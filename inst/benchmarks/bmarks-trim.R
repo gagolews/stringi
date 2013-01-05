@@ -1,4 +1,6 @@
 # TO DO
+require("rbenchmark")
+require("stringr")
 
 bmarks <- NULL
 

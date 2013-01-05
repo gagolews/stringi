@@ -2,7 +2,12 @@ require(testthat)
 
 test_that("stri_flatten", {
    
-   
-   expect_that(stri_flatten(c("A", "", "B", "", "C")), is_identical_to("ABC"))
-
+   # basic tests (ASCII, border-line):
+   expect_identical(stri_flatten(c("", "", "", "", "")), "")
+   expect_identical(stri_flatten(c(character(0))), character(0))
+   expect_identical(stri_flatten(c(NA, NA, NA)), NA_character_)
+   expect_identical(stri_flatten(c("A", "", "B", "", "C")), "ABC")
+   expect_identical(stri_flatten(c("A", "", "B", NA, "C")), NA_character_)
+   expect_identical(stri_flatten(c(LETTERS)), paste(LETTERS, collapse=""))
+   expect_identical(stri_flatten("0987654321"), "0987654321")
 })
