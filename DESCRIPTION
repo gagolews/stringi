@@ -1,0 +1,33 @@
+Package: ICU
+Version: 0.1-1
+Date: 2013-01-03
+Title: What the package does (short line)
+Description: More about what it does (maybe more than one line)
+URL: http://www.ibspan.waw.pl/~gagolews/stringr/
+BugReports: http://pkgname.bugtracker.url
+LazyData: true
+Type: Package
+Depends:
+    R (>= 2.15.0)
+SystemRequirements: ICU4C (>= 50)
+License: LGPL (>= 3)
+Suggests:
+    testthat
+Authors@R: c(
+    person("Marek", "Gagolewski", role = c("aut", "cre"),
+    email = "gagolews@ibspan.waw.pl"),
+    person("Bartek", "Tartanus", role = "aut",
+    email = "bartektartanus@gmail.com")
+    )
+Author: Marek Gagolewski and Bartek Tartanus
+Maintainer: Marek Gagolewski <gagolews@ibspan.waw.pl>
+Collate:
+    'ICU.R'
+    'casefold.R'
+    'dup.R'
+    'join.R'
+    'trim.R'
+    'unicode_normalization.R'
+    'ICU_settings.R'
+    'prepare_arg.R'
+    'compare.R'

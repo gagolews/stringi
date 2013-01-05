@@ -1,0 +1,25 @@
+stringi Package installation & building
+
+
+
+On Linux:
+
+
+cd src/
+./configure
+make
+make install
+
+Perhaps this could also be needed:
+
+ln -s /usr/local/lib/libicuuc.so.50 /usr/lib
+ln -s /usr/local/lib/libicui18n.so.50  /usr/lib
+ln -s /usr/local/lib/libicudata.so.50  /usr/lib
+ln -s /usr/local/lib/libicuio.so.50 /usr/lib
+ln -s /usr/local/lib/libicule.so.50 /usr/lib
+
+
+Ferora:
+   you may try with `yum install libicu-devel`
+
+
