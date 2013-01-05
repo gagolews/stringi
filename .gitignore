@@ -1,16 +1,12 @@
-# History files
-.Rhistory
-
-# Example code in package build process
-*-Ex.R
-
 # Roxygen-generated man pages
 man/*.Rd
-.Rproj.user
 
-# RStudio files:
+# R/RStudio files:
 .Rbuildignore
 stringi.Rproj
+.Rproj.user
+.Rhistory
+.RData
 
 # compiled/precompiled files
 *.o

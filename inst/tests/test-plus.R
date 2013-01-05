@@ -1,12 +1,12 @@
 require(testthat)
 
-
-
 test_that("%+%", {
-   expect_that("A" %+% NA, is_equivalent_to(NA_character_))
-   expect_that(NA %+% "B", is_equivalent_to(NA_character_))
-   expect_that("A" %+% "B", is_equivalent_to("AB"))
-   expect_that("A" %+% character(0), is_equivalent_to("A"))
-   expect_that("A" %+% c("A", "B", "C"), is_equivalent_to(c("AA", "AB", "AC")))
+   
+   # basic tests (ASCII, border-line):
+   expect_equivalent("A" %+% NA, NA_character_)
+   expect_equivalent(NA %+% "B", NA_character_)
+   expect_equivalent(NA %+% NA, NA_character_)
+   expect_equivalent("A" %+% "B", "AB")
+   expect_equivalent("A" %+% character(0), "A")
+   expect_equivalent("A" %+% c("A", "B", "C"), c("AA", "AB", "AC"))
 })
-

@@ -1,16 +1,17 @@
 require(testthat)
 
+# TO DO...
 
 test_that("stri_dup", {
 
+   # basic tests (ASCII, border-line):
    expect_that(stri_dup(c("A", "B"), c(2,3,4)), is_identical_to(c("AA", "BBB", "AAAA")))
-   
    
    expect_that(length(stri_dup(character(0), integer(0)))==0, is_true())
    expect_that(length(stri_dup("char", integer(0)))==0, is_true())
    expect_that(length(stri_dup(character(0), 1))==0, is_true())
    
-   expect_that(all(is.na(stri_dup("A", -1, NA))), is_true())
+   expect_that(all(is.na(stri_dup("A", c(-1, NA)))), is_true())
 })
 
 
