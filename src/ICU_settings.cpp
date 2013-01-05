@@ -1,6 +1,8 @@
 #include "stringi.h"
 
-
+/* Get curent-default ICU locale information
+   returns an R named list
+*/
 SEXP stri_getinfo()
 {
    const R_len_t infosize = 10;
@@ -18,36 +20,36 @@ SEXP stri_getinfo()
    SET_STRING_ELT(names, 8, mkChar("Charset.native.mincharsize"));
    SET_STRING_ELT(names, 9, mkChar("Charset.native.maxcharsize"));
    
-   PROTECT(vals = allocVector(STRSXP, infosize));
+   PROTECT(vals = allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i) 
-      SET_STRING_ELT(vals, i, NA_STRING);
+      SET_VECTOR_ELT(vals, i, ScalarString(NA_STRING));
       
    Locale loc = Locale::getDefault();
-   SET_STRING_ELT(vals, 0, mkChar(loc.getLanguage()));
-   SET_STRING_ELT(vals, 1, mkChar(loc.getCountry()));
-   SET_STRING_ELT(vals, 2, mkChar(loc.getVariant()));
-   SET_STRING_ELT(vals, 3, mkChar(loc.getName()));
-   SET_STRING_ELT(vals, 4, mkChar("UTF-8"));
-   SET_STRING_ELT(vals, 5, mkChar(ucnv_getDefaultName()));
+   SET_VECTOR_ELT(vals, 0, mkString(loc.getLanguage()));
+   SET_VECTOR_ELT(vals, 1, mkString(loc.getCountry()));
+   SET_VECTOR_ELT(vals, 2, mkString(loc.getVariant()));
+   SET_VECTOR_ELT(vals, 3, mkString(loc.getName()));
+   SET_VECTOR_ELT(vals, 4, mkString("UTF-8"));
+   SET_VECTOR_ELT(vals, 5, mkString(ucnv_getDefaultName()));
 
    UErrorCode err = U_ZERO_ERROR;
    UConverter* uconv = ucnv_open(NULL, &err);
    if (U_FAILURE(err)) { warning("ICU4R: Couldn't open default UConverter"); }
    else {
-      SET_STRING_ELT(vals, 8, mkChar(SSTR((int)ucnv_getMinCharSize(uconv)).c_str()));
-      SET_STRING_ELT(vals, 9, mkChar(SSTR((int)ucnv_getMaxCharSize(uconv)).c_str()));
+      SET_VECTOR_ELT(vals, 8, ScalarInteger((int)ucnv_getMinCharSize(uconv)));
+      SET_VECTOR_ELT(vals, 9, ScalarInteger((int)ucnv_getMaxCharSize(uconv)));
 
       const char* stdname;
       err = U_ZERO_ERROR;
       stdname = ucnv_getStandardName(ucnv_getDefaultName(), "MIME", &err);
       if (U_FAILURE(err)) warning("Couldn't get locale display name");
-      else SET_STRING_ELT(vals, 6, mkChar(stdname));
+      else SET_VECTOR_ELT(vals, 6, mkString(stdname));
       
       
       err = U_ZERO_ERROR;
       stdname = ucnv_getStandardName(ucnv_getDefaultName(), "IANA", &err);
       if (U_FAILURE(err)) warning("Couldn't get locale display name");
-      else SET_STRING_ELT(vals, 7, mkChar(stdname));
+      else SET_VECTOR_ELT(vals, 7, mkString(stdname));
       
       
       ucnv_close(uconv);
