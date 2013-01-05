@@ -3,12 +3,12 @@
 SEXP stri_prepare_arg_string(SEXP x)
 {
    if (isString(x))
-      return x;
+      return x; // return as-is
    if (isFactor(x))
    {
       SEXP call;
       PROTECT(call = lang2(install("as.character"), x));
-		x = eval(call, R_GlobalEnv);
+		x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
       return x;
    }

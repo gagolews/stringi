@@ -5,7 +5,8 @@
    vectorized over s
    if s is NA the result will be NA
    
-   TO DO: WHAT IF s is not in UTF-8???
+   TO DO: Encoding marking!
+   TO DO: USE C API (no UnicodeString....)
 */
 SEXP stri_trim(SEXP s)
 {

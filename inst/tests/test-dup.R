@@ -5,13 +5,17 @@ require(testthat)
 test_that("stri_dup", {
 
    # basic tests (ASCII, border-line):
-   expect_that(stri_dup(c("A", "B"), c(2,3,4)), is_identical_to(c("AA", "BBB", "AAAA")))
+   suppressWarnings(expect_identical(stri_dup(c("A", "B"), c(2,3,4)), c("AA", "BBB", "AAAA")))
+   expect_warning(stri_dup(c("A", "B"), c(2,3,4)))
    
-   expect_that(length(stri_dup(character(0), integer(0)))==0, is_true())
-   expect_that(length(stri_dup("char", integer(0)))==0, is_true())
-   expect_that(length(stri_dup(character(0), 1))==0, is_true())
-   
-   expect_that(all(is.na(stri_dup("A", c(-1, NA)))), is_true())
+   expect_identical(stri_dup(character(0), integer(0)), character(0))
+   expect_identical(stri_dup("char", integer(0)), character(0))
+   expect_identical(stri_dup(character(0), 10), character(0))
+   expect_identical(stri_dup("ABC", 0), "")
+   expect_identical(stri_dup("A", c(1.5, 1.99, 0.1)), c("A", "A", ""))
+   expect_warning(stri_dup("A", ":-("))
+   expect_identical(stri_dup(c("ABC", "", "A"), c(0, 100, 0)), c("", "", ""))
+   expect_identical(stri_dup("A", c(-1, 0, 1, NA)), c(NA, "", "A", NA))
 })
 
 
