@@ -1,3 +1,3 @@
 stringi
 =======
-authors : Marek Gagolewski, Bartlomiej Tartanus
+authors : Marek Gagolewski and Bartlomiej Tartanus
