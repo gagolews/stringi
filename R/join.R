@@ -10,7 +10,7 @@
 #' @export
 "%+%" <- function(e1, e2) {
    .Call("stri_join2", stri_prepare_arg_string(e1),
-         stri_prepare_arg_string(e2), PACKAGE="ICU")
+         stri_prepare_arg_string(e2), PACKAGE="stringi")
 }
 
 
@@ -27,6 +27,6 @@
 #' @param str will be coerced to character
 #' @export
 stri_flatten <- function(str) {
-   .Call("stri_flatten", stri_prepare_arg_string(str), PACKAGE="ICU")
+   .Call("stri_flatten", stri_prepare_arg_string(str), PACKAGE="stringi")
 }
 

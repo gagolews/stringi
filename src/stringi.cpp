@@ -19,12 +19,15 @@ static const R_CallMethodDef cCallMethods[] = {
 };
 
 
-extern "C" void R_init_ICU(DllInfo *dll)
+extern "C" void R_init_stringi(DllInfo *dll)
 {
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
    R_useDynamicSymbols(dll, Rboolean(FALSE));
-   cerr << "DEBUG: Dynamic library ICU loaded." << endl;
    
+#ifndef NDEBUG
+   cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
+#endif
+
 //   cerr << "DEBUG: ICU4R start locale=\"" << uloc_getDefault() << "\"" << endl;
 //   cerr << "DEBUG: ICU4R changing default locale manually..." << endl;
 //   UErrorCode err = U_ZERO_ERROR;
@@ -33,8 +36,10 @@ extern "C" void R_init_ICU(DllInfo *dll)
 }
 
 
-extern "C" void  R_unload_ICU(DllInfo *info)
+extern "C" void  R_unload_stringi(DllInfo *info)
 {
-   cerr << "DEBUG: Dynamic library ICU unloaded." << endl;
+#ifndef NDEBUG
+   cerr << "DEBUG: Dynamic library 'stringi' unloaded." << endl;
+#endif
 }
 

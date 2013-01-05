@@ -1,19 +1,11 @@
-require("testthat")
-require("rbenchmark")
+require(testthat)
 
-x <- stri_dup("AaBbCc", 1:1000)
-
-benchmark(
-   y1 <- tolower(x),
-   y2 <- stri_tolower(x)
-)
-
-expect_that(y2, is_identical_to(y1))
-
-
-benchmark(
-   y1 <- toupper(x),
-   y2 <- stri_toupper(x)
-)
-
-expect_that(y2, is_identical_to(y1))
+test_that("stri_tolower", {
+   
+   expect_that(stri_tolower(LETTERS), is_equivalent_to(letters)) 
+   expect_that(stri_tolower(letters), is_equivalent_to(letters))
+   
+   expect_that(stri_toupper(LETTERS), is_equivalent_to(LETTERS)) 
+   expect_that(stri_toupper(letters), is_equivalent_to(LETTERS))
+   
+})

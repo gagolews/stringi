@@ -1,4 +1,4 @@
-Package: ICU
+Package: stringi
 Version: 0.1-1
 Date: 2013-01-03
 Title: What the package does (short line)
@@ -22,7 +22,6 @@ Authors@R: c(
 Author: Marek Gagolewski and Bartek Tartanus
 Maintainer: Marek Gagolewski <gagolews@ibspan.waw.pl>
 Collate:
-    'ICU.R'
     'casefold.R'
     'dup.R'
     'join.R'
@@ -31,3 +30,4 @@ Collate:
     'ICU_settings.R'
     'prepare_arg.R'
     'compare.R'
+    'stringi-package.R'

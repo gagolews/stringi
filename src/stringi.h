@@ -1,6 +1,11 @@
 #ifndef __stringi_h
 #define __stringi_h
 
+// for DEBUG mode
+#undef NDEBUG
+// for non-DEBUG mode:
+// #define NDEBUG
+
 // do not enable this:
 //#define U_CHARSET_IS_UTF8 1
 

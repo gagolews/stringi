@@ -1,9 +1,9 @@
 #' aa
-#' @useDynLib ICU
+#' @useDynLib stringi
 .onAttach <- function(lib, pkg)
 {
 # auto load by @useDynLib:
-#    library.dynam("ICU", pkg, lib, verbose=TRUE)
+#    library.dynam("stringi", pkg, lib, verbose=TRUE)
    
 # TEMP:
    print(stri_getinfo())  
@@ -14,7 +14,7 @@
 # 
 # }
 
-.onUnload <- function(libpath)
-{
-   library.dynam.unload("ICU", libpath)
-}
+# .onUnload <- function(libpath)
+# {
+#    library.dynam.unload("stringi", libpath)
+# }

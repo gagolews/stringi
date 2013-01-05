@@ -7,5 +7,5 @@
 #' if name, a single string is generated.
 #' otherwise the function throws an error.
 stri_prepare_arg_string <- function(x) {
-   .Call("stri_prepare_arg_string", x, PACKAGE="ICU")  
+   .Call("stri_prepare_arg_string", x, PACKAGE="stringi")  
 }

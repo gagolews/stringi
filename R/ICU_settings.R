@@ -2,5 +2,5 @@
 #' 
 #' @export
 stri_getinfo <- function() {
-   .Call("stri_getinfo", PACKAGE="ICU")
+   .Call("stri_getinfo", PACKAGE="stringi")
 }

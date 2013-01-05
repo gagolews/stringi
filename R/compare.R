@@ -8,7 +8,7 @@
 "%==%" <- function(e1, e2) {
    stop("not yet implemented")
 #    .Call("stri_casecompare", 
-#          stri_prepare_arg_string(e1), stri_prepare_arg_string(e2), PACKAGE="ICU")
+#          stri_prepare_arg_string(e1), stri_prepare_arg_string(e2), PACKAGE="stringi")
 }
 
 # COLLATION OPTIONS

@@ -1,3 +1,7 @@
+require(testthat)
+
+# to do:
+
 
 ICU:::stri_prepare_arg_string(LETTERS)
 ICU:::stri_prepare_arg_string(c(TRUE, FALSE, TRUE))
@@ -14,13 +18,6 @@ ICU:::stri_prepare_arg_string(list(1, 2, 3)) # error
 ICU:::stri_prepare_arg_string(data.frame(1, 2, 3)) # error
 
 
-require("microbenchmark")
-require("testthat")
-require("stringr")
 
-microbenchmark(ICU:::stri_prepare_arg_string(LETTERS),
-               stringr:::check_string(LETTERS), times=10000)
 
-microbenchmark(ICU:::stri_prepare_arg_string(c(1+1i, 2+2i)),
-               stringr:::check_string(c(1+1i, 2+2i)), times=10000)
 
