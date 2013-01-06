@@ -23,7 +23,7 @@
 */
 SEXP stri_getinfo()
 {
-   const R_len_t infosize = 10;
+   const R_len_t infosize = 6;
    SEXP vals;
    SEXP names;
    PROTECT(names = allocVector(STRSXP, infosize));
@@ -32,11 +32,7 @@ SEXP stri_getinfo()
    SET_STRING_ELT(names, 2, mkChar("Locale.variant"));   
    SET_STRING_ELT(names, 3, mkChar("Locale.name"));
    SET_STRING_ELT(names, 4, mkChar("Charset.internal"));
-   SET_STRING_ELT(names, 5, mkChar("Charset.native.ICU"));
-   SET_STRING_ELT(names, 6, mkChar("Charset.native.MIME"));
-   SET_STRING_ELT(names, 7, mkChar("Charset.native.IANA"));   
-   SET_STRING_ELT(names, 8, mkChar("Charset.native.mincharsize"));
-   SET_STRING_ELT(names, 9, mkChar("Charset.native.maxcharsize"));
+   SET_STRING_ELT(names, 5, mkChar("Charset.native"));
    
    PROTECT(vals = allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i) 
@@ -48,30 +44,8 @@ SEXP stri_getinfo()
    SET_VECTOR_ELT(vals, 2, mkString(loc.getVariant()));
    SET_VECTOR_ELT(vals, 3, mkString(loc.getName()));
    SET_VECTOR_ELT(vals, 4, mkString("UTF-8"));
-   SET_VECTOR_ELT(vals, 5, mkString(ucnv_getDefaultName()));
+   SET_VECTOR_ELT(vals, 5, stri_ucnv_encinfo(R_NilValue));
 
-   UErrorCode err = U_ZERO_ERROR;
-   UConverter* uconv = ucnv_open(NULL, &err);
-   if (U_FAILURE(err)) { warning("ICU4R: Couldn't open default UConverter"); }
-   else {
-      SET_VECTOR_ELT(vals, 8, ScalarInteger((int)ucnv_getMinCharSize(uconv)));
-      SET_VECTOR_ELT(vals, 9, ScalarInteger((int)ucnv_getMaxCharSize(uconv)));
-
-      const char* stdname;
-      err = U_ZERO_ERROR;
-      stdname = ucnv_getStandardName(ucnv_getDefaultName(), "MIME", &err);
-      if (U_FAILURE(err)) warning("Couldn't get locale display name");
-      else SET_VECTOR_ELT(vals, 6, mkString(stdname));
-      
-      
-      err = U_ZERO_ERROR;
-      stdname = ucnv_getStandardName(ucnv_getDefaultName(), "IANA", &err);
-      if (U_FAILURE(err)) warning("Couldn't get locale display name");
-      else SET_VECTOR_ELT(vals, 7, mkString(stdname));
-      
-      
-      ucnv_close(uconv);
-   }
    setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);
    return vals;

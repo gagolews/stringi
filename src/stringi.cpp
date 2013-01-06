@@ -33,6 +33,8 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_getinfo", (DL_FUNC)&stri_getinfo, 0},
    {"stri_prepare_arg_string", (DL_FUNC)&stri_prepare_arg_string, 1},
    {"stri_casecompare", (DL_FUNC)&stri_casecompare, 2},
+   {"stri_ucnv_enclist", (DL_FUNC)&stri_ucnv_enclist, 0},
+   {"stri_ucnv_encinfo", (DL_FUNC)&stri_ucnv_encinfo, 1},
    {NULL, NULL, 0}
 };
 

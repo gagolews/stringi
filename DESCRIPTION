@@ -32,3 +32,4 @@ Collate:
     'compare.R'
     'stringi-package.R'
     'wrap.R'
+    'ucnv.R'

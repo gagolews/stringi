@@ -18,25 +18,36 @@
 
 
 
-## TO DO: package doc
+#' \pkg{stringi} is an open source (LGPL 3) package for R.
+#' It allows for correct, fast, and simple string manipulation in each locale. 
+#'
+#' \bold{Keywords}: internationalization, ICU, ICU4R, i18n, l10n
+#'
+#' @name stringi-package
+#' @docType package
+#' @title Correct, fast, and simple string manipulation in each locale
+#' @author Marek Gagolewski \email{gagolews@@ibspan.waw.pl},\cr
+#' Bartek Tartanus \email{bartektartanus@@gmail.com}
+#' @references
+#' Package homepage, \url{http://www.ibspan.waw.pl/~gagolews/?page=resources&subpage=stringi}.\cr
+#' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
+#' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
+#' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
+invisible(NULL)
+
+
+
+
 
 #' TO DO
 #' @useDynLib stringi
 .onAttach <- function(lib, pkg)
 {
-# auto load by @useDynLib:
-#    library.dynam("stringi", pkg, lib, verbose=TRUE)
-   
-# TEMP:
-   print(stri_getinfo())  
+   info <- stri_getinfo()
+   locale <- paste(info$Locale.language, "_", info$Locale.country, sep="")
+   if (!is.null(info$Charset.native$MIME) && !is.na(info$Charset.native$MIME))
+      charset <- info$Charset.native$MIME
+   else
+      charset <- info$Charset.native$ICU
+   packageStartupMessage(paste("stringi (", locale, ", ", charset, ")\n", sep=""))
 }
-
-# .onLoad <- function(lib, pkg)
-# {
-# 
-# }
-
-# .onUnload <- function(libpath)
-# {
-#    library.dynam.unload("stringi", libpath)
-# }
