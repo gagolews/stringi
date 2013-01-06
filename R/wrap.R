@@ -21,7 +21,7 @@
 #' Wrap strings to paragraphs
 #'
 #' @description Wrap strings to paragraphs
-#' @usage stri_wrap(s, width = 76, method = c("greedy", "dynamic"), spaces = "\\p{Z}", spacecost = 1)
+#' @usage stri_wrap(s, width = 76, method = c("greedy", "dynamic"), spaces = "\\p{Z}+", spacecost = 1)
 #' @param s character vector of strings to format into paragraphs
 #' @param width positive integer giving the target column for wrapping lines
 #' @param method indicates which method is used for wrapping. You can specify just the initial letter of the value. See 'Details' for description of possible methods.
@@ -55,11 +55,17 @@ stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",s
 
 
 #'  documentation...
-#'
+#'  
+#' !we keep stri_wrap only to compare efficiency between R and C++ versions
+#'  after that stri_wrapC will be stri_wrap and old stri_wrap will be del.
+#'  TODO Also the default parameter spaces should be different - the current
+#'  splits string only by space and omits line breaks - \n
+#'  TODO add indent and exdent parameter (see strwrap)
 #' @export
 stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",spacecost=1)
 {
-   s <- as.character(s)
+   if (!is.character(s))   
+      s <- as.character(s)
    width <- as.integer(width)
    stopifnot(is.finite(width)&&width>0)
    spacecost <- as.integer(spacecost)
