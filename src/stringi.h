@@ -84,6 +84,7 @@ SEXP stri_prepare_arg_string(SEXP x);
 
 // ucnv.cpp:
 void stri__ucnv_getStandards(const char**& standards, R_len_t& cs);
+const char* stri___ucnv_getFriendlyName(const char* canname);
 SEXP stri_ucnv_enclist();
 SEXP stri_ucnv_encinfo(SEXP enc);
 

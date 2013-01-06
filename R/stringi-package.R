@@ -45,9 +45,6 @@ invisible(NULL)
 {
    info <- stri_getinfo()
    locale <- paste(info$Locale.language, "_", info$Locale.country, sep="")
-   if (!is.null(info$Charset.native$MIME) && !is.na(info$Charset.native$MIME))
-      charset <- info$Charset.native$MIME
-   else
-      charset <- info$Charset.native$ICU
+   charset <- info$Charset.native$Name.friendly
    packageStartupMessage(paste("stringi (", locale, ", ", charset, ")\n", sep=""))
 }
