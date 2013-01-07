@@ -144,7 +144,8 @@ stri_wrap_dynamic <- function(wordslist,width,spacecost){
             space[i,i] <- "\n"
          }
       }
-      paste(words, space[n,-n], sep="",collapse="")
+      space[n,n] <- ""
+      paste(words, space[n,], sep="",collapse="")
    })
 }
 
