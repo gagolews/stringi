@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -18,6 +18,11 @@
  
 #include "stringi.h"
 
+
+/**
+ * ...
+ * 
+ */
 SEXP stri_prepare_arg_string(SEXP x)
 {
    if (isString(x))

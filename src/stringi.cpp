@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -22,7 +22,9 @@
 
 
 
-
+/**
+ * ...
+ */
 static const R_CallMethodDef cCallMethods[] = {
    {"stri_trim", (DL_FUNC)&stri_trim, 1},
    {"stri_dup", (DL_FUNC)&stri_dup, 2},
@@ -39,6 +41,10 @@ static const R_CallMethodDef cCallMethods[] = {
 };
 
 
+
+/**
+ * ...
+ */
 extern "C" void R_init_stringi(DllInfo *dll)
 {
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
@@ -56,6 +62,11 @@ extern "C" void R_init_stringi(DllInfo *dll)
 }
 
 
+
+
+/**
+ * ...
+ */
 extern "C" void  R_unload_stringi(DllInfo *info)
 {
 #ifndef NDEBUG

@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -57,7 +57,6 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
  *  @param canname Canonical (ICU) encoding name
  *  @return First existing of: MIME name or JAVA name or Canonical
  */
-
 const char* stri___ucnv_getFriendlyName(const char* canname)
 {
    if (!canname) return NULL;
@@ -184,6 +183,10 @@ SEXP stri_ucnv_encinfo(SEXP enc)
 }
 
 
+
+/**
+ * ...
+ */
 SEXP stri_ucnv_enclist()
 {
    R_len_t cs;

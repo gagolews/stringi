@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 

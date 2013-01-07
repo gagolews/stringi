@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -18,6 +18,10 @@
  
 #include "stringi.h"
 
+
+/** 
+ * TO DO
+ */
 SEXP stri_casecompare(SEXP x, SEXP y)
 {
    error("stri_casecompare not implemented");   
