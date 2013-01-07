@@ -38,6 +38,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_ucnv_enclist", (DL_FUNC)&stri_ucnv_enclist, 0},
    {"stri_ucnv_encinfo", (DL_FUNC)&stri_ucnv_encinfo, 1},
    {"stri_numbytes", (DL_FUNC)&stri_numbytes, 1},
+   {"stri_wrap_greedy", (DL_FUNC)&stri_wrap_greedy, 3},
    {NULL, NULL, 0}
 };
 

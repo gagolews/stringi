@@ -91,6 +91,9 @@ SEXP stri_ucnv_encinfo(SEXP enc);
 // length.cpp
 SEXP stri_numbytes(SEXP s);
 
+// wrap.cpp
+SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
+
 
 // ------------------------------------------------------------------------
 
