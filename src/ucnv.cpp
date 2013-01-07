@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -52,9 +52,38 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
 }
 
 
+
+/** Get friendly endoding name
+ *  @param canname Canonical (ICU) encoding name
+ *  @return First existing of: MIME name or JAVA name or Canonical
+ */
+const char* stri___ucnv_getFriendlyName(const char* canname)
+{
+   if (!canname) return NULL;
+   
+   UErrorCode err;
+   const char* frname;
+   
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "MIME", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+      
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "JAVA", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+      
+   return canname;
+}
+
+
 /** Fetch information on given encoding
  * @param enc either NULL or "" for default encoding, or one string with encoding name
  * @ret a list
+ * 
+ * @TODO Has ASCII subset?
+ * @TODO How many (max) UTF-8 chars correspond to one char in this encoding?
  */
 SEXP stri_ucnv_encinfo(SEXP enc)
 {
@@ -105,32 +134,47 @@ SEXP stri_ucnv_encinfo(SEXP enc)
    // alloc output list
    SEXP vals;
    SEXP names;
-   PROTECT(names = allocVector(STRSXP, cs+3));
-   PROTECT(vals = allocVector(VECSXP, cs+3));
+   const int nval = cs+4;
+   PROTECT(names = allocVector(STRSXP, nval));
+   SET_STRING_ELT(names, 0, mkChar("Name.friendly"));
+   SET_STRING_ELT(names, 1, mkChar("Name.ICU"));
+   for (R_len_t i=0; i<cs; ++i)
+      SET_STRING_ELT(names, i+2, mkChar((string("Name.")+standards[i]).c_str()));
+   SET_STRING_ELT(names, nval-2, mkChar("CharSize.min"));
+   SET_STRING_ELT(names, nval-1, mkChar("CharSize.max"));
+   
+   PROTECT(vals = allocVector(VECSXP, nval));
 
    
-   // get canonical (ICU) name -> 0
+   // get canonical (ICU) name
    err = U_ZERO_ERROR;
    const char* canname = ucnv_getName(uconv, &err);
-   if (U_FAILURE(err) || !canname)
-      SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
-   else SET_VECTOR_ELT(vals, 0, mkString(canname));
-   SET_STRING_ELT(names, 0, mkChar("ICU"));
-      
-   // min,max character size
-   SET_VECTOR_ELT(vals, cs+1, ScalarInteger((int)ucnv_getMinCharSize(uconv)));
-   SET_VECTOR_ELT(vals, cs+2, ScalarInteger((int)ucnv_getMaxCharSize(uconv)));
-   SET_STRING_ELT(names, cs+1, mkChar("mincharsize"));
-   SET_STRING_ELT(names, cs+2, mkChar("maxcharsize"));
    
-   // other standard names
-   for (R_len_t i=0; i<cs; ++i) {
-      err = U_ZERO_ERROR;
-      const char* stdname = ucnv_getStandardName(canname, standards[i], &err);
-      if (U_FAILURE(err) || !stdname)
-         SET_VECTOR_ELT(vals, i+1, ScalarString(NA_STRING));
-      else SET_VECTOR_ELT(vals, i+1, mkString(stdname));
-      SET_STRING_ELT(names, i+1, mkChar(standards[i]));
+   if (U_FAILURE(err) || !canname) {
+      SET_VECTOR_ELT(vals, 1, ScalarString(NA_STRING));
+      warning("could not get canonical (ICU) encoding name (stri_ucnv_encinfo)");
+   }
+   else {
+      SET_VECTOR_ELT(vals, 1, mkString(canname));
+   
+      // friendly name
+      const char* frname = stri___ucnv_getFriendlyName(canname);
+      if (frname)  SET_VECTOR_ELT(vals, 0, mkString(frname));
+      else         SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
+         
+      // min,max character size
+      SET_VECTOR_ELT(vals, nval-2, ScalarInteger((int)ucnv_getMinCharSize(uconv)));
+      SET_VECTOR_ELT(vals, nval-1, ScalarInteger((int)ucnv_getMaxCharSize(uconv)));
+      
+      // other standard names
+      for (R_len_t i=0; i<cs; ++i) {
+         err = U_ZERO_ERROR;
+         const char* stdname = ucnv_getStandardName(canname, standards[i], &err);
+         if (U_FAILURE(err) || !stdname)
+            SET_VECTOR_ELT(vals, i+2, ScalarString(NA_STRING));
+         else
+            SET_VECTOR_ELT(vals, i+2, mkString(stdname));
+      }
    }
    
    setAttrib(vals, R_NamesSymbol, names);
@@ -139,6 +183,10 @@ SEXP stri_ucnv_encinfo(SEXP enc)
 }
 
 
+
+/**
+ * ...
+ */
 SEXP stri_ucnv_enclist()
 {
    R_len_t cs;

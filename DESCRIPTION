@@ -33,3 +33,4 @@ Collate:
     'stringi-package.R'
     'wrap.R'
     'ucnv.R'
+    'length.R'

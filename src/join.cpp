@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -20,7 +20,7 @@
 
 
 
-/* vectorized over s1 and s2 
+/** vectorized over s1 and s2 
 
    optimized for s1 longer than s2
    if s1 or s2 is NA then result is NA
@@ -113,7 +113,7 @@ SEXP stri_join2(SEXP s1, SEXP s2)
 }
 
 
-/* TO DO: Encoding marking!
+/** TO DO: Encoding marking!
 
    if any of s is NA, the result will be NA_char_
 */

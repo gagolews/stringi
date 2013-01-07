@@ -39,7 +39,7 @@
 #' cat(stri_wrap(s,20,"d"))
 #' 
 #' @export
-stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",spacecost=1)
+stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
 {
    s <- as.character(s)
    width <- as.integer(width)

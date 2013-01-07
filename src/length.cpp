@@ -20,9 +20,24 @@
 
 
 /** 
- * TO DO
+ * .... 
  */
-SEXP stri_casecompare(SEXP x, SEXP y)
+SEXP stri_numbytes(SEXP s)
 {
-   error("stri_casecompare not implemented");   
+   s = stri_prepare_arg_string(s);
+   int n = LENGTH(s); // XLENGTH - LENGTH with long vector support
+   SEXP e;
+   PROTECT(e = allocVector(INTSXP, n));
+   for (int i=0; i<n; ++i) {
+      SEXP curs = STRING_ELT(s, i);
+      if (curs == NA_STRING) {
+         INTEGER(e)[i] = NA_INTEGER;
+      }
+      else {
+         INTEGER(e)[i] = LENGTH(curs);
+      }
+   }
+   
+   UNPROTECT(1);
+   return e;
 }

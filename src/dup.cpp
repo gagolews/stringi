@@ -1,4 +1,4 @@
-/** This file is part of the 'stringi' library.
+/* This file is part of the 'stringi' library.
  * 
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  * 
@@ -19,13 +19,13 @@
 #include "stringi.h"
 
 
-/* The function is vectorized over s and c
+/** The function is vectorized over s and c
    if s is NA or c is NA the result will be NA
    if c<0 the result will be NA
    if c==0 the result will be an empty string
    if s or c is an empty vector then the result is an empty vector
    
-   TO DO: Encoding!!!
+   @TODO Encoding!!!
 */
 SEXP stri_dup(SEXP s, SEXP c)
 {
