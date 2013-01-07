@@ -21,10 +21,10 @@
 #' Wrap strings to paragraphs
 #'
 #' @description Wrap strings to paragraphs
-#' @usage stri_wrap(s, width = 76, method = c("greedy", "dynamic"), spaces = "(\\p{Z}|\\n)+", spacecost = 1)
+#' @usage stri_wrap(s, width = 76, method = "greedy", spaces = "(\\p{Z}|\\n)+", spacecost = 1)
 #' @param s character vector of strings to format into paragraphs
 #' @param width positive integer giving the target column for wrapping lines
-#' @param method indicates which method is used for wrapping. You can specify just the initial letter of the value. See 'Details' for description of possible methods.
+#' @param method indicates which method is used for wrapping ("greedy" or "dynamic"). You can specify just the initial letter of the value. See 'Details' for description of possible methods.
 #' @param spaces length one character vector or expression ?...
 #' @param spacecost positive integer which determines the cost of one space (gap between each word)
 #' @details Greedy algorithm is simple way of word wrapping and it always puts as many words on each line as possible. This method minimize the number of space left at the end of every line and always uses the minimum number of lines. Disadvantage of this method could be fact that the number of empty space at the end of lines may be various. Dynamic algorithm is more complex, but it returns text wrapped more aesthetic. This method minimize the squared number of space, so the text is arranged evenly.
@@ -39,7 +39,7 @@
 #' cat(stri_wrap(s,20,"d"))
 #' 
 #' @export
-stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
+stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
    s <- as.character(s)
    width <- as.integer(width)
@@ -62,7 +62,7 @@ stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\
 #'  splits string only by space and omits line breaks - \n
 #'  TODO add indent and exdent parameter (see strwrap)
 #' @export
-stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
+stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
    if (!is.character(s))   
       s <- as.character(s)
@@ -90,7 +90,7 @@ stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\
 #'  
 #'  TODO add indent and exdent parameter (see strwrap)
 #' @export
-stri_wrapC2 <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
+stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
 	if (!is.character(s))   
 		s <- as.character(s)
@@ -98,13 +98,16 @@ stri_wrapC2 <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|
 	stopifnot(is.finite(width)&&width>0)
 	spacecost <- as.integer(spacecost)
 	stopifnot(is.finite(spacecost)&&spacecost>0)
-	method <- match.arg(method)
+	method <- pmatch(method,c("greedy","dynamic"),1,T)
 	wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
+	method <- rep(method,ceiling(length(s)/length(method)))
+	j <- 1
 	sapply(wordslist,function(words){
 		count <- nchar(words)
-		where <- switch(method,
-							 dynamic = .Call("stri_wrap_dynamic",count,width,spacecost,PACKAGE="stringi"),
-							 greedy = .Call("stri_wrap_greedy",count,width,spacecost,PACKAGE="stringi"))
+		where <- switch(method[j],
+							 .Call("stri_wrap_greedy",count,width,spacecost,PACKAGE="stringi"),
+							 .Call("stri_wrap_dynamic",count,width,spacecost,PACKAGE="stringi"))
+		j <<- j+1;
 		space <- rep(" ",length(where))
 		space[where] <- "\n"
 		space[length(where)] <- ""

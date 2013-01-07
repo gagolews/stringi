@@ -45,8 +45,7 @@ SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 {
 	int n = LENGTH(count);
-	SEXP costm;
-	PROTECT(costm = allocVector(REALSXP, n*n));
+	double* costm = (double*)R_alloc(n*n, sizeof(double)); 
 	double ct = 0;
 	double sum = 0;
 	for(int i=0;i<n;i++){
@@ -56,14 +55,13 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 				sum = sum + INTEGER(count)[k];
 			ct = INTEGER(width)[0]-(j-i)*INTEGER(spacecost)[0]-sum;
 			if(ct<0){ //nie miesci sie, to infinity
-				REAL(costm)[i*n+j]=std::numeric_limits<double>::infinity();
+				costm[i*n+j]=std::numeric_limits<double>::infinity();
 			}else //jak miesci to kwadrat i wpisujemy w tablice
-				REAL(costm)[i*n+j]=ct*ct;
+				costm[i*n+j]=ct*ct;
 		}
 	}
 	//i-ty element f to koszt wypisania pierwszych i slow
-	SEXP f;
-	PROTECT(f = allocVector(REALSXP, n));
+	double* f = (double*)R_alloc(n, sizeof(double));
 	int j=0;
 	//gdzie beda space (false) a gdzie nowy wiersz (true)
 	SEXP space;
@@ -71,31 +69,29 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	for(int i=0;i<n;i++) //zerowanie (false'owanie) 
 		for(int j=0;j<n;j++)
 			LOGICAL(space)[i*n+j]=false;
-	while(j<n && REAL(costm)[j]<std::numeric_limits<double>::infinity()){
-		REAL(f)[j] = REAL(costm)[j];
+	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
+		f[j] = costm[j];
 		LOGICAL(space)[j*n+j] = true;
 		j=j+1;
 	}
 	double min=0;
 	int w=0;
-	SEXP temp;
-	PROTECT(temp = allocVector(REALSXP, n));
+	double* temp = (double*)R_alloc(n, sizeof(double));
 	if(j<n){
 	    for(int i=j;i<n;i++){
 			//tablica pomoze nam szukac min
 			//temp = new double[i-1]; tablica o rozm i-1 starczy
-			REAL(temp)[0]=REAL(f)[0]+REAL(costm)[1*n+i];
-			min=REAL(temp)[0];
+			temp[0]=f[0]+costm[1*n+i];
+			min=temp[0];
 			w=0;
 			for(int k=1;k<i-1;k++){
-				REAL(temp)[k]=REAL(f)[k]+REAL(costm)[(k+1)*n+i];
-				if(REAL(temp)[k]<min){
-					min=REAL(temp)[k];
+				temp[k]=f[k]+costm[(k+1)*n+i];
+				if(temp[k]<min){
+					min=temp[k];
 					w=k;
 				}
 			}
-			REAL(f)[i] = REAL(temp)[w];
-//			delete []temp;
+			f[i] = temp[w];
 			for(int k=0;k<n;k++)
 				LOGICAL(space)[i*n+k] = LOGICAL(space)[w*n+k];
 			LOGICAL(space)[i*n+i] = true;
@@ -106,6 +102,6 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	PROTECT(out = allocVector(LGLSXP, n));
 	for(int i=0;i<n;i++)
 		LOGICAL(out)[i]=LOGICAL(space)[(n-1)*n+i];
-	UNPROTECT(5);
+	UNPROTECT(2);
 	return(out);
 }
