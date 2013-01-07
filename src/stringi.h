@@ -93,7 +93,7 @@ SEXP stri_numbytes(SEXP s);
 
 // wrap.cpp
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
-
+SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
 
 // ------------------------------------------------------------------------
 

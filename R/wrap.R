@@ -21,7 +21,7 @@
 #' Wrap strings to paragraphs
 #'
 #' @description Wrap strings to paragraphs
-#' @usage stri_wrap(s, width = 76, method = c("greedy", "dynamic"), spaces = "\\p{Z}+", spacecost = 1)
+#' @usage stri_wrap(s, width = 76, method = c("greedy", "dynamic"), spaces = "(\\p{Z}|\\n)+", spacecost = 1)
 #' @param s character vector of strings to format into paragraphs
 #' @param width positive integer giving the target column for wrapping lines
 #' @param method indicates which method is used for wrapping. You can specify just the initial letter of the value. See 'Details' for description of possible methods.
@@ -62,7 +62,7 @@ stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\
 #'  splits string only by space and omits line breaks - \n
 #'  TODO add indent and exdent parameter (see strwrap)
 #' @export
-stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",spacecost=1)
+stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
 {
    if (!is.character(s))   
       s <- as.character(s)
@@ -90,7 +90,7 @@ stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",
 #'  
 #'  TODO add indent and exdent parameter (see strwrap)
 #' @export
-stri_wrapC2 <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+",spacecost=1)
+stri_wrapC2 <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n)+",spacecost=1)
 {
 	if (!is.character(s))   
 		s <- as.character(s)
@@ -103,7 +103,7 @@ stri_wrapC2 <- function(s,width=76,method=c("greedy","dynamic"),spaces="\\p{Z}+"
 	sapply(wordslist,function(words){
 		count <- nchar(words)
 		where <- switch(method,
-							 dynamic = stri_wrap_d(count,width,spacecost),
+							 dynamic = .Call("stri_wrap_dynamic",count,width,spacecost,PACKAGE="stringi"),
 							 greedy = .Call("stri_wrap_greedy",count,width,spacecost,PACKAGE="stringi"))
 		space <- rep(" ",length(where))
 		space[where] <- "\n"
