@@ -88,6 +88,9 @@ const char* stri___ucnv_getFriendlyName(const char* canname);
 SEXP stri_ucnv_enclist();
 SEXP stri_ucnv_encinfo(SEXP enc);
 
+// length.cpp
+SEXP stri_numbytes(SEXP s);
+
 
 // ------------------------------------------------------------------------
 

@@ -21,3 +21,6 @@ test_that("stri_wrap", {
   expect_that(stri_wrapC(s, h,"g"), is_identical_to(str_wrap(s,h)))
 })
 
+strwrap("1 1 1",6)
+cat(stri_wrap(s,20))
+strwrap

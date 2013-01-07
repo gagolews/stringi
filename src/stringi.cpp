@@ -37,6 +37,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_casecompare", (DL_FUNC)&stri_casecompare, 2},
    {"stri_ucnv_enclist", (DL_FUNC)&stri_ucnv_enclist, 0},
    {"stri_ucnv_encinfo", (DL_FUNC)&stri_ucnv_encinfo, 1},
+   {"stri_numbytes", (DL_FUNC)&stri_numbytes, 1},
    {NULL, NULL, 0}
 };
 

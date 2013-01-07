@@ -14,6 +14,7 @@ all: stringi.cpp prepare_arg.cpp ICU_settings.cpp trim.cpp \
       compare.cpp \
       unicode_normalization.cpp \
       ucnv.cpp \
+      length.cpp \
       -O2 -licuuc -licudata -licui18n -licuio -licule -liculx \
       -I/usr/local/include \
       -L/usr/local/lib
