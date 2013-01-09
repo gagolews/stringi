@@ -22,18 +22,102 @@
 
 
 
-///** 
-// * 
-// * 
-// */
-//SEXP stri_uncv_encode(SEXP s, SEXP from, SEXP to) 
-//{
-// icu::UnicodeString::UnicodeString    (    const char *  	src,
-//		int32_t  	srcLength,
-//		UConverter *  	cnv,
-//		UErrorCode &  	errorCode 
-//	)   
-//}
+/** 
+ * Convert character vector between given encodings
+ * 
+ * @param s     input character vector
+ * @param from  source encoding
+ * @param to    target encoding
+ * @return a character vector with s converted
+ * @TODO Encoding marking...
+ */
+SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to) 
+{
+   s = stri_prepare_arg_string(s);
+   R_len_t ns = LENGTH(s);
+   if (ns <= 0) return s;
+   
+   UConverter* uconv_from = stri__ucnv_open(from);
+   if (!uconv_from) return stri__mkStringNA(ns);
+   
+   UConverter* uconv_to = stri__ucnv_open(to);
+   if (!uconv_to) {
+      ucnv_close(uconv_from);
+      return stri__mkStringNA(ns);
+   }
+   
+   // possibly we could check whether from's and to's canonical names
+   // are the same and then return the input as-is (maybe with an Encoding
+   // marking?). this is, however, a rare case. moreover, calling with
+   // from==to may serve as a test for this
+   // function (we check if it's an identity function)
+   
+
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
+   
+   char* buf = NULL;
+   int buflen = 0;
+   
+//   bool isTarget8bit = ((int)ucnv_getMaxCharSize(uconv_to) == 1);
+//   
+//   if (isTarget8bit) {
+//      // find maximal length of the buffer needed;
+//      // this should speed up the code
+//      for (int i=0; i<ns; ++i) {
+//         SEXP curs1 = STRING_ELT(s, i);
+//         if (curs1 == NA_STRING) continue;
+//         R_len_t cns = LENGTH(curs1);
+//         if (cns > buflen) buflen = cns;
+//      }
+//      
+//      buflen++;
+//      buf = R_alloc(buflen, sizeof(char));
+//   }
+   
+   
+   // encode each string
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP si = STRING_ELT(s, i);
+      if (si == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      UErrorCode err = U_ZERO_ERROR;
+      UnicodeString trans(CHAR(si), (int32_t)LENGTH(si), uconv_from, err); // to UTF-16
+      if (U_FAILURE(err)) {
+         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      err = U_ZERO_ERROR;
+      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
+
+      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
+         buflen = buflen_need + 1;
+         // no buf deallocation needed
+         buf = R_alloc(buflen, sizeof(char));
+         
+         err = U_ZERO_ERROR;
+         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
+      }
+      
+      if (buflen_need < 0 || U_FAILURE(err)) {
+         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
+   }
+   ucnv_close(uconv_from);
+   ucnv_close(uconv_to);
+   UNPROTECT(1);
+   
+   return ret;
+}
 
 
 

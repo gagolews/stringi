@@ -57,6 +57,11 @@ using namespace icu;
 
 // ------------------------------------------------------------------------
 
+
+// common.cpp
+SEXP stri__mkStringNA(R_len_t howmany);
+
+
 // trim.cpp:
 SEXP stri_trim(SEXP s);
 
@@ -90,6 +95,7 @@ SEXP stri_ucnv_enclist();
 SEXP stri_ucnv_encinfo(SEXP enc);
 UConverter* stri__ucnv_open(const char* enc);
 UConverter* stri__ucnv_open(SEXP enc);
+SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to);
 
 // length.cpp
 SEXP stri_numbytes(SEXP s);

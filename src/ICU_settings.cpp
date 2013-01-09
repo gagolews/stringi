@@ -19,7 +19,7 @@
 #include "stringi.h"
 
 /** Get curent-default ICU locale information
-   returns an R named list
+ *  @return an R named list
 */
 SEXP stri_getinfo()
 {

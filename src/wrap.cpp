@@ -24,9 +24,7 @@
 */
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 {
-   count = stri_prepare_arg_integer(count); // assure it's an iteger
-   width = stri_prepare_arg_integer(width); // assure it's an iteger
-   spacecost = stri_prepare_arg_integer(spacecost); // assure it's an iteger
+   // maybe a call to stri_prepare_arg_integer?
 //   if (LENGTH(spacecost) != 1) error("spacecost should be a vector of length 1");
    
 	int n = LENGTH(count);
@@ -49,9 +47,7 @@ SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 
 SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 {
-   count = stri_prepare_arg_integer(count); // assure it's an iteger
-   width = stri_prepare_arg_integer(width); // assure it's an iteger
-   spacecost = stri_prepare_arg_integer(spacecost); // assure it's an iteger
+   // maybe a call to stri_prepare_arg_integer?
 //   if (LENGTH(spacecost) != 1) error("spacecost should be a vector of length 1");
    
 	int n = LENGTH(count);

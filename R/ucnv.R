@@ -21,6 +21,7 @@
 #' Get list of available encodings
 #'
 #' @return A list with...
+#' @seealso \code{\link{stri_ucnv_encode}}, \code{\link{stri_ucnv_encinfo}}
 #' @export
 stri_ucnv_enclist <- function() {
    .Call("stri_ucnv_enclist", PACKAGE="stringi")
@@ -31,10 +32,30 @@ stri_ucnv_enclist <- function() {
 #' 
 #' If enc is missing, NULL (default encoding) is used
 #' 
-#' @param enc NULL or "" for default encoding, or a single string with encoding name
+#' @param enc NULL/""/missing for default encoding, or a single string with encoding name
 #' @return A list with...
+#' @seealso \code{\link{stri_ucnv_encode}}, \code{\link{stri_ucnv_enclist}}
 #' @export
 stri_ucnv_encinfo <- function(enc) {
    if (missing(enc)) enc <- NULL
+   # prepare_arg done internally
    .Call("stri_ucnv_encinfo", enc, PACKAGE="stringi")
+}
+
+
+#' Convert character vector between given encodings 
+#' 
+#' If enc is missing, NULL (default encoding) is used
+#' 
+#' @param str strings to encode
+#' @param from input encoding:
+#'       NULL/"" for default encoding, or a single string with encoding name
+#' @param from target encoding:
+#'       NULL/"" for default encoding, or a single string with encoding name
+#' @return A list with...
+#' @seealso \code{\link{stri_ucnv_enclist}}, \code{\link{stri_ucnv_encinfo}}
+#' @export
+stri_ucnv_encode <- function(str, from, to) {
+   # prepare_arg done internally
+   .Call("stri_ucnv_encode", str, from, to, PACKAGE="stringi")
 }
