@@ -23,7 +23,8 @@
 #' @param str will be coerced to character
 #' @export
 stri_tolower <- function(str) {
-   .Call("stri_casefold", as.character(str), 1L, PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_casefold", str, 1L, PACKAGE="stringi")
 }
 
 #' Translate to upper case
@@ -32,5 +33,6 @@ stri_tolower <- function(str) {
 #' @param str will be coerced to character
 #' @export
 stri_toupper <- function(str) {
-   .Call("stri_casefold", as.character(str), 2L, PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_casefold", str, 2L, PACKAGE="stringi")
 }

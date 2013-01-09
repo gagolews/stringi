@@ -15,30 +15,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
+
 #include "stringi.h"
 
 
+
+
 /** 
- * .... 
- */
-SEXP stri_numbytes(SEXP s)
+ *  Create a character vector filled with NA_character_
+ * 
+ *  Useful when something goes wrong
+ * 
+ *  @param how_many length of the vector
+ *  @return a character vector of length how_many
+*/
+SEXP stri__mkStringNA(R_len_t howmany)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   if (howmany <= 0) return R_NilValue;
    
-   int n = LENGTH(s); // XLENGTH - LENGTH with long vector support
-   SEXP e;
-   PROTECT(e = allocVector(INTSXP, n));
-   for (int i=0; i<n; ++i) {
-      SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING) {
-         INTEGER(e)[i] = NA_INTEGER;
-      }
-      else {
-         INTEGER(e)[i] = LENGTH(curs);
-      }
-   }
-   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, howmany));
+   for (R_len_t i=0; i<howmany; ++i)
+      SET_STRING_ELT(ret, i, NA_STRING);
    UNPROTECT(1);
-   return e;
+   return ret;   
 }

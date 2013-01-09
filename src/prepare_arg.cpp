@@ -43,3 +43,28 @@ SEXP stri_prepare_arg_string(SEXP x)
    error("expected a character vector on input (or something easily coercible to)");
    return x; // avoid compiler warning
 }
+
+
+/**
+ * ...
+ * 
+ */
+SEXP stri_prepare_arg_integer(SEXP x)
+{
+   if (isFactor(x)) // factors must be checked first
+   {
+      SEXP call;
+      PROTECT(call = lang2(install("as.character"), x));
+   	x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+		UNPROTECT(1);
+      return coerceVector(x,INTSXP);
+   }
+   
+   if (isInteger(x))
+      return x; // return as-is
+   if (isVectorAtomic(x))
+      return coerceVector(x,INTSXP);
+      
+   error("expected an integer vector on input (or something easily coercible to)");
+   return x; // avoid compiler warning
+}

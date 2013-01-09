@@ -59,7 +59,7 @@ stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\
 #' !we keep stri_wrap only to compare efficiency between R and C++ versions
 #'  after that stri_wrapC will be stri_wrap and old stri_wrap will be del.
 #'  TODO Also the default parameter spaces should be different - the current
-#'  splits string only by space and omits line breaks - \n
+#'  splits string only by space and omits line breaks - \\n
 #'  TODO add indent and exdent parameter (see strwrap)
 #' @export
 stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)

@@ -30,6 +30,9 @@
 */
 SEXP stri_join2(SEXP s1, SEXP s2)
 {
+   s1 = stri_prepare_arg_string(s1); // prepare string argument
+   s2 = stri_prepare_arg_string(s2); // prepare string argument
+   
    R_len_t ns1 = LENGTH(s1);
    R_len_t ns2 = LENGTH(s2);
    if (ns1 <= 0) return s2;
@@ -115,10 +118,12 @@ SEXP stri_join2(SEXP s1, SEXP s2)
 
 /** TO DO: Encoding marking!
 
-   if any of s is NA, the result will be NA_char_
+   if any of s is NA, the result will be NA_character_
 */
 SEXP stri_flatten(SEXP s)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
+   
    R_len_t ns = LENGTH(s);
    if (ns <= 0) return s;
    

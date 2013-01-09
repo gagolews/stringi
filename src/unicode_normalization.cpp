@@ -29,6 +29,9 @@
 */
 SEXP stri_unicode_normalization(SEXP s, SEXP type)
 {
+   s = stri_prepare_arg_string(s);        // prepare string argument
+   type = stri_prepare_arg_integer(type); // prepare int argument
+   
    UErrorCode err = U_ZERO_ERROR;
    const Normalizer2* nfc = NULL;
    int _type = INTEGER(type)[0];

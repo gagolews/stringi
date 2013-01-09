@@ -27,8 +27,8 @@
 #' @export
 "%==%" <- function(e1, e2) {
    stop("not yet implemented")
-#    .Call("stri_casecompare", 
-#          stri_prepare_arg_string(e1), stri_prepare_arg_string(e2), PACKAGE="stringi")
+   # prepare_arg done internally
+#    .Call("stri_casecompare", e1, e2, PACKAGE="stringi")
 }
 
 # COLLATION OPTIONS

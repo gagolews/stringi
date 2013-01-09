@@ -20,62 +20,107 @@
 #include "stringi.h"
 
 
-/** Get ICU ucnv standard names and their count
- *  @param standards [OUT]
- *  @param cs [OUT]
- *  Memory is allocated via R_alloc()
- */
-void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
-{
-   UErrorCode err;
-   cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
-   if (cs <= 0) {
-#ifndef NDEBUG
-      error("DEBUG: number of standard names is not positive (stri_ucnv_list)");
-#endif
-      standards = NULL;
-      cs = 0;
-   }
-   standards = (const char**)R_alloc(cs, sizeof(char*));
-   R_len_t j=0;
 
-   for (R_len_t i=0; i<cs; ++i) {
-      err = U_ZERO_ERROR;
-      standards[i] = ucnv_getStandard(i, &err);
-      if (U_FAILURE(err)) {
-#ifndef NDEBUG
-         error("could not gen standard name (stri_ucnv_list)");
-#endif
-         standards[i] = NULL;
+
+/** 
+ * Convert character vector between given encodings
+ * 
+ * @param s     input character vector
+ * @param from  source encoding
+ * @param to    target encoding
+ * @return a character vector with s converted
+ * @TODO Encoding marking...
+ */
+SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to) 
+{
+   s = stri_prepare_arg_string(s);
+   R_len_t ns = LENGTH(s);
+   if (ns <= 0) return s;
+   
+   UConverter* uconv_from = stri__ucnv_open(from);
+   if (!uconv_from) return stri__mkStringNA(ns);
+   
+   UConverter* uconv_to = stri__ucnv_open(to);
+   if (!uconv_to) {
+      ucnv_close(uconv_from);
+      return stri__mkStringNA(ns);
+   }
+   
+   // possibly we could check whether from's and to's canonical names
+   // are the same and then return the input as-is (maybe with an Encoding
+   // marking?). this is, however, a rare case. moreover, calling with
+   // from==to may serve as a test for this
+   // function (we check if it's an identity function)
+   
+
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
+   
+   char* buf = NULL;
+   int buflen = 0;
+   
+//   bool isTarget8bit = ((int)ucnv_getMaxCharSize(uconv_to) == 1);
+//   
+//   if (isTarget8bit) {
+//      // find maximal length of the buffer needed;
+//      // this should speed up the code
+//      for (int i=0; i<ns; ++i) {
+//         SEXP curs1 = STRING_ELT(s, i);
+//         if (curs1 == NA_STRING) continue;
+//         R_len_t cns = LENGTH(curs1);
+//         if (cns > buflen) buflen = cns;
+//      }
+//      
+//      buflen++;
+//      buf = R_alloc(buflen, sizeof(char));
+//   }
+   
+   
+   // encode each string
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP si = STRING_ELT(s, i);
+      if (si == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
       }
+      
+      UErrorCode err = U_ZERO_ERROR;
+      UnicodeString trans(CHAR(si), (int32_t)LENGTH(si), uconv_from, err); // to UTF-16
+      if (U_FAILURE(err)) {
+         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      err = U_ZERO_ERROR;
+      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
+
+      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
+         buflen = buflen_need + 1;
+         // no buf deallocation needed
+         buf = R_alloc(buflen, sizeof(char));
+         
+         err = U_ZERO_ERROR;
+         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
+      }
+      
+      if (buflen_need < 0 || U_FAILURE(err)) {
+         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
    }
+   ucnv_close(uconv_from);
+   ucnv_close(uconv_to);
+   UNPROTECT(1);
+   
+   return ret;
 }
 
 
 
-/** Get friendly endoding name
- *  @param canname Canonical (ICU) encoding name
- *  @return First existing of: MIME name or JAVA name or Canonical
- */
-const char* stri___ucnv_getFriendlyName(const char* canname)
-{
-   if (!canname) return NULL;
-   
-   UErrorCode err;
-   const char* frname;
-   
-   err = U_ZERO_ERROR;
-   frname = ucnv_getStandardName(canname, "MIME", &err);
-   if (U_SUCCESS(err) && frname)
-      return frname;
-      
-   err = U_ZERO_ERROR;
-   frname = ucnv_getStandardName(canname, "JAVA", &err);
-   if (U_SUCCESS(err) && frname)
-      return frname;
-      
-   return canname;
-}
 
 
 /** Fetch information on given encoding
@@ -87,44 +132,10 @@ const char* stri___ucnv_getFriendlyName(const char* canname)
  */
 SEXP stri_ucnv_encinfo(SEXP enc)
 {
-   // check enc argument and get ICU ucnv converter for given name
-   UErrorCode err;
-   UConverter* uconv = NULL;
-   const char* queried_enc;
-   bool useDefaultEncoding = false;
-
-   if (isString(enc)) {
-      if (LENGTH(enc) < 1)
-         error("incorrect argument to stri_ucnv_getinfo");
-      else if (LENGTH(enc) > 1) // this shouldn't happen
-         warning("stri_ucnv_getinfo: vector is longer than 1. taking the first element");
-
-      if (STRING_ELT(enc, 0) == NA_STRING)
-         error("incorrect argument to stri_ucnv_getinfo");
-      else if (LENGTH(STRING_ELT(enc, 0)) == 0)
-         useDefaultEncoding = true;
-      else {
-         queried_enc = CHAR(STRING_ELT(enc, 0));
-         err = U_ZERO_ERROR;
-         uconv = ucnv_open(queried_enc, &err);
-         if (U_FAILURE(err)) {
-            warning("could not find converter for given name (stri_ucnv_getinfo)");
-            return R_NilValue;
-         }
-      }
-   }
+   UConverter* uconv = stri__ucnv_open(enc);
+   if (!uconv) return R_NilValue;
    
-   if (!uconv) {
-      if (isNull(enc) || useDefaultEncoding) {
-         queried_enc = ucnv_getDefaultName();
-         err = U_ZERO_ERROR;
-         uconv = ucnv_open(NULL, &err);
-         if (U_FAILURE(err))
-            error("could not open default converter (stri_ucnv_getinfo)");
-      }
-      else
-         error("incorrect argument to stri_ucnv_getinfo");
-   }
+   UErrorCode err;
       
    // get list of available standards
    R_len_t cs;
@@ -176,6 +187,7 @@ SEXP stri_ucnv_encinfo(SEXP enc)
             SET_VECTOR_ELT(vals, i+2, mkString(stdname));
       }
    }
+   ucnv_close(uconv);
    
    setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);
@@ -235,4 +247,126 @@ SEXP stri_ucnv_enclist()
    setAttrib(ret, R_NamesSymbol, names);
    UNPROTECT(2);
    return ret;
+}
+
+
+
+
+
+
+
+/** Get ICU ucnv standard names and their count
+ *  @param standards [OUT]
+ *  @param cs [OUT]
+ *  Memory is allocated via R_alloc()
+ */
+void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
+{
+   UErrorCode err;
+   cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
+   if (cs <= 0) {
+#ifndef NDEBUG
+      error("DEBUG: number of standard names is not positive (stri_ucnv_list)");
+#endif
+      standards = NULL;
+      cs = 0;
+   }
+   standards = (const char**)R_alloc(cs, sizeof(char*));
+   R_len_t j=0;
+
+   for (R_len_t i=0; i<cs; ++i) {
+      err = U_ZERO_ERROR;
+      standards[i] = ucnv_getStandard(i, &err);
+      if (U_FAILURE(err)) {
+#ifndef NDEBUG
+         error("could not gen standard name (stri_ucnv_list)");
+#endif
+         standards[i] = NULL;
+      }
+   }
+}
+
+
+
+/** Get friendly endoding name
+ *  @param canname Canonical (ICU) encoding name
+ *  @return First existing of: MIME name or JAVA name or Canonical
+ */
+const char* stri___ucnv_getFriendlyName(const char* canname)
+{
+   if (!canname) return NULL;
+   
+   UErrorCode err;
+   const char* frname;
+   
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "MIME", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+      
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "JAVA", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+      
+   return canname;
+}
+
+
+/** Open UEncoder for given locale
+ *  @param enc encoding name or NULL/empty string for default encoding
+ *  @return NULL on error + a warning
+ */
+UConverter* stri__ucnv_open(const char* enc)
+{
+   UErrorCode err = U_ZERO_ERROR;
+   UConverter* uconv = NULL;
+   
+   if (!enc || !enc[0]) {
+      // use default encoding
+      uconv = ucnv_open(NULL, &err);
+      if (U_FAILURE(err)) {
+         warning("could not open default converter");
+         return NULL;
+      }
+      else
+         return uconv;
+         
+   } else {
+      // use given encoding
+      uconv = ucnv_open(enc, &err);
+      if (U_FAILURE(err)) {
+         warning("could not find converter for given encoding");
+         return NULL;
+      }
+      else
+         return uconv;
+   }
+}
+
+
+
+/** Open UEncoder for given locale
+ *  @param enc either NULL or "" for default encoding, or one string with encoding name
+ *  @return NULL on error + a warning
+ */
+UConverter* stri__ucnv_open(SEXP enc)
+{
+   if (isNull(enc))
+      return stri__ucnv_open((const char*)NULL); // use default encoding
+      
+   enc = stri_prepare_arg_string(enc);
+
+   if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING) {
+      if (LENGTH(enc) > 1) // this shouldn't happen
+         warning("only one encoding specifier supported. taking first");
+
+      if (LENGTH(STRING_ELT(enc, 0)) == 0)
+         return stri__ucnv_open((const char*)NULL); // use default encoding
+      else
+         return stri__ucnv_open((const char*)CHAR(STRING_ELT(enc, 0)));
+   }
+
+   error("incorrect encoding specifier");   
+   return NULL; // to avoid compilation warnings
 }

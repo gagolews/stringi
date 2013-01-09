@@ -23,9 +23,12 @@
 
 
 /**
- * ...
+ * List of functions available in R via .Call()
+ * 
+ * \code{\{"method_name", (DL_FUNC)pointer, number_of_args\}}
  */
 static const R_CallMethodDef cCallMethods[] = {
+<<<<<<< HEAD
    {"stri_trim", (DL_FUNC)&stri_trim, 1},
    {"stri_dup", (DL_FUNC)&stri_dup, 2},
    {"stri_join2", (DL_FUNC)&stri_join2, 2},
@@ -42,12 +45,36 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_wrap_dynamic", (DL_FUNC)&stri_wrap_dynamic, 3},
    {"stri_split", (DL_FUNC)&stri_split, 1},
    {NULL, NULL, 0}
+=======
+   
+   {"stri_casecompare",             (DL_FUNC)&stri_casecompare,            2},
+   {"stri_casefold",                (DL_FUNC)&stri_casefold,               2},
+   {"stri_dup",                     (DL_FUNC)&stri_dup,                    2},
+   {"stri_flatten",                 (DL_FUNC)&stri_flatten,                1},
+   {"stri_getinfo",                 (DL_FUNC)&stri_getinfo,                0},
+   {"stri_join2",                   (DL_FUNC)&stri_join2,                  2},
+   {"stri_numbytes",                (DL_FUNC)&stri_numbytes,               1},
+   {"stri_prepare_arg_string",      (DL_FUNC)&stri_prepare_arg_string,     1},
+   {"stri_prepare_arg_integer",     (DL_FUNC)&stri_prepare_arg_integer,    1},
+   {"stri_trim",                    (DL_FUNC)&stri_trim,                   1},
+   {"stri_ucnv_enclist",            (DL_FUNC)&stri_ucnv_enclist,           0},
+   {"stri_ucnv_encinfo",            (DL_FUNC)&stri_ucnv_encinfo,           1},
+   {"stri_ucnv_encode",             (DL_FUNC)&stri_ucnv_encode,            3},
+   {"stri_unicode_normalization",   (DL_FUNC)&stri_unicode_normalization,  2},
+   {"stri_wrap_greedy",             (DL_FUNC)&stri_wrap_greedy,            3},
+   {"stri_wrap_dynamic",            (DL_FUNC)&stri_wrap_dynamic,           3},
+   
+   // the list must be NULL-terminated:
+   {NULL,                           NULL,                                  0}
+>>>>>>> 430a6ef76e7f0ec017fca5adb3e524f1eec66cc5
 };
 
 
 
 /**
- * ...
+ * Library initialization.
+ * 
+ * R calls this automatically on lib load/attach.
  */
 extern "C" void R_init_stringi(DllInfo *dll)
 {
@@ -68,13 +95,13 @@ extern "C" void R_init_stringi(DllInfo *dll)
 
 
 
-/**
- * ...
- */
-extern "C" void  R_unload_stringi(DllInfo *info)
-{
-#ifndef NDEBUG
-   cerr << "DEBUG: Dynamic library 'stringi' unloaded." << endl;
-#endif
-}
+///**
+// * ... not needed ...
+// */
+//extern "C" void  R_unload_stringi(DllInfo *info)
+//{
+//#ifndef NDEBUG
+//   cerr << "DEBUG: Dynamic library 'stringi' unloaded." << endl;
+//#endif
+//}
 

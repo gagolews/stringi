@@ -20,20 +20,22 @@
 
 
 /** The function is vectorized over s and c
-   if s is NA or c is NA the result will be NA
-   if c<0 the result will be NA
-   if c==0 the result will be an empty string
-   if s or c is an empty vector then the result is an empty vector
-   
-   @TODO Encoding!!!
+ *  if s is NA or c is NA the result will be NA
+ *  if c<0 the result will be NA
+ *  if c==0 the result will be an empty string
+ *  if s or c is an empty vector then the result is an empty vector
+ *  
+ *  @TODO Encoding!!!
 */
 SEXP stri_dup(SEXP s, SEXP c)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
+   c = stri_prepare_arg_integer(c); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
-   if (ns <= 0 || nc <= 0)
-      return allocVector(STRSXP, 0);
-   
+   if (ns <= 0)       return s;
+   else if (nc <= 0)  return allocVector(STRSXP, 0);
+      
    R_len_t nm = max(ns, nc);
    if (nm % ns != 0 || nm % nc != 0)
       warning("longer object length is not a multiple of shorter object length");

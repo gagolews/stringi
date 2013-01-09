@@ -5,6 +5,7 @@ all: stringi.cpp prepare_arg.cpp ICU_settings.cpp trim.cpp \
       unicode_normalization.cpp compare.cpp
 	R CMD SHLIB \
       stringi.cpp \
+      common.cpp \
       prepare_arg.cpp \
       ICU_settings.cpp \
       trim.cpp \

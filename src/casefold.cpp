@@ -23,14 +23,19 @@
 
 
 /** 
-   vectorized over s
-   if s is NA the result will be NA
-   
-   TO DO: WHAT IF s is not in UTF-8??? Encoding marking!
-   TO DO: USE C API (no UnicodeString....)
+ *  vectorized over s
+ *  if s is NA the result will be NA
+ * 
+ *  @param s ...
+ *  @param type ...
+ *  @return ...
+ *  
+ *  @TODO  WHAT IF s is not in UTF-8??? Encoding marking!
+ *  @TODO  USE C API (no UnicodeString....)
 */
 SEXP stri_casefold(SEXP s, SEXP type)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
    int _type = INTEGER(type)[0];
    R_len_t ns = LENGTH(s);
    SEXP e;   
