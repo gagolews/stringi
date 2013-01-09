@@ -25,10 +25,3 @@ test_that("stri_wrap", {
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
 })
-
-# Bartus, w testach tylko test_that i expect_*,
-# benchmarki (system.time, microbenchmark) przerzuc do inst/bmarks
-# przyklady do inst/examples
-# run_package_test.R nie chce mi sie przez to wykonac poprawnie :)
-
-

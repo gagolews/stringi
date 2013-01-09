@@ -25,15 +25,22 @@
 SEXP stri_split(SEXP s)
 {
    s = stri_prepare_arg_string(s);
-   int n = LENGTH(s); 
+   int n = LENGTH(s);
+   int* count = (int*)R_alloc(n, sizeof(int)); 
    SEXP e;
    SEXP curs;
-   int k;
+   int k=0,b=0;
    for (int i=0; i<n; ++i) {
    	curs = STRING_ELT(s, i);
    	k = LENGTH(curs);
-   	for(int j=0; j<k; ++j)
-   		printf("%s ",CHAR(curs));
+   	count[i]=0;
+   	for(int j=0; j<k; ++j){
+   		b = (int)CHAR(curs)[j];
+   		if(b==10)
+				count[i]++;
+   	}
+   	printf("count%d=%d ",i,count[i]);
    }
+   
    return s;
 }

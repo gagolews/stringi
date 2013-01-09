@@ -44,7 +44,7 @@ stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\
    s <- as.character(s)
    width <- as.integer(width)
    stopifnot(is.finite(width)&&width>0)
-   spacecost <- as.integer(spacecost)
+   spacecost <- as.integer(spacecost)[1]
    stopifnot(is.finite(spacecost)&&spacecost>0)
    method <- match.arg(method)
    wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
@@ -68,7 +68,7 @@ stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\
       s <- as.character(s)
    width <- as.integer(width)
    stopifnot(is.finite(width)&&width>0)
-   spacecost <- as.integer(spacecost)
+   spacecost <- as.integer(spacecost)[1]
    stopifnot(is.finite(spacecost)&&spacecost>0)
    method <- match.arg(method)
    wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
@@ -96,7 +96,7 @@ stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
 		s <- as.character(s)
 	width <- as.integer(width)
 	stopifnot(is.finite(width)&&width>0)
-	spacecost <- as.integer(spacecost)
+	spacecost <- as.integer(spacecost)[1]
 	stopifnot(is.finite(spacecost)&&spacecost>0)
 	method <- pmatch(method,c("greedy","dynamic"),1,T)
 	wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)

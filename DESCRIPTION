@@ -38,3 +38,5 @@ Collate:
     'wrap.R'
     'ucnv.R'
     'length.R'
+    'split.R'
+    
