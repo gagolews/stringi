@@ -18,6 +18,7 @@
  
 #include "stringi.h"
 #include <string>
+using namespace std;
 
 /** 
  * .... 
@@ -30,7 +31,7 @@ SEXP stri_split(SEXP s)
    SEXP e;
    PROTECT(e = allocVector(VECSXP,n));
    SEXP curs,temp;
-   int k=0,b=0;
+   int k=0,b=0,st,end,where;
    for (int i=0; i<n; ++i) {
    	curs = STRING_ELT(s, i);
    	k = LENGTH(curs);
@@ -42,7 +43,17 @@ SEXP stri_split(SEXP s)
    	}
    	PROTECT(temp = allocVector(STRSXP,count[i]+1));
    	printf("count%d=%d ",i,count[i]);
-   	SET_STRING_ELT(temp,i, mkChar("ala"));
+   	st=0;
+   	where=0;
+   	for(int j=0; j<k; ++j){
+			b = (int)CHAR(curs)[j];
+   			if(b==10){
+   				end=j;
+   				SET_STRING_ELT(temp,where, curs);//substr(STRING_ELT(curs,0),st,end));
+   				st=j;
+   				++where;
+   			}
+   	}
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);
    }
