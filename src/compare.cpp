@@ -24,5 +24,7 @@
  */
 SEXP stri_casecompare(SEXP x, SEXP y)
 {
+   x = stri_prepare_arg_string(x); // prepare string argument
+   y = stri_prepare_arg_string(y); // prepare string argument
    error("stri_casecompare not implemented");   
 }

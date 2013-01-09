@@ -24,7 +24,8 @@
  */
 SEXP stri_numbytes(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s); // prepare string argument
+   
    int n = LENGTH(s); // XLENGTH - LENGTH with long vector support
    SEXP e;
    PROTECT(e = allocVector(INTSXP, n));

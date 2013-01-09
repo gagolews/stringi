@@ -31,6 +31,7 @@
 */
 SEXP stri_casefold(SEXP s, SEXP type)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
    int _type = INTEGER(type)[0];
    R_len_t ns = LENGTH(s);
    SEXP e;   

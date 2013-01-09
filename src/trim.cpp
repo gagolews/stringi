@@ -28,6 +28,8 @@
 */
 SEXP stri_trim(SEXP s)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
+   
    R_len_t ns = LENGTH(s);
    SEXP e;
    PROTECT(e = allocVector(STRSXP, ns));

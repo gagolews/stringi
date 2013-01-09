@@ -29,6 +29,8 @@
 */
 SEXP stri_dup(SEXP s, SEXP c)
 {
+   s = stri_prepare_arg_string(s); // prepare string argument
+   c = stri_prepare_arg_integer(c); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0)

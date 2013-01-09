@@ -24,7 +24,8 @@
 #' @return trimmed character vector 
 #' @export
 stri_trim <- function(str) {
-   .Call("stri_trim", stri_prepare_arg_string(str), PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_trim", str, PACKAGE="stringi")
 }
 
 

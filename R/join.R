@@ -29,13 +29,13 @@
 #' @param e2 character vector
 #' @export
 "%+%" <- function(e1, e2) {
-   .Call("stri_join2", stri_prepare_arg_string(e1),
-         stri_prepare_arg_string(e2), PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_join2", e1, e2, PACKAGE="stringi")
 }
 
 
 
-# TO DO: stri_join alias stri_c
+
 
 
 
@@ -47,6 +47,9 @@
 #' @param str will be coerced to character
 #' @export
 stri_flatten <- function(str) {
-   .Call("stri_flatten", stri_prepare_arg_string(str), PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_flatten", str, PACKAGE="stringi")
 }
 
+
+# TO DO: stri_join alias stri_c - like paste(...)

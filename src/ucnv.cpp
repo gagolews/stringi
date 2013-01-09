@@ -88,6 +88,8 @@ const char* stri___ucnv_getFriendlyName(const char* canname)
 SEXP stri_ucnv_encinfo(SEXP enc)
 {
    // check enc argument and get ICU ucnv converter for given name
+   if (!isNull(enc)) enc = stri_prepare_arg_string(enc);
+   
    UErrorCode err;
    UConverter* uconv = NULL;
    const char* queried_enc;
