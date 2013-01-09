@@ -24,16 +24,16 @@
  */
 SEXP stri_split(SEXP s)
 {
-   // = stri_prepare_arg_string(s);
-   //int n = LENGTH(s); 
-   //SEXP e;
-   //SEXP curs;
-   // k;
-//   for (int i=0; i<n; ++i) {
-//   	curs = STRING_ELT(s, i);
-//   	k = LENGTH(curs);
-//   	for(int j=0; j<k; ++j)
-//   		printf("%s ",CHAR(curs));
-//   }
+   s = stri_prepare_arg_string(s);
+   int n = LENGTH(s); 
+   SEXP e;
+   SEXP curs;
+   int k;
+   for (int i=0; i<n; ++i) {
+   	curs = STRING_ELT(s, i);
+   	k = LENGTH(curs);
+   	for(int j=0; j<k; ++j)
+   		printf("%s ",CHAR(curs));
+   }
    return s;
 }
