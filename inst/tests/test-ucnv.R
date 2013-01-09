@@ -1,9 +1,11 @@
 require(testthat)
 
-test_that("stri_ucnv_enclist,stri_ucnv_encinfo", {
+test_that("stri_ucnv_enclist, stri_ucnv_encinfo", {
 
    # basic tests (ASCII, border-line):
    
+   expect_true(length(stri_ucnv_enclist())>0)
+      
    expect_true(length(sapply(
       stri_ucnv_enclist(),
       function(enc) stri_ucnv_encinfo(enc[[1]])$Name.friendly)) > 0)
