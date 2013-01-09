@@ -28,7 +28,8 @@ SEXP stri_split(SEXP s)
    int n = LENGTH(s);
    int* count = (int*)R_alloc(n, sizeof(int)); 
    SEXP e;
-   SEXP curs;
+   PROTECT(e = allocVector(VECSXP,n));
+   SEXP curs,temp;
    int k=0,b=0;
    for (int i=0; i<n; ++i) {
    	curs = STRING_ELT(s, i);
@@ -39,8 +40,12 @@ SEXP stri_split(SEXP s)
    		if(b==10)
 				count[i]++;
    	}
+   	PROTECT(temp = allocVector(STRSXP,count[i]+1));
    	printf("count%d=%d ",i,count[i]);
+   	SET_STRING_ELT(temp,i, mkChar("ala"));
+   	SET_VECTOR_ELT(e,i,temp);
+   	UNPROTECT(1);
    }
-   
-   return s;
+   UNPROTECT(1);
+   return e;
 }
