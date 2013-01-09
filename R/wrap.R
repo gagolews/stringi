@@ -100,7 +100,7 @@ stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
 	stopifnot(is.finite(spacecost)&&spacecost>0)
 	method <- pmatch(method,c("greedy","dynamic"),1,T)
 	wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
-	method <- rep(method,ceiling(length(s)/length(method)))
+	method <- rep(method,length=length(s))
 	j <- 1
 	sapply(wordslist,function(words){
 		count <- nchar(words)

@@ -27,7 +27,7 @@ test_that("stri_wrap", {
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
 	s <- rep(s,2)
 	h <- 76
-	cat(stri_wrapC2(s,h,c("d","g")),sep=paste(c("\n|",rep("-",h-2),"|\n"),collapse=""))
+	cat(stri_wrapC2(s,h,c("g","d")),sep=paste(c("\n|",rep("-",h-2),"|\n"),collapse=""))
 	s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.","Nie ma zatem takiego czlowieka, ktory kocha cierpienie samo w sobie")
 	s <- rep(s,3)
 	h <- 20
@@ -43,13 +43,13 @@ s <- rep(s,100)
 system.time(stri_wrap(s,25,"g"))
 system.time(stri_wrapC(s,25,"g"))
 system.time(stri_wrapC2(s,25,"g"))
+microbenchmark(stri_wrap(s,25),stri_wrapC(s,25),stri_wrapC2(s,25),times=10)
 
 # different stri_wrap versions - dynamic
 system.time(stri_wrap(s,25,"d"))
 system.time(stri_wrapC(s,25,"d"))
 system.time(stri_wrapC2(s,25,"d"))
-
-microbenchmark(stri_wrap(s,25,"d"),stri_wrapC(s,25,"d"),stri_wrapC2(s,25,"d"))
+microbenchmark(stri_wrap(s,25,"d"),stri_wrapC(s,25,"d"),stri_wrapC2(s,25,"d"),times=10)
 
 
 # stri_wrap vs strwrap/str_wrap
