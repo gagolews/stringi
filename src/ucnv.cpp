@@ -18,7 +18,6 @@
 
 
 #include "stringi.h"
-#include <queue>
 
 
 
@@ -51,120 +50,81 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
    // marking?). this is, however, a rare case. moreover, calling with
    // from==to may serve as a test for this
    // function (we check if it's an identity function)
+   
+   
+   int buflen = -1;
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP si = STRING_ELT(s, i);
+      if (si == NA_STRING) continue;
+      R_len_t ni = LENGTH(si);      
+      if (ni > buflen) buflen = ni;
+   }
+   
+   if (buflen < 0)
+      return stri__mkStringNA(ns);
 
+   // this may suffice, but not necessarily
+   // for utf-8 input this may be overestimated
+   buflen = UCNV_GET_MAX_BYTES_FOR_STRING(buflen,
+      (int)ucnv_getMaxCharSize(uconv_to))+1;
+   char* buf = new char[buflen];
+   
    UErrorCode err;
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, ns));
+      
    
-   UnicodeString** trans = new UnicodeString*[ns];
-   int max_buf_len = -1;
+   // encode each string
    for (R_len_t i=0; i<ns; ++i) {
       SEXP si = STRING_ELT(s, i);
       if (si == NA_STRING) {
          SET_STRING_ELT(ret, i, NA_STRING);
-         trans[i] = NULL;
          continue;
       }
       
+      R_len_t ni = LENGTH(si);
+//      if (ni == 0) {...} // do we need that? give it a break :)
+
       err = U_ZERO_ERROR;
-      trans[i] = new UnicodeString(CHAR(si), (int32_t)LENGTH(si), uconv_from, err); // to UTF-16
+      UnicodeString trans(CHAR(si), ni, uconv_from, err); // to UTF-16
       if (U_FAILURE(err)) {
          warning(SSTR("could not convert string #" << (i+1)).c_str());
          SET_STRING_ELT(ret, i, NA_STRING);
-         delete trans[i];
-         trans[i] = NULL;
          continue;
       }
-      
-      if (trans[i]->length() > max_buf_len) max_buf_len = trans[i]->length();
-   }
-   
-   if (max_buf_len >= 0) {
-      // "The calculated size is guaranteed to be sufficient for this conversion." [ICU4C]
-      max_buf_len = UCNV_GET_MAX_BYTES_FOR_STRING(max_buf_len, (int)ucnv_getMaxCharSize(uconv_to));
-      char* buf = new char[max_buf_len+1];
-      for (R_len_t i=0; i<ns; ++i) {
-         if (trans[i] == NULL) continue;
-         err = U_ZERO_ERROR;
-         int out_buf_len = trans[i]->extract(buf, max_buf_len, uconv_to, err);
-         if (U_FAILURE(err)) {
-            warning(SSTR("could not convert string #" << (i+1)).c_str());
-            SET_STRING_ELT(ret, i, NA_STRING);
-         }
-         else
-            SET_STRING_ELT(ret, i, mkCharLen(buf, out_buf_len)); /// @TODO: mark encoding
-         delete trans[i];
-//         trans[i] = NULL;
-      }
-      delete [] buf;
-   }
-//    CE_NATIVE = 0,
-//    CE_UTF8   = 1,
-//    CE_LATIN1 = 2,
-//    CE_BYTES  = 3,
-//    CE_SYMBOL = 5,
-   delete[] trans;
-   
-   
-//   // encode each string
-//   for (R_len_t i=0; i<ns; ++i) {
-//      SEXP si = STRING_ELT(s, i);
-//      if (si == NA_STRING) {
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//      
-//
-//
-////      UChar32 target;
-////      queue<UChar32> queue_in;
-////      UErrorCode err = U_ZERO_ERROR;
-////      const char* in_start = CHAR(si);
-////      const char* in_end = in_start + LENGTH(si);
-////      ucnv_reset(uconv_from);
-////      while (in_start != in_end) {
-////         target = ucnv_getNextUChar(uconv_from, &in_start, in_end, &err);
-////         if (U_FAILURE(err)) break;
-////         queue_in.push(target);
-////      }
-////
-////      if (U_FAILURE(err)) {
-////         warning(SSTR("could not convert string #" << (i+1)).c_str());
-////         SET_STRING_ELT(ret, i, NA_STRING);
-////         continue;
-////      }
-//
-//      err = U_ZERO_ERROR;
-//      UnicodeString trans(CHAR(si), (int32_t)LENGTH(si), uconv_from, err); // to UTF-16
-//      if (U_FAILURE(err)) {
-//         warning(SSTR("could not convert string #" << (i+1)).c_str());
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//      
-//      queue<UChar32> queue_out;
-//
-//      err = U_ZERO_ERROR;
-//      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
-//
-//      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
-////         cerr << buflen << " " << buflen_need + 1 << endl;
-//         buflen = buflen_need + 1;
-//         // no buf deallocation needed
-//         buf = R_alloc(buflen, sizeof(char));
-//
-//         err = U_ZERO_ERROR;
-//         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
-//      }
-//
-//      if (buflen_need < 0 || U_FAILURE(err)) {
-//         warning(SSTR("could not convert string #" << (i+1)).c_str());
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
 
-//      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
-//   }
+      err = U_ZERO_ERROR;
+      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
+
+      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
+#ifndef NDEBUG
+         cerr << "DEBUG: stri_ucnv_encode: expanding buffer"
+            << buflen << " -> " << buflen_need + 1 << endl;
+#endif
+         buflen = buflen_need + 1;
+         // no buf deallocation needed
+         delete [] buf;
+         buf = new char[buflen];
+
+         err = U_ZERO_ERROR;
+         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
+      }
+
+      if (buflen_need < 0 || U_FAILURE(err)) {
+         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+////    CE_NATIVE = 0,
+////    CE_UTF8   = 1,
+////    CE_LATIN1 = 2,
+////    CE_BYTES  = 3,
+////    CE_SYMBOL = 5,
+      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
+   }
+   
+   delete [] buf;
    ucnv_close(uconv_from);
    ucnv_close(uconv_to);
    UNPROTECT(1);

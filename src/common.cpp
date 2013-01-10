@@ -41,3 +41,22 @@ SEXP stri__mkStringNA(R_len_t howmany)
    UNPROTECT(1);
    return ret;   
 }
+
+
+/** 
+ *  Create a character vector filled with empty strings
+ * 
+ *  @param how_many length of the vector
+ *  @return a character vector of length how_many
+*/
+SEXP stri__mkStringEmpty(R_len_t howmany)
+{
+   if (howmany <= 0) return R_NilValue;
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, howmany));
+   for (R_len_t i=0; i<howmany; ++i)
+      SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
+   UNPROTECT(1);
+   return ret;   
+}

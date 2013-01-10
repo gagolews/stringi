@@ -14,18 +14,24 @@ test_that("stri_ucnv_encode", {
    expect_equivalent(stri_ucnv_encode(LETTERS, "US-ASCII", "latin1"), LETTERS)
    expect_equivalent(stri_ucnv_encode(letters, "latin1",   "UTF-8"),  letters)
    
-   polish_chars_latin2  <- rawToChar(as.raw(c(161, 198, 202, 163, 209, 
+   .polish_chars_latin2  <- rawToChar(as.raw(c(161, 198, 202, 163, 209, 
       211, 166, 172, 175, 177, 230, 234, 179, 241, 243, 182, 188, 191)))
-   polish_chars_cp1250  <- rawToChar(as.raw(c(165, 198, 202, 163, 209,
+   Encoding(.polish_chars_latin2) <- "bytes"
+   
+   .polish_chars_cp1250  <- rawToChar(as.raw(c(165, 198, 202, 163, 209,
       211, 140, 143, 175, 185, 230, 234, 179, 241, 243, 156, 159, 191)))  
-   polish_chars_utf8    <- intToUtf8(      (c(260, 262, 280, 321, 323,
+   Encoding(.polish_chars_cp1250) <- "bytes"
+   
+   .polish_chars_utf8    <- intToUtf8(      (c(260, 262, 280, 321, 323,
       211, 346, 377, 379, 261, 263, 281, 322, 324, 243, 347, 378, 380))) 
+   Encoding(.polish_chars_utf8) <- "bytes"
+   
    expect_equivalent(
-      charToRaw(stri_ucnv_encode(polish_chars_latin2, "latin2", "cp1250")),
-      charToRaw(polish_chars_cp1250))
+      charToRaw(stri_ucnv_encode(.polish_chars_latin2, "latin2", "cp1250")),
+      charToRaw(.polish_chars_cp1250))
    expect_equivalent(
-      charToRaw(stri_ucnv_encode(polish_chars_cp1250, "cp1250", "utf8")),
-      charToRaw(polish_chars_utf8))
+      charToRaw(stri_ucnv_encode(.polish_chars_cp1250, "cp1250", "utf8")),
+      charToRaw(.polish_chars_utf8))
    
 })
 

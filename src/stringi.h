@@ -60,7 +60,7 @@ using namespace icu;
 
 // common.cpp
 SEXP stri__mkStringNA(R_len_t howmany);
-
+SEXP stri__mkStringEmpty(R_len_t howmany);
 
 // trim.cpp:
 SEXP stri_trim(SEXP s);
