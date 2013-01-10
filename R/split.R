@@ -20,10 +20,11 @@
 
 #' Split 
 #' 
-#' @param str to split
+#' @param str string to split
+#' @param split 
 #' @return splitted list of character vectors
 #' @export
-stri_split <- function(str) {
+stri_split <- function(str, split='\n') {
 	# prepare_arg done internally
-	.Call("stri_split", str, PACKAGE="stringi")
+	.Call("stri_split", str, split, PACKAGE="stringi")
 }
