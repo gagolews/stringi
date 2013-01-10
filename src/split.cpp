@@ -27,34 +27,33 @@ SEXP stri_split(SEXP s)
 {
    s = stri_prepare_arg_string(s);
    int n = LENGTH(s);
-   int* count = (int*)R_alloc(n, sizeof(int)); // this is not needed - it can be a scalar variable
+   int count = 0;
    SEXP e;
    PROTECT(e = allocVector(VECSXP,n));
    SEXP curs,temp;
    int k=0,b=0,st,end,where;
    for (int i=0; i<n; ++i) {
+      count = 0;
    	curs = STRING_ELT(s, i);
    	k = LENGTH(curs);
-   	count[i]=0;
-      // const char* string = CHAR(curs);
+   	count=0;
+      const char* string = CHAR(curs);
    	for(int j=0; j<k; ++j){
-   		b = (int)CHAR(curs)[j]; // just string[i] - it's fast, no b needed
-   		if(b==10) // MG: or b == '\n' ('a' - char, "a" - string (char*): {'a', '\0'})
-				count[i]++;
+   		if(string[j]=='\n') // MG: or b == '\n' ('a' - char, "a" - string (char*): {'a', '\0'})
+				count++;
          // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
          // don't increment count in such case (?)
    	}
-   	PROTECT(temp = allocVector(STRSXP,count[i]+1));
-   	printf("count%d=%d ",i,count[i]);
+   	PROTECT(temp = allocVector(STRSXP,count+1));
    	st=0;
    	where=0;
-   	for(int j=0; j<k; ++j){ // j<count[i]?
-			b = (int)CHAR(curs)[j]; // see above
-   			if(b==10){ // '\n'
+   	for(int j=0; j<k; ++j){
+			string = CHAR(curs); 
+   			if(string[j]=='\n'){ // '\n'
    				end=j;
-   				SET_STRING_ELT(temp,where, curs);//substr(STRING_ELT(curs,0),st,end));
+   				SET_STRING_ELT(temp,where, mkCharLen(string+st, end-st));
+               //substr(STRING_ELT(curs,0),st,end));
                // MG: http://www.cplusplus.com/reference/cstring/
-               
                //given start and end - index in string
                //we can do:
                // SET_STRING_ELT(temp, j, mkCharLen(string+start, end-start+1))
@@ -64,11 +63,11 @@ SEXP stri_split(SEXP s)
                // - it returns a "scalar" string that may be copied into STRSXP (with SET_STRING_ELT)
                // good work - i'm glad it's challenging :)
                
-               
-   				st=j;
+   				st=j+1;
    				++where;
    			}
    	}
+      SET_STRING_ELT(temp,where, mkCharLen(string+st, k-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);
    }
