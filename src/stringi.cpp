@@ -68,6 +68,8 @@ extern "C" void R_init_stringi(DllInfo *dll)
    cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
 #endif
 
+//U_UNICODE_VERSION
+
 //   cerr << "DEBUG: ICU4R start locale=\"" << uloc_getDefault() << "\"" << endl;
 //   cerr << "DEBUG: ICU4R changing default locale manually..." << endl;
 //   UErrorCode err = U_ZERO_ERROR;

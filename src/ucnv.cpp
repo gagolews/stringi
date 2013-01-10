@@ -44,6 +44,21 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
       ucnv_close(uconv_from);
       return stri__mkStringNA(ns);
    }
+   
+//   // mark output Encoding as `bytes` if any of the below doesn't hold:
+//   int outenc_mark = CE_BYTES; 
+//   const char* outenc_canname = ucnv_getName(uconv_to);
+//   if (strcmp(outenc_canname, "UTF-8") == 0)
+//      outenc_mark = CE_UTF8;
+//   else {
+//      const char* outenc_default;
+//   }
+   
+////    CE_NATIVE = 0,
+////    CE_UTF8   = 1,
+////    CE_LATIN1 = 2,
+////    CE_BYTES  = 3,
+////    CE_SYMBOL = 5,
 
    // possibly we could check whether from's and to's canonical names
    // are the same and then return the input as-is (maybe with an Encoding
@@ -116,11 +131,7 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
          continue;
       }
 
-////    CE_NATIVE = 0,
-////    CE_UTF8   = 1,
-////    CE_LATIN1 = 2,
-////    CE_BYTES  = 3,
-////    CE_SYMBOL = 5,
+
       SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
    }
    
@@ -132,7 +143,107 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
 }
 
 
+/**
+ * ...
+ */
+bool stri__ucnv_hasASCIIsubset(UConverter* conv)
+{
+   if (ucnv_getMinCharSize(conv) != 1) return false;
+   
+   const int ascii_from = 1;
+   const int ascii_to = 126;
+   char ascii[ascii_to-ascii_from+2]; // + \0
+   for (int i=ascii_from; i<=ascii_to; ++i)
+      ascii[i-ascii_from] = (char)i;
+   ascii[ascii_to-ascii_from+1] = '\0';
+   
+   UChar32 c;
+   
+   const char* ascii_last = ascii;
+   const char* ascii1 = ascii;
+   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   
+   UErrorCode err = U_ZERO_ERROR;
+   ucnv_reset(conv);
+   
+   while (ascii1 < ascii2) {
+      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
+      if (U_FAILURE(err)) {
+         err = U_ZERO_ERROR;
+         warning(SSTR("Cannot convert ASCII character #"
+            << (int)(unsigned char)ascii_last[0]
+            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         return false;
+      }
+      
+      if (ascii_last != ascii1-1) // one byte should be consumed
+         return false;
+      else if (c != (int)ascii_last[0])
+         return false;
 
+      ascii_last = ascii1;
+   } 
+   
+   return true;  
+}
+
+
+/**
+ * ...
+ */
+bool stri__ucnv_is1to1Unicode(UConverter* conv)
+{
+   if (ucnv_getMinCharSize(conv) != 1) return false;
+   
+   const int ascii_from = 1;
+   const int ascii_to = 255;
+   char ascii[ascii_to-ascii_from+2]; // + \0
+   for (int i=ascii_from; i<=ascii_to; ++i)
+      ascii[i-ascii_from] = (char)i;
+   ascii[ascii_to-ascii_from+1] = '\0';
+   
+   UChar32 c;
+   
+   const char* ascii_last = ascii;
+   const char* ascii1 = ascii;
+   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   
+   
+   
+   UErrorCode err = U_ZERO_ERROR;
+   ucnv_reset(conv);
+   
+   while (ascii1 < ascii2) {
+      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
+      if (U_FAILURE(err)) {
+         err = U_ZERO_ERROR;
+         warning(SSTR("Cannot convert ASCII character #"
+            << (int)(unsigned char)ascii_last[0]
+            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         return false;
+      }
+      
+//      cerr << (int)(unsigned char)ascii_last[0] << " -> " << c << endl;
+      if (ascii_last != ascii1-1) // one byte should be consumed
+         return false;
+         
+      UnicodeString sout = UnicodeString::fromUTF32 (&c, 1);
+      if (sout.length() != 1) { // is that the right way to do that??
+         warning(SSTR("Problematic character #"
+            << (int)(unsigned char)ascii_last[0]
+            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         return false;
+      }
+      
+      // check tolower, toupper etc....
+      // check conversion from unicode..............
+      // @TODO.... t.b.d..........
+
+      ascii_last = ascii1;
+   } 
+   
+   return true;  
+}
 
 
 /** Fetch information on given encoding
@@ -157,12 +268,15 @@ SEXP stri_ucnv_encinfo(SEXP enc)
    // alloc output list
    SEXP vals;
    SEXP names;
-   const int nval = cs+4;
+   const int nval = cs+2+5;
    PROTECT(names = allocVector(STRSXP, nval));
    SET_STRING_ELT(names, 0, mkChar("Name.friendly"));
    SET_STRING_ELT(names, 1, mkChar("Name.ICU"));
    for (R_len_t i=0; i<cs; ++i)
       SET_STRING_ELT(names, i+2, mkChar((string("Name.")+standards[i]).c_str()));
+   SET_STRING_ELT(names, nval-5, mkChar("ASCII.subset"));
+   SET_STRING_ELT(names, nval-4, mkChar("Unicode.1to1"));
+   SET_STRING_ELT(names, nval-3, mkChar("CharSize.8bit"));
    SET_STRING_ELT(names, nval-2, mkChar("CharSize.min"));
    SET_STRING_ELT(names, nval-1, mkChar("CharSize.max"));
 
@@ -185,10 +299,24 @@ SEXP stri_ucnv_encinfo(SEXP enc)
       if (frname)  SET_VECTOR_ELT(vals, 0, mkString(frname));
       else         SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
 
-      // min,max character size
-      SET_VECTOR_ELT(vals, nval-2, ScalarInteger((int)ucnv_getMinCharSize(uconv)));
-      SET_VECTOR_ELT(vals, nval-1, ScalarInteger((int)ucnv_getMaxCharSize(uconv)));
 
+      // has ASCII as its subset?
+      SET_VECTOR_ELT(vals, nval-5, ScalarLogical((int)stri__ucnv_hasASCIIsubset(uconv)));
+      
+      // min,max character size, is 8bit?
+      int mincharsize = (int)ucnv_getMinCharSize(uconv);
+      int maxcharsize = (int)ucnv_getMaxCharSize(uconv);
+      int is8bit = (mincharsize==1 && maxcharsize == 1);
+      SET_VECTOR_ELT(vals, nval-3, ScalarLogical(is8bit));
+      SET_VECTOR_ELT(vals, nval-2, ScalarInteger(mincharsize));
+      SET_VECTOR_ELT(vals, nval-1, ScalarInteger(maxcharsize));
+      
+      // is there a one-to-one correspondence with Unicode?
+      if (!is8bit)
+         SET_VECTOR_ELT(vals, nval-4, ScalarLogical(NA_LOGICAL));
+      else
+         SET_VECTOR_ELT(vals, nval-4, ScalarLogical((int)stri__ucnv_is1to1Unicode(uconv)));
+         
       // other standard names
       for (R_len_t i=0; i<cs; ++i) {
          err = U_ZERO_ERROR;
