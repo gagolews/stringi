@@ -28,3 +28,11 @@ stri_split <- function(str, split='\n') {
 	# prepare_arg done internally
 	.Call("stri_split", str, split, PACKAGE="stringi")
 }
+
+# TODO
+# correct :
+# stri_split("ala","") != strsplit("ala","")
+#
+# determine: which result is better?
+# strsplit("lal","l") or stri_split("lalal","l")
+# 
