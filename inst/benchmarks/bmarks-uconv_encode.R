@@ -26,7 +26,7 @@ local({
       iconv(rep(polish_chars_cp1250, 25), "cp1250", "latin2")
    ))
    
-   x <- stri_dup(polish_chars_cp1250, 25)
+   x <- stri_dup(polish_chars_cp1250, 1:250)
    print(microbenchmark(
       stri_ucnv_encode(x, "cp1250", "utf8"),
       iconv(x, "cp1250", "utf8")
@@ -37,10 +37,11 @@ local({
       iconv(x, "cp1250", "latin2")
    ))
    
-   
+#    
    #  ERROR????????????????????????????????????????????????
-   print(microbenchmark(
-      stri_ucnv_encode(stri_dup(polish_chars_cp1250, 25), "cp1250", "latin2"),
-      iconv(stri_dup(polish_chars_cp1250, 25), "cp1250", "latin2")
-   ))
+#    print(microbenchmark(
+#       stri_ucnv_encode(stri_dup(polish_chars_cp1250, 1), "cp1250", "latin2"),
+#       iconv(stri_dup(polish_chars_cp1250, 1), "cp1250", "latin2")
+#    , times=1, control=list(warmup=1)))
+
 })
