@@ -21,7 +21,10 @@ local({
    srep <- rep(s,10)
    print(microbenchmark(stri_split(srep),strsplit(srep,'\n',fixed=TRUE)))
    print(microbenchmark(stri_split(s,'a'),strsplit(s,'a',TRUE)))
+   print(microbenchmark(stri_split(s,"co"),strsplit(s,"co",TRUE)))
 
    srepdup <- stri_dup(srep,10)
    print(microbenchmark(stri_split(srepdup),strsplit(srepdup,'\n',fixed=TRUE)))
+   print(microbenchmark(stri_split(srepdup,"co"),strsplit(srepdup,"co",fixed=TRUE)))
+   
 })
