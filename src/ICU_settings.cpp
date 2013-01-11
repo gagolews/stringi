@@ -23,29 +23,47 @@
 */
 SEXP stri_getinfo()
 {
-   const R_len_t infosize = 6;
+   const R_len_t infosize = 7;
    SEXP vals;
    SEXP names;
    PROTECT(names = allocVector(STRSXP, infosize));
-   SET_STRING_ELT(names, 0, mkChar("Locale.language"));
-   SET_STRING_ELT(names, 1, mkChar("Locale.country"));  
-   SET_STRING_ELT(names, 2, mkChar("Locale.variant"));   
-   SET_STRING_ELT(names, 3, mkChar("Locale.name"));
-   SET_STRING_ELT(names, 4, mkChar("Charset.internal"));
-   SET_STRING_ELT(names, 5, mkChar("Charset.native"));
+   SET_STRING_ELT(names, 0, mkChar("Unicode.version"));
+   SET_STRING_ELT(names, 1, mkChar("Locale.language"));
+   SET_STRING_ELT(names, 2, mkChar("Locale.country"));  
+   SET_STRING_ELT(names, 3, mkChar("Locale.variant"));   
+   SET_STRING_ELT(names, 4, mkChar("Locale.name"));
+   SET_STRING_ELT(names, 5, mkChar("Charset.internal"));
+   SET_STRING_ELT(names, 6, mkChar("Charset.native"));
    
    PROTECT(vals = allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i) 
       SET_VECTOR_ELT(vals, i, ScalarString(NA_STRING));
       
-   Locale loc = Locale::getDefault();
-   SET_VECTOR_ELT(vals, 0, mkString(loc.getLanguage()));
-   SET_VECTOR_ELT(vals, 1, mkString(loc.getCountry()));
-   SET_VECTOR_ELT(vals, 2, mkString(loc.getVariant()));
-   SET_VECTOR_ELT(vals, 3, mkString(loc.getName()));
-   SET_VECTOR_ELT(vals, 4, mkString("UTF-8"));
-   SET_VECTOR_ELT(vals, 5, stri_ucnv_encinfo(R_NilValue));
-
+   SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
+   SET_VECTOR_ELT(vals, 5, mkString("UTF-8"));
+   SET_VECTOR_ELT(vals, 6, stri_ucnv_encinfo(R_NilValue));
+   
+   // get default (current) ICU locale:      
+   const char* loc = uloc_getDefault();
+   UErrorCode err = U_ZERO_ERROR;
+   char buf[ULOC_FULLNAME_CAPACITY];
+   
+   uloc_getLanguage(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
+   if (U_FAILURE(err)) err = U_ZERO_ERROR;
+   else SET_VECTOR_ELT(vals, 1, mkString(buf));
+   
+   uloc_getCountry(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
+   if (U_FAILURE(err)) err = U_ZERO_ERROR;
+   else SET_VECTOR_ELT(vals, 2, mkString(buf));
+   
+   uloc_getVariant(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
+   if (U_FAILURE(err)) err = U_ZERO_ERROR;
+   else SET_VECTOR_ELT(vals, 3, mkString(buf));
+   
+   uloc_canonicalize(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
+   if (U_FAILURE(err)) err = U_ZERO_ERROR;
+   else SET_VECTOR_ELT(vals, 4, mkString(buf));
+   
    setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);
    return vals;

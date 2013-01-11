@@ -36,6 +36,7 @@
 #include <unicode/utf16.h>
 #include <unicode/normalizer2.h>
 #include <unicode/locid.h>
+#include <unicode/uloc.h>
 
 #include <R.h>
 #include <Rmath.h>
