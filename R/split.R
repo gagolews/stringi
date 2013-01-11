@@ -26,7 +26,7 @@
 #' @export
 stri_split <- function(str, split='\n') {
 	# prepare_arg done internally
-	.Call("stri_split", str, split, PACKAGE="stringi")
+	.Call("stri_split_fixed", str, split, PACKAGE="stringi")
 }
 
 # TODO

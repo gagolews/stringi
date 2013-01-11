@@ -13,6 +13,8 @@ s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
 
-microbenchmark(stri_split(s),strsplit(s,'\n'))
+microbenchmark(stri_split(s),strsplit(s,'\n',TRUE))
 s <- rep(s,10)
-microbenchmark(stri_split(s),strsplit(s,'\n'))
+microbenchmark(stri_split(s),strsplit(s,'\n',TRUE))
+microbenchmark(stri_split(s,' '),strsplit(s,' ',TRUE))
+microbenchmark(stri_split(s,'a'),strsplit(s,'a',TRUE))

@@ -23,7 +23,7 @@
 /** 
  * .... 
  */
-SEXP stri_split(SEXP s, SEXP split)
+SEXP stri_split_fixed(SEXP s, SEXP split)
 {
    s = stri_prepare_arg_string(s);
    int n = LENGTH(s);
