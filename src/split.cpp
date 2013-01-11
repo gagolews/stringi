@@ -26,22 +26,29 @@
 SEXP stri_split_fixed(SEXP s, SEXP split)
 {
    s = stri_prepare_arg_string(s);
-   int n = LENGTH(s);
+   int slen = LENGTH(s);
    int count = 0;
-   char spl = CHAR(STRING_ELT(split, 0))[0]; 
+   const char* spl = CHAR(STRING_ELT(split, 0)); 
+   int spllen = LENGTH(STRING_ELT(split,0));
    SEXP e;
-   PROTECT(e = allocVector(VECSXP,n));
+   PROTECT(e = allocVector(VECSXP,slen));
    SEXP curs,temp;
-   int k=0,b=0,st,end,where;
-   for (int i=0; i<n; ++i) {
+   int k=0,b=0,curslen,st,end,where;
+   for (int i=0; i<slen; ++i) {
       count = 0;
    	curs = STRING_ELT(s, i);
-   	k = LENGTH(curs);
+   	curslen = LENGTH(curs);
    	count=0;
       const char* string = CHAR(curs);
-   	for(int j=0; j<k; ++j){
-   		if(string[j]==spl) // MG: or b == '\n' ('a' - char, "a" - string (char*): {'a', '\0'})
-				count++;
+   	for(int j=0; j<curslen; ++j){
+         //if(string[j]==spl) // MG: or b == '\n' ('a' - char, "a" - string (char*): {'a', '\0'})
+         k=0;
+         while(string[j+k]==spl[k] && k<spllen)
+            k++;
+   		if(k==spllen){
+            count++;
+            j=j+k+1;
+   		}
          // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
          // don't increment count in such case (?)
          // BT: IMO we should not remove empty line in this function. 
@@ -50,25 +57,30 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
    	PROTECT(temp = allocVector(STRSXP,count+1));
    	st=0;
    	where=0;
-   	for(int j=0; j<k; ++j){
+   	for(int j=0; j<curslen; ++j){
 			string = CHAR(curs); 
-   			if(string[j]==spl){ 
-   				end=j;
-   				SET_STRING_ELT(temp,where, mkCharLen(string+st, end-st));
-               // MG: http://www.cplusplus.com/reference/cstring/
-               //given start and end - index in string
-               //we can do:
-               // SET_STRING_ELT(temp, j, mkCharLen(string+start, end-start+1))
-               // string - address of the first character
-               // string+start - address of the start-th character
-               // definition: mkCharLen(char* address_of_first_char, int howManyCharsToCopy)
-               // - it returns a "scalar" string that may be copied into STRSXP (with SET_STRING_ELT)
-               // good work - i'm glad it's challenging :)
-   				st=j+1;
-   				++where;
-   			}
+         k=0;
+         while(string[j+k]==spl[k] && k<spllen)
+            k++;
+      	if(k==spllen){
+   		//if(string[j]==spl){ 
+   			end=j;
+   			SET_STRING_ELT(temp,where, mkCharLen(string+st, end-st));
+            // MG: http://www.cplusplus.com/reference/cstring/
+            //given start and end - index in string
+            //we can do:
+            // SET_STRING_ELT(temp, j, mkCharLen(string+start, end-start+1))
+            // string - address of the first character
+            // string+start - address of the start-th character
+            // definition: mkCharLen(char* address_of_first_char, int howManyCharsToCopy)
+            // - it returns a "scalar" string that may be copied into STRSXP (with SET_STRING_ELT)
+            // good work - i'm glad it's challenging :)
+   			st=j+k;
+   			++where;
+            j=j+k+1;
+   		}
    	}
-      SET_STRING_ELT(temp,where, mkCharLen(string+st, k-st));
+      SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);
    }
