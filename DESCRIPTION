@@ -1,12 +1,12 @@
 Package: stringi
 Version: 0.1-1
-Date: 2013-01-09
+Date: 2013-01-11
 Title: ICU bindings for R
 Description: stringi is an R package for correct, fast,
-    and simple string manipulation in each locale.
+    and simple string manipulation in each locale and native charset.
     ICU API bindings offer R users a platform- and system-locale-independent
-    rich variety of functions known from other programming languages,
-    like Java, Perl, Python and PHP.
+    rich variety of consistent functions known from other 
+    programming languages, like Java, Perl, Python and PHP.
 URL: http://www.ibspan.waw.pl/~gagolews/stringi/
 BugReports: https://github.com/gagolews/stringi/issues
 LazyData: true

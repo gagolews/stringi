@@ -8,9 +8,6 @@ stringi.Rproj
 .Rhistory
 .RData
 
-# KDevelop project files:
-*.kdev4
-
 # compiled/precompiled files
 *.o
 *.so
@@ -19,3 +16,6 @@ stringi.Rproj
 *~
 *.backup
 *.bak
+
+# KDevelop project files:
+*.kdev4

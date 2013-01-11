@@ -141,14 +141,16 @@ stri_join (like paste()) ALIAS stri_c
 
 ========= CASE FOLDING/LETTERS =======
 
-stri_tolower
-stri_toupper
+stri_tolower [MG*]
+stri_toupper [MG*]
 stri_titlecase
-stri_reverse
+stri_reverse [MG*]
 
 ========= SEARCH / REPLACE / SUBSTR / REGEXP =======
 
-stri_split
+stri_split_fixed [BT*]
+stri_split_regex
+stri_split_charclass
 
 stri_startswith
 stri_endswidh
@@ -212,7 +214,7 @@ Line boundary analysis determines where a text string can be broken when line-wr
 Sentence boundary analysis allows selection with correct interpretation of periods within numbers and abbreviations, and trailing punctuation marks such as quotation marks and parentheses.
 
 
-stri_wrap: greedy / dynamic [BT]
+stri_wrap: greedy / dynamic [BT*]
 
 ========= BUILD ===========
 
@@ -229,7 +231,7 @@ stri_wrap: greedy / dynamic [BT]
 
 stri_empty - check for empty string
 
-stri_numbytes
+stri_numbytes [DONE]
 
 stri_length (aka stri_len)
 

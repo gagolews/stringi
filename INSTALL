@@ -10,7 +10,14 @@ cd src/
 make
 make install
 
+(default settings are OK)
+
+
 Perhaps this could also be needed:
+
+[edit] /etc/ld.so.conf
+
+or:
 
 ln -s /usr/local/lib/libicuuc.so.50 /usr/lib
 ln -s /usr/local/lib/libicui18n.so.50  /usr/lib
@@ -21,5 +28,5 @@ ln -s /usr/local/lib/libicule.so.50 /usr/lib
 
 Ferora:
    you may try with `yum install libicu-devel`
-
+   however, it may give you an outdated version of the ICU library
 
