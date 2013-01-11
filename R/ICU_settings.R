@@ -18,9 +18,22 @@
 
 
 
-#' Description: TO DO
+#' Get currently used ICU settings
 #' 
+#' @return a list of TODO....
 #' @export
 stri_getinfo <- function() {
-   .Call("stri_getinfo", PACKAGE="stringi")
+   info <- .Call("stri_getinfo", PACKAGE="stringi")
+   if (info$Charset.native$Name.friendly != "UTF-8") {
+      if (!info$Charset.native$CharSize.8bit)
+         warning("you use a non-8bit native charset. \
+            this may cause serious problems. consider switching to UTF-8")
+      else if (!info$Charset.native$Unicode.1to1)
+         warning("your native charset does not convert well to Unicode. \
+            this may cause serious problems. consider switching to UTF-8")
+      else if (!info$Charset.native$ASCII.subset)
+         warning("your native charset is not a superset of US-ASCII. \
+            this may cause serious problems. consider switching to UTF-8")
+   }
+   info
 }

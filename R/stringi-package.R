@@ -43,6 +43,9 @@ invisible(NULL)
 #' @useDynLib stringi
 .onAttach <- function(lib, pkg)
 {
+   # stri_getinfo() produces a warning if current native charset
+   # is problematic. the packageStartupMessage also indicates the user
+   # whether ICU has guessed the locale used correctly. Leave it as is :)
    info <- stri_getinfo()
    locale <- paste(info$Locale.language, "_", info$Locale.country, sep="")
    charset <- info$Charset.native$Name.friendly
