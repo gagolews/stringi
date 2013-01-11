@@ -227,13 +227,16 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       if (ascii_last != ascii1-1) // one byte should be consumed
          return false;
          
-      UnicodeString sout = UnicodeString::fromUTF32 (&c, 1);
-      if (sout.length() != 1) { // is that the right way to do that??
+      // check whether the character is encoded
+      // by a single UTF-16 code point
+      UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
+      if (!U16_IS_SINGLE(lead)) {
          warning(SSTR("Problematic character #"
             << (int)(unsigned char)ascii_last[0]
             << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
          return false;
       }
+      
       
       // check tolower, toupper etc....
       // check conversion from unicode..............
