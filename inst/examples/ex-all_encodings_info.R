@@ -13,6 +13,8 @@ local({
       )
    }
    
+   encinfo <- encinfo[order(encinfo[[1]]), ]
+   
    # Note that the "HZ" encoding treats "~" (#126) specially
    
    

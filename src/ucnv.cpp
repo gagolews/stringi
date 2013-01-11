@@ -60,6 +60,10 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
 ////    CE_BYTES  = 3,
 ////    CE_SYMBOL = 5,
 
+//int ucnv_compareNames    ( 	const char *  	name1,
+//		const char *  	name2 
+//	) 
+
    // possibly we could check whether from's and to's canonical names
    // are the same and then return the input as-is (maybe with an Encoding
    // marking?). this is, however, a rare case. moreover, calling with
@@ -150,8 +154,8 @@ bool stri__ucnv_hasASCIIsubset(UConverter* conv)
 {
    if (ucnv_getMinCharSize(conv) != 1) return false;
    
-   const int ascii_from = 1;
-   const int ascii_to = 126;
+   const int ascii_from = 0x0001;
+   const int ascii_to   = 0x007f;
    char ascii[ascii_to-ascii_from+2]; // + \0
    for (int i=ascii_from; i<=ascii_to; ++i)
       ascii[i-ascii_from] = (char)i;
@@ -170,17 +174,25 @@ bool stri__ucnv_hasASCIIsubset(UConverter* conv)
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
          err = U_ZERO_ERROR;
-         warning(SSTR("Cannot convert ASCII character #"
+         warning(SSTR("Cannot convert ASCII character 0x" << std::hex
             << (int)(unsigned char)ascii_last[0]
             << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
          return false;
       }
       
-      if (ascii_last != ascii1-1) // one byte should be consumed
+      // Has just one byte been consumed? (??is that necessary??)
+      // How many code units (bytes) are used for the UTF-8 encoding
+      // of this Unicode code point? Does this code unit (byte)
+      // encode a code point by itself (US-ASCII 0..0x7f)?
+      // Is that the same ASCII char?
+      if (ascii_last != ascii1-1
+         || U8_LENGTH(c) != 1
+         || c != (int)ascii_last[0]) {
+//         warning(SSTR("Problematic character #"
+//            << (int)(unsigned char)ascii_last[0]
+//            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
          return false;
-      else if (c != (int)ascii_last[0])
-         return false;
-
+      }
       ascii_last = ascii1;
    } 
    
@@ -195,20 +207,20 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
 {
    if (ucnv_getMinCharSize(conv) != 1) return false;
    
-   const int ascii_from = 1;
-   const int ascii_to = 255;
+   const int ascii_from = 65;
+   const int ascii_to = 0x00ff;
    char ascii[ascii_to-ascii_from+2]; // + \0
    for (int i=ascii_from; i<=ascii_to; ++i)
       ascii[i-ascii_from] = (char)i;
    ascii[ascii_to-ascii_from+1] = '\0';
    
    UChar32 c;
+   const int buflen =  UCNV_GET_MAX_BYTES_FOR_STRING(1, 1);
+   char buf[buflen];
    
    const char* ascii_last = ascii;
    const char* ascii1 = ascii;
    const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
-   
-   
    
    UErrorCode err = U_ZERO_ERROR;
    ucnv_reset(conv);
@@ -216,7 +228,6 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
    while (ascii1 < ascii2) {
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
-         err = U_ZERO_ERROR;
          warning(SSTR("Cannot convert ASCII character #"
             << (int)(unsigned char)ascii_last[0]
             << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
@@ -227,20 +238,36 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       if (ascii_last != ascii1-1) // one byte should be consumed
          return false;
          
-      // check whether the character is encoded
+      // check whether the character is represented
       // by a single UTF-16 code point
       UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
       if (!U16_IS_SINGLE(lead)) {
-         warning(SSTR("Problematic character #"
+         warning(SSTR("Problematic character 0x" << std::hex
             << (int)(unsigned char)ascii_last[0]
+            << " -> \\u" << c
             << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
          return false;
       }
       
-      
-      // check tolower, toupper etc....
-      // check conversion from unicode..............
-      // @TODO.... t.b.d..........
+      // character not convertable => ignore
+      if (c != UCHAR_REPLACEMENT) {    
+         ucnv_fromUChars(conv, buf, buflen, (UChar*)&c, 1, &err);
+         if (U_FAILURE(err)) {
+            warning(SSTR("Cannot convert ASCII character 0x" << std::hex
+               << (int)(unsigned char)ascii_last[0]
+               << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+            return false;
+         }
+         
+         if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
+            warning(SSTR("Problematic character 0x" << std::hex 
+               << (int)(unsigned char)ascii_last[0]
+               << " -> \\u" << c << " -> 0x" << (int)buf[0]
+               << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+            return false;
+         }
+      }      
+      // check tolower, toupper etc. (???)
 
       ascii_last = ascii1;
    } 

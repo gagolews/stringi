@@ -54,7 +54,7 @@ using namespace icu;
 
 
 #define SSTR(x) (dynamic_cast<ostringstream&>(ostringstream() << std::dec << x).str())
-
+#define UCHAR_REPLACEMENT 0xFFFD
 
 // ------------------------------------------------------------------------
 
