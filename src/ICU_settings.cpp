@@ -41,7 +41,7 @@ SEXP stri_getinfo()
       
    SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
    SET_VECTOR_ELT(vals, 5, mkString("UTF-8"));
-   SET_VECTOR_ELT(vals, 6, stri_ucnv_encinfo(R_NilValue));
+   SET_VECTOR_ELT(vals, 6, stri_encinfo(R_NilValue));
    
    // get default (current) ICU locale:      
    const char* loc = uloc_getDefault();

@@ -30,7 +30,7 @@
  * @return a character vector with s converted
  * @TODO Encoding marking...
  */
-SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
+SEXP stri_encode(SEXP s, SEXP from, SEXP to)
 {
    s = stri_prepare_arg_string(s);
    R_len_t ns = LENGTH(s);
@@ -117,7 +117,7 @@ SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to)
 
       if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
 #ifndef NDEBUG
-         cerr << "DEBUG: stri_ucnv_encode: expanding buffer"
+         cerr << "DEBUG: stri_encode: expanding buffer"
             << buflen << " -> " << buflen_need + 1 << endl;
 #endif
          buflen = buflen_need + 1;
@@ -283,7 +283,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
  * @TODO Has ASCII subset?
  * @TODO How many (max) UTF-8 chars correspond to one char in this encoding?
  */
-SEXP stri_ucnv_encinfo(SEXP enc)
+SEXP stri_encinfo(SEXP enc)
 {
    UConverter* uconv = stri__ucnv_open(enc);
    if (!uconv) return R_NilValue;
@@ -319,7 +319,7 @@ SEXP stri_ucnv_encinfo(SEXP enc)
 
    if (U_FAILURE(err) || !canname) {
       SET_VECTOR_ELT(vals, 1, ScalarString(NA_STRING));
-      warning("could not get canonical (ICU) encoding name (stri_ucnv_encinfo)");
+      warning("could not get canonical (ICU) encoding name (stri_encinfo)");
    }
    else {
       SET_VECTOR_ELT(vals, 1, mkString(canname));
@@ -369,7 +369,7 @@ SEXP stri_ucnv_encinfo(SEXP enc)
 /**
  * ...
  */
-SEXP stri_ucnv_enclist()
+SEXP stri_enclist()
 {
    R_len_t cs;
    const char** standards;
@@ -421,10 +421,6 @@ SEXP stri_ucnv_enclist()
 
 
 
-
-
-
-
 /** Get ICU ucnv standard names and their count
  *  @param standards [OUT]
  *  @param cs [OUT]
@@ -436,7 +432,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
    cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
    if (cs <= 0) {
 #ifndef NDEBUG
-      error("DEBUG: number of standard names is not positive (stri_ucnv_list)");
+      error("DEBUG: number of standard names is not positive (stri_list)");
 #endif
       standards = NULL;
       cs = 0;
@@ -449,7 +445,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
       standards[i] = ucnv_getStandard(i, &err);
       if (U_FAILURE(err)) {
 #ifndef NDEBUG
-         error("could not gen standard name (stri_ucnv_list)");
+         error("could not gen standard name (stri_list)");
 #endif
          standards[i] = NULL;
       }

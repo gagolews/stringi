@@ -21,10 +21,10 @@
 #' Get list of available encodings
 #'
 #' @return A list with...
-#' @seealso \code{\link{stri_ucnv_encode}}, \code{\link{stri_ucnv_encinfo}}
+#' @seealso \code{\link{stri_encode}}, \code{\link{stri_encinfo}}
 #' @export
-stri_ucnv_enclist <- function() {
-   .Call("stri_ucnv_enclist", PACKAGE="stringi")
+stri_enclist <- function() {
+   .Call("stri_enclist", PACKAGE="stringi")
 }
 
 
@@ -34,12 +34,12 @@ stri_ucnv_enclist <- function() {
 #' 
 #' @param enc NULL/""/missing for default encoding, or a single string with encoding name
 #' @return A list with...
-#' @seealso \code{\link{stri_ucnv_encode}}, \code{\link{stri_ucnv_enclist}}
+#' @seealso \code{\link{stri_encode}}, \code{\link{stri_enclist}}
 #' @export
-stri_ucnv_encinfo <- function(enc) {
+stri_encinfo <- function(enc) {
    if (missing(enc)) enc <- NULL
    # prepare_arg done internally
-   .Call("stri_ucnv_encinfo", enc, PACKAGE="stringi")
+   .Call("stri_encinfo", enc, PACKAGE="stringi")
 }
 
 
@@ -53,9 +53,9 @@ stri_ucnv_encinfo <- function(enc) {
 #' @param from target encoding:
 #'       NULL/"" for default encoding, or a single string with encoding name
 #' @return A list with...
-#' @seealso \code{\link{stri_ucnv_enclist}}, \code{\link{stri_ucnv_encinfo}}
+#' @seealso \code{\link{stri_enclist}}, \code{\link{stri_encinfo}}
 #' @export
-stri_ucnv_encode <- function(str, from, to) {
+stri_encode <- function(str, from, to) {
    # prepare_arg done internally
-   .Call("stri_ucnv_encode", str, from, to, PACKAGE="stringi")
+   .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }

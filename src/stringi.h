@@ -93,13 +93,13 @@ SEXP stri_prepare_arg_integer(SEXP x);
 // ucnv.cpp:
 void stri__ucnv_getStandards(const char**& standards, R_len_t& cs);
 const char* stri___ucnv_getFriendlyName(const char* canname);
-SEXP stri_ucnv_enclist();
-SEXP stri_ucnv_encinfo(SEXP enc);
 UConverter* stri__ucnv_open(const char* enc);
 UConverter* stri__ucnv_open(SEXP enc);
-SEXP stri_ucnv_encode(SEXP s, SEXP from, SEXP to);
 bool stri__ucnv_hasASCIIsubset(UConverter* conv);
 bool stri__ucnv_is1to1Unicode(UConverter* conv);
+SEXP stri_encode(SEXP s, SEXP from, SEXP to);
+SEXP stri_enclist();
+SEXP stri_encinfo(SEXP enc);
 
 // length.cpp
 SEXP stri_numbytes(SEXP s);

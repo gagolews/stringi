@@ -2,14 +2,14 @@ require("stringi")
 
 local({
    
-   encodings <- stri_ucnv_enclist()
+   encodings <- stri_enclist()
 
-   encinfo <- as.data.frame(stri_ucnv_encinfo(encodings[[1]][1]),
+   encinfo <- as.data.frame(stri_encinfo(encodings[[1]][1]),
                             stringsAsFactors=FALSE)
       
    for (i in seq_along(encodings)[-1]) {
       encinfo <- rbind(encinfo,
-         stri_ucnv_encinfo(encodings[[i]][1])
+         stri_encinfo(encodings[[i]][1])
       )
    }
    
