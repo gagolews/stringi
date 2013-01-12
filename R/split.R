@@ -18,11 +18,20 @@
 
 
 
-#' Split 
+#' Split the elements of a character vector
 #' 
-#' @param str string to split
-#' @param split 
-#' @return splitted list of character vectors
+#' Split the elements of a character vector str into substrings. Vectorized over str and split.
+#' 
+#' @param str character vector to split
+#' @param split character vector
+#' @return A list of the same length as str. The i-th element of list contains splitted str[i]character vectors
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_split(s," ")
+#' stri_split(s,"o")
+#' stri_split(s,"it")
+#' 
 #' @export
 stri_split <- function(str, split='\n') {
 	# prepare_arg done internally

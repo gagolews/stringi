@@ -26,6 +26,7 @@
 SEXP stri_split_fixed(SEXP s, SEXP split)
 {
    s = stri_prepare_arg_string(s);
+   split = stri_prepare_arg_string(split);
    int a = LENGTH(s);
    int b = LENGTH(split);
    int max = 0;
@@ -65,7 +66,6 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
          while(string[j+k]==spl[k] && k<spllen)
             k++;
       	if(k==spllen){
-   		//if(string[j]==spl){ 
    			end=j;
    			SET_STRING_ELT(temp,where, mkCharLen(string+st, end-st));
             // MG: http://www.cplusplus.com/reference/cstring/
