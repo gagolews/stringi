@@ -28,6 +28,22 @@ stri_localelist <- function() {
 }
 
 
+#' Set default ICU locale
+#'
+#' ICU4C API DOC: "Because a Locale is just an identifier for a region, 
+#' no validity check is performed when you specify a Locale. 
+#' If you want to see whether particular resources are available 
+#' for the Locale you asked for, you must query those resources. (...)
+#' Note: When you ask for a resource for a particular locale, you get
+#' back the best available match, not necessarily precisely what you asked for.
+#' @return result of stri_info(short=TRUE)
+#' @seealso \code{\link{stri_localelist}}
+#' @export
+stri_localeset <- function(loc) {
+   .Call("stri_localeset", loc, PACKAGE="stringi")
+   stri_info(short=TRUE)
+}
+
 
 #' Get info on given locale
 #' 
@@ -35,7 +51,7 @@ stri_localelist <- function() {
 #' 
 #' @param loc NULL/""/missing for default locale, or a single string with locale name
 #' @return A list with...
-#' @seealso \code{\link{stri_localeinfo}}
+#' @seealso \code{\link{stri_localelist}}
 #' @export
 stri_localeinfo <- function(loc) {
    if (missing(loc)) loc <- NULL

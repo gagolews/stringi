@@ -19,6 +19,27 @@
 #include "stringi.h"
 
 
+
+SEXP stri_localeset(SEXP loc)
+{
+   loc = stri_prepare_arg_string(loc);
+   if (LENGTH(loc) >= 1 && STRING_ELT(loc, 0) != NA_STRING 
+         && LENGTH(STRING_ELT(loc, 0)) > 0) {
+      if (LENGTH(loc) > 1) // this shouldn't happen
+        warning("only one locale specifier supported. taking first");
+   
+      UErrorCode err = U_ZERO_ERROR;
+      uloc_setDefault(CHAR(STRING_ELT(loc, 0)), &err);
+      if (U_FAILURE(err))
+         error("could not set locale");
+   }
+   else
+      error("incorrect locale specifier");
+      
+   return R_NilValue;
+}
+
+
 /** Get list of available locales
  *  @return R character vector
  */

@@ -104,6 +104,7 @@ SEXP stri_encinfo(SEXP enc);
 // uloc.cpp:
 SEXP stri_localeinfo(SEXP loc);
 SEXP stri_localelist();
+SEXP stri_localeset(SEXP loc);
 
 // length.cpp
 SEXP stri_numbytes(SEXP s);

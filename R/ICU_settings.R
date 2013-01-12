@@ -45,10 +45,10 @@ stri_info <- function(short=FALSE) {
          locales. see stri_localelist()")
    
    if (!short)
-      info
+      return(info)
    else {
-      locale <- info$Locale$Language %+% "_" %+% info$Locale$Country
+      locale <- info$Locale$Name
       charset <- info$Charset.native$Name.friendly
-      locale %+% "." %+% charset
+      return(locale %+% "." %+% charset)
    }
 }
