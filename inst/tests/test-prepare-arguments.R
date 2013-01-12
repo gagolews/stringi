@@ -41,10 +41,14 @@ test_that("stri_prepare_arg_string", {
 test_that("stri_prepare_arg_integer", {
 
    expect_equivalent(stringi:::stri_prepare_arg_integer(1:10), 1:10)
-   expect_equivalent(stringi:::stri_prepare_arg_integer(seq(0,1,by=0.5)), c(0L,0L,1L))
-   expect_equivalent(stringi:::stri_prepare_arg_integer(c(TRUE, FALSE)), c(1L, 0L))
-   expect_equivalent(stringi:::stri_prepare_arg_integer(factor(c("4", "1", "1", "2", "4"))), c(4L, 1L, 1L, 2L, 4L))
-   expect_equivalent(stringi:::stri_prepare_arg_integer(c("1", "one", "1.5")), c(1L, NA_integer_, 1L))
+   expect_equivalent(stringi:::stri_prepare_arg_integer(
+      seq(0,1,by=0.5)), c(0L,0L,1L))
+   expect_equivalent(stringi:::stri_prepare_arg_integer(
+      c(TRUE, FALSE)), c(1L, 0L))
+   expect_equivalent(stringi:::stri_prepare_arg_integer(
+      factor(c("4", "1", "1", "2", "4"))), c(4L, 1L, 1L, 2L, 4L))
+   suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_integer(
+      c("1", "one", "1.5")), c(1L, NA_integer_, 1L)))
    
    expect_error(stringi:::stri_prepare_arg_integer(NULL))
    expect_error(stringi:::stri_prepare_arg_integer(list(1, 2, 3)))
