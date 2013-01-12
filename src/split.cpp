@@ -26,28 +26,30 @@
 SEXP stri_split_fixed(SEXP s, SEXP split)
 {
    s = stri_prepare_arg_string(s);
-   int slen = LENGTH(s);
+   int a = LENGTH(s);
+   int b = LENGTH(split);
+   int max = 0;
+   if(a>b) max=a; else max=b;
    int count = 0;
-   const char* spl = CHAR(STRING_ELT(split, 0)); 
-   int spllen = LENGTH(STRING_ELT(split,0));
    SEXP e;
-   PROTECT(e = allocVector(VECSXP,slen));
+   PROTECT(e = allocVector(VECSXP,max));
    SEXP curs,temp;
-   int k=0,b=0,curslen,st,end,where;
-   for (int i=0; i<slen; ++i) {
+   int k=0,curslen,spllen,st,end,where;
+   for (int i=0; i<max; ++i) {
       count = 0;
-   	curs = STRING_ELT(s, i);
+   	curs = STRING_ELT(s, i % a);
    	curslen = LENGTH(curs);
-   	count=0;
       const char* string = CHAR(curs);
+      const char* spl = CHAR(STRING_ELT(split, i % b));
+      spllen = LENGTH(STRING_ELT(split,i % b));
+   	count=0;
    	for(int j=0; j<curslen; ++j){
-         //if(string[j]==spl) // MG: or b == '\n' ('a' - char, "a" - string (char*): {'a', '\0'})
          k=0;
          while(string[j+k]==spl[k] && k<spllen)
             k++;
    		if(k==spllen){
             count++;
-            j=j+k+1;
+            j=j+k-1;
    		}
          // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
          // don't increment count in such case (?)
@@ -77,7 +79,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
             // good work - i'm glad it's challenging :)
    			st=j+k;
    			++where;
-            j=j+k+1;
+            j=j+k-1; //if match, then there is no need to check next k el.
    		}
    	}
       SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
