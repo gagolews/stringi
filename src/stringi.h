@@ -100,6 +100,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv);
 SEXP stri_encode(SEXP s, SEXP from, SEXP to);
 SEXP stri_enclist();
 SEXP stri_encinfo(SEXP enc);
+SEXP stri_encset(SEXP loc);
 
 // uloc.cpp:
 SEXP stri_localeinfo(SEXP loc);

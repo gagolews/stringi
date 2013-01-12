@@ -43,6 +43,17 @@ stri_encinfo <- function(enc) {
 }
 
 
+#' Set default ICU charset
+#'
+#' @return result of stri_info(short=TRUE)
+#' @seealso \code{\link{stri_enclist}}
+#' @export
+stri_encset <- function(loc) {
+   .Call("stri_encset", loc, PACKAGE="stringi")
+   stri_info(short=TRUE)
+}
+
+
 #' Convert character vector between given encodings 
 #' 
 #' If enc is missing, NULL (default encoding) is used

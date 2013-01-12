@@ -21,6 +21,32 @@
 
 
 
+SEXP stri_encset(SEXP enc)
+{
+   enc = stri_prepare_arg_string(enc);
+   if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING 
+         && LENGTH(STRING_ELT(enc, 0)) > 0) {
+      if (LENGTH(enc) > 1) // this shouldn't happen
+        warning("only one charset specifier supported. taking first");
+   
+      UErrorCode err = U_ZERO_ERROR;
+      UConverter* uconv = ucnv_open(CHAR(STRING_ELT(enc, 0)), &err);
+      if (U_FAILURE(err))
+         error("could not find converter for given encoding");
+      else {
+         const char* name = ucnv_getName(uconv, &err);
+         if (U_FAILURE(err))
+            error("could not find converter for given encoding");
+         ucnv_setDefaultName(name);
+      }
+   }
+   else
+      error("incorrect charset specifier");
+      
+   return R_NilValue;
+}
+
+
 /**
  * Convert character vector between given encodings
  *
