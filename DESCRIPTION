@@ -39,3 +39,4 @@ Collate:
     'ucnv.R'
     'length.R'
     'split.R'
+    'uloc.R'

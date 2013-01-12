@@ -278,10 +278,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
 
 /** Fetch information on given encoding
  * @param enc either NULL or "" for default encoding, or one string with encoding name
- * @ret a list
- *
- * @TODO Has ASCII subset?
- * @TODO How many (max) UTF-8 chars correspond to one char in this encoding?
+ * @return R list object
  */
 SEXP stri_encinfo(SEXP enc)
 {
@@ -367,7 +364,8 @@ SEXP stri_encinfo(SEXP enc)
 
 
 /**
- * ...
+ * Get all available ICU charsets and their aliases (elems 2,3,...)
+ * @return R list object
  */
 SEXP stri_enclist()
 {

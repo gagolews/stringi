@@ -84,7 +84,7 @@ SEXP stri_join2(SEXP s1, SEXP s2);
 SEXP stri_casecompare(SEXP x, SEXP y);
 
 // ICU_settings.cpp:
-SEXP stri_getinfo();
+SEXP stri_info();
 
 // prepare_arg.cpp:
 SEXP stri_prepare_arg_string(SEXP x);
@@ -100,6 +100,10 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv);
 SEXP stri_encode(SEXP s, SEXP from, SEXP to);
 SEXP stri_enclist();
 SEXP stri_encinfo(SEXP enc);
+
+// uloc.cpp:
+SEXP stri_localeinfo(SEXP loc);
+SEXP stri_localelist();
 
 // length.cpp
 SEXP stri_numbytes(SEXP s);

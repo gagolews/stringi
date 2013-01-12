@@ -18,51 +18,28 @@
  
 #include "stringi.h"
 
+
+
+
 /** Get curent-default ICU locale information
  *  @return an R named list
 */
-SEXP stri_getinfo()
+SEXP stri_info()
 {
-   const R_len_t infosize = 7;
+   const R_len_t infosize = 4;
    SEXP vals;
    SEXP names;
    PROTECT(names = allocVector(STRSXP, infosize));
    SET_STRING_ELT(names, 0, mkChar("Unicode.version"));
-   SET_STRING_ELT(names, 1, mkChar("Locale.language"));
-   SET_STRING_ELT(names, 2, mkChar("Locale.country"));  
-   SET_STRING_ELT(names, 3, mkChar("Locale.variant"));   
-   SET_STRING_ELT(names, 4, mkChar("Locale.name"));
-   SET_STRING_ELT(names, 5, mkChar("Charset.internal"));
-   SET_STRING_ELT(names, 6, mkChar("Charset.native"));
+   SET_STRING_ELT(names, 1, mkChar("Locale"));
+   SET_STRING_ELT(names, 2, mkChar("Charset.internal"));
+   SET_STRING_ELT(names, 3, mkChar("Charset.native"));
    
    PROTECT(vals = allocVector(VECSXP, infosize));
-   for (int i=0; i<infosize; ++i) 
-      SET_VECTOR_ELT(vals, i, ScalarString(NA_STRING));
-      
    SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
-   SET_VECTOR_ELT(vals, 5, mkString("UTF-8"));
-   SET_VECTOR_ELT(vals, 6, stri_encinfo(R_NilValue));
-   
-   // get default (current) ICU locale:      
-   const char* loc = uloc_getDefault();
-   UErrorCode err = U_ZERO_ERROR;
-   char buf[ULOC_FULLNAME_CAPACITY];
-   
-   uloc_getLanguage(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 1, mkString(buf));
-   
-   uloc_getCountry(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 2, mkString(buf));
-   
-   uloc_getVariant(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 3, mkString(buf));
-   
-   uloc_canonicalize(uloc_getDefault(), buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 4, mkString(buf));
+   SET_VECTOR_ELT(vals, 1, stri_localeinfo(R_NilValue));
+   SET_VECTOR_ELT(vals, 2, mkString("UTF-8")); // this is fixed
+   SET_VECTOR_ELT(vals, 3, stri_encinfo(R_NilValue));
    
    setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);

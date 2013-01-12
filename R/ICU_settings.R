@@ -20,10 +20,13 @@
 
 #' Get currently used ICU settings
 #' 
-#' @return a list of TODO....
+#' @param short should only current locale and charset be returned?
+#' @return a list of TODO.... (short=FALSE) or a string (short=TRUE)
 #' @export
-stri_getinfo <- function() {
-   info <- .Call("stri_getinfo", PACKAGE="stringi")
+stri_info <- function(short=FALSE) {
+   stopifnot(is.logical(short), length(short) == 1)
+   
+   info <- .Call("stri_info", PACKAGE="stringi")
    if (info$Charset.native$Name.friendly != "UTF-8") {
       if (!info$Charset.native$CharSize.8bit)
          warning("you use a non-8bit native charset. \
@@ -35,5 +38,17 @@ stri_getinfo <- function() {
          warning("your native charset is not a superset of US-ASCII. \
             this may cause serious problems. consider switching to UTF-8")
    }
-   info
+   
+   loclist <- stri_localelist()
+   if (!(info$Locale$Name %in% loclist))
+      warning("your current locale is not on the list of available \
+         locales. see stri_localelist()")
+   
+   if (!short)
+      info
+   else {
+      locale <- info$Locale$Language %+% "_" %+% info$Locale$Country
+      charset <- info$Charset.native$Name.friendly
+      locale %+% "." %+% charset
+   }
 }

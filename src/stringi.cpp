@@ -32,17 +32,19 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_casecompare",             (DL_FUNC)&stri_casecompare,            2},
    {"stri_casefold",                (DL_FUNC)&stri_casefold,               2},
    {"stri_dup",                     (DL_FUNC)&stri_dup,                    2},
+   {"stri_enclist",                 (DL_FUNC)&stri_enclist,                0},
+   {"stri_encinfo",                 (DL_FUNC)&stri_encinfo,                1},
+   {"stri_encode",                  (DL_FUNC)&stri_encode,                 3},
    {"stri_flatten",                 (DL_FUNC)&stri_flatten,                1},
-   {"stri_getinfo",                 (DL_FUNC)&stri_getinfo,                0},
+   {"stri_info",                    (DL_FUNC)&stri_info,                   0},
    {"stri_join2",                   (DL_FUNC)&stri_join2,                  2},
+   {"stri_localeinfo",              (DL_FUNC)&stri_localeinfo,             1},
+   {"stri_localelist",              (DL_FUNC)&stri_localelist,             0},
    {"stri_numbytes",                (DL_FUNC)&stri_numbytes,               1},
    {"stri_prepare_arg_string",      (DL_FUNC)&stri_prepare_arg_string,     1},
    {"stri_prepare_arg_integer",     (DL_FUNC)&stri_prepare_arg_integer,    1},
    {"stri_split_fixed",					(DL_FUNC)&stri_split_fixed,				2},
    {"stri_trim",                    (DL_FUNC)&stri_trim,                   1},
-   {"stri_enclist",                 (DL_FUNC)&stri_enclist,                0},
-   {"stri_encinfo",                 (DL_FUNC)&stri_encinfo,                1},
-   {"stri_encode",                  (DL_FUNC)&stri_encode,                 3},
    {"stri_unicode_normalization",   (DL_FUNC)&stri_unicode_normalization,  2},
    {"stri_wrap_greedy",             (DL_FUNC)&stri_wrap_greedy,            3},
    {"stri_wrap_dynamic",            (DL_FUNC)&stri_wrap_dynamic,           3},
@@ -67,14 +69,6 @@ extern "C" void R_init_stringi(DllInfo *dll)
 #ifndef NDEBUG
    cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
 #endif
-
-//U_UNICODE_VERSION
-
-//   cerr << "DEBUG: ICU4R start locale=\"" << uloc_getDefault() << "\"" << endl;
-//   cerr << "DEBUG: ICU4R changing default locale manually..." << endl;
-//   UErrorCode err = U_ZERO_ERROR;
-//   uloc_setDefault("de_DE", &err);
-//   if (U_FAILURE(err)) warning("ICU4R: Couldn't set default locale");
 }
 
 
