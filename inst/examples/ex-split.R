@@ -1,8 +1,5 @@
-require(testthat)
-
-test_that("stri_split", {
-   s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
-	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
+s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
+   nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
 	lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac 
 	diam. Quisque semper justo at risus. Donec venenatis, turpis vel 
 	hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui 
@@ -13,12 +10,7 @@ test_that("stri_split", {
 	mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras 
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
-   s <- rep(s,3)
-   expect_identical(stri_split(s), strsplit(s,'\n',TRUE))
-   expect_identical(stri_split(s,' '),strsplit(s,' ',TRUE))
-   expect_identical(stri_split(s,'a'),strsplit(s,'a',TRUE))
-   expect_identical(stri_split(s,"co"),strsplit(s,"co",TRUE))
-   expect_identical(stri_split(s,"rem"),strsplit(s,"rem",TRUE))
-   s <- c("abababab babab abab bbaba","a")
-   expect_identical(stri_split(s,"bab"),strsplit(s,"bab",TRUE))
-})
+
+stri_split(c(s,"ala\nma\nkota"))
+stri_split(s,c("\n"," ","em"))
+stri_split(rep(s,3),c("\n"," "))

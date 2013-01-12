@@ -34,5 +34,5 @@ stri_split <- function(str, split='\n') {
 # stri_split("ala","") != strsplit("ala","")
 #
 # determine: which result is better?
-# strsplit("lal","l") or stri_split("lalal","l")
+# strsplit("lalal","l") or stri_split("lalal","l")
 # 
