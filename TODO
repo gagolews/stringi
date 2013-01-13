@@ -117,7 +117,7 @@ Tests
 (--) stri_length (aka stri_len)
 (--) stri_width
 (+~) Normalization (NFC/NFD/NFKC/NFKD)
-(~~) stri_chartype
+(+~) stri_chartype
 (~~) stri_charname
 
       Unicode Character
