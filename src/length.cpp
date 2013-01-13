@@ -19,26 +19,50 @@
 #include "stringi.h"
 
 
+
+/**
+ * Get the largest number of bytes in its strings
+ * (useful for allocating temporary buffers)
+ * 
+ * if all strings are NA or an empty character vector is given, -1 is returned
+ * 
+ * @param s R character vector
+ * @return maximal number of bytes
+ */
+R_len_t stri__numbytes_max(SEXP s)
+{
+   R_len_t ns = LENGTH(s);
+   if (ns <= 0) return -1;
+   
+   int maxlen = -1;
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP cs = STRING_ELT(s, i);
+      if (cs == NA_STRING) continue;
+      R_len_t cns = LENGTH(cs);
+      if (cns > maxlen) maxlen = cns;
+   }
+   return maxlen;
+}
+
 /** 
- * .... 
+ * Get number of bytes in a string
+ * @param s R object coercible to a character vector
+ * @return integer vector
  */
 SEXP stri_numbytes(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
    
    int n = LENGTH(s); // XLENGTH - LENGTH with long vector support
-   SEXP e;
-   PROTECT(e = allocVector(INTSXP, n));
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, n));
    for (int i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING) {
-         INTEGER(e)[i] = NA_INTEGER;
-      }
-      else {
-         INTEGER(e)[i] = LENGTH(curs);
-      }
+      if (curs == NA_STRING)
+         INTEGER(ret)[i] = NA_INTEGER;
+      else
+         INTEGER(ret)[i] = LENGTH(curs);
    }
-   
    UNPROTECT(1);
-   return e;
+   return ret;
 }

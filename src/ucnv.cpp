@@ -20,7 +20,12 @@
 #include "stringi.h"
 
 
-
+/**
+ * Sets current (default) ICU charset
+ * It given charset is unavailable, an error is raised
+ * @param loc new charset
+ * @return nothing
+ */
 SEXP stri_encset(SEXP enc)
 {
    enc = stri_prepare_arg_string(enc);

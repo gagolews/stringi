@@ -19,7 +19,12 @@
 #include "stringi.h"
 
 
-
+/**
+ * Sets current (default) ICU locale
+ * No checking done here! (R version does that and generates warning if needed)
+ * @param loc new locale
+ * @return nothing
+ */
 SEXP stri_localeset(SEXP loc)
 {
    loc = stri_prepare_arg_string(loc);

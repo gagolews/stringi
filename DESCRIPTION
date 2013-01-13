@@ -40,3 +40,4 @@ Collate:
     'length.R'
     'split.R'
     'uloc.R'
+    'uchar.R'

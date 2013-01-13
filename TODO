@@ -117,6 +117,8 @@ Tests
 (--) stri_length (aka stri_len)
 (--) stri_width
 (+~) Normalization (NFC/NFD/NFKC/NFKD)
+(~~) stri_chartype
+(~~) stri_charname
 
       Unicode Character
       Properties and Names    uchar.h, uscript.h

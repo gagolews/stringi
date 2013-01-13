@@ -107,8 +107,15 @@ SEXP stri_localeinfo(SEXP loc);
 SEXP stri_localelist();
 SEXP stri_localeset(SEXP loc);
 
+// uchar.cpp:
+void stri__uchar_charType(const char* s, int n, int* codes);
+SEXP stri_charname(SEXP s);
+SEXP stri_chartype(SEXP s);
+
+
 // length.cpp
 SEXP stri_numbytes(SEXP s);
+R_len_t stri__numbytes_max(SEXP s);
 
 // wrap.cpp
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
