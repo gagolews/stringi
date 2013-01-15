@@ -47,7 +47,8 @@ SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 
 SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 {
-   // maybe a call to stri_prepare_arg_integer?
+   // maybe a call to stri_prepare_arg_integer? 
+   // i've just meet you, so call me maybe :P
 //   if (LENGTH(spacecost) != 1) error("spacecost should be a vector of length 1");
    
 	int n = LENGTH(count);
@@ -57,22 +58,22 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	for(int i=0;i<n;i++){
 		for(int j=i;j<n;j++){
 			sum=0;
-			for(int k=i;k<=j;k++) //sumujemy koszt slow od i do j -- ENGLISH :)
+			for(int k=i;k<=j;k++) //sum of costs words from i to j
 				sum = sum + INTEGER(count)[k];
 			ct = INTEGER(width)[0]-(j-i)*INTEGER(spacecost)[0]-sum;
-			if(ct<0){ //nie miesci sie, to infinity
+			if(ct<0){ //if the cost is bigger than width, put infinity
 				costm[i*n+j]=std::numeric_limits<double>::infinity();
-			}else //jak miesci to kwadrat i wpisujemy w tablice
+			}else //put squared cost into matrix
 				costm[i*n+j]=ct*ct;
 		}
 	}
-	//i-ty element f to koszt wypisania pierwszych i slow-- ENGLISH :)
+	//i-th element of f - cost of
 	double* f = (double*)R_alloc(n, sizeof(double));
 	int j=0;
-	//gdzie beda space (false) a gdzie nowy wiersz (true)-- ENGLISH :)
+	//where to put space (false) and where break line (true)
 	SEXP space;
 	PROTECT(space = allocVector(LGLSXP, n*n));
-	for(int i=0;i<n;i++) //zerowanie (false'owanie) 
+	for(int i=0;i<n;i++) // put false everywhere
 		for(int j=0;j<n;j++)
 			LOGICAL(space)[i*n+j]=false;
 	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
@@ -85,8 +86,10 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	double* temp = (double*)R_alloc(n, sizeof(double));
 	if(j<n){
 	    for(int i=j;i<n;i++){
-			//tablica pomoze nam szukac min-- ENGLISH :)
-			//temp = new double[i-1]; tablica o rozm i-1 starczy-- ENGLISH :)
+			//to find min we use array "temp"
+			//temp = new double[i-1]; 
+         //in every loop step we need i-1 elements array, but to avoid
+         //multiple allocation we alloc one big array outside the loop
 			temp[0]=f[0]+costm[1*n+i];
 			min=temp[0];
 			w=0;
@@ -103,7 +106,7 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 			LOGICAL(space)[i*n+i] = true;
 		}
 	}
-	//zwracamy ostani wiersz macierzy-- ENGLISH :)
+	//return the last row of the matrix
 	SEXP out;
 	PROTECT(out = allocVector(LGLSXP, n));
 	for(int i=0;i<n;i++)
