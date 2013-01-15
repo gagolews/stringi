@@ -31,6 +31,8 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
    int b = LENGTH(split);
    int max = 0;
    if(a>b) max=a; else max=b;
+   if (max % a != 0 || max % b != 0)
+      warning("longer object length is not a multiple of shorter object length");
    int count = 0;
    SEXP e;
    PROTECT(e = allocVector(VECSXP,max));

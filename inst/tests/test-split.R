@@ -14,6 +14,7 @@ test_that("stri_split", {
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
    s <- rep(s,3)
+   expect_warning(stri_split(s,c("o","a")))
    expect_identical(stri_split(s), strsplit(s,'\n',TRUE))
    expect_identical(stri_split(s,' '),strsplit(s,' ',TRUE))
    expect_identical(stri_split(s,'a'),strsplit(s,'a',TRUE))
