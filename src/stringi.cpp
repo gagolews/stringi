@@ -40,6 +40,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_encode",                  (DL_FUNC)&stri_encode,                 3},
    {"stri_flatten",                 (DL_FUNC)&stri_flatten,                1},
    {"stri_info",                    (DL_FUNC)&stri_info,                   0},
+   {"stri_join",                    (DL_FUNC)&stri_join,                   1},
    {"stri_join2",                   (DL_FUNC)&stri_join2,                  2},
    {"stri_localeinfo",              (DL_FUNC)&stri_localeinfo,             1},
    {"stri_localelist",              (DL_FUNC)&stri_localelist,             0},

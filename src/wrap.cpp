@@ -87,9 +87,10 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	if(j<n){
 	    for(int i=j;i<n;i++){
 			//to find min we use array "temp"
-			//temp = new double[i-1]; 
-         //in every loop step we need i-1 elements array, but to avoid
-         //multiple allocation we alloc one big array outside the loop
+			//temp = new double[i-1]; <- we can use this, because in every
+         //loop step we need i-1 elements array, but to avoid multiple
+         //reallocation we alloc one big array outside the loop and
+         // overwrite each element
 			temp[0]=f[0]+costm[1*n+i];
 			min=temp[0];
 			w=0;

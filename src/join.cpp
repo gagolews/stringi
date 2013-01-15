@@ -115,6 +115,30 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    return e;
 }
 
+SEXP stri_join(SEXP s)
+{
+   int slen = LENGTH(s);
+   int max = 0;
+   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
+   for(int i=0;i<slen;++i){
+      //prepare each element of the list
+      SET_VECTOR_ELT(s,i,stri_prepare_arg_string(VECTOR_ELT(s,i)));
+      //save length of each element for further operations
+      elementslen[i] = LENGTH(VECTOR_ELT(s,i));
+      //check maximum size
+      if(max < elementslen[i]) max = elementslen[i];
+   }
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP,max));
+   for(int i=0;i<max;++i){
+      for(int j=0;j<slen;++j){
+         //join strings from each list element
+      }
+      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(s,i%slen),i%elementslen[i%slen]));
+   }
+   UNPROTECT(1);
+   return e;
+}
 
 /** TO DO: Encoding marking!
 

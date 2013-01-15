@@ -78,6 +78,7 @@ SEXP stri_dup(SEXP s, SEXP c);
 
 // join.cpp:
 SEXP stri_flatten(SEXP s);
+SEXP stri_join(SEXP s);
 SEXP stri_join2(SEXP s1, SEXP s2);
 
 // compare.cpp:

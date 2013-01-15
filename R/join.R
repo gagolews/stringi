@@ -34,7 +34,16 @@
 }
 
 
-
+#' Join character vectors
+#' 
+#' 
+#' 
+#' @param sep separator
+#' @param collapse collapse
+#' @export
+stri_join <- function(...,sep="",collapse=NULL){
+   .Call("stri_join", list(...), PACKAGE="stringi")
+}
 
 
 
