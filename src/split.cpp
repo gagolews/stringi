@@ -39,7 +39,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
    SEXP e;
    PROTECT(e = allocVector(VECSXP,max));
    SEXP curs,temp;
-   int k=0,curslen,spllen,st,end,where;
+   int k=0,curslen,spllen,st,add,where;
    //omitempty is bool, but bool* didn't work, so i changed it into
    //int* and now it's fine
    int* omit = LOGICAL(omitempty);
@@ -51,28 +51,29 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
       const char* spl = CHAR(STRING_ELT(split, i % b));
       spllen = LENGTH(STRING_ELT(split,i % b));
    	count=0; //count how long vector is needed
-      st=0;
+      st=0; add=1;
    	for(int j=0; j<curslen; ++j){
          k=0;
          while(string[j+k]==spl[k] && k<spllen)
             k++;
    		if(k==spllen){
-            printf("j=%d k=%d curslen=%d st=%d\n",j,k,curslen,st);
-            if(!omit[i % c] || j > st)// && j+k<curslen))
+            //printf("j=%d k=%d curslen=%d st=%d\n",j,k,curslen,st);
+            if(!omit[i % c] || j > st)
             {
-               printf("j=%d k=%d curslen=%d st=%d count++\n",j,k,curslen,st);
+               //printf("j=%d k=%d curslen=%d st=%d count++\n",j,k,curslen,st);
                count++;
             }
             st=j+k;
             j=j+k-1;
+            if(omit[i % c] && st==curslen)
+               add=0;
    		}
          // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
          // don't increment count in such case (?)
          // BT: IMO we should not remove empty line in this function. 
          // we have stri_trim to do such things...
    	}
-      printf("%d",count);
-   	PROTECT(temp = allocVector(STRSXP,count+1));
+   	PROTECT(temp = allocVector(STRSXP,count+add));
    	st=0;
    	where=0;
    	for(int j=0; j<curslen; ++j){
