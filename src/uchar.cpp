@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -76,14 +76,79 @@ SEXP stri_chartype(SEXP s)
 }
 
 
-/** Get character names
- * @param s character vector
- * @return list of character vectors
- * @TODO other encodings..................
+/** Get character categories
+ * Based on ICU4C/uchar.h
+ * U_UNASSIGNED (id=0) is omitted
+ * @return list of 3 vectors (integer, character, character)
  */
-SEXP stri_charname(SEXP s)
+SEXP stri_charcategories()
 {
-   s = stri_prepare_arg_string(s);
-   error("not implemented yet");
-   return s;
+
+   
+   
+   
+   
+   
+ 
+   const R_len_t numcolumns = 3;
+   const R_len_t numcategories = U_CHAR_CATEGORY_COUNT-1;
+   SEXP vals;
+   SEXP names;
+   PROTECT(names = allocVector(STRSXP, numcolumns));
+   SET_STRING_ELT(names, 0, mkChar("Identifier"));
+   SET_STRING_ELT(names, 1, mkChar("CategoryFull"));
+   SET_STRING_ELT(names, 2, mkChar("Category"));
+   
+   SEXP id;
+   SEXP cat;
+   SEXP cat2;
+   PROTECT(id   = allocVector(INTSXP, numcategories));
+   PROTECT(cat  = allocVector(STRSXP, numcategories));
+   PROTECT(cat2 = allocVector(STRSXP, numcategories));
+   
+#define STRI_CHARCATEGORIES_CREATE(x, y, z) \
+   INTEGER(id)[x-1] = x; \
+   SET_STRING_ELT(cat,  x-1, mkChar(y)); \
+   SET_STRING_ELT(cat2, x-1, mkChar(z)); \
+
+  
+//STRI_CHARCATEGORIES_CREATE( U_UNASSIGNED,             "U_UNASSIGNED",               "Cn" )
+STRI_CHARCATEGORIES_CREATE( U_UPPERCASE_LETTER,       "U_UPPERCASE_LETTER",         "Lu" )
+STRI_CHARCATEGORIES_CREATE( U_LOWERCASE_LETTER,       "U_LOWERCASE_LETTER",         "Ll" )
+STRI_CHARCATEGORIES_CREATE( U_TITLECASE_LETTER,       "U_TITLECASE_LETTER",         "Lt" )
+STRI_CHARCATEGORIES_CREATE( U_MODIFIER_LETTER,        "U_MODIFIER_LETTER",          "Lm" )
+STRI_CHARCATEGORIES_CREATE( U_OTHER_LETTER,           "U_OTHER_LETTER",             "Lo" )
+STRI_CHARCATEGORIES_CREATE( U_NON_SPACING_MARK,       "U_NON_SPACING_MARK",         "Mn" )        
+STRI_CHARCATEGORIES_CREATE( U_ENCLOSING_MARK,         "U_ENCLOSING_MARK",           "Me" )
+STRI_CHARCATEGORIES_CREATE( U_COMBINING_SPACING_MARK, "U_COMBINING_SPACING_MARK",   "Mc" )
+STRI_CHARCATEGORIES_CREATE( U_DECIMAL_DIGIT_NUMBER,   "U_DECIMAL_DIGIT_NUMBER",     "Nd" )
+STRI_CHARCATEGORIES_CREATE( U_LETTER_NUMBER,          "U_LETTER_NUMBER",            "Nl" )
+STRI_CHARCATEGORIES_CREATE( U_OTHER_NUMBER,           "U_OTHER_NUMBER",             "No" )
+STRI_CHARCATEGORIES_CREATE( U_SPACE_SEPARATOR,        "U_SPACE_SEPARATOR",          "Zs" )
+STRI_CHARCATEGORIES_CREATE( U_LINE_SEPARATOR,         "U_LINE_SEPARATOR",           "Zl" )
+STRI_CHARCATEGORIES_CREATE( U_PARAGRAPH_SEPARATOR,    "U_PARAGRAPH_SEPARATOR",      "Zp" )
+STRI_CHARCATEGORIES_CREATE( U_CONTROL_CHAR,           "U_CONTROL_CHAR",             "Cc" )
+STRI_CHARCATEGORIES_CREATE( U_FORMAT_CHAR,            "U_FORMAT_CHAR",              "Cf" )
+STRI_CHARCATEGORIES_CREATE( U_PRIVATE_USE_CHAR,       "U_PRIVATE_USE_CHAR",         "Co" )
+STRI_CHARCATEGORIES_CREATE( U_SURROGATE,              "U_SURROGATE",                "Cs" )
+STRI_CHARCATEGORIES_CREATE( U_DASH_PUNCTUATION,       "U_DASH_PUNCTUATION",         "Pd" )
+STRI_CHARCATEGORIES_CREATE( U_START_PUNCTUATION,      "U_START_PUNCTUATION",        "Ps" )
+STRI_CHARCATEGORIES_CREATE( U_END_PUNCTUATION,        "U_END_PUNCTUATION",          "Pe" )
+STRI_CHARCATEGORIES_CREATE( U_CONNECTOR_PUNCTUATION,  "U_CONNECTOR_PUNCTUATION",    "Pc" )
+STRI_CHARCATEGORIES_CREATE( U_OTHER_PUNCTUATION,      "U_OTHER_PUNCTUATION",        "Po" )
+STRI_CHARCATEGORIES_CREATE( U_MATH_SYMBOL,            "U_MATH_SYMBOL",              "Sm" )
+STRI_CHARCATEGORIES_CREATE( U_CURRENCY_SYMBOL,        "U_CURRENCY_SYMBOL",          "Sc" )
+STRI_CHARCATEGORIES_CREATE( U_MODIFIER_SYMBOL,        "U_MODIFIER_SYMBOL",          "Sk" )
+STRI_CHARCATEGORIES_CREATE( U_OTHER_SYMBOL,           "U_OTHER_SYMBOL",             "So" )
+STRI_CHARCATEGORIES_CREATE( U_INITIAL_PUNCTUATION,    "U_INITIAL_PUNCTUATION",      "Pi" )
+STRI_CHARCATEGORIES_CREATE( U_FINAL_PUNCTUATION,      "U_FINAL_PUNCTUATION",        "Pf" )
+
+   PROTECT(vals = allocVector(VECSXP, numcolumns));
+   SET_VECTOR_ELT(vals, 0, id);
+   SET_VECTOR_ELT(vals, 1, cat);
+   SET_VECTOR_ELT(vals, 2, cat2);
+   
+   setAttrib(vals, R_NamesSymbol, names);
+   UNPROTECT(5);
+   return vals;
 }

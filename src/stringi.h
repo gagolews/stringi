@@ -110,7 +110,7 @@ SEXP stri_localeset(SEXP loc);
 
 // uchar.cpp:
 void stri__uchar_charType(const char* s, int n, int* codes);
-SEXP stri_charname(SEXP s);
+SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
 
 
