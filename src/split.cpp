@@ -84,7 +84,12 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
             j=j+k-1; //if match, then there is no need to check next k el.
    		}
    	}
-      SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
+      //with this line, stri_split will return vector equal to str_split
+      //stri_split("ala","a")==strsplit("ala","a")==c("","l")
+      //without if(...) line we get
+      //stri_split("ala","a")==str_split("ala","a")==c("","l","")
+      if(curslen>st)
+         SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);
    }
