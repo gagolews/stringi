@@ -18,7 +18,7 @@
 
 
 
-#' Get character types
+#' Get character types (general character category identifier)
 #'
 #' Returns the general category value for each *code point* in each string
 #' Same as java.lang.Character.getType()
@@ -30,7 +30,7 @@ stri_chartype <- function(s) {
    .Call("stri_chartype", s, PACKAGE="stringi")
 }
 
-#' Get character categories
+#' Get general character categories
 #'
 #' Returns the "modern" names of each Unicode character category
 #' Based on ICU4C/uchar.h
@@ -44,3 +44,11 @@ stri_charcategories <- function() {
    rownames(categories) <- categories[,2]
    categories[,-2]
 }
+
+
+## ' test
+## UCHAR_CATEGORY_Lu <- bitShiftL(1, x)
+## ...
+## general property - negative
+
+
