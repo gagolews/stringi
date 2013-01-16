@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -110,7 +110,7 @@ SEXP stri_localeset(SEXP loc);
 
 // uchar.cpp:
 void stri__uchar_charType(const char* s, int n, int* codes);
-SEXP stri_charname(SEXP s);
+SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
 
 

@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus
+## Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -18,23 +18,37 @@
 
 
 
-#' Get character types
+#' Get character types (general character category identifier)
 #'
 #' Returns the general category value for each *code point* in each string
 #' Same as java.lang.Character.getType()
 #' @param s character vector
 #' @return list of numeric vectors
+#' @seealso \code{\link{stri_charcategories}}
 #' @export
 stri_chartype <- function(s) {
    .Call("stri_chartype", s, PACKAGE="stringi")
 }
 
-#' Get character names
+#' Get general character categories
 #'
-#' Returns the "modern" names of each character in each string
-#' @param s character vector
-#' @return list of character vectors
+#' Returns the "modern" names of each Unicode character category
+#' Based on ICU4C/uchar.h
+#' U_UNASSIGNED (id=0) is omitted
+#' @return data frame with 2 columns...
+#' @seealso \code{\link{stri_chartype}}
 #' @export
-stri_charname <- function(s) {
-   .Call("stri_charname", s, PACKAGE="stringi")
+stri_charcategories <- function() {
+   categories <- as.data.frame(.Call("stri_charcategories", PACKAGE="stringi"),
+      stringsAsFactors=FALSE)
+   rownames(categories) <- categories[,2]
+   categories[,-2]
 }
+
+
+## ' test
+## UCHAR_CATEGORY_Lu <- bitShiftL(1, x)
+## ...
+## general property - negative
+
+

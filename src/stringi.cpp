@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -31,7 +31,7 @@ static const R_CallMethodDef cCallMethods[] = {
    
    {"stri_casecompare",             (DL_FUNC)&stri_casecompare,            2},
    {"stri_casefold",                (DL_FUNC)&stri_casefold,               2},
-   {"stri_charname",                (DL_FUNC)&stri_charname,               1},
+   {"stri_charcategories",          (DL_FUNC)&stri_charcategories,         0},
    {"stri_chartype",                (DL_FUNC)&stri_chartype,               1},
    {"stri_dup",                     (DL_FUNC)&stri_dup,                    2},
    {"stri_enclist",                 (DL_FUNC)&stri_enclist,                0},

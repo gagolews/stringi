@@ -12,8 +12,10 @@ test_that("stri_chartype", {
 
 
 
-# test_that("stri_charname", {
-#    expect_equivalent(stri_charname(character(0)), NULL)
-#    expect_equivalent(stri_charname(c("", NA_character_)),
-#                      list(integer(0), NA_character_))
-# })
+test_that("stri_charcategories", {
+   categories <- stri_charcategories()
+   expect_equivalent(nrow(categories), 29)
+   expect_equivalent(ncol(categories), 2)
+   expect_equivalent(categories$Category[1], "Lu")
+   expect_equivalent(categories$Category[2], "Ll")
+})
