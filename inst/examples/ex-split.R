@@ -14,3 +14,4 @@ s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 stri_split(c(s,"ala\nma\nkota"))
 stri_split(s,c("\n"," ","em"))
 stri_split(rep(s,3),c("\n"," "))
+stri_split("babbab","b",omitempty = c(T,F))
