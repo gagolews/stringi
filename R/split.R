@@ -33,9 +33,9 @@
 #' stri_split(s,"it")
 #' 
 #' @export
-stri_split <- function(str, split='\n') {
+stri_split <- function(str, split='\n', omitempty=FALSE) {
 	# prepare_arg done internally
-	.Call("stri_split_fixed", str, split, PACKAGE="stringi")
+	.Call("stri_split_fixed", str, split, omitempty, PACKAGE="stringi")
 }
 
 # TODO

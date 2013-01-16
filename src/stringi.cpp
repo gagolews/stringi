@@ -48,7 +48,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_numbytes",                (DL_FUNC)&stri_numbytes,               1},
    {"stri_prepare_arg_string",      (DL_FUNC)&stri_prepare_arg_string,     1},
    {"stri_prepare_arg_integer",     (DL_FUNC)&stri_prepare_arg_integer,    1},
-   {"stri_split_fixed",					(DL_FUNC)&stri_split_fixed,				2},
+   {"stri_split_fixed",					(DL_FUNC)&stri_split_fixed,				3},
    {"stri_trim",                    (DL_FUNC)&stri_trim,                   1},
    {"stri_unicode_normalization",   (DL_FUNC)&stri_unicode_normalization,  2},
    {"stri_wrap_greedy",             (DL_FUNC)&stri_wrap_greedy,            3},

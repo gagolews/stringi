@@ -23,21 +23,26 @@
 /** 
  * .... 
  */
-SEXP stri_split_fixed(SEXP s, SEXP split)
+SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
 {
    s = stri_prepare_arg_string(s);
    split = stri_prepare_arg_string(split);
    int a = LENGTH(s);
    int b = LENGTH(split);
-   int max = 0;
-   if(a>b) max=a; else max=b;
-   if (max % a != 0 || max % b != 0)
+   int c = LENGTH(omitempty);
+   int max = a;
+   if(b>max) max=b;
+   if(c>max) max=c;
+   if (max % a != 0 || max % b != 0 || max % c != 0)
       warning("longer object length is not a multiple of shorter object length");
    int count = 0;
    SEXP e;
    PROTECT(e = allocVector(VECSXP,max));
    SEXP curs,temp;
    int k=0,curslen,spllen,st,end,where;
+   //omitempty is bool, but bool* didn't work, so i changed it into
+   //int* and now it's fine
+   int* omit = LOGICAL(omitempty);
    for (int i=0; i<max; ++i) {
       count = 0;
    	curs = STRING_ELT(s, i % a);
@@ -45,13 +50,20 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
       const char* string = CHAR(curs);
       const char* spl = CHAR(STRING_ELT(split, i % b));
       spllen = LENGTH(STRING_ELT(split,i % b));
-   	count=0;
+   	count=0; //count how long vector is needed
+      st=0;
    	for(int j=0; j<curslen; ++j){
          k=0;
          while(string[j+k]==spl[k] && k<spllen)
             k++;
    		if(k==spllen){
-            count++;
+            printf("j=%d k=%d curslen=%d st=%d\n",j,k,curslen,st);
+            if(!omit[i % c] || j > st)// && j+k<curslen))
+            {
+               printf("j=%d k=%d curslen=%d st=%d count++\n",j,k,curslen,st);
+               count++;
+            }
+            st=j+k;
             j=j+k-1;
    		}
          // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
@@ -59,6 +71,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
          // BT: IMO we should not remove empty line in this function. 
          // we have stri_trim to do such things...
    	}
+      printf("%d",count);
    	PROTECT(temp = allocVector(STRSXP,count+1));
    	st=0;
    	where=0;
@@ -68,8 +81,10 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
          while(string[j+k]==spl[k] && k<spllen)
             k++;
       	if(k==spllen){
-   			end=j;
-   			SET_STRING_ELT(temp,where, mkCharLen(string+st, end-st));
+            if(!omit[i % c] || j > st){
+               SET_STRING_ELT(temp,where, mkCharLen(string+st, j-st));
+               ++where;
+            }
             // MG: http://www.cplusplus.com/reference/cstring/
             //given start and end - index in string
             //we can do:
@@ -80,7 +95,6 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
             // - it returns a "scalar" string that may be copied into STRSXP (with SET_STRING_ELT)
             // good work - i'm glad it's challenging :)
    			st=j+k;
-   			++where;
             j=j+k-1; //if match, then there is no need to check next k el.
    		}
    	}
@@ -88,7 +102,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split)
       //stri_split("ala","a")==strsplit("ala","a")==c("","l")
       //without if(...) line we get
       //stri_split("ala","a")==str_split("ala","a")==c("","l","")
-      if(curslen>st)
+      if(!omit[i % c] || curslen>st)
          SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);

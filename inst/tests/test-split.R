@@ -22,4 +22,5 @@ test_that("stri_split", {
    expect_identical(stri_split(s,"rem"),strsplit(s,"rem",TRUE))
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_split(s,"bab"),strsplit(s,"bab",TRUE))
+   stri_split("lalal","l",c(T,F))
 })
