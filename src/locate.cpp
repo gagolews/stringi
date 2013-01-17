@@ -19,6 +19,7 @@
 #include "stringi.h"
 
 
+
 /** Locate all occurences of character class in one string
  *  @param s string
  *  @param n numbytes for s

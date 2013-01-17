@@ -138,7 +138,7 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
       err = U_ZERO_ERROR;
       UnicodeString trans(CHAR(si), ni, uconv_from, err); // to UTF-16
       if (U_FAILURE(err)) {
-         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         warning("could not convert string #%d", i+1);
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
@@ -161,7 +161,7 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
       }
 
       if (buflen_need < 0 || U_FAILURE(err)) {
-         warning(SSTR("could not convert string #" << (i+1)).c_str());
+         warning("could not convert string #%d", i+1);
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
@@ -205,9 +205,9 @@ bool stri__ucnv_hasASCIIsubset(UConverter* conv)
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
          err = U_ZERO_ERROR;
-         warning(SSTR("Cannot convert ASCII character 0x" << std::hex
-            << (int)(unsigned char)ascii_last[0]
-            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
          return false;
       }
       
@@ -219,9 +219,6 @@ bool stri__ucnv_hasASCIIsubset(UConverter* conv)
       if (ascii_last != ascii1-1
          || U8_LENGTH(c) != 1
          || c != (int)ascii_last[0]) {
-//         warning(SSTR("Problematic character #"
-//            << (int)(unsigned char)ascii_last[0]
-//            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
          return false;
       }
       ascii_last = ascii1;
@@ -259,9 +256,9 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
    while (ascii1 < ascii2) {
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
-         warning(SSTR("Cannot convert ASCII character #"
-            << (int)(unsigned char)ascii_last[0]
-            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         warning("Cannot convert character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
          return false;
       }
       
@@ -273,10 +270,10 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       // by a single UTF-16 code point
       UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
       if (!U16_IS_SINGLE(lead)) {
-         warning(SSTR("Problematic character 0x" << std::hex
-            << (int)(unsigned char)ascii_last[0]
-            << " -> \\u" << c
-            << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+         warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            c,
+            ucnv_getName(conv, &err));
          return false;
       }
       
@@ -284,17 +281,18 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       if (c != UCHAR_REPLACEMENT) {    
          ucnv_fromUChars(conv, buf, buflen, (UChar*)&c, 1, &err);
          if (U_FAILURE(err)) {
-            warning(SSTR("Cannot convert ASCII character 0x" << std::hex
-               << (int)(unsigned char)ascii_last[0]
-               << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+            warning("Cannot convert character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
             return false;
          }
          
          if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
-            warning(SSTR("Problematic character 0x" << std::hex 
-               << (int)(unsigned char)ascii_last[0]
-               << " -> \\u" << c << " -> 0x" << (int)buf[0]
-               << " (encoding=" << ucnv_getName(conv, &err) << ")").c_str());
+            warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
+               (int)(unsigned char)ascii_last[0],
+               c,
+               (int)buf[0],
+               ucnv_getName(conv, &err));
             return false;
          }
       }      

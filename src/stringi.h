@@ -57,10 +57,6 @@ using namespace icu;
 // use LENGTH instead
 #undef length
 
-/// Create a string object (use SSTR(x).c_str()) to get char*)
-/// useful for generating errors/warnings
-#define SSTR(x) (dynamic_cast<ostringstream&>(ostringstream() << std::dec << x).str())
-
 /// Unicode replacement character
 #define UCHAR_REPLACEMENT 0xFFFD
 
