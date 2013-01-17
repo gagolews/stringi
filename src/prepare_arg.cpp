@@ -76,7 +76,9 @@ SEXP stri_prepare_arg_integer(SEXP x)
  */
 SEXP stri_prepare_arg_logical(SEXP x)
 {
-   if (isFactor(x)) // factors must be checked first
+   if (isLogical(x))
+      return x; // return as-is
+   if (isFactor(x))
    {
       SEXP call;
       PROTECT(call = lang2(install("as.character"), x));
@@ -85,8 +87,6 @@ SEXP stri_prepare_arg_logical(SEXP x)
       return coerceVector(x,LGLSXP);
    }
    
-   if (isLogical(x))
-      return x; // return as-is
    if (isVectorAtomic(x))
       return coerceVector(x,LGLSXP);
       
