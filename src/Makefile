@@ -3,7 +3,6 @@
 
 
 
-# ...t.b.d...
 SRCS        =  stringi.cpp \
                common.cpp \
                prepare_arg.cpp \
