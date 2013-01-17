@@ -23,4 +23,6 @@ test_that("stri_split", {
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_split(s,"bab"),strsplit(s,"bab"))
    expect_identical(stri_split("lalal","l"),str_split("lalal","l"))
+   
+   expect_identical(stri_split(NA,"A"),list(NA_character_))
 })
