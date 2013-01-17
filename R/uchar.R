@@ -48,11 +48,22 @@ stri_charcategories <- function() {
 
 #' Get Unicode character General Category Mask
 #' @param name One- or two-letter category name
-#' @return integer mask
+#' @return internal code
 #' @export
-stri_char_getcategorymask <- function(name)
+stri_char_getcategoryid <- function(name)
 {
-   .Call("stri_char_getcategorymask", name, PACKAGE="stringi")  
+   .Call("stri_char_getcategoryid", name, PACKAGE="stringi")  
+}
+
+
+
+#' Get Unicode character binary property identifier
+#' @param name Property name
+#' @return internal code
+#' @export
+stri_char_getpropertyid <- function(name)
+{
+   .Call("stri_char_getpropertyid", name, PACKAGE="stringi")  
 }
 
 

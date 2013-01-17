@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -60,3 +60,16 @@ SEXP stri__mkStringEmpty(R_len_t howmany)
    UNPROTECT(1);
    return ret;   
 }
+
+
+/** Convert each ascii lower case letter to upper case
+ *  Useful for checking options
+ *  @param x string [IN/OUT], null-terminated
+ */
+void stri__asciiUpperCase(char* x)
+{
+   for (int i=0; x[i] != '\0'; ++i)
+      if (x[i] >= 'a' && x[i] <= 'z')
+         x[i] -= 'a'-'A';
+}
+

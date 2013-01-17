@@ -24,8 +24,12 @@
 // for non-DEBUG mode:
 // #define NDEBUG
 
+
+#ifdef U_CHARSET_IS_UTF8
 // do not enable this:
-//#define U_CHARSET_IS_UTF8 1
+#undef U_CHARSET_IS_UTF8
+#endif
+
 
 #include <iostream>
 #include <unicode/uchar.h>
@@ -53,8 +57,11 @@ using namespace icu;
 // use LENGTH instead
 #undef length
 
-
+/// Create a string object (use SSTR(x).c_str()) to get char*)
+/// useful for generating errors/warnings
 #define SSTR(x) (dynamic_cast<ostringstream&>(ostringstream() << std::dec << x).str())
+
+/// Unicode replacement character
 #define UCHAR_REPLACEMENT 0xFFFD
 
 // ------------------------------------------------------------------------
@@ -63,6 +70,7 @@ using namespace icu;
 // common.cpp
 SEXP stri__mkStringNA(R_len_t howmany);
 SEXP stri__mkStringEmpty(R_len_t howmany);
+void stri__asciiUpperCase(char* x);
 
 // trim.cpp:
 SEXP stri_trim(SEXP s);
@@ -109,11 +117,17 @@ SEXP stri_localelist();
 SEXP stri_localeset(SEXP loc);
 
 // uchar.cpp:
+#define STRI__UCHAR_BINPROP_MASK      0xff000000
+#define STRI__UCHAR_IS_BINPROP(x)     ((x & STRI__UCHAR_BINPROP_MASK) == STRI__UCHAR_BINPROP_MASK)
+#define STRI__UCHAR_CREATE_BINPROP(x) (x  | STRI__UCHAR_BINPROP_MASK)
+#define STRI__UCHAR_GET_BINPROP(x)    (x & ~(STRI__UCHAR_BINPROP_MASK))
+#define STRI__UCHAR_IS_GC_MASK(x)     (!STRI__UCHAR_IS_BINPROP(x))
+
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
-SEXP stri_char_getcategorymask(SEXP x);
-SEXP stri_char_getbinaryproperty(SEXP x);
+SEXP stri_char_getcategoryid(SEXP x);
+SEXP stri_char_getpropertyid(SEXP x);
 
 
 // length.cpp

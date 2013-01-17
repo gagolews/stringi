@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,10 +24,12 @@
    if s is NA the result will be NA
    
    TO DO: Encoding marking!
-   TO DO: USE C API (no UnicodeString....)
+   TO DO: USE C API (no UnicodeString....) !!!! (this should be rewritten)
 */
 SEXP stri_trim(SEXP s)
 {
+   warning("stri_trim: rewrite!");
+   
    s = stri_prepare_arg_string(s); // prepare string argument
    
    R_len_t ns = LENGTH(s);
