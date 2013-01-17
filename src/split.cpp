@@ -27,6 +27,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
 {
    s = stri_prepare_arg_string(s);
    split = stri_prepare_arg_string(split);
+   omitempty = stri_prepare_arg_logical(omitempty);
    int a = LENGTH(s);
    int b = LENGTH(split);
    int c = LENGTH(omitempty);
