@@ -18,6 +18,7 @@ all: stringi.cpp prepare_arg.cpp ICU_settings.cpp trim.cpp \
       uloc.cpp \
       uchar.cpp \
       length.cpp \
+      locate.cpp \
 		split.cpp \
 		wrap.cpp \
       -O2 -licuuc -licudata -licui18n -licuio -licule -liculx \

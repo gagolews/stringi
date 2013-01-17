@@ -43,3 +43,4 @@ Collate:
     'split.R'
     'uloc.R'
     'uchar.R'
+    'locate.R'

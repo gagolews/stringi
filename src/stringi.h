@@ -71,6 +71,7 @@ using namespace icu;
 SEXP stri__mkStringNA(R_len_t howmany);
 SEXP stri__mkStringEmpty(R_len_t howmany);
 void stri__asciiUpperCase(char* x);
+SEXP stri__emptyList();
 
 // trim.cpp:
 SEXP stri_trim(SEXP s);
@@ -141,6 +142,11 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
 // split.cpp
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
 
+// locate.cpp
+SEXP stri_locate_all_class(SEXP s, SEXP c);
+void stri__locate_all_class1(const char* s, int n, int c,
+   int* start, int* end, int& o);
+   
 // ------------------------------------------------------------------------
 
 

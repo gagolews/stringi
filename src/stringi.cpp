@@ -47,6 +47,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_localeinfo",              (DL_FUNC)&stri_localeinfo,             1},
    {"stri_localelist",              (DL_FUNC)&stri_localelist,             0},
    {"stri_localeset",               (DL_FUNC)&stri_localeset,              1},
+   {"stri_locate_all_class",        (DL_FUNC)&stri_locate_all_class,       2},
    {"stri_numbytes",                (DL_FUNC)&stri_numbytes,               1},
    {"stri_prepare_arg_string",      (DL_FUNC)&stri_prepare_arg_string,     1},
    {"stri_prepare_arg_integer",     (DL_FUNC)&stri_prepare_arg_integer,    1},

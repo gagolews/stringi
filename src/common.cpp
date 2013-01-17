@@ -73,3 +73,12 @@ void stri__asciiUpperCase(char* x)
          x[i] -= 'a'-'A';
 }
 
+
+/** Returns an empty R list
+ *  @return list()
+ */
+SEXP stri__emptyList()
+{
+   SEXP ret = allocVector(VECSXP, 0);
+   return ret;
+}
