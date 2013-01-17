@@ -23,14 +23,13 @@
 /** Locate all occurences of character class in one string
  *  @param s string
  *  @param n numbytes for s
- *  @param cls class identifier
- *  - use macros: STRI__UCHAR_IS_BINPROP, STRI__UCHAR_GET_BINPROP
- *    and/or STRI__UCHAR_IS_GC_MASK
+ *  @param cls class identifier (internal)
+ *  - use macros: STRI__UCHAR_IS_ANY_BINPROP, STRI__UCHAR_IS_ANY_GCMASK, ...
  * @param start [out] indices  (0-based)
  * @param end [out] indices (0-based)
  * @param o [out] number of occurences (compact subsequences are merged)
  */
-void stri__locate_all_class1(const char* s, int n, int cls,
+void stri__locate_all_class1(const char* s, int n, int32_t* cls,
    int* start, int* end, int& o)
 {
    int i;
@@ -56,16 +55,36 @@ void stri__locate_all_class1(const char* s, int n, int cls,
             newsubseq = true;                        \
       }
 
-   if (STRI__UCHAR_IS_GC_MASK(cls)) {
-      // cls = cls; General Category masks are stored as-is
-      
-      STRI__LOCATE_ALL_CLASS1_DO((U_GET_GC_MASK(chr) & cls) != 0)
+//   cerr << cls[0] << " " << cls[1] << endl;
+//   cerr << STRI__UCHAR_IS_MATCHING_GCMASK(cls);
+//   cerr << STRI__UCHAR_IS_COMPLEMENT_GCMASK(cls);
+//   cerr << STRI__UCHAR_IS_MATCHING_BINPROP(cls);
+//   cerr << STRI__UCHAR_IS_COMPLEMENT_BINPROP(cls);
+//   cerr << endl;
+   
+   
+   if (STRI__UCHAR_IS_MATCHING_GCMASK(cls)) {
+      // General Category (matching)
+      int mask = STRI__UCHAR_GET_MATCHING_GCMASK(cls);
+      STRI__LOCATE_ALL_CLASS1_DO((U_GET_GC_MASK(chr) & mask) != 0)
    }
-   else { // STRI__UCHAR_IS_BINPROP
-      cls = STRI__UCHAR_GET_BINPROP(cls); // this need to be recoded
-
-      STRI__LOCATE_ALL_CLASS1_DO(u_hasBinaryProperty(chr, (UProperty)cls))      
+   else if (STRI__UCHAR_IS_COMPLEMENT_GCMASK(cls)) {
+      // General Category (complement)
+      int mask = STRI__UCHAR_GET_COMPLEMENT_GCMASK(cls);
+      STRI__LOCATE_ALL_CLASS1_DO((U_GET_GC_MASK(chr) & mask) == 0)
    }
+   else if (STRI__UCHAR_IS_MATCHING_BINPROP(cls)) {
+      // Binary property (matching)
+      UProperty prop = (UProperty)STRI__UCHAR_GET_MATCHING_BINPROP(cls);
+      STRI__LOCATE_ALL_CLASS1_DO(u_hasBinaryProperty(chr, prop))
+   }
+   else if (STRI__UCHAR_IS_COMPLEMENT_BINPROP(cls)) {
+      // Binary property (complement)
+      UProperty prop = (UProperty)STRI__UCHAR_GET_COMPLEMENT_BINPROP(cls);
+      STRI__LOCATE_ALL_CLASS1_DO(!u_hasBinaryProperty(chr, prop))
+   }
+   else
+      error("incorrect class identifier");
 }
 
 
@@ -83,6 +102,9 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0) return stri__emptyList();
+   if (nc % STRI__UCHAR_CLASS_LENGTH != 0)
+      error("incorrect class identifier");
+   nc /= STRI__UCHAR_CLASS_LENGTH;
    
    R_len_t nout = max(ns, nc);
    if (nout % ns != 0 || nout % nc != 0)
@@ -109,11 +131,11 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    
    for (R_len_t i=0; i<nout; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
-      R_len_t curc = cc[i%nc];
+      int32_t* curc = cc + STRI__UCHAR_CLASS_LENGTH*(i%nc);
       R_len_t cursl = LENGTH(curs);
 
       
-      if (curs == NA_STRING || curc == NA_INTEGER || cursl == 0) {
+      if (curs == NA_STRING || cursl == 0) {
          PROTECT(ans = allocMatrix(INTSXP, 0, 2));
       }
       else {

@@ -115,11 +115,42 @@ SEXP stri_localelist();
 SEXP stri_localeset(SEXP loc);
 
 // uchar.cpp:
-#define STRI__UCHAR_BINPROP_MASK      0xff000000
-#define STRI__UCHAR_IS_BINPROP(x)     ((x & STRI__UCHAR_BINPROP_MASK) == STRI__UCHAR_BINPROP_MASK)
-#define STRI__UCHAR_CREATE_BINPROP(x) (x  | STRI__UCHAR_BINPROP_MASK)
-#define STRI__UCHAR_GET_BINPROP(x)    (x & ~(STRI__UCHAR_BINPROP_MASK))
-#define STRI__UCHAR_IS_GC_MASK(x)     (!STRI__UCHAR_IS_BINPROP(x))
+#define STRI__UCHAR_COMPLEMENT_MASK      0x40000000
+#define STRI__UCHAR_NOTUSED_MASK         0xffffffff
+#define STRI__UCHAR_CLASS_LENGTH         2
+
+#define STRI__UCHAR_IS_ANY_BINPROP(x) \
+   (((x)[0] == STRI__UCHAR_NOTUSED_MASK) && ((x)[1] != STRI__UCHAR_NOTUSED_MASK))
+#define STRI__UCHAR_IS_MATCHING_BINPROP(x) \
+   ((STRI__UCHAR_IS_ANY_BINPROP(x)) && (((x)[1] & (~STRI__UCHAR_COMPLEMENT_MASK)) == (x)[1]))
+#define STRI__UCHAR_IS_COMPLEMENT_BINPROP(x) \
+   ((STRI__UCHAR_IS_ANY_BINPROP(x)) && (((x)[1] & STRI__UCHAR_COMPLEMENT_MASK) == STRI__UCHAR_COMPLEMENT_MASK))
+   
+#define STRI__UCHAR_CREATE_MATCHING_BINPROP(x,c) \
+   { (x)[0] = STRI__UCHAR_NOTUSED_MASK; (x)[1] = c; }
+#define STRI__UCHAR_CREATE_COMPLEMENT_BINPROP(x,c) \
+   { (x)[0] = STRI__UCHAR_NOTUSED_MASK; (x)[1] = (c | STRI__UCHAR_COMPLEMENT_MASK); }
+
+#define STRI__UCHAR_GET_MATCHING_BINPROP(x)         ((x)[1])
+#define STRI__UCHAR_GET_COMPLEMENT_BINPROP(x)       ((x)[1] & (~STRI__UCHAR_COMPLEMENT_MASK))
+
+
+#define STRI__UCHAR_IS_ANY_GCMASK(x) \
+   (((x)[1] == STRI__UCHAR_NOTUSED_MASK) && ((x)[0] != STRI__UCHAR_NOTUSED_MASK))
+#define STRI__UCHAR_IS_MATCHING_GCMASK(x) \
+   ((STRI__UCHAR_IS_ANY_GCMASK(x)) && (((x)[0] & (~STRI__UCHAR_COMPLEMENT_MASK)) == (x)[0]))
+#define STRI__UCHAR_IS_COMPLEMENT_GCMASK(x) \
+   ((STRI__UCHAR_IS_ANY_GCMASK(x)) && (((x)[0] & STRI__UCHAR_COMPLEMENT_MASK) == STRI__UCHAR_COMPLEMENT_MASK))
+   
+#define STRI__UCHAR_CREATE_MATCHING_GCMASK(x,c) \
+   { (x)[1] = STRI__UCHAR_NOTUSED_MASK; (x)[0] = c; }
+#define STRI__UCHAR_CREATE_COMPLEMENT_GCMASK(x,c) \
+   { (x)[1] = STRI__UCHAR_NOTUSED_MASK; (x)[0] = (c | STRI__UCHAR_COMPLEMENT_MASK); }
+
+#define STRI__UCHAR_GET_MATCHING_GCMASK(x)         ((x)[0])
+#define STRI__UCHAR_GET_COMPLEMENT_GCMASK(x)       ((x)[0] & (~STRI__UCHAR_COMPLEMENT_MASK))
+
+   
 
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
@@ -141,7 +172,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
-void stri__locate_all_class1(const char* s, int n, int c,
+void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);
    
 // ------------------------------------------------------------------------

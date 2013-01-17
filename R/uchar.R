@@ -48,6 +48,7 @@ stri_charcategories <- function() {
 
 #' Get Unicode character General Category Mask
 #' 
+#' The following may also be preceeded with '^' (complement):
 #' \code{Lu}: UPPERCASE_LETTER
 #' \code{Ll}: LOWERCASE_LETTER
 #' \code{Lt}: TITLECASE_LETTER
@@ -98,6 +99,7 @@ stri_char_getcategoryid <- function(name)
 
 #' Get Unicode character binary property identifier
 #' 
+#' The following may also be preceeded with '^' (complement):
 #' \code{ALPHABETIC}
 #' \code{ASCII_HEX_DIGIT}
 #' \code{BIDI_CONTROL}
