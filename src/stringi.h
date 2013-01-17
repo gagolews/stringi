@@ -112,6 +112,8 @@ SEXP stri_localeset(SEXP loc);
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
+SEXP stri_char_getcategorymask(SEXP x);
+SEXP stri_char_getbinaryproperty(SEXP x);
 
 
 // length.cpp
