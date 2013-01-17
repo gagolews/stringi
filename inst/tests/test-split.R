@@ -1,4 +1,5 @@
 require(testthat)
+require(stringr)
 
 test_that("stri_split", {
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
@@ -24,5 +25,8 @@ test_that("stri_split", {
    expect_identical(stri_split(s,"bab"),strsplit(s,"bab"))
    expect_identical(stri_split("lalal","l"),str_split("lalal","l"))
    
-   expect_identical(stri_split(NA,"A"),list(NA_character_))
+   expect_identical(stri_split(NA,"a",TRUE),list(NA_character_))
+   expect_identical(stri_split("NA",NA,TRUE),list(NA_character_))
+   expect_identical(stri_split("NA","a",NA),list(NA_character_))
 })
+
