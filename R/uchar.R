@@ -24,7 +24,7 @@
 #' Same as java.lang.Character.getType()
 #' @param s character vector
 #' @return list of numeric vectors
-#' @seealso \code{\link{stri_charcategories}}
+#' @seealso \code{\link{stri_charcategories}}, \code{\link{stri_char_getcategoryid}}
 #' @export
 stri_chartype <- function(s) {
    .Call("stri_chartype", s, PACKAGE="stringi")
@@ -36,7 +36,7 @@ stri_chartype <- function(s) {
 #' Based on ICU4C/uchar.h
 #' U_UNASSIGNED (id=0) is omitted
 #' @return data frame with 2 columns...
-#' @seealso \code{\link{stri_chartype}}
+#' @seealso \code{\link{stri_chartype}}, \code{\link{stri_char_getcategoryid}}
 #' @export
 stri_charcategories <- function() {
    categories <- as.data.frame(.Call("stri_charcategories", PACKAGE="stringi"),
@@ -47,8 +47,47 @@ stri_charcategories <- function() {
 
 
 #' Get Unicode character General Category Mask
+#' 
+#' \code{Lu}: UPPERCASE_LETTER
+#' \code{Ll}: LOWERCASE_LETTER
+#' \code{Lt}: TITLECASE_LETTER
+#' \code{Lm}: MODIFIER_LETTER
+#' \code{Lo}: OTHER_LETTER
+#' \code{Mn}: NON_SPACING_MARK
+#' \code{Me}: ENCLOSING_MARK
+#' \code{Mc}: COMBINING_SPACING_MARK
+#' \code{Nd}: DECIMAL_DIGIT_NUMBER
+#' \code{Nl}: LETTER_NUMBER
+#' \code{No}: OTHER_NUMBER
+#' \code{Zs}: SPACE_SEPARATOR
+#' \code{Zl}: LINE_SEPARATOR
+#' \code{Zp}: PARAGRAPH_SEPARATOR
+#' \code{Cc}: CONTROL_CHAR
+#' \code{Cf}: FORMAT_CHAR
+#' \code{Co}: PRIVATE_USE_CHAR
+#' \code{Cs}: SURROGATE
+#' \code{Pd}: DASH_PUNCTUATION
+#' \code{Ps}: START_PUNCTUATION
+#' \code{Pe}: END_PUNCTUATION
+#' \code{Pc}: CONNECTOR_PUNCTUATION
+#' \code{Po}: OTHER_PUNCTUATION
+#' \code{Sm}: MATH_SYMBOL
+#' \code{Sc}: CURRENCY_SYMBOL
+#' \code{Sk}: MODIFIER_SYMBOL
+#' \code{So}: OTHER_SYMBOL
+#' \code{Pi}: INITIAL_PUNCTUATION
+#' \code{Pf}: FINAL_PUNCTUATION
+#' \code{L}: ...
+#' \code{Z}: ...
+#' \code{C}: ...
+#' \code{M}: ...
+#' \code{N}: ...
+#' \code{P}: ...
+#' \code{S}: ...
+#' 
 #' @param name One- or two-letter category name
-#' @return internal code
+#' @return Internal Unicode character General Category identifier
+#' @seealso \code{\link{stri_charcategories}}
 #' @export
 stri_char_getcategoryid <- function(name)
 {
@@ -58,8 +97,67 @@ stri_char_getcategoryid <- function(name)
 
 
 #' Get Unicode character binary property identifier
+#' 
+#' \code{ALPHABETIC}
+#' \code{ASCII_HEX_DIGIT}
+#' \code{BIDI_CONTROL}
+#' \code{BIDI_MIRRORED}
+#' \code{DASH}
+#' \code{DEFAULT_IGNORABLE_CODE_POINT}
+#' \code{DEPRECATED}
+#' \code{DIACRITIC}
+#' \code{EXTENDER}
+#' \code{FULL_COMPOSITION_EXCLUSION}
+#' \code{GRAPHEME_BASE}
+#' \code{GRAPHEME_EXTEND}
+#' \code{GRAPHEME_LINK}
+#' \code{HEX_DIGIT}
+#' \code{HYPHEN}
+#' \code{ID_CONTINUE}
+#' \code{ID_START}
+#' \code{IDEOGRAPHIC}
+#' \code{IDS_BINARY_OPERATOR}
+#' \code{IDS_TRINARY_OPERATOR}
+#' \code{JOIN_CONTROL}
+#' \code{LOGICAL_ORDER_EXCEPTION}
+#' \code{LOWERCASE}
+#' \code{MATH}
+#' \code{NONCHARACTER_CODE_POINT}
+#' \code{QUOTATION_MARK}
+#' \code{RADICAL}
+#' \code{SOFT_DOTTED}
+#' \code{TERMINAL_PUNCTUATION}
+#' \code{UNIFIED_IDEOGRAPH}
+#' \code{UPPERCASE}
+#' \code{WHITE_SPACE}
+#' \code{XID_CONTINUE}
+#' \code{XID_START}
+#' \code{CASE_SENSITIVE}
+#' \code{S_TERM}
+#' \code{VARIATION_SELECTOR}
+#' \code{NFD_INERT}
+#' \code{NFKD_INERT}
+#' \code{NFC_INERT}
+#' \code{NFKC_INERT}
+#' \code{SEGMENT_STARTER}
+#' \code{PATTERN_SYNTAX}
+#' \code{PATTERN_WHITE_SPACE}
+#' \code{POSIX_ALNUM}
+#' \code{POSIX_BLANK}
+#' \code{POSIX_GRAPH}
+#' \code{POSIX_PRINT}
+#' \code{POSIX_XDIGIT}
+#' \code{CASED}
+#' \code{CASE_IGNORABLE}
+#' \code{CHANGES_WHEN_LOWERCASED}
+#' \code{CHANGES_WHEN_UPPERCASED}
+#' \code{CHANGES_WHEN_TITLECASED}
+#' \code{CHANGES_WHEN_CASEFOLDED}
+#' \code{CHANGES_WHEN_CASEMAPPED}
+#' \code{CHANGES_WHEN_NFKC_CASEFOLDED}
+#'
 #' @param name Property name
-#' @return internal code
+#' @return Internal Unicode character Binary Property identifier
 #' @export
 stri_char_getpropertyid <- function(name)
 {
