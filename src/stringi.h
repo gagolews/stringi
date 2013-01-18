@@ -60,6 +60,8 @@ using namespace icu;
 /// Unicode replacement character
 #define UCHAR_REPLACEMENT 0xFFFD
 
+#include "messages.h"
+
 // ------------------------------------------------------------------------
 
 

@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,7 @@ SEXP stri_dup(SEXP s, SEXP c)
       
    R_len_t nm = max(ns, nc);
    if (nm % ns != 0 || nm % nc != 0)
-      warning("longer object length is not a multiple of shorter object length");
+      warning(MSG__WARN_RECYCLING_RULE);
       
    int* cc = INTEGER(c);
    

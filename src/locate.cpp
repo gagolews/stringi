@@ -84,7 +84,7 @@ void stri__locate_all_class1(const char* s, int n, int32_t* cls,
       STRI__LOCATE_ALL_CLASS1_DO(!u_hasBinaryProperty(chr, prop))
    }
    else
-      error("incorrect class identifier");
+      error(MSG__INCORRECT_UCHAR_CLASS_ID);
 }
 
 
@@ -103,12 +103,12 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0) return stri__emptyList();
    if (nc % STRI__UCHAR_CLASS_LENGTH != 0)
-      error("incorrect class identifier");
+      error(MSG__INCORRECT_UCHAR_CLASS_ID);
    nc /= STRI__UCHAR_CLASS_LENGTH;
    
    R_len_t nout = max(ns, nc);
    if (nout % ns != 0 || nout % nc != 0)
-      warning("longer object length is not a multiple of shorter object length");
+      warning(MSG__WARN_RECYCLING_RULE);
    
 
    

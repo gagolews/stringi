@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -40,7 +40,7 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    R_len_t nsm = max(ns1, ns2);
    
    if (nsm % ns1 != 0 || nsm % ns2 != 0)
-      warning("longer object length is not a multiple of shorter object length");
+      warning(MSG__WARN_RECYCLING_RULE);
    
    // find maximal length of the buffer needed
    R_len_t maxsize = 0;
@@ -115,35 +115,57 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    return e;
 }
 
+
+
+
+/**
+ * ....
+ * @param s ...
+ * @return ...
+ */
 SEXP stri_join(SEXP s)
 {
-   int slen = LENGTH(s);
-   int max = 0;
-   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
-   for(int i=0;i<slen;++i){
-      //prepare each element of the list
-      SET_VECTOR_ELT(s,i,stri_prepare_arg_string(VECTOR_ELT(s,i)));
-      //save length of each element for further operations
-      elementslen[i] = LENGTH(VECTOR_ELT(s,i));
-      //check maximum size
-      if(max < elementslen[i]) max = elementslen[i];
-   }
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP,max));
-   for(int i=0;i<max;++i){
-      for(int j=0;j<slen;++j){
-         //join strings from each list element
-      }
-      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(s,i%slen),i%elementslen[i%slen]));
-   }
-   UNPROTECT(1);
-   return e;
+   // MG:
+   // See Sec. 5.9.10 in http://cran.r-project.org/doc/manuals/R-exts.html
+   // "Currently all arguments to a .Call call will have NAMED set to 2, 
+   // and so users must assume that they need to be duplicated before alteration"
+   // NAMED set to 2 -> The object has potentially been bound to two or 
+   // more symbols, and one should act as if another variable is currently bound to this value. 
+   error("stri_join: please, rewrite");
+   return R_NilValue;
+   
+   
+//   int slen = LENGTH(s);
+//   int max = 0;
+//   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
+//   for(int i=0;i<slen;++i){
+//      //prepare each element of the list
+//      SET_VECTOR_ELT(s,i,stri_prepare_arg_string(VECTOR_ELT(s,i)));
+//      //save length of each element for further operations
+//      elementslen[i] = LENGTH(VECTOR_ELT(s,i));
+//      //check maximum size
+//      if(max < elementslen[i]) max = elementslen[i];
+//   }
+//   SEXP e;
+//   PROTECT(e = allocVector(STRSXP,max));
+//   for(int i=0;i<max;++i){
+//      for(int j=0;j<slen;++j){
+//         //join strings from each list element
+//      }
+//      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(s,i%slen),i%elementslen[i%slen]));
+//   }
+//   UNPROTECT(1);
+//   return e;
 }
 
-/** TO DO: Encoding marking!
 
-   if any of s is NA, the result will be NA_character_
-*/
+
+/** TO DO: Encoding marking!
+ *
+ *  if any of s is NA, the result will be NA_character_
+ *  @param s ....
+ *  @return ....
+ */
 SEXP stri_flatten(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
