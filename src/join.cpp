@@ -131,31 +131,28 @@ SEXP stri_join(SEXP s)
    // and so users must assume that they need to be duplicated before alteration"
    // NAMED set to 2 -> The object has potentially been bound to two or 
    // more symbols, and one should act as if another variable is currently bound to this value. 
-   error("stri_join: please, rewrite");
-   return R_NilValue;
-   
-   
-//   int slen = LENGTH(s);
-//   int max = 0;
-//   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
-//   for(int i=0;i<slen;++i){
-//      //prepare each element of the list
-//      SET_VECTOR_ELT(s,i,stri_prepare_arg_string(VECTOR_ELT(s,i)));
-//      //save length of each element for further operations
-//      elementslen[i] = LENGTH(VECTOR_ELT(s,i));
-//      //check maximum size
-//      if(max < elementslen[i]) max = elementslen[i];
-//   }
-//   SEXP e;
-//   PROTECT(e = allocVector(STRSXP,max));
-//   for(int i=0;i<max;++i){
-//      for(int j=0;j<slen;++j){
-//         //join strings from each list element
-//      }
-//      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(s,i%slen),i%elementslen[i%slen]));
-//   }
-//   UNPROTECT(1);
-//   return e;
+   SEXP str = duplicate(s);
+   int slen = LENGTH(str);
+   int max = 0;
+   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
+   for(int i=0;i<slen;++i){
+      //prepare each element of the list
+      SET_VECTOR_ELT(str,i,stri_prepare_arg_string(VECTOR_ELT(str,i)));
+      //save length of each element for further operations
+      elementslen[i] = LENGTH(VECTOR_ELT(str,i));
+      //check maximum size
+      if(max < elementslen[i]) max = elementslen[i];
+   }
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP,max));
+   for(int i=0;i<max;++i){
+      for(int j=0;j<slen;++j){
+         //join strings from each list element
+      }
+      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(str,i%slen),i%elementslen[i%slen]));
+   }
+   UNPROTECT(1);
+   return e;
 }
 
 
