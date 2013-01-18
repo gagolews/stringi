@@ -1,0 +1,42 @@
+## `stringi` Makefile
+## Copyright 2013, M.Gagolewski, B.Tartanus, M.Bujarski
+
+
+# stringi.cpp should be the first on the list (affects libname)
+SRCS        =  stringi.cpp \
+               common.cpp \
+               prepare_arg.cpp \
+               ICU_settings.cpp \
+               trim.cpp \
+               casefold.cpp \
+               dup.cpp \
+               join.cpp \
+               compare.cpp \
+               unicode_normalization.cpp \
+               ucnv.cpp \
+               uloc.cpp \
+               uchar.cpp \
+               length.cpp \
+               locate.cpp \
+               split.cpp \
+               wrap.cpp
+
+HEADERS     =  stringi.h \
+               messages.h
+
+OBJECTS     =  $(SRCS:.cpp=.o)
+
+
+PKG_LIBS     = -L/usr/local/lib -licuuc -licudata -licui18n -licuio -licule -liculx
+PKG_CXXFLAGS = -I/usr/local/include
+RM           = rm -f
+
+.PHONY: all
+
+all: $(SHLIB)
+
+# %.o: %.cpp $(HEADERS)
+#	$(CXX) $(CPPFLAGS) $(CXXFLAGS)  -c -o $@ $<
+
+clean:
+	$(RM) $(OBJECTS)
