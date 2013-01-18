@@ -2,8 +2,6 @@ require(testthat)
 
 test_that("stri_locate_all_class", {
 
-   # basic tests (ASCII, border-line):
-   
    expect_is(stri_locate_all_class(character(0), stri_char_getcategoryid("Z")), "list")
    expect_error(stri_locate_all_class(c("", ""), 1))
    expect_error(length(stri_locate_all_class(LETTERS, NA_integer_)))
@@ -33,4 +31,35 @@ test_that("stri_locate_all_class", {
       stri_locate_all_class("    xxx\n\t \v   \n",
          stri_char_getpropertyid("^WHITE_SPACE"))[[1]]),
       c(5, 7))
+})
+
+
+
+test_that("stri_locate_first_class", {
+   
+   expect_equivalent(stri_locate_first_class(
+      c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
+      stri_char_getcategoryid("L")),
+      c(1L, 2L, 1L, 2L, NA_integer_))
+
+   expect_equivalent(
+      stri_locate_first_class("    xxx\n\t \v   \n",
+         c(stri_char_getpropertyid("WHITE_SPACE"),
+           stri_char_getpropertyid("^WHITE_SPACE"))),
+      c(1L, 5L))
+})
+
+
+test_that("stri_locate_last_class", {
+   
+   expect_equivalent(stri_locate_last_class(
+      c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
+      stri_char_getcategoryid("L")),
+                     c(3L, 4L, 5L, 6L, NA_integer_))
+   
+   expect_equivalent(
+      stri_locate_last_class("    xxx\n\t \v   \n",
+            c(stri_char_getpropertyid("WHITE_SPACE"),
+              stri_char_getpropertyid("^WHITE_SPACE"))),
+      c(15L, 7L))
 })

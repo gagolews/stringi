@@ -17,7 +17,7 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Locate all occurences of character classes
+#' Locate all occurences of each character class
 #'
 #' Vectorized over s and class
 #' @param s character vector
@@ -29,5 +29,33 @@
 #' @export
 stri_locate_all_class <- function(s, class) {
    .Call("stri_locate_all_class", s, class, PACKAGE="stringi")
+}
+
+
+#' Locate the first occurence of each character class
+#'
+#' Vectorized over s and class
+#' @param s character vector
+#' @param class General Category or Binary Property identifier, integer vector
+#' @return Integer vector of length n, where n is the length of s. NA iff not found.
+#' The returned indices are Unicode-code point-based
+#' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
+#' @export
+stri_locate_first_class <- function(s, class) {
+   .Call("stri_locate_first_or_last_class", s, class, TRUE, PACKAGE="stringi")
+}
+
+
+#' Locate the lase occurence of each character class
+#'
+#' Vectorized over s and class
+#' @param s character vector
+#' @param class General Category or Binary Property identifier, integer vector
+#' @return Integer vector of length n, where n is the length of s. NA iff not found.
+#' The returned indices are Unicode-code point-based
+#' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
+#' @export
+stri_locate_last_class <- function(s, class) {
+   .Call("stri_locate_first_or_last_class", s, class, FALSE, PACKAGE="stringi")
 }
 

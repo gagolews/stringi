@@ -174,8 +174,12 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
+SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
+
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);
+void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
+   int& first, int& last);
    
 // ------------------------------------------------------------------------
 
