@@ -66,3 +66,28 @@ SEXP stri_numbytes(SEXP s)
    UNPROTECT(1);
    return ret;
 }
+
+SEXP stri_length(SEXP s)
+{
+    s = stri_prepare_arg_string(s);
+    int ns = LENGTH(s);
+    UChar32 c;
+    
+    SEXP ret;
+    PROTECT(ret = allocVector(INTSXP, ns));
+    
+    for (int k = 0; k < ns; k++) {
+        SEXP q = STRING_ELT(s, k);
+        if (q == NA_STRING)
+            INTEGER(ret)[k] = NA_INTEGER;
+        else {
+            int j = 0;      // number of code points
+            int nq = LENGTH(q);
+            for (int i = 0; i < nq; j++)
+                U8_NEXT(CHAR(q), i, nq, c);
+            INTEGER(ret)[k] = j;
+        }
+    }
+    UNPROTECT(1);
+    return ret;
+}

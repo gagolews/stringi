@@ -27,3 +27,13 @@ stri_numbytes <- function(str) {
    # prepare_arg done internally
    .Call("stri_numbytes", str, PACKAGE="stringi")
 }
+
+
+#' The number of characters in a string
+#' 
+#' @param str character vector
+#' @return integer vector giving the number of characters in each element of character vector
+#' @export
+stri_length <- function(str) {
+   .Call("stri_length", str, PACKAGE="stringi")
+}
