@@ -67,6 +67,11 @@ SEXP stri_numbytes(SEXP s)
    return ret;
 }
 
+/**
+ * Count the number of characters in a string
+ * @param s R character vector
+ * @return integer vector
+ */
 SEXP stri_length(SEXP s)
 {
     s = stri_prepare_arg_string(s);
