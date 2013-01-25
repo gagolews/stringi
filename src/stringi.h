@@ -47,9 +47,6 @@
 #include <Rdefines.h>
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
-#include <cstring>
-#include <iomanip>
-#include <sstream>
 using namespace std;
 using namespace icu;
 
@@ -61,6 +58,7 @@ using namespace icu;
 #define UCHAR_REPLACEMENT 0xFFFD
 
 #include "messages.h"
+#include "rustring.h"
 
 // ------------------------------------------------------------------------
 
