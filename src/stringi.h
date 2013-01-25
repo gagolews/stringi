@@ -98,6 +98,7 @@ SEXP stri_info();
 SEXP stri_prepare_arg_string(SEXP x);
 SEXP stri_prepare_arg_integer(SEXP x);
 SEXP stri_prepare_arg_logical(SEXP x);
+const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true);
 
 // ucnv.cpp:
 void stri__ucnv_getStandards(const char**& standards, R_len_t& cs);

@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  * 
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
  * 
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,28 +19,22 @@
 #include "stringi.h"
 
 
+
+
+
 /**
  * Sets current (default) ICU locale
- * No checking done here! (R version does that and generates warning if needed)
+ * No check done here! (analogous R version does that and generates warning if needed)
  * @param loc new locale
  * @return nothing
  */
 SEXP stri_localeset(SEXP loc)
 {
-   loc = stri_prepare_arg_string(loc);
-   if (LENGTH(loc) >= 1 && STRING_ELT(loc, 0) != NA_STRING 
-         && LENGTH(STRING_ELT(loc, 0)) > 0) {
-      if (LENGTH(loc) > 1) // this shouldn't happen
-        warning("only one locale specifier supported. taking first");
-   
-      UErrorCode err = U_ZERO_ERROR;
-      uloc_setDefault(CHAR(STRING_ELT(loc, 0)), &err);
-      if (U_FAILURE(err))
-         error("could not set locale");
-   }
-   else
-      error("incorrect locale specifier");
-      
+   const char* qloc = stri__prepare_arg_locale(loc, false);
+   UErrorCode err = U_ZERO_ERROR;
+   uloc_setDefault(qloc, &err);
+   if (U_FAILURE(err))
+      error(MSG__LOCALE_ERROR_SET);
    return R_NilValue;
 }
 
@@ -70,27 +64,7 @@ SEXP stri_localelist()
  */
 SEXP stri_localeinfo(SEXP loc)
 {
-   const char* qloc = NULL;
-   
-   if (isNull(loc))
-      qloc = uloc_getDefault();
-   else {
-      loc = stri_prepare_arg_string(loc);
-      if (LENGTH(loc) >= 1 && STRING_ELT(loc, 0) != NA_STRING) {
-         if (LENGTH(loc) > 1) // this shouldn't happen
-            warning("only one locale specifier supported. taking first");
-   
-         if (LENGTH(STRING_ELT(loc, 0)) == 0)
-            qloc = uloc_getDefault();
-         else
-            qloc = (const char*)CHAR(STRING_ELT(loc, 0));
-      }
-      else {
-         error("incorrect encoding specifier");
-         return R_NilValue;
-      }
-   }
-
+   const char* qloc = stri__prepare_arg_locale(loc, true);
    const R_len_t infosize = 4;
    SEXP vals;
    SEXP names;

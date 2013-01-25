@@ -31,4 +31,22 @@
 #define MSG__INCORRECT_INTERNAL_ARG \
    "incorrect argument"
 
+#define MSG__EXPECTED_CHARACTER \
+   "incorrect argument: character vector expected"
+
+#define MSG__EXPECTED_INTEGER \
+   "incorrect argument: integer vector expected"
+   
+#define MSG__EXPECTED_LOGICAL \
+   "incorrect argument: logical vector expected"
+
+#define MSG__LOCALE_ERROR_SET \
+   "could not set locale"
+
+#define MSG__LOCALE_INCORRECT_ID \
+   "incorrect locale identifier"
+
+#define MSG__LOCALE_ATTEMPT_SET_GE1 \
+   "only one locale specifier supported. taking first"
+   
 #endif
