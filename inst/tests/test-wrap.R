@@ -7,6 +7,15 @@ test_that("stri_wrap", {
 	expect_identical(stri_wrapC2(s, h,"g"), stri_wrap(s,h,"g"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
+   #vectorized over string and method
+	expect_identical(stri_wrapC3(s, h,c("g","d")), 
+                    c(stri_wrapC3(s,h,"g"),stri_wrapC3(s,h,"d")))
+   #stri_wrapC3 uses stri_split_fixed which currently splits only by " "
+   #so the next example with \n can't work well.
+	expect_identical(stri_wrapC3(s, h,"g"), stri_wrapC(s,h,"g"))
+	expect_identical(stri_wrapC3(s, h,"g"), stri_wrap(s,h,"g"))
+	expect_identical(stri_wrapC3(s, h,"d"), stri_wrapC(s,h,"d"))
+	expect_identical(stri_wrapC3(s, h,"d"), stri_wrap(s,h,"d"))
 	s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
 	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
 	lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac 
@@ -19,7 +28,7 @@ test_that("stri_wrap", {
 	mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras 
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
-	h <- 25
+	h <- "25"
 	expect_identical(stri_wrapC2(s, h,"g"), stri_wrapC(s,h,"g"))
 	expect_identical(stri_wrapC2(s, h,"g"), stri_wrap(s,h,"g"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
