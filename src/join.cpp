@@ -143,13 +143,26 @@ SEXP stri_join(SEXP s)
       //check maximum size
       if(max < elementslen[i]) max = elementslen[i];
    }
+   for(int i=0;i<slen;++i){
+      if(max % elementslen[i]!=0){
+         warning(MSG__WARN_RECYCLING_RULE);
+         break;
+      }
+   }
    SEXP e;
    PROTECT(e = allocVector(STRSXP,max));
+   const char* buf = R_alloc(5, sizeof(char));
+   char* temp = R_alloc(5, sizeof(char));
+   char* ret = R_alloc(10, sizeof(char));
    for(int i=0;i<max;++i){
-      for(int j=0;j<slen;++j){
+      memcpy(ret, CHAR(STRING_ELT(VECTOR_ELT(str,0),i%elementslen[0])),5);
+      for(int j=1;j<slen;++j){
+         buf = CHAR(STRING_ELT(VECTOR_ELT(str,j),i%elementslen[j]));
+         memcpy(temp,buf,5);
+         strcat(ret, temp);
          //join strings from each list element
       }
-      SET_STRING_ELT(e,i,STRING_ELT(VECTOR_ELT(str,i%slen),i%elementslen[i%slen]));
+      SET_STRING_ELT(e,i,mkCharLen(ret,10));
    }
    UNPROTECT(1);
    return e;

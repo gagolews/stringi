@@ -171,6 +171,7 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
 
 // split.cpp
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
+SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);

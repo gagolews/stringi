@@ -18,6 +18,46 @@
  
 #include "stringi.h"
 
+/** 
+ * .... 
+ * @param s ...
+ * @param from integer vector ...
+ * @param to integer vector ...
+ * @return ...
+ */
+
+SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
+{
+   s = STRING_ELT(stri_prepare_arg_string(s),0);
+   from = stri_prepare_arg_integer(from);
+   to = stri_prepare_arg_integer(to);
+   if(s == NA_STRING)
+      return NA_STRING;
+   int ns = LENGTH(s);
+   int nfrom = LENGTH(from);
+   if(nfrom!=LENGTH(to))
+      error("'from' and 'to' lengths differ");
+   UChar32 c;
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP,nfrom));
+   printf("ns=%d nfrom=%d\n",ns,nfrom);
+   int j=0,k=0,st=0;
+   for (int i = 0; i < ns; j++)
+   {
+      printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
+      if(j==INTEGER(from)[k]){
+         st=i;
+      }
+      if(j==INTEGER(to)[k]){
+         SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
+         k++;
+      }
+      U8_NEXT(CHAR(s), i, ns, c);
+   }
+   printf("i=%d c=%c k=%d j=%d \n",ns,c,k,j);
+   UNPROTECT(1);
+   return e;
+}
 
 /** 
  * .... 
