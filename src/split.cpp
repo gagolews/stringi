@@ -46,7 +46,7 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
    {
       printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
       if(j==INTEGER(from)[k]){
-         st=i;
+         st=i-1;
       }
       if(j==INTEGER(to)[k]){
          SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
