@@ -92,9 +92,8 @@ stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\
 #' @export
 stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
-	if (!is.character(s))   
-		s <- as.character(s)
-	width <- as.integer(width)
+	s <- stri_prepare_arg_string(s)
+	width <- stri_prepare_arg_integer(width)
 	stopifnot(is.finite(width)&&width>0)
 	spacecost <- as.integer(spacecost)[1]
 	stopifnot(is.finite(spacecost)&&spacecost>0)
@@ -113,6 +112,27 @@ stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
 		space[length(where)] <- ""
 		paste(words,space,sep="",collapse="")
 	})
+}
+
+#'  documentation...
+#'  
+#'  this function uses stri_wrap_* implemented in C++
+#'  even more C++
+#'  TODO add indent and exdent parameter (see strwrap)
+#' @export
+stri_wrapC3 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
+{
+   s <- stri_prepare_arg_string(s)
+   width <- stri_prepare_arg_integer(width)
+   stopifnot(is.finite(width)&&width>0)
+   spacecost <- as.integer(spacecost)[1]
+   stopifnot(is.finite(spacecost)&&spacecost>0)
+   method <- pmatch(method,c("greedy","dynamic"),1,T)
+   # when stri_split will work with regexp use this line:
+   #wordslist <- stri_split(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
+   #for now we can only split by " "
+   wordslist <- stri_split(enc2utf8(s), enc2utf8(" "), omitempty=TRUE)
+   .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
 }
 
 # (internal function)

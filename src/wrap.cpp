@@ -20,8 +20,13 @@
 #include <limits>
 
 /** 
-
-*/
+ * .... 
+ * @param count ...
+ * @param width ...
+ * @param spacecost ...
+ * @return ...
+ */
+ 
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 {
    // maybe a call to stri_prepare_arg_integer?
@@ -115,3 +120,45 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 	UNPROTECT(2);
 	return(out);
 }
+
+/** 
+ * .... 
+ * @param wordslist ...
+ * @param method ...
+ * @param width ...
+ * @param spacecost ...
+ * @return ...
+ */
+   
+ SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost)
+ {
+   int nwordslist = LENGTH(wordslist);
+   int nmethod = LENGTH(method);
+   int nmax = max(nwordslist,nmethod);
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP,nmax));
+   SEXP words,count,temp,space,where;
+   for(int i=0;i<nmax;i++)
+   {
+      words = VECTOR_ELT(wordslist,i % nwordslist);
+      count = stri_length(words);
+      if(INTEGER(method)[i % nmethod]==2)
+         where = stri_wrap_dynamic(count,width,spacecost);
+      else
+         where = stri_wrap_greedy(count,width,spacecost);
+      int nwhere = LENGTH(where);
+      PROTECT(space = allocVector(STRSXP,nwhere));
+      for(int k = 0; k < nwhere-1; k++){
+         if(INTEGER(where)[k])
+            SET_STRING_ELT(space,k,mkCharLen("\n", 1));
+         else
+            SET_STRING_ELT(space,k,mkCharLen(" ", 1));
+      }
+      SET_STRING_ELT(space, nwhere-1, mkCharLen("", 0));
+      temp = STRING_ELT(stri_flatten(stri_join2(words,space)),0);
+      SET_STRING_ELT(ret,i,temp);
+      UNPROTECT(1);
+   }
+   UNPROTECT(1);
+   return ret;
+ }

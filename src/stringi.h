@@ -168,6 +168,7 @@ SEXP stri_length(SEXP s);
 // wrap.cpp
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
 SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
+SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 
 // split.cpp
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
