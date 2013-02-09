@@ -176,15 +176,23 @@ SEXP stri_join(SEXP s)
  *  @param s ....
  *  @return ....
  */
-SEXP stri_flatten(SEXP s)
+SEXP stri_flatten(SEXP s, SEXP sep)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
+   sep = STRING_ELT(stri_prepare_arg_string(sep),0);
    
    R_len_t ns = LENGTH(s);
+   R_len_t nsep = LENGTH(sep);
    if (ns <= 0) return s;
    
    SEXP e;
    PROTECT(e = allocVector(STRSXP, 1));
+   //if sep == NA return NA
+   if (sep == NA_STRING) {
+      SET_STRING_ELT(e, 0, NA_STRING);
+      UNPROTECT(1);
+      return e;
+   }
    
    R_len_t totalsize = 0;
    for (int i=0; i<ns; ++i){
@@ -196,6 +204,8 @@ SEXP stri_flatten(SEXP s)
       }
       totalsize += LENGTH(curs);
    }
+   //add the length of sep
+   totalsize += (ns-1)*nsep;
    
    // if we are here - output is definitely not NA_character_
    
@@ -211,6 +221,10 @@ SEXP stri_flatten(SEXP s)
          if (ni > 0) {
             memcpy(buf2, CHAR(ss), ni);
             buf2 += ni;
+         }
+         if (i<ns-1){
+            memcpy(buf2, CHAR(sep),nsep);
+            buf2 += nsep;
          }
       }
       SET_STRING_ELT(e, 0, mkCharLen(buf, totalsize));

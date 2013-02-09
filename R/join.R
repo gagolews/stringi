@@ -54,10 +54,11 @@ stri_join <- function(...,sep="",collapse=NULL){
 #' this works like paste(str, collapse="", sep=""), but ca. 3x faster
 #' 
 #' @param str will be coerced to character
+#' @param sep separator
 #' @export
-stri_flatten <- function(str) {
+stri_flatten <- function(str, sep="") {
    # prepare_arg done internally
-   .Call("stri_flatten", str, PACKAGE="stringi")
+   .Call("stri_flatten", str, sep, PACKAGE="stringi")
 }
 
 

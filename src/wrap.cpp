@@ -157,7 +157,7 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
             SET_STRING_ELT(space,k,mkCharLen(" ", 1));
       }
       SET_STRING_ELT(space, nwhere-1, mkCharLen("", 0));
-      temp = STRING_ELT(stri_flatten(stri_join2(words,space)),0);
+      temp = STRING_ELT(stri_flatten(stri_join2(words,space),mkCharLen("", 0)),0);
       SET_STRING_ELT(ret,i,temp);
       UNPROTECT(1);
    }
