@@ -123,7 +123,7 @@ stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
 stri_wrapC3 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
    s <- stri_prepare_arg_string(s)
-   width <- stri_prepare_arg_integer(width)
+   width <- stri_prepare_arg_integer(width)[1]
    stopifnot(is.finite(width)&&width>0)
    spacecost <- as.integer(spacecost)[1]
    stopifnot(is.finite(spacecost)&&spacecost>0)

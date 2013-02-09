@@ -10,6 +10,7 @@ test_that("stri_wrap", {
    #vectorized over string and method
 	expect_identical(stri_wrapC3(s, h,c("g","d")), 
                     c(stri_wrapC3(s,h,"g"),stri_wrapC3(s,h,"d")))
+   expect_identical(stri_wrapC3(c(s,s)),c(stri_wrapC3(s),stri_wrapC3(s)))
    #stri_wrapC3 uses stri_split_fixed which currently splits only by " "
    #so the next example with \n can't work well.
 	expect_identical(stri_wrapC3(s, h,"g"), stri_wrapC(s,h,"g"))

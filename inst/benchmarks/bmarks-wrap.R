@@ -6,6 +6,7 @@ strwrap("1 1 1",6)
 cat(stri_wrapC2(s,40,"d"))
 cat(stri_wrapC2(s,40,"g"))
 s <- rep(s,100)
+
 # different stri_wrap versions - greedy 
 system.time(stri_wrap(s,25,"g"))
 system.time(stri_wrapC(s,25,"g"))
@@ -33,3 +34,5 @@ system.time(stri_wrapC3(s,25))
 
 microbenchmark(strwrap(s,25), str_wrap(s,25),stri_wrap(s,25),
                stri_wrapC(s,25),stri_wrapC2(s,25),stri_wrapC3(s,25),times=10)
+
+microbenchmark(strwrap(s,25),str_wrap(s,25),stri_wrapC2(s,25,"d"),stri_wrapC3(s,25,"d"))

@@ -123,17 +123,19 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 
 /** 
  * .... 
- * @param wordslist ...
- * @param method ...
- * @param width ...
+ * @param wordslist list of words
+ * @param method integer vector of wraping methods (2==dynamic, else greedy)
+ * @param width 
  * @param spacecost ...
- * @return ...
+ * @return character vector
  */
    
  SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost)
  {
    int nwordslist = LENGTH(wordslist);
    int nmethod = LENGTH(method);
+   //vectorized over width ?
+   //int nwidth = LENGTH(width);
    int nmax = max(nwordslist,nmethod);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP,nmax));
