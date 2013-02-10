@@ -17,6 +17,38 @@ test_that("stri_trim", {
    expect_equivalent(stri_trim(stri_dup(" ", 1:100)), rep("", 100))
 })
 
+test_that("stri_ltrim", {
+   
+   # basic tests (ASCII, border-line):
+   expect_equivalent(stri_ltrim(character(0)), character(0))
+   expect_equivalent(stri_ltrim(NA), NA_character_)
+   
+   expect_equivalent(stri_ltrim("      "), "")
+   expect_equivalent(stri_ltrim("   A  "), "A  ")
+   expect_equivalent(stri_ltrim("A     "), "A     ")
+   expect_equivalent(stri_ltrim("     A"), "A")
+   
+   expect_equivalent(stri_ltrim(LETTERS), LETTERS)
+   
+   expect_equivalent(stri_ltrim(stri_dup(" ", 1:100)), rep("", 100))
+})
+
+test_that("stri_rtrim", {
+   
+   # basic tests (ASCII, border-line):
+   expect_equivalent(stri_rtrim(character(0)), character(0))
+   expect_equivalent(stri_rtrim(NA), NA_character_)
+   
+   expect_equivalent(stri_rtrim("      "), "")
+   expect_equivalent(stri_rtrim("   A  "), "   A")
+   expect_equivalent(stri_rtrim("A     "), "A")
+   expect_equivalent(stri_rtrim("     A"), "     A")
+   
+   expect_equivalent(stri_rtrim(LETTERS), LETTERS)
+   
+   expect_equivalent(stri_rtrim(stri_dup(" ", 1:100)), rep("", 100))
+})
+
 test_that("stri_pad", {
    #vectorized over str
    expect_identical(stri_pad(letters,20),str_pad(letters,20))
