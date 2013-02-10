@@ -71,6 +71,7 @@ SEXP stri__emptyList();
 
 // trim.cpp:
 SEXP stri_trim(SEXP s);
+SEXP stri_ltrim(SEXP s);
 SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad);
 
 // unicode_normalization.cpp:

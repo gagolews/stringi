@@ -33,6 +33,17 @@ stri_trim <- function(str) {
 
 # TO DO: stri_ltrim
 
+#' Trim whitespaces from left side of strings
+#' 
+#' @param str will be coerced to character
+#' @return trimmed character vector 
+#' @export
+stri_ltrim <- function(str) {
+   # prepare_arg done internally
+   .Call("stri_ltrim", str, PACKAGE="stringi")
+}
+
+
 #' Pad a string
 #' 
 #' Works like str_pad but faster and it's vectorized not only over s, but also over width and side. And works with NA value.

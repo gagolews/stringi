@@ -54,6 +54,43 @@ SEXP stri_trim(SEXP s)
 }
 
 
+
+
+/** 
+   vectorized over s
+   if s is NA the result will be NA
+   
+*/
+SEXP stri_ltrim(SEXP s)
+{   
+   s = stri_prepare_arg_string(s); // prepare string argument
+   
+   R_len_t ns = LENGTH(s);
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP, ns));
+   int j=0;
+   const char* space = " ";
+   
+   for (int i=0; i<ns; ++i)
+   {
+      SEXP ss = STRING_ELT(s, i);
+      if (ss == NA_STRING)
+         SET_STRING_ELT(e, i, NA_STRING);
+      else {
+         const char* string = CHAR(ss);
+         int nstring = LENGTH(ss);
+         for(j=0; j < nstring ; ++j){
+            if(string[j] != space[0])
+               break;
+         }
+         SET_STRING_ELT(e, i, mkCharLen(string+j,nstring-j));
+      }
+   }
+   UNPROTECT(1);
+   return e;
+}
+
+
 /** 
    vectorized over s, width and side
    if s is NA the result will be NA
