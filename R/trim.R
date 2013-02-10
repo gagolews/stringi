@@ -38,10 +38,14 @@ stri_trim <- function(str) {
 #' Works like str_pad but faster and it's vectorized not only over s, but also over width and side. And works with NA value.
 #' 
 #' @param str character vector
-#' @param width
-#' @param side
-#' @param pad
+#' @param width pad strings to this minimum width
+#' @param side side on which padding character is added (left, right or both)
+#' @param pad single padding character (default is space)
 #' @return character vector 
+#' @details If string is longer than width, then string is returned unchanged. Look at the example.
+#' @examples
+#' stri_pad("stringi",10,c("l","r","b"),"#")
+#' stri_pad("stringi",5:9,pad="$")
 #' @export
 stri_pad <- function(str, width, side = "left", pad = " ") {
    # prepare_arg done internally
