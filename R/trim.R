@@ -29,9 +29,6 @@ stri_trim <- function(str) {
 }
 
 
-# TO DO: stri_rtrim
-
-# TO DO: stri_ltrim
 
 #' Trim whitespaces from left side of strings
 #' 
@@ -41,6 +38,17 @@ stri_trim <- function(str) {
 stri_ltrim <- function(str) {
    # prepare_arg done internally
    .Call("stri_ltrim", str, PACKAGE="stringi")
+}
+
+
+#' Trim whitespaces from right side of strings
+#' 
+#' @param str will be coerced to character
+#' @return trimmed character vector 
+#' @export
+stri_rtrim <- function(str) {
+   # prepare_arg done internally
+   .Call("stri_rtrim", str, PACKAGE="stringi")
 }
 
 
