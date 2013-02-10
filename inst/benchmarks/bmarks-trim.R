@@ -1,5 +1,6 @@
 # TO DO
 require("rbenchmark")
+require("microbenchmark")
 require("stringr")
 
 # stri_trim
@@ -16,10 +17,11 @@ bmarks <- rbind(bmarks, benchmark(
 print(bmarks)
 expect_identical(trm2, trm1)
 
-test_that("stri_trim", {
-   expect_that(length(stri_trim(character(0)))==0, is_true())
-   expect_that(stri_trim(c("A", "A ", " A", "    A    ")), is_equivalent_to(rep("A", 4)))
-})
+microbenchmark(str_trim(test),stri_trim(test))
+
+microbenchmark(str_trim(test,"l"),stri_ltrim(test))
+
+microbenchmark(str_trim(test,"r"),stri_rtrim(test))
 
 
 # stri_pad
@@ -34,4 +36,4 @@ bmarks <- rbind(bmarks, benchmark(
    columns=c("test", "relative", "elapsed", "user.self", "sys.self", "replications")
 ))
 print(bmarks)
-expect_identical(pad1, pad2)
+microbenchmark(str_pad(test,150),stri_pad(test,150))

@@ -3,8 +3,8 @@ require(microbenchmark)
 s <- c("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
 
 strwrap("1 1 1",6)
-cat(stri_wrapC2(s,40,"d"))
-cat(stri_wrapC2(s,40,"g"))
+cat(stri_wrapC3(s,40,"d"))
+cat(stri_wrapC3(s,40,"g"))
 s <- rep(s,100)
 
 # different stri_wrap versions - greedy 
@@ -36,3 +36,4 @@ microbenchmark(strwrap(s,25), str_wrap(s,25),stri_wrap(s,25),
                stri_wrapC(s,25),stri_wrapC2(s,25),stri_wrapC3(s,25),times=10)
 
 microbenchmark(strwrap(s,25),str_wrap(s,25),stri_wrapC2(s,25,"d"),stri_wrapC3(s,25,"d"))
+
