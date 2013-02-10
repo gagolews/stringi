@@ -51,6 +51,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_locate_all_class",           (DL_FUNC)&stri_locate_all_class,           2},
    {"stri_locate_first_or_last_class", (DL_FUNC)&stri_locate_first_or_last_class, 3},
    {"stri_numbytes",                   (DL_FUNC)&stri_numbytes,                   1},
+   {"stri_pad",                        (DL_FUNC)&stri_pad,                        4},
    {"stri_prepare_arg_string",         (DL_FUNC)&stri_prepare_arg_string,         1},
    {"stri_prepare_arg_integer",        (DL_FUNC)&stri_prepare_arg_integer,        1},
    {"stri_prepare_arg_logical",        (DL_FUNC)&stri_prepare_arg_logical,        1},

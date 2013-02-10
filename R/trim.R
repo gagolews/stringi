@@ -32,3 +32,20 @@ stri_trim <- function(str) {
 # TO DO: stri_rtrim
 
 # TO DO: stri_ltrim
+
+#' Pad a string
+#' 
+#' Works like str_pad but faster and it's vectorized not only over s, but also over width and side. And works with NA value.
+#' 
+#' @param str character vector
+#' @param width
+#' @param side
+#' @param pad
+#' @return character vector 
+#' @export
+stri_pad <- function(str, width, side = "left", pad = " ") {
+   # prepare_arg done internally
+   side <- pmatch(side, c("left", "right", "both"),1,T)
+   .Call("stri_pad", str, width, side, pad, PACKAGE="stringi")
+}
+

@@ -52,3 +52,90 @@ SEXP stri_trim(SEXP s)
    UNPROTECT(1);
    return e;
 }
+
+
+/** 
+   vectorized over s, width and side
+   if s is NA the result will be NA
+   
+*/
+
+SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   width = stri_prepare_arg_integer(width);
+   pad = stri_prepare_arg_string(pad);
+   
+   R_len_t ns = LENGTH(s);
+   R_len_t nside = LENGTH(side);
+   R_len_t nwidth = LENGTH(width);
+   R_len_t nmax = ns;
+   if(nside > nmax) nmax = nside;
+   if(nwidth> nmax) nmax = nwidth;
+   
+   if(INTEGER(stri_length(pad))[0] != 1) 
+      error("pad must be single character");
+   
+   int needed=0;
+   SEXP e, curs, slen;
+   PROTECT(e = allocVector(STRSXP, nmax));
+   
+   const char* p = CHAR(STRING_ELT(pad,0));
+   
+   slen = stri_length(s);
+   int wi, sleni;
+   for (int i=0; i<nmax; ++i){
+      curs = STRING_ELT(s, i % ns);
+      if(curs == NA_STRING){
+         SET_STRING_ELT(e, i, NA_STRING);
+         continue;
+      }
+      
+      wi = INTEGER(width)[i%nwidth]; 
+      sleni = INTEGER(slen)[i%ns];
+      
+      needed = max(0, wi - sleni);
+      if(needed == 0){
+         SET_STRING_ELT(e, i, curs);
+         continue;
+      }
+      char* buf = R_alloc(wi, sizeof(char)); 
+      char* buf2 = buf;
+      switch(INTEGER(side)[i % nside]){
+         //left
+         case 1:
+         for(int j=0; j<needed; ++j){
+            memcpy(buf2, p, 1);
+            buf2 += 1;
+         }
+         memcpy(buf2, CHAR(curs), sleni);
+         break;
+         //right
+         case 2:
+         memcpy(buf2, CHAR(curs), sleni);
+         buf2 += sleni;
+         for(int j=0; j<needed; ++j){
+            memcpy(buf2, p, 1);
+            buf2 += 1;
+         }
+         break;
+         //both
+         case 3:
+         for(int j=0; j<floor(needed/2); ++j){
+            memcpy(buf2, p, 1);
+            buf2 += 1;
+         }
+         memcpy(buf2, CHAR(curs), sleni);
+         buf2 += sleni;
+         for(int j=0; j<ceil(double(needed)/2); ++j){
+            memcpy(buf2, p, 1);
+            buf2 += 1;
+         }
+         break;
+      }
+      SET_STRING_ELT(e, i, mkCharLen(buf, wi));
+   }
+   
+   UNPROTECT(1);
+   return e;
+}
