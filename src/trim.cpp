@@ -28,25 +28,31 @@
 */
 SEXP stri_trim(SEXP s)
 {
-   warning("stri_trim: rewrite!");
-   
    s = stri_prepare_arg_string(s); // prepare string argument
    
    R_len_t ns = LENGTH(s);
    SEXP e;
    PROTECT(e = allocVector(STRSXP, ns));
-   string y;
+   int j=0,k=0;
+   const char* space = " ";
+   
    for (int i=0; i<ns; ++i)
    {
       SEXP ss = STRING_ELT(s, i);
       if (ss == NA_STRING)
          SET_STRING_ELT(e, i, NA_STRING);
       else {
-         UnicodeString xu = UnicodeString::fromUTF8(StringPiece(CHAR(ss)));
-         xu.trim();
-         xu.toUTF8String(y);
-         SET_STRING_ELT(e, i, mkCharLen(y.c_str(), y.length()));
-         if (i < ns-1) y.clear();
+         const char* string = CHAR(ss);
+         int nstring = LENGTH(ss);
+         for(j=0; j < nstring ; ++j){
+            if(string[j] != space[0])
+               break;
+         }
+         for(k=0; k < nstring ; ++k){
+            if(string[nstring-1-k] != space[0])
+               break;
+         }
+         SET_STRING_ELT(e, i, mkCharLen(string+j,nstring-k-j));
       }
    }
    UNPROTECT(1);
