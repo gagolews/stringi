@@ -137,8 +137,11 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
    //vectorized over width ?
    //int nwidth = LENGTH(width);
    int nmax = max(nwordslist,nmethod);
-   SEXP ret;
+   SEXP ret, sep;
    PROTECT(ret = allocVector(STRSXP,nmax));
+   //sep for stri_flatten
+   PROTECT(sep = allocVector(STRSXP,1));
+   SET_STRING_ELT(sep,0,mkCharLen("",0));
    SEXP words,count,temp,space,where;
    for(int i=0;i<nmax;i++)
    {
@@ -157,10 +160,10 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
             SET_STRING_ELT(space,k,mkCharLen(" ", 1));
       }
       SET_STRING_ELT(space, nwhere-1, mkCharLen("", 0));
-      temp = STRING_ELT(stri_flatten(stri_join2(words,space),mkCharLen("", 0)),0);
+      temp = STRING_ELT(stri_flatten(stri_join2(words,space),sep),0);
       SET_STRING_ELT(ret,i,temp);
       UNPROTECT(1);
    }
-   UNPROTECT(1);
+   UNPROTECT(2);
    return ret;
  }
