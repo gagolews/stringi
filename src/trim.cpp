@@ -24,7 +24,6 @@
    if s is NA the result will be NA
    
    TO DO: Encoding marking!
-   TO DO: USE C API (no UnicodeString....) !!!! (this should be rewritten)
 */
 SEXP stri_trim(SEXP s)
 {
@@ -52,7 +51,9 @@ SEXP stri_trim(SEXP s)
             if(string[nstring-1-k] != space[0])
                break;
          }
-         SET_STRING_ELT(e, i, mkCharLen(string+j,nstring-k-j));
+         //if string contains only space, then k+j > nstring and mkCharLen
+         //throws an error (negative len). That's why max() is needed here
+         SET_STRING_ELT(e, i, mkCharLen(string+j, max(0,nstring-k-j)));
       }
    }
    UNPROTECT(1);
