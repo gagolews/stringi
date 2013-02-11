@@ -19,6 +19,7 @@ SRCS        =  stringi.cpp \
                length.cpp \
                locate.cpp \
                split.cpp \
+               sub.cpp \
                wrap.cpp
 
 HEADERS     =  stringi.h \

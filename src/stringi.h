@@ -177,6 +177,9 @@ SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 
+// sub.cpp
+SEXP stri_sub(SEXP s, SEXP from, SEXP to);
+
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
 SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
