@@ -41,6 +41,8 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
    int nfrom = LENGTH(from);
    int nto = LENGTH(to);
    int nmax = ns;
+   if(ns == 0 || nfrom == 0 || nto == 0)
+      return allocVector(STRSXP,0);
    if(nfrom > nmax) nmax = nfrom;
    if(nto > nmax) nmax = nto;
    if (nmax % ns != 0 || nmax % nfrom != 0 || nmax % nto != 0)
@@ -62,35 +64,41 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
       curfrom = INTEGER(from)[i % nfrom];
       curto = INTEGER(to)[i % nto];
       curcount = INTEGER(count)[i % ns];
+      //if string is NA, return NA
+      if(curs == NA_STRING){
+         SET_STRING_ELT(e, i, NA_STRING);
+         continue;
+      }
       //if from or to <0 then count from the end 
       if(curfrom < 0)
          curfrom += curcount + 1;
       if(curto < 0)
          curto += curcount + 1;
       //if from is greater than to then return empty string
-      if(curfrom > curto)
+      if(curfrom > curto){
          SET_STRING_ELT(e, i, mkCharLen("",0));
-      else{
-         j = 0; 
-         lastk = 0;
-         for(k=0; k < curslen; ++j){
-            if(j==curfrom){
-            //lastk is here, bacause without it you dont know if the last 
-            //char is one or two byte long so k-1 doesnt work every time
-               st=lastk;
-               //if substring to the last char copy now, dont waste time
-               if(curto == curcount){
-                  SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, curto-st));
-                  break;
-               }
-            }
-            if(j==curto){
-               SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, k-st));
+         continue;
+      }
+      j = 0; 
+      lastk = 0;
+      for(k=0; k < curslen; ++j){
+         if(j==curfrom){
+         //lastk is here, bacause without it you dont know if the last 
+         //char is one or two byte long so k-1 doesnt work every time
+            st=lastk;
+            //if substring to the last char copy now, dont waste time
+            //if to > len copy till the end - works like str_sub and substr
+            if(curto >= curcount){
+               SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, curslen-st));
                break;
             }
-            lastk = k;
-            U8_NEXT(CHAR(curs), k, curslen, c);
          }
+         if(j==curto){
+            SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, k-st));
+            break;
+         }
+         lastk = k;
+         U8_NEXT(CHAR(curs), k, curslen, c);
       }
    }
    UNPROTECT(1);
