@@ -16,9 +16,7 @@
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
  
-//to and length args are mutually exclusive; (?missing)
-//omitting to and length means 'to the end of the string'; (?missing)
-//the function is vectorized over s, from, and length.
+
 //ASSERT: length(from)==length(sub)
 //note that from/to/length are indicating Unicode code points, not bytes
 //OPTIONALLY: when from is omitted then either to or length must be integer matrices with 2 columns (what do you think?)
@@ -52,16 +50,23 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
    //into where and now you can easliy get substring by where[from[i]]
    //int* where = (int*)R_alloc(curslen, sizeof(int));
    UChar32 c;
-   SEXP e, curs;
+   SEXP e, curs, count;
+   count = stri_length(s);
    int curfrom, curto, curslen;
    PROTECT(e = allocVector(STRSXP, nmax));
-   int j=0,k=0,lastk=0,st=0;
+   int j=0,k=0,lastk=0,st=0,curcount=0;
    for (int i = 0; i < nmax; ++i)
    {
       curs = STRING_ELT(s, i % ns);
       curslen = LENGTH(curs);
       curfrom = INTEGER(from)[i % nfrom];
       curto = INTEGER(to)[i % nto];
+      curcount = INTEGER(count)[i % ns];
+      //if from or to <0 then count from the end 
+      if(curfrom < 0)
+         curfrom += curcount + 1;
+      if(curto < 0)
+         curto += curcount + 1;
       //if from is greater than to then return empty string
       if(curfrom > curto)
          SET_STRING_ELT(e, i, mkCharLen("",0));
@@ -69,10 +74,16 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
          j = 0; 
          lastk = 0;
          for(k=0; k < curslen; ++j){
-            if(j==curfrom)
+            if(j==curfrom){
             //lastk is here, bacause without it you dont know if the last 
             //char is one or two byte long so k-1 doesnt work every time
                st=lastk;
+               //if substring to the last char copy now, dont waste time
+               if(curto == curcount){
+                  SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, curto-st));
+                  break;
+               }
+            }
             if(j==curto){
                SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, k-st));
                break;

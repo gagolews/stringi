@@ -23,21 +23,29 @@
 #' Vectorized over s, from and (to or length).
 #' 
 #' @param str character vector 
-#' @param from
-#' @param to
-#' @param length
+#' @param from integer vector 
+#' @param to integer vector
+#' @param length non-negative integer vector
+#' 
+#' @details to has priority over length
 #' @return character vector
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_sub(s,1:3,11:13)
-#' stri_sub(s,"o")
+#' stri_sub(s, from=1:3*6, to=21)
+#' stri_sub(s, from=c(1,7,13), length=5)
+#' stri_sub(s, from=1, length=1:3)
+#' stri_sub(s, -17, -7)
 #' 
 #' @export
-stri_sub <- function(str, from = 1L, to, length) {
+stri_sub <- function(str, from = 1L, to = -1L, length) {
 	# prepare_arg done internally
-   # TODO:
-   #if missing to or length do some magic and call:
+   if(missing(to) && !missing(length))
+      if(!all(length >= 0)){
+         # not non negative - triple denial. 
+         stop("'to' is missing and 'length' is not non-negative")
+      }else
+         to <- from + length - 1
 	.Call("stri_sub", str, from, to, PACKAGE="stringi")
 }
 
