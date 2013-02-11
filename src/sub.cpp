@@ -65,7 +65,7 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
       curto = INTEGER(to)[i % nto];
       curcount = INTEGER(count)[i % ns];
       //if string is NA, return NA
-      if(curs == NA_STRING){
+      if(curs == NA_STRING || curfrom == NA_INTEGER || curto == NA_INTEGER){
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
       }
@@ -74,8 +74,8 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
          curfrom += curcount + 1;
       if(curto < 0)
          curto += curcount + 1;
-      //if from is greater than to then return empty string
-      if(curfrom > curto){
+      //if from is greater than to or count then return empty string
+      if(curfrom > curto || curfrom > curcount){
          SET_STRING_ELT(e, i, mkCharLen("",0));
          continue;
       }
@@ -87,7 +87,7 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
          //char is one or two byte long so k-1 doesnt work every time
             st=lastk;
             //if substring to the last char copy now, dont waste time
-            //if to > len copy till the end - works like str_sub and substr
+            //if to > count copy till the end-works like str_sub and substr
             if(curto >= curcount){
                SET_STRING_ELT(e,i, mkCharLen(CHAR(curs)+st, curslen-st));
                break;
