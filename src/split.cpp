@@ -40,21 +40,22 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
    UChar32 c;
    SEXP e;
    PROTECT(e = allocVector(STRSXP,nfrom));
-   printf("ns=%d nfrom=%d\n",ns,nfrom);
-   int j=0,k=0,st=0;
-   for (int i = 0; i < ns; j++)
+   int j=0,lasti=0,k=0,st=0;
+   for (int i = 0; i < ns; ++j)
    {
-      printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
+      //printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
       if(j==INTEGER(from)[k]){
-         st=i-1;
+         //lasti is here, bacause without it you dont know if the last char
+         //is one or two byte long so i-1 doesnt work every time
+         st=lasti;
       }
       if(j==INTEGER(to)[k]){
          SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
          k++;
       }
+      lasti = i;
       U8_NEXT(CHAR(s), i, ns, c);
    }
-   printf("i=%d c=%c k=%d j=%d \n",ns,c,k,j);
    UNPROTECT(1);
    return e;
 }
