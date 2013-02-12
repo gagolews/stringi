@@ -53,6 +53,7 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
    //int* where = (int*)R_alloc(curslen, sizeof(int));
    UChar32 c;
    SEXP e, curs, count;
+   //this line can be the first one to replace to improve performance 
    count = stri_length(s);
    int curfrom, curto, curslen;
    PROTECT(e = allocVector(STRSXP, nmax));

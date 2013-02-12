@@ -11,5 +11,8 @@ test_that("stri_sub", {
    expect_identical(stri_sub(s,2,stri_length(s)-1),stri_sub(s,2,-2))
    expect_identical(stri_sub(s,10,8),"")
 	expect_identical(stri_sub(s,1,stri_length(s)+10),s)
-
+   #for = two column matrix
+   expect_identical(stri_sub(s,matrix(1:6,ncol=2)),stri_sub(s,1:3,4:6))
+   expect_warning(stri_sub(s,matrix(1:6,ncol=2),to=-1))
+   expect_identical(stri_sub(s,length=-1:1),c("","","a"))
 })

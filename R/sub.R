@@ -25,7 +25,7 @@
 #' @param str character vector 
 #' @param from integer vector 
 #' @param to integer vector
-#' @param length non-negative integer vector
+#' @param length integer vector
 #' 
 #' @details to has priority over length
 #' @return character vector
@@ -40,12 +40,14 @@
 #' @export
 stri_sub <- function(str, from = 1L, to = -1L, length) {
 	# prepare_arg done internally
-   if(missing(to) && !missing(length))
-      if(!all(length >= 0)){
-         # not non negative - triple denial. 
-         stop("'to' is missing and 'length' is not non-negative")
-      }else
-         to <- from + length - 1
+   if(is.matrix(from) && ncol(from) == 2){
+      if(!missing(to) || !missing(length))
+         warning("'from' is matrix, so 'to' and 'length' are ignored")
+      to   <- from[ , 2]
+      from <- from[ , 1]
+   }else if(missing(to) && !missing(length))
+      #without pmax, when from=1, length=-1 -> to-1 and you get whole string
+         to <- pmax(from + length - 1, 0)
 	.Call("stri_sub", str, from, to, PACKAGE="stringi")
 }
 
