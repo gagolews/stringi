@@ -23,7 +23,7 @@
 #' Vectorized over s, from and (to or length).
 #' 
 #' @param str character vector 
-#' @param from integer vector 
+#' @param from integer vector or two-column matrix
 #' @param to integer vector
 #' @param length integer vector
 #' 

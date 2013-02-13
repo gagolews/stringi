@@ -26,9 +26,8 @@
 #' @param e2 character vector
 #' @export
 "%==%" <- function(e1, e2) {
-   stop("not yet implemented")
    # prepare_arg done internally
-#    .Call("stri_casecompare", e1, e2, PACKAGE="stringi")
+   .Call("stri_casecompare", e1, e2, PACKAGE="stringi")
 }
 
 # COLLATION OPTIONS

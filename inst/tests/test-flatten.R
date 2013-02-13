@@ -10,4 +10,10 @@ test_that("stri_flatten", {
    expect_identical(stri_flatten(c("A", "", "B", NA, "C")), NA_character_)
    expect_identical(stri_flatten(c(LETTERS)), paste(LETTERS, collapse=""))
    expect_identical(stri_flatten("0987654321"), "0987654321")
+   
+   #separator
+   expect_identical(stri_flatten(letters," "),paste(letters,collapse=" "))
+   expect_identical(stri_flatten(letters,"#$"),paste(letters,collapse="#$"))
+   expect_identical(stri_flatten(letters,"ół"),paste(letters,collapse="ół"))
+   
 })

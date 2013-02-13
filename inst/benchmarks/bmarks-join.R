@@ -1,11 +1,11 @@
 # TO DO:
-
+require("microbenchmark")
 require("rbenchmark")
 
 x <- stri_dup("A", 1:1000)
 y <- stri_dup("B", 1:1000)
 
-print(benchmark(
+print(microbenchmark(
    z1 <- paste(x, y, sep=""),
    z2 <- x %+% y
 ))
@@ -20,7 +20,7 @@ print(benchmark(
 expect_that(z2, is_identical_to(z1))
 
 
-print(benchmark(
+print(microbenchmark(
    z1 <- paste(x[1], y, sep=""),
    z2 <- x[1] %+% y
 ))
@@ -28,7 +28,7 @@ print(benchmark(
 expect_that(z2, is_identical_to(z1))
 
 
-print(benchmark(
+print(microbenchmark(
    z1 <- paste(x[length(x)], y, sep=""),
    z2 <- x[length(x)] %+% y
 ))
@@ -36,7 +36,7 @@ print(benchmark(
 expect_that(z2, is_identical_to(z1))
 
 
-print(benchmark(
+print(microbenchmark(
    z1 <- paste(x, y[length(y)], sep=""),
    z2 <- x %+% y[length(y)]
 ))
