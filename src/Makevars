@@ -9,6 +9,7 @@ SRCS        =  stringi.cpp \
                ICU_settings.cpp \
                trim.cpp \
                casefold.cpp \
+               count.cpp \
                dup.cpp \
                join.cpp \
                compare.cpp \

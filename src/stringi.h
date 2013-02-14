@@ -82,6 +82,9 @@ SEXP stri_unicode_normalization(SEXP s, SEXP type);
 // casefold.cpp:
 SEXP stri_casefold(SEXP s, SEXP type);
 
+// count.cpp
+SEXP stri_count_fixed(SEXP s, SEXP pattern);
+
 // dup.cpp:
 SEXP stri_dup(SEXP s, SEXP c);
 

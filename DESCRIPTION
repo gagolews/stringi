@@ -45,3 +45,4 @@ Collate:
     'uchar.R'
     'locate.R'
     'sub.R'
+    'count.R'

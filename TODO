@@ -67,8 +67,10 @@ Tests
 
 ========== TRIM ===========
 
-(--) stri_rtrim
-(--) stri_ltrim
+(++) stri_trim
+(++) stri_rtrim [BT]
+(++) stri_ltrim [BT]
+(++) stri_trim_all [BT]
 
 ========= COLLATION =======
 
