@@ -154,15 +154,17 @@ SEXP stri_trim_all(SEXP s)
    split = stri_split_fixed(s, space, omit);
    
    for(int i=0; i < ns; ++i){
-      temp = STRING_ELT(stri_flatten(VECTOR_ELT(split,i), space),0);
+      temp = stri_flatten(VECTOR_ELT(split,i), space);
+      if(LENGTH(temp) == 0){
+         SET_STRING_ELT(e, i, mkCharLen("",0));
+         continue;
+      }
+      //if we are here, then length >0 and we can get first element
+      temp = STRING_ELT(temp,0);
       if(temp == NA_STRING){
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
       }
-//      if(temp == NULL){
-//         SET_STRING_ELT(e, i, mkCharLen("",0));
-//         continue;
-//      }
       const char* string = CHAR(temp);
       SET_STRING_ELT(e, i, mkCharLen(string,LENGTH(temp)));
    }

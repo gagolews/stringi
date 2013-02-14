@@ -54,9 +54,7 @@ test_that("stri_trim_all", {
    # basic tests (ASCII, border-line):
    expect_equivalent(stri_trim_all(character(0)), character(0))
    expect_equivalent(stri_trim_all(NA), NA_character_)
-   #this one is ok
    expect_equivalent(stri_trim_all(""),"")
-   #but this is not, why?
    expect_equivalent(stri_trim_all("      "), "")
    expect_equivalent(stri_trim_all("   A  "), "A")
    expect_equivalent(stri_trim_all(" A A  A   A  "), "A A A A")
@@ -64,6 +62,8 @@ test_that("stri_trim_all", {
    expect_equivalent(stri_trim_all(LETTERS), LETTERS)
  
    expect_equivalent(stri_trim_all(stri_dup(" ", 1:100)), rep("", 100))
+   s <- stri_flatten(LETTERS%+%stri_dup(" ",1:26))
+   expect_equivalent(stri_trim_all(s),stri_flatten(LETTERS," "))
 })
 
 test_that("stri_pad", {
