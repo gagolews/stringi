@@ -23,6 +23,12 @@ microbenchmark(str_trim(test,"l"),stri_ltrim(test))
 
 microbenchmark(str_trim(test,"r"),stri_rtrim(test))
 
+# stri_trim_all
+
+microbenchmark(stri_trim_all(test),str_trim(test))
+flat <- stri_flatten(test)
+microbenchmark(stri_trim_all(flat),str_trim(flat))
+
 
 # stri_pad
 

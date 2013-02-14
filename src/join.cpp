@@ -125,6 +125,7 @@ SEXP stri_join2(SEXP s1, SEXP s2)
  */
 SEXP stri_join(SEXP s)
 {
+   warning("stri_join is not finished!");
    // MG:
    // See Sec. 5.9.10 in http://cran.r-project.org/doc/manuals/R-exts.html
    // "Currently all arguments to a .Call call will have NAMED set to 2, 
