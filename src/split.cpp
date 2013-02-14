@@ -75,6 +75,9 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
    int a = LENGTH(s);
    int b = LENGTH(split);
    int c = LENGTH(omitempty);
+   //if any length is 0 then return empty list
+   if (a==0 || b==0 || c==0)
+      return allocVector(VECSXP, 0);
    int max = a;
    if(b>max) max=b;
    if(c>max) max=c;
@@ -108,21 +111,13 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty)
             while(string[j+k]==spl[k] && k<spllen)
                k++;
       		if(k==spllen){
-               //printf("j=%d k=%d curslen=%d st=%d\n",j,k,curslen,st);
                if(!omit[i % c] || j > st)
-               {
-                  //printf("j=%d k=%d curslen=%d st=%d count++\n",j,k,curslen,st);
                   count++;
-               }
                st=j+k;
                j=j+k-1;
                if(omit[i % c] && st==curslen)
                   add=0;
       		}
-            // MG: what if string[i] == '\n' and string[i-1] == '\n' (i>0) ? 
-            // don't increment count in such case (?)
-            // BT: IMO we should not remove empty line in this function. 
-            // we have stri_trim to do such things...
       	}
       	PROTECT(temp = allocVector(STRSXP,count+add));
       	st=0;
