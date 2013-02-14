@@ -73,6 +73,7 @@ SEXP stri__emptyList();
 SEXP stri_trim(SEXP s);
 SEXP stri_ltrim(SEXP s);
 SEXP stri_rtrim(SEXP s);
+SEXP stri_trim_all(SEXP s);
 SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad);
 
 // unicode_normalization.cpp:

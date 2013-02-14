@@ -61,6 +61,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_split_pos",         			(DL_FUNC)&stri_split_pos,  		    	    3},
    {"stri_sub",               			(DL_FUNC)&stri_sub,  		         	    3},
    {"stri_trim",                       (DL_FUNC)&stri_trim,                       1},
+   {"stri_trim_all",                   (DL_FUNC)&stri_trim_all,                   1},
    {"stri_unicode_normalization",      (DL_FUNC)&stri_unicode_normalization,      2},
    {"stri_wrap",                       (DL_FUNC)&stri_wrap,                       4},
    {"stri_wrap_greedy",                (DL_FUNC)&stri_wrap_greedy,                3},

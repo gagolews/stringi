@@ -133,6 +133,44 @@ SEXP stri_rtrim(SEXP s)
 }
 
 
+
+/** 
+   vectorized over s
+   if s is NA the result will be NA
+   
+*/
+SEXP stri_trim_all(SEXP s)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   
+   R_len_t ns = LENGTH(s);
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP, ns));
+   SEXP split,omit,space,temp;
+   PROTECT(omit = allocVector(LGLSXP, 1));
+   PROTECT(space= allocVector(STRSXP, 1));
+   LOGICAL(omit)[0] = true;
+   SET_STRING_ELT(space, 0, mkCharLen(" ",1));
+   split = stri_split_fixed(s, space, omit);
+   
+   for(int i=0; i < ns; ++i){
+      temp = STRING_ELT(stri_flatten(VECTOR_ELT(split,i), space),0);
+      if(temp == NA_STRING){
+         SET_STRING_ELT(e, i, NA_STRING);
+         continue;
+      }
+//      if(temp == NULL){
+//         SET_STRING_ELT(e, i, mkCharLen("",0));
+//         continue;
+//      }
+      const char* string = CHAR(temp);
+      SET_STRING_ELT(e, i, mkCharLen(string,LENGTH(temp)));
+   }
+   UNPROTECT(3);
+   return e;
+}
+
+
 /** 
    vectorized over s, width and side
    if s is NA the result will be NA

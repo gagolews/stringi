@@ -51,9 +51,19 @@ stri_rtrim <- function(str) {
    .Call("stri_rtrim", str, PACKAGE="stringi")
 }
 
+#' Trim all unnecessary double whitespaces from string
+#' 
+#' @param str will be coerced to character
+#' @return trimmed character vector 
+#' @export
+stri_trim_all <- function(str) {
+   # prepare_arg done internally
+   .Call("stri_trim_all", str, PACKAGE="stringi")
+}
 
 #' Pad a string
 #' 
+#' Add whitespace at the begining or/and at the end of string.
 #' Works like str_pad but faster and it's vectorized not only over s, but also over width and side. And works with NA value.
 #' 
 #' @param str character vector
