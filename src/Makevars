@@ -12,6 +12,7 @@ SRCS        =  stringi.cpp \
                count.cpp \
                dup.cpp \
                join.cpp \
+               justify.cpp \
                compare.cpp \
                unicode_normalization.cpp \
                ucnv.cpp \

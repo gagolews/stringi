@@ -45,6 +45,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_info",                       (DL_FUNC)&stri_info,                       0},
    {"stri_join",                       (DL_FUNC)&stri_join,                       1},
    {"stri_join2",                      (DL_FUNC)&stri_join2,                      2},
+   {"stri_justify",                    (DL_FUNC)&stri_justify,                    2},
    {"stri_length",                     (DL_FUNC)&stri_length,                     1},
    {"stri_localeinfo",                 (DL_FUNC)&stri_localeinfo,                 1},
    {"stri_localelist",                 (DL_FUNC)&stri_localelist,                 0},

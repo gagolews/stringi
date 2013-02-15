@@ -93,6 +93,9 @@ SEXP stri_flatten(SEXP s, SEXP sep);
 SEXP stri_join(SEXP s);
 SEXP stri_join2(SEXP s1, SEXP s2);
 
+// justify.cpp
+SEXP stri_justify(SEXP s, SEXP width);
+
 // compare.cpp:
 SEXP stri_casecompare(SEXP x, SEXP y);
 

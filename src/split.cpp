@@ -40,8 +40,8 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
    UChar32 c;
    SEXP e;
    PROTECT(e = allocVector(STRSXP,nfrom));
-   int j=0,lasti=0,k=0,st=0;
-   for (int i = 0; i < ns; ++j)
+   int j=0,lasti=0,k=0,st=0,i=0;
+   for (i = 0; lasti < ns; ++j)
    {
       //printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
       if(j==INTEGER(from)[k]){
@@ -56,6 +56,8 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
       lasti = i;
       U8_NEXT(CHAR(s), i, ns, c);
    }
+   if(INTEGER(to)[nfrom] > j)
+      SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, ns-st));
    UNPROTECT(1);
    return e;
 }
