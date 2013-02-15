@@ -27,4 +27,11 @@ local({
    print(microbenchmark(stri_split(srepdup),strsplit(srepdup,'\n',fixed=TRUE)))
    print(microbenchmark(stri_split(srepdup,"co"),strsplit(srepdup,"co",fixed=TRUE)))
    
+   #stri_split_pos vs stri_sub
+   print(microbenchmark(stri_split_pos(s,c(1,15),c(10,25)),stri_sub(s,c(1,15),c(10,25))))
+   print(microbenchmark(stri_split_pos(s,c(1,4,19),c(3,20,45)),stri_sub(s,c(1,4,19),c(3,20,45)),times=10))
+   
+   print(microbenchmark(stri_split_pos(srep,c(1,21),c(20,45)),stri_sub(srep,c(1,21),c(20,45)),times=10))
+   print(microbenchmark(stri_split_pos(srepdup,c(1,21),c(20,45)),stri_sub(srepdup,c(1,21),c(20,45)),times=10))
+   
 })

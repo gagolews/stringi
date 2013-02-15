@@ -47,3 +47,22 @@ stri_split <- function(str, split='\n', omitempty=FALSE) {
 # determine: which result is better?
 # strsplit("lalal","l") or stri_split("lalal","l")
 # 
+
+#' Split the elements of a character vector by position
+#' 
+#' 
+#' @param str character vector to split
+#' @param split character element
+#' @param from integer vector
+#' @param to integer vector
+#' @return A list of the same length as the longest of vectors: str, split and omitempty. Shorter vectors are recycled. The i-th element of list contains splitted str[i] character vectors
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_split_pos(s,c(1,4),c(3,6))
+#' 
+#' @export
+stri_split_pos <- function(str, from, to) {
+   # prepare_arg done internally
+   .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
+}
