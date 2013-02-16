@@ -8,8 +8,8 @@ test_that("stri_trim", {
    expect_equivalent(stri_trim(NA), NA_character_)
    
    expect_equivalent(stri_trim("      "), "")
-   expect_equivalent(stri_trim("   A  "), "A")
-   expect_equivalent(stri_trim("A     "), "A")
+   expect_equivalent(stri_trim(" \tA  "), "A")
+   expect_equivalent(stri_trim("A \t\n"), "A")
    expect_equivalent(stri_trim("     A"), "A")
    
    expect_equivalent(stri_trim(LETTERS), LETTERS)

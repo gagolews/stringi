@@ -33,7 +33,6 @@ SEXP stri_trim(SEXP s)
    SEXP e;
    PROTECT(e = allocVector(STRSXP, ns));
    int j=0,k=0;
-   const char* space = " ";
    
    for (int i=0; i<ns; ++i)
    {
@@ -44,11 +43,11 @@ SEXP stri_trim(SEXP s)
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
          for(j=0; j < nstring ; ++j){
-            if(string[j] != space[0])
+            if(string[j] != ' ')
                break;
          }
          for(k=0; k < nstring ; ++k){
-            if(string[nstring-1-k] != space[0])
+            if(string[nstring-1-k] != ' ')
                break;
          }
          //if string contains only space, then k+j > nstring and mkCharLen
@@ -76,7 +75,6 @@ SEXP stri_ltrim(SEXP s)
    SEXP e;
    PROTECT(e = allocVector(STRSXP, ns));
    int j=0;
-   const char* space = " ";
    
    for (int i=0; i<ns; ++i)
    {
@@ -87,7 +85,7 @@ SEXP stri_ltrim(SEXP s)
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
          for(j=0; j < nstring ; ++j){
-            if(string[j] != space[0])
+            if(string[j] != ' ')
                break;
          }
          SET_STRING_ELT(e, i, mkCharLen(string+j,nstring-j));
@@ -111,7 +109,6 @@ SEXP stri_rtrim(SEXP s)
    SEXP e;
    PROTECT(e = allocVector(STRSXP, ns));
    int j=0;
-   const char* space = " ";
    
    for (int i=0; i<ns; ++i)
    {
@@ -122,7 +119,7 @@ SEXP stri_rtrim(SEXP s)
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
          for(j=0; j < nstring ; ++j){
-            if(string[nstring-1-j] != space[0])
+            if(string[nstring-1-j] != ' ')
                break;
          }
          SET_STRING_ELT(e, i, mkCharLen(string,nstring-j));

@@ -25,7 +25,14 @@
 #' @export
 stri_trim <- function(str) {
    # prepare_arg done internally
-   .Call("stri_trim", str, PACKAGE="stringi")
+   
+   from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
+   to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
+   from[is.na(from)] <- -1 # this will return an empty string
+   to[is.na(to)] <- -1
+   stri_sub(str, from, to)
+   
+#    .Call("stri_trim", str, PACKAGE="stringi")
 }
 
 

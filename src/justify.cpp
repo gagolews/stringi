@@ -41,7 +41,6 @@ SEXP stri_justify(SEXP s, SEXP width)
    SEXP e, curs;
    PROTECT(e = allocVector(STRSXP, nmax));
    int j=0,k=0,curwidth;
-   const char* space = " ";
    
    for (int i=0; i < nmax; ++i)
    {
@@ -51,14 +50,14 @@ SEXP stri_justify(SEXP s, SEXP width)
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
       }
-      const char* string = CHAR(ss);
-      int nstring = LENGTH(ss);
+      const char* string = CHAR(curs);
+      int nstring = LENGTH(curs);
       for(j=0; j < nstring ; ++j){
-         if(string[j] != space[0])
+         if(string[j] != ' ')
             break;
       }
       for(k=0; k < nstring ; ++k){
-         if(string[nstring-1-k] != space[0])
+         if(string[nstring-1-k] != ' ')
             break;
       }
       SET_STRING_ELT(e, i, mkCharLen(string+j, max(0,nstring-k-j)));
