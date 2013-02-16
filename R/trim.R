@@ -63,7 +63,7 @@ stri_ltrim <- function(str) {
 stri_rtrim <- function(str) {
    # prepare_arg done internally in stri_sub
    
-   to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
+   to <- stri_locate_last_class(str,stri_char_getpropertyid("^WHITE_SPACE"))
    to[is.na(to)] <- 0 # this will return an empty string
    stri_sub(str, 1, to)
 #   .Call("stri_rtrim", str, PACKAGE="stringi")
@@ -76,7 +76,25 @@ stri_rtrim <- function(str) {
 #' @export
 stri_trim_all <- function(str) {
    # prepare_arg done internally
-   .Call("stri_trim_all", str, PACKAGE="stringi")
+   subs <- stri_locate_all_class(str,stri_char_getpropertyid("^WHITE_SPACE"))
+   n <- length(str)
+   ret <- character(n)
+   for(i in 1:n){
+      if(is.na(str[i])){
+         ret[i] <- NA
+         next;
+      }
+      from <- subs[[i]][,1]
+      to <- subs[[i]][,2]
+      if(is.na(from) || is.na(to)){
+         ret[i] <- ""
+         next;
+      }
+      ret[i] <- stri_flatten(stri_split_pos(str[i],from,to)," ")
+   }
+      
+   return(ret)
+   #.Call("stri_trim_all", str, PACKAGE="stringi")
 }
 
 #' Pad a string

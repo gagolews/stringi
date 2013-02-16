@@ -8,6 +8,7 @@ require("stringr")
 bmarks <- NULL
 
 test <- paste(stri_dup(" ", 1:1000), "A", stri_dup(" ", 1:1000), sep="")
+flat <- stri_flatten(test)
 
 bmarks <- rbind(bmarks, benchmark(
    trm1 <- str_trim(test),
@@ -18,17 +19,21 @@ print(bmarks)
 expect_identical(trm2, trm1)
 
 microbenchmark(str_trim(test),stri_trim(test))
+microbenchmark(str_trim(flat),stri_trim(flat))
 
 microbenchmark(str_trim(test,"l"),stri_ltrim(test))
+microbenchmark(str_trim(flat,"l"),stri_ltrim(flat))
 
 microbenchmark(str_trim(test,"r"),stri_rtrim(test))
+microbenchmark(str_trim(flat,"r"),stri_rtrim(flat))
 
 # stri_trim_all
 
-microbenchmark(stri_trim_all(test),str_trim(test))
-flat <- stri_flatten(test)
-microbenchmark(stri_trim_all(flat),str_trim(flat))
+microbenchmark(stri_trim_all(test),str_trim(test),times=10)
 
+microbenchmark(stri_trim_all(flat),str_trim(flat),times=10)
+f <- rep(flat, 25)
+microbenchmark(stri_trim_all(f),str_trim(f),times=10)
 
 # stri_pad
 
