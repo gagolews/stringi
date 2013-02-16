@@ -28,8 +28,8 @@ stri_trim <- function(str) {
    
    from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
    to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
-   from[is.na(from)] <- -1 # this will return an empty string
-   to[is.na(to)] <- -1
+   from[is.na(from)] <- 0 # this will return an empty string
+   to[is.na(to)] <- 0
    stri_sub(str, from, to)
    
 #    .Call("stri_trim", str, PACKAGE="stringi")
