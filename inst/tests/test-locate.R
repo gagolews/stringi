@@ -14,13 +14,13 @@ test_that("stri_locate_all_class", {
       c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C", "123"),
          stri_char_getcategoryid("L")), as.integer),
       list(c(1L, 3L), c(1L, 3L), c(1L, 3L, 5L, 1L, 3L, 5L),
-           c(2L, 4L, 6L, 2L, 4L, 6L), integer(0)))
+           c(2L, 4L, 6L, 2L, 4L, 6L), c(NA_integer_, NA_integer_)))
    
    expect_equivalent(lapply(stri_locate_all_class(
       c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C", "123"),
          stri_char_getcategoryid("^L")), as.integer),
-      list(integer(0), integer(0), c(2L, 4L, 6L, 2L, 4L, 6L),
-         c(1L, 3L, 5L, 1L, 3L, 5L), c(1L, 3L)))
+      list(c(NA_integer_, NA_integer_), c(NA_integer_, NA_integer_),
+         c(2L, 4L, 6L, 2L, 4L, 6L), c(1L, 3L, 5L, 1L, 3L, 5L), c(1L, 3L)))
    
    expect_equivalent(as.integer(
       stri_locate_all_class("    xxx\n\t \v   \n",

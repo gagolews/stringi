@@ -25,6 +25,7 @@
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
 #' Consecutive sequences of characters from a class are merged.
+#' NAs for no match.
 #' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
 #' @export
 stri_locate_all_class <- function(s, class) {

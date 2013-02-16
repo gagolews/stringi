@@ -200,11 +200,19 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
          stri__locate_all_class1(CHAR(curs), cursl, curc,
             start, end, occurences);
          
-         PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
-         int* ians = INTEGER(ans);
-         for(int j = 0; j < occurences; j++) {
-            ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
-            ians[j+1*occurences] = end[j] + 1;
+         if (occurences > 0) {
+            PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
+            int* ians = INTEGER(ans);
+            for(int j = 0; j < occurences; j++) {
+               ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
+               ians[j+1*occurences] = end[j] + 1;
+            }
+         }
+         else {
+            PROTECT(ans = allocMatrix(INTSXP, 1, 2));
+            int* ians = INTEGER(ans);
+            ians[0] = NA_INTEGER;
+            ians[1] = NA_INTEGER;  
          }
       }
          
