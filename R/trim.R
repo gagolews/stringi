@@ -24,7 +24,7 @@
 #' @return trimmed character vector 
 #' @export
 stri_trim <- function(str) {
-   # prepare_arg done internally
+   # prepare_arg done internally in stri_sub
    
    from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
    to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
@@ -43,8 +43,15 @@ stri_trim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_ltrim <- function(str) {
-   # prepare_arg done internally
-   .Call("stri_ltrim", str, PACKAGE="stringi")
+   # prepare_arg done internally in stri_sub
+   
+   from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
+   from[is.na(from)] <- 0 # this will return an empty string
+   #any idea how to improve this two lines?
+   to <- rep(-1,length(from))
+   to[from==0] <- 0
+   stri_sub(str, from, to)
+#   .Call("stri_ltrim", str, PACKAGE="stringi")
 }
 
 
@@ -54,8 +61,12 @@ stri_ltrim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_rtrim <- function(str) {
-   # prepare_arg done internally
-   .Call("stri_rtrim", str, PACKAGE="stringi")
+   # prepare_arg done internally in stri_sub
+   
+   to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
+   to[is.na(to)] <- 0 # this will return an empty string
+   stri_sub(str, 1, to)
+#   .Call("stri_rtrim", str, PACKAGE="stringi")
 }
 
 #' Trim all unnecessary double whitespaces from string
