@@ -82,7 +82,7 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
       }
       j = 0; 
       lastk = 0;
-      for(k=0; k < curslen; ++j){
+      for(k=0; lastk < curslen; ++j){
          if(j==curfrom){
          //lastk is here, bacause without it you dont know if the last 
          //char is one or two byte long so k-1 doesnt work every time
