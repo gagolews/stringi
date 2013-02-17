@@ -62,8 +62,8 @@ test_that("stri_trim_all", {
    expect_equivalent(stri_trim_all(NA), NA_character_)
    expect_equivalent(stri_trim_all(""),"")
    expect_equivalent(stri_trim_all("         "), "")
-   expect_equivalent(stri_trim_all("   A  "), "A")
-   expect_equivalent(stri_trim_all(" A A  A   A  "), "A A A A")
+   expect_equivalent(stri_trim_all("  \t A \n "), "A")
+   expect_equivalent(stri_trim_all(" A A  A  \t A  "), "A A A A")
  
    expect_equivalent(stri_trim_all(LETTERS), LETTERS)
  

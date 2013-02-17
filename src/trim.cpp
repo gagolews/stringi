@@ -139,31 +139,31 @@ SEXP stri_rtrim(SEXP s)
 SEXP stri_trim_all(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   
    R_len_t ns = LENGTH(s);
-   SEXP e;
+   SEXP e,subs, curs, temp, temp2, white, space;
    PROTECT(e = allocVector(STRSXP, ns));
-   SEXP split,omit,space,temp;
-   PROTECT(omit = allocVector(LGLSXP, 1));
-   PROTECT(space= allocVector(STRSXP, 1));
-   LOGICAL(omit)[0] = true;
-   SET_STRING_ELT(space, 0, mkCharLen(" ",1));
-   split = stri_split_fixed(s, space, omit);
-   
+   PROTECT(white = allocVector(STRSXP, 1));
+   PROTECT(space = allocVector(STRSXP, 1));
+   SET_STRING_ELT(white,0,mkCharLen("^WHITE_SPACE",12));
+   SET_STRING_ELT(space,0,mkCharLen(" ",1));
+   subs = stri_locate_all_class(s, stri_char_getpropertyid(white));
+   int n;
    for(int i=0; i < ns; ++i){
-      temp = stri_flatten(VECTOR_ELT(split,i), space);
-      if(LENGTH(temp) == 0){
-         SET_STRING_ELT(e, i, mkCharLen("",0));
-         continue;
-      }
-      //if we are here, then length >0 and we can get first element
-      temp = STRING_ELT(temp,0);
-      if(temp == NA_STRING){
+      curs = STRING_ELT(s, i);
+      if(curs == NA_STRING){
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
       }
-      const char* string = CHAR(temp);
-      SET_STRING_ELT(e, i, mkCharLen(string,LENGTH(temp)));
+      temp = VECTOR_ELT(subs, 0);
+      n = LENGTH(temp)/2;
+      int* fromto = INTEGER(temp);
+      //if from==NA then string contains only white space -> return empty
+      if(fromto[0] == NA_INTEGER){
+         SET_STRING_ELT(e, i, mkCharLen("",0));
+         continue;
+      }
+      temp2 = stri__split_pos(CHAR(curs), fromto, fromto + n,LENGTH(curs),n);
+      SET_STRING_ELT(e, i,STRING_ELT(stri_flatten(temp2, space),0));
    }
    UNPROTECT(3);
    return e;
