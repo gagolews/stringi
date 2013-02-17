@@ -194,7 +194,10 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
       R_len_t cursl = LENGTH(curs);
 
       if (curs == NA_STRING || cursl == 0) {
-         PROTECT(ans = allocMatrix(INTSXP, 0, 2));
+         PROTECT(ans = allocMatrix(INTSXP, 1, 2));
+         int* ians = INTEGER(ans);
+         ians[0] = NA_INTEGER;
+         ians[1] = NA_INTEGER;  
       }
       else {
          stri__locate_all_class1(CHAR(curs), cursl, curc,
