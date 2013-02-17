@@ -183,6 +183,7 @@ SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 // split.cpp
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
+SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
 
 // sub.cpp
 SEXP stri_sub(SEXP s, SEXP from, SEXP to);

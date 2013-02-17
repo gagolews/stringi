@@ -62,6 +62,41 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
    return e;
 }
 
+
+/** 
+ * This function is implemented only for stri_trim_all
+ * @param s ...
+ * @param from integer vector ...
+ * @param to integer vector ...
+ * @param ns length of s
+ * @param n length of from and tos
+ * @return ...
+ */
+
+SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
+{
+   UChar32 c;
+   SEXP e;
+   PROTECT(e = allocVector(STRSXP,n));
+   int j=0,lasti=0,k=0,st=0,i=0;
+   for (i = 0; lasti < ns; ++j)
+   {
+      if(j==from[k])
+         //lasti is here, bacause without it you dont know if the last char
+         //is one or two byte long so i-1 doesnt work every time
+         st=lasti;
+      if(j==to[k]){
+         SET_STRING_ELT(e,k, mkCharLen(s+st, i-st));
+         k++;
+      }
+      lasti = i;
+      U8_NEXT(s, i, ns, c);
+   }
+   UNPROTECT(1);
+   return e;
+}
+
+
 /** 
  * .... 
  * @param s ...
