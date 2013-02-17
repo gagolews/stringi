@@ -191,7 +191,8 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
    
    if(INTEGER(stri_length(pad))[0] != 1) 
       error("pad must be single character");
-   
+   if(nmax % ns !=0 || nmax % nside !=0 || nmax % nwidth !=0)
+      warning(MSG__WARN_RECYCLING_RULE);
    int needed=0;
    SEXP e, curs, slen;
    PROTECT(e = allocVector(STRSXP, nmax));

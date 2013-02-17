@@ -73,6 +73,7 @@ test_that("stri_trim_all", {
 })
 
 test_that("stri_pad", {
+   expect_warning(stri_pad(letters,1:5))
    #vectorized over str
    expect_identical(stri_pad(letters,20),str_pad(letters,20))
    #vectorized over side
