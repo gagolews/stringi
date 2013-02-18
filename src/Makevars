@@ -20,6 +20,7 @@ SRCS        =  stringi.cpp \
                uchar.cpp \
                length.cpp \
                locate.cpp \
+               replace.cpp \
                split.cpp \
                sub.cpp \
                wrap.cpp
