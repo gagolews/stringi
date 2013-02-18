@@ -137,6 +137,8 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
    //vectorized over width ?
    //int nwidth = LENGTH(width);
    int nmax = max(nwordslist,nmethod);
+   if(nmax % nwordslist != 0 || nmax % nmethod != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
    SEXP ret, sep;
    PROTECT(ret = allocVector(STRSXP,nmax));
    //sep for stri_flatten

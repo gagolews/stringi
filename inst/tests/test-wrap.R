@@ -34,4 +34,6 @@ test_that("stri_wrap", {
 	expect_identical(stri_wrapC2(s, h,"g"), stri_wrap(s,h,"g"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
 	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
+   
+   expect_warning(stri_wrapC3(stri_dup(s,2),10,c("g","d","g")))
 })
