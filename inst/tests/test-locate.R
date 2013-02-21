@@ -9,6 +9,11 @@ test_that("stri_locate_all_class", {
    expect_equivalent(stri_locate_all_class(character(0), 1), list())
    expect_equivalent(stri_locate_all_class(LETTERS, integer(0)), list())
    
+   expect_equivalent(as.integer(stri_locate_all_class("", stri_char_getpropertyid("^WHITE_SPACE"))[[1]]),
+         c(NA_integer_, NA_integer_))
+   
+   expect_equivalent(as.integer(stri_locate_all_class(NA, stri_char_getpropertyid("^WHITE_SPACE"))[[1]]),
+                     c(NA_integer_, NA_integer_))
    
    expect_equivalent(lapply(stri_locate_all_class(
       c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C", "123"),
@@ -37,6 +42,9 @@ test_that("stri_locate_all_class", {
 
 test_that("stri_locate_first_class", {
    
+   expect_equivalent(stri_locate_first_class("", stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
+   expect_equivalent(stri_locate_first_class(NA, stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
+                           
    expect_equivalent(stri_locate_first_class(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
       stri_char_getcategoryid("L")),
@@ -51,6 +59,9 @@ test_that("stri_locate_first_class", {
 
 
 test_that("stri_locate_last_class", {
+   
+   expect_equivalent(stri_locate_last_class("", stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
+   expect_equivalent(stri_locate_last_class(NA, stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
    
    expect_equivalent(stri_locate_last_class(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),

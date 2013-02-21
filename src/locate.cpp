@@ -170,13 +170,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    R_len_t nout = max(ns, nc);
    if (nout % ns != 0 || nout % nc != 0)
       warning(MSG__WARN_RECYCLING_RULE);
-   
-   R_len_t nmax = stri__numbytes_max(s);
-   int* start = new int[nmax];
-   int* end = new int[nmax];
-   int  occurences;
-   int* cc = INTEGER(c);
-   
+      
    SEXP ans;
    SEXP dimnames;
    SEXP colnames;
@@ -188,16 +182,35 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
+#define STRI__LOCATEALL_NOTFOUND \
+      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
+      int* ians = INTEGER(ans); \
+      ians[0] = NA_INTEGER; \
+      ians[1] = NA_INTEGER;  
+         
+   R_len_t nmax = stri__numbytes_max(s);
+   if (nmax <= 0) {
+      STRI__LOCATEALL_NOTFOUND      
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      
+      for (R_len_t i=0; i<nout; ++i)
+         SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(4);  
+      return ret;
+   }
+      
+   int* start = new int[nmax];
+   int* end = new int[nmax];
+   int  occurences;
+   int* cc = INTEGER(c);
+   
    for (R_len_t i=0; i<nout; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
       int32_t* curc = cc + STRI__UCHAR_CLASS_LENGTH*(i%nc);
       R_len_t cursl = LENGTH(curs);
 
       if (curs == NA_STRING || cursl == 0) {
-         PROTECT(ans = allocMatrix(INTSXP, 1, 2));
-         int* ians = INTEGER(ans);
-         ians[0] = NA_INTEGER;
-         ians[1] = NA_INTEGER;  
+         STRI__LOCATEALL_NOTFOUND 
       }
       else {
          stri__locate_all_class1(CHAR(curs), cursl, curc,
@@ -212,16 +225,13 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
             }
          }
          else {
-            PROTECT(ans = allocMatrix(INTSXP, 1, 2));
-            int* ians = INTEGER(ans);
-            ians[0] = NA_INTEGER;
-            ians[1] = NA_INTEGER;  
+            STRI__LOCATEALL_NOTFOUND
          }
       }
          
-      setAttrib(ans, R_DimNamesSymbol, dimnames);
-      UNPROTECT(1);   
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
       SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(1);  
    }
    
    delete [] start;
