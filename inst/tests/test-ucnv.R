@@ -67,3 +67,24 @@ test_that("stri_enclist, stri_encinfo", {
    expect_equivalent(stri_encinfo("Shift-JIS")$Name.friendly, "Shift_JIS") # Japanese
    expect_equivalent(stri_encinfo("EUC-KR")$Name.friendly, "EUC-KR") # Korean
 })
+
+
+test_that("stri_enc_is_ascii",{
+   expect_identical(stri_enc_is_ascii(character(0)),logical(0))
+   expect_identical(stri_enc_is_ascii(NA),NA)
+   expect_identical(stri_enc_is_ascii(letters),rep(TRUE,26))
+   expect_identical(stri_enc_is_ascii("ą"),FALSE)
+   expect_identical(stri_enc_is_ascii("S\xe9bastien"),FALSE)
+   
+})
+
+
+test_that("stri_enc_is_utf8",{
+   expect_identical(stri_enc_is_utf8(character(0)),logical(0))
+   expect_identical(stri_enc_is_utf8(NA),NA)
+   expect_identical(stri_enc_is_utf8(letters),rep(TRUE,26))
+   expect_identical(stri_enc_is_utf8("ą"),TRUE)
+   expect_identical(stri_enc_is_utf8("S\xe9bastien"),FALSE)
+   
+})
+
