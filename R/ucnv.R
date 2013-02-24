@@ -70,3 +70,23 @@ stri_encode <- function(str, from, to) {
    # prepare_arg done internally
    .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }
+
+#' Check if string is in ASCII
+#'
+#' @param str character vector
+#' @return logical vector
+#' @seealso \code{\link{stri_enc_is_utf8}}
+#' @export
+stri_enc_is_ascii <- function(str) {
+   .Call("stri_enc_is_ascii", str, PACKAGE="stringi")
+}
+
+#' Check if string is in UTF8
+#'
+#' @param str character vector
+#' @return logical vector
+#' @seealso \code{\link{stri_enc_is_ascii}}
+#' @export
+stri_enc_is_utf8 <- function(str) {
+   .Call("stri_enc_is_utf8", str, PACKAGE="stringi")
+}

@@ -119,6 +119,8 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to);
 SEXP stri_enclist();
 SEXP stri_encinfo(SEXP enc);
 SEXP stri_encset(SEXP loc);
+SEXP stri_enc_is_ascii(SEXP s);
+SEXP stri_enc_is_utf8(SEXP s);
 
 // uloc.cpp:
 SEXP stri_localeinfo(SEXP loc);

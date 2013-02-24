@@ -563,3 +563,77 @@ UConverter* stri__ucnv_open(SEXP enc)
    error("incorrect encoding specifier");
    return NULL; // to avoid compilation warnings
 }
+
+
+/** Is in ASCII?
+ *  @param s string
+ *  @return logical vector
+ */
+
+SEXP stri_enc_is_ascii(SEXP s)
+{
+   s = stri_prepare_arg_string(s);
+   int ns = LENGTH(s);
+   
+   SEXP e, curs;
+   PROTECT(e = allocVector(LGLSXP, ns));
+   for(int i=0; i < ns; ++i){
+      curs = STRING_ELT(s, i);
+      if(curs == NA_STRING){
+         LOGICAL(e)[i] = NA_LOGICAL;
+         continue;
+      }
+      const char* string = CHAR(curs);
+      int ncurs = LENGTH(curs);
+      LOGICAL(e)[i] = true;
+      for(int j=0; j < ncurs; ++j){
+         if(!U8_IS_SINGLE(string[j])){
+            LOGICAL(e)[i] = false;
+            break;
+         }
+      }
+      
+   }
+   UNPROTECT(1);
+   return e;
+}
+
+
+
+
+/** Is in UTF8?
+ *  @param s string
+ *  @return logical vector
+ */
+
+SEXP stri_enc_is_utf8(SEXP s)
+{
+   s = stri_prepare_arg_string(s);
+   int ns = LENGTH(s);
+   UChar32 c;
+   int ncurs;
+   SEXP e, curs;
+   PROTECT(e = allocVector(LGLSXP, ns));
+   for(int i=0; i < ns; ++i){
+      curs = STRING_ELT(s, i);
+      if(curs == NA_STRING){
+         LOGICAL(e)[i] = NA_LOGICAL;
+         continue;
+      }
+      const char* string = CHAR(curs);
+      ncurs = LENGTH(curs);
+      LOGICAL(e)[i] = true;
+      for(int j=0; j < ncurs; ){
+         U8_NEXT(string, j, ncurs, c);
+         if(c < 0){
+            LOGICAL(e)[i] = false;
+            break;
+         }
+      }
+      
+   }
+   UNPROTECT(1);
+   
+   
+   return e;
+}

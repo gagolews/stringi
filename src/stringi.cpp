@@ -41,6 +41,8 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_encinfo",                    (DL_FUNC)&stri_encinfo,                    1},
    {"stri_encset",                     (DL_FUNC)&stri_encset,                     1},
    {"stri_encode",                     (DL_FUNC)&stri_encode,                     3},
+   {"stri_enc_is_ascii",               (DL_FUNC)&stri_enc_is_ascii,               1},
+   {"stri_enc_is_utf8",                (DL_FUNC)&stri_enc_is_utf8,                1},
    {"stri_flatten",                    (DL_FUNC)&stri_flatten,                    2},
    {"stri_info",                       (DL_FUNC)&stri_info,                       0},
    {"stri_join",                       (DL_FUNC)&stri_join,                       1},
