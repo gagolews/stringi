@@ -577,18 +577,19 @@ SEXP stri_enc_is_ascii(SEXP s)
    
    SEXP e, curs;
    PROTECT(e = allocVector(LGLSXP, ns));
-   for(int i=0; i < ns; ++i){
+   int* be = LOGICAL(e); // may be faster than LOGICAL(e)[i]
+   for (int i=0; i < ns; ++i) {
       curs = STRING_ELT(s, i);
-      if(curs == NA_STRING){
-         LOGICAL(e)[i] = NA_LOGICAL;
+      if (curs == NA_STRING) {
+         be[i] = NA_LOGICAL;
          continue;
       }
       const char* string = CHAR(curs);
       int ncurs = LENGTH(curs);
-      LOGICAL(e)[i] = true;
-      for(int j=0; j < ncurs; ++j){
-         if(!U8_IS_SINGLE(string[j])){
-            LOGICAL(e)[i] = false;
+      be[i] = true;
+      for (int j=0; j < ncurs; ++j){
+         if (!U8_IS_SINGLE(string[j])) {
+            be[i] = false;
             break;
          }
       }
@@ -614,26 +615,25 @@ SEXP stri_enc_is_utf8(SEXP s)
    int ncurs;
    SEXP e, curs;
    PROTECT(e = allocVector(LGLSXP, ns));
-   for(int i=0; i < ns; ++i){
+   int* be = LOGICAL(e);
+   for (int i=0; i < ns; ++i) {
       curs = STRING_ELT(s, i);
-      if(curs == NA_STRING){
-         LOGICAL(e)[i] = NA_LOGICAL;
+      if (curs == NA_STRING){
+         be[i] = NA_LOGICAL;
          continue;
       }
       const char* string = CHAR(curs);
       ncurs = LENGTH(curs);
-      LOGICAL(e)[i] = true;
-      for(int j=0; j < ncurs; ){
+      be[i] = true;
+      for(int j=0; j < ncurs; ) {
          U8_NEXT(string, j, ncurs, c);
-         if(c < 0){
-            LOGICAL(e)[i] = false;
+         if(c < 0) {
+            be[i] = false;
             break;
          }
       }
       
    }
    UNPROTECT(1);
-   
-   
    return e;
 }

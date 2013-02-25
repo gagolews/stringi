@@ -1,6 +1,6 @@
 Package: stringi
-Version: 0.1-1
-Date: 2013-01-16
+Version: 0.1-2
+Date: 2013-02-25
 Title: ICU bindings for R
 Description: stringi is an R package for correct, fast,
     and simple string manipulation in each locale and native charset.
@@ -16,16 +16,17 @@ Depends:
 SystemRequirements: ICU4C (>= 50)
 License: LGPL (>= 3)
 Suggests:
-    testthat
+    testthat,
+    microbenchmark
 Authors@R: c(
     person("Marek", "Gagolewski", role = c("aut", "cre"),
     email = "gagolews@ibspan.waw.pl"),
     person("Bartek", "Tartanus", role = "aut",
     email = "bartektartanus@gmail.com"),
-    person("Marcin", "Bujarski", role = "aut",
+    person("Marcin", "Bujarski", role = "ctb",
     email = "marcin.bujarski@gmail.com")
     )
-Author: Marek Gagolewski and Bartek Tartanus and Marcin Bujarski
+Author: Marek Gagolewski and Bartek Tartanus, with contributions from Marcin Bujarski
 Maintainer: Marek Gagolewski <gagolews@ibspan.waw.pl>
 Collate:
     'casefold.R'

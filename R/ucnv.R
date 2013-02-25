@@ -71,21 +71,21 @@ stri_encode <- function(str, from, to) {
    .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }
 
-#' Check if string is in ASCII
+#' Check if string is possibly in ASCII
 #'
 #' @param str character vector
 #' @return logical vector
-#' @seealso \code{\link{stri_enc_is_utf8}}
+#' @seealso \code{\link{stri_enc_is_utf8}}, \code{\link{stri_encode}}
 #' @export
 stri_enc_is_ascii <- function(str) {
    .Call("stri_enc_is_ascii", str, PACKAGE="stringi")
 }
 
-#' Check if string is in UTF8
+#' Check if string is possibly in UTF8
 #'
 #' @param str character vector
 #' @return logical vector
-#' @seealso \code{\link{stri_enc_is_ascii}}
+#' @seealso \code{\link{stri_enc_is_ascii}}, \code{\link{stri_encode}}
 #' @export
 stri_enc_is_utf8 <- function(str) {
    .Call("stri_enc_is_utf8", str, PACKAGE="stringi")
