@@ -36,6 +36,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_char_getcategoryid",         (DL_FUNC)&stri_char_getcategoryid,         1},
    {"stri_char_getpropertyid",         (DL_FUNC)&stri_char_getpropertyid,         1},
    {"stri_count_fixed",                (DL_FUNC)&stri_count_fixed,                2},
+   {"stri_detect_regex",               (DL_FUNC)&stri_detect_regex,               2},
    {"stri_dup",                        (DL_FUNC)&stri_dup,                        2},
    {"stri_enclist",                    (DL_FUNC)&stri_enclist,                    0},
    {"stri_encinfo",                    (DL_FUNC)&stri_encinfo,                    1},

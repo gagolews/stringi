@@ -41,6 +41,7 @@
 #include <unicode/normalizer2.h>
 #include <unicode/locid.h>
 #include <unicode/uloc.h>
+#include <unicode/regex.h>
 
 #include <R.h>
 #include <Rmath.h>
@@ -84,6 +85,9 @@ SEXP stri_casefold(SEXP s, SEXP type);
 
 // count.cpp
 SEXP stri_count_fixed(SEXP s, SEXP pattern);
+
+//detect.cpp
+SEXP stri_detect_regex(SEXP str, SEXP pattern);
 
 // dup.cpp:
 SEXP stri_dup(SEXP s, SEXP c);

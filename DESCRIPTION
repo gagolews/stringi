@@ -49,3 +49,4 @@ Collate:
     'count.R'
     'justify.R'
     'replace.R'
+    'detect.R'

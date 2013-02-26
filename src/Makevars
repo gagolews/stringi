@@ -10,6 +10,7 @@ SRCS        =  stringi.cpp \
                trim.cpp \
                casefold.cpp \
                count.cpp \
+               detect.cpp \
                dup.cpp \
                join.cpp \
                justify.cpp \
