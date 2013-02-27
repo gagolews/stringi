@@ -25,41 +25,48 @@
  * @param pattern R character vector containing regular expressions
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern) {
-    str = stri_prepare_arg_string(str);
-    pattern = stri_prepare_arg_string(pattern);
-    
-    int ns = LENGTH(str);
-    int np = LENGTH(pattern);
-    int nmax = ns;
-    if (ns > np)
-        nmax = ns;
-    else
-        nmax = np;
-    if (nmax % np != 0 || nmax % ns != 0)
-        warning(MSG__WARN_RECYCLING_RULE);
-    
-    SEXP ret, s, p;
-    PROTECT(ret = allocVector(LGLSXP, nmax));
-    UErrorCode status;
-    
-    for (int i = 0; i < nmax; i++) {
-        s = STRING_ELT(str, i % ns);
-        p = STRING_ELT(pattern, i % np);
-        if (s == NA_STRING || p == NA_STRING) {
-            LOGICAL(ret)[i] = NA_LOGICAL;
-            continue;
-        }
-        status = U_ZERO_ERROR;
-        RegexMatcher* matcher = new RegexMatcher(CHAR(p), CHAR(s), 0, status);
-        if (U_FAILURE(status)) {    // hmm
+   str = stri_prepare_arg_string(str);
+   pattern = stri_prepare_arg_string(pattern);
+   
+   int ns = LENGTH(str);
+   int np = LENGTH(pattern);
+   int nmax = ns;
+   if (ns > np)
+      nmax = ns;
+   else
+      nmax = np;
+   if (nmax % np != 0 || nmax % ns != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   
+   SEXP ret, s, p;
+   PROTECT(ret = allocVector(LGLSXP, nmax));
+   UErrorCode status;
+   
+   for (int i = 0; i < np; i++) {
+      p = STRING_ELT(pattern, i);
+      if (p == NA_STRING)
+         for (int j = i; j < nmax; j += np)
+            LOGICAL(ret)[j] = NA_LOGICAL;
+      else {
+         RegexMatcher *matcher = new RegexMatcher(CHAR(p), 0, status);
+         if (U_FAILURE(status))
             error(u_errorName(status));
-        }
-        else {
-            LOGICAL(ret)[i] = matcher->find();     //or ...->matches(status)?
-        }
-        delete matcher;
-    }
-    
-    UNPROTECT(1);
-    return ret;
+         for (int j = i; j < nmax; j += np) {
+            s = STRING_ELT(str, j % ns);
+            if (s == NA_STRING)
+               LOGICAL(ret)[j] = NA_LOGICAL;
+            else {
+               matcher->reset(CHAR(s));
+               LOGICAL(ret)[j] = matcher->find();
+            }
+         }
+         delete matcher;
+      }
+   }
+   
+   UNPROTECT(1);
+   return ret;
 }
+
+
+
