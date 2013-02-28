@@ -132,13 +132,16 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
    //int* and now it's fine
    int* omit = LOGICAL(omitempty);
    for (int i=0; i<nmax; ++i) {
+      if(REAL(n)[i%c]==NA_REAL)
+         printf("rowne");
       count = 0;
       curs = STRING_ELT(s, i % a);
       curslen = LENGTH(curs);
       const char* string = CHAR(curs);
       const char* spl = CHAR(STRING_ELT(split, i % b));
+      // REAL(n)[i] == NA_REAL is wrong way of testing. IS_NA() must be used
       if(curs == NA_STRING || STRING_ELT(split, i % b) == NA_STRING
-         || REAL(n)[i % c]==NA_REAL || omit[i%d]==NA_LOGICAL){
+         || ISNA(REAL(n)[i % c]) || omit[i%d]==NA_LOGICAL){
          PROTECT(temp = allocVector(STRSXP,1));
          SET_STRING_ELT(temp,0,NA_STRING);
          SET_VECTOR_ELT(e,i,temp);
@@ -196,7 +199,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
             }
    			st=j+k;
             j=j+k-1; //if match, then there is no need to check next k el.
-            if(where+1 == count+add){
+            if(where+1 == curn){
                break;
             }
    		}
@@ -205,7 +208,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
       //stri_split("ala","a")==strsplit("ala","a")==c("","l")
       //without if(...) line we get
       //stri_split("ala","a")==str_split("ala","a")==c("","l","")
-      if(where+1==count+add || !omit[i % d] || curslen>st)
+      if(where+1==curn || !omit[i % d] || curslen>st)
          SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);

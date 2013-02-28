@@ -24,8 +24,13 @@
 #' 
 #' @param str character vector to split
 #' @param split character vector
+#' @param n integer vector which contains maximum nuber of pieces to return. Default (\code{Inf})
 #' @param omitempty omit every empty string?
 #' @return A list of the same length as the longest of vectors: str, split and omitempty. Shorter vectors are recycled. The i-th element of list contains splitted str[i] character vectors
+#' 
+#' @details If \code{n} is non-positive then empty vector is returned.
+#' 
+#' @seealso \link{stri_split_pos} to split string by positions.
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -33,6 +38,7 @@
 #' stri_split(s,"o")
 #' stri_split(s,"it")
 #' stri_split("babab","b",c(TRUE,FALSE))
+#' stri_split("babab","b",-1:4)
 #' 
 #' @export
 stri_split <- function(str, split='\n', n=Inf, omitempty=FALSE) {
