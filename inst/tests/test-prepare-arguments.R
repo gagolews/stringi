@@ -37,6 +37,19 @@ test_that("stri_prepare_arg_string", {
 
 })
 
+test_that("stri_prepare_arg_integer", {
+   expect_equivalent(stringi:::stri_prepare_arg_double(c("1","2")),1:2)
+   expect_equivalent(stringi:::stri_prepare_arg_double(character(0)),numeric(0))
+   expect_equivalent(stringi:::stri_prepare_arg_double(1:5),1:5)
+   expect_equivalent(stringi:::stri_prepare_arg_double(1.5:5),1.5:5)
+   expect_equivalent(stringi:::stri_prepare_arg_double(as.factor(1:5)),1:5)
+   
+   
+   expect_error(stringi:::stri_prepare_arg_double(NULL))
+   expect_error(stringi:::stri_prepare_arg_double(list(1,2,3)))
+   expect_error(stringi:::stri_prepare_arg_double(data.frame(1,2,3)))
+})
+
 
 test_that("stri_prepare_arg_integer", {
 
@@ -54,3 +67,4 @@ test_that("stri_prepare_arg_integer", {
    expect_error(stringi:::stri_prepare_arg_integer(list(1, 2, 3)))
    expect_error(stringi:::stri_prepare_arg_integer(data.frame(1, 2, 3)))
 })
+

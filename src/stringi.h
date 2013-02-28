@@ -108,6 +108,7 @@ SEXP stri_info();
 
 // prepare_arg.cpp:
 SEXP stri_prepare_arg_string(SEXP x);
+SEXP stri_prepare_arg_double(SEXP x);
 SEXP stri_prepare_arg_integer(SEXP x);
 SEXP stri_prepare_arg_logical(SEXP x);
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true);
@@ -190,7 +191,7 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
 SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 
 // split.cpp
-SEXP stri_split_fixed(SEXP s, SEXP split, SEXP omitempty);
+SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty);
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
 

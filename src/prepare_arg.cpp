@@ -47,6 +47,32 @@ SEXP stri_prepare_arg_string(SEXP x)
    return x; // avoid compiler warning
 }
 
+/**
+ * Prepare SEXP/double vector argument
+ * 
+ * If the object cannot be coerced, the execution is stopped
+ * @param x a double vector or an object that can be coerced to a double vector
+ * @return REALSXP
+ */
+SEXP stri_prepare_arg_double(SEXP x)
+{
+   if(isReal(x))
+      return x; //return as-is
+   else if (isFactor(x)) 
+   {
+      SEXP call;
+      PROTECT(call = lang2(install("as.character"), x));
+      x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+		UNPROTECT(1);
+      return coerceVector(x,REALSXP);
+   }
+   else if (isVectorAtomic(x))
+      return coerceVector(x,REALSXP);
+      
+   error(MSG__EXPECTED_DOUBLE);
+   return x; // avoid compiler warning
+}
+
 
 /**
  * Prepare SEXP/integer vector argument

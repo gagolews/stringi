@@ -34,6 +34,9 @@
 #define MSG__EXPECTED_CHARACTER \
    "incorrect argument: character vector expected"
 
+#define MSG__EXPECTED_DOUBLE \
+   "incorrect argument: double vector expected"
+
 #define MSG__EXPECTED_INTEGER \
    "incorrect argument: integer vector expected"
    

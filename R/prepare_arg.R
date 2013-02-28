@@ -31,6 +31,18 @@ stri_prepare_arg_string <- function(x) {
 }
 
 
+#' Prepare a double argument (Internal method)
+#' 
+#' @param x argument to be checked
+#' @return if x is a factor, as.character is called.
+#' if a double, it is returned with no change.
+#' if atomic vector (also a matrix), it is coerced to double vector.
+#' otherwise the function throws an error.
+stri_prepare_arg_double <- function(x) {
+   .Call("stri_prepare_arg_double", x, PACKAGE="stringi")  
+}
+
+
 #' Prepare an integer argument (Internal method)
 #' 
 #' @param x argument to be checked
