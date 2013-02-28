@@ -17,11 +17,30 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' Replace first
+#' 
+#' 
+#' @param str character vector
+#' @param pattern character vector
+#' @param replacement 
+#' @return character vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_replace_all(s," ","#")
+#' stri_replace_all(s,"o","0")
+#' 
+#' @export
+stri_replace_first <- function(str, pattern, replacement) {
+   # prepare_arg done internally
+   .Call("stri_replace_first_fixed", str, pattern, replacement, PACKAGE="stringi")
+}
+
 
 #' Replace all
 #' 
 #' 
-#' @param str character vector to split
+#' @param str character vector
 #' @param pattern character vector
 #' @param replacement 
 #' @return character vector

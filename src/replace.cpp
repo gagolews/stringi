@@ -25,6 +25,56 @@
  * @param replacement ...
  * @return ...
  */
+SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
+{
+   s   = stri_prepare_arg_string(s);
+   pat = stri_prepare_arg_string(pat);
+   rep = stri_prepare_arg_string(rep);
+   int ns   = LENGTH(s);
+   int npat = LENGTH(pat);
+   int nrep = LENGTH(rep);
+   //if any length is 0 then return empty vector
+   if (ns==0 || npat==0 || nrep==0)
+      return allocVector(STRSXP, 0);
+   int nmax = ns;
+   if(npat>nmax) nmax=npat;
+   if(nrep>nmax) nmax=nrep;
+   //if (nmax % ns != 0 || nmax % npat != 0 || nmax % nrep != 0)
+   //   warning(MSG__WARN_RECYCLING_RULE);
+   int count = 0;
+   SEXP e, split, omit, temp, currep, inf;
+   PROTECT(e = allocVector(STRSXP,nmax));
+   PROTECT(omit = allocVector(LGLSXP,1));
+   PROTECT(currep = allocVector(STRSXP,1));
+   PROTECT(inf = allocVector(REALSXP,1));
+   LOGICAL(omit)[0] = false;
+   REAL(inf)[0] = 2;
+   //if max(ns,npat) % ns || % npat != 0 then inside stri_split we get warn
+   split = stri_split_fixed(s,pat,inf,omit);
+   int nsplit = LENGTH(split), nm=ns;
+   if(npat > nm) nm=npat;
+   if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   int k=0,curslen,st,add,where;
+   for (int i=0; i<nmax; ++i) {
+      temp = VECTOR_ELT(split, i % nsplit);
+      SET_STRING_ELT(currep,0,STRING_ELT(rep,i % nrep));
+      SET_STRING_ELT(e, i, STRING_ELT(stri_flatten(temp,currep),0));
+   }
+   UNPROTECT(4);
+   return e;
+}
+
+
+
+
+/** 
+ * .... 
+ * @param s ...
+ * @param pattern ...
+ * @param replacement ...
+ * @return ...
+ */
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
 {
    s   = stri_prepare_arg_string(s);

@@ -86,5 +86,5 @@ test_that("stri_pad", {
    
    test <- paste(stri_dup(letters, 1:2600), "A", stri_dup(" ", 1:2600), sep="")
    
-   expect_identical(str_pad(test,150), stri_pad(test,150))
+   expect_identical(stri_pad(test,150), str_pad(test,150))
 })

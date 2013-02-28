@@ -63,6 +63,7 @@ static const R_CallMethodDef cCallMethods[] = {
    {"stri_prepare_arg_integer",        (DL_FUNC)&stri_prepare_arg_integer,        1},
    {"stri_prepare_arg_logical",        (DL_FUNC)&stri_prepare_arg_logical,        1},
    {"stri_replace_all_fixed",   	   	(DL_FUNC)&stri_replace_all_fixed,		    3},
+   {"stri_replace_first_fixed",        (DL_FUNC)&stri_replace_first_fixed,		    3},
    {"stri_rtrim",                      (DL_FUNC)&stri_rtrim,                      1},
    {"stri_split_fixed",		   			(DL_FUNC)&stri_split_fixed,		    	    4},
    {"stri_split_pos",         			(DL_FUNC)&stri_split_pos,  		    	    3},
