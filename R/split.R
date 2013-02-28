@@ -35,9 +35,9 @@
 #' stri_split("babab","b",c(TRUE,FALSE))
 #' 
 #' @export
-stri_split <- function(str, split='\n', omitempty=FALSE) {
+stri_split <- function(str, split='\n', n=Inf, omitempty=FALSE) {
 	# prepare_arg done internally
-	.Call("stri_split_fixed", str, split, omitempty, PACKAGE="stringi")
+	.Call("stri_split_fixed", str, split, n, omitempty, PACKAGE="stringi")
 }
 
 # TODO

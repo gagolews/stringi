@@ -26,7 +26,8 @@ Authors@R: c(
     person("Marcin", "Bujarski", role = "ctb",
     email = "marcin.bujarski@gmail.com")
     )
-Author: Marek Gagolewski and Bartek Tartanus, with contributions from Marcin Bujarski
+Author: Marek Gagolewski and Bartek Tartanus, with contributions from Marcin
+    Bujarski
 Maintainer: Marek Gagolewski <gagolews@ibspan.waw.pl>
 Collate:
     'casefold.R'
