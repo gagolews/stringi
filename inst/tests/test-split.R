@@ -38,5 +38,10 @@ test_that("stri_split", {
                                list(character(0),character(0),character(0)))
    expect_identical(stri_split("sss","s",1:3),list("sss",c("","ss"),c("","","s")))
    
+   
+   expect_identical(stri_split(";123", ";", n=2), list(c("", "123")))
+   expect_identical(stri_split(";123", ";", n=2, omitempty=TRUE), list("123"))
+   expect_identical(stri_split("123;456", ";", n=2), list(c("123", "456")))
+   expect_identical(stri_split("123;456;789", ";", n=2), list(c("123", "456;789")))
 })
 
