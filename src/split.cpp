@@ -155,6 +155,14 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
          continue;
       }else
          curn = REAL(n)[i % c];
+      //if curn == 1 then we need to return the whole string in one pice
+      if(curn == 1){
+         PROTECT(temp = allocVector(STRSXP,1));
+         SET_STRING_ELT(temp,0,curs);
+         SET_VECTOR_ELT(e,i,temp);
+         UNPROTECT(1);
+         continue;
+      }
       spllen = LENGTH(STRING_ELT(split,i % b));
       count=0; //count how long vector is needed
       st=0; add=1;
@@ -169,7 +177,8 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
             j=j+k-1;
             if(omit[i % d] && st==curslen)
                add=0;
-            //if(count+add==REAL(n[i % c]))
+            if(count+add==curn)
+               break;
       	}
       }
       PROTECT(temp = allocVector(STRSXP,count+add));
@@ -185,24 +194,18 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
                SET_STRING_ELT(temp,where, mkCharLen(string+st, j-st));
                ++where;
             }
-            // MG: http://www.cplusplus.com/reference/cstring/
-            //given start and end - index in string
-            //we can do:
-            // SET_STRING_ELT(temp, j, mkCharLen(string+start, end-start+1))
-            // string - address of the first character
-            // string+start - address of the start-th character
-            // definition: mkCharLen(char* address_of_first_char, int howManyCharsToCopy)
-            // - it returns a "scalar" string that may be copied into STRSXP (with SET_STRING_ELT)
-            // good work - i'm glad it's challenging :)
    			st=j+k;
             j=j+k-1; //if match, then there is no need to check next k el.
+            if(where+1 == count+add){
+               break;
+            }
    		}
    	}
       //with this line, stri_split will return vector equal to str_split
       //stri_split("ala","a")==strsplit("ala","a")==c("","l")
       //without if(...) line we get
       //stri_split("ala","a")==str_split("ala","a")==c("","l","")
-      if(!omit[i % d] || curslen>st)
+      if(where+1==count+add || !omit[i % d] || curslen>st)
          SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
    	SET_VECTOR_ELT(e,i,temp);
    	UNPROTECT(1);
