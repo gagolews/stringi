@@ -186,6 +186,9 @@ SEXP stri_length(SEXP s);
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
 
+// reverse.cpp
+SEXP stri_reverse(SEXP s);
+
 // wrap.cpp
 SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
 SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);

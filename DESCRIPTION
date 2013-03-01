@@ -51,3 +51,4 @@ Collate:
     'justify.R'
     'replace.R'
     'detect.R'
+    'reverse.R'

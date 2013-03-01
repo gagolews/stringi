@@ -27,8 +27,8 @@
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_all(s," ","#")
-#' stri_replace_all(s,"o","0")
+#' stri_replace_first(s," ","123")
+#' stri_replace_first(s,"o","!!!")
 #' 
 #' @export
 stri_replace_first <- function(str, pattern, replacement) {
