@@ -31,9 +31,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
    int nmax = ns;
-   if (ns > np)
-      nmax = ns;
-   else
+   if (np > ns)
       nmax = np;
    if (nmax % np != 0 || nmax % ns != 0)
       warning(MSG__WARN_RECYCLING_RULE);
