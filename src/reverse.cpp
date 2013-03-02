@@ -27,7 +27,7 @@ SEXP stri_reverse(SEXP s)
 {
    s   = stri_prepare_arg_string(s);
    int ns   = LENGTH(s);
-   int curslen,lastj;
+   int curslen,lastj,k,j;
    SEXP e, curs;
    UChar32 c;
    
@@ -41,10 +41,10 @@ SEXP stri_reverse(SEXP s)
       curslen = LENGTH(curs);
       const char* string = CHAR(curs);
       char* rev = R_alloc(curslen, sizeof(char));
-      for(int j=0; j < curslen;){
+      for(j=0; j < curslen;){
          lastj = j;
          U8_NEXT(string, j, curslen, c);
-         for(int k=0; k < j-lastj; ++k){
+         for(k=0; k < j-lastj; ++k){
             rev[curslen-j+k] = string[lastj+k];
          }
       }

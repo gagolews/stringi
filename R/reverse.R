@@ -20,7 +20,12 @@
 
 #' Reverse string
 #' 
-#' @param str 
+#' @param str
+#' 
+#' @return character vector
+#' @examples
+#' stri_reverse("123","abc d e f") 
+#' 
 #' @export
 stri_reverse <- function(str) {
    # prepare_arg done internally
