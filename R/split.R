@@ -26,6 +26,7 @@
 #' @param split character vector
 #' @param n integer vector which contains maximum nuber of pieces to return. Default (\code{Inf})
 #' @param omitempty omit every empty string?
+#' @param exact logical vector 
 #' @return A list of the same length as the longest of vectors: str, split and omitempty. Shorter vectors are recycled. The i-th element of list contains splitted str[i] character vectors
 #' 
 #' @details If \code{n} is non-positive then empty vector is returned.
