@@ -42,15 +42,15 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    //if (nmax % ns != 0 || nmax % npat != 0 || nmax % nrep != 0)
    //   warning(MSG__WARN_RECYCLING_RULE);
    int count = 0;
-   SEXP e, split, omit, temp, currep, inf;
+   SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
-   PROTECT(omit = allocVector(LGLSXP,1));
+   PROTECT(sexpfalse = allocVector(LGLSXP,1));
    PROTECT(currep = allocVector(STRSXP,1));
    PROTECT(inf = allocVector(REALSXP,1));
-   LOGICAL(omit)[0] = false;
+   LOGICAL(sexpfalse)[0] = false;
    REAL(inf)[0] = 2;
    //if max(ns,npat) % ns || % npat != 0 then inside stri_split we get warn
-   split = stri_split_fixed(s,pat,inf,omit);
+   split = stri_split_fixed(s,pat,inf,sexpfalse,sexpfalse);
    int nsplit = LENGTH(split), nm=ns;
    if(npat > nm) nm=npat;
    if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
@@ -92,15 +92,15 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    //if (nmax % ns != 0 || nmax % npat != 0 || nmax % nrep != 0)
    //   warning(MSG__WARN_RECYCLING_RULE);
    int count = 0;
-   SEXP e, split, omit, temp, currep, inf;
+   SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
-   PROTECT(omit = allocVector(LGLSXP,1));
+   PROTECT(sexpfalse = allocVector(LGLSXP,1));
    PROTECT(currep = allocVector(STRSXP,1));
    PROTECT(inf = allocVector(REALSXP,1));
-   LOGICAL(omit)[0] = false;
+   LOGICAL(sexpfalse)[0] = false;
    REAL(inf)[0] = R_PosInf;
    //if max(ns,npat) % ns || % npat != 0 then inside stri_split we get warn
-   split = stri_split_fixed(s,pat,inf,omit);
+   split = stri_split_fixed(s,pat,inf,sexpfalse,sexpfalse);
    int nsplit = LENGTH(split), nm=ns;
    if(npat > nm) nm=npat;
    if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)

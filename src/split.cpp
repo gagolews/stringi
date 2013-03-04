@@ -104,47 +104,48 @@ SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
  * @param omitempty ...
  * @return ...
  */
-SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
+SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact)
 {
    s = stri_prepare_arg_string(s);
    split = stri_prepare_arg_string(split);
    n = stri_prepare_arg_double(n);
    omitempty = stri_prepare_arg_logical(omitempty);
+   exact = stri_prepare_arg_logical(exact);
    int a = LENGTH(s);
    int b = LENGTH(split);
    int c = LENGTH(n);
    int d = LENGTH(omitempty);
+   int e = LENGTH(exact);
    //if any length is 0 then return empty list
-   if (a==0 || b==0 || c==0 || d==0)
+   if (a==0 || b==0 || c==0 || d==0 || e==0)
       return allocVector(VECSXP, 0);
    int nmax = a;
    if(b>nmax) nmax=b;
    if(c>nmax) nmax=c;
    if(d>nmax) nmax=d;
-   if (nmax % a != 0 || nmax % b != 0 || nmax % c != 0 || nmax % d != 0)
+   if(e>nmax) nmax=e;
+   if (nmax % a != 0 || nmax % b != 0 || nmax % c != 0 || nmax % d != 0 || nmax % e != 0)
       warning(MSG__WARN_RECYCLING_RULE);
    int count = 0;
-   SEXP e;
-   PROTECT(e = allocVector(VECSXP,nmax));
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP,nmax));
    SEXP curs,temp;
    int k=0,curslen,spllen,st,add,where,curn;
    //omitempty is bool, but bool* didn't work, so i changed it into
    //int* and now it's fine
    int* omit = LOGICAL(omitempty);
    for (int i=0; i<nmax; ++i) {
-      if(REAL(n)[i%c]==NA_REAL)
-         printf("rowne");
       count = 0;
       curs = STRING_ELT(s, i % a);
       curslen = LENGTH(curs);
       const char* string = CHAR(curs);
       const char* spl = CHAR(STRING_ELT(split, i % b));
-      // REAL(n)[i] == NA_REAL is wrong way of testing. IS_NA() must be used
+      // REAL(n)[i] == NA_REAL is wrong way of testing. ISNA() must be used
       if(curs == NA_STRING || STRING_ELT(split, i % b) == NA_STRING
          || ISNA(REAL(n)[i % c]) || omit[i%d]==NA_LOGICAL){
          PROTECT(temp = allocVector(STRSXP,1));
          SET_STRING_ELT(temp,0,NA_STRING);
-         SET_VECTOR_ELT(e,i,temp);
+         SET_VECTOR_ELT(ret,i,temp);
          UNPROTECT(1);
          continue;
       }
@@ -153,36 +154,45 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
          curn = -1;
       }else if(REAL(n)[i % c] <= 0){
          PROTECT(temp = allocVector(STRSXP,0));
-         SET_VECTOR_ELT(e,i,temp);
+         SET_VECTOR_ELT(ret,i,temp);
          UNPROTECT(1);
          continue;
       }else
          curn = REAL(n)[i % c];
-      //if curn == 1 then we need to return the whole string in one pice
+      //if curn == 1 then we need to return the whole string in one piece
       if(curn == 1){
          PROTECT(temp = allocVector(STRSXP,1));
          SET_STRING_ELT(temp,0,curs);
-         SET_VECTOR_ELT(e,i,temp);
+         SET_VECTOR_ELT(ret,i,temp);
          UNPROTECT(1);
          continue;
       }
       spllen = LENGTH(STRING_ELT(split,i % b));
-      count=0; //count how long vector is needed
-      st=0; add=1;
-      for(int j=0; j<curslen; ++j){
-         k=0;
-         while(string[j+k]==spl[k] && k<spllen)
-            k++;
-         if(k==spllen){
-            if(!omit[i % d] || j > st)
-               count++;
-            st=j+k;
-            j=j+k-1;
-            if(omit[i % d] && st==curslen)
-               add=0;
-            if(count+add==curn)
-               break;
-      	}
+      //curn > 1 means that curn is not infinity (in such case curn 
+      //is set to -1) or negative (empty vector is returned and this part
+      //of code is skipped).
+      //exact==TRUE then return vector of exact length
+      if(curn > 1 && LOGICAL(exact)[i % e]){
+         count = curn;
+         add = 0;
+      }else{ //otherwise count how long vector is needed
+         count=0;
+         st=0; add=1;
+         for(int j=0; j<curslen; ++j){
+            k=0;
+            while(string[j+k]==spl[k] && k<spllen)
+               k++;
+            if(k==spllen){
+               if(!omit[i % d] || j > st)
+                  count++;
+               st=j+k;
+               j=j+k-1;
+               if(omit[i % d] && st==curslen)
+                  add=0;
+               if(count+add==curn)
+                  break;
+            }
+         }
       }
       PROTECT(temp = allocVector(STRSXP,count+add));
       st=0;
@@ -210,9 +220,9 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty)
       //stri_split("ala","a")==str_split("ala","a")==c("","l","")
       if(where+1==curn || !omit[i % d] || curslen>st)
          SET_STRING_ELT(temp,where, mkCharLen(string+st, curslen-st));
-   	SET_VECTOR_ELT(e,i,temp);
+   	SET_VECTOR_ELT(ret,i,temp);
    	UNPROTECT(1);
    }
    UNPROTECT(1);
-   return e;
+   return ret;
 }
