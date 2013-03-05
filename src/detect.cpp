@@ -38,7 +38,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
    
    SEXP ret, s, p;
    PROTECT(ret = allocVector(LGLSXP, nmax));
-   UErrorCode status;
+   UErrorCode status = U_ZERO_ERROR;
    
    for (int i = 0; i < np; i++) {
       p = STRING_ELT(pattern, i);
