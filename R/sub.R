@@ -20,7 +20,7 @@
 
 #' Extract substrings from a character vector
 #' 
-#' Vectorized over s, from and (to or length).
+#' Vectorized over \code{s}, \code{from} and (\code{to} or \code{length}).
 #' 
 #' @param str character vector 
 #' @param from integer vector or two-column matrix
@@ -36,18 +36,32 @@
 #' stri_sub(s, from=c(1,7,13), length=5)
 #' stri_sub(s, from=1, length=1:3)
 #' stri_sub(s, -17, -7)
+#' stri_sub(s, -5, length=4)
+#' 
+#' @seealso \link{stri_sub<-}
 #' 
 #' @export
 stri_sub <- function(str, from = 1L, to = -1L, length) {
-	# prepare_arg done internally
+   # prepare_arg done internally
    if(is.matrix(from) && ncol(from) == 2){
       if(!missing(to) || !missing(length))
          warning("'from' is matrix, so 'to' and 'length' are ignored")
       to   <- from[ , 2]
       from <- from[ , 1]
-   }else if(missing(to) && !missing(length))
-      #without pmax, when from=1, length=-1 -> to-1 and you get whole string
-         to <- pmax(from + length - 1, 0)
-	.Call("stri_sub", str, from, to, PACKAGE="stringi")
+   }else if(missing(to) && !missing(length)){
+      to <- from + length -1
+      # if from <0 then counting is done from the end of string, so if
+      #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
+      #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
+      #that's why we need this:
+      w <- from < 0 & to >= 0
+      to[w] <- -1
+      #if length is negative then return an empty string
+      w <- length <= 0
+      to[w] <- 0
+   }
+   .Call("stri_sub", str, from, to, PACKAGE="stringi")
 }
+
+
 
