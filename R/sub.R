@@ -64,4 +64,49 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 }
 
 
+#' Replace substrings in a character vector
+#' 
+#' Vectorized over \code{s}, \code{from}, (\code{to} or \code{length}) and \code{value}.
+#' 
+#' @usage stri_sub(str, from=1, to=-1, length) <- value
+#' @param str character vector 
+#' @param from integer vector or two-column matrix
+#' @param to integer vector
+#' @param length integer vector
+#' @param value
+#' 
+#' @details \code{to} has priority over \code{length}
+#' @return character vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_sub(s, 1, 5) <- "stringi" ; s
+#' stri_sub(s, -6, length=5) <- "." ; s
+#' stri_sub(s, 1, 1:3) <- 1:2 ; s
+#' 
+#' @seealso \link{stri_sub}, \link{stri_replace_first},
+#'          \link{stri_replace_last}, \link{stri_replace_all}.
+#' 
+#' @export
+"stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {
+   # prepare_arg done internally
+   if(is.matrix(from) && ncol(from) == 2){
+      if(!missing(to) || !missing(length))
+         warning("'from' is matrix, so 'to' and 'length' are ignored")
+      to   <- from[ , 2]
+      from <- from[ , 1]
+   }else if(missing(to) && !missing(length)){
+      to <- from + length -1
+      # if from <0 then counting is done from the end of string, so if
+      #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
+      #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
+      #that's why we need this:
+      w <- from < 0 & to >= 0
+      to[w] <- -1
+      #if length is negative then return an empty string
+      w <- length <= 0
+      to[w] <- 0
+   }
+   .Call("stri_sub_op", str, from, to, value, PACKAGE="stringi")
+}
 

@@ -201,6 +201,7 @@ SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
 
 // sub.cpp
 SEXP stri_sub(SEXP s, SEXP from, SEXP to);
+SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
