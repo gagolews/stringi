@@ -25,3 +25,13 @@ test_that("stri_sub", {
 	
 	
 })
+
+test_that("stri_sub<-", {
+   s <- c("ala ma \u0105 \u00F1 ą kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
+   expect_identical(stri_sub(s)<-"a", "a")
+   #s is NA_character, but function returns NA_logical
+   expect_identical(stri_sub(s)<-NA, NA)
+   #character(0) has priority over NA
+   expect_identical(stri_sub(s)<-character(0), character(0))
+   
+})
