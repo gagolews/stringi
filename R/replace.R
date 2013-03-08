@@ -37,6 +37,26 @@ stri_replace_first <- function(str, pattern, replacement) {
 }
 
 
+#' Replace last
+#' 
+#' 
+#' @param str character vector
+#' @param pattern character vector
+#' @param replacement 
+#' @return character vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_replace_last(s," ","123")
+#' stri_replace_last(s,"o","!!!")
+#' 
+#' @export
+stri_replace_last <- function(str, pattern, replacement) {
+   # prepare_arg done internally
+   stri_reverse(.Call("stri_replace_first_fixed", stri_reverse(str), pattern, replacement, PACKAGE="stringi"))
+}
+
+
 #' Replace all
 #' 
 #' 
