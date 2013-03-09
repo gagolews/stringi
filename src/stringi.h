@@ -69,8 +69,9 @@ SEXP stri__mkStringNA(R_len_t howmany);
 SEXP stri__mkStringEmpty(R_len_t howmany);
 void stri__asciiUpperCase(char* x);
 SEXP stri__emptyList();
-SEXP stri__convertInputToUtf8(SEXP x, cetype_t& outenc);
-SEXP stri__convertOutputFromUtf8(SEXP x, cetype_t outenc);
+SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc);
+SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc);
+
 
 // trim.cpp:
 SEXP stri_trim(SEXP s);

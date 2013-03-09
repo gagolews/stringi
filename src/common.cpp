@@ -23,7 +23,7 @@
 
 
 /** 
- *  Create a character vector filled with NA_character_
+ *  Creates a character vector filled with NA_character_
  * 
  *  Useful when something goes wrong
  * 
@@ -44,7 +44,7 @@ SEXP stri__mkStringNA(R_len_t howmany)
 
 
 /** 
- *  Create a character vector filled with empty strings
+ *  Creates a character vector filled with empty strings
  * 
  *  @param how_many length of the vector
  *  @return a character vector of length how_many
@@ -62,7 +62,8 @@ SEXP stri__mkStringEmpty(R_len_t howmany)
 }
 
 
-/** Convert each ascii lower case letter to upper case
+/** Converts each ascii lower case letter to upper case
+ * 
  *  Useful for checking options.
  *  If non-ASCII string is given, an error is generated.
  *  @param x string [IN/OUT], null-terminated
@@ -79,6 +80,7 @@ void stri__asciiUpperCase(char* x)
 
 
 /** Creates an empty R list
+ * 
  *  @return list()
  */
 SEXP stri__emptyList()
@@ -89,11 +91,12 @@ SEXP stri__emptyList()
 
 
 /** Converts an R character vector with arbitrary encoding to UTF-8
- *  @param x CHARSXP (R marked encoding)
- *  @param outenc guide for stri__convertOutputFromUtf8()
+ * 
+ *  @param x character vector = CHARSXP (with marked encoding)
+ *  @param outenc guide for stri__convertFromUtf8()
  *  @return CHARSXP (converted)
  */
-SEXP stri__convertInputToUtf8(SEXP x, cetype_t& outenc)
+SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc)
 {
 ////    CE_NATIVE = 0,
 ////    CE_UTF8   = 1,
@@ -101,17 +104,24 @@ SEXP stri__convertInputToUtf8(SEXP x, cetype_t& outenc)
 ////    CE_BYTES  = 3,
 ////    CE_SYMBOL = 5,
 ////    CE_ANY
+
+//mkCharLenCE    ( 	const char *  	name,
+//		int  	len,
+//		cetype_t  	enc 
+//	) 	
+   
    outenc = CE_UTF8; // tmp
    return x; // tmp
 }
 
 
 /** Converts an R character vector from UTF-8 to an encoding suggested by outenc
- *  @param x CHARSXP in UTF-8
- *  @param outenc guide from stri__convertInputToUtf8()
+ * 
+ *  @param x character vector = CHARSXP (with marked encoding)
+ *  @param outenc guide from stri__convertToUtf8()
  *  @return CHARSXP (converted)
  */
-SEXP stri__convertOutputFromUtf8(SEXP x, cetype_t outenc)
+SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc)
 {
    if (outenc == CE_UTF8)
       return x;
