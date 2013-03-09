@@ -25,74 +25,87 @@
  * (useful for allocating temporary buffers)
  * 
  * if all strings are NA or an empty character vector is given, -1 is returned
+ * Prior to memory allocation, you should check for < 0!
  * 
+ * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return maximal number of bytes
  */
 R_len_t stri__numbytes_max(SEXP s)
 {
-   R_len_t ns = LENGTH(s);
+   R_xlen_t ns = XLENGTH(s);
    if (ns <= 0) return -1;
-   
-   int maxlen = -1;
-   for (R_len_t i=0; i<ns; ++i) {
+   R_len_t maxlen = -1;
+   for (R_xlen_t i=0; i<ns; ++i) {
       SEXP cs = STRING_ELT(s, i);
-      if (cs == NA_STRING) continue;
-      R_len_t cns = LENGTH(cs);
-      if (cns > maxlen) maxlen = cns;
+      if (cs != NA_STRING) {
+         /* INPUT ENCODING CHECK: this function does not need this. */
+         R_len_t cns = LENGTH(cs);
+         if (cns > maxlen) maxlen = cns;
+      }
    }
    return maxlen;
 }
 
+
+
 /** 
- * Get number of bytes in a string
+ * Get number of bytes in each string
+ * 
+ * Note that ICU permits only strings of length < 2^31.
  * @param s R object coercible to a character vector
  * @return integer vector
  */
 SEXP stri_numbytes(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   
-   int n = LENGTH(s); // XLENGTH - LENGTH with long vector support
+   R_xlen_t n = XLENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, n));
-   for (int i=0; i<n; ++i) {
+   int* retint = INTEGER(ret);
+   for (R_xlen_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(s, i);
+      /* INPUT ENCODING CHECK: this function does not need this. */
       if (curs == NA_STRING)
-         INTEGER(ret)[i] = NA_INTEGER;
+         retint[i] = NA_INTEGER;
       else
-         INTEGER(ret)[i] = LENGTH(curs);
+         retint[i] = LENGTH(curs);
    }
    UNPROTECT(1);
    return ret;
 }
 
+
+
 /**
  * Count the number of characters in a string
+ * 
+ * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
  */
 SEXP stri_length(SEXP s)
 {
-    s = stri_prepare_arg_string(s);
-    int ns = LENGTH(s);
-    UChar32 c;
-    
-    SEXP ret;
-    PROTECT(ret = allocVector(INTSXP, ns));
-    
-    for (int k = 0; k < ns; k++) {
-        SEXP q = STRING_ELT(s, k);
-        if (q == NA_STRING)
-            INTEGER(ret)[k] = NA_INTEGER;
-        else {
-            int j = 0;      // number of code points
-            int nq = LENGTH(q);
-            for (int i = 0; i < nq; j++)
-                U8_NEXT(CHAR(q), i, nq, c);
-            INTEGER(ret)[k] = j;
-        }
-    }
-    UNPROTECT(1);
-    return ret;
+   s = stri_prepare_arg_string(s);
+   R_xlen_t ns = XLENGTH(s);
+   UChar32 c;
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, ns));
+   int* retint = INTEGER(ret);   
+   for (R_xlen_t k = 0; k < ns; k++) {
+     SEXP q = STRING_ELT(s, k);
+     if (q == NA_STRING)
+         retint[k] = NA_INTEGER;
+     else {
+         R_xlen_t j = 0;      // number of detected code points
+         R_len_t nq = LENGTH(q);
+         /* Note: ICU50 permits only int-size strings in U8_NEXT */
+         const char* qc = CHAR(q); /* INPUT ENCODING CHECK: @TODO. */
+         for (R_len_t i = 0; i < nq; j++)
+             U8_NEXT(qc, i, nq, c);
+         retint[k] = j;
+     }
+   }
+   UNPROTECT(1);
+   return ret;
 }

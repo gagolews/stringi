@@ -97,6 +97,11 @@ extern "C" void R_init_stringi(DllInfo *dll)
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
    R_useDynamicSymbols(dll, Rboolean(FALSE));
    
+   if (!SUPPORT_UTF8) {
+      /* Rconfig.h states that all R platforms supports that */
+      error("Your R version does not support UTF-8 encoding.");  
+   }
+   
 #ifndef NDEBUG
    cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
 #endif

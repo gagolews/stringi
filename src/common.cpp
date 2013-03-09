@@ -98,6 +98,24 @@ SEXP stri__emptyList()
  */
 SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc)
 {
+      
+      
+//   SEXP s1 = STRING_ELT(s, 0);
+//   cerr << "B=" << IS_BYTES(s1) << endl;
+//   cerr << "U=" << IS_UTF8(s1) << endl;
+//   cerr << "L=" << IS_LATIN1(s1) << endl;
+//   cerr << "A=" << IS_ASCII(s1) << endl;
+//   cout << IS_UTF8(s1) << endl;
+//   cout << IS_LATIN1(s1) << endl;
+//   cout << IS_ASCII(s1) << endl;
+//   cout << IS_BYTES(s1) << endl;
+   //ENC_KNOWN    (         x   ) 	   ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+//IS_UTF8    ( 	  	x	) 	   ((x)->sxpinfo.gp & UTF8_MASK)
+//IS_LATIN1    ( 	  	x	) 	   ((x)->sxpinfo.gp & LATIN1_MASK)
+//
+// IS_ASCII    ( 	  	x	) 	   ((x)->sxpinfo.gp & ASCII_MASK)
+//  IS_BYTES    ( 	  	x	) 	   ((x)->sxpinfo.gp & BYTES_MASK)
+   
 ////    CE_NATIVE = 0,
 ////    CE_UTF8   = 1,
 ////    CE_LATIN1 = 2,
@@ -105,6 +123,22 @@ SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc)
 ////    CE_SYMBOL = 5,
 ////    CE_ANY
 
+// sepASCII = strIsASCII(csep);
+//sepKnown = ENC_KNOWN(sep) > 0; # LATIN1 or UTF8
+//sepUTF8 = IS_UTF8(sep);
+//sepBytes = IS_BYTES(sep);
+//
+//Rboolean strIsASCII    ( 	const char *  	str	) 	
+//
+//ENC_KNOWN    ( 	  	x	) 	   ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+//IS_UTF8    ( 	  	x	) 	   ((x)->sxpinfo.gp & UTF8_MASK)
+//IS_LATIN1    ( 	  	x	) 	   ((x)->sxpinfo.gp & LATIN1_MASK)
+//
+// IS_ASCII    ( 	  	x	) 	   ((x)->sxpinfo.gp & ASCII_MASK)
+//  IS_BYTES    ( 	  	x	) 	   ((x)->sxpinfo.gp & BYTES_MASK)
+
+//STRSXP - character vector
+//TYPEOF(x) != CHARSXP
 //mkCharLenCE    ( 	const char *  	name,
 //		int  	len,
 //		cetype_t  	enc 

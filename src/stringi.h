@@ -42,14 +42,29 @@
 #include <unicode/locid.h>
 #include <unicode/uloc.h>
 #include <unicode/regex.h>
-
-#include <R.h>
-#include <Rmath.h>
-#include <Rdefines.h>
-#include <Rinternals.h>
-#include <R_ext/Rdynload.h>
 using namespace std;
 using namespace icu;
+
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rmath.h>
+#include <Rdefines.h>
+#include <R_ext/Rdynload.h>
+
+
+// taken from Defn.h - sorry, this is needed
+// CHARSXP charset bits
+#define BYTES_MASK (1<<1)
+#define LATIN1_MASK (1<<2)
+#define UTF8_MASK (1<<3)
+#define ASCII_MASK (1<<6)
+#define IS_BYTES(x) ((x)->sxpinfo.gp & BYTES_MASK)
+#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+#define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
+#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+
 
 // undef R's length macro (conflicts with std::string.length())
 // use LENGTH instead
