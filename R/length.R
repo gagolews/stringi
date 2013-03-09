@@ -18,22 +18,55 @@
 
 
 
-#' ???
+#' Count the Number of Bytes
 #' 
-#' @param str will be coerced to character
-#' @return trimmed character vector 
+#' Missing values are handled properly.
+#' 
+#' @param str character vector, or a vector to be coerced to a character vector
+#' @return an integer vector giving the sizes of each element 
 #' @export
 stri_numbytes <- function(str) {
-   # prepare_arg done internally
    .Call("stri_numbytes", str, PACKAGE="stringi")
 }
 
 
-#' The number of characters in a string
+#' Count the Number of Characters
 #' 
-#' @param str character vector
-#' @return integer vector giving the number of characters in each element of character vector
+#' Missing values are handled properly.
+#' 
+#' @param str character vector, or a vector to be coerced to a character vector
+#' @return an integer vector giving the sizes of each element
 #' @export
 stri_length <- function(str) {
    .Call("stri_length", str, PACKAGE="stringi")
 }
+
+
+#' Determine if String is Empty
+#' 
+#' Missing values are handled properly.
+#' This is a fast way to find out if elements of a character vector are empty strings.
+#' 
+#' @param str character vector, or a vector to be coerced to a character vector
+#' @return a logical vector
+#' @export
+stri_isempty <- function(str) {
+   .Call("stri_isempty", str, PACKAGE="stringi")
+}
+
+
+
+#' Count the Width of Characters
+#' 
+#' Missing values are handled properly.
+#' This is equivalent to the number of columns the cat() function will use
+#' to print the string in a monospaced font. 
+#' 
+#' @param str character vector, or a vector to be coerced to a character vector
+#' @return an integer vector giving the sizes of each element
+#' @export
+stri_width <- function(str) {
+   .Call("stri_width", str, PACKAGE="stringi")
+}
+
+
