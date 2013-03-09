@@ -196,9 +196,11 @@ SEXP stri_char_getpropertyid(SEXP x);
 
 
 // length.cpp
-SEXP stri_numbytes(SEXP s);
 R_len_t stri__numbytes_max(SEXP s);
+SEXP stri_numbytes(SEXP s);
 SEXP stri_length(SEXP s);
+SEXP stri_isempty(SEXP s);
+SEXP stri_width(SEXP s);
 
 // replace.cpp
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);

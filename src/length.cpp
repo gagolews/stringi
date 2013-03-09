@@ -69,7 +69,7 @@ SEXP stri_numbytes(SEXP s)
       if (curs == NA_STRING)
          retint[i] = NA_INTEGER;
       else
-         retint[i] = LENGTH(curs);
+         retint[i] = LENGTH(curs); // O(1) - stored by R
    }
    UNPROTECT(1);
    return ret;
@@ -88,7 +88,6 @@ SEXP stri_length(SEXP s)
 {
    s = stri_prepare_arg_string(s);
    R_xlen_t ns = XLENGTH(s);
-   UChar32 c;
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
@@ -98,14 +97,66 @@ SEXP stri_length(SEXP s)
          retint[k] = NA_INTEGER;
      else {
          R_xlen_t j = 0;      // number of detected code points
-         R_len_t nq = LENGTH(q);
+         R_len_t nq = LENGTH(q);  // O(1) - stored by R
          /* Note: ICU50 permits only int-size strings in U8_NEXT */
          const char* qc = CHAR(q); /* INPUT ENCODING CHECK: @TODO. */
          for (R_len_t i = 0; i < nq; j++)
-             U8_NEXT(qc, i, nq, c);
+             U8_FWD_1(qc, i, nq);
          retint[k] = j;
      }
    }
+   UNPROTECT(1);
+   return ret;
+}
+
+
+/**
+ * Check whether a string is empty
+ * 
+ * Note that ICU permits only strings of length < 2^31.
+ * @param s R character vector
+ * @return integer vector
+ */
+SEXP stri_isempty(SEXP s)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   R_xlen_t n = XLENGTH(s);
+   SEXP ret;
+   PROTECT(ret = allocVector(LGLSXP, n));
+   int* retlog = LOGICAL(ret);
+   for (R_xlen_t i=0; i<n; ++i) {
+      SEXP curs = STRING_ELT(s, i);
+      /* INPUT ENCODING CHECK: this function does not need this. */
+      if (curs == NA_STRING)
+         retlog[i] = NA_LOGICAL;
+      else
+         retlog[i] = (CHAR(curs)[0] == '\0');
+   }
+   UNPROTECT(1);
+   return ret;  
+}
+
+
+/**
+ * Determine the width of the strint
+ * e.g. some chinese chars have width > 1.
+ * 
+ * Note that ICU permits only strings of length < 2^31.
+ * @param s R character vector
+ * @return integer vector
+ */
+SEXP stri_width(SEXP s)
+{
+   s = stri_prepare_arg_string(s);
+   R_xlen_t ns = XLENGTH(s);
+   UChar32 c;
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, ns));
+   int* retint = INTEGER(ret);   
+   
+   // @TODO ------------------------------------------------------------------------------------------------------
+   error("TODO: the function has not yet been implemented.");
+   
    UNPROTECT(1);
    return ret;
 }
