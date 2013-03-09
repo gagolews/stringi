@@ -75,25 +75,6 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
       ucnv_close(uconv_from);
       return stri__mkStringNA(ns);
    }
-   
-//   // mark output Encoding as `bytes` if any of the below doesn't hold:
-//   int outenc_mark = CE_BYTES; 
-//   const char* outenc_canname = ucnv_getName(uconv_to);
-//   if (strcmp(outenc_canname, "UTF-8") == 0)
-//      outenc_mark = CE_UTF8;
-//   else {
-//      const char* outenc_default;
-//   }
-   
-////    CE_NATIVE = 0,
-////    CE_UTF8   = 1,
-////    CE_LATIN1 = 2,
-////    CE_BYTES  = 3,
-////    CE_SYMBOL = 5,
-
-//int ucnv_compareNames    ( 	const char *  	name1,
-//		const char *  	name2 
-//	) 
 
    // possibly we could check whether from's and to's canonical names
    // are the same and then return the input as-is (maybe with an Encoding
@@ -235,7 +216,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
 {
    if (ucnv_getMinCharSize(conv) != 1) return false;
    
-   const int ascii_from = 65;
+   const int ascii_from = 32;
    const int ascii_to = 0x00ff;
    char ascii[ascii_to-ascii_from+2]; // + \0
    for (int i=ascii_from; i<=ascii_to; ++i)
@@ -472,7 +453,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
       standards[i] = ucnv_getStandard(i, &err);
       if (U_FAILURE(err)) {
 #ifndef NDEBUG
-         error("could not gen standard name (stri_list)");
+         error("could not get standard name (stri_list)");
 #endif
          standards[i] = NULL;
       }

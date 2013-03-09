@@ -63,18 +63,22 @@ SEXP stri__mkStringEmpty(R_len_t howmany)
 
 
 /** Convert each ascii lower case letter to upper case
- *  Useful for checking options
+ *  Useful for checking options.
+ *  If non-ASCII string is given, an error is generated.
  *  @param x string [IN/OUT], null-terminated
  */
 void stri__asciiUpperCase(char* x)
 {
-   for (int i=0; x[i] != '\0'; ++i)
-      if (x[i] >= 'a' && x[i] <= 'z')
+   for (int i=0; x[i] != '\0'; ++i) {
+      if (x[i] > 127)
+         error(MSG__EXPECTED_ASCII);
+      else if (x[i] >= 'a' && x[i] <= 'z')
          x[i] -= 'a'-'A';
+   }
 }
 
 
-/** Returns an empty R list
+/** Creates an empty R list
  *  @return list()
  */
 SEXP stri__emptyList()
@@ -82,3 +86,38 @@ SEXP stri__emptyList()
    SEXP ret = allocVector(VECSXP, 0);
    return ret;
 }
+
+
+/** Converts an R character vector with arbitrary encoding to UTF-8
+ *  @param x CHARSXP (R marked encoding)
+ *  @param outenc guide for stri__convertOutputFromUtf8()
+ *  @return CHARSXP (converted)
+ */
+SEXP stri__convertInputToUtf8(SEXP x, cetype_t& outenc)
+{
+////    CE_NATIVE = 0,
+////    CE_UTF8   = 1,
+////    CE_LATIN1 = 2,
+////    CE_BYTES  = 3,
+////    CE_SYMBOL = 5,
+////    CE_ANY
+   outenc = CE_UTF8; // tmp
+   return x; // tmp
+}
+
+
+/** Converts an R character vector from UTF-8 to an encoding suggested by outenc
+ *  @param x CHARSXP in UTF-8
+ *  @param outenc guide from stri__convertInputToUtf8()
+ *  @return CHARSXP (converted)
+ */
+SEXP stri__convertOutputFromUtf8(SEXP x, cetype_t outenc)
+{
+   if (outenc == CE_UTF8)
+      return x;
+   else {
+      return x; // tmp  
+   }
+}
+
+

@@ -42,6 +42,9 @@
    
 #define MSG__EXPECTED_LOGICAL \
    "incorrect argument: logical vector expected"
+   
+#define MSG__EXPECTED_ASCII \
+   "incorrect argument: only ASCII characters expected"
 
 #define MSG__LOCALE_ERROR_SET \
    "could not set locale"
@@ -51,5 +54,7 @@
 
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
+   
+
    
 #endif
