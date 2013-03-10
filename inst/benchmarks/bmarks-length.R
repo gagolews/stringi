@@ -3,7 +3,7 @@ require('stringr')
 
 
 x <- str_dup('a', 0:100)
-y <- str_dup('ą', 0:100)
+y <- str_dup('\u0104', 0:100)
 
 microbenchmark(
    nchar(x), stri_length(x), str_length(x),

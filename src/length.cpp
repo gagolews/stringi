@@ -30,6 +30,7 @@
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return maximal number of bytes
+ * @version 0.1 (Marek Gagolewski)
  */
 R_len_t stri__numbytes_max(SEXP s)
 {
@@ -55,6 +56,7 @@ R_len_t stri__numbytes_max(SEXP s)
  * Note that ICU permits only strings of length < 2^31.
  * @param s R object coercible to a character vector
  * @return integer vector
+ * @version 0.1 (Marcin Bujarski)
  */
 SEXP stri_numbytes(SEXP s)
 {
@@ -83,12 +85,27 @@ SEXP stri_numbytes(SEXP s)
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
+ * @version 0.1 (Marcin Bujarski)
+ * @version 0.2 (Marek Gagolewski) Multiple input encoding suppert
  */
 SEXP stri_length(SEXP s)
 {
    s = stri_prepare_arg_string(s);
    R_len_t ns = LENGTH(s);
    SEXP ret;
+   
+   UConverter* uconv = NULL;
+   bool uconv_8bit = false;
+   bool uconv_utf8 = false;
+   
+/* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
+#define STRI_LENGTH_CALCULATE_UTF8 \
+   const char* qc = CHAR(q); \
+   R_len_t j = 0;  /* number of detected code points */ \    
+   for (R_len_t i = 0; i < nq; j++) \
+      U8_FWD_1(qc, i, nq); \
+   retint[k] = j;
+   
    PROTECT(ret = allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
    for (R_len_t k = 0; k < ns; k++) {
@@ -106,12 +123,7 @@ SEXP stri_length(SEXP s)
          else if (IS_BYTES(q)) 
             error(MSG__BYTESENC);
          else if (IS_UTF8(q)) {
-            /* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
-            const char* qc = CHAR(q);
-            R_len_t j = 0;      // number of detected code points
-            for (R_len_t i = 0; i < nq; j++)
-                U8_FWD_1(qc, i, nq);
-            retint[k] = j;
+            STRI_LENGTH_CALCULATE_UTF8
          }
          else { // Any encoding - detection needed
 //            UTF-8 strings can be fairly reliably recognized as such by a
@@ -121,18 +133,59 @@ SEXP stri_length(SEXP s)
 //            We have two possibilities here:
 //            1. Auto detect encoding: Is this ASCII or UTF-8? If not => use Native
 //                This won't work correctly in some cases.
-//                e.g. (c4,85) represents Polish a with ogonek in UTF-8
-//                and A umlaut, Ellipsis in WINDOWS-1250
+//                e.g. (c4,85) represents ("Polish a with ogonek") in UTF-8
+//                and ("A umlaut", "Ellipsis") in WINDOWS-1250
 //            2. Assume it's Native; this assumes the user working in an 8-bit environment
 //                would convert strings to UTF-8 manually if needed - I think is's
 //                a more reasonable approach (Native --> input via keyboard)
       
-            warning("TO DO");
-            retint[k] = nq; // tmp....................
+            if (!uconv) { // open ucnv on demand
+               uconv = stri__ucnv_open((const char*)NULL); // native decoder
+               if (!uconv) {
+                  retint[k] = NA_INTEGER;
+                  continue;
+               }
+               uconv_8bit = ((int)ucnv_getMaxCharSize(uconv) == 1);
+               if (!uconv_8bit) {
+                  UErrorCode err = U_ZERO_ERROR;
+                  const char* name = ucnv_getName(uconv, &err);
+                  if (U_FAILURE(err))
+                     error("could not query default converter");
+                  uconv_utf8 = !strncmp("UTF-8", name, 5);
+               }
+            }
+             
+            if (uconv_8bit) {
+               retint[k] = nq; // it's an 8-bit encoding :-)
+            }
+            else if (uconv_utf8) { // it's UTF-8
+               STRI_LENGTH_CALCULATE_UTF8
+            }
+            else {  // native encoding which is neither 8-bit, nor UTF-8 (e.g. 'Big5')
+               UErrorCode err = U_ZERO_ERROR;
+               const char* source = CHAR(q);
+               const char* sourceLimit = source + nq;
+               R_len_t j;
+               for (j = 0; source != sourceLimit; j++) {
+                  if (U_FAILURE(err)) break; // error from previous iteration
+                  // iterate through each native-encoded character:
+                  ucnv_getNextUChar(uconv, &source, sourceLimit, &err);
+               }
+               if (U_FAILURE(err)) {  // error from last iteration
+                  warning("error determining length for native, neither 8-bit- nor UTF-8-encoded string.");
+                  retint[k] = NA_INTEGER;
+               }
+               else
+                  retint[k] = j; // all right, we got it!
+            }
          }
       }
    }
    UNPROTECT(1);
+   
+   if (uconv)
+      ucnv_close(uconv);
+      
    return ret;
 }
 
@@ -143,6 +196,7 @@ SEXP stri_length(SEXP s)
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_isempty(SEXP s)
 {
@@ -157,7 +211,7 @@ SEXP stri_isempty(SEXP s)
       if (curs == NA_STRING)
          retlog[i] = NA_LOGICAL;
       else
-         retlog[i] = (CHAR(curs)[0] == '\0');
+         retlog[i] = (CHAR(curs)[0] == '\0'); // (LENGTH(curs) == 0); // slower?
    }
    UNPROTECT(1);
    return ret;  
@@ -165,12 +219,14 @@ SEXP stri_isempty(SEXP s)
 
 
 /**
- * Determine the width of the strint
+ * Determine the width of the string
  * e.g. some chinese chars have width > 1.
  * 
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
+ * @version 0.1 (WHO?) TO BE DONE
+ * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
  */
 SEXP stri_width(SEXP s)
 {
@@ -181,7 +237,7 @@ SEXP stri_width(SEXP s)
    PROTECT(ret = allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
    
-   // @TODO ------------------------------------------------------------------------------------------------------
+   ///< @TODO ------------------------------------------------------------------------------------------------------
    error("TODO: the function has not yet been implemented.");
    
    UNPROTECT(1);
