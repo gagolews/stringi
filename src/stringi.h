@@ -131,6 +131,48 @@ SEXP stri_prepare_arg_integer(SEXP x);
 SEXP stri_prepare_arg_logical(SEXP x);
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true);
 
+// length.cpp
+R_len_t stri__numbytes_max(SEXP s);
+SEXP stri_numbytes(SEXP s);
+SEXP stri_length(SEXP s);
+SEXP stri_isempty(SEXP s);
+SEXP stri_width(SEXP s);
+
+// locate.cpp
+SEXP stri_locate_all_class(SEXP s, SEXP c);
+SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
+
+void stri__locate_all_class1(const char* s, int n, int32_t* c,
+   int* start, int* end, int& o);
+void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
+   int& first, int& last);
+   
+
+// replace.cpp
+SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
+SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
+
+// reverse.cpp
+SEXP stri_reverse(SEXP s);
+
+
+// split.cpp
+SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
+SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
+SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
+
+// sub.cpp
+SEXP stri_sub(SEXP s, SEXP from, SEXP to);
+SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);
+
+
+// wrap.cpp
+SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
+SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
+SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
+
+
+
 // ucnv.cpp:
 void stri__ucnv_getStandards(const char**& standards, R_len_t& cs);
 const char* stri___ucnv_getFriendlyName(const char* canname);
@@ -147,9 +189,9 @@ SEXP stri_enc_is_utf8(SEXP s);
 SEXP stri_enc_Rmark(SEXP s);
 
 // uloc.cpp:
-SEXP stri_localeinfo(SEXP loc);
-SEXP stri_localelist();
-SEXP stri_localeset(SEXP loc);
+SEXP stri_locale_info(SEXP loc);
+SEXP stri_locale_list();
+SEXP stri_locale_set(SEXP loc);
 
 // uchar.cpp:
 #define STRI__UCHAR_COMPLEMENT_MASK      0x40000000
@@ -196,43 +238,6 @@ SEXP stri_char_getcategoryid(SEXP x);
 SEXP stri_char_getpropertyid(SEXP x);
 
 
-// length.cpp
-R_len_t stri__numbytes_max(SEXP s);
-SEXP stri_numbytes(SEXP s);
-SEXP stri_length(SEXP s);
-SEXP stri_isempty(SEXP s);
-SEXP stri_width(SEXP s);
-
-// replace.cpp
-SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
-SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
-
-// reverse.cpp
-SEXP stri_reverse(SEXP s);
-
-// wrap.cpp
-SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
-SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
-SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
-
-// split.cpp
-SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
-SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
-SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
-
-// sub.cpp
-SEXP stri_sub(SEXP s, SEXP from, SEXP to);
-SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);
-
-// locate.cpp
-SEXP stri_locate_all_class(SEXP s, SEXP c);
-SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
-
-void stri__locate_all_class1(const char* s, int n, int32_t* c,
-   int* start, int* end, int& o);
-void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
-   int& first, int& last);
-   
 // ------------------------------------------------------------------------
 
 

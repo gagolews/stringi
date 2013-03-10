@@ -28,21 +28,23 @@ stri_info <- function(short=FALSE) {
    
    info <- .Call("stri_info", PACKAGE="stringi")
    if (info$Charset.native$Name.friendly != "UTF-8") {
-      if (!info$Charset.native$CharSize.8bit)
-         warning("you use a non-8bit native charset. \
-            this may cause serious problems. consider switching to UTF-8")
-      else if (!info$Charset.native$Unicode.1to1)
-         warning("your native charset does not convert well to Unicode. \
-            this may cause serious problems. consider switching to UTF-8")
+#       if (!info$Charset.native$CharSize.8bit)    # this should not cause problems, e.g. in the Big5 encoding
+#          warning("You use a non-8bit native charset. " %+%
+#             "This may cause serious problems. Consider switching to UTF-8.")
+#       else 
+      if (!info$Charset.native$Unicode.1to1)
+         warning("your native charset does not convert well to Unicode. " %+%
+            "This may cause serious problems. Consider switching to UTF-8.")
       else if (!info$Charset.native$ASCII.subset)
-         warning("your native charset is not a superset of US-ASCII. \
-            this may cause serious problems. consider switching to UTF-8")
+         warning("Your native charset is not a superset of US-ASCII. " %+%
+            "This may cause serious problems. Consider switching to UTF-8.")
    }
    
-   loclist <- stri_localelist()
+   loclist <- stri_locale_list()
    if (!(info$Locale$Name %in% loclist))
-      warning("your current locale is not on the list of available \
-         locales. see stri_localelist()")
+      warning("Your current locale is not on the list of available " %+%
+         "locales. Some functions may not work properly. Refer to stri_localelist() for more details " %+%
+         "on known locale specifiers.")
    
    if (!short)
       return(info)

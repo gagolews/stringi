@@ -24,11 +24,10 @@
 
 /**
  * Sets current (default) ICU locale
- * No check done here! (analogous R version does that and generates warning if needed)
  * @param loc new locale
  * @return nothing
  */
-SEXP stri_localeset(SEXP loc)
+SEXP stri_locale_set(SEXP loc)
 {
    const char* qloc = stri__prepare_arg_locale(loc, false);
    UErrorCode err = U_ZERO_ERROR;
@@ -42,7 +41,7 @@ SEXP stri_localeset(SEXP loc)
 /** Get list of available locales
  *  @return R character vector
  */
-SEXP stri_localelist()
+SEXP stri_locale_list()
 {
    R_len_t c = (R_len_t)uloc_countAvailable();
    SEXP ret;
@@ -58,11 +57,11 @@ SEXP stri_localelist()
 }
 
 
-/** Get default (current) ICU locale
+/** Get info on default (current) ICU locale or on given locale
  *  @param loc either NULL or "" for default locale, or one string with locale name
  *  @return R list object
  */
-SEXP stri_localeinfo(SEXP loc)
+SEXP stri_locale_info(SEXP loc)
 {
    const char* qloc = stri__prepare_arg_locale(loc, true);
    const R_len_t infosize = 4;
