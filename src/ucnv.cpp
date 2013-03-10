@@ -26,7 +26,7 @@
  * @param loc new charset
  * @return nothing
  */
-SEXP stri_encset(SEXP enc)
+SEXP stri_enc_set(SEXP enc)
 {
    enc = stri_prepare_arg_string(enc);
    if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING 
@@ -290,7 +290,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
  * @param enc either NULL or "" for default encoding, or one string with encoding name
  * @return R list object
  */
-SEXP stri_encinfo(SEXP enc)
+SEXP stri_enc_info(SEXP enc)
 {
    UConverter* uconv = stri__ucnv_open(enc);
    if (!uconv) return R_NilValue;
@@ -377,7 +377,7 @@ SEXP stri_encinfo(SEXP enc)
  * Get all available ICU charsets and their aliases (elems 2,3,...)
  * @return R list object
  */
-SEXP stri_enclist()
+SEXP stri_enc_list()
 {
    R_len_t cs;
    const char** standards;
@@ -551,24 +551,24 @@ UConverter* stri__ucnv_open(SEXP enc)
  *  @return logical vector
  */
 
-SEXP stri_enc_is_ascii(SEXP s)
+SEXP stri_enc_isascii(SEXP s)
 {
    s = stri_prepare_arg_string(s);
-   int ns = LENGTH(s);
+   R_len_t ns = LENGTH(s);
    
    SEXP e, curs;
    PROTECT(e = allocVector(LGLSXP, ns));
    int* be = LOGICAL(e); // may be faster than LOGICAL(e)[i]
-   for (int i=0; i < ns; ++i) {
+   for (R_len_t i=0; i < ns; ++i) {
       curs = STRING_ELT(s, i);
       if (curs == NA_STRING) {
          be[i] = NA_LOGICAL;
          continue;
       }
       const char* string = CHAR(curs);
-      int ncurs = LENGTH(curs);
+      R_len_t ncurs = LENGTH(curs);
       be[i] = true;
-      for (int j=0; j < ncurs; ++j){
+      for (R_len_t j=0; j < ncurs; ++j){
          if (!U8_IS_SINGLE(string[j])) {
             be[i] = false;
             break;
@@ -588,16 +588,16 @@ SEXP stri_enc_is_ascii(SEXP s)
  *  @return logical vector
  */
 
-SEXP stri_enc_is_utf8(SEXP s)
+SEXP stri_enc_isutf8(SEXP s)
 {
    s = stri_prepare_arg_string(s);
-   int ns = LENGTH(s);
+   R_len_t ns = LENGTH(s);
    UChar32 c;
-   int ncurs;
+   R_len_t ncurs;
    SEXP e, curs;
    PROTECT(e = allocVector(LGLSXP, ns));
    int* be = LOGICAL(e);
-   for (int i=0; i < ns; ++i) {
+   for (R_len_t i=0; i < ns; ++i) {
       curs = STRING_ELT(s, i);
       if (curs == NA_STRING){
          be[i] = NA_LOGICAL;
@@ -606,7 +606,7 @@ SEXP stri_enc_is_utf8(SEXP s)
       const char* string = CHAR(curs);
       ncurs = LENGTH(curs);
       be[i] = true;
-      for(int j=0; j < ncurs; ) {
+      for(R_len_t j=0; j < ncurs; ) {
          U8_NEXT(string, j, ncurs, c);
          if(c < 0) {
             be[i] = false;

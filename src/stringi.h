@@ -181,11 +181,11 @@ UConverter* stri__ucnv_open(SEXP enc);
 bool stri__ucnv_hasASCIIsubset(UConverter* conv);
 bool stri__ucnv_is1to1Unicode(UConverter* conv);
 SEXP stri_encode(SEXP s, SEXP from, SEXP to);
-SEXP stri_enclist();
-SEXP stri_encinfo(SEXP enc);
-SEXP stri_encset(SEXP loc);
-SEXP stri_enc_is_ascii(SEXP s);
-SEXP stri_enc_is_utf8(SEXP s);
+SEXP stri_enc_list();
+SEXP stri_enc_info(SEXP enc);
+SEXP stri_enc_set(SEXP loc);
+SEXP stri_enc_isascii(SEXP s);
+SEXP stri_enc_isutf8(SEXP s);
 SEXP stri_enc_Rmark(SEXP s);
 
 // uloc.cpp:

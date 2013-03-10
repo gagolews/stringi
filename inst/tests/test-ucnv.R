@@ -37,54 +37,54 @@ test_that("stri_encode", {
 
 
 
-test_that("stri_enclist, stri_encinfo", {
+test_that("stri_enc_list, stri_enc_info", {
 
    # basic tests (ASCII, border-line):
    
-   expect_true(length(stri_enclist())>0)
+   expect_true(length(stri_enc_list())>0)
       
    suppressWarnings(expect_true(length(sapply(
-      stri_enclist(),
-      function(enc) stri_encinfo(enc[[1]])$Name.friendly
+      stri_enc_list(),
+      function(enc) stri_enc_info(enc[[1]])$Name.friendly
    )) > 0))
    
-   expect_equivalent(stri_encinfo("CP-1250")$Name.friendly, "windows-1250") # CE
-   expect_equivalent(stri_encinfo("CP-1251")$Name.friendly, "windows-1251") # Cyrillic
-   expect_equivalent(stri_encinfo("CP-1252")$Name.friendly, "windows-1252") # WE
-   expect_equivalent(stri_encinfo("CP-1253")$Name.friendly, "windows-1253") # Greek
-   expect_equivalent(stri_encinfo("CP-1254")$Name.friendly, "windows-1254") # Turkish
-   expect_equivalent(stri_encinfo("CP-1255")$Name.friendly, "windows-1255") # Hebrew
-   expect_equivalent(stri_encinfo("CP-1256")$Name.friendly, "windows-1256") # Arabic
-   expect_equivalent(stri_encinfo("CP-1257")$Name.friendly, "windows-1257") # Baltic
-   expect_equivalent(stri_encinfo("CP-1258")$Name.friendly, "windows-1258") # Vietnamese
-   expect_equivalent(stri_encinfo("latin1")$Name.friendly, "ISO-8859-1") # WE
-   expect_equivalent(stri_encinfo("latin2")$Name.friendly, "ISO-8859-2") # CE
-   expect_equivalent(stri_encinfo("UTF-8")$Name.friendly, "UTF-8")
-   expect_equivalent(stri_encinfo("ASCII")$Name.friendly, "US-ASCII")
-   expect_equivalent(stri_encinfo("Big5")$Name.friendly, "Big5") # Trad. Chinese
-   expect_equivalent(stri_encinfo("EUC-CN")$Name.friendly, "GB2312") # Simpl. Chinese
-   expect_equivalent(stri_encinfo("EUC-JP")$Name.friendly, "EUC-JP") # Japanese
-   expect_equivalent(stri_encinfo("Shift-JIS")$Name.friendly, "Shift_JIS") # Japanese
-   expect_equivalent(stri_encinfo("EUC-KR")$Name.friendly, "EUC-KR") # Korean
+   expect_equivalent(stri_enc_info("CP-1250")$Name.friendly, "windows-1250") # CE
+   expect_equivalent(stri_enc_info("CP-1251")$Name.friendly, "windows-1251") # Cyrillic
+   expect_equivalent(stri_enc_info("CP-1252")$Name.friendly, "windows-1252") # WE
+   expect_equivalent(stri_enc_info("CP-1253")$Name.friendly, "windows-1253") # Greek
+   expect_equivalent(stri_enc_info("CP-1254")$Name.friendly, "windows-1254") # Turkish
+   expect_equivalent(stri_enc_info("CP-1255")$Name.friendly, "windows-1255") # Hebrew
+   expect_equivalent(stri_enc_info("CP-1256")$Name.friendly, "windows-1256") # Arabic
+   expect_equivalent(stri_enc_info("CP-1257")$Name.friendly, "windows-1257") # Baltic
+   expect_equivalent(stri_enc_info("CP-1258")$Name.friendly, "windows-1258") # Vietnamese
+   expect_equivalent(stri_enc_info("latin1")$Name.friendly, "ISO-8859-1") # WE
+   expect_equivalent(stri_enc_info("latin2")$Name.friendly, "ISO-8859-2") # CE
+   expect_equivalent(stri_enc_info("UTF-8")$Name.friendly, "UTF-8")
+   expect_equivalent(stri_enc_info("ASCII")$Name.friendly, "US-ASCII")
+   expect_equivalent(stri_enc_info("Big5")$Name.friendly, "Big5") # Trad. Chinese
+   expect_equivalent(stri_enc_info("EUC-CN")$Name.friendly, "GB2312") # Simpl. Chinese
+   expect_equivalent(stri_enc_info("EUC-JP")$Name.friendly, "EUC-JP") # Japanese
+   expect_equivalent(stri_enc_info("Shift-JIS")$Name.friendly, "Shift_JIS") # Japanese
+   expect_equivalent(stri_enc_info("EUC-KR")$Name.friendly, "EUC-KR") # Korean
 })
 
 
-test_that("stri_enc_is_ascii",{
-   expect_identical(stri_enc_is_ascii(character(0)),logical(0))
-   expect_identical(stri_enc_is_ascii(NA),NA)
-   expect_identical(stri_enc_is_ascii(letters),rep(TRUE,26))
-   expect_identical(stri_enc_is_ascii("ąðś→ŋð↓đħŋ¶↓→ħŋę]ŋħęðđ↓jĸśę¶ħðjĸđ"),FALSE)
-   expect_identical(stri_enc_is_ascii("S\xe9bastien"),FALSE)
+test_that("stri_enc_isascii",{
+   expect_identical(stri_enc_isascii(character(0)),logical(0))
+   expect_identical(stri_enc_isascii(NA),NA)
+   expect_identical(stri_enc_isascii(letters),rep(TRUE,26))
+   expect_identical(stri_enc_isascii("\u0120\u0130\u2432"),FALSE)
+   expect_identical(stri_enc_isascii("S\xe9bastien"),FALSE)
    
 })
 
 
-test_that("stri_enc_is_utf8",{
-   expect_identical(stri_enc_is_utf8(character(0)),logical(0))
-   expect_identical(stri_enc_is_utf8(NA),NA)
-   expect_identical(stri_enc_is_utf8(letters),rep(TRUE,26))
-   expect_identical(stri_enc_is_utf8("ąðś→ŋð↓đħŋ¶↓→ħŋę]ŋħęðđ↓jĸśę¶ħðjĸđ"),TRUE)
-   expect_identical(stri_enc_is_utf8("S\xe9bastien"),FALSE)
+test_that("stri_enc_isutf8",{
+   expect_identical(stri_enc_isutf8(character(0)),logical(0))
+   expect_identical(stri_enc_isutf8(NA),NA)
+   expect_identical(stri_enc_isutf8(letters),rep(TRUE,26))
+   expect_identical(stri_enc_isutf8("\u0120\u0130\u2432"),TRUE)
+   expect_identical(stri_enc_isutf8("S\xe9bastien"),FALSE)
    
 })
 

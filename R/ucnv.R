@@ -18,82 +18,132 @@
 
 
 
-#' Get list of available encodings
+#' Character Encoding Management
+#'
+#' Most of the computations in \pkg{stringi} are performed internally
+#' using either UTF-8 or UTF-16 encodings. However, we still need to communicate
+#' with R somehow and give some trust in how it handles strings.
+#' 
+#' Basically, R has a very simple encoding-marking mechanism.
+#' \code{ASCII} strings consist of bytes with values <= 127.
+#' \code{UTF-8} strings...
+#' \code{LATIN1} string....
+#' \code{BYTES} strings...
+#' Sometimes strings have no encoding marks. In this case one should
+#' assume that he/she deals with natively-encoded data.
+#' 
+#' @references
+#' Conversion - ICU User Guide, \url{http://userguide.icu-project.org/conversion} (technical details)
+#' @name encoding-main
+#' @family encoding
+NULL
+
+
+#' List Available Encodings
 #'
 #' @return A list with...
-#' @seealso \code{\link{stri_encode}}, \code{\link{stri_encinfo}}
+#' @family encoding
 #' @export
-stri_enclist <- function() {
-   .Call("stri_enclist", PACKAGE="stringi")
+stri_enc_list <- function() {
+   .Call("stri_enc_list", PACKAGE="stringi")
 }
 
 
-#' Get info on given encoding
+#' Quert Given Encoding
+#' 
+#' 
+#' @param enc \code{NULL} or \code{""} for default encoding,
+#' or a single string with encoding name
+#' @return A list with...
+#' @family encoding
+#' @export
+stri_enc_info <- function(enc=NULL) {
+   .Call("stri_enc_info", enc, PACKAGE="stringi")
+}
+
+
+#' Set Default Encoding
+#'
+#' @param enc character encoding name,
+#' see \code{\link{stri_enc_list()}}
+#' @return Previously set default encoding, invisibly.
+#' @family encoding
+#' @export
+stri_enc_set <- function(enc) {
+   previous <- stri_enc_get()
+   
+   # We call stri_info, because it generates some warnings,
+   # in case any problems are found:
+   .Call("stri_enc_set", enc, PACKAGE="stringi")
+   message('You are now working with ' %+% stri_info(short=TRUE))
+   invisible(previous)
+}
+
+
+#' Get Default Encoding
+#' 
+#' Same as \code{stri_enc_info()$Name.friendly}.
+#' 
+#' @return a character string
+#' @family encoding
+#' @export
+stri_enc_get <- function() {
+   stri_enc_info(NULL)$Name.friendly
+}
+
+
+#' Convert Character Vector Between Given Encodings 
 #' 
 #' If enc is missing, NULL (default encoding) is used
 #' 
-#' @param enc NULL/""/missing for default encoding, or a single string with encoding name
-#' @return A list with...
-#' @seealso \code{\link{stri_encode}}, \code{\link{stri_enclist}}
-#' @export
-stri_encinfo <- function(enc) {
-   if (missing(enc)) enc <- NULL
-   # prepare_arg done internally
-   .Call("stri_encinfo", enc, PACKAGE="stringi")
-}
-
-
-#' Set default ICU charset
-#'
-#' @return result of stri_info(short=TRUE)
-#' @seealso \code{\link{stri_enclist}}
-#' @export
-stri_encset <- function(loc) {
-   .Call("stri_encset", loc, PACKAGE="stringi")
-   stri_info(short=TRUE)
-}
-
-
-#' Convert character vector between given encodings 
-#' 
-#' If enc is missing, NULL (default encoding) is used
-#' 
-#' @param str strings to encode
+#' @param str character vector to be converted
 #' @param from input encoding:
-#'       NULL/"" for default encoding, or a single string with encoding name
+#'       \code{NULL} or \code{""} for default encoding,
+#'       or a single string with encoding name
 #' @param from target encoding:
-#'       NULL/"" for default encoding, or a single string with encoding name
-#' @return A list with...
-#' @seealso \code{\link{stri_enclist}}, \code{\link{stri_encinfo}}
+#'       \code{NULL} or \code{""} for default encoding,
+#'       or a single string with encoding name
+#' @return A character vector with encoded strings.
+#' @family encoding
 #' @export
-stri_encode <- function(str, from, to) {
-   # prepare_arg done internally
+stri_encode <- function(str, from, to=NULL) {
    .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }
 
+
 #' Check if string is possibly in ASCII
 #'
+#' This function is independent of the way R marks encodings in
+#' character strings (see \code{\link{Encoding}} and \code{\link{encoding-main}}).
+#' 
 #' @param str character vector
 #' @return logical vector
-#' @seealso \code{\link{stri_enc_is_utf8}}, \code{\link{stri_encode}}
+#' @family encoding
 #' @export
-stri_enc_is_ascii <- function(str) {
-   .Call("stri_enc_is_ascii", str, PACKAGE="stringi")
+stri_enc_isascii <- function(str) {
+   .Call("stri_enc_isascii", str, PACKAGE="stringi")
 }
+
 
 #' Check if string is possibly in UTF8
 #'
+#' This function is independent of the way R marks encodings in
+#' character strings (see \code{\link{Encoding}} and \code{\link{encoding-main}}).
 #' @param str character vector
 #' @return logical vector
-#' @seealso \code{\link{stri_enc_is_ascii}}, \code{\link{stri_encode}}
+#' @family encoding
 #' @export
-stri_enc_is_utf8 <- function(str) {
-   .Call("stri_enc_is_utf8", str, PACKAGE="stringi")
+stri_enc_isutf8 <- function(str) {
+   .Call("stri_enc_isutf8", str, PACKAGE="stringi")
 }
 
 
-#' Check R encoding marking
-#' This is an internal function (don't export)
+
+# Check R encoding marking
+# 
+# This is an internal function (no-export & no-manual) - test how R marks
+# ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
+# @param str character vector
 stri_enc_Rmark <- function(str) {
    invisible(.Call("stri_enc_Rmark", str, PACKAGE="stringi"))
 }

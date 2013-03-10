@@ -18,10 +18,17 @@
 
 
 
-#' \pkg{stringi} is an open source (LGPL 3) package for R.
+#' \pkg{stringi} is an open source package for R.
 #' It allows for correct, fast, and simple string manipulation in each locale. 
 #'
-#' \bold{Keywords}: internationalization, ICU, ICU4R, i18n, l10n
+#' \bold{Keywords}: internationalization, localization, ICU, ICU4R, i18n, l10n, Unicode
+#' 
+#' Some notes:
+#' * How do we treat character vectors on input? What objects are automatically coerced?
+#' * Do we treat NA values consistently? Yes.
+#' * Do we preserve objects' attributes? No.
+#' 
+#' Information on default encodings and locales....
 #'
 #' @name stringi-package
 #' @docType package

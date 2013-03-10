@@ -3,9 +3,10 @@ require(testthat)
 
 test_that("stri_locale", {
    
-   expect_true(length(stri_localelist())>0)
+   expect_true(length(stri_locale_list())>0)
    
-   expect_warning(stri_localeset("XX_YY"))
-   expect_true(substr(stri_localeset("pl_PL"), 1, 5) == "pl_PL")
+   expect_warning(stri_locale_set("XX_YY"))
+   expect_true(substr(stri_locale_set("pl_PL"), 1, 5) == "xx_YY")
+   expect_true(substr(stri_locale_set("pl_PL"), 1, 5) == "pl_PL")
    
 })

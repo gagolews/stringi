@@ -64,39 +64,39 @@ stri_locale_list <- function() {
 #'
 #' 
 #' @param loc a character string of the form \code{Language},
-#' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US"
-#' @return Previously set default locale
+#' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US",
+#' see \code{\link{stri_locale_list()}}
+#' @return Previously set default locale, invisibly.
 #' @family locale
 #' @export
 stri_locale_set <- function(loc) {
    previous <- stri_locale_get()
    .Call("stri_locale_set", loc, PACKAGE="stringi")
    
-   # We call stri_info, be cause it generates some warnings if any problems
-   # are found:
-   message('Now you are working with ' %+% stri_info(short=TRUE))
+   # We call stri_info, because it generates some warnings,
+   # in case any problems are found:
+   message('You are now working with ' %+% stri_info(short=TRUE))
    invisible(previous)
 }
 
 
 #' Get Default Locale
 #' 
-#' Same as \code{stri_locale_info(NULL)$Name}.
+#' Same as \code{stri_locale_info()$Name}.
 #' 
 #' @return a character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US" 
 #' @family locale
 #' @export
-stri_locale_get <- function(loc=NULL) {
-   .Call("stri_locale_info", NULL, PACKAGE="stringi")$Name
+stri_locale_get <- function() {
+   stri_locale_info(NULL)$Name
 }
 
 
 #' Query Given Locale
 #' 
-#' If loc is missing, NULL (default locale) is used
 #' 
-#' @param loc \code{NULL}, \code{""}, or \code{NA} for default locale, or a single string with locale name
+#' @param loc \code{NULL} or \code{""} for default locale, or a single string with locale name
 #' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
 #' their combination, \code{Name}. Each is a character string.
 #' @family locale

@@ -32,11 +32,11 @@ stri_info <- function(short=FALSE) {
 #          warning("You use a non-8bit native charset. " %+%
 #             "This may cause serious problems. Consider switching to UTF-8.")
 #       else 
-      if (!info$Charset.native$Unicode.1to1)
-         warning("your native charset does not convert well to Unicode. " %+%
-            "This may cause serious problems. Consider switching to UTF-8.")
-      else if (!info$Charset.native$ASCII.subset)
+      if (!identical(info$Charset.native$ASCII.subset, TRUE))
          warning("Your native charset is not a superset of US-ASCII. " %+%
+           "This may cause serious problems. Consider switching to UTF-8.")
+      else if (!identical(info$Charset.native$Unicode.1to1, TRUE))
+         warning("your native charset does not convert well to Unicode. " %+%
             "This may cause serious problems. Consider switching to UTF-8.")
    }
    

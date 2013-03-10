@@ -39,7 +39,7 @@ SEXP stri_info()
    SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
    SET_VECTOR_ELT(vals, 1, stri_locale_info(R_NilValue));
    SET_VECTOR_ELT(vals, 2, mkString("UTF-8")); // this is fixed
-   SET_VECTOR_ELT(vals, 3, stri_encinfo(R_NilValue));
+   SET_VECTOR_ELT(vals, 3, stri_enc_info(R_NilValue));
    
    setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);
