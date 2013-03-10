@@ -17,11 +17,43 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' Locale Management
+#'
+#' Locales are most conviniently identified by character strings
+#' of the form \code{Language},
+#' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US"
+#'
+#' ICU4C API DOC: "Because a Locale is just an identifier for a region, 
+#' no validity check is performed when you specify a Locale. 
+#' If you want to see whether particular resources are available 
+#' for the Locale you asked for, you must query those resources. (...)
+#' Note: When you ask for a resource for a particular locale, you get
+#' back the best available match, not necessarily precisely what you asked for."
+#' 
+#' ICU4C API DOC: "ICU is implemented as a set of services. One example 
+#' of a service is the formatting of a numeric value into a string. 
+#' Another is the sorting of a list of strings. When client code wants 
+#' to use a service, the first thing it does is request a service object 
+#' for a given locale. The resulting object is then expected to perform 
+#' its operations in a way that is culturally correct for the requested locale."
+#' 
+#' "Default locales are available to all the objects in a program. 
+#' If you set a new default locale for one section of code, it can affect 
+#' the entire program [all other functions from \pkg{stringi}]. Application programs should not set the default locale 
+#' as a way to request an international object. The default locale is set 
+#' to be the system locale on that platform."
+#' 
+#' @references
+#' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
+#' @name locale-main
+#' @family locale
+NULL
+
 
 #' List Available Locales
 #'
 #' @return Character vector
-#' @seealso \code{\link{stri_locale_info}}
+#' @family locale
 #' @export
 stri_locale_list <- function() {
    .Call("stri_locale_list", PACKAGE="stringi")
@@ -30,19 +62,11 @@ stri_locale_list <- function() {
 
 #' Set Default Locale
 #'
-#' ICU4C API DOC: "Because a Locale is just an identifier for a region, 
-#' no validity check is performed when you specify a Locale. 
-#' If you want to see whether particular resources are available 
-#' for the Locale you asked for, you must query those resources. (...)
-#' Note: When you ask for a resource for a particular locale, you get
-#' back the best available match, not necessarily precisely what you asked for.
-#' 
-#' TODO: More details needed on how to set the locale. Maybe we should create a separate man page on Locales....
 #' 
 #' @param loc a character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US"
 #' @return Previously set default locale
-#' @seealso \code{\link{stri_localelist}}
+#' @family locale
 #' @export
 stri_locale_set <- function(loc) {
    previous <- stri_locale_get()
@@ -61,7 +85,7 @@ stri_locale_set <- function(loc) {
 #' 
 #' @return a character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variang}, e.g. "en_US" 
-#' @seealso \code{\link{stri_locale_info}}
+#' @family locale
 #' @export
 stri_locale_get <- function(loc=NULL) {
    .Call("stri_locale_info", NULL, PACKAGE="stringi")$Name
@@ -75,7 +99,7 @@ stri_locale_get <- function(loc=NULL) {
 #' @param loc \code{NULL}, \code{""}, or \code{NA} for default locale, or a single string with locale name
 #' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
 #' their combination, \code{Name}. Each is a character string.
-#' @seealso \code{\link{stri_locale_list}}
+#' @family locale
 #' @export
 stri_locale_info <- function(loc=NULL) {
    .Call("stri_locale_info", loc, PACKAGE="stringi")
