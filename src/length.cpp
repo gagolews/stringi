@@ -33,10 +33,10 @@
  */
 R_len_t stri__numbytes_max(SEXP s)
 {
-   R_xlen_t ns = XLENGTH(s);
+   R_len_t ns = LENGTH(s);
    if (ns <= 0) return -1;
    R_len_t maxlen = -1;
-   for (R_xlen_t i=0; i<ns; ++i) {
+   for (R_len_t i=0; i<ns; ++i) {
       SEXP cs = STRING_ELT(s, i);
       if (cs != NA_STRING) {
          /* INPUT ENCODING CHECK: this function does not need this. */
@@ -59,11 +59,11 @@ R_len_t stri__numbytes_max(SEXP s)
 SEXP stri_numbytes(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   R_xlen_t n = XLENGTH(s);
+   R_len_t n = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, n));
    int* retint = INTEGER(ret);
-   for (R_xlen_t i=0; i<n; ++i) {
+   for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(s, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       if (curs == NA_STRING)
@@ -87,23 +87,37 @@ SEXP stri_numbytes(SEXP s)
 SEXP stri_length(SEXP s)
 {
    s = stri_prepare_arg_string(s);
-   R_xlen_t ns = XLENGTH(s);
+   R_len_t ns = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
-   for (R_xlen_t k = 0; k < ns; k++) {
-     SEXP q = STRING_ELT(s, k);
-     if (q == NA_STRING)
+   for (R_len_t k = 0; k < ns; k++) {
+      SEXP q = STRING_ELT(s, k);
+      if (q == NA_STRING)
          retint[k] = NA_INTEGER;
-     else {
-         R_xlen_t j = 0;      // number of detected code points
+      else {
          R_len_t nq = LENGTH(q);  // O(1) - stored by R
-         /* Note: ICU50 permits only int-size strings in U8_NEXT */
-         const char* qc = CHAR(q); /* INPUT ENCODING CHECK: @TODO. */
-         for (R_len_t i = 0; i < nq; j++)
-             U8_FWD_1(qc, i, nq);
-         retint[k] = j;
-     }
+
+         // We trust (is that a wise assumption?)
+         // R encoding marks; However, it there is no mark,
+         // the string may have any encoding (ascii, latin1, utf8, native)
+         if (IS_ASCII(q) || IS_LATIN1(q))
+            retint[k] = nq;
+         else if (IS_BYTES(q)) 
+            error(MSG__BYTESENC);
+         else if (IS_UTF8(q)) {
+            /* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
+            const char* qc = CHAR(q);
+            R_len_t j = 0;      // number of detected code points
+            for (R_len_t i = 0; i < nq; j++)
+                U8_FWD_1(qc, i, nq);
+            retint[k] = j;
+         }
+         else { // Any encoding - detection needed
+            warning("TO DO");
+            retint[k] = nq; // tmp....................
+         }
+      }
    }
    UNPROTECT(1);
    return ret;
@@ -120,11 +134,11 @@ SEXP stri_length(SEXP s)
 SEXP stri_isempty(SEXP s)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   R_xlen_t n = XLENGTH(s);
+   R_len_t n = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, n));
    int* retlog = LOGICAL(ret);
-   for (R_xlen_t i=0; i<n; ++i) {
+   for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(s, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       if (curs == NA_STRING)
@@ -148,7 +162,7 @@ SEXP stri_isempty(SEXP s)
 SEXP stri_width(SEXP s)
 {
    s = stri_prepare_arg_string(s);
-   R_xlen_t ns = XLENGTH(s);
+   R_len_t ns = LENGTH(s);
    UChar32 c;
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, ns));

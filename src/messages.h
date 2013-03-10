@@ -55,6 +55,8 @@
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
    
+#define MSG__BYTESENC \
+   "bytes encoding is not supported by this function"
 
    
 #endif
