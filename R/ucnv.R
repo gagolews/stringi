@@ -41,20 +41,34 @@ NULL
 
 #' List Available Encodings
 #'
-#' @return A list with...
+#' Please note that apart from given encodings, ICU tries to normalize
+#' encoding specifiers. E.g. \code{"UTF8"} is also valid.....
+#'
+#' @param simplified logical value TODO....
+#' @return If \code{simplified} is \code{FALSE} (the default), a list of
+#'  character vectors is returned: Each element represents.... its name is....
+#' 
+#' When \code{simplified} is \code{TRUE}, then the resulting list
+#' is coerced to a character vector, sorted, and its duplicates are removed.
 #' @family encoding
 #' @export
-stri_enc_list <- function() {
-   .Call("stri_enc_list", PACKAGE="stringi")
+stri_enc_list <- function(simplified=FALSE) {
+   simplified <- identical(simplified, TRUE)
+   
+   ret <- .Call("stri_enc_list", PACKAGE="stringi")
+   if (simplified)
+      return(sort(unique(unlist(ret))))
+   else
+      return(ret)
 }
 
 
-#' Quert Given Encoding
+#' Query Given Encoding
 #' 
 #' 
 #' @param enc \code{NULL} or \code{""} for default encoding,
 #' or a single string with encoding name
-#' @return A list with...
+#' @return A list with... TODO.....
 #' @family encoding
 #' @export
 stri_enc_info <- function(enc=NULL) {

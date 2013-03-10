@@ -18,11 +18,12 @@
 
 
 
-#' Get currently used ICU settings
+#' Query Default Settings
 #' 
 #' @param short should only current locale and charset be returned?
 #' @return a list of TODO.... (short=FALSE) or a string (short=TRUE)
 #' @export
+#' @family locale, encoding
 stri_info <- function(short=FALSE) {
    stopifnot(is.logical(short), length(short) == 1)
    
