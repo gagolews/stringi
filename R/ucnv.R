@@ -90,3 +90,10 @@ stri_enc_is_ascii <- function(str) {
 stri_enc_is_utf8 <- function(str) {
    .Call("stri_enc_is_utf8", str, PACKAGE="stringi")
 }
+
+
+#' Check R encoding marking
+#' This is an internal function (don't export)
+stri_enc_Rmark <- function(str) {
+   invisible(.Call("stri_enc_Rmark", str, PACKAGE="stringi"))
+}

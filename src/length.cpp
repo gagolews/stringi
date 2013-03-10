@@ -114,6 +114,19 @@ SEXP stri_length(SEXP s)
             retint[k] = j;
          }
          else { // Any encoding - detection needed
+//            UTF-8 strings can be fairly reliably recognized as such by a
+//            simple algorithm, i.e., the probability that a string of
+//            characters in any other encoding appears as valid UTF-8 is low,
+//            diminishing with increasing string length.
+//            We have two possibilities here:
+//            1. Auto detect encoding: Is this ASCII or UTF-8? If not => use Native
+//                This won't work correctly in some cases.
+//                e.g. (c4,85) represents Polish a with ogonek in UTF-8
+//                and A umlaut, Ellipsis in WINDOWS-1250
+//            2. Assume it's Native; this assumes the user working in an 8-bit environment
+//                would convert strings to UTF-8 manually if needed - I think is's
+//                a more reasonable approach (Native --> input via keyboard)
+      
             warning("TO DO");
             retint[k] = nq; // tmp....................
          }

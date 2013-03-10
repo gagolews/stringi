@@ -34,6 +34,7 @@
 #' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
 #' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
 #' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
+#' RFC 3629: UTF-8, a transformation format of ISO 10646 \url{http://tools.ietf.org/html/rfc3629}.\cr
 invisible(NULL)
 
 

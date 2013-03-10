@@ -63,7 +63,7 @@ using namespace icu;
 #define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 #define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
 #define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
-#define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK))
+#define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
 
 
 // undef R's length macro (conflicts with std::string.length())
@@ -144,6 +144,7 @@ SEXP stri_encinfo(SEXP enc);
 SEXP stri_encset(SEXP loc);
 SEXP stri_enc_is_ascii(SEXP s);
 SEXP stri_enc_is_utf8(SEXP s);
+SEXP stri_enc_Rmark(SEXP s);
 
 // uloc.cpp:
 SEXP stri_localeinfo(SEXP loc);
