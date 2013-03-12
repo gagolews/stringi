@@ -18,6 +18,17 @@
 
 
 
+#' Strings as Arguments in \pkg{stringi}
+#'
+#' Some notes:
+#' * How do we treat character vectors on input? What objects are automatically coerced?
+#' * Do we treat NA values consistently? Yes.
+#' * Do we preserve objects' attributes? No.
+#' 
+#' @name string-arguments
+NULL
+
+
 #' Prepare a string argument (Internal method)
 #' 
 #' @param x argument to be checked
