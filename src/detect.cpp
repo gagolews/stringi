@@ -21,6 +21,59 @@
 
 /** 
  * .... 
+ * @param s ...
+ * @param pattern ...
+ * @return ...
+ */
+SEXP stri_detect_fixed(SEXP s, SEXP pattern)
+{
+   s = stri_prepare_arg_string(s);
+   pattern = stri_prepare_arg_string(pattern);
+   int ns = LENGTH(s);
+   int npattern = LENGTH(pattern);
+   //if any length is 0 then return empty list
+   if (ns==0 || npattern==0)
+      return allocVector(LGLSXP, 0);
+   int nmax = ns;
+   if(npattern>nmax) nmax=npattern;
+   if (nmax % ns != 0 || nmax % npattern != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   SEXP e;
+   PROTECT(e = allocVector(LGLSXP, nmax));
+   SEXP curs,curpat;
+   int k=0,curslen,curpatlen;
+   
+   for (int i=0; i<nmax; ++i) {
+      curs = STRING_ELT(s, i % ns);
+      curpat = STRING_ELT(pattern, i % npattern);
+      
+      if(curs == NA_STRING || curpat == NA_STRING){
+         LOGICAL(e)[i] = NA_LOGICAL;
+         continue;
+      }
+      curslen = LENGTH(curs);
+      curpatlen = LENGTH(curpat);
+      const char* string = CHAR(curs);
+      const char* spat = CHAR(curpat);
+      LOGICAL(e)[i] = false;
+   	for(int j=0; j<curslen; ++j){
+         k=0;
+         while(string[j+k]==spat[k] && k<curpatlen)
+            k++;
+   		if(k==curpatlen){
+            LOGICAL(e)[i] = true;
+            //if match then skip and check next element of s
+            break;
+   		}
+   	}
+   }
+   UNPROTECT(1);
+   return e;
+}
+
+
+/** 
+ * .... 
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
  */

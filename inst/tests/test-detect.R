@@ -1,5 +1,22 @@
 require("testthat")
 
+test_that("stri_detect_fiexd", {
+   expect_identical(stri_detect_fixed("a", NA), NA)
+   expect_identical(stri_detect_fixed(NA, "a"), NA)
+   expect_identical(stri_detect_fixed(NA, NA), NA)
+   expect_identical(stri_detect_fixed("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_detect_fixed(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_detect_fixed(character(0), character(0)), logical(0))
+   
+   s <- c("Lorem\n123", " ", "kota", "4\tą")
+   p <- c(" ", "\tą")
+   expect_identical(stri_detect_fixed(s, p), c(F, F, F, T))
+   
+   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2)))
+   
+})
+
+
 test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex(NA, NA), NA)
    expect_identical(stri_detect_regex(character(0), character(0)), logical(0))

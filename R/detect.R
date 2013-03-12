@@ -17,6 +17,18 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' Detect if string contains pattern
+#' 
+#' Vectorized over \code{str} and \code{pattern}
+#' 
+#' @param str character vector
+#' @param pattern character vector 
+#' @export
+stri_detect_fixed <- function(str, pattern) {
+   .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
+}
+
+
 #' ...
 #' 
 #' @param str character vector
