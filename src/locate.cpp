@@ -148,6 +148,49 @@ void stri__locate_all_class1(const char* s, int n, int32_t* cls,
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
 }
 
+/** Locate all occurences of character pattern in one string
+ *  @param s string
+ *  @param n numbytes for s
+ *  @param p pattern to locate
+ * @param start [out] indices  (0-based)
+ * @param end [out] indices (0-based)
+ * @param o [out] number of occurences (compact subsequences are merged)
+ */
+void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
+   int* start, int* end, int& o)
+{
+   o = 0;
+   int charnum = 0,charnump=0;
+   int j,k;
+   UChar32 chr;
+   
+   for (int i=0; i<ns; ++charnum) {
+      k=0;
+      while(s[i+k]==p[k] && k< np){
+         ++k;
+      }
+      if(k==np){
+         ++o;
+         start[o-1] = charnum;
+         j=i+k;
+         //if we found match there is no point of checking next k bytes
+         for(i; i<j; ++charnum)
+            U8_NEXT(s, i, ns, chr);
+         //this line is here, because it was easier to --charnum than check
+         //if j in loop should be i+k-1 or i+k-2 (value depends on many 
+         //bytes long is last character)
+         --charnum;
+         end[o-1] = charnum;
+      }else
+         //the reason why this is in else and not outside the if/else 
+         //statement is simple - if k==np then this line is done in loop.
+         //it's easier that way - check previous comment
+         U8_NEXT(s, i, ns, chr);
+   }
+}
+
+
+
 
 /** Locate all occurences of character classes
  * @param s character vector
@@ -317,6 +360,93 @@ SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
 
    
    UNPROTECT(1);
+   return ret;
+}
+
+
+/** Locate all occurences of pattern
+ * @param s character vector
+ * @param p character vector
+ * @return list of integer matrices (2 columns)
+ */
+SEXP stri_locate_all_fixed(SEXP s, SEXP p)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   p = stri_prepare_arg_string(p); // prepare integer argument
+   R_len_t ns = LENGTH(s);
+   R_len_t np = LENGTH(p);
+   if (ns <= 0 || np <= 0) return stri__emptyList();
+   
+   R_len_t nout = max(ns, np);
+   if (nout % ns != 0 || nout % np != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+      
+   SEXP ans;
+   SEXP dimnames;
+   SEXP colnames;
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(dimnames = allocVector(VECSXP, 2));
+   PROTECT(colnames = allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, mkChar("start"));
+   SET_STRING_ELT(colnames, 1, mkChar("end"));
+   SET_VECTOR_ELT(dimnames, 1, colnames);
+   
+#define STRI__LOCATEALL_NOTFOUND \
+      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
+      int* ians = INTEGER(ans); \
+      ians[0] = NA_INTEGER; \
+      ians[1] = NA_INTEGER;  
+         
+   R_len_t nmax = stri__numbytes_max(s);
+   if (nmax <= 0) {
+      STRI__LOCATEALL_NOTFOUND      
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      
+      for (R_len_t i=0; i<nout; ++i)
+         SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(4);  
+      return ret;
+   }
+      
+   int* start = new int[nmax];
+   int* end = new int[nmax];
+   int  occurences=0;
+   
+   for (R_len_t i=0; i<nout; ++i) {
+      SEXP curs = STRING_ELT(s, i%ns);
+      SEXP curp = STRING_ELT(p, i%np);
+      R_len_t cursl = LENGTH(curs);
+      R_len_t curpl = LENGTH(curp);
+
+      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
+         STRI__LOCATEALL_NOTFOUND 
+      }
+      else {
+         stri__locate_all_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
+            start, end, occurences);
+         
+         if (occurences > 0) {
+            PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
+            int* ians = INTEGER(ans);
+            for(int j = 0; j < occurences; j++) {
+               ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
+               ians[j+1*occurences] = end[j] + 1;
+            }
+         }
+         else {
+            STRI__LOCATEALL_NOTFOUND
+         }
+      }
+         
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(1);  
+   }
+   
+   delete [] start;
+   delete [] end;
+   UNPROTECT(3);
    return ret;
 }
 

@@ -141,6 +141,7 @@ SEXP stri_width(SEXP s);
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
+SEXP stri_locate_all_fixed(SEXP s, SEXP p);
 SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
 
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
