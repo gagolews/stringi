@@ -26,5 +26,5 @@ local({
 
    srepdup <- stri_dup(srep,26)
    print(microbenchmark(stri_locate_all_fixed(srepdup," "),str_locate_all(srepdup,fixed(" "))))
-   
+   print(microbenchmark(stri_locate_all_fixed(srepdup,"Lorem"),str_locate_all(srepdup,fixed("Lorem"))))
 })

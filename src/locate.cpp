@@ -148,6 +148,66 @@ void stri__locate_all_class1(const char* s, int n, int32_t* cls,
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
 }
 
+
+/** Locate the first and/or the last occurence of character pattern in one string
+ * 
+ *  @param s string
+ *  @param n numbytes for s
+ *  @param p pattern
+ *  @param first [IN/OUT] code point index of the first occurence, 
+ *       -1 if not found; 0-based
+ *  @param last  [IN/OUT] code point index of the last occurence,
+ *       -1 if not found; 0-based
+ */
+void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  int np,
+   int* start, int* end, int& o, bool first)
+{
+   o = 0;
+   int charnum = 0,charnump=0;
+   int j,k;
+   UChar32 chr;
+   
+   if(first){
+      for (int i=0; i<ns; ++charnum) {
+         k=0;
+         while(s[i+k]==p[k] && k< np){
+            ++k;
+         }
+         if(k==np){
+            ++o;
+            start[o-1] = charnum;
+            j=i+k;
+            for(i; i<j; ++charnum)
+               U8_NEXT(s, i, ns, chr);
+            --charnum;
+            end[o-1] = charnum;
+            break;
+         }else
+            U8_NEXT(s, i, ns, chr);
+      }
+   }else{
+      //this is not the most efficient, but it works. If you have any idea
+      //how to improve this, feel free to correct
+      for (int i=0; i<ns; ++charnum) {
+         k=0;
+         while(s[i+k]==p[k] && k< np){
+            ++k;
+         }
+         if(k==np){
+            o=1;
+            start[o-1] = charnum;
+            j=i+k;
+            for(i; i<j; ++charnum)
+               U8_NEXT(s, i, ns, chr);
+            --charnum;
+            end[o-1] = charnum;
+         }else
+            U8_NEXT(s, i, ns, chr);
+      }
+   }
+}
+
+
 /** Locate all occurences of character pattern in one string
  *  @param s string
  *  @param n numbytes for s
@@ -450,3 +510,93 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    return ret;
 }
 
+
+/** Locate first or last occurences of pattern
+ * @param s character vector
+ * @param p character vector
+ * @return list of integer matrices (2 columns)
+ */
+SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
+{
+   first = stri_prepare_arg_logical(first); // prepare logical argument
+   if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
+      error(MSG__INCORRECT_INTERNAL_ARG);
+      
+   s = stri_prepare_arg_string(s); // prepare string argument
+   p = stri_prepare_arg_string(p); // prepare integer argument
+   R_len_t ns = LENGTH(s);
+   R_len_t np = LENGTH(p);
+   if (ns <= 0 || np <= 0) return stri__emptyList();
+   
+   R_len_t nout = max(ns, np);
+   if (nout % ns != 0 || nout % np != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+      
+   SEXP ans;
+   SEXP dimnames;
+   SEXP colnames;
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(dimnames = allocVector(VECSXP, 2));
+   PROTECT(colnames = allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, mkChar("start"));
+   SET_STRING_ELT(colnames, 1, mkChar("end"));
+   SET_VECTOR_ELT(dimnames, 1, colnames);
+   //is it necessary to define this in each function?Or maybe one is enough?
+#define STRI__LOCATEALL_NOTFOUND \
+      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
+      int* ians = INTEGER(ans); \
+      ians[0] = NA_INTEGER; \
+      ians[1] = NA_INTEGER;  
+         
+   R_len_t nmax = stri__numbytes_max(s);
+   if (nmax <= 0) {
+      STRI__LOCATEALL_NOTFOUND      
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      
+      for (R_len_t i=0; i<nout; ++i)
+         SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(4);  
+      return ret;
+   }
+      
+   int* start = new int[nmax];
+   int* end = new int[nmax];
+   int  occurences=0;
+   
+   for (R_len_t i=0; i<nout; ++i) {
+      SEXP curs = STRING_ELT(s, i%ns);
+      SEXP curp = STRING_ELT(p, i%np);
+      R_len_t cursl = LENGTH(curs);
+      R_len_t curpl = LENGTH(curp);
+
+      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
+         STRI__LOCATEALL_NOTFOUND 
+      }
+      else {
+         stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
+            start, end, occurences, LOGICAL(first)[0]);
+         
+         if (occurences > 0) {
+            PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
+            int* ians = INTEGER(ans);
+            for(int j = 0; j < occurences; j++) {
+               ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
+               ians[j+1*occurences] = end[j] + 1;
+            }
+         }
+         else {
+            STRI__LOCATEALL_NOTFOUND
+         }
+      }
+         
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(1);  
+   }
+   
+   delete [] start;
+   delete [] end;
+   UNPROTECT(3);
+   return ret;
+}

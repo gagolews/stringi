@@ -75,3 +75,33 @@ stri_locate_all_fixed <- function(s, pattern) {
    .Call("stri_locate_all_fixed", s, pattern, PACKAGE="stringi")
 }
 
+#' Locate first occurence of character pattern
+#'
+#' Vectorized over s and pattern
+#' @param s character vector
+#' @param pattern character vector
+#' @return list of integer matrices.  First column gives start postions
+#' of matches, and second column gives end position.
+#' Consecutive sequences of characters from a pattern are merged.
+#' NAs for no match.
+#' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_last_fixed}}
+#' @export
+stri_locate_first_fixed <- function(s, pattern) {
+   .Call("stri_locate_first_or_last_fixed", s, pattern, TRUE, PACKAGE="stringi")
+}
+
+#' Locate last occurence of character pattern
+#'
+#' Vectorized over s and pattern
+#' @param s character vector
+#' @param pattern character vector
+#' @return list of integer matrices.  First column gives start postions
+#' of matches, and second column gives end position.
+#' Consecutive sequences of characters from a pattern are merged.
+#' NAs for no match.
+#' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_first_fixed}}
+#' @export
+stri_locate_last_fixed <- function(s, pattern) {
+   .Call("stri_locate_first_or_last_fixed", s, pattern, FALSE, PACKAGE="stringi")
+}
+
