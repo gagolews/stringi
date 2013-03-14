@@ -74,3 +74,19 @@ test_that("stri_locate_last_class", {
               stri_char_getpropertyid("^WHITE_SPACE"))),
       c(15L, 7L))
 })
+
+
+
+test_that("stri_locate_all_fixed", {
+   
+   expect_is(stri_locate_all_fixed(character(0), "a"), "list")
+   
+   expect_equivalent(stri_locate_all_fixed(NA, character(0)), list())
+   expect_equivalent(stri_locate_all_fixed(character(0), NA), list())
+   expect_equivalent(stri_locate_all_fixed(LETTERS, character(0)), list())
+   expect_equivalent(stri_locate_all_fixed(NA, ""), list(matrix(c(NA,NA_integer_))))
+   
+   expect_equivalent(stri_locate_all_fixed("1aąa", "ą"), list(matrix(c(3,3))))
+   expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1,2))))
+   
+})
