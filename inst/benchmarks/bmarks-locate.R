@@ -27,4 +27,25 @@ local({
    srepdup <- stri_dup(srep,26)
    print(microbenchmark(stri_locate_all_fixed(srepdup," "),str_locate_all(srepdup,fixed(" "))))
    print(microbenchmark(stri_locate_all_fixed(srepdup,"Lorem"),str_locate_all(srepdup,fixed("Lorem"))))
+   
+   #compare different variants of stri_locate_*_fixed
+   print(microbenchmark(stri_locate_all_fixed(s,"a"),
+                        stri_locate_first_fixed(s,"a"),
+                        stri_locate_last_fixed(s,"a")))
+   
+   print(microbenchmark(stri_locate_all_fixed(srep,"a"),
+                        stri_locate_first_fixed(srep,"a"),
+                        stri_locate_last_fixed(srep,"a")))
+   
+   print(microbenchmark(stri_locate_all_fixed(srepdup,"a"),
+                        stri_locate_first_fixed(srepdup,"a"),
+                        stri_locate_last_fixed(srepdup,"a")))
+   
+   one <- stri_flatten(c(stri_dup(1,10000),2))
+   pat <- stri_flatten(c(stri_dup(1,1000),2))
+   print(microbenchmark(stri_locate_all_fixed(one,pat),str_locate_all(one,fixed(pat))))
+   print(microbenchmark(stri_locate_first_fixed(one,pat),str_locate(one,fixed(pat))))
+   
+   print(microbenchmark(stri_locate_first_fixed(one,one),stri_locate_all_fixed(one,one)))
+   
 })

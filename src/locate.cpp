@@ -186,23 +186,44 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             U8_NEXT(s, i, ns, chr);
       }
    }else{
-      //this is not the most efficient, but it works. If you have any idea
-      //how to improve this, feel free to correct
-      for (int i=0; i<ns; ++charnum) {
+      //this is not the most efficient, but it works. It is only a little 
+      //bit faster than stri_locate_all_fixed, which is bad
+//      for (int i=0; i<ns; ++charnum) {
+//         k=0;
+//         while(s[i+k]==p[k] && k< np){
+//            ++k;
+//         }
+//         if(k==np){
+//            o=1;
+//            start[o-1] = charnum;
+//            j=i+k;
+//            for(i; i<j; ++charnum)
+//               U8_NEXT(s, i, ns, chr);
+//            --charnum;
+//            end[o-1] = charnum;
+//         }else
+//            U8_NEXT(s, i, ns, chr);
+//      }
+
+//this version is almost two times faster than this one from above
+//but it's still not even close to stri_locate_first
+//IMPORTANT: in this version stri_locate_last("aaa","aa")==(2,3) 
+//previous (above) version returns (1,2)
+      for (int i=ns-np; i>=0; --i) {
          k=0;
-         while(s[i+k]==p[k] && k< np){
+         while(s[i+k]==p[k] && k < np){
             ++k;
          }
          if(k==np){
             o=1;
+            for(j=0; j<i; ++charnum)
+               U8_NEXT(s, j, i, chr);
+            for(j=0; j<np; ++charnump)
+               U8_NEXT(p, j, np, chr);
             start[o-1] = charnum;
-            j=i+k;
-            for(i; i<j; ++charnum)
-               U8_NEXT(s, i, ns, chr);
-            --charnum;
-            end[o-1] = charnum;
-         }else
-            U8_NEXT(s, i, ns, chr);
+            end[o-1] = charnum + charnump - 1;
+            break;
+         }
       }
    }
 }
