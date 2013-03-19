@@ -83,6 +83,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
    
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
+   if (ns == 0 || np == 0)
+      return allocVector(LGLSXP, 0);
    int nmax = ns;
    if (np > ns)
       nmax = np;
@@ -91,14 +93,37 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
    
    SEXP ret, s, p;
    PROTECT(ret = allocVector(LGLSXP, nmax));
-   UErrorCode status = U_ZERO_ERROR;
-   
-   for (int i = 0; i < np; i++) {
+   UErrorCode status;
+ 
+ 
+//   for (int i = 0; i < nmax; i++) { 
+//      s = STRING_ELT(str, i % ns);
+//      p = STRING_ELT(pattern, i % np);
+//      if (p == NA_STRING) {
+//         LOGICAL(ret)[i] = NA_LOGICAL;
+//      }
+//      else {
+//         status = U_ZERO_ERROR;
+//         RegexMatcher *matcher = new RegexMatcher(UnicodeString::fromUTF8(StringPiece(CHAR(p))), 0, status);
+//         if (U_FAILURE(status))
+//            error(u_errorName(status));
+//         matcher->reset(UnicodeString::fromUTF8(StringPiece(CHAR(s))));
+//         int found = (int)matcher->find(0, status);
+//         if (U_FAILURE(status))
+//            error(u_errorName(status));
+//         LOGICAL(ret)[i] = found;
+//         delete matcher;
+//      }
+//   }
+ 
+   for (int i = 0; i < np; i++) { // for each pattern
       p = STRING_ELT(pattern, i);
-      if (p == NA_STRING)
+      if (p == NA_STRING) {
          for (int j = i; j < nmax; j += np)
             LOGICAL(ret)[j] = NA_LOGICAL;
+      }
       else {
+         status = U_ZERO_ERROR;
          RegexMatcher *matcher = new RegexMatcher(CHAR(p), 0, status);
          if (U_FAILURE(status))
             error(u_errorName(status));
@@ -108,7 +133,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
                LOGICAL(ret)[j] = NA_LOGICAL;
             else {
                matcher->reset(CHAR(s));
-               LOGICAL(ret)[j] = matcher->find();
+               int found = (int)matcher->find();
+               LOGICAL(ret)[j] = found;
             }
          }
          delete matcher;
