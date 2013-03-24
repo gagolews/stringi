@@ -18,10 +18,20 @@
 
 
 
-#' Query Default Settings
+#' Query Default Settings for \pkg{stringi}
 #' 
 #' @param short should only current locale and charset be returned?
-#' @return a list of TODO.... (short=FALSE) or a string (short=TRUE)
+#' 
+#' @return If \code{short==TRUE}, then a single string containing 
+#' information on default character encoding and locale is returned.
+#' Otherwise, you get a list with the following components:
+#' \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library
+#' \code{Locale} -- contains information on default locale,
+#' as returned by \code{stri_locale_info()}
+#' \code{Charset.internal} -- always \code{"UTF-8"}
+#' \code{Charset.native} -- information on default encoding,
+#' as returned by \code{stri_enc_info()}
+#' 
 #' @export
 #' @family locale, encoding
 stri_info <- function(short=FALSE) {

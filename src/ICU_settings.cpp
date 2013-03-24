@@ -21,8 +21,15 @@
 
 
 
-/** Get curent-default ICU locale information
- *  @return an R named list
+/** Get curent-default ICU locale and charset information
+ * 
+ *  @return an R named list with 4 components:
+ *  \code{Unicode.version} == ICU Unicode version,
+ *  \code{Locale} == \code{stri_locale_info()},
+ *  \code{Charset.internal} == \code{"UTF-8"}, 
+ *  \code{Charset.native} == \code{stri_enc_info()})
+ * 
+ *  @version 0.1 (Marek Gagolewski)
 */
 SEXP stri_info()
 {

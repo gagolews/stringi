@@ -126,7 +126,7 @@ SEXP stri_justify(SEXP s, SEXP width);
 SEXP stri_casecompare(SEXP x, SEXP y);
 
 // ICU_settings.cpp:
-SEXP stri_info();
+SEXP stri_info();                        // DONE
 
 // prepare_arg.cpp:
 SEXP stri_prepare_arg_string(SEXP x);    // DONE

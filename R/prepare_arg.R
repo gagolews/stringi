@@ -18,14 +18,22 @@
 
 
 
-#' Strings as Arguments in \pkg{stringi}
+#' Passing Arguments to Functions in \pkg{stringi}
 #'
 #' Some notes:
 #' * How do we treat character vectors on input? What objects are automatically coerced?
 #' * Do we treat NA values consistently? Yes.
 #' * Do we preserve objects' attributes? No.
 #' 
-#' @name string-arguments
+#' When character vector argument is expected: factors and other coercible vectors
+#' are converted with \code{as.character(...)}, otherwise an error is generated.
+#' 
+#' When logical, numeric or integer vector argument is expected:
+#' factors are converted with \code{as.*(as.character(...))} and other coercible vectors
+#' are converted with \code{as.character()}, otherwise an error is generated.
+#' 
+#' @name arguments
+#' @family passing-arguments
 NULL
 
 
@@ -37,18 +45,22 @@ NULL
 #' if atomic vector (also a matrix), it is coerced to character vector.
 #' if name, a single string is generated.
 #' otherwise the function throws an error.
+#' 
+#' @family passing-arguments
 stri_prepare_arg_string <- function(x) {
    .Call("stri_prepare_arg_string", x, PACKAGE="stringi")  
 }
 
 
-#' Prepare a double argument (Internal method)
+#' Prepare a numeric argument (Internal method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a factor, as.character is called.
 #' if a double, it is returned with no change.
 #' if atomic vector (also a matrix), it is coerced to double vector.
 #' otherwise the function throws an error.
+#' 
+#' @family passing-arguments
 stri_prepare_arg_double <- function(x) {
    .Call("stri_prepare_arg_double", x, PACKAGE="stringi")  
 }
@@ -61,6 +73,8 @@ stri_prepare_arg_double <- function(x) {
 #' if an integer, it is returned with no change.
 #' if atomic vector (also a matrix), it is coerced to integer vector.
 #' otherwise the function throws an error.
+#' 
+#' @family passing-arguments
 stri_prepare_arg_integer <- function(x) {
    .Call("stri_prepare_arg_integer", x, PACKAGE="stringi")  
 }
@@ -72,6 +86,8 @@ stri_prepare_arg_integer <- function(x) {
 #' if factor, as.character is called.
 #' if atomic vector (also a matrix), it is coerced to logical vector.
 #' otherwise the function throws an error.
+#' 
+#' @family passing-arguments
 stri_prepare_arg_logical <- function(x) {
    .Call("stri_prepare_arg_logical", x, PACKAGE="stringi")  
 }
