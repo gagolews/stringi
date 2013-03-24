@@ -101,7 +101,7 @@ SEXP stri_length(SEXP s)
 /* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
 #define STRI_LENGTH_CALCULATE_UTF8 \
    const char* qc = CHAR(q); \
-   R_len_t j = 0;  /* number of detected code points */ \    
+   R_len_t j = 0;  /* number of detected code points */\    
    for (R_len_t i = 0; i < nq; j++) \
       U8_FWD_1(qc, i, nq); \
    retint[k] = j;
