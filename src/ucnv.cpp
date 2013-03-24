@@ -20,46 +20,44 @@
 #include "stringi.h"
 
 
-/**
- * Sets current (default) ICU charset
- * It given charset is unavailable, an error is raised
- * @param loc new charset
- * @return nothing
+// ------------------------------------------------------------------------
+
+
+/** Open UConverter for given character encoding
+ * 
+ *  If the converted could be opened, then an error is generated.
+ * 
+ *  @param enc encoding name or NULL for default encoding (please,
+ *       use \code{stri__prepare_arg_enc()})
+ *  @return opened UConverter* (must be closed manually after use)
  */
-SEXP stri_enc_set(SEXP enc)
+UConverter* stri__ucnv_open(const char* enc)
 {
-   enc = stri_prepare_arg_string(enc);
-   if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING 
-         && LENGTH(STRING_ELT(enc, 0)) > 0) {
-      if (LENGTH(enc) > 1) // this shouldn't happen
-        warning("only one charset specifier supported. taking first");
+   UErrorCode err = U_ZERO_ERROR;
+   UConverter* uconv = NULL;
+
+   uconv = ucnv_open(enc, &err);
+   if (U_FAILURE(err))
+      error(MSG__ENC_ERROR_SET);
    
-      UErrorCode err = U_ZERO_ERROR;
-      UConverter* uconv = ucnv_open(CHAR(STRING_ELT(enc, 0)), &err);
-      if (U_FAILURE(err))
-         error("could not find converter for given encoding");
-      else {
-         const char* name = ucnv_getName(uconv, &err);
-         if (U_FAILURE(err))
-            error("could not find converter for given encoding");
-         ucnv_setDefaultName(name);
-      }
-   }
-   else
-      error("incorrect charset specifier");
-      
-   return R_NilValue;
+   return uconv;
 }
 
+
+// ------------------------------------------------------------------------
 
 /**
  * Convert character vector between given encodings
  *
  * @param s     input character vector
- * @param from  source encoding
- * @param to    target encoding
- * @return a character vector with s converted
+ * @param from  source encoding, \code{NULL} or \code{""} for default enc
+ * @param to    target encoding, \code{NULL} or \code{""} for default enc
+ * @return a converted character vector
+ * 
  * @TODO Encoding marking...
+ * 
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_encode(SEXP s, SEXP from, SEXP to)
 {
@@ -67,14 +65,10 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
    R_len_t ns = LENGTH(s);
    if (ns <= 0) return s;
 
-   UConverter* uconv_from = stri__ucnv_open(from);
-   if (!uconv_from) return stri__vector_NA_strings(ns);
-
-   UConverter* uconv_to = stri__ucnv_open(to);
-   if (!uconv_to) {
-      ucnv_close(uconv_from);
-      return stri__vector_NA_strings(ns);
-   }
+   const char* selected_from = stri__prepare_arg_enc(from, true);
+   const char* selected_to   = stri__prepare_arg_enc(to, true);
+   UConverter* uconv_from = stri__ucnv_open(selected_from);
+   UConverter* uconv_to = stri__ucnv_open(selected_to);
 
    // possibly we could check whether from's and to's canonical names
    // are the same and then return the input as-is (maybe with an Encoding
@@ -159,229 +153,89 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
 }
 
 
-/**
- * ...
+
+// ------------------------------------------------------------------------
+
+
+/** Check R encoding marking *for testing only*
+ *  This function should not be exported
+ * 
+ *  @param s character vector
+ * 
+ *  Results are printed on STDERR
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
-bool stri__ucnv_hasASCIIsubset(UConverter* conv)
+SEXP stri_enc_Rmark(SEXP s)
 {
-   if (ucnv_getMinCharSize(conv) != 1) return false;
-   
-   const int ascii_from = 0x0001;
-   const int ascii_to   = 0x007f;
-   char ascii[ascii_to-ascii_from+2]; // + \0
-   for (int i=ascii_from; i<=ascii_to; ++i)
-      ascii[i-ascii_from] = (char)i;
-   ascii[ascii_to-ascii_from+1] = '\0';
-   
-   UChar32 c;
-   
-   const char* ascii_last = ascii;
-   const char* ascii1 = ascii;
-   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
-   
-   UErrorCode err = U_ZERO_ERROR;
-   ucnv_reset(conv);
-   
-   while (ascii1 < ascii2) {
-      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
-      if (U_FAILURE(err)) {
-         err = U_ZERO_ERROR;
-         warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
-            ucnv_getName(conv, &err));
-         return false;
+   s = stri_prepare_arg_string(s);
+   int ns = LENGTH(s);
+   for (int i=0; i < ns; ++i) {
+      cerr << "Element #" <<  i << ":";
+      SEXP curs = STRING_ELT(s, i);
+      if (curs == NA_STRING){
+         cerr << "\tNA" << endl;
+         continue;
       }
-      
-      // Has just one byte been consumed? (??is that necessary??)
-      // How many code units (bytes) are used for the UTF-8 encoding
-      // of this Unicode code point? Does this code unit (byte)
-      // encode a code point by itself (US-ASCII 0..0x7f)?
-      // Is that the same ASCII char?
-      if (ascii_last != ascii1-1
-         || U8_LENGTH(c) != 1
-         || c != (int)ascii_last[0]) {
-         return false;
-      }
-      ascii_last = ascii1;
-   } 
-   
-   return true;  
+      const char* string = CHAR(curs);
+      cerr << "\tMARK_ASCII =" << (IS_ASCII(curs) > 0);
+      cerr << "\tMARK_UTF8  =" << (IS_UTF8(curs) > 0);
+      cerr << "\tMARK_LATIN1=" << (IS_LATIN1(curs) > 0);
+      cerr << "\tMARK_BYTES =" << (IS_BYTES(curs) > 0);
+      cerr << endl;
+   }
+   return R_NilValue;
 }
+
+
+// ------------------------------------------------------------------------
 
 
 /**
- * ...
+ * Sets current (default) ICU charset
+ * 
+ * If given charset is unavailable, an error is raised
+ * 
+ * @param enc new charset (single string)
+ * @return nothing (\code{R_NilValue})
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
-bool stri__ucnv_is1to1Unicode(UConverter* conv)
+SEXP stri_enc_set(SEXP enc)
 {
-   if (ucnv_getMinCharSize(conv) != 1) return false;
-   
-   const int ascii_from = 32;
-   const int ascii_to = 0x00ff;
-   char ascii[ascii_to-ascii_from+2]; // + \0
-   for (int i=ascii_from; i<=ascii_to; ++i)
-      ascii[i-ascii_from] = (char)i;
-   ascii[ascii_to-ascii_from+1] = '\0';
-   
-   UChar32 c;
-   const int buflen =  UCNV_GET_MAX_BYTES_FOR_STRING(1, 1);
-   char buf[buflen];
-   
-   const char* ascii_last = ascii;
-   const char* ascii1 = ascii;
-   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
-   
+   const char* selected_enc
+      = stri__prepare_arg_enc(enc, false); // here, the default encoding may not be requested
+      
+   // this will generate an error if enc is not supported:
+   UConverter* uconv = stri__ucnv_open(selected_enc); 
+
    UErrorCode err = U_ZERO_ERROR;
-   ucnv_reset(conv);
-   
-   while (ascii1 < ascii2) {
-      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
-      if (U_FAILURE(err)) {
-         warning("Cannot convert character 0x%2x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
-            ucnv_getName(conv, &err));
-         return false;
-      }
-      
-//      cerr << (int)(unsigned char)ascii_last[0] << " -> " << c << endl;
-      if (ascii_last != ascii1-1) // one byte should be consumed
-         return false;
-         
-      // check whether the character is represented
-      // by a single UTF-16 code point
-      UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
-      if (!U16_IS_SINGLE(lead)) {
-         warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
-            c,
-            ucnv_getName(conv, &err));
-         return false;
-      }
-      
-      // character not convertable => ignore
-      if (c != UCHAR_REPLACEMENT) {    
-         ucnv_fromUChars(conv, buf, buflen, (UChar*)&c, 1, &err);
-         if (U_FAILURE(err)) {
-            warning("Cannot convert character 0x%2x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
-            ucnv_getName(conv, &err));
-            return false;
-         }
-         
-         if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
-            warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
-               (int)(unsigned char)ascii_last[0],
-               c,
-               (int)buf[0],
-               ucnv_getName(conv, &err));
-            return false;
-         }
-      }      
-      // check tolower, toupper etc. (???)
-
-      ascii_last = ascii1;
-   } 
-   
-   return true;  
+   const char* name = ucnv_getName(uconv, &err); // get "official" encoding name
+   ucnv_close(uconv); // no longer needed
+   if (U_FAILURE(err))
+      error(MSG__ENC_ERROR_SET);
+   ucnv_setDefaultName(name); // set as default
+  
+   return R_NilValue;
 }
 
 
-/** Fetch information on given encoding
- * @param enc either NULL or "" for default encoding, or one string with encoding name
- * @return R list object
- */
-SEXP stri_enc_info(SEXP enc)
-{
-   UConverter* uconv = stri__ucnv_open(enc);
-   if (!uconv) return R_NilValue;
-
-   UErrorCode err;
-
-   // get list of available standards
-   R_len_t cs;
-   const char** standards;
-   stri__ucnv_getStandards(standards, cs);
-
-   // alloc output list
-   SEXP vals;
-   SEXP names;
-   const int nval = cs+2+5;
-   PROTECT(names = allocVector(STRSXP, nval));
-   SET_STRING_ELT(names, 0, mkChar("Name.friendly"));
-   SET_STRING_ELT(names, 1, mkChar("Name.ICU"));
-   for (R_len_t i=0; i<cs; ++i)
-      SET_STRING_ELT(names, i+2, mkChar((string("Name.")+standards[i]).c_str()));
-   SET_STRING_ELT(names, nval-5, mkChar("ASCII.subset"));
-   SET_STRING_ELT(names, nval-4, mkChar("Unicode.1to1"));
-   SET_STRING_ELT(names, nval-3, mkChar("CharSize.8bit"));
-   SET_STRING_ELT(names, nval-2, mkChar("CharSize.min"));
-   SET_STRING_ELT(names, nval-1, mkChar("CharSize.max"));
-
-   PROTECT(vals = allocVector(VECSXP, nval));
-
-
-   // get canonical (ICU) name
-   err = U_ZERO_ERROR;
-   const char* canname = ucnv_getName(uconv, &err);
-
-   if (U_FAILURE(err) || !canname) {
-      SET_VECTOR_ELT(vals, 1, ScalarString(NA_STRING));
-      warning("could not get canonical (ICU) encoding name (stri_encinfo)");
-   }
-   else {
-      SET_VECTOR_ELT(vals, 1, mkString(canname));
-
-      // friendly name
-      const char* frname = stri___ucnv_getFriendlyName(canname);
-      if (frname)  SET_VECTOR_ELT(vals, 0, mkString(frname));
-      else         SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
-
-
-      // has ASCII as its subset?
-      SET_VECTOR_ELT(vals, nval-5, ScalarLogical((int)stri__ucnv_hasASCIIsubset(uconv)));
-      
-      // min,max character size, is 8bit?
-      int mincharsize = (int)ucnv_getMinCharSize(uconv);
-      int maxcharsize = (int)ucnv_getMaxCharSize(uconv);
-      int is8bit = (mincharsize==1 && maxcharsize == 1);
-      SET_VECTOR_ELT(vals, nval-3, ScalarLogical(is8bit));
-      SET_VECTOR_ELT(vals, nval-2, ScalarInteger(mincharsize));
-      SET_VECTOR_ELT(vals, nval-1, ScalarInteger(maxcharsize));
-      
-      // is there a one-to-one correspondence with Unicode?
-      if (!is8bit)
-         SET_VECTOR_ELT(vals, nval-4, ScalarLogical(NA_LOGICAL));
-      else
-         SET_VECTOR_ELT(vals, nval-4, ScalarLogical((int)stri__ucnv_is1to1Unicode(uconv)));
-         
-      // other standard names
-      for (R_len_t i=0; i<cs; ++i) {
-         err = U_ZERO_ERROR;
-         const char* stdname = ucnv_getStandardName(canname, standards[i], &err);
-         if (U_FAILURE(err) || !stdname)
-            SET_VECTOR_ELT(vals, i+2, ScalarString(NA_STRING));
-         else
-            SET_VECTOR_ELT(vals, i+2, mkString(stdname));
-      }
-   }
-   ucnv_close(uconv);
-
-   setAttrib(vals, R_NamesSymbol, names);
-   UNPROTECT(2);
-   return vals;
-}
 
 
 
 /**
  * Get all available ICU charsets and their aliases (elems 2,3,...)
- * @return R list object
+ * 
+ * @return R list object; element name == ICU charset canonical name;
+ * elements are character vectors (aliases)
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_enc_list()
 {
-   R_len_t cs;
-   const char** standards;
-   stri__ucnv_getStandards(standards, cs);
+   //R_len_t cs;
+   //const char** standards;
+   //stri__ucnv_getStandards(standards, cs);
 
    UErrorCode err;
 
@@ -422,6 +276,7 @@ SEXP stri_enc_list()
       }
    }
 
+   //delete [] standards;
    setAttrib(ret, R_NamesSymbol, names);
    UNPROTECT(2);
    return ret;
@@ -429,128 +284,20 @@ SEXP stri_enc_list()
 
 
 
-/** Get ICU ucnv standard names and their count
- *  @param standards [OUT]
- *  @param cs [OUT]
- *  Memory is allocated via R_alloc()
- */
-void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
-{
-   UErrorCode err;
-   cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
-   if (cs <= 0) {
-#ifndef NDEBUG
-      error("DEBUG: number of standard names is not positive (stri_list)");
-#endif
-      standards = NULL;
-      cs = 0;
-   }
-   standards = (const char**)R_alloc(cs, sizeof(char*));
-   R_len_t j=0;
-
-   for (R_len_t i=0; i<cs; ++i) {
-      err = U_ZERO_ERROR;
-      standards[i] = ucnv_getStandard(i, &err);
-      if (U_FAILURE(err)) {
-#ifndef NDEBUG
-         error("could not get standard name (stri_list)");
-#endif
-         standards[i] = NULL;
-      }
-   }
-}
 
 
 
-/** Get friendly endoding name
- *  @param canname Canonical (ICU) encoding name
- *  @return First existing of: MIME name or JAVA name or Canonical
- */
-const char* stri___ucnv_getFriendlyName(const char* canname)
-{
-   if (!canname) return NULL;
 
-   UErrorCode err;
-   const char* frname;
-
-   err = U_ZERO_ERROR;
-   frname = ucnv_getStandardName(canname, "MIME", &err);
-   if (U_SUCCESS(err) && frname)
-      return frname;
-
-   err = U_ZERO_ERROR;
-   frname = ucnv_getStandardName(canname, "JAVA", &err);
-   if (U_SUCCESS(err) && frname)
-      return frname;
-
-   return canname;
-}
-
-
-/** Open UEncoder for given locale
- *  @param enc encoding name or NULL/empty string for default encoding
- *  @return NULL on error + a warning
- */
-UConverter* stri__ucnv_open(const char* enc)
-{
-   UErrorCode err = U_ZERO_ERROR;
-   UConverter* uconv = NULL;
-
-   if (!enc || !enc[0]) {
-      // use default encoding
-      uconv = ucnv_open(NULL, &err);
-      if (U_FAILURE(err)) {
-         warning("could not open default converter");
-         return NULL;
-      }
-      else
-         return uconv;
-
-   } else {
-      // use given encoding
-      uconv = ucnv_open(enc, &err);
-      if (U_FAILURE(err)) {
-         warning("could not find converter for given encoding");
-         return NULL;
-      }
-      else
-         return uconv;
-   }
-}
-
-
-
-/** Open UEncoder for given locale
- *  @param enc either NULL or "" for default encoding, or one string with encoding name
- *  @return NULL on error + a warning
- */
-UConverter* stri__ucnv_open(SEXP enc)
-{
-   if (isNull(enc))
-      return stri__ucnv_open((const char*)NULL); // use default encoding
-
-   enc = stri_prepare_arg_string(enc);
-
-   if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING) {
-      if (LENGTH(enc) > 1) // this shouldn't happen
-         warning("only one encoding specifier supported. taking first");
-
-      if (LENGTH(STRING_ELT(enc, 0)) == 0)
-         return stri__ucnv_open((const char*)NULL); // use default encoding
-      else
-         return stri__ucnv_open((const char*)CHAR(STRING_ELT(enc, 0)));
-   }
-
-   error("incorrect encoding specifier");
-   return NULL; // to avoid compilation warnings
-}
-
-
-/** Is in ASCII?
- *  @param s string
+/** Which string is ASCII-encoded
+ * 
+ * simple check whether charcodes are in [1..127]
+ * by using U8_IS_SINGLE
+ * 
+ *  @param s character vector
  *  @return logical vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
  */
-
 SEXP stri_enc_isascii(SEXP s)
 {
    s = stri_prepare_arg_string(s);
@@ -583,11 +330,15 @@ SEXP stri_enc_isascii(SEXP s)
 
 
 
-/** Is in UTF8?
- *  @param s string
+/** Which string is probably UTF-8-encoded
+ * 
+ * simple check with U8_NEXT
+ * 
+ *  @param s character vector
  *  @return logical vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
  */
-
 SEXP stri_enc_isutf8(SEXP s)
 {
    s = stri_prepare_arg_string(s);
@@ -621,27 +372,310 @@ SEXP stri_enc_isutf8(SEXP s)
 
 
 
-/** Check R encoding marking *for testing only*
- *  This function should not be exported
- *  @param s character vector
+
+
+
+
+// ------------------------------------------------------------------------
+
+
+/** 
+ * Get ICU ucnv standard names and their count
+ * 
+ *  @param standards [OUT] - dynamically allocated array of char strings
+ *  (items are are possesed by ICU, but the array should be freed)
+ *  @param cs [out] - size of \code{standards}
+ *  
+ *  @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_enc_Rmark(SEXP s)
+void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
 {
-   s = stri_prepare_arg_string(s);
-   int ns = LENGTH(s);
-   for (int i=0; i < ns; ++i) {
-      cerr << "Element #" <<  i << ":";
-      SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING){
-         cerr << "\tNA" << endl;
-         continue;
+   UErrorCode err;
+   cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
+   if (cs <= 0) error(MSG__ENC_ERROR_SET);
+   standards = new const char*[cs];
+   R_len_t j=0;
+
+   for (R_len_t i=0; i<cs; ++i) {
+      err = U_ZERO_ERROR;
+      standards[i] = ucnv_getStandard(i, &err);
+      if (U_FAILURE(err)) {
+#ifndef NDEBUG
+         warning("could not get standard name (stri_list)");
+#endif
+         standards[i] = NULL;
       }
-      const char* string = CHAR(curs);
-      cerr << "\tMARK_ASCII =" << (IS_ASCII(curs) > 0);
-      cerr << "\tMARK_UTF8  =" << (IS_UTF8(curs) > 0);
-      cerr << "\tMARK_LATIN1=" << (IS_LATIN1(curs) > 0);
-      cerr << "\tMARK_BYTES =" << (IS_BYTES(curs) > 0);
-      cerr << endl;
    }
-   return R_NilValue;
 }
+
+
+
+/** 
+ * Get friendly encoding name
+ *  
+ * @param canname Canonical (ICU) encoding name
+ * @return First existing of: MIME name or JAVA name or Canonical
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+const char* stri__ucnv_getFriendlyName(const char* canname)
+{
+   if (!canname) return NULL;
+
+   UErrorCode err;
+   const char* frname;
+
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "MIME", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+
+   err = U_ZERO_ERROR;
+   frname = ucnv_getStandardName(canname, "JAVA", &err);
+   if (U_SUCCESS(err) && frname)
+      return frname;
+
+   return canname;
+}
+
+
+
+/**
+ * Convert each ASCII character (1..127) to UTF-8 
+ * and checks whether it gets the same result
+ * 
+ * This sould be used only on 8-bit converters
+ * 
+ * @param conv ICU charset converter
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+bool stri__ucnv_hasASCIIsubset(UConverter* conv)
+{
+   if (ucnv_getMinCharSize(conv) != 1) return false;
+   
+   const int ascii_from = 0x0001;
+   const int ascii_to   = 0x007f;
+   char ascii[ascii_to-ascii_from+2]; // + \0
+   for (int i=ascii_from; i<=ascii_to; ++i)
+      ascii[i-ascii_from] = (char)i;
+   ascii[ascii_to-ascii_from+1] = '\0';
+   
+   UChar32 c;
+   
+   const char* ascii_last = ascii;
+   const char* ascii1 = ascii;
+   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   
+   ucnv_reset(conv);
+   
+   while (ascii1 < ascii2) {
+      UErrorCode err = U_ZERO_ERROR;
+      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
+      if (U_FAILURE(err)) {
+#ifndef NDEBUG
+         warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
+#endif
+         return false;
+      }
+      
+      // Has just one byte been consumed? (??is that necessary??)
+      // How many code units (bytes) are used for the UTF-8 encoding
+      // of this Unicode code point? Does this code unit (byte)
+      // encode a code point by itself (US-ASCII 0..0x7f)?
+      // Is that the same ASCII char?
+      if (ascii_last != ascii1-1
+         || U8_LENGTH(c) != 1
+         || c != (int)ascii_last[0]) {
+         return false;
+      }
+      ascii_last = ascii1;
+   } 
+   
+   return true;  
+}
+
+
+/**
+ * Converts each character (23..255) to UTF-8 and the back to original enc
+ * and checks whether it gets the same result
+ * 
+ * This sould be used only on 8-bit converters
+ * 
+ * @param conv ICU charset converter
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+bool stri__ucnv_is1to1Unicode(UConverter* conv)
+{
+   if (ucnv_getMinCharSize(conv) != 1) return false;
+   
+   const int ascii_from = 32;
+   const int ascii_to = 0x00ff;
+   char ascii[ascii_to-ascii_from+2]; // + \0
+   for (int i=ascii_from; i<=ascii_to; ++i)
+      ascii[i-ascii_from] = (char)i;
+   ascii[ascii_to-ascii_from+1] = '\0';
+   
+   UChar32 c;
+   const int buflen =  UCNV_GET_MAX_BYTES_FOR_STRING(1, 1);
+   char buf[buflen];
+   
+   const char* ascii_last = ascii;
+   const char* ascii1 = ascii;
+   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   
+   UErrorCode err = U_ZERO_ERROR;
+   ucnv_reset(conv);
+   
+   while (ascii1 < ascii2) {
+      c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
+      if (U_FAILURE(err)) {
+#ifndef NDEBUG
+         warning("Cannot convert character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
+#endif
+         return false;
+      }
+      
+//      cerr << (int)(unsigned char)ascii_last[0] << " -> " << c << endl;
+      if (ascii_last != ascii1-1) // one byte should be consumed
+         return false;
+         
+      // check whether the character is represented
+      // by a single UTF-16 code point
+      UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
+      if (!U16_IS_SINGLE(lead)) {
+#ifndef NDEBUG
+         warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            c,
+            ucnv_getName(conv, &err));
+#endif
+         return false;
+      }
+      
+      // character not convertable => ignore
+      if (c != UCHAR_REPLACEMENT) {    
+         ucnv_fromUChars(conv, buf, buflen, (UChar*)&c, 1, &err);
+         if (U_FAILURE(err)) {
+#ifndef NDEBUG
+            warning("Cannot convert character 0x%2x (encoding=%s)",
+            (int)(unsigned char)ascii_last[0],
+            ucnv_getName(conv, &err));
+#endif
+            return false;
+         }
+         
+         if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
+#ifndef NDEBUG
+            warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
+               (int)(unsigned char)ascii_last[0],
+               c,
+               (int)buf[0],
+               ucnv_getName(conv, &err));
+#endif
+            return false;
+         }
+      }      
+      
+      
+      // @TODO: check tolower, toupper etc. (???)
+
+      ascii_last = ascii1;
+   } 
+   
+   return true;  
+}
+
+
+/** Fetch information on given encoding
+ * 
+ * @param enc either NULL or "" for default encoding, or one string with encoding name
+ * @return R list object with many components (see R doc for details)
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_enc_info(SEXP enc)
+{
+   const char* selected_enc = stri__prepare_arg_enc(enc, true);
+   UConverter* uconv = stri__ucnv_open(selected_enc); 
+   UErrorCode err;
+
+   // get list of available standards
+   R_len_t cs;
+   const char** standards;
+   stri__ucnv_getStandards(standards, cs);
+
+   // alloc output list
+   SEXP vals;
+   SEXP names;
+   const int nval = cs+2+5;
+   PROTECT(names = allocVector(STRSXP, nval));
+   SET_STRING_ELT(names, 0, mkChar("Name.friendly"));
+   SET_STRING_ELT(names, 1, mkChar("Name.ICU"));
+   for (R_len_t i=0; i<cs; ++i)
+      SET_STRING_ELT(names, i+2, mkChar((string("Name.")+standards[i]).c_str()));
+   SET_STRING_ELT(names, nval-5, mkChar("ASCII.subset"));
+   SET_STRING_ELT(names, nval-4, mkChar("Unicode.1to1"));
+   SET_STRING_ELT(names, nval-3, mkChar("CharSize.8bit"));
+   SET_STRING_ELT(names, nval-2, mkChar("CharSize.min"));
+   SET_STRING_ELT(names, nval-1, mkChar("CharSize.max"));
+
+   PROTECT(vals = allocVector(VECSXP, nval));
+
+
+   // get canonical (ICU) name
+   err = U_ZERO_ERROR;
+   const char* canname = ucnv_getName(uconv, &err);
+
+   if (U_FAILURE(err) || !canname) {
+      SET_VECTOR_ELT(vals, 1, ScalarString(NA_STRING));
+      warning(MSG__ENC_ERROR_GETNAME);
+   }
+   else {
+      SET_VECTOR_ELT(vals, 1, mkString(canname));
+
+      // friendly name
+      const char* frname = stri__ucnv_getFriendlyName(canname);
+      if (frname)  SET_VECTOR_ELT(vals, 0, mkString(frname));
+      else         SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
+
+
+      // has ASCII as its subset?
+      SET_VECTOR_ELT(vals, nval-5, ScalarLogical((int)stri__ucnv_hasASCIIsubset(uconv)));
+      
+      // min,max character size, is 8bit?
+      int mincharsize = (int)ucnv_getMinCharSize(uconv);
+      int maxcharsize = (int)ucnv_getMaxCharSize(uconv);
+      int is8bit = (mincharsize==1 && maxcharsize == 1);
+      SET_VECTOR_ELT(vals, nval-3, ScalarLogical(is8bit));
+      SET_VECTOR_ELT(vals, nval-2, ScalarInteger(mincharsize));
+      SET_VECTOR_ELT(vals, nval-1, ScalarInteger(maxcharsize));
+      
+      // is there a one-to-one correspondence with Unicode?
+      if (!is8bit)
+         SET_VECTOR_ELT(vals, nval-4, ScalarLogical(NA_LOGICAL));
+      else
+         SET_VECTOR_ELT(vals, nval-4, ScalarLogical((int)stri__ucnv_is1to1Unicode(uconv)));
+         
+      // other standard names
+      for (R_len_t i=0; i<cs; ++i) {
+         err = U_ZERO_ERROR;
+         const char* stdname = ucnv_getStandardName(canname, standards[i], &err);
+         if (U_FAILURE(err) || !stdname)
+            SET_VECTOR_ELT(vals, i+2, ScalarString(NA_STRING));
+         else
+            SET_VECTOR_ELT(vals, i+2, mkString(stdname));
+      }
+   }
+   ucnv_close(uconv);
+   delete [] standards;
+   setAttrib(vals, R_NamesSymbol, names);
+   UNPROTECT(2);
+   return vals;
+}
+

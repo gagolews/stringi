@@ -34,14 +34,14 @@
 
 
 // common.cpp
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2);          // DONE
-SEXP stri__vector_NA_strings(R_len_t howmany);                   // DONE
-SEXP stri__vector_empty_strings(R_len_t howmany);                // DONE
-char* stri__asciiCopyToLowerCase(char* dest, const char* src);   // DONE
-char* stri__asciiCopyToUpperCase(char* dest, const char* src);   // DONE
-SEXP stri__emptyList();                                          // DONE
-SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc);              // ...
-SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc);             // ...
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2);             // DONE
+SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
+SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
+char*   stri__asciiCopyToLowerCase(char* dest, const char* src);    // DONE
+char*   stri__asciiCopyToUpperCase(char* dest, const char* src);    // DONE
+SEXP    stri__emptyList();                                          // DONE
+SEXP    stri__convertToUtf8(SEXP x, cetype_t& outenc);              // ...
+SEXP    stri__convertFromUtf8(SEXP x, cetype_t outenc);             // ...
 
 
 // casefold.cpp:
@@ -62,6 +62,10 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern);
 // dup.cpp:
 SEXP stri_dup(SEXP s, SEXP c);
 
+
+// ICU_settings.cpp:
+SEXP stri_info();                        // DONE
+
 // join.cpp:
 SEXP stri_flatten(SEXP s, SEXP sep);
 SEXP stri_join(SEXP s);
@@ -70,22 +74,13 @@ SEXP stri_join2(SEXP s1, SEXP s2);
 // justify.cpp
 SEXP stri_justify(SEXP s, SEXP width);
 
-// ICU_settings.cpp:
-SEXP stri_info();                        // DONE
-
-// prepare_arg.cpp:
-SEXP stri_prepare_arg_string(SEXP x);    // DONE
-SEXP stri_prepare_arg_double(SEXP x);    // DONE
-SEXP stri_prepare_arg_integer(SEXP x);   // DONE
-SEXP stri_prepare_arg_logical(SEXP x);   // DONE
-const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
 
 // length.cpp
 R_len_t stri__numbytes_max(SEXP s); // DONE
 SEXP stri_numbytes(SEXP s);         // DONE
 SEXP stri_length(SEXP s);           // DONE
 SEXP stri_isempty(SEXP s);          // DONE
-SEXP stri_width(SEXP s);            // ...
+SEXP stri_width(SEXP s);            // ...TODO...
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
@@ -98,6 +93,13 @@ void stri__locate_all_class1(const char* s, int n, int32_t* c,
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
    int& first, int& last);
    
+// prepare_arg.cpp:
+SEXP        stri_prepare_arg_string(SEXP x);                            // DONE
+SEXP        stri_prepare_arg_double(SEXP x);                            // DONE
+SEXP        stri_prepare_arg_integer(SEXP x);                           // DONE
+SEXP        stri_prepare_arg_logical(SEXP x);                           // DONE
+const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
+const char* stri__prepare_arg_enc(SEXP loc, bool allowdefault=true);    // DONE
 
 // replace.cpp
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
@@ -134,19 +136,26 @@ SEXP stri_char_getpropertyid(SEXP x);
 
 
 // ucnv.cpp:
-void stri__ucnv_getStandards(const char**& standards, R_len_t& cs);
-const char* stri___ucnv_getFriendlyName(const char* canname);
-UConverter* stri__ucnv_open(const char* enc);
-UConverter* stri__ucnv_open(SEXP enc);
-bool stri__ucnv_hasASCIIsubset(UConverter* conv);
-bool stri__ucnv_is1to1Unicode(UConverter* conv);
-SEXP stri_encode(SEXP s, SEXP from, SEXP to);
-SEXP stri_enc_list();
-SEXP stri_enc_info(SEXP enc);
-SEXP stri_enc_set(SEXP loc);
-SEXP stri_enc_isascii(SEXP s);
-SEXP stri_enc_isutf8(SEXP s);
-SEXP stri_enc_Rmark(SEXP s);
+UConverter* stri__ucnv_open(const char* enc);                              // DONE
+bool        stri__ucnv_hasASCIIsubset(UConverter* conv);                   // DONE
+bool        stri__ucnv_is1to1Unicode(UConverter* conv);                    // DONE
+void        stri__ucnv_getStandards(const char**& standards, R_len_t& cs); // DONE
+const char* stri__ucnv_getFriendlyName(const char* canname);               // DONE
+SEXP stri_enc_Rmark(SEXP s); /* internal, but in namespace: for testing */ // DONE
+
+SEXP stri_enc_list();                                   // DONE
+SEXP stri_enc_info(SEXP enc);                           // DONE
+SEXP stri_enc_set(SEXP loc);                            // DONE
+
+SEXP stri_enc_isascii(SEXP s);                          // DONE
+SEXP stri_enc_isutf8(SEXP s);                           // DONE
+// @TODO: stri_enc_detect()                             // ...TODO...
+
+
+SEXP stri_encode(SEXP s, SEXP from, SEXP to);           // ...
+// @TODO: stri_encode_native2utf8()                     // ...TODO...
+// @TODO: stri_encode_unknown2utf8()                    // ...TODO...
+
 
 // uloc.cpp:
 SEXP stri_locale_info(SEXP loc);                        // DONE

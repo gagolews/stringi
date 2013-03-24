@@ -19,6 +19,8 @@
 
 #' Locale Management in \pkg{stringi}
 #'
+#' In this section we explain how we deal with locales in \pkg{stringi}.
+#' 
 #' Locales are most conviniently identified by character strings
 #' of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US"
@@ -38,10 +40,13 @@
 #' its operations in a way that is culturally correct for the requested locale."
 #' 
 #' 
+#' 
+#' \bold{A Note on Default Locales}
+#' 
 #' Except for \code{\link{stri_locale_set()}}, each function
 #' selects default locale if an empty string or \code{NULL} is given as
 #' argument.
-#'
+#' 
 #' "Default locales are available to all the objects in a program. 
 #' If you set a new default locale for one section of code, it can affect 
 #' the entire program [all other functions from \pkg{stringi}]. 
@@ -105,8 +110,13 @@ stri_locale_get <- function() {
 
 #' Query Given Locale
 #' 
+#' Note that here you may gen info on any desired locale,
+#' even if it is unsupported by ICU or if you pass a malformed locale
+#' identified (e.g. not of the form Language_Country). See \link{locale-main}
+#' for the discussion.
 #' 
-#' @param loc \code{NULL} or \code{""} for default locale, or a single string with locale name
+#' @param loc \code{NULL} or \code{""} for default locale, or a single string with locale identifier
+#' 
 #' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
 #' their combination, \code{Name}. Each is a character string.
 #' @family locale

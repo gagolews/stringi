@@ -144,7 +144,7 @@ SEXP stri_prepare_arg_logical(SEXP x)
 
 
 /**
- * Prepare character vector argument that will be used to set locale
+ * Prepare character vector argument that will be used to choose a locale
  *
  * If the \code{loc} argument is incorrect, the an error is generated.
  * If something goes wrong, a warning is given.
@@ -180,5 +180,49 @@ const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault)
          error(MSG__LOCALE_INCORRECT_ID);
    }
    
+   // won't come here anyway
    return NULL; // avoid compiler warning
 }
+
+
+/**
+ * Prepare character vector argument that will be used to choose a character encoding
+ *
+ * If the \code{enc} argument is incorrect, the an error is generated.
+ * If something goes wrong, a warning is given.
+ * 
+ * @param enc generally, a single character string
+ * @param allowdefault do we allow \code{R_NilValue} or a single empty string
+ *    to work as a default charset selector? (defaults \code{true})
+ * @return string a \code{C} string with extracted locale name
+ * (NULL for default charset so that it can be passed to ICU's \code{ucnv_open()}
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+const char* stri__prepare_arg_enc(SEXP enc, bool allowdefault)
+{
+   if (allowdefault && isNull(enc))
+      return (const char*)NULL;
+   else {
+      enc = stri_prepare_arg_string(enc);
+      if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING) {
+         if (LENGTH(enc) > 1) // only one string is expected
+            warning(MSG__ENC_ATTEMPT_SET_GE1);
+   
+         if (LENGTH(STRING_ELT(enc, 0)) == 0) {
+            if (allowdefault)
+               return (const char*)NULL;
+            else
+               error(MSG__ENC_INCORRECT_ID);
+         }
+         else
+            return (const char*)CHAR(STRING_ELT(enc, 0));
+      }
+      else
+         error(MSG__ENC_INCORRECT_ID);
+   }
+   
+   // won't come here anyway
+   return NULL; // avoid compiler warning
+}
+

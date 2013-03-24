@@ -53,13 +53,25 @@
    "incorrect argument: the string contains non-ASCII characters"
 
 #define MSG__LOCALE_ERROR_SET \
-   "could not set locale"
+   "could not set or select given locale"
+   
+#define MSG__ENC_ERROR_GETNAME \
+   "could not fetch name of the character encoding from the ICU converter"
+   
+#define MSG__ENC_ERROR_SET \
+   "could not set, query or select given character encoding"
 
 #define MSG__LOCALE_INCORRECT_ID \
    "incorrect locale identifier"
+   
+#define MSG__ENC_INCORRECT_ID \
+   "incorrect character encoding identifier"
 
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
+   
+#define MSG__ENC_ATTEMPT_SET_GE1 \
+   "only one character encoding specifier supported. taking first"
    
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
