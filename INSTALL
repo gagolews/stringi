@@ -6,10 +6,9 @@ ICU4c
 
 On Linux:
 
-wget http://download.icu-project.org/files/icu4c/50.1.1/icu4c-50_1_1-src.tgz
-tar -zxvf icu4c-50_1_1-src.tgz
-cd <icu4c directory>
-cd src/
+wget http://download.icu-project.org/files/icu4c/51.1/icu4c-51_1-src.tgz
+tar -zxvf icu4c-51_1-src.tgz
+cd icu/source/
 ./configure
 make
 sudo make install
@@ -21,12 +20,12 @@ sudo [edit_cmd] /etc/ld.so.conf
 
 or:
 
-sudo ln -s /usr/local/lib/libicuuc.so.50 /usr/lib
-sudo ln -s /usr/local/lib/libicui18n.so.50  /usr/lib
-sudo ln -s /usr/local/lib/libicudata.so.50  /usr/lib
-sudo ln -s /usr/local/lib/libicuio.so.50 /usr/lib
-sudo ln -s /usr/local/lib/libicule.so.50 /usr/lib
-
+sudo ln -s /usr/local/lib/libicuuc.so.51 /usr/lib
+sudo ln -s /usr/local/lib/libicui18n.so.51  /usr/lib
+sudo ln -s /usr/local/lib/libicudata.so.51  /usr/lib
+sudo ln -s /usr/local/lib/libicuio.so.51 /usr/lib
+sudo ln -s /usr/local/lib/libicule.so.51 /usr/lib
+sudo ln -s /usr/local/lib/libiculx.so.51 /usr/lib
 
 Ferora:
    you may try with `yum install libicu-devel`

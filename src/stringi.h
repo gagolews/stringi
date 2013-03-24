@@ -52,6 +52,7 @@ using namespace icu;
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 
+// #include <pcre.h>
 
 // taken from Defn.h - sorry, this is needed
 // CHARSXP charset bits

@@ -52,3 +52,4 @@ Collate:
     'replace.R'
     'detect.R'
     'reverse.R'
+    'regex.R'

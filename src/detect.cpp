@@ -51,10 +51,12 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
          LOGICAL(e)[i] = NA_LOGICAL;
          continue;
       }
+      
       curslen = LENGTH(curs);
       curpatlen = LENGTH(curpat);
       const char* string = CHAR(curs);
       const char* spat = CHAR(curpat);
+      
       LOGICAL(e)[i] = false;
    	for(int j=0; j<curslen; ++j){
          k=0;
@@ -77,9 +79,25 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
  */
-SEXP stri_detect_regex(SEXP str, SEXP pattern) {
+SEXP stri_detect_regex(SEXP str, SEXP pattern)
+{
+//   { // TEST
+//   UErrorCode status = U_ZERO_ERROR;
+//   RegexMatcher *matcher = new RegexMatcher("aaaaaaaaaaaaaaaa", 0, status);
+//   if (U_FAILURE(status))
+//      error(u_errorName(status));
+//   matcher->reset("aaaaaaaaaaaaaaaa");
+//   cerr << (int)matcher->find() << endl;
+//   delete matcher;
+//   }
+   
+   
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
+   
+   //   cerr << pcre_config(PCRE_CONFIG_UTF8, NULL) << endl;
+//   cerr << pcre_config(PCRE_CONFIG_UNICODE_PROPERTIES, NULL) << endl;
+//   cerr << pcre_version();
    
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
@@ -132,6 +150,9 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern) {
             if (s == NA_STRING)
                LOGICAL(ret)[j] = NA_LOGICAL;
             else {
+//      cerr << CHAR(s) << endl;
+//      cerr << CHAR(p) << endl;
+      
                matcher->reset(CHAR(s));
                int found = (int)matcher->find();
                LOGICAL(ret)[j] = found;

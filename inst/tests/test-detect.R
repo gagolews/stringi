@@ -1,6 +1,6 @@
 require("testthat")
 
-test_that("stri_detect_fiexd", {
+test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed("a", NA), NA)
    expect_identical(stri_detect_fixed(NA, "a"), NA)
    expect_identical(stri_detect_fixed(NA, NA), NA)
@@ -32,6 +32,5 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaaa"), TRUE)
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaa",  "aaaaaaaaaaaaaaa"), TRUE)
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
-
    
 })
