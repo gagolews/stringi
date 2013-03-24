@@ -86,7 +86,7 @@ SEXP stri_numbytes(SEXP s)
  * @param s R character vector
  * @return integer vector
  * @version 0.1 (Marcin Bujarski)
- * @version 0.2 (Marek Gagolewski) Multiple input encoding suppert
+ * @version 0.2 (Marek Gagolewski) Multiple input encoding support
  */
 SEXP stri_length(SEXP s)
 {

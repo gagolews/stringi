@@ -20,13 +20,17 @@
 
 
 
-/** vectorized over s1 and s2 
-
-   optimized for s1 longer than s2
-   if s1 or s2 is NA then result is NA
-   if s1 or s2 is empty, then the result is just s1 or s2
-   
-   TO DO: Encoding!!!
+/** Join two character vectors, element by element
+ * 
+ * Vectorized over s1 and s2. Optimized for |s1| >= |s2|
+ * @param s1 character vector
+ * @param s2 character vector
+ * @return character vector, res_i=s1_i + s2_i for |s1|==|s2|
+ *  if s1 or s2 is NA then result is NA
+ *  if s1 or s2 is empty, then the result is just s1 or s2
+ *  
+ *  TO DO: Encoding!!!
+ * @version 0.1 (Marek Gagolewski)
 */
 SEXP stri_join2(SEXP s1, SEXP s2)
 {
@@ -35,12 +39,10 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    
    R_len_t ns1 = LENGTH(s1);
    R_len_t ns2 = LENGTH(s2);
-   if (ns1 <= 0) return s2;
-   else if (ns2 <= 0) return s1;
-   R_len_t nsm = max(ns1, ns2);
+   R_len_t nsm = stri__recycling_rule(ns1, ns2);
    
-   if (nsm % ns1 != 0 || nsm % ns2 != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   if (ns1 <= 0) return s2;
+   if (ns2 <= 0) return s1;
    
    // find maximal length of the buffer needed
    R_len_t maxsize = 0;

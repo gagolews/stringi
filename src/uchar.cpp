@@ -164,8 +164,7 @@ SEXP stri_char_getcategoryid(SEXP x)
    // convert to upper-case
    const char* name_int = CHAR(xf);
    char* name = new char[LENGTH(xf)+1];
-   strncpy(name, name_int, LENGTH(xf)+1);
-   stri__asciiUpperCase(name);
+   stri__asciiCopyToUpperCase(name, name_int);
    
    int cmpl = 0;
    if (name[0] == '^')
@@ -290,8 +289,7 @@ SEXP stri_char_getpropertyid(SEXP x)
    // convert name to upper case
    const char* name_int = CHAR(xf);
    char* name = new char[LENGTH(xf)+1];
-   strncpy(name, name_int, LENGTH(xf)+1);
-   stri__asciiUpperCase(name);
+   stri__asciiCopyToUpperCase(name, name_int);
    
    int cmpl = 0;
    if (name[0] == '^')

@@ -68,12 +68,12 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
    if (ns <= 0) return s;
 
    UConverter* uconv_from = stri__ucnv_open(from);
-   if (!uconv_from) return stri__mkStringNA(ns);
+   if (!uconv_from) return stri__vector_NA_strings(ns);
 
    UConverter* uconv_to = stri__ucnv_open(to);
    if (!uconv_to) {
       ucnv_close(uconv_from);
-      return stri__mkStringNA(ns);
+      return stri__vector_NA_strings(ns);
    }
 
    // possibly we could check whether from's and to's canonical names
@@ -92,7 +92,7 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
    }
    
    if (buflen < 0)
-      return stri__mkStringNA(ns);
+      return stri__vector_NA_strings(ns);
 
    // this may suffice, but not necessarily
    // for utf-8 input this may be overestimated

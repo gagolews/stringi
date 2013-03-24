@@ -23,22 +23,46 @@
 
 
 /** 
- *  Creates a character vector filled with NA_character_
+ *  Calculate the lenght of the output vector when applying a vectorized
+ *  operation on two vectors
  * 
- *  Useful when something goes wrong
+ *  For nonconforming lengths, a warning is given
  * 
- *  @param how_many length of the vector
- *  @return a character vector of length how_many
+ *  @param ns1 length of some vector
+ *  @param ns2 length of another vector
+ *  @return max of the two given lengths
+ * 
+ * @version 0.1 (Marek Gagolewski)
 */
-SEXP stri__mkStringNA(R_len_t howmany)
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2)
 {
-   if (howmany <= 0) return R_NilValue;
+   R_len_t nsm = max(ns1, ns2);
+   if (nsm % ns1 != 0 || nsm % ns2 != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   return nsm;
+}
+
+
+
+/** 
+ *  Creates a character vector filled with \code{NA_character_}
+ * 
+ *  @param howmany length of the vector, \code{howmany >= 0}
+ *  @return a character vector of length \code{howmany}
+ * 
+ * @version 0.1 (Marek Gagolewski)
+*/
+SEXP stri__vector_NA_strings(R_len_t howmany)
+{
+   if (howmany < 0)
+      error(MSG__EXPECTED_NONNEGATIVE);
    
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, howmany));
    for (R_len_t i=0; i<howmany; ++i)
       SET_STRING_ELT(ret, i, NA_STRING);
    UNPROTECT(1);
+   
    return ret;   
 }
 
@@ -46,42 +70,85 @@ SEXP stri__mkStringNA(R_len_t howmany)
 /** 
  *  Creates a character vector filled with empty strings
  * 
- *  @param how_many length of the vector
- *  @return a character vector of length how_many
+ *  @param howmany length of the vector, \code{howmany >= 0}
+ *  @return a character vector of length \code{howmany}
+ * 
+ * @version 0.1 (Marek Gagolewski)
 */
-SEXP stri__mkStringEmpty(R_len_t howmany)
+SEXP stri__vector_empty_strings(R_len_t howmany)
 {
-   if (howmany <= 0) return R_NilValue;
+   if (howmany < 0)
+      error(MSG__EXPECTED_NONNEGATIVE);
    
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, howmany));
    for (R_len_t i=0; i<howmany; ++i)
       SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
    UNPROTECT(1);
+   
    return ret;   
 }
 
 
-/** Converts each ascii lower case letter to upper case
+/** Copies one string to another, converting each ASCII lower case letter to upper case
  * 
  *  Useful for checking options.
  *  If non-ASCII string is given, an error is generated.
- *  @param x string [IN/OUT], null-terminated
+ * 
+ *  @param dest destination buffer
+ *  @param src NULL-terminated string
+ *  @return \code{dest}
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
-void stri__asciiUpperCase(char* x)
+char* stri__asciiCopyToUpperCase(char* dest, const char* src)
 {
-   for (int i=0; x[i] != '\0'; ++i) {
-      if (x[i] > 127)
+   int i;
+   for (i=0; src[i] != '\0'; ++i) {
+      if (src[i] > 127)
          error(MSG__EXPECTED_ASCII);
-      else if (x[i] >= 'a' && x[i] <= 'z')
-         x[i] -= 'a'-'A';
+      else if (src[i] >= 'a' && src[i] <= 'z')
+         dest[i] = src[i] - ('a'-'A');
+      else
+         dest[i] = src[i];
    }
+   dest[i] = '\0';
+   return dest;
+}
+
+
+/** Copies one string to another, converting each ASCII upper case letter to lower case
+ * 
+ *  Useful for checking options.
+ *  If non-ASCII string is given, an error is generated.
+ * 
+ *  @param dest destination buffer
+ *  @param src NULL-terminated string
+ *  @return \code{dest}
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+char* stri__asciiCopyToLowerCase(char* dest, const char* src)
+{
+   int i;
+   for (i=0; src[i] != '\0'; ++i) {
+      if (src[i] > 127)
+         error(MSG__EXPECTED_ASCII);
+      else if (src[i] >= 'A' && src[i] <= 'Z')
+         dest[i] = src[i] + ('a'-'A');
+      else
+         dest[i] = src[i];
+   }
+   dest[i] = '\0';
+   return dest;
 }
 
 
 /** Creates an empty R list
  * 
- *  @return list()
+ * @return the same as a call to \code{list()} in R
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri__emptyList()
 {
@@ -95,6 +162,8 @@ SEXP stri__emptyList()
  *  @param x character vector = CHARSXP (with marked encoding)
  *  @param outenc guide for stri__convertFromUtf8()
  *  @return CHARSXP (converted)
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc)
 {
@@ -154,6 +223,8 @@ SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc)
  *  @param x character vector = CHARSXP (with marked encoding)
  *  @param outenc guide from stri__convertToUtf8()
  *  @return CHARSXP (converted)
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc)
 {

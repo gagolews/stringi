@@ -30,6 +30,12 @@
 
 #define MSG__INCORRECT_INTERNAL_ARG \
    "incorrect argument"
+   
+#define MSG__EXPECTED_NONNEGATIVE \
+   "incorrect argument: nonnegative value expected"
+   
+#define MSG__EXPECTED_POSITIVE \
+   "incorrect argument: positive value expected"
 
 #define MSG__EXPECTED_CHARACTER \
    "incorrect argument: character vector expected"
@@ -44,7 +50,7 @@
    "incorrect argument: logical vector expected"
    
 #define MSG__EXPECTED_ASCII \
-   "incorrect argument: only ASCII characters expected"
+   "incorrect argument: the string contains non-ASCII characters"
 
 #define MSG__LOCALE_ERROR_SET \
    "could not set locale"

@@ -81,12 +81,14 @@ using namespace icu;
 
 
 // common.cpp
-SEXP stri__mkStringNA(R_len_t howmany);
-SEXP stri__mkStringEmpty(R_len_t howmany);
-void stri__asciiUpperCase(char* x);
-SEXP stri__emptyList();
-SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc);
-SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc);
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2);          // DONE
+SEXP stri__vector_NA_strings(R_len_t howmany);                   // DONE
+SEXP stri__vector_empty_strings(R_len_t howmany);                // DONE
+char* stri__asciiCopyToLowerCase(char* dest, const char* src);   // DONE
+char* stri__asciiCopyToUpperCase(char* dest, const char* src);   // DONE
+SEXP stri__emptyList();                                          // DONE
+SEXP stri__convertToUtf8(SEXP x, cetype_t& outenc);              // ...
+SEXP stri__convertFromUtf8(SEXP x, cetype_t outenc);             // ...
 
 
 // trim.cpp:
@@ -134,11 +136,11 @@ SEXP stri_prepare_arg_logical(SEXP x);
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true);
 
 // length.cpp
-R_len_t stri__numbytes_max(SEXP s);
-SEXP stri_numbytes(SEXP s);
-SEXP stri_length(SEXP s);
-SEXP stri_isempty(SEXP s);
-SEXP stri_width(SEXP s);
+R_len_t stri__numbytes_max(SEXP s); // DONE
+SEXP stri_numbytes(SEXP s);         // DONE
+SEXP stri_length(SEXP s);           // DONE
+SEXP stri_isempty(SEXP s);          // DONE
+SEXP stri_width(SEXP s);            // ...
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
