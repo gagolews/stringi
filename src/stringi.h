@@ -129,11 +129,11 @@ SEXP stri_casecompare(SEXP x, SEXP y);
 SEXP stri_info();
 
 // prepare_arg.cpp:
-SEXP stri_prepare_arg_string(SEXP x);
-SEXP stri_prepare_arg_double(SEXP x);
-SEXP stri_prepare_arg_integer(SEXP x);
-SEXP stri_prepare_arg_logical(SEXP x);
-const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true);
+SEXP stri_prepare_arg_string(SEXP x);    // DONE
+SEXP stri_prepare_arg_double(SEXP x);    // DONE
+SEXP stri_prepare_arg_integer(SEXP x);   // DONE
+SEXP stri_prepare_arg_logical(SEXP x);   // DONE
+const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
 
 // length.cpp
 R_len_t stri__numbytes_max(SEXP s); // DONE
@@ -195,9 +195,9 @@ SEXP stri_enc_isutf8(SEXP s);
 SEXP stri_enc_Rmark(SEXP s);
 
 // uloc.cpp:
-SEXP stri_locale_info(SEXP loc);
-SEXP stri_locale_list();
-SEXP stri_locale_set(SEXP loc);
+SEXP stri_locale_info(SEXP loc);    // DONE
+SEXP stri_locale_list();            // DONE
+SEXP stri_locale_set(SEXP loc);     // DONE
 
 // uchar.cpp:
 #define STRI__UCHAR_COMPLEMENT_MASK      0x40000000

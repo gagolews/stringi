@@ -20,11 +20,14 @@
 
 
 /**
- * Prepare SEXP/character vector argument
+ * Prepare character vector argument
  * 
- * If the object cannot be coerced, the execution is stopped
+ * If the object cannot be coerced, then an error will be generated
+ * 
  * @param x a character vector or an object that can be coerced to a character vector
- * @return STRSXP
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_prepare_arg_string(SEXP x)
 {
@@ -39,7 +42,7 @@ SEXP stri_prepare_arg_string(SEXP x)
       return x;
    }
    else if (isVectorAtomic(x))
-      return coerceVector(x,STRSXP);
+      return coerceVector(x, STRSXP);
    else if (isSymbol(x))
       return ScalarString(PRINTNAME(x));
       
@@ -47,27 +50,32 @@ SEXP stri_prepare_arg_string(SEXP x)
    return x; // avoid compiler warning
 }
 
+
+
 /**
- * Prepare SEXP/double vector argument
+ * Prepare numeric vector argument
  * 
- * If the object cannot be coerced, the execution is stopped
- * @param x a double vector or an object that can be coerced to a double vector
- * @return REALSXP
+ * If the object cannot be coerced, then an error will be generated
+ * 
+ * @param x a numeric vector or an object that can be coerced to a numeric vector
+ * @return numeric vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_prepare_arg_double(SEXP x)
 {
-   if(isReal(x))
-      return x; //return as-is
-   else if (isFactor(x)) 
+   if (isFactor(x)) 
    {
       SEXP call;
       PROTECT(call = lang2(install("as.character"), x));
       x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x,REALSXP);
+      return coerceVector(x, REALSXP);
    }
+   else if(isReal(x))
+      return x; //return as-is
    else if (isVectorAtomic(x))
-      return coerceVector(x,REALSXP);
+      return coerceVector(x, REALSXP);
       
    error(MSG__EXPECTED_DOUBLE);
    return x; // avoid compiler warning
@@ -75,26 +83,29 @@ SEXP stri_prepare_arg_double(SEXP x)
 
 
 /**
- * Prepare SEXP/integer vector argument
+ * Prepare integer vector argument
  * 
- * If the object cannot be coerced, the execution is stopped
+ * If the object cannot be coerced, then an error will be generated
+ * 
  * @param x an integer vector or an object that can be coerced to an integer vector
- * @return INTSXP
+ * @return integer vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_prepare_arg_integer(SEXP x)
 {
-   if (isFactor(x)) // factors must be checked first
+   if (isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
    {
       SEXP call;
       PROTECT(call = lang2(install("as.character"), x));
    	x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x,INTSXP);
+      return coerceVector(x, INTSXP);
    }
    else if (isInteger(x))
       return x; // return as-is
    else if (isVectorAtomic(x))
-      return coerceVector(x,INTSXP);
+      return coerceVector(x, INTSXP);
       
    error(MSG__EXPECTED_INTEGER);
    return x; // avoid compiler warning
@@ -102,26 +113,29 @@ SEXP stri_prepare_arg_integer(SEXP x)
 
 
 /**
- * Prepare SEXP/logical vector argument
+ * Prepare logical vector argument
  * 
- * If the object cannot be coerced, the execution is stopped
+ * If the object cannot be coerced, then an error will be generated
+ * 
  * @param x a logical vector or an object that can be coerced to a logical vector
- * @return LGLSXP
+ * @return logical vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_prepare_arg_logical(SEXP x)
 {
-   if (isLogical(x))
-      return x; // return as-is
-   else if (isFactor(x))
+   if (isFactor(x))
    {
       SEXP call;
       PROTECT(call = lang2(install("as.character"), x));
       x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x,LGLSXP);
+      return coerceVector(x, LGLSXP);
    }
+   else if (isLogical(x))
+      return x; // return as-is
    else if (isVectorAtomic(x))
-      return coerceVector(x,LGLSXP);
+      return coerceVector(x, LGLSXP);
       
    error(MSG__EXPECTED_LOGICAL);
    return x; // avoid compiler warning
@@ -130,11 +144,18 @@ SEXP stri_prepare_arg_logical(SEXP x)
 
 
 /**
- * Prepare SEXP/locale [character vector] argument 
+ * Prepare character vector argument that will be used to set locale
  *
- * @param loc R_NilValue for default locale or....
- * @param allowdefault ...
- * @return string...
+ * If the \code{loc} argument is incorrect, the an error is generated.
+ * If something goes wrong, a warning is given.
+ * 
+ * @param loc generally, a single character string
+ * @param allowdefault do we allow \code{R_NilValue} or a single empty string
+ *    to work as a default locale selector? (defaults \code{true})
+ * @return string a \code{C} string with extracted locale name
+ * 
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault)
 {
@@ -143,17 +164,21 @@ const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault)
    else {
       loc = stri_prepare_arg_string(loc);
       if (LENGTH(loc) >= 1 && STRING_ELT(loc, 0) != NA_STRING) {
-         if (LENGTH(loc) > 1) // this shouldn't happen
+         if (LENGTH(loc) > 1) // only one string is expected
             warning(MSG__LOCALE_ATTEMPT_SET_GE1);
    
-         if (LENGTH(STRING_ELT(loc, 0)) == 0)
-            return uloc_getDefault();
+         if (LENGTH(STRING_ELT(loc, 0)) == 0) {
+            if (allowdefault)
+               return uloc_getDefault();
+            else
+               error(MSG__LOCALE_INCORRECT_ID);
+         }
          else
             return (const char*)CHAR(STRING_ELT(loc, 0));
       }
-      else {
+      else
          error(MSG__LOCALE_INCORRECT_ID);
-         return NULL; // avoid compiler warning
-      }
    }
+   
+   return NULL; // avoid compiler warning
 }

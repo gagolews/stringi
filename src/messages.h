@@ -32,22 +32,22 @@
    "incorrect argument"
    
 #define MSG__EXPECTED_NONNEGATIVE \
-   "incorrect argument: nonnegative value expected"
+   "incorrect argument: expected a nonnegative numeric value"
    
 #define MSG__EXPECTED_POSITIVE \
-   "incorrect argument: positive value expected"
+   "incorrect argument: expected a positive numeric value"
 
 #define MSG__EXPECTED_CHARACTER \
-   "incorrect argument: character vector expected"
+   "incorrect argument: expected a character vector"
 
 #define MSG__EXPECTED_DOUBLE \
-   "incorrect argument: double vector expected"
+   "incorrect argument: expected a numeric vector"
 
 #define MSG__EXPECTED_INTEGER \
-   "incorrect argument: integer vector expected"
+   "incorrect argument: expected an integer vector"
    
 #define MSG__EXPECTED_LOGICAL \
-   "incorrect argument: logical vector expected"
+   "incorrect argument: expected a logical vector"
    
 #define MSG__EXPECTED_ASCII \
    "incorrect argument: the string contains non-ASCII characters"

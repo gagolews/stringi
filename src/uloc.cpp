@@ -24,8 +24,11 @@
 
 /**
  * Sets current (default) ICU locale
- * @param loc new locale
- * @return nothing
+ * 
+ * @param loc new locale (a single character string)
+ * @return nothing (\code{R_NilValue})
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_locale_set(SEXP loc)
 {
@@ -39,7 +42,10 @@ SEXP stri_locale_set(SEXP loc)
 
 
 /** Get list of available locales
- *  @return R character vector
+ *  
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_locale_list()
 {
@@ -58,8 +64,14 @@ SEXP stri_locale_list()
 
 
 /** Get info on default (current) ICU locale or on given locale
- *  @param loc either NULL or "" for default locale, or one string with locale name
- *  @return R list object
+ * 
+ *  @param loc either \code{NULL} or \code{""} for default locale, 
+ *     or one string with locale name
+ *  @return a named R list object: each item (\code{Language},
+ *  \code{Country}, \code{Variant}, \code{Name}) consists of
+ *  a single string
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_locale_info(SEXP loc)
 {
