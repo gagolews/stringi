@@ -185,14 +185,12 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
    R_len_t ns = LENGTH(s);
    R_len_t nside = LENGTH(side);
    R_len_t nwidth = LENGTH(width);
-   R_len_t nmax = ns;
-   if(nside > nmax) nmax = nside;
-   if(nwidth> nmax) nmax = nwidth;
    
    if(INTEGER(stri_length(pad))[0] != 1) 
       error("pad must be single character");
-   if(nmax % ns !=0 || nmax % nside !=0 || nmax % nwidth !=0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   
+   R_len_t nmax = stri__recycling_rule3(ns, nside, nwidth);
+   
    int needed=0;
    SEXP e, curs, slen;
    PROTECT(e = allocVector(STRSXP, nmax));

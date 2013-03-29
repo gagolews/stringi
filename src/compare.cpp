@@ -28,9 +28,8 @@ SEXP stri_casecompare(SEXP x, SEXP y)
    y = stri_prepare_arg_string(y); // prepare string argument
    int nx = LENGTH(x);
    int ny = LENGTH(y);
-   int nmax = max(nx, ny);
-   if(nmax % nx != 0 || nmax % ny != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   int nmax = stri__recycling_rule(nx, ny);
+   
    SEXP e, curx, cury;
    int curlen, j;
    PROTECT(e = allocVector(LGLSXP, nmax));

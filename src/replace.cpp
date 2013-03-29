@@ -34,7 +34,7 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    int npat = LENGTH(pat);
    int nrep = LENGTH(rep);
    //if any length is 0 then return empty vector
-   if (ns==0 || npat==0 || nrep==0)
+   if (ns<=0 || npat<=0 || nrep<=0)
       return allocVector(STRSXP, 0);
    int nmax = ns;
    if(npat>nmax) nmax=npat;

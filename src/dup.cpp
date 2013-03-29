@@ -36,9 +36,7 @@ SEXP stri_dup(SEXP s, SEXP c)
    if (ns <= 0)       return s;
    else if (nc <= 0)  return allocVector(STRSXP, 0);
       
-   R_len_t nm = max(ns, nc);
-   if (nm % ns != 0 || nm % nc != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   R_len_t nm = stri__recycling_rule(ns, nc);
       
    int* cc = INTEGER(c);
    
