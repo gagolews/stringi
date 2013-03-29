@@ -70,3 +70,68 @@ SEXP stri_count_fixed(SEXP s, SEXP pattern)
    UNPROTECT(1);
    return e;
 }
+
+
+/** 
+ * .... 
+ * @param str R character vector
+ * @param pattern R character vector containing regular expressions
+ */
+SEXP stri_count_regex(SEXP str, SEXP pattern)
+{
+   str = stri_prepare_arg_string(str);
+   pattern = stri_prepare_arg_string(pattern);
+   
+   int ns = LENGTH(str);
+   int np = LENGTH(pattern);
+   if (ns == 0 || np == 0)
+      return allocVector(LGLSXP, 0);
+   int nmax = stri__recycling_rule(ns, np);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, nmax));
+   UErrorCode status;
+ 
+   StriContainerUTF16* ss = new StriContainerUTF16(str);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern);
+
+   for (int i = 0; i < np; i++) { // for each pattern
+      if (pp->isNA(i)) {
+         for (int j = i; j < nmax; j += np)
+            INTEGER(ret)[j] = NA_INTEGER;
+      }
+      else {
+//          ICU team [ICU trac #10054] answer for our [stringi-issue #17]:
+//          The parameter type to Reset is (const UnicodeString &). The matcher
+//          retains a reference to the caller supplied string; it does not copy it.
+//          UnicodeString has a constructor from (const char *). So we get a temporary
+//          UnicodeString constructed, then deleted after the reset() returns, leaving
+//          the matcher to operate on deleted data.
+
+         status = U_ZERO_ERROR;
+         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
+         if (U_FAILURE(status))
+            error(u_errorName(status));
+         for (int j = i; j < nmax; j += np) {
+            if (ss->isNA(j % ns))
+               INTEGER(ret)[j] = NA_INTEGER;
+            else {
+               matcher->reset(ss->get(j%ns));
+               int count = 0;
+               int found = (int)matcher->find();
+               while(found){
+                  ++count;
+                  found = (int)matcher->find();
+               }
+               INTEGER(ret)[j] = count;
+            }
+         }
+         delete matcher;
+      }
+   }
+   
+   delete ss;
+   delete pp;
+   UNPROTECT(1);
+   return ret;
+}

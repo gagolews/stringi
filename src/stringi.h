@@ -53,6 +53,7 @@ SEXP stri_casecompare(SEXP x, SEXP y);
 
 // count.cpp
 SEXP stri_count_fixed(SEXP s, SEXP pattern);
+SEXP stri_count_regex(SEXP s, SEXP pattern);
 
 //detect.cpp
 SEXP stri_detect_fixed(SEXP str, SEXP pattern);

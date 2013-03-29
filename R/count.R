@@ -28,13 +28,34 @@
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_count(s," ")
-#' stri_count(s,"o")
-#' stri_count(s,"it")
-#' stri_count("babab","b")
+#' stri_count_fixed(s," ")
+#' stri_count_fixed(s,"o")
+#' stri_count_fixed(s,"it")
+#' stri_count_fixed("babab","b")
 #' 
 #' @export
-stri_count <- function(str, pattern) {
+stri_count_fixed <- function(str, pattern) {
 	# prepare_arg done internally
 	.Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
+}
+
+#' Count the number of matches in a string
+#' 
+#' Vectorized over str and pattern.
+#' 
+#' @param str character vector
+#' @param pattern character vector
+#' @return integer vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_count_regex(s,"(s|el)it")
+#' stri_count_regex(s,"i.i")
+#' stri_count_regex(s,".it")
+#' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
+#' 
+#' @export
+stri_count_regex <- function(str, pattern) {
+   # prepare_arg done internally
+   .Call("stri_count_regex", str, pattern, PACKAGE="stringi")
 }
