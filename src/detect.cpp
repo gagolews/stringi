@@ -94,14 +94,15 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
    if (nmax % np != 0 || nmax % ns != 0)
       warning(MSG__WARN_RECYCLING_RULE);
    
-   SEXP ret, s, p;
+   SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, nmax));
    UErrorCode status;
  
- 
+   StriContainerUTF16* ss = new StriContainerUTF16(str);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern);
+
    for (int i = 0; i < np; i++) { // for each pattern
-      p = STRING_ELT(pattern, i);
-      if (p == NA_STRING) {
+      if (pp->isNA(i)) {
          for (int j = i; j < nmax; j += np)
             LOGICAL(ret)[j] = NA_LOGICAL;
       }
@@ -113,18 +114,15 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
 //          UnicodeString constructed, then deleted after the reset() returns, leaving
 //          the matcher to operate on deleted data.
 
-         UnicodeString pattern = UnicodeString::fromUTF8(CHAR(p));
          status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pattern, 0, status);
+         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
          if (U_FAILURE(status))
             error(u_errorName(status));
          for (int j = i; j < nmax; j += np) {
-            s = STRING_ELT(str, j % ns);
-            if (s == NA_STRING)
+            if (ss->isNA(j % ns))
                LOGICAL(ret)[j] = NA_LOGICAL;
             else {
-               UnicodeString search = UnicodeString::fromUTF8(CHAR(s));
-               matcher->reset(search);
+               matcher->reset(ss->get(j%ns));
                int found = (int)matcher->find();
                LOGICAL(ret)[j] = found;
             }
@@ -133,6 +131,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
       }
    }
    
+   delete ss;
+   delete pp;
    UNPROTECT(1);
    return ret;
 }

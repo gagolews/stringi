@@ -20,6 +20,12 @@
 #include "stringi.h"
 
 
+StriContainerUTF16::StriContainerUTF16()
+{
+   this->n = 0;
+   this->enc = NULL;
+   this->str = NULL;
+}
 
 
 StriContainerUTF16::StriContainerUTF16(SEXP rstr)
@@ -29,14 +35,15 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr)
       error("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
 #endif
    R_len_t nr = LENGTH(rstr);
+   this->n = nr;
    if (nr <= 0) {
       this->enc = NULL;
       this->str = NULL;
    }
    else {
-      this->enc = new StriEnc[n];
-      this->str = new UnicodeString[n];
-      for (R_len_t i=0; i<n; ++i) {
+      this->enc = new StriEnc[nr];
+      this->str = new UnicodeString[nr];
+      for (R_len_t i=0; i<nr; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
             this->enc[i] = STRI_NA; 
@@ -79,7 +86,7 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    if (n > 0) {
       this->enc = new StriEnc[n];
       this->str = new UnicodeString[n];
-      for (int i=0; i<this->n; ++i) {
+      for (int i=0; i<n; ++i) {
          this->enc[i] = container.enc[i];
          this->str[i] = container.str[i];
       }
@@ -106,7 +113,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
    if (n > 0) {
       this->enc = new StriEnc[n];
       this->str = new UnicodeString[n];
-      for (int i=0; i<this->n; ++i) {
+      for (int i=0; i<n; ++i) {
          this->enc[i] = container.enc[i];
          this->str[i] = container.str[i];
       }

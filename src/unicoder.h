@@ -46,14 +46,27 @@ class StriContainerUTF16 {
       
    public:
       
+      StriContainerUTF16();
       StriContainerUTF16(SEXP rstr);
       StriContainerUTF16(StriContainerUTF16& container);
       ~StriContainerUTF16();
       StriContainerUTF16& operator=(StriContainerUTF16& container);
       SEXP toR() const;
       inline R_len_t length() const { return this->n; }
-
-
+      
+      inline bool isNA(int i) const {
+#ifndef NDEBUG
+         if (i < 0 || i >= n) error("isNA: INDEX OUT OF BOUNDS");
+#endif
+         return this->enc[i] == STRI_NA;
+      }
+      
+      UnicodeString& get(int i) {
+#ifndef NDEBUG
+         if (i < 0 || i >= n) error("get: INDEX OUT OF BOUNDS");
+#endif
+         return this->str[i];
+      }
 };
 
 
