@@ -43,6 +43,53 @@ R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2)
 }
 
 
+/** 
+ *  Calculate the lenght of the output vector when applying a vectorized
+ *  operation on three vectors
+ * 
+ *  For nonconforming lengths, a warning is given
+ * 
+ *  @param ns1 length of some vector
+ *  @param ns2 length of another vector
+ *  @param ns3 length of last vector
+ *  @return max of the three given lengths
+ * 
+ * @version 0.1 (Bartek Tartanus)
+*/
+R_len_t stri__recycling_rule3(R_len_t ns1, R_len_t ns2, R_len_t ns3)
+{
+   R_len_t nsm = max(ns1, ns2);
+   nsm = max(nsm, ns3);
+   if (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   return nsm;
+}
+
+
+/** 
+ *  Calculate the lenght of the output vector when applying a vectorized
+ *  operation on four vectors
+ * 
+ *  For nonconforming lengths, a warning is given
+ * 
+ *  @param ns1 length of some vector
+ *  @param ns2 length of another vector
+ *  @param ns3 length of next vector
+ *  @param ns4 length of last vector
+ *  @return max of the three given lengths
+ * 
+ * @version 0.1 (Bartek Tartanus)
+*/
+R_len_t stri__recycling_rule4(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4)
+{
+   R_len_t nsm = max(ns1, ns2);
+   nsm = max(nsm, ns3);
+   nsm = max(nsm, ns4);
+   if (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0 || nsm % ns4 != 0)
+      warning(MSG__WARN_RECYCLING_RULE);
+   return nsm;
+}
+
 
 /** 
  *  Creates a character vector filled with \code{NA_character_}

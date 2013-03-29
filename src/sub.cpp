@@ -36,13 +36,12 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
    int ns = LENGTH(s);
    int nfrom = LENGTH(from);
    int nto = LENGTH(to);
-   int nmax = ns;
+   
    if(ns == 0 || nfrom == 0 || nto == 0)
       return allocVector(STRSXP,0);
-   if(nfrom > nmax) nmax = nfrom;
-   if(nto > nmax) nmax = nto;
-   if (nmax % ns != 0 || nmax % nfrom != 0 || nmax % nto != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   
+   int nmax = stri__recycling_rule3(ns, nfrom, nto);
+   
    //idea to improve performance if ns << nmax
    //first - check every element of s and save position of every utf char
    //into where and now you can easliy get substring by where[from[i]]
@@ -123,14 +122,11 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
    int nfrom = LENGTH(from);
    int nto = LENGTH(to);
    int nval = LENGTH(value);
-   int nmax = ns;
+   
    if(ns == 0 || nfrom == 0 || nto == 0 || nval == 0)
       return allocVector(STRSXP,0);
-   if(nfrom > nmax) nmax = nfrom;
-   if(nto > nmax) nmax = nto;
-   if(nval > nmax) nmax = nval;
-   if(nmax % ns !=0 || nmax % nfrom !=0 || nmax % nto !=0 || nmax % nval !=0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   
+   int nmax = stri__recycling_rule4(ns, nfrom, nto, nval);
    //idea to improve performance if ns << nmax
    //first - check every element of s and save position of every utf char
    //into where and now you can easliy get substring by where[from[i]]
