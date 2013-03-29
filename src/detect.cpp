@@ -81,23 +81,8 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
-//   { // TEST
-//   UErrorCode status = U_ZERO_ERROR;
-//   RegexMatcher *matcher = new RegexMatcher("aaaaaaaaaaaaaaaa", 0, status);
-//   if (U_FAILURE(status))
-//      error(u_errorName(status));
-//   matcher->reset("aaaaaaaaaaaaaaaa");
-//   cerr << (int)matcher->find() << endl;
-//   delete matcher;
-//   }
-   
-   
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   
-   //   cerr << pcre_config(PCRE_CONFIG_UTF8, NULL) << endl;
-//   cerr << pcre_config(PCRE_CONFIG_UNICODE_PROPERTIES, NULL) << endl;
-//   cerr << pcre_version();
    
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
@@ -114,26 +99,6 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
    UErrorCode status;
  
  
-//   for (int i = 0; i < nmax; i++) { 
-//      s = STRING_ELT(str, i % ns);
-//      p = STRING_ELT(pattern, i % np);
-//      if (p == NA_STRING) {
-//         LOGICAL(ret)[i] = NA_LOGICAL;
-//      }
-//      else {
-//         status = U_ZERO_ERROR;
-//         RegexMatcher *matcher = new RegexMatcher(UnicodeString::fromUTF8(StringPiece(CHAR(p))), 0, status);
-//         if (U_FAILURE(status))
-//            error(u_errorName(status));
-//         matcher->reset(UnicodeString::fromUTF8(StringPiece(CHAR(s))));
-//         int found = (int)matcher->find(0, status);
-//         if (U_FAILURE(status))
-//            error(u_errorName(status));
-//         LOGICAL(ret)[i] = found;
-//         delete matcher;
-//      }
-//   }
- 
    for (int i = 0; i < np; i++) { // for each pattern
       p = STRING_ELT(pattern, i);
       if (p == NA_STRING) {
@@ -141,8 +106,16 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
             LOGICAL(ret)[j] = NA_LOGICAL;
       }
       else {
+//          ICU team [ICU trac #10054] answer for our [stringi-issue #17]:
+//          The parameter type to Reset is (const UnicodeString &). The matcher
+//          retains a reference to the caller supplied string; it does not copy it.
+//          UnicodeString has a constructor from (const char *). So we get a temporary
+//          UnicodeString constructed, then deleted after the reset() returns, leaving
+//          the matcher to operate on deleted data.
+
+         UnicodeString pattern = UnicodeString::fromUTF8(CHAR(p));
          status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(CHAR(p), 0, status);
+         RegexMatcher *matcher = new RegexMatcher(pattern, 0, status);
          if (U_FAILURE(status))
             error(u_errorName(status));
          for (int j = i; j < nmax; j += np) {
@@ -150,10 +123,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
             if (s == NA_STRING)
                LOGICAL(ret)[j] = NA_LOGICAL;
             else {
-//      cerr << CHAR(s) << endl;
-//      cerr << CHAR(p) << endl;
-      
-               matcher->reset(CHAR(s));
+               UnicodeString search = UnicodeString::fromUTF8(CHAR(s));
+               matcher->reset(search);
                int found = (int)matcher->find();
                LOGICAL(ret)[j] = found;
             }

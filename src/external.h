@@ -25,6 +25,10 @@
 #undef U_CHARSET_IS_UTF8
 #endif
 
+
+#define  UNISTR_FROM_CHAR_EXPLICIT   explicit
+#define 	UNISTR_FROM_STRING_EXPLICIT explicit
+
 #include <iostream>
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
