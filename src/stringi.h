@@ -28,6 +28,7 @@
 #include "external.h"
 #include "messages.h"
 #include "macros.h"
+#include "unicoder.h"
 
 
 // ------------------------------------------------------------------------
@@ -40,8 +41,6 @@ SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 char*   stri__asciiCopyToLowerCase(char* dest, const char* src);    // DONE
 char*   stri__asciiCopyToUpperCase(char* dest, const char* src);    // DONE
 SEXP    stri__emptyList();                                          // DONE
-SEXP    stri__convertToUtf8(SEXP x, cetype_t& outenc);              // ...
-SEXP    stri__convertFromUtf8(SEXP x, cetype_t outenc);             // ...
 
 
 // casefold.cpp:
