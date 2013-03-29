@@ -85,7 +85,7 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
    if (ns == 0 || np == 0)
-      return allocVector(LGLSXP, 0);
+      return allocVector(INTSXP, 0);
    int nmax = stri__recycling_rule(ns, np);
    
    SEXP ret;
