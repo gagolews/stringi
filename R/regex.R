@@ -20,9 +20,14 @@
 
 #' Regular expressions in \pkg{stringi}
 #'
+#' All \code{stri_*_regex} functions in \pkg{stingi} use
+#' the \pkg{ICU} regex engine.
+#'
 #' @references
-#' PCRE man pages, http://www.pcre.org/pcre.txt, especially, see \code{PCREUNICODE}
+#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
+#' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
-#' @name regex
+#' @family regex
+#' @name regex-main
 NULL
 
