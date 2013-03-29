@@ -15,16 +15,34 @@ local({
    	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
    	massa nibh nec erat."
    
-   print(microbenchmark(stri_count(s,"o"),str_count(s,"o")))
-   print(microbenchmark(stri_count(s,' '),str_count(s,' ')))
+   #fixed
+   print(microbenchmark(stri_count_fixed(s,"o"),str_count(s,fixed("o"))))
+   print(microbenchmark(stri_count_fixed(s,' '),str_count(s,fixed(' '))))
    
    srep <- rep(s,10)
-   print(microbenchmark(stri_count(srep,"o"),str_count(srep,"o")))
-   print(microbenchmark(stri_count(srep,'a'),str_count(srep,'a')))
-   print(microbenchmark(stri_count(s,"co"),str_count(s,"co")))
+   print(microbenchmark(stri_count_fixed(srep,"o"),str_count(srep,fixed("o"))))
+   print(microbenchmark(stri_count_fixed(srep,'a'),str_count(srep,fixed('a'))))
+   print(microbenchmark(stri_count_fixed(s,"co"),str_count(s,fixed("co"))))
 
    srepdup <- stri_dup(srep,10)
-   print(microbenchmark(stri_count(srepdup," "),str_count(srepdup," ")))
-   print(microbenchmark(stri_count(srepdup,"co"),str_count(srepdup,"co")))
+   print(microbenchmark(stri_count_fixed(srepdup," "),str_count(srepdup,fixed(" "))))
+   print(microbenchmark(stri_count_fixed(srepdup,"co"),str_count(srepdup,fixed("co"))))
+   
+   #regex
+   pat1 <- " [[a-z]]*\\. Phasellus (ph|or|co)"
+   pat2 <- "(s|el|v)it"
+   pat3 <- c(pat1, pat2, "ell?(e|u| )", "(L|l)orem .*? nisi .*? nisi","123")
+   
+   print(microbenchmark(stri_count_regex(s,pat1),str_count(s,pat1)))
+   print(microbenchmark(stri_count_regex(s,pat2),str_count(s,pat2)))
+   print(microbenchmark(stri_count_regex(s,pat3),str_count(s,pat3)))
+   
+   print(microbenchmark(stri_count_regex(srep,pat1),str_count(srep,pat1)))
+   print(microbenchmark(stri_count_regex(srep,pat2),str_count(srep,pat2)))
+   print(microbenchmark(stri_count_regex(srep,pat3),str_count(srep,pat3)))
+   
+   print(microbenchmark(stri_count_regex(srepdup,pat1),str_count(srepdup,pat1)))
+   print(microbenchmark(stri_count_regex(srepdup,pat2),str_count(srepdup,pat2)))
+   print(microbenchmark(stri_count_regex(srepdup,pat3),str_count(srepdup,pat3)))
    
 })
