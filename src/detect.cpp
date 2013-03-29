@@ -30,14 +30,12 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
    s = stri_prepare_arg_string(s);
    pattern = stri_prepare_arg_string(pattern);
    int ns = LENGTH(s);
-   int npattern = LENGTH(pattern);
+   int np = LENGTH(pattern);
    //if any length is 0 then return empty list
-   if (ns==0 || npattern==0)
+   if (ns<=0 || np<=0)
       return allocVector(LGLSXP, 0);
-   int nmax = ns;
-   if(npattern>nmax) nmax=npattern;
-   if (nmax % ns != 0 || nmax % npattern != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   int nmax = stri__recycling_rule(ns, np);
+   
    SEXP e;
    PROTECT(e = allocVector(LGLSXP, nmax));
    SEXP curs,curpat;
@@ -45,7 +43,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
    
    for (int i=0; i<nmax; ++i) {
       curs = STRING_ELT(s, i % ns);
-      curpat = STRING_ELT(pattern, i % npattern);
+      curpat = STRING_ELT(pattern, i % np);
       
       if(curs == NA_STRING || curpat == NA_STRING){
          LOGICAL(e)[i] = NA_LOGICAL;
@@ -88,11 +86,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
    int np = LENGTH(pattern);
    if (ns == 0 || np == 0)
       return allocVector(LGLSXP, 0);
-   int nmax = ns;
-   if (np > ns)
-      nmax = np;
-   if (nmax % np != 0 || nmax % ns != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   int nmax = stri__recycling_rule(ns, np);
    
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, nmax));

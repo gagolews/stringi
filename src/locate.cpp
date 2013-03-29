@@ -291,9 +291,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
    nc /= STRI__UCHAR_CLASS_LENGTH;
    
-   R_len_t nout = max(ns, nc);
-   if (nout % ns != 0 || nout % nc != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   R_len_t nout = stri__recycling_rule(ns, nc);
       
    SEXP ans;
    SEXP dimnames;
@@ -390,9 +388,7 @@ SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
    nc /= STRI__UCHAR_CLASS_LENGTH;
    
-   R_len_t nout = max(ns, nc);
-   if (nout % ns != 0 || nout % nc != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   R_len_t nout = stri__recycling_rule(ns, nc);
    
    int* cc = INTEGER(c);
    
@@ -458,10 +454,8 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
    
-   R_len_t nout = max(ns, np);
-   if (nout % ns != 0 || nout % np != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
-      
+   R_len_t nout = stri__recycling_rule(ns, np);
+   
    SEXP ans;
    SEXP dimnames;
    SEXP colnames;
@@ -549,10 +543,8 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
    
-   R_len_t nout = max(ns, np);
-   if (nout % ns != 0 || nout % np != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
-      
+   R_len_t nout = stri__recycling_rule(ns, np);
+   
    SEXP ans;
    SEXP dimnames;
    SEXP colnames;
