@@ -39,88 +39,12 @@
 #' cat(stri_wrap(s,20,"d"))
 #' 
 #' @export
-stri_wrap <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
-{
-   s <- as.character(s)
-   width <- as.integer(width)
-   stopifnot(is.finite(width)&&width>0)
-   spacecost <- as.integer(spacecost)[1]
-   stopifnot(is.finite(spacecost)&&spacecost>0)
-   method <- match.arg(method)
-   wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
-   switch(method, 
-          dynamic = stri_wrap_dynamic(wordslist,width,spacecost),
-          greedy = stri_wrap_greedy(wordslist,width,spacecost))
-}
 
+#  TODO Also the default parameter spaces should be different - the current
+#  splits string only by space and omits line breaks - \\n
+#  TODO add indent and exdent parameter (see strwrap)
 
-#'  documentation...
-#'  
-#' !we keep stri_wrap only to compare efficiency between R and C++ versions
-#'  after that stri_wrapC will be stri_wrap and old stri_wrap will be del.
-#'  TODO Also the default parameter spaces should be different - the current
-#'  splits string only by space and omits line breaks - \\n
-#'  TODO add indent and exdent parameter (see strwrap)
-#' @export
-stri_wrapC <- function(s,width=76,method=c("greedy","dynamic"),spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
-{
-   if (!is.character(s))   
-      s <- as.character(s)
-   width <- as.integer(width)
-   stopifnot(is.finite(width)&&width>0)
-   spacecost <- as.integer(spacecost)[1]
-   stopifnot(is.finite(spacecost)&&spacecost>0)
-   method <- match.arg(method)
-   wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
-   sapply(wordslist,function(words){
-      count <- nchar(words)
-      where <- switch(method,
-                      dynamic = stri_wrap_d(count,width,spacecost),
-                      greedy = stri_wrap_g(count,width,spacecost))
-      space <- rep(" ",length(where))
-      space[where] <- "\n"
-      space[length(where)] <- ""
-      paste(words,space,sep="",collapse="")
-   })
-}
-
-#'  documentation...
-#'  
-#'  this function uses stri_wrap_greedy implemented in C++
-#'  
-#'  TODO add indent and exdent parameter (see strwrap)
-#' @export
-stri_wrapC2 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
-{
-	s <- stri_prepare_arg_string(s)
-	width <- stri_prepare_arg_integer(width)
-	stopifnot(is.finite(width)&&width>0)
-	spacecost <- as.integer(spacecost)[1]
-	stopifnot(is.finite(spacecost)&&spacecost>0)
-	method <- pmatch(method,c("greedy","dynamic"),1,T)
-	wordslist <- strsplit(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
-	method <- rep(method,length=length(s))
-	j <- 1
-	sapply(wordslist,function(words){
-		count <- nchar(words)
-		where <- switch(method[j],
-							 .Call("stri_wrap_greedy",count,width,spacecost,PACKAGE="stringi"),
-							 .Call("stri_wrap_dynamic",count,width,spacecost,PACKAGE="stringi"))
-		j <<- j+1;
-		space <- rep(" ",length(where))
-		space[where] <- "\n"
-		space[length(where)] <- ""
-		paste(words,space,sep="",collapse="")
-	})
-}
-
-#'  documentation...
-#'  
-#'  this function uses stri_wrap_* implemented in C++
-#'  even more C++
-#'  TODO add indent and exdent parameter (see strwrap)
-#' @export
-stri_wrapC3 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
+stri_wrap <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
    s <- stri_prepare_arg_string(s)
    width <- stri_prepare_arg_integer(width)[1]
@@ -129,125 +53,10 @@ stri_wrapC3 <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
    stopifnot(is.finite(spacecost)&&spacecost>0)
    method <- pmatch(method,c("greedy","dynamic"),1,T)
    # when stri_split will work with regexp use this line:
-   #wordslist <- stri_split(enc2utf8(s), enc2utf8(spaces), perl=TRUE)
+   #wordslist <- stri_split_class(s, whitespaces)
    #for now we can only split by " "
    wordslist <- stri_split(enc2utf8(s), enc2utf8(" "), omitempty=TRUE)
    .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
-}
-
-# (internal function)
-stri_wrap_dynamic <- function(wordslist,width,spacecost){
-   sapply(wordslist,function(words){
-      n <- length(words)
-      len <- nchar(words)
-      costm <- matrix(Inf,nrow=n,ncol=n)
-      for(i in 1:n){
-         for(j in i:n){
-            ct <- width-(j-i)*spacecost-sum(len[i:j])
-            if(ct<0){
-               break 
-            }else
-               costm[i,j]<-ct^2
-         }
-      }
-      space <- matrix(" ",n,n)
-      f <- rep(0,n)
-      j <- 1
-      while(j<=n && is.finite(costm[1,j])){
-         f[j]<-costm[1,j]
-         space[j,j] <- "\n"
-         j<-j+1
-      }
-      if(j<=n){
-         for(i in j:n){
-            ct <- f[2:i-1]+costm[2:i,i]
-            w <- which.min(ct)
-            f[i]<-ct[w]
-            space[i,] <- space[w,]
-            space[i,i] <- "\n"
-         }
-      }
-      space[n,n] <- ""
-      paste(words, space[n,], sep="",collapse="")
-   })
-}
-
-
-
-# (internal function)
-stri_wrap_greedy <- function(wordslist,width,spacecost){
-   sapply(wordslist, function(words) {
-      n <- length(words)
-      space <- character(n)
-      len <- nchar(words)
-      cost <- len[1]
-      if(n>1)
-         for (i in 2:n) {
-            if (cost + spacecost + len[i] > width) {
-               space[i-1] <- "\n"
-               cost <- len[i]
-            } else {
-               space[i-1] <- " "
-               cost <- cost + spacecost + len[i]
-            }
-         }
-      paste(words, space, sep="", collapse="")
-   })
-}
-
-
-# (internal function)
-stri_wrap_g <- function(count,width,spacecost){
-  n <- length(count)
-  cost <- count[1]
-  space <- rep(FALSE,n)
-  #tutaj nie mozna wykonywac petli do n-1 bo moze sie okazac, ze nie zlamie
-  #nam wtedy ostatniego wiersza odpowiednio i ostatni wyraz wyjdzie poza
-  #ustalona szerokosc!
-  if(n>1)
-     for(i in 2:n){
-       if(cost+spacecost+count[i]>width){
-         space[i-1] <- TRUE
-         cost <- count[i]
-       }else
-         cost <- cost + spacecost + count[i]
-     }
-  return(space)
-}
-
-
-
-# (internal function)
-stri_wrap_d <- function(count,width,spacecost){
-  n <- length(count)
-  costm <- matrix(Inf,nrow=n,ncol=n)
-  for(i in 1:n){
-    for(j in i:n){
-      ct <- width-(j-i)*spacecost-sum(count[i:j])
-      if(ct<0){
-        break 
-      }else
-        costm[i,j]<-ct^2
-    }
-  }
-  space <- matrix(FALSE,n,n)
-  f <- rep(0,n)
-  j <- 1
-  while(j<=n && is.finite(costm[1,j])){
-    f[j]<-costm[1,j]
-    space[j,j] <- TRUE
-    j<-j+1
-  }
-  if(j<=n){
-    for(i in j:n){
-      ct <- f[2:i-1]+costm[2:i,i]
-      w <- which.min(ct)
-      f[i]<-ct[w]
-      space[i,] <- space[w,]
-      space[i,i] <- TRUE
-    }
-  }
-  return(space[n,])
 }
 
 

@@ -3,20 +3,15 @@ require(testthat)
 test_that("stri_wrap", {
 	s <- c("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
 	h <- 20
-	expect_identical(stri_wrapC2(s, h,"g"), stri_wrapC(s,h,"g"))
-	expect_identical(stri_wrapC2(s, h,"g"), stri_wrap(s,h,"g"))
-	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
-	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
+	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h,"g"))
+	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h,"g"))
+	expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
+	expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
    #vectorized over string and method
-	expect_identical(stri_wrapC3(s, h,c("g","d")), 
-                    c(stri_wrapC3(s,h,"g"),stri_wrapC3(s,h,"d")))
-   expect_identical(stri_wrapC3(c(s,s)),c(stri_wrapC3(s),stri_wrapC3(s)))
-   #stri_wrapC3 uses stri_split_fixed which currently splits only by " "
-   #so the next example with \n can't work well.
-	expect_identical(stri_wrapC3(s, h,"g"), stri_wrapC(s,h,"g"))
-	expect_identical(stri_wrapC3(s, h,"g"), stri_wrap(s,h,"g"))
-	expect_identical(stri_wrapC3(s, h,"d"), stri_wrapC(s,h,"d"))
-	expect_identical(stri_wrapC3(s, h,"d"), stri_wrap(s,h,"d"))
+	expect_identical(stri_wrap(s, h,c("g","d")), 
+                    c(stri_wrap(s,h,"g"),stri_wrap(s,h,"d")))
+   expect_identical(stri_wrap(c(s,s)),c(stri_wrap(s),stri_wrap(s)))
+
 	s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
 	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
 	lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac 
@@ -30,10 +25,7 @@ test_that("stri_wrap", {
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
 	h <- "25"
-	expect_identical(stri_wrapC2(s, h,"g"), stri_wrapC(s,h,"g"))
-	expect_identical(stri_wrapC2(s, h,"g"), stri_wrap(s,h,"g"))
-	expect_identical(stri_wrapC2(s, h,"d"), stri_wrapC(s,h,"d"))
-	expect_identical(stri_wrapC2(s, h,"d"), stri_wrap(s,h,"d"))
-   
-   expect_warning(stri_wrapC3(stri_dup(s,2),10,c("g","d","g")))
+	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h))
+	
+   expect_warning(stri_wrap(rep(s,2),10,c("g","d","g")))
 })
