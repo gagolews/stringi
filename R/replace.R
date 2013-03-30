@@ -17,6 +17,25 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' Replace all
+#' 
+#' 
+#' @param str character vector
+#' @param pattern character vector
+#' @param replacement 
+#' @return character vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_replace_all(s," ","#")
+#' stri_replace_all(s,"o","0")
+#' 
+#' @export
+stri_replace_all <- function(str, pattern, replacement) {
+	# prepare_arg done internally
+	.Call("stri_replace_all_fixed", str, pattern, replacement, PACKAGE="stringi")
+}
+
 #' Replace first
 #' 
 #' 
@@ -57,7 +76,7 @@ stri_replace_last <- function(str, pattern, replacement) {
 }
 
 
-#' Replace all
+#' Replace all regex
 #' 
 #' 
 #' @param str character vector
@@ -67,12 +86,11 @@ stri_replace_last <- function(str, pattern, replacement) {
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_all(s," ","#")
-#' stri_replace_all(s,"o","0")
+#' stri_replace_all_regex(s," .*? ","#")
+#' stri_replace_all_regex(s,"(el|s)it","1234")
 #' 
 #' @export
-stri_replace_all <- function(str, pattern, replacement) {
-	# prepare_arg done internally
-	.Call("stri_replace_all_fixed", str, pattern, replacement, PACKAGE="stringi")
+stri_replace_all_regex <- function(str, pattern, replacement) {
+   # prepare_arg done internally
+   .Call("stri_replace_all_regex", str, pattern, replacement, PACKAGE="stringi")
 }
-

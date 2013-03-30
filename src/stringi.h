@@ -108,6 +108,7 @@ const char* stri__prepare_arg_enc(SEXP loc, bool allowdefault=true);    // DONE
 // replace.cpp
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
+SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);
 
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
