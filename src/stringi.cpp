@@ -62,6 +62,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_locale_set,                 1),
    STRI__MAKE_CALL_METHOD(stri_locate_all_class,           2),
    STRI__MAKE_CALL_METHOD(stri_locate_all_fixed,           2),
+   STRI__MAKE_CALL_METHOD(stri_locate_all_regex,           2),
    STRI__MAKE_CALL_METHOD(stri_locate_first_or_last_class, 3),
    STRI__MAKE_CALL_METHOD(stri_locate_first_or_last_fixed, 3),
    STRI__MAKE_CALL_METHOD(stri_ltrim,                      1),

@@ -87,6 +87,7 @@ SEXP stri_width(SEXP s);            // ...TODO...
 // locate.cpp
 SEXP stri_locate_all_class(SEXP s, SEXP c);
 SEXP stri_locate_all_fixed(SEXP s, SEXP p);
+SEXP stri_locate_all_regex(SEXP s, SEXP p);
 SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
 SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first);
 
