@@ -102,6 +102,8 @@ test_that("stri_locate_first_fixed", {
    
    expect_equivalent(stri_locate_first_fixed("1aąa", "ą"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_first_fixed("aaa", "aa"), list(matrix(c(1,2))))
+   expect_equivalent(stri_locate_first_fixed("aa1a12aa123", "123"), list(matrix(c(9,11))))
+   expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32"), list(matrix(c(NA_integer_,NA))))
    
 })
 
@@ -117,5 +119,41 @@ test_that("stri_locate_last_fixed", {
    
    expect_equivalent(stri_locate_last_fixed("1aąa", "ą"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_last_fixed("aaa", "aa"), list(matrix(c(2,3))))
+   
+})
+
+test_that("stri_locate_all_regex", {
+   
+   expect_is(stri_locate_all_regex(character(0), "a"), "list")
+   
+   expect_equivalent(stri_locate_all_regex(NA, character(0)), list())
+   expect_equivalent(stri_locate_all_regex(character(0), NA), list())
+   expect_equivalent(stri_locate_all_regex(LETTERS, character(0)), list())
+   expect_equivalent(stri_locate_all_regex(NA, ""), list(matrix(c(NA,NA_integer_))))
+   
+   expect_equivalent(stri_locate_all_regex("1aąa", "ą"), list(matrix(c(3,3))))
+   expect_equivalent(stri_locate_all_regex("aaa", "aa"), list(matrix(c(1,2))))
+   
+   expect_equivalent(stri_locate_all_regex("1aąa", "a.a"), list(matrix(c(2,4))))
+   expect_equivalent(stri_locate_all_regex("ala ola ela ula", ".la"), list(matrix(c(1,5,9,13,3,7,11,15),ncol=2)))
+   expect_equivalent(stri_locate_all_regex("ala ola ela ula", "(a|u|z)la"), list(matrix(c(1,13,3,15),ncol=2)))
+   
+})
+
+test_that("stri_locate_first_regex", {
+   
+   expect_is(stri_locate_first_regex(character(0), "a"), "list")
+   
+   expect_equivalent(stri_locate_first_regex(NA, character(0)), list())
+   expect_equivalent(stri_locate_first_regex(character(0), NA), list())
+   expect_equivalent(stri_locate_first_regex(LETTERS, character(0)), list())
+   expect_equivalent(stri_locate_first_regex(NA, ""), list(matrix(c(NA,NA_integer_))))
+   
+   expect_equivalent(stri_locate_first_regex("1aąa", "ą"), list(matrix(c(3,3))))
+   expect_equivalent(stri_locate_first_regex("aaa", "aa"), list(matrix(c(1,2))))
+   
+   expect_equivalent(stri_locate_first_regex("1aąa", "a.a"), list(matrix(c(2,4))))
+   expect_equivalent(stri_locate_first_regex("ala ola ela ula", ".la"), list(matrix(c(1,3))))
+   expect_equivalent(stri_locate_first_regex("ala ola ela ula", "(e|u|z)la"), list(matrix(c(9,11))))
    
 })
