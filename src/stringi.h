@@ -90,6 +90,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p);
 SEXP stri_locate_all_regex(SEXP s, SEXP p);
 SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
 SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first);
+SEXP stri_locate_first_regex(SEXP s, SEXP p);
 
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);

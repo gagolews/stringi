@@ -121,3 +121,18 @@ stri_locate_all_regex <- function(s, pattern) {
    .Call("stri_locate_all_regex", s, pattern, PACKAGE="stringi")
 }
 
+#' Locate first occurences of each regex pattern
+#'
+#' Vectorized over s and pattern
+#' @param s character vector
+#' @param pattern character vector
+#' @return list of integer matrices.  First column gives start postions
+#' of matches, and second column gives end position.
+#' Consecutive sequences of characters from a pattern are merged.
+#' NAs for no match.
+#' @seealso \code{\link{stri_locate_all_regex}}, \code{\link{stri_locate_last_regex}}
+#' @export
+stri_locate_first_regex <- function(s, pattern) {
+   .Call("stri_locate_first_regex", s, pattern, PACKAGE="stringi")
+}
+

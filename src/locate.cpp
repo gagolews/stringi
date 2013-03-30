@@ -329,7 +329,7 @@ SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
  *       -1 if not found; 0-based
  */
 void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  int np,
-   int* start, int* end, int& o, bool first)
+   int& start, int& end, int& o, bool first)
 {
    o = 0;
    int charnum = 0,charnump=0;
@@ -343,13 +343,13 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             ++k;
          }
          if(k==np){
-            ++o;
-            start[o-1] = charnum;
+            o = 1;
+            start = charnum;
             j=i+k;
             for(i; i<j; ++charnum)
                U8_NEXT(s, i, ns, chr);
             --charnum;
-            end[o-1] = charnum;
+            end = charnum;
             break;
          }else
             U8_NEXT(s, i, ns, chr);
@@ -363,13 +363,13 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
 //            ++k;
 //         }
 //         if(k==np){
-//            o=1;
-//            start[o-1] = charnum;
+//            o = 1;
+//            start = charnum;
 //            j=i+k;
 //            for(i; i<j; ++charnum)
 //               U8_NEXT(s, i, ns, chr);
 //            --charnum;
-//            end[o-1] = charnum;
+//            end = charnum;
 //         }else
 //            U8_NEXT(s, i, ns, chr);
 //      }
@@ -384,13 +384,13 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             ++k;
          }
          if(k==np){
-            o=1;
+            o = 1;
             for(j=0; j<i; ++charnum)
                U8_NEXT(s, j, i, chr);
             for(j=0; j<np; ++charnump)
                U8_NEXT(p, j, np, chr);
-            start[o-1] = charnum;
-            end[o-1] = charnum + charnump - 1;
+            start = charnum;
+            end = charnum + charnump - 1;
             break;
          }
       }
@@ -553,27 +553,12 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    SET_STRING_ELT(colnames, 0, mkChar("start"));
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
-   //is it necessary to define this in each function?Or maybe one is enough?
-#define STRI__LOCATEALL_NOTFOUND \
-      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(ans); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-         
-   R_len_t nmax = stri__numbytes_max(s);
-   if (nmax <= 0) {
-      STRI__LOCATEALL_NOTFOUND      
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+   
+   PROTECT(ans = allocMatrix(INTSXP, 1, 2)); 
+   int* ians = INTEGER(ans);
+   setAttrib(ans, R_DimNamesSymbol, dimnames);
       
-      for (R_len_t i=0; i<nout; ++i)
-         SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(4);  
-      return ret;
-   }
-      
-   int* start = new int[nmax];
-   int* end = new int[nmax];
-   int  occurences=0;
+   int start, end, occurences=0;
    
    for (R_len_t i=0; i<nout; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
@@ -582,33 +567,26 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
       R_len_t curpl = LENGTH(curp);
 
       if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         STRI__LOCATEALL_NOTFOUND 
+         ians[0] = NA_INTEGER; 
+         ians[1] = NA_INTEGER;
       }
       else {
          stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
             start, end, occurences, LOGICAL(first)[0]);
          
          if (occurences > 0) {
-            PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
-            int* ians = INTEGER(ans);
-            for(int j = 0; j < occurences; j++) {
-               ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
-               ians[j+1*occurences] = end[j] + 1;
-            }
+            ians[0] = start + 1; // 0-based index -> 1-based
+            ians[1] = end + 1;
          }
          else {
-            STRI__LOCATEALL_NOTFOUND
+            ians[0] = NA_INTEGER;
+            ians[1] = NA_INTEGER;
          }
-      }
-         
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      } 
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);  
    }
    
-   delete [] start;
-   delete [] end;
-   UNPROTECT(3);
+   UNPROTECT(4);
    return ret;
 }
 
@@ -682,7 +660,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
                INTEGER(ret)[j] = NA_INTEGER;
             else {
                matcher->reset(ss->get(j%ns));
-               int occurences = 0;
+               occurences = 0;
                int found = (int)matcher->find();
                while(found){ //find all matches
                   start[occurences] = (int)matcher->start(status);
@@ -718,3 +696,109 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    UNPROTECT(3);
    return ret;
 }
+
+
+/** Locate first occurences of pattern
+ * @param s character vector
+ * @param p character vector
+ * @return list of integer matrices (2 columns)
+ */
+SEXP stri_locate_first_regex(SEXP s, SEXP p)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   p = stri_prepare_arg_string(p); // prepare integer argument
+   R_len_t ns = LENGTH(s);
+   R_len_t np = LENGTH(p);
+   if (ns <= 0 || np <= 0) return stri__emptyList();
+   
+   R_len_t nout = stri__recycling_rule(ns, np);
+   
+   UErrorCode status;
+ 
+   StriContainerUTF16* ss = new StriContainerUTF16(s);
+   StriContainerUTF16* pp = new StriContainerUTF16(p);
+   
+   SEXP ans;
+   SEXP dimnames;
+   SEXP colnames;
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(dimnames = allocVector(VECSXP, 2));
+   PROTECT(colnames = allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, mkChar("start"));
+   SET_STRING_ELT(colnames, 1, mkChar("end"));
+   SET_VECTOR_ELT(dimnames, 1, colnames);
+   
+#define STRI__LOCATEALL_NOTFOUND \
+      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
+      int* ians = INTEGER(ans); \
+      ians[0] = NA_INTEGER; \
+      ians[1] = NA_INTEGER;  
+         
+   R_len_t nmax = stri__numbytes_max(s);
+   if (nmax <= 0) {
+      STRI__LOCATEALL_NOTFOUND      
+      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+      
+      for (R_len_t i=0; i<nout; ++i)
+         SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(4);  
+      return ret;
+   }
+      
+   int* start = new int[nmax];
+   int* end = new int[nmax];
+   int  occurences=0;
+   
+   for (int i = 0; i < np; i++) { // for each pattern
+      if (pp->isNA(i)) {
+         for (int j = i; j < nmax; j += np)
+            INTEGER(ret)[j] = NA_INTEGER;
+      }
+      else {
+         status = U_ZERO_ERROR;
+         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
+         if (U_FAILURE(status))
+            error(u_errorName(status));
+         for (int j = i; j < nmax; j += np) {
+            if (ss->isNA(j % ns))
+               INTEGER(ret)[j] = NA_INTEGER;
+            else {
+               matcher->reset(ss->get(j%ns));
+               occurences = 0;
+               int found = (int)matcher->find();
+               if(found){ //find first matches
+                  start[occurences] = (int)matcher->start(status);
+                  end[occurences] = (int)matcher->end(status);
+                  ++occurences;
+                  found = (int)matcher->find();
+               }
+               if (occurences > 0) { //rewrite them
+                  PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
+                  int* ians = INTEGER(ans);
+                  for(int j = 0; j < occurences; j++) {
+                     ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
+                     ians[j+1*occurences] = end[j]; //end returns position of next character after match
+                  }
+               }
+               else { //if not found, return matrix with NA
+                  STRI__LOCATEALL_NOTFOUND
+               }
+            }
+            setAttrib(ans, R_DimNamesSymbol, dimnames); 
+            SET_VECTOR_ELT(ret, i, ans);
+            UNPROTECT(1); 
+         }
+         delete matcher;
+      }   
+   }
+   
+   delete [] start;
+   delete [] end;
+   
+   delete ss;
+   delete pp;
+   UNPROTECT(3);
+   return ret;
+}
+
