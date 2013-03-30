@@ -20,6 +20,8 @@
 
 #' Wrap strings to paragraphs
 #'
+#' Function is vectorized over str, width, method and spacecost
+#'
 #' @description Wrap strings to paragraphs
 #' @usage stri_wrap(s, width = 76, method = "greedy", spaces = "(\\p{Z}|\\n)+", spacecost = 1)
 #' @param s character vector of strings to format into paragraphs
@@ -40,22 +42,21 @@
 #' 
 #' @export
 
-#  TODO Also the default parameter spaces should be different - the current
-#  splits string only by space and omits line breaks - \\n
+#  TODO the default parameter spaces should be different (class WHITESPACE)
 #  TODO add indent and exdent parameter (see strwrap)
 
-stri_wrap <- function(s,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
+stri_wrap <- function(str,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 {
-   s <- stri_prepare_arg_string(s)
-   width <- stri_prepare_arg_integer(width)[1]
+   str <- stri_prepare_arg_string(str)
+   width <- stri_prepare_arg_integer(width)
    stopifnot(is.finite(width)&&width>0)
-   spacecost <- as.integer(spacecost)[1]
+   spacecost <- stri_prepare_arg_integer(spacecost)
    stopifnot(is.finite(spacecost)&&spacecost>0)
    method <- pmatch(method,c("greedy","dynamic"),1,T)
    # when stri_split will work with regexp use this line:
-   #wordslist <- stri_split_class(s, whitespaces)
+   #wordslist <- stri_split_class(str, whitespaces)
    #for now we can only split by " "
-   wordslist <- stri_split(enc2utf8(s), enc2utf8(" "), omitempty=TRUE)
+   wordslist <- stri_split(enc2utf8(str), enc2utf8(" "), omitempty=TRUE)
    .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
 }
 

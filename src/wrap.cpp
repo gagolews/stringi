@@ -27,22 +27,21 @@
  * @return ...
  */
  
-SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
+SEXP stri_wrap_greedy(SEXP count, int width, int spacecost)
 {
    // maybe a call to stri_prepare_arg_integer?
-//   if (LENGTH(spacecost) != 1) error("spacecost should be a vector of length 1");
    
 	int n = LENGTH(count);
 	int cost = INTEGER(count)[0];
 	SEXP space;
 	PROTECT(space = allocVector(LGLSXP, n));
 	for(int i=1;i<n;i++){
-		if(cost+INTEGER(spacecost)[0]+INTEGER(count)[i]>INTEGER(width)[0]){
+		if(cost+spacecost+INTEGER(count)[i]>width){
 			LOGICAL(space)[i-1] = true;
 			cost = INTEGER(count)[i];
 		}else{
 			LOGICAL(space)[i-1] = false;
-			cost = cost + INTEGER(spacecost)[0] + INTEGER(count)[i];
+			cost = cost + spacecost + INTEGER(count)[i];
 		}
 	}
 	UNPROTECT(1);
@@ -50,11 +49,9 @@ SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost)
 }
 
 
-SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
+SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
 {
    // maybe a call to stri_prepare_arg_integer? 
-   // i've just meet you, so call me maybe :P
-//   if (LENGTH(spacecost) != 1) error("spacecost should be a vector of length 1");
    
 	int n = LENGTH(count);
 	double* costm = (double*)R_alloc(n*n, sizeof(double)); 
@@ -65,7 +62,7 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
 			sum=0;
 			for(int k=i;k<=j;k++) //sum of costs words from i to j
 				sum = sum + INTEGER(count)[k];
-			ct = INTEGER(width)[0]-(j-i)*INTEGER(spacecost)[0]-sum;
+			ct = width-(j-i)*spacecost-sum;
 			if(ct<0){ //if the cost is bigger than width, put infinity
 				costm[i*n+j]=std::numeric_limits<double>::infinity();
 			}else //put squared cost into matrix
@@ -134,9 +131,9 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
  {
    int nwordslist = LENGTH(wordslist);
    int nmethod = LENGTH(method);
-   //vectorized over width ?
-   //int nwidth = LENGTH(width);
-   int nmax = stri__recycling_rule(nwordslist,nmethod);
+   int nwidth = LENGTH(width);
+   int nspacecost = LENGTH(spacecost);
+   int nmax = stri__recycling_rule4(nwordslist,nmethod,nwidth,nspacecost);
    
    SEXP ret, sep;
    PROTECT(ret = allocVector(STRSXP,nmax));
@@ -149,9 +146,9 @@ SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost)
       words = VECTOR_ELT(wordslist,i % nwordslist);
       count = stri_length(words);
       if(INTEGER(method)[i % nmethod]==2)
-         where = stri_wrap_dynamic(count,width,spacecost);
+         where = stri_wrap_dynamic(count,INTEGER(width)[i%nwidth],INTEGER(spacecost)[i%nspacecost]);
       else
-         where = stri_wrap_greedy(count,width,spacecost);
+         where = stri_wrap_greedy(count,INTEGER(width)[i%nwidth],INTEGER(spacecost)[i%nspacecost]);
       int nwhere = LENGTH(where);
       PROTECT(space = allocVector(STRSXP,nwhere));
       for(int k = 0; k < nwhere-1; k++){

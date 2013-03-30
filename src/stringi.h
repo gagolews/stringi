@@ -170,8 +170,8 @@ SEXP stri_unicode_normalization(SEXP s, SEXP type);
 
 
 // wrap.cpp
-SEXP stri_wrap_greedy(SEXP count, SEXP width, SEXP spacecost);
-SEXP stri_wrap_dynamic(SEXP count, SEXP width, SEXP spacecost);
+SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);
+SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);
 SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 
 
