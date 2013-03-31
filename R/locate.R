@@ -110,7 +110,11 @@ stri_locate_last_class <- function(str, class) {
 #' @param pattern character vector
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
-#' NAs for no match.
+#' \code{NA}s for no match.
+#' 
+#' @examples
+#' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
+#' 
 #' @seealso \code{\link{stri_locate_first_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
 stri_locate_all_fixed <- function(str, pattern) {
@@ -128,9 +132,13 @@ stri_locate_all_fixed <- function(str, pattern) {
 #' and 2 columns, giving the start and end positions of each match
 #' and \code{NA}s iff not found.
 #' 
+#' @examples
+#' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
+#' 
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
 stri_locate_first_fixed <- function(str, pattern) {
+   warning('TO DO: stri_locate_first_fixed should return ONE matrix')
    .Call("stri_locate_first_or_last_fixed", str, pattern, TRUE, PACKAGE="stringi")
 }
 
@@ -145,9 +153,13 @@ stri_locate_first_fixed <- function(str, pattern) {
 #' and 2 columns, giving the start and end positions of each match
 #' and \code{NA}s iff not found.
 #' 
+#' @examples
+#' stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
+#' 
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_first_fixed}}
 #' @export
 stri_locate_last_fixed <- function(str, pattern) {
+   warning('TO DO: stri_locate_last_fixed should return ONE matrix')
    .Call("stri_locate_first_or_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
 }
 
