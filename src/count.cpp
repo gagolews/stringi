@@ -19,20 +19,18 @@
 #include "stringi.h"
 
 /** 
- * .... 
- * @param s ...
- * @param pattern ...
- * @return ...
+ * Count the number of recurrences of \code{pattern} in \code{s}
+ * @param str strings to search in
+ * @param pattern patterns to search for
+ * @return integer vector
  */
-SEXP stri_count_fixed(SEXP s, SEXP pattern)
+SEXP stri_count_fixed(SEXP str, SEXP pattern)
 {
-   s = stri_prepare_arg_string(s);
+   str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   R_len_t ns = LENGTH(s);
+   R_len_t ns = LENGTH(str);
    R_len_t np = LENGTH(pattern);
-   //if any length is 0 then return empty list
-   if (ns <= 0 || np <= 0)
-      return allocVector(INTSXP, 0);
+   if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, np);
 
    int count = 0;
@@ -42,7 +40,7 @@ SEXP stri_count_fixed(SEXP s, SEXP pattern)
    int k=0,curslen,curpatlen;
    
    for (int i=0; i<nmax; ++i) {
-   	curs = STRING_ELT(s, i % ns);
+   	curs = STRING_ELT(str, i % ns);
       curpat = STRING_ELT(pattern, i % np);
       
       if(curs == NA_STRING || curpat == NA_STRING){
@@ -71,63 +69,48 @@ SEXP stri_count_fixed(SEXP s, SEXP pattern)
 
 
 /** 
- * .... 
- * @param str R character vector
- * @param pattern R character vector containing regular expressions
+ * Count the number of recurrences of \code{pattern} in \code{s}
+ * @param str strings to search in
+ * @param pattern regex patterns to search for
+ * @return integer vector
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16's vectorization
  */
 SEXP stri_count_regex(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   
    R_len_t ns = LENGTH(str);
    R_len_t np = LENGTH(pattern);
-   if (ns <= 0 || np <= 0)
-      return allocVector(INTSXP, 0);
+   if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, np);
    
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, nmax));
-   UErrorCode status;
- 
+   
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
-
-   for (int i = 0; i < np; i++) { // for each pattern
-      if (pp->isNA(i)) {
-         for (int j = i; j < nmax; j += np)
-            INTEGER(ret)[j] = NA_INTEGER;
+ 
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         INTEGER(ret)[i] = NA_INTEGER;
       }
       else {
-//          ICU team [ICU trac #10054] answer for our [stringi-issue #17]:
-//          The parameter type to Reset is (const UnicodeString &). The matcher
-//          retains a reference to the caller supplied string; it does not copy it.
-//          UnicodeString has a constructor from (const char *). So we get a temporary
-//          UnicodeString constructed, then deleted after the reset() returns, leaving
-//          the matcher to operate on deleted data.
-
-         status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
-         if (U_FAILURE(status))
-            error(u_errorName(status));
-         for (int j = i; j < nmax; j += np) {
-            if (ss->isNA(j % ns))
-               INTEGER(ret)[j] = NA_INTEGER;
-            else {
-               matcher->reset(ss->get(j%ns));
-               int count = 0;
-               int found = (int)matcher->find();
-               while(found){
-                  ++count;
-                  found = (int)matcher->find();
-               }
-               INTEGER(ret)[j] = count;
-            }
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+         matcher->reset(ss->get(i));
+         int count = 0;
+         bool found = (bool)matcher->find();
+         while(found) {
+            ++count;
+            found = (bool)matcher->find();
          }
-         delete matcher;
+         INTEGER(ret)[i] = count;
       }
    }
-   
+
    delete ss;
    delete pp;
    UNPROTECT(1);

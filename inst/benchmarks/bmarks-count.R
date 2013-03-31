@@ -33,13 +33,13 @@ local({
    pat2 <- "(s|el|v)it"
    pat3 <- c(pat1, pat2, "ell?(e|u| )", "(L|l)orem .*? nisi .*? nisi","123")
    
-   print(microbenchmark(stri_count_regex(s,pat1),str_count(s,pat1)))
-   print(microbenchmark(stri_count_regex(s,pat2),str_count(s,pat2)))
-   print(microbenchmark(stri_count_regex(s,pat3),str_count(s,pat3)))
+   print(microbenchmark(stri_count_regex(s,pat1),str_count(s,pat1),str_count(s,perl(pat1))))
+   print(microbenchmark(stri_count_regex(s,pat2),str_count(s,pat2),str_count(s,perl(pat2))))
+   print(microbenchmark(stri_count_regex(s,pat3),str_count(s,pat3),str_count(s,perl(pat3))))
    
-   print(microbenchmark(stri_count_regex(srep,pat1),str_count(srep,pat1)))
-   print(microbenchmark(stri_count_regex(srep,pat2),str_count(srep,pat2)))
-   print(microbenchmark(stri_count_regex(srep,pat3),str_count(srep,pat3)))
+   print(microbenchmark(stri_count_regex(srep,pat1),str_count(srep,pat1),str_count(srep,perl(pat1))))
+   print(microbenchmark(stri_count_regex(srep,pat2),str_count(srep,pat2),str_count(srep,perl(pat2))))
+   print(microbenchmark(stri_count_regex(srep,pat3),str_count(srep,pat3),str_count(srep,perl(pat3))))
    
    print(microbenchmark(stri_count_regex(srepdup,pat1),str_count(srepdup,pat1)))
    print(microbenchmark(stri_count_regex(srepdup,pat2),str_count(srepdup,pat2)))

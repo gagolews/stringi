@@ -24,6 +24,7 @@ local({
    print(microbenchmark(stri_detect_regex(srep, "^[A-Z]"), str_detect(srep, "^[A-Z]"), str_detect(srep, perl("^[A-Z]"))))
    print(microbenchmark(stri_detect_regex(srep, "[a-z]$"), str_detect(srep, "[a-z]$"), str_detect(srep, perl("[a-z]$"))))
    print(microbenchmark(stri_detect_regex(srep, "^[a-z]+$"), str_detect(srep, "^[a-z]+$"), str_detect(srep, perl("^[a-z]+$"))))
+   print(microbenchmark(stri_detect_regex(srep2, "^[a-z]+$"), str_detect(srep2, "^[a-z]+$"), str_detect(srep2, perl("^[a-z]+$"))))
    print(microbenchmark(stri_detect_regex(srep2, "^[A-Z]"), str_detect(srep2, "^[A-Z]"), str_detect(srep2, perl("^[A-Z]"))))
    print(microbenchmark(stri_detect_regex(srep2, "[a-z]$"), str_detect(srep2, "[a-z]$"), str_detect(srep2, perl("[a-z]$"))))
    print(microbenchmark(stri_detect_regex(srep2, "^[a-z]+$"), str_detect(srep2, "^[a-z]+$"), str_detect(srep2, perl("^[a-z]+$"))))

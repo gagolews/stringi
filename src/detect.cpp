@@ -77,6 +77,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
  * @param pattern R character vector containing regular expressions
  * @version 0.1 (Marcin Bujarski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
+ * @version 0.3 (Marek Gagolewski) - use StriContainerUTF16's vectorization
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
@@ -101,7 +102,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
          LOGICAL(ret)[i] = NA_LOGICAL;
       }
       else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i);
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
          matcher->reset(ss->get(i));
          int found = (int)matcher->find();
          LOGICAL(ret)[i] = found;

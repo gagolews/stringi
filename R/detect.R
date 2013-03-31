@@ -17,7 +17,7 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Detect If a String Contains Given Substring
+#' Detect a Pattern Match in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -29,7 +29,7 @@ stri_detect_fixed <- function(str, pattern) {
 }
 
 
-#' Detect If a String Matches a Given Pattern
+#' Detect a Regex Pattern Match in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 

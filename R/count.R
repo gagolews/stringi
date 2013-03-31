@@ -18,12 +18,12 @@
 
 
 
-#' Count the number of matches in a string
+#' Count the Number of Pattern Matches in a String
 #' 
-#' Vectorized over str and pattern.
+#' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' @param str character vector
-#' @param pattern character vector
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
 #' @return integer vector
 #' 
 #' @examples
@@ -39,12 +39,14 @@ stri_count_fixed <- function(str, pattern) {
 	.Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
 }
 
-#' Count the number of matches in a string
+
+
+#' Count the Number of Regex Pattern Matches in a String
 #' 
-#' Vectorized over str and pattern.
+#' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' @param str character vector
-#' @param pattern character vector
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
 #' @return integer vector
 #' 
 #' @examples
@@ -55,6 +57,7 @@ stri_count_fixed <- function(str, pattern) {
 #' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
 #' 
 #' @export
+#' @family regex
 stri_count_regex <- function(str, pattern) {
    # prepare_arg done internally
    .Call("stri_count_regex", str, pattern, PACKAGE="stringi")
