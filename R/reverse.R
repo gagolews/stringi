@@ -20,12 +20,14 @@
 
 #' Reverse string
 #' 
-#' @param str
+#' Reverse every string in vector
 #' 
-#' @return character vector
+#' @param str character vector
+#' 
+#' @return character vector which contains every string reversed
 #' @examples
-#' stri_reverse("123","abc d e f") 
-#' 
+#' stri_reverse(c("123","abc d e f"))
+#' stri_reverse("ZXY (ąłż123$^).")
 #' @export
 stri_reverse <- function(str) {
    # prepare_arg done internally

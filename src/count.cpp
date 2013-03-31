@@ -28,12 +28,12 @@ SEXP stri_count_fixed(SEXP s, SEXP pattern)
 {
    s = stri_prepare_arg_string(s);
    pattern = stri_prepare_arg_string(pattern);
-   int ns = LENGTH(s);
-   int np = LENGTH(pattern);
+   R_len_t ns = LENGTH(s);
+   R_len_t np = LENGTH(pattern);
    //if any length is 0 then return empty list
    if (ns <= 0 || np <= 0)
       return allocVector(INTSXP, 0);
-   int nmax = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(ns, np);
 
    int count = 0;
    SEXP e;
@@ -80,11 +80,11 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
    
-   int ns = LENGTH(str);
-   int np = LENGTH(pattern);
+   R_len_t ns = LENGTH(str);
+   R_len_t np = LENGTH(pattern);
    if (ns <= 0 || np <= 0)
       return allocVector(INTSXP, 0);
-   int nmax = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(ns, np);
    
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, nmax));

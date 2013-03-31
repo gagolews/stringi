@@ -29,19 +29,20 @@
  
 SEXP stri_wrap_greedy(SEXP count, int width, int spacecost)
 {
-   // maybe a call to stri_prepare_arg_integer?
+   int n = LENGTH(count);
+   int* icount = INTEGER(count);
+   int cost = icount[0];
    
-	int n = LENGTH(count);
-	int cost = INTEGER(count)[0];
 	SEXP space;
 	PROTECT(space = allocVector(LGLSXP, n));
+   
 	for(int i=1;i<n;i++){
-		if(cost+spacecost+INTEGER(count)[i]>width){
+		if(cost+spacecost+icount[i]>width){
 			LOGICAL(space)[i-1] = true;
-			cost = INTEGER(count)[i];
+			cost = icount[i];
 		}else{
 			LOGICAL(space)[i-1] = false;
-			cost = cost + spacecost + INTEGER(count)[i];
+			cost = cost + spacecost + icount[i];
 		}
 	}
 	UNPROTECT(1);
@@ -57,11 +58,13 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
 	double* costm = (double*)R_alloc(n*n, sizeof(double)); 
 	double ct = 0;
 	double sum = 0;
+   int* icount = INTEGER(count);
+   
 	for(int i=0;i<n;i++){
 		for(int j=i;j<n;j++){
 			sum=0;
 			for(int k=i;k<=j;k++) //sum of costs words from i to j
-				sum = sum + INTEGER(count)[k];
+				sum = sum + icount[k];
 			ct = width-(j-i)*spacecost-sum;
 			if(ct<0){ //if the cost is bigger than width, put infinity
 				costm[i*n+j]=std::numeric_limits<double>::infinity();

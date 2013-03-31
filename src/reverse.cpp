@@ -20,18 +20,19 @@
 
 /** 
  * Reverse string 
- * @param s ...
- * @return ...
+ * @param s character vector
+ * @return character vector which contains every string reversed
  */
 SEXP stri_reverse(SEXP s)
 {
    s   = stri_prepare_arg_string(s);
-   int ns   = LENGTH(s);
-   int curslen,lastj,k,j;
+   R_len_t ns   = LENGTH(s);
+   int curslen, lastj, k, j;
    SEXP e, curs;
    UChar32 c;
    
    PROTECT(e = allocVector(STRSXP,ns));
+   
    for (int i=0; i<ns; ++i) {
       curs = STRING_ELT(s, i);
       if(curs == NA_STRING){
@@ -41,10 +42,10 @@ SEXP stri_reverse(SEXP s)
       curslen = LENGTH(curs);
       const char* string = CHAR(curs);
       char* rev = R_alloc(curslen, sizeof(char));
-      for(j=0; j < curslen;){
+      for(j=0; j < curslen;){ //no need to use ++j here, U8_NEXT does that
          lastj = j;
          U8_NEXT(string, j, curslen, c);
-         for(k=0; k < j-lastj; ++k){
+         for(k=0; k < j-lastj; ++k){ //copy char
             rev[curslen-j+k] = string[lastj+k];
          }
       }
