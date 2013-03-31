@@ -129,11 +129,11 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
    
  SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost)
  {
-   int nwordslist = LENGTH(wordslist);
-   int nmethod = LENGTH(method);
-   int nwidth = LENGTH(width);
-   int nspacecost = LENGTH(spacecost);
-   int nmax = stri__recycling_rule4(nwordslist,nmethod,nwidth,nspacecost);
+   R_len_t nwordslist = LENGTH(wordslist);
+   R_len_t nmethod = LENGTH(method);
+   R_len_t nwidth = LENGTH(width);
+   R_len_t nspacecost = LENGTH(spacecost);
+   R_len_t nmax = stri__recycling_rule4(nwordslist,nmethod,nwidth,nspacecost);
    
    SEXP ret, sep;
    PROTECT(ret = allocVector(STRSXP,nmax));
@@ -141,14 +141,18 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
    PROTECT(sep = allocVector(STRSXP,1));
    SET_STRING_ELT(sep,0,mkCharLen("",0));
    SEXP words,count,temp,space,where;
+   
+   int* iwidth     = INTEGER(width);
+   int* ispacecost = INTEGER(spacecost);
+   
    for(int i=0;i<nmax;i++)
    {
       words = VECTOR_ELT(wordslist,i % nwordslist);
       count = stri_length(words);
       if(INTEGER(method)[i % nmethod]==2)
-         where = stri_wrap_dynamic(count,INTEGER(width)[i%nwidth],INTEGER(spacecost)[i%nspacecost]);
+         where = stri_wrap_dynamic(count,iwidth[i%nwidth],ispacecost[i%nspacecost]);
       else
-         where = stri_wrap_greedy(count,INTEGER(width)[i%nwidth],INTEGER(spacecost)[i%nspacecost]);
+         where = stri_wrap_greedy(count,iwidth[i%nwidth],ispacecost[i%nspacecost]);
       int nwhere = LENGTH(where);
       PROTECT(space = allocVector(STRSXP,nwhere));
       for(int k = 0; k < nwhere-1; k++){
