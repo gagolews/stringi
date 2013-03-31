@@ -56,8 +56,9 @@ class StriContainerUTF16 {
       StriContainerUTF16(StriContainerUTF16& container);
       ~StriContainerUTF16();
       StriContainerUTF16& operator=(StriContainerUTF16& container);
-      SEXP toR() const;
+      SEXP toR(R_len_t i) const;
 //      inline R_len_t length() const { return this->n; }
+
       
       /** check if the vectorized ith element is NA
        */

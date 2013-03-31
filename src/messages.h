@@ -76,5 +76,7 @@
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
 
+#define MSG__REGEXP_FAILED \
+   "regexp search failed"
    
 #endif

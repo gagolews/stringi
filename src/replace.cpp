@@ -34,7 +34,7 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    R_len_t ns   = LENGTH(s);
    R_len_t npat = LENGTH(pat);
    R_len_t nrep = LENGTH(rep);
-   if (ns==0 || npat==0 || nrep==0) return allocVector(STRSXP, 0);
+   if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
    
    int count = 0;
@@ -77,7 +77,7 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    int ns   = LENGTH(s);
    int npat = LENGTH(pat);
    int nrep = LENGTH(rep);
-   if (ns<=0 || npat<=0 || nrep<=0) return allocVector(STRSXP, 0);
+   if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
    
    int count = 0;
@@ -115,6 +115,7 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
  * @param replacement replacements
  * @return character vector
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski)  - use StriContainerUTF16's vectorization
  */
 SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
 {
@@ -128,36 +129,31 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    R_len_t nmax = stri__recycling_rule(ns, np, nr);
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP,nmax));
+   PROTECT(ret = allocVector(STRSXP, nmax));
    
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax);
+   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax, false); // make a DEEP copy as the strings will be changed
    StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
    StriContainerUTF16* rr = new StriContainerUTF16(r, nmax);
    
-   for (int i = 0; i < np; i++) { // for each pattern
-      if (pp->isNA(i)) {
-         for (int j = i; j < nmax; j += np)
-            SET_STRING_ELT(ret, j, NA_STRING);
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i) || rr->isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
       }
       else {
-         status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+         matcher->reset(ss->get(i));
+         
+         UErrorCode status = U_ZERO_ERROR;
+         ss->get(i) = matcher->replaceAll(rr->get(i), status);  // this has length nmax now, we may modify it
          if (U_FAILURE(status))
-            error(u_errorName(status));
-         for (int j = i; j < nmax; j += np) {
-            if (ss->isNA(j % ns))
-               SET_STRING_ELT(ret, j, NA_STRING);
-            else {
-               warning("Not done yet...");
-               matcher->reset(ss->get(j%ns));
-               matcher->replaceAll(rr->get(j%nr), status);
-               SET_VECTOR_ELT(ret, i, ss->toR());   
-            }
-         }
-         delete matcher;
-      }   
+            error(MSG__REGEXP_FAILED);
+         SET_STRING_ELT(ret, i, ss->toR(i));
+      }
    }
    
    delete ss;

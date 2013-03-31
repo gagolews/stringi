@@ -17,61 +17,62 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Replace all
+#' Replace All Occurences of a Pattern
 #' 
 #' 
-#' @param str character vector
-#' @param pattern character vector
-#' @param replacement 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of patterns to search for
+#' @param replacement character vector of strings to replace with
 #' @return character vector
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_all(s," ","#")
-#' stri_replace_all(s,"o","0")
+#' stri_replace_all_fixed(s," ","#")
+#' stri_replace_all_fixed(s,"o","0")
 #' 
 #' @export
-stri_replace_all <- function(str, pattern, replacement) {
+stri_replace_all_fixed <- function(str, pattern, replacement) {
 	# prepare_arg done internally
 	.Call("stri_replace_all_fixed", str, pattern, replacement, PACKAGE="stringi")
 }
 
-#' Replace first
+#' Replace First Occurence of a Pattern
 #' 
 #' 
-#' @param str character vector
-#' @param pattern character vector
-#' @param replacement 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of patterns to search for
+#' @param replacement character vector of strings to replace with
 #' @return character vector
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_first(s," ","123")
-#' stri_replace_first(s,"o","!!!")
+#' stri_replace_first_fixed(s," ","123")
+#' stri_replace_first_fixed(s,"o","!!!")
 #' 
 #' @export
-stri_replace_first <- function(str, pattern, replacement) {
+stri_replace_first_fixed <- function(str, pattern, replacement) {
    # prepare_arg done internally
    .Call("stri_replace_first_fixed", str, pattern, replacement, PACKAGE="stringi")
 }
 
 
-#' Replace last
+#' Replace Last Occurence of a Pattern
 #' 
 #' 
-#' @param str character vector
-#' @param pattern character vector
-#' @param replacement 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of patterns to search for
+#' @param replacement character vector of strings to replace with
 #' @return character vector
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_last(s," ","123")
-#' stri_replace_last(s,"o","!!!")
+#' stri_replace_last_fixed(s," ","123")
+#' stri_replace_last_fixed(s,"o","!!!")
 #' 
 #' @export
-stri_replace_last <- function(str, pattern, replacement) {
+stri_replace_last_fixed <- function(str, pattern, replacement) {
    # prepare_arg done internally
+   warning("TO DO: no stri_reverse call here.....")
    stri_reverse(.Call("stri_replace_first_fixed", stri_reverse(str), pattern, replacement, PACKAGE="stringi"))
 }
 
@@ -86,6 +87,7 @@ stri_replace_last <- function(str, pattern, replacement) {
 #' Input that is not part of any match is left unchanged; 
 #' each match is replaced in the result by the replacement string. 
 #' The replacement string may contain references to capture groups.
+#' References are of the form \code{$n}, where n is the number of the capture group.
 #' 
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #' 
@@ -98,6 +100,8 @@ stri_replace_last <- function(str, pattern, replacement) {
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_replace_all_regex(s, " .*? ", "#")
 #' stri_replace_all_regex(s, "(el|s)it", "1234")
+#' stri_replace_all_regex('abaca', 'a', c('!', '*'))
+#' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' 
 #' @export
 #' @family regex

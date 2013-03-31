@@ -54,15 +54,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
 #endif
    this->nrecycle = n2;
    
-   if (!shallowrecycle) error("TO DO shallow!");
-   
    if (this->n <= 0) {
       this->enc = NULL;
       this->str = NULL;
    }
    else {
-      this->enc = new StriEnc[this->n];
-      this->str = new UnicodeString*[this->n];
+      this->enc = new StriEnc[(shallowrecycle)?this->n:this->nrecycle];
+      this->str = new UnicodeString*[(shallowrecycle)?this->n:this->nrecycle];
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -95,7 +93,18 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
                this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
-      }      
+      }
+      if (!shallowrecycle) {
+         for (R_len_t i=this->n; i<this->nrecycle; ++i) {
+            SEXP curs = STRING_ELT(rstr, i);
+            this->enc[i] = this->enc[i%this->n];
+            if (this->enc[i] == STRI_NA)
+               this->str[i] = NULL;
+            else
+               this->str[i] = new UnicodeString(*this->str[i%this->n]);
+         }
+         this->n = this->nrecycle;
+      }
    }
 }
 
@@ -149,38 +158,33 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 }
 
 
-/** Export contents of this container to R character vector
- *  The number of exported strings is equal to \code{n}, not \code{nrecycle}
+/** Export string
  */
-SEXP StriContainerUTF16::toR() const
+SEXP StriContainerUTF16::toR(R_len_t i) const
 {
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, this->n));
-   for (R_len_t i=0; i<this->n; ++i) {
-      switch (this->enc[i]) {
-         case STRI_NA:
-            SET_STRING_ELT(e, i, NA_STRING);
-            break;
-            
-         case STRI_ENC_ASCII:
-         case STRI_ENC_UTF8:
-            error(".... TO DO ....");
-            break;
-            
-         case STRI_ENC_LATIN1:
-            error(".... TO DO ....");
-            break;
-            
-         case STRI_ENC_NATIVE:
-            error(".... TO DO ....");
-            break;
-            
-         default: // this shouldn't happen
-            error(MSG__ENC_ERROR_SET);
+   switch (this->enc[i]) {
+      case STRI_NA:
+         return NA_STRING;
+         
+      case STRI_ENC_ASCII:
+      case STRI_ENC_UTF8: {
+         std::string s;
+         this->str[i]->toUTF8String(s);
+         return mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
       }
-   }   
-   UNPROTECT(1);
-   return e;
+         
+      case STRI_ENC_LATIN1:
+         error(".... TO DO ....");
+         break;
+         
+      case STRI_ENC_NATIVE:
+         error(".... TO DO ....");
+         break;
+         
+      default: // this shouldn't happen
+         error(MSG__ENC_ERROR_SET);
+   } 
+   return mkChar("");
 }
  
  
