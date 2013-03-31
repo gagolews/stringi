@@ -24,16 +24,30 @@
 #' @param str character vector of strings to search in
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @param merge logical; should consecutive sequences of characters be merged?
 #'    
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a class are merged.
+#' Consecutive sequences of characters from a class are not merged by default.
 #' \code{NA}s for no match.
+#' 
+#' @examples
+#' stri_locate_all_class(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'))
+#' stri_locate_all_class(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'), merge=TRUE)
 #' 
 #' @export
 #' @family charclass
-stri_locate_all_class <- function(str, class) {
-   .Call("stri_locate_all_class", str, class, PACKAGE="stringi")
+stri_locate_all_class <- function(str, class, merge=FALSE) {
+   ret <- .Call("stri_locate_all_class", str, class, PACKAGE="stringi")
+   merge <- identical(merge, TRUE)
+   
+   if (merge) return(ret)
+   else return(lapply(ret, function(m) {
+      if (is.na(m[1,1])) return(m)
+      idx <- unlist(apply(m, 1, function(k) k[1]:k[2]))
+      matrix(idx, ncol=2, nrow=length(idx),
+             dimnames=list(NULL,c('start', 'end')))
+   }))
 }
 
 
