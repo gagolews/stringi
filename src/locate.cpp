@@ -601,7 +601,7 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
 SEXP stri_locate_all_regex(SEXP s, SEXP p)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare integer argument
+   p = stri_prepare_arg_string(p); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
@@ -706,7 +706,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
 SEXP stri_locate_first_regex(SEXP s, SEXP p)
 {
    s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare integer argument
+   p = stri_prepare_arg_string(p); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();

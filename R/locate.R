@@ -45,14 +45,21 @@ stri_locate_all_class <- function(str, class) {
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
 #'    
-#' @return Integer vector of length n, where n is the length of \code{str}.
-#' \code{NA} iff not found.
-#' The returned indices are Unicode-code point-based
+#' @return Integer matrix with n rows, where n is the length of \code{str},
+#' and 2 columns, giving the start and end positions of each match
+#' and \code{NA}s iff not found.
+#' Note that it always holds \code{start == end}.
+#' 
+#' @examples
+#' stri_locate_first_class('AaBbCc', stri_char_getcategoryid('Ll'))
+#' stri_locate_first_class('AbcdeF', stri_char_getcategoryid('Ll'))
 #' 
 #' @export
 #' @family charclass
 stri_locate_first_class <- function(str, class) {
-   .Call("stri_locate_first_or_last_class", str, class, TRUE, PACKAGE="stringi")
+   ret <- .Call("stri_locate_first_or_last_class", str, class, TRUE, PACKAGE="stringi")
+   matrix(ret, ncol=2, nrow=length(ret),
+      dimnames=list(NULL,c('start', 'end')))
 }
 
 
@@ -63,18 +70,25 @@ stri_locate_first_class <- function(str, class) {
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
 #' 
-#' @return Integer vector of length n, where n is the length of \code{str}.
-#' \code{NA} iff not found.
-#' The returned indices are Unicode-code point-based
+#' @return Integer matrix with n rows, where n is the length of \code{str},
+#' and 2 columns, giving the start and end positions of each match
+#' and \code{NA}s iff not found.
+#' Note that it always holds \code{start == end}.
+#' 
+#' @examples
+#' stri_locate_last_class('AaBbCc', stri_char_getcategoryid('Ll'))
+#' stri_locate_last_class('AbcdeF', stri_char_getcategoryid('Ll'))
 #' 
 #' @export
 #' @family charclass
 stri_locate_last_class <- function(str, class) {
-   .Call("stri_locate_first_or_last_class", str, class, FALSE, PACKAGE="stringi")
+   ret <- .Call("stri_locate_first_or_last_class", str, class, FALSE, PACKAGE="stringi")
+   matrix(ret, ncol=2, nrow=length(ret),
+      dimnames=list(NULL,c('start', 'end')))
 }
 
 
-#' Locate all occurences of each character pattern
+#' Locate All Occurences of a Pattern
 #'
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -82,7 +96,6 @@ stri_locate_last_class <- function(str, class) {
 #' @param pattern character vector
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a pattern are merged.
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_first_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
@@ -91,16 +104,16 @@ stri_locate_all_fixed <- function(str, pattern) {
 }
 
 
-#' Locate first occurence of character pattern
+#' Locate First Occurence of a Pattern
 #'
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @return list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a pattern are merged.
-#' NAs for no match.
+#' @return Integer matrix with n rows, where n is the length of \code{str},
+#' and 2 columns, giving the start and end positions of each match
+#' and \code{NA}s iff not found.
+#' 
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
 stri_locate_first_fixed <- function(str, pattern) {
@@ -108,16 +121,16 @@ stri_locate_first_fixed <- function(str, pattern) {
 }
 
 
-#' Locate last occurence of character pattern
+#' Locate Last Occurence of a Pattern
 #'
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @return list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a pattern are merged.
-#' NAs for no match.
+#' @return Integer matrix with n rows, where n is the length of \code{str},
+#' and 2 columns, giving the start and end positions of each match
+#' and \code{NA}s iff not found.
+#' 
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_first_fixed}}
 #' @export
 stri_locate_last_fixed <- function(str, pattern) {
@@ -134,9 +147,11 @@ stri_locate_last_fixed <- function(str, pattern) {
 #' 
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a pattern are merged.
-#' NAs for no match.
-#' @seealso \code{\link{stri_locate_first_regex}}, \code{\link{stri_locate_last_regex}}
+#' \code{NA}s iff not found.
+#' 
+#' @examples
+#' stri_locate_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' 
 #' @export
 #' @family regex
 stri_locate_all_regex <- function(str, pattern) {
@@ -144,18 +159,20 @@ stri_locate_all_regex <- function(str, pattern) {
 }
 
 
-#' Locate First Occurence of A Regex Pattern
+#' Locate First Occurence of a Regex Pattern
 #'
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
 #' 
-#' @return list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' Consecutive sequences of characters from a pattern are merged.
-#' NAs for no match.
-#' @seealso \code{\link{stri_locate_all_regex}}, \code{\link{stri_locate_last_regex}}
+#' @return Integer matrix with n rows, where n is the length of \code{str},
+#' and 2 columns, giving the start and end positions of each match
+#' and \code{NA}s iff not found.
+#' 
+#' @examples
+#' stri_locate_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' 
 #' @export
 #' @family regex
 stri_locate_first_regex <- function(str, pattern) {

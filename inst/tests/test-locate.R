@@ -42,36 +42,36 @@ test_that("stri_locate_all_class", {
 
 test_that("stri_locate_first_class", {
    
-   expect_equivalent(stri_locate_first_class("", stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
-   expect_equivalent(stri_locate_first_class(NA, stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
+   expect_equivalent(as.integer(stri_locate_first_class("", stri_char_getpropertyid("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
+   expect_equivalent(as.integer(stri_locate_first_class(NA, stri_char_getpropertyid("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
                            
    expect_equivalent(stri_locate_first_class(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
-      stri_char_getcategoryid("L")),
+      stri_char_getcategoryid("L"))[,1],
       c(1L, 2L, 1L, 2L, NA_integer_))
 
    expect_equivalent(
       stri_locate_first_class("    xxx\n\t \v   \n",
          c(stri_char_getpropertyid("WHITE_SPACE"),
-           stri_char_getpropertyid("^WHITE_SPACE"))),
+           stri_char_getpropertyid("^WHITE_SPACE")))[,2],
       c(1L, 5L))
 })
 
 
 test_that("stri_locate_last_class", {
    
-   expect_equivalent(stri_locate_last_class("", stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
-   expect_equivalent(stri_locate_last_class(NA, stri_char_getpropertyid("^WHITE_SPACE")), NA_integer_)
+   expect_equivalent(stri_locate_last_class("", stri_char_getpropertyid("^WHITE_SPACE"))[,2], NA_integer_)
+   expect_equivalent(stri_locate_last_class(NA, stri_char_getpropertyid("^WHITE_SPACE"))[,2], NA_integer_)
    
    expect_equivalent(stri_locate_last_class(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
-      stri_char_getcategoryid("L")),
+      stri_char_getcategoryid("L"))[,2],
                      c(3L, 4L, 5L, 6L, NA_integer_))
    
    expect_equivalent(
       stri_locate_last_class("    xxx\n\t \v   \n",
             c(stri_char_getpropertyid("WHITE_SPACE"),
-              stri_char_getpropertyid("^WHITE_SPACE"))),
+              stri_char_getpropertyid("^WHITE_SPACE")))[,2],
       c(15L, 7L))
 })
 

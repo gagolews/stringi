@@ -1,7 +1,7 @@
 **stringi**: `ICU` bindings for `R`
 =======
 
-**Authors**: Marek Gagolewski, Bartlomiej Tartanus and Marcin Bujarski
+**Authors**: Marek Gagolewski, Bartlomiej Tartanus, with contributions from Marcin Bujarski
 
 **Homepage**: http://www.ibspan.waw.pl/~gagolews/stringi/
 

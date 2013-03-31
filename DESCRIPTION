@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.1-2
-Date: 2013-03-29
+Date: 2013-03-31
 Title: ICU bindings for R
 Description: stringi is an R package for correct, fast,
     and simple string manipulation in each locale and native charset.
