@@ -136,7 +136,7 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
    R_len_t nmethod = LENGTH(method);
    R_len_t nwidth = LENGTH(width);
    R_len_t nspacecost = LENGTH(spacecost);
-   R_len_t nmax = stri__recycling_rule4(nwordslist,nmethod,nwidth,nspacecost);
+   R_len_t nmax = stri__recycling_rule(nwordslist,nmethod,nwidth,nspacecost);
    
    SEXP ret, sep;
    PROTECT(ret = allocVector(STRSXP,nmax));

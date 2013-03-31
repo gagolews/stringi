@@ -40,7 +40,7 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
    if(ns == 0 || nfrom == 0 || nto == 0)
       return allocVector(STRSXP,0);
    
-   int nmax = stri__recycling_rule3(ns, nfrom, nto);
+   int nmax = stri__recycling_rule(ns, nfrom, nto);
    
    //idea to improve performance if ns << nmax
    //first - check every element of s and save position of every utf char
@@ -126,7 +126,7 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
    if(ns == 0 || nfrom == 0 || nto == 0 || nval == 0)
       return allocVector(STRSXP,0);
    
-   int nmax = stri__recycling_rule4(ns, nfrom, nto, nval);
+   int nmax = stri__recycling_rule(ns, nfrom, nto, nval);
    //idea to improve performance if ns << nmax
    //first - check every element of s and save position of every utf char
    //into where and now you can easliy get substring by where[from[i]]

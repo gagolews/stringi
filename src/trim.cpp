@@ -189,7 +189,7 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
    if(INTEGER(stri_length(pad))[0] != 1) 
       error("pad must be single character");
    
-   R_len_t nmax = stri__recycling_rule3(ns, nside, nwidth);
+   R_len_t nmax = stri__recycling_rule(ns, nside, nwidth);
    
    int needed=0;
    SEXP e, curs, slen;

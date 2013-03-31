@@ -135,7 +135,7 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    //if any length is 0 then return empty vector
    if (ns <= 0 || np <= 0 || nr <= 0)
       return allocVector(STRSXP, 0);
-   R_len_t nmax = stri__recycling_rule3(ns, np, nr);
+   R_len_t nmax = stri__recycling_rule(ns, np, nr);
    
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP,nmax));
