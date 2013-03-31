@@ -17,53 +17,68 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Locate all occurences of each character class
+#' Locate All Occurences of a Character Class
 #'
-#' Vectorized over s and class
-#' @param s character vector
-#' @param class General Category or Binary Property identifier, integer vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector of strings to search in
+#' @param class character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#'    
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
 #' Consecutive sequences of characters from a class are merged.
-#' NAs for no match.
-#' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
+#' \code{NA}s for no match.
+#' 
 #' @export
-stri_locate_all_class <- function(s, class) {
-   .Call("stri_locate_all_class", s, class, PACKAGE="stringi")
+#' @family charclass
+stri_locate_all_class <- function(str, class) {
+   .Call("stri_locate_all_class", str, class, PACKAGE="stringi")
 }
 
 
-#' Locate the first occurence of each character class
+#' Locate First Occurence of a Character Class
+#'
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector of strings to search in
+#' @param class character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#'    
+#' @return Integer vector of length n, where n is the length of \code{str}.
+#' \code{NA} iff not found.
+#' The returned indices are Unicode-code point-based
+#' 
+#' @export
+#' @family charclass
+stri_locate_first_class <- function(str, class) {
+   .Call("stri_locate_first_or_last_class", str, class, TRUE, PACKAGE="stringi")
+}
+
+
+#' Locate Last Occurence of a Character Class
 #'
 #' Vectorized over s and class
-#' @param s character vector
-#' @param class General Category or Binary Property identifier, integer vector
-#' @return Integer vector of length n, where n is the length of s. NA iff not found.
+#' @param str character vector of strings to search in
+#' @param class character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' 
+#' @return Integer vector of length n, where n is the length of \code{str}.
+#' \code{NA} iff not found.
 #' The returned indices are Unicode-code point-based
-#' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
+#' 
 #' @export
-stri_locate_first_class <- function(s, class) {
-   .Call("stri_locate_first_or_last_class", s, class, TRUE, PACKAGE="stringi")
+#' @family charclass
+stri_locate_last_class <- function(str, class) {
+   .Call("stri_locate_first_or_last_class", str, class, FALSE, PACKAGE="stringi")
 }
 
-
-#' Locate the lase occurence of each character class
-#'
-#' Vectorized over s and class
-#' @param s character vector
-#' @param class General Category or Binary Property identifier, integer vector
-#' @return Integer vector of length n, where n is the length of s. NA iff not found.
-#' The returned indices are Unicode-code point-based
-#' @seealso \code{\link{stri_char_getpropertyid}}, \code{\link{stri_char_getcategoryid}}
-#' @export
-stri_locate_last_class <- function(s, class) {
-   .Call("stri_locate_first_or_last_class", s, class, FALSE, PACKAGE="stringi")
-}
 
 #' Locate all occurences of each character pattern
 #'
-#' Vectorized over s and pattern
-#' @param s character vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector
 #' @param pattern character vector
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
@@ -71,14 +86,16 @@ stri_locate_last_class <- function(s, class) {
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_first_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
-stri_locate_all_fixed <- function(s, pattern) {
-   .Call("stri_locate_all_fixed", s, pattern, PACKAGE="stringi")
+stri_locate_all_fixed <- function(str, pattern) {
+   .Call("stri_locate_all_fixed", str, pattern, PACKAGE="stringi")
 }
+
 
 #' Locate first occurence of character pattern
 #'
-#' Vectorized over s and pattern
-#' @param s character vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector
 #' @param pattern character vector
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
@@ -86,14 +103,16 @@ stri_locate_all_fixed <- function(s, pattern) {
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
-stri_locate_first_fixed <- function(s, pattern) {
-   .Call("stri_locate_first_or_last_fixed", s, pattern, TRUE, PACKAGE="stringi")
+stri_locate_first_fixed <- function(str, pattern) {
+   .Call("stri_locate_first_or_last_fixed", str, pattern, TRUE, PACKAGE="stringi")
 }
+
 
 #' Locate last occurence of character pattern
 #'
-#' Vectorized over s and pattern
-#' @param s character vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector
 #' @param pattern character vector
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
@@ -101,38 +120,45 @@ stri_locate_first_fixed <- function(s, pattern) {
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_first_fixed}}
 #' @export
-stri_locate_last_fixed <- function(s, pattern) {
-   .Call("stri_locate_first_or_last_fixed", s, pattern, FALSE, PACKAGE="stringi")
+stri_locate_last_fixed <- function(str, pattern) {
+   .Call("stri_locate_first_or_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
 }
 
 
-#' Locate all occurences of each regex pattern
+#' Locate All Occurences of a Regex Pattern
 #'
-#' Vectorized over s and pattern
-#' @param s character vector
-#' @param pattern character vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
+#' 
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
 #' Consecutive sequences of characters from a pattern are merged.
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_first_regex}}, \code{\link{stri_locate_last_regex}}
 #' @export
-stri_locate_all_regex <- function(s, pattern) {
-   .Call("stri_locate_all_regex", s, pattern, PACKAGE="stringi")
+#' @family regex
+stri_locate_all_regex <- function(str, pattern) {
+   .Call("stri_locate_all_regex", str, pattern, PACKAGE="stringi")
 }
 
-#' Locate first occurences of each regex pattern
+
+#' Locate First Occurence of A Regex Pattern
 #'
-#' Vectorized over s and pattern
-#' @param s character vector
-#' @param pattern character vector
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
+#' 
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
 #' Consecutive sequences of characters from a pattern are merged.
 #' NAs for no match.
 #' @seealso \code{\link{stri_locate_all_regex}}, \code{\link{stri_locate_last_regex}}
 #' @export
-stri_locate_first_regex <- function(s, pattern) {
-   .Call("stri_locate_first_regex", s, pattern, PACKAGE="stringi")
+#' @family regex
+stri_locate_first_regex <- function(str, pattern) {
+   .Call("stri_locate_first_regex", str, pattern, PACKAGE="stringi")
 }
 

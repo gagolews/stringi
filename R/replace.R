@@ -76,20 +76,31 @@ stri_replace_last <- function(str, pattern, replacement) {
 }
 
 
-#' Replace all regex
+#' Replace All Occurences of a Regex Pattern
 #' 
 #' 
-#' @param str character vector
-#' @param pattern character vector
-#' @param replacement 
+#' Replaces every substring of the input that matches the pattern 
+#' with the given replacement string. 
+#' 
+#' The function scans the input string for matches of the pattern. 
+#' Input that is not part of any match is left unchanged; 
+#' each match is replaced in the result by the replacement string. 
+#' The replacement string may contain references to capture groups.
+#' 
+#' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
+#' 
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
+#' @param replacement character vector of strings to replace with
 #' @return character vector
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_all_regex(s," .*? ","#")
-#' stri_replace_all_regex(s,"(el|s)it","1234")
+#' stri_replace_all_regex(s, " .*? ", "#")
+#' stri_replace_all_regex(s, "(el|s)it", "1234")
 #' 
 #' @export
+#' @family regex
 stri_replace_all_regex <- function(str, pattern, replacement) {
    # prepare_arg done internally
    .Call("stri_replace_all_regex", str, pattern, replacement, PACKAGE="stringi")

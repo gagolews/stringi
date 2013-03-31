@@ -24,6 +24,7 @@
  * @param s ...
  * @param pattern ...
  * @return ...
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_detect_fixed(SEXP s, SEXP pattern)
 {
@@ -31,9 +32,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
    pattern = stri_prepare_arg_string(pattern);
    int ns = LENGTH(s);
    int np = LENGTH(pattern);
-   //if any length is 0 then return empty list
-   if (ns<=0 || np<=0)
-      return allocVector(LGLSXP, 0);
+   if (ns <= 0 || np <= 0) return allocVector(LGLSXP, 0);
    int nmax = stri__recycling_rule(ns, np);
    
    SEXP e;
@@ -76,16 +75,16 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
  * .... 
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
+ * @version 0.1 (Marcin Bujarski)
+ * @version 0.2 (Marek Gagolewski)
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   
    int ns = LENGTH(str);
    int np = LENGTH(pattern);
-   if (ns == 0 || np == 0)
-      return allocVector(LGLSXP, 0);
+   if (ns <= 0 || np <= 0) return allocVector(LGLSXP, 0);
    int nmax = stri__recycling_rule(ns, np);
    
    SEXP ret;

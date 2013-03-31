@@ -451,7 +451,6 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
-   
    R_len_t nout = stri__recycling_rule(ns, np);
    
    SEXP ans;
@@ -593,10 +592,11 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
 
 /* REGEX */
 
-/** Locate all occurences of pattern
+/** Locate all occurences of a regex pattern
  * @param s character vector
  * @param p character vector
  * @return list of integer matrices (2 columns)
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_locate_all_regex(SEXP s, SEXP p)
 {
@@ -605,7 +605,6 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
-   
    R_len_t nout = stri__recycling_rule(ns, np);
    
    UErrorCode status;
@@ -698,10 +697,11 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
 }
 
 
-/** Locate first occurences of pattern
+/** Locate first occurence of a regex pattern
  * @param s character vector
  * @param p character vector
  * @return list of integer matrices (2 columns)
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_locate_first_regex(SEXP s, SEXP p)
 {
@@ -710,7 +710,6 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
-   
    R_len_t nout = stri__recycling_rule(ns, np);
    
    UErrorCode status;

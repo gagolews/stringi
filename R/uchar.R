@@ -18,6 +18,31 @@
 
 
 
+#' Character Classes in \pkg{stringi}
+#'
+#' There are two separate ways to specify character classes or
+#' their complements in \pkg{stringi}:
+#' 
+#' * with Unicode General Category Masks, e.g. \code{Lu} for Upper-Case Letters,
+#' see \code{\link{stri_char_getcategoryid}}
+#' 
+#' * with Unicode Binary Property Identifies, e.g. \code{ALPHABETIC} for
+#' alphabetic characters, see \code{\link{stri_char_getpropertyid}}
+#' 
+#' Note that e.g. General Category \code{Z} (some space) and Binary Property
+#' \code{WHITE_SPACE} may match different character sets.
+#' 
+#' @references
+#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
+#' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
+#' 
+#' @family charclass
+#' @name charclass-main
+NULL
+
+
+
+
 #' Get character types (general character category identifier)
 #'
 #' Returns the general category value for each *code point* in each string
@@ -26,9 +51,11 @@
 #' @return list of numeric vectors
 #' @seealso \code{\link{stri_charcategories}}, \code{\link{stri_char_getcategoryid}}
 #' @export
+#' @family charclass
 stri_chartype <- function(s) {
    .Call("stri_chartype", s, PACKAGE="stringi")
 }
+
 
 #' Get general character categories
 #'
@@ -38,6 +65,7 @@ stri_chartype <- function(s) {
 #' @return data frame with 2 columns...
 #' @seealso \code{\link{stri_chartype}}, \code{\link{stri_char_getcategoryid}}
 #' @export
+#' @family charclass
 stri_charcategories <- function() {
    categories <- as.data.frame(.Call("stri_charcategories", PACKAGE="stringi"),
       stringsAsFactors=FALSE)
@@ -90,6 +118,7 @@ stri_charcategories <- function() {
 #' @return Internal Unicode character General Category identifier
 #' @seealso \code{\link{stri_charcategories}}
 #' @export
+#' @family charclass
 stri_char_getcategoryid <- function(name)
 {
    .Call("stri_char_getcategoryid", name, PACKAGE="stringi")  
@@ -161,6 +190,7 @@ stri_char_getcategoryid <- function(name)
 #' @param name Property name
 #' @return Internal Unicode character Binary Property identifier
 #' @export
+#' @family charclass
 stri_char_getpropertyid <- function(name)
 {
    .Call("stri_char_getpropertyid", name, PACKAGE="stringi")  

@@ -18,7 +18,7 @@
 
 
 
-#' Regular expressions in \pkg{stringi}
+#' Regular Expressions in \pkg{stringi}
 #'
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
 #' the \pkg{ICU} regex engine.

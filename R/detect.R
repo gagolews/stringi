@@ -19,7 +19,7 @@
 
 #' Detect If a String Contains Given Substring
 #' 
-#' Vectorized over \code{str} and \code{pattern}
+#' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector
 #' @param pattern character vector 
@@ -31,10 +31,10 @@ stri_detect_fixed <- function(str, pattern) {
 
 #' Detect If a String Matches a Given Pattern
 #' 
-#' Vectorized over \code{str} and \code{pattern}
+#' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' @param str character vector
-#' @param pattern character vector containing regular expressions
+#' @param str character vector of strings to search in
+#' @param pattern character vector of regex patterns to search for
 #' @export
 #' @family regex
 stri_detect_regex <- function(str, pattern) {

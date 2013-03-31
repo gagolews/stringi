@@ -34,14 +34,9 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    R_len_t ns   = LENGTH(s);
    R_len_t npat = LENGTH(pat);
    R_len_t nrep = LENGTH(rep);
-   //if any length is 0 then return empty vector
-   if (ns==0 || npat==0 || nrep==0)
-      return allocVector(STRSXP, 0);
-   R_len_t nmax = ns;
-   if(npat>nmax) nmax=npat;
-   if(nrep>nmax) nmax=nrep;
-   //if (nmax % ns != 0 || nmax % npat != 0 || nmax % nrep != 0)
-   //   warning(MSG__WARN_RECYCLING_RULE);
+   if (ns==0 || npat==0 || nrep==0) return allocVector(STRSXP, 0);
+   R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
+   
    int count = 0;
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
@@ -82,14 +77,9 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    int ns   = LENGTH(s);
    int npat = LENGTH(pat);
    int nrep = LENGTH(rep);
-   //if any length is 0 then return empty vector
-   if (ns<=0 || npat<=0 || nrep<=0)
-      return allocVector(STRSXP, 0);
-   int nmax = ns;
-   if(npat>nmax) nmax=npat;
-   if(nrep>nmax) nmax=nrep;
-   //if (nmax % ns != 0 || nmax % npat != 0 || nmax % nrep != 0)
-   //   warning(MSG__WARN_RECYCLING_RULE);
+   if (ns<=0 || npat<=0 || nrep<=0) return allocVector(STRSXP, 0);
+   R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
+   
    int count = 0;
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
@@ -118,11 +108,13 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
 
 
 /** 
- * .... 
- * @param s ...
- * @param pattern ...
- * @param replacement ...
- * @return ...
+ * Replace all occurences of \code{p} by \code{r} in \code{s}
+ * 
+ * @param s strings to search in
+ * @param pattern regex patterns to search for
+ * @param replacement replacements
+ * @return character vector
+ * @version 0.1 (Bartek Tartanus)
  */
 SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
 {
@@ -132,9 +124,7 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nr = LENGTH(r);
-   //if any length is 0 then return empty vector
-   if (ns <= 0 || np <= 0 || nr <= 0)
-      return allocVector(STRSXP, 0);
+   if (ns <= 0 || np <= 0 || nr <= 0) return allocVector(STRSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, np, nr);
    
    SEXP ret;
@@ -169,6 +159,10 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
          delete matcher;
       }   
    }
+   
+   delete ss;
+   delete pp;
+   delete rr;
    UNPROTECT(1);
    return ret;
 }
