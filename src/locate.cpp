@@ -609,8 +609,8 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s);
-   StriContainerUTF16* pp = new StriContainerUTF16(p);
+   StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
+   StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
    
    SEXP ans;
    SEXP dimnames;
@@ -714,8 +714,8 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
    
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s);
-   StriContainerUTF16* pp = new StriContainerUTF16(p);
+   StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
+   StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
    
    SEXP ans;
    SEXP dimnames;

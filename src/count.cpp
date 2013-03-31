@@ -90,8 +90,8 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
    PROTECT(ret = allocVector(INTSXP, nmax));
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(str);
-   StriContainerUTF16* pp = new StriContainerUTF16(pattern);
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
 
    for (int i = 0; i < np; i++) { // for each pattern
       if (pp->isNA(i)) {

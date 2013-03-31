@@ -21,6 +21,9 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex(NA, NA), NA)
    expect_identical(stri_detect_regex(character(0), character(0)), logical(0))
    
+   expect_identical(stri_detect_regex('a', c('a', 'b', 'c')), c(T,F,F))
+   expect_identical(stri_detect_regex(c('a', 'b', 'c'), 'a'), c(T,F,F))
+   
    s <- c("Lorem", "123", " ", " ", "kota", "4\tą")
    p <- c("[[:alpha:]]+", "[[:blank:]]+")
    expect_identical(stri_detect_regex(s, p), c(T, F, F, T, T, T))

@@ -132,9 +132,9 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s);
-   StriContainerUTF16* pp = new StriContainerUTF16(p);
-   StriContainerUTF16* rr = new StriContainerUTF16(r);
+   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
+   StriContainerUTF16* rr = new StriContainerUTF16(r, nmax);
    
    for (int i = 0; i < np; i++) { // for each pattern
       if (pp->isNA(i)) {
@@ -150,7 +150,8 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
             if (ss->isNA(j % ns))
                SET_STRING_ELT(ret, j, NA_STRING);
             else {
-               status = U_ZERO_ERROR;
+               warning("Not done yet...");
+               matcher->reset(ss->get(j%ns));
                matcher->replaceAll(rr->get(j%nr), status);
                SET_VECTOR_ELT(ret, i, ss->toR());   
             }

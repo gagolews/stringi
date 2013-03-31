@@ -89,38 +89,22 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
    
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, nmax));
-   UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(str);
-   StriContainerUTF16* pp = new StriContainerUTF16(pattern);
-
-   for (int i = 0; i < np; i++) { // for each pattern
-      if (pp->isNA(i)) {
-         for (int j = i; j < nmax; j += np)
-            LOGICAL(ret)[j] = NA_LOGICAL;
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
+ 
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         LOGICAL(ret)[i] = NA_LOGICAL;
       }
       else {
-//          ICU team [ICU trac #10054] answer for our [stringi-issue #17]:
-//          The parameter type to Reset is (const UnicodeString &). The matcher
-//          retains a reference to the caller supplied string; it does not copy it.
-//          UnicodeString has a constructor from (const char *). So we get a temporary
-//          UnicodeString constructed, then deleted after the reset() returns, leaving
-//          the matcher to operate on deleted data.
-
-         status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
-         if (U_FAILURE(status))
-            error(u_errorName(status));
-         for (int j = i; j < nmax; j += np) {
-            if (ss->isNA(j % ns))
-               LOGICAL(ret)[j] = NA_LOGICAL;
-            else {
-               matcher->reset(ss->get(j%ns));
-               int found = (int)matcher->find();
-               LOGICAL(ret)[j] = found;
-            }
-         }
-         delete matcher;
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i);
+         matcher->reset(ss->get(i));
+         int found = (int)matcher->find();
+         LOGICAL(ret)[i] = found;
       }
    }
    

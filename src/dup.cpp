@@ -72,7 +72,6 @@ SEXP stri_dup(SEXP s, SEXP c)
    }
    else {
       char* buf = R_alloc(maxsize, sizeof(char)); // thread-safe
-      char* buf2;
       // at least one string should be copied (for some i, j)
       
       for (int i=0; i<ns; ++i) {

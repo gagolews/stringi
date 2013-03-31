@@ -20,6 +20,9 @@
 #define __unicoder_h
 
 
+/**
+ * ...
+ */
 enum StriEnc {
    STRI_ENC_UNDEFINED=0,
    STRI_ENC_ASCII,
@@ -34,46 +37,70 @@ enum StriEnc {
 /**
  * A class to handle conversion between R character vectors and UTF-16 string vectors
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - lastMatcher cache, supports auto-vectorization
  */
 class StriContainerUTF16 {
    
    private:
       
-      R_len_t n;            ///< number of strings 
+      R_len_t n;            ///< number of strings (size of \code{enc} and \code{str})
       StriEnc* enc;         ///< original encoding of each string
-      UnicodeString** str;  ///< data - \code{UnicodeString}s
-      
-      
+      UnicodeString** str;  ///< data - \code{UnicodeString}s 
+      R_len_t nrecycle;     ///< number of strings for the recycle rule (can be > \code{n})
+      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
       
    public:
       
       StriContainerUTF16();
-      StriContainerUTF16(SEXP rstr);
+      StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
       StriContainerUTF16(StriContainerUTF16& container);
       ~StriContainerUTF16();
       StriContainerUTF16& operator=(StriContainerUTF16& container);
       SEXP toR() const;
-      inline R_len_t length() const { return this->n; }
+//      inline R_len_t length() const { return this->n; }
       
+      /** check if the vectorized ith element is NA
+       */
       inline bool isNA(int i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= n) error("isNA: INDEX OUT OF BOUNDS");
+         if (i < 0 || i >= nrecycle) error("isNA: INDEX OUT OF BOUNDS");
 #endif
-         return (this->enc[i] == STRI_NA);
+         return (this->enc[i%n] == STRI_NA);
       }
       
+      /** get the vectorized ith element
+       */
       UnicodeString& get(int i) {
 #ifndef NDEBUG
-         if (i < 0 || i >= n) error("get: INDEX OUT OF BOUNDS");
+         if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
 #endif
-         return (*(this->str[i]));
+         return (*(this->str[i%n]));
+      }
+      
+      
+      
+      RegexMatcher* vectorize_getMatcher(R_len_t i);
+      
+      /** Loop over vectorized container - init */
+      inline R_len_t vectorize_init() const {
+         if (this->n <= 0) return this->nrecycle;
+         else return 0;
+      }
+      
+      /** Loop over vectorized container - end iterator */
+      inline R_len_t vectorize_end() const {
+         return this->nrecycle;  
+      }
+      
+      /** Loop over vectorized container - next iteration */
+      inline R_len_t vectorize_next(R_len_t i) const {
+         if (i == this->nrecycle-1) return this->nrecycle; // this is the end
+         i = i + this->n;
+         if (i >= this->nrecycle)
+            return ((i+1) % this->nrecycle);  
+         else
+            return i;
       }
 };
-
-
-
-
-//SEXP    stri__convertToUtf8(SEXP x, cetype_t& outenc);              // ...
-//SEXP    stri__convertFromUtf8(SEXP x, cetype_t outenc);             // ...
 
 #endif

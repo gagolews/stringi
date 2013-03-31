@@ -232,10 +232,10 @@ SEXP stri_width(SEXP s)
 {
    s = stri_prepare_arg_string(s);
    R_len_t ns = LENGTH(s);
-   UChar32 c;
+   //UChar32 c;
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, ns));
-   int* retint = INTEGER(ret);   
+   //int* retint = INTEGER(ret);   
    
    ///< @TODO ------------------------------------------------------------------------------------------------------
    error("TODO: the function has not yet been implemented.");
