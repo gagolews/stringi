@@ -150,8 +150,7 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
             if (ss->isNA(j % ns))
                SET_STRING_ELT(ret, j, NA_STRING);
             else {
-               warning("Not done yet...");
-               matcher->reset(ss->get(j%ns));
+               status = U_ZERO_ERROR;
                matcher->replaceAll(rr->get(j%nr), status);
                SET_VECTOR_ELT(ret, i, ss->toR());   
             }

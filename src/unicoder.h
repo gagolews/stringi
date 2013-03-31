@@ -32,15 +32,16 @@ enum StriEnc {
 
 
 /**
- * ...
+ * A class to handle conversion between R character vectors and UTF-16 string vectors
+ * @version 0.1 (Marek Gagolewski)
  */
 class StriContainerUTF16 {
    
    private:
       
-      R_len_t n;           ///< number of strings 
-      StriEnc* enc;        ///< original encoding of each string
-      UnicodeString* str;  ///< data
+      R_len_t n;            ///< number of strings 
+      StriEnc* enc;         ///< original encoding of each string
+      UnicodeString** str;  ///< data - \code{UnicodeString}s
       
       
       
@@ -58,14 +59,14 @@ class StriContainerUTF16 {
 #ifndef NDEBUG
          if (i < 0 || i >= n) error("isNA: INDEX OUT OF BOUNDS");
 #endif
-         return this->enc[i] == STRI_NA;
+         return (this->enc[i] == STRI_NA);
       }
       
       UnicodeString& get(int i) {
 #ifndef NDEBUG
          if (i < 0 || i >= n) error("get: INDEX OUT OF BOUNDS");
 #endif
-         return this->str[i];
+         return (*(this->str[i]));
       }
 };
 

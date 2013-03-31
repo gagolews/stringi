@@ -76,7 +76,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
  * @version 0.1 (Marcin Bujarski)
- * @version 0.2 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
