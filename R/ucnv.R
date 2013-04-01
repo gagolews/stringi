@@ -80,7 +80,7 @@
 #' @references
 #' Conversion - ICU User Guide, \url{http://userguide.icu-project.org/conversion} \cr
 #' Converters - ICU User Guide, \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
-#' @name encoding-main
+#' @name encoding_main
 #' @family encoding
 NULL
 

@@ -28,6 +28,6 @@
 #' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
 #' @family regex
-#' @name regex-main
+#' @name regex_main
 NULL
 

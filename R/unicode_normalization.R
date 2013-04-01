@@ -18,50 +18,85 @@
 
 
 
-#' Perform Unicode normalization (NFC)
+#' Perform Unicode Normalization
 #' 
-#' @param str will be coerced to character
+#' Unicode Normalization Forms are formally defined normalizations of Unicode 
+#' strings which make it possible to determine whether any two Unicode 
+#' strings are equivalent to each other.
+#' Essentially, the Unicode Normalization Algorithm puts all combining 
+#' marks in a specified order, and uses rules for decomposition 
+#' and composition to transform each string into one of the 
+#' Unicode Normalization Forms. 
+#' 
+#' The following Normalization Forms (NFs) are supported:
+#' \itemize{
+#' \item NFC (Canonical Decomposition, followed by Canonical Composition),
+#' \item NFD (Canonical Decomposition),
+#' \item NFKC (Compatibility Decomposition, followed by Canonical Composition),
+#' \item NFKD (Compatibility Decomposition),
+#' \item NFKC_Casefold (combination of NFKC, case folding, and removing ignorable
+#'  characters which was introduced with Unicode 5.2)
+#' }
+#' 
+#' Note that many W3C Specifications recommend using NFC for all content,
+#' because this form avoids potential interoperability problems arising 
+#' from the use of canonically equivalent, yet different,
+#' character sequences in document formats on the Web.
+#' 
+#' The input character vector can be in any encoding.
+#' The output will always be in UTF-8.
+#' 
+#' @param str character vector to be encoded
 #' @export
-stri_nfc <- function(str) {
+#' @rdname unicode_normalization
+#' @family encoding
+#' @references
+#' {Unicode Normalization Forms} - Unicode Standard Annex #15,
+#'    \url{http://unicode.org/reports/tr15}\cr
+#' {Character Model for the World Wide Web 1.0: Normalization}
+#'    - W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}\cr
+#' {Normalization} - ICU User Guide,
+#'    \url{http://userguide.icu-project.org/transforms/normalization} [technical details]\cr
+stri_enc_nfc <- function(str) {
    # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 10L, PACKAGE="stringi")
 }
 
-#' Perform Unicode normalization (NFD)
-#' 
-#' @param str will be coerced to character
+
+
+#' @rdname unicode_normalization
 #' @export
-stri_nfd <- function(str) {
+stri_enc_nfd <- function(str) {
    # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 20L, PACKAGE="stringi")
 }
 
 
-#' Perform Unicode normalization (NFKD)
-#' 
-#' @param str will be coerced to character
+
+
+#' @rdname unicode_normalization
 #' @export
-stri_nfkd <- function(str) {
+stri_enc_nfkd <- function(str) {
    # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 21L, PACKAGE="stringi")
 }
 
 
-#' Perform Unicode normalization (NFKC)
-#' 
-#' @param str will be coerced to character
+
+
+#' @rdname unicode_normalization
 #' @export
-stri_nfkc <- function(str) {
+stri_enc_nfkc <- function(str) {
    # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 11L, PACKAGE="stringi")
 }
 
 
-#' Perform Unicode normalization (NFKC_Casefild)
-#' 
-#' @param str will be coerced to character
+
+
+#' @rdname unicode_normalization
 #' @export
-stri_nfkc_casefold <- function(str) {
+stri_enc_nfkc_casefold <- function(str) {
    # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 12L, PACKAGE="stringi")
 }

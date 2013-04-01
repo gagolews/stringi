@@ -185,7 +185,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 /** Export string to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
  */
-SEXP StriContainerUTF16::toR(R_len_t i)
+SEXP StriContainerUTF16::toR(R_len_t i) const
 {
    switch (this->enc[i]) {
       case STRI_NA:
