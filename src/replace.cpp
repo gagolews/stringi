@@ -149,7 +149,7 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
          matcher->reset(ss->get(i));
          
          UErrorCode status = U_ZERO_ERROR;
-         ss->get(i) = matcher->replaceAll(rr->get(i), status);  // this has length nmax now, we may modify it
+         ss->set(i, matcher->replaceAll(rr->get(i), status));  // this has length nmax now, we may modify it
          if (U_FAILURE(status))
             error(MSG__REGEXP_FAILED);
          SET_STRING_ELT(ret, i, ss->toR(i));

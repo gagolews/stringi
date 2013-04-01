@@ -31,6 +31,9 @@ StriContainerUTF16::StriContainerUTF16()
    this->enc = NULL;
    this->str = NULL;
    this->lastMatcher = NULL;
+   this->ucnvNative = NULL;
+   this->ucnvLatin1 = NULL;
+   this->isShallow = true;
 }
 
 
@@ -47,7 +50,10 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
       error("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
 #endif
    this->n = LENGTH(rstr);
+   this->isShallow = shallowrecycle;
    this->lastMatcher = NULL;
+   this->ucnvNative = NULL;
+   this->ucnvLatin1 = NULL;
    
 #ifndef NDEBUG 
    if (this->n > n2) error("DEBUG: n>nrecycle");
@@ -59,8 +65,8 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
       this->str = NULL;
    }
    else {
-      this->enc = new StriEnc[(shallowrecycle)?this->n:this->nrecycle];
-      this->str = new UnicodeString*[(shallowrecycle)?this->n:this->nrecycle];
+      this->enc = new StriEnc[(this->isShallow)?this->n:this->nrecycle];
+      this->str = new UnicodeString*[(this->isShallow)?this->n:this->nrecycle];
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -94,9 +100,8 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
             }
          }
       }
-      if (!shallowrecycle) {
+      if (!this->isShallow) {
          for (R_len_t i=this->n; i<this->nrecycle; ++i) {
-            SEXP curs = STRING_ELT(rstr, i);
             this->enc[i] = this->enc[i%this->n];
             if (this->enc[i] == STRI_NA)
                this->str[i] = NULL;
@@ -113,7 +118,10 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
 {
    this->n = container.n;
    this->nrecycle = container.nrecycle;
+   this->isShallow = container.isShallow;
    this->lastMatcher = NULL;
+   this->ucnvNative = NULL;
+   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
       this->enc = new StriEnc[this->n];
       this->str = new UnicodeString*[this->n];
@@ -138,7 +146,10 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
    this->n = container.n;
    this->nrecycle = container.nrecycle;
+   this->isShallow = container.isShallow;
    this->lastMatcher = NULL;
+   this->ucnvNative = NULL;
+   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
       this->enc = new StriEnc[this->n];
       this->str = new UnicodeString*[this->n];
@@ -191,6 +202,13 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
 
 StriContainerUTF16::~StriContainerUTF16()
 {
+   if (this->lastMatcher)
+      delete this->lastMatcher;
+   if (this->ucnvNative)
+      ucnv_close(this->ucnvNative);
+   if (this->ucnvLatin1)
+      ucnv_close(this->ucnvLatin1);
+
    if (this->n > 0) {
       for (int i=0; i<this->n; ++i) {
          if (this->str[i])
@@ -199,14 +217,14 @@ StriContainerUTF16::~StriContainerUTF16()
       delete [] this->enc;  
       delete [] this->str;
    }
-   if (this->lastMatcher)
-      delete this->lastMatcher;
-      
+
    this->enc = NULL;
    this->str = NULL;
    this->lastMatcher = NULL;
    this->n = 0;
    this->nrecycle = 0;
+   this->ucnvNative = NULL;
+   this->ucnvLatin1 = NULL;
 }
 
 
@@ -222,7 +240,11 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
 {
    if (this->lastMatcher) {
       if (i >= this->n) {
-//         cerr << "Matcher reuse" << endl; // tmp, test only
+#ifndef NDEBUG
+      if ((this->debugMatcherIndex % this->n) != (i % this->n))
+         error("DEBUG: vectorize_getMatcher - matcher reuse failed!");
+      //         cerr << "Matcher reuse" << endl; // tmp, test only
+#endif
          return lastMatcher; // reuse
       }
       else {
@@ -237,6 +259,9 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
       this->~StriContainerUTF16();
       error(u_errorName(status));
    }
-   
+#ifndef NDEBUG
+   this->debugMatcherIndex = (i % this->n);
+#endif
+
    return lastMatcher;
 }

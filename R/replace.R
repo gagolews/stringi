@@ -36,6 +36,7 @@ stri_replace_all_fixed <- function(str, pattern, replacement) {
 	.Call("stri_replace_all_fixed", str, pattern, replacement, PACKAGE="stringi")
 }
 
+
 #' Replace First Occurence of a Pattern
 #' 
 #' 

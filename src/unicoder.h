@@ -44,11 +44,17 @@ class StriContainerUTF16 {
    private:
       
       R_len_t n;            ///< number of strings (size of \code{enc} and \code{str})
-      StriEnc* enc;         ///< original encoding of each string
-      UnicodeString** str;  ///< data - \code{UnicodeString}s 
       R_len_t nrecycle;     ///< number of strings for the recycle rule (can be > \code{n})
+      StriEnc* enc;              ///< original encoding of each string
+      UnicodeString** str;       ///< data - \code{UnicodeString}s 
       RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
-      
+      UConverter* ucnvNative;    ///< recently used Native encoder
+      UConverter* ucnvLatin1;    ///< recently used Latin1 encoder
+      bool isShallow;            ///< have we made only shallow copy of the strings (=> read only)
+#ifndef NDEBUG
+      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
+#endif
+
    public:
       
       StriContainerUTF16();
@@ -71,14 +77,23 @@ class StriContainerUTF16 {
       
       /** get the vectorized ith element
        */
-      UnicodeString& get(int i) {
+      const UnicodeString& get(int i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
 #endif
          return (*(this->str[i%n]));
       }
       
-      
+      /** set the vectorized ith element
+       */
+      void set(int i, const UnicodeString& s) const {
+#ifndef NDEBUG
+         if (this->isShallow) error("set: shallow StriContainerUTF16");
+         if (n != nrecycle)   error("set: n!=nrecycle");
+         if (i < 0 || i >= n) error("set: INDEX OUT OF BOUNDS");
+#endif
+         *(this->str[i]) = s;
+      }
       
       RegexMatcher* vectorize_getMatcher(R_len_t i);
       
