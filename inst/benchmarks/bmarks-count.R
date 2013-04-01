@@ -1,4 +1,5 @@
 require(microbenchmark)
+require(stringr)
 
 local({
    

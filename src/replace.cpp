@@ -37,7 +37,6 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, npat, nrep, true); // disable warning here -> stri_split_fixed
    
-   int count = 0;
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
    PROTECT(sexpfalse = allocVector(LGLSXP,1));
@@ -51,7 +50,6 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    if(npat > nm) nm=npat;
    if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
       warning(MSG__WARN_RECYCLING_RULE);
-   int k=0,curslen,st,add,where;
    for (int i=0; i<nmax; ++i) {
       temp = VECTOR_ELT(split, i % nsplit);
       SET_STRING_ELT(currep,0,STRING_ELT(rep,i % nrep));
@@ -80,7 +78,6 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
    R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
    
-   int count = 0;
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
    PROTECT(sexpfalse = allocVector(LGLSXP,1));
@@ -94,7 +91,6 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    if(npat > nm) nm=npat;
    if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
       warning(MSG__WARN_RECYCLING_RULE);
-   int k=0,curslen,st,add,where;
    for (int i=0; i<nmax; ++i) {
       temp = VECTOR_ELT(split, i % nsplit);
       SET_STRING_ELT(currep,0,STRING_ELT(rep,i % nrep));
@@ -130,8 +126,6 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, nmax));
-   
-   UErrorCode status;
  
    StriContainerUTF16* ss = new StriContainerUTF16(s, nmax, false); // make a DEEP copy as the strings will be changed
    StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
