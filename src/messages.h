@@ -82,4 +82,10 @@
 #define MSG__REGEXP_FAILED \
    "regexp search failed"
    
+#define MSG__RESOURCE_ERROR_GET \
+   "required resource unavailable"
+   
+#define MSG__RESOURCE_ERROR_APPLY \
+   "error while applying operation"
+   
 #endif

@@ -39,6 +39,7 @@
 #'  one single encoding at a time and switch between them, or to convert
 #'   between external and internal encodings.
 #'
+#'
 #' \bold{UTF-8}
 #' 
 #' UTF-8 has ASCII as its subset. bytes 0--127 are the same....
@@ -47,6 +48,12 @@
 #' (from 2 to 4 bytes)
 #' 
 #' Not all sequences of bytes are valid UTF-8.
+#' 
+#' Unicode normalization..... see \link{unicode_normalization}
+#' for discussion
+#' 
+#' ???Most functions in \pkg{stringi} output results in UTF-8???
+#' 
 #' 
 #' \bold{Selecting Encodings in \pkg{stringi}}
 #' 

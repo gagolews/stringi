@@ -169,7 +169,8 @@ SEXP stri_locale_set(SEXP loc);                         // DONE
 
 
 // unicode_normalization.cpp:
-SEXP stri_unicode_normalization(SEXP s, SEXP type);
+const Normalizer2* stri__get_unicode_normalizer(SEXP type); // DONE
+SEXP stri_unicode_normalization(SEXP s, SEXP type);         // DONE
 
 
 // wrap.cpp

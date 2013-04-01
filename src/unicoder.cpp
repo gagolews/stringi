@@ -182,12 +182,46 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 }
 
 
+
+
+/** Export character vector to R
+ *  THE OUTPUT IS ALWAYS IN UTF-8
+ *  Recycle rule is applied, so length == nrecycle
+ */
+SEXP StriContainerUTF16::toR() const
+{
+   SEXP ret;   
+   PROTECT(ret = allocVector(STRSXP, this->nrecycle));
+   std::string buf;
+   
+   for (R_len_t i=0; i<this->nrecycle; ++i) {
+      if (!this->str[i%n])
+         SET_STRING_ELT(ret, i, NA_STRING);
+      else {
+         buf.clear();
+         this->str[i%n]->toUTF8String(buf);
+         SET_STRING_ELT(ret, i,
+            mkCharLenCE(buf.c_str(), buf.length(), CE_UTF8));
+      }
+   }
+   
+   UNPROTECT(1);
+   return ret;
+}
+
+
+
 /** Export string to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
+ *  @param i index [with recycle]
  */
 SEXP StriContainerUTF16::toR(R_len_t i) const
 {
-   switch (this->enc[i]) {
+#ifndef NDEBUG
+         if (i < 0 || i >= nrecycle) error("toR: INDEX OUT OF BOUNDS");
+#endif
+
+   switch (this->enc[i%n]) {
       case STRI_NA:
          return NA_STRING;
          
@@ -196,7 +230,7 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
 //      case STRI_ENC_UTF8:
       {
          std::string s;
-         this->str[i]->toUTF8String(s);
+         this->str[i%n]->toUTF8String(s);
          return mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
       }
 //         

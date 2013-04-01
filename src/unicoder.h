@@ -20,18 +20,7 @@
 #define __unicoder_h
 
 
-/**
- * ...
- */
-enum StriEnc {
-   STRI_ENC_UNDEFINED=0,
-   STRI_ENC_ASCII,
-   STRI_ENC_LATIN1,
-   STRI_ENC_UTF8,
-   STRI_ENC_NATIVE,
-   STRI_ENC_BYTES,
-   STRI_NA
-};
+
 
 
 /**
@@ -63,6 +52,7 @@ class StriContainerUTF16 {
       ~StriContainerUTF16();
       StriContainerUTF16& operator=(StriContainerUTF16& container);
       SEXP toR(R_len_t i) const;
+      SEXP toR() const;
 //      inline R_len_t length() const { return this->n; }
 
       
@@ -84,9 +74,20 @@ class StriContainerUTF16 {
          return (*(this->str[i%n]));
       }
       
+      /** get the vectorized ith element
+       */
+      UnicodeString& getWritable(int i) {
+#ifndef NDEBUG
+         if (this->isShallow) error("getWritable: shallow StriContainerUTF16");
+         if (n != nrecycle)   error("getWritable: n!=nrecycle");
+         if (i < 0 || i >= n) error("getWritable: INDEX OUT OF BOUNDS");
+#endif
+         return (*(this->str[i%n]));
+      }
+      
       /** set the vectorized ith element
        */
-      void set(int i, const UnicodeString& s) const {
+      void set(int i, const UnicodeString& s) {
 #ifndef NDEBUG
          if (this->isShallow) error("set: shallow StriContainerUTF16");
          if (n != nrecycle)   error("set: n!=nrecycle");

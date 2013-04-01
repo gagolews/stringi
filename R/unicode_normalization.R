@@ -44,21 +44,24 @@
 #' character sequences in document formats on the Web.
 #' 
 #' The input character vector can be in any encoding.
-#' The output will always be in UTF-8.
+#'
 #' 
 #' @param str character vector to be encoded
-#' @export
-#' @rdname unicode_normalization
-#' @family encoding
+#' @return For \code{stri_enc_nf*}, a character vector
+#' of the same lenght as input will be returned. The output will always be in UTF-8.
+#' 
 #' @references
 #' {Unicode Normalization Forms} - Unicode Standard Annex #15,
 #'    \url{http://unicode.org/reports/tr15}\cr
 #' {Character Model for the World Wide Web 1.0: Normalization}
 #'    - W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}\cr
 #' {Normalization} - ICU User Guide,
-#'    \url{http://userguide.icu-project.org/transforms/normalization} [technical details]\cr
+#'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
+#'    
+#' @export
+#' @rdname unicode_normalization
+#' @family encoding
 stri_enc_nfc <- function(str) {
-   # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 10L, PACKAGE="stringi")
 }
 
@@ -67,7 +70,6 @@ stri_enc_nfc <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfd <- function(str) {
-   # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 20L, PACKAGE="stringi")
 }
 
@@ -77,7 +79,6 @@ stri_enc_nfd <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkd <- function(str) {
-   # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 21L, PACKAGE="stringi")
 }
 
@@ -87,7 +88,6 @@ stri_enc_nfkd <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkc <- function(str) {
-   # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 11L, PACKAGE="stringi")
 }
 
@@ -97,6 +97,5 @@ stri_enc_nfkc <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkc_casefold <- function(str) {
-   # prepare_arg done internally
    .Call("stri_unicode_normalization", str, 12L, PACKAGE="stringi")
 }
