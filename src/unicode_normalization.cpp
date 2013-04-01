@@ -108,3 +108,47 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
    return ret;
 }
 
+
+/** 
+ * Check if String is Normalized
+ * 
+ * @param str character vector
+ * @param type normalization type [internal]
+ * @return logical vector
+ * @version 0.1 (Marek Gagolewski) - use StriContainerUTF16
+ */
+SEXP stri_enc_isnf(SEXP str, SEXP type)
+{
+   str = stri_prepare_arg_string(str);    // prepare string argument
+   const Normalizer2* normalizer =
+      stri__normalizer_get(type); // auto `type` check here
+
+   R_len_t nstr = LENGTH(str);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(LGLSXP, nstr));
+   int* retlog = LOGICAL(ret);
+   
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nstr);
+
+   for (R_len_t i = ss->vectorize_init();
+         i != ss->vectorize_end();
+         i = ss->vectorize_next(i))
+   {
+      if (!ss->isNA(i)) {
+         UErrorCode status = U_ZERO_ERROR;
+         retlog[i] = normalizer->isNormalized(ss->get(i), status);
+         if (U_FAILURE(status))
+            error(MSG__RESOURCE_ERROR_APPLY);
+      }
+      else
+         retlog[i] = NA_LOGICAL;
+   }
+   
+
+   delete ss;
+   // normalizer shall not be deleted at all
+   UNPROTECT(1);
+   return ret;
+}
+

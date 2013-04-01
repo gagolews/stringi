@@ -99,3 +99,47 @@ stri_enc_nfkc <- function(str) {
 stri_enc_nfkc_casefold <- function(str) {
    .Call("stri_enc_nf", str, 12L, PACKAGE="stringi")
 }
+
+
+
+
+#' @rdname unicode_normalization
+#' @export
+stri_enc_isnfc <- function(str) {
+   .Call("stri_enc_isnf", str, 10L, PACKAGE="stringi")
+}
+
+
+#' @rdname unicode_normalization
+#' @export
+stri_enc_isnfd <- function(str) {
+   .Call("stri_enc_isnf", str, 20L, PACKAGE="stringi")
+}
+
+
+
+
+#' @rdname unicode_normalization
+#' @export
+stri_enc_isnfkd <- function(str) {
+   .Call("stri_enc_isnf", str, 21L, PACKAGE="stringi")
+}
+
+
+
+
+#' @rdname unicode_normalization
+#' @export
+stri_enc_isnfkc <- function(str) {
+   .Call("stri_enc_isnf", str, 11L, PACKAGE="stringi")
+}
+
+
+
+
+#' @rdname unicode_normalization
+#' @export
+stri_enc_isnfkc_casefold <- function(str) {
+   .Call("stri_enc_isnf", str, 12L, PACKAGE="stringi")
+}
+
