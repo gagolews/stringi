@@ -118,11 +118,8 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    s = stri_prepare_arg_string(s);
    p = stri_prepare_arg_string(p);
    r = stri_prepare_arg_string(r);
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   R_len_t nr = LENGTH(r);
-   if (ns <= 0 || np <= 0 || nr <= 0) return allocVector(STRSXP, 0);
-   R_len_t nmax = stri__recycling_rule(ns, np, nr);
+   R_len_t nmax = stri__recycling_rule(LENGTH(s), LENGTH(p), LENGTH(r));
+   // this will work for nmax == 0:
    
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, nmax));

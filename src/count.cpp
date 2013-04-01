@@ -80,10 +80,8 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   R_len_t ns = LENGTH(str);
-   R_len_t np = LENGTH(pattern);
-   if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);
-   R_len_t nmax = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(LENGTH(str), LENGTH(pattern));
+   // this will work for nmax == 0:
    
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, nmax));

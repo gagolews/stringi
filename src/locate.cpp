@@ -445,9 +445,9 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    p = stri_prepare_arg_string(p); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
-   if (ns <= 0 || np <= 0) return stri__emptyList();
    R_len_t nout = stri__recycling_rule(ns, np);
-   
+   if (nout <= 0) return stri__emptyList();
+      
    SEXP ans;
    SEXP dimnames;
    SEXP colnames;
@@ -527,9 +527,8 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    p = stri_prepare_arg_string(p); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
-   if (ns <= 0 || np <= 0) return stri__emptyList();
-   
    R_len_t nmax = stri__recycling_rule(ns, np);
+   // this will work for nmax == 0:
    
    SEXP dimnames;
    SEXP colnames;
@@ -590,8 +589,8 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    p = stri_prepare_arg_string(p); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
-   if (ns <= 0 || np <= 0) return stri__emptyList();
    R_len_t nout = stri__recycling_rule(ns, np);
+   if (nout <= 0) return stri__emptyList();
    
    UErrorCode status;
  
@@ -679,24 +678,22 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
 
 
 /** Locate first occurence of a regex pattern
- * @param s character vector
- * @param p character vector
+ * @param str character vector
+ * @param pattern character vector
  * @return list of integer matrices (2 columns)
  * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_locate_first_regex(SEXP s, SEXP p)
+SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare string argument
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   if (ns <= 0 || np <= 0) return stri__emptyList();
-   R_len_t nmax = stri__recycling_rule(ns, np);
+   str     = stri_prepare_arg_string(str);
+   pattern = stri_prepare_arg_string(pattern);
+   R_len_t nmax = stri__recycling_rule(LENGTH(str), LENGTH(pattern));
+   // this will work for nmax == 0:
    
-   UErrorCode status;
+
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax);
-   StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
    
    SEXP dimnames;
    SEXP colnames;
@@ -704,40 +701,40 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
    PROTECT(dimnames = allocVector(VECSXP, 2));
    PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar("start"));
-   SET_STRING_ELT(colnames, 1, mkChar("end"));
+   SET_STRING_ELT(colnames, 0, mkChar("start")); // @TODO: maybe we should move "start" and "stop" to messages.h 
+   SET_STRING_ELT(colnames, 1, mkChar("end"));   // MSG__LOCATE_DIM_START, MSG__LOCATE_DIM_END ????
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
    int* iret = INTEGER(ret);
    setAttrib(ret, R_DimNamesSymbol, dimnames);
    
-   for (int i = 0; i < np; i++) { // for each pattern
-      if (pp->isNA(i)) {
-         for (int j = i; j < nmax; j += np)
-            INTEGER(ret)[j] = NA_INTEGER;
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         iret[i] = NA_INTEGER;
+         iret[i+nmax] = NA_INTEGER;
       }
       else {
-         status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
-         if (U_FAILURE(status))
-            error(u_errorName(status));
-         for (int j = i; j < nmax; j += np) {
-            if (ss->isNA(j % ns))
-               INTEGER(ret)[j] = NA_INTEGER;
-            else {
-               matcher->reset(ss->get(j%ns));
-               int found = (int)matcher->find();
-               if(found){ //find first matches
-                  iret[j] = (int)matcher->start(status) + 1; // 0-based index -> 1-based
-                  iret[j+nmax] = (int)matcher->end(status); //end returns position of next character after match
-                  
-               } else {
-                  iret[j] = NA_INTEGER;
-                  iret[j+nmax] = NA_INTEGER;
-               }
-            }
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+         matcher->reset(ss->get(i));
+         int found = (int)matcher->find();
+         if (found) { //find first matches
+            UErrorCode status = U_ZERO_ERROR;
+            int start = (int)matcher->start(status);
+            int end   = (int)matcher->end(status);
+            if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
+
+            // @ TODO : Adjush UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+
+            iret[i] = start + 1; // 0-based index -> 1-based
+            iret[i+nmax] = end;  // end returns position of next character after match
          }
-         delete matcher;
+         else {
+            iret[i] = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
+         }
       }   
    }
    

@@ -83,10 +83,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   int ns = LENGTH(str);
-   int np = LENGTH(pattern);
-   if (ns <= 0 || np <= 0) return allocVector(LGLSXP, 0);
-   int nmax = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(LENGTH(str), LENGTH(pattern));
+   // this will work for nmax == 0:
    
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, nmax));

@@ -55,6 +55,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
    this->ucnvNative = NULL;
    this->ucnvLatin1 = NULL;
    
+   if (n2 == 0) this->n = 0;
 #ifndef NDEBUG 
    if (this->n > n2) error("DEBUG: n>nrecycle");
 #endif
