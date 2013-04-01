@@ -85,13 +85,14 @@ SEXP stri_isempty(SEXP s);          // DONE
 SEXP stri_width(SEXP s);            // ...TODO...
 
 // locate.cpp
-SEXP stri_locate_all_class(SEXP s, SEXP c);
-SEXP stri_locate_all_fixed(SEXP s, SEXP p);
-SEXP stri_locate_all_regex(SEXP s, SEXP p);
-SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first);
-SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first);
-SEXP stri_locate_first_regex(SEXP s, SEXP p);
+SEXP stri_locate_all_class(SEXP str, SEXP c);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern);
+SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
+SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first);
+SEXP stri_locate_first_regex(SEXP str, SEXP patternp);
 
+void stri__locate_set_dimnames(SEXP matrix);
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
@@ -169,9 +170,9 @@ SEXP stri_locale_set(SEXP loc);                         // DONE
 
 
 // unicode_normalization.cpp:
-const Normalizer2* stri__normalizer_get(SEXP type); // DONE
-SEXP stri_enc_nf(SEXP s, SEXP type);                // DONE
-SEXP stri_enc_isnf(SEXP s, SEXP type);              // DONE
+const Normalizer2* stri__normalizer_get(SEXP type);     // DONE
+SEXP stri_enc_nf(SEXP s, SEXP type);                    // DONE
+SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 
 // wrap.cpp

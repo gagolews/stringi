@@ -18,6 +18,26 @@
  
 #include "stringi.h"
 
+
+/**
+ * Set colnames for matrix returned by stri_locate_first_* or stri_locate_last_*
+ * @param matrix R matrix with two columns
+ * @version 0.1 (Marek Gagolewski)
+ */
+void stri__locate_set_dimnames(SEXP matrix) {
+   SEXP dimnames;
+   SEXP colnames;
+   PROTECT(dimnames = allocVector(VECSXP, 2));
+   PROTECT(colnames = allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, mkChar(MSG__LOCATE_DIM_START));
+   SET_STRING_ELT(colnames, 1, mkChar(MSG__LOCATE_DIM_END));
+   SET_VECTOR_ELT(dimnames, 1, colnames);
+   setAttrib(matrix, R_DimNamesSymbol, dimnames);
+   UNPROTECT(2);
+}
+
+
+
 /* CLASS */
 
 /** Locate the first and/or the last occurence of character class in one string
@@ -173,14 +193,15 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    SEXP dimnames;
    SEXP colnames;
    SEXP ret;
+   /* @TODO: use stri__locate_set_dimnames or its modified version  */
    PROTECT(ret = allocVector(VECSXP, nout));
    PROTECT(dimnames = allocVector(VECSXP, 2));
    PROTECT(colnames = allocVector(STRSXP, 2));
    SET_STRING_ELT(colnames, 0, mkChar("start"));
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
-   
 
+   /* @TODO: use STL stack class here */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
       STRI__CREATE2NA_MATRIX(ans)      
@@ -249,6 +270,9 @@ SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
    first = stri_prepare_arg_logical(first); // prepare logical argument
    if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
       error(MSG__INCORRECT_INTERNAL_ARG);
+      
+   /* @TODO: this function should return a matrix with 2 columns
+      now this is assured by some R code :-( */
       
    s = stri_prepare_arg_string(s); // prepare string argument
    c = stri_prepare_arg_integer(c); // prepare integer argument
@@ -434,6 +458,8 @@ void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
    }
 }
 
+
+
 /** Locate all occurences of pattern
  * @param s character vector
  * @param p character vector
@@ -458,7 +484,8 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    SET_STRING_ELT(colnames, 0, mkChar("start"));
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
-   
+      /* @TODO: use stri__locate_set_dimnames or its modified version  */
+   /* @TODO: use STL stack class here */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
       STRI__CREATE2NA_MATRIX(ans)      
@@ -530,21 +557,12 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    R_len_t nmax = stri__recycling_rule(ns, np);
    // this will work for nmax == 0:
    
-   SEXP dimnames;
-   SEXP colnames;
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar("start"));
-   SET_STRING_ELT(colnames, 1, mkChar("end"));
-   SET_VECTOR_ELT(dimnames, 1, colnames);
-   
+   stri__locate_set_dimnames(ret);
    int* iret = INTEGER(ret);
-   setAttrib(ret, R_DimNamesSymbol, dimnames);
-      
-   int start, end, occurences=0;
    
+   int start, end, occurences=0;
    for (R_len_t i=0; i<nmax; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
       SEXP curp = STRING_ELT(p, i%np);
@@ -570,7 +588,7 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
       } 
    }
    
-   UNPROTECT(3);
+   UNPROTECT(1);
    return ret;
 }
 
@@ -590,7 +608,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(ns, np);
-   if (nout <= 0) return stri__emptyList();
+   if (nout <= 0) return stri__emptyList(); // at least one arg of length 0?
    
    UErrorCode status;
  
@@ -681,7 +699,8 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
  * @param str character vector
  * @param pattern character vector
  * @return list of integer matrices (2 columns)
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - StriContainerUTF16
  */
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
 {
@@ -689,25 +708,15 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    pattern = stri_prepare_arg_string(pattern);
    R_len_t nmax = stri__recycling_rule(LENGTH(str), LENGTH(pattern));
    // this will work for nmax == 0:
-   
 
- 
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
    
-   SEXP dimnames;
-   SEXP colnames;
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar("start")); // @TODO: maybe we should move "start" and "stop" to messages.h 
-   SET_STRING_ELT(colnames, 1, mkChar("end"));   // MSG__LOCATE_DIM_START, MSG__LOCATE_DIM_END ????
-   SET_VECTOR_ELT(dimnames, 1, colnames);
+   stri__locate_set_dimnames(ret);
    
    int* iret = INTEGER(ret);
-   setAttrib(ret, R_DimNamesSymbol, dimnames);
-   
    for (R_len_t i = pp->vectorize_init();
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
@@ -740,7 +749,7 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    
    delete ss;
    delete pp;
-   UNPROTECT(3);
+   UNPROTECT(1);
    return ret;
 }
 

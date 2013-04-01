@@ -88,4 +88,10 @@
 #define MSG__RESOURCE_ERROR_APPLY \
    "error while applying operation"
    
+#define MSG__LOCATE_DIM_START \
+   "start"
+
+#define MSG__LOCATE_DIM_END \
+   "end"
+   
 #endif
