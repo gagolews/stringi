@@ -540,52 +540,50 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
    
-   R_len_t nout = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(ns, np);
    
    SEXP ans;
    SEXP dimnames;
    SEXP colnames;
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
    PROTECT(dimnames = allocVector(VECSXP, 2));
    PROTECT(colnames = allocVector(STRSXP, 2));
    SET_STRING_ELT(colnames, 0, mkChar("start"));
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
-   PROTECT(ans = allocMatrix(INTSXP, 1, 2)); 
-   int* ians = INTEGER(ans);
-   setAttrib(ans, R_DimNamesSymbol, dimnames);
+   int* iret = INTEGER(ret);
+   setAttrib(ret, R_DimNamesSymbol, dimnames);
       
    int start, end, occurences=0;
    
-   for (R_len_t i=0; i<nout; ++i) {
+   for (R_len_t i=0; i<nmax; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
       SEXP curp = STRING_ELT(p, i%np);
       R_len_t cursl = LENGTH(curs);
       R_len_t curpl = LENGTH(curp);
 
       if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         ians[0] = NA_INTEGER; 
-         ians[1] = NA_INTEGER;
+         iret[i] = NA_INTEGER; 
+         iret[i+nmax] = NA_INTEGER;
       }
       else {
          stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
             start, end, occurences, LOGICAL(first)[0]);
          
          if (occurences > 0) {
-            ians[0] = start + 1; // 0-based index -> 1-based
-            ians[1] = end + 1;
+            iret[i] = start + 1; // 0-based index -> 1-based
+            iret[i+nmax] = end + 1;
          }
          else {
-            ians[0] = NA_INTEGER;
-            ians[1] = NA_INTEGER;
+            iret[i] = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
          }
       } 
-      SET_VECTOR_ELT(ret, i, ans);
    }
    
-   UNPROTECT(4);
+   UNPROTECT(3);
    return ret;
 }
 

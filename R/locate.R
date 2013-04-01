@@ -138,7 +138,6 @@ stri_locate_all_fixed <- function(str, pattern) {
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_last_fixed}}
 #' @export
 stri_locate_first_fixed <- function(str, pattern) {
-   warning('TO DO: stri_locate_first_fixed should return ONE matrix')
    .Call("stri_locate_first_or_last_fixed", str, pattern, TRUE, PACKAGE="stringi")
 }
 
@@ -159,7 +158,6 @@ stri_locate_first_fixed <- function(str, pattern) {
 #' @seealso \code{\link{stri_locate_all_fixed}}, \code{\link{stri_locate_first_fixed}}
 #' @export
 stri_locate_last_fixed <- function(str, pattern) {
-   warning('TO DO: stri_locate_last_fixed should return ONE matrix')
    .Call("stri_locate_first_or_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
 }
 
