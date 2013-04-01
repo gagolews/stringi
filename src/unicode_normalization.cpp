@@ -27,7 +27,7 @@
  * 
  * @version 0.1 (Marek Gagolewski)
  */
-const Normalizer2* stri__get_unicode_normalizer(SEXP type)
+const Normalizer2* stri__normalizer_get(SEXP type)
 {
    type = stri_prepare_arg_integer(type); // prepare int argument
    
@@ -79,11 +79,11 @@ const Normalizer2* stri__get_unicode_normalizer(SEXP type)
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
  */
-SEXP stri_unicode_normalization(SEXP str, SEXP type)
+SEXP stri_enc_nf(SEXP str, SEXP type)
 {
    str = stri_prepare_arg_string(str);    // prepare string argument
    const Normalizer2* normalizer =
-      stri__get_unicode_normalizer(type); // auto `type` check here
+      stri__normalizer_get(type); // auto `type` check here
 
    
    StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle

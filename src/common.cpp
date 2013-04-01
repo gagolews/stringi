@@ -155,7 +155,7 @@ char* stri__asciiCopyToUpperCase(char* dest, const char* src)
 {
    int i;
    for (i=0; src[i] != '\0'; ++i) {
-      if (src[i] > 127)
+      if (src[i] & 0x80) // i.e. ASCII code > 127
          error(MSG__EXPECTED_ASCII);
       else if (src[i] >= 'a' && src[i] <= 'z')
          dest[i] = src[i] - ('a'-'A');
@@ -182,7 +182,7 @@ char* stri__asciiCopyToLowerCase(char* dest, const char* src)
 {
    int i;
    for (i=0; src[i] != '\0'; ++i) {
-      if (src[i] > 127)
+      if (src[i] & 0x80) // i.e. ASCII code > 127
          error(MSG__EXPECTED_ASCII);
       else if (src[i] >= 'A' && src[i] <= 'Z')
          dest[i] = src[i] + ('a'-'A');

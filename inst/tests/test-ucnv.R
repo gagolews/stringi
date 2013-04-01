@@ -3,10 +3,7 @@ require(testthat)
 
 test_that("stri_encode", {
    
-   suppressWarnings(expect_equivalent(
-      stri_encode(rep("", 10), "blahblahblah", "nosuchencoding"),
-      rep(NA_character_, 10)))
-   expect_warning(stri_encode("", "blahblahblah", "nosuchencoding"))
+   expect_error(stri_encode("", "blahblahblah", "nosuchencoding"))
    
    expect_equivalent(stri_encode("", "", ""), "")
    expect_equivalent(stri_encode(LETTERS, "", ""), LETTERS)

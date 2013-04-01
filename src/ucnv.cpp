@@ -177,7 +177,7 @@ SEXP stri_enc_Rmark(SEXP s)
          cerr << "\tNA" << endl;
          continue;
       }
-      const char* string = CHAR(curs);
+      //const char* string = CHAR(curs);
       cerr << "\tMARK_ASCII =" << (IS_ASCII(curs) > 0);
       cerr << "\tMARK_UTF8  =" << (IS_UTF8(curs) > 0);
       cerr << "\tMARK_LATIN1=" << (IS_LATIN1(curs) > 0);
@@ -394,7 +394,6 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
    cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
    if (cs <= 0) error(MSG__ENC_ERROR_SET);
    standards = new const char*[cs];
-   R_len_t j=0;
 
    for (R_len_t i=0; i<cs; ++i) {
       err = U_ZERO_ERROR;
@@ -547,7 +546,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
          
       // check whether the character is represented
       // by a single UTF-16 code point
-      UChar lead = U16_LEAD(c), trail = U16_TRAIL(c);
+      UChar lead = U16_LEAD(c); //, trail = U16_TRAIL(c);
       if (!U16_IS_SINGLE(lead)) {
 #ifndef NDEBUG
          warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",

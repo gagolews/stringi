@@ -62,7 +62,7 @@
 #' @rdname unicode_normalization
 #' @family encoding
 stri_enc_nfc <- function(str) {
-   .Call("stri_unicode_normalization", str, 10L, PACKAGE="stringi")
+   .Call("stri_enc_nf", str, 10L, PACKAGE="stringi")
 }
 
 
@@ -70,7 +70,7 @@ stri_enc_nfc <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfd <- function(str) {
-   .Call("stri_unicode_normalization", str, 20L, PACKAGE="stringi")
+   .Call("stri_enc_nf", str, 20L, PACKAGE="stringi")
 }
 
 
@@ -79,7 +79,7 @@ stri_enc_nfd <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkd <- function(str) {
-   .Call("stri_unicode_normalization", str, 21L, PACKAGE="stringi")
+   .Call("stri_enc_nf", str, 21L, PACKAGE="stringi")
 }
 
 
@@ -88,7 +88,7 @@ stri_enc_nfkd <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkc <- function(str) {
-   .Call("stri_unicode_normalization", str, 11L, PACKAGE="stringi")
+   .Call("stri_enc_nf", str, 11L, PACKAGE="stringi")
 }
 
 
@@ -97,5 +97,5 @@ stri_enc_nfkc <- function(str) {
 #' @rdname unicode_normalization
 #' @export
 stri_enc_nfkc_casefold <- function(str) {
-   .Call("stri_unicode_normalization", str, 12L, PACKAGE="stringi")
+   .Call("stri_enc_nf", str, 12L, PACKAGE="stringi")
 }

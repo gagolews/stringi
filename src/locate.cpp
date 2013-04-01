@@ -346,8 +346,8 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             o = 1;
             start = charnum;
             j=i+k;
-            for(i; i<j; ++charnum)
-               U8_NEXT(s, i, ns, chr);
+            for(/* NOOP */; i<j; ++charnum)
+               ;
             --charnum;
             end = charnum;
             break;
@@ -410,7 +410,7 @@ void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
    int* start, int* end, int& o)
 {
    o = 0;
-   int charnum = 0,charnump=0;
+   int charnum = 0;
    int j,k;
    UChar32 chr;
    
@@ -424,7 +424,7 @@ void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
          start[o-1] = charnum;
          j=i+k;
          //if we found match there is no point of checking next k bytes
-         for(i; i<j; ++charnum)
+         for(/* NOOP */; i<j; ++charnum)
             U8_NEXT(s, i, ns, chr);
          //this line is here, because it was easier to --charnum than check
          //if j in loop should be i+k-1 or i+k-2 (value depends on many 
@@ -542,7 +542,6 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    
    R_len_t nmax = stri__recycling_rule(ns, np);
    
-   SEXP ans;
    SEXP dimnames;
    SEXP colnames;
    SEXP ret;
@@ -678,7 +677,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
                }
             }
             setAttrib(ans, R_DimNamesSymbol, dimnames); 
-            SET_VECTOR_ELT(ret, i, ans);
+            SET_VECTOR_ELT(ret, i, ans);  // !!!!! `ans` may be used uninitialized in this function !!!!!
             UNPROTECT(1); 
          }
          delete matcher;
@@ -783,7 +782,7 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
                }
             }
             setAttrib(ans, R_DimNamesSymbol, dimnames); 
-            SET_VECTOR_ELT(ret, i, ans);
+            SET_VECTOR_ELT(ret, i, ans); // !!!!! `ans` may be used uninitialized in this function !!!!!
             UNPROTECT(1); 
          }
          delete matcher;

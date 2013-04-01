@@ -38,7 +38,7 @@ OBJECTS     =  $(SRCS:.cpp=.o)
 
 
 PKG_LIBS     = -L/usr/local/lib -licuuc -licudata -licui18n -licuio -licule -liculx
-PKG_CXXFLAGS = -I/usr/local/include -Wall
+PKG_CXXFLAGS = -I/usr/local/include -Wall -Wextra
 RM           = rm -f
 
 .PHONY: all

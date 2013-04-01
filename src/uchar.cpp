@@ -170,7 +170,7 @@ SEXP stri_char_getcategoryid(SEXP x)
    if (name[0] == '^')
       cmpl = 1;  
    
-   int id = STRI__UCHAR_NOTUSED_MASK;
+   unsigned int id = STRI__UCHAR_NOTUSED_MASK;
    switch(name[cmpl]) {
       case 'C':
          switch (name[cmpl+1]) {
@@ -294,7 +294,7 @@ SEXP stri_char_getpropertyid(SEXP x)
    int cmpl = 0;
    if (name[0] == '^')
       cmpl = 1;
-   int id = STRI__UCHAR_NOTUSED_MASK;
+   unsigned int id = STRI__UCHAR_NOTUSED_MASK;
 
 #define STRI__BINPROP_TEST(x, y) \
    if (!strcmp(name+cmpl, x)) id = y;
