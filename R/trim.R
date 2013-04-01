@@ -24,14 +24,12 @@
 #' @return trimmed character vector 
 #' @export
 stri_trim <- function(str) {
-   # prepare_arg done internally in stri_sub
-   
-   from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
-   to <- stri_locate_last_class(str,    stri_char_getpropertyid("^WHITE_SPACE"))
+   if (length(str) == 0) return(str)
+   from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
+   to   <- as.integer(stri_locate_last_class(str,  stri_char_getpropertyid("^WHITE_SPACE"))[,1])
    from[is.na(from)] <- 0 # this will return an empty string
    to[is.na(to)] <- 0
    stri_sub(str, from, to)
-   
 #    .Call("stri_trim", str, PACKAGE="stringi")
 }
 
@@ -43,11 +41,9 @@ stri_trim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_ltrim <- function(str) {
-   # prepare_arg done internally in stri_sub
-   
-   from <- stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))
+   if (length(str) == 0) return(str)
+   from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
    from[is.na(from)] <- 0 # this will return an empty string
-   #any idea how to improve this two lines?
    to <- rep(-1,length(from))
    to[from==0] <- 0
    stri_sub(str, from, to)
@@ -61,9 +57,8 @@ stri_ltrim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_rtrim <- function(str) {
-   # prepare_arg done internally in stri_sub
-   
-   to <- stri_locate_last_class(str,stri_char_getpropertyid("^WHITE_SPACE"))
+   if (length(str) == 0) return(str)
+   to <- as.integer(stri_locate_last_class(str,stri_char_getpropertyid("^WHITE_SPACE"))[,1])
    to[is.na(to)] <- 0 # this will return an empty string
    stri_sub(str, 1, to)
 #   .Call("stri_rtrim", str, PACKAGE="stringi")
