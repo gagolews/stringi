@@ -180,15 +180,10 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
-#define STRI__LOCATEALL_NOTFOUND \
-      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(ans); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-         
+
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      STRI__LOCATEALL_NOTFOUND      
+      STRI__CREATE2NA_MATRIX(ans)      
       setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
       for (R_len_t i=0; i<nout; ++i)
@@ -208,7 +203,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
       R_len_t cursl = LENGTH(curs);
 
       if (curs == NA_STRING || cursl == 0) {
-         STRI__LOCATEALL_NOTFOUND 
+         STRI__CREATE2NA_MATRIX(ans)
       }
       else {
          stri__locate_all_class1(CHAR(curs), cursl, curc,
@@ -223,7 +218,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
             }
          }
          else {
-            STRI__LOCATEALL_NOTFOUND
+            STRI__CREATE2NA_MATRIX(ans)
          }
       }
          
@@ -339,7 +334,7 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
    if(first){
       for (int i=0; i<ns; ++charnum) {
          k=0;
-         while(s[i+k]==p[k] && k< np){
+         while(k < np && i+k < ns && s[i+k]==p[k]){
             ++k;
          }
          if(k==np){
@@ -347,7 +342,7 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             start = charnum;
             j=i+k;
             for(/* NOOP */; i<j; ++charnum)
-               ;
+               U8_NEXT(s, i, ns, chr);
             --charnum;
             end = charnum;
             break;
@@ -380,7 +375,7 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
 //previous (above) version returns (1,2)
       for (int i=ns-np; i>=0; --i) {
          k=0;
-         while(s[i+k]==p[k] && k < np){
+         while(k < np && i+k < ns && s[i+k]==p[k]){
             ++k;
          }
          if(k==np){
@@ -464,15 +459,9 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
-#define STRI__LOCATEALL_NOTFOUND \
-      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(ans); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-         
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      STRI__LOCATEALL_NOTFOUND      
+      STRI__CREATE2NA_MATRIX(ans)      
       setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
       for (R_len_t i=0; i<nout; ++i)
@@ -492,7 +481,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
       R_len_t curpl = LENGTH(curp);
 
       if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         STRI__LOCATEALL_NOTFOUND 
+         STRI__CREATE2NA_MATRIX(ans)
       }
       else {
          stri__locate_all_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
@@ -507,7 +496,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
             }
          }
          else {
-            STRI__LOCATEALL_NOTFOUND
+            STRI__CREATE2NA_MATRIX(ans)
          }
       }
          
@@ -620,15 +609,9 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
-#define STRI__LOCATEALL_NOTFOUND \
-      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(ans); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-         
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      STRI__LOCATEALL_NOTFOUND      
+      STRI__CREATE2NA_MATRIX(ans)
       setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
       for (R_len_t i=0; i<nout; ++i)
@@ -673,12 +656,13 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
                   }
                }
                else { //if not found, return matrix with NA
-                  STRI__LOCATEALL_NOTFOUND
+                  STRI__CREATE2NA_MATRIX(ans)
                }
-            }
+               
             setAttrib(ans, R_DimNamesSymbol, dimnames); 
             SET_VECTOR_ELT(ret, i, ans);  // !!!!! `ans` may be used uninitialized in this function !!!!!
             UNPROTECT(1); 
+            }
          }
          delete matcher;
       }   
@@ -707,44 +691,25 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    if (ns <= 0 || np <= 0) return stri__emptyList();
-   R_len_t nout = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(ns, np);
    
    UErrorCode status;
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
-   StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
+   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
    
-   SEXP ans;
    SEXP dimnames;
    SEXP colnames;
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
    PROTECT(dimnames = allocVector(VECSXP, 2));
    PROTECT(colnames = allocVector(STRSXP, 2));
    SET_STRING_ELT(colnames, 0, mkChar("start"));
    SET_STRING_ELT(colnames, 1, mkChar("end"));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
-#define STRI__LOCATEALL_NOTFOUND \
-      PROTECT(ans = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(ans); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-         
-   R_len_t nmax = stri__numbytes_max(s);
-   if (nmax <= 0) {
-      STRI__LOCATEALL_NOTFOUND      
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
-      
-      for (R_len_t i=0; i<nout; ++i)
-         SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(4);  
-      return ret;
-   }
-      
-   int* start = new int[nmax];
-   int* end = new int[nmax];
-   int  occurences=0;
+   int* iret = INTEGER(ret);
+   setAttrib(ret, R_DimNamesSymbol, dimnames);
    
    for (int i = 0; i < np; i++) { // for each pattern
       if (pp->isNA(i)) {
@@ -761,36 +726,20 @@ SEXP stri_locate_first_regex(SEXP s, SEXP p)
                INTEGER(ret)[j] = NA_INTEGER;
             else {
                matcher->reset(ss->get(j%ns));
-               occurences = 0;
                int found = (int)matcher->find();
                if(found){ //find first matches
-                  start[occurences] = (int)matcher->start(status);
-                  end[occurences] = (int)matcher->end(status);
-                  ++occurences;
-                  found = (int)matcher->find();
-               }
-               if (occurences > 0) { //rewrite them
-                  PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
-                  int* ians = INTEGER(ans);
-                  for(int j = 0; j < occurences; j++) {
-                     ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
-                     ians[j+1*occurences] = end[j]; //end returns position of next character after match
-                  }
-               }
-               else { //if not found, return matrix with NA
-                  STRI__LOCATEALL_NOTFOUND
+                  iret[j] = (int)matcher->start(status) + 1; // 0-based index -> 1-based
+                  iret[j+nmax] = (int)matcher->end(status); //end returns position of next character after match
+                  
+               } else {
+                  iret[j] = NA_INTEGER;
+                  iret[j+nmax] = NA_INTEGER;
                }
             }
-            setAttrib(ans, R_DimNamesSymbol, dimnames); 
-            SET_VECTOR_ELT(ret, i, ans); // !!!!! `ans` may be used uninitialized in this function !!!!!
-            UNPROTECT(1); 
          }
          delete matcher;
       }   
    }
-   
-   delete [] start;
-   delete [] end;
    
    delete ss;
    delete pp;

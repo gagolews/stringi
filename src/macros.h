@@ -60,6 +60,14 @@ enum StriNormalizationForm {
 };
 
 
+// locate.cpp
+
+#define STRI__CREATE2NA_MATRIX(x) \
+      PROTECT(x = allocMatrix(INTSXP, 1, 2)); \
+      int* ians = INTEGER(x); \
+      ians[0] = NA_INTEGER; \
+      ians[1] = NA_INTEGER;  
+
 // undef R's length macro (conflicts with std::string.length())
 // use LENGTH instead
 #undef length
