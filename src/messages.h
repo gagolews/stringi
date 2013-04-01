@@ -60,6 +60,9 @@
    
 #define MSG__ENC_ERROR_SET \
    "could not set, query or select given character encoding"
+   
+#define MSG__ENC_ERROR_CONVERT \
+   "could not convert string encoding"
 
 #define MSG__LOCALE_INCORRECT_ID \
    "incorrect locale identifier"

@@ -67,6 +67,9 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
    else {
       this->enc = new StriEnc[(this->isShallow)?this->n:this->nrecycle];
       this->str = new UnicodeString*[(this->isShallow)?this->n:this->nrecycle];
+      for (R_len_t i=0; i<this->n; ++i)
+         this->str[i] = NULL; // in case it fails during conversion
+         
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -83,8 +86,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
                this->enc[i] = STRI_ENC_UTF8; 
             }
             else if (IS_LATIN1(curs)) {
-               error(".... TO DO ....");
-               this->str[i] = NULL; // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)))
+               if (!this->ucnvLatin1)
+                  this->ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
+               UErrorCode status = U_ZERO_ERROR;
+               this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
+                  this->ucnvLatin1, status);
+               if (U_FAILURE(status))
+                  error(MSG__ENC_ERROR_CONVERT);  
                this->enc[i] = STRI_ENC_LATIN1; 
             }
             else if (IS_BYTES(curs)) 
@@ -94,8 +102,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
 //             Assume it's Native; this assumes the user working in an 8-bit environment
 //             would convert strings to UTF-8 manually if needed - I think is's
 //             a more reasonable approach (Native --> input via keyboard)
-               error(".... TO DO ....");
-               this->str[i] = NULL; // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)))
+               if (!this->ucnvNative)
+                  this->ucnvNative = stri__ucnv_open((char*)NULL);
+               UErrorCode status = U_ZERO_ERROR;
+               this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
+                  this->ucnvNative, status);
+               if (U_FAILURE(status))
+                  error(MSG__ENC_ERROR_CONVERT);  
                this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
@@ -169,33 +182,50 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 }
 
 
-/** Export string
+/** Export string to R
+ *  THE OUTPUT IS ALWAYS IN UTF-8
  */
-SEXP StriContainerUTF16::toR(R_len_t i) const
+SEXP StriContainerUTF16::toR(R_len_t i)
 {
    switch (this->enc[i]) {
       case STRI_NA:
          return NA_STRING;
          
-      case STRI_ENC_ASCII:
-      case STRI_ENC_UTF8: {
+      default:
+//      case STRI_ENC_ASCII:
+//      case STRI_ENC_UTF8:
+      {
          std::string s;
          this->str[i]->toUTF8String(s);
          return mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
       }
-         
-      case STRI_ENC_LATIN1:
-         error(".... TO DO ....");
-         break;
-         
-      case STRI_ENC_NATIVE:
-         error(".... TO DO ....");
-         break;
-         
-      default: // this shouldn't happen
-         error(MSG__ENC_ERROR_SET);
+//         
+//      case STRI_ENC_LATIN1:
+//         error(".... TO DO ....");
+//         break;
+//         
+//      case STRI_ENC_NATIVE: {
+//         if (!this->ucnvNative)
+//            this->ucnvNative = stri__ucnv_open((const char*)NULL);
+//         // the following buffer length is overestimated
+//         // (#codepoints <= UnicodeString::length() <= 2*#codepoints)
+//         const int n = UCNV_GET_MAX_BYTES_FOR_STRING(this->str[i]->length(),
+//            ucnv_getMaxCharSize(this->ucnvNative));
+//         char* buf = new char[n];
+//         UErrorCode status = U_ZERO_ERROR;
+//         int nout = this->str[i]->extract(buf, n, this->ucnvNative, status);
+//         cerr << status << endl;
+//         if (U_FAILURE(status))
+//            error(MSG__ENC_ERROR_CONVERT);
+//         if (nout >= n)
+//            error(MSG__ENC_ERROR_CONVERT);
+//         return mkCharLenCE(buf, nout, CE_NATIVE);
+//         break;
+//      }
+//         
+//      default: // this shouldn't happen
+//         error(MSG__ENC_ERROR_SET);
    } 
-   return mkChar("");
 }
  
  

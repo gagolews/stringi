@@ -18,4 +18,22 @@ test_that("stri_replace_regex", {
    expect_identical(stri_replace_all_regex(c('a', 'b', 'c', 'd'),
                                            c('[ac]', '[bd]'), '!'),
                                            rep('!', 4))
+   
+   origenc <- stri_enc_set("latin2")
+   expect_identical(stri_replace_all_regex(iconv("ąść", "UTF-8", "latin2"), 
+                                                 iconv("ąść", "UTF-8", "latin2"),
+                                                 iconv("ęłź", "UTF-8", "latin2")), "ęłź") # output is always UTF-8
+   stri_enc_set(origenc)
+   
+   origenc <- stri_enc_set("cp1250")
+   expect_identical(stri_replace_all_regex(iconv("ąść", "UTF-8", "cp1250"), 
+                                           iconv("ąść", "UTF-8", "cp1250"),
+                                           iconv("ęłź", "UTF-8", "cp1250")), "ęłź") # output is always UTF-8
+   stri_enc_set(origenc)
+   
+   x1 <- rawToChar(as.raw(198))
+   x2 <- rawToChar(as.raw(230))
+   Encoding(x1) <- 'latin1'
+   Encoding(x2) <- 'latin1'
+   expect_identical(stri_replace_all_regex(x1, x1, x2), 'æ')
 })

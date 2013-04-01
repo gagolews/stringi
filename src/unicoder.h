@@ -62,7 +62,7 @@ class StriContainerUTF16 {
       StriContainerUTF16(StriContainerUTF16& container);
       ~StriContainerUTF16();
       StriContainerUTF16& operator=(StriContainerUTF16& container);
-      SEXP toR(R_len_t i) const;
+      SEXP toR(R_len_t i);
 //      inline R_len_t length() const { return this->n; }
 
       
