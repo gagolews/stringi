@@ -35,9 +35,9 @@
 
 
 // common.cpp
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2);              // DONE
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3); // DONE
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4); // DONE
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, bool disableWarning=false);              // DONE
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, bool disableWarning=false); // DONE
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4, bool disableWarning=false); // DONE
 SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 char*   stri__asciiCopyToLowerCase(char* dest, const char* src);    // DONE

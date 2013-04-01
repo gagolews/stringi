@@ -30,14 +30,15 @@
  * 
  *  @param ns1 length of some vector
  *  @param ns2 length of another vector
+ *  @param disableWarning disable warning in case of multiple calls
  *  @return max of the two given lengths
  * 
  * @version 0.1 (Marek Gagolewski)
 */
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2)
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, bool disableWarning)
 {
    R_len_t nsm = max(ns1, ns2);
-   if (nsm % ns1 != 0 || nsm % ns2 != 0)
+   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0))
       warning(MSG__WARN_RECYCLING_RULE);
    return nsm;
 }
@@ -52,15 +53,16 @@ R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2)
  *  @param ns1 length of some vector
  *  @param ns2 length of another vector
  *  @param ns3 length of last vector
+ *  @param disableWarning disable warning in case of multiple calls
  *  @return max of the three given lengths
  * 
  * @version 0.1 (Bartek Tartanus)
 */
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3)
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, bool disableWarning)
 {
    R_len_t nsm = max(ns1, ns2);
    nsm = max(nsm, ns3);
-   if (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0)
+   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0))
       warning(MSG__WARN_RECYCLING_RULE);
    return nsm;
 }
@@ -76,16 +78,17 @@ R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3)
  *  @param ns2 length of another vector
  *  @param ns3 length of next vector
  *  @param ns4 length of last vector
+ *  @param disableWarning disable warning in case of multiple calls
  *  @return max of the three given lengths
  * 
  * @version 0.1 (Bartek Tartanus)
 */
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4)
+R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4, bool disableWarning)
 {
    R_len_t nsm = max(ns1, ns2);
    nsm = max(nsm, ns3);
    nsm = max(nsm, ns4);
-   if (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0 || nsm % ns4 != 0)
+   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0 || nsm % ns4 != 0))
       warning(MSG__WARN_RECYCLING_RULE);
    return nsm;
 }
