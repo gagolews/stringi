@@ -198,37 +198,37 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
    const char* p = CHAR(STRING_ELT(pad,0));
    
    slen = stri_length(s);
-   int wi, sleni;
+   int* iwidth = INTEGER(width);
+   int* islen  = INTEGER(slen);
+   int* iside  = INTEGER(side);
+   
    for (int i=0; i<nmax; ++i){
       curs = STRING_ELT(s, i % ns);
-      if(curs == NA_STRING){
+      if(curs == NA_STRING || iwidth[i % nwidth] == NA_INTEGER){
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
       }
       
-      wi = INTEGER(width)[i%nwidth]; 
-      sleni = INTEGER(slen)[i%ns];
-      
-      needed = max(0, wi - sleni);
+      needed = max(0, iwidth[i % nwidth] - islen[i % ns]);
       if(needed == 0){
          SET_STRING_ELT(e, i, curs);
          continue;
       }
-      char* buf = R_alloc(wi, sizeof(char)); 
+      char* buf = R_alloc(iwidth[i % nwidth], sizeof(char)); 
       char* buf2 = buf;
-      switch(INTEGER(side)[i % nside]){
+      switch(iside[i % nside]){
          //left
          case 1:
          for(int j=0; j<needed; ++j){
             memcpy(buf2, p, 1);
             buf2 += 1;
          }
-         memcpy(buf2, CHAR(curs), sleni);
+         memcpy(buf2, CHAR(curs), islen[i % ns]);
          break;
          //right
          case 2:
-         memcpy(buf2, CHAR(curs), sleni);
-         buf2 += sleni;
+         memcpy(buf2, CHAR(curs), islen[i % ns]);
+         buf2 += islen[i % ns];
          for(int j=0; j<needed; ++j){
             memcpy(buf2, p, 1);
             buf2 += 1;
@@ -240,15 +240,15 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
             memcpy(buf2, p, 1);
             buf2 += 1;
          }
-         memcpy(buf2, CHAR(curs), sleni);
-         buf2 += sleni;
+         memcpy(buf2, CHAR(curs), islen[i % ns]);
+         buf2 += islen[i % ns];
          for(int j=0; j<ceil(double(needed)/2); ++j){
             memcpy(buf2, p, 1);
             buf2 += 1;
          }
          break;
       }
-      SET_STRING_ELT(e, i, mkCharLen(buf, wi));
+      SET_STRING_ELT(e, i, mkCharLen(buf, iwidth[i % nwidth]));
    }
    
    UNPROTECT(1);
