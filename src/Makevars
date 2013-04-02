@@ -10,8 +10,6 @@ SRCS        =  stringi.cpp \
                unicoder.cpp \
                trim.cpp \
                casefold.cpp \
-               count.cpp \
-               detect.cpp \
                dup.cpp \
                join.cpp \
                justify.cpp \
@@ -21,12 +19,16 @@ SRCS        =  stringi.cpp \
                uloc.cpp \
                uchar.cpp \
                length.cpp \
-               locate.cpp \
-               replace.cpp \
                reverse.cpp \
                split.cpp \
                sub.cpp \
                wrap.cpp \
+               search_common.cpp \
+               search_class_locate.cpp \
+               search_fixed_count.cpp \
+               search_fixed_detect.cpp \
+               search_fixed_replace.cpp \
+               search_fixed_locate.cpp \
                search_regex_count.cpp \
                search_regex_detect.cpp \
                search_regex_locate.cpp \
