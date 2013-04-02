@@ -629,37 +629,13 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(ns, np);
-   if (nout <= 0) return stri__emptyList(); // at least one arg of length 0?
+   // this will work for nmax == 0:
  
    StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
    StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
    
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nout));
-      
-//   SEXP ans;
-//   SEXP dimnames;
-//   SEXP colnames;
-//   PROTECT(dimnames = allocVector(VECSXP, 2));
-//   PROTECT(colnames = allocVector(STRSXP, 2));
-//   SET_STRING_ELT(colnames, 0, mkChar("start"));
-//   SET_STRING_ELT(colnames, 1, mkChar("end"));
-//   SET_VECTOR_ELT(dimnames, 1, colnames);
-   
-//   R_len_t nmax = stri__numbytes_max(s);
-//   if (nmax <= 0) {
-//      STRI__CREATE2NA_MATRIX(ans)
-//      setAttrib(ans, R_DimNamesSymbol, dimnames); 
-//      
-//      for (R_len_t i=0; i<nout; ++i)
-//         SET_VECTOR_ELT(ret, i, ans);
-//      UNPROTECT(4);  
-//      return ret;
-//   }
-      
-//   int* start = new int[nmax];
-//   int* end = new int[nmax];
-//   int  occurences=0;
 
    for (R_len_t i = pp->vectorize_init();
          i != pp->vectorize_end();
@@ -699,12 +675,13 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
             deque<R_len_t_x2>::iterator iter = occurences.begin();
             for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
                R_len_t_x2 match = *iter;
-               
-               // @ TODO : Adjush UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-                           
                INTEGER(ans)[j]             = match.v1 + 1; // 0-based index -> 1-based
                INTEGER(ans)[j+noccurences] = match.v2; //end returns position of next character after match
             }
+            
+            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+                  ss->get(i).length(), INTEGER(ans), INTEGER(ans)+noccurences, noccurences);
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
          }
@@ -757,11 +734,12 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
             int start = (int)matcher->start(status);
             int end   = (int)matcher->end(status);
             if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-
-            // @ TODO : Adjush UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-
             iret[i] = start + 1; // 0-based index -> 1-based
             iret[i+nmax] = end;  // end returns position of next character after match
+            
+            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+                  ss->get(i).length(), iret+i, iret+i+nmax, 1);
          }
          else {
             iret[i] = NA_INTEGER;

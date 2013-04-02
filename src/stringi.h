@@ -44,6 +44,11 @@ struct R_len_t_x2 {
 };
 
 
+// ------------------------------------------------------------------------
+
+
+// casefold.cpp:
+SEXP stri_casefold(SEXP s, SEXP type);
 
 
 // common.cpp
@@ -57,9 +62,6 @@ char*   stri__asciiCopyToUpperCase(char* dest, const char* src);    // DONE
 SEXP    stri__emptyList();                                          // DONE
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
 
-// casefold.cpp:
-SEXP stri_casefold(SEXP s, SEXP type);
-
 
 // compare.cpp:
 SEXP stri_casecompare(SEXP x, SEXP y);
@@ -69,9 +71,11 @@ SEXP stri_casecompare(SEXP x, SEXP y);
 SEXP stri_count_fixed(SEXP s, SEXP pattern);
 SEXP stri_count_regex(SEXP s, SEXP pattern);
 
-//detect.cpp
+
+// detect.cpp
 SEXP stri_detect_fixed(SEXP str, SEXP pattern);
 SEXP stri_detect_regex(SEXP str, SEXP pattern);
+
 
 // dup.cpp:
 SEXP stri_dup(SEXP s, SEXP c);
@@ -80,10 +84,12 @@ SEXP stri_dup(SEXP s, SEXP c);
 // ICU_settings.cpp:
 SEXP stri_info();                        // DONE
 
+
 // join.cpp:
 SEXP stri_flatten(SEXP s, SEXP sep);
 SEXP stri_join(SEXP s);
 SEXP stri_join2(SEXP s1, SEXP s2);
+
 
 // justify.cpp
 SEXP stri_justify(SEXP s, SEXP width);
@@ -95,6 +101,7 @@ SEXP stri_numbytes(SEXP s);         // DONE
 SEXP stri_length(SEXP s);           // DONE
 SEXP stri_isempty(SEXP s);          // DONE
 SEXP stri_width(SEXP s);            // ...TODO...
+
 
 // locate.cpp
 SEXP stri_locate_all_class(SEXP str, SEXP c);
@@ -111,6 +118,7 @@ void stri__locate_all_class1(const char* s, int n, int32_t* c,
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
    int& first, int& last);
    
+   
 // prepare_arg.cpp:
 SEXP        stri_prepare_arg_string(SEXP x);                            // DONE
 SEXP        stri_prepare_arg_double(SEXP x);                            // DONE
@@ -119,10 +127,12 @@ SEXP        stri_prepare_arg_logical(SEXP x);                           // DONE
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
 const char* stri__prepare_arg_enc(SEXP loc, bool allowdefault=true);    // DONE
 
+
 // replace.cpp
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
 SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);
+
 
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
@@ -132,6 +142,7 @@ SEXP stri_reverse(SEXP s);
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
+
 
 // sub.cpp
 SEXP stri_sub(SEXP s, SEXP from, SEXP to);
@@ -147,12 +158,13 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad);
 
 
 // uchar.cpp:
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);           // DONE
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, int* i2, const int ni);  // DONE
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
 SEXP stri_char_getcategoryid(SEXP x);
 SEXP stri_char_getpropertyid(SEXP x);
-
 
 // ucnv.cpp:
 UConverter* stri__ucnv_open(const char* enc);                              // DONE
@@ -169,7 +181,6 @@ SEXP stri_enc_set(SEXP loc);                            // DONE
 SEXP stri_enc_isascii(SEXP s);                          // DONE
 SEXP stri_enc_isutf8(SEXP s);                           // DONE
 // @TODO: stri_enc_detect()                             // ...TODO...
-
 
 SEXP stri_encode(SEXP s, SEXP from, SEXP to);           // ...
 // @TODO: stri_encode_native2utf8()                     // ...TODO...

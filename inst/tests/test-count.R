@@ -66,5 +66,8 @@ test_that("stri_count_regex", {
    expect_identical(stri_count_regex(s,"bab"),c(5L,0L))
    expect_identical(stri_count_regex(c("lalal","12l34l56","ąólł"),"l"),3:1)
    
+   expect_identical(stri_count_regex("X\U00024B62\U00024B63\U00024B64X",
+                               c("\U00024B62", "\U00024B63", "\U00024B64", "X")),
+                                      c(1L, 1L, 1L, 2L))
 })
 

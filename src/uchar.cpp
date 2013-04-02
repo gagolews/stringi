@@ -20,6 +20,38 @@
 
 
 
+/** Convert Unicode16-Char indices to Unicode32 (code points)
+ *
+ * \code{i1} must be sorted increasingly
+ * 
+ * @param str array of UChar
+ * @param nstr size of \code{str}
+ * @param i1 indices [in/out]
+ * @param ni size of \code{i1}
+ * 
+ */
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni)
+{
+   
+}
+
+/** Convert Unicode16-Char indices to Unicode32 (code points)
+ *
+ * \code{i1} and \code{i2} must be sorted increasingly
+ * 
+ * @param str array of UChar
+ * @param nstr size of \code{str}
+ * @param i1 indices [in/out]
+ * @param i2 indices [in/out]
+ * @param ni size of \code{i1} and \code{i2}
+ * 
+ */
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, int* i2, const int ni)
+{
+   
+}
+
+
 /** get char types for each code point UTF-8 string
  * @param s UTF-8 encoded string
  * @param n number of bytes

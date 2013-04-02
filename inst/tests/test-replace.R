@@ -36,4 +36,8 @@ test_that("stri_replace_regex", {
    Encoding(x1) <- 'latin1'
    Encoding(x2) <- 'latin1'
    expect_identical(stri_replace_all_regex(x1, x1, x2), 'æ')
+   
+   expect_identical(stri_replace_all_regex("X\U00024B62X",
+             c("\U00024B62", "\U00024B63", "X"), ""),
+                    c("XX", "X\U00024B62X", "\U00024B62"))
 })
