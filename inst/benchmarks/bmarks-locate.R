@@ -70,4 +70,8 @@ local({
    
    print(microbenchmark(stri_locate_first_fixed(one,one),stri_locate_all_fixed(one,one)))
    
+   x <- stri_dup('aba', 10000)
+   stopifnot(stri_locate_all_fixed(x, 'b')[[1]] == str_locate_all(x, fixed('b'))[[1]])
+   print(microbenchmark(stri_locate_all_fixed(x, 'b'), str_locate_all(x, fixed('b'))))
+   
 })
