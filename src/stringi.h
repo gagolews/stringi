@@ -158,8 +158,9 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad);
 
 
 // uchar.cpp:
-void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);           // DONE
-void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, int* i2, const int ni);  // DONE
+// void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,
+   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);  // DONE
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);

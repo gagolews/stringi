@@ -2,15 +2,14 @@ require(microbenchmark)
 require(stringr)
 
 local({
-  
-   x <- stri_dup('aba', 1000)
+   
+   x <- stri_dup('aba', c(100, 1000, 10000))
    stopifnot(stri_locate_all_regex(x, 'b')[[1]] == str_locate_all(x, 'b')[[1]])
    microbenchmark(
       stri_locate_all_regex(x, 'b'),
       str_locate_all(x, 'b'),
       str_locate_all(x, perl('b'))
    )
-
    
    x <- stri_dup('aba', 0:10)
    stopifnot(stri_locate_all_regex(x, 'b')[[1]] == str_locate_all(x, 'b')[[1]])

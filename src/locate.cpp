@@ -675,13 +675,17 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
             deque<R_len_t_x2>::iterator iter = occurences.begin();
             for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
                R_len_t_x2 match = *iter;
-               INTEGER(ans)[j]             = match.v1 + 1; // 0-based index -> 1-based
-               INTEGER(ans)[j+noccurences] = match.v2; //end returns position of next character after match
+               INTEGER(ans)[j]             = match.v1; 
+               INTEGER(ans)[j+noccurences] = match.v2;
             }
             
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
             stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), INTEGER(ans), INTEGER(ans)+noccurences, noccurences);
+                  ss->get(i).length(), INTEGER(ans),
+                  INTEGER(ans)+noccurences, noccurences,
+                  1, // 0-based index -> 1-based
+                  0  // end returns position of next character after match
+            );
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
          }
@@ -734,12 +738,16 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
             int start = (int)matcher->start(status);
             int end   = (int)matcher->end(status);
             if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-            iret[i] = start + 1; // 0-based index -> 1-based
-            iret[i+nmax] = end;  // end returns position of next character after match
+            iret[i] = start;
+            iret[i+nmax] = end;
             
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
             stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), iret+i, iret+i+nmax, 1);
+                  ss->get(i).length(), 
+                  iret+i, iret+i+nmax, 1,
+                  1, // 0-based index -> 1-based
+                  0  // end returns position of next character after match
+            );
          }
          else {
             iret[i] = NA_INTEGER;
