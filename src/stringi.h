@@ -67,14 +67,6 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 SEXP stri_casecompare(SEXP x, SEXP y);
 
 
-// count.cpp
-SEXP stri_count_fixed(SEXP s, SEXP pattern);
-SEXP stri_count_regex(SEXP s, SEXP pattern);
-
-
-// detect.cpp
-SEXP stri_detect_fixed(SEXP str, SEXP pattern);
-SEXP stri_detect_regex(SEXP str, SEXP pattern);
 
 
 // dup.cpp:
@@ -103,20 +95,7 @@ SEXP stri_isempty(SEXP s);          // DONE
 SEXP stri_width(SEXP s);            // ...TODO...
 
 
-// locate.cpp
-SEXP stri_locate_all_class(SEXP str, SEXP c);
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern);
-SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
-SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first);
-SEXP stri_locate_first_regex(SEXP str, SEXP patternp);
 
-void stri__locate_set_dimnames_list(SEXP list);
-void stri__locate_set_dimnames_matrix(SEXP matrix);
-void stri__locate_all_class1(const char* s, int n, int32_t* c,
-   int* start, int* end, int& o);
-void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
-   int& first, int& last);
    
    
 // prepare_arg.cpp:
@@ -127,11 +106,6 @@ SEXP        stri_prepare_arg_logical(SEXP x);                           // DONE
 const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
 const char* stri__prepare_arg_enc(SEXP loc, bool allowdefault=true);    // DONE
 
-
-// replace.cpp
-SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
-SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
-SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);
 
 
 // reverse.cpp
@@ -166,6 +140,7 @@ SEXP stri_charcategories();
 SEXP stri_chartype(SEXP s);
 SEXP stri_char_getcategoryid(SEXP x);
 SEXP stri_char_getpropertyid(SEXP x);
+
 
 // ucnv.cpp:
 UConverter* stri__ucnv_open(const char* enc);                              // DONE
@@ -206,6 +181,40 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);
 SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
 
 
+
+
+// ----------- SEARCH --------------------------------------------
+
+
+SEXP stri_count_fixed(SEXP s, SEXP pattern);
+
+SEXP stri_detect_fixed(SEXP str, SEXP pattern);
+
+
+
+SEXP stri_locate_all_class(SEXP str, SEXP c);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
+
+SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
+SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first);
+
+
+void stri__locate_set_dimnames_list(SEXP list);
+void stri__locate_set_dimnames_matrix(SEXP matrix);
+void stri__locate_all_class1(const char* s, int n, int32_t* c,
+   int* start, int* end, int& o);
+void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
+   int& first, int& last);
+
+SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);
+SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);
+
+
+SEXP stri_detect_regex(SEXP str, SEXP pattern);                         // DONE
+SEXP stri_count_regex(SEXP s, SEXP pattern);                            // DONE
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                     // DONE
+SEXP stri_locate_first_regex(SEXP str, SEXP patternp);                  // DONE
+SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);                    // DONE
 
 
 // ------------------------------------------------------------------------
