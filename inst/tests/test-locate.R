@@ -136,6 +136,9 @@ test_that("stri_locate_all_regex", {
    expect_equivalent(stri_locate_all_regex(NA, ""), list(matrix(c(NA,NA_integer_))))
    
    expect_equivalent(stri_locate_all_regex("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
+   expect_equivalent(stri_locate_all_regex("X\U00024B62\U00024B63\U00024B64X",
+                                    c("\U00024B62", "\U00024B63", "\U00024B64")),
+            list(matrix(c(2L,2L)), matrix(c(3L,3L)), matrix(c(4L,4L))))
    expect_equivalent(stri_locate_all_regex("aaa", "aa"), list(matrix(c(1,2))))
    
    expect_equivalent(stri_locate_all_regex("1a\u0105a", "a.a"), list(matrix(c(2,4))))

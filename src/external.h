@@ -30,6 +30,7 @@
 #define 	UNISTR_FROM_STRING_EXPLICIT explicit
 
 #include <iostream>
+#include <deque>
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
 #include <unicode/ucnv.h>

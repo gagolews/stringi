@@ -24,7 +24,7 @@
  * @param matrix R matrix with two columns
  * @version 0.1 (Marek Gagolewski)
  */
-void stri__locate_set_dimnames(SEXP matrix) {
+void stri__locate_set_dimnames_matrix(SEXP matrix) {
    SEXP dimnames;
    SEXP colnames;
    PROTECT(dimnames = allocVector(VECSXP, 2));
@@ -36,6 +36,26 @@ void stri__locate_set_dimnames(SEXP matrix) {
    UNPROTECT(2);
 }
 
+
+/**
+ * Set colnames for matrices stored in a list returned by stri_locate_all_* or stri_locate_all_*
+ * @param matrix R matrix with two columns
+ * @version 0.1 (Marek Gagolewski)
+ */
+void stri__locate_set_dimnames_list(SEXP list) {
+   SEXP dimnames;
+   SEXP colnames;
+   PROTECT(dimnames = allocVector(VECSXP, 2));
+   PROTECT(colnames = allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, mkChar(MSG__LOCATE_DIM_START));
+   SET_STRING_ELT(colnames, 1, mkChar(MSG__LOCATE_DIM_END));
+   SET_VECTOR_ELT(dimnames, 1, colnames);
+   
+   R_len_t n = LENGTH(list);
+   for (R_len_t i = 0; i < n; ++i)
+      setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
+   UNPROTECT(2);
+}
 
 
 /* CLASS */
@@ -204,7 +224,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    /* @TODO: use STL stack class here */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      STRI__CREATE2NA_MATRIX(ans)      
+      PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
       setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
       for (R_len_t i=0; i<nout; ++i)
@@ -224,7 +244,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
       R_len_t cursl = LENGTH(curs);
 
       if (curs == NA_STRING || cursl == 0) {
-         STRI__CREATE2NA_MATRIX(ans)
+         PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
       }
       else {
          stri__locate_all_class1(CHAR(curs), cursl, curc,
@@ -239,7 +259,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
             }
          }
          else {
-            STRI__CREATE2NA_MATRIX(ans)
+            PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
          }
       }
          
@@ -488,7 +508,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
    /* @TODO: use STL stack class here */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      STRI__CREATE2NA_MATRIX(ans)      
+      PROTECT(ans = stri__matrix_NA_INTEGER(1,2));    
       setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
       for (R_len_t i=0; i<nout; ++i)
@@ -508,7 +528,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
       R_len_t curpl = LENGTH(curp);
 
       if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         STRI__CREATE2NA_MATRIX(ans)
+         PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
       }
       else {
          stri__locate_all_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
@@ -523,7 +543,7 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
             }
          }
          else {
-            STRI__CREATE2NA_MATRIX(ans)
+            PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
          }
       }
          
@@ -559,7 +579,7 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
    
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   stri__locate_set_dimnames(ret);
+   stri__locate_set_dimnames_matrix(ret);
    int* iret = INTEGER(ret);
    
    int start, end, occurences=0;
@@ -600,6 +620,7 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
  * @param p character vector
  * @return list of integer matrices (2 columns)
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - StriContainerUTF16+deque usage
  */
 SEXP stri_locate_all_regex(SEXP s, SEXP p)
 {
@@ -609,88 +630,91 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(ns, np);
    if (nout <= 0) return stri__emptyList(); // at least one arg of length 0?
-   
-   UErrorCode status;
  
    StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
    StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
    
-   SEXP ans;
-   SEXP dimnames;
-   SEXP colnames;
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nout));
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar("start"));
-   SET_STRING_ELT(colnames, 1, mkChar("end"));
-   SET_VECTOR_ELT(dimnames, 1, colnames);
-   
-   R_len_t nmax = stri__numbytes_max(s);
-   if (nmax <= 0) {
-      STRI__CREATE2NA_MATRIX(ans)
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
       
-      for (R_len_t i=0; i<nout; ++i)
+//   SEXP ans;
+//   SEXP dimnames;
+//   SEXP colnames;
+//   PROTECT(dimnames = allocVector(VECSXP, 2));
+//   PROTECT(colnames = allocVector(STRSXP, 2));
+//   SET_STRING_ELT(colnames, 0, mkChar("start"));
+//   SET_STRING_ELT(colnames, 1, mkChar("end"));
+//   SET_VECTOR_ELT(dimnames, 1, colnames);
+   
+//   R_len_t nmax = stri__numbytes_max(s);
+//   if (nmax <= 0) {
+//      STRI__CREATE2NA_MATRIX(ans)
+//      setAttrib(ans, R_DimNamesSymbol, dimnames); 
+//      
+//      for (R_len_t i=0; i<nout; ++i)
+//         SET_VECTOR_ELT(ret, i, ans);
+//      UNPROTECT(4);  
+//      return ret;
+//   }
+      
+//   int* start = new int[nmax];
+//   int* end = new int[nmax];
+//   int  occurences=0;
+
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         SEXP ans;
+         PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // 1x2 NA matrix
          SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(4);  
-      return ret;
-   }
-      
-   int* start = new int[nmax];
-   int* end = new int[nmax];
-   int  occurences=0;
-   
-   for (int i = 0; i < np; i++) { // for each pattern
-      if (pp->isNA(i)) {
-         for (int j = i; j < nmax; j += np)
-            INTEGER(ret)[j] = NA_INTEGER;
+         UNPROTECT(1);
       }
       else {
-         status = U_ZERO_ERROR;
-         RegexMatcher *matcher = new RegexMatcher(pp->get(i), 0, status);
-         if (U_FAILURE(status))
-            error(u_errorName(status));
-         for (int j = i; j < nmax; j += np) {
-            if (ss->isNA(j % ns))
-               INTEGER(ret)[j] = NA_INTEGER;
-            else {
-               matcher->reset(ss->get(j%ns));
-               occurences = 0;
-               int found = (int)matcher->find();
-               while(found){ //find all matches
-                  start[occurences] = (int)matcher->start(status);
-                  end[occurences] = (int)matcher->end(status);
-                  ++occurences;
-                  found = (int)matcher->find();
-               }
-               if (occurences > 0) { //rewrite them
-                  PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
-                  int* ians = INTEGER(ans);
-                  for(int j = 0; j < occurences; j++) {
-                     ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
-                     ians[j+1*occurences] = end[j]; //end returns position of next character after match
-                  }
-               }
-               else { //if not found, return matrix with NA
-                  STRI__CREATE2NA_MATRIX(ans)
-               }
-               
-            setAttrib(ans, R_DimNamesSymbol, dimnames); 
-            SET_VECTOR_ELT(ret, i, ans);  // !!!!! `ans` may be used uninitialized in this function !!!!!
-            UNPROTECT(1); 
-            }
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+         matcher->reset(ss->get(i));
+         int found = (int)matcher->find();
+         if (!found) {
+            SEXP ans;
+            PROTECT(ans = stri__matrix_NA_INTEGER(0, 2)); // matrix with 0 rows and 2 columns
+            SET_VECTOR_ELT(ret, i, ans);
+            UNPROTECT(1);
          }
-         delete matcher;
-      }   
+         else {
+            deque<R_len_t_x2> occurences;
+            while (found) {
+               UErrorCode status = U_ZERO_ERROR;
+               int start = (int)matcher->start(status);
+               int end  =  (int)matcher->end(status);
+               if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
+               
+               occurences.push_back(R_len_t_x2(start, end));
+               found = (int)matcher->find();
+            }
+            
+            R_len_t noccurences = occurences.size();
+            SEXP ans;
+            PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+            deque<R_len_t_x2>::iterator iter = occurences.begin();
+            for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+               R_len_t_x2 match = *iter;
+               
+               // @ TODO : Adjush UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+                           
+               INTEGER(ans)[j]             = match.v1 + 1; // 0-based index -> 1-based
+               INTEGER(ans)[j+noccurences] = match.v2; //end returns position of next character after match
+            }
+            SET_VECTOR_ELT(ret, i, ans);
+            UNPROTECT(1);
+         }
+      }
    }
-   
-   delete [] start;
-   delete [] end;
    
    delete ss;
    delete pp;
-   UNPROTECT(3);
+   stri__locate_set_dimnames_list(ret);
+   UNPROTECT(1);
    return ret;
 }
 
@@ -714,7 +738,6 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   stri__locate_set_dimnames(ret);
    
    int* iret = INTEGER(ret);
    for (R_len_t i = pp->vectorize_init();
@@ -749,6 +772,7 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    
    delete ss;
    delete pp;
+   stri__locate_set_dimnames_matrix(ret);
    UNPROTECT(1);
    return ret;
 }

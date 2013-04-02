@@ -34,6 +34,18 @@
 // ------------------------------------------------------------------------
 
 
+/** Two \code{R_len_t}s as one :)
+ * 
+ */
+struct R_len_t_x2 {
+   R_len_t_x2(R_len_t v1, R_len_t v2) { this->v1 = v1; this->v2 = v2; }
+   R_len_t v1;
+   R_len_t v2;
+};
+
+
+
+
 // common.cpp
 R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, bool disableWarning=false);              // DONE
 R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, bool disableWarning=false); // DONE
@@ -43,7 +55,7 @@ SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 char*   stri__asciiCopyToLowerCase(char* dest, const char* src);    // DONE
 char*   stri__asciiCopyToUpperCase(char* dest, const char* src);    // DONE
 SEXP    stri__emptyList();                                          // DONE
-
+SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
 
 // casefold.cpp:
 SEXP stri_casefold(SEXP s, SEXP type);
@@ -92,7 +104,8 @@ SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
 SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first);
 SEXP stri_locate_first_regex(SEXP str, SEXP patternp);
 
-void stri__locate_set_dimnames(SEXP matrix);
+void stri__locate_set_dimnames_list(SEXP list);
+void stri__locate_set_dimnames_matrix(SEXP matrix);
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,

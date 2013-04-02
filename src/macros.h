@@ -20,6 +20,13 @@
 #define __macros_h
 
 
+
+// undef R's length macro (conflicts with std::string.length())
+// use LENGTH instead
+#undef length
+
+
+
 // taken from R's Defn.h - sorry, this is needed
 // CHARSXP charset bits
 #define BYTES_MASK (1<<1)
@@ -60,17 +67,6 @@ enum StriNormalizationForm {
 };
 
 
-// locate.cpp
-
-#define STRI__CREATE2NA_MATRIX(x) \
-      PROTECT(x = allocMatrix(INTSXP, 1, 2)); \
-      int* ians = INTEGER(x); \
-      ians[0] = NA_INTEGER; \
-      ians[1] = NA_INTEGER;  
-
-// undef R's length macro (conflicts with std::string.length())
-// use LENGTH instead
-#undef length
 
 /// Unicode replacement character
 #define UCHAR_REPLACEMENT 0xFFFD
