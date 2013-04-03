@@ -42,7 +42,7 @@
 #' stri_split("babab","b",-1:4)
 #' 
 #' @export
-stri_split <- function(str, split='\n', n=Inf, omitempty=FALSE, exact=FALSE) {
+stri_split_fixed <- function(str, split='\n', n=Inf, omitempty=FALSE, exact=FALSE) {
 	# prepare_arg done internally
 	.Call("stri_split_fixed", str, split, n, omitempty, exact, PACKAGE="stringi")
 }

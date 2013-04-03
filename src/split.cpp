@@ -117,15 +117,10 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact)
    int d = LENGTH(omitempty);
    int e = LENGTH(exact);
    //if any length is 0 then return empty list
-   if (a==0 || b==0 || c==0 || d==0 || e==0)
+   if (a <= 0 || b <= 0 || c <= 0 || d <= 0 || e <= 0)
       return allocVector(VECSXP, 0);
-   int nmax = a;
-   if(b>nmax) nmax=b;
-   if(c>nmax) nmax=c;
-   if(d>nmax) nmax=d;
-   if(e>nmax) nmax=e;
-   if (nmax % a != 0 || nmax % b != 0 || nmax % c != 0 || nmax % d != 0 || nmax % e != 0)
-      warning(MSG__WARN_RECYCLING_RULE);
+   int nmax = stri__recycling_rule(a, b, c, d, e);
+   
    int count = 0;
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP,nmax));
