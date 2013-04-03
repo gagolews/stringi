@@ -114,6 +114,7 @@ SEXP stri_reverse(SEXP s);
 
 
 // split.cpp
+SEXP stri_split_class(SEXP s, SEXP c);
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);

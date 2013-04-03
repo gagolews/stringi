@@ -96,6 +96,37 @@ SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
    return e;
 }
 
+/** 
+ * .... 
+ * @param s character vector
+ * @param class character vector
+ * @return list
+ */
+SEXP stri_split_class(SEXP s, SEXP c)
+{
+   s = stri_prepare_arg_string(s);
+   c = stri_prepare_arg_string(c);
+   
+   R_len_t ns = LENGTH(s);
+   R_len_t nc = LENGTH(c);
+   R_len_t nmax = stri__recycling_rule(ns, nc);
+   
+   SEXP ret, from, curs;
+   PROTECT(ret = allocVector(VECSXP,nmax));
+   PROTECT(from = allocVector(VECSXP,nc));
+   error("Not finished - stri_locate_all_class with merge is needed");
+   from = stri_locate_all_class(s, c);
+   
+   for (int i=0; i<nmax; ++i) {
+      const char* string = CHAR(STRING_ELT(s, i % ns));
+      int* f = INTEGER(VECTOR_ELT(from, i % nc));
+      //SET_VECTOR_ELT(ret, i, stri__split_pos(string, f, f+LENGTH(f)/2,LENGTH(string),LENGTH(f)/2));
+   }
+   
+   UNPROTECT(2);
+   return ret;
+}
+
 
 /** 
  * .... 
@@ -116,9 +147,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact)
    int c = LENGTH(n);
    int d = LENGTH(omitempty);
    int e = LENGTH(exact);
-   //if any length is 0 then return empty list
-   if (a <= 0 || b <= 0 || c <= 0 || d <= 0 || e <= 0)
-      return allocVector(VECSXP, 0);
+   
    int nmax = stri__recycling_rule(a, b, c, d, e);
    
    int count = 0;

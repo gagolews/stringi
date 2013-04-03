@@ -27,7 +27,7 @@
 #' @param to integer vector
 #' @param length integer vector
 #' 
-#' @details to has priority over length
+#' @details \code{to} has priority over \code{length}. If \code{from} is two column matrix then first column is used as \code{from} and second as \code{to}. Also in such case given \code{to} and \code{length} are ignored.
 #' @return character vector
 #' 
 #' @examples

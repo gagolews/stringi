@@ -80,6 +80,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_replace_all_regex,   	     3),
    STRI__MAKE_CALL_METHOD(stri_reverse,                    1),
    STRI__MAKE_CALL_METHOD(stri_rtrim,                      1),
+   STRI__MAKE_CALL_METHOD(stri_split_class,   	    	     2),
    STRI__MAKE_CALL_METHOD(stri_split_fixed,		    	     5),
    STRI__MAKE_CALL_METHOD(stri_split_pos,  		    	     3),
    STRI__MAKE_CALL_METHOD(stri_sub,  		         	     3),
