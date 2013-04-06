@@ -28,10 +28,14 @@
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:
 #' \enumerate{
-#'    \item \code{NumLines} - number of lines (number of not-\code{NA} strings in the vector)
-#'    \item \code{NumLinesNotEmpty} - number of lines with at least one non-\code{WHITE_SPACE} character [WHITE_SPACE binary property....]
-#'    \item \code{NumChars} - number of Unicode code points (total lengths of strings)
-#'    \item \code{NumCharsNotWhite} - number of Unicode code points that are  not \code{WHITE_SPACE}s
+#'    \item \code{Lines} - number of lines (number of 
+#'    not-\code{NA} strings in the vector)
+#'    \item \code{LinesNEmpty} - number of lines with at least 
+#'    one non-\code{WHITE_SPACE} character [WHITE_SPACE binary property....]
+#'    \item \code{Chars} - number of Unicode code points 
+#'    (total lengths of strings)
+#'    \item \code{CharsNWhite} - number of Unicode code points 
+#'    that are  not \code{WHITE_SPACE}s
 #' }
 #' @family stats
 #' @export
@@ -42,8 +46,8 @@ stri_stats_general <- function(str) {
 
 #' Statistics for a Character Vector Containing LaTeX Commands
 #' 
-#' We use Kile 2.1.3 LaTeX Word Count algorithm,
-#' see http://kile.sourceforge.net/team.php
+#' We use a modified LaTeX Word Count algorithm taken from Kile 2.1.3,
+#' see http://kile.sourceforge.net/team.php for original contributors
 #' 
 #' This function gives general statistics on the whole character vector.
 #' Such input vector will often be a text file loaded via the
@@ -53,7 +57,12 @@ stri_stats_general <- function(str) {
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:
 #' \enumerate{
-#'    \item ...
+#'    \item \code{CharsWord} - number of word characters
+#'    \item \code{CharsCmdEnvir} - command and words characters
+#'    \item \code{CharsWhite} - LaTeX white characters, including \{ and \} in some contexts
+#'    \item \code{Words} - number of words
+#'    \item \code{Cmds} - number of commands
+#'    \item \code{Envirs} - number of environments
 #' }
 #' @family stats
 #' @export
