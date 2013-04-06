@@ -83,6 +83,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_split_class,   	    	     2),
    STRI__MAKE_CALL_METHOD(stri_split_fixed,		    	     5),
    STRI__MAKE_CALL_METHOD(stri_split_pos,  		    	     3),
+   STRI__MAKE_CALL_METHOD(stri_stats_general,     	    	  1),
+   STRI__MAKE_CALL_METHOD(stri_stats_latex,     	    	  1),
    STRI__MAKE_CALL_METHOD(stri_sub,  		         	     3),
    STRI__MAKE_CALL_METHOD(stri_sub_op, 		         	  4),
    STRI__MAKE_CALL_METHOD(stri_trim,                       1),

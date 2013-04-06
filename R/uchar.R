@@ -37,7 +37,7 @@
 #' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
 #' @family charclass
-#' @name charclass_main
+#' @name stringi-charclass
 NULL
 
 

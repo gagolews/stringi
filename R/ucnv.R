@@ -87,7 +87,7 @@
 #' @references
 #' Conversion - ICU User Guide, \url{http://userguide.icu-project.org/conversion} \cr
 #' Converters - ICU User Guide, \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
-#' @name encoding_main
+#' @name stringi-encoding
 #' @family encoding
 NULL
 

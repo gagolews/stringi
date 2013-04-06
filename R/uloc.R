@@ -56,7 +56,7 @@
 #' 
 #' @references
 #' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
-#' @name locale_main
+#' @name stringi-locale
 #' @family locale
 NULL
 

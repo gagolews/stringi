@@ -120,6 +120,11 @@ SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
 SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
 
 
+// stats.cpp
+SEXP stri_stats_general(SEXP str);
+SEXP stri_stats_latex(SEXP str);
+
+
 // sub.cpp
 SEXP stri_sub(SEXP s, SEXP from, SEXP to);
 SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);

@@ -21,6 +21,7 @@ SRCS        =  stringi.cpp \
                length.cpp \
                reverse.cpp \
                split.cpp \
+               stats.cpp \
                sub.cpp \
                wrap.cpp \
                search_common.cpp \
