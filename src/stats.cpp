@@ -43,16 +43,33 @@ SEXP stri_stats_general(SEXP str)
    int* stats = INTEGER(ret);
    for (int i=0; i<gsAll; ++i) stats[i] = 0;
 
+   // @TODO: UNICODE!!!!
    R_len_t ns = LENGTH(str);
-   for (int i=0; i<ns; ++i) {
+   for (R_len_t i=0; i<ns; ++i) {
       SEXP curs = STRING_ELT(str, i);
       if(curs == NA_STRING) continue; // ignore
       
       ++stats[gsNumLines]; // another line
+      R_len_t     cn = LENGTH(curs);
+      const char* cs = CHAR(curs);
+      UChar32 c;
+      bool AnyNotWhite = false;
       
+      for (int j=0; j<cn; ) {
+         U8_NEXT(cs, j, cn, c);
+         ++stats[gsNumChars]; // another character [code point]
+         // we test for UCHAR_WHITE_SPACE binary property
+         if (!u_hasBinaryProperty(c, UCHAR_WHITE_SPACE)) {
+            AnyNotWhite = true;
+            ++stats[gsNumCharsNotWhite];
+         }
+      }
+
+      if (AnyNotWhite) ++stats[gsNumLinesNotEmpty]; // we have a non-empty line here
    }
+   
+   stri__set_names(ret, gsAll, "NumLines", "NumLinesNotEmpty", "NumChars", "NumCharsNotWhite");
    UNPROTECT(1);
-   error("TODO: not implemented yet");
    return ret;
 }
 //WHITE_SPACE

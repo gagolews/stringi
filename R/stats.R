@@ -28,13 +28,15 @@
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:
 #' \enumerate{
-#'    \item ...
+#'    \item \code{NumLines} - number of lines (number of not-\code{NA} strings in the vector)
+#'    \item \code{NumLinesNotEmpty} - number of lines with at least one non-\code{WHITE_SPACE} character [WHITE_SPACE binary property....]
+#'    \item \code{NumChars} - number of Unicode code points (total lengths of strings)
+#'    \item \code{NumCharsNotWhite} - number of Unicode code points that are  not \code{WHITE_SPACE}s
 #' }
 #' @family stats
 #' @export
 stri_stats_general <- function(str) {
-   # prepare_arg done internally
-   .Call("stri_stats_general", str, class, PACKAGE="stringi")
+   .Call("stri_stats_general", str, PACKAGE="stringi")
 }
 
 
@@ -56,7 +58,6 @@ stri_stats_general <- function(str) {
 #' @family stats
 #' @export
 stri_stats_latex <- function(str) {
-   # prepare_arg done internally
-   .Call("stri_stats_latex", str, class, PACKAGE="stringi")
+   .Call("stri_stats_latex", str, PACKAGE="stringi")
 }
 
