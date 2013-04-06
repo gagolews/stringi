@@ -52,6 +52,7 @@ SEXP stri_casefold(SEXP s, SEXP type);
 
 
 // common.cpp
+void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
 R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, bool disableWarning=false);              // DONE
 R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, bool disableWarning=false); // DONE
 R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4, bool disableWarning=false); // DONE

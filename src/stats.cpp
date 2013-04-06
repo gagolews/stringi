@@ -21,16 +21,42 @@
 
 /** 
  * General statistics for a character vector
+ * 
  * @param str a character vector
  * @return integer vector, see R man for details
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_stats_general(SEXP str)
 {
    str = stri_prepare_arg_string(str);
    
+   enum {
+      gsNumLines = 0,
+      gsNumLinesNotEmpty = 1,
+      gsNumChars = 2,
+      gsNumCharsNotWhite = 3,
+      gsAll = 4 // always == number of elements
+   };
+
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, gsAll));
+   int* stats = INTEGER(ret);
+   for (int i=0; i<gsAll; ++i) stats[i] = 0;
+
+   R_len_t ns = LENGTH(str);
+   for (int i=0; i<ns; ++i) {
+      SEXP curs = STRING_ELT(str, i);
+      if(curs == NA_STRING) continue; // ignore
+      
+      ++stats[gsNumLines]; // another line
+      
+   }
+   UNPROTECT(1);
    error("TODO: not implemented yet");
-   return str;
+   return ret;
 }
+//WHITE_SPACE
+
 
 
 /** 
@@ -41,11 +67,19 @@ SEXP stri_stats_general(SEXP str)
  * 
  * @param str a character vector
  * @return integer vector, see R man for details
+ * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_stats_latex(SEXP str)
 {
    str = stri_prepare_arg_string(str);
    
+   const int nstats = 6;
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, nstats));
+   int* stats = INTEGER(ret);
+   for (int i=0; i<nstats; ++i) stats[i] = 0;
+
+   UNPROTECT(1);
    error("TODO: not implemented yet");
-   return str;
+   return ret;
 }

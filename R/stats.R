@@ -21,7 +21,9 @@
 #' 
 #' This function gives general statistics on the whole character vector.
 #' Such input vector will often be a text file loaded via the
-#' \code{\link{readLines}} function.
+#' \code{\link{readLines}} function, where each text line
+#' is represented by a separate string.
+#' 
 #' 
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:
@@ -43,7 +45,8 @@ stri_stats_general <- function(str) {
 #' 
 #' This function gives general statistics on the whole character vector.
 #' Such input vector will often be a text file loaded via the
-#' \code{\link{readLines}} function.
+#' \code{\link{readLines}} function, where each text line
+#' is represented by a separate string.
 #' 
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:

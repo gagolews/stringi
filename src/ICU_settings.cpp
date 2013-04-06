@@ -35,12 +35,6 @@ SEXP stri_info()
 {
    const R_len_t infosize = 4;
    SEXP vals;
-   SEXP names;
-   PROTECT(names = allocVector(STRSXP, infosize));
-   SET_STRING_ELT(names, 0, mkChar("Unicode.version"));
-   SET_STRING_ELT(names, 1, mkChar("Locale"));
-   SET_STRING_ELT(names, 2, mkChar("Charset.internal"));
-   SET_STRING_ELT(names, 3, mkChar("Charset.native"));
    
    PROTECT(vals = allocVector(VECSXP, infosize));
    SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
@@ -48,7 +42,8 @@ SEXP stri_info()
    SET_VECTOR_ELT(vals, 2, mkString("UTF-8")); // this is fixed
    SET_VECTOR_ELT(vals, 3, stri_enc_info(R_NilValue));
    
-   setAttrib(vals, R_NamesSymbol, names);
-   UNPROTECT(2);
+   stri__set_names(vals, infosize,
+      "Unicode.version", "Locale", "Charset.internal", "Charset.native");
+   UNPROTECT(1);
    return vals;
 }

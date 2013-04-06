@@ -29,6 +29,7 @@
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
 #define 	UNISTR_FROM_STRING_EXPLICIT explicit
 
+#include <cstdarg>
 #include <iostream>
 #include <deque>
 #include <unicode/uchar.h>

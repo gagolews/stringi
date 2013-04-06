@@ -176,13 +176,7 @@ SEXP stri_charcategories()
 {
    const R_len_t numcolumns = 3;
    const R_len_t numcategories = U_CHAR_CATEGORY_COUNT-1;
-   SEXP vals;
-   SEXP names;
-   PROTECT(names = allocVector(STRSXP, numcolumns));
-   SET_STRING_ELT(names, 0, mkChar("Identifier"));
-   SET_STRING_ELT(names, 1, mkChar("CategoryFull"));
-   SET_STRING_ELT(names, 2, mkChar("Category"));
-   
+
    SEXP id;
    SEXP cat;
    SEXP cat2;
@@ -227,13 +221,14 @@ STRI_CHARCATEGORIES_CREATE( U_OTHER_SYMBOL,           "OTHER_SYMBOL",           
 STRI_CHARCATEGORIES_CREATE( U_INITIAL_PUNCTUATION,    "INITIAL_PUNCTUATION",      "Pi" )
 STRI_CHARCATEGORIES_CREATE( U_FINAL_PUNCTUATION,      "FINAL_PUNCTUATION",        "Pf" )
 
+   SEXP vals;
    PROTECT(vals = allocVector(VECSXP, numcolumns));
    SET_VECTOR_ELT(vals, 0, id);
    SET_VECTOR_ELT(vals, 1, cat);
    SET_VECTOR_ELT(vals, 2, cat2);
    
-   setAttrib(vals, R_NamesSymbol, names);
-   UNPROTECT(5);
+   stri__set_names(vals, numcolumns, "Identifier", "CategoryFull", "Category");
+   UNPROTECT(4);
    return vals;
 }
 

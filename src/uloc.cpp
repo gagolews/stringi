@@ -78,18 +78,10 @@ SEXP stri_locale_info(SEXP loc)
    const char* qloc = stri__prepare_arg_locale(loc, true);
    const R_len_t infosize = 4;
    SEXP vals;
-   SEXP names;
-   PROTECT(names = allocVector(STRSXP, infosize));
-   
-   SET_STRING_ELT(names, 0, mkChar("Language"));
-   SET_STRING_ELT(names, 1, mkChar("Country"));  
-   SET_STRING_ELT(names, 2, mkChar("Variant"));   
-   SET_STRING_ELT(names, 3, mkChar("Name"));
     
    PROTECT(vals = allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i) 
       SET_VECTOR_ELT(vals, i, ScalarString(NA_STRING));
-      
    
    UErrorCode err = U_ZERO_ERROR;
    char buf[ULOC_FULLNAME_CAPACITY]; // this is sufficient
@@ -110,7 +102,7 @@ SEXP stri_locale_info(SEXP loc)
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
    else SET_VECTOR_ELT(vals, 3, mkString(buf));  
 
-   setAttrib(vals, R_NamesSymbol, names);
-   UNPROTECT(2);
+   stri__set_names(vals, 4, "Language", "Country", "Variant", "Name");
+   UNPROTECT(1);
    return vals;
 }
