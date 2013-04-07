@@ -6,8 +6,8 @@ test_that("stri_wrap", {
 	h <- 20
 	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h))
 	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h))
-	expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
-	expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
+	#expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
+	#expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
    #vectorized over string, method, width and spacecost
 	expect_identical(stri_wrap(s, h,c("g","d")), 
                     c(stri_wrap(s,h,"g"),stri_wrap(s,h,"d")))

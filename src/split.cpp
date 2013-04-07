@@ -109,7 +109,7 @@ SEXP stri_split_class(SEXP s, SEXP c)
    
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
-   R_len_t nmax = stri__recycling_rule(ns, nc);
+   R_len_t nmax = stri__recycling_rule(true, 2, ns, nc);
    
    SEXP ret, from, curs;
    PROTECT(ret = allocVector(VECSXP,nmax));
@@ -148,7 +148,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact)
    int d = LENGTH(omitempty);
    int e = LENGTH(exact);
    
-   int nmax = stri__recycling_rule(a, b, c, d, e);
+   int nmax = stri__recycling_rule(true, 5, a, b, c, d, e);
    
    int count = 0;
    SEXP ret;

@@ -39,7 +39,7 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    
    R_len_t ns1 = LENGTH(s1);
    R_len_t ns2 = LENGTH(s2);
-   R_len_t nsm = stri__recycling_rule(ns1, ns2);
+   R_len_t nsm = stri__recycling_rule(true, 2, ns1, ns2);
    
    if (ns1 <= 0) return s2;
    if (ns2 <= 0) return s1;

@@ -31,7 +31,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str);
    pattern = stri_prepare_arg_string(pattern);
-   R_len_t nmax = stri__recycling_rule(LENGTH(str), LENGTH(pattern));
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    // this will work for nmax == 0:
    
    SEXP ret;

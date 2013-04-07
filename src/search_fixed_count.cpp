@@ -34,7 +34,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern)
    R_len_t ns = LENGTH(str);
    R_len_t np = LENGTH(pattern);
    if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);
-   R_len_t nmax = stri__recycling_rule(ns, np);
+   R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
 
    int count = 0;
    SEXP e;

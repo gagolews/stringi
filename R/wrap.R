@@ -54,9 +54,9 @@ stri_wrap <- function(str,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",sp
    stopifnot(is.finite(spacecost)&&spacecost>0)
    method <- pmatch(method,c("greedy","dynamic"),1,T)
    # when stri_split will work with regexp use this line:
-   #wordslist <- stri_split_class(str, whitespaces)
-   #for now we can only split by " "
-   wordslist <- stri_split(enc2utf8(str), enc2utf8(" "), omitempty=TRUE)
+   # wordslist <- stri_split_class(str, whitespaces)
+   # for now we can only split by " "
+   wordslist <- stri_split_fixed(enc2utf8(str), enc2utf8(" "), omitempty=TRUE)
    .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
 }
 

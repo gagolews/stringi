@@ -165,7 +165,7 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
    nc /= STRI__UCHAR_CLASS_LENGTH;
    
-   R_len_t nout = stri__recycling_rule(ns, nc);
+   R_len_t nout = stri__recycling_rule(true, 2, ns, nc);
       
    SEXP ans;
    SEXP dimnames;
@@ -261,7 +261,7 @@ SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
       error(MSG__INCORRECT_UCHAR_CLASS_ID);
    nc /= STRI__UCHAR_CLASS_LENGTH;
    
-   R_len_t nout = stri__recycling_rule(ns, nc);
+   R_len_t nout = stri__recycling_rule(true, 2, ns, nc);
    
    int* cc = INTEGER(c);
    

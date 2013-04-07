@@ -36,7 +36,7 @@ SEXP stri_dup(SEXP s, SEXP c)
    if (ns <= 0)       return s;
    else if (nc <= 0)  return allocVector(STRSXP, 0);
       
-   R_len_t nm = stri__recycling_rule(ns, nc);
+   R_len_t nm = stri__recycling_rule(true, 2, ns, nc);
       
    int* cc = INTEGER(c);
    

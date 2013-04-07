@@ -35,7 +35,7 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
    R_len_t npat = LENGTH(pat);
    R_len_t nrep = LENGTH(rep);
    if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
-   R_len_t nmax = stri__recycling_rule(ns, npat, nrep, true); // disable warning here -> stri_split_fixed
+   R_len_t nmax = stri__recycling_rule(false, 3, ns, npat, nrep); // disable warning here -> stri_split_fixed
    
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));
@@ -76,7 +76,7 @@ SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
    int npat = LENGTH(pat);
    int nrep = LENGTH(rep);
    if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
-   R_len_t nmax = stri__recycling_rule(ns, npat, nrep);
+   R_len_t nmax = stri__recycling_rule(true, 3, ns, npat, nrep);
    
    SEXP e, split, sexpfalse, temp, currep, inf;
    PROTECT(e = allocVector(STRSXP,nmax));

@@ -35,10 +35,10 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
    SEXP names;
    PROTECT(names = allocVector(STRSXP, numnames));
    
-   va_start (arguments, numnames);         
+   va_start(arguments, numnames);         
    for (R_len_t i = 0; i < numnames; ++i)        
       SET_STRING_ELT(names, i, mkChar(va_arg(arguments, char*)));
-   va_end ( arguments );              
+   va_end(arguments);              
    
    setAttrib(object, R_NamesSymbol, names);
    UNPROTECT(1);
@@ -48,104 +48,45 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 
 /** 
  *  Calculate the length of the output vector when applying a vectorized
- *  operation on two vectors
+ *  operation on >= 2  vectors
  * 
  *  For nonconforming lengths, a warning is given
  * 
- *  @param ns1 length of some vector
- *  @param ns2 length of another vector
- *  @param disableWarning disable warning in case of multiple calls
- *  @return max of the two given lengths or 0 iff any ns* is <= 0
+ *  @param enableWarning enable warning in case of multiple calls to this function
+ *  @param n number of vectors to recycle
+ *  @param ... vector lengths
+ *  @return max of the given lengths or 0 iff any ns* is <= 0
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - variable args length
 */
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, bool disableWarning)
+R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 {
-   if (ns1 <= 0 || ns2 <= 0) return 0;
-   R_len_t nsm = max(ns1, ns2);
-   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0))
-      warning(MSG__WARN_RECYCLING_RULE);
-   return nsm;
-}
+   R_len_t nsm = 0;
+   va_list arguments; 
+   
+   va_start(arguments, n);         
+   for (R_len_t i = 0; i < n; ++i) {
+      R_len_t curlen = va_arg(arguments, R_len_t);
+      if (curlen <= 0)
+         return 0;
+      if (curlen > nsm)
+         nsm = curlen;
+   }
+   va_end(arguments); 
+   
+   if (enableWarning) {
+      va_start(arguments, n);
+      for (R_len_t i = 0; i < n; ++i) {
+         R_len_t curlen = va_arg(arguments, R_len_t);
+         if (nsm % curlen != 0) {
+            warning(MSG__WARN_RECYCLING_RULE);
+            break;
+         }
+      }
+      va_end(arguments);
+   }
 
-
-/** 
- *  Calculate the length of the output vector when applying a vectorized
- *  operation on three vectors
- * 
- *  For nonconforming lengths, a warning is given
- * 
- *  @param ns1 length of some vector
- *  @param ns2 length of another vector
- *  @param ns3 length of last vector
- *  @param disableWarning disable warning in case of multiple calls
- *  @return max of the three given lengths or 0 iff any ns* is <= 0
- * 
- * @version 0.1 (Bartek Tartanus)
-*/
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, bool disableWarning)
-{
-   if (ns1 <= 0 || ns2 <= 0 || ns3 <= 0) return 0;
-   R_len_t nsm = max(ns1, ns2);
-   nsm = max(nsm, ns3);
-   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0))
-      warning(MSG__WARN_RECYCLING_RULE);
-   return nsm;
-}
-
-
-/** 
- *  Calculate the length of the output vector when applying a vectorized
- *  operation on four vectors
- * 
- *  For nonconforming lengths, a warning is given
- * 
- *  @param ns1 length of some vector
- *  @param ns2 length of another vector
- *  @param ns3 length of next vector
- *  @param ns4 length of last vector
- *  @param disableWarning disable warning in case of multiple calls
- *  @return max of the three given lengths or 0 iff any ns* is <= 0
- * 
- * @version 0.1 (Bartek Tartanus)
-*/
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4, bool disableWarning)
-{
-   if (ns1 <= 0 || ns2 <= 0 || ns3 <= 0 || ns4 <= 0) return 0;
-   R_len_t nsm = max(ns1, ns2);
-   nsm = max(nsm, ns3);
-   nsm = max(nsm, ns4);
-   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0 || nsm % ns4 != 0))
-      warning(MSG__WARN_RECYCLING_RULE);
-   return nsm;
-}
-
-
-/** 
- *  Calculate the length of the output vector when applying a vectorized
- *  operation on five vectors
- * 
- *  For nonconforming lengths, a warning is given
- * 
- *  @param ns1 length of some vector
- *  @param ns2 length of another vector
- *  @param ns3 length of next vector
- *  @param ns4 length of second to last vector
- *  @param ns5 length of final vector
- *  @param disableWarning disable warning in case of multiple calls
- *  @return max of the three given lengths or 0 iff any ns* is <= 0
- * 
- * @version 0.1 (Bartek Tartanus)
-*/
-R_len_t stri__recycling_rule(R_len_t ns1, R_len_t ns2, R_len_t ns3, R_len_t ns4, R_len_t ns5, bool disableWarning)
-{
-   if (ns1 <= 0 || ns2 <= 0 || ns3 <= 0 || ns4 <= 0 || ns5 <= 0) return 0;
-   R_len_t nsm = max(ns1, ns2);
-   nsm = max(nsm, ns3);
-   nsm = max(nsm, ns4);
-   nsm = max(nsm, ns5);
-   if (!disableWarning && (nsm % ns1 != 0 || nsm % ns2 != 0 || nsm % ns3 != 0 || nsm % ns4 != 0 || nsm % ns4 != 0))
-      warning(MSG__WARN_RECYCLING_RULE);
    return nsm;
 }
 

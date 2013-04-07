@@ -28,7 +28,7 @@ SEXP stri_casecompare(SEXP x, SEXP y)
    y = stri_prepare_arg_string(y); // prepare string argument
    int nx = LENGTH(x);
    int ny = LENGTH(y);
-   int nmax = stri__recycling_rule(nx, ny);
+   int nmax = stri__recycling_rule(true, 2, nx, ny);
    
    SEXP e, curx, cury;
    int curlen, j;

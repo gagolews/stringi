@@ -33,7 +33,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
    int ns = LENGTH(s);
    int np = LENGTH(pattern);
    if (ns <= 0 || np <= 0) return allocVector(LGLSXP, 0);
-   int nmax = stri__recycling_rule(ns, np);
+   int nmax = stri__recycling_rule(true, 2, ns, np);
    
    SEXP e;
    PROTECT(e = allocVector(LGLSXP, nmax));
