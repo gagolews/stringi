@@ -1,8 +1,8 @@
 Package: stringi
 Version: 0.1-3
-Date: 2013-04-01
+Date: 2013-04-22
 Title: ICU bindings for R
-Description: stringi is an R package for correct, fast,
+Description: stringi is THE R package for correct, fast,
     and simple string manipulation in each locale and native charset.
     ICU API bindings offer R users a platform- and system-locale-independent
     rich variety of consistent functions known from other

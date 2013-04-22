@@ -6,28 +6,46 @@ ICU4c
 
 On Linux:
 
+cd /tmp
 wget http://download.icu-project.org/files/icu4c/51.1/icu4c-51_1-src.tgz
 tar -zxvf icu4c-51_1-src.tgz
 cd icu/source/
 ./configure
 make
-sudo make install
+sudo make install     # as root
 
 
-Perhaps this could also be needed:
+Perhaps this also will be required:
 
 sudo [edit_cmd] /etc/ld.so.conf
 
 or:
 
-sudo ln -s /usr/local/lib/libicuuc.so.51 /usr/lib
-sudo ln -s /usr/local/lib/libicui18n.so.51  /usr/lib
-sudo ln -s /usr/local/lib/libicudata.so.51  /usr/lib
-sudo ln -s /usr/local/lib/libicuio.so.51 /usr/lib
-sudo ln -s /usr/local/lib/libicule.so.51 /usr/lib
-sudo ln -s /usr/local/lib/libiculx.so.51 /usr/lib
+sudo ln -s /usr/local/lib/libicuuc.so.51.1 /usr/lib    # or .so.XX.XX (check!)
+sudo ln -s /usr/local/lib/libicui18n.so.51.1  /usr/lib
+sudo ln -s /usr/local/lib/libicudata.so.51.1  /usr/lib
+sudo ln -s /usr/local/lib/libicuio.so.51.1 /usr/lib
+sudo ln -s /usr/local/lib/libicule.so.51.1 /usr/lib
+sudo ln -s /usr/local/lib/libiculx.so.51.1 /usr/lib
 
-Ferora:
+Then update ld-database/cache:
+
+sudo ldconfig
+
+
+
+On Fedora Linux:
+
    you may try with `yum install libicu-devel`
    however, it may give you an outdated version of the ICU library
+   therefore, it is not recommended
 
+
+
+Get stringi from GitHub
+=======================
+
+cd /tmp
+git clone https://github.com/gagolews/stringi.git
+R CMD build stringi
+R CMD INSTALL stringi_VERSION.tar.gz
