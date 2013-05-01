@@ -201,7 +201,8 @@ SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // ...
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);            // ....
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);              // ....
 
-
+bool stri__detect_class1(const char* s, int n, int32_t* cls);
+SEXP stri_detect_class(SEXP s, SEXP c);
 void stri__locate_all_class1(const char* s, int n, int32_t* c,
    int* start, int* end, int& o);
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,

@@ -25,6 +25,7 @@ SRCS        =  stringi.cpp \
                sub.cpp \
                wrap.cpp \
                search_common.cpp \
+               search_class_detect.cpp \
                search_class_locate.cpp \
                search_fixed_count.cpp \
                search_fixed_detect.cpp \

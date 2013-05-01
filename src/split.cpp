@@ -118,8 +118,8 @@ SEXP stri_split_class(SEXP s, SEXP c)
    from = stri_locate_all_class(s, c);
    
    for (int i=0; i<nmax; ++i) {
-      const char* string = CHAR(STRING_ELT(s, i % ns));
-      int* f = INTEGER(VECTOR_ELT(from, i % nc));
+      //const char* string = CHAR(STRING_ELT(s, i % ns));
+      //int* f = INTEGER(VECTOR_ELT(from, i % nc));
       //SET_VECTOR_ELT(ret, i, stri__split_pos(string, f, f+LENGTH(f)/2,LENGTH(string),LENGTH(f)/2));
    }
    

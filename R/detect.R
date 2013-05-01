@@ -24,6 +24,11 @@
 #' @param str character vector
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @examples
+#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Ll"))
+#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Lu"))
+#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Zs"))
+#' 
 #' @export
 stri_detect_class <- function(str, class) {
    .Call("stri_detect_class", str, class, PACKAGE="stringi")

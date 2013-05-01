@@ -40,6 +40,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_char_getpropertyid,         1),
    STRI__MAKE_CALL_METHOD(stri_count_fixed,                2),
    STRI__MAKE_CALL_METHOD(stri_count_regex,                2),
+   STRI__MAKE_CALL_METHOD(stri_detect_class,               2),
    STRI__MAKE_CALL_METHOD(stri_detect_fixed,               2),
    STRI__MAKE_CALL_METHOD(stri_detect_regex,               2),
    STRI__MAKE_CALL_METHOD(stri_dup,                        2),
