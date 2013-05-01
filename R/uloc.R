@@ -43,7 +43,7 @@
 #' 
 #' \bold{A Note on Default Locales}
 #' 
-#' Except for \code{\link{stri_locale_set()}}, each function
+#' Except for \code{\link{stri_locale_set}}, each function
 #' selects default locale if an empty string or \code{NULL} is given as
 #' argument.
 #' 
@@ -56,7 +56,7 @@
 #' 
 #' @references
 #' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
-#' @name stringi-locale
+#' @name stringi_locale
 #' @family locale
 NULL
 
@@ -75,12 +75,12 @@ stri_locale_list <- function() {
 
 #' Set Default Locale
 #'
-#' See \link{locale-main} for more information on the effect of
+#' See \link{stringi_locale} for more information on the effect of
 #' changing default locale.
 #' 
 #' @param loc a character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
-#' see \code{\link{stri_locale_list()}}
+#' see \code{\link{stri_locale_list}}
 #' @return Previously set default locale, invisibly.
 #' @family locale
 #' @export
@@ -112,7 +112,7 @@ stri_locale_get <- function() {
 #' 
 #' Note that here you may gen info on any desired locale,
 #' even if it is unsupported by ICU or if you pass a malformed locale
-#' identified (e.g. not of the form Language_Country). See \link{locale-main}
+#' identified (e.g. not of the form Language_Country). See \link{stringi_locale}
 #' for the discussion.
 #' 
 #' @param loc \code{NULL} or \code{""} for default locale, or a single string with locale identifier

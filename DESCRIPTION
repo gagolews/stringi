@@ -1,9 +1,9 @@
 Package: stringi
 Version: 0.1-3
 Date: 2013-05-01
-Title: ICU bindings for R
+Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast,
-    and simple string manipulation in each locale and native charset.
+    and simple string processing in each locale and native charset.
     ICU API bindings offer R users a platform- and system-locale-independent
     rich variety of consistent functions known from other
     programming languages, like Java, Perl, Python and PHP.
@@ -26,9 +26,6 @@ Authors@R: c(
     person("Marcin", "Bujarski", role = "ctb",
     email = "marcin.bujarski@gmail.com")
     )
-Author: Marek Gagolewski and Bartek Tartanus, with contributions from Marcin
-    Bujarski
-Maintainer: Marek Gagolewski <gagolews@rexamine.com>
 Collate:
     'casefold.R'
     'dup.R'

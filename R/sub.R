@@ -84,8 +84,8 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 #' stri_sub(s, -6, length=5) <- "." ; s
 #' stri_sub(s, 1, 1:3) <- 1:2 ; s
 #' 
-#' @seealso \link{stri_sub}, \link{stri_replace_first},
-#'          \link{stri_replace_last}, \link{stri_replace_all}.
+#' @seealso \code{\link{stri_sub}}, \code{\link{stri_replace_first_fixed}},
+#'          \code{\link{stri_replace_last_fixed}}, \code{\link{stri_replace_all}}.
 #' 
 #' @export
 "stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {

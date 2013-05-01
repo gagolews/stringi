@@ -19,25 +19,31 @@
 
 
 #' \pkg{stringi} is an open source package for R.
-#' It allows for correct, fast, and simple string manipulation in each locale. 
+#' It allows for correct, fast, and simple string manipulation in each locale
+#' and any character encoding. 
 #'
 #' \bold{Keywords}: internationalization, localization, ICU, ICU4R, i18n, l10n, Unicode
 #' 
 #' 
-#' \link{string-arguments}
-#' \link{locale-main}
-#' \link{encoding-main}
+#' Man pages on general topics:
+#' \itemize{
+#' \item \link{stringi_arguments} - how \pkg{stringi} deals with its functions' arguments, 
+#' \item \link{stringi_locale} - locale management,
+#' \item \link{stringi_encoding} - encoding management,
+#' \item \link{stringi_regex} - regular expressions,
+#' \item \link{stringi_charclass} - Unicore Character classes and binary properties
+#' }
 #' 
 #' Information on default encodings and locales....
 #'
 #' @name stringi-package
 #' @docType package
 #' @title Correct, fast, and simple string manipulation in each locale
-#' @author Marek Gagolewski \email{gagolews@@ibspan.waw.pl},\cr
-#' Bartek Tartanus \email{bartektartanus@@gmail.com},\cr
-#' Marcin Bujarski \email{marcin.bujarski@@gmail.com}
+#' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
+#' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
+#' with contributions from Marcin Bujarski.
 #' @references
-#' Package homepage, \url{http://www.ibspan.waw.pl/~gagolews/?page=resources&subpage=stringi}.\cr
+#' \pkg{stringi} Package homepage, \url{http://www.rexamine.com/resources/stringi/}.\cr
 #' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
 #' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
 #' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
@@ -48,12 +54,11 @@ invisible(NULL)
 
 
 
-#' TO DO
 #' @useDynLib stringi
 .onAttach <- function(lib, pkg)
 {
    # stri_info() produces a warning if current native charset
-   # is problematic. the packageStartupMessage also indicates the user
+   # is problematic. The packageStartupMessage also indicates the user
    # whether ICU has guessed the locale used correctly. Leave it as is :)
    info <- stri_info(short=TRUE)
    packageStartupMessage("stringi (" %+% info %+% ")")

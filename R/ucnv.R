@@ -49,7 +49,7 @@
 #' 
 #' Not all sequences of bytes are valid UTF-8.
 #' 
-#' Unicode normalization..... see \link{unicode_normalization}
+#' Unicode normalization..... see \code{\link{stri_enc_nfc}}
 #' for discussion
 #' 
 #' ???Most functions in \pkg{stringi} output results in UTF-8???
@@ -57,7 +57,7 @@
 #' 
 #' \bold{Selecting Encodings in \pkg{stringi}}
 #' 
-#' Except for \code{\link{stri_enc_set()}}, each function
+#' Except for \code{\link{stri_enc_set}}, each function
 #' selects default encoding if an empty string or \code{NULL} is given as
 #' argument. Generally, an attempt to select an unsupported ICU character
 #' encoder will finish with an error.
@@ -87,7 +87,7 @@
 #' @references
 #' Conversion - ICU User Guide, \url{http://userguide.icu-project.org/conversion} \cr
 #' Converters - ICU User Guide, \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
-#' @name stringi-encoding
+#' @name stringi_encoding
 #' @family encoding
 NULL
 
@@ -96,7 +96,7 @@ NULL
 #'
 #' Please note that apart from given encodings, ICU tries to normalize
 #' encoding specifiers. E.g. \code{"UTF8"} is also valid,
-#' see \link{encoding-main} for more information.
+#' see \link{stringi_encoding} for more information.
 #'
 #' @param simplified logical value TODO....
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of
@@ -152,7 +152,7 @@ stri_enc_info <- function(enc=NULL) {
 #' Set Default Encoding
 #'
 #' @param enc character encoding name,
-#' see \code{\link{stri_enc_list()}}
+#' see \code{\link{stri_enc_list}}
 #' @return Previously set default encoding, invisibly.
 #' 
 #' @family encoding
@@ -188,7 +188,7 @@ stri_enc_get <- function() {
 #' The function checks whether all character codes are in the set {1,2,...,127}.
 #'
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{encoding-main}}).
+#' character strings (see \code{\link{Encoding}} and \code{\link{stringi_encoding}}).
 #' 
 #' 
 #' @param str character vector
@@ -220,7 +220,7 @@ stri_enc_isascii <- function(str) {
 #' note that isascii => isutf8
 #' 
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{encoding-main}}).
+#' character strings (see \code{\link{Encoding}} and \code{\link{stringi_encoding}}).
 #' 
 #' @param str character vector
 #' @return logical vector; ith element indicates whether the ith string

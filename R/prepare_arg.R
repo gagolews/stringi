@@ -32,8 +32,8 @@
 #' factors are converted with \code{as.*(as.character(...))} and other coercible vectors
 #' are converted with \code{as.character()}, otherwise an error is generated.
 #' 
-#' @name arguments
-#' @family passing-arguments
+#' @name stringi_arguments
+#' @family prepare_arg
 NULL
 
 
@@ -46,7 +46,7 @@ NULL
 #' if name, a single string is generated.
 #' otherwise the function throws an error.
 #' 
-#' @family passing-arguments
+#' @family prepare_arg
 stri_prepare_arg_string <- function(x) {
    .Call("stri_prepare_arg_string", x, PACKAGE="stringi")  
 }
@@ -60,7 +60,7 @@ stri_prepare_arg_string <- function(x) {
 #' if atomic vector (also a matrix), it is coerced to double vector.
 #' otherwise the function throws an error.
 #' 
-#' @family passing-arguments
+#' @family prepare_arg
 stri_prepare_arg_double <- function(x) {
    .Call("stri_prepare_arg_double", x, PACKAGE="stringi")  
 }
@@ -74,7 +74,7 @@ stri_prepare_arg_double <- function(x) {
 #' if atomic vector (also a matrix), it is coerced to integer vector.
 #' otherwise the function throws an error.
 #' 
-#' @family passing-arguments
+#' @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
    .Call("stri_prepare_arg_integer", x, PACKAGE="stringi")  
 }
@@ -87,7 +87,7 @@ stri_prepare_arg_integer <- function(x) {
 #' if atomic vector (also a matrix), it is coerced to logical vector.
 #' otherwise the function throws an error.
 #' 
-#' @family passing-arguments
+#' @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
    .Call("stri_prepare_arg_logical", x, PACKAGE="stringi")  
 }
