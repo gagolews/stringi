@@ -24,6 +24,7 @@
 #' @param str character vector
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @return logical vector
 #' @examples
 #' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Ll"))
 #' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Lu"))
@@ -40,7 +41,12 @@ stri_detect_class <- function(str, class) {
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector
-#' @param pattern character vector 
+#' @param pattern character vector
+#' 
+#' @return logical vector 
+#' @examples
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"),c('i','R','0'))
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"),'R')
 #' @export
 stri_detect_fixed <- function(str, pattern) {
    .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
@@ -53,6 +59,12 @@ stri_detect_fixed <- function(str, pattern) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
+#' 
+#' @return logical vector
+#' @examples
+#' stri_detect_regex(c("stringi w R","REXAMINE","123"), 'R.')
+#' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
+#' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
 #' @export
 #' @family regex
 stri_detect_regex <- function(str, pattern) {
@@ -69,6 +81,8 @@ stri_detect_regex <- function(str, pattern) {
 #' @param fixed character vector of fixed patterns to search for
 #' @param charclass character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @return logical vector
+#' 
 #' @export
 #' @family search
 stri_detect <- function(str, regex, fixed, charclass) {
