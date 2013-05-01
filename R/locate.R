@@ -203,3 +203,74 @@ stri_locate_first_regex <- function(str, pattern) {
    .Call("stri_locate_first_regex", str, pattern, PACKAGE="stringi")
 }
 
+
+#' Locate All Occurences of a Regex Pattern, Fixed Patter or Character Class
+#'
+#' Vectorized over \code{str} and \code{regex}, \code{fixed}, \code{charclass}.
+#' 
+#' @param str character vector of strings to search in
+#' @param regex character vector of regex patterns to search for
+#' @param fixed character vector of patterns to search for
+#' @param charclass character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' 
+#' @return list of integer matrices.  First column gives start postions
+#' of matches, and second column gives end position.
+#' \code{NA}s iff not found.
+#' 
+#' @examples
+#' stri_locate_all('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_all('Bartolini', fixed='i')
+#' 
+#' @export
+#' @family regex, search
+stri_locate_all <- function(str, regex, fixed, charclass) {
+   if(!missing(regex))
+      .Call("stri_locate_all_regex", str, regex, PACKAGE="stringi")
+   else if(!missing(fixed))
+      .Call("stri_locate_all_fixed", str, fixed, PACKAGE="stringi")
+   else if(!missing(charclass))
+      .Call("stri_locate_all_class", str, charclass, PACKAGE="stringi")
+   else
+      #TODO: maybe create a macro which contains text of this error? 
+      #It would be use in at least three or four functions
+      error("You have specify at least one of regex, fixed and charclass")
+}
+
+
+
+#' Locate First Occurences of a Regex Pattern, Fixed Patter or Character Class
+#'
+#' Vectorized over \code{str} and \code{regex}, \code{fixed}, \code{charclass}.
+#' 
+#' @param str character vector of strings to search in
+#' @param regex character vector of regex patterns to search for
+#' @param fixed character vector of patterns to search for
+#' @param charclass character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' 
+#' @return integer matrix with n rows, where n is the length of \code{str}.  
+#' First column gives start postions of matches, and second column gives end position.
+#' \code{NA}s iff not found.
+#' 
+#' @examples
+#' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+#' stri_locate_all('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_all('Bartolini', fixed=letters[1:3])
+#' #locate all white spacess
+#' stri_locate_all(s, charclass=stri_char_getcategoryid('Zs'))
+#' 
+#' @export
+#' @family regex, search
+stri_locate_first <- function(str, regex, fixed, charclass) {
+   if(!missing(regex))
+      .Call("stri_locate_first_regex", str, regex, PACKAGE="stringi")
+   else if(!missing(fixed))
+      .Call("stri_locate_first_or_last_fixed", str, fixed, TRUE, PACKAGE="stringi")
+   else if(!missing(charclass))
+      .Call("stri_locate_first_class", str, charclass, PACKAGE="stringi")
+   else
+      #TODO: maybe create a macro which contains text of this error? 
+      #It would be use in at least three or four functions
+      error("You have specify at least one of regex, fixed and charclass")
+}

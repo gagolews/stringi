@@ -110,3 +110,52 @@ stri_replace_all_regex <- function(str, pattern, replacement) {
    # prepare_arg done internally
    .Call("stri_replace_all_regex", str, pattern, replacement, PACKAGE="stringi")
 }
+
+
+#' Replace All Occurences of a Pattern
+#' 
+#' 
+#' Replaces every substring of the input that matches the pattern 
+#' with the given replacement string. 
+#' 
+#' The function scans the input string for matches of the pattern. 
+#' Input that is not part of any match is left unchanged; 
+#' each match is replaced in the result by the replacement string. 
+#' The replacement string may contain references to capture groups.
+#' References are of the form \code{$n}, where n is the number of the capture group.
+#' 
+#' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
+#' 
+#' @param str character vector of strings to search in
+#' @param regex character vector of regex patterns to search for
+#' @param replacement character vector of strings to replace with
+#' @param fixed character vector of patterns to search for
+#' @param charclass character class identifiers specified by
+#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @return character vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_replace_all(s, " .*? ", "#")
+#' stri_replace_all(s, "(el|s)it", "1234")
+#' stri_replace_all('abaca', 'a', c('!', '*'))
+#' stri_replace_all('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
+#' stri_replace_all('aaabbaabab', fixed='ab', replacement='***')
+#' #delete all lowercase letters
+#' stri_replace_all(s, charclass=stri_char_getcategoryid("Ll"), replacement='')
+#' 
+#' @export
+#' @family regex, search
+stri_replace_all <- function(str, regex, replacement, fixed, charclass) {
+   #TODO: determine which order of arguments is more natural == easier to use
+   if(!missing(regex))
+      .Call("stri_replace_all_regex", str, regex, replacement, PACKAGE="stringi")
+   else if(!missing(fixed))
+      .Call("stri_replace_all_fixed", str, fixed, replacement, PACKAGE="stringi")
+   else if(!missing(charclass))
+      .Call("stri_replace_all_class", str, charclass, replacement, PACKAGE="stringi")
+   else
+      #TODO: maybe create a macro which contains text of this error? 
+      #It would be use in at least three or four functions
+      error("You have specify at least one of regex, fixed and charclass")
+}
