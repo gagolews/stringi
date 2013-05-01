@@ -25,15 +25,10 @@
  * 
  */
 StriContainerUTF16::StriContainerUTF16()
+   : StriContainerUTF_Base()
 {
-   this->n = 0;
-   this->nrecycle = 0;
-   this->enc = NULL;
    this->str = NULL;
    this->lastMatcher = NULL;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
-   this->isShallow = true;
 }
 
 
@@ -43,7 +38,8 @@ StriContainerUTF16::StriContainerUTF16()
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
  */
-StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycle)
+StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle)
+   : StriContainerUTF_Base()
 {
 #ifndef NDEBUG 
    if (!isString(rstr))
@@ -52,14 +48,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
    this->n = LENGTH(rstr);
    this->isShallow = shallowrecycle;
    this->lastMatcher = NULL;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    
-   if (n2 == 0) this->n = 0;
+   if (nrecycle == 0) this->n = 0;
 #ifndef NDEBUG 
-   if (this->n > n2) error("DEBUG: n>nrecycle");
+   if (this->n > nrecycle) error("DEBUG: n>nrecycle");
 #endif
-   this->nrecycle = n2;
+   this->nrecycle = nrecycle;
    
    if (this->n <= 0) {
       this->enc = NULL;
@@ -129,18 +123,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t n2, bool shallowrecycl
 
 
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
+   :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
 {
-   this->n = container.n;
-   this->nrecycle = container.nrecycle;
-   this->isShallow = container.isShallow;
    this->lastMatcher = NULL;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
-      this->enc = new StriEnc[this->n];
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
-         this->enc[i] = container.enc[i];
          if (this->str[i])
             this->str[i] = new UnicodeString(*(container.str[i]));
          else
@@ -148,7 +136,6 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
       }
    }
    else {
-      this->enc = NULL;
       this->str = NULL;
    }
 }
@@ -158,14 +145,11 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
 
 StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
-   this->n = container.n;
-   this->nrecycle = container.nrecycle;
-   this->isShallow = container.isShallow;
+   this->~StriContainerUTF16();
+   (StriContainerUTF_Base&) (*this) = (StriContainerUTF_Base&)container;
+   
    this->lastMatcher = NULL;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
-      this->enc = new StriEnc[this->n];
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
          this->enc[i] = container.enc[i];
@@ -176,10 +160,28 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
       }
    }
    else {
-      this->enc = NULL;
       this->str = NULL;
    }
    return *this;
+}
+
+
+
+StriContainerUTF16::~StriContainerUTF16()
+{
+   if (this->lastMatcher)
+      delete this->lastMatcher;
+
+   if (this->n > 0) {
+      for (int i=0; i<this->n; ++i) {
+         if (this->str[i])
+            delete this->str[i];
+      }
+      delete [] this->str;
+   }
+
+   this->str = NULL;
+   this->lastMatcher = NULL;
 }
 
 
@@ -265,32 +267,7 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
  
  
 
-StriContainerUTF16::~StriContainerUTF16()
-{
-   if (this->lastMatcher)
-      delete this->lastMatcher;
-   if (this->ucnvNative)
-      ucnv_close(this->ucnvNative);
-   if (this->ucnvLatin1)
-      ucnv_close(this->ucnvLatin1);
 
-   if (this->n > 0) {
-      for (int i=0; i<this->n; ++i) {
-         if (this->str[i])
-            delete this->str[i];
-      }
-      delete [] this->enc;  
-      delete [] this->str;
-   }
-
-   this->enc = NULL;
-   this->str = NULL;
-   this->lastMatcher = NULL;
-   this->n = 0;
-   this->nrecycle = 0;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
-}
 
 
 

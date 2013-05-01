@@ -16,27 +16,24 @@
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
  
-#ifndef __unicoder_h
-#define __unicoder_h
+#ifndef __unicoder_base_h
+#define __unicoder_base_h
 
 
 
 
 
 /**
- * A class to handle conversion between R character vectors and UTF-16 string vectors
+ * Base class for StriContainerUTF8 and StriContainerUTF16
  * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - lastMatcher cache, supports auto-vectorization
  */
-class StriContainerUTF16 {
+class StriContainerUTF_Base {
    
-   private:
+   protected:
       
-      R_len_t n;            ///< number of strings (size of \code{enc} and \code{str})
-      R_len_t nrecycle;     ///< number of strings for the recycle rule (can be > \code{n})
+      R_len_t n;                 ///< number of strings (size of \code{enc} and \code{str})
+      R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
       StriEnc* enc;              ///< original encoding of each string
-      UnicodeString** str;       ///< data - \code{UnicodeString}s 
-      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
       UConverter* ucnvNative;    ///< recently used Native encoder
       UConverter* ucnvLatin1;    ///< recently used Latin1 encoder
       bool isShallow;            ///< have we made only shallow copy of the strings (=> read only)
@@ -44,15 +41,17 @@ class StriContainerUTF16 {
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
 #endif
 
+   StriContainerUTF_Base();
+   StriContainerUTF_Base(StriContainerUTF_Base& container);
+   ~StriContainerUTF_Base();
+
+
+
    public:
-      
-      StriContainerUTF16();
-      StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
-      StriContainerUTF16(StriContainerUTF16& container);
-      ~StriContainerUTF16();
-      StriContainerUTF16& operator=(StriContainerUTF16& container);
-      SEXP toR(R_len_t i) const;
-      SEXP toR() const;
+      StriContainerUTF_Base& operator=(StriContainerUTF_Base& container);
+         
+//      SEXP toR(R_len_t i) const = 0;
+//      SEXP toR() const = 0;
 //      inline R_len_t length() const { return this->n; }
 
       
@@ -65,38 +64,6 @@ class StriContainerUTF16 {
          return (this->enc[i%n] == STRI_NA);
       }
       
-      /** get the vectorized ith element
-       */
-      const UnicodeString& get(int i) const {
-#ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
-#endif
-         return (*(this->str[i%n]));
-      }
-      
-      /** get the vectorized ith element
-       */
-      UnicodeString& getWritable(int i) {
-#ifndef NDEBUG
-         if (this->isShallow) error("getWritable: shallow StriContainerUTF16");
-         if (n != nrecycle)   error("getWritable: n!=nrecycle");
-         if (i < 0 || i >= n) error("getWritable: INDEX OUT OF BOUNDS");
-#endif
-         return (*(this->str[i%n]));
-      }
-      
-      /** set the vectorized ith element
-       */
-      void set(int i, const UnicodeString& s) {
-#ifndef NDEBUG
-         if (this->isShallow) error("set: shallow StriContainerUTF16");
-         if (n != nrecycle)   error("set: n!=nrecycle");
-         if (i < 0 || i >= n) error("set: INDEX OUT OF BOUNDS");
-#endif
-         *(this->str[i]) = s;
-      }
-      
-      RegexMatcher* vectorize_getMatcher(R_len_t i);
       
       /** Loop over vectorized container - init */
       inline R_len_t vectorize_init() const {

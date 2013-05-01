@@ -124,7 +124,6 @@ SEXP stri_stats_latex(SEXP str)
       R_len_t     cn = LENGTH(curs);
       const char* cs = CHAR(curs);
       UChar32 c;
-      bool AnyNonWhite = false;
       
       int state = stStandard;
       bool word = false; // we are not in a word currently

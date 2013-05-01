@@ -28,8 +28,9 @@
 #include "external.h"
 #include "messages.h"
 #include "macros.h"
-#include "unicoder.h"
-
+#include "unicoder_base.h"
+#include "unicoder8.h"
+#include "unicoder16.h"
 
 // ------------------------------------------------------------------------
 

@@ -7,7 +7,9 @@ SRCS        =  stringi.cpp \
                common.cpp \
                prepare_arg.cpp \
                ICU_settings.cpp \
-               unicoder.cpp \
+               unicoder_base.cpp \
+               unicoder8.cpp \
+               unicoder16.cpp \
                trim.cpp \
                casefold.cpp \
                dup.cpp \
