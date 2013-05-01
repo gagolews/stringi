@@ -32,14 +32,8 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
    
    private:
       
-      R_len_t n;            ///< number of strings (size of \code{enc} and \code{str})
-      R_len_t nrecycle;     ///< number of strings for the recycle rule (can be > \code{n})
-      StriEnc* enc;              ///< original encoding of each string
       UnicodeString** str;       ///< data - \code{UnicodeString}s 
       RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
-      UConverter* ucnvNative;    ///< recently used Native encoder
-      UConverter* ucnvLatin1;    ///< recently used Latin1 encoder
-      bool isShallow;            ///< have we made only shallow copy of the strings (=> read only)
 #ifndef NDEBUG
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
 #endif
@@ -56,14 +50,6 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
 //      inline R_len_t length() const { return this->n; }
 
       
-      /** check if the vectorized ith element is NA
-       */
-      inline bool isNA(int i) const {
-#ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("isNA: INDEX OUT OF BOUNDS");
-#endif
-         return (this->enc[i%n] == STRI_NA);
-      }
       
       /** get the vectorized ith element
        */
@@ -97,27 +83,6 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       }
       
       RegexMatcher* vectorize_getMatcher(R_len_t i);
-      
-      /** Loop over vectorized container - init */
-      inline R_len_t vectorize_init() const {
-         if (this->n <= 0) return this->nrecycle;
-         else return 0;
-      }
-      
-      /** Loop over vectorized container - end iterator */
-      inline R_len_t vectorize_end() const {
-         return this->nrecycle;  
-      }
-      
-      /** Loop over vectorized container - next iteration */
-      inline R_len_t vectorize_next(R_len_t i) const {
-         if (i == this->nrecycle-1) return this->nrecycle; // this is the end
-         i = i + this->n;
-         if (i >= this->nrecycle)
-            return ((i+1) % this->nrecycle);  
-         else
-            return i;
-      }
 };
 
 #endif

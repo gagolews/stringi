@@ -76,6 +76,8 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
    else {
       this->enc = NULL;
    }
+   
+   return *this;
 }
 
 
