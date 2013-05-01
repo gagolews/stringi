@@ -152,7 +152,6 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
    if (this->n > 0) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
-         this->enc[i] = container.enc[i];
          if (this->str[i])
             this->str[i] = new UnicodeString(*(container.str[i]));
          else

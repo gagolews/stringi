@@ -38,6 +38,7 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
 #endif
 
+
    public:
       
       StriContainerUTF16();
@@ -47,8 +48,6 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       StriContainerUTF16& operator=(StriContainerUTF16& container);
       SEXP toR(R_len_t i) const;
       SEXP toR() const;
-//      inline R_len_t length() const { return this->n; }
-
       
       
       /** get the vectorized ith element

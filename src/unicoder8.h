@@ -29,6 +29,53 @@
  */
 class StriContainerUTF8 : public StriContainerUTF_Base {
 
+   private:
+   
+      std::string** str;  ///< data - \code{string}s 
+      
+      
+   public:
+      
+      StriContainerUTF8();
+      StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
+      StriContainerUTF8(StriContainerUTF8& container);
+      ~StriContainerUTF8();
+      StriContainerUTF8& operator=(StriContainerUTF8& container);
+      SEXP toR(R_len_t i) const;
+      SEXP toR() const;
+
+      
+      
+      /** get the vectorized ith element
+       */
+      const std::string& get(int i) const {
+#ifndef NDEBUG
+         if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
+#endif
+         return (*(this->str[i%n]));
+      }
+      
+      /** get the vectorized ith element
+       */
+      std::string& getWritable(int i) {
+#ifndef NDEBUG
+         if (this->isShallow) error("getWritable: shallow StriContainerUTF8");
+         if (n != nrecycle)   error("getWritable: n!=nrecycle");
+         if (i < 0 || i >= n) error("getWritable: INDEX OUT OF BOUNDS");
+#endif
+         return (*(this->str[i%n]));
+      }
+      
+      /** set the vectorized ith element
+       */
+      void set(int i, const std::string& s) {
+#ifndef NDEBUG
+         if (this->isShallow) error("set: shallow StriContainerUTF8");
+         if (n != nrecycle)   error("set: n!=nrecycle");
+         if (i < 0 || i >= n) error("set: INDEX OUT OF BOUNDS");
+#endif
+         *(this->str[i]) = s;
+      }
 };
 
 #endif
