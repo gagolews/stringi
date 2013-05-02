@@ -12,7 +12,6 @@ SRCS        =  stringi.cpp \
                unicoder16.cpp \
                trim.cpp \
                casefold.cpp \
-               dup.cpp \
                join.cpp \
                justify.cpp \
                compare.cpp \

@@ -23,6 +23,10 @@ test_that("stri_detect_regex", {
    
    expect_identical(stri_detect_regex('a', c('a', 'b', 'c')), c(T,F,F))
    expect_identical(stri_detect_regex(c('a', 'b', 'c'), 'a'), c(T,F,F))
+   suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:3]), c(T,T,F)))
+   suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:3], LETTERS[1:5]), c(T,T,T,F,F)))
+   suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:5]), c(T,T,F,F,F)))
+   suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:4], LETTERS[1:5]), c(T,T,T,T,F)))
    
    s <- c("Lorem", "123", " ", " ", "kota", "4\tą")
    p <- c("[[:alpha:]]+", "[[:blank:]]+")

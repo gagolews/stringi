@@ -31,6 +31,7 @@
 #' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Zs"))
 #' 
 #' @export
+#' @family detect, search
 stri_detect_class <- function(str, class) {
    .Call("stri_detect_class", str, class, PACKAGE="stringi")
 }
@@ -48,6 +49,8 @@ stri_detect_class <- function(str, class) {
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"),c('i','R','0'))
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"),'R')
 #' @export
+#' 
+#' @family detect, search
 stri_detect_fixed <- function(str, pattern) {
    .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
 }
@@ -66,7 +69,7 @@ stri_detect_fixed <- function(str, pattern) {
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
 #' @export
-#' @family regex
+#' @family detect, search, regex
 stri_detect_regex <- function(str, pattern) {
    .Call("stri_detect_regex", str, pattern, PACKAGE="stringi")
 }
@@ -84,7 +87,7 @@ stri_detect_regex <- function(str, pattern) {
 #' @return logical vector
 #' 
 #' @export
-#' @family search
+#' @family detect, search
 stri_detect <- function(str, regex, fixed, charclass) {
    if(!missing(regex))
       .Call("stri_detect_regex", str, regex, PACKAGE="stringi")

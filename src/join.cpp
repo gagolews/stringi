@@ -20,6 +20,104 @@
 
 
 
+
+/** Duplicate given strings
+ * 
+ *
+ *  @param s character vector
+ *  @param c integer vector == times
+ *  @return character vector;
+ * 
+ *  The function is vectorized over s and c
+ *  if s is NA or c is NA the result will be NA
+ *  if c<0 the result will be NA
+ *  if c==0 the result will be an empty string
+ *  if s or c is an empty vector then the result is an empty vector
+ *  
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
+*/
+SEXP stri_dup(SEXP s, SEXP c)
+{
+   s = stri_prepare_arg_string(s); // prepare string argument
+   c = stri_prepare_arg_integer(c); // prepare string argument
+   R_len_t nc = LENGTH(c);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(s), nc);
+   if (nmax <= 0) return allocVector(STRSXP, 0);
+   
+   int* cc = INTEGER(c);
+   StriContainerUTF8* ss = new StriContainerUTF8(s, nmax);
+   
+   // STEP 1.
+   // Calculate the required buffer length
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      if (ss->isNA(i) || cc[i % nc] == NA_INTEGER)
+         continue;
+         
+      R_len_t cursize = cc[i % nc]*ss->get(i).size();
+      if (cursize > bufsize)
+         bufsize = cursize;
+   }
+   
+   // STEP 2.
+   // Alloc buffer & result vector
+   char* buf = new char[bufsize+1];   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, nmax));
+
+   // STEP 3.
+   // Duplicate
+   const std::string* last_string = NULL; // this will allow for reusing buffer...
+   R_len_t last_index = 0;                // ...useful for stri_dup('a', 1:1000) or stri_dup('a', 1000:1)
+   
+   for (R_len_t i = ss->vectorize_init(); // this iterator allows for...
+         i != ss->vectorize_end();        // ...smart buffer reusage
+         i = ss->vectorize_next(i))
+   {
+      R_len_t cur_dups = cc[i % nc];
+      if (ss->isNA(i) || cur_dups == NA_INTEGER || cur_dups < 0)
+         SET_STRING_ELT(ret, i, NA_STRING);
+      else {
+         const std::string* cur_string = &ss->get(i);
+         R_len_t cur_length = cur_string->length();
+         if (cur_dups <= 0 || cur_length <= 0) {
+            SET_STRING_ELT(ret, i, mkCharLen("", 0));
+            continue;
+         }
+         
+         // all right, here the result will neither be NA nor an empty string
+         
+         if (cur_string != last_string) {
+            // well, no reuse possible - resetting
+            last_string = cur_string;
+            last_index = 0;
+         }
+         
+         // we paste only "additional" duplicates
+         R_len_t max_index = cur_length*cur_dups;
+         for (; last_index < max_index; last_index += cur_length) {
+            memcpy(buf+last_index, cur_string->c_str(), cur_length);
+         }
+         
+         // the result is always in UTF-8
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, max_index, CE_UTF8));
+      }
+   }
+   
+   
+   // STEP 4.
+   // Clean up & finish
+   
+   delete buf;
+   delete ss;
+   UNPROTECT(1);
+   return ret;
+}
+
+
+
+
 /** Join two character vectors, element by element
  * 
  * Vectorized over s1 and s2. Optimized for |s1| >= |s2|

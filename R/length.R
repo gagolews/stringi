@@ -25,7 +25,7 @@
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element 
 #' @export
-#' @seealso \code{\link{stri_length}}, \code{\link{stri_isempty}}, \code{\link{stri_width}}
+#' @family length
 stri_numbytes <- function(str) {
    .Call("stri_numbytes", str, PACKAGE="stringi")
 }
@@ -38,7 +38,7 @@ stri_numbytes <- function(str) {
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element
 #' @export
-#' @seealso \code{\link{stri_numbytes}}, \code{\link{stri_isempty}}, \code{\link{stri_width}}
+#' @family length
 stri_length <- function(str) {
    .Call("stri_length", str, PACKAGE="stringi")
 }
@@ -52,7 +52,7 @@ stri_length <- function(str) {
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return a logical vector
 #' @export
-#' @seealso \code{\link{stri_length}}, \code{\link{stri_numbytes}}, \code{\link{stri_width}}
+#' @family length
 stri_isempty <- function(str) {
    .Call("stri_isempty", str, PACKAGE="stringi")
 }
@@ -68,7 +68,7 @@ stri_isempty <- function(str) {
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element
 #' @export
-#' @seealso \code{\link{stri_length}}, \code{\link{stri_isempty}}, \code{\link{stri_numbytes}}
+#' @family length
 stri_width <- function(str) {
    .Call("stri_width", str, PACKAGE="stringi")
 }

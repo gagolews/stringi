@@ -37,13 +37,11 @@ class StriContainerUTF_Base {
       UConverter* ucnvNative;    ///< recently used Native encoder
       UConverter* ucnvLatin1;    ///< recently used Latin1 encoder
       bool isShallow;            ///< have we made only shallow copy of the strings (=> read only)
-#ifndef NDEBUG
-      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
-#endif
 
-   StriContainerUTF_Base();
-   StriContainerUTF_Base(StriContainerUTF_Base& container);
-   ~StriContainerUTF_Base();
+
+      StriContainerUTF_Base();
+      StriContainerUTF_Base(StriContainerUTF_Base& container);
+      ~StriContainerUTF_Base();
 
 
 
@@ -78,10 +76,11 @@ class StriContainerUTF_Base {
       
       /** Loop over vectorized container - next iteration */
       inline R_len_t vectorize_next(R_len_t i) const {
-         if (i == this->nrecycle-1) return this->nrecycle; // this is the end
+         if (i == this->nrecycle - 1 - (this->nrecycle%this->n))
+            return this->nrecycle; // this is the end
          i = i + this->n;
          if (i >= this->nrecycle)
-            return ((i+1) % this->nrecycle);  
+            return (i % this->n) + 1;  
          else
             return i;
       }

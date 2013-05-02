@@ -11,6 +11,8 @@ test_that("stri_dup", {
    expect_identical(stri_dup(character(0), integer(0)), character(0))
    expect_identical(stri_dup("char", integer(0)), character(0))
    expect_identical(stri_dup(character(0), 10), character(0))
+   expect_identical(stri_dup(LETTERS, 1), LETTERS)
+   expect_identical(stri_dup(LETTERS, 2), paste(LETTERS, LETTERS, sep=""))
    expect_identical(stri_dup("ABC", 0), "")
    expect_identical(stri_dup("A", c(1.5, 1.99, 0.1)), c("A", "A", ""))
    expect_warning(stri_dup("A", ":-("))

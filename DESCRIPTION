@@ -28,7 +28,6 @@ Authors@R: c(
     )
 Collate:
     'casefold.R'
-    'dup.R'
     'join.R'
     'trim.R'
     'unicode_normalization.R'
