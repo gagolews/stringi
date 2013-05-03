@@ -118,15 +118,15 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
    from = stri_prepare_arg_integer(from);
    to = stri_prepare_arg_integer(to);
    value = stri_prepare_arg_string(value);
-   int ns = LENGTH(s);
-   int nfrom = LENGTH(from);
-   int nto = LENGTH(to);
-   int nval = LENGTH(value);
+   R_len_t ns = LENGTH(s);
+   R_len_t nfrom = LENGTH(from);
+   R_len_t nto = LENGTH(to);
+   R_len_t nval = LENGTH(value);
    
    if(ns == 0 || nfrom == 0 || nto == 0 || nval == 0)
       return allocVector(STRSXP,0);
    
-   int nmax = stri__recycling_rule(true, 4, ns, nfrom, nto, nval);
+   R_len_t nmax = stri__recycling_rule(true, 4, ns, nfrom, nto, nval);
    //idea to improve performance if ns << nmax
    //first - check every element of s and save position of every utf char
    //into where and now you can easliy get substring by where[from[i]]
@@ -185,7 +185,7 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
             }
          }
          if(j==curto){
-            char* buf = R_alloc(st+curvallen+curslen-curto, sizeof(char)); 
+            char* buf = R_alloc(st+curvallen+curslen-k, sizeof(char)); 
             char* buf2 = buf;
             //copy the beginning of a string
             memcpy(buf2, CHAR(curs),st);
@@ -194,9 +194,9 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
             memcpy(buf2, CHAR(curval),curvallen);
             buf2 += curvallen;
             //and copy the rest of a string
-            memcpy(buf2, CHAR(curs)+curto,curslen-curto);
-            buf2 += curslen-curto;
-            SET_STRING_ELT(e, i, mkCharLen(buf, st+curvallen+curslen-curto));
+            memcpy(buf2, CHAR(curs)+k,curslen-k);
+            buf2 += curslen-k;
+            SET_STRING_ELT(e, i, mkCharLen(buf, st+curvallen+curslen-k));
             break;
          }
          lastk = k;

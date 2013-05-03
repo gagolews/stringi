@@ -33,5 +33,10 @@ test_that("stri_sub<-", {
    expect_identical(stri_sub(s)<-NA, NA)
    #character(0) has priority over NA
    expect_identical(stri_sub(s)<-character(0), character(0))
+   s <- "ąaś1"
+   stri_sub(s,1,1) <- "x"
+   expect_identical(s,"xaś1")
+   stri_sub(s,2,3) <- ""
+   expect_identical(s,"x1")
    
 })
