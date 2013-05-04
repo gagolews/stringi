@@ -54,3 +54,5 @@ bmarks <- rbind(bmarks, benchmark(
 ))
 print(bmarks)
 microbenchmark(str_pad(test,150),stri_pad(test,150))
+microbenchmark(str_pad(flat,120),stri_pad(flat,120))
+microbenchmark(str_pad(flat,1200000),stri_pad(flat,1200000))
