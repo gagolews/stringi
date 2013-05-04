@@ -41,13 +41,13 @@ stri_trim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_ltrim <- function(str) {
-   if (length(str) == 0) return(str)
-   from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
-   from[is.na(from)] <- 0 # this will return an empty string
-   to <- rep(-1,length(from))
-   to[from==0] <- 0
-   stri_sub(str, from, to)
-#   .Call("stri_ltrim", str, PACKAGE="stringi")
+#    if (length(str) == 0) return(str)
+#    from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
+#    from[is.na(from)] <- 0 # this will return an empty string
+#    to <- rep(-1,length(from))
+#    to[from==0] <- 0
+#    stri_sub(str, from, to)
+  .Call("stri_ltrim", str, PACKAGE="stringi")
 }
 
 
@@ -57,11 +57,11 @@ stri_ltrim <- function(str) {
 #' @return trimmed character vector 
 #' @export
 stri_rtrim <- function(str) {
-   if (length(str) == 0) return(str)
-   to <- as.integer(stri_locate_last_class(str,stri_char_getpropertyid("^WHITE_SPACE"))[,1])
-   to[is.na(to)] <- 0 # this will return an empty string
-   stri_sub(str, 1, to)
-#   .Call("stri_rtrim", str, PACKAGE="stringi")
+#    if (length(str) == 0) return(str)
+#    to <- as.integer(stri_locate_last_class(str,stri_char_getpropertyid("^WHITE_SPACE"))[,1])
+#    to[is.na(to)] <- 0 # this will return an empty string
+#    stri_sub(str, 1, to)
+  .Call("stri_rtrim", str, PACKAGE="stringi")
 }
 
 #' Trim all unnecessary double whitespaces from string

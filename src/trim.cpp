@@ -31,8 +31,8 @@
  */
 void stri__locate_trim1(const char* s, int n, int& first, int& last)
 {
-   int32_t cls[2] = {1073745920, -1};
-   int i;
+   int32_t cls[2] = {-1, 1073741855};
+   int i, previ;
    UChar32 chr;
    int charnum = 0;
    
@@ -48,12 +48,13 @@ void stri__locate_trim1(const char* s, int n, int& first, int& last)
    // if-for/else-for insted of for-if/else made here for efficiency reasons
 #define STRI__LOCATE_FIRST_CLASS1_DO(__CHR_CLS_TEST__) \
       for (i=0; i<n; charnum++) {                      \
+         previ = i;                                    \
          U8_NEXT(s, i, n, chr);                        \
          if (__CHR_CLS_TEST__) {                       \
             if (last != NA_INTEGER)                    \
                last = i;                               \
             if (first != NA_INTEGER && first <0) {     \
-               first = i;                              \
+               first = previ;                          \
                if (last == NA_INTEGER)                 \
                   return;                              \
             }                                          \
@@ -112,7 +113,7 @@ SEXP stri_trim(SEXP s)
          from=-1;
          to=-1;
          stri__locate_trim1(string, nstring, from, to);
-         SET_STRING_ELT(ret, i, mkCharLen(string+from-1, max(0,to-from+1)));
+         SET_STRING_ELT(ret, i, mkCharLen(string+from, max(0,to-from)));
       }
    }
    UNPROTECT(1);
@@ -134,9 +135,9 @@ SEXP stri_ltrim(SEXP s)
    R_len_t ns = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, ns));
-   int j=0;
+   int from=-1, to=-1;
    
-   for (R_len_t i=0; i<ns; ++i)
+   for (int i=0; i<ns; ++i)
    {
       SEXP ss = STRING_ELT(s, i);
       if (ss == NA_STRING)
@@ -144,11 +145,10 @@ SEXP stri_ltrim(SEXP s)
       else {
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
-         for(j=0; j < nstring ; ++j){
-            if(string[j] != ' ')
-               break;
-         }
-         SET_STRING_ELT(ret, i, mkCharLen(string+j,nstring-j));
+         from=-1;
+         to=NA_INTEGER;
+         stri__locate_trim1(string, nstring, from, to);
+         SET_STRING_ELT(ret, i, mkCharLen(string+from, max(0,nstring-from)));
       }
    }
    UNPROTECT(1);
@@ -166,27 +166,26 @@ SEXP stri_rtrim(SEXP s)
    s = stri_prepare_arg_string(s); // prepare string argument
    
    R_len_t ns = LENGTH(s);
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, ns));
-   int j=0;
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
+   int from=-1, to=-1;
    
    for (int i=0; i<ns; ++i)
    {
       SEXP ss = STRING_ELT(s, i);
       if (ss == NA_STRING)
-         SET_STRING_ELT(e, i, NA_STRING);
+         SET_STRING_ELT(ret, i, NA_STRING);
       else {
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
-         for(j=0; j < nstring ; ++j){
-            if(string[nstring-1-j] != ' ')
-               break;
-         }
-         SET_STRING_ELT(e, i, mkCharLen(string,nstring-j));
+         from=NA_INTEGER;
+         to=-1;
+         stri__locate_trim1(string, nstring, from, to);
+         SET_STRING_ELT(ret, i, mkCharLen(string, max(0,to)));
       }
    }
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
 
