@@ -27,6 +27,12 @@ microbenchmark(str_trim(flat,"l"),stri_ltrim(flat))
 microbenchmark(str_trim(test,"r"),stri_rtrim(test))
 microbenchmark(str_trim(flat,"r"),stri_rtrim(flat))
 
+microbenchmark(str_trim(test),stri_trim(test), .Call("stri_trim", test, PACKAGE="stringi"))
+microbenchmark(str_trim(flat),stri_trim(flat), .Call("stri_trim", flat, PACKAGE="stringi"))
+
+microbenchmark(str_trim(test,"l"),stri_ltrim(test), .Call("stri_ltrim", test, PACKAGE="stringi"))
+microbenchmark(str_trim(flat,"l"),stri_ltrim(flat), .Call("stri_ltrim", flat, PACKAGE="stringi"))
+
 # stri_trim_all
 
 microbenchmark(stri_trim_all(test),str_trim(test),times=10)

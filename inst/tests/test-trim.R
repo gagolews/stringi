@@ -13,6 +13,7 @@ test_that("stri_trim", {
    expect_equivalent(stri_trim("     A"), "A")
    expect_equivalent(stri_trim(" \t"),"")
    expect_equivalent(stri_trim("\n"),"")
+   expect_equivalent(stri_trim(" \t ą \n "),"ą")
    
    expect_equivalent(stri_trim(LETTERS), LETTERS)
    
@@ -31,6 +32,7 @@ test_that("stri_ltrim", {
    expect_equivalent(stri_ltrim("     A"), "A")
    expect_equivalent(stri_ltrim(" \t"), "")
    expect_equivalent(stri_ltrim("\n"), "")
+   expect_equivalent(stri_ltrim(" \t ą \n "),"ą \n ")
    
    expect_equivalent(stri_ltrim(LETTERS), LETTERS)
    
@@ -49,6 +51,7 @@ test_that("stri_rtrim", {
    expect_equivalent(stri_rtrim("    \n A"), "    \n A")
    expect_equivalent(stri_rtrim("\t "), "")
    expect_equivalent(stri_rtrim("\n"), "")
+   expect_equivalent(stri_rtrim(" \t ą \n ")," \t ą")
    
    expect_equivalent(stri_rtrim(LETTERS), LETTERS)
    
@@ -64,6 +67,7 @@ test_that("stri_trim_all", {
    expect_equivalent(stri_trim_all("         "), "")
    expect_equivalent(stri_trim_all("  \t A \n "), "A")
    expect_equivalent(stri_trim_all(" A A  A  \t A  "), "A A A A")
+   expect_equivalent(stri_trim(" \t ą \n "),"ą")
  
    expect_equivalent(stri_trim_all(LETTERS), LETTERS)
  

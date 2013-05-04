@@ -18,6 +18,73 @@
  
 #include "stringi.h"
 
+//THIS IS INTERNAL FUNCTION ONLY FOR STRI_TRIM
+/** Locate the first and/or the last occurence of character class in one string
+ * 
+ *  if first/last is NA_INTEGER on input, then we are not interested in that
+ *  @param s string
+ *  @param n numbytes for s
+ *  @param first [IN/OUT] code point index of the first occurence, 
+ *       -1 if not found; 0-based
+ *  @param last  [IN/OUT] code point index of the last occurence,
+ *       -1 if not found; 0-based
+ */
+void stri__locate_trim1(const char* s, int n, int& first, int& last)
+{
+   int32_t cls[2] = {1073745920, -1};
+   int i;
+   UChar32 chr;
+   int charnum = 0;
+   
+   if (first != NA_INTEGER && last != NA_INTEGER) {
+      first = -1;
+      last  = -1;
+   }   
+   else if (first == NA_INTEGER)
+      last  = -1;
+   else
+      first = -1;
+   
+   // if-for/else-for insted of for-if/else made here for efficiency reasons
+#define STRI__LOCATE_FIRST_CLASS1_DO(__CHR_CLS_TEST__) \
+      for (i=0; i<n; charnum++) {                      \
+         U8_NEXT(s, i, n, chr);                        \
+         if (__CHR_CLS_TEST__) {                       \
+            if (last != NA_INTEGER)                    \
+               last = i;                               \
+            if (first != NA_INTEGER && first <0) {     \
+               first = i;                              \
+               if (last == NA_INTEGER)                 \
+                  return;                              \
+            }                                          \
+         }                                             \
+      }
+   
+   if (STRI__UCHAR_IS_MATCHING_GCMASK(cls)) {
+      // General Category (matching)
+      int mask = STRI__UCHAR_GET_MATCHING_GCMASK(cls);
+      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) != 0)
+   }
+   else if (STRI__UCHAR_IS_COMPLEMENT_GCMASK(cls)) {
+      // General Category (complement)
+      int mask = STRI__UCHAR_GET_COMPLEMENT_GCMASK(cls);
+      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) == 0)
+   }
+   else if (STRI__UCHAR_IS_MATCHING_BINPROP(cls)) {
+      // Binary property (matching)
+      UProperty prop = (UProperty)STRI__UCHAR_GET_MATCHING_BINPROP(cls);
+      STRI__LOCATE_FIRST_CLASS1_DO(u_hasBinaryProperty(chr, prop))
+   }
+   else if (STRI__UCHAR_IS_COMPLEMENT_BINPROP(cls)) {
+      // Binary property (complement)
+      UProperty prop = (UProperty)STRI__UCHAR_GET_COMPLEMENT_BINPROP(cls);
+      STRI__LOCATE_FIRST_CLASS1_DO(!u_hasBinaryProperty(chr, prop))
+   }
+   else
+      error(MSG__INCORRECT_UCHAR_CLASS_ID);
+}
+
+
 
 /** 
    vectorized over s
@@ -30,33 +97,26 @@ SEXP stri_trim(SEXP s)
    s = stri_prepare_arg_string(s); // prepare string argument
    
    R_len_t ns = LENGTH(s);
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, ns));
-   int j=0,k=0;
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
+   int from=-1, to=-1;
    
    for (int i=0; i<ns; ++i)
    {
       SEXP ss = STRING_ELT(s, i);
       if (ss == NA_STRING)
-         SET_STRING_ELT(e, i, NA_STRING);
+         SET_STRING_ELT(ret, i, NA_STRING);
       else {
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
-         for(j=0; j < nstring ; ++j){
-            if(string[j] != ' ')
-               break;
-         }
-         for(k=0; k < nstring ; ++k){
-            if(string[nstring-1-k] != ' ')
-               break;
-         }
-         //if string contains only space, then k+j > nstring and mkCharLen
-         //throws an error (negative len). That's why max() is needed here
-         SET_STRING_ELT(e, i, mkCharLen(string+j, max(0,nstring-k-j)));
+         from=-1;
+         to=-1;
+         stri__locate_trim1(string, nstring, from, to);
+         SET_STRING_ELT(ret, i, mkCharLen(string+from-1, max(0,to-from+1)));
       }
    }
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
 
@@ -72,15 +132,15 @@ SEXP stri_ltrim(SEXP s)
    s = stri_prepare_arg_string(s); // prepare string argument
    
    R_len_t ns = LENGTH(s);
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, ns));
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
    int j=0;
    
-   for (int i=0; i<ns; ++i)
+   for (R_len_t i=0; i<ns; ++i)
    {
       SEXP ss = STRING_ELT(s, i);
       if (ss == NA_STRING)
-         SET_STRING_ELT(e, i, NA_STRING);
+         SET_STRING_ELT(ret, i, NA_STRING);
       else {
          const char* string = CHAR(ss);
          int nstring = LENGTH(ss);
@@ -88,11 +148,11 @@ SEXP stri_ltrim(SEXP s)
             if(string[j] != ' ')
                break;
          }
-         SET_STRING_ELT(e, i, mkCharLen(string+j,nstring-j));
+         SET_STRING_ELT(ret, i, mkCharLen(string+j,nstring-j));
       }
    }
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
 

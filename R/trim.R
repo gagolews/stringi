@@ -24,13 +24,13 @@
 #' @return trimmed character vector 
 #' @export
 stri_trim <- function(str) {
-   if (length(str) == 0) return(str)
-   from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
-   to   <- as.integer(stri_locate_last_class(str,  stri_char_getpropertyid("^WHITE_SPACE"))[,1])
-   from[is.na(from)] <- 0 # this will return an empty string
-   to[is.na(to)] <- 0
-   stri_sub(str, from, to)
-#    .Call("stri_trim", str, PACKAGE="stringi")
+#    if (length(str) == 0) return(str)
+#    from <- as.integer(stri_locate_first_class(str, stri_char_getpropertyid("^WHITE_SPACE"))[,1])
+#    to   <- as.integer(stri_locate_last_class(str,  stri_char_getpropertyid("^WHITE_SPACE"))[,1])
+#    from[is.na(from)] <- 0 # this will return an empty string
+#    to[is.na(to)] <- 0
+#    stri_sub(str, from, to)
+   .Call("stri_trim", str, PACKAGE="stringi")
 }
 
 

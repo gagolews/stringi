@@ -130,6 +130,7 @@ SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);
 
 
 // trim.cpp:
+void stri__locate_trim1(const char* s, int n, int& first, int& last);
 SEXP stri_trim(SEXP s);
 SEXP stri_ltrim(SEXP s);
 SEXP stri_rtrim(SEXP s);
