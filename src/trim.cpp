@@ -244,25 +244,33 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
    R_len_t ns = LENGTH(s);
    R_len_t nside = LENGTH(side);
    R_len_t nwidth = LENGTH(width);
+   R_len_t np = LENGTH(pad);
    
-   if(INTEGER(stri_length(pad))[0] != 1) 
+   //check if pad is single character
+   int* iplen = INTEGER(stri_length(pad));
+   for(R_len_t i=0; i<np; ++i){
+      if(iplen[i] != 1) 
       error("pad must be single character");
+   }
    
-   R_len_t nmax = stri__recycling_rule(true, 3, ns, nside, nwidth);
+   R_len_t nmax = stri__recycling_rule(true, 4, ns, nside, nwidth, np);
    
    int needed=0;
-   SEXP e, curs, slen;
+   SEXP e, curs, slen, snum, pnum;
    PROTECT(e = allocVector(STRSXP, nmax));
    
-   const char* p = CHAR(STRING_ELT(pad,0));
-   
    slen = stri_length(s);
+   snum = stri_numbytes(s);
+   pnum = stri_numbytes(pad);
    int* iwidth = INTEGER(width);
-   int* islen  = INTEGER(slen);
    int* iside  = INTEGER(side);
+   int* islen  = INTEGER(slen);
+   int* isnum  = INTEGER(snum);
+   int* ipnum  = INTEGER(pnum);
    
-   for (int i=0; i<nmax; ++i){
+   for (R_len_t i=0; i<nmax; ++i){
       curs = STRING_ELT(s, i % ns);
+      const char* p = CHAR(STRING_ELT(pad, i % np));
       if(curs == NA_STRING || iwidth[i % nwidth] == NA_INTEGER){
          SET_STRING_ELT(e, i, NA_STRING);
          continue;
@@ -273,41 +281,41 @@ SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
          SET_STRING_ELT(e, i, curs);
          continue;
       }
-      char* buf = R_alloc(iwidth[i % nwidth], sizeof(char)); 
+      char* buf = R_alloc(isnum[i%ns]+ipnum[i%np]*needed, sizeof(char)); 
       char* buf2 = buf;
       switch(iside[i % nside]){
          //left
          case 1:
          for(int j=0; j<needed; ++j){
-            memcpy(buf2, p, 1);
-            buf2 += 1;
+            memcpy(buf2, p, ipnum[i%np]);
+            buf2 += ipnum[i%np];
          }
-         memcpy(buf2, CHAR(curs), islen[i % ns]);
+         memcpy(buf2, CHAR(curs), isnum[i % ns]);
          break;
          //right
          case 2:
-         memcpy(buf2, CHAR(curs), islen[i % ns]);
-         buf2 += islen[i % ns];
+         memcpy(buf2, CHAR(curs), isnum[i % ns]);
+         buf2 += isnum[i % ns];
          for(int j=0; j<needed; ++j){
-            memcpy(buf2, p, 1);
-            buf2 += 1;
+            memcpy(buf2, p, ipnum[i%np]);
+            buf2 += ipnum[i%np];
          }
          break;
          //both
          case 3:
          for(int j=0; j<floor(needed/2); ++j){
-            memcpy(buf2, p, 1);
-            buf2 += 1;
+            memcpy(buf2, p, ipnum[i%np]);
+            buf2 += ipnum[i%np];
          }
-         memcpy(buf2, CHAR(curs), islen[i % ns]);
-         buf2 += islen[i % ns];
+         memcpy(buf2, CHAR(curs), isnum[i % ns]);
+         buf2 += isnum[i % ns];
          for(int j=0; j<ceil(double(needed)/2); ++j){
-            memcpy(buf2, p, 1);
-            buf2 += 1;
+            memcpy(buf2, p, ipnum[i%np]);
+            buf2 += ipnum[i%np];
          }
          break;
       }
-      SET_STRING_ELT(e, i, mkCharLen(buf, iwidth[i % nwidth]));
+      SET_STRING_ELT(e, i, mkCharLen(buf, isnum[i%ns]+ipnum[i%np]*needed));
    }
    
    UNPROTECT(1);

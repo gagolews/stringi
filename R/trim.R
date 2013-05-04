@@ -77,17 +77,19 @@ stri_trim_all <- function(str) {
 #' Pad a string
 #' 
 #' Add whitespace at the begining or/and at the end of string.
-#' Works like str_pad but faster and it's vectorized not only over s, but also over width and side. And works with NA value.
+#' Works like str_pad but faster and it's vectorized not only over s, but 
+#' also over width, side and pad. And works with NA value.
 #' 
 #' @param str character vector
 #' @param width pad strings to this minimum width
 #' @param side side on which padding character is added (left, right or both)
-#' @param pad single padding character (default is space)
+#' @param pad character vector of single padding character (default is space)
 #' @return character vector 
 #' @details If string is longer than width, then string is returned unchanged. Look at the example.
 #' @examples
 #' stri_pad("stringi",10,c("l","r","b"),"#")
 #' stri_pad("stringi",5:9,pad="$")
+#' stri_pad("1",3,"b",pad=LETTERS)
 #' @export
 stri_pad <- function(str, width, side = "left", pad = " ") {
    # prepare_arg done internally
