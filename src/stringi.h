@@ -29,6 +29,7 @@
 #include "messages.h"
 #include "macros.h"
 #include "unicoder_base.h"
+#include "string8.h"
 #include "unicoder8.h"
 #include "unicoder16.h"
 

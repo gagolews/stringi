@@ -41,7 +41,11 @@ HEADERS     =  stringi.h \
                messages.h \
                external.h \
                macros.h \
-               unicoder.h
+               unicoder_base.h \
+               unicoder8.h \
+               unicoder16.h \
+               string8.h
+               
 
 OBJECTS     =  $(SRCS:.cpp=.o)
 
