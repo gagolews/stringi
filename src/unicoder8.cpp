@@ -59,7 +59,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
    }
    else {
       this->enc = new StriEnc[(this->isShallow)?this->n:this->nrecycle];
-      this->str = new std::string*[(this->isShallow)?this->n:this->nrecycle];
+      this->str = new String8*[(this->isShallow)?this->n:this->nrecycle];
       for (R_len_t i=0; i<this->n; ++i)
          this->str[i] = NULL; // in case it fails during conversion
          
@@ -71,11 +71,11 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
          }
          else {
             if (IS_ASCII(curs)) {
-               this->str[i] = new std::string(CHAR(curs), LENGTH(curs));
+               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !this->isShallow);
                this->enc[i] = STRI_ENC_ASCII; 
             }
             else if (IS_UTF8(curs)) {
-               this->str[i] = new std::string(CHAR(curs), LENGTH(curs));
+               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !this->isShallow);
                this->enc[i] = STRI_ENC_UTF8; 
             }
             else if (IS_LATIN1(curs)) {
@@ -84,10 +84,11 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                UErrorCode status = U_ZERO_ERROR;
                // @TODO: may be slower
                UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvLatin1, status);
-               this->str[i] = new std::string();
-               tmp.toUTF8String(*this->str[i]);
+               std::string tmp2;
+               tmp.toUTF8String(tmp2);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT);  
+                  error(MSG__ENC_ERROR_CONVERT); 
+               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
                this->enc[i] = STRI_ENC_LATIN1; 
             }
             else if (IS_BYTES(curs)) 
@@ -102,10 +103,11 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                UErrorCode status = U_ZERO_ERROR;
                // @TODO: may be slower
                UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvNative, status);
-               this->str[i] = new std::string();
-               tmp.toUTF8String(*this->str[i]);
+               std::string tmp2;
+               tmp.toUTF8String(tmp2);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT);  
+                  error(MSG__ENC_ERROR_CONVERT); 
+               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
                this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
@@ -116,7 +118,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
             if (this->enc[i] == STRI_NA)
                this->str[i] = NULL;
             else
-               this->str[i] = new std::string(*this->str[i%this->n]);
+               this->str[i] = new String8(*this->str[i%this->n]);
          }
          this->n = this->nrecycle;
       }
@@ -128,10 +130,10 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
    :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
 {
    if (this->n > 0) {
-      this->str = new std::string*[this->n];
+      this->str = new String8*[this->n];
       for (int i=0; i<this->n; ++i) {
          if (this->str[i])
-            this->str[i] = new std::string(*(container.str[i]));
+            this->str[i] = new String8(*(container.str[i]));
          else
             this->str[i] = NULL;
       }
@@ -150,10 +152,10 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
    (StriContainerUTF_Base&) (*this) = (StriContainerUTF_Base&)container;
 
    if (this->n > 0) {
-      this->str = new std::string*[this->n];
+      this->str = new String8*[this->n];
       for (int i=0; i<this->n; ++i) {
          if (this->str[i])
-            this->str[i] = new std::string(*(container.str[i]));
+            this->str[i] = new String8(*(container.str[i]));
          else
             this->str[i] = NULL;
       }

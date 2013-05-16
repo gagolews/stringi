@@ -68,7 +68,7 @@ SEXP stri_dup(SEXP s, SEXP c)
 
    // STEP 3.
    // Duplicate
-   const std::string* last_string = NULL; // this will allow for reusing buffer...
+   const String8* last_string = NULL; // this will allow for reusing buffer...
    R_len_t last_index = 0;                // ...useful for stri_dup('a', 1:1000) or stri_dup('a', 1000:1)
    
    for (R_len_t i = ss->vectorize_init(); // this iterator allows for...
@@ -79,7 +79,7 @@ SEXP stri_dup(SEXP s, SEXP c)
       if (ss->isNA(i) || cur_dups == NA_INTEGER || cur_dups < 0)
          SET_STRING_ELT(ret, i, NA_STRING);
       else {
-         const std::string* cur_string = &ss->get(i);
+         const String8* cur_string = &ss->get(i);
          R_len_t cur_length = cur_string->length();
          if (cur_dups <= 0 || cur_length <= 0) {
             SET_STRING_ELT(ret, i, mkCharLen("", 0));

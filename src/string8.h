@@ -33,7 +33,7 @@ class String8  {
    private:
    
       char* str;  ///< character data in UTF-8
-      int n;      ///< string length (in bytes), not including NUL
+      R_len_t n;      ///< string length (in bytes), not including NUL
       bool memalloc; /// < should the memory be freed at the end
       
       
@@ -45,16 +45,17 @@ class String8  {
        */
       String8() {
          this->str = NULL;
-         this->n = -1;
+         this->n = 0;
          this->memalloc = false;
       }
    
+      
       /** constructor
        * @param str character buffer
        * @param n buffer length (not including NUL)
        * @param memalloc should a deep copy of the buffer be done?
        */      
-      String8(char* str, int n, bool memalloc=false)
+      String8(const char* str, R_len_t n, bool memalloc=false)
       {
          this->memalloc = memalloc;
          this->n = n;
@@ -63,7 +64,7 @@ class String8  {
             memcpy(this->str, str, n+1);
          }
          else {
-            this->str = str;
+            this->str = (char*)(str); // we know what we're doing
          }
       }
       
@@ -114,13 +115,13 @@ class String8  {
       }
       
       /** string length in bytes */
-      inline int length() const
+      inline R_len_t length() const
       {
          return this->n;  
       }
       
       /** string length in bytes (alias for \code{length()}) */
-      inline int size() const
+      inline R_len_t size() const
       {
          return this->n;  
       }
