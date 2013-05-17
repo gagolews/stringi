@@ -271,20 +271,78 @@ SEXP stri_join(SEXP s)
 
 
 
-/** TO DO: Encoding marking!
+
+/** String vector flatten, with no separator
  *
  *  if any of s is NA, the result will be NA_character_
- *  @param s ....
- *  @return ....
+ * 
+ *  @param s character vector
+ *  @return if s is not empty, then a character vector of length 1 
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
+ */
+SEXP stri_flatten_nosep(SEXP s)
+{
+   s = stri_prepare_arg_string(s);
+   
+   R_len_t ns = LENGTH(s);
+   if (ns <= 0) return s; // TODO: is that right? empty vector or empty string should be returned?
+   
+   StriContainerUTF8* ss = new StriContainerUTF8(s, ns);
+   
+   // 1. Get required buffer size
+   R_len_t nchar = 0;
+   for (int i=0; i<ns; ++i) {
+      if (ss->isNA(i)) return stri__vector_NA_strings(1); // at least 1 NA => return NA
+      nchar += ss->get(i).length();
+   }
+   
+   // 2. Fill the buf!
+   char* buf = new char[nchar]; // NULL not needed
+   R_len_t cur = 0;
+   for (int i=0; i<ns; ++i) {
+      R_len_t ncur = ss->get(i).length();
+      memcpy(buf+cur, ss->get(i).c_str(), ncur);
+      cur += ncur;
+   }
+   
+   delete ss; // not needed anymore
+   
+   // 3. Get ret val & solongfarewellaufwiedersehenadieu
+   SEXP ret; 
+   PROTECT(ret = allocVector(STRSXP, 1));
+   SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nchar, CE_UTF8));
+   UNPROTECT(1);
+   return ret;
+}
+
+
+/** String vector flatten, with separator possible between each string
+ *
+ *  if any of s is NA, the result will be NA_character_
+ * 
+ *  @param s character vector
+ *  @param sep TBD.........
+ *  @return if s is not empty, then a character vector of length 1 
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Bartek Tartanus) - sep arg added (1 sep supported)
+ * @version 0.3 (Marek Gagolewski) - tbd.
  */
 SEXP stri_flatten(SEXP s, SEXP sep)
 {
+   // Check if sep is given?
+   sep = stri_prepare_arg_string(sep);
+   if (LENGTH(sep) == 1 && LENGTH(STRING_ELT(sep, 0)) == 0)
+      return stri_flatten_nosep(s); // specialized -> faster
+      
    s = stri_prepare_arg_string(s); // prepare string argument
-   sep = STRING_ELT(stri_prepare_arg_string(sep),0);
+   sep = STRING_ELT(sep, 0); // only first element used (TBD: we really want it?)
    
    R_len_t ns = LENGTH(s);
    R_len_t nsep = LENGTH(sep);
-   if (ns <= 0) return s;
+   if (ns <= 0) return s;       // TODO: is that right? empty vector or empty string should be returned?
    
    SEXP e;
    PROTECT(e = allocVector(STRSXP, 1));
@@ -296,7 +354,7 @@ SEXP stri_flatten(SEXP s, SEXP sep)
    }
    
    R_len_t totalsize = 0;
-   for (int i=0; i<ns; ++i){
+   for (int i=0; i<ns; ++i) {
       SEXP curs = STRING_ELT(s, i);
       if (curs == NA_STRING) {
          SET_STRING_ELT(e, 0, NA_STRING);

@@ -21,6 +21,8 @@
 
 #' Duplicate Strings
 #'
+#' Vectorized over \code{str} and \code{times}
+#'
 #' @param str character vector of strings to be duplicated
 #' @param times integer vector with number of times to duplicate each string
 #' @return character vector
@@ -74,13 +76,23 @@ stri_join <- function(..., sep="", collapse=NULL) {
 
 
 
-#' Flatten a string
+#' Flatten a String
 #' 
-#' Joins each element of a character vector into one string;
-#' this works like \code{paste(str, collapse="", sep="")}, but ca. 3x faster
+#' ???vectorized over sep and str????
 #' 
-#' @param str will be coerced to character
-#' @param sep separator
+#' Joins each element of a character vector into one string.
+#' \code{stri_flatten(str)} works the same as
+#' \code{paste(str, collapse="", sep="")}, but is ca. 3x faster
+#' 
+#' @param str vector of strings will be coerced to character
+#' @param sep separator (single string? vector of strings?) TBD
+#' 
+#' @return
+#' If \code{str} is not empty, then a single string is returned.
+#' 
+#' @examples
+#' stri_flatten(LETTERS)
+#' stri_flatten(LETTERS, sep=",")
 #' 
 #' @export
 #' @family paste

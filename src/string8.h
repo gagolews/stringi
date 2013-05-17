@@ -60,6 +60,7 @@ class String8  {
          this->memalloc = memalloc;
          this->n = n;
          if (memalloc) {
+//            cerr << "DEBUG: String8: memalloc!" << endl;
             this->str = new char[n+1];
             memcpy(this->str, str, n+1);
          }
@@ -81,6 +82,7 @@ class String8  {
          this->memalloc = s.memalloc;
          this->n = s.n;
          if (s.memalloc) {
+//            cerr << "DEBUG: String8: memalloc!" << endl;
             this->str = new char[s.n+1];
             memcpy(this->str, s.str, s.n+1);
          }
@@ -98,6 +100,7 @@ class String8  {
          this->memalloc = s.memalloc;
          this->n = s.n;
          if (s.memalloc) {
+//            cerr << "DEBUG: String8: memalloc!" << endl;
             this->str = new char[s.n+1];
             memcpy(this->str, s.str, s.n+1);
          }
