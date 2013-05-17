@@ -69,6 +69,9 @@
    
 #define MSG__ENC_INCORRECT_ID \
    "incorrect character encoding identifier"
+   
+#define MSG__COLLAPSE_EXPECTED1 \
+   "only one string for `collapse` is supported. taking first"
 
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"

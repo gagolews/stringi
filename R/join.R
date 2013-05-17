@@ -78,27 +78,34 @@ stri_join <- function(..., sep="", collapse=NULL) {
 
 #' Flatten a String
 #' 
-#' ???vectorized over sep and str????
+#' 
 #' 
 #' Joins each element of a character vector into one string.
-#' \code{stri_flatten(str)} works the same as
-#' \code{paste(str, collapse="", sep="")}, but is ca. 3x faster
+#' \code{stri_flatten(str, collapse='XXX')} works the same as
+#' \code{paste(str, collapse='XXX', sep="")}.
+#' 
+#' If you wish to use some more fancy \code{collapse} separators
+#' between flattened strings,
+#' call \code{stri_join(str, separators, collapse='')}.
+#' 
 #' 
 #' @param str vector of strings will be coerced to character
-#' @param sep separator (single string? vector of strings?) TBD
+#' @param collapse separator, a single string
 #' 
 #' @return
 #' If \code{str} is not empty, then a single string is returned.
+#' If \code{collapse} has length > 1, then only first string
+#' will be used.
 #' 
 #' @examples
 #' stri_flatten(LETTERS)
-#' stri_flatten(LETTERS, sep=",")
+#' stri_flatten(LETTERS, collapse=",")
 #' 
 #' @export
 #' @family paste
-stri_flatten <- function(str, sep="") {
+stri_flatten <- function(str, collapse="") {
    # prepare_arg done internally
-   .Call("stri_flatten", str, sep, PACKAGE="stringi")
+   .Call("stri_flatten", str, collapse, PACKAGE="stringi")
 }
 
 

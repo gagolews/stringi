@@ -12,9 +12,10 @@ test_that("stri_flatten", {
    expect_identical(stri_flatten("0987654321"), "0987654321")
    expect_identical(stri_flatten("\u0105\u0104"),paste("\u0105\u0104", collapse=""))
    
-   #separator
-   expect_identical(stri_flatten(letters, sep=" "),paste(letters,  collapse=" "))
-   expect_identical(stri_flatten(letters, sep="#$"),paste(letters, collapse="#$"))
-   expect_identical(stri_flatten(letters, sep="\u0105\u0104"),paste(letters, collapse="\u0105\u0104"))
+   # collapse-separators
+   expect_identical(stri_flatten(LETTERS, collapse=character(0)), character(0))
+   expect_identical(stri_flatten(letters, collapse=" "),paste(letters,  collapse=" "))
+   expect_identical(stri_flatten(letters, collapse="#$"),paste(letters, collapse="#$"))
+   expect_identical(stri_flatten(letters, collapse="\u0105\u0104"),paste(letters, collapse="\u0105\u0104"))
    
 })

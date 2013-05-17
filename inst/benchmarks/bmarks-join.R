@@ -40,40 +40,17 @@ print(microbenchmark(
    paste(x, collapse="")
 ))
 
-x <- rep(stri_dup(c('\u0105', '\u0104'), 100), 100)
+x <- rep(stri_dup(c('\u0105', '\u0104'), 1000), 100)
 print(microbenchmark(
    stri_flatten(x),
    paste(x, collapse="")
 ))
 
 print(microbenchmark(
-   stri_flatten(LETTERS, sep=" "),
-   paste(LETTERS, collapse=" ")
+   stri_flatten(x, collapse=" "),
+   paste(x, collapse=" ")
 ))
 
-
-
-# TEMP: 2013-05-17 results [MG]
-
-# Unit: microseconds
-# expr   min     lq median    uq    max neval
-# stri_flatten(LETTERS) 2.513 2.8320 3.0385 3.291 31.987   100
-# paste(LETTERS, collapse = "") 7.541 8.0055 8.3435 8.674 33.085   100
-
-# Unit: microseconds
-# expr    min      lq  median      uq    max neval
-# stri_flatten(x) 10.163 10.8305 11.1175 11.4000 39.497   100
-# paste(x, collapse = "") 31.025 31.6255 32.1350 32.6245 61.201   100
-
-# Unit: microseconds
-# expr     min      lq   median       uq      max neval
-# stri_flatten(x) 122.578 123.713 124.4225 128.0375 1693.094   100
-# paste(x, collapse = "") 313.440 317.124 319.8070 343.7260  678.916   100
-
-# Unit: microseconds
-# expr   min     lq median     uq    max neval
-# stri_flatten(LETTERS, sep = " ") 2.668 3.0065 3.2645 3.5430 28.031   100
-# paste(LETTERS, collapse = " ") 7.577 8.2895 8.6340 8.9975 32.143   100
 
 #########################################################################
 

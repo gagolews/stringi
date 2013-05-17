@@ -287,14 +287,17 @@ SEXP stri_flatten_nosep(SEXP s)
    s = stri_prepare_arg_string(s);
    
    R_len_t ns = LENGTH(s);
-   if (ns <= 0) return s; // TODO: is that right? empty vector or empty string should be returned?
+   if (ns <= 0) return s;
    
    StriContainerUTF8* ss = new StriContainerUTF8(s, ns);
    
    // 1. Get required buffer size
    R_len_t nchar = 0;
    for (int i=0; i<ns; ++i) {
-      if (ss->isNA(i)) return stri__vector_NA_strings(1); // at least 1 NA => return NA
+      if (ss->isNA(i)) {
+         delete ss;
+         return stri__vector_NA_strings(1); // at least 1 NA => return NA
+      }
       nchar += ss->get(i).length();
    }
    
@@ -307,12 +310,13 @@ SEXP stri_flatten_nosep(SEXP s)
       cur += ncur;
    }
    
-   delete ss; // not needed anymore
    
    // 3. Get ret val & solongfarewellaufwiedersehenadieu
    SEXP ret; 
    PROTECT(ret = allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nchar, CE_UTF8));
+   delete buf;
+   delete ss;
    UNPROTECT(1);
    return ret;
 }
@@ -323,72 +327,77 @@ SEXP stri_flatten_nosep(SEXP s)
  *  if any of s is NA, the result will be NA_character_
  * 
  *  @param s character vector
- *  @param sep TBD.........
+ *  @param sep a single string [R name: collapse]
  *  @return if s is not empty, then a character vector of length 1 
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Bartek Tartanus) - sep arg added (1 sep supported)
- * @version 0.3 (Marek Gagolewski) - tbd.
+ * @version 0.3 (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
  */
 SEXP stri_flatten(SEXP s, SEXP sep)
 {
    // Check if sep is given?
    sep = stri_prepare_arg_string(sep);
-   if (LENGTH(sep) == 1 && LENGTH(STRING_ELT(sep, 0)) == 0)
-      return stri_flatten_nosep(s); // specialized -> faster
+//   if (LENGTH(sep) == 1 && LENGTH(STRING_ELT(sep, 0)) == 0)
+//      return stri_flatten_nosep(s); // specialized -> slightly (not too much) faster
       
-   s = stri_prepare_arg_string(s); // prepare string argument
-   sep = STRING_ELT(sep, 0); // only first element used (TBD: we really want it?)
-   
+   s = stri_prepare_arg_string(s); // prepare string argument   
    R_len_t ns = LENGTH(s);
    R_len_t nsep = LENGTH(sep);
-   if (ns <= 0) return s;       // TODO: is that right? empty vector or empty string should be returned?
+   if (ns <= 0 || nsep <= 0) return stri__vector_empty_strings(0);
    
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, 1));
-   //if sep == NA return NA
-   if (sep == NA_STRING) {
-      SET_STRING_ELT(e, 0, NA_STRING);
+   if (nsep > 1) {
+      warning(MSG__COLLAPSE_EXPECTED1);
+      SEXP sep_old = sep;
+      PROTECT(sep = allocVector(STRSXP, 1));
+      SET_STRING_ELT(sep, 0, STRING_ELT(sep_old, 0));
       UNPROTECT(1);
-      return e;
    }
    
-   R_len_t totalsize = 0;
+   StriContainerUTF8* ssep = new StriContainerUTF8(sep, 1);
+   if (ssep->isNA(0)) {
+      delete ssep;
+      return stri__vector_NA_strings(1);
+   }
+   
+   R_len_t ncharsep = ssep->get(0).length();
+   
+   StriContainerUTF8* ss = new StriContainerUTF8(s, ns);
+   
+   // 1. Get required buffer size
+   R_len_t nchar = 0;
    for (int i=0; i<ns; ++i) {
-      SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING) {
-         SET_STRING_ELT(e, 0, NA_STRING);
-         UNPROTECT(1);
-         return e;
+      if (ss->isNA(i)) {
+         delete ssep;
+         delete ss;
+         return stri__vector_NA_strings(1); // at least 1 NA => return NA
       }
-      totalsize += LENGTH(curs);
+      nchar += ss->get(i).length() + ((i<ns-1)?ncharsep:0);
    }
-   //add the length of sep
-   totalsize += (ns-1)*nsep;
+
    
-   // if we are here - output is definitely not NA_character_
-   
-   if (totalsize <= 0)
-      SET_STRING_ELT(e, 0, mkCharLen("", 0)); // empty string on output
-   else {
-      // not an empty string
-      char* buf = R_alloc(totalsize, sizeof(char)); // to be thread-safe
-      char* buf2 = buf;
-      for (int i=0; i<ns; ++i) {
-         SEXP ss = STRING_ELT(s, i);
-         int ni = LENGTH(ss);
-         if (ni > 0) {
-            memcpy(buf2, CHAR(ss), ni);
-            buf2 += ni;
-         }
-         if (i<ns-1){
-            memcpy(buf2, CHAR(sep),nsep);
-            buf2 += nsep;
-         }
+   // 2. Fill the buf!
+   char* buf = new char[nchar]; // NULL not needed
+   R_len_t cur = 0;
+   for (int i=0; i<ns; ++i) {
+      R_len_t ncur = ss->get(i).length();
+      memcpy(buf+cur, ss->get(i).c_str(), ncur);
+      cur += ncur;
+      if (i < ns-1 && ncharsep > 0) {
+         memcpy(buf+cur, ssep->get(0).c_str(), ncharsep);
+         cur += ncharsep;  
       }
-      SET_STRING_ELT(e, 0, mkCharLen(buf, totalsize));
    }
+   
+   
+   // 3. Get ret val & solongfarewellaufwiedersehenadieu
+   SEXP ret; 
+   PROTECT(ret = allocVector(STRSXP, 1));
+   SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nchar, CE_UTF8));
+   delete buf;
+   delete ssep;
+   delete ss;
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
