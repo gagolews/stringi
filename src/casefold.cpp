@@ -23,57 +23,58 @@
 
 
 /** 
- *  vectorized over s
- *  if s is NA the result will be NA
+ * Convert case (TitleCase, lowercase, UPPERCASE, etc.)
  * 
- *  @param s ...
- *  @param type ...
- *  @return ...
+ * 
+ *  @param str character vector
+ *  @param type internal code of case conversion type 
+ *  @return character vector
  *  
- *  @TODO  WHAT IF s is not in UTF-8??? Encoding marking!
- *  @TODO  USE C API (no UnicodeString....)
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
 */
-SEXP stri_casefold(SEXP s, SEXP type)
+SEXP stri_casefold(SEXP str, SEXP type)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   str = stri_prepare_arg_string(str); // prepare string argument
+   
+   if (!isInteger(type) || LENGTH(type) != 1)
+      error(MSG__INCORRECT_INTERNAL_ARG);
+      
    int _type = INTEGER(type)[0];
-   R_len_t ns = LENGTH(s);
-   SEXP e;   
-   PROTECT(e = allocVector(STRSXP, ns));
-   string y;
-
-   for (int i=0; i<ns; ++i)
+   
+   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
+   
+   for (R_len_t i = ss->vectorize_init();
+         i != ss->vectorize_end();
+         i = ss->vectorize_next(i))
    {
-      SEXP ss = STRING_ELT(s, i);
-      if (ss == NA_STRING)
-         SET_STRING_ELT(e, i, NA_STRING);
-      else {
-         UnicodeString xu = UnicodeString::fromUTF8(StringPiece(CHAR(ss)));
+      if (!ss->isNA(i)) {
          switch (_type) {
             case 1:
-               xu.toLower();
+               ss->getWritable(i).toLower();
                break;
             case 2:
-               xu.toUpper();
+               ss->getWritable(i).toUpper();
                break;
             case 3:
-               error("stri_case: toTitle() has not been implemented yet");
-//               xu.toTitle();
+               ss->getWritable(i).toTitle(NULL); // use default ICU's BreakIterator
                break;
             case 4:
-               xu.foldCase(U_FOLD_CASE_DEFAULT);
+               ss->getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);
                break;
             case 5:
-               xu.foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
+               ss->getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
                break;
             default:
-               error("stri_case: incorrect case conversion type");
+               error("stri_casefold: incorrect case conversion type");
          }
-         xu.toUTF8String(y);
-         SET_STRING_ELT(e, i, mkCharLen(y.c_str(), y.length()));
-         if (i < ns-1) y.clear();
       }
    }
+   
+   SEXP ret;
+   PROTECT(ret = ss->toR());
+   delete ss;
+   // normalizer shall not be deleted at all
    UNPROTECT(1);
-   return e;
+   return ret;
 }

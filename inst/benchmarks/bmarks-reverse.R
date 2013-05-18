@@ -15,12 +15,16 @@ local({
    	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
    	massa nibh nec erat."
    
-   print(microbenchmark(stri_reverse(s)))
-   
-   srep <- rep(s,10)
-   print(microbenchmark(stri_reverse(srep)))
+   print(microbenchmark(
+      stri_reverse(s),
+      intToUtf8(rev(utf8ToInt(s)))
+   ))
 
-   srepdup <- stri_dup(srep,10)
-   print(microbenchmark(stri_reverse(srepdup)))
+   srepdup <- stri_dup(s, 10)
+   
+   print(microbenchmark(
+      stri_reverse(srepdup),
+      intToUtf8(rev(utf8ToInt(srepdup)))
+   ))
    
 })

@@ -17,22 +17,37 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Translate to lower case
+#' Translate String to lowercase
 #' 
-#' Performance: similar to tolower() 
-#' @param str will be coerced to character
+#' @param str character vector on which casefolding is applied
+#' @return character vector
+#' 
 #' @export
+#' @family casefold
 stri_tolower <- function(str) {
-   # prepare_arg done internally
    .Call("stri_casefold", str, 1L, PACKAGE="stringi")
 }
 
-#' Translate to upper case
+
+#' Translate String to UPPERCASE
 #' 
-#' Performance: similar to toupper() 
-#' @param str will be coerced to character
+#' @param str character vector on which casefolding is applied
+#' @return character vector
+#' 
 #' @export
+#' @family casefold
 stri_toupper <- function(str) {
-   # prepare_arg done internally
    .Call("stri_casefold", str, 2L, PACKAGE="stringi")
+}
+
+
+#' Translate String to TitleCase
+#' 
+#' @param str character vector on which casefolding is applied
+#' @return character vector
+#' 
+#' @export
+#' @family casefold
+stri_totitle <- function(str) {
+   .Call("stri_casefold", str, 3L, PACKAGE="stringi")
 }

@@ -15,6 +15,8 @@ test_that("stri_tolower", {
    
    ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
    expect_equivalent(stri_tolower(ascii_non_letters), ascii_non_letters)
+   
+   expect_equivalent(stri_tolower("\u0105\u0104"), "\u0105\u0105")
 })
 
 
@@ -33,4 +35,26 @@ test_that("stri_toupper", {
    
    ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
    expect_equivalent(stri_toupper(ascii_non_letters), ascii_non_letters)
+   
+   expect_equivalent(stri_toupper("\u0105\u0104"), "\u0104\u0104")
+})
+
+
+
+
+test_that("stri_totitle", {
+   
+   # basic tests (ASCII, border-line):
+   expect_equivalent(stri_totitle(character(0)), character(0))
+   expect_equivalent(stri_totitle(""), "")
+   expect_equivalent(stri_totitle(NA), NA_character_)
+   
+   expect_equivalent(stri_totitle(c("!@#aAbBcC123", NA, "")), c("!@#Aabbcc123", NA, ""))
+   
+   ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
+   expect_equivalent(stri_toupper(ascii_non_letters), ascii_non_letters)
+   
+   expect_equivalent(stri_totitle("\u0105\u0104"), "\u0104\u0105")
+   
+   expect_equivalent(stri_totitle("ala   ma   kota"), "Ala   Ma   Kota")
 })
