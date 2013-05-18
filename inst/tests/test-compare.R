@@ -1,8 +1,6 @@
 require(testthat)
 
 test_that("stri_cmp", {
-
-   # basic tests (ASCII, border-line):
    
    expect_equivalent(stri_cmp(character(0), character(0)), integer(0))
    expect_equivalent(stri_cmp(LETTERS, character(0)), integer(0))
@@ -18,5 +16,16 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp(letters, LETTERS, strength=2), rep(0L, length(LETTERS)))
    
    expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105'), 0L)
+   
+})
+
+
+
+test_that("stri_order", {
+   
+   expect_equivalent(stri_order(character(0)), integer(0))
+   expect_equivalent(stri_order(LETTERS), 1:length(LETTERS))
+   expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
+
 })
 

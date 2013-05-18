@@ -52,7 +52,6 @@ struct R_len_t_x2 {
 // casefold.cpp:
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);
 
-
 // common.cpp
 void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...);       // DONE
@@ -66,7 +65,7 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 
 // compare.cpp:
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale);
-
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale);
 
 
 

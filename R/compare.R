@@ -48,6 +48,7 @@
 #' 
 #' @references
 #' Collation - ICU User Guide - http://userguide.icu-project.org/collation
+#' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture
 #' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
 #' 
 #' @examples
@@ -65,3 +66,37 @@ stri_compare <- function(e1, e2, strength=3L, locale=NULL) {
 #' @export
 #' @rdname stri_compare
 stri_cmp <- stri_compare
+
+
+
+#' Ordering Permutation and Sorting, String Comparisons with Collation
+#' 
+#' See \code{\link{stri_compare}} for more details on the
+#' locale-aware string comparison used in \pkg{stringi}
+#' 
+#' Uses a stable sort algorithm (STL's stable_sort);
+#' performs up to \eqn{N*log^2(N)} element comparisons,
+#' where \eqn{N} is the length of \code{str}.
+#' 
+#' \code{NA}s are always put at the end.
+#' 
+#' @param str character vector
+#' @param strength collation strength, defaults to 3
+#' @param locale \code{NULL} or \code{""} for casefolding following
+#' the conventions of the default locale, or a single string with locale identifier
+#' 
+#' @return integer vector, gives the sort order
+#' 
+#' @family locale_dependent
+#' @export
+#' @rdname stri_order
+stri_order <- function(str, decreasing=FALSE, strength=3L, locale=NULL) {
+   .Call("stri_order", str, decreasing, strength, locale, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_order
+stri_sort <-  function(str, decreasing=FALSE, strength=3L, locale=NULL) {
+   str[stri_order(str, decreasing, strength, locale)]
+}

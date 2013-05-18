@@ -85,3 +85,21 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
    UNPROTECT(1);
    return ret;
 }
+
+
+
+/** Ordering Permutation (string comparison with collation)
+ * 
+ * @param str character vector
+ * @param decreasing single logical value
+ * @param strength single integer
+ * @param locale single string identifying the locale ("" or NULL for default locale)
+ * @return integer vector (permutation)
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
+{
+   error("to do");
+   return R_NilValue;
+}
