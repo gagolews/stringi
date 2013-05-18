@@ -25,6 +25,7 @@ test_that("stri_order", {
    
    expect_equivalent(stri_order(character(0)), integer(0))
    expect_equivalent(stri_order(LETTERS), 1:length(LETTERS))
+   expect_equivalent(stri_order(rev(LETTERS)), length(LETTERS):1)
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
 })

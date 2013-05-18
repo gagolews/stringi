@@ -35,13 +35,12 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
    const char* qloc = stri__prepare_arg_locale(locale, true);
    Locale loc = Locale::createFromName(qloc);
    
-   e1 = stri_prepare_arg_string(e1); // prepare string argument
-   e2 = stri_prepare_arg_string(e2); // prepare string argument
    strength = stri_prepare_arg_integer(strength);
-   
    if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
    else if (LENGTH(strength) > 1) warning(MSG__STRENGTH_EXPECTED1);
    
+   e1 = stri_prepare_arg_string(e1); // prepare string argument
+   e2 = stri_prepare_arg_string(e2); // prepare string argument
    R_len_t ne1 = LENGTH(e1);
    R_len_t ne2 = LENGTH(e2);
    R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
@@ -88,6 +87,25 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
 
 
 
+
+
+/** help struct for stri_order **/
+struct StriSort {
+   StriContainerUTF16* ss;
+   bool decreasing;
+   Collator* col;
+   StriSort(StriContainerUTF16* ss, Collator* col, bool decreasing)
+   { this->ss = ss; this->col = col; this->decreasing = decreasing; }
+   
+   bool operator() (int a, int b) const
+   {
+      int ret = ((int)col->compare(ss->get(a-1), ss->get(b-1)));
+      if (decreasing) return (ret > 0);
+      else return (ret < 0);
+   }
+};
+   
+   
 /** Ordering Permutation (string comparison with collation)
  * 
  * @param str character vector
@@ -100,6 +118,78 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
 {
-   error("to do");
-   return R_NilValue;
+   const char* qloc = stri__prepare_arg_locale(locale, true);
+   Locale loc = Locale::createFromName(qloc);
+   
+   decreasing = stri_prepare_arg_logical(decreasing);
+   if (LENGTH(decreasing) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
+   else if (LENGTH(decreasing) > 1) warning(MSG__DECREASING_EXPECTED1);
+   
+   strength = stri_prepare_arg_integer(strength);
+   if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
+   else if (LENGTH(strength) > 1) warning(MSG__STRENGTH_EXPECTED1);
+   
+   str = stri_prepare_arg_string(str); // prepare string argument
+   R_len_t nout = LENGTH(str);
+   
+   UErrorCode err = U_ZERO_ERROR;
+   Collator* col = Collator::createInstance(loc, err);
+   if (!U_SUCCESS(err)) {
+      error(MSG__RESOURCE_ERROR_GET);
+   }
+
+   err = U_ZERO_ERROR;
+   col->setAttribute(UCOL_STRENGTH, (UColAttributeValue)(INTEGER(strength)[0]-1), err);
+   if (!U_SUCCESS(err)) {
+      delete col;
+      error(MSG__RESOURCE_ERROR_GET);
+   }
+   
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nout);
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, nout));
+   
+   // count NA values
+   R_len_t countNA = 0;
+   for (R_len_t i=0; i<nout; ++i)
+      if (ss->isNA(i))
+         ++countNA;
+   
+   // NAs must be put at end (note the stable sort behavior!)
+   int* order = INTEGER(ret);
+   R_len_t k1 = 0;
+   R_len_t k2 = nout-countNA;
+   for (R_len_t i=0; i<nout; ++i) {
+      if (ss->isNA(i))
+         order[k2++] = i+1;
+      else
+         order[k1++] = i+1;
+   }
+   
+   
+   // TO DO: use sort keys...
+   
+   bool decr = (LOGICAL(decreasing)[0]==true);
+   
+   // check if already sorted - if not - sort!
+   for (R_len_t i = 0; i<nout-countNA-1; ++i) {
+      int val = ((int)col->compare(ss->get(i), ss->get(i+1)));
+      if ((decr && val < 0) || (!decr && val > 0)) {
+         // sort! 
+         StriSort comp(ss, col, decr);
+         std::vector<int> data;
+         data.assign(order, order+nout-countNA);
+         std::stable_sort(data.begin(), data.end(), comp);
+         R_len_t i=0;
+         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
+            order[i] = *it;
+         break;
+      }
+   }
+
+  
+   delete col;
+   delete ss;
+   UNPROTECT(1);
+   return ret;
 }

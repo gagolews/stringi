@@ -78,18 +78,28 @@ stri_cmp <- stri_compare
 #' performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #' 
+#' \code{stri_order} is slightly slower than \code{order} only for
+#' already sorted data. In other cases it outperforms this function
+#' (test yourself).
+#' 
 #' \code{NA}s are always put at the end.
 #' 
 #' @param str character vector
+#' @param decreasing single logical value; should the sort order be increasing or decreasing?
 #' @param strength collation strength, defaults to 3
 #' @param locale \code{NULL} or \code{""} for casefolding following
 #' the conventions of the default locale, or a single string with locale identifier
 #' 
-#' @return integer vector, gives the sort order
+#' @return for \code{stri_order} - an integer vector that gives the sort order;
+#' for \code{stri_order} - a sorted version of \code{str}
 #' 
 #' @family locale_dependent
 #' @export
 #' @rdname stri_order
+#' 
+#' @examples
+#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
+#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
 stri_order <- function(str, decreasing=FALSE, strength=3L, locale=NULL) {
    .Call("stri_order", str, decreasing, strength, locale, PACKAGE="stringi")
 }

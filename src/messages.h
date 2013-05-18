@@ -81,7 +81,10 @@
    
 #define MSG__STRENGTH_EXPECTED1 \
    "only one integer value for `strength` is supported. taking first"
-   
+ 
+#define MSG__DECREASING_EXPECTED1 \
+   "only one logical value for `decreasing` is supported. taking first"
+ 
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
    

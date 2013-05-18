@@ -32,6 +32,8 @@
 #include <cstdarg>
 #include <iostream>
 #include <deque>
+#include <algorithm>
+#include <vector>
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
 #include <unicode/ucnv.h>
