@@ -3,6 +3,7 @@ require(testthat)
 test_that("stri_flatten", {
    
    # basic tests (ASCII, border-line):
+   expect_warning(stri_flatten(LETTERS, collapse=LETTERS))
    expect_identical(stri_flatten(c("", "", "", "", "")), "")
    expect_identical(stri_flatten(c(character(0))), character(0))
    expect_identical(stri_flatten(c(NA, NA, NA)), NA_character_)

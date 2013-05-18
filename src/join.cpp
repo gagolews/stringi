@@ -214,48 +214,119 @@ SEXP stri_join2(SEXP s1, SEXP s2)
  */
 SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
 {
-   warning("stri_join is not finished!");
-   // MG:
-   // See Sec. 5.9.10 in http://cran.r-project.org/doc/manuals/R-exts.html
-   // "Currently all arguments to a .Call call will have NAMED set to 2, 
-   // and so users must assume that they need to be duplicated before alteration"
-   // NAMED set to 2 -> The object has potentially been bound to two or 
-   // more symbols, and one should act as if another variable is currently bound to this value. 
-   SEXP str = duplicate(s);
-   int slen = LENGTH(str);
-   int max = 0;
-   int* elementslen = (int*)R_alloc(slen, sizeof(int)); 
-   for(int i=0;i<slen;++i){
-      //prepare each element of the list
-      SET_VECTOR_ELT(str,i,stri_prepare_arg_string(VECTOR_ELT(str,i)));
-      //save length of each element for further operations
-      elementslen[i] = LENGTH(VECTOR_ELT(str,i));
-      //check maximum size
-      if(max < elementslen[i]) max = elementslen[i];
+   // 1. Check whether s is a list, prepare string agrs,
+   //    calculate length of the longest char. vect.
+   if (!isVectorList(s))
+      error(MSG__INCORRECT_INTERNAL_ARG); // this shouldn't happen (see R call)
+   R_len_t narg = LENGTH(s);
+   if (narg <= 0) return stri__vector_empty_strings(0);
+   
+#ifndef NDEBUG
+   // check whether we are free to change s
+   // if this has been called in R as list(...) - it must be OK
+   if (NAMED(s) > 0) error(MSG__INTERNAL_ERROR);
+#endif
+   R_len_t nmax = 0; // length of the longest character vector
+   for (R_len_t i=0; i<narg; ++i) {
+      SEXP cur = stri_prepare_arg_string(VECTOR_ELT(s, i));  
+      R_len_t ncur = LENGTH(cur);
+      SET_VECTOR_ELT(s, i, cur);
+      if (ncur <= 0) return stri__vector_empty_strings(0);
+      if (ncur > nmax) nmax = ncur;
    }
-   for(int i=0;i<slen;++i){
-      if(max % elementslen[i]!=0){
-         warning(MSG__WARN_RECYCLING_RULE);
-         break;
+   
+   // 2. Prepare sep
+   sep = stri_prepare_arg_string(sep);
+   R_len_t nsep = LENGTH(sep);
+   if (nsep <= 0) return stri__vector_empty_strings(0);
+   
+   if (STRING_ELT(sep, 0) == NA_STRING)
+      return stri__vector_NA_strings(nmax);
+      
+   if (nsep > 1) {
+      warning(MSG__SEP_EXPECTED1);
+      SEXP sep_old = sep;
+      PROTECT(sep = allocVector(STRSXP, 1));
+      SET_STRING_ELT(sep, 0, STRING_ELT(sep_old, 0));
+      UNPROTECT(1);
+   }
+   StriContainerUTF8* ssep = new StriContainerUTF8(sep, 1);
+   const char* sep_char = ssep->get(0).c_str();
+   R_len_t     sep_len  = ssep->get(0).length();
+   
+   
+   // an often occuring case - we have a specialized function for this :-)
+   if (sep_len == 0 && narg == 2) {
+      if (isNull(collapse))
+         return stri_join2(VECTOR_ELT(s, 0), VECTOR_ELT(s, 1));
+      else
+         return stri_flatten(stri_join2(VECTOR_ELT(s, 0), VECTOR_ELT(s, 1)), collapse);
+   }
+   
+   // 3. Convert character vectors to be concatenated
+   StriContainerUTF8** ss = new StriContainerUTF8*[narg];
+   for (R_len_t i=0; i<narg; ++i) {
+      ss[i] = new StriContainerUTF8(VECTOR_ELT(s, i), nmax);
+   }
+   
+   // 4. Get buf size
+   R_len_t nchar = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      R_len_t curchar = 0;
+      for (R_len_t j=0; j<narg; ++j) {
+         if (ss[j]->isNA(i)) {
+            curchar = 0;
+            break;
+         }
+         curchar += ss[j]->get(i).length() + ((j<narg-1)?sep_len:0);
       }
+      
+      if (curchar > nchar) nchar = curchar;
    }
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP,max));
-   const char* buf = R_alloc(5, sizeof(char));
-   char* temp = R_alloc(5, sizeof(char));
-   char* ret = R_alloc(10, sizeof(char));
-   for(int i=0;i<max;++i){
-      memcpy(ret, CHAR(STRING_ELT(VECTOR_ELT(str,0),i%elementslen[0])),5);
-      for(int j=1;j<slen;++j){
-         buf = CHAR(STRING_ELT(VECTOR_ELT(str,j),i%elementslen[j]));
-         memcpy(temp,buf,5);
-         strcat(ret, temp);
-         //join strings from each list element
+   
+   // 5. Create ret val
+   char* buf = new char[nchar+1];
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, nmax));
+   
+   for (R_len_t i=0; i<nmax; ++i) {
+      bool anyNA = false;
+      R_len_t cursize = 0;
+      for (R_len_t j=0; j<narg; ++j) {
+         if (ss[j]->isNA(i)) {
+            anyNA = true;
+            break;
+         }
+         
+         const String8* curstring = &(ss[j]->get(i));
+         memcpy(buf+cursize, curstring->c_str(), curstring->length());
+         cursize += curstring->length();
+         
+         if (j < narg-1 && sep_len > 0) {
+            memcpy(buf+cursize, sep_char, sep_len);
+            cursize += sep_len;
+         }
       }
-      SET_STRING_ELT(e,i,mkCharLen(ret,10));
+      
+      if (anyNA)
+         SET_STRING_ELT(ret, i, NA_STRING);
+      else
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, cursize, CE_UTF8));
    }
+   
+   
+   // 6. Clean up & return
+   for (R_len_t i=0; i<narg; ++i)
+      delete ss[i];
+   delete [] ss;
+   delete ssep;
+   delete buf;
    UNPROTECT(1);
-   return e;
+   
+   if (isNull(collapse))
+      return ret;
+   else
+      return stri_flatten(ret, collapse);
 }
 
 
@@ -335,6 +406,9 @@ SEXP stri_flatten(SEXP s, SEXP sep)
    R_len_t nsep = LENGTH(sep);
    if (ns <= 0 || nsep <= 0) return stri__vector_empty_strings(0);
    
+   if (STRING_ELT(sep, 0) == NA_STRING)
+      return stri__vector_NA_strings(1);
+      
    if (nsep > 1) {
       warning(MSG__COLLAPSE_EXPECTED1);
       SEXP sep_old = sep;
@@ -344,10 +418,6 @@ SEXP stri_flatten(SEXP s, SEXP sep)
    }
    
    StriContainerUTF8* ssep = new StriContainerUTF8(sep, 1);
-   if (ssep->isNA(0)) {
-      delete ssep;
-      return stri__vector_NA_strings(1);
-   }
    
    R_len_t ncharsep = ssep->get(0).length();
    

@@ -31,6 +31,9 @@
 #define MSG__INCORRECT_INTERNAL_ARG \
    "incorrect argument"
    
+#define MSG__INTERNAL_ERROR \
+   "internal error"
+   
 #define MSG__EXPECTED_NONNEGATIVE \
    "incorrect argument: expected a nonnegative numeric value"
    
@@ -72,7 +75,10 @@
    
 #define MSG__COLLAPSE_EXPECTED1 \
    "only one string for `collapse` is supported. taking first"
-
+   
+#define MSG__SEP_EXPECTED1 \
+   "only one string for `sep` is supported. taking first"
+   
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
    

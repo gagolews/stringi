@@ -97,3 +97,41 @@ print(microbenchmark(
 
 expect_that(z2, is_identical_to(z1))
 
+
+###############################################################################
+
+print(microbenchmark(
+   stri_join(LETTERS, letters, sep='!', collapse='?'),
+   paste(LETTERS, letters, sep='!', collapse='?')
+))
+
+
+print(microbenchmark(
+   stri_join(LETTERS, letters, sep=''),
+   paste(LETTERS, letters, sep='')
+))
+
+
+x <- stri_dup("A", 1:1000)
+y <- stri_dup("B", 1:1000)
+print(microbenchmark(
+   stri_join(x, y, sep=''),
+   paste(x, y, sep='')
+))
+
+
+print(microbenchmark(
+   stri_join(x, y, sep='', collapse='?'),
+   paste(x, y, sep='', collapse='?')
+))
+
+z <- stri_dup('\u0105', 1000)
+print(microbenchmark(
+   stri_join(z, y, sep=''),
+   paste(z, y, sep='')
+))
+
+print(microbenchmark(
+   stri_join(y, z, sep=''),
+   paste(y, z, sep='')
+))
