@@ -18,19 +18,26 @@
 
 
 
-#' Reverse string
+#' Reverse Each String
 #' 
-#' Reverse every string in vector
+#' Reverses every string in given character vector.
+#' 
+#' Note that this operation is not very intelligent - it just reverses
+#' the order of all Unicode code points.
+#' It may result in non-Unicode-normalized
+#' strings and may give strange output for bidirectional strings.
 #' 
 #' @param str character vector
 #' 
-#' @return character vector which contains every string reversed
+#' @return character vector in which every string from \code{str}
+#'  has been reversed
+#' 
 #' @examples
-#' stri_reverse(c("123","abc d e f"))
-#' stri_reverse("ZXY (ąłż123$^).")
+#' stri_reverse(c("123", "abc d e f"))
+#' stri_reverse("ZXY (\u0105\u0104123$^).")
+#' stri_reverse(stri_enc_nfd('\u0105')) == stri_enc_nfd('\u0105') # A, ogonek -> agonek, A
 #' @export
 stri_reverse <- function(str) {
-   # prepare_arg done internally
    .Call("stri_reverse", str, PACKAGE="stringi")
 }
 

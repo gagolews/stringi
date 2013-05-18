@@ -77,7 +77,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  * @param type normalization type [internal]
  * @return character vector
  * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16 & ICU facilities
  */
 SEXP stri_enc_nf(SEXP str, SEXP type)
 {

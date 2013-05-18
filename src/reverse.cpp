@@ -19,39 +19,34 @@
 #include "stringi.h"
 
 /** 
- * Reverse string 
- * @param s character vector
- * @return character vector which contains every string reversed
+ * Reverse Each String 
+ * @param str character vector
+ * @return character vector with every string reversed
+ * 
+ *  
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
  */
-SEXP stri_reverse(SEXP s)
+SEXP stri_reverse(SEXP str)
 {
-   s   = stri_prepare_arg_string(s);
-   R_len_t ns   = LENGTH(s);
-   int curslen, lastj, k, j;
-   SEXP e, curs;
-   UChar32 c;
+   str = stri_prepare_arg_string(str);    // prepare string argument
    
-   PROTECT(e = allocVector(STRSXP,ns));
-   
-   for (int i=0; i<ns; ++i) {
-      curs = STRING_ELT(s, i);
-      if(curs == NA_STRING){
-         SET_STRING_ELT(e, i, NA_STRING);
-         continue;
+   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
+
+   for (R_len_t i = ss->vectorize_init();
+         i != ss->vectorize_end();
+         i = ss->vectorize_next(i))
+   {
+      if (!ss->isNA(i)) {
+         UErrorCode status = U_ZERO_ERROR;
+         ss->getWritable(i).reverse(); // Use ICU facilities
       }
-      curslen = LENGTH(curs);
-      const char* string = CHAR(curs);
-      char* rev = R_alloc(curslen, sizeof(char));
-      for(j=0; j < curslen;){ //no need to use ++j here, U8_NEXT does that
-         lastj = j;
-         U8_NEXT(string, j, curslen, c);
-         for(k=0; k < j-lastj; ++k){ //copy char
-            rev[curslen-j+k] = string[lastj+k];
-         }
-      }
-      SET_STRING_ELT(e, i, mkCharLen(rev,curslen));
    }
+   
+   SEXP ret;
+   PROTECT(ret = ss->toR());
+   delete ss;
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
