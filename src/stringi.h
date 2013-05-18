@@ -65,7 +65,7 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 
 
 // compare.cpp:
-SEXP stri_casecompare(SEXP x, SEXP y);
+SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale);
 
 
 

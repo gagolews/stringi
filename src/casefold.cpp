@@ -52,7 +52,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 ////  TO DO
 ////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
 //   UErrorCode err = U_ZERO_ERROR;
-//   BreakIterator* br = BreakIterator::createWordInstance(loc, err);
+//   BreakIterator* br = BreakIterator::createWordInstance(loc, err); // should be freed after use
 ////   if (!U_SUCCESS(err))
 //   cerr << (err == U_ZERO_ERROR) << endl;
 //   cerr << (err == U_USING_DEFAULT_WARNING) << endl;

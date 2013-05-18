@@ -20,42 +20,68 @@
 
 
 /** 
- * TO DO
+ * Compare character vectors, with collation
+ * 
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param strength single integer
+ * @param locale single string identifying the locale ("" or NULL for default locale)
+ * @return integer vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_casecompare(SEXP x, SEXP y)
+SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
 {
-   x = stri_prepare_arg_string(x); // prepare string argument
-   y = stri_prepare_arg_string(y); // prepare string argument
-   int nx = LENGTH(x);
-   int ny = LENGTH(y);
-   int nmax = stri__recycling_rule(true, 2, nx, ny);
+   const char* qloc = stri__prepare_arg_locale(locale, true);
+   Locale loc = Locale::createFromName(qloc);
    
-   SEXP e, curx, cury;
-   int curlen, j;
-   PROTECT(e = allocVector(LGLSXP, nmax));
-   for(int i=0; i < nmax; ++i){
-      curx = STRING_ELT(x, i % nx);
-      cury = STRING_ELT(y, i % ny);
-      if(curx == NA_STRING || cury == NA_STRING){
-         LOGICAL(e)[i] = NA_LOGICAL;
-         continue;
-      }
-      curlen = LENGTH(curx);
-      if(curlen != LENGTH(cury)){
-         LOGICAL(e)[i] = false;
-         continue;
-      }
-      const char* stringx = CHAR(curx);
-      const char* stringy = CHAR(cury);
-      for(j=0; j < curlen; ++j){
-         if(stringx[j] != stringy[j]){
-            LOGICAL(e)[i] = false;
-            break;
-         }
-      }
-      if(j == curlen)
-         LOGICAL(e)[i] = true;
+   e1 = stri_prepare_arg_string(e1); // prepare string argument
+   e2 = stri_prepare_arg_string(e2); // prepare string argument
+   strength = stri_prepare_arg_integer(strength);
+   
+   if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
+   else if (LENGTH(strength) > 1) warning(MSG__STRENGTH_EXPECTED1);
+   
+   R_len_t ne1 = LENGTH(e1);
+   R_len_t ne2 = LENGTH(e2);
+   R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
+   
+   UErrorCode err = U_ZERO_ERROR;
+   Collator* col = Collator::createInstance(loc, err);
+   if (!U_SUCCESS(err)) {
+      error(MSG__RESOURCE_ERROR_GET);
    }
+   
+   err = U_ZERO_ERROR;
+   col->setAttribute(UCOL_STRENGTH, (UColAttributeValue)(INTEGER(strength)[0]-1), err);
+   if (!U_SUCCESS(err)) {
+      delete col;
+      error(MSG__RESOURCE_ERROR_GET);
+   }
+   
+   
+   StriContainerUTF16* se1 = new StriContainerUTF16(e1, nout);
+   StriContainerUTF16* se2 = new StriContainerUTF16(e2, nout);
+   
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, nout));
+   
+   for (R_len_t i = se1->vectorize_init();
+         i != se1->vectorize_end();
+         i = se1->vectorize_next(i))
+   {
+      if (se1->isNA(i) || se2->isNA(i)) {
+         INTEGER(ret)[i] = NA_INTEGER;
+         continue;
+      }
+      
+      INTEGER(ret)[i] = (int)col->compare(se1->get(i), se2->get(i));
+   }
+   
+   delete col;
+   delete se1;
+   delete se2;
    UNPROTECT(1);
-   return e;   
+   return ret;
 }

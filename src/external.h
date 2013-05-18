@@ -43,6 +43,7 @@
 #include <unicode/uloc.h>
 #include <unicode/regex.h>
 #include <unicode/brkiter.h>
+#include <unicode/coll.h>
 using namespace std;
 using namespace icu;
 

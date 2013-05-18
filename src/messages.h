@@ -79,6 +79,9 @@
 #define MSG__SEP_EXPECTED1 \
    "only one string for `sep` is supported. taking first"
    
+#define MSG__STRENGTH_EXPECTED1 \
+   "only one integer value for `strength` is supported. taking first"
+   
 #define MSG__LOCALE_ATTEMPT_SET_GE1 \
    "only one locale specifier supported. taking first"
    

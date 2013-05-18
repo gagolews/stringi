@@ -79,6 +79,8 @@ stri_prepare_arg_integer <- function(x) {
    .Call("stri_prepare_arg_integer", x, PACKAGE="stringi")  
 }
 
+
+
 #' Prepare a logical argument (Internal method)
 #' 
 #' @param x argument to be checked
