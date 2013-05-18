@@ -57,7 +57,7 @@
 #' @references
 #' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
 #' @name stringi_locale
-#' @family locale
+#' @family locale, locale_dependent
 NULL
 
 
@@ -78,15 +78,15 @@ stri_locale_list <- function() {
 #' See \link{stringi_locale} for more information on the effect of
 #' changing default locale.
 #' 
-#' @param loc a character string of the form \code{Language},
+#' @param locale a character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
 #' see \code{\link{stri_locale_list}}
 #' @return Previously set default locale, invisibly.
 #' @family locale
 #' @export
-stri_locale_set <- function(loc) {
+stri_locale_set <- function(locale) {
    previous <- stri_locale_get()
-   .Call("stri_locale_set", loc, PACKAGE="stringi")
+   .Call("stri_locale_set", locale, PACKAGE="stringi")
    
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
@@ -115,13 +115,13 @@ stri_locale_get <- function() {
 #' identified (e.g. not of the form Language_Country). See \link{stringi_locale}
 #' for the discussion.
 #' 
-#' @param loc \code{NULL} or \code{""} for default locale, or a single string with locale identifier
+#' @param locale \code{NULL} or \code{""} for default locale, or a single string with locale identifier
 #' 
 #' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
 #' their combination, \code{Name}. Each is a character string.
 #' @family locale
 #' @export
-stri_locale_info <- function(loc=NULL) {
-   .Call("stri_locale_info", loc, PACKAGE="stringi")
+stri_locale_info <- function(locale=NULL) {
+   .Call("stri_locale_info", locale, PACKAGE="stringi")
 }
 

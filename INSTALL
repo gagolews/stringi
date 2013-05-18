@@ -6,9 +6,11 @@ ICU4c
 
 On Linux:
 
+
 cd /tmp
 wget http://download.icu-project.org/files/icu4c/51.1/icu4c-51_1-src.tgz
 tar -zxvf icu4c-51_1-src.tgz
+....TODO: download FULL ICU data & decompress it to icu/source/data.....
 cd icu/source/
 ./configure
 make

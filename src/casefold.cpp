@@ -28,13 +28,17 @@
  * 
  *  @param str character vector
  *  @param type internal code of case conversion type 
+ *  @param locale single string identifying the locale ("" or NULL for default locale)
  *  @return character vector
  *  
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
 */
-SEXP stri_casefold(SEXP str, SEXP type)
+SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 {
+   const char* qloc = stri__prepare_arg_locale(locale, true);
+   Locale loc = Locale::createFromName(qloc);
+   
    str = stri_prepare_arg_string(str); // prepare string argument
    
    if (!isInteger(type) || LENGTH(type) != 1)
@@ -44,6 +48,16 @@ SEXP stri_casefold(SEXP str, SEXP type)
    
    StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
    
+   
+////  TO DO
+////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
+//   UErrorCode err = U_ZERO_ERROR;
+//   BreakIterator* br = BreakIterator::createWordInstance(loc, err);
+////   if (!U_SUCCESS(err))
+//   cerr << (err == U_ZERO_ERROR) << endl;
+//   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
+//   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
+   
    for (R_len_t i = ss->vectorize_init();
          i != ss->vectorize_end();
          i = ss->vectorize_next(i))
@@ -51,13 +65,13 @@ SEXP stri_casefold(SEXP str, SEXP type)
       if (!ss->isNA(i)) {
          switch (_type) {
             case 1:
-               ss->getWritable(i).toLower();
+               ss->getWritable(i).toLower(loc);
                break;
             case 2:
-               ss->getWritable(i).toUpper();
+               ss->getWritable(i).toUpper(loc);
                break;
             case 3:
-               ss->getWritable(i).toTitle(NULL); // use default ICU's BreakIterator
+               ss->getWritable(i).toTitle(NULL, loc); // use default ICU's BreakIterator
                break;
             case 4:
                ss->getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);

@@ -17,37 +17,47 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Translate String to lowercase
+#' Translate String to with Full Case Mapping
+#' 
+#' \code{stri_tolower} translates strings to lowercase,
+#' \code{stri_toupper} -- to UPPERCASE,
+#' and \code{stri_totitle} -- to Title Case.
+#' 
+#' ICU implements full Unicode string case mappings. In general,
+#' \itemize{
+#' \item case mapping can change the number of code points and/or code units of a string,
+#' \item is language-sensitive (results may differ depending on locale), and
+#' \item is context-sensitive (a character in the input string may map differently depending on surrounding characters).
+#' }
 #' 
 #' @param str character vector on which casefolding is applied
+#' @param locale \code{NULL} or \code{""} for casefolding following
+#' the conventions of the default locale, or a single string with locale identifier
 #' @return character vector
 #' 
+#' @references
+#' Case Mappings - ICU User Guide, http://userguide.icu-project.org/transforms/casemappings
+#' @family locale_dependent
 #' @export
-#' @family casefold
-stri_tolower <- function(str) {
-   .Call("stri_casefold", str, 1L, PACKAGE="stringi")
+#' @rdname casefold
+#' 
+#' @examples
+#' stri_toupper("\u00DF", "de_DE") # small german double s
+#' stri_toupper("i", "en_US") != stri_toupper("i", "tr_TR")
+stri_tolower <- function(str, locale=NULL) {
+   .Call("stri_casefold", str, 1L, locale, PACKAGE="stringi")
 }
 
 
-#' Translate String to UPPERCASE
-#' 
-#' @param str character vector on which casefolding is applied
-#' @return character vector
-#' 
 #' @export
-#' @family casefold
-stri_toupper <- function(str) {
-   .Call("stri_casefold", str, 2L, PACKAGE="stringi")
+#' @rdname casefold
+stri_toupper <- function(str, locale=NULL) {
+   .Call("stri_casefold", str, 2L, locale, PACKAGE="stringi")
 }
 
 
-#' Translate String to TitleCase
-#' 
-#' @param str character vector on which casefolding is applied
-#' @return character vector
-#' 
 #' @export
-#' @family casefold
-stri_totitle <- function(str) {
-   .Call("stri_casefold", str, 3L, PACKAGE="stringi")
+#' @rdname casefold
+stri_totitle <- function(str, locale=NULL) {
+   .Call("stri_casefold", str, 3L, locale, PACKAGE="stringi")
 }

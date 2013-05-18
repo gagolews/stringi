@@ -50,7 +50,7 @@ struct R_len_t_x2 {
 
 
 // casefold.cpp:
-SEXP stri_casefold(SEXP s, SEXP type);
+SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);
 
 
 // common.cpp
@@ -71,7 +71,7 @@ SEXP stri_casecompare(SEXP x, SEXP y);
 
 
 // dup.cpp:
-SEXP stri_dup(SEXP s, SEXP c);
+SEXP stri_dup(SEXP str, SEXP c);
 
 
 // ICU_settings.cpp:
@@ -79,22 +79,22 @@ SEXP stri_info();                        // DONE
 
 
 // join.cpp:
-SEXP stri_flatten(SEXP s, SEXP sep);
-SEXP stri_flatten_nosep(SEXP s);
-SEXP stri_join(SEXP s, SEXP sep, SEXP collapse);
+SEXP stri_flatten(SEXP str, SEXP sep);
+SEXP stri_flatten_nosep(SEXP str);
+SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);
 SEXP stri_join2(SEXP s1, SEXP s2);
 
 
 // justify.cpp
-SEXP stri_justify(SEXP s, SEXP width);
+SEXP stri_justify(SEXP str, SEXP width);
 
 
 // length.cpp
-R_len_t stri__numbytes_max(SEXP s); // DONE
-SEXP stri_numbytes(SEXP s);         // DONE
-SEXP stri_length(SEXP s);           // DONE
-SEXP stri_isempty(SEXP s);          // DONE
-SEXP stri_width(SEXP s);            // ...TODO...
+R_len_t stri__numbytes_max(SEXP str); // DONE
+SEXP stri_numbytes(SEXP str);         // DONE
+SEXP stri_length(SEXP str);           // DONE
+SEXP stri_isempty(SEXP str);          // DONE
+SEXP stri_width(SEXP str);            // ...TODO...
 
 
 

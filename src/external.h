@@ -42,6 +42,7 @@
 #include <unicode/locid.h>
 #include <unicode/uloc.h>
 #include <unicode/regex.h>
+#include <unicode/brkiter.h>
 using namespace std;
 using namespace icu;
 
