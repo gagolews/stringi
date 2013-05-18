@@ -57,7 +57,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_flatten_nosep,              1),
    STRI__MAKE_CALL_METHOD(stri_info,                       0),
    STRI__MAKE_CALL_METHOD(stri_isempty,                    1),
-   STRI__MAKE_CALL_METHOD(stri_join,                       1),
+   STRI__MAKE_CALL_METHOD(stri_join,                       3),
    STRI__MAKE_CALL_METHOD(stri_join2,                      2),
    STRI__MAKE_CALL_METHOD(stri_justify,                    2),
    STRI__MAKE_CALL_METHOD(stri_length,                     1),

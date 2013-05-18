@@ -127,8 +127,9 @@ SEXP stri_dup(SEXP s, SEXP c)
  *  if s1 or s2 is NA then result is NA
  *  if s1 or s2 is empty, then the result is just s1 or s2
  *  
- *  TO DO: Encoding!!!
+ *  
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
 */
 SEXP stri_join2(SEXP s1, SEXP s2)
 {
@@ -137,93 +138,81 @@ SEXP stri_join2(SEXP s1, SEXP s2)
    
    R_len_t ns1 = LENGTH(s1);
    R_len_t ns2 = LENGTH(s2);
-   R_len_t nsm = stri__recycling_rule(true, 2, ns1, ns2);
+   R_len_t nmax = stri__recycling_rule(true, 2, ns1, ns2);
    
-   if (ns1 <= 0) return s2;
-   if (ns2 <= 0) return s1;
+   if (ns1 <= 0) return s1;
+   if (ns2 <= 0) return s2;
    
-   // find maximal length of the buffer needed
-   R_len_t maxsize = 0;
-   for (int i=0; i<ns1; ++i) {
-      SEXP curs1 = STRING_ELT(s1, i);
-      if (curs1 == NA_STRING) continue;
-      R_len_t cnsl = LENGTH(curs1);
+   StriContainerUTF8* ss1 = new StriContainerUTF8(s1, nmax);
+   StriContainerUTF8* ss2 = new StriContainerUTF8(s2, nmax);
+   
+   // 1. find maximal length of the buffer needed
+   R_len_t nchar = 0;
+   for (int i=0; i<nmax; ++i) {
+      if (ss1->isNA(i) || ss2->isNA(i))
+         continue;
       
-      for (int j=i; j<nsm; j+=ns1) {
-         SEXP curs2 = STRING_ELT(s2, j%ns2);
-         if (curs2 == NA_STRING) continue;
-         R_len_t cns2 = LENGTH(curs2);
+      R_len_t c1 = ss1->get(i).length();
+      R_len_t c2 = ss2->get(i).length();
          
-         if (cnsl+cns2 > maxsize) maxsize = cnsl+cns2;
-      }
+      if (c1+c2 > nchar) nchar = c1+c2;
    }
    
-   SEXP e;
-   PROTECT(e = allocVector(STRSXP, nsm)); // output vector
-      
-   // it may happen that maxsize == 0!
-   if (maxsize <= 0) {
-      // => we'll have NA_character_ or "" in the output vector
-      for (int i=0; i<nsm; ++i) {
-         if (STRING_ELT(s1, i%ns1) == NA_STRING
-          || STRING_ELT(s2, i%ns2) == NA_STRING)
-            SET_STRING_ELT(e, i, NA_STRING);
-         else
-            SET_STRING_ELT(e, i, mkCharLen("", 0));
+   // 2. Create buf & retval
+   char* buf = new char[nchar+1]; // NULL not needed, but nchar could be == 0
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, nmax)); // output vector
+   
+   // 3. Set retval
+   const String8* last_string_1 = NULL;
+   R_len_t last_buf_idx = 0;
+   for (R_len_t i = ss1->vectorize_init(); // this iterator allows for...
+         i != ss1->vectorize_end();        // ...smart buffer reusage
+         i = ss1->vectorize_next(i))
+   {
+      if (ss1->isNA(i) || ss2->isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
       }
-   }
-   else {
-      char* buf = R_alloc(maxsize, sizeof(char)); // to be thread-safe
-      char* buf2;
       
-      // at least one string should be copied (for some i, j)
-      for (int i=0; i<ns1; ++i) {
-         SEXP ss1 = STRING_ELT(s1, i);
-         if (ss1 == NA_STRING) {
-            for (int j=i; j<nsm; j+=ns1)
-               SET_STRING_ELT(e, j, NA_STRING); // NA %+% ??? == NA
-         }
-         else {
-            buf2 = buf; // don't copy ss1 yet (copy only when needed)
-         
-            const char* si1 = CHAR(ss1); // this is not NA
-            R_len_t sn1 = LENGTH(ss1);   // this may be equal to 0
-               
-            for (int j=i; j<nsm; j+=ns1) {  
-               SEXP ss2 = STRING_ELT(s2, j%ns2);
-               if (ss2 == NA_STRING)
-                  SET_STRING_ELT(e, j, NA_STRING);
-               else {
-                  const char* si2 = CHAR(ss2); // this is not NA
-                  R_len_t sn2 = LENGTH(ss2);   // this may be equal to 0
-                  
-                  if (sn1 != 0 && buf2 == buf) {
-                     // now copy of ss1 is needed
-                     memcpy(buf, si1, sn1);
-                     buf2 = buf + sn1;
-                  }
-                  if (sn2 != 0)
-                     memcpy(buf2, si2, sn2);
-                  SET_STRING_ELT(e, j, mkCharLen(buf, sn1+sn2)); // sn1+sn2 may be equal to 0
-               }
-            }
-         }
+      // If e1 has length < length of e2, this will be faster:      
+      const String8* cur_string_1 = &(ss1->get(i));
+      if (cur_string_1 != last_string_1) {
+         last_string_1 = cur_string_1;
+         last_buf_idx = cur_string_1->length();
+         memcpy(buf, cur_string_1->c_str(), last_buf_idx);
       }
+      
+      const String8* cur_string_2 = &(ss2->get(i));
+      R_len_t  cur_len_2 = cur_string_2->length();
+      memcpy(buf+last_buf_idx, cur_string_2->c_str(), cur_len_2);
+      // the result is always in UTF-8
+      SET_STRING_ELT(ret, i, mkCharLenCE(buf, last_buf_idx+cur_len_2, CE_UTF8));
    }
    
+   // 4. Cleanup & finish
+   delete buf;
+   delete ss1;
+   delete ss2;
    UNPROTECT(1);
-   return e;
+   return ret;
 }
 
 
 
 
 /**
- * ....
- * @param s ...
- * @return ...
+ * Concatenate Character Vectors
+ * @param s list of character vectors
+ * @param sep single string
+ * @param collapse single string
+ * @return character vector
+ * 
+ *  
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
  */
-SEXP stri_join(SEXP s)
+SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
 {
    warning("stri_join is not finished!");
    // MG:
@@ -302,7 +291,7 @@ SEXP stri_flatten_nosep(SEXP s)
    }
    
    // 2. Fill the buf!
-   char* buf = new char[nchar]; // NULL not needed
+   char* buf = new char[nchar+1]; // NULL not needed, but nchar could be == 0
    R_len_t cur = 0;
    for (int i=0; i<ns; ++i) {
       R_len_t ncur = ss->get(i).length();
@@ -377,7 +366,7 @@ SEXP stri_flatten(SEXP s, SEXP sep)
 
    
    // 2. Fill the buf!
-   char* buf = new char[nchar]; // NULL not needed
+   char* buf = new char[nchar+1]; // NULL not needed, but nchar could be == 0
    R_len_t cur = 0;
    for (int i=0; i<ns; ++i) {
       R_len_t ncur = ss->get(i).length();

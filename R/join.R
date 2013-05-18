@@ -40,11 +40,13 @@ stri_dup <- function(str, times) {
 
 
 
-#' Join two character vectors
+#' Concatenate Two Character Vectors
 #' 
-#' This is ca. 1.5x faster than \code{paste(e1, e2, sep="")}
-#' However, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
-#' is slower than \code{paste(e1, e2, e3, sep="")}, 
+#' Vectorized over \code{e1} and \code{e2}
+#' 
+#' This operator words as a call to \code{stri_join(e1, e2, sep="")}.
+#' Note that, however, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
+#' is slower than \code{stri_join(e1, e2, e3, sep="")}, 
 #' because it creates a new result each time
 #' 
 #' @param e1 character vector
@@ -54,26 +56,43 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
-   # prepare_arg done internally
    .Call("stri_join2", e1, e2, PACKAGE="stringi")
 }
 
 
-#' Join character vectors
+#' Concatenate Character Vectors
 #' 
 #' 
 #' 
-#' @param sep separator
-#' @param collapse collapse
+#' @param sep single string, separates terms
+#' @param collapse single string, separates the results
+#' 
+#' @return
+#' If \code{collapse} is set to non-\code{NULL}, the the result will be a single string.
+#' Otherwise, you will get a character vector of length equal
+#' to the length of the longest argument.
+#' 
+#' If any of the arguments is a vector of length 0, then in result
+#' you will get 0-length character vector.
+#' 
+#' In case of any \code{NA}, \code{NA} is set to the corresponding element.
 #' 
 #' @export
 #' @family paste
+#' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
-   .Call("stri_join", list(...), PACKAGE="stringi")
+   .Call("stri_join", list(...), sep, collapse, PACKAGE="stringi")
 }
 
-# TO DO: stri_join alias stri_c - like paste(...)
 
+
+#' @rdname stri_join
+#' @export
+stri_c <- stri_join
+
+#' @rdname stri_join
+#' @export
+stri_paste <- stri_join
 
 
 #' Flatten a String

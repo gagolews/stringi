@@ -81,7 +81,7 @@ SEXP stri_info();                        // DONE
 // join.cpp:
 SEXP stri_flatten(SEXP s, SEXP sep);
 SEXP stri_flatten_nosep(SEXP s);
-SEXP stri_join(SEXP s);
+SEXP stri_join(SEXP s, SEXP sep, SEXP collapse);
 SEXP stri_join2(SEXP s1, SEXP s2);
 
 
