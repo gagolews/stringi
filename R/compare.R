@@ -79,7 +79,7 @@ stri_cmp <- stri_compare
 #' where \eqn{N} is the length of \code{str}.
 #' 
 #' \code{stri_order} is slightly slower than \code{order} only for
-#' already sorted data. In other cases it outperforms this function
+#' already sorted data. In other cases it outperforms the base-R function
 #' (test yourself).
 #' 
 #' \code{NA}s are always put at the end.

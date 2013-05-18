@@ -28,5 +28,7 @@ test_that("stri_order", {
    expect_equivalent(stri_order(rev(LETTERS)), length(LETTERS):1)
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
+   
+   expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6)) 
 })
 

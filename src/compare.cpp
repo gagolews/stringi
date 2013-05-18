@@ -33,7 +33,6 @@
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
 {
    const char* qloc = stri__prepare_arg_locale(locale, true);
-   Locale loc = Locale::createFromName(qloc);
    
    strength = stri_prepare_arg_integer(strength);
    if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
@@ -46,21 +45,16 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
    R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
    
    UErrorCode err = U_ZERO_ERROR;
-   Collator* col = Collator::createInstance(loc, err);
+   UCollator* col = ucol_open(qloc, &err);
    if (!U_SUCCESS(err)) {
       error(MSG__RESOURCE_ERROR_GET);
    }
    
-   err = U_ZERO_ERROR;
-   col->setAttribute(UCOL_STRENGTH, (UColAttributeValue)(INTEGER(strength)[0]-1), err);
-   if (!U_SUCCESS(err)) {
-      delete col;
-      error(MSG__RESOURCE_ERROR_GET);
-   }
+   ucol_setStrength(col, (UCollationStrength)(INTEGER(strength)[0]-1));
    
    
-   StriContainerUTF16* se1 = new StriContainerUTF16(e1, nout);
-   StriContainerUTF16* se2 = new StriContainerUTF16(e2, nout);
+   StriContainerUTF8* se1 = new StriContainerUTF8(e1, nout);
+   StriContainerUTF8* se2 = new StriContainerUTF8(e2, nout);
    
    
    SEXP ret;
@@ -75,10 +69,14 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
          continue;
       }
       
-      INTEGER(ret)[i] = (int)col->compare(se1->get(i), se2->get(i));
+      err = U_ZERO_ERROR;
+      INTEGER(ret)[i] = (int)ucol_strcollUTF8(col,
+         se1->get(i).c_str(), se1->get(i).length(),
+         se2->get(i).c_str(), se2->get(i).length(),
+         &err);
    }
    
-   delete col;
+   ucol_close(col);
    delete se1;
    delete se2;
    UNPROTECT(1);
@@ -91,15 +89,19 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
 
 /** help struct for stri_order **/
 struct StriSort {
-   StriContainerUTF16* ss;
+   StriContainerUTF8* ss;
    bool decreasing;
-   Collator* col;
-   StriSort(StriContainerUTF16* ss, Collator* col, bool decreasing)
+   UCollator* col;
+   StriSort(StriContainerUTF8* ss, UCollator* col, bool decreasing)
    { this->ss = ss; this->col = col; this->decreasing = decreasing; }
    
    bool operator() (int a, int b) const
    {
-      int ret = ((int)col->compare(ss->get(a-1), ss->get(b-1)));
+      UErrorCode err = U_ZERO_ERROR;
+      int ret = (int)ucol_strcollUTF8(col,
+         ss->get(a-1).c_str(), ss->get(a-1).length(),
+         ss->get(b-1).c_str(), ss->get(b-1).length(),
+         &err);
       if (decreasing) return (ret > 0);
       else return (ret < 0);
    }
@@ -119,7 +121,7 @@ struct StriSort {
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
 {
    const char* qloc = stri__prepare_arg_locale(locale, true);
-   Locale loc = Locale::createFromName(qloc);
+//   Locale loc = Locale::createFromName(qloc);
    
    decreasing = stri_prepare_arg_logical(decreasing);
    if (LENGTH(decreasing) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
@@ -133,19 +135,14 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
    R_len_t nout = LENGTH(str);
    
    UErrorCode err = U_ZERO_ERROR;
-   Collator* col = Collator::createInstance(loc, err);
+   UCollator* col = ucol_open(qloc, &err);
    if (!U_SUCCESS(err)) {
       error(MSG__RESOURCE_ERROR_GET);
    }
 
-   err = U_ZERO_ERROR;
-   col->setAttribute(UCOL_STRENGTH, (UColAttributeValue)(INTEGER(strength)[0]-1), err);
-   if (!U_SUCCESS(err)) {
-      delete col;
-      error(MSG__RESOURCE_ERROR_GET);
-   }
+   ucol_setStrength(col, (UCollationStrength)(INTEGER(strength)[0]-1));
    
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nout);
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nout);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, nout));
    
@@ -173,7 +170,11 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
    
    // check if already sorted - if not - sort!
    for (R_len_t i = 0; i<nout-countNA-1; ++i) {
-      int val = ((int)col->compare(ss->get(i), ss->get(i+1)));
+      err = U_ZERO_ERROR;
+      int val = (int)ucol_strcollUTF8(col,
+         ss->get(order[i]-1).c_str(), ss->get(order[i]-1).length(),
+         ss->get(order[i+1]-1).c_str(), ss->get(order[i+1]-1).length(),
+         &err);
       if ((decr && val < 0) || (!decr && val > 0)) {
          // sort! 
          StriSort comp(ss, col, decr);
@@ -188,7 +189,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
    }
 
   
-   delete col;
+   ucol_close(col);
    delete ss;
    UNPROTECT(1);
    return ret;

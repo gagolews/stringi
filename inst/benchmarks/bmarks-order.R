@@ -40,6 +40,14 @@ local({
       sort(x)
    ))
    
+   
+   for (i in 1:10) { y <- sample(seq_along(x), 2); x[y] <- x[rev(y)] }
+   print(microbenchmark(
+      stri_sort(x),
+      sort(x)
+   ))
+   
+   
    x <- rev(x)
    print(microbenchmark(
       stri_order(x),

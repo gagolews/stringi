@@ -46,6 +46,7 @@
 #include <unicode/regex.h>
 #include <unicode/brkiter.h>
 #include <unicode/coll.h>
+#include <unicode/ucol.h>
 using namespace std;
 using namespace icu;
 
