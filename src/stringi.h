@@ -64,9 +64,12 @@ SEXP    stri__emptyList();                                          // DONE
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
 
 
+// collator.cpp:
+UCollator*  stri__ucol_open(SEXP collator_opts);
+
 // compare.cpp:
-SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale);         // DONE
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale);  // DONE
+SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts);            // DONE
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);     // DONE
 
 
 // ICU_settings.cpp:

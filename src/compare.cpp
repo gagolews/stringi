@@ -24,30 +24,23 @@
  * 
  * @param e1 character vector
  * @param e2 character vector
- * @param strength single integer
- * @param locale single string identifying the locale ("" or NULL for default locale)
+ * @param collator_opts passed to stri__ucol_open()
  * @return integer vector
  * 
  * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
+SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   strength = stri_prepare_arg_integer_1(strength, "strength");
+   UCollator* col = stri__ucol_open(collator_opts);
+   if (!col)
+      error("TO DO: byte compare!!!");
+      
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
    
    R_len_t ne1 = LENGTH(e1);
    R_len_t ne2 = LENGTH(e2);
    R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
-   
-   UErrorCode err = U_ZERO_ERROR;
-   UCollator* col = ucol_open(qloc, &err);
-   if (!U_SUCCESS(err)) {
-      error(MSG__RESOURCE_ERROR_GET);
-   }
-   
-   ucol_setStrength(col, (UCollationStrength)(INTEGER(strength)[0]-1));
    
    
    StriContainerUTF8* se1 = new StriContainerUTF8(e1, nout);
@@ -66,7 +59,7 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
          continue;
       }
       
-      err = U_ZERO_ERROR;
+      UErrorCode err = U_ZERO_ERROR;
       INTEGER(ret)[i] = (int)ucol_strcollUTF8(col,
          se1->get(i).c_str(), se1->get(i).length(),
          se2->get(i).c_str(), se2->get(i).length(),
@@ -109,28 +102,20 @@ struct StriSort {
  * 
  * @param str character vector
  * @param decreasing single logical value
- * @param strength single integer
- * @param locale single string identifying the locale ("" or NULL for default locale)
+ * @param collator_opts passed to stri__ucol_open()
  * @return integer vector (permutation)
  * 
  * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-//   Locale loc = Locale::createFromName(qloc);
+   UCollator* col = stri__ucol_open(collator_opts);
+   if (!col)
+      error("TO DO: byte compare!!!");
+      
    decreasing = stri_prepare_arg_logical_1(decreasing, "decreasing");
-   strength = stri_prepare_arg_integer_1(strength, "strength");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t nout = LENGTH(str);
-   
-   UErrorCode err = U_ZERO_ERROR;
-   UCollator* col = ucol_open(qloc, &err);
-   if (!U_SUCCESS(err)) {
-      error(MSG__RESOURCE_ERROR_GET);
-   }
-
-   ucol_setStrength(col, (UCollationStrength)(INTEGER(strength)[0]-1));
    
    StriContainerUTF8* ss = new StriContainerUTF8(str, nout);
    SEXP ret;
@@ -154,13 +139,14 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
    }
    
    
-   // TO DO: use sort keys...
+   // TO DO: think of using sort keys...
+   // however, how it's quite fast...
    
    bool decr = (LOGICAL(decreasing)[0]==true);
    
    // check if already sorted - if not - sort!
    for (R_len_t i = 0; i<nout-countNA-1; ++i) {
-      err = U_ZERO_ERROR;
+      UErrorCode err = U_ZERO_ERROR;
       int val = (int)ucol_strcollUTF8(col,
          ss->get(order[i]-1).c_str(), ss->get(order[i]-1).length(),
          ss->get(order[i+1]-1).c_str(), ss->get(order[i+1]-1).length(),

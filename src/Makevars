@@ -10,6 +10,7 @@ SRCS        =  stringi.cpp \
                unicoder_base.cpp \
                unicoder8.cpp \
                unicoder16.cpp \
+               collator.cpp \
                trim.cpp \
                casefold.cpp \
                join.cpp \
