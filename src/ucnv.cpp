@@ -153,41 +153,6 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
 }
 
 
-
-// ------------------------------------------------------------------------
-
-
-/** Check R encoding marking *for testing only*
- *  This function should not be exported
- * 
- *  @param s character vector
- * 
- *  Results are printed on STDERR
- * 
- * @version 0.1 (Marek Gagolewski)
- */
-SEXP stri_enc_Rmark(SEXP s)
-{
-   s = stri_prepare_arg_string(s, "str");
-   int ns = LENGTH(s);
-   for (int i=0; i < ns; ++i) {
-      cerr << "Element #" <<  i << ":";
-      SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING){
-         cerr << "\tNA" << endl;
-         continue;
-      }
-      //const char* string = CHAR(curs);
-      cerr << "\tMARK_ASCII =" << (IS_ASCII(curs) > 0);
-      cerr << "\tMARK_UTF8  =" << (IS_UTF8(curs) > 0);
-      cerr << "\tMARK_LATIN1=" << (IS_LATIN1(curs) > 0);
-      cerr << "\tMARK_BYTES =" << (IS_BYTES(curs) > 0);
-      cerr << endl;
-   }
-   return R_NilValue;
-}
-
-
 // ------------------------------------------------------------------------
 
 
@@ -677,4 +642,3 @@ SEXP stri_enc_info(SEXP enc)
    UNPROTECT(2);
    return vals;
 }
-

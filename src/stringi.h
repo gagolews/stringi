@@ -157,7 +157,6 @@ bool        stri__ucnv_hasASCIIsubset(UConverter* conv);                   // DO
 bool        stri__ucnv_is1to1Unicode(UConverter* conv);                    // DONE
 void        stri__ucnv_getStandards(const char**& standards, R_len_t& cs); // DONE
 const char* stri__ucnv_getFriendlyName(const char* canname);               // DONE
-SEXP stri_enc_Rmark(SEXP s); /* internal, but in namespace: for testing */ // DONE
 
 SEXP stri_enc_list();                                   // DONE
 SEXP stri_enc_info(SEXP enc);                           // DONE
@@ -223,6 +222,14 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                     // DONE
 SEXP stri_locate_first_regex(SEXP str, SEXP patternp);                  // DONE
 SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);                    // DONE
 
+
+
+
+// test.cpp /* internal, but in namespace: for testing */
+SEXP stri_test_Rmark(SEXP str);  // DONE
+SEXP stri_test_UnicodeContainer16(SEXP str);
+SEXP stri_test_UnicodeContainer8(SEXP str);
+SEXP stri_test_returnasis(SEXP x);
 
 // ------------------------------------------------------------------------
 

@@ -234,20 +234,6 @@ stri_enc_isutf8 <- function(str) {
 
 
 
-# Check R encoding marking
-# 
-# This is an internal function (no-export & no-manual) - test how R marks
-# ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
-#
-# Results are printed on STDERR
-#
-# @param str character vector
-stri_enc_Rmark <- function(str) {
-   invisible(.Call("stri_enc_Rmark", str, PACKAGE="stringi"))
-}
-
-
-
 
 #' Convert Character Vector Between Given Encodings 
 #' 
