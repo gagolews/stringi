@@ -101,7 +101,8 @@ local({
    print(microbenchmark(
       stringi:::stri_prepare_arg_string(s), 
       stringi:::stri_test_UnicodeContainer8(s),
-      stringi:::stri_test_UnicodeContainer16(s)
+      stringi:::stri_test_UnicodeContainer16(s),
+      iconv(s, "latin2", "utf-8")
    ))
    stri_enc_set(oldenc)
    
@@ -109,7 +110,7 @@ local({
 # Measurement #1 (2013-05-19, MG)
 #    Unit: microseconds
 #    expr     min       lq   median       uq     max neval
-#    stringi:::stri_prepare_arg_string(s)  20.755  24.6040  29.5180  30.4275 109.448   100
-#    stringi:::stri_test_UnicodeContainer8(s) 246.106 261.5035 266.2845 270.3125 614.057   100
-#    stringi:::stri_test_UnicodeContainer16(s)  75.999  82.0085  83.9125  87.3870 150.798   100
+#    stringi:::stri_prepare_arg_string(s)   9.944  15.4195  17.9485  24.5625  51.807   100
+#    stringi:::stri_test_UnicodeContainer8(s) 144.796 149.8555 152.1875 242.6665 304.971   100
+#    stringi:::stri_test_UnicodeContainer16(s)  41.852  45.6745  50.2180  71.4000 188.521   100
 })

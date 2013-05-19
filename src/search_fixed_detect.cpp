@@ -43,68 +43,68 @@
 //   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
 //   UErrorCode err = U_ZERO_ERROR;
 //   
-////   const UnicodeString* last_str = NULL;
-////   const UnicodeString* last_pat = NULL;
-////   err = U_ZERO_ERROR;
-////   StringSearch *matcher = NULL;
-////   
-////   if (!U_SUCCESS(err))
-////      error(MSG__STRSEARCH_FAILED);
-////   
-////   for (R_len_t i = pp->vectorize_init();
-////         i != pp->vectorize_end();
-////         i = pp->vectorize_next(i))
-////   {
-////      if (pp->isNA(i) || ss->isNA(i)) {
-////         LOGICAL(ret)[i] = NA_LOGICAL;
-////      }
-////      else {
-////         const UnicodeString* cur_str = &(ss->get(i));
-////         const UnicodeString* cur_pat = &(pp->get(i));
-////         
-//////         if (!matcher) {
-//////            err = U_ZERO_ERROR;
-//////            last_pat = cur_pat;
-//////            last_str = cur_str;
-//////            matcher = new StringSearch(*last_pat, *last_str, loc, NULL, err);
-//////            if (!U_SUCCESS(err))
-//////               error(MSG__STRSEARCH_FAILED);
-//////            matcher->getCollator()->setAttribute(UCOL_STRENGTH, UCOL_IDENTICAL, err);
-//////            if (!U_SUCCESS(err))
-//////               error(MSG__STRSEARCH_FAILED);
-//////         }
-//////   
-//////         if (cur_pat != last_pat) {
-//////            last_pat = cur_pat;
-//////            err = U_ZERO_ERROR;
-//////            matcher->setPattern(*last_pat, err);
-//////            if (!U_SUCCESS(err))
-//////               error(MSG__STRSEARCH_FAILED);
-//////         }
-//////   
-//////         if (cur_str != last_str) {
-//////            last_str = cur_str;
-//////            err = U_ZERO_ERROR;
-//////            matcher->setText(*last_str, err);
-//////            if (!U_SUCCESS(err))
-//////               error(MSG__STRSEARCH_FAILED);
-//////         }
-//////         
-//////         matcher->reset();
-//////         err = U_ZERO_ERROR;
-//////         int found = ((int)matcher->first(err) != USEARCH_DONE);
-////         
-////         if (!U_SUCCESS(err))
-////            error(MSG__STRSEARCH_FAILED);
-////            
-////         LOGICAL(ret)[i] = 0;
-////         
-////      }
-////   }
+//   const UnicodeString* last_str = NULL;
+//   const UnicodeString* last_pat = NULL;
+//   err = U_ZERO_ERROR;
+//   StringSearch *matcher = NULL;
+//   
+//   if (!U_SUCCESS(err))
+//      error(MSG__STRSEARCH_FAILED);
+//   
+//   for (R_len_t i = pp->vectorize_init();
+//         i != pp->vectorize_end();
+//         i = pp->vectorize_next(i))
+//   {
+//      if (pp->isNA(i) || ss->isNA(i)) {
+//         LOGICAL(ret)[i] = NA_LOGICAL;
+//      }
+//      else {
+//         const UnicodeString* cur_str = &(ss->get(i));
+//         const UnicodeString* cur_pat = &(pp->get(i));
+//         
+//         if (!matcher) {
+//            err = U_ZERO_ERROR;
+//            last_pat = cur_pat;
+//            last_str = cur_str;
+//            matcher = new StringSearch(*last_pat, *last_str, loc, NULL, err);
+//            if (!U_SUCCESS(err))
+//               error(MSG__STRSEARCH_FAILED);
+//            matcher->getCollator()->setAttribute(UCOL_STRENGTH, UCOL_IDENTICAL, err);
+//            if (!U_SUCCESS(err))
+//               error(MSG__STRSEARCH_FAILED);
+//         }
+//   
+//         if (cur_pat != last_pat) {
+//            last_pat = cur_pat;
+//            err = U_ZERO_ERROR;
+//            matcher->setPattern(*last_pat, err);
+//            if (!U_SUCCESS(err))
+//               error(MSG__STRSEARCH_FAILED);
+//         }
+//   
+//         if (cur_str != last_str) {
+//            last_str = cur_str;
+//            err = U_ZERO_ERROR;
+//            matcher->setText(*last_str, err);
+//            if (!U_SUCCESS(err))
+//               error(MSG__STRSEARCH_FAILED);
+//         }
+//         
+//         matcher->reset();
+//         err = U_ZERO_ERROR;
+//         int found = ((int)matcher->first(err) != USEARCH_DONE);
+//         
+//         if (!U_SUCCESS(err))
+//            error(MSG__STRSEARCH_FAILED);
+//            
+//         LOGICAL(ret)[i] = 0;
+//         
+//      }
+//   }
 //   
 //   delete ss;
 //   delete pp;
-////   if (matcher) delete matcher;
+//   if (matcher) delete matcher;
 //   UNPROTECT(1);
 //   return ret;
 //}

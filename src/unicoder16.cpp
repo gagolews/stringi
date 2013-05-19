@@ -73,6 +73,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
          }
          else {
             if (IS_ASCII(curs)) {
+//               int n = LENGTH(curs);
+//               UChar* buf = new UChar[n];
+//               const char* in = CHAR(curs);
+//               for (int j=0; j<n; ++j)
+//                  buf[j] = (UChar)in[j];
+//               this->str[i] = new UnicodeString(buf, LENGTH(curs));
+//               delete[]buf;
                this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
                this->enc[i] = STRI_ENC_ASCII; 
             }
@@ -122,6 +129,10 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
 }
 
 
+
+/** Copy constructor
+ * 
+ */
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
 {
@@ -165,7 +176,9 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 }
 
 
-
+/** Destructor
+ * 
+ */
 StriContainerUTF16::~StriContainerUTF16()
 {
    if (this->lastMatcher)
@@ -282,9 +295,11 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
    if (this->lastMatcher) {
       if (i >= this->n) {
 #ifndef NDEBUG
-      if ((this->debugMatcherIndex % this->n) != (i % this->n))
+      if ((this->debugMatcherIndex % this->n) != (i % this->n)) {
+         this->~StriContainerUTF16(); // free mem!
          error("DEBUG: vectorize_getMatcher - matcher reuse failed!");
       //         cerr << "Matcher reuse" << endl; // tmp, test only
+      }
 #endif
          return lastMatcher; // reuse
       }
@@ -297,7 +312,7 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
    UErrorCode status = U_ZERO_ERROR;
    this->lastMatcher = new RegexMatcher(this->get(i), 0, status);
    if (U_FAILURE(status)) {
-      this->~StriContainerUTF16();
+      this->~StriContainerUTF16(); // free mem!
       error(u_errorName(status));
    }
 #ifndef NDEBUG

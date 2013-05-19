@@ -62,4 +62,71 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
 }
 
 
+// Another version (MG)
+// No conversion to UTF-16, using UText
+// This is slower than the StriContainerUTF16 + C++ API for regex
+// Well... we've tried. :)
+//
+//SEXP stri_detect_regex(SEXP str, SEXP pattern)
+//{
+//   str = stri_prepare_arg_string(str, "str");
+//   pattern = stri_prepare_arg_string(pattern, "pattern");
+//   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+//   // this will work for nmax == 0:
+//   
+//   SEXP ret;
+//   PROTECT(ret = allocVector(LGLSXP, nmax));
+// 
+//   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+//   StriContainerUTF8* pp = new StriContainerUTF8(pattern, nmax);
+// 
+//   UText *uts = NULL;
+//   UText *utp = NULL;
+//   const String8* last_s = NULL;
+//   const String8* last_p = NULL;
+//   URegularExpression* matcher = NULL;
+//   UErrorCode err = U_ZERO_ERROR;
+//   
+//   for (R_len_t i = pp->vectorize_init();
+//         i != pp->vectorize_end();
+//         i = pp->vectorize_next(i))
+//   {
+//      if (pp->isNA(i) || ss->isNA(i)) {
+//         LOGICAL(ret)[i] = NA_LOGICAL;
+//      }
+//      else {
+//         const String8* cur_s = &(ss->get(i));
+//         const String8* cur_p = &(pp->get(i));
+//         
+//         if (last_p != cur_p) {
+//            last_p = cur_p;
+//            if (matcher) uregex_close(matcher);
+//            utp = utext_openUTF8(utp, last_p->c_str(), last_p->length(), &err);
+//            matcher = uregex_openUText(utp, 0, NULL, &err);
+//            if (U_FAILURE(err))
+//               error(MSG__REGEXP_FAILED);
+//         }
+//         
+//         if (last_s != cur_s) {
+//            last_s = cur_s;
+//            uts = utext_openUTF8(uts, last_s->c_str(), last_s->length(), &err);
+//         }
+//         
+//         uregex_setUText(matcher, uts, &err);
+//         uregex_reset(matcher, 0, &err);
+//         int found = (int)uregex_find(matcher, -1, &err);
+//         LOGICAL(ret)[i] = found;
+//         if (U_FAILURE(err))
+//            error(MSG__REGEXP_FAILED);
+//      }
+//   }
+//   
+//   if (matcher) uregex_close(matcher);
+//   if (uts) utext_close(uts);
+//   if (utp) utext_close(utp);
+//   delete ss;
+//   delete pp;
+//   UNPROTECT(1);
+//   return ret;
+//}
 

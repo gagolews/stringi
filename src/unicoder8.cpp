@@ -98,10 +98,13 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
 //             Assume it's Native; this assumes the user working in an 8-bit environment
 //             would convert strings to UTF-8 manually if needed - I think is's
 //             a more reasonable approach (Native --> input via keyboard)
+
+
+// version 0.1 - through UnicodeString
                if (!this->ucnvNative)
                   this->ucnvNative = stri__ucnv_open((char*)NULL);
                UErrorCode status = U_ZERO_ERROR;
-               // @TODO: may be slower
+//               // @TODO: may be slower
                UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvNative, status);
                std::string tmp2;
                tmp.toUTF8String(tmp2);
@@ -109,6 +112,25 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                   error(MSG__ENC_ERROR_CONVERT); 
                this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
                this->enc[i] = STRI_ENC_NATIVE; 
+
+// version 0.2
+//               if (!this->ucnvNative)
+//                  this->ucnvNative = stri__ucnv_open((char*)NULL);
+//               UErrorCode status = U_ZERO_ERROR;
+//               
+//               
+//               UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvNative, status);
+//               
+//               int bufsize = tmp.length()*4;
+//               char* buf = new char[bufsize];
+//               int realsize = 0;
+//               
+//               u_strToUTF8(buf, bufsize, &realsize,
+//               		tmp.getBuffer(), tmp.length(), &status);
+//                     
+//               this->str[i] = new String8(buf, realsize, true);
+//               delete[]buf;
+//               this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
       }
