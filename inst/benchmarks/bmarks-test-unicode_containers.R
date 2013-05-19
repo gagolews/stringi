@@ -16,6 +16,10 @@ local({
    ))
    
    
+
+})
+
+
 # Measurement #1 (2013-05-19, MG)
 #    Unit: nanoseconds
 #    expr   min      lq  median      uq   max neval
@@ -25,10 +29,6 @@ local({
 #    stringi:::stri_prepare_arg_string(s)  9552 10329.5 10799.0 11795.5 88299   100
 #    stringi:::stri_test_UnicodeContainer8(s) 10003 10997.0 11367.5 12459.5 25446   100
 #    stringi:::stri_test_UnicodeContainer16(s) 10504 11128.5 11785.0 12573.5 25176   100
-})
-
-
-
 
 local({
    

@@ -7,6 +7,7 @@ test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed("kot lorem1", character(0)), logical(0))
    expect_identical(stri_detect_fixed(character(0), "ipsum 1234"), logical(0))
    expect_identical(stri_detect_fixed(character(0), character(0)), logical(0))
+   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"), c(T, T, T, T))
    
    s <- c("Lorem\n123", " ", "kota", "4\tą")
    p <- c(" ", "\t\u0105")

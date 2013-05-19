@@ -22,6 +22,12 @@
 #'
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
 #' the \pkg{ICU} regex engine.
+#' 
+#' ignore_case.....
+#' 
+#' all regex functions treat text as single line.
+#' if you want multiline facilities, do split (all \pkg{stringi} functions
+#' are nicely vectorized)
 #'
 #' @references
 #' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr

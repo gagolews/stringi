@@ -41,6 +41,12 @@ stri_detect_class <- function(str, class) {
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
+#' By default, a very fast bytewise (locale independent)
+#' search is performed, with time complexity of
+#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
+#' For natural language, non-English text this is, however, not what
+#' you probably want.
+#' 
 #' @param str character vector
 #' @param pattern character vector
 #' 
@@ -97,6 +103,5 @@ stri_detect <- function(str, regex, fixed, charclass) {
       .Call("stri_detect_class", str, charclass, PACKAGE="stringi")
    else
       error("You have specify at least one of regex, fixed and charclass")
-   
 }
 
