@@ -25,6 +25,10 @@
 #' * Do we treat NA values consistently? Yes.
 #' * Do we preserve objects' attributes? No.
 #' 
+#' See the man page links below for the description of internal methods used
+#' in all functions from the \pkg{stringi} package (just to get more insight,
+#' in case you're interested in details).
+#' 
 #' When character vector argument is expected: factors and other coercible vectors
 #' are converted with \code{as.character(...)}, otherwise an error is generated.
 #' 
@@ -32,12 +36,17 @@
 #' factors are converted with \code{as.*(as.character(...))} and other coercible vectors
 #' are converted with \code{as.character()}, otherwise an error is generated.
 #' 
+#' Some functions (like \code{\link{stri_join}}
+#' assume that a vector with one element is given;
+#' in that case, for empty vectors we get an error and for vectors with > 1
+#' elements - a warning....
+#' 
 #' @name stringi_arguments
 #' @family prepare_arg
 NULL
 
 
-#' Prepare a string argument (Internal method)
+#' Prepare a String Argument (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a string, it is returned with no change.
@@ -48,11 +57,11 @@ NULL
 #' 
 #' @family prepare_arg
 stri_prepare_arg_string <- function(x) {
-   .Call("stri_prepare_arg_string", x, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_string", x, NULL, PACKAGE="stringi")  
 }
 
 
-#' Prepare a numeric argument (Internal method)
+#' Prepare a Numeric Argument (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a factor, as.character is called.
@@ -62,11 +71,11 @@ stri_prepare_arg_string <- function(x) {
 #' 
 #' @family prepare_arg
 stri_prepare_arg_double <- function(x) {
-   .Call("stri_prepare_arg_double", x, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_double", x, NULL, PACKAGE="stringi")  
 }
 
 
-#' Prepare an integer argument (Internal method)
+#' Prepare an Integer Argument (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a factor, as.character is called.
@@ -76,12 +85,12 @@ stri_prepare_arg_double <- function(x) {
 #' 
 #' @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
-   .Call("stri_prepare_arg_integer", x, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_integer", x, NULL, PACKAGE="stringi")  
 }
 
 
 
-#' Prepare a logical argument (Internal method)
+#' Prepare a Logical Srgument (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a logical, it is returned with no change.
@@ -91,5 +100,68 @@ stri_prepare_arg_integer <- function(x) {
 #' 
 #' @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
-   .Call("stri_prepare_arg_logical", x, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_logical", x, NULL, PACKAGE="stringi")  
 }
+
+
+
+#' Prepare a String Argument [Single Value] (Internal Method)
+#' 
+#' @param x argument to be checked
+#' @return 
+#' first \code{\link{stri_prepare_arg_string}} is called;
+#' on empty vector, an error is generated;
+#' if there are are > 1 elems, a warning is generated;
+#' a vector with one (the first in \code{x}) is returned
+#' 
+#' @family prepare_arg
+stri_prepare_arg_string_1 <- function(x) {
+   .Call("stri_prepare_arg_string_1", x, NULL, PACKAGE="stringi")  
+}
+
+
+#' Prepare a Numeric Argument [Single Value] (Internal Method)
+#' 
+#' @param x argument to be checked
+#' @return
+#' first \code{\link{stri_prepare_arg_double}} is called;
+#' on empty vector, an error is generated;
+#' if there are are > 1 elems, a warning is generated;
+#' a vector with one (the first in \code{x}) is returned
+#' 
+#' @family prepare_arg
+stri_prepare_arg_double_1 <- function(x) {
+   .Call("stri_prepare_arg_double_1", x, NULL, PACKAGE="stringi")  
+}
+
+
+#' Prepare an Integer Argument [Single Value] (Internal Method)
+#' 
+#' @param x argument to be checked
+#' @return
+#' first \code{\link{stri_prepare_arg_integer}} is called;
+#' on empty vector, an error is generated;
+#' if there are are > 1 elems, a warning is generated;
+#' a vector with one (the first in \code{x}) is returned
+#' 
+#' @family prepare_arg
+stri_prepare_arg_integer_1 <- function(x) {
+   .Call("stri_prepare_arg_integer_1", x, NULL, PACKAGE="stringi")  
+}
+
+
+
+#' Prepare a Logical Argument [Single Value] (Internal Method)
+#' 
+#' @param x argument to be checked
+#' @return 
+#' first \code{\link{stri_prepare_arg_logical}} is called;
+#' on empty vector, an error is generated;
+#' if there are are > 1 elems, a warning is generated;
+#' a vector with one (the first in \code{x}) is returned
+#' 
+#' @family prepare_arg
+stri_prepare_arg_logical_1 <- function(x) {
+   .Call("stri_prepare_arg_logical_1", x, NULL, PACKAGE="stringi")  
+}
+
