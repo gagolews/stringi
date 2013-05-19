@@ -53,7 +53,7 @@ local({
 })
 
 
-# Original version (v0.1) - measured by MG
+# v0.2 - measured by MG
 # Unit: microseconds
 # expr     min       lq  median       uq     max neval
 # stri_detect_fixed(sjoin, "Nam")   2.831   3.5555   5.779   7.5985  45.362   100

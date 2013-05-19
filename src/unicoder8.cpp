@@ -63,6 +63,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
       for (R_len_t i=0; i<this->n; ++i)
          this->str[i] = NULL; // in case it fails during conversion
          
+      UConverter* ucnvLatin1 = NULL;
+      UConverter* ucnvNative = NULL;
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -70,20 +72,19 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
             this->str[i] = NULL;
          }
          else {
-            if (IS_ASCII(curs)) {
+            if (IS_ASCII(curs)) { // ASCII - ultra fast 
                this->str[i] = new String8(CHAR(curs), LENGTH(curs), !this->isShallow);
                this->enc[i] = STRI_ENC_ASCII; 
             }
-            else if (IS_UTF8(curs)) {
+            else if (IS_UTF8(curs)) { // UTF-8 - ultra fast 
                this->str[i] = new String8(CHAR(curs), LENGTH(curs), !this->isShallow);
                this->enc[i] = STRI_ENC_UTF8; 
             }
             else if (IS_LATIN1(curs)) {
-               if (!this->ucnvLatin1)
-                  this->ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
+               if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
                UErrorCode status = U_ZERO_ERROR;
                // @TODO: may be slower
-               UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvLatin1, status);
+               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvLatin1, status);
                std::string tmp2;
                tmp.toUTF8String(tmp2);
                if (U_FAILURE(status))
@@ -101,11 +102,10 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
 
 
 // version 0.1 - through UnicodeString
-               if (!this->ucnvNative)
-                  this->ucnvNative = stri__ucnv_open((char*)NULL);
+               if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
                UErrorCode status = U_ZERO_ERROR;
 //               // @TODO: may be slower
-               UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvNative, status);
+               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvNative, status);
                std::string tmp2;
                tmp.toUTF8String(tmp2);
                if (U_FAILURE(status))
@@ -134,6 +134,11 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
             }
          }
       }
+      
+      if (ucnvLatin1) ucnv_close(ucnvLatin1);
+      if (ucnvNative) ucnv_close(ucnvNative);
+
+
       if (!this->isShallow) {
          for (R_len_t i=this->n; i<this->nrecycle; ++i) {
             this->enc[i] = this->enc[i%this->n];

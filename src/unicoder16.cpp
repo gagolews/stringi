@@ -64,7 +64,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
       this->str = new UnicodeString*[(this->isShallow)?this->n:this->nrecycle];
       for (R_len_t i=0; i<this->n; ++i)
          this->str[i] = NULL; // in case it fails during conversion
-         
+      
+      UConverter* ucnvASCII = NULL;
+//      UConverter* ucnvUTF8 = NULL;
+      UConverter* ucnvLatin1 = NULL;
+      UConverter* ucnvNative = NULL;
+      
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -73,26 +78,25 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
          }
          else {
             if (IS_ASCII(curs)) {
-//               int n = LENGTH(curs);
-//               UChar* buf = new UChar[n];
-//               const char* in = CHAR(curs);
-//               for (int j=0; j<n; ++j)
-//                  buf[j] = (UChar)in[j];
-//               this->str[i] = new UnicodeString(buf, LENGTH(curs));
-//               delete[]buf;
-               this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
+               if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");      
+               UErrorCode status = U_ZERO_ERROR;
+               this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
+                  ucnvASCII, status);
+               if (U_FAILURE(status))
+                  error(MSG__ENC_ERROR_CONVERT);  
+//               this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs))); // slower than the above
                this->enc[i] = STRI_ENC_ASCII; 
             }
             else if (IS_UTF8(curs)) {
+               // the above ASCII-approach is slower for UTF-8
                this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
                this->enc[i] = STRI_ENC_UTF8; 
             }
             else if (IS_LATIN1(curs)) {
-               if (!this->ucnvLatin1)
-                  this->ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
+               if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
                UErrorCode status = U_ZERO_ERROR;
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
-                  this->ucnvLatin1, status);
+                  ucnvLatin1, status);
                if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT);  
                this->enc[i] = STRI_ENC_LATIN1; 
@@ -104,17 +108,22 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
 //             Assume it's Native; this assumes the user working in an 8-bit environment
 //             would convert strings to UTF-8 manually if needed - I think is's
 //             a more reasonable approach (Native --> input via keyboard)
-               if (!this->ucnvNative)
-                  this->ucnvNative = stri__ucnv_open((char*)NULL);
+               if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
                UErrorCode status = U_ZERO_ERROR;
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
-                  this->ucnvNative, status);
+                  ucnvNative, status);
                if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT);  
                this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
       }
+      
+      if (ucnvASCII) ucnv_close(ucnvASCII);
+//      if (ucnvUTF8)  ucnv_close(ucnvUTF8);
+      if (ucnvLatin1) ucnv_close(ucnvLatin1);
+      if (ucnvNative) ucnv_close(ucnvNative);
+      
       if (!this->isShallow) {
          for (R_len_t i=this->n; i<this->nrecycle; ++i) {
             this->enc[i] = this->enc[i%this->n];

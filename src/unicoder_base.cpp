@@ -30,8 +30,6 @@ StriContainerUTF_Base::StriContainerUTF_Base()
    this->n = 0;
    this->nrecycle = 0;
    this->enc = NULL;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    this->isShallow = true;
 }
 
@@ -43,8 +41,6 @@ StriContainerUTF_Base::StriContainerUTF_Base(StriContainerUTF_Base& container)
    this->n = container.n;
    this->nrecycle = container.nrecycle;
    this->isShallow = container.isShallow;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
       this->enc = new StriEnc[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -65,8 +61,6 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
    this->n = container.n;
    this->nrecycle = container.nrecycle;
    this->isShallow = container.isShallow;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
    if (this->n > 0) {
       this->enc = new StriEnc[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -84,11 +78,6 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
 
 StriContainerUTF_Base::~StriContainerUTF_Base()
 {
-   if (this->ucnvNative)
-      ucnv_close(this->ucnvNative);
-   if (this->ucnvLatin1)
-      ucnv_close(this->ucnvLatin1);
-
    if (this->n > 0) {
       delete [] this->enc;  
    }
@@ -96,8 +85,6 @@ StriContainerUTF_Base::~StriContainerUTF_Base()
    this->enc = NULL;
    this->n = 0;
    this->nrecycle = 0;
-   this->ucnvNative = NULL;
-   this->ucnvLatin1 = NULL;
 }
 
 

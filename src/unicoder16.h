@@ -27,6 +27,7 @@
  * A class to handle conversion between R character vectors and UTF-16 string vectors
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - lastMatcher cache, supports auto-vectorization
+ * @version 0.3 (Marek Gagolewski) - improved ASCII performance (seperate ucnv)
  */
 class StriContainerUTF16 : public StriContainerUTF_Base {
    

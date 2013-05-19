@@ -26,6 +26,7 @@
 /**
  * Base class for StriContainerUTF8 and StriContainerUTF16
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - removed ucnvNative, ucnvLatin1 (not needed per-object)
  */
 class StriContainerUTF_Base {
    
@@ -34,9 +35,7 @@ class StriContainerUTF_Base {
       R_len_t n;                 ///< number of strings (size of \code{enc} and \code{str})
       R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
       StriEnc* enc;              ///< original encoding of each string
-      UConverter* ucnvNative;    ///< recently used Native encoder
-      UConverter* ucnvLatin1;    ///< recently used Latin1 encoder
-      bool isShallow;            ///< have we made only shallow copy of the strings (=> read only)
+      bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
 
 
       StriContainerUTF_Base();
