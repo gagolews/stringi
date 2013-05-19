@@ -149,8 +149,8 @@ void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
  */
 SEXP stri_locate_all_fixed(SEXP s, SEXP p)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare integer argument
+   s = stri_prepare_arg_string(s, "stri"); // prepare string argument
+   p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(true, 2, ns, np);
@@ -228,12 +228,13 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
  */
 SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
 {
-   first = stri_prepare_arg_logical(first); // prepare logical argument
+   // TODO: .....prepare....1??
+   first = stri_prepare_arg_logical(first, "first"); // prepare logical argument
    if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
       error(MSG__INCORRECT_INTERNAL_ARG);
       
-   s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare integer argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nmax = stri__recycling_rule(true, 2, ns, np);

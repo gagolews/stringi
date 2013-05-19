@@ -72,8 +72,11 @@ stri_dup <- function(str, times) {
 #' Otherwise, you will get a character vector of length equal
 #' to the length of the longest argument.
 #' 
-#' If any of the arguments is a vector of length 0, then in result
+#' If any of the arguments in `\code{...}` is a vector of length 0, then in result
 #' you will get 0-length character vector.
+#' 
+#' If \code{collapse} or \code{sep} has length > 1, then only first string
+#' will be used.
 #' 
 #' In case of any \code{NA}, \code{NA} is set to the corresponding element.
 #' 

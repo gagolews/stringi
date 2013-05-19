@@ -73,24 +73,6 @@
 #define MSG__ENC_INCORRECT_ID \
    "incorrect character encoding identifier"
    
-#define MSG__COLLAPSE_EXPECTED1 \
-   "only one string for `collapse` is supported. taking first"
-   
-#define MSG__SEP_EXPECTED1 \
-   "only one string for `sep` is supported. taking first"
-   
-#define MSG__STRENGTH_EXPECTED1 \
-   "only one integer value for `strength` is supported. taking first"
- 
-#define MSG__DECREASING_EXPECTED1 \
-   "only one logical value for `decreasing` is supported. taking first"
- 
-#define MSG__LOCALE_ATTEMPT_SET_GE1 \
-   "only one locale specifier supported. taking first"
-   
-#define MSG__ENC_ATTEMPT_SET_GE1 \
-   "only one character encoding specifier supported. taking first"
-   
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
 
@@ -111,5 +93,37 @@
    
 #define MSG__NEWLINE_FOUND \
    "newline character found in a string"
+   
+
+
+#define MSG__ARG_EXPECTED_NOT_NA \
+   "missing value in argument `%s` is not supported"
+
+#define MSG__ARG_EXPECTED_NOT_EMPTY \
+   "argument `%s` should be a non-empty vector"
+   
+#define MSG__ARG_EXPECTED_1_STRING \
+   "argument `%s` should be one character string; taking the first one"
+
+#define MSG__ARG_EXPECTED_1_LOGICAL \
+   "argument `%s` should be one logical value; taking the first one"
+
+#define MSG__ARG_EXPECTED_1_INTEGER \
+   "argument `%s` should be one integer value; taking the first one"
+
+#define MSG__ARG_EXPECTED_1_NUMERIC \
+   "argument `%s` should be one numeric value; taking the first one"
+   
+#define MSG__ARG_EXPECTED_STRING \
+   "argument `%s` should be a character vector (or an object coercible to)"
+
+#define MSG__ARG_EXPECTED_LOGICAL \
+   "argument `%s` should be a logical vector (or an object coercible to)"
+
+#define MSG__ARG_EXPECTED_INTEGER \
+   "argument `%s` should be an integer vector (or an object coercible to)"
+
+#define MSG__ARG_EXPECTED_NUMERIC \
+   "argument `%s` should be a numeric vector (or an object coercible to)"
    
 #endif

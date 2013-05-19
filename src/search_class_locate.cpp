@@ -156,8 +156,8 @@ void stri__locate_all_class1(const char* s, int n, int32_t* cls,
  */
 SEXP stri_locate_all_class(SEXP s, SEXP c)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   c = stri_prepare_arg_integer(c); // prepare integer argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   c = stri_prepare_arg_integer(c, "class"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0) return stri__emptyList();
@@ -245,15 +245,16 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
  */
 SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
 {
-   first = stri_prepare_arg_logical(first); // prepare logical argument
+   first = stri_prepare_arg_logical(first, "first"); // prepare logical argument
+   // TODO: .....prepare....1??
    if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
       error(MSG__INCORRECT_INTERNAL_ARG);
       
    /* @TODO: this function should return a matrix with 2 columns
       now this is assured by some R code :-( */
       
-   s = stri_prepare_arg_string(s); // prepare string argument
-   c = stri_prepare_arg_integer(c); // prepare integer argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   c = stri_prepare_arg_integer(c, "class"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0) return allocVector(INTSXP, 0);

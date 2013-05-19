@@ -36,13 +36,11 @@
 */
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, true);
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
    Locale loc = Locale::createFromName(qloc);
-   
-   str = stri_prepare_arg_string(str); // prepare string argument
-   
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
    if (!isInteger(type) || LENGTH(type) != 1)
-      error(MSG__INCORRECT_INTERNAL_ARG);
+      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
       
    int _type = INTEGER(type)[0];
    

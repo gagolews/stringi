@@ -95,7 +95,7 @@ void stri__locate_trim1(const char* s, int n, int& first, int& last)
 */
 SEXP stri_trim(SEXP s)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    
    R_len_t ns = LENGTH(s);
    SEXP ret;
@@ -130,7 +130,7 @@ SEXP stri_trim(SEXP s)
 */
 SEXP stri_ltrim(SEXP s)
 {   
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    
    R_len_t ns = LENGTH(s);
    SEXP ret;
@@ -163,7 +163,7 @@ SEXP stri_ltrim(SEXP s)
 */
 SEXP stri_rtrim(SEXP s)
 {   
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    
    R_len_t ns = LENGTH(s);
    SEXP ret;
@@ -197,7 +197,7 @@ SEXP stri_rtrim(SEXP s)
 */
 SEXP stri_trim_all(SEXP s)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    R_len_t ns = LENGTH(s);
    SEXP e,subs, curs, temp, temp2, white, space;
    PROTECT(e = allocVector(STRSXP, ns));
@@ -237,10 +237,10 @@ SEXP stri_trim_all(SEXP s)
 
 SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad)
 {
-   s     = stri_prepare_arg_string(s); // prepare string argument
-   width = stri_prepare_arg_integer(width);
-   side  = stri_prepare_arg_integer(side);
-   pad   = stri_prepare_arg_string(pad);
+   s     = stri_prepare_arg_string(s, "str"); // prepare string argument
+   width = stri_prepare_arg_integer(width, "width");
+   side  = stri_prepare_arg_integer(side, "side");
+   pad   = stri_prepare_arg_string(pad, "pad");
    
    R_len_t ns     = LENGTH(s);
    R_len_t nside  = LENGTH(side);

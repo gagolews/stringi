@@ -32,14 +32,11 @@
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, true);
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   strength = stri_prepare_arg_integer_1(strength, "strength");
+   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
+   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
    
-   strength = stri_prepare_arg_integer(strength);
-   if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
-   else if (LENGTH(strength) > 1) warning(MSG__STRENGTH_EXPECTED1);
-   
-   e1 = stri_prepare_arg_string(e1); // prepare string argument
-   e2 = stri_prepare_arg_string(e2); // prepare string argument
    R_len_t ne1 = LENGTH(e1);
    R_len_t ne2 = LENGTH(e2);
    R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
@@ -120,18 +117,11 @@ struct StriSort {
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, true);
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
 //   Locale loc = Locale::createFromName(qloc);
-   
-   decreasing = stri_prepare_arg_logical(decreasing);
-   if (LENGTH(decreasing) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
-   else if (LENGTH(decreasing) > 1) warning(MSG__DECREASING_EXPECTED1);
-   
-   strength = stri_prepare_arg_integer(strength);
-   if (LENGTH(strength) == 0) error(MSG__INCORRECT_INTERNAL_ARG);
-   else if (LENGTH(strength) > 1) warning(MSG__STRENGTH_EXPECTED1);
-   
-   str = stri_prepare_arg_string(str); // prepare string argument
+   decreasing = stri_prepare_arg_logical_1(decreasing, "decreasing");
+   strength = stri_prepare_arg_integer_1(strength, "strength");
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t nout = LENGTH(str);
    
    UErrorCode err = U_ZERO_ERROR;

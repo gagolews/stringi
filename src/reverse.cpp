@@ -29,7 +29,7 @@
  */
 SEXP stri_reverse(SEXP str)
 {
-   str = stri_prepare_arg_string(str);    // prepare string argument
+   str = stri_prepare_arg_string(str, "str");    // prepare string argument
    
    StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
 
@@ -38,7 +38,7 @@ SEXP stri_reverse(SEXP str)
          i = ss->vectorize_next(i))
    {
       if (!ss->isNA(i)) {
-         UErrorCode status = U_ZERO_ERROR;
+//         UErrorCode status = U_ZERO_ERROR;
          ss->getWritable(i).reverse(); // Use ICU facilities
       }
    }

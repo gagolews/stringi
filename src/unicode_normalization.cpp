@@ -29,11 +29,8 @@
  */
 const Normalizer2* stri__normalizer_get(SEXP type)
 {
-   type = stri_prepare_arg_integer(type); // prepare int argument
-   
-   if (LENGTH(type) != 1)
-      error(MSG__INCORRECT_INTERNAL_ARG);
-   
+   if (!isInteger(type) || LENGTH(type) != 1)
+      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually   
    int _type = INTEGER(type)[0];
    
    UErrorCode status = U_ZERO_ERROR;
@@ -81,7 +78,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  */
 SEXP stri_enc_nf(SEXP str, SEXP type)
 {
-   str = stri_prepare_arg_string(str);    // prepare string argument
+   str = stri_prepare_arg_string(str, "str");    // prepare string argument
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here
 
@@ -119,7 +116,7 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
  */
 SEXP stri_enc_isnf(SEXP str, SEXP type)
 {
-   str = stri_prepare_arg_string(str);    // prepare string argument
+   str = stri_prepare_arg_string(str, "str");    // prepare string argument
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here
 

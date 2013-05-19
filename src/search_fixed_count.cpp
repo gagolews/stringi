@@ -29,8 +29,8 @@
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern)
 {
-   str = stri_prepare_arg_string(str);
-   pattern = stri_prepare_arg_string(pattern);
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t ns = LENGTH(str);
    R_len_t np = LENGTH(pattern);
    if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);

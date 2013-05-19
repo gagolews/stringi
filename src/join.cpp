@@ -39,8 +39,8 @@
 */
 SEXP stri_dup(SEXP s, SEXP c)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   c = stri_prepare_arg_integer(c); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   c = stri_prepare_arg_integer(c, "times"); // prepare string argument
    R_len_t nc = LENGTH(c);
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(s), nc);
    if (nmax <= 0) return allocVector(STRSXP, 0);
@@ -133,8 +133,8 @@ SEXP stri_dup(SEXP s, SEXP c)
 */
 SEXP stri_join2(SEXP s1, SEXP s2)
 {
-   s1 = stri_prepare_arg_string(s1); // prepare string argument
-   s2 = stri_prepare_arg_string(s2); // prepare string argument
+   s1 = stri_prepare_arg_string(s1, "e1"); // prepare string argument
+   s2 = stri_prepare_arg_string(s2, "e2"); // prepare string argument
    
    R_len_t ns1 = LENGTH(s1);
    R_len_t ns2 = LENGTH(s2);
@@ -228,7 +228,7 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
 #endif
    R_len_t nmax = 0; // length of the longest character vector
    for (R_len_t i=0; i<narg; ++i) {
-      SEXP cur = stri_prepare_arg_string(VECTOR_ELT(s, i));  
+      SEXP cur = stri_prepare_arg_string(VECTOR_ELT(s, i), "...");  
       R_len_t ncur = LENGTH(cur);
       SET_VECTOR_ELT(s, i, cur);
       if (ncur <= 0) return stri__vector_empty_strings(0);
@@ -236,20 +236,9 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
    }
    
    // 2. Prepare sep
-   sep = stri_prepare_arg_string(sep);
-   R_len_t nsep = LENGTH(sep);
-   if (nsep <= 0) return stri__vector_empty_strings(0);
-   
+   sep = stri_prepare_arg_string_1(sep, "sep");   
    if (STRING_ELT(sep, 0) == NA_STRING)
       return stri__vector_NA_strings(nmax);
-      
-   if (nsep > 1) {
-      warning(MSG__SEP_EXPECTED1);
-      SEXP sep_old = sep;
-      PROTECT(sep = allocVector(STRSXP, 1));
-      SET_STRING_ELT(sep, 0, STRING_ELT(sep_old, 0));
-      UNPROTECT(1);
-   }
    StriContainerUTF8* ssep = new StriContainerUTF8(sep, 1);
    const char* sep_char = ssep->get(0).c_str();
    R_len_t     sep_len  = ssep->get(0).length();
@@ -344,7 +333,7 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
  */
 SEXP stri_flatten_nosep(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    
    R_len_t ns = LENGTH(s);
    if (ns <= 0) return s;
@@ -387,39 +376,27 @@ SEXP stri_flatten_nosep(SEXP s)
  *  if any of s is NA, the result will be NA_character_
  * 
  *  @param s character vector
- *  @param sep a single string [R name: collapse]
+ *  @param collapse a single string [R name: collapse]
  *  @return if s is not empty, then a character vector of length 1 
  * 
  * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Bartek Tartanus) - sep arg added (1 sep supported)
+ * @version 0.2 (Bartek Tartanus) - collapse arg added (1 sep supported)
  * @version 0.3 (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
  */
-SEXP stri_flatten(SEXP s, SEXP sep)
+SEXP stri_flatten(SEXP s, SEXP collapse)
 {
-   // Check if sep is given?
-   sep = stri_prepare_arg_string(sep);
-//   if (LENGTH(sep) == 1 && LENGTH(STRING_ELT(sep, 0)) == 0)
-//      return stri_flatten_nosep(s); // specialized -> slightly (not too much) faster
-      
-   s = stri_prepare_arg_string(s); // prepare string argument   
+   // Check if collapse is given?
+   collapse = stri_prepare_arg_string_1(collapse, "collapse");
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument   
    R_len_t ns = LENGTH(s);
-   R_len_t nsep = LENGTH(sep);
-   if (ns <= 0 || nsep <= 0) return stri__vector_empty_strings(0);
+   if (ns <= 0) return stri__vector_empty_strings(0);
    
-   if (STRING_ELT(sep, 0) == NA_STRING)
+   if (STRING_ELT(collapse, 0) == NA_STRING)
       return stri__vector_NA_strings(1);
-      
-   if (nsep > 1) {
-      warning(MSG__COLLAPSE_EXPECTED1);
-      SEXP sep_old = sep;
-      PROTECT(sep = allocVector(STRSXP, 1));
-      SET_STRING_ELT(sep, 0, STRING_ELT(sep_old, 0));
-      UNPROTECT(1);
-   }
    
-   StriContainerUTF8* ssep = new StriContainerUTF8(sep, 1);
+   StriContainerUTF8* scollapse = new StriContainerUTF8(collapse, 1);
    
-   R_len_t ncharsep = ssep->get(0).length();
+   R_len_t ncharcollapse = scollapse->get(0).length();
    
    StriContainerUTF8* ss = new StriContainerUTF8(s, ns);
    
@@ -427,11 +404,11 @@ SEXP stri_flatten(SEXP s, SEXP sep)
    R_len_t nchar = 0;
    for (int i=0; i<ns; ++i) {
       if (ss->isNA(i)) {
-         delete ssep;
+         delete scollapse;
          delete ss;
          return stri__vector_NA_strings(1); // at least 1 NA => return NA
       }
-      nchar += ss->get(i).length() + ((i<ns-1)?ncharsep:0);
+      nchar += ss->get(i).length() + ((i<ns-1)?ncharcollapse:0);
    }
 
    
@@ -442,9 +419,9 @@ SEXP stri_flatten(SEXP s, SEXP sep)
       R_len_t ncur = ss->get(i).length();
       memcpy(buf+cur, ss->get(i).c_str(), ncur);
       cur += ncur;
-      if (i < ns-1 && ncharsep > 0) {
-         memcpy(buf+cur, ssep->get(0).c_str(), ncharsep);
-         cur += ncharsep;  
+      if (i < ns-1 && ncharcollapse > 0) {
+         memcpy(buf+cur, scollapse->get(0).c_str(), ncharcollapse);
+         cur += ncharcollapse;  
       }
    }
    
@@ -454,7 +431,7 @@ SEXP stri_flatten(SEXP s, SEXP sep)
    PROTECT(ret = allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nchar, CE_UTF8));
    delete buf;
-   delete ssep;
+   delete scollapse;
    delete ss;
    UNPROTECT(1);
    return ret;

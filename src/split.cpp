@@ -28,9 +28,9 @@
 
 SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
 {
-   s = STRING_ELT(stri_prepare_arg_string(s),0);
-   from = stri_prepare_arg_integer(from);
-   to = stri_prepare_arg_integer(to);
+   s = STRING_ELT(stri_prepare_arg_string(s, "str"),0);
+   from = stri_prepare_arg_integer(from, "from");
+   to = stri_prepare_arg_integer(to, "to");
    if(s == NA_STRING)
       return NA_STRING;
    int ns = LENGTH(s);
@@ -104,8 +104,8 @@ SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
  */
 SEXP stri_split_class(SEXP s, SEXP c)
 {
-   s = stri_prepare_arg_string(s);
-   c = stri_prepare_arg_string(c);
+   s = stri_prepare_arg_string(s, "str");
+   c = stri_prepare_arg_string(c, "class");
    
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
@@ -137,11 +137,11 @@ SEXP stri_split_class(SEXP s, SEXP c)
  */
 SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact)
 {
-   s = stri_prepare_arg_string(s);
-   split = stri_prepare_arg_string(split);
-   n = stri_prepare_arg_double(n);
-   omitempty = stri_prepare_arg_logical(omitempty);
-   exact = stri_prepare_arg_logical(exact);
+   s = stri_prepare_arg_string(s, "str");
+   split = stri_prepare_arg_string(split, "split");
+   n = stri_prepare_arg_double(n, "n");
+   omitempty = stri_prepare_arg_logical(omitempty, "omitempty"); // TODO: prepare...logical_1?
+   exact = stri_prepare_arg_logical(exact, "exact"); // TODO: logical_1?
    int a = LENGTH(s);
    int b = LENGTH(split);
    int c = LENGTH(n);

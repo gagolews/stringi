@@ -28,8 +28,8 @@
  */
 SEXP stri_detect_fixed(SEXP s, SEXP pattern)
 {
-   s = stri_prepare_arg_string(s);
-   pattern = stri_prepare_arg_string(pattern);
+   s = stri_prepare_arg_string(s, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
    int ns = LENGTH(s);
    int np = LENGTH(pattern);
    if (ns <= 0 || np <= 0) return allocVector(LGLSXP, 0);

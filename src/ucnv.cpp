@@ -61,12 +61,12 @@ UConverter* stri__ucnv_open(const char* enc)
  */
 SEXP stri_encode(SEXP s, SEXP from, SEXP to)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    if (ns <= 0) return s;
 
-   const char* selected_from = stri__prepare_arg_enc(from, true);
-   const char* selected_to   = stri__prepare_arg_enc(to, true);
+   const char* selected_from = stri__prepare_arg_enc(from, "from", true);
+   const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    UConverter* uconv_from = stri__ucnv_open(selected_from);
    UConverter* uconv_to = stri__ucnv_open(selected_to);
 
@@ -168,7 +168,7 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to)
  */
 SEXP stri_enc_Rmark(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    int ns = LENGTH(s);
    for (int i=0; i < ns; ++i) {
       cerr << "Element #" <<  i << ":";
@@ -204,7 +204,7 @@ SEXP stri_enc_Rmark(SEXP s)
 SEXP stri_enc_set(SEXP enc)
 {
    const char* selected_enc
-      = stri__prepare_arg_enc(enc, false); // here, the default encoding may not be requested
+      = stri__prepare_arg_enc(enc, "enc", false); // here, the default encoding may not be requested
       
    // this will generate an error if enc is not supported:
    UConverter* uconv = stri__ucnv_open(selected_enc); 
@@ -300,7 +300,7 @@ SEXP stri_enc_list()
  */
 SEXP stri_enc_isascii(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    
    SEXP e, curs;
@@ -341,7 +341,7 @@ SEXP stri_enc_isascii(SEXP s)
  */
 SEXP stri_enc_isutf8(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    UChar32 c;
    R_len_t ncurs;
@@ -600,7 +600,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
  */
 SEXP stri_enc_info(SEXP enc)
 {
-   const char* selected_enc = stri__prepare_arg_enc(enc, true);
+   const char* selected_enc = stri__prepare_arg_enc(enc, "enc", true);
    UConverter* uconv = stri__ucnv_open(selected_enc); 
    UErrorCode err;
 

@@ -30,8 +30,8 @@
  */
 SEXP stri_locate_all_regex(SEXP s, SEXP p)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   p = stri_prepare_arg_string(p); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   p = stri_prepare_arg_string(p, "pattern"); // prepare string argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(true, 2, ns, np);
@@ -115,8 +115,8 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
  */
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
 {
-   str     = stri_prepare_arg_string(str);
-   pattern = stri_prepare_arg_string(pattern);
+   str     = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    // this will work for nmax == 0:
 

@@ -32,9 +32,9 @@
  */
 SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
 {
-   s = stri_prepare_arg_string(s);
-   p = stri_prepare_arg_string(p);
-   r = stri_prepare_arg_string(r);
+   s = stri_prepare_arg_string(s, "str");
+   p = stri_prepare_arg_string(p, "pattern");
+   r = stri_prepare_arg_string(r, "replacement");
    R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(s), LENGTH(p), LENGTH(r));
    // this will work for nmax == 0:
    

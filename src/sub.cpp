@@ -30,9 +30,9 @@
 
 SEXP stri_sub(SEXP s, SEXP from, SEXP to)
 {
-   s = stri_prepare_arg_string(s);
-   from = stri_prepare_arg_integer(from);
-   to = stri_prepare_arg_integer(to);
+   s = stri_prepare_arg_string(s, "str");
+   from = stri_prepare_arg_integer(from, "from");
+   to = stri_prepare_arg_integer(to, "to");
    int ns = LENGTH(s);
    int nfrom = LENGTH(from);
    int nto = LENGTH(to);
@@ -114,10 +114,10 @@ SEXP stri_sub(SEXP s, SEXP from, SEXP to)
 
 SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value)
 {
-   s = stri_prepare_arg_string(s);
-   from = stri_prepare_arg_integer(from);
-   to = stri_prepare_arg_integer(to);
-   value = stri_prepare_arg_string(value);
+   s = stri_prepare_arg_string(s, "str");
+   from = stri_prepare_arg_integer(from, "from");
+   to = stri_prepare_arg_integer(to, "to");
+   value = stri_prepare_arg_string(value, "value");
    R_len_t ns = LENGTH(s);
    R_len_t nfrom = LENGTH(from);
    R_len_t nto = LENGTH(to);

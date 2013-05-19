@@ -60,7 +60,7 @@ R_len_t stri__numbytes_max(SEXP s)
  */
 SEXP stri_numbytes(SEXP s)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    R_len_t n = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, n));
@@ -90,7 +90,7 @@ SEXP stri_numbytes(SEXP s)
  */
 SEXP stri_length(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    SEXP ret;
    
@@ -200,7 +200,7 @@ SEXP stri_length(SEXP s)
  */
 SEXP stri_isempty(SEXP s)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    R_len_t n = LENGTH(s);
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, n));
@@ -230,7 +230,7 @@ SEXP stri_isempty(SEXP s)
  */
 SEXP stri_width(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    //UChar32 c;
    SEXP ret;

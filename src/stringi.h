@@ -50,7 +50,8 @@ struct R_len_t_x2 {
 
 
 // casefold.cpp:
-SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);
+SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);               // DONE
+
 
 // common.cpp
 void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
@@ -64,24 +65,20 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 
 
 // compare.cpp:
-SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale);
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale);
-
-
-
-// dup.cpp:
-SEXP stri_dup(SEXP str, SEXP c);
+SEXP stri_compare(SEXP e1, SEXP e2, SEXP strength, SEXP locale);         // DONE
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP strength, SEXP locale);  // DONE
 
 
 // ICU_settings.cpp:
-SEXP stri_info();                        // DONE
+SEXP stri_info();                                      // DONE
 
 
 // join.cpp:
-SEXP stri_flatten(SEXP str, SEXP sep);
-SEXP stri_flatten_nosep(SEXP str);
-SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);
-SEXP stri_join2(SEXP s1, SEXP s2);
+SEXP stri_dup(SEXP str, SEXP c);                       // DONE
+SEXP stri_flatten(SEXP str, SEXP collapse);            // DONE
+SEXP stri_flatten_nosep(SEXP str);                     // DONE
+SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);     // DONE
+SEXP stri_join2(SEXP e1, SEXP e2);                     // DONE
 
 
 // justify.cpp
@@ -100,17 +97,21 @@ SEXP stri_width(SEXP str);            // ...TODO...
    
    
 // prepare_arg.cpp:
-SEXP        stri_prepare_arg_string(SEXP x);                            // DONE
-SEXP        stri_prepare_arg_double(SEXP x);                            // DONE
-SEXP        stri_prepare_arg_integer(SEXP x);                           // DONE
-SEXP        stri_prepare_arg_logical(SEXP x);                           // DONE
-const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault=true); // DONE
-const char* stri__prepare_arg_enc(SEXP loc, bool allowdefault=true);    // DONE
+SEXP        stri_prepare_arg_string(SEXP x, const char* argname);          // DONE
+SEXP        stri_prepare_arg_double(SEXP x, const char* argname);          // DONE
+SEXP        stri_prepare_arg_integer(SEXP x, const char* argname);         // DONE
+SEXP        stri_prepare_arg_logical(SEXP x, const char* argname);         // DONE
+SEXP        stri_prepare_arg_string_1(SEXP x, const char* argname);        // DONE
+SEXP        stri_prepare_arg_double_1(SEXP x, const char* argname);        // DONE
+SEXP        stri_prepare_arg_integer_1(SEXP x, const char* argname);       // DONE
+SEXP        stri_prepare_arg_logical_1(SEXP x, const char* argname);       // DONE
+const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault); // DONE
+const char* stri__prepare_arg_enc(SEXP loc, const char* argname, bool allowdefault);    // DONE
 
 
 
 // reverse.cpp
-SEXP stri_reverse(SEXP s);
+SEXP stri_reverse(SEXP s);                                              // DONE
 
 
 // split.cpp

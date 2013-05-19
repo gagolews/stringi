@@ -28,9 +28,9 @@
  */
 SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
 {
-   s   = stri_prepare_arg_string(s);
-   pat = stri_prepare_arg_string(pat);
-   rep = stri_prepare_arg_string(rep);
+   s   = stri_prepare_arg_string(s, "str");
+   pat = stri_prepare_arg_string(pat, "pattern");
+   rep = stri_prepare_arg_string(rep, "replacement");
    R_len_t ns   = LENGTH(s);
    R_len_t npat = LENGTH(pat);
    R_len_t nrep = LENGTH(rep);
@@ -69,9 +69,9 @@ SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
  */
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
 {
-   s   = stri_prepare_arg_string(s);
-   pat = stri_prepare_arg_string(pat);
-   rep = stri_prepare_arg_string(rep);
+   s   = stri_prepare_arg_string(s, "str");
+   pat = stri_prepare_arg_string(pat, "pattern");
+   rep = stri_prepare_arg_string(rep, "replacement");
    int ns   = LENGTH(s);
    int npat = LENGTH(pat);
    int nrep = LENGTH(rep);

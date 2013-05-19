@@ -81,8 +81,8 @@ bool stri__detect_class1(const char* s, int n, int32_t* cls)
  */
 SEXP stri_detect_class(SEXP s, SEXP c)
 {
-   s = stri_prepare_arg_string(s); // prepare string argument
-   c = stri_prepare_arg_integer(c); // prepare integer argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   c = stri_prepare_arg_integer(c, "class"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t nc = LENGTH(c);
    if (ns <= 0 || nc <= 0) return allocVector(INTSXP, 0);

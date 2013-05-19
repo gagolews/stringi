@@ -26,11 +26,13 @@
  * If the object cannot be coerced, then an error will be generated
  * 
  * @param x a character vector or an object that can be coerced to a character vector
+ * @param argname argument name (message formatting)
  * @return character vector
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - argname added
  */
-SEXP stri_prepare_arg_string(SEXP x)
+SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
    if (isString(x))
       return x; // return as-is
@@ -47,7 +49,7 @@ SEXP stri_prepare_arg_string(SEXP x)
    else if (isSymbol(x))
       return ScalarString(PRINTNAME(x));
       
-   error(MSG__EXPECTED_CHARACTER);
+   error(MSG__ARG_EXPECTED_STRING, argname);
    return x; // avoid compiler warning
 }
 
@@ -59,11 +61,13 @@ SEXP stri_prepare_arg_string(SEXP x)
  * If the object cannot be coerced, then an error will be generated
  * 
  * @param x a numeric vector or an object that can be coerced to a numeric vector
+ * @param argname argument name (message formatting)
  * @return numeric vector
  * 
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - argname added
  */
-SEXP stri_prepare_arg_double(SEXP x)
+SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
    if (isFactor(x)) 
    {
@@ -78,7 +82,7 @@ SEXP stri_prepare_arg_double(SEXP x)
    else if (isVectorAtomic(x))
       return coerceVector(x, REALSXP);
       
-   error(MSG__EXPECTED_DOUBLE);
+   error(MSG__ARG_EXPECTED_NUMERIC, argname);
    return x; // avoid compiler warning
 }
 
@@ -89,11 +93,13 @@ SEXP stri_prepare_arg_double(SEXP x)
  * If the object cannot be coerced, then an error will be generated
  * 
  * @param x an integer vector or an object that can be coerced to an integer vector
+ * @param argname argument name (message formatting)
  * @return integer vector
  * 
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - argname added
  */
-SEXP stri_prepare_arg_integer(SEXP x)
+SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
    if (isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
    {
@@ -108,7 +114,7 @@ SEXP stri_prepare_arg_integer(SEXP x)
    else if (isVectorAtomic(x))
       return coerceVector(x, INTSXP);
       
-   error(MSG__EXPECTED_INTEGER);
+   error(MSG__ARG_EXPECTED_INTEGER, argname);
    return x; // avoid compiler warning
 }
 
@@ -119,11 +125,13 @@ SEXP stri_prepare_arg_integer(SEXP x)
  * If the object cannot be coerced, then an error will be generated
  * 
  * @param x a logical vector or an object that can be coerced to a logical vector
+ * @param argname argument name (message formatting)
  * @return logical vector
  * 
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - argname added
  */
-SEXP stri_prepare_arg_logical(SEXP x)
+SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
    if (isFactor(x))
    {
@@ -138,9 +146,138 @@ SEXP stri_prepare_arg_logical(SEXP x)
    else if (isVectorAtomic(x))
       return coerceVector(x, LGLSXP);
       
-   error(MSG__EXPECTED_LOGICAL);
+   error(MSG__ARG_EXPECTED_LOGICAL, argname);
    return x; // avoid compiler warning
 }
+
+
+
+
+
+/** Prepare string argument - one string
+ * 
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ * 
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return always an R character vector with 1 element
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_string(x, argname);
+   R_len_t nx = LENGTH(x);
+   
+   if (nx <= 0)
+      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+   
+   if (nx > 1) {
+      warning(MSG__ARG_EXPECTED_1_STRING, argname);
+      SEXP xold = x;
+      PROTECT(x = allocVector(STRSXP, 1));
+      SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
+      UNPROTECT(1);      
+   }
+   
+   return x;
+}
+
+
+/** Prepare double argument - one value
+ * 
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ * 
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return always an R double vector with 1 element
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_double(x, argname);
+   R_len_t nx = LENGTH(x);
+   
+   if (nx <= 0)
+      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+   
+   if (nx > 1) {
+      warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
+      double x0 = REAL(x)[0];
+      PROTECT(x = allocVector(REALSXP, 1));
+      REAL(x)[0] = x0;
+      UNPROTECT(1);      
+   }
+   
+   return x;
+}
+
+
+/** Prepare integer argument - one value
+ * 
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ * 
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return always an R integer vector with 1 element
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_integer(x, argname);
+   R_len_t nx = LENGTH(x);
+   
+   if (nx <= 0)
+      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+   
+   if (nx > 1) {
+      warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
+      int x0 = INTEGER(x)[0];
+      PROTECT(x = allocVector(INTSXP, 1));
+      INTEGER(x)[0] = x0;
+      UNPROTECT(1);      
+   }
+   
+   return x;   
+}
+
+
+/** Prepare logical argument - one value
+ * 
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ * 
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return always an R logical vector with 1 element
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_logical(x, argname);
+   R_len_t nx = LENGTH(x);
+   
+   if (nx <= 0)
+      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+   
+   if (nx > 1) {
+      warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
+      int x0 = LOGICAL(x)[0];
+      PROTECT(x = allocVector(LGLSXP, 1));
+      LOGICAL(x)[0] = x0;
+      UNPROTECT(1);      
+   }
+   
+   return x;      
+}
+
+
 
 
 
@@ -153,32 +290,31 @@ SEXP stri_prepare_arg_logical(SEXP x)
  * @param loc generally, a single character string
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
  *    to work as a default locale selector? (defaults \code{true})
+ * @param argname argument name (message formatting)
  * @return string a \code{C} string with extracted locale name
  * 
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - argname added
  */
-const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault)
+const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault)
 {
    if (allowdefault && isNull(loc))
       return uloc_getDefault();
    else {
-      loc = stri_prepare_arg_string(loc);
-      if (LENGTH(loc) >= 1 && STRING_ELT(loc, 0) != NA_STRING) {
-         if (LENGTH(loc) > 1) // only one string is expected
-            warning(MSG__LOCALE_ATTEMPT_SET_GE1);
-   
-         if (LENGTH(STRING_ELT(loc, 0)) == 0) {
-            if (allowdefault)
-               return uloc_getDefault();
-            else
-               error(MSG__LOCALE_INCORRECT_ID);
-         }
+      loc = stri_prepare_arg_string_1(loc, argname);
+      if (STRING_ELT(loc, 0) == NA_STRING) {
+         error(MSG__ARG_EXPECTED_NOT_NA, argname);
+      }
+      
+      if (LENGTH(STRING_ELT(loc, 0)) == 0) {
+         if (allowdefault)
+            return uloc_getDefault();
          else
-            return (const char*)CHAR(STRING_ELT(loc, 0));
+            error(MSG__LOCALE_INCORRECT_ID);
       }
       else
-         error(MSG__LOCALE_INCORRECT_ID);
+         return (const char*)CHAR(STRING_ELT(loc, 0));
    }
    
    // won't come here anyway
@@ -195,32 +331,32 @@ const char* stri__prepare_arg_locale(SEXP loc, bool allowdefault)
  * @param enc generally, a single character string
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
  *    to work as a default charset selector? (defaults \code{true})
+ * @param argname argument name (message formatting)
  * @return string a \code{C} string with extracted locale name
  * (NULL for default charset so that it can be passed to ICU's \code{ucnv_open()}
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) - argname added
+ * 
  */
-const char* stri__prepare_arg_enc(SEXP enc, bool allowdefault)
+const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefault)
 {
    if (allowdefault && isNull(enc))
       return (const char*)NULL;
    else {
-      enc = stri_prepare_arg_string(enc);
-      if (LENGTH(enc) >= 1 && STRING_ELT(enc, 0) != NA_STRING) {
-         if (LENGTH(enc) > 1) // only one string is expected
-            warning(MSG__ENC_ATTEMPT_SET_GE1);
-   
-         if (LENGTH(STRING_ELT(enc, 0)) == 0) {
-            if (allowdefault)
-               return (const char*)NULL;
-            else
-               error(MSG__ENC_INCORRECT_ID);
-         }
+      enc = stri_prepare_arg_string_1(enc, argname);
+      if (STRING_ELT(enc, 0) == NA_STRING) {
+         error(MSG__ARG_EXPECTED_NOT_NA, argname);
+      }
+
+      if (LENGTH(STRING_ELT(enc, 0)) == 0) {
+         if (allowdefault)
+            return (const char*)NULL;
          else
-            return (const char*)CHAR(STRING_ELT(enc, 0));
+            error(MSG__ENC_INCORRECT_ID);
       }
       else
-         error(MSG__ENC_INCORRECT_ID);
+         return (const char*)CHAR(STRING_ELT(enc, 0));
    }
    
    // won't come here anyway

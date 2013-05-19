@@ -30,8 +30,8 @@
  */
 SEXP stri_count_regex(SEXP str, SEXP pattern)
 {
-   str = stri_prepare_arg_string(str);
-   pattern = stri_prepare_arg_string(pattern);
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    // this will work for nmax == 0:
    

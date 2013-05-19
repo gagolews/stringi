@@ -134,7 +134,7 @@ void stri__uchar_charType(const char* s, int n, int* codes, int& ncodes)
  */
 SEXP stri_chartype(SEXP s)
 {
-   s = stri_prepare_arg_string(s);
+   s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    if (ns <= 0) return R_NilValue;
    
@@ -239,7 +239,8 @@ STRI_CHARCATEGORIES_CREATE( U_FINAL_PUNCTUATION,      "FINAL_PUNCTUATION",      
  */
 SEXP stri_char_getcategoryid(SEXP x)
 {
-   x = stri_prepare_arg_string(x);
+   x = stri_prepare_arg_string(x, "str");
+   // TODO: stri_prepare_arg_string_1................................
    if (LENGTH(x) == 0) error("please provide category name");
    else if (LENGTH(x) > 1) warning("only one name supported. taking first");
    SEXP xf = STRING_ELT(x, 0);
@@ -364,7 +365,9 @@ SEXP stri_char_getcategoryid(SEXP x)
  */
 SEXP stri_char_getpropertyid(SEXP x)
 {
-   x = stri_prepare_arg_string(x);
+   x = stri_prepare_arg_string(x, "str");
+   
+   // TODO: stri_prepare_arg_string_1................................
    if (LENGTH(x) == 0) error("please provide property name");
    else if (LENGTH(x) > 1) warning("only one property supported. taking first");
    SEXP xf = STRING_ELT(x, 0);

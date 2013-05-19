@@ -28,7 +28,7 @@
  */
 SEXP stri_stats_general(SEXP str)
 {
-   str = stri_prepare_arg_string(str);
+   str = stri_prepare_arg_string(str, "str");
    
    enum {
       gsNumLines = 0,
@@ -91,7 +91,7 @@ SEXP stri_stats_general(SEXP str)
  */
 SEXP stri_stats_latex(SEXP str)
 {
-   str = stri_prepare_arg_string(str);
+   str = stri_prepare_arg_string(str, "str");
    
    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;
    // see http://kile.sourceforge.net/team.php
