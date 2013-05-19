@@ -20,13 +20,99 @@
 
 
 /** 
- * Detect if a pattern occurs in a string
- * @param s ...
- * @param pattern ...
- * @return ...
+ * Detect if a pattern occurs in a string [string search with collation]
+ * @param str character vector
+ * @param pattern character vector
+ * @return logical vector
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16 & ICU Collation
  */
-SEXP stri_detect_fixed(SEXP s, SEXP pattern)
+//SEXP stri_detect_fixed(SEXP str, SEXP pattern) // v0.2 - ongoing.....
+//{
+//   //   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+//   Locale loc = Locale::createFromName("pl_PL"/*qloc*/);
+//   
+//   str = stri_prepare_arg_string(str, "str");
+//   pattern = stri_prepare_arg_string(pattern, "pattern");
+//   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+//   
+//   SEXP ret;
+//   PROTECT(ret = allocVector(LGLSXP, nmax));
+// 
+//   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+//   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
+//   UErrorCode err = U_ZERO_ERROR;
+//   
+////   const UnicodeString* last_str = NULL;
+////   const UnicodeString* last_pat = NULL;
+////   err = U_ZERO_ERROR;
+////   StringSearch *matcher = NULL;
+////   
+////   if (!U_SUCCESS(err))
+////      error(MSG__STRSEARCH_FAILED);
+////   
+////   for (R_len_t i = pp->vectorize_init();
+////         i != pp->vectorize_end();
+////         i = pp->vectorize_next(i))
+////   {
+////      if (pp->isNA(i) || ss->isNA(i)) {
+////         LOGICAL(ret)[i] = NA_LOGICAL;
+////      }
+////      else {
+////         const UnicodeString* cur_str = &(ss->get(i));
+////         const UnicodeString* cur_pat = &(pp->get(i));
+////         
+//////         if (!matcher) {
+//////            err = U_ZERO_ERROR;
+//////            last_pat = cur_pat;
+//////            last_str = cur_str;
+//////            matcher = new StringSearch(*last_pat, *last_str, loc, NULL, err);
+//////            if (!U_SUCCESS(err))
+//////               error(MSG__STRSEARCH_FAILED);
+//////            matcher->getCollator()->setAttribute(UCOL_STRENGTH, UCOL_IDENTICAL, err);
+//////            if (!U_SUCCESS(err))
+//////               error(MSG__STRSEARCH_FAILED);
+//////         }
+//////   
+//////         if (cur_pat != last_pat) {
+//////            last_pat = cur_pat;
+//////            err = U_ZERO_ERROR;
+//////            matcher->setPattern(*last_pat, err);
+//////            if (!U_SUCCESS(err))
+//////               error(MSG__STRSEARCH_FAILED);
+//////         }
+//////   
+//////         if (cur_str != last_str) {
+//////            last_str = cur_str;
+//////            err = U_ZERO_ERROR;
+//////            matcher->setText(*last_str, err);
+//////            if (!U_SUCCESS(err))
+//////               error(MSG__STRSEARCH_FAILED);
+//////         }
+//////         
+//////         matcher->reset();
+//////         err = U_ZERO_ERROR;
+//////         int found = ((int)matcher->first(err) != USEARCH_DONE);
+////         
+////         if (!U_SUCCESS(err))
+////            error(MSG__STRSEARCH_FAILED);
+////            
+////         LOGICAL(ret)[i] = 0;
+////         
+////      }
+////   }
+//   
+//   delete ss;
+//   delete pp;
+////   if (matcher) delete matcher;
+//   UNPROTECT(1);
+//   return ret;
+//}
+
+
+
+
+SEXP stri_detect_fixed(SEXP s, SEXP pattern) // Old version (0.1)
 {
    s = stri_prepare_arg_string(s, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -55,7 +141,7 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
       const char* spat = CHAR(curpat);
       
       LOGICAL(e)[i] = false;
-   	for(int j=0; j<curslen; ++j){
+      for(int j=0; j<curslen; ++j){
          k=0;
          while(string[j+k]==spat[k] && k<curpatlen)
             k++;
@@ -69,6 +155,4 @@ SEXP stri_detect_fixed(SEXP s, SEXP pattern)
    UNPROTECT(1);
    return e;
 }
-
-
 

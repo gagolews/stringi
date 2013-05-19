@@ -47,6 +47,7 @@
 #include <unicode/brkiter.h>
 #include <unicode/coll.h>
 #include <unicode/ucol.h>
+#include <unicode/stsearch.h>
 using namespace std;
 using namespace icu;
 

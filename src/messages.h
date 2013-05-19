@@ -79,6 +79,9 @@
 #define MSG__REGEXP_FAILED \
    "regexp search failed"
    
+#define MSG__STRSEARCH_FAILED \
+   "string search failed"
+   
 #define MSG__RESOURCE_ERROR_GET \
    "required resource unavailable"
    
