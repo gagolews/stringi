@@ -69,7 +69,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
 //      UConverter* ucnvUTF8 = NULL;
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
-      
+
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -77,18 +77,25 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
             this->str[i] = NULL;
          }
          else {
-            if (IS_ASCII(curs)) {
+            if (IS_ASCII(curs)) {         
                if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");      
                UErrorCode status = U_ZERO_ERROR;
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
                   ucnvASCII, status);
                if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT);  
-//               this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs))); // slower than the above
+                  
+               // Performance improvement attempt #1:
+               // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs))); // slower than the above
+               
+               // Performance improvement attempt #2:
+               // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
+               // This wasn't faster tham the ucnvASCII approach.
+
                this->enc[i] = STRI_ENC_ASCII; 
             }
             else if (IS_UTF8(curs)) {
-               // the above ASCII-approach is slower for UTF-8
+               // the above ASCII-approach (but with ucnvUTF8) is slower for UTF-8
                this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
                this->enc[i] = STRI_ENC_UTF8; 
             }

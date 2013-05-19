@@ -30,30 +30,12 @@ local({
 #    stringi:::stri_test_UnicodeContainer8(s) 10003 10997.0 11367.5 12459.5 25446   100
 #    stringi:::stri_test_UnicodeContainer16(s) 10504 11128.5 11785.0 12573.5 25176   100
 
-local({
-   
-   s <- LETTERS
-   stringi:::stri_test_Rmark(s)
-   print(microbenchmark(
-      stringi:::stri_prepare_arg_string(s), 
-      stringi:::stri_test_UnicodeContainer8(s),
-      stringi:::stri_test_UnicodeContainer16(s)
-   ))
-   
-# Measurement #1 (2013-05-19, MG)
-#    Unit: microseconds
-#    expr    min      lq  median      uq    max neval
-#    stringi:::stri_prepare_arg_string(s)  9.872 10.7135 11.2230 11.8865 25.889   100
-#    stringi:::stri_test_UnicodeContainer8(s) 11.820 12.8505 13.4395 14.1160 29.648   100
-#    stringi:::stri_test_UnicodeContainer16(s) 14.034 14.7510 15.3555 16.1440 90.433   100
-})
-
 
 
 
 local({
    
-   s <- stri_dup(stri_flatten(stri_dup(c("aa", "bb"), 100), " "), 1:10)
+   s <- stri_dup(stri_flatten(stri_dup(c("aa", "bb"), 1000), " "), 1:10)
    stringi:::stri_test_Rmark(s)
    print(microbenchmark(
       stringi:::stri_prepare_arg_string(s), 
@@ -65,23 +47,16 @@ local({
 
 
 # Measurement #1 (2013-05-19, MG)
-#    Unit: microseconds
-#    expr    min      lq  median      uq     max neval
-#    stringi:::stri_prepare_arg_string(s)  9.672 11.0385 11.7550 13.7835  38.844   100
-#    stringi:::stri_test_UnicodeContainer8(s) 10.905 12.1820 13.1995 15.2210  57.305   100
-#    stringi:::stri_test_UnicodeContainer16(s) 44.819 45.9320 46.6670 48.0230 360.264   100
-
-# Improved ASCII performance for UTF16
-#    Unit: microseconds
-#    expr    min      lq  median      uq     max neval
-#    stringi:::stri_prepare_arg_string(s)  9.561 10.9010 11.3885 13.9725  43.902   100
-#    stringi:::stri_test_UnicodeContainer8(s) 10.958 11.8655 12.9865 15.4225 108.738   100
-#    stringi:::stri_test_UnicodeContainer16(s) 31.290 32.1465 32.8440 34.6435  99.538   100
+# Unit: microseconds
+# expr     min       lq   median       uq     max neval
+# stringi:::stri_prepare_arg_string(s)   9.974  11.9055  13.1745  19.1200  28.835   100
+# stringi:::stri_test_UnicodeContainer8(s)  11.371  12.8830  14.0140  21.1885  86.676   100
+# stringi:::stri_test_UnicodeContainer16(s) 164.490 166.0250 167.8360 173.9060 306.561   100
 
 
 local({
    
-   s <- stri_dup(stri_flatten(stri_dup(c("\u0105", "\u0104"), 100), " "), 1:10)
+   s <- stri_dup(stri_flatten(stri_dup(c("\u0105", "\u0104"), 1000), " "), 1:10)
    stringi:::stri_test_Rmark(s)
    print(microbenchmark(
       stringi:::stri_prepare_arg_string(s), 
@@ -92,11 +67,11 @@ local({
 })
 
 # Measurement #1 (2013-05-19, MG)
-#    Unit: microseconds
-#    expr    min      lq  median      uq      max neval
-#    stringi:::stri_prepare_arg_string(s)  9.664 10.7785 11.5585 12.6710   76.666   100
-#    stringi:::stri_test_UnicodeContainer8(s) 10.899 12.2120 12.8875 14.7425 1549.652   100
-#    stringi:::stri_test_UnicodeContainer16(s) 52.557 53.9540 54.6785 55.6770   87.539   100
+# Unit: microseconds
+# expr     min       lq   median       uq      max neval
+# stringi:::stri_prepare_arg_string(s)  10.067  11.0425  11.8515  18.7260   51.464   100
+# stringi:::stri_test_UnicodeContainer8(s)  11.115  12.4325  13.5465  21.0015   37.968   100
+# stringi:::stri_test_UnicodeContainer16(s) 386.544 389.9070 395.3860 401.0670 2105.723   100
 
 
 

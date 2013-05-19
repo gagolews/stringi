@@ -65,6 +65,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
          
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
+      int bufsize = -1;
+      char* buf = NULL;
+         
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -80,63 +83,68 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                this->str[i] = new String8(CHAR(curs), LENGTH(curs), !this->isShallow);
                this->enc[i] = STRI_ENC_UTF8; 
             }
-            else if (IS_LATIN1(curs)) {
-               if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
-               UErrorCode status = U_ZERO_ERROR;
-               // @TODO: may be slower
-               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvLatin1, status);
-               std::string tmp2;
-               tmp.toUTF8String(tmp2);
-               if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT); 
-               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
-               this->enc[i] = STRI_ENC_LATIN1; 
-            }
             else if (IS_BYTES(curs)) 
                error(MSG__BYTESENC);
             else {
-//             Any encoding - detection needed
+//             LATIN1 ------- OR ------ Any encoding - detection needed  
 //             Assume it's Native; this assumes the user working in an 8-bit environment
 //             would convert strings to UTF-8 manually if needed - I think is's
 //             a more reasonable approach (Native --> input via keyboard)
 
 
-// version 0.1 - through UnicodeString
-               if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
-               UErrorCode status = U_ZERO_ERROR;
-//               // @TODO: may be slower
-               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvNative, status);
-               std::string tmp2;
-               tmp.toUTF8String(tmp2);
-               if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT); 
-               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
-               this->enc[i] = STRI_ENC_NATIVE; 
-
-// version 0.2
-//               if (!this->ucnvNative)
-//                  this->ucnvNative = stri__ucnv_open((char*)NULL);
+// version 0.1 - through UnicodeString & std::string
+//               if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
 //               UErrorCode status = U_ZERO_ERROR;
-//               
-//               
-//               UnicodeString tmp(CHAR(curs), LENGTH(curs), this->ucnvNative, status);
-//               
-//               int bufsize = tmp.length()*4;
-//               char* buf = new char[bufsize];
-//               int realsize = 0;
-//               
-//               u_strToUTF8(buf, bufsize, &realsize,
-//               		tmp.getBuffer(), tmp.length(), &status);
-//                     
-//               this->str[i] = new String8(buf, realsize, true);
-//               delete[]buf;
+//               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvNative, status);
+//               if (U_FAILURE(status))
+//                  error(MSG__ENC_ERROR_CONVERT); 
+//               std::string tmp2;
+//               tmp.toUTF8String(tmp2);
+//               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
 //               this->enc[i] = STRI_ENC_NATIVE; 
+
+// version 0.2 - faster - through UnicodeString & u_strToUTF8
+               UConverter* ucnvCurrent;
+               if (IS_LATIN1(curs)) {
+                  if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
+                  ucnvCurrent = ucnvLatin1;
+               }
+               else {
+                  if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
+                  ucnvCurrent = ucnvNative;
+               }
+               UErrorCode status = U_ZERO_ERROR;
+               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvCurrent, status);
+               if (!U_SUCCESS(status))
+                  error(MSG__ENC_ERROR_CONVERT);
+               
+               if (!buf) {
+                  // calculate max string length
+                  R_len_t maxlen = 0;
+                  for (R_len_t z=i; z<this->n; ++z) { // start from current string (this wasn't needed before)
+                     SEXP tmps = STRING_ELT(rstr, z);
+                     if ((tmps != NA_STRING) && (maxlen < LENGTH(tmps))) 
+                        maxlen = LENGTH(tmps);
+                  }
+                  bufsize = maxlen*3+1; // 1 UChar -> max 3 UTF8 bytes
+                  buf = new char[bufsize];
+               }
+               int realsize = 0;
+               
+               u_strToUTF8(buf, bufsize, &realsize,
+               		tmp.getBuffer(), tmp.length(), &status);
+               if (!U_SUCCESS(status))
+                  error(MSG__ENC_ERROR_CONVERT);
+                  
+               this->str[i] = new String8(buf, realsize, true);
+               this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
       }
       
       if (ucnvLatin1) ucnv_close(ucnvLatin1);
       if (ucnvNative) ucnv_close(ucnvNative);
+      if (buf) delete [] buf;
 
 
       if (!this->isShallow) {

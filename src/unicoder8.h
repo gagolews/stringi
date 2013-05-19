@@ -26,6 +26,7 @@
 /**
  * A class to handle conversion between R character vectors and UTF-8 string vectors
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski) Improved performance for Native enc->UTF-8 (through u_strToUTF8)
  */
 class StriContainerUTF8 : public StriContainerUTF_Base {
 
