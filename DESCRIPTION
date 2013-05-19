@@ -51,3 +51,4 @@ Collate:
     'search_replace.R'
     'search_split.R'
     'test.R'
+    'collator.R'

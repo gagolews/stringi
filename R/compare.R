@@ -20,22 +20,15 @@
 
 #' Compare Strings, with Collation
 #' 
-#' Performs a locale-aware, natural-language alike string comparison.
-#' This is a more intelligent form than that provided by R.
-#' 
 #' Vectorized over \code{e1} and \code{e2}.
-#' 
-#' \code{strength} set to 3 is the least permissive (the default).
-#' Set to 2 to ignore case differences.
-#' Set to 1 to also ignore diacritical differences.
-#' 
-#' The strings are Unicode-normalized before the comparison.
+#'
+#' For more information on ICU's Collator and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
 #' 
 #' @param e1 character vector
 #' @param e2 character vector
-#' @param strength collation strength, defaults to 3
-#' @param locale \code{NULL} or \code{""} for casefolding following
-#' the conventions of the default locale, or a single string with locale identifier
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return integer vector, elements are comparison results of corresponding
 #' pairs;
@@ -46,20 +39,16 @@
 #' @export
 #' @rdname stri_compare
 #' 
-#' @references
-#' Collation - ICU User Guide - http://userguide.icu-project.org/collation
-#' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture
-#' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
 #' 
 #' @examples
-#' stri_cmp("hladny", "chladny", locale="pl_PL") # in Polish ch < h
-#' stri_cmp("hladny", "chladny", locale="sk_SK") # in Slovak ch > h
-#' stri_cmp("hladny", "HLADNY") # <
-#' stri_cmp("hladny", "HLADNY", strength=2) # ==
-#' stri_cmp("hladný", "hladny", strength=1, locale="sk_SK") # ==
+#' stri_cmp("hladny", "chladny", stri_collator_genopts(locale="pl_PL")) # in Polish ch < h
+#' stri_cmp("hladny", "chladny", stri_collator_genopts(locale="sk_SK")) # in Slovak ch > h
+#' stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
+#' stri_cmp("hladny", "HLADNY", stri_collator_genopts(strength=2)) # ==
+#' stri_cmp("hladný", "hladny", stri_collator_genopts(strength=1, locale="sk_SK")) # ==
 #' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
-stri_compare <- function(e1, e2, strength=3L, locale=NULL) {
-   .Call("stri_compare", e1, e2, strength, locale, PACKAGE="stringi")
+stri_compare <- function(e1, e2, collator_opts=list()) {
+   .Call("stri_compare", e1, e2, collator_opts, PACKAGE="stringi")
 }
 
 
@@ -71,8 +60,8 @@ stri_cmp <- stri_compare
 
 #' Ordering Permutation and Sorting, String Comparisons with Collation
 #' 
-#' See \code{\link{stri_compare}} for more details on the
-#' locale-aware string comparison used in \pkg{stringi}
+#' For more information on ICU's Collator and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
 #' 
 #' Uses a stable sort algorithm (STL's stable_sort);
 #' performs up to \eqn{N*log^2(N)} element comparisons,
@@ -86,9 +75,8 @@ stri_cmp <- stri_compare
 #' 
 #' @param str character vector
 #' @param decreasing single logical value; should the sort order be increasing or decreasing?
-#' @param strength collation strength, defaults to 3
-#' @param locale \code{NULL} or \code{""} for casefolding following
-#' the conventions of the default locale, or a single string with locale identifier
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return for \code{stri_order} - an integer vector that gives the sort order;
 #' for \code{stri_order} - a sorted version of \code{str}
@@ -98,10 +86,10 @@ stri_cmp <- stri_compare
 #' @rdname stri_order
 #' 
 #' @examples
-#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
-#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
-stri_order <- function(str, decreasing=FALSE, strength=3L, locale=NULL) {
-   .Call("stri_order", str, decreasing, strength, locale, PACKAGE="stringi")
+#' stri_sort(c("hladny", "chladny"), stri_collator_genopts(locale="pl_PL"))
+#' stri_sort(c("hladny", "chladny"), stri_collator_genopts(locale="sk_SK"))
+stri_order <- function(str, decreasing=FALSE, collator_opts=list()) {
+   .Call("stri_order", str, decreasing, collator_opts, PACKAGE="stringi")
 }
 
 

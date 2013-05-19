@@ -80,31 +80,6 @@ local({
 # str_detect(sjoindup, fixed("Bam")) 23.444030 23.653496 23.769519 24.085639 30.742328   100
 
 
-# Unit: microseconds
-# expr     min       lq   median       uq      max neval
-# stri_detect_fixed(sjoin, "Nam")  63.698  66.3255  76.8865  78.3135 62602.59   100
-# str_detect(sjoin, fixed("Nam")) 150.437 157.4285 169.1935 174.0215   879.50   100
-# Unit: microseconds
-# expr     min       lq   median       uq     max neval
-# stri_detect_fixed(s, "Nam") 112.772 116.1455 125.6460 127.1235 473.120   100
-# str_detect(s, fixed("Nam")) 160.359 165.7470 178.0235 189.9835 315.213   100
-# Unit: microseconds
-# expr      min       lq   median       uq      max neval
-# stri_detect_fixed(sjoindup, "Nam") 8053.718 8242.477 8316.476 8468.270 9061.885   100
-# str_detect(sjoindup, fixed("Nam"))  798.203  873.433 1113.197 1153.259 1504.996   100
-# Unit: microseconds
-# expr     min       lq   median       uq     max neval
-# stri_detect_fixed(sjoin, "Bam")  73.088  75.4055  86.4750  88.3715 175.227   100
-# str_detect(sjoin, fixed("Bam")) 152.439 157.9810 169.1265 174.6260 355.271   100
-# Unit: microseconds
-# expr     min       lq   median       uq     max neval
-# stri_detect_fixed(s, "Bam") 110.338 113.8565 123.7295 127.0585 373.944   100
-# str_detect(s, fixed("Bam")) 159.836 165.6290 177.4035 182.3695 337.045   100
-# Unit: milliseconds
-# expr       min        lq    median        uq       max neval
-# stri_detect_fixed(sjoindup, "Bam") 176.45811 176.99133 177.35979 178.35916 183.77596   100
-# str_detect(sjoindup, fixed("Bam"))  23.42955  23.57937  23.66958  23.90059  24.47757   100
-
 local({
    s <- c("Lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipisicing", 
      "elit", "Proin", "nibh", "augue", "suscipit", "a", "scelerisque", 

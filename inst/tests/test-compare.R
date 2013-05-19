@@ -11,9 +11,12 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp(LETTERS, letters), rep(+1L, length(LETTERS)))
    expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a'), c(NA_integer_, 0L, 1L))
    
-   expect_equivalent(stri_cmp("hladny", "chladny", locale="pl_PL"),  1L)
-   expect_equivalent(stri_cmp("hladny", "chladny", locale="sk_SK"), -1L)
-   expect_equivalent(stri_cmp(letters, LETTERS, strength=2), rep(0L, length(LETTERS)))
+   expect_equivalent(stri_cmp("hladny", "chladny", stri_collator_genopts(locale="pl_PL")),  1L)
+   expect_equivalent(stri_cmp("hladny", "chladny", stri_collator_genopts(locale="sk_SK")), -1L)
+   expect_equivalent(stri_cmp(letters, LETTERS, stri_collator_genopts(strength=2)), rep(0L, length(LETTERS)))
+   
+   expect_equivalent(stri_cmp("dupa100", "dupa2"), -1)
+   expect_equivalent(stri_cmp("dupa100", "dupa2", stri_collator_genopts(numeric=TRUE)), 1)
    
    expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105'), 0L)
    

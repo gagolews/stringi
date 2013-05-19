@@ -24,6 +24,9 @@
 #define MSG__INCORRECT_UCHAR_CLASS_ID \
    "incorrect class identifier"
 
+#define MSG__INCORRECT_COLLATOR_OPTION \
+   "incorrect collator option: `%s`. ignoring"
+
 /// warning when applying recycling rule to not fully recycled args
 #define MSG__WARN_RECYCLING_RULE \
    "longer object length is not a multiple of shorter object length"
