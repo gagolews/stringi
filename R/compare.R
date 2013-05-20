@@ -95,6 +95,6 @@ stri_order <- function(str, decreasing=FALSE, collator_opts=list()) {
 
 #' @export
 #' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, strength=3L, locale=NULL) {
-   str[stri_order(str, decreasing, strength, locale)]
+stri_sort <-  function(str, decreasing=FALSE, collator_opts=list()) {
+   str[stri_order(str, decreasing, collator_opts)]
 }

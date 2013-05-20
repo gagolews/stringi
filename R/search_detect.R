@@ -21,6 +21,7 @@
 #' 
 #' Vectorized over \code{str} and \code{class}.
 #' 
+#' 
 #' @param str character vector
 #' @param class character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
@@ -41,24 +42,34 @@ stri_detect_class <- function(str, class) {
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' By default, a very fast bytewise (locale independent)
-#' search is performed, with time complexity of
+#' For more information on ICU's Collator & SearchEngine
+#' and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
+#' 
+#' If \code{collator_opts} is \code{NA}, then a very fast (for small p)
+#' bytewise (locale independent) search is performed, with time complexity of
 #' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
 #' For natural language, non-English text this is, however, not what
 #' you probably want.
 #' 
+#' Otherwise, ICU's implementation of Boyer Moore's search is used, 
+#' with time complexity of O(n+p), see \code{\link{stri_collator_genopts}}
+#' for more details.
+#' 
 #' @param str character vector
 #' @param pattern character vector
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return logical vector 
 #' @examples
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"),c('i','R','0'))
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"),'R')
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), collator_opts=NA)
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', collator_opts=NA)
 #' @export
 #' 
-#' @family detect, search
-stri_detect_fixed <- function(str, pattern) {
-   .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
+#' @family detect, search, locale_dependent
+stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
+   .Call("stri_detect_fixed", str, pattern, collator_opts, PACKAGE="stringi")
 }
 
 

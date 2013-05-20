@@ -189,7 +189,7 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 // wrap.cpp
 SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);
 SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);
-SEXP stri_wrap(SEXP wordslist,SEXP method,SEXP width,SEXP spacecost);
+SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);
 
 
 
@@ -201,7 +201,8 @@ void stri__locate_set_dimnames_matrix(SEXP matrix);                  // DONE
 
 
 SEXP stri_count_fixed(SEXP s, SEXP pattern);                          // ....
-SEXP stri_detect_fixed(SEXP str, SEXP pattern);                       // ....
+SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern);                  // DONE
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ....
 SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // .....
 SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);            // ....

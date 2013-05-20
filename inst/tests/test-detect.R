@@ -1,20 +1,33 @@
 require("testthat")
 
-test_that("stri_detect_fixed", {
-   expect_identical(stri_detect_fixed("a", NA), NA)
-   expect_identical(stri_detect_fixed(NA, "a"), NA)
-   expect_identical(stri_detect_fixed(NA, NA), NA)
-   expect_identical(stri_detect_fixed("kot lorem1", character(0)), logical(0))
-   expect_identical(stri_detect_fixed(character(0), "ipsum 1234"), logical(0))
-   expect_identical(stri_detect_fixed(character(0), character(0)), logical(0))
-   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"), c(T, T, T, T))
-   
-   s <- c("Lorem\n123", " ", "kota", "4\tą")
-   p <- c(" ", "\t\u0105")
-   expect_identical(stri_detect_fixed(s, p), c(F, F, F, T))
-   
-   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2)))
-   
+test_that("stri_detect_fixed [byte]", {
+   collator_opts <- NA
+   expect_identical(stri_detect_fixed("a", NA, collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed(NA, "a", collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed(NA, NA, collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed("kot lorem1", character(0), collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(character(0), "ipsum 1234", collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(character(0), character(0), collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab", collator_opts=collator_opts), c(T, T, T, T))
+   expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105"), collator_opts=collator_opts), c(F, F, F, T))
+   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), collator_opts=collator_opts))
+   expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105"), collator_opts=collator_opts), FALSE)
+})
+
+
+
+test_that("stri_detect_fixed [collator]", {
+   collator_opts <- list()
+   expect_identical(stri_detect_fixed("a", NA, collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed(NA, "a", collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed(NA, NA, collator_opts=collator_opts), NA)
+   expect_identical(stri_detect_fixed("kot lorem1", character(0), collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(character(0), "ipsum 1234", collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(character(0), character(0), collator_opts=collator_opts), logical(0))
+   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab", collator_opts=collator_opts), c(T, T, T, T))
+   expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105"), collator_opts=collator_opts), c(F, F, F, T))
+   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), collator_opts=collator_opts))
+   expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105"), collator_opts=collator_opts), TRUE)
 })
 
 

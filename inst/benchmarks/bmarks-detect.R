@@ -21,63 +21,67 @@ local({
    sjoindup <- stri_dup(sjoin, 1:100)
    
    print(microbenchmark(
-      stri_detect_fixed(sjoin, "Nam"),
+      stri_detect_fixed(sjoin, "Nam", collator_opts=NA),
+      stri_detect_fixed(sjoin, "Nam", collator_opts=list()),
       str_detect(sjoin, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(s, "Nam"),
+      stri_detect_fixed(s, "Nam", collator_opts=NA),
+      stri_detect_fixed(s, "Nam", collator_opts=list()),
       str_detect(s, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoindup, "Nam"),
+      stri_detect_fixed(sjoindup, "Nam", collator_opts=NA),
+      stri_detect_fixed(sjoindup, "Nam", collator_opts=list()),
       str_detect(sjoindup, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoin, "Bam"),
+      stri_detect_fixed(sjoin, "Bam", collator_opts=NA),
+      stri_detect_fixed(sjoin, "Bam", collator_opts=list()),
       str_detect(sjoin, fixed("Bam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(s, "Bam"),
+      stri_detect_fixed(s, "Bam", collator_opts=NA),
+      stri_detect_fixed(s, "Bam", collator_opts=list()),
       str_detect(s, fixed("Bam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoindup, "Bam"),
+      stri_detect_fixed(sjoindup, "Bam", collator_opts=NA),
+      stri_detect_fixed(sjoindup, "Bam", collator_opts=list()),
       str_detect(sjoindup, fixed("Bam"))
    ))
    
 })
 
 
-# v0.2 - measured by MG
-# Unit: microseconds
-# expr     min       lq  median       uq     max neval
-# stri_detect_fixed(sjoin, "Nam")   2.831   3.5555   5.779   7.5985  45.362   100
-# str_detect(sjoin, fixed("Nam")) 148.065 151.5350 153.671 163.0140 432.615   100
-# Unit: microseconds
-# expr     min      lq  median       uq     max neval
-# stri_detect_fixed(s, "Nam")  10.250  11.302  12.260  16.8185  77.212   100
-# str_detect(s, fixed("Nam")) 153.682 160.051 162.817 167.4230 340.116   100
-# Unit: microseconds
-# expr     min      lq   median      uq      max neval
-# stri_detect_fixed(sjoindup, "Nam")  52.854  54.336  78.4225  92.376  158.315   100
-# str_detect(sjoindup, fixed("Nam")) 778.413 831.854 876.3255 960.933 1222.064   100
-# Unit: microseconds
-# expr     min       lq  median      uq     max neval
-# stri_detect_fixed(sjoin, "Bam")   2.950   3.7365   6.864   7.331  23.790   100
-# str_detect(sjoin, fixed("Bam")) 146.792 151.6500 154.119 157.793 337.462   100
-# Unit: microseconds
-# expr     min       lq  median       uq     max neval
-# stri_detect_fixed(s, "Bam")  10.389  11.3810  15.688  16.3315  45.139   100
-# str_detect(s, fixed("Bam")) 156.546 159.2975 161.822 168.0075 347.983   100
-# Unit: milliseconds
-# expr       min        lq    median        uq       max neval
-# stri_detect_fixed(sjoindup, "Bam")  3.137768  3.198831  3.231719  3.291973  4.488585   100
-# str_detect(sjoindup, fixed("Bam")) 23.444030 23.653496 23.769519 24.085639 30.742328   100
+longtext <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
+pattern <- c("ABC", "DSHFUD", "A", "GDSUI", "XVCXGUIE", "DGUHERE", rawToChar(as.raw(sample(65:90, 200, replace=TRUE))))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=NA)))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list(strength=1))))
+print(system.time(str_detect(longtext, fixed(pattern))))
+
+longtext1 <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
+longtext2 <- stri_flatten(stri_dup("A", 10000000), stri_dup("B", 10000000))
+longtext3 <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
+longtext <- c(longtext1, longtext2, longtext3)
+pattern <- stri_flatten(stri_dup("A", 5000000), stri_dup("B", 5000000))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=NA)))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list(strength=1))))
+print(system.time(str_detect(longtext, fixed(pattern))))
+
+longtext <- longtext[1]
+pattern <- pattern[1:3]
+print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
+print(system.time(str_detect(longtext, fixed(pattern))))
+print(system.time({stringi:::stri_test_UnicodeContainer16(longtext);
+                   stringi:::stri_test_UnicodeContainer16(pattern)})) # this is not THE critical part
 
 
 local({

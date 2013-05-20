@@ -21,17 +21,36 @@
 #' 
 #' Convenience function to tune collator's behavior,
 #' e.g. in \code{\link{stri_compare}} or \code{\link{stri_order}}.
+#' 
+#' \bold{Collation}
+#' 
 #' ICU's collator performs a locale-aware, natural-language
 #' alike string comparison.
 #' This is a more intelligent form than that provided by base R, and definitely
 #' more complex than ordinary byte-comparison.
 #' 
-#' Note on collation strength. Generally, \code{strength} set to 4 is
+#' A note on collation strength. Generally, \code{strength} set to 4 is
 #' the least permissive.
 #' Set to 2 to ignore case differences.
 #' Set to 1 to also ignore diacritical differences.
 #' 
 #' The strings are Unicode-normalized before the comparison.
+#' 
+#' \bold{String Search Engine}
+#' 
+#' ...modified form of the Boyer Moore's search (cf. Werner, 1999),
+#' with time complexity of
+#' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)}).
+#' 
+#' Tuning Collator's parameter allow us to perform correct matching
+#' that properly takes into account accented letters, conjoined letters,
+#' and ignorable punctuation 
+#' 
+#' If you, however, still want to use bytewise comparisons,
+#' just pass \code{NA} as \code{collator_opts} in search
+#' functions... This will be the fastest approach, especially
+#' for short texts.
+#' 
 #' 
 #' @param locale single string, \code{""} for default locale
 #' @param strength single integer, collation strength, in \{1,2,...,4\};
@@ -66,6 +85,8 @@
 #' Collation - ICU User Guide - http://userguide.icu-project.org/collation
 #' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture
 #' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
+#' ICU String Search Service - ICU User Guide - http://userguide.icu-project.org/collation/icu-string-search-service
+#' L. Werner, Efficient Text Searching in Java, 1999, http://icu-project.org/docs/papers/efficient_text_searching_in_java.html
 #' 
 #' @examples
 #' stri_cmp("dupa100", "dupa2") != stri_cmp("dupa100", "dupa2", stri_collator_genopts(numeric=TRUE))

@@ -20,14 +20,14 @@
 
 
 /** 
- * Detect if a pattern occurs in a string [string search with collation]
+ * Detect if a pattern occurs in a string [fast but dummy bitewise compare]
  * @param str character vector
  * @param pattern character vector
  * @return logical vector
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8, bugfix - loop could go to far
  */
-SEXP stri_detect_fixed(SEXP str, SEXP pattern) // Old version (0.1)
+SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern) // Old version (0.1)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -77,87 +77,91 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern) // Old version (0.1)
 
 
 
-
-//SEXP stri_detect_fixed(SEXP str, SEXP pattern) // v0.2 - ongoing.....
-//{
-//   //   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-//   Locale loc = Locale::createFromName("pl_PL"/*qloc*/);
-//   
-//   str = stri_prepare_arg_string(str, "str");
-//   pattern = stri_prepare_arg_string(pattern, "pattern");
-//   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-//   
-//   SEXP ret;
-//   PROTECT(ret = allocVector(LGLSXP, nmax));
-// 
-//   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
-//   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
-//   UErrorCode err = U_ZERO_ERROR;
-//   
-//   const UnicodeString* last_str = NULL;
-//   const UnicodeString* last_pat = NULL;
-//   err = U_ZERO_ERROR;
-//   StringSearch *matcher = NULL;
-//   
-//   if (!U_SUCCESS(err))
-//      error(MSG__STRSEARCH_FAILED);
-//   
-//   for (R_len_t i = pp->vectorize_init();
-//         i != pp->vectorize_end();
-//         i = pp->vectorize_next(i))
-//   {
-//      if (pp->isNA(i) || ss->isNA(i)) {
-//         LOGICAL(ret)[i] = NA_LOGICAL;
-//      }
-//      else {
-//         const UnicodeString* cur_str = &(ss->get(i));
-//         const UnicodeString* cur_pat = &(pp->get(i));
-//         
-//         if (!matcher) {
-//            err = U_ZERO_ERROR;
-//            last_pat = cur_pat;
-//            last_str = cur_str;
-//            matcher = new StringSearch(*last_pat, *last_str, loc, NULL, err);
-//            if (!U_SUCCESS(err))
-//               error(MSG__STRSEARCH_FAILED);
-//            matcher->getCollator()->setAttribute(UCOL_STRENGTH, UCOL_IDENTICAL, err);
-//            if (!U_SUCCESS(err))
-//               error(MSG__STRSEARCH_FAILED);
-//         }
-//   
-//         if (cur_pat != last_pat) {
-//            last_pat = cur_pat;
-//            err = U_ZERO_ERROR;
-//            matcher->setPattern(*last_pat, err);
-//            if (!U_SUCCESS(err))
-//               error(MSG__STRSEARCH_FAILED);
-//         }
-//   
-//         if (cur_str != last_str) {
-//            last_str = cur_str;
-//            err = U_ZERO_ERROR;
-//            matcher->setText(*last_str, err);
-//            if (!U_SUCCESS(err))
-//               error(MSG__STRSEARCH_FAILED);
-//         }
-//         
-//         matcher->reset();
-//         err = U_ZERO_ERROR;
-//         int found = ((int)matcher->first(err) != USEARCH_DONE);
-//         
-//         if (!U_SUCCESS(err))
-//            error(MSG__STRSEARCH_FAILED);
-//            
-//         LOGICAL(ret)[i] = 0;
-//         
-//      }
-//   }
-//   
-//   delete ss;
-//   delete pp;
-//   if (matcher) delete matcher;
-//   UNPROTECT(1);
-//   return ret;
-//}
+/** 
+ * Detect if a pattern occurs in a string [with collation]
+ * @param str character vector
+ * @param pattern character vector
+ * @param collator_opts passed to stri__ucol_open(),
+ * if \code{NA}, then \code{stri_detect_fixed_byte} is called
+ * @return logical vector
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
+{
+   UCollator* col = stri__ucol_open(collator_opts);
+   if (!col)
+      return stri_detect_fixed_byte(str, pattern);
+   
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(LGLSXP, nmax));
+   int* ret_tab = LOGICAL(ret);
+   
+   clock_t c = clock();
+   
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
+   UErrorCode err = U_ZERO_ERROR;
+   
+   
+   const UnicodeString* last_str = NULL;
+   const UnicodeString* last_pat = NULL;
+   err = U_ZERO_ERROR;
+   UStringSearch *matcher = NULL;
+   
+   if (!U_SUCCESS(err))
+      error(MSG__STRSEARCH_FAILED);
+   
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         LOGICAL(ret)[i] = NA_LOGICAL;
+      }
+      else {
+         const UnicodeString* cur_str = &(ss->get(i));
+         const UnicodeString* cur_pat = &(pp->get(i));
+         
+         if (!matcher) {
+            last_pat = cur_pat;
+            last_str = cur_str;
+            err = U_ZERO_ERROR;
+            matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
+               last_str->getBuffer(), last_str->length(), col, NULL, &err);
+            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
+         }
+   
+         if (cur_pat != last_pat) {
+            last_pat = cur_pat;
+            err = U_ZERO_ERROR;
+            usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
+            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+         }
+   
+         if (cur_str != last_str) {
+            last_str = cur_str;
+            err = U_ZERO_ERROR;
+            usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
+            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+         }
+         
+         usearch_reset(matcher);
+         err = U_ZERO_ERROR;
+         ret_tab[i] = ((int)usearch_first(matcher, &err) != USEARCH_DONE);  // this is F*G slow! :-(
+         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+      }
+   }
+   
+   if (matcher) usearch_close(matcher);
+   delete ss;
+   delete pp;
+   UNPROTECT(1);
+   return ret;
+}
 
 
