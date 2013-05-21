@@ -22,19 +22,38 @@
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' @param str character vector of strings to search in
-#' @param pattern character vector of regex patterns to search for
-#' @return integer vector
+#' 
+#' For more information on ICU's Collator & SearchEngine
+#' and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
+#' 
+#' If \code{collator_opts} is \code{NA}, then a very fast (for small p)
+#' bytewise (locale independent) search is performed, with time complexity of
+#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
+#' For natural language, non-English text this is, however, not what
+#' you probably want.
+#' 
+#' Otherwise, ICU's implementation of Boyer Moore's search is used, 
+#' with time complexity of O(n+p), see \code{\link{stri_collator_genopts}}
+#' for more details.
+#' 
+#' @param str character vector
+#' @param pattern character vector
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
+#' @return integer vector, with number of matches for vectorized
+#' search task
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_count_fixed(s," ")
-#' stri_count_fixed(s,"o")
-#' stri_count_fixed(s,"it")
-#' stri_count_fixed("babab","b")
+#' stri_count_fixed(s, " ")
+#' stri_count_fixed(s, "o")
+#' stri_count_fixed(s, "it")
+#' stri_count_fixed("babab", "b")
 #' 
 #' @export
-stri_count_fixed <- function(str, pattern) {
+#' @family   count, search, locale_dependent
+stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 	# prepare_arg done internally
 	.Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
 }
@@ -47,7 +66,8 @@ stri_count_fixed <- function(str, pattern) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
-#' @return integer vector
+#' @return integer vector, with number of matches for vectorized
+#' search task
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -57,8 +77,34 @@ stri_count_fixed <- function(str, pattern) {
 #' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
 #' 
 #' @export
-#' @family regex
+#' @family count, search, regex
 stri_count_regex <- function(str, pattern) {
    # prepare_arg done internally
    .Call("stri_count_regex", str, pattern, PACKAGE="stringi")
 }
+
+
+#'  Count the Number of Pattern Matches in a String
+#' 
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' @param str character vector of strings to search in
+#' @param regex character vector of regex patterns to search for
+#' @param fixed character vector of fixed patterns to search for
+#' @param charclass character class identifiers 
+#' @param ... additional arguments passed to the underlying functions
+#' @return logical vector
+#' 
+#' @export
+#' @family count, search
+stri_count <- function(str, ..., regex, fixed, charclass) {
+   if(!missing(regex))
+      stri_count_regex(str, regex, ...)
+   else if(!missing(fixed))
+      stri_count_fixed(str, fixed, ...)
+   else if(!missing(charclass))
+      stri_count_class(str, charclass, ...)
+   else
+      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+}
+

@@ -21,51 +21,58 @@
 
 
 /** 
- * Count the number of recurrences of \code{pattern} in \code{s}
+ * Count the number of recurrences of \code{pattern} in \code{str} [fast but dummy bitewise compare]
  * @param str strings to search in
  * @param pattern patterns to search for
  * @return integer vector
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t ns = LENGTH(str);
-   R_len_t np = LENGTH(pattern);
+   int ns = LENGTH(str);
+   int np = LENGTH(pattern);
    if (ns <= 0 || np <= 0) return allocVector(INTSXP, 0);
-   R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
-
-   int count = 0;
-   SEXP e;
-   PROTECT(e = allocVector(INTSXP, nmax));
-   SEXP curs,curpat;
-   int k=0,curslen,curpatlen;
+   int nmax = stri__recycling_rule(true, 2, ns, np);
    
-   for (int i=0; i<nmax; ++i) {
-   	curs = STRING_ELT(str, i % ns);
-      curpat = STRING_ELT(pattern, i % np);
-      
-      if(curs == NA_STRING || curpat == NA_STRING){
-         INTEGER(e)[i] = NA_INTEGER;
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8* sp = new StriContainerUTF8(pattern, nmax);
+
+   SEXP ret;
+   PROTECT(ret = allocVector(INTSXP, nmax));
+   int* ret_tab = INTEGER(ret);
+   
+   for (R_len_t i=0; i<nmax; ++i) {  
+      if (ss->isNA(i) || sp->isNA(i)) {
+         ret_tab[i] = NA_INTEGER;
          continue;
       }
-      curslen = LENGTH(curs);
-      curpatlen = LENGTH(curpat);
-      const char* string = CHAR(curs);
-      const char* spat = CHAR(curpat);
-   	count=0;
-   	for(int j=0; j<curslen; ++j){
-         k=0;
-         while(string[j+k]==spat[k] && k<curpatlen)
+      
+      ret_tab[i] = 0;
+      const String8* curs = &ss->get(i);
+      const String8* curp = &sp->get(i);
+      const char* chs = curs->c_str();
+      const char* chp = curp->c_str();
+      int ns = curs->length();
+      int np = curp->length();
+      
+      ret_tab[i] = false;
+      for (int j=0; j<ns-np+1; ++j) {                  // O(ns*np) algorithm
+         int k=0;
+         while(k<np && chs[j+k] == chp[k])
             k++;
-   		if(k==curpatlen){
-            count++;
-            j=j+k-1; //if match then skip next k char
+      	if(k == np) {
+            ++ret_tab[i];
+            //if match then skip and check next element of s
+            j += np-1; // skip next np chars (-1, as we do ++j)
    		}
    	}
-      INTEGER(e)[i] = count;
    }
+   
+   delete ss;
+   delete sp;
    UNPROTECT(1);
-   return e;
+   return ret;
 }

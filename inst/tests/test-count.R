@@ -1,13 +1,13 @@
 require(testthat)
 
 test_that("stri_count_fixed", {
-   expect_identical(stri_count_fixed(character(0)," "),integer(0))   
-   expect_identical(stri_count_fixed(NA,"a"),NA_integer_)
-   expect_identical(stri_count_fixed("NA",NA),NA_integer_)
-   expect_identical(stri_count_fixed("   "," "),3L)
-   expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
-   expect_identical(stri_count_fixed("a a","a"),2L)
-   expect_identical(stri_count_fixed("aba","abcdef"),0L)
+   expect_identical(stri_count_fixed(character(0)," ", collator_opts=NA),integer(0))   
+   expect_identical(stri_count_fixed(NA,"a", collator_opts=NA),NA_integer_)
+   expect_identical(stri_count_fixed("NA",NA, collator_opts=NA),NA_integer_)
+   expect_identical(stri_count_fixed("   "," ", collator_opts=NA),3L)
+   expect_identical(stri_count_fixed("###",c("#","##","###"), collator_opts=NA),c(3L,1L,1L))
+   expect_identical(stri_count_fixed("a a","a", collator_opts=NA),2L)
+   expect_identical(stri_count_fixed("aba","abcdef", collator_opts=NA),0L)
    
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
 	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
@@ -22,15 +22,15 @@ test_that("stri_count_fixed", {
 	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
 	massa nibh nec erat."
    s <- stri_dup(s,1:3)
-   expect_warning(stri_count_fixed(s,c("o","a")))
-   expect_identical(stri_count_fixed(s,"\n"), 1:3*11L)
-   expect_identical(stri_count_fixed(s,' '), 1:3*116L)
-   expect_identical(stri_count_fixed(s,'a'), 1:3*50L)
-   expect_identical(stri_count_fixed(s,"co"), 1:3*6L)
-   expect_identical(stri_count_fixed(s,"rem"), 1:3*2L)
+   expect_warning(stri_count_fixed(s,c("o","a"), collator_opts=NA))
+   expect_identical(stri_count_fixed(s,"\n", collator_opts=NA), 1:3*11L)
+   expect_identical(stri_count_fixed(s,' ', collator_opts=NA), 1:3*116L)
+   expect_identical(stri_count_fixed(s,'a', collator_opts=NA), 1:3*50L)
+   expect_identical(stri_count_fixed(s,"co", collator_opts=NA), 1:3*6L)
+   expect_identical(stri_count_fixed(s,"rem", collator_opts=NA), 1:3*2L)
    s <- c("abababab babab abab bbaba","a")
-   expect_identical(stri_count_fixed(s,"bab"),c(5L,0L))
-   expect_identical(stri_count_fixed(c("lalal","12l34l56","ąólł"),"l"),3:1)
+   expect_identical(stri_count_fixed(s,"bab", collator_opts=NA),c(5L,0L))
+   expect_identical(stri_count_fixed(c("lalal","12l34l56","ąólł"),"l", collator_opts=NA),3:1)
    
 })
 

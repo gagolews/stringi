@@ -99,20 +99,20 @@ stri_detect_regex <- function(str, pattern) {
 #' @param str character vector of strings to search in
 #' @param regex character vector of regex patterns to search for
 #' @param fixed character vector of fixed patterns to search for
-#' @param charclass character class identifiers specified by
-#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @param charclass character class identifiers 
+#' @param ... additional arguments passed to the underlying functions
 #' @return logical vector
 #' 
 #' @export
 #' @family detect, search
-stri_detect <- function(str, regex, fixed, charclass) {
+stri_detect <- function(str, ..., regex, fixed, charclass) {
    if(!missing(regex))
-      .Call("stri_detect_regex", str, regex, PACKAGE="stringi")
+      stri_detect_regex(str, regex, ...)
    else if(!missing(fixed))
-      .Call("stri_detect_fixed", str, fixed, PACKAGE="stringi")
+      stri_detect_fixed(str, fixed, ...)
    else if(!missing(charclass))
-      .Call("stri_detect_class", str, charclass, PACKAGE="stringi")
+      stri_detect_class(str, charclass, ...)
    else
-      error("You have specify at least one of regex, fixed and charclass")
+      stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
 
