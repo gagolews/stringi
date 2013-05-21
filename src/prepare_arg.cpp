@@ -161,7 +161,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
- * @return always an R character vector with 1 element
+ * @return always an R character vector with >=1 element
  * 
  * @version 0.1 (Marek Gagolewski)
  */
@@ -175,10 +175,10 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
    
    if (nx > 1) {
       warning(MSG__ARG_EXPECTED_1_STRING, argname);
-      SEXP xold = x;
-      PROTECT(x = allocVector(STRSXP, 1));
-      SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
-      UNPROTECT(1);      
+//      SEXP xold = x;
+//      PROTECT(x = allocVector(STRSXP, 1));
+//      SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
+//      UNPROTECT(1);      
    }
    
    return x;
@@ -192,7 +192,7 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
- * @return always an R double vector with 1 element
+ * @return always an R double vector with >=1 element
  * 
  * @version 0.1 (Marek Gagolewski)
  */
@@ -206,10 +206,10 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
    
    if (nx > 1) {
       warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
-      double x0 = REAL(x)[0];
-      PROTECT(x = allocVector(REALSXP, 1));
-      REAL(x)[0] = x0;
-      UNPROTECT(1);      
+//      double x0 = REAL(x)[0];
+//      PROTECT(x = allocVector(REALSXP, 1));
+//      REAL(x)[0] = x0;
+//      UNPROTECT(1);      
    }
    
    return x;
@@ -223,7 +223,7 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
- * @return always an R integer vector with 1 element
+ * @return always an R integer vector with >=1 element
  * 
  * @version 0.1 (Marek Gagolewski)
  */
@@ -237,10 +237,10 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
    
    if (nx > 1) {
       warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
-      int x0 = INTEGER(x)[0];
-      PROTECT(x = allocVector(INTSXP, 1));
-      INTEGER(x)[0] = x0;
-      UNPROTECT(1);      
+//      int x0 = INTEGER(x)[0];
+//      PROTECT(x = allocVector(INTSXP, 1));
+//      INTEGER(x)[0] = x0;
+//      UNPROTECT(1);      
    }
    
    return x;   
@@ -254,7 +254,7 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
- * @return always an R logical vector with 1 element
+ * @return always an R logical vector with >=1 element
  * 
  * @version 0.1 (Marek Gagolewski)
  */
@@ -268,10 +268,10 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
    
    if (nx > 1) {
       warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
-      int x0 = LOGICAL(x)[0];
-      PROTECT(x = allocVector(LGLSXP, 1));
-      LOGICAL(x)[0] = x0;
-      UNPROTECT(1);      
+//      int x0 = LOGICAL(x)[0];
+//      PROTECT(x = allocVector(LGLSXP, 1));
+//      LOGICAL(x)[0] = x0;
+//      UNPROTECT(1);      
    }
    
    return x;      

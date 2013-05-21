@@ -28,7 +28,7 @@
 #' @param e1 character vector
 #' @param e2 character vector
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
-#' with Collator's options, or \code{NA} for dummy byte comparison
+#' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
 #' 
 #' @return integer vector, elements are comparison results of corresponding
 #' pairs;
@@ -76,7 +76,7 @@ stri_cmp <- stri_compare
 #' @param str character vector
 #' @param decreasing single logical value; should the sort order be increasing or decreasing?
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
-#' with Collator's options, or \code{NA} for dummy byte comparison
+#' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
 #' 
 #' @return for \code{stri_order} - an integer vector that gives the sort order;
 #' for \code{stri_order} - a sorted version of \code{str}

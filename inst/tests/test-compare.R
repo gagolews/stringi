@@ -25,6 +25,24 @@ test_that("stri_cmp", {
 })
 
 
+test_that("stri_cmp_codepoints", {
+   
+   expect_equivalent(stri_cmp(character(0), character(0), collator_opts=NA), integer(0))
+   expect_equivalent(stri_cmp(LETTERS, character(0), collator_opts=NA), integer(0))
+   expect_equivalent(stri_cmp(character(0), LETTERS, collator_opts=NA), integer(0))
+   
+   expect_equivalent(stri_cmp(LETTERS, LETTERS, collator_opts=NA), rep(0L,  length(LETTERS)))
+   expect_equivalent(stri_cmp(letters, LETTERS, collator_opts=NA), rep(+1L, length(LETTERS)))
+   expect_equivalent(stri_cmp(LETTERS, letters, collator_opts=NA), rep(-1L, length(LETTERS)))
+   expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a', collator_opts=NA), c(NA_integer_, 0L, 1L))
+   
+   expect_equivalent(stri_cmp("dupa100", "dupa2", collator_opts=NA), -1)
+   
+   expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105', collator_opts=NA), -1L)
+   
+})
+
+
 
 test_that("stri_order", {
    
@@ -37,3 +55,14 @@ test_that("stri_order", {
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6)) 
 })
 
+
+test_that("stri_order [codepoints]", {
+   
+   expect_equivalent(stri_order(character(0), collator_opts=NA), integer(0))
+   expect_equivalent(stri_order(LETTERS, collator_opts=NA), 1:length(LETTERS))
+   expect_equivalent(stri_order(rev(LETTERS), collator_opts=NA), length(LETTERS):1)
+   expect_equivalent(stri_order(LETTERS, decreasing=TRUE, collator_opts=NA), length(LETTERS):1)
+   
+   
+   expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA), collator_opts=NA), c(3, 5, 1, 2, 4, 6)) 
+})

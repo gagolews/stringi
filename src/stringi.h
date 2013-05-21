@@ -68,6 +68,8 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 UCollator*  stri__ucol_open(SEXP collator_opts);
 
 // compare.cpp:
+int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2); // DONE
+SEXP stri_compare_codepoints(SEXP e1, SEXP e2);                     // DONE
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts);            // DONE
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);     // DONE
 
