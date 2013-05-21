@@ -17,8 +17,35 @@ local({
    	massa nibh nec erat."
    
    #fixed
-   print(microbenchmark(stri_count_fixed(s,"o"),str_count(s,fixed("o"))))
-   print(microbenchmark(stri_count_fixed(s,' '),str_count(s,fixed(' '))))
+   print(microbenchmark(
+      stri_count_fixed(s, "o", collator_opts=NA),
+      stri_count_fixed(s, "o"),
+      str_count(s, fixed("o"))
+   ))
+   
+   print(microbenchmark(
+      stri_count_fixed(s, ' '),
+      stri_count_fixed(s, ' ', collator_opts=NA),
+      str_count(s, fixed(' '))
+   ))
+   
+   xxx <- stri_dup("\u0105b\u0105", 10000)
+   print(microbenchmark(
+      stri_count_fixed(xxx, ' '),
+      stri_count_fixed(xxx, ' ', collator_opts=NA),
+      str_count(xxx, fixed(' '))
+   ))
+   stopifnot(stri_count_fixed(xxx, ' ') == str_count(xxx, fixed(' ')))
+   
+   print(microbenchmark(
+      stri_count_fixed(xxx, 'b\u0105\u0105b'),
+      stri_count_fixed(xxx, 'b\u0105\u0105b', collator_opts=NA),
+      str_count(xxx, fixed('b\u0105\u0105b'))
+   ))
+   stopifnot(stri_count_fixed(xxx, 'b\u0105\u0105b') == str_count(xxx, fixed('b\u0105\u0105b')))
+   
+   
+   
    
    srep <- rep(s,10)
    print(microbenchmark(stri_count_fixed(srep,"o"),str_count(srep,fixed("o"))))

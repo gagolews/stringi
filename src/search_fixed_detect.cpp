@@ -27,7 +27,7 @@
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8, bugfix - loop could go to far
  */
-SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern) // Old version (0.1)
+SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern) 
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -120,7 +120,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          i = pp->vectorize_next(i))
    {
       if (pp->isNA(i) || ss->isNA(i)) {
-         LOGICAL(ret)[i] = NA_LOGICAL;
+         ret_tab[i] = NA_LOGICAL;
       }
       else {
          const UnicodeString* cur_str = &(ss->get(i));

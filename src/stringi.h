@@ -198,11 +198,12 @@ SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);
 
 // ----------- SEARCH --------------------------------------------
 
-void stri__locate_set_dimnames_list(SEXP list);                      // DONE
-void stri__locate_set_dimnames_matrix(SEXP matrix);                  // DONE
+void stri__locate_set_dimnames_list(SEXP list);                       // DONE
+void stri__locate_set_dimnames_matrix(SEXP matrix);                   // DONE
 
 
-SEXP stri_count_fixed(SEXP s, SEXP pattern);                          // ....
+SEXP stri_count_fixed_byte(SEXP str, SEXP pattern);                   // DONE
+SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);    // DONE
 SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern);                  // DONE
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ....

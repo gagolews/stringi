@@ -55,7 +55,7 @@
 #' @family   count, search, locale_dependent
 stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 	# prepare_arg done internally
-	.Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
+	.Call("stri_count_fixed", str, pattern, collator_opts, PACKAGE="stringi")
 }
 
 

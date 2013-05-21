@@ -1,6 +1,6 @@
 require(testthat)
 
-test_that("stri_count_fixed", {
+test_that("stri_count_fixed [byte compare]", {
    expect_identical(stri_count_fixed(character(0)," ", collator_opts=NA),integer(0))   
    expect_identical(stri_count_fixed(NA,"a", collator_opts=NA),NA_integer_)
    expect_identical(stri_count_fixed("NA",NA, collator_opts=NA),NA_integer_)
@@ -33,6 +33,25 @@ test_that("stri_count_fixed", {
    expect_identical(stri_count_fixed(c("lalal","12l34l56","ąólł"),"l", collator_opts=NA),3:1)
    
 })
+
+
+
+test_that("stri_count_fixed [collation]", {
+   expect_identical(stri_count_fixed(character(0)," "),integer(0))   
+   expect_identical(stri_count_fixed(NA,"a"),NA_integer_)
+   expect_identical(stri_count_fixed("NA",NA),NA_integer_)
+   expect_identical(stri_count_fixed("   "," "),3L)
+   expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
+   expect_identical(stri_count_fixed("a a","a"),2L)
+   expect_identical(stri_count_fixed("aba","abcdef"),0L)
+   
+   expect_identical(stri_count_fixed("aaaaa", "aa"), 2L)
+   expect_identical(stri_count_fixed("aaAAa-a", "aa"), 1L)
+   expect_identical(stri_count_fixed("aaAAa-a", "aa", collator_opts=list(strength=1)), 2L)
+   expect_identical(stri_count_fixed("aaAAa-a", "aa", collator_opts=stri_collator_genopts(strength=1, alternate_shifted=TRUE)), 3L)
+})
+
+
 
 test_that("stri_count_regex", {
    expect_identical(stri_count_regex(character(0)," "),integer(0))   
