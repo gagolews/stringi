@@ -674,6 +674,16 @@ SEXP stri_enc_toutf32(SEXP str)
    
    StriContainerUTF8* se = new StriContainerUTF8(str, n);
    
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<n; ++i) {
+       if (se->isNA(i)) continue;
+       R_len_t ni = se->get(i).length();
+       if (ni > bufsize) bufsize = ni;
+   }
+   
+   bufsize = bufsize + 1; // at most 4 times too large... well, have to be
+   int* buf = new int[bufsize];
+   
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, n));
    
@@ -681,26 +691,31 @@ SEXP stri_enc_toutf32(SEXP str)
          i != se->vectorize_end();
          i = se->vectorize_next(i)) {
             
-      deque<UChar32> chars;
+      if (se->isNA(i)) continue; // leave NULL
+            
+//      deque<UChar32> chars; // this is slower than usin a common, over-sized buf
       
       UChar32 c;
       const char* s = se->get(i).c_str();
       R_len_t n = se->get(i).length();
       R_len_t j = 0;
+      R_len_t k = 0;
       while (j < n) {
          U8_NEXT_UNSAFE(s, j, c);
-         chars.push_back(c);
+         buf[k++] = (int)c;
+//         chars.push_back(c);
       }
       
       SEXP conv;
-      PROTECT(conv = allocVector(INTSXP, chars.size()));
-      
-      int* conv_tab = INTEGER(conv);
-      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
-         *(conv_tab++) = (int)*it;
+      PROTECT(conv = allocVector(INTSXP, k /*chars.size()*/));
+      memcpy(INTEGER(conv), buf, sizeof(int)*k);
+//      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
+//         *(conv_tab++) = (int)*it;
       SET_VECTOR_ELT(ret, i, conv);
       UNPROTECT(1);
    }
+   
+   delete buf;
    delete se;   
    UNPROTECT(1);
    return ret;

@@ -264,6 +264,8 @@ stri_encode <- function(str, from, to=NULL) {
 #' UTF-32 is a 32bit encoding in which each Unicode code point
 #' corresponds to exactly one integer value.
 #' 
+#' NA_character_ are converted to NULL.
+#' 
 #' @param str character vector to be converted
 #' @return list of integer vectors
 #' 
