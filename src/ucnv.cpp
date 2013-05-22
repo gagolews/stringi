@@ -645,6 +645,32 @@ SEXP stri_enc_info(SEXP enc)
 
 
 
+/** Convert from UTF-32 [single string, internal]
+ * 
+ * On invalid codepoint, warning is generated and -1 is returned
+ * @param data  UTF-32 codes
+ * @param ndata number of codes
+ * @param buf [out] output buffer
+ * @param bufsize buffer size
+ * @return number of bytes written
+ */
+R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize)
+{
+   R_len_t i = 0;
+   R_len_t k = 0;
+   UBool err = FALSE;
+   while (k < ndata) {
+      UChar32 c = data[k++];
+      U8_APPEND((uint8_t*)buf, i, bufsize, c, err);
+      if (err) {
+         warning(MSG__INVALID_CODE_POINT, (int)c);
+         return -1;
+      }
+   }
+   return i;
+}
+
+
 /** Convert from UTF-32
  * 
  * @param integer vector or list with integer vectors
@@ -652,11 +678,58 @@ SEXP stri_enc_info(SEXP enc)
  * 
  * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_enc_fromutf32(SEXP str)
+SEXP stri_enc_fromutf32(SEXP vec)
 {
-   error("NOT IMPLEMENTED YET");
-   
-   
+   if (isVectorList(vec)) {
+      R_len_t n = LENGTH(vec);
+      R_len_t bufsize = 0;
+      for (R_len_t i=0; i<n; ++i) {
+         SEXP cur = VECTOR_ELT(vec, i);
+         if (isNull(cur))
+            continue;
+         cur = stri_prepare_arg_integer(cur, "vec[i]");
+         if (LENGTH(cur) > bufsize) bufsize = LENGTH(cur);
+         SET_VECTOR_ELT(vec, i, cur);
+      }
+      
+      bufsize = U8_MAX_LENGTH*bufsize+1;
+      char* buf = new char[bufsize];
+      SEXP ret;
+      PROTECT(ret = allocVector(STRSXP, n));
+      for (R_len_t i=0; i<n; ++i) {
+         SEXP cur = VECTOR_ELT(vec, i);
+         if (isNull(cur)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+         }
+         R_len_t chars = stri__enc_fromutf32(INTEGER(cur), LENGTH(cur), buf, bufsize);
+         if (chars < 0)
+            SET_STRING_ELT(ret, i, NA_STRING);
+         else
+            SET_STRING_ELT(ret, i, mkCharLenCE(buf, chars, CE_UTF8));
+      }
+      delete [] buf;
+      UNPROTECT(1);
+      return ret;
+   }
+   else {
+      vec = stri_prepare_arg_integer(vec, "vec");  // integer vector
+      SEXP ret;
+      PROTECT(ret = allocVector(STRSXP, 1));
+      
+      int* data = INTEGER(vec);
+      R_len_t ndata = LENGTH(vec);
+      R_len_t bufsize = U8_MAX_LENGTH*ndata+1;
+      char* buf = new char[bufsize];
+      R_len_t chars = stri__enc_fromutf32(data, ndata, buf, bufsize);
+      if (chars < 0)
+         SET_STRING_ELT(ret, 0, NA_STRING);
+      else
+         SET_STRING_ELT(ret, 0, mkCharLenCE(buf, chars, CE_UTF8));
+      delete [] buf;
+      UNPROTECT(1);
+      return ret;
+   }
 }
 
 

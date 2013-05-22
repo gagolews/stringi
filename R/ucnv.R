@@ -289,6 +289,9 @@ stri_enc_toutf32 <- function(str) {
 #' Note that 0s are not allowed in \code{vec}, as they are used
 #' to mark the end of a string (in C/C++/...).
 #' 
+#' If an incorrect codepoint is given, a warning is generated
+#' and the corresponding element in the return vector is set to \code{NA}.
+#' 
 #' @param vec list of integer vectors or, for convenience, a single integer vector
 #' @return character vector
 #' 

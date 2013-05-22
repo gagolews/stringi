@@ -92,9 +92,19 @@ test_that("stri_enc_toutf32", {
    expect_identical(stri_enc_toutf32(character(0)), list())
    expect_identical(stri_enc_toutf32(LETTERS), as.list(65:90))
    expect_identical(stri_enc_toutf32(c("A", NA, "A")), list(65L, NULL, 65L))
-   
+   expect_identical(stri_enc_toutf32("a\u0105\u3423b")[[1]], utf8ToInt("a\u0105\u3423b"))
 })
 
 
-
+test_that("stri_enc_fromutf32", {
+   
+   expect_identical(stri_enc_fromutf32(integer(0)), "")
+   expect_identical(stri_enc_fromutf32(c(65L, 66L, 67L)), "ABC")
+   expect_identical(stri_enc_fromutf32(c(43,234,649,63,23532,23632)), intToUtf8(c(43,234,649,63,23532,23632)))
+   expect_warning(stri_enc_fromutf32(c(43,234,649,63,23532,233643642)))
+   
+   expect_identical(stri_enc_fromutf32(list()), character(0))
+   expect_identical(stri_enc_fromutf32(list(NULL)), NA_character_)
+   expect_identical(stri_enc_fromutf32(list(65:67, NULL)), c("ABC", NA_character_))
+})
 

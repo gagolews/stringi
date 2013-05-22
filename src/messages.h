@@ -27,6 +27,9 @@
 #define MSG__INCORRECT_COLLATOR_OPTION \
    "incorrect collator option: `%s`. ignoring"
 
+#define MSG__INVALID_CODE_POINT \
+   "invalid Unicode codepoint \\u%08.8x"
+
 /// warning when applying recycling rule to not fully recycled args
 #define MSG__WARN_RECYCLING_RULE \
    "longer object length is not a multiple of shorter object length"
