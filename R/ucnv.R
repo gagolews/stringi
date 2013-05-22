@@ -253,3 +253,46 @@ stri_encode <- function(str, from, to=NULL) {
    .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }
 
+
+
+#' Convert To UTF-32
+#' 
+#' This is a vectorized version of \code{utf8ToInt(enc2utf8(str))},
+#' but works - as usual in \pkg{stringi} - for many different
+#' character encodings (native encoding is always converted to Unicode).
+#' 
+#' UTF-32 is a 32bit encoding in which each Unicode code point
+#' corresponds to exactly one integer value.
+#' 
+#' @param str character vector to be converted
+#' @return list of integer vectors
+#' 
+#' @family encoding
+#' @export
+stri_enc_toutf32 <- function(str) {
+   .Call("stri_enc_toutf32", str, PACKAGE="stringi")
+}
+
+
+
+#' Convert From UTF-32
+#' 
+#' This is a vectorized version of \code{intToUtf8},
+#' as usual in \pkg{stringi}, it returns character strings
+#' in UTF-8.
+#' 
+#' UTF-32 is a 32bit encoding in which each Unicode code point
+#' corresponds to exactly one integer value.
+#' 
+#' Note that 0s are not allowed in \code{vec}, as they are used
+#' to mark the end of a string (in C/C++/...).
+#' 
+#' @param vec list of integer vectors or, for convenience, a single integer vector
+#' @return character vector
+#' 
+#' @family encoding
+#' @export
+stri_enc_fromutf32 <- function(vec) {
+   .Call("stri_enc_fromutf32", vec, PACKAGE="stringi")
+}
+

@@ -642,3 +642,66 @@ SEXP stri_enc_info(SEXP enc)
    UNPROTECT(2);
    return vals;
 }
+
+
+
+/** Convert from UTF-32
+ * 
+ * @param integer vector or list with integer vectors
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_enc_fromutf32(SEXP str)
+{
+   error("NOT IMPLEMENTED YET");
+   
+   
+}
+
+
+/** Convert character vector to UTF-32
+ * 
+ * @param character vector
+ * @return list with integer vectors
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_enc_toutf32(SEXP str)
+{
+   str = stri_prepare_arg_string(str, "str");
+   R_len_t n = LENGTH(str);
+   
+   StriContainerUTF8* se = new StriContainerUTF8(str, n);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, n));
+   
+   for (R_len_t i = se->vectorize_init();
+         i != se->vectorize_end();
+         i = se->vectorize_next(i)) {
+            
+      deque<UChar32> chars;
+      
+      UChar32 c;
+      const char* s = se->get(i).c_str();
+      R_len_t n = se->get(i).length();
+      R_len_t j = 0;
+      while (j < n) {
+         U8_NEXT_UNSAFE(s, j, c);
+         chars.push_back(c);
+      }
+      
+      SEXP conv;
+      PROTECT(conv = allocVector(INTSXP, chars.size()));
+      
+      int* conv_tab = INTEGER(conv);
+      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
+         *(conv_tab++) = (int)*it;
+      SET_VECTOR_ELT(ret, i, conv);
+      UNPROTECT(1);
+   }
+   delete se;   
+   UNPROTECT(1);
+   return ret;
+}

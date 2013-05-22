@@ -85,3 +85,15 @@ test_that("stri_enc_isutf8",{
    
 })
 
+
+
+test_that("stri_enc_toutf32", {
+   
+   expect_identical(stri_enc_toutf32(character(0)), list())
+   expect_identical(stri_enc_toutf32(LETTERS), as.list(65:90))
+   
+})
+
+
+
+

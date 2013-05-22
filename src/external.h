@@ -32,6 +32,7 @@
 #include <cstdarg>
 #include <iostream>
 #include <deque>
+#include <queue>
 #include <algorithm>
 #include <vector>
 #include <unicode/uchar.h>

@@ -175,6 +175,9 @@ SEXP stri_encode(SEXP s, SEXP from, SEXP to);           // ...
 // @TODO: stri_encode_native2utf8()                     // ...TODO...
 // @TODO: stri_encode_unknown2utf8()                    // ...TODO...
 
+SEXP stri_enc_fromutf32(SEXP str);                      // DONE
+SEXP stri_enc_toutf32(SEXP str);                        // DONE
+
 
 // uloc.cpp:
 SEXP stri_locale_info(SEXP loc);                        // DONE
