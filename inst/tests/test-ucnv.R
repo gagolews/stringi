@@ -108,3 +108,20 @@ test_that("stri_enc_fromutf32", {
    expect_identical(stri_enc_fromutf32(list(65:67, NULL)), c("ABC", NA_character_))
 })
 
+
+
+test_that("stri_enc_toutf8", {
+   
+   expect_identical(stri_enc_toutf8(character(0)), character(0))
+   expect_identical(stri_enc_toutf8(LETTERS), LETTERS)
+   s <- c('sgajhgaoi', NA, '\u0105fds\u5432\u0104')
+   expect_identical(stri_enc_toutf8(s), s)
+
+   s <- c('\xa3\xb1ka')
+   enc <- stri_enc_set('latin-2')
+   expect_identical(stri_enc_toutf8(s), "\u0141\u0105ka")
+   stri_enc_set(enc)
+   expect_identical(stri_enc_toutf8(s, is_unknown_8bit=TRUE), "\ufffd\ufffdka")
+})
+
+

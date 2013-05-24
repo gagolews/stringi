@@ -84,6 +84,11 @@
 #' Sometimes strings have no encoding marks. In this case one should
 #' assume that he/she deals with natively-encoded data.
 #' 
+#' Functions which allow `bytes` encoding marks are very rare in \pkg{stringi},
+#' and were carefully selected. These are: \code{\link{str_enc_toutf8}}
+#' (with argument \code{is_unknown_8bit=TRUE}), \code{\link{str_enc_toascii}}
+#' \code{\link{str_encode}}.
+#' 
 #' @references
 #' Conversion - ICU User Guide, \url{http://userguide.icu-project.org/conversion} \cr
 #' Converters - ICU User Guide, \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
@@ -239,6 +244,9 @@ stri_enc_isutf8 <- function(str) {
 #' 
 #' If enc is missing, NULL (default encoding) is used
 #' 
+#' TO DO: Note problems with UTF-16 and UTF-32
+#' - embedded NULS..... Bytes encoding marks.....
+#' 
 #' @param str character vector to be converted
 #' @param from input encoding:
 #'       \code{NULL} or \code{""} for default encoding,
@@ -299,5 +307,62 @@ stri_enc_toutf32 <- function(str) {
 #' @export
 stri_enc_fromutf32 <- function(vec) {
    .Call("stri_enc_fromutf32", vec, PACKAGE="stringi")
+}
+
+
+
+#' Convert To UTF-8
+#' 
+#' Converts marked-encoding character strings to UTF-8 strings.
+#' 
+#' If \code{is_unknown_8bit} is set to \code{TRUE},
+#' the for strings marked by R as having neither ASCII
+#' nor UTF-8 encoding, then all bytecodes > 127 are replaced with
+#' the Unicode REPLACEMENT CHARACTER (\\Ufffd).
+#' `Bytes' encoding-marked strings are treated as 8-bit strings.
+#' 
+#' Otherwise, R encoding marking is used (ASCII, UTF-8, Latin1, Native
+#' set by \code{\link{str_enc_set}}.
+#' 
+#' The REPLACEMENT CHARACTER may be interpreted as Unicode \code{NA} value
+#' for single characters (and not vector elements, e.g. whole strings).
+#' 
+#' 
+#' @param str character vector to be converted
+#' @param is_unknown_8bit single logical value, see Details
+#' @return character vector
+#' 
+#' @family encoding
+#' @export
+stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
+   .Call("stri_enc_toutf8", str, is_unknown_8bit, PACKAGE="stringi")
+}
+
+
+
+#' Convert To ASCII
+#' 
+#' Converts character strings to ASCII, i.e. strings with all
+#' codes <= 127.
+#' 
+#' All charcodes > 127 are replaced with ASCII SUBSTITUTE
+#' CHARACTER (0x1A).
+#' Always R encoding marking is used, to determine whether
+#' an 8-bit string
+#' is given on input or maybe rather an UTF-8 string.
+#' 
+#' `Bytes' encoding-marked strings are treated as 8-bit strings.
+#' 
+#' The  SUBSTITUTE
+#' CHARACTER may be interpreted as ASCII \code{NA} value
+#' for single characters (and not vector elements, e.g. whole strings).
+#' 
+#' @param str character vector to be converted
+#' @return character vector
+#' 
+#' @family encoding
+#' @export
+stri_enc_toascii <- function(str) {
+   .Call("stri_enc_toascii", str, PACKAGE="stringi")
 }
 

@@ -673,7 +673,7 @@ R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize
 
 /** Convert from UTF-32
  * 
- * @param integer vector or list with integer vectors
+ * @param vec integer vector or list with integer vectors
  * @return character vector
  * 
  * @version 0.1 (Marek Gagolewski)
@@ -735,7 +735,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
 
 /** Convert character vector to UTF-32
  * 
- * @param character vector
+ * @param str character vector
  * @return list with integer vectors
  * 
  * @version 0.1 (Marek Gagolewski)
@@ -793,3 +793,84 @@ SEXP stri_enc_toutf32(SEXP str)
    UNPROTECT(1);
    return ret;
 }
+
+
+
+/** Convert character vector to UTF-8
+ * 
+ * @param str character vector
+ * @param is_unknown_8bit single logical value;
+ * if TRUE, then in case of ENC_NATIVE or ENC_LATIN1, UTF-8 
+ * REPLACEMENT CHARACTERs (U+FFFD) are 
+ * put for codes > 127
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
+{
+   str = stri_prepare_arg_string(str, "str");
+   R_len_t n = LENGTH(str);
+   
+   is_unknown_8bit = stri_prepare_arg_logical_1(is_unknown_8bit, "is_unknown_8bit");
+   
+   if (LOGICAL(is_unknown_8bit)[0] == TRUE) {
+      SEXP ret;
+      PROTECT(ret = allocVector(STRSXP, n));
+      for (R_len_t i=0; i<n; ++i) {
+         SEXP curs = STRING_ELT(str, i);
+         if (curs == NA_STRING) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+         }
+         else if (IS_ASCII(curs) || IS_UTF8(curs)) {
+            SET_STRING_ELT(ret, i, curs);
+         }
+         else { // some 8-bit encoding
+            R_len_t curn = LENGTH(curs);
+            const char* curs_tab = CHAR(curs);
+            // TODO: buffer reuse....
+            char* buf = new char[curn*3+1]; // one byte -> either one byte or FFFD, which is 3 bytes in UTF-8
+            R_len_t k = 0;
+            for (R_len_t j=0; j<curn; ++j) {
+               if (U8_IS_SINGLE(curs_tab[j]))
+                  buf[k++] = curs_tab[j];
+               else { // 0xEF 0xBF 0xBD
+                  buf[k++] = (char)0xef;
+                  buf[k++] = (char)0xbf;
+                  buf[k++] = (char)0xbd;
+               }
+            }
+            SET_STRING_ELT(ret, i, mkCharLenCE(buf, k, CE_UTF8));
+            delete [] buf;
+         }
+      }
+      UNPROTECT(1);
+      return ret;      
+   }
+   else {
+      StriContainerUTF8* se = new StriContainerUTF8(str, n);
+      
+      SEXP ret = se->toR();
+      delete se;
+      return ret;
+   }
+}
+
+
+
+/** Convert character vector to ASCII
+ * 
+ * All charcodes > 127 are replaced with subst chars (0x1A)
+ * 
+ * @param str character vector
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_enc_toascii(SEXP str)
+{
+   error("TO DO");
+   return str;
+}
+
