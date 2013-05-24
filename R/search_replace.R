@@ -103,7 +103,8 @@ stri_replace_last_fixed <- function(str, pattern, replacement) {
 #' stri_replace_all_regex(s, "(el|s)it", "1234")
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
-#' 
+#' stri_replace_all_regex(c("stringi w R","REXAMINE","123"), '( R|R.)', ' r ')
+#'  
 #' @export
 #' @family regex
 stri_replace_all_regex <- function(str, pattern, replacement) {

@@ -85,6 +85,7 @@ stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), 'R.')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
+#' stri_detect_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' @export
 #' @family detect, search, regex
 stri_detect_regex <- function(str, pattern) {

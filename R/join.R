@@ -53,6 +53,9 @@ stri_dup <- function(str, times) {
 #' @param e2 character vector
 #' 
 #' @TODO add family `paste` (now roxygen is broken)
+#' @examples
+#' c('abc','123','\u0105\u0104')%+%letters[1:5]
+#' 'ID_'%+%1:5
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
@@ -81,6 +84,10 @@ stri_dup <- function(str, times) {
 #' In case of any \code{NA}, \code{NA} is set to the corresponding element.
 #' 
 #' @export
+#' @examples
+#' stri_join(1:5,letters)
+#' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...')
+#' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
 #' @family paste
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
@@ -122,7 +129,7 @@ stri_paste <- stri_join
 #' @examples
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
-#' 
+#' stri_flatten(c('abc','123','\u0105\u0104'))
 #' @export
 #' @family paste
 stri_flatten <- function(str, collapse="") {

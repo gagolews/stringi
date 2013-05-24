@@ -44,6 +44,12 @@
 #' @examples
 #' stri_toupper("\u00DF", "de_DE") # small german double s
 #' stri_toupper("i", "en_US") != stri_toupper("i", "tr_TR")
+#' stri_toupper(c('abc','123','\u0105\u0104'))
+#' 
+#' stri_tolower(c('AbC','123','\u0105\u0104'))
+#' 
+#' stri_totitle(c('AbC','123','\u0105\u0104'))
+#' stri_totitle("aLA mA kOTA")
 stri_tolower <- function(str, locale=NULL) {
    .Call("stri_casefold", str, 1L, locale, PACKAGE="stringi")
 }

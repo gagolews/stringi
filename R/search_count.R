@@ -50,6 +50,7 @@
 #' stri_count_fixed(s, "o")
 #' stri_count_fixed(s, "it")
 #' stri_count_fixed("babab", "b")
+#' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
 #' 
 #' @export
 #' @family   count, search, locale_dependent
@@ -75,6 +76,8 @@ stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 #' stri_count_regex(s,"i.i")
 #' stri_count_regex(s,".it")
 #' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
+#' stri_count_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
+#' stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
 #' 
 #' @export
 #' @family count, search, regex

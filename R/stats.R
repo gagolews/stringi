@@ -37,6 +37,12 @@
 #'    \item \code{CharsNWhite} - number of Unicode code points 
 #'    that are  not \code{WHITE_SPACE}s
 #' }
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
+#'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
+#'       lorem. Etiam pellentesque aliquet tellus."
+#' stri_stats_general(s)
+#' 
 #' @family stats
 #' @export
 stri_stats_general <- function(str) {
@@ -64,6 +70,12 @@ stri_stats_general <- function(str) {
 #'    \item \code{Cmds} - number of commands
 #'    \item \code{Envirs} - number of environments
 #' }
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
+#'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
+#'       lorem. Etiam pellentesque aliquet tellus."
+#' stri_stats_latex(s)
+#' 
 #' @family stats
 #' @export
 stri_stats_latex <- function(str) {

@@ -39,6 +39,7 @@
 #'       lorem. Etiam pellentesque aliquet tellus."
 #' stri_wrap(s,20,"d")
 #' cat(stri_wrap(s,20,"d"))
+#' cat(stri_wrap(s,20,"g"))
 #' 
 #' @export
 

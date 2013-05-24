@@ -78,9 +78,8 @@ SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
 	//where to put space (false) and where break line (true)
 	SEXP space;
 	PROTECT(space = allocVector(LGLSXP, n*n));
-	for(int i=0;i<n;i++) // put false everywhere
-		for(int j=0;j<n;j++)
-			LOGICAL(space)[i*n+j]=false;
+	for(int i=0;i<n*n;i++) // put false everywhere
+		LOGICAL(space)[i]=false;
 	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
 		f[j] = costm[j];
 		LOGICAL(space)[j*n+j] = true;

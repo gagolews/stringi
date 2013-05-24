@@ -24,6 +24,9 @@
 #' 
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element 
+#' @examples
+#' stri_numbytes(letters)
+#' stri_numbytes(c('abc','123','\u0105\u0104'))
 #' @export
 #' @family length
 stri_numbytes <- function(str) {
@@ -37,6 +40,9 @@ stri_numbytes <- function(str) {
 #' 
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element
+#' @examples
+#' stri_length(LETTERS)
+#' stri_length(c('abc','123','\u0105\u0104'))
 #' @export
 #' @family length
 stri_length <- function(str) {
@@ -51,6 +57,9 @@ stri_length <- function(str) {
 #' 
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return a logical vector
+#' @examples
+#' stri_isempty(letters[1:3])
+#' stri_isempty(c(',','','abc','123','\u0105\u0104'))
 #' @export
 #' @family length
 stri_isempty <- function(str) {
@@ -67,6 +76,9 @@ stri_isempty <- function(str) {
 #' 
 #' @param str character vector, or a vector to be coerced to a character vector
 #' @return an integer vector giving the sizes of each element
+#' @examples
+#' stri_width(LETTERS[1:5])
+#' stri_width(c('abc','123','\u0105\u0104'))
 #' @export
 #' @family length
 stri_width <- function(str) {
