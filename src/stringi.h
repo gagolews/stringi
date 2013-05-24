@@ -167,18 +167,22 @@ SEXP stri_enc_list();                                   // DONE
 SEXP stri_enc_info(SEXP enc);                           // DONE
 SEXP stri_enc_set(SEXP loc);                            // DONE
 
-SEXP stri_enc_isascii(SEXP s);                          // DONE
-SEXP stri_enc_isutf8(SEXP s);                           // DONE
-// @TODO: stri_enc_detect()                             // ...TODO...
-
 SEXP stri_encode(SEXP str, SEXP from, SEXP to);          // ...TODO...
-
 
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize); // DONE [internal]
 SEXP stri_enc_fromutf32(SEXP str);                      // DONE
 SEXP stri_enc_toutf32(SEXP str);                        // DONE
-SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);   // ...TODO...
-SEXP stri_enc_toascii(SEXP str);                        // ...TODO...
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);   // DONE
+SEXP stri_enc_toascii(SEXP str);                        // DONE
+//@TODO: SEXP stri_enc_fromutf16(SEXP str);             // ...TODO... be careful: BOMs!
+//@TODO: SEXP stri_enc_toutf16(SEXP str);               // ...TODO... -> list with elems of type raw
+
+SEXP stri_enc_isascii(SEXP s);                          // DONE
+SEXP stri_enc_isutf8(SEXP s);                           // DONE
+// @TODO: stri_enc_detect()                             // ...TODO...
+
+
+
 
 // uloc.cpp:
 SEXP stri_locale_info(SEXP loc);                        // DONE

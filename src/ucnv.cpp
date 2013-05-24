@@ -30,6 +30,8 @@
  *  @param enc encoding name or NULL for default encoding (please,
  *       use \code{stri__prepare_arg_enc()})
  *  @return opened UConverter* (must be closed manually after use)
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 UConverter* stri__ucnv_open(const char* enc)
 {
@@ -43,114 +45,6 @@ UConverter* stri__ucnv_open(const char* enc)
    return uconv;
 }
 
-
-// ------------------------------------------------------------------------
-
-/**
- * Convert character vector between given encodings
- *
- * @param s     input character vector
- * @param from  source encoding, \code{NULL} or \code{""} for default enc
- * @param to    target encoding, \code{NULL} or \code{""} for default enc
- * @return a converted character vector
- * 
- * @TODO Encoding marking...
- * 
- * 
- * @version 0.1 (Marek Gagolewski)
- */
-SEXP stri_encode(SEXP s, SEXP from, SEXP to)
-{
-   s = stri_prepare_arg_string(s, "str");
-   R_len_t ns = LENGTH(s);
-   if (ns <= 0) return s;
-
-   const char* selected_from = stri__prepare_arg_enc(from, "from", true);
-   const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
-   UConverter* uconv_from = stri__ucnv_open(selected_from);
-   UConverter* uconv_to = stri__ucnv_open(selected_to);
-
-   // possibly we could check whether from's and to's canonical names
-   // are the same and then return the input as-is (maybe with an Encoding
-   // marking?). this is, however, a rare case. moreover, calling with
-   // from==to may serve as a test for this
-   // function (we check if it's an identity function)
-   
-   
-   int buflen = -1;
-   for (R_len_t i=0; i<ns; ++i) {
-      SEXP si = STRING_ELT(s, i);
-      if (si == NA_STRING) continue;
-      R_len_t ni = LENGTH(si);      
-      if (ni > buflen) buflen = ni;
-   }
-   
-   if (buflen < 0)
-      return stri__vector_NA_strings(ns);
-
-   // this may suffice, but not necessarily
-   // for utf-8 input this may be overestimated
-   buflen = UCNV_GET_MAX_BYTES_FOR_STRING(buflen,
-      (int)ucnv_getMaxCharSize(uconv_to))+1;
-   char* buf = new char[buflen];
-   
-   UErrorCode err;
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, ns));
-      
-   
-   // encode each string
-   for (R_len_t i=0; i<ns; ++i) {
-      SEXP si = STRING_ELT(s, i);
-      if (si == NA_STRING) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      R_len_t ni = LENGTH(si);
-//      if (ni == 0) {...} // do we need that? give it a break :)
-
-      err = U_ZERO_ERROR;
-      UnicodeString trans(CHAR(si), ni, uconv_from, err); // to UTF-16
-      if (U_FAILURE(err)) {
-         warning("could not convert string #%d", i+1);
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-
-      err = U_ZERO_ERROR;
-      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
-
-      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
-#ifndef NDEBUG
-         cerr << "DEBUG: stri_encode: expanding buffer"
-            << buflen << " -> " << buflen_need + 1 << endl;
-#endif
-         buflen = buflen_need + 1;
-         // no buf deallocation needed
-         delete [] buf;
-         buf = new char[buflen];
-
-         err = U_ZERO_ERROR;
-         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
-      }
-
-      if (buflen_need < 0 || U_FAILURE(err)) {
-         warning("could not convert string #%d", i+1);
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-
-
-      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
-   }
-   
-   delete [] buf;
-   ucnv_close(uconv_from);
-   ucnv_close(uconv_to);
-   UNPROTECT(1);
-   return ret;
-}
 
 
 // ------------------------------------------------------------------------
@@ -198,17 +92,10 @@ SEXP stri_enc_set(SEXP enc)
  */
 SEXP stri_enc_list()
 {
-   //R_len_t cs;
-   //const char** standards;
-   //stri__ucnv_getStandards(standards, cs);
-
-   UErrorCode err;
-
    R_len_t c = (R_len_t)ucnv_countAvailable();
+   
    SEXP ret;
    SEXP names;
-
-
    PROTECT(ret = allocVector(VECSXP, c));
    PROTECT(names = allocVector(STRSXP, c));
 
@@ -221,7 +108,7 @@ SEXP stri_enc_list()
 
       SET_STRING_ELT(names, i, mkChar(canonical_name));
 
-      err = U_ZERO_ERROR;
+      UErrorCode err = U_ZERO_ERROR;
       R_len_t ci = (R_len_t)ucnv_countAliases(canonical_name, &err);
       if (U_FAILURE(err) || ci <= 0)
          SET_VECTOR_ELT(ret, i, ScalarString(NA_STRING));
@@ -241,7 +128,6 @@ SEXP stri_enc_list()
       }
    }
 
-   //delete [] standards;
    setAttrib(ret, R_NamesSymbol, names);
    UNPROTECT(2);
    return ret;
@@ -268,11 +154,12 @@ SEXP stri_enc_isascii(SEXP s)
    s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
    
-   SEXP e, curs;
+   SEXP e;
    PROTECT(e = allocVector(LGLSXP, ns));
-   int* be = LOGICAL(e); // may be faster than LOGICAL(e)[i]
+   int* be = LOGICAL(e); // may be faster than LOGICAL(e)[i] all the time
+   
    for (R_len_t i=0; i < ns; ++i) {
-      curs = STRING_ELT(s, i);
+      SEXP curs = STRING_ELT(s, i);
       if (curs == NA_STRING) {
          be[i] = NA_LOGICAL;
          continue;
@@ -280,14 +167,14 @@ SEXP stri_enc_isascii(SEXP s)
       const char* string = CHAR(curs);
       R_len_t ncurs = LENGTH(curs);
       be[i] = true;
-      for (R_len_t j=0; j < ncurs; ++j){
-         if (!U8_IS_SINGLE(string[j])) {
-            be[i] = false;
+      for (R_len_t j=0; j < ncurs; ++j) {
+         if (!U8_IS_SINGLE(string[j])) { // i.e. <= 127
+            be[i] = false; // definitely not ASCII
             break;
          }
       }
-      
    }
+   
    UNPROTECT(1);
    return e;
 }
@@ -308,29 +195,30 @@ SEXP stri_enc_isutf8(SEXP s)
 {
    s = stri_prepare_arg_string(s, "str");
    R_len_t ns = LENGTH(s);
-   UChar32 c;
-   R_len_t ncurs;
-   SEXP e, curs;
+   
+   SEXP e;
    PROTECT(e = allocVector(LGLSXP, ns));
    int* be = LOGICAL(e);
+   
    for (R_len_t i=0; i < ns; ++i) {
-      curs = STRING_ELT(s, i);
+      SEXP curs = STRING_ELT(s, i);
       if (curs == NA_STRING){
          be[i] = NA_LOGICAL;
          continue;
       }
       const char* string = CHAR(curs);
-      ncurs = LENGTH(curs);
+      UChar32 c;
+      R_len_t ncurs = LENGTH(curs);
       be[i] = true;
-      for(R_len_t j=0; j < ncurs; ) {
+      for (R_len_t j=0; j < ncurs; ) {
          U8_NEXT(string, j, ncurs, c);
-         if(c < 0) {
-            be[i] = false;
+         if (c < 0) { // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error 
+            be[i] = false; // definitely not UTF-8
             break;
          }
-      }
-      
+      }   
    }
+   
    UNPROTECT(1);
    return e;
 }
@@ -653,6 +541,8 @@ SEXP stri_enc_info(SEXP enc)
  * @param buf [out] output buffer
  * @param bufsize buffer size
  * @return number of bytes written
+ * 
+ * @version 0.1 (Marek Gagolewski)
  */
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize)
 {
@@ -921,4 +811,119 @@ SEXP stri_enc_toascii(SEXP str)
    UNPROTECT(1);
    return ret;      
 }
+
+
+
+
+// ------------------------------------------------------------------------
+
+/**
+ * Convert character vector between given encodings
+ *
+ * @param s     input character vector
+ * @param from  source encoding, \code{NULL} or \code{""} for default enc
+ * @param to    target encoding, \code{NULL} or \code{""} for default enc
+ * @return a converted character vector
+ * 
+ * @TODO Encoding marking...
+ * 
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_encode(SEXP s, SEXP from, SEXP to)
+{
+   warning("TO DO......");
+   
+   
+   s = stri_prepare_arg_string(s, "str");
+   R_len_t ns = LENGTH(s);
+   if (ns <= 0) return s;
+
+   const char* selected_from = stri__prepare_arg_enc(from, "from", true);
+   const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
+   UConverter* uconv_from = stri__ucnv_open(selected_from);
+   UConverter* uconv_to = stri__ucnv_open(selected_to);
+
+   // possibly we could check whether from's and to's canonical names
+   // are the same and then return the input as-is (maybe with an Encoding
+   // marking?). this is, however, a rare case. moreover, calling with
+   // from==to may serve as a test for this
+   // function (we check if it's an identity function)
+   
+   
+   int buflen = -1;
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP si = STRING_ELT(s, i);
+      if (si == NA_STRING) continue;
+      R_len_t ni = LENGTH(si);      
+      if (ni > buflen) buflen = ni;
+   }
+   
+   if (buflen < 0)
+      return stri__vector_NA_strings(ns);
+
+   // this may suffice, but not necessarily
+   // for utf-8 input this may be overestimated
+   buflen = UCNV_GET_MAX_BYTES_FOR_STRING(buflen,
+      (int)ucnv_getMaxCharSize(uconv_to))+1;
+   char* buf = new char[buflen];
+   
+   UErrorCode err;
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, ns));
+      
+   
+   // encode each string
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP si = STRING_ELT(s, i);
+      if (si == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t ni = LENGTH(si);
+//      if (ni == 0) {...} // do we need that? give it a break :)
+
+      err = U_ZERO_ERROR;
+      UnicodeString trans(CHAR(si), ni, uconv_from, err); // to UTF-16
+      if (U_FAILURE(err)) {
+         warning("could not convert string #%d", i+1);
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      err = U_ZERO_ERROR;
+      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
+
+      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
+#ifndef NDEBUG
+         cerr << "DEBUG: stri_encode: expanding buffer"
+            << buflen << " -> " << buflen_need + 1 << endl;
+#endif
+         buflen = buflen_need + 1;
+         // no buf deallocation needed
+         delete [] buf;
+         buf = new char[buflen];
+
+         err = U_ZERO_ERROR;
+         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
+      }
+
+      if (buflen_need < 0 || U_FAILURE(err)) {
+         warning("could not convert string #%d", i+1);
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+
+      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
+   }
+   
+   delete [] buf;
+   ucnv_close(uconv_from);
+   ucnv_close(uconv_to);
+   UNPROTECT(1);
+   return ret;
+}
+
 

@@ -68,21 +68,21 @@ stri_isempty <- function(str) {
 
 
 
-#' Count the Width of Characters
-#' 
-#' Missing values are handled properly.
-#' This is equivalent to the number of columns the cat() function will use
-#' to print the string in a monospaced font. 
-#' 
-#' @param str character vector, or a vector to be coerced to a character vector
-#' @return an integer vector giving the sizes of each element
-#' @examples
-#' stri_width(LETTERS[1:5])
-#' stri_width(c('abc','123','\u0105\u0104'))
-#' @export
-#' @family length
-stri_width <- function(str) {
-   .Call("stri_width", str, PACKAGE="stringi")
-}
+# #' Count the Width of Characters
+# #' 
+# #' Missing values are handled properly.
+# #' This is equivalent to the number of columns the cat() function will use
+# #' to print the string in a monospaced font. 
+# #' 
+# #' @param str character vector, or a vector to be coerced to a character vector
+# #' @return an integer vector giving the sizes of each element
+# #' @examples
+# #' stri_width(LETTERS[1:5])
+# #' stri_width(c('abc','123','\u0105\u0104'))
+# #' @export
+# #' @family length
+# stri_width <- function(str) {
+#    .Call("stri_width", str, PACKAGE="stringi")
+# }
 
 
