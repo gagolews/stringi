@@ -870,7 +870,55 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
  */
 SEXP stri_enc_toascii(SEXP str)
 {
-   error("TO DO");
-   return str;
+   str = stri_prepare_arg_string(str, "str");
+   R_len_t n = LENGTH(str);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, n));
+   for (R_len_t i=0; i<n; ++i) {
+      SEXP curs = STRING_ELT(str, i);
+      if (curs == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      else if (IS_ASCII(curs)) {
+         SET_STRING_ELT(ret, i, curs);
+      }
+      else if (IS_UTF8(curs)) {
+         R_len_t curn = LENGTH(curs);
+         const char* curs_tab = CHAR(curs);
+         // TODO: buffer reuse....
+         char* buf = new char[curn+1]; // this may be 4 times too much
+         R_len_t k = 0;
+         UChar32 c;
+         for (int j=0; j<curn; ) {
+            U8_NEXT(curs_tab, j, curn, c);
+            if (c > 127)
+               buf[k++] = 0x1a;
+            else
+               buf[k++] = (char)c;
+         }
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         delete [] buf;
+      }
+      else { // some 8-bit encoding
+         R_len_t curn = LENGTH(curs);
+         const char* curs_tab = CHAR(curs);
+         // TODO: buffer reuse....
+         char* buf = new char[curn+1]; 
+         R_len_t k = 0;
+         for (R_len_t j=0; j<curn; ++j) {
+            if (U8_IS_SINGLE(curs_tab[j]))
+               buf[k++] = curs_tab[j];
+            else { 
+               buf[k++] = (char)0x1a; // subst char in ascii
+            }
+         }
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         delete [] buf;
+      }
+   }
+   UNPROTECT(1);
+   return ret;      
 }
 
