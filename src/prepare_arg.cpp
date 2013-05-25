@@ -153,6 +153,39 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 
 
 
+/**
+ * Prepare raw vector argument
+ * 
+ * If the object cannot be coerced, then an error will be generated
+ * 
+ * @param x a raw vector or an object that can be coerced to a raw vector
+ * @param argname argument name (message formatting)
+ * @return raw vector
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
+{
+   if (isFactor(x))
+   {
+      SEXP call;
+      PROTECT(call = lang2(install("as.character"), x));
+      x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+   	UNPROTECT(1);
+      return coerceVector(x, RAWSXP);
+   }
+   else if ((TYPEOF(x) == RAWSXP))
+      return x; // return as-is
+   else if (isVectorAtomic(x))
+      return coerceVector(x, RAWSXP);
+      
+   error(MSG__ARG_EXPECTED_RAW, argname);
+   return x; // avoid compiler warning
+}
+
+
+
+
 
 /** Prepare string argument - one string
  * 

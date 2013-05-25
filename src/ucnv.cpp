@@ -577,9 +577,9 @@ SEXP stri_enc_fromutf32(SEXP vec)
          SEXP cur = VECTOR_ELT(vec, i);
          if (isNull(cur))
             continue;
-         cur = stri_prepare_arg_integer(cur, "vec[i]");
+         if (!isInteger(cur))
+            error(MSG__ARG_EXPECTED_INTEGER_NO_COERCION, "vec[[i]]");
          if (LENGTH(cur) > bufsize) bufsize = LENGTH(cur);
-         SET_VECTOR_ELT(vec, i, cur);
       }
       
       bufsize = U8_MAX_LENGTH*bufsize+1;
@@ -656,7 +656,7 @@ SEXP stri_enc_toutf32(SEXP str)
             
       if (se->isNA(i)) continue; // leave NULL
             
-//      deque<UChar32> chars; // this is slower than usin a common, over-sized buf
+//      deque<UChar32> chars; // this is slower than using a common, over-sized buf
       
       UChar32 c;
       const char* s = se->get(i).c_str();
@@ -725,9 +725,9 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
                if (U8_IS_SINGLE(curs_tab[j]))
                   buf[k++] = curs_tab[j];
                else { // 0xEF 0xBF 0xBD
-                  buf[k++] = (char)0xef;
-                  buf[k++] = (char)0xbf;
-                  buf[k++] = (char)0xbd;
+                  buf[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
+                  buf[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
+                  buf[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
                }
             }
             SET_STRING_ELT(ret, i, mkCharLenCE(buf, k, CE_UTF8));
@@ -783,8 +783,8 @@ SEXP stri_enc_toascii(SEXP str)
          UChar32 c;
          for (int j=0; j<curn; ) {
             U8_NEXT(curs_tab, j, curn, c);
-            if (c > 127)
-               buf[k++] = 0x1a;
+            if (c > ASCII_MAXCHARCODE)
+               buf[k++] = ASCII_SUBSTITUTE;
             else
                buf[k++] = (char)c;
          }
@@ -801,7 +801,7 @@ SEXP stri_enc_toascii(SEXP str)
             if (U8_IS_SINGLE(curs_tab[j]))
                buf[k++] = curs_tab[j];
             else { 
-               buf[k++] = (char)0x1a; // subst char in ascii
+               buf[k++] = (char)ASCII_SUBSTITUTE; // subst char in ascii
             }
          }
          SET_STRING_ELT(ret, i, mkCharLenCE(buf, k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
@@ -840,6 +840,15 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       if (nv <= 0) {
          if (to_raw_logical) return allocVector(VECSXP, 0);
          else return str;
+      }
+      
+      for (R_len_t i=0; i<nv; ++i) {
+         SEXP cur = VECTOR_ELT(str, i);
+         if (isNull(cur))
+            continue;
+         if (!isRaw(cur))
+            error(MSG__ARG_EXPECTED_RAW_NO_COERCION, "str[[i]]");
+            
       }
       
       error("TO DO......");

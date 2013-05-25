@@ -106,6 +106,7 @@ SEXP        stri_prepare_arg_string(SEXP x, const char* argname);          // DO
 SEXP        stri_prepare_arg_double(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_integer(SEXP x, const char* argname);         // DONE
 SEXP        stri_prepare_arg_logical(SEXP x, const char* argname);         // DONE
+SEXP        stri_prepare_arg_raw(SEXP x, const char* argname);             // DONE
 SEXP        stri_prepare_arg_string_1(SEXP x, const char* argname);        // DONE
 SEXP        stri_prepare_arg_double_1(SEXP x, const char* argname);        // DONE
 SEXP        stri_prepare_arg_integer_1(SEXP x, const char* argname);       // DONE

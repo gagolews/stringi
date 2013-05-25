@@ -322,6 +322,8 @@ stri_enc_toutf32 <- function(str) {
 #' If an incorrect codepoint is given, a warning is generated
 #' and the corresponding element in the return vector is set to \code{NA}.
 #' 
+#' \code{NULL} list elems are converted to \code{NA_character_}.
+#' 
 #' @param vec list of integer vectors or, for convenience, a single integer vector
 #' @return character vector
 #' 

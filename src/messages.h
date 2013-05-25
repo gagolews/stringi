@@ -57,7 +57,8 @@
    
 #define MSG__EXPECTED_LOGICAL \
    "incorrect argument: expected a logical vector"
-   
+
+ 
 #define MSG__EXPECTED_ASCII \
    "incorrect argument: the string contains non-ASCII characters"
 
@@ -126,6 +127,9 @@
 #define MSG__ARG_EXPECTED_STRING \
    "argument `%s` should be a character vector (or an object coercible to)"
 
+#define MSG__ARG_EXPECTED_RAW \
+   "argument `%s` should be a raw vector (or an object coercible to)"
+   
 #define MSG__ARG_EXPECTED_LOGICAL \
    "argument `%s` should be a logical vector (or an object coercible to)"
 
@@ -134,5 +138,20 @@
 
 #define MSG__ARG_EXPECTED_NUMERIC \
    "argument `%s` should be a numeric vector (or an object coercible to)"
+
+#define MSG__ARG_EXPECTED_STRING_NO_COERCION \
+   "argument `%s` should be a character vector"
+
+#define MSG__ARG_EXPECTED_RAW_NO_COERCION \
+   "argument `%s` should be a raw vector"
    
+#define MSG__ARG_EXPECTED_LOGICAL_NO_COERCION \
+   "argument `%s` should be a logical vector"
+
+#define MSG__ARG_EXPECTED_INTEGER_NO_COERCION \
+   "argument `%s` should be an integer vector"
+
+#define MSG__ARG_EXPECTED_NUMERIC_NO_COERCION \
+   "argument `%s` should be a numeric vector"
+
 #endif

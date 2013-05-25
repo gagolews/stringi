@@ -230,7 +230,7 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
    for (R_len_t i=0; i<narg; ++i) {
       SEXP cur = stri_prepare_arg_string(VECTOR_ELT(s, i), "...");  
       R_len_t ncur = LENGTH(cur);
-      SET_VECTOR_ELT(s, i, cur);
+      SET_VECTOR_ELT(s, i, cur); // Here we are sure that this is legal and does not influence other objects
       if (ncur <= 0) return stri__vector_empty_strings(0);
       if (ncur > nmax) nmax = ncur;
    }

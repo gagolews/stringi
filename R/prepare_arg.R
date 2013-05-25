@@ -46,7 +46,7 @@
 NULL
 
 
-#' Prepare a String Argument (Internal Method)
+#' Prepare a String Vector Argument (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return if x is a string, it is returned with no change.
@@ -61,10 +61,10 @@ stri_prepare_arg_string <- function(x) {
 }
 
 
-#' Prepare a Numeric Argument (Internal Method)
+#' Prepare a Numeric Vector Argument (Internal Method)
 #' 
 #' @param x argument to be checked
-#' @return if x is a factor, as.character is called.
+#' @return if x is a factor, as.character is called + coercion to numeric.
 #' if a double, it is returned with no change.
 #' if atomic vector (also a matrix), it is coerced to double vector.
 #' otherwise the function throws an error.
@@ -75,10 +75,10 @@ stri_prepare_arg_double <- function(x) {
 }
 
 
-#' Prepare an Integer Argument (Internal Method)
+#' Prepare an Integer Vector Argument (Internal Method)
 #' 
 #' @param x argument to be checked
-#' @return if x is a factor, as.character is called.
+#' @return if x is a factor, as.character is called + coercion to integer.
 #' if an integer, it is returned with no change.
 #' if atomic vector (also a matrix), it is coerced to integer vector.
 #' otherwise the function throws an error.
@@ -90,11 +90,11 @@ stri_prepare_arg_integer <- function(x) {
 
 
 
-#' Prepare a Logical Srgument (Internal Method)
+#' Prepare a Logical Vector Argument (Internal Method)
 #' 
 #' @param x argument to be checked
-#' @return if x is a logical, it is returned with no change.
-#' if factor, as.character is called.
+#' @return if x is a logical vector, it is returned with no change.
+#' if factor, as.character is called + coercion to logical.
 #' if atomic vector (also a matrix), it is coerced to logical vector.
 #' otherwise the function throws an error.
 #' 
@@ -104,8 +104,22 @@ stri_prepare_arg_logical <- function(x) {
 }
 
 
+#' Prepare a Raw Vector Argument (Internal Method)
+#' 
+#' @param x argument to be checked
+#' @return if x is a raw vector, it is returned with no change.
+#' if factor, as.character is called + coercion to raw.
+#' if atomic vector (also a matrix), it is coerced to a raw vector.
+#' otherwise the function throws an error.
+#' 
+#' @family prepare_arg
+stri_prepare_arg_raw <- function(x) {
+   .Call("stri_prepare_arg_raw", x, NULL, PACKAGE="stringi")  
+}
 
-#' Prepare a String Argument [Single Value] (Internal Method)
+
+
+#' Prepare a String Vector Argument [Single Value] (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return 
@@ -120,7 +134,7 @@ stri_prepare_arg_string_1 <- function(x) {
 }
 
 
-#' Prepare a Numeric Argument [Single Value] (Internal Method)
+#' Prepare a Numeric Vector Argument [Single Value] (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return
@@ -135,7 +149,7 @@ stri_prepare_arg_double_1 <- function(x) {
 }
 
 
-#' Prepare an Integer Argument [Single Value] (Internal Method)
+#' Prepare an Integer Vector Argument [Single Value] (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return
@@ -151,7 +165,7 @@ stri_prepare_arg_integer_1 <- function(x) {
 
 
 
-#' Prepare a Logical Argument [Single Value] (Internal Method)
+#' Prepare a Logical Vector Argument [Single Value] (Internal Method)
 #' 
 #' @param x argument to be checked
 #' @return 

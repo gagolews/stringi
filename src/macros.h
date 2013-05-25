@@ -39,7 +39,7 @@
 #define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 #define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
 
-
+#define isRaw(x) (TYPEOF(x) == RAWSXP)
 
 /**
  * ...
@@ -71,7 +71,10 @@ enum StriNormalizationForm {
 /// Unicode replacement character
 #define UCHAR_REPLACEMENT 0xFFFD
 #define ASCII_SUBSTITUTE  0x1A
-
+#define ASCII_MAXCHARCODE 127
+#define UCHAR_REPLACEMENT_UTF8_BYTE1 0xef
+#define UCHAR_REPLACEMENT_UTF8_BYTE2 0xbf
+#define UCHAR_REPLACEMENT_UTF8_BYTE3 0xbd
 
 // uchar.cpp:
 #define STRI__UCHAR_COMPLEMENT_MASK      0x40000000
