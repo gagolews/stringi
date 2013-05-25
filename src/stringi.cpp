@@ -58,7 +58,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_enc_toascii,                1),
    STRI__MAKE_CALL_METHOD(stri_enc_toutf8,                 2),
    STRI__MAKE_CALL_METHOD(stri_enc_toutf32,                1),
-   STRI__MAKE_CALL_METHOD(stri_encode,                     3),
+   STRI__MAKE_CALL_METHOD(stri_encode,                     4),
    STRI__MAKE_CALL_METHOD(stri_flatten,                    2),
    STRI__MAKE_CALL_METHOD(stri_flatten_nosep,              1),
    STRI__MAKE_CALL_METHOD(stri_info,                       0),

@@ -88,17 +88,17 @@ UCollator* stri__ucol_open(SEXP collator_opts)
             ucol_setAttribute(col, UCOL_CASE_FIRST,
                (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:(LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST)), &err);
          } else if  (!strcmp(curname, "uppercase_first")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(collator_opts, i), "uppercase_first");
-            ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, LOGICAL(val)[0]?UCOL_ON:UCOL_OFF, &err);
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "uppercase_first");
+            ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "case_level")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(collator_opts, i), "case_level");
-            ucol_setAttribute(col, UCOL_CASE_LEVEL, LOGICAL(val)[0]?UCOL_ON:UCOL_OFF, &err);
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "case_level");
+            ucol_setAttribute(col, UCOL_CASE_LEVEL, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "normalization")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(collator_opts, i), "normalization");
-            ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, LOGICAL(val)[0]?UCOL_ON:UCOL_OFF, &err);
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "normalization");
+            ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "numeric")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(collator_opts, i), "numeric");
-            ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, LOGICAL(val)[0]?UCOL_ON:UCOL_OFF, &err);
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "numeric");
+            ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else {
             warning(MSG__INCORRECT_COLLATOR_OPTION, curname);
          }

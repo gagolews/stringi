@@ -279,6 +279,25 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 
 
 
+/** Prepare logical argument - one value, not NA
+ * 
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ * 
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return a boolean value
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ */
+bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_logical_1(x, argname);
+   int xval = LOGICAL(x)[0];
+   if (xval == NA_LOGICAL)
+      error(MSG__ARG_EXPECTED_NOT_NA, argname);
+   return (bool)xval;
+}
 
 
 /**

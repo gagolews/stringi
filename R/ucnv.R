@@ -242,25 +242,47 @@ stri_enc_isutf8 <- function(str) {
 
 #' Convert Character Vector Between Given Encodings 
 #' 
+#' \code{stri_conv} is an alias for \code{stri_encode}.
+#' 
 #' If enc is missing, NULL (default encoding) is used
 #' 
-#' TO DO: Note problems with UTF-16 and UTF-32
-#' - embedded NULS..... Bytes encoding marks.....
+#' Note that possible problems may occur with \code{to}
+#' set to UTF-16 and UTF-32, as the output strings may have embedded NULs.
+#' In such cases use \code{to_raw=TRUE} and consider
+#' specyfying a byte order marker (BOM) for portability reasons
+#' (e.g. give \code{UTF-16LE} or \code{UTF-16BE}).
 #' 
-#' @param str character vector to be converted
+#' For \code{to_raw=FALSE}, the strings always have marked encodings
+#' according to the converter
+#' used (as specified by \code{to}) and the current default Encoding
+#' (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
+#' or \code{bytes} in other cases).
+#' 
+#' @param str character vector or a list of \code{raw} vectors
+#' to be converted
 #' @param from input encoding:
 #'       \code{NULL} or \code{""} for default encoding,
 #'       or a single string with encoding name
 #' @param from target encoding:
 #'       \code{NULL} or \code{""} for default encoding,
 #'       or a single string with encoding name
-#' @return A character vector with encoded strings.
+#' @param to_raw single logical value: should a list of raw vectors
+#' be returned rather than a character vector?
+#' @return A character vector with encoded strings
+#' (if \code{to_raw} is \code{FALSE}) or a list of raw vectors
+#' otherwise.
+#' 
 #' @family encoding
+#' @rdname stri_encode
 #' @export
-stri_encode <- function(str, from, to=NULL) {
+stri_encode <- function(str, from, to=NULL, to_raw=FALSE) {
    .Call("stri_encode", str, from, to, PACKAGE="stringi")
 }
 
+
+#' @rdname stri_encode
+#' @export
+stri_conv <- stri_encode
 
 
 #' Convert To UTF-32

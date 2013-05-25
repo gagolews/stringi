@@ -215,7 +215,7 @@ struct StriSortCodepoints {
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
    UCollator* col = stri__ucol_open(collator_opts);      
-   decreasing = stri_prepare_arg_logical_1(decreasing, "decreasing");
+   bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t nout = LENGTH(str);
    
@@ -243,8 +243,6 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    
    // TO DO: think of using sort keys...
    // however, now it's quite fast...
-   
-   bool decr = (LOGICAL(decreasing)[0]==true);
    
    // check if already sorted - if not - sort!
    for (R_len_t i = 0; i<nout-countNA-1; ++i) {

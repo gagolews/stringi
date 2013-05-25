@@ -110,6 +110,7 @@ SEXP        stri_prepare_arg_string_1(SEXP x, const char* argname);        // DO
 SEXP        stri_prepare_arg_double_1(SEXP x, const char* argname);        // DONE
 SEXP        stri_prepare_arg_integer_1(SEXP x, const char* argname);       // DONE
 SEXP        stri_prepare_arg_logical_1(SEXP x, const char* argname);       // DONE
+bool        stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname); // DONE
 const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault); // DONE
 const char* stri__prepare_arg_enc(SEXP loc, const char* argname, bool allowdefault);    // DONE
 
@@ -167,7 +168,7 @@ SEXP stri_enc_list();                                   // DONE
 SEXP stri_enc_info(SEXP enc);                           // DONE
 SEXP stri_enc_set(SEXP loc);                            // DONE
 
-SEXP stri_encode(SEXP str, SEXP from, SEXP to);          // ...TODO...
+SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);   // ...TODO...
 
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize); // DONE [internal]
 SEXP stri_enc_fromutf32(SEXP str);                      // DONE
