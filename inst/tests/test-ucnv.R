@@ -30,6 +30,9 @@ test_that("stri_encode", {
       charToRaw(stri_encode(.polish_chars_cp1250, "cp1250", "utf8")),
       charToRaw(.polish_chars_utf8))
    
+   expect_equivalent(
+      stri_encode(stri_encode(c("\u0105abc\u0104", NA, "\ufffd\u5432"), "UTF-8", "latin2", to_raw=TRUE), "latin2", "UTF-8"),
+      c("\u0105abc\u0104",    NA,         "\032\032"))
 })
 
 

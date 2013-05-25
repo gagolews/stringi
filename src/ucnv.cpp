@@ -577,7 +577,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
          SEXP cur = VECTOR_ELT(vec, i);
          if (isNull(cur))
             continue;
-         if (!isInteger(cur))
+         if (!isInteger(cur)) // this cannot be treated with stri_prepare_arg*, as vec may be a mem-shared object
             error(MSG__ARG_EXPECTED_INTEGER_NO_COERCION, "vec[[i]]");
          if (LENGTH(cur) > bufsize) bufsize = LENGTH(cur);
       }
@@ -835,47 +835,102 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
    
+   // check is args passed are OK
    if (isVectorList(str)) {
-      R_len_t nv = LENGTH(str);
-      if (nv <= 0) {
-         if (to_raw_logical) return allocVector(VECSXP, 0);
-         else return str;
-      }
-      
+      R_len_t nv = LENGTH(str);   
       for (R_len_t i=0; i<nv; ++i) {
          SEXP cur = VECTOR_ELT(str, i);
          if (isNull(cur))
             continue;
-         if (!isRaw(cur))
+         if (!isRaw(cur))  // this cannot be treated with stri_prepare_arg*, as str may be a mem-shared object
             error(MSG__ARG_EXPECTED_RAW_NO_COERCION, "str[[i]]");
             
       }
-      
-      error("TO DO......");
-      
-      UConverter* uconv_from = stri__ucnv_open(selected_from);
-      UConverter* uconv_to = stri__ucnv_open(selected_to);
    }
-   else {
+   else
       str = stri_prepare_arg_string(str, "str");
-      R_len_t ns = LENGTH(str);
-      if (ns <= 0) {
-         if (to_raw_logical) return allocVector(VECSXP, 0);
-         else return str;
+   
+   // get number of strings to convert, if == 0, then you know what's the result
+   R_len_t ns = LENGTH(str);
+   if (ns <= 0) return allocVector(to_raw_logical?VECSXP:STRSXP, 0);
+   bool is_vector_arg = (bool)(isVectorList(str));
+   
+   // Open converters
+   UConverter* uconv_from = stri__ucnv_open(selected_from);
+   UConverter* uconv_to = stri__ucnv_open(selected_to);
+   
+   // Get target encoding mark
+   UErrorCode err = U_ZERO_ERROR;
+   const char* uconv_to_name = ucnv_getName(uconv_to, &err);
+   if (!U_SUCCESS(err))
+      error(MSG__INTERNAL_ERROR);
+   cetype_t encmark_to;
+   if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
+      encmark_to = CE_UTF8; // no CE for ASCII, will be auto-detected by mkCharLenCE
+   else if (!strcmp(uconv_to_name, "ISO-8859-1"))
+      encmark_to = CE_LATIN1;
+   else if (!strcmp(uconv_to_name, ucnv_getDefaultName()))
+      encmark_to = CE_NATIVE;
+   else
+      encmark_to = CE_BYTES; // all other cases - bytes enc (this is reasonable, isn't it?)
+   
+   // Prepare out val
+   SEXP ret;
+   PROTECT(ret = allocVector(to_raw_logical?VECSXP:STRSXP, ns));
+   
+   char* buf = 0;
+   R_len_t buflen = 0;
+   
+   for (R_len_t i=0; i<ns; ++i) {
+      SEXP curs;
+      bool isNA = false;
+      const char* curd = 0;
+      if (is_vector_arg) {
+         curs = VECTOR_ELT(str, i);
+         if (isNull(curs)) isNA = true;
+         else curd = (const char*)RAW(curs);
+      }
+      else {
+         curs = STRING_ELT(str, i);
+         if (curs == NA_STRING) isNA = true;
+         else curd = (const char*)CHAR(curs);
       }
       
-      error("TO DO......");
+      if (isNA) {
+         if (to_raw_logical) SET_VECTOR_ELT(ret, i, R_NilValue);
+         else                SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
       
-      UConverter* uconv_from = stri__ucnv_open(selected_from);
-      UConverter* uconv_to = stri__ucnv_open(selected_to);
+      R_len_t curn = LENGTH(curs);
+      
+      err = U_ZERO_ERROR;
+      UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16
+      if (!U_SUCCESS(err))
+         error(MSG__INTERNAL_ERROR);
+      
+      err = U_ZERO_ERROR;
+      R_len_t bufneed = encs.extract(buf, buflen, uconv_to, err); // UTF-16 -> TO
+      if (bufneed > buflen) { // larger buffer needed
+         if (buf) delete[] buf;
+         buflen = bufneed+1;
+         buf = new char[buflen];
+         err = U_ZERO_ERROR;
+         bufneed = encs.extract(buf, buflen, uconv_to, err);
+         if (bufneed > buflen || !U_SUCCESS(err))
+            error(MSG__INTERNAL_ERROR);
+      }
+      
+      
+      if (to_raw_logical) {
+         SEXP outobj = allocVector(RAWSXP, bufneed);
+         memcpy(RAW(outobj), buf, bufneed);
+         SET_VECTOR_ELT(ret, i, outobj);
+      }
+      else {
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, bufneed, encmark_to));
+      }
    }
-
-   // possibly we could check whether from's and to's canonical names
-   // are the same and then return the input as-is (maybe with an Encoding
-   // marking?). this is, however, a rare case. moreover, calling with
-   // from==to may serve as a test for this
-   // function (we check if it's an identity function)
-   
    
 //   int buflen = -1;
 //   for (R_len_t i=0; i<ns; ++i) {
@@ -945,11 +1000,11 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 //      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
 //   }
 //   
-//   delete [] buf;
-//   ucnv_close(uconv_from);
-//   ucnv_close(uconv_to);
-//   UNPROTECT(1);
-//   return ret;
+   delete [] buf;
+   ucnv_close(uconv_from);
+   ucnv_close(uconv_to);
+   UNPROTECT(1);
+   return ret;
 }
 
 

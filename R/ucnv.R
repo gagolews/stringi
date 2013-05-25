@@ -276,7 +276,7 @@ stri_enc_isutf8 <- function(str) {
 #' @rdname stri_encode
 #' @export
 stri_encode <- function(str, from, to=NULL, to_raw=FALSE) {
-   .Call("stri_encode", str, from, to, PACKAGE="stringi")
+   .Call("stri_encode", str, from, to, to_raw, PACKAGE="stringi")
 }
 
 
