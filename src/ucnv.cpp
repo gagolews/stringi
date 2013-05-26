@@ -864,15 +864,15 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    const char* uconv_to_name = ucnv_getName(uconv_to, &err);
    if (!U_SUCCESS(err))
       error(MSG__INTERNAL_ERROR);
-   cetype_t encmark_to;
-   if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
-      encmark_to = CE_UTF8; // no CE for ASCII, will be auto-detected by mkCharLenCE
-   else if (!strcmp(uconv_to_name, "ISO-8859-1"))
-      encmark_to = CE_LATIN1;
-   else if (!strcmp(uconv_to_name, ucnv_getDefaultName()))
-      encmark_to = CE_NATIVE;
-   else
-      encmark_to = CE_BYTES; // all other cases - bytes enc (this is reasonable, isn't it?)
+   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones - bytes enc (this is reasonable, isn't it?)
+   if (!to_raw_logical) { // otherwise not needed
+      if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
+         encmark_to = CE_UTF8; // no CE for ASCII, will be auto-detected by mkCharLenCE
+      else if (!strcmp(uconv_to_name, "ISO-8859-1"))
+         encmark_to = CE_LATIN1;
+      else if (!strcmp(uconv_to_name, ucnv_getDefaultName()))
+         encmark_to = CE_NATIVE;
+   }
    
    // Prepare out val
    SEXP ret;
@@ -905,13 +905,21 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       R_len_t curn = LENGTH(curs);
       
       err = U_ZERO_ERROR;
-      UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16
+      UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
       if (!U_SUCCESS(err))
          error(MSG__INTERNAL_ERROR);
       
+      R_len_t bufneed = encs.length()*ucnv_getMaxCharSize(uconv_to)+1;
+      if (bufneed > buflen) {
+         if (buf) delete [] buf;
+         buflen = bufneed;
+         buf = new char[buflen];
+      }
+      
       err = U_ZERO_ERROR;
-      R_len_t bufneed = encs.extract(buf, buflen, uconv_to, err); // UTF-16 -> TO
+      bufneed = encs.extract(buf, buflen, uconv_to, err); // UTF-16 -> TO
       if (bufneed > buflen) { // larger buffer needed
+//         warning("buf extending");
          if (buf) delete[] buf;
          buflen = bufneed+1;
          buf = new char[buflen];
@@ -920,7 +928,6 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          if (bufneed > buflen || !U_SUCCESS(err))
             error(MSG__INTERNAL_ERROR);
       }
-      
       
       if (to_raw_logical) {
          SEXP outobj = allocVector(RAWSXP, bufneed);
@@ -932,74 +939,6 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       }
    }
    
-//   int buflen = -1;
-//   for (R_len_t i=0; i<ns; ++i) {
-//      SEXP si = STRING_ELT(s, i);
-//      if (si == NA_STRING) continue;
-//      R_len_t ni = LENGTH(si);      
-//      if (ni > buflen) buflen = ni;
-//   }
-//   
-//   if (buflen < 0)
-//      return stri__vector_NA_strings(ns);
-//
-//   // this may suffice, but not necessarily
-//   // for utf-8 input this may be overestimated
-//   buflen = UCNV_GET_MAX_BYTES_FOR_STRING(buflen,
-//      (int)ucnv_getMaxCharSize(uconv_to))+1;
-//   char* buf = new char[buflen];
-//   
-//   UErrorCode err;
-//   SEXP ret;
-//   PROTECT(ret = allocVector(STRSXP, ns));
-//      
-//   
-//   // encode each string
-//   for (R_len_t i=0; i<ns; ++i) {
-//      SEXP si = STRING_ELT(s, i);
-//      if (si == NA_STRING) {
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//      
-//      R_len_t ni = LENGTH(si);
-////      if (ni == 0) {...} // do we need that? give it a break :)
-//
-//      err = U_ZERO_ERROR;
-//      UnicodeString trans(CHAR(si), ni, uconv_from, err); // to UTF-16
-//      if (U_FAILURE(err)) {
-//         warning("could not convert string #%d", i+1);
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//
-//      err = U_ZERO_ERROR;
-//      int buflen_need = trans.extract(buf, buflen, uconv_to, err);
-//
-//      if (buflen_need >= 0 && U_FAILURE(err)) { // enlarge the buffer
-//#ifndef NDEBUG
-//         cerr << "DEBUG: stri_encode: expanding buffer"
-//            << buflen << " -> " << buflen_need + 1 << endl;
-//#endif
-//         buflen = buflen_need + 1;
-//         // no buf deallocation needed
-//         delete [] buf;
-//         buf = new char[buflen];
-//
-//         err = U_ZERO_ERROR;
-//         buflen_need = trans.extract(buf, buflen, uconv_to, err); // try again
-//      }
-//
-//      if (buflen_need < 0 || U_FAILURE(err)) {
-//         warning("could not convert string #%d", i+1);
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//
-//
-//      SET_STRING_ELT(ret, i, mkCharLen(buf, buflen_need)); /// @TODO: mark encoding
-//   }
-//   
    delete [] buf;
    ucnv_close(uconv_from);
    ucnv_close(uconv_to);
