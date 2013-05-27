@@ -134,9 +134,11 @@ SEXP stri_stats_latex(SEXP str);
 
 
 // sub.cpp
-R_len_t stri__UChar32_to_UTF8_index(const char* s, R_len_t n, R_len_t i, R_len_t lasti=-1, R_len_t lastres=-1);
-SEXP stri_sub_from_to(SEXP str, SEXP from, SEXP to);           // ..TODO..
-SEXP stri_sub_from_length(SEXP str, SEXP from, SEXP length);   // ..TODO..
+R_len_t stri__UChar32_to_UTF8_index_fwd(const char* s, R_len_t n, R_len_t i,
+   R_len_t lasti=-1, R_len_t lastres=-1);                      // DONE [internal]
+R_len_t stri__UChar32_to_UTF8_index_back(const char* s, R_len_t n, R_len_t i, 
+   R_len_t lasti=-1, R_len_t lastres=-1);                      // DONE [internal]
+SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);      // DONE
 SEXP stri_sub_op(SEXP str, SEXP from, SEXP to, SEXP value);    // ..TODO..
 
 

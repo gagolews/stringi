@@ -46,6 +46,7 @@
 #' Negative \code{length} means counting backwards.
 #' 
 #' In case of out-of-bound indices, they are silently corrected.
+#' If \code{from} > \code{to}, then an empty string is returned.
 #' 
 #' @return character vector
 #' 
@@ -84,12 +85,12 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
          warning("argument `length` is ignored in given context")
       if (is.matrix(from) && !missing(to))
          warning("argument `to` is ignored in given context")
-      .Call("stri_sub_from_to", str, from, to, PACKAGE="stringi")
+      .Call("stri_sub", str, from, to, NULL, PACKAGE="stringi")
    }
    else {
       if (!missing(to))
          warning("argument `to` is ignored in given context")
-      .Call("stri_sub_from_length", str, from, length, PACKAGE="stringi")
+      .Call("stri_sub", str, from, NULL, length, PACKAGE="stringi")
    }
 }
 

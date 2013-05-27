@@ -16,16 +16,47 @@ local({
    	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
    	massa nibh nec erat."
    to <- stri_length(s)
-   print(microbenchmark(stri_sub(s),substr(s,1,to)))
-   print(microbenchmark(stri_sub(s,1:10,11:20),str_sub(s,1:10,11:20)))
+   print(microbenchmark(
+      stri_sub(s),
+      substr(s,1,to),
+      str_sub(s)
+   ))
+   stopifnot(all(stri_sub(s)==str_sub(s)))
+   
+   print(microbenchmark(
+      stri_sub(s,to-5,to),
+      substr(s,to-5,to),
+      str_sub(s,to-5,to)
+   ))
+   
+   print(microbenchmark(
+      stri_sub(s,1:10,11:20),
+      str_sub(s,1:10,11:20)
+   ))
    
    srep <- rep(s,10)
-   print(microbenchmark(stri_sub(srep,10,20),substr(srep,10,20)))
-   print(microbenchmark(stri_sub(s,1:100,-(1:100)),str_sub(s,1:100,-(1:100))))
-   #print(microbenchmark(stri_sub(s,"co"),substr(s,"co",TRUE)))
+   print(microbenchmark(
+      stri_sub(srep,10,20),
+      substr(srep,10,20),
+      str_sub(srep,10,20)
+   ))
+   
+   print(microbenchmark(
+      stri_sub(s,1:100,-(1:100)),
+      str_sub(s,1:100,-(1:100))
+   ))
 
-   srepdup <- stri_dup(srep,10)
-   print(microbenchmark(stri_sub(srepdup,1:100,1:100),str_sub(srepdup,1:100,1:100)))
-   print(microbenchmark(stri_sub(srepdup,1:100),str_sub(srepdup,1:100)))
+
+   srepdup <- stri_dup(srep,100)
+   print(microbenchmark(
+      stri_sub(srepdup,1:100,1:100),
+      str_sub(srepdup,1:100,1:100)
+   ))
+   stopifnot(all(stri_sub(srepdup,1:100,1:100)==str_sub(srepdup,1:100,1:100)))
+   
+   print(microbenchmark(
+      stri_sub(srepdup,1:100),
+      str_sub(srepdup,1:100)
+   ))
    
 })

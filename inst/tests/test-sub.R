@@ -21,9 +21,12 @@ test_that("stri_sub", {
    
    expect_identical(stri_sub("123",-1),"3")
 	expect_identical(stri_sub("123",-3),"123")
+	expect_identical(stri_sub("123",3,length=-1:3),c("","","3","3","3"))
+	expect_identical(stri_sub("123",2,length=-1:3),c("","","2","23","23"))
+	expect_identical(stri_sub("123",1,length=-1:3),c("","","1","12","123"))
 	expect_identical(stri_sub("123",-1,length=-1:3),c("","","3","3","3"))
-	
-	
+	expect_identical(stri_sub("123",-2,length=-1:3),c("","","2","23","23"))
+	expect_identical(stri_sub("123",-3,length=-1:3),c("","","1","12","123"))
 })
 
 test_that("stri_sub<-", {
