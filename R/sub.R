@@ -61,28 +61,8 @@
 #' @family indexing
 #' @export
 stri_sub <- function(str, from = 1L, to = -1L, length) {
-#    # prepare_arg done internally
-#    if(is.matrix(from) && ncol(from) == 2){
-#       if(!missing(to) || !missing(length))
-#          warning("'from' is matrix, so 'to' and 'length' are ignored")
-#       to   <- from[ , 2]
-#       from <- from[ , 1]
-#    }else if(missing(to) && !missing(length)){
-#       to <- from + length -1
-#       # if from <0 then counting is done from the end of string, so if
-#       #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
-#       #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
-#       #that's why we need this:
-#       w <- from < 0 & to >= 0
-#       to[w] <- -1
-#       #if length is negative then return an empty string
-#       w <- length <= 0
-#       to[w] <- 0
-#    }
    # Whoaaa! One of the longest-code R functions in stringi :)
    if (missing(length)) {
-      if (!missing(length))
-         warning("argument `length` is ignored in given context")
       if (is.matrix(from) && !missing(to))
          warning("argument `to` is ignored in given context")
       .Call("stri_sub", str, from, to, NULL, PACKAGE="stringi")
@@ -90,6 +70,8 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
    else {
       if (!missing(to))
          warning("argument `to` is ignored in given context")
+      if (is.matrix(from))
+         warning("argument `length` is ignored in given context")
       .Call("stri_sub", str, from, NULL, length, PACKAGE="stringi")
    }
 }
