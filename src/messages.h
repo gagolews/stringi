@@ -154,4 +154,16 @@
 #define MSG__ARG_EXPECTED_NUMERIC_NO_COERCION \
    "argument `%s` should be a numeric vector"
 
+#define MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS \
+   "argument `%s` should be a matrix with %d columns"
+
+#define MSG__ARG_EXPECTED_NOT_MATRIX \
+   "argument `%s` is a matrix, which is not supported in given context"
+
+#define MSG__ARG_IGNORING \
+   "ignoring argument `%s` in given context"
+
+#define MSG__ARG_EXCLUSIVE \
+   "arguments `%s` and `%s` are mutually exclusive in given context"
+   
 #endif

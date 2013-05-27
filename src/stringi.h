@@ -122,9 +122,9 @@ SEXP stri_reverse(SEXP s);                                              // DONE
 
 
 // split.cpp
-SEXP stri_split_class(SEXP s, SEXP c);
-SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
-SEXP stri_split_pos(SEXP s, SEXP from, SEXP to);
+SEXP stri_split_class(SEXP str, SEXP c);
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
+SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);
 SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
 
 
@@ -134,17 +134,19 @@ SEXP stri_stats_latex(SEXP str);
 
 
 // sub.cpp
-SEXP stri_sub(SEXP s, SEXP from, SEXP to);
-SEXP stri_sub_op(SEXP s, SEXP from, SEXP to, SEXP value);
+R_len_t stri__UChar32_to_UTF8_index(const char* s, R_len_t n, R_len_t i, R_len_t lasti=-1, R_len_t lastres=-1);
+SEXP stri_sub_from_to(SEXP str, SEXP from, SEXP to);           // ..TODO..
+SEXP stri_sub_from_length(SEXP str, SEXP from, SEXP length);   // ..TODO..
+SEXP stri_sub_op(SEXP str, SEXP from, SEXP to, SEXP value);    // ..TODO..
 
 
 // trim.cpp:
 void stri__locate_trim1(const char* s, int n, int& first, int& last);
-SEXP stri_trim(SEXP s);
-SEXP stri_ltrim(SEXP s);
-SEXP stri_rtrim(SEXP s);
-SEXP stri_trim_all(SEXP s);
-SEXP stri_pad(SEXP s, SEXP width, SEXP side, SEXP pad);
+SEXP stri_trim(SEXP str);
+SEXP stri_ltrim(SEXP str);
+SEXP stri_rtrim(SEXP str);
+SEXP stri_trim_all(SEXP str);
+SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);
 
 
 // uchar.cpp:
@@ -153,7 +155,7 @@ void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,
    int* i1, int* i2, const int ni, int adj1=0, int adj2=0);  // DONE
 void stri__uchar_charType(const char* s, int n, int* codes);
 SEXP stri_charcategories();
-SEXP stri_chartype(SEXP s);
+SEXP stri_chartype(SEXP str);
 SEXP stri_char_getcategoryid(SEXP x);
 SEXP stri_char_getpropertyid(SEXP x);
 
@@ -169,7 +171,7 @@ SEXP stri_enc_list();                                   // DONE
 SEXP stri_enc_info(SEXP enc);                           // DONE
 SEXP stri_enc_set(SEXP loc);                            // DONE
 
-SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);   // ...TODO...
+SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);   // DONE
 
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize); // DONE [internal]
 SEXP stri_enc_fromutf32(SEXP str);                      // DONE
@@ -179,9 +181,9 @@ SEXP stri_enc_toascii(SEXP str);                        // DONE
 //@TODO: SEXP stri_enc_fromutf16(SEXP str);             // ...TODO... be careful: BOMs!
 //@TODO: SEXP stri_enc_toutf16(SEXP str);               // ...TODO... -> list with elems of type raw
 
-SEXP stri_enc_isascii(SEXP s);                          // DONE
-SEXP stri_enc_isutf8(SEXP s);                           // DONE
-// @TODO: stri_enc_detect()                             // ...TODO...
+SEXP stri_enc_isascii(SEXP str);                          // DONE
+SEXP stri_enc_isutf8(SEXP str);                           // DONE
+// @TODO: stri_enc_detect()                               // ...TODO...
 
 
 
@@ -234,10 +236,10 @@ SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
 
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern);                         // DONE
-SEXP stri_count_regex(SEXP s, SEXP pattern);                            // DONE
+SEXP stri_count_regex(SEXP str, SEXP pattern);                          // DONE
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                     // DONE
 SEXP stri_locate_first_regex(SEXP str, SEXP patternp);                  // DONE
-SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r);                    // DONE
+SEXP stri_replace_all_regex(SEXP str, SEXP p, SEXP r);                  // DONE
 
 
 

@@ -18,16 +18,35 @@
 
 
 
-#' Extract substrings from a character vector
+#' Extract Substrings From a Character Vector
 #' 
-#' Vectorized over \code{s}, \code{from} and (\code{to} or \code{length}).
+#' The indices given are, of course, Unicode codepoint-based,
+#' and not byte-based.
 #' 
 #' @param str character vector 
 #' @param from integer vector or two-column matrix
-#' @param to integer vector
-#' @param length integer vector
+#' @param to integer vector, mutually exclusive with \code{length} and \code{from} being a matrix
+#' @param length integer vector, mutually exclusive with \code{to} and \code{from} being a matrix
 #' 
-#' @details \code{to} has priority over \code{length}. If \code{from} is two column matrix then first column is used as \code{from} and second as \code{to}. Also in such case given \code{to} and \code{length} are ignored.
+#' @details 
+#' Vectorized over \code{s}, \code{from} and (\code{to} or \code{length}).
+#' \code{to} and \code{length} are mutually exclusive.
+#' 
+#' \code{to} has priority over \code{length}. 
+#' If \code{from} is a two column matrix, then the first column is used 
+#' as \code{from} and second as \code{to}. Also in such case arguments
+#' \code{to} and \code{length} are ignored.
+#' 
+#' The indices are 1-based, is index 1 denotes the first character
+#' in a string. \code{to} means the last index of the substring, inclusive.
+#' 
+#' For negative indices in \code{from} or \code{to},
+#' the counting starts at the end of the string.
+#' E.g. index -1 denotes the last code point in the string.
+#' Negative \code{length} means counting backwards.
+#' 
+#' In case of out-of-bound indices, they are silently corrected.
+#' 
 #' @return character vector
 #' 
 #' @examples
@@ -38,29 +57,40 @@
 #' stri_sub(s, -17, -7)
 #' stri_sub(s, -5, length=4)
 #' 
-#' @seealso \link{stri_sub<-}
-#' 
+#' @family indexing
 #' @export
 stri_sub <- function(str, from = 1L, to = -1L, length) {
-   # prepare_arg done internally
-   if(is.matrix(from) && ncol(from) == 2){
-      if(!missing(to) || !missing(length))
-         warning("'from' is matrix, so 'to' and 'length' are ignored")
-      to   <- from[ , 2]
-      from <- from[ , 1]
-   }else if(missing(to) && !missing(length)){
-      to <- from + length -1
-      # if from <0 then counting is done from the end of string, so if
-      #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
-      #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
-      #that's why we need this:
-      w <- from < 0 & to >= 0
-      to[w] <- -1
-      #if length is negative then return an empty string
-      w <- length <= 0
-      to[w] <- 0
+#    # prepare_arg done internally
+#    if(is.matrix(from) && ncol(from) == 2){
+#       if(!missing(to) || !missing(length))
+#          warning("'from' is matrix, so 'to' and 'length' are ignored")
+#       to   <- from[ , 2]
+#       from <- from[ , 1]
+#    }else if(missing(to) && !missing(length)){
+#       to <- from + length -1
+#       # if from <0 then counting is done from the end of string, so if
+#       #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
+#       #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
+#       #that's why we need this:
+#       w <- from < 0 & to >= 0
+#       to[w] <- -1
+#       #if length is negative then return an empty string
+#       w <- length <= 0
+#       to[w] <- 0
+#    }
+   # Whoaaa! One of the longest-code R functions in stringi :)
+   if (missing(length)) {
+      if (!missing(length))
+         warning("argument `length` is ignored in given context")
+      if (is.matrix(from) && !missing(to))
+         warning("argument `to` is ignored in given context")
+      .Call("stri_sub_from_to", str, from, to, PACKAGE="stringi")
    }
-   .Call("stri_sub", str, from, to, PACKAGE="stringi")
+   else {
+      if (!missing(to))
+         warning("argument `to` is ignored in given context")
+      .Call("stri_sub_from_length", str, from, length, PACKAGE="stringi")
+   }
 }
 
 
@@ -84,8 +114,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 #' stri_sub(s, -6, length=5) <- "." ; s
 #' stri_sub(s, 1, 1:3) <- 1:2 ; s
 #' 
-#' @seealso \code{\link{stri_sub}}, \code{\link{stri_replace_first_fixed}},
-#'          \code{\link{stri_replace_last_fixed}}, \code{\link{stri_replace_all}}.
+#' @family indexing
 #' 
 #' @export
 "stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {

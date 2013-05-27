@@ -1,7 +1,7 @@
 require(testthat)
 
 test_that("stri_sub", {
-	s <- c("ala ma \u0105 \u00F1 ą kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
+	s <- c("ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
 	expect_identical(stri_sub(s), s)
 	expect_identical(stri_sub("12", 1, 2), "12")
 	expect_identical(stri_sub("12", 2, 2), "2")
