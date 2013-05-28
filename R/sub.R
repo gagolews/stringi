@@ -22,14 +22,19 @@
 #' 
 #' The indices given are, of course, Unicode codepoint-based,
 #' and not byte-based.
+#' Note that for some Unicode strings, the extracted substrings may not
+#' be well-formed, especially if the input is not in the NFC normalization
+#' from, includes byte order marks, Bidirectional text marks, and so on.
+#' Handle with care.
 #' 
 #' @param str character vector 
 #' @param from integer vector or two-column matrix
 #' @param to integer vector, mutually exclusive with \code{length} and \code{from} being a matrix
 #' @param length integer vector, mutually exclusive with \code{to} and \code{from} being a matrix
+#' @param value character vector to be substituted [replacement function]
 #' 
 #' @details 
-#' Vectorized over \code{s}, \code{from} and (\code{to} or \code{length}).
+#' Vectorized over \code{str}, [\code{value}], \code{from} and (\code{to} or \code{length}).
 #' \code{to} and \code{length} are mutually exclusive.
 #' 
 #' \code{to} has priority over \code{length}. 
@@ -45,10 +50,17 @@
 #' E.g. index -1 denotes the last code point in the string.
 #' Negative \code{length} means counting backwards.
 #' 
-#' In case of out-of-bound indices, they are silently corrected.
+#' 
+#' For \code{stri_sub}, in case of out-of-bound indices, they are silently corrected.
 #' If \code{from} > \code{to}, then an empty string is returned.
 #' 
-#' @return character vector
+#' For \code{stri_sub<-}, and strange configurations of indices, you'll get
+#' string concatenation to front, back, or middle.
+#' 
+#' @return character vector. Standard extract function
+#' returns the desired substrings. The replacement function
+#' returns the character vector with given substrings substituted
+#' by \code{value}.
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -57,8 +69,12 @@
 #' stri_sub(s, from=1, length=1:3)
 #' stri_sub(s, -17, -7)
 #' stri_sub(s, -5, length=4)
+#' (stri_sub(s, 1, 5) <- "stringi")
+#' (stri_sub(s, -6, length=5) <- ".")
+#' (stri_sub(s, 1, 1:3) <- 1:2)
 #' 
 #' @family indexing
+#' @rdname stri_sub
 #' @export
 stri_sub <- function(str, from = 1L, to = -1L, length) {
    # Whoaaa! One of the longest-code R functions in stringi :)
@@ -77,48 +93,21 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 }
 
 
-#' Replace substrings in a character vector
-#' 
-#' Vectorized over \code{s}, \code{from}, (\code{to} or \code{length}) and \code{value}.
-#' 
-#' @usage stri_sub(str, from=1, to=-1, length) <- value
-#' @param str character vector 
-#' @param from integer vector or two-column matrix
-#' @param to integer vector
-#' @param length integer vector
-#' @param value
-#' 
-#' @details \code{to} has priority over \code{length}
-#' @return character vector
-#' 
-#' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_sub(s, 1, 5) <- "stringi" ; s
-#' stri_sub(s, -6, length=5) <- "." ; s
-#' stri_sub(s, 1, 1:3) <- 1:2 ; s
-#' 
-#' @family indexing
-#' 
+#' @rdname stri_sub
 #' @export
 "stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {
-   # prepare_arg done internally
-   if(is.matrix(from) && ncol(from) == 2){
-      if(!missing(to) || !missing(length))
-         warning("'from' is matrix, so 'to' and 'length' are ignored")
-      to   <- from[ , 2]
-      from <- from[ , 1]
-   }else if(missing(to) && !missing(length)){
-      to <- from + length -1
-      # if from <0 then counting is done from the end of string, so if
-      #from=-3 and length=2 then from=-3 and to=-2 so it's ok, but if
-      #from=-3 and length=4 then from=-3 and to=0 => empty string(incorrect)
-      #that's why we need this:
-      w <- from < 0 & to >= 0
-      to[w] <- -1
-      #if length is negative then return an empty string
-      w <- length <= 0
-      to[w] <- 0
+   # Whoaaa! One of the longest-code R functions in stringi :)
+   if (missing(length)) {
+      if (is.matrix(from) && !missing(to))
+         warning("argument `to` is ignored in given context")
+      .Call("stri_sub_replacement", str, from, to, NULL, value, PACKAGE="stringi")
    }
-   .Call("stri_sub_op", str, from, to, value, PACKAGE="stringi")
+   else {
+      if (!missing(to))
+         warning("argument `to` is ignored in given context")
+      if (is.matrix(from))
+         warning("argument `length` is ignored in given context")
+      .Call("stri_sub_replacement", str, from, NULL, length, value, PACKAGE="stringi")
+   }
 }
 
