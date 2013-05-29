@@ -18,7 +18,7 @@
 
 
 
-#' Extract Substrings From a Character Vector
+#' Extract Substrings From or Replace Substring In a Character Vector
 #' 
 #' The indices given are, of course, Unicode codepoint-based,
 #' and not byte-based.

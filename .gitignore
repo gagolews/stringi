@@ -2,7 +2,6 @@
 man/*.Rd
 
 # R/RStudio files:
-.Rbuildignore
 stringi.Rproj
 .Rproj.user
 .Rhistory
