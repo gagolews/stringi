@@ -17,7 +17,7 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Locale Management in \pkg{stringi}
+#' Locales and \pkg{stringi}
 #'
 #' In this section we explain how we deal with locales in \pkg{stringi}.
 #' 
@@ -41,7 +41,7 @@
 #' 
 #' 
 #' 
-#' \bold{A Note on Default Locales}
+#' @section A Note on Default Locales:
 #' 
 #' Except for \code{\link{stri_locale_set}}, each function
 #' selects default locale if an empty string or \code{NULL} is given as
@@ -54,74 +54,23 @@
 #' as a way to request an international object. The default locale is set 
 #' to be the system locale on that platform."
 #' 
+#' @section Collation:
+#' 
+#' See \code{\link{collator}} for the description
+#' on how to tune the Collator, which performs
+#' a locale-aware, natural-language
+#' alike string comparison.
+#' It is used for string casefolding, comparing, ordering,
+#' sorting, and searching.
+#' 
 #' @references
 #' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
-#' @name stringi_locale
-#' @family locale, locale_dependent
-NULL
-
-
-#' List Available Locales
-#'
-#' Note that not all services may be available for all locales.
 #' 
-#' @return Character vector of supported locale indentifiers
-#' @family locale
-#' @export
-stri_locale_list <- function() {
-   .Call("stri_locale_list", PACKAGE="stringi")
-}
-
-
-#' Set Default Locale
-#'
-#' See \link{stringi_locale} for more information on the effect of
-#' changing default locale.
-#' 
-#' @param locale a character string of the form \code{Language},
-#' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
-#' see \code{\link{stri_locale_list}}
-#' @return Previously set default locale, invisibly.
-#' @family locale
-#' @export
-stri_locale_set <- function(locale) {
-   previous <- stri_locale_get()
-   .Call("stri_locale_set", locale, PACKAGE="stringi")
-   
-   # We call stri_info, because it generates some warnings,
-   # in case any problems are found:
-   message('You are now working with ' %+% stri_info(short=TRUE))
-   invisible(previous)
-}
-
-
-#' Get Default Locale
-#' 
-#' Same as \code{stri_locale_info()$Name}.
-#' 
-#' @return a character string of the form \code{Language},
-#' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US" 
-#' @family locale
-#' @export
-stri_locale_get <- function() {
-   stri_locale_info(NULL)$Name
-}
-
-
-#' Query Given Locale
-#' 
-#' Note that here you may gen info on any desired locale,
-#' even if it is unsupported by ICU or if you pass a malformed locale
-#' identified (e.g. not of the form Language_Country). See \link{stringi_locale}
-#' for the discussion.
-#' 
-#' @param locale \code{NULL} or \code{""} for default locale, or a single string with locale identifier
-#' 
-#' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
-#' their combination, \code{Name}. Each is a character string.
-#' @family locale
-#' @export
-stri_locale_info <- function(locale=NULL) {
-   .Call("stri_locale_info", locale, PACKAGE="stringi")
-}
+#' @name stringi-locale
+#' @rdname stringi-locale
+#' @concepts locale language 
+#' @family locale_management
+#' @family locale_sensitive
+#' @family stringi_general_topics
+invisible(NULL)
 

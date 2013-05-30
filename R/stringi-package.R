@@ -29,7 +29,12 @@
 #' \itemize{
 #' \item \link{stringi-arguments} - how \pkg{stringi} deals with its functions' arguments, 
 #' \item \link{stringi-encoding} - encoding management,
-#' \item \link{stringi_locale} - locale management,
+#' including encoding management, detection, conversion, and Unicode
+#' normalization,
+#' \item \link{stringi-locale} - locale management, 
+#' and the list locale-sensitive operations, especially
+#' \link{collator} for the description of string collation algorithm,
+#' used for string comparing, ordering, sorting, casefolding, and searching.
 #' \item \link{stringi_regex} - regular expressions,
 #' \item \link{stringi_charclass} - Unicore Character classes and binary properties
 #' }

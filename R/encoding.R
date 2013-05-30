@@ -96,6 +96,8 @@
 #' 
 #' @concepts character encoding utf8 utf-8 utf-16 utf16 uft-32 utf32 ascii iconv native bytes nfc normalization
 #' @name stringi-encoding
+#' @rdname string-encoding
+#' @aliases encoding
 #' @family stringi_general_topics
 #' @family encoding_management
 #' @family encoding_normalization

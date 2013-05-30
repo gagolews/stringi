@@ -37,7 +37,9 @@
 #' 
 #' @references
 #' Case Mappings - ICU User Guide, http://userguide.icu-project.org/transforms/casemappings
-#' @family locale_dependent
+#' @family locale_sensitive
+#' @aliases casefold
+#' @concepts case folding translation title upper lower
 #' @export
 #' @rdname casefold
 #' 

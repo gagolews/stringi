@@ -66,7 +66,10 @@
 #' @return
 #' A named R list object; missing options are left with default values.
 #' @export
-#' @family locale_dependent, search_fixed
+#' @aliases collator
+#' @concepts collator collation comparison ordering sorting fcd nfd locale language context
+#' @family locale_sensitive
+#' @family search_fixed
 #' 
 #' @references
 #' Collation - ICU User Guide - http://userguide.icu-project.org/collation\cr
