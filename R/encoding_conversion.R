@@ -41,7 +41,7 @@
 #' @param from input encoding:
 #'       \code{NULL} or \code{""} for default encoding,
 #'       or a single string with encoding name
-#' @param from target encoding:
+#' @param to target encoding:
 #'       \code{NULL} or \code{""} for default encoding,
 #'       or a single string with encoding name
 #' @param to_raw single logical value: should a list of raw vectors

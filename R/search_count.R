@@ -70,6 +70,7 @@ stri_count_charclass <- function(str, pattern) {
 #' stri_count_fixed(s, " ")
 #' stri_count_fixed(s, "o")
 #' stri_count_fixed(s, "it")
+#' stri_count_fixed(s, letters)
 #' stri_count_fixed("babab", "b")
 #' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
 #' 
@@ -126,6 +127,11 @@ stri_count_regex <- function(str, pattern) {
 #' @param charclass character class identifiers 
 #' @param ... additional arguments passed to the underlying functions
 #' @return logical vector
+#' 
+#' @examples
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_count(s, fixed=letters)
+#' stri_count(s, regex="[[:alpha:]]")
 #' 
 #' @export
 #' @family search_count
