@@ -18,6 +18,43 @@
 
 
 
+
+#' String Searching
+#' 
+#' This man page describes how to perform string search-based
+#' operations in \pkg{stringi}.
+#' 
+#' There are three string searching ``engines'' in \pkg{stringi}.
+#' \itemize{
+#'    \item \code{stri_*_regex} - ICU's regular expressions, see \link{stringi-search-regex},
+#'    \item \code{stri_*_fixed} - ICU's \code{StringSearch}, locale-sensitive ``fixed'' patterns, see \link{stringi-search-fixed},
+#'    \item \code{stri_*_charclass} - single character classes and binary properties, see \link{stringi-search-charclass},
+#' }
+#' 
+#' Each ``engine'' is able to perform many search-based operations:
+#' \itemize{
+#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string
+#'    \item \code{stri_count_*} - counts the number of pattern's occurences
+#'    \item ...
+#' }
+#' 
+#' @name stringi-search
+#' @rdname stringi-search
+#' @family search_regex
+#' @family search_fixed
+#' @family search_charclass
+#' @family search_detect
+#' @family search_count
+#' @family search_locate
+#' @family search_replace
+#' @family search_split
+#' @family search_extract
+#' @concepts search regex collator character binary property class fixed
+#' @family stringi_general_topics
+invisible(NULL)
+
+
+
 #' Regular Expressions in \pkg{stringi}
 #'
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
@@ -33,9 +70,9 @@
 #' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
 #' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
+#' @name stringi-search-regex
 #' @family search_regex
-#' @name search_regex
-NULL
+invisible(NULL)
 
 
 
@@ -67,13 +104,17 @@ NULL
 #' ICU String Search Service - ICU User Guide - http://userguide.icu-project.org/collation/icu-string-search-service\cr
 #' L. Werner, Efficient Text Searching in Java, 1999, http://icu-project.org/docs/papers/efficient_text_searching_in_java.html
 #' 
+#' @name stringi-search-fixed
 #' @family search_fixed
-#' @name search_fixed
-NULL
+invisible(NULL)
 
 
 
 #' Character Classes in \pkg{stringi}
+#'
+#' All \code{stri_*_charclass} functions in \pkg{stingi} perform
+#' single character search-based operations....
+#' 
 #'
 #' There are two separate ways to specify character classes or
 #' their complements in \pkg{stringi}:
@@ -91,6 +132,6 @@ NULL
 #' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
 #' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
+#' @name stringi-search-charclass
 #' @family search_charclass
-#' @name search_charclass
-NULL
+invisible(NULL)

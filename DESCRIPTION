@@ -56,3 +56,4 @@ Collate:
     'test.R'
     'trim.R'
     'wrap.R'
+    'search_extract.R'

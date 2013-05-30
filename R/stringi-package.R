@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
+## Copyright 2013 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -35,8 +35,8 @@
 #' and the list locale-sensitive operations, especially
 #' \link{collator} for the description of string collation algorithm,
 #' used for string comparing, ordering, sorting, casefolding, and searching.
-#' \item \link{stringi_regex} - regular expressions,
-#' \item \link{stringi_charclass} - Unicore Character classes and binary properties
+#' \item \link{stringi-search} - string searching, especially
+#' \link{stringi-search-regex}, \link{stringi-search-fixed}, and \link{stringi-search-charclass}
 #' }
 #' 
 #' Information on default encodings and locales....

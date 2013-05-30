@@ -35,7 +35,7 @@
 #' \code{-1} if \code{e1[...] < e2[...]},
 #' \code{0} if equal, and \code{1} if greater.
 #' 
-#' @family locale_dependent
+#' @family locale_sensitive
 #' @export
 #' @rdname stri_compare
 #' 
@@ -81,7 +81,7 @@ stri_cmp <- stri_compare
 #' @return for \code{stri_order} - an integer vector that gives the sort order;
 #' for \code{stri_order} - a sorted version of \code{str}
 #' 
-#' @family locale_dependent
+#' @family locale_sensitive
 #' @export
 #' @rdname stri_order
 #' 

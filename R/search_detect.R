@@ -19,11 +19,11 @@
 
 #' Detect a Character Class in a String
 #' 
-#' Vectorized over \code{str} and \code{class}.
+#' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' 
 #' @param str character vector
-#' @param class character class identifiers specified by
+#' @param pattern character class identifiers specified by
 #' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
 #' @return logical vector
 #' @examples
@@ -32,9 +32,10 @@
 #' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Zs"))
 #' 
 #' @export
-#' @family detect, search
-stri_detect_class <- function(str, class) {
-   .Call("stri_detect_class", str, class, PACKAGE="stringi")
+#' @family search_detect
+#' @family search_charclass
+stri_detect_charclass <- function(str, pattern) {
+   .Call("stri_detect_class", str, pattern, PACKAGE="stringi")
 }
 
 
@@ -67,7 +68,9 @@ stri_detect_class <- function(str, class) {
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', collator_opts=NA)
 #' @export
 #' 
-#' @family detect, search, locale_dependent
+#' @family search_detect
+#' @family search_fixed
+#' @family locale_sensitive
 stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
    .Call("stri_detect_fixed", str, pattern, collator_opts, PACKAGE="stringi")
 }
@@ -87,7 +90,8 @@ stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' @export
-#' @family detect, search, regex
+#' @family search_detect
+#' @family search_regex
 stri_detect_regex <- function(str, pattern) {
    .Call("stri_detect_regex", str, pattern, PACKAGE="stringi")
 }
@@ -95,7 +99,10 @@ stri_detect_regex <- function(str, pattern) {
 
 #' Detect a Pattern Match in a String
 #' 
-#' Vectorized over \code{str} and \code{pattern}.
+#' A convenience function.
+#' Calls either \code{\link{stri_detect_regex}},
+#' \code{\link{stri_detect_fixed}}, or \code{\link{stri_detect_charclass}},
+#' depending on the argument used.
 #' 
 #' @param str character vector of strings to search in
 #' @param regex character vector of regex patterns to search for
@@ -105,7 +112,7 @@ stri_detect_regex <- function(str, pattern) {
 #' @return logical vector
 #' 
 #' @export
-#' @family detect, search
+#' @family search_detect
 stri_detect <- function(str, ..., regex, fixed, charclass) {
    if(!missing(regex))
       stri_detect_regex(str, regex, ...)
