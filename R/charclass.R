@@ -18,27 +18,7 @@
 
 
 
-#' Character Classes in \pkg{stringi}
-#'
-#' There are two separate ways to specify character classes or
-#' their complements in \pkg{stringi}:
-#' 
-#' * with Unicode General Category Masks, e.g. \code{Lu} for Upper-Case Letters,
-#' see \code{\link{stri_char_getcategoryid}}
-#' 
-#' * with Unicode Binary Property Identifies, e.g. \code{ALPHABETIC} for
-#' alphabetic characters, see \code{\link{stri_char_getpropertyid}}
-#' 
-#' Note that e.g. General Category \code{Z} (some space) and Binary Property
-#' \code{WHITE_SPACE} may match different character sets.
-#' 
-#' @references
-#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
-#' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
-#' 
-#' @family charclass
-#' @name stringi_charclass
-NULL
+
 
 
 

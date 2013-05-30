@@ -18,7 +18,7 @@
 
 
 
-#' Count the Number of Pattern Matches in a String
+#' Count the Number of Fixed Pattern Matches in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -53,7 +53,7 @@
 #' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
 #' 
 #' @export
-#' @family   count, search, locale_dependent
+#' @family   stri_count, search, locale_dependent
 stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 	# prepare_arg done internally
 	.Call("stri_count_fixed", str, pattern, collator_opts, PACKAGE="stringi")
@@ -80,16 +80,21 @@ stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
 #' 
 #' @export
-#' @family count, search, regex
+#' @family stri_count, search, regex
 stri_count_regex <- function(str, pattern) {
    # prepare_arg done internally
    .Call("stri_count_regex", str, pattern, PACKAGE="stringi")
 }
 
 
-#'  Count the Number of Pattern Matches in a String
+
+#' Count the Number of Pattern Matches in a String
 #' 
-#' Vectorized over \code{str} and \code{pattern}.
+#' A convenience function.
+#' Calls either \code{\link{stri_count_regex}},
+#' \code{\link{stri_count_fixed}}, or \code{\link{stri_count_charclass}},
+#' depending on the argument used.
+#' 
 #' 
 #' @param str character vector of strings to search in
 #' @param regex character vector of regex patterns to search for
@@ -99,14 +104,14 @@ stri_count_regex <- function(str, pattern) {
 #' @return logical vector
 #' 
 #' @export
-#' @family count, search
+#' @family stri_count, search
 stri_count <- function(str, ..., regex, fixed, charclass) {
    if(!missing(regex))
       stri_count_regex(str, regex, ...)
    else if(!missing(fixed))
       stri_count_fixed(str, fixed, ...)
    else if(!missing(charclass))
-      stri_count_class(str, charclass, ...)
+      stri_count_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }

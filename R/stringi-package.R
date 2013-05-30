@@ -27,9 +27,9 @@
 #' 
 #' Man pages on general topics:
 #' \itemize{
-#' \item \link{stringi_arguments} - how \pkg{stringi} deals with its functions' arguments, 
+#' \item \link{stringi-arguments} - how \pkg{stringi} deals with its functions' arguments, 
+#' \item \link{stringi-encoding} - encoding management,
 #' \item \link{stringi_locale} - locale management,
-#' \item \link{stringi_encoding} - encoding management,
 #' \item \link{stringi_regex} - regular expressions,
 #' \item \link{stringi_charclass} - Unicore Character classes and binary properties
 #' }
@@ -38,7 +38,7 @@
 #'
 #' @name stringi-package
 #' @docType package
-#' @title Correct, fast, and simple string manipulation in each locale
+#' @title THE String Processing Package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
 #' with contributions from Marcin Bujarski.
@@ -47,7 +47,8 @@
 #' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
 #' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
 #' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
-#' RFC 3629: UTF-8, a transformation format of ISO 10646 \url{http://tools.ietf.org/html/rfc3629}.\cr
+#' RFC 3629: UTF-8, a transformation format of ISO 10646 \url{http://tools.ietf.org/html/rfc3629}.
+#' @family stringi_general_topics
 invisible(NULL)
 
 

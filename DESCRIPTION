@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.1-3
-Date: 2013-05-29
+Date: 2013-05-30
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast,
     and simple string processing in each locale and native charset.
@@ -30,20 +30,15 @@ Collate:
     'casefold.R'
     'join.R'
     'trim.R'
-    'unicode_normalization.R'
     'ICU_settings.R'
     'prepare_arg.R'
     'compare.R'
     'stringi-package.R'
     'wrap.R'
-    'ucnv.R'
     'length.R'
-    'uloc.R'
-    'uchar.R'
     'sub.R'
     'justify.R'
     'reverse.R'
-    'regex.R'
     'stats.R'
     'search_count.R'
     'search_detect.R'
@@ -52,3 +47,11 @@ Collate:
     'search_split.R'
     'test.R'
     'collator.R'
+    'charclass.R'
+    'locale.R'
+    'search.R'
+    'encoding_conversion.R'
+    'encoding_detection.R'
+    'encoding_management.R'
+    'encoding_normalization.R'
+    'encoding.R'

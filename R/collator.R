@@ -20,9 +20,10 @@
 #' Generate List with Collator Options
 #' 
 #' Convenience function to tune collator's behavior,
-#' e.g. in \code{\link{stri_compare}} or \code{\link{stri_order}}.
+#' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
+#' \code{\link{stri_detect_fixed}}, and other \link{search_fixed} functions.
 #' 
-#' \bold{Collation}
+#'
 #' 
 #' ICU's collator performs a locale-aware, natural-language
 #' alike string comparison.
@@ -36,20 +37,6 @@
 #' 
 #' The strings are Unicode-normalized before the comparison.
 #' 
-#' \bold{String Search Engine}
-#' 
-#' ...modified form of the Boyer Moore's search (cf. Werner, 1999),
-#' with time complexity of
-#' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)}).
-#' 
-#' Tuning Collator's parameter allow us to perform correct matching
-#' that properly takes into account accented letters, conjoined letters,
-#' and ignorable punctuation 
-#' 
-#' If you, however, still want to use bytewise comparisons,
-#' just pass \code{NA} as \code{collator_opts} in search
-#' functions... This will be the fastest approach, especially
-#' for short texts.
 #' 
 #' 
 #' @param locale single string, \code{""} for default locale
@@ -79,17 +66,15 @@
 #' @return
 #' A named R list object; missing options are left with default values.
 #' @export
-#' @family locale_dependent
+#' @family locale_dependent, search_fixed
 #' 
 #' @references
-#' Collation - ICU User Guide - http://userguide.icu-project.org/collation
-#' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture
+#' Collation - ICU User Guide - http://userguide.icu-project.org/collation\cr
+#' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture\cr
 #' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
-#' ICU String Search Service - ICU User Guide - http://userguide.icu-project.org/collation/icu-string-search-service
-#' L. Werner, Efficient Text Searching in Java, 1999, http://icu-project.org/docs/papers/efficient_text_searching_in_java.html
 #' 
 #' @examples
-#' stri_cmp("dupa100", "dupa2") != stri_cmp("dupa100", "dupa2", stri_collator_genopts(numeric=TRUE))
+#' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_collator_genopts(numeric=TRUE))
 #' stri_cmp("above mentioned", "above-mentioned")
 #' stri_cmp("above mentioned", "above-mentioned", stri_collator_genopts(alternate_shifted=TRUE))
 stri_collator_genopts <- function(locale="", strength=3L,

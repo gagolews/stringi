@@ -59,15 +59,15 @@
 #'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
 #'    
 #' @export
-#' @rdname unicode_normalization
-#' @family encoding
+#' @rdname normalization
+#' @family encoding_normalization
 stri_enc_nfc <- function(str) {
    .Call("stri_enc_nf", str, 10L, PACKAGE="stringi")
 }
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_nfd <- function(str) {
    .Call("stri_enc_nf", str, 20L, PACKAGE="stringi")
@@ -76,7 +76,7 @@ stri_enc_nfd <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_nfkd <- function(str) {
    .Call("stri_enc_nf", str, 21L, PACKAGE="stringi")
@@ -85,7 +85,7 @@ stri_enc_nfkd <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_nfkc <- function(str) {
    .Call("stri_enc_nf", str, 11L, PACKAGE="stringi")
@@ -94,7 +94,7 @@ stri_enc_nfkc <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_nfkc_casefold <- function(str) {
    .Call("stri_enc_nf", str, 12L, PACKAGE="stringi")
@@ -103,14 +103,14 @@ stri_enc_nfkc_casefold <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_isnfc <- function(str) {
    .Call("stri_enc_isnf", str, 10L, PACKAGE="stringi")
 }
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_isnfd <- function(str) {
    .Call("stri_enc_isnf", str, 20L, PACKAGE="stringi")
@@ -119,7 +119,7 @@ stri_enc_isnfd <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_isnfkd <- function(str) {
    .Call("stri_enc_isnf", str, 21L, PACKAGE="stringi")
@@ -128,7 +128,7 @@ stri_enc_isnfkd <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_isnfkc <- function(str) {
    .Call("stri_enc_isnf", str, 11L, PACKAGE="stringi")
@@ -137,7 +137,7 @@ stri_enc_isnfkc <- function(str) {
 
 
 
-#' @rdname unicode_normalization
+#' @rdname normalization
 #' @export
 stri_enc_isnfkc_casefold <- function(str) {
    .Call("stri_enc_isnf", str, 12L, PACKAGE="stringi")
