@@ -17,7 +17,7 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Detect a Character Class in a String
+#' Detect a Character Class Match in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -39,7 +39,7 @@ stri_detect_charclass <- function(str, pattern) {
 }
 
 
-#' Detect a Pattern Match in a String
+#' Detect a Fixed Pattern Match in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -105,10 +105,10 @@ stri_detect_regex <- function(str, pattern) {
 #' depending on the argument used.
 #' 
 #' @param str character vector of strings to search in
+#' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector of regex patterns to search for
 #' @param fixed character vector of fixed patterns to search for
-#' @param charclass character class identifiers 
-#' @param ... additional arguments passed to the underlying functions
+#' @param charclass character class identifiers
 #' @return logical vector
 #' 
 #' @export

@@ -18,7 +18,7 @@
 
 
 
-#' Detect a Character Class in a String
+#' Count the Number of Character Class Matches in a String
 #' 
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -29,7 +29,7 @@
 #' @return integer vector
 #' 
 #' @export
-#' @family search_detect
+#' @family search_count
 #' @family search_charclass
 stri_count_charclass <- function(str, pattern) {
    stop("TO DO!!!")
@@ -122,10 +122,10 @@ stri_count_regex <- function(str, pattern) {
 #' 
 #' 
 #' @param str character vector of strings to search in
+#' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector of regex patterns to search for
 #' @param fixed character vector of fixed patterns to search for
-#' @param charclass character class identifiers 
-#' @param ... additional arguments passed to the underlying functions
+#' @param charclass character class identifiers
 #' @return logical vector
 #' 
 #' @examples

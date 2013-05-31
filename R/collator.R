@@ -21,7 +21,7 @@
 #' 
 #' Convenience function to tune collator's behavior,
 #' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
-#' \code{\link{stri_detect_fixed}}, and other \link{search_fixed} functions.
+#' \code{\link{stri_detect_fixed}}, and other \link{stringi-search-fixed} functions.
 #' 
 #'
 #' 

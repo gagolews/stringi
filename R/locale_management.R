@@ -32,7 +32,7 @@ stri_locale_list <- function() {
 
 #' Set Default Locale
 #'
-#' See \link{stringi_locale} for more information on the effect of
+#' See \link{stringi-locale} for more information on the effect of
 #' changing default locale.
 #' 
 #' @param locale a character string of the form \code{Language},
@@ -69,7 +69,7 @@ stri_locale_get <- function() {
 #' 
 #' Note that here you may gen info on any desired locale,
 #' even if it is unsupported by ICU or if you pass a malformed locale
-#' identified (e.g. not of the form Language_Country). See \link{stringi_locale}
+#' identified (e.g. not of the form Language_Country). See \link{stringi-locale}
 #' for the discussion.
 #' 
 #' @param locale \code{NULL} or \code{""} for default locale, or a single string with locale identifier

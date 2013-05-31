@@ -22,7 +22,7 @@
 #'
 #' Please note that apart from given encodings, ICU tries to normalize
 #' encoding specifiers. E.g. \code{"UTF8"} is also valid,
-#' see \link{stringi_encoding} for more information.
+#' see \link{stringi-encoding} for more information.
 #'
 #' @param simplified logical value TODO....
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of

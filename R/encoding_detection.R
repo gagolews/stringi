@@ -23,7 +23,7 @@
 #' The function checks whether all character codes are in the set {1,2,...,127}.
 #'
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{stringi_encoding}}).
+#' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
 #' 
 #' 
 #' @param str character vector
@@ -55,7 +55,7 @@ stri_enc_isascii <- function(str) {
 #' note that isascii => isutf8
 #' 
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{stringi_encoding}}).
+#' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
 #' 
 #' @param str character vector
 #' @return logical vector; ith element indicates whether the ith string
