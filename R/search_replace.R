@@ -41,21 +41,21 @@
 #' @family search_charclass
 #' @family search_replace
 stri_replace_all_charclass <- function(str, pattern, replacement) {
-   stop("TO DO")
+   stop("TO DO: stri_replace_all_charclass")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_first_charclass <- function(str, pattern, replacement) {
-   stop("TO DO")
+   stop("TO DO: stri_replace_first_charclass")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_last_charclass <- function(str, pattern, replacement) {
-   stop("TO DO")
+   stop("TO DO: stri_replace_last_charclass")
 }
 
 
@@ -87,23 +87,22 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @family search_fixed
 #' @family search_replace
 #' @family locale_sensitive
-stri_replace_all_fixed <- function(str, pattern, replacement) {
-	.Call("stri_replace_all_fixed", str, pattern, replacement, PACKAGE="stringi")
+stri_replace_all_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+   stop("TO DO: stri_replace_all_fixed")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_first_fixed <- function(str, pattern, replacement) {
-   .Call("stri_replace_first_fixed", str, pattern, replacement, PACKAGE="stringi")
+stri_replace_first_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+   stop("TO DO: stri_replace_first_fixed")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_last_fixed <- function(str, pattern, replacement) {
-   stop("TO DO: no stri_reverse call here.....")
-   stri_reverse(.Call("stri_replace_first_fixed", stri_reverse(str), pattern, replacement, PACKAGE="stringi"))
+stri_replace_last_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+   stop("TO DO: stri_replace_last_fixed")
 }
 
 
@@ -150,14 +149,14 @@ stri_replace_all_regex <- function(str, pattern, replacement) {
 #' @export
 #' @rdname stri_replace_regex
 stri_replace_first_regex <- function(str, pattern, replacement) {
-   stop("TO DO")
+   stop("TO DO: stri_replace_first_regex")
 }
 
 
 #' @export
 #' @rdname stri_replace_regex
 stri_replace_last_regex <- function(str, pattern, replacement) {
-   stop("TO DO")
+   stop("TO DO: stri_replace_last_regex")
 }
 
 

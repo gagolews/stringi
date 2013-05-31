@@ -48,6 +48,14 @@ struct R_len_t_x2 {
 
 // ------------------------------------------------------------------------
 
+// @TODO: stri_multisub                                   // ...TODO... [version >0.1]
+// @TODO: stri_multisub_replacement                       // ...TODO... [version >0.1]
+// @TODO: SEXP stri_enc_fromutf16(SEXP str);              // ...TODO... be careful: BOMs! [version >0.1]
+// @TODO: SEXP stri_enc_toutf16(SEXP str);                // ...TODO... -> list with elems of type raw [version >0.1]
+// @TODO: stri_enc_detect()                               // ...TODO... [version >0.1]
+
+// ------------------------------------------------------------------------
+
 
 // casefold.cpp:
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);               // DONE
@@ -86,9 +94,6 @@ SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);     // DONE
 SEXP stri_join2(SEXP e1, SEXP e2);                     // DONE
 
 
-// justify.cpp
-SEXP stri_justify(SEXP str, SEXP width);
-
 
 // length.cpp
 R_len_t stri__numbytes_max(SEXP str); // DONE
@@ -99,8 +104,6 @@ SEXP stri_width(SEXP str);            // ...TODO...
 
 
 
-   
-   
 // prepare_arg.cpp:
 SEXP        stri_prepare_arg_string(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_double(SEXP x, const char* argname);          // DONE
@@ -121,16 +124,6 @@ const char* stri__prepare_arg_enc(SEXP loc, const char* argname, bool allowdefau
 SEXP stri_reverse(SEXP s);                                              // DONE
 
 
-// split.cpp
-SEXP stri_split_class(SEXP str, SEXP c);
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP omitempty, SEXP exact);
-SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);
-SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);
-
-
-// stats.cpp
-SEXP stri_stats_general(SEXP str);
-SEXP stri_stats_latex(SEXP str);
 
 
 // sub.cpp
@@ -139,27 +132,10 @@ R_len_t stri__UChar32_to_UTF8_index_fwd(const char* s, R_len_t n, R_len_t i,
 R_len_t stri__UChar32_to_UTF8_index_back(const char* s, R_len_t n, R_len_t i, 
    R_len_t lasti=-1, R_len_t lastres=-1);                      // DONE [internal]
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);      // DONE
-SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value);    // ..TODO..
+SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value);    // DONE
 
 
-// trim.cpp:
-void stri__locate_trim1(const char* s, int n, int& first, int& last);
-SEXP stri_trim(SEXP str);
-SEXP stri_ltrim(SEXP str);
-SEXP stri_rtrim(SEXP str);
-SEXP stri_trim_all(SEXP str);
-SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);
 
-
-// uchar.cpp:
-// void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
-void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,
-   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);  // DONE
-void stri__uchar_charType(const char* s, int n, int* codes);
-SEXP stri_charcategories();
-SEXP stri_chartype(SEXP str);
-SEXP stri_char_getcategoryid(SEXP x);
-SEXP stri_char_getpropertyid(SEXP x);
 
 
 // ucnv.cpp:
@@ -180,12 +156,12 @@ SEXP stri_enc_fromutf32(SEXP str);                      // DONE
 SEXP stri_enc_toutf32(SEXP str);                        // DONE
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);   // DONE
 SEXP stri_enc_toascii(SEXP str);                        // DONE
-//@TODO: SEXP stri_enc_fromutf16(SEXP str);             // ...TODO... be careful: BOMs!
-//@TODO: SEXP stri_enc_toutf16(SEXP str);               // ...TODO... -> list with elems of type raw
+
 
 SEXP stri_enc_isascii(SEXP str);                          // DONE
 SEXP stri_enc_isutf8(SEXP str);                           // DONE
-// @TODO: stri_enc_detect()                               // ...TODO...
+
+
 
 
 
@@ -203,10 +179,13 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 
 // wrap.cpp
-SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);
-SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);
-SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);
+SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);                // ...TO DO...
+SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);               // ...TO DO...
+SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);    // ...TO DO...
 
+
+// justify.cpp
+SEXP stri_justify(SEXP str, SEXP width);   // ...TO DO...
 
 
 
@@ -220,37 +199,79 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern);                   // DONE
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);    // DONE
 SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern);                  // DONE
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ....
-SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // .....
-SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep);            // ....
-SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep);              // ....
-
-bool stri__detect_class1(const char* s, int n, int32_t* cls);
-SEXP stri_detect_class(SEXP s, SEXP c);
-void stri__locate_all_class1(const char* s, int n, int32_t* c,
-   int* start, int* end, int& o);
-void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
-   int& first, int& last);
-SEXP stri_locate_all_class(SEXP str, SEXP c);
-SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ...TO DO...
+SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // ...TO DO... ----- delete this!!!
+//SEXP stri_locate_first_fixed(SEXP str, SEXP pattern); // ...TO DO...
+//SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);  // ...TO DO...
+//SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);   // ...TO DO...
+//SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement); // ...TO DO...
+//SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...
 
 
 
+SEXP stri_detect_regex(SEXP str, SEXP pattern);                            // DONE
+SEXP stri_count_regex(SEXP str, SEXP pattern);                             // DONE
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                        // DONE
+SEXP stri_locate_first_regex(SEXP str, SEXP pattern);                      // DONE
+//SEXP stri_locate_last_regex(SEXP str, SEXP pattern);                     // ...TO DO...
+SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DONE
+//SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement); // ...TO DO...
+//SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...
 
-SEXP stri_detect_regex(SEXP str, SEXP pattern);                         // DONE
-SEXP stri_count_regex(SEXP str, SEXP pattern);                          // DONE
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                     // DONE
-SEXP stri_locate_first_regex(SEXP str, SEXP patternp);                  // DONE
-SEXP stri_replace_all_regex(SEXP str, SEXP p, SEXP r);                  // DONE
 
 
+
+bool stri__detect_class1(const char* s, int n, int32_t* cls);                  // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri_detect_class(SEXP s, SEXP c);                                        // ...TO DO: rewrite completely & rename to *charclass
+void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // ...TO DO: rewrite completely & rename to *charclass
+   int* start, int* end, int& o);                                              // ...TO DO: rewrite completely & rename to *charclass
+void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,    // ...TO DO: rewrite completely & rename to *charclass
+   int& first, int& last);                                                     // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri_locate_all_class(SEXP str, SEXP c);                                  // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);            // ...TO DO: rewrite completely & rename to *charclass
+
+
+
+// uchar.cpp:
+// void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
+void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,  
+   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // ...DONE, but move somewhere else
+void stri__uchar_charType(const char* s, int n, int* codes);                   // ...TO DO: rewrite completely
+SEXP stri_charcategories();                                                    // ...TO DO: rewrite completely
+SEXP stri_chartype(SEXP str);                                                  // ...TO DO: rewrite completely
+SEXP stri_char_getcategoryid(SEXP x);                                          // ...TO DO: rewrite completely
+SEXP stri_char_getpropertyid(SEXP x);                                          // ...TO DO: rewrite completely
+
+// split.cpp
+SEXP stri_split_class(SEXP str, SEXP c);   // ...TO DO...
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP omitempty, SEXP exact);   // ...TO DO...
+SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);   // ...TO DO...
+SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO...
+
+
+
+// trim.cpp:
+void stri__locate_trim1(const char* s, int n, int& first, int& last);   // ...TO DO...
+SEXP stri_trim(SEXP str);   // ...TO DO...
+SEXP stri_ltrim(SEXP str);   // ...TO DO...
+SEXP stri_rtrim(SEXP str);   // ...TO DO...
+SEXP stri_trim_all(SEXP str);   // ...TO DO...
+SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);   // ...TO DO...
+
+
+
+
+
+// stats.cpp
+SEXP stri_stats_general(SEXP str);   // ...TO DO...
+SEXP stri_stats_latex(SEXP str);   // ...TO DO...
 
 
 // test.cpp /* internal, but in namespace: for testing */
-SEXP stri_test_Rmark(SEXP str);  // DONE
-SEXP stri_test_UnicodeContainer16(SEXP str);
-SEXP stri_test_UnicodeContainer8(SEXP str);
-SEXP stri_test_returnasis(SEXP x);
+SEXP stri_test_Rmark(SEXP str);               // DONE
+SEXP stri_test_UnicodeContainer16(SEXP str);  // DONE
+SEXP stri_test_UnicodeContainer8(SEXP str);   // DONE
+SEXP stri_test_returnasis(SEXP x);            // DONE
 
 // ------------------------------------------------------------------------
 

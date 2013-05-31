@@ -30,13 +30,14 @@
 #'    
 #' @return
 #' For \code{stri_locate_all_charclass},
-#' list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' \code{NA}s for no match.
+#' list of \code{max(length(str), length(pattern))} integer matrices.
+#' The first column gives start postions
+#' of matches, and the second column gives end position.
+#' Two \code{NA}s for no match.
 #' 
 #' For \code{stri_locate_first_charclass} and \code{stri_locate_last_charclass},
-#' Integer matrix with n rows, where n is the length of \code{str},
-#' and 2 columns, giving the start and end positions of first
+#' integer matrix with \code{max(length(str), length(pattern))} rows, 
+#' and two columns, giving the start and end positions of first
 #' or last matches, respectively, and \code{NA}s iff not found.
 #' 
 #' @examples
@@ -89,16 +90,19 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' 
 #' @param str character vector
 #' @param pattern character vector
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return
 #' For \code{stri_locate_all_fixed},
-#' list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' \code{NA}s for no match.
+#' list of \code{max(length(str), length(pattern))} integer matrices.
+#' The first column gives start postions
+#' of matches, and the second column gives end position.
+#' Two \code{NA}s for no match.
 #' 
 #' For \code{stri_locate_first_fixed} and \code{stri_locate_last_fixed},
-#' Integer matrix with n rows, where n is the length of \code{str},
-#' and 2 columns, giving the start and end positions of first
+#' integer matrix with \code{max(length(str), length(pattern))} rows, 
+#' and two columns, giving the start and end positions of first
 #' or last matches, respectively, and \code{NA}s iff not found.
 #' 
 #' @examples
@@ -113,21 +117,26 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @family search_locate
 #' @family indexing
 #' @family locale_sensitive
-stri_locate_all_fixed <- function(str, pattern) {
+stri_locate_all_fixed <- function(str, pattern, collator_opts=list()) {
+   warning("TO DO: use collator_opts")
    .Call("stri_locate_all_fixed", str, pattern, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_fixed
-stri_locate_first_fixed <- function(str, pattern) {
+stri_locate_first_fixed <- function(str, pattern, collator_opts=list()) {
+   warning("TO DO: use collator_opts")
+   warning("TO DO: call stri_locate_first_fixed")
    .Call("stri_locate_first_or_last_fixed", str, pattern, TRUE, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_fixed
-stri_locate_last_fixed <- function(str, pattern) {
+stri_locate_last_fixed <- function(str, pattern, collator_opts=list()) {
+   warning("TO DO: use collator_opts")
+   warning("TO DO: call stri_locate_last_fixed")
    .Call("stri_locate_first_or_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
 }
 
@@ -141,13 +150,14 @@ stri_locate_last_fixed <- function(str, pattern) {
 #' 
 #' @return
 #' For \code{stri_locate_all_regex},
-#' list of integer matrices.  First column gives start postions
-#' of matches, and second column gives end position.
-#' \code{NA}s for no match.
+#' list of \code{max(length(str), length(pattern))} integer matrices.
+#' The first column gives start postions
+#' of matches, and the second column gives end position.
+#' Two \code{NA}s for no match.
 #' 
 #' For \code{stri_locate_first_regex} and \code{stri_locate_last_regex},
-#' Integer matrix with n rows, where n is the length of \code{str},
-#' and 2 columns, giving the start and end positions of first
+#' integer matrix with \code{max(length(str), length(pattern))} rows, 
+#' and two columns, giving the start and end positions of first
 #' or last matches, respectively, and \code{NA}s iff not found.
 #' 
 #' @examples
@@ -234,9 +244,7 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @param fixed character vector of fixed patterns to search for
 #' @param charclass character class identifiers
 #' 
-#' @return integer matrix with n rows, where n is the length of \code{str}.  
-#' First column gives start postions of matches, and second column gives end position.
-#' \code{NA}s iff not found.
+#' @return integer matrix with two columns
 #' 
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -273,9 +281,7 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @param fixed character vector of fixed patterns to search for
 #' @param charclass character class identifiers
 #' 
-#' @return integer matrix with n rows, where n is the length of \code{str}.  
-#' First column gives start postions of matches, and second column gives end position.
-#' \code{NA}s iff not found.
+#' @return integer matrix with two columns
 #' 
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -316,7 +322,7 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
 #'             occurence of the pattern
 #' 
 #' @return same as the underlying functions called, i.e.
-#' a 2-column matrix or list of matrices.
+#' a 2-column matrix or a list of matrices.
 #' 
 #' 
 #' @export
