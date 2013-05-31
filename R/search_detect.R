@@ -114,11 +114,11 @@ stri_detect_regex <- function(str, pattern) {
 #' @export
 #' @family search_detect
 stri_detect <- function(str, ..., regex, fixed, charclass) {
-   if(!missing(regex))
+   if (!missing(regex))
       stri_detect_regex(str, regex, ...)
-   else if(!missing(fixed))
+   else if (!missing(fixed))
       stri_detect_fixed(str, fixed, ...)
-   else if(!missing(charclass))
+   else if (!missing(charclass))
       stri_detect_class(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")

@@ -70,3 +70,13 @@ SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
    UNPROTECT(1);
    return ret;
 }
+
+
+
+// TO DO: stri_replace_first_regex (with capture groups: use icu::RegexMatcher::replaceFirst)
+
+
+
+
+// TO DO: stri_replace_last_regex (with capture groups: extract groups manually...)
+

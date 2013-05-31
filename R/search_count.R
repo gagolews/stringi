@@ -136,11 +136,11 @@ stri_count_regex <- function(str, pattern) {
 #' @export
 #' @family search_count
 stri_count <- function(str, ..., regex, fixed, charclass) {
-   if(!missing(regex))
+   if (!missing(regex))
       stri_count_regex(str, regex, ...)
-   else if(!missing(fixed))
+   else if (!missing(fixed))
       stri_count_fixed(str, fixed, ...)
-   else if(!missing(charclass))
+   else if (!missing(charclass))
       stri_count_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")

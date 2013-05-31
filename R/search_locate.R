@@ -112,6 +112,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @family search_fixed
 #' @family search_locate
 #' @family indexing
+#' @family locale_sensitive
 stri_locate_all_fixed <- function(str, pattern) {
    .Call("stri_locate_all_fixed", str, pattern, PACKAGE="stringi")
 }
@@ -208,11 +209,11 @@ stri_locate_last_regex <- function(str, pattern) {
 #' @family search_locate
 #' @family indexing
 stri_locate_all <- function(str, ..., regex, fixed, charclass) {
-   if(!missing(regex))
+   if (!missing(regex))
       stri_locate_all_regex(str, regex, ...)
-   else if(!missing(fixed))
+   else if (!missing(fixed))
       stri_locate_all_fixed(str, fixed, ...)
-   else if(!missing(charclass))
+   else if (!missing(charclass))
       stri_locate_all_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
@@ -247,11 +248,11 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @family search_locate
 #' @family indexing
 stri_locate_first <- function(str, ..., regex, fixed, charclass) {
-   if(!missing(regex))
+   if (!missing(regex))
       stri_locate_first_regex(str, regex, ...)
-   else if(!missing(fixed))
+   else if (!missing(fixed))
       stri_locate_first_fixed(str, fixed, ...)
-   else if(!missing(charclass))
+   else if (!missing(charclass))
       stri_locate_first_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
@@ -286,11 +287,11 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @family search_locate
 #' @family indexing
 stri_locate_last <- function(str, ..., regex, fixed, charclass) {
-   if(!missing(regex))
+   if (!missing(regex))
       stri_locate_last_regex(str, regex, ...)
-   else if(!missing(fixed))
+   else if (!missing(fixed))
       stri_locate_last_fixed(str, fixed, ...)
-   else if(!missing(charclass))
+   else if (!missing(charclass))
       stri_locate_last_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
@@ -322,7 +323,8 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
 #' @family search_locate
 #' @family indexing
 stri_locate <- function(str, ..., regex, fixed, charclass, 
-                        mode=c("all", "first", "last")) {
+                        mode=c("first", "all", "last")) {
+   # `first` is default for compatibility with stringr
    mode <- match.arg(mode) # this is slow
    
    switch(mode,
