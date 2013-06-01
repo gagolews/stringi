@@ -231,7 +231,7 @@ SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);            /
 // uchar.cpp:
 // void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
 void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,  
-   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // ...DONE, but move somewhere else
+   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
 void stri__uchar_charType(const char* s, int n, int* codes);                   // ...TO DO: rewrite completely
 SEXP stri_charcategories();                                                    // ...TO DO: rewrite completely
 SEXP stri_chartype(SEXP str);                                                  // ...TO DO: rewrite completely

@@ -35,7 +35,7 @@
  * 
  * @version 0.1 (Bartek Tartanus)  stri_sub
  * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UCha32-to-UTF8 index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UChar32-to-UTF8 index
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -167,7 +167,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * 
  * @version 0.1 (Bartek Tartanus)  
  * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UCha32-to-UTF8 index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UChar32-to-UTF8 index
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 {

@@ -73,6 +73,12 @@ stri_cmp <- stri_compare
 #' 
 #' \code{NA}s are always put at the end.
 #' 
+#' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
+#' it does not always return UTF-8-encoded strings,
+#' and preserves many input strings's attributes.
+#' This is because it is defined as
+#' \code{str[stri_order(str, decreasing, collator_opts)]}.
+#' 
 #' @param str character vector
 #' @param decreasing single logical value; should the sort order be increasing or decreasing?
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}

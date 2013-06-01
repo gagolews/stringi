@@ -300,7 +300,7 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
          }
          // else 
       }
-      else //if (wh >= last_ind_back_codepoint) { // continue last search
+      else { //if (wh >= last_ind_back_codepoint)  // continue last search
          j    = last_ind_back_codepoint;
          jres = last_ind_back_utf8;
       }
@@ -368,7 +368,7 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
          }
          // else 
       }
-      else //if (wh >= last_ind_fwd_codepoint) { // continue last search
+      else { //if (wh >= last_ind_fwd_codepoint)  // continue last search
          j    = last_ind_fwd_codepoint;
          jres = last_ind_fwd_utf8;
       }
