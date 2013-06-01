@@ -100,8 +100,6 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    PROTECT(ret = allocVector(LGLSXP, nmax));
    int* ret_tab = LOGICAL(ret);
    
-   clock_t c = clock();
-   
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
    UErrorCode err = U_ZERO_ERROR;

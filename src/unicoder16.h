@@ -28,6 +28,7 @@
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - lastMatcher cache, supports auto-vectorization
  * @version 0.3 (Marek Gagolewski) - improved ASCII performance (seperate ucnv)
+ * @version 0.4 (Marek Gagolewski) - now NAs are marked as NULLs in str
  */
 class StriContainerUTF16 : public StriContainerUTF_Base {
    
@@ -51,35 +52,59 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       SEXP toR() const;
       
       
+      /** check if the vectorized ith element is NA
+       */
+      inline bool isNA(int i) const {
+#ifndef NDEBUG
+         if (i < 0 || i >= nrecycle)
+            error("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
+#endif
+         return (str[i%n] == NULL);
+      }
+      
+      
       /** get the vectorized ith element
        */
       const UnicodeString& get(int i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
+         if (i < 0 || i >= nrecycle)
+            error("StriContainerUTF16::get(): INDEX OUT OF BOUNDS");
+         if (str[i%n] == NULL)
+            error("StriContainerUTF16::get(): isNA");
 #endif
-         return (*(this->str[i%n]));
+         return (*(str[i%n]));
       }
       
       /** get the vectorized ith element
        */
       UnicodeString& getWritable(int i) {
 #ifndef NDEBUG
-         if (this->isShallow) error("getWritable: shallow StriContainerUTF16");
-         if (n != nrecycle)   error("getWritable: n!=nrecycle");
-         if (i < 0 || i >= n) error("getWritable: INDEX OUT OF BOUNDS");
+         if (isShallow)              
+            error("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
+         if (n != nrecycle)          
+            error("StriContainerUTF16::getWritable(): n!=nrecycle");
+         if (i < 0 || i >= n)        
+            error("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
+         if (str[i%n] == NULL) 
+            error("StriContainerUTF16::getWritable(): isNA");
 #endif
-         return (*(this->str[i%n]));
+         return (*(str[i%n])); // in fact, "%n" is not necessary
       }
       
       /** set the vectorized ith element
        */
       void set(int i, const UnicodeString& s) {
 #ifndef NDEBUG
-         if (this->isShallow) error("set: shallow StriContainerUTF16");
-         if (n != nrecycle)   error("set: n!=nrecycle");
-         if (i < 0 || i >= n) error("set: INDEX OUT OF BOUNDS");
+         if (isShallow)              
+            error("StriContainerUTF16::set(): shallow StriContainerUTF16");
+         if (n != nrecycle)          
+            error("StriContainerUTF16::set(): n!=nrecycle");
+         if (i < 0 || i >= n)        
+            error("StriContainerUTF16::set(): INDEX OUT OF BOUNDS");
+         if (str[i%n] == NULL) 
+            error("StriContainerUTF16::set(): isNA");
 #endif
-         *(this->str[i]) = s;
+         *(str[i%n]) = s; // in fact, "%n" is not necessary
       }
       
       RegexMatcher* vectorize_getMatcher(R_len_t i);

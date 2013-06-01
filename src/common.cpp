@@ -130,7 +130,7 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, howmany));
    for (R_len_t i=0; i<howmany; ++i)
-      SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
+      SET_STRING_ELT(ret, i, R_BlankString);
    UNPROTECT(1);
    
    return ret;   

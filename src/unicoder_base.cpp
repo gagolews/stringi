@@ -29,8 +29,39 @@ StriContainerUTF_Base::StriContainerUTF_Base()
 {
    this->n = 0;
    this->nrecycle = 0;
-   this->enc = NULL;
+#ifndef NDEBUG
    this->isShallow = true;
+#endif
+}
+
+
+
+/**
+ * 
+ * 
+ */
+void StriContainerUTF_Base::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle)
+{
+#ifndef NDEBUG 
+   if (this->n != 0) error("StriContainerUTF_Base::init_Base(...): already initialized");
+   this->isShallow = shallowrecycle;
+#endif
+
+   if (n == 0 || nrecycle == 0) {
+      this->nrecycle = 0;
+      this->n = 0;
+   }
+   else {
+      this->nrecycle = nrecycle;
+      this->n = (shallowrecycle)?n:nrecycle;
+      
+#ifndef NDEBUG 
+   if (this->n < n)
+      error("StriContainerUTF_Base::init_Base(...): this->n < n");
+   if (this->n > this->nrecycle)
+      error("StriContainerUTF_Base::init_Base(...): this->n > this->nrecycle");
+#endif
+   }
 }
 
 
@@ -40,16 +71,9 @@ StriContainerUTF_Base::StriContainerUTF_Base(StriContainerUTF_Base& container)
 {
    this->n = container.n;
    this->nrecycle = container.nrecycle;
+#ifndef NDEBUG
    this->isShallow = container.isShallow;
-   if (this->n > 0) {
-      this->enc = new StriEnc[this->n];
-      for (int i=0; i<this->n; ++i) {
-         this->enc[i] = container.enc[i];
-      }
-   }
-   else {
-      this->enc = NULL;
-   }
+#endif
 }
 
 
@@ -60,16 +84,9 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
    
    this->n = container.n;
    this->nrecycle = container.nrecycle;
+#ifndef NDEBUG
    this->isShallow = container.isShallow;
-   if (this->n > 0) {
-      this->enc = new StriEnc[this->n];
-      for (int i=0; i<this->n; ++i) {
-         this->enc[i] = container.enc[i];
-      }
-   }
-   else {
-      this->enc = NULL;
-   }
+#endif
    
    return *this;
 }
@@ -78,11 +95,6 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
 
 StriContainerUTF_Base::~StriContainerUTF_Base()
 {
-   if (this->n > 0) {
-      delete [] this->enc;  
-   }
-
-   this->enc = NULL;
    this->n = 0;
    this->nrecycle = 0;
 }

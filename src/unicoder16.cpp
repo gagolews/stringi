@@ -39,42 +39,31 @@ StriContainerUTF16::StriContainerUTF16()
  * @param shallowrecycle will \code{this->str} be ever modified?
  */
 StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle)
-   : StriContainerUTF_Base()
 {
+   this->lastMatcher = NULL;
+   this->str = NULL;
 #ifndef NDEBUG 
    if (!isString(rstr))
       error("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
 #endif
-   this->n = LENGTH(rstr);
-   this->isShallow = shallowrecycle;
-   this->lastMatcher = NULL;
+   R_len_t nrstr = LENGTH(rstr);
+   this->init_Base(nrstr, nrecycle, shallowrecycle); // calling LENGTH(rstr) fails on constructor call
    
-   if (nrecycle == 0) this->n = 0;
-#ifndef NDEBUG 
-   if (this->n > nrecycle) error("DEBUG: n>nrecycle");
-#endif
-   this->nrecycle = nrecycle;
-   
-   if (this->n <= 0) {
-      this->enc = NULL;
-      this->str = NULL;
-   }
-   else {
-      this->enc = new StriEnc[(this->isShallow)?this->n:this->nrecycle];
-      this->str = new UnicodeString*[(this->isShallow)?this->n:this->nrecycle];
+
+   if (this->n > 0) {
+      this->str = new UnicodeString*[this->n];
       for (R_len_t i=0; i<this->n; ++i)
-         this->str[i] = NULL; // in case it fails during conversion
+         this->str[i] = NULL; // in case it fails during conversion (this is NA)
       
       UConverter* ucnvASCII = NULL;
 //      UConverter* ucnvUTF8 = NULL;
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
 
-      for (R_len_t i=0; i<this->n; ++i) {
+      for (R_len_t i=0; i<nrstr; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
-            this->enc[i] = STRI_NA; 
-            this->str[i] = NULL;
+            continue; // keep NA
          }
          else {
             if (IS_ASCII(curs)) {         
@@ -91,13 +80,10 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                // Performance improvement attempt #2:
                // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
                // This wasn't faster tham the ucnvASCII approach.
-
-               this->enc[i] = STRI_ENC_ASCII; 
             }
             else if (IS_UTF8(curs)) {
                // the above ASCII-approach (but with ucnvUTF8) is slower for UTF-8
                this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
-               this->enc[i] = STRI_ENC_UTF8; 
             }
             else if (IS_LATIN1(curs)) {
                if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
@@ -106,7 +92,6 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                   ucnvLatin1, status);
                if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT);  
-               this->enc[i] = STRI_ENC_LATIN1; 
             }
             else if (IS_BYTES(curs)) 
                error(MSG__BYTESENC);
@@ -121,7 +106,6 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                   ucnvNative, status);
                if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT);  
-               this->enc[i] = STRI_ENC_NATIVE; 
             }
          }
       }
@@ -131,15 +115,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
       if (ucnvLatin1) ucnv_close(ucnvLatin1);
       if (ucnvNative) ucnv_close(ucnvNative);
       
-      if (!this->isShallow) {
-         for (R_len_t i=this->n; i<this->nrecycle; ++i) {
-            this->enc[i] = this->enc[i%this->n];
-            if (this->enc[i] == STRI_NA)
+      if (!shallowrecycle) {
+         for (R_len_t i=nrstr; i<this->n; ++i) {
+            if (this->str[i%nrstr] == NULL)
                this->str[i] = NULL;
             else
-               this->str[i] = new UnicodeString(*this->str[i%this->n]);
+               this->str[i] = new UnicodeString(*this->str[i%nrstr]);
          }
-         this->n = this->nrecycle;
       }
    }
 }
@@ -153,10 +135,10 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
 {
    this->lastMatcher = NULL;
-   if (this->n > 0) {
+   if (container.str) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
-         if (this->str[i])
+         if (container.str[i])
             this->str[i] = new UnicodeString(*(container.str[i]));
          else
             this->str[i] = NULL;
@@ -176,10 +158,10 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
    (StriContainerUTF_Base&) (*this) = (StriContainerUTF_Base&)container;
    
    this->lastMatcher = NULL;
-   if (this->n > 0) {
+   if (container.str) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
-         if (this->str[i])
+         if (container.str[i])
             this->str[i] = new UnicodeString(*(container.str[i]));
          else
             this->str[i] = NULL;
@@ -197,19 +179,19 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
  */
 StriContainerUTF16::~StriContainerUTF16()
 {
-   if (this->lastMatcher)
-      delete this->lastMatcher;
-
-   if (this->n > 0) {
-      for (int i=0; i<this->n; ++i) {
-         if (this->str[i])
-            delete this->str[i];
-      }
-      delete [] this->str;
+   if (lastMatcher) {
+      delete lastMatcher;
+      lastMatcher = NULL;
    }
 
-   this->str = NULL;
-   this->lastMatcher = NULL;
+   if (str) {
+      for (int i=0; i<this->n; ++i) {
+         if (str[i])
+            delete str[i];
+      }
+      delete [] str;
+      str = NULL;
+   }
 }
 
 
@@ -218,19 +200,20 @@ StriContainerUTF16::~StriContainerUTF16()
 /** Export character vector to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
  *  Recycle rule is applied, so length == nrecycle
+ * @return STRSXP
  */
 SEXP StriContainerUTF16::toR() const
 {
    SEXP ret;   
-   PROTECT(ret = allocVector(STRSXP, this->nrecycle));
+   PROTECT(ret = allocVector(STRSXP, nrecycle));
    std::string buf;
    
-   for (R_len_t i=0; i<this->nrecycle; ++i) {
-      if (!this->str[i%n])
+   for (R_len_t i=0; i<nrecycle; ++i) {
+      if (!str[i%n])
          SET_STRING_ELT(ret, i, NA_STRING);
       else {
          buf.clear();
-         this->str[i%n]->toUTF8String(buf);
+         str[i%n]->toUTF8String(buf);
          SET_STRING_ELT(ret, i,
             mkCharLenCE(buf.c_str(), buf.length(), CE_UTF8));
       }
@@ -245,59 +228,24 @@ SEXP StriContainerUTF16::toR() const
 /** Export string to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
  *  @param i index [with recycle]
+ *  @return CHARSXP
  */
 SEXP StriContainerUTF16::toR(R_len_t i) const
 {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("toR: INDEX OUT OF BOUNDS");
+   if (i < 0 || i >= nrecycle) error("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS");
 #endif
 
-   switch (this->enc[i%n]) {
-      case STRI_NA:
-         return NA_STRING;
-         
-      default:
-//      case STRI_ENC_ASCII:
-//      case STRI_ENC_UTF8:
-      {
-         std::string s;
-         this->str[i%n]->toUTF8String(s);
-         return mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
-      }
-//         
-//      case STRI_ENC_LATIN1:
-//         error(".... TO DO ....");
-//         break;
-//         
-//      case STRI_ENC_NATIVE: {
-//         if (!this->ucnvNative)
-//            this->ucnvNative = stri__ucnv_open((const char*)NULL);
-//         // the following buffer length is overestimated
-//         // (#codepoints <= UnicodeString::length() <= 2*#codepoints)
-//         const int n = UCNV_GET_MAX_BYTES_FOR_STRING(this->str[i]->length(),
-//            ucnv_getMaxCharSize(this->ucnvNative));
-//         char* buf = new char[n];
-//         UErrorCode status = U_ZERO_ERROR;
-//         int nout = this->str[i]->extract(buf, n, this->ucnvNative, status);
-//         cerr << status << endl;
-//         if (U_FAILURE(status))
-//            error(MSG__ENC_ERROR_CONVERT);
-//         if (nout >= n)
-//            error(MSG__ENC_ERROR_CONVERT);
-//         return mkCharLenCE(buf, nout, CE_NATIVE);
-//         break;
-//      }
-//         
-//      default: // this shouldn't happen
-//         error(MSG__ENC_ERROR_SET);
-   } 
+   if (str[i%n] == NULL)
+      return NA_STRING;
+   else {
+      std::string s;
+      str[i%n]->toUTF8String(s);
+      return mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
+   }
 }
  
  
-
-
-
-
 
 /** the returned matcher shall not be deleted by the user 
  * 
@@ -308,31 +256,28 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
  */
 RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
 {
-   if (this->lastMatcher) {
-      if (i >= this->n) {
+   if (lastMatcher) {
+      if (i >= n) {
 #ifndef NDEBUG
-      if ((this->debugMatcherIndex % this->n) != (i % this->n)) {
-         this->~StriContainerUTF16(); // free mem!
+      if ((debugMatcherIndex % n) != (i % n)) {
          error("DEBUG: vectorize_getMatcher - matcher reuse failed!");
-      //         cerr << "Matcher reuse" << endl; // tmp, test only
       }
 #endif
          return lastMatcher; // reuse
       }
       else {
-         delete this->lastMatcher;
-         this->lastMatcher = NULL;
+         delete lastMatcher;
+         lastMatcher = NULL;
       }
    }
    
    UErrorCode status = U_ZERO_ERROR;
-   this->lastMatcher = new RegexMatcher(this->get(i), 0, status);
+   lastMatcher = new RegexMatcher(this->get(i), 0, status);
    if (U_FAILURE(status)) {
-      this->~StriContainerUTF16(); // free mem!
       error(u_errorName(status));
    }
 #ifndef NDEBUG
-   this->debugMatcherIndex = (i % this->n);
+   debugMatcherIndex = (i % n);
 #endif
 
    return lastMatcher;

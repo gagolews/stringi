@@ -27,59 +27,51 @@
  * Base class for StriContainerUTF8 and StriContainerUTF16
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - removed ucnvNative, ucnvLatin1 (not needed per-object)
+ * @version 0.3 (Marek Gagolewski) - removed enc array
  */
 class StriContainerUTF_Base {
    
    protected:
       
-      R_len_t n;                 ///< number of strings (size of \code{enc} and \code{str})
+      R_len_t n;                 ///< number of strings (size of \code{str})
       R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
-      StriEnc* enc;              ///< original encoding of each string
-      bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
 
+#ifndef NDEBUG
+      bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
+#endif
 
       StriContainerUTF_Base();
       StriContainerUTF_Base(StriContainerUTF_Base& container);
       ~StriContainerUTF_Base();
 
+      void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle);
 
 
    public:
       StriContainerUTF_Base& operator=(StriContainerUTF_Base& container);
-         
-//      SEXP toR(R_len_t i) const = 0;
-//      SEXP toR() const = 0;
-//      inline R_len_t length() const { return this->n; }
 
       
-      /** check if the vectorized ith element is NA
-       */
-      inline bool isNA(int i) const {
-#ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("isNA: INDEX OUT OF BOUNDS");
-#endif
-         return (this->enc[i%n] == STRI_NA);
-      }
+
       
       
       /** Loop over vectorized container - init */
       inline R_len_t vectorize_init() const {
-         if (this->n <= 0) return this->nrecycle;
+         if (n <= 0) return nrecycle;
          else return 0;
       }
       
       /** Loop over vectorized container - end iterator */
       inline R_len_t vectorize_end() const {
-         return this->nrecycle;  
+         return nrecycle;  
       }
       
       /** Loop over vectorized container - next iteration */
       inline R_len_t vectorize_next(R_len_t i) const {
-         if (i == this->nrecycle - 1 - (this->nrecycle%this->n))
-            return this->nrecycle; // this is the end
-         i = i + this->n;
-         if (i >= this->nrecycle)
-            return (i % this->n) + 1;  
+         if (i == nrecycle - 1 - (nrecycle%n))
+            return nrecycle; // this is the end
+         i = i + n;
+         if (i >= nrecycle)
+            return (i % n) + 1;  
          else
             return i;
       }

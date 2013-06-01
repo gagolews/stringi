@@ -27,6 +27,7 @@
  * A class to handle conversion between R character vectors and UTF-8 string vectors
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) Improved performance for Native enc->UTF-8 (through u_strToUTF8)
+ * @version 0.3 (Marek Gagolewski) - now NAs are marked as NULLs in str
  */
 class StriContainerUTF8 : public StriContainerUTF_Base {
 
@@ -45,40 +46,29 @@ class StriContainerUTF8 : public StriContainerUTF_Base {
       SEXP toR(R_len_t i) const;
       SEXP toR() const;
 
+
+      /** check if the vectorized ith element is NA
+       */
+      inline bool isNA(int i) const {
+#ifndef NDEBUG
+         if (i < 0 || i >= nrecycle)
+            error("StriContainerUTF8::isNA(): INDEX OUT OF BOUNDS");
+#endif
+         return (str[i%n] == NULL);
+      }
       
       
       /** get the vectorized ith element
        */
       const String8& get(int i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle) error("get: INDEX OUT OF BOUNDS");
+         if (i < 0 || i >= nrecycle)
+            error("StriContainerUTF8::get(): INDEX OUT OF BOUNDS");
+         if (str[i%n] == NULL)
+            error("StriContainerUTF8::get(): isNA");
 #endif
-         return (*(this->str[i%n]));
+         return (*(str[i%n]));
       }
-      
-      /** get the vectorized ith element
-       */
-/*      String8& getWritable(int i) {
-#ifndef NDEBUG
-         if (this->isShallow) error("getWritable: shallow StriContainerUTF8");
-         if (n != nrecycle)   error("getWritable: n!=nrecycle");
-         if (i < 0 || i >= n) error("getWritable: INDEX OUT OF BOUNDS");
-#endif
-         return (*(this->str[i%n]));
-      }
-  */
-  
-      /** set the vectorized ith element
-       */
-  /*    void set(int i, const std::string& s) {
-#ifndef NDEBUG
-         if (this->isShallow) error("set: shallow StriContainerUTF8");
-         if (n != nrecycle)   error("set: n!=nrecycle");
-         if (i < 0 || i >= n) error("set: INDEX OUT OF BOUNDS");
-#endif
-         *(this->str[i]) = s;
-      } 
-      */
 };
 
 #endif
