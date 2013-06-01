@@ -27,13 +27,25 @@
  * A class to handle conversion between R character vectors and UTF-8 string vectors
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) Improved performance for Native enc->UTF-8 (through u_strToUTF8)
- * @version 0.3 (Marek Gagolewski) - now NAs are marked as NULLs in str
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) Now NAs are marked as NULLs in str
+ * @version 0.4 (Marek Gagolewski, 2013-06-01) UChar32_to_UTF8_index_back, UChar32_to_UTF8_index_fwd added
  */
 class StriContainerUTF8 : public StriContainerUTF_Base {
 
    private:
    
       String8** str;  ///< data - \code{string}s 
+      
+      
+      // the following are used in UChar32_to_UTF8_index_back
+      // and UChar32_to_UTF8_index_fwd to speed up computations
+      // on the same strings
+      R_len_t last_ind_fwd_codepoint;
+      R_len_t last_ind_fwd_utf8;
+      const char* last_ind_fwd_str;
+      R_len_t last_ind_back_codepoint;
+      R_len_t last_ind_back_utf8;
+      const char* last_ind_back_str;
       
       
    public:
@@ -48,8 +60,10 @@ class StriContainerUTF8 : public StriContainerUTF_Base {
 
 
       /** check if the vectorized ith element is NA
+       * @param i index
+       * @return true if is NA
        */
-      inline bool isNA(int i) const {
+      inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             error("StriContainerUTF8::isNA(): INDEX OUT OF BOUNDS");
@@ -59,8 +73,10 @@ class StriContainerUTF8 : public StriContainerUTF_Base {
       
       
       /** get the vectorized ith element
+       * @param i index
+       * @return string, read only
        */
-      const String8& get(int i) const {
+      const String8& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             error("StriContainerUTF8::get(): INDEX OUT OF BOUNDS");
@@ -69,6 +85,11 @@ class StriContainerUTF8 : public StriContainerUTF_Base {
 #endif
          return (*(str[i%n]));
       }
+      
+      
+
+      R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
+      R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);
 };
 
 #endif

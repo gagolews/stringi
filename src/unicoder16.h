@@ -53,8 +53,10 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       
       
       /** check if the vectorized ith element is NA
+       * @param i index
+       * @return true if is NA
        */
-      inline bool isNA(int i) const {
+      inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             error("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
@@ -64,8 +66,10 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       
       
       /** get the vectorized ith element
+       * @param i index
+       * @return string
        */
-      const UnicodeString& get(int i) const {
+      const UnicodeString& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             error("StriContainerUTF16::get(): INDEX OUT OF BOUNDS");
@@ -76,8 +80,10 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       }
       
       /** get the vectorized ith element
+       * @param i index
+       * @return string
        */
-      UnicodeString& getWritable(int i) {
+      UnicodeString& getWritable(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)              
             error("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
@@ -92,8 +98,10 @@ class StriContainerUTF16 : public StriContainerUTF_Base {
       }
       
       /** set the vectorized ith element
+       * @param i index
+       * @param s string to be copied
        */
-      void set(int i, const UnicodeString& s) {
+      void set(R_len_t i, const UnicodeString& s) {
 #ifndef NDEBUG
          if (isShallow)              
             error("StriContainerUTF16::set(): shallow StriContainerUTF16");

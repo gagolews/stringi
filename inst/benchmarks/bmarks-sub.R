@@ -55,6 +55,30 @@ local({
    stopifnot(all(stri_sub(srepdup,1:100,1:100)==str_sub(srepdup,1:100,1:100)))
    
    print(microbenchmark(
+      stri_sub(srepdup,100:1,1:100),
+      str_sub(srepdup,100:1,1:100)
+   ))
+   stopifnot(all(stri_sub(srepdup,100:1,1:100)==str_sub(srepdup,100:1,1:100)))
+   
+   print(microbenchmark(
+      stri_sub(srepdup,100:1,100:1),
+      str_sub(srepdup,100:1,100:1)
+   ))
+   stopifnot(all(stri_sub(srepdup,100:1,100:1)==str_sub(srepdup,100:1,100:1)))
+   
+   print(microbenchmark(
+      stri_sub(srepdup,1:100,-(1:100)),
+      str_sub(srepdup,1:100,-(1:100))
+   ))
+   stopifnot(all(stri_sub(srepdup,1:100,-(1:100))==str_sub(srepdup,1:100,-(1:100))))
+   
+   print(microbenchmark(
+      stri_sub(srepdup,-(1:100),-(1:100)),
+      str_sub(srepdup,-(1:100),-(1:100))
+   ))
+   stopifnot(all(stri_sub(srepdup,-(1:100),-(1:100))==str_sub(srepdup,-(1:100),-(1:100))))
+   
+   print(microbenchmark(
       stri_sub(srepdup,1:100),
       str_sub(srepdup,1:100)
    ))

@@ -27,7 +27,9 @@
 StriContainerUTF8::StriContainerUTF8()
    : StriContainerUTF_Base()
 {
-   this->str = NULL;
+   str = NULL;
+   last_ind_back_str = NULL;
+   last_ind_fwd_str = NULL;
 }
 
 
@@ -243,4 +245,144 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
       // This is already in UTF-8
       return mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8);
 }
+ 
+ 
+ 
+ 
+       
+/** Convert BACKWARD UChar32-based index to UTF-8 based
+ * 
+ * @param i string index (in container)
+ * @param wh UChar32 character's position to look for,
+ * counting starts from 0 == byte after last character in the i-th string
+ * @return UTF-8 (byte) index
+ * 
+ * 
+ * @version 0.1 (Bartek Tartanus)  stri_sub
+ * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) moved to StriContainerUTF8
+ */
+R_len_t StriContainerUTF8::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
+{
+   R_len_t cur_n = get(i).length();
+   const char* cur_s = get(i).c_str();
+   
+   if (wh <= 0) return cur_n;
+
+   if (last_ind_back_str != cur_s) {
+      // starting search in a different string
+      last_ind_back_codepoint = 0;
+      last_ind_back_utf8 = cur_n;
+      last_ind_back_str = cur_s;
+   }
+   
+
+   
+   R_len_t j = 0;
+   R_len_t jres = cur_n;
+   
+   if (last_ind_back_codepoint > 0) {
+      if (wh < last_ind_back_codepoint) {
+         // check if it makes sense to go towards the end of the string
+         // or maybe it will be better to start from the end and move backwards
+         if ((last_ind_back_codepoint-wh) < (wh-0)) {
+            // less code points will be considered when going backwards
+            j    = last_ind_back_codepoint;
+            jres = last_ind_back_utf8;
+            while (j > wh && jres < cur_n) {
+               U8_FWD_1((const uint8_t*)cur_s, jres, cur_n);
+               --j;
+            }
+            
+            last_ind_back_codepoint = wh;
+            last_ind_back_utf8 = jres;
+            return jres; // stop right now
+         }
+         // else 
+      }
+      else //if (wh >= last_ind_back_codepoint) { // continue last search
+         j    = last_ind_back_codepoint;
+         jres = last_ind_back_utf8;
+      }
+   }
+   
+   // go backward
+   while (j < wh && jres > 0) {
+      U8_BACK_1((const uint8_t*)cur_s, 0, jres);
+      ++j;
+   }
+   
+   last_ind_back_codepoint = wh;
+   last_ind_back_utf8 = jres;
+      
+   return jres; 
+}
+
+
+
+/** Convert FORWARD UChar32-based index to UTF-8 based
+ * 
+ * @param i string index (in container)
+ * @param wh UChar32 character's position to look for,
+ * counting starts from 0 == first character in i-th string
+ * @return UTF-8 (byte) index
+ * 
+ * 
+ * @version 0.1 (Bartek Tartanus)  stri_sub
+ * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) moved to StriContainerUTF8
+ */
+R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
+{
+   if (wh <= 0) return 0;
+   
+   R_len_t cur_n = get(i).length();
+   const char* cur_s = get(i).c_str();
+
+   if (last_ind_fwd_str != cur_s) {
+      // starting search in a different string
+      last_ind_fwd_codepoint = 0;
+      last_ind_fwd_utf8 = 0;
+      last_ind_fwd_str = cur_s;
+   }
+   
+   R_len_t j = 0;
+   R_len_t jres = 0;
+   
+   if (last_ind_fwd_codepoint > 0) {
+      if (wh < last_ind_fwd_codepoint) {
+         // check if it makes sense to go backwards from last position,
+         // or it is better to start from scratch
+         if ((last_ind_fwd_codepoint-wh) < (wh-0)) {
+            // less code points will be considered when going backwards
+            j    = last_ind_fwd_codepoint;
+            jres = last_ind_fwd_utf8;
+            while (j > wh && jres > 0) {
+               U8_BACK_1((const uint8_t*)cur_s, 0, jres);
+               --j;
+            }
+            
+            last_ind_fwd_codepoint = wh;
+            last_ind_fwd_utf8 = jres;
+            return jres; // stop right now
+         }
+         // else 
+      }
+      else //if (wh >= last_ind_fwd_codepoint) { // continue last search
+         j    = last_ind_fwd_codepoint;
+         jres = last_ind_fwd_utf8;
+      }
+   }
+   
+   // go forward
+   while (j < wh && jres < cur_n) {
+      U8_FWD_1((const uint8_t*)cur_s, jres, cur_n);
+      ++j;
+   }
+   
+   last_ind_fwd_codepoint = wh;
+   last_ind_fwd_utf8 = jres;
+   return jres;
+}
+
  

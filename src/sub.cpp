@@ -35,6 +35,7 @@
  * 
  * @version 0.1 (Bartek Tartanus)  stri_sub
  * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UCha32-to-UTF8 index
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -91,12 +92,6 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, nmax));
    
-   const char* last_s = 0;
-   R_len_t last_ind_fwd_codepoint = -1;
-   R_len_t last_ind_fwd_utf8 = -1;
-   R_len_t last_ind_back_codepoint = -1;
-   R_len_t last_ind_back_utf8 = -1;
-   
    for (R_len_t i = se->vectorize_init();
          i != se->vectorize_end();
          i = se->vectorize_next(i))
@@ -110,7 +105,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       
       if (length_tab) {
          if (cur_to <= 0) {
-            SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
+            SET_STRING_ELT(ret, i, R_BlankString);
             continue;
          }
          cur_to = cur_from + cur_to - 1;
@@ -120,53 +115,26 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       const char* cur_s = se->get(i).c_str();
       R_len_t cur_n = se->get(i).length();
       
-      // allows to continue search in the same string
-      // speeds up if we search near the place where were recently
-      if (last_s != cur_s) {
-         last_s = cur_s;
-         last_ind_fwd_codepoint = 0;
-         last_ind_fwd_utf8 = 0;
-         last_ind_back_codepoint = 0;
-         last_ind_back_utf8 = cur_n;
-      }
-      
-
 
       R_len_t cur_from2; // UTF-8 byte incices
       R_len_t cur_to2;   // UTF-8 byte incices
       
       if (cur_from >= 0) {
          cur_from--; // 1-based -> 0-based index
-         cur_from2 = stri__UChar32_to_UTF8_index_fwd(cur_s, cur_n,
-            cur_from, last_ind_fwd_codepoint, last_ind_fwd_utf8);
-            
-         last_ind_fwd_codepoint = cur_from;
-         last_ind_fwd_utf8 = cur_from2;
+         cur_from2 = se->UChar32_to_UTF8_index_fwd(i, cur_from);
       }
       else {
          cur_from = -cur_from;
-         cur_from2 = stri__UChar32_to_UTF8_index_back(cur_s, cur_n,
-            cur_from, last_ind_back_codepoint, last_ind_back_utf8);
-            
-         last_ind_back_codepoint = cur_from;
-         last_ind_back_utf8 = cur_from2;
+         cur_from2 = se->UChar32_to_UTF8_index_back(i, cur_from);
       }
          
       if (cur_to >= 0) {
          ; // do nothing with cur_to // 1-based -> 0-based index but +1 as we need the next one (bound)
-         cur_to2 = stri__UChar32_to_UTF8_index_fwd(cur_s, cur_n,
-            cur_to, last_ind_fwd_codepoint, last_ind_fwd_utf8);
-            
-         last_ind_fwd_codepoint = cur_to;
-         last_ind_fwd_utf8 = cur_to2;
+         cur_to2 = se->UChar32_to_UTF8_index_fwd(i, cur_to);
       }
       else {
          cur_to = -cur_to - 1;
-         cur_to2 = stri__UChar32_to_UTF8_index_back(cur_s, cur_n,
-            cur_to, last_ind_back_codepoint, last_ind_back_utf8);
-            
-         last_ind_back_codepoint = cur_to;
-         last_ind_back_utf8 = cur_to2;
+         cur_to2 = se->UChar32_to_UTF8_index_back(i, cur_to);
       }
       
       if (cur_to2 > cur_from2) { // just copy
@@ -199,6 +167,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * 
  * @version 0.1 (Bartek Tartanus)  
  * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
+ * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UCha32-to-UTF8 index
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 {
@@ -259,10 +228,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    PROTECT(ret = allocVector(STRSXP, nmax));
    
    const char* last_s = 0;
-   R_len_t last_ind_fwd_codepoint = -1;
-   R_len_t last_ind_fwd_utf8 = -1;
-   R_len_t last_ind_back_codepoint = -1;
-   R_len_t last_ind_back_utf8 = -1;
+
    
    for (R_len_t i = se->vectorize_init();
          i != se->vectorize_end();
@@ -277,7 +243,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       
       if (length_tab) {
          if (cur_to <= 0) {
-            SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
+            SET_STRING_ELT(ret, i, R_BlankString);
             continue;
          }
          cur_to = cur_from + cur_to - 1;
@@ -287,16 +253,6 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       const char* cur_s = se->get(i).c_str();
       R_len_t cur_n = se->get(i).length();
       
-      // allows to continue search in the same string
-      // speeds up if we search near the place where were recently
-      if (last_s != cur_s) {
-         last_s = cur_s;
-         last_ind_fwd_codepoint = 0;
-         last_ind_fwd_utf8 = 0;
-         last_ind_back_codepoint = 0;
-         last_ind_back_utf8 = cur_n;
-      }
-      
 
 
       R_len_t cur_from2; // UTF-8 byte incices
@@ -304,36 +260,20 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       
       if (cur_from >= 0) {
          cur_from--; // 1-based -> 0-based index
-         cur_from2 = stri__UChar32_to_UTF8_index_fwd(cur_s, cur_n,
-            cur_from, last_ind_fwd_codepoint, last_ind_fwd_utf8);
-            
-         last_ind_fwd_codepoint = cur_from;
-         last_ind_fwd_utf8 = cur_from2;
+         cur_from2 = se->UChar32_to_UTF8_index_fwd(i, cur_from);
       }
       else {
          cur_from = -cur_from;
-         cur_from2 = stri__UChar32_to_UTF8_index_back(cur_s, cur_n,
-            cur_from, last_ind_back_codepoint, last_ind_back_utf8);
-            
-         last_ind_back_codepoint = cur_from;
-         last_ind_back_utf8 = cur_from2;
+         cur_from2 = se->UChar32_to_UTF8_index_back(i, cur_from);
       }
          
       if (cur_to >= 0) {
          ; // do nothing with cur_to // 1-based -> 0-based index but +1 as we need the next one (bound)
-         cur_to2 = stri__UChar32_to_UTF8_index_fwd(cur_s, cur_n,
-            cur_to, last_ind_fwd_codepoint, last_ind_fwd_utf8);
-            
-         last_ind_fwd_codepoint = cur_to;
-         last_ind_fwd_utf8 = cur_to2;
+         cur_to2 = se->UChar32_to_UTF8_index_fwd(i, cur_to);
       }
       else {
          cur_to = -cur_to - 1;
-         cur_to2 = stri__UChar32_to_UTF8_index_back(cur_s, cur_n,
-            cur_to, last_ind_back_codepoint, last_ind_back_utf8);
-            
-         last_ind_back_codepoint = cur_to;
-         last_ind_back_utf8 = cur_to2;
+         cur_to2 = se->UChar32_to_UTF8_index_back(i, cur_to);
       }
       
       const char* val_s = sval->get(i).c_str();
@@ -354,109 +294,4 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
 
 
-
-/** Converts codepoint-based index to utf8-byte index [left-based index]
- * 
- * @param s string
- * @param n length of \code{s}, in bytes
- * @param i codepoint-based index to look for is \code{s}, 0-based
- * @param lasti (allow to continue last search - last codepoint-based index)
- * @param lastres (allow to continue last search - last search result)
- * 
- * @return utf8-base translated index \code{i}, 0-based
- * 
- * @version 0.1 (Bartek Tartanus)  stri_sub
- * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
- */
-R_len_t stri__UChar32_to_UTF8_index_fwd(const char* s, R_len_t n, R_len_t i,
-                                    R_len_t lasti, R_len_t lastres)
-{
-   if (i <= 0) return 0;
-   
-   R_len_t j = 0;
-   R_len_t jres = 0;
-   
-   if (lasti >= 0) {
-      if (i < lasti) {
-         // check if it makes sense to go backwards, or to start from scratch
-         if ((lasti-i) < (i-0)) {
-            // less code points will be considered when going backwards
-            j    = lasti;
-            jres = lastres;
-            while (j > i && jres > 0) {
-               U8_BACK_1((const uint8_t*)s, 0, jres);
-               --j;
-            }
-            return jres; // stop right now
-         }
-         // else 
-      }
-      else if (i >= lasti) { // continue last search
-         j    = lasti;
-         jres = lastres;
-      }
-   }
-   
-   // go forward
-   while (j < i && jres < n) {
-      U8_FWD_1((const uint8_t*)s, jres, n);
-      ++j;
-   }
-      
-   return jres;
-}
-
-
-
-/** Converts codepoint-based index to utf8-byte index [right-based index]
- * 
- * @param s string
- * @param n length of \code{s}, in bytes
- * @param i codepoint-based index to look for is \code{s}, 0-based
- *    [0 == end, 1 == last char, 2 == second-to-last, etc.]
- * @param lasti (allow to continue last search - last codepoint-based index)
- * @param lastres (allow to continue last search - last search result)
- * 
- * @return utf8-base translated index \code{i}, 0-based
- * 
- * @version 0.1 (Bartek Tartanus)  stri_sub
- * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
- */
-R_len_t stri__UChar32_to_UTF8_index_back(const char* s, R_len_t n, R_len_t i,
-                                    R_len_t lasti, R_len_t lastres)
-{
-   if (i <= 0) return n;
-   
-   R_len_t j = 0;
-   R_len_t jres = n;
-   
-   if (lasti >= 0) {
-      if (i < lasti) {
-         // check if it makes sense to go forward, or to start from scratch
-         if ((lasti-i) < (i-0)) {
-            // less code points will be considered when going backwards
-            j    = lasti;
-            jres = lastres;
-            while (j > i && jres < n) {
-               U8_FWD_1((const uint8_t*)s, jres, n);
-               --j;
-            }
-            return jres; // stop right now
-         }
-         // else 
-      }
-      else if (i >= lasti) { // continue last search
-         j    = lasti;
-         jres = lastres;
-      }
-   }
-   
-   // go backward
-   while (j < i && jres > 0) {
-      U8_BACK_1((const uint8_t*)s, 0, jres);
-      ++j;
-   }
-      
-   return jres;
-}
 
