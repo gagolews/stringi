@@ -219,7 +219,8 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DO
 
 
 
-SEXP stri_detect_class(SEXP s, SEXP c);                                        // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri_detect_charclass(SEXP str, SEXP pattern);                        // DONE
+SEXP stri_count_charclass(SEXP str, SEXP pattern);                         // DONE
 void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // ...TO DO: rewrite completely & rename to *charclass
    int* start, int* end, int& o);                                              // ...TO DO: rewrite completely & rename to *charclass
 void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,    // ...TO DO: rewrite completely & rename to *charclass

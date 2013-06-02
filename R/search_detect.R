@@ -22,20 +22,18 @@
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' 
-#' @param str character vector
-#' @param pattern character class identifiers specified by
-#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @param str character vector to search in
+#' @param pattern character vector with character class identifiers, see !!TODO!!
 #' @return logical vector
+#' 
 #' @examples
-#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Ll"))
-#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Lu"))
-#' stri_detect_class(c("stringi w R","REXAMINE","123"),stri_char_getcategoryid("Zs"))
+#' stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
 #' 
 #' @export
 #' @family search_detect
 #' @family search_charclass
 stri_detect_charclass <- function(str, pattern) {
-   .Call("stri_detect_class", str, pattern, PACKAGE="stringi")
+   .Call("stri_detect_charclass", str, pattern, PACKAGE="stringi")
 }
 
 

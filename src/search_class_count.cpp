@@ -21,16 +21,15 @@
 
 
 /** 
- * Detect if a character class occurs in a string
+ * Count a character class occurences in a string
  * 
  * @param str character vector
  * @param pattern character vector
- * @return logical vector
+ * @return integer vector
  * 
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-02) Use StrContainerUTF8 and CharClass classes
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
-SEXP stri_detect_charclass(SEXP str, SEXP pattern)
+SEXP stri_count_charclass(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -39,8 +38,8 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
    StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, nmax));
-   int* ret_tab = LOGICAL(ret);
+   PROTECT(ret = allocVector(INTSXP, nmax));
+   int* ret_tab = INTEGER(ret);
    
    CharClass cc;
    const char* last_pattern = 0;
@@ -48,7 +47,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
       SEXP cur_pattern = STRING_ELT(pattern, i%nmax);
       
       if (ss->isNA(i) || cur_pattern == NA_STRING) {
-         ret_tab[i] = NA_LOGICAL;
+         ret_tab[i] = NA_INTEGER;
          continue;
       }
       
@@ -58,22 +57,20 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
       }
       
       if (cc.isNA()) {
-         ret_tab[i] = NA_LOGICAL;
+         ret_tab[i] = NA_INTEGER;
          continue;
       }
       
       R_len_t curn = ss->get(i).length();
       const char* curs = ss->get(i).c_str();
-      ret_tab[i] = FALSE;
+      ret_tab[i] = 0;
       R_len_t j;
       UChar32 chr;
       
       for (j=0; j<curn; ) {
          U8_NEXT(curs, j, curn, chr);
-         if (cc.test(chr)) {
-            ret_tab[i] = TRUE;
-            break;
-         } 
+         if (cc.test(chr))
+            ++ret_tab[i];
       }
    }
 
