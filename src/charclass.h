@@ -38,10 +38,12 @@ struct CharClass {
       bool complement;          //< Are we interested in the complement of a char class?
    
    
-      static const char* binprop_names[];       //< textual identifiers binary properties
-      static const UProperty binprop_code[];    //< corresponding codes for \code{binprop_names}
-   
-   
+      static const char* binprop_names[];             //< textual identifiers binary properties
+      static const char* binprop_names_normalized[];  //< normalized identifiers binary properties (only uppercase ascii)
+      static const UProperty binprop_code[];          //< corresponding codes for \code{binprop_names}
+      static const R_len_t binprop_length;            //< length of \code{binprop_*} arrays
+      static const R_len_t binprop_maxchars;          //< maximal number of characters in \code{binprop_*} arrays
+      
    public:
    
       CharClass() { binprop = (UProperty)-1; gencat = (UCharCategory)-1; complement = false; }

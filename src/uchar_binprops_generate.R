@@ -5,6 +5,8 @@
 
 require('stringi') # :-)
 
+
+
 binprops <- c(
    "ALPHABETIC"="UCHAR_ALPHABETIC",
    "ASCII_HEX_DIGIT"="UCHAR_ASCII_HEX_DIGIT",
@@ -65,10 +67,78 @@ binprops <- c(
    "CHANGES_WHEN_NFKC_CASEFOLDED"="UCHAR_CHANGES_WHEN_NFKC_CASEFOLDED"
 )
 
-binprops <- binprops[stri_order(names(binprops))]
+binprops_normalized = c(
+   "ALPHABETIC",
+   "ASCIIHEXDIGIT",
+   "BIDICONTROL",
+   "BIDIMIRRORED",
+   "DASH",
+   "DEFAULTIGNORABLECODEPOINT",
+   "DEPRECATED",
+   "DIACRITIC",
+   "EXTENDER",
+   "FULLCOMPOSITIONEXCLUSION",
+   "GRAPHEMEBASE",
+   "GRAPHEMEEXTEND",
+   "GRAPHEMELINK",
+   "HEXDIGIT",
+   "HYPHEN",
+   "IDCONTINUE",
+   "IDSTART",
+   "IDEOGRAPHIC",
+   "IDSBINARYOPERATOR",
+   "IDSTRINARYOPERATOR",
+   "JOINCONTROL",
+   "LOGICALORDEREXCEPTION",
+   "LOWERCASE",
+   "MATH",
+   "NONCHARACTERCODEPOINT",
+   "QUOTATIONMARK",
+   "RADICAL",
+   "SOFTDOTTED",
+   "TERMINALPUNCTUATION",
+   "UNIFIEDIDEOGRAPH",
+   "UPPERCASE",
+   "WHITESPACE",
+   "XIDCONTINUE",
+   "XIDSTART",
+   "CASESENSITIVE",
+   "STERM",
+   "VARIATIONSELECTOR",
+   "NFDINERT",
+   "NFKDINERT",
+   "NFCINERT",
+   "NFKCINERT",
+   "SEGMENTSTARTER",
+   "PATTERNSYNTAX",
+   "PATTERNWHITESPACE",
+   "POSIXALNUM",
+   "POSIXBLANK",
+   "POSIXGRAPH",
+   "POSIXPRINT",
+   "POSIXXDIGIT",
+   "CASED",
+   "CASEIGNORABLE",
+   "CHANGESWHENLOWERCASED",
+   "CHANGESWHENUPPERCASED",
+   "CHANGESWHENTITLECASED",
+   "CHANGESWHENCASEFOLDED",
+   "CHANGESWHENCASEMAPPED",
+   "CHANGESWHENNFKCCASEFOLDED"
+)
+
+ord <- stri_order(binprops_normalized)
+binprops <- binprops[ord]
+binprops_normalized <- binprops_normalized[ord]
+
+cat(stri_wrap(stri_join("\"", binprops_normalized, "\"", collapse=", "), 80))
+cat('\n\n\n')
+cat(stri_wrap(stri_join("\"", names(binprops), "\"", collapse=", "), 80))
+cat('\n\n\n')
+cat(stri_wrap(stri_join(binprops, collapse=", "), 80))
+cat('\n\n\n')
+
+print(length(binprops))
+print(max(stri_length(names(binprops))))
 
 
-cat(stri_join("else STRI__BINPROP_TEST(\"", names(binprops), "\", ", binprops, ")", collapse="\n"))
-
-cat(stri_join("\"", names(binprops), "\", ", collapse=""))
-cat(stri_join(binprops, ", ", collapse=""))

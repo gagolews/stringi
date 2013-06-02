@@ -1,5 +1,21 @@
 require(testthat)
 
+
+
+test_that("stri_count_charclass", {
+   expect_identical(stri_count_charclass("a", NA), NA_integer_)
+   expect_identical(stri_count_charclass(NA, "a"), NA_integer_)
+   expect_identical(stri_count_charclass(NA, NA), NA_integer_)
+   expect_identical(suppressWarnings(stri_count_charclass("a", "WTF????")), NA_integer_)
+   expect_warning(stri_count_charclass("a", "WTF????"))
+   
+   expect_identical(stri_count_charclass("a\u0105bc", c("L", "Ll", "Lu")), c(4L,4L,0L))
+   expect_identical(stri_count_charclass("a\u0105bc", c("l", "ll", "lu")), c(4L,4L,0L))
+   expect_identical(stri_count_charclass("a\u0105bc", c("^l", "^ll", "^lu")), c(0L,0L,4L))
+   expect_identical(stri_count_charclass("a\u0105bc", c("AlPh_a  bEtic")), c(4L))
+})
+
+
 test_that("stri_count_fixed [byte compare]", {
    expect_identical(stri_count_fixed(character(0)," ", collator_opts=NA),integer(0))   
    expect_identical(stri_count_fixed(NA,"a", collator_opts=NA),NA_integer_)

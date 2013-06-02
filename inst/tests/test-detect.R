@@ -1,5 +1,21 @@
 require("testthat")
 
+
+
+test_that("stri_detect_charclass", {
+   expect_identical(stri_detect_charclass("a", NA), NA)
+   expect_identical(stri_detect_charclass(NA, "a"), NA)
+   expect_identical(stri_detect_charclass(NA, NA), NA)
+   expect_identical(suppressWarnings(stri_detect_charclass("a", "WTF????")), NA)
+   expect_warning(stri_detect_charclass("a", "WTF????"))
+   
+   expect_identical(stri_detect_charclass("a\u0105bc", c("L", "Ll", "Lu")), c(T,T,F))
+   expect_identical(stri_detect_charclass("a\u0105bc", c("l", "ll", "lu")), c(T,T,F))
+   expect_identical(stri_detect_charclass("a\u0105bc", c("^l", "^ll", "^lu")), c(F,F,T))
+   expect_identical(stri_detect_charclass("a\u0105bc", c("AlPh_a  bEtic")), c(T))
+})
+
+
 test_that("stri_detect_fixed [byte]", {
    collator_opts <- NA
    expect_identical(stri_detect_fixed("a", NA, collator_opts=collator_opts), NA)

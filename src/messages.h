@@ -105,6 +105,10 @@
    "newline character found in a string"
    
 
+
+#define MSG__CHARCLASS_INCORRECT_WHICH \
+   "unknown charclass `%s`. assuming NA"
+
 #define MSG__CHARCLASS_INCORRECT \
    "unknown charclass. assuming NA"
 

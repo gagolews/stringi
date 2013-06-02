@@ -20,46 +20,65 @@
 #include "stringi.h"
 
 
-const char* CharClass::binprop_names[] = { // sorted by binprop_names
-         "ALPHABETIC", "ASCII_HEX_DIGIT", "BIDI_CONTROL", "BIDI_MIRRORED", 
-         "CASE_IGNORABLE", "CASE_SENSITIVE", "CASED", "CHANGES_WHEN_CASEFOLDED", 
-         "CHANGES_WHEN_CASEMAPPED", "CHANGES_WHEN_LOWERCASED", 
-         "CHANGES_WHEN_NFKC_CASEFOLDED", "CHANGES_WHEN_TITLECASED", 
-         "CHANGES_WHEN_UPPERCASED", "DASH", "DEFAULT_IGNORABLE_CODE_POINT", 
-         "DEPRECATED", "DIACRITIC", "EXTENDER", "FULL_COMPOSITION_EXCLUSION", 
-         "GRAPHEME_BASE", "GRAPHEME_EXTEND", "GRAPHEME_LINK", "HEX_DIGIT", 
-         "HYPHEN", "ID_CONTINUE", "ID_START", "IDEOGRAPHIC", "IDS_BINARY_OPERATOR",
-         "IDS_TRINARY_OPERATOR", "JOIN_CONTROL", "LOGICAL_ORDER_EXCEPTION", 
-         "LOWERCASE", "MATH", "NFC_INERT", "NFD_INERT", "NFKC_INERT", "NFKD_INERT",
-         "NONCHARACTER_CODE_POINT", "PATTERN_SYNTAX", "PATTERN_WHITE_SPACE", 
-         "POSIX_ALNUM", "POSIX_BLANK", "POSIX_GRAPH", "POSIX_PRINT", "POSIX_XDIGIT",
-         "QUOTATION_MARK", "RADICAL", "S_TERM", "SEGMENT_STARTER", "SOFT_DOTTED", 
-         "TERMINAL_PUNCTUATION", "UNIFIED_IDEOGRAPH", "UPPERCASE", 
-         "VARIATION_SELECTOR", "WHITE_SPACE", "XID_CONTINUE", "XID_START"
-      };
+// these static vars are automatically generated via an R script
+const R_len_t CharClass::binprop_maxchars = 32;
 
+const R_len_t CharClass::binprop_length = 57;
 
-const UProperty CharClass::binprop_code[] = { // sorted by binprop_names
-         UCHAR_ALPHABETIC, UCHAR_ASCII_HEX_DIGIT, UCHAR_BIDI_CONTROL, 
-         UCHAR_BIDI_MIRRORED, UCHAR_CASE_IGNORABLE, UCHAR_CASE_SENSITIVE, 
-         UCHAR_CASED, UCHAR_CHANGES_WHEN_CASEFOLDED, UCHAR_CHANGES_WHEN_CASEMAPPED,
-         UCHAR_CHANGES_WHEN_LOWERCASED, UCHAR_CHANGES_WHEN_NFKC_CASEFOLDED, 
-         UCHAR_CHANGES_WHEN_TITLECASED, UCHAR_CHANGES_WHEN_UPPERCASED, 
-         UCHAR_DASH, UCHAR_DEFAULT_IGNORABLE_CODE_POINT, UCHAR_DEPRECATED, 
-         UCHAR_DIACRITIC, UCHAR_EXTENDER, UCHAR_FULL_COMPOSITION_EXCLUSION, 
-         UCHAR_GRAPHEME_BASE, UCHAR_GRAPHEME_EXTEND, UCHAR_GRAPHEME_LINK, 
-         UCHAR_HEX_DIGIT, UCHAR_HYPHEN, UCHAR_ID_CONTINUE, UCHAR_ID_START, 
-         UCHAR_IDEOGRAPHIC, UCHAR_IDS_BINARY_OPERATOR, UCHAR_IDS_TRINARY_OPERATOR,
-         UCHAR_JOIN_CONTROL, UCHAR_LOGICAL_ORDER_EXCEPTION, UCHAR_LOWERCASE, 
-         UCHAR_MATH, UCHAR_NFC_INERT, UCHAR_NFD_INERT, UCHAR_NFKC_INERT, 
-         UCHAR_NFKD_INERT, UCHAR_NONCHARACTER_CODE_POINT, UCHAR_PATTERN_SYNTAX,
-         UCHAR_PATTERN_WHITE_SPACE, UCHAR_POSIX_ALNUM, UCHAR_POSIX_BLANK, 
-         UCHAR_POSIX_GRAPH, UCHAR_POSIX_PRINT, UCHAR_POSIX_XDIGIT, 
-         UCHAR_QUOTATION_MARK, UCHAR_RADICAL, UCHAR_S_TERM, 
-         UCHAR_SEGMENT_STARTER, UCHAR_SOFT_DOTTED, UCHAR_TERMINAL_PUNCTUATION,
-         UCHAR_UNIFIED_IDEOGRAPH, UCHAR_UPPERCASE, UCHAR_VARIATION_SELECTOR, 
-         UCHAR_WHITE_SPACE, UCHAR_XID_CONTINUE, UCHAR_XID_START
-      };
+const char* CharClass::binprop_names[] = { // sorted by binprop_names_normalized
+   "ALPHABETIC", "ASCII_HEX_DIGIT", "BIDI_CONTROL", "BIDI_MIRRORED", "CASED",
+   "CASE_IGNORABLE", "CASE_SENSITIVE", "CHANGES_WHEN_CASEFOLDED",
+   "CHANGES_WHEN_CASEMAPPED", "CHANGES_WHEN_LOWERCASED",
+   "CHANGES_WHEN_NFKC_CASEFOLDED", "CHANGES_WHEN_TITLECASED",
+   "CHANGES_WHEN_UPPERCASED", "DASH", "DEFAULT_IGNORABLE_CODE_POINT", "DEPRECATED",
+   "DIACRITIC", "EXTENDER", "FULL_COMPOSITION_EXCLUSION", "GRAPHEME_BASE",
+   "GRAPHEME_EXTEND", "GRAPHEME_LINK", "HEX_DIGIT", "HYPHEN", "ID_CONTINUE",
+   "IDEOGRAPHIC", "IDS_BINARY_OPERATOR", "ID_START", "IDS_TRINARY_OPERATOR",
+   "JOIN_CONTROL", "LOGICAL_ORDER_EXCEPTION", "LOWERCASE", "MATH", "NFC_INERT",
+   "NFD_INERT", "NFKC_INERT", "NFKD_INERT", "NONCHARACTER_CODE_POINT",
+   "PATTERN_SYNTAX", "PATTERN_WHITE_SPACE", "POSIX_ALNUM", "POSIX_BLANK",
+   "POSIX_GRAPH", "POSIX_PRINT", "POSIX_XDIGIT", "QUOTATION_MARK", "RADICAL",
+   "SEGMENT_STARTER", "SOFT_DOTTED", "S_TERM", "TERMINAL_PUNCTUATION",
+   "UNIFIED_IDEOGRAPH", "UPPERCASE", "VARIATION_SELECTOR", "WHITE_SPACE",
+   "XID_CONTINUE", "XID_START"
+};
+
+const char* CharClass::binprop_names_normalized[] = { // sorted by binprop_names_normalized
+   "ALPHABETIC", "ASCIIHEXDIGIT", "BIDICONTROL", "BIDIMIRRORED", "CASED",
+   "CASEIGNORABLE", "CASESENSITIVE", "CHANGESWHENCASEFOLDED",
+   "CHANGESWHENCASEMAPPED", "CHANGESWHENLOWERCASED", "CHANGESWHENNFKCCASEFOLDED",
+   "CHANGESWHENTITLECASED", "CHANGESWHENUPPERCASED", "DASH",
+   "DEFAULTIGNORABLECODEPOINT", "DEPRECATED", "DIACRITIC", "EXTENDER",
+   "FULLCOMPOSITIONEXCLUSION", "GRAPHEMEBASE", "GRAPHEMEEXTEND", "GRAPHEMELINK",
+   "HEXDIGIT", "HYPHEN", "IDCONTINUE", "IDEOGRAPHIC", "IDSBINARYOPERATOR",
+   "IDSTART", "IDSTRINARYOPERATOR", "JOINCONTROL", "LOGICALORDEREXCEPTION",
+   "LOWERCASE", "MATH", "NFCINERT", "NFDINERT", "NFKCINERT", "NFKDINERT",
+   "NONCHARACTERCODEPOINT", "PATTERNSYNTAX", "PATTERNWHITESPACE", "POSIXALNUM",
+   "POSIXBLANK", "POSIXGRAPH", "POSIXPRINT", "POSIXXDIGIT", "QUOTATIONMARK",
+   "RADICAL", "SEGMENTSTARTER", "SOFTDOTTED", "STERM", "TERMINALPUNCTUATION",
+   "UNIFIEDIDEOGRAPH", "UPPERCASE", "VARIATIONSELECTOR", "WHITESPACE",
+   "XIDCONTINUE", "XIDSTART"
+};
+
+const UProperty CharClass::binprop_code[] = { // sorted by binprop_names_normalized
+   UCHAR_ALPHABETIC, UCHAR_ASCII_HEX_DIGIT, UCHAR_BIDI_CONTROL,
+   UCHAR_BIDI_MIRRORED, UCHAR_CASED, UCHAR_CASE_IGNORABLE, UCHAR_CASE_SENSITIVE,
+   UCHAR_CHANGES_WHEN_CASEFOLDED, UCHAR_CHANGES_WHEN_CASEMAPPED,
+   UCHAR_CHANGES_WHEN_LOWERCASED, UCHAR_CHANGES_WHEN_NFKC_CASEFOLDED,
+   UCHAR_CHANGES_WHEN_TITLECASED, UCHAR_CHANGES_WHEN_UPPERCASED, UCHAR_DASH,
+   UCHAR_DEFAULT_IGNORABLE_CODE_POINT, UCHAR_DEPRECATED, UCHAR_DIACRITIC,
+   UCHAR_EXTENDER, UCHAR_FULL_COMPOSITION_EXCLUSION, UCHAR_GRAPHEME_BASE,
+   UCHAR_GRAPHEME_EXTEND, UCHAR_GRAPHEME_LINK, UCHAR_HEX_DIGIT, UCHAR_HYPHEN,
+   UCHAR_ID_CONTINUE, UCHAR_IDEOGRAPHIC, UCHAR_IDS_BINARY_OPERATOR, UCHAR_ID_START,
+   UCHAR_IDS_TRINARY_OPERATOR, UCHAR_JOIN_CONTROL, UCHAR_LOGICAL_ORDER_EXCEPTION,
+   UCHAR_LOWERCASE, UCHAR_MATH, UCHAR_NFC_INERT, UCHAR_NFD_INERT, UCHAR_NFKC_INERT,
+   UCHAR_NFKD_INERT, UCHAR_NONCHARACTER_CODE_POINT, UCHAR_PATTERN_SYNTAX,
+   UCHAR_PATTERN_WHITE_SPACE, UCHAR_POSIX_ALNUM, UCHAR_POSIX_BLANK,
+   UCHAR_POSIX_GRAPH, UCHAR_POSIX_PRINT, UCHAR_POSIX_XDIGIT, UCHAR_QUOTATION_MARK,
+   UCHAR_RADICAL, UCHAR_SEGMENT_STARTER, UCHAR_SOFT_DOTTED, UCHAR_S_TERM,
+   UCHAR_TERMINAL_PUNCTUATION, UCHAR_UNIFIED_IDEOGRAPH, UCHAR_UPPERCASE,
+   UCHAR_VARIATION_SELECTOR, UCHAR_WHITE_SPACE, UCHAR_XID_CONTINUE, UCHAR_XID_START
+};
       
       
       
@@ -119,10 +138,9 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
    
    if (n >= 1 && n <= 2) {
       
-      UChar32 name1_32 = u_toupper((UChar32)name[0]);
-      UChar32 name2_32 = (name[1]!=0)?u_toupper((UChar32)name[1]):0;
-      char name1 = (name1_32>127)?ASCII_SUBSTITUTE:(name1_32);
-      char name2 = (name2_32>127)?ASCII_SUBSTITUTE:(name2_32);
+      // compare case-insensitively
+      char name1 = (U8_IS_SINGLE(name[0]))?(char)u_toupper((UChar32)name[0]):0;
+      char name2 = (U8_IS_SINGLE(name[1]) && name[1]!=0)?(char)u_toupper((UChar32)name[1]):0;
    
       switch(name1) {
          case 'C':
@@ -218,13 +236,56 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
  */
 UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 {
+   // convert name to uppercase and get rid of all non-letters
+   // similar behavior: ICU's charset selection
+   char name2[CharClass::binprop_maxchars+1];
+   R_len_t n2 = 0; // true number of characters
+
+   R_len_t j;
+   UChar32 chr;
+   for (j=0; j<n && n2<CharClass::binprop_maxchars; ) {
+      U8_NEXT(name, j, n, chr);
+      chr = u_toupper(chr);
+      if (u_isupper(chr) && chr <= ASCII_MAXCHARCODE)
+         name2[n2++] = (char)chr;
+      else if (u_ispunct(chr) || u_isspace(chr))
+         ; // ignore
+      else 
+         name2[n2++] = ASCII_SUBSTITUTE;
+   }
+   name2[n2] = '\0';
+
+   // -------------------------------------------------------------------
+   
    UProperty id = (UProperty)(-1);
    
-   error("TO DO");
+   if (n2 >= 1) {
+      // binprop_names is sorted; apply binary search
+      R_len_t i1 = 0;
+      R_len_t i2 = CharClass::binprop_length-1;
+      while (i1 <= i2) {
+         int im = i1+(i2-i1)/2;
+         
+#ifndef NDEBUG
+         if (i1 < 0 || i2 >= CharClass::binprop_length || im < i1 || im > i2)
+            error("CharClass::getBinaryPropertyFromName FAILED; %d, %d, %d", i1, i2, im);
+#endif
+         int cmpres = strcmp(name2, CharClass::binprop_names_normalized[im]); // no collation needed
+
+         if (cmpres == 0) {
+            id = CharClass::binprop_code[im];
+            break; // found!
+         }
+         else if (cmpres > 0)
+            i1 = im + 1;
+         else
+            i2 = im - 1;
+      }
+   }
  
    if (id == (UProperty)-1)
-      warning(MSG__CHARCLASS_INCORRECT);
-      
+      warning(MSG__CHARCLASS_INCORRECT_WHICH, name);
+
    return id;
 }
 
