@@ -61,9 +61,13 @@ const UProperty CharClass::binprop_code[] = { // sorted by binprop_names
          UCHAR_WHITE_SPACE, UCHAR_XID_CONTINUE, UCHAR_XID_START
       };
       
+      
+      
 /** Get desired character class code from given name
  * 
  * @param charclass CHARSXP, can be NA
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 CharClass::CharClass(SEXP charclass)
 {
@@ -74,30 +78,177 @@ CharClass::CharClass(SEXP charclass)
 
    binprop = (UProperty)-1;
    gencat = (UCharCategory)-1;
+   complement = false;
    
    if (charclass == NA_STRING)
       return; // leave (-1, -1) == NA
    
+   R_len_t n = LENGTH(charclass);
+   const char* name = CHAR(charclass);
+   
+   if (name[0] == '^') { // if n==0, then name[0] == '\0'
+      complement = true;
+      name++;
+      n--;
+   }
+
+   if (n == 0) {
+      warning(MSG__CHARCLASS_INCORRECT);
+   }
+   else if (n <= 2) { // it's possibly a general category
+      gencat = CharClass::getGeneralCategoryFromName(name, n);
+   }
+   else { // it's possibly a binary property
+      binprop = CharClass::getBinaryPropertyFromName(name, n);
+   }
+}
+
+
+/**
+ * Get unicode general category mask from name
+ * 
+ * @param name character string
+ * @param n \code{name}'s length
+ * @return general category mask
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ */
+UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
+{
+   UCharCategory id = (UCharCategory)(-1);
+   
+   if (n >= 1 && n <= 2) {
+      
+      UChar32 name1_32 = u_toupper((UChar32)name[0]);
+      UChar32 name2_32 = (name[1]!=0)?u_toupper((UChar32)name[1]):0;
+      char name1 = (name1_32>127)?ASCII_SUBSTITUTE:(name1_32);
+      char name2 = (name2_32>127)?ASCII_SUBSTITUTE:(name2_32);
+   
+      switch(name1) {
+         case 'C':
+            switch (name2) {
+               case 'N':  id = U_GC_CN_MASK; break;
+               case 'C':  id = U_GC_CC_MASK; break;
+               case 'F':  id = U_GC_CF_MASK; break;
+               case 'O':  id = U_GC_CO_MASK; break;
+               case 'S':  id = U_GC_CS_MASK; break;
+               case '\0': id = U_GC_C_MASK;  break;
+            }
+            break;
+            
+         case 'L':
+            switch (name2) {
+               case 'U':  id = U_GC_LU_MASK; break;
+               case 'L':  id = U_GC_LL_MASK; break;
+               case 'T':  id = U_GC_LT_MASK; break;
+               case 'M':  id = U_GC_LM_MASK; break;
+               case 'O':  id = U_GC_LO_MASK; break;
+               case 'C':  id = U_GC_LC_MASK; break;
+               case '\0': id = U_GC_L_MASK;  break;
+            }
+            break;
+            
+         case 'M':
+            switch (name2) {
+               case 'N':  id = U_GC_MN_MASK; break;
+               case 'E':  id = U_GC_ME_MASK; break;
+               case 'C':  id = U_GC_MC_MASK; break;
+               case '\0': id = U_GC_M_MASK;  break;
+            }
+            break;
+            
+         case 'N':
+            switch (name2) {
+               case 'D':  id = U_GC_ND_MASK; break;
+               case 'L':  id = U_GC_NL_MASK; break;
+               case 'O':  id = U_GC_NO_MASK; break;
+               case '\0': id = U_GC_N_MASK;  break;
+            }
+            break;
+            
+         case 'P':
+            switch (name2) {
+               case 'D':  id = U_GC_PD_MASK; break;
+               case 'S':  id = U_GC_PS_MASK; break;
+               case 'E':  id = U_GC_PE_MASK; break;
+               case 'C':  id = U_GC_PC_MASK; break;
+               case 'O':  id = U_GC_PO_MASK; break;
+               case 'I':  id = U_GC_PI_MASK; break;
+               case 'F':  id = U_GC_PF_MASK; break;
+               case '\0': id = U_GC_P_MASK;  break;
+            }
+            break;
+            
+         case 'S':
+            switch (name2) {
+               case 'M':  id = U_GC_SM_MASK; break;
+               case 'C':  id = U_GC_SC_MASK; break;
+               case 'K':  id = U_GC_SK_MASK; break;
+               case 'O':  id = U_GC_SO_MASK; break;
+               case '\0': id = U_GC_S_MASK;  break;
+            }
+            break;
+            
+         case 'Z':
+            switch (name2) {
+               case 'S':  id = U_GC_ZS_MASK; break;
+               case 'L':  id = U_GC_ZL_MASK; break;
+               case 'P':  id = U_GC_ZP_MASK; break;
+               case '\0': id = U_GC_Z_MASK;  break;
+            }
+            break;
+      }
+   }
+   
+   if (id == (UCharCategory)-1)
+      warning(MSG__CHARCLASS_INCORRECT);
+      
+   return id;
+}
+
+
+/**
+ * Get binary property code from name
+ * 
+ * @param name character string
+ * @param n \code{name}'s length
+ * @return general category mask
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ */
+UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
+{
+   UCharCategory id = (UCharCategory)(-1);
+   
    error("TO DO");
+ 
+   if (id == (UProperty)-1)
+      warning(MSG__CHARCLASS_INCORRECT);
+      
+   return id;
 }
 
 
 
-/** Test if a character falls into given charclass
+/** Test if a character falls into a given charclass
  * 
  * @param c UTF-32 char code
- * @return TRUE, FALSE, or NA_LOGICAL
+ * @return TRUE (1) or FALSE (0)
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 int CharClass::test(UChar32 c)
 {
    if (binprop != (UProperty)-1) {
-         //UBool    u_hasBinaryProperty (UChar32 c, UProperty which)
-      error("TO DO");
+      int res = (u_hasBinaryProperty(c, binprop) != 0);
+      if (complement) return !(res);
+      else            return  (res);
    }
    else if (gencat != (UCharCategory)-1) {
-      //(U_GET_GC_MASK(chr) & mask) != 0
-      error("TO DO");
+      int res = ((U_GET_GC_MASK(c) & gencat) != 0);
+      if (complement) return !(res);
+      else            return  (res);
    }
    else
-      return NA_LOGICAL;
+      return FALSE;
 }

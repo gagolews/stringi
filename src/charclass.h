@@ -27,7 +27,7 @@
  * Class for testing whether a character falls into a given character class
  * (i.e. has a given binary property or is in general unicode category).
  * 
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 struct CharClass {
    
@@ -35,6 +35,7 @@ struct CharClass {
    
       UProperty     binprop;    //< Unicode Binary Property, -1 if not used
       UCharCategory gencat;     //< Unicode General Category, -1 if not used
+      bool complement;          //< Are we interested in the complement of a char class?
    
    
       static const char** binprop_names;       //< textual identifiers binary properties
@@ -43,14 +44,16 @@ struct CharClass {
    
    public:
    
-      
-   
-      CharClass() { binprop = (UProperty)-1; gencat = (UCharCategory)-1; }
+      CharClass() { binprop = (UProperty)-1; gencat = (UCharCategory)-1; complement = false; }
       CharClass(SEXP charclass);
       inline bool isNA() { return (binprop == (UProperty)-1 && gencat == (UCharCategory)-1); }
 
       int test(UChar32 c);
 
+
+
+      static UCharCategory getGeneralCategoryFromName(const char* name, R_len_t n);
+      static UProperty getBinaryPropertyFromName(const char* name, R_len_t n);
 };
 
 #endif

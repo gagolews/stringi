@@ -105,6 +105,8 @@
    "newline character found in a string"
    
 
+#define MSG__CHARCLASS_INCORRECT \
+   "unknown charclass. assuming NA"
 
 #define MSG__ARG_EXPECTED_NOT_NA \
    "missing value in argument `%s` is not supported"
