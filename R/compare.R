@@ -45,7 +45,7 @@
 #' stri_cmp("hladny", "chladny", stri_collator_genopts(locale="sk_SK")) # in Slovak ch > h
 #' stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
 #' stri_cmp("hladny", "HLADNY", stri_collator_genopts(strength=2)) # ==
-#' stri_cmp("hladný", "hladny", stri_collator_genopts(strength=1, locale="sk_SK")) # ==
+#' stri_cmp("hladn\u00FD", "hladny", stri_collator_genopts(strength=1, locale="sk_SK")) # ==
 #' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
 stri_compare <- function(e1, e2, collator_opts=list()) {
    .Call("stri_compare", e1, e2, collator_opts, PACKAGE="stringi")

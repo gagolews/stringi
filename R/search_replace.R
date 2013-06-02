@@ -74,6 +74,8 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param str character vector of strings to search in
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
+#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return character vector
 #' 
 #' @examples

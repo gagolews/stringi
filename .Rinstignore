@@ -1,4 +1,0 @@
-^.*\.Rproj$
-^\.Rproj\.user$
-^inst/benchmarks
-^inst/examples

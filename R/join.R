@@ -19,16 +19,23 @@
 
 
 
+#' @title
 #' Duplicate Strings
 #'
-#' Vectorized over \code{str} and \code{times}
+#' @description
+#' Duplicates each string \code{times} times. This is done by
+#' copying the contents of \code{str} at the end of \code{str}.
+#'
+#' @details
+#' Vectorized over \code{str} and \code{times}.
 #'
 #' @param str character vector of strings to be duplicated
 #' @param times integer vector with number of times to duplicate each string
+#' 
 #' @return character vector
 #' 
 #' @export
-#' @family paste
+#' @family join
 #' @examples
 #' stri_dup("a", 1:5)
 #' stri_dup(c("a", NA, "ba"), 4)
@@ -40,19 +47,30 @@ stri_dup <- function(str, times) {
 
 
 
+#' @title
 #' Concatenate Two Character Vectors
 #' 
-#' Vectorized over \code{e1} and \code{e2}
+#' @description
+#' A binary operator for joining (concatenating) two character vectors,
+#' with typical R look-and-feel.
+#' 
+#' @details
+#' Vectorized over \code{e1} and \code{e2}.
 #' 
 #' This operator words as a call to \code{stri_join(e1, e2, sep="")}.
 #' Note that, however, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
 #' is slower than \code{stri_join(e1, e2, e3, sep="")}, 
 #' because it creates a new result each time
 #' 
+#' @usage
+#' e1 \%+\% e2
+#' 
 #' @param e1 character vector
 #' @param e2 character vector
 #' 
-#' @TODO add family `paste` (now roxygen is broken)
+#' @return character vector
+#' 
+#' @TODO add family `join` (now Roxygen2 is broken)
 #' @examples
 #' c('abc','123','\u0105\u0104')%+%letters[1:5]
 #' 'ID_'%+%1:5
@@ -63,14 +81,16 @@ stri_dup <- function(str, times) {
 }
 
 
+#' @title
 #' Concatenate Character Vectors
 #' 
+#' @description
+#' The function is very similar to the built-in \code{paste()} function.
 #' 
+#' @details
+#' \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
+#' Use whichever you want, they are the same.
 #' 
-#' @param sep single string, separates terms
-#' @param collapse single string, separates the results
-#' 
-#' @return
 #' If \code{collapse} is set to non-\code{NULL}, the the result will be a single string.
 #' Otherwise, you will get a character vector of length equal
 #' to the length of the longest argument.
@@ -83,12 +103,18 @@ stri_dup <- function(str, times) {
 #' 
 #' In case of any \code{NA}, \code{NA} is set to the corresponding element.
 #' 
+#' @param ... character vectors which corresponding elements should be concatenated
+#' @param sep single string, separates terms
+#' @param collapse single string, separates the results
+#' 
+#' @return character string
+#' 
 #' @export
 #' @examples
 #' stri_join(1:5,letters)
 #' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...')
 #' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
-#' @family paste
+#' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
    .Call("stri_join", list(...), sep, collapse, PACKAGE="stringi")
@@ -105,11 +131,13 @@ stri_c <- stri_join
 stri_paste <- stri_join
 
 
+#' @title
 #' Flatten a String
 #' 
+#' @description
+#' Joins elements of a character vector into one string.
 #' 
-#' 
-#' Joins each element of a character vector into one string.
+#' @details
 #' \code{stri_flatten(str, collapse='XXX')} works the same as
 #' \code{paste(str, collapse='XXX', sep="")}.
 #' 
@@ -117,21 +145,22 @@ stri_paste <- stri_join
 #' between flattened strings,
 #' call \code{stri_join(str, separators, collapse='')}.
 #' 
+#' If \code{str} is not empty, then a single string is returned.
+#' If \code{collapse} has length > 1, then only first string
+#' will be used.
 #' 
 #' @param str vector of strings will be coerced to character
 #' @param collapse separator, a single string
 #' 
 #' @return
-#' If \code{str} is not empty, then a single string is returned.
-#' If \code{collapse} has length > 1, then only first string
-#' will be used.
+#' character vector
 #' 
 #' @examples
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
 #' stri_flatten(c('abc','123','\u0105\u0104'))
 #' @export
-#' @family paste
+#' @family join
 stri_flatten <- function(str, collapse="") {
    # prepare_arg done internally
    .Call("stri_flatten", str, collapse, PACKAGE="stringi")

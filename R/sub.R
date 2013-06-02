@@ -18,8 +18,10 @@
 
 
 
+#' @title
 #' Extract Substrings From or Replace Substring In a Character Vector
 #' 
+#' @description
 #' The indices given are, of course, Unicode codepoint-based,
 #' and not byte-based.
 #' Note that for some Unicode strings, the extracted substrings may not
@@ -27,11 +29,6 @@
 #' from, includes byte order marks, Bidirectional text marks, and so on.
 #' Handle with care.
 #' 
-#' @param str character vector 
-#' @param from integer vector or two-column matrix
-#' @param to integer vector, mutually exclusive with \code{length} and \code{from} being a matrix
-#' @param length integer vector, mutually exclusive with \code{to} and \code{from} being a matrix
-#' @param value character vector to be substituted [replacement function]
 #' 
 #' @details 
 #' Vectorized over \code{str}, [\code{value}], \code{from} and (\code{to} or \code{length}).
@@ -57,10 +54,17 @@
 #' For \code{stri_sub<-}, and strange configurations of indices, you'll get
 #' string concatenation to front, back, or middle.
 #' 
-#' @return character vector. Standard extract function
+#' @param str character vector 
+#' @param from integer vector or two-column matrix
+#' @param to integer vector, mutually exclusive with \code{length} and \code{from} being a matrix
+#' @param length integer vector, mutually exclusive with \code{to} and \code{from} being a matrix
+#' @param value character vector to be substituted [replacement function]
+#' 
+#' 
+#' @return Character vector. Standard extract function
 #' returns the desired substrings. The replacement function
 #' returns the character vector with given substrings substituted
-#' by \code{value}.
+#' with \code{value}.
 #' 
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -95,6 +99,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 
 #' @rdname stri_sub
 #' @export
+#' @usage stri_sub(str, from = 1L, to = -1L, length) <- value
 "stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {
    # Whoaaa! One of the longest-code R functions in stringi :)
    if (missing(length)) {

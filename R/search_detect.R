@@ -117,7 +117,7 @@ stri_detect <- function(str, ..., regex, fixed, charclass) {
    else if (!missing(fixed))
       stri_detect_fixed(str, fixed, ...)
    else if (!missing(charclass))
-      stri_detect_class(str, charclass, ...)
+      stri_detect_charclass(str, charclass, ...)
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }

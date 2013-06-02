@@ -134,7 +134,7 @@ extern "C" void R_init_stringi(DllInfo *dll)
    }
    
 #ifndef NDEBUG
-   cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
+//    cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
 #endif
 }
 
