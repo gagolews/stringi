@@ -20,20 +20,6 @@
 
 
 
-///** Convert Unicode16-Char indices to Unicode32 (code points)
-// *
-// * \code{i1} must be sorted increasingly
-// * 
-// * @param str array of UChar
-// * @param nstr size of \code{str}
-// * @param i1 indices, 1-based [in/out]
-// * @param ni size of \code{i1}
-// * 
-// */
-//void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni)
-//{
-//   error("TO DO: stri__UChar16_to_UChar32_index");
-//}
 
 /** Convert Unicode16-Char indices to Unicode32 (code points)
  *
