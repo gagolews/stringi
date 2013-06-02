@@ -127,74 +127,74 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
       switch(name1) {
          case 'C':
             switch (name2) {
-               case 'N':  id = U_GC_CN_MASK; break;
-               case 'C':  id = U_GC_CC_MASK; break;
-               case 'F':  id = U_GC_CF_MASK; break;
-               case 'O':  id = U_GC_CO_MASK; break;
-               case 'S':  id = U_GC_CS_MASK; break;
-               case '\0': id = U_GC_C_MASK;  break;
+               case 'N':  id = (UCharCategory)U_GC_CN_MASK; break;
+               case 'C':  id = (UCharCategory)U_GC_CC_MASK; break;
+               case 'F':  id = (UCharCategory)U_GC_CF_MASK; break;
+               case 'O':  id = (UCharCategory)U_GC_CO_MASK; break;
+               case 'S':  id = (UCharCategory)U_GC_CS_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_C_MASK;  break;
             }
             break;
             
          case 'L':
             switch (name2) {
-               case 'U':  id = U_GC_LU_MASK; break;
-               case 'L':  id = U_GC_LL_MASK; break;
-               case 'T':  id = U_GC_LT_MASK; break;
-               case 'M':  id = U_GC_LM_MASK; break;
-               case 'O':  id = U_GC_LO_MASK; break;
-               case 'C':  id = U_GC_LC_MASK; break;
-               case '\0': id = U_GC_L_MASK;  break;
+               case 'U':  id = (UCharCategory)U_GC_LU_MASK; break;
+               case 'L':  id = (UCharCategory)U_GC_LL_MASK; break;
+               case 'T':  id = (UCharCategory)U_GC_LT_MASK; break;
+               case 'M':  id = (UCharCategory)U_GC_LM_MASK; break;
+               case 'O':  id = (UCharCategory)U_GC_LO_MASK; break;
+               case 'C':  id = (UCharCategory)U_GC_LC_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_L_MASK;  break;
             }
             break;
             
          case 'M':
             switch (name2) {
-               case 'N':  id = U_GC_MN_MASK; break;
-               case 'E':  id = U_GC_ME_MASK; break;
-               case 'C':  id = U_GC_MC_MASK; break;
-               case '\0': id = U_GC_M_MASK;  break;
+               case 'N':  id = (UCharCategory)U_GC_MN_MASK; break;
+               case 'E':  id = (UCharCategory)U_GC_ME_MASK; break;
+               case 'C':  id = (UCharCategory)U_GC_MC_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_M_MASK;  break;
             }
             break;
             
          case 'N':
             switch (name2) {
-               case 'D':  id = U_GC_ND_MASK; break;
-               case 'L':  id = U_GC_NL_MASK; break;
-               case 'O':  id = U_GC_NO_MASK; break;
-               case '\0': id = U_GC_N_MASK;  break;
+               case 'D':  id = (UCharCategory)U_GC_ND_MASK; break;
+               case 'L':  id = (UCharCategory)U_GC_NL_MASK; break;
+               case 'O':  id = (UCharCategory)U_GC_NO_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_N_MASK;  break;
             }
             break;
             
          case 'P':
             switch (name2) {
-               case 'D':  id = U_GC_PD_MASK; break;
-               case 'S':  id = U_GC_PS_MASK; break;
-               case 'E':  id = U_GC_PE_MASK; break;
-               case 'C':  id = U_GC_PC_MASK; break;
-               case 'O':  id = U_GC_PO_MASK; break;
-               case 'I':  id = U_GC_PI_MASK; break;
-               case 'F':  id = U_GC_PF_MASK; break;
-               case '\0': id = U_GC_P_MASK;  break;
+               case 'D':  id = (UCharCategory)U_GC_PD_MASK; break;
+               case 'S':  id = (UCharCategory)U_GC_PS_MASK; break;
+               case 'E':  id = (UCharCategory)U_GC_PE_MASK; break;
+               case 'C':  id = (UCharCategory)U_GC_PC_MASK; break;
+               case 'O':  id = (UCharCategory)U_GC_PO_MASK; break;
+               case 'I':  id = (UCharCategory)U_GC_PI_MASK; break;
+               case 'F':  id = (UCharCategory)U_GC_PF_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_P_MASK;  break;
             }
             break;
             
          case 'S':
             switch (name2) {
-               case 'M':  id = U_GC_SM_MASK; break;
-               case 'C':  id = U_GC_SC_MASK; break;
-               case 'K':  id = U_GC_SK_MASK; break;
-               case 'O':  id = U_GC_SO_MASK; break;
-               case '\0': id = U_GC_S_MASK;  break;
+               case 'M':  id = (UCharCategory)U_GC_SM_MASK; break;
+               case 'C':  id = (UCharCategory)U_GC_SC_MASK; break;
+               case 'K':  id = (UCharCategory)U_GC_SK_MASK; break;
+               case 'O':  id = (UCharCategory)U_GC_SO_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_S_MASK;  break;
             }
             break;
             
          case 'Z':
             switch (name2) {
-               case 'S':  id = U_GC_ZS_MASK; break;
-               case 'L':  id = U_GC_ZL_MASK; break;
-               case 'P':  id = U_GC_ZP_MASK; break;
-               case '\0': id = U_GC_Z_MASK;  break;
+               case 'S':  id = (UCharCategory)U_GC_ZS_MASK; break;
+               case 'L':  id = (UCharCategory)U_GC_ZL_MASK; break;
+               case 'P':  id = (UCharCategory)U_GC_ZP_MASK; break;
+               case '\0': id = (UCharCategory)U_GC_Z_MASK;  break;
             }
             break;
       }
@@ -218,7 +218,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
  */
 UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 {
-   UCharCategory id = (UCharCategory)(-1);
+   UProperty id = (UProperty)(-1);
    
    error("TO DO");
  

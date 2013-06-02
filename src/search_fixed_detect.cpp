@@ -96,14 +96,13 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
-   SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, nmax));
-   int* ret_tab = LOGICAL(ret);
-   
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
    UErrorCode err = U_ZERO_ERROR;
    
+   SEXP ret;
+   PROTECT(ret = allocVector(LGLSXP, nmax));
+   int* ret_tab = LOGICAL(ret);
    
    const UnicodeString* last_str = NULL;
    const UnicodeString* last_pat = NULL;

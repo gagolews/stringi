@@ -113,7 +113,6 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       }
       
       const char* cur_s = se->get(i).c_str();
-      R_len_t cur_n = se->get(i).length();
       
 
       R_len_t cur_from2; // UTF-8 byte incices
@@ -226,8 +225,6 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    // args prepared, let's go
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, nmax));
-   
-   const char* last_s = 0;
 
    
    for (R_len_t i = se->vectorize_init();

@@ -38,8 +38,8 @@ struct CharClass {
       bool complement;          //< Are we interested in the complement of a char class?
    
    
-      static const char** binprop_names;       //< textual identifiers binary properties
-      static const UProperty* binprop_code;    //< corresponding codes for \code{binprop_names}
+      static const char* binprop_names[];       //< textual identifiers binary properties
+      static const UProperty binprop_code[];    //< corresponding codes for \code{binprop_names}
    
    
    public:

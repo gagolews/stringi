@@ -219,8 +219,6 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DO
 
 
 
-
-bool stri__detect_class1(const char* s, int n, int32_t* cls);                  // ...TO DO: rewrite completely & rename to *charclass
 SEXP stri_detect_class(SEXP s, SEXP c);                                        // ...TO DO: rewrite completely & rename to *charclass
 void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // ...TO DO: rewrite completely & rename to *charclass
    int* start, int* end, int& o);                                              // ...TO DO: rewrite completely & rename to *charclass
@@ -241,6 +239,8 @@ SEXP stri_chartype(SEXP str);                                                  /
 SEXP stri_char_getcategoryid(SEXP x);                                          // ...TO DO: rewrite completely
 SEXP stri_char_getpropertyid(SEXP x);                                          // ...TO DO: rewrite completely
 
+
+
 // split.cpp
 SEXP stri_split_class(SEXP str, SEXP c);   // ...TO DO...
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP omitempty, SEXP exact);   // ...TO DO...
@@ -259,11 +259,10 @@ SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);   // ...TO DO...
 
 
 
-
-
 // stats.cpp
 SEXP stri_stats_general(SEXP str);   // ...TO DO...
 SEXP stri_stats_latex(SEXP str);   // ...TO DO...
+
 
 
 // test.cpp /* internal, but in namespace: for testing */
