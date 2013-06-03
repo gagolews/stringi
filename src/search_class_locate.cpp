@@ -18,73 +18,108 @@
  
 #include "stringi.h"
 
-/** Locate the first and/or the last occurence of character class in one string
+
+
+/** 
+ * Locate first or last occurences of a character class occurences in each string
  * 
- *  if first/last is NA_INTEGER on input, then we are not interested in that
- *  @param s string
- *  @param n numbytes for s
- *  @param cls class identifier (internal)
- *  - use macros: STRI__UCHAR_IS_ANY_BINPROP, STRI__UCHAR_IS_ANY_GCMASK, ...
- *  @param first [IN/OUT] code point index of the first occurence, 
- *       -1 if not found; 0-based
- *  @param last  [IN/OUT] code point index of the last occurence,
- *       -1 if not found; 0-based
+ * @param str character vector
+ * @param pattern character vector
+ * @return matrix with 2 columns
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-04)
  */
-void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,
-   int& first, int& last)
+SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
-   int i;
-   UChar32 chr;
-   int charnum = 0;
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
-   if (first != NA_INTEGER && last != NA_INTEGER) {
-      first = -1;
-      last  = -1;
-   }   
-   else if (first == NA_INTEGER)
-      last  = -1;
-   else
-      first = -1;
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    
-   // if-for/else-for insted of for-if/else made here for efficiency reasons
-#define STRI__LOCATE_FIRST_CLASS1_DO(__CHR_CLS_TEST__) \
-      for (i=0; i<n; charnum++) {                      \
-         U8_NEXT(s, i, n, chr);                        \
-         if (__CHR_CLS_TEST__) {                       \
-            if (last != NA_INTEGER)                    \
-               last = charnum;                         \
-            if (first != NA_INTEGER) {                 \
-               first = charnum;                        \
-               if (last == NA_INTEGER)                 \
-                  return;                              \
-            }                                          \
-         }                                             \
+   SEXP ret;
+   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
+   stri__locate_set_dimnames_matrix(ret);
+   int* ret_tab = INTEGER(ret);
+   
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      ret_tab[i]      = NA_INTEGER;
+      ret_tab[i+nmax] = NA_INTEGER;
+      
+      if (ss->isNA(i) || cur_pattern == NA_STRING)
+         continue;
+         
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
       }
-   
-   if (STRI__UCHAR_IS_MATCHING_GCMASK(cls)) {
-      // General Category (matching)
-      int mask = STRI__UCHAR_GET_MATCHING_GCMASK(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) != 0)
+      
+      if (cc.isNA())
+         continue;
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j;
+      R_len_t k = 0;
+      UChar32 chr;
+         
+      for (j=0; j<curn; ) {
+         U8_NEXT(curs, j, curn, chr);
+         k++; // 1-based index
+         if (cc.test(chr)) {
+            ret_tab[i]      = k;
+            if (first) break; // that's enough for first
+            // note that for last, we can't go backwards from the end, as we need a proper index!
+         }
+      }
+      ret_tab[i+nmax] = ret_tab[i];
    }
-   else if (STRI__UCHAR_IS_COMPLEMENT_GCMASK(cls)) {
-      // General Category (complement)
-      int mask = STRI__UCHAR_GET_COMPLEMENT_GCMASK(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) == 0)
-   }
-   else if (STRI__UCHAR_IS_MATCHING_BINPROP(cls)) {
-      // Binary property (matching)
-      UProperty prop = (UProperty)STRI__UCHAR_GET_MATCHING_BINPROP(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO(u_hasBinaryProperty(chr, prop))
-   }
-   else if (STRI__UCHAR_IS_COMPLEMENT_BINPROP(cls)) {
-      // Binary property (complement)
-      UProperty prop = (UProperty)STRI__UCHAR_GET_COMPLEMENT_BINPROP(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO(!u_hasBinaryProperty(chr, prop))
-   }
-   else
-      error(MSG__INCORRECT_UCHAR_CLASS_ID);
+
+   delete ss;
+   UNPROTECT(1);
+   return ret;
 }
 
+
+
+/** 
+ * Locate first occurences of a character class occurences in each string
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @return matrix with 2 columns
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ */
+SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
+{
+   return stri__locate_firstlast_charclass(str, pattern, true);
+}
+
+
+/** 
+ * Locate first occurences of a character class occurences in each string
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @return matrix with 2 columns
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ */
+SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
+{
+   return stri__locate_firstlast_charclass(str, pattern, false);
+}
+
+
+
+// -----------------------------------------------------------------------
+// OLD: ------------------------------------------------------------------
 
 
 /** Locate all occurences of character class in one string
@@ -232,84 +267,3 @@ SEXP stri_locate_all_class(SEXP s, SEXP c)
    return ret;
 }
 
-
-
-/** Locate the first or the last occurence of each character class
- * @param s character vector
- * @param c integer vector (general category or binary property code
- *  - use macros: STRI__UCHAR_IS_BINPROP, STRI__UCHAR_GET_BINPROP
- *    and/or STRI__UCHAR_IS_GC_MASK
- * @param first logical; TRUE if the first or FALSE if the last
- *    occurence is of interest
- * @return integer vector of length |s|
- */
-SEXP stri_locate_first_or_last_class(SEXP s, SEXP c, SEXP first)
-{
-   first = stri_prepare_arg_logical(first, "first"); // prepare logical argument
-   // TODO: .....prepare....1??
-   if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
-      error(MSG__INCORRECT_INTERNAL_ARG);
-      
-   /* @TODO: this function should return a matrix with 2 columns
-      now this is assured by some R code :-( */
-      
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   c = stri_prepare_arg_integer(c, "class"); // prepare integer argument
-   R_len_t ns = LENGTH(s);
-   R_len_t nc = LENGTH(c);
-   if (ns <= 0 || nc <= 0) return allocVector(INTSXP, 0);
-   if (nc % STRI__UCHAR_CLASS_LENGTH != 0)
-      error(MSG__INCORRECT_UCHAR_CLASS_ID);
-   nc /= STRI__UCHAR_CLASS_LENGTH;
-   
-   R_len_t nout = stri__recycling_rule(true, 2, ns, nc);
-   
-   int* cc = INTEGER(c);
-   
-   SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, nout));
-   int* ret_int = INTEGER(ret);
-
-   if (LOGICAL(first)[0]) {
-      int fnd_first = -1;
-      int fnd_last = NA_INTEGER;
-      for (R_len_t i=0; i<nout; ++i) {                           
-         SEXP curs = STRING_ELT(s, i%ns);                        
-         int32_t* curc = cc + STRI__UCHAR_CLASS_LENGTH*(i%nc);   
-         R_len_t cursl = LENGTH(curs);                           
-         if (curs == NA_STRING || cursl == 0)                    
-            ret_int[i] = NA_INTEGER;                             
-         else {
-            stri__locate_first_and_last_class1(CHAR(curs),       
-               cursl, curc, fnd_first, fnd_last);                        
-            if (fnd_first >= 0)
-               ret_int[i] = fnd_first+1;
-            else
-               ret_int[i] = NA_INTEGER;
-         }
-      }
-   }
-   else {
-      int fnd_first = NA_INTEGER;
-      int fnd_last  = -1;
-      for (R_len_t i=0; i<nout; ++i) {                           
-         SEXP curs = STRING_ELT(s, i%ns);                        
-         int32_t* curc = cc + STRI__UCHAR_CLASS_LENGTH*(i%nc);   
-         R_len_t cursl = LENGTH(curs);                           
-         if (curs == NA_STRING || cursl == 0)                    
-            ret_int[i] = NA_INTEGER;                             
-         else {
-            stri__locate_first_and_last_class1(CHAR(curs),       
-               cursl, curc, fnd_first, fnd_last);                        
-            if (fnd_last >= 0)
-               ret_int[i] = fnd_last+1;
-            else
-               ret_int[i] = NA_INTEGER;
-         }
-      }
-   }
-
-   
-   UNPROTECT(1);
-   return ret;
-}

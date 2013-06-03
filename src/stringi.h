@@ -221,19 +221,20 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DO
 
 SEXP stri_detect_charclass(SEXP str, SEXP pattern);                        // DONE
 SEXP stri_count_charclass(SEXP str, SEXP pattern);                         // DONE
-void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first); // DONE, internal
+SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                  // DONE
+SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                   // DONE
+
+void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // used only in stri_locate_all_class...TO DO: rewrite completely & rename to *charclass
    int* start, int* end, int& o);                                              // ...TO DO: rewrite completely & rename to *charclass
-void stri__locate_first_and_last_class1(const char* s, int n, int32_t* cls,    // ...TO DO: rewrite completely & rename to *charclass
-   int& first, int& last);                                                     // ...TO DO: rewrite completely & rename to *charclass
 SEXP stri_locate_all_class(SEXP str, SEXP c);                                  // ...TO DO: rewrite completely & rename to *charclass
-SEXP stri_locate_first_or_last_class(SEXP str, SEXP c, SEXP first);            // ...TO DO: rewrite completely & rename to *charclass
 
 
 
 // uchar.cpp:
 // void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
 void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,  
-   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
+   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // used only in search_regex ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
 void stri__uchar_charType(const char* s, int n, int* codes);                   // ...TO DO: rewrite completely
 SEXP stri_charcategories();                                                    // ...TO DO: rewrite completely
 SEXP stri_chartype(SEXP str);                                                  // ...TO DO: rewrite completely

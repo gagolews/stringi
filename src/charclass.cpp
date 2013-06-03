@@ -139,7 +139,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
    if (n >= 1 && n <= 2) {
       
       // compare case-insensitively
-      char name1 = (U8_IS_SINGLE(name[0]))?(char)u_toupper((UChar32)name[0]):0;
+      char name1 = (U8_IS_SINGLE(name[0]) && name[0]!=0)?(char)u_toupper((UChar32)name[0]):0;
       char name2 = (U8_IS_SINGLE(name[1]) && name[1]!=0)?(char)u_toupper((UChar32)name[1]):0;
    
       switch(name1) {

@@ -31,6 +31,7 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
    PROTECT(colnames = allocVector(STRSXP, 2));
    SET_STRING_ELT(colnames, 0, mkChar(MSG__LOCATE_DIM_START));
    SET_STRING_ELT(colnames, 1, mkChar(MSG__LOCATE_DIM_END));
+   SET_VECTOR_ELT(dimnames, 0, R_NilValue);
    SET_VECTOR_ELT(dimnames, 1, colnames);
    setAttrib(matrix, R_DimNamesSymbol, dimnames);
    UNPROTECT(2);

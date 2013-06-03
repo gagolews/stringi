@@ -9,6 +9,7 @@ test_that("stri_count_charclass", {
    expect_identical(suppressWarnings(stri_count_charclass("a", "WTF????")), NA_integer_)
    expect_warning(stri_count_charclass("a", "WTF????"))
    
+   expect_identical(stri_count_charclass(c("a", "ab", "abc", "1234"), "L"), c(1L,2L,3L,0L))
    expect_identical(stri_count_charclass("a\u0105bc", c("L", "Ll", "Lu")), c(4L,4L,0L))
    expect_identical(stri_count_charclass("a\u0105bc", c("l", "ll", "lu")), c(4L,4L,0L))
    expect_identical(stri_count_charclass("a\u0105bc", c("^l", "^ll", "^lu")), c(0L,0L,4L))

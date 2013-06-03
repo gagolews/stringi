@@ -36,7 +36,7 @@
 #' current Unicode standard decided to use up to 4 bytes).
 #' 
 #' Missing values are handled properly,
-#' as opposed to the builtin \code{\link{nchar(str, "bytes"}} function call.
+#' as opposed to the builtin \code{\link{nchar}(str, "bytes")} function call.
 #' 
 #' The strings do not need to be re-encoded to perform this operation.
 #' 

@@ -9,6 +9,7 @@ test_that("stri_detect_charclass", {
    expect_identical(suppressWarnings(stri_detect_charclass("a", "WTF????")), NA)
    expect_warning(stri_detect_charclass("a", "WTF????"))
    
+   expect_identical(stri_detect_charclass(c("a", "ab", "abc", "1234"), "L"), c(T,T,T,F))
    expect_identical(stri_detect_charclass("a\u0105bc", c("L", "Ll", "Lu")), c(T,T,F))
    expect_identical(stri_detect_charclass("a\u0105bc", c("l", "ll", "lu")), c(T,T,F))
    expect_identical(stri_detect_charclass("a\u0105bc", c("^l", "^ll", "^lu")), c(F,F,T))

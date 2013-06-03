@@ -34,7 +34,8 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
    StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    
@@ -45,7 +46,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
    CharClass cc;
    const char* last_pattern = 0;
    for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%nmax);
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
       
       if (ss->isNA(i) || cur_pattern == NA_STRING) {
          ret_tab[i] = NA_LOGICAL;

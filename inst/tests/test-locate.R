@@ -42,40 +42,46 @@ test_that("stri_locate_all_charclass", {
 
 test_that("stri_locate_first_charclass", {
    
-   expect_is(stri_locate_first_charclass(character(0), stri_char_getpropertyid("^WHITE_SPACE")), "matrix")
+   expect_is(stri_locate_first_charclass(character(0), "^WHITE_SPACE"), "matrix")
    
-   expect_equivalent(as.integer(stri_locate_first_charclass("", stri_char_getpropertyid("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
-   expect_equivalent(as.integer(stri_locate_first_charclass(NA, stri_char_getpropertyid("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
-                           
+   expect_equivalent(as.integer(stri_locate_first_charclass("", ("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
+   expect_equivalent(as.integer(stri_locate_first_charclass(NA, ("^WHITE_SPACE"))), c(NA_integer_,NA_integer_))
+   
    expect_equivalent(stri_locate_first_charclass(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
-      stri_char_getcategoryid("L"))[,1],
+      ("L"))[,1],
       c(1L, 2L, 1L, 2L, NA_integer_))
+   
+   expect_equivalent(stri_locate_first_charclass("abc", c("L", "Z", "P"))[,1],
+                     c(1L, NA_integer_, NA_integer_))
 
    expect_equivalent(
       stri_locate_first_charclass("    xxx\n\t \v   \n",
-         c(stri_char_getpropertyid("WHITE_SPACE"),
-           stri_char_getpropertyid("^WHITE_SPACE")))[,2],
+         c(("WHITE_SPACE"),
+           ("^WHITE_SPACE")))[,2],
       c(1L, 5L))
 })
 
 
 test_that("stri_locate_last_charclass", {
    
-   expect_is(stri_locate_last_charclass(character(0), stri_char_getpropertyid("^WHITE_SPACE")), "matrix")
+   expect_is(stri_locate_last_charclass(character(0), ("^WHITE_SPACE")), "matrix")
    
-   expect_equivalent(stri_locate_last_charclass("", stri_char_getpropertyid("^WHITE_SPACE"))[,2], NA_integer_)
-   expect_equivalent(stri_locate_last_charclass(NA, stri_char_getpropertyid("^WHITE_SPACE"))[,2], NA_integer_)
+   expect_equivalent(stri_locate_last_charclass("", ("^WHITE_SPACE"))[,2], NA_integer_)
+   expect_equivalent(stri_locate_last_charclass(NA, ("^WHITE_SPACE"))[,2], NA_integer_)
+   
+   expect_equivalent(stri_locate_last_charclass("abc", c("L", "Z", "P"))[,1],
+                     c(3L, NA_integer_, NA_integer_))
    
    expect_equivalent(stri_locate_last_charclass(
       c("abc", "5\u0105bc", "a1B2c3", "1\u01052b3C", "123"),
-      stri_char_getcategoryid("L"))[,2],
+      ("L"))[,2],
                      c(3L, 4L, 5L, 6L, NA_integer_))
    
    expect_equivalent(
       stri_locate_last_charclass("    xxx\n\t \v   \n",
-            c(stri_char_getpropertyid("WHITE_SPACE"),
-              stri_char_getpropertyid("^WHITE_SPACE")))[,2],
+            c(("WHITE_SPACE"),
+              ("^WHITE_SPACE")))[,2],
       c(15L, 7L))
 })
 

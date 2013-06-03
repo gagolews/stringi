@@ -17,13 +17,18 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' @title
 #' Locate Occurences of a Character Class
 #'
+#' @description
+#' These functions may be used e.g. to find the indices, at which
+#' we find letters, digits, or whitespaces in a given string.
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' @param str character vector of strings to search in
-#' @param pattern character class identifiers specified by
-#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @param str character vector to search in
+#' @param pattern character vector with character class identifiers, see !!TODO!!
 #' @param merge logical [\code{stri_locate_all_charclass} only];
 #' should consecutive sequences of indices in resulting
 #' matrix be merged?
@@ -38,13 +43,15 @@
 #' For \code{stri_locate_first_charclass} and \code{stri_locate_last_charclass},
 #' integer matrix with \code{max(length(str), length(pattern))} rows, 
 #' and two columns, giving the start and end positions of first
-#' or last matches, respectively, and \code{NA}s iff not found.
+#' or last matches, respectively, and two \code{NA}s iff not found.
+#' Note that the first column is always equal to the same column, as
+#' we look for single code points in these two cases.
 #' 
 #' @examples
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'))
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'), merge=TRUE)
-#' stri_locate_first_charclass('AaBbCc', stri_char_getcategoryid('Ll'))
-#' stri_locate_last_charclass('AaBbCc', stri_char_getcategoryid('Ll'))
+#' stri_locate_first_charclass('AaBbCc', 'Ll')
+#' stri_locate_last_charclass('AaBbCc', 'Ll')
 #' 
 #' @export
 #' @rdname stri_locate_charclass 
@@ -69,18 +76,14 @@ stri_locate_all_charclass <- function(str, pattern, merge=FALSE) {
 #' @export
 #' @rdname stri_locate_charclass
 stri_locate_first_charclass <- function(str, pattern) {
-   ret <- .Call("stri_locate_first_or_last_class", str, pattern, TRUE, PACKAGE="stringi")
-   matrix(ret, ncol=2, nrow=length(ret),
-      dimnames=list(NULL,c('start', 'end')))
+   .Call("stri_locate_first_charclass", str, pattern, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_charclass
 stri_locate_last_charclass <- function(str, pattern) {
-   ret <- .Call("stri_locate_first_or_last_class", str, pattern, FALSE, PACKAGE="stringi")
-   matrix(ret, ncol=2, nrow=length(ret),
-      dimnames=list(NULL,c('start', 'end')))
+   .Call("stri_locate_last_charclass", str, pattern, PACKAGE="stringi")
 }
 
 
