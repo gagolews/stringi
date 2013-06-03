@@ -38,6 +38,7 @@ test_that("stri_prepare_arg_string", {
 })
 
 test_that("stri_prepare_arg_double", {
+   expect_equivalent(stringi:::stri_prepare_arg_double(NA),NA_real_)
    expect_equivalent(stringi:::stri_prepare_arg_double(c("1","2")),1:2)
    expect_equivalent(stringi:::stri_prepare_arg_double(character(0)),numeric(0))
    expect_equivalent(stringi:::stri_prepare_arg_double(1:5),1:5)
@@ -52,7 +53,7 @@ test_that("stri_prepare_arg_double", {
 
 
 test_that("stri_prepare_arg_integer", {
-
+   expect_equivalent(stringi:::stri_prepare_arg_integer(NA), NA_integer_)
    expect_equivalent(stringi:::stri_prepare_arg_integer(1:10), 1:10)
    expect_equivalent(stringi:::stri_prepare_arg_integer(
       seq(0,1,by=0.5)), c(0L,0L,1L))
@@ -70,7 +71,7 @@ test_that("stri_prepare_arg_integer", {
 
 
 test_that("stri_prepare_arg_logical", {
-   
+   expect_equivalent(stringi:::stri_prepare_arg_logical(NA), NA)
    expect_equivalent(stringi:::stri_prepare_arg_logical((-3):3), c(T,T,T,F,T,T,T))
    expect_equivalent(stringi:::stri_prepare_arg_logical(c("TRUE", "FALSE", "T", "F", NA)), c(T,F,T,F,NA))
    

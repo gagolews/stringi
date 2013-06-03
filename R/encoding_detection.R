@@ -30,6 +30,10 @@
 #' @return logical vector; ith element indicates whether the ith string
 #' corresponds to a valid ASCII byte sequence
 #' 
+#' @examples
+#' stri_enc_isascii(letters[1:3])
+#' stri_enc_isascii("\u0105\u0104")
+#' 
 #' @family encoding_detection
 #' @export
 stri_enc_isascii <- function(str) {
@@ -60,6 +64,10 @@ stri_enc_isascii <- function(str) {
 #' @param str character vector
 #' @return logical vector; ith element indicates whether the ith string
 #' corresponds to a valid UTF-8 byte sequence
+#' 
+#' @examples
+#' stri_enc_isutf8(letters[1:3])
+#' stri_enc_isutf8("\u0105\u0104")
 #' 
 #' @family encoding_detection
 #' @export

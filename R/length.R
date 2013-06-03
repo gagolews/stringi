@@ -60,6 +60,7 @@ stri_length <- function(str) {
 #' @examples
 #' stri_isempty(letters[1:3])
 #' stri_isempty(c(',','','abc','123','\u0105\u0104'))
+#' stri_isempty(character(1))
 #' @export
 #' @family length
 stri_isempty <- function(str) {
