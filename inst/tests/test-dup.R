@@ -6,6 +6,8 @@ test_that("stri_dup", {
    suppressWarnings(expect_identical(stri_dup(c("A", "B"), c(2,3,4)), c("AA", "BBB", "AAAA")))
    expect_warning(stri_dup(c("A", "B"), c(2,3,4)))
    
+   expect_identical(stri_dup(NA,3),NA_character_)
+   expect_identical(stri_dup("A",NA),NA_character_)
    expect_identical(stri_dup(character(0), integer(0)), character(0))
    expect_identical(stri_dup("char", integer(0)), character(0))
    expect_identical(stri_dup(character(0), 10), character(0))
