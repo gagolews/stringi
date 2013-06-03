@@ -55,6 +55,10 @@
 #' ???Most functions in \pkg{stringi} output results in UTF-8???
 #' 
 #' 
+#' codepoints input in R: uxxxxxx vs Uxxxxxx
+#' 
+#' 
+#' 
 #' @section Encoding Management:
 #' 
 #' Except for \code{\link{stri_enc_set}}, each function

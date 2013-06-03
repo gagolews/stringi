@@ -2,10 +2,12 @@ require(testthat)
 
 test_that("stri_numbytes", {
    expect_equivalent(stri_numbytes(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 5))
+   expect_equivalent(stri_numbytes('\U7fffffff'), 6)
 })
 
 test_that("stri_length", {
    expect_equivalent(stri_length(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
+   expect_equivalent(stri_length('\U7fffffff'), 1)
 })
   
 

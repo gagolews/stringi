@@ -18,15 +18,39 @@
 
 
 
+#' @title
 #' Count the Number of Bytes
 #' 
-#' Missing values are handled properly.
+#' @description
+#' Counts the number of bytes needed to store in computer's memory
+#' all the characters of each string.
 #' 
-#' @param str character vector, or a vector to be coerced to a character vector
-#' @return an integer vector giving the sizes of each element 
+#' @details
+#' This is often not the function you would normally use
+#' in your string processing activity. See rather \code{\link{stri_length}}.
+#' 
+#' For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
+#' For UTF-8 strings, the returned values may be greater
+#' than the number of code points, as UTF-8 is not a fixed-byte encoding:
+#' one codepoint may be represented by 1-6 bytes (however,
+#' current Unicode standard decided to use up to 4 bytes).
+#' 
+#' Missing values are handled properly,
+#' as opposed to the builtin \code{\link{nchar(str, "bytes"}} function call.
+#' 
+#' The strings do not need to be re-encoded to perform this operation.
+#' 
+#' The returned values does not of course include the trailing NUL bytes,
+#' which are used internally to mark the end of string data (in C).
+#' 
+#' @param str character vector
+#' @return integer vector of the same length as \code{str}
+#' 
 #' @examples
 #' stri_numbytes(letters)
 #' stri_numbytes(c('abc','123','\u0105\u0104'))
+#' stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
+#' 
 #' @export
 #' @family length
 stri_numbytes <- function(str) {
@@ -34,15 +58,34 @@ stri_numbytes <- function(str) {
 }
 
 
+#' @title
 #' Count the Number of Characters
 #' 
-#' Missing values are handled properly.
+#' @description
+#' This function returns the number of code points
+#' in each string.
 #' 
-#' @param str character vector, or a vector to be coerced to a character vector
-#' @return an integer vector giving the sizes of each element
+#' @details
+#' Note that the number of code points
+#' not the same as the `width` of the string when
+#' printed on the screen.
+#' 
+#' If a given string is in UTF-8 and not has been properly normalized
+#' (e.g. by \code{\link{stri_enc_nfc}}), this number may sometimes be
+#' misleading.
+#' 
+#' Missing values are handled properly,
+#' as opposed to the builtin \code{\link{nchar}} function.
+#' For `byte` encodings we get, as usual, an error.
+#' 
+#' @param str character vector
+#' @return integer vector of the same length as \code{str}
+#' 
 #' @examples
 #' stri_length(LETTERS)
 #' stri_length(c('abc','123','\u0105\u0104'))
+#' stri_length(stri_enc_nfkd('\u0105')) # two code points (!)
+#' 
 #' @export
 #' @family length
 stri_length <- function(str) {
@@ -50,17 +93,28 @@ stri_length <- function(str) {
 }
 
 
+#' @title
 #' Determine if String is Empty
 #' 
-#' Missing values are handled properly.
-#' This is a fast way to find out if elements of a character vector are empty strings.
+#' @description
+#' This is the fast way to find out
+#' if consecutive elements of a character vector are empty strings or not.
 #' 
-#' @param str character vector, or a vector to be coerced to a character vector
-#' @return a logical vector
+#' @details
+#' Missing values are handled properly,
+#' as opposed to the builtin \code{\link{nzchar}} function.
+#' 
+#' Unlike \code{(stri_length(str) == 0)}, does not need any character
+#' encoding conversion.
+#' 
+#' @param str character vector
+#' @return logical vector of the same length as \code{str}
+#' 
 #' @examples
 #' stri_isempty(letters[1:3])
 #' stri_isempty(c(',','','abc','123','\u0105\u0104'))
 #' stri_isempty(character(1))
+#' 
 #' @export
 #' @family length
 stri_isempty <- function(str) {
@@ -69,7 +123,7 @@ stri_isempty <- function(str) {
 
 
 
-# #' Count the Width of Characters
+# #' Count the Width of Characters [version >0.1]
 # #' 
 # #' Missing values are handled properly.
 # #' This is equivalent to the number of columns the cat() function will use

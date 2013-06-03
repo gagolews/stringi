@@ -103,7 +103,7 @@ R_len_t stri__numbytes_max(SEXP str); // DONE
 SEXP stri_numbytes(SEXP str);         // DONE
 SEXP stri_length(SEXP str);           // DONE
 SEXP stri_isempty(SEXP str);          // DONE
-SEXP stri_width(SEXP str);            // ...TODO...
+SEXP stri_width(SEXP str);            // ...TODO... [version >0.1]
 
 
 

@@ -22,13 +22,9 @@
 #' Extract Substrings From or Replace Substring In a Character Vector
 #' 
 #' @description
-#' The indices given are, of course, Unicode codepoint-based,
-#' and not byte-based.
-#' Note that for some Unicode strings, the extracted substrings may not
-#' be well-formed, especially if the input is not in the NFC normalization
-#' from, includes byte order marks, Bidirectional text marks, and so on.
-#' Handle with care.
-#' 
+#' The first function extracts substrings under given codepoint-based
+#' index ranges. The second one allows us to substitute substrings
+#' with given strings.
 #' 
 #' @details 
 #' Vectorized over \code{str}, [\code{value}], \code{from} and (\code{to} or \code{length}).
@@ -39,8 +35,16 @@
 #' as \code{from} and second as \code{to}. Also in such case arguments
 #' \code{to} and \code{length} are ignored.
 #' 
-#' The indices are 1-based, is index 1 denotes the first character
-#' in a string. \code{to} means the last index of the substring, inclusive.
+#' The indices given are, of course, Unicode codepoint-based,
+#' and not byte-based.
+#' Note that for some Unicode strings, the extracted substrings may not
+#' be well-formed, especially if the input is not in the NFC normalization
+#' from, includes byte order marks, Bidirectional text marks, and so on.
+#' Handle with care.
+#' 
+#' Moreover, indices are 1-based, is index 1 denotes the first character
+#' in a string, which gives a typical R look-and-feel.
+#' Argument \code{to} defines the last index of the substring, inclusive.
 #' 
 #' For negative indices in \code{from} or \code{to},
 #' the counting starts at the end of the string.
@@ -61,7 +65,9 @@
 #' @param value character vector to be substituted [replacement function]
 #' 
 #' 
-#' @return Character vector. Standard extract function
+#' @return character vector
+#' 
+#' Standard extract function
 #' returns the desired substrings. The replacement function
 #' returns the character vector with given substrings substituted
 #' with \code{value}.
