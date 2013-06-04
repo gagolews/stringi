@@ -21,73 +21,85 @@
 
 
 
-//THIS IS INTERNAL FUNCTION ONLY FOR STRI_TRIM
-/** Locate the first and/or the last occurence of character class in one string
+/** 
+ * Trim characters from a charclass from left AND/OR right side of the string
+ *  
+ * @param str character vector
+ * @param pattern character vector
+ * @param left from left?
+ * @param right from left?
+ * @return character vector
  * 
- *  if first/last is NA_INTEGER on input, then we are not interested in that
- *  @param s string
- *  @param n numbytes for s
- *  @param first [IN/OUT] code point index of the first occurence, 
- *       -1 if not found; 0-based
- *  @param last  [IN/OUT] code point index of the last occurence,
- *       -1 if not found; 0-based
- */
-void stri__locate_trim1(const char* s, int n, int& first, int& last)
+ * @version 0.1 (Bartek Tartanus)  
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
+*/
+SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
-   int32_t cls[2] = {-1, 1073741855};
-   int i, previ;
-   UChar32 chr;
-   int charnum = 0;
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
-   if (first != NA_INTEGER && last != NA_INTEGER) {
-      first = -1;
-      last  = -1;
-   }   
-   else if (first == NA_INTEGER)
-      last  = -1;
-   else
-      first = -1;
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    
-   // if-for/else-for insted of for-if/else made here for efficiency reasons
-#define STRI__LOCATE_FIRST_CLASS1_DO(__CHR_CLS_TEST__) \
-      for (i=0; i<n; charnum++) {                      \
-         previ = i;                                    \
-         U8_NEXT(s, i, n, chr);                        \
-         if (__CHR_CLS_TEST__) {                       \
-            if (last != NA_INTEGER)                    \
-               last = i;                               \
-            if (first != NA_INTEGER && first <0) {     \
-               first = previ;                          \
-               if (last == NA_INTEGER)                 \
-                  return;                              \
-            }                                          \
-         }                                             \
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, nmax));
+   
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      if (ss->isNA(i) || cur_pattern == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
       }
-   
-   if (STRI__UCHAR_IS_MATCHING_GCMASK(cls)) {
-      // General Category (matching)
-      int mask = STRI__UCHAR_GET_MATCHING_GCMASK(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) != 0)
+      
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      }
+      
+      if (cc.isNA()) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j;
+      R_len_t jlast1 = 0;
+      R_len_t jlast2 = curn;
+      UChar32 chr;
+      
+      if (left) {
+         for (j=0; j<curn; ) {
+            U8_NEXT(curs, j, curn, chr); // "look ahead"
+            if (cc.test(chr)) {
+               break; // break at first occurence
+            }
+            jlast1 = j;
+         }
+      }
+      
+      if (right && jlast1 < curn) {
+         for (j=curn; j>0; ) {
+            U8_PREV(curs, 0, j, chr); // "look behind"
+            if (cc.test(chr)) {
+               break; // break at first occurence
+            }
+            jlast2 = j;
+         }
+      }
+      
+      // now jlast is the index, from which we start copying
+      SET_STRING_ELT(ret, i, mkCharLenCE(curs+jlast1, (jlast2-jlast1), CE_UTF8));
    }
-   else if (STRI__UCHAR_IS_COMPLEMENT_GCMASK(cls)) {
-      // General Category (complement)
-      int mask = STRI__UCHAR_GET_COMPLEMENT_GCMASK(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO((U_GET_GC_MASK(chr) & mask) == 0)
-   }
-   else if (STRI__UCHAR_IS_MATCHING_BINPROP(cls)) {
-      // Binary property (matching)
-      UProperty prop = (UProperty)STRI__UCHAR_GET_MATCHING_BINPROP(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO(u_hasBinaryProperty(chr, prop))
-   }
-   else if (STRI__UCHAR_IS_COMPLEMENT_BINPROP(cls)) {
-      // Binary property (complement)
-      UProperty prop = (UProperty)STRI__UCHAR_GET_COMPLEMENT_BINPROP(cls);
-      STRI__LOCATE_FIRST_CLASS1_DO(!u_hasBinaryProperty(chr, prop))
-   }
-   else
-      error(MSG__INCORRECT_UCHAR_CLASS_ID);
-}
 
+   delete ss;
+   UNPROTECT(1);
+   return ret;  
+}
 
 
 /** 
@@ -98,32 +110,11 @@ void stri__locate_trim1(const char* s, int n, int& first, int& last)
  * @return character vector
  * 
  * @version 0.1 (Bartek Tartanus)  
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
 */
-SEXP stri_trim_both(SEXP s, SEXP pattern)
+SEXP stri_trim_both(SEXP str, SEXP pattern)
 {
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   
-   R_len_t ns = LENGTH(s);
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, ns));
-   int from=-1, to=-1;
-   
-   for (int i=0; i<ns; ++i)
-   {
-      SEXP ss = STRING_ELT(s, i);
-      if (ss == NA_STRING)
-         SET_STRING_ELT(ret, i, NA_STRING);
-      else {
-         const char* string = CHAR(ss);
-         int nstring = LENGTH(ss);
-         from=-1;
-         to=-1;
-         stri__locate_trim1(string, nstring, from, to);
-         SET_STRING_ELT(ret, i, mkCharLen(string+from, max(0,to-from)));
-      }
-   }
-   UNPROTECT(1);
-   return ret;
+   return stri__trim_leftright(str, pattern, true, true);
 }
 
 
@@ -137,61 +128,11 @@ SEXP stri_trim_both(SEXP s, SEXP pattern)
  * @return character vector
  * 
  * @version 0.1 (Bartek Tartanus) 
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
 */
 SEXP stri_trim_left(SEXP str, SEXP pattern)
 {   
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
-   
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
-   
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
-   
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
-      R_len_t j;
-      R_len_t jlast = 0;
-      UChar32 chr;
-      
-      for (j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr); // "look ahead"
-         if (cc.test(chr)) {
-            break; // break at first occurence
-         }
-         jlast = j;
-      }
-      
-      // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i, mkCharLenCE(curs+jlast, curn-jlast, CE_UTF8));
-   }
-
-   delete ss;
-   UNPROTECT(1);
-   return ret;
+   return stri__trim_leftright(str, pattern, true, false);
 }
 
 
@@ -203,61 +144,11 @@ SEXP stri_trim_left(SEXP str, SEXP pattern)
  * @return character vector
  * 
  * @version 0.1 (Bartek Tartanus)  
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
 */
 SEXP stri_trim_right(SEXP str, SEXP pattern)
 {   
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
-   
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
-   
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
-   
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
-      R_len_t j;
-      R_len_t jlast = curn;
-      UChar32 chr;
-      
-      for (j=curn; j>0; ) {
-         U8_PREV(curs, 0, j, chr); // "look behind"
-         if (cc.test(chr)) {
-            break; // break at first occurence
-         }
-         jlast = j;
-      }
-      
-      // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i, mkCharLenCE(curs, jlast, CE_UTF8));
-   }
-
-   delete ss;
-   UNPROTECT(1);
-   return ret;
+   return stri__trim_leftright(str, pattern, false, true);
 }
 
 
