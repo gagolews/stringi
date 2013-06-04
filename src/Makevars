@@ -22,6 +22,7 @@ SRCS        =  stringi.cpp \
                uloc.cpp \
                uchar.cpp \
                length.cpp \
+               pad.cpp \
                reverse.cpp \
                split.cpp \
                stats.cpp \

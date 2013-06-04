@@ -57,3 +57,4 @@ Collate:
     'trim.R'
     'wrap.R'
     'search_extract.R'
+    'pad.R'
