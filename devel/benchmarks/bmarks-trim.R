@@ -11,37 +11,48 @@ test <- paste(stri_dup(" ", 1:1000), "A", stri_dup(" ", 1:1000), sep="")
 flat <- stri_flatten(test)
 
 bmarks <- rbind(bmarks, benchmark(
-   trm1 <- str_trim(test),
+   trm1 <- stri_trim_both(test),
    trm2 <- stri_trim(test),
    columns=c("test", "relative", "elapsed", "user.self", "sys.self", "replications")
 ))
 print(bmarks)
 expect_identical(trm2, trm1)
 
-microbenchmark(str_trim(test),stri_trim(test))
-microbenchmark(str_trim(flat),stri_trim(flat))
+microbenchmark(str_trim(test),stri_trim_both(test))
+microbenchmark(str_trim(flat),stri_trim_both(flat))
 
-microbenchmark(str_trim(test,"l"),stri_ltrim(test))
-microbenchmark(str_trim(flat,"l"),stri_ltrim(flat))
+# Unit: milliseconds
+# expr       min        lq    median        uq      max neval
+# str_trim(test) 48.831169 49.350811 49.556970 49.862412 51.97588   100
+# stri_trim_both(test)  8.833461  9.002334  9.061019  9.128485 10.92432   100
+# > microbenchmark(str_trim(flat),stri_trim_both(flat))
+# Unit: milliseconds
+# expr      min       lq   median       uq      max neval
+# str_trim(flat) 39.45053 39.73859 39.94127 40.16401 43.42621   100
+# stri_trim_both(flat) 11.79601 11.92980 11.99634 12.09874 12.37360   100
 
-microbenchmark(str_trim(test,"r"),stri_rtrim(test))
-microbenchmark(str_trim(flat,"r"),stri_rtrim(flat))
+microbenchmark(str_trim(test,"l"),stri_trim_left(test))
+microbenchmark(str_trim(flat,"l"),stri_trim_left(flat))
 
-microbenchmark(str_trim(test),stri_trim(test), .Call("stri_trim", test, PACKAGE="stringi"))
-microbenchmark(str_trim(flat),stri_trim(flat), .Call("stri_trim", flat, PACKAGE="stringi"))
+microbenchmark(str_trim(test,"r"),stri_trim_right(test))
+microbenchmark(str_trim(flat,"r"),stri_trim_right(flat))
 
-microbenchmark(str_trim(test,"l"),stri_ltrim(test), .Call("stri_ltrim", test, PACKAGE="stringi"))
-microbenchmark(str_trim(flat,"l"),stri_ltrim(flat), .Call("stri_ltrim", flat, PACKAGE="stringi"))
+microbenchmark(str_trim(test),stri_trim_both(test))
+microbenchmark(str_trim(flat),stri_trim_both(flat))
 
-# stri_trim_all
+microbenchmark(str_trim(test,"left"),stri_trim_left(test))
+microbenchmark(str_trim(flat,"left"),stri_trim_left(flat))
 
-microbenchmark(stri_trim_all(test),str_trim(test),times=10)
+microbenchmark(str_trim(test,"right"),stri_trim_right(test)) # v0.1: 10.7ms, v0.2: 9ms :P
+microbenchmark(str_trim(flat,"right"),stri_trim_right(flat)) # v0.1: 10ms, v0.2: 3ms :P
 
-microbenchmark(stri_trim_all(flat),str_trim(flat),times=10)
-f <- rep(flat, 25)
-microbenchmark(stri_trim_all(f),str_trim(f),times=10)
+
+
+
+
 
 # stri_pad
+# TODO : move to bmarks-pad.R
 
 bmarks <- NULL
 

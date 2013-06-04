@@ -137,7 +137,7 @@ SEXP stri_trim_both(SEXP s, SEXP pattern)
  * @return character vector
  * 
  * @version 0.1 (Bartek Tartanus) 
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF16 and CharClass
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
 */
 SEXP stri_trim_left(SEXP str, SEXP pattern)
 {   
@@ -203,30 +203,59 @@ SEXP stri_trim_left(SEXP str, SEXP pattern)
  * @return character vector
  * 
  * @version 0.1 (Bartek Tartanus)  
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
 */
 SEXP stri_trim_right(SEXP str, SEXP pattern)
 {   
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
-   R_len_t ns = LENGTH(str);
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, ns));
-   int from=-1, to=-1;
+   PROTECT(ret = allocVector(STRSXP, nmax));
    
-   for (int i=0; i<ns; ++i)
-   {
-      SEXP ss = STRING_ELT(str, i);
-      if (ss == NA_STRING)
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      if (ss->isNA(i) || cur_pattern == NA_STRING) {
          SET_STRING_ELT(ret, i, NA_STRING);
-      else {
-         const char* string = CHAR(ss);
-         int nstring = LENGTH(ss);
-         from=NA_INTEGER;
-         to=-1;
-         stri__locate_trim1(string, nstring, from, to);
-         SET_STRING_ELT(ret, i, mkCharLen(string, max(0,to)));
+         continue;
       }
+      
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      }
+      
+      if (cc.isNA()) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j;
+      R_len_t jlast = curn;
+      UChar32 chr;
+      
+      for (j=curn; j>0; ) {
+         U8_PREV(curs, 0, j, chr); // "look behind"
+         if (cc.test(chr)) {
+            break; // break at first occurence
+         }
+         jlast = j;
+      }
+      
+      // now jlast is the index, from which we start copying
+      SET_STRING_ELT(ret, i, mkCharLenCE(curs, jlast, CE_UTF8));
    }
+
+   delete ss;
    UNPROTECT(1);
    return ret;
 }
