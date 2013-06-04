@@ -25,7 +25,7 @@
 #' we find letters, digits, or whitespaces in a given string.
 #' 
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
+#' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
 #' 
 #' @param str character vector to search in
 #' @param pattern character vector with character class identifiers, see !!TODO!!
@@ -38,7 +38,7 @@
 #' list of \code{max(length(str), length(pattern))} integer matrices.
 #' The first column gives start postions
 #' of matches, and the second column gives end position.
-#' Two \code{NA}s for no match.
+#' Two \code{NA}s for no match or \code{NA} arguments.
 #' 
 #' For \code{stri_locate_first_charclass} and \code{stri_locate_last_charclass},
 #' integer matrix with \code{max(length(str), length(pattern))} rows, 
@@ -48,8 +48,8 @@
 #' we look for single code points in these two cases.
 #' 
 #' @examples
-#' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'))
-#' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), stri_char_getcategoryid('Ll'), merge=TRUE)
+#' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll')
+#' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
 #' stri_locate_first_charclass('AaBbCc', 'Ll')
 #' stri_locate_last_charclass('AaBbCc', 'Ll')
 #' 
@@ -59,17 +59,8 @@
 #' @family search_charclass 
 #' @family search_locate
 #' @family indexing
-stri_locate_all_charclass <- function(str, pattern, merge=FALSE) {
-   ret <- .Call("stri_locate_all_class", str, pattern, PACKAGE="stringi")
-   merge <- identical(merge, TRUE)
-   
-   if (merge) return(ret)
-   else return(lapply(ret, function(m) {
-      if (is.na(m[1,1])) return(m)
-      idx <- unlist(apply(m, 1, function(k) k[1]:k[2]))
-      matrix(idx, ncol=2, nrow=length(idx),
-             dimnames=list(NULL,c('start', 'end')))
-   }))
+stri_locate_all_charclass <- function(str, pattern, merge=TRUE) {
+   .Call("stri_locate_all_charclass", str, pattern, merge, PACKAGE="stringi")
 }
 
 
@@ -211,12 +202,12 @@ stri_locate_last_regex <- function(str, pattern) {
 #' 
 #' @return list of integer matrices.  First column gives start postions
 #' of matches, and second column gives end position.
-#' \code{NA}s iff not found.
+#' Double \code{NA}s iff not found or \code{NA} argument is given.
 #' 
 #' @examples
 #' stri_locate_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
-#' stri_locate_all(s, charclass=stri_char_getcategoryid('Zs')) # all whitespaces
+#' stri_locate_all(s, charclass='Zs') # all whitespaces
 #' 
 #' @export
 #' @family search_locate
@@ -247,13 +238,14 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @param fixed character vector of fixed patterns to search for
 #' @param charclass character class identifiers
 #' 
-#' @return integer matrix with two columns
+#' @return integer matrix with two columns,
+#' double \code{NA}s if not found.
 #' 
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_locate_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_first('Bartolini', fixed=letters[1:3])
-#' stri_locate_first(s, charclass=stri_char_getcategoryid('Zs'))
+#' stri_locate_first(s, charclass='Zs')
 #' 
 #' @export
 #' @family search_locate
@@ -284,13 +276,14 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @param fixed character vector of fixed patterns to search for
 #' @param charclass character class identifiers
 #' 
-#' @return integer matrix with two columns
+#' @return integer matrix with two columns,
+#' double \code{NA}s if not found.
 #' 
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_locate_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_last('Bartolini', fixed=letters[1:3])
-#' stri_locate_last(s, charclass=stri_char_getcategoryid('Zs'))
+#' stri_locate_last(s, charclass='Zs')
 #' 
 #' @export
 #' @family search_locate

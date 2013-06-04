@@ -205,7 +205,7 @@ SEXP stri_trim_all(SEXP s)
    PROTECT(space = allocVector(STRSXP, 1));
    SET_STRING_ELT(white,0,mkCharLen("^WHITE_SPACE",12));
    SET_STRING_ELT(space,0,mkCharLen(" ",1));
-   subs = stri_locate_all_class(s, stri_char_getpropertyid(white));
+   subs = stri_locate_all_charclass(s, white, ScalarLogical(FALSE));
    int n;
    for(int i=0; i < ns; ++i){
       curs = STRING_ELT(s, i);

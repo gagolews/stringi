@@ -115,7 +115,7 @@ SEXP stri_split_class(SEXP s, SEXP c)
    PROTECT(ret = allocVector(VECSXP,nmax));
    PROTECT(from = allocVector(VECSXP,nc));
    error("Not finished - stri_locate_all_class with merge is needed");
-   from = stri_locate_all_class(s, c);
+//   from = stri_locate_all_charclass(s, c);
    
    for (int i=0; i<nmax; ++i) {
       //const char* string = CHAR(STRING_ELT(s, i % ns));

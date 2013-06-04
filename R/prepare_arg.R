@@ -41,6 +41,16 @@
 #' in that case, for empty vectors we get an error and for vectors with > 1
 #' elements - a warning....
 #' 
+#' *vectorization*
+#' 
+#' almost all functions are vectorized with respect to all arguments;
+#' this may sometimes lead to strange results - we assume you know what
+#' you are doing. you may e.g. apply pattern search on each string,
+#' or search for each pattern in a string
+#' 
+#' we took care of performance: e.g. in regex searching we reuse
+#' regex matchers from iteration to interation, as long it's possible....
+#' 
 #' @name stringi-arguments
 #' @family stringi_general_topics
 #' @family prepare_arg

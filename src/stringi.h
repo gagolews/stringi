@@ -224,10 +224,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern);                         // DO
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first); // DONE, internal
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                  // DONE
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                   // DONE
-
-void stri__locate_all_class1(const char* s, int n, int32_t* c,                 // used only in stri_locate_all_class...TO DO: rewrite completely & rename to *charclass
-   int* start, int* end, int& o);                                              // ...TO DO: rewrite completely & rename to *charclass
-SEXP stri_locate_all_class(SEXP str, SEXP c);                                  // ...TO DO: rewrite completely & rename to *charclass
+SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);        // DONE
 
 
 
