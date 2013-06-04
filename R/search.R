@@ -28,7 +28,8 @@
 #' \itemize{
 #'    \item \code{stri_*_regex} - ICU's regular expressions, see \link{stringi-search-regex},
 #'    \item \code{stri_*_fixed} - ICU's \code{StringSearch}, locale-sensitive ``fixed'' patterns, see \link{stringi-search-fixed},
-#'    \item \code{stri_*_charclass} - single character classes and binary properties, see \link{stringi-search-charclass},
+#'    \item \code{stri_*_charclass} - character classes:
+#'    more exactly, either general character categories or binary properties, see \link{stringi-search-charclass},
 #' }
 #' 
 #' Each ``engine'' is able to perform many search-based operations:

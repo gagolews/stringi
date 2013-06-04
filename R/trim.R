@@ -19,45 +19,80 @@
 
 
 #' @title
-#' Trim whitespaces from strings
+#' Trim Characters from Left or Right Side of a String
+#' 
+#' @description
+#' These functions may e.g. be used to get rid of unnecessary
+#' whitespaces from strings. Trimming stops at the first
+#' \code{pattern} match.
+#' 
+#' @details
+#' \code{stri_trim} is a convenience function, which dispatches
+#' control to \code{stri_trim_*}. Don't use it if you can: it's slower.
+#' 
+#' Unlike in many other string processing libraries,
+#' our trim functions are quite general. A character class
+#' given by \code{pattern} 
+#' may be adjusted to suit your needs (most often you will use the default
+#' value or a charclass negation, e.g. with \code{^} at the begining).
+#' 
+#' With this function in some cases you may extract very quickly data, which
+#' normally requires using regular expressions. E.g. you may get
+#' \code{"23.5"} out of \code{"total of 23.5 bitcoins"}.
+#' 
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' For trimming whitespaces, please note the difference
+#' between Unicode binary property `\code{WHITE_SPACE}` (more general)
+#' and general character category `\code{Z}`.
 #' 
 #' @param str character vector
+#' @param pattern character vector with character class identifiers that
+#' should be preserved, see !!TODO!!
+#' @param mode character [\code{stri_trim} only]; defaults \code{both}
 #' @return character vector
 #' 
+#' @examples
+#' stri_trim_left("               aaa")
+#' stri_trim_left("total of 23.5 bitcoins", "N")
+#' 
+#' @aliases stri_trim
 #' @family search_trim
 #' @family search_charclass
+#' @rdname stri_trim
 #' @export
-stri_trim <- function(str) {
-   .Call("stri_trim", str, PACKAGE="stringi")
+stri_trim_both <- function(str, pattern="^WHITE_SPACE") {
+   .Call("stri_trim_both", str, pattern, PACKAGE="stringi")
 }
 
 
-#' @title
-#' Trim whitespaces from left side of strings
-#' 
-#' @param str will be coerced to character
-#' @return trimmed character vector 
-#' 
-#' @family search_trim
-#' @family search_charclass
+#' @rdname stri_trim
 #' @export
-stri_ltrim <- function(str) {
-  .Call("stri_ltrim", str, PACKAGE="stringi")
+stri_trim_left <- function(str, pattern="^WHITE_SPACE") {
+  .Call("stri_trim_left", str, pattern, PACKAGE="stringi")
 }
 
 
-#' @title
-#' Trim whitespaces from right side of strings
-#' 
-#' @param str will be coerced to character
-#' @return trimmed character vector 
-#' 
-#' @family search_trim
-#' @family search_charclass
+#' @rdname stri_trim
 #' @export
-stri_rtrim <- function(str) {
-  .Call("stri_rtrim", str, PACKAGE="stringi")
+stri_trim_right <- function(str, pattern="^WHITE_SPACE") {
+  .Call("stri_trim_right", str, pattern, PACKAGE="stringi")
 }
+
+
+#' @rdname stri_trim
+#' @export
+stri_trim <- function(str, side=c("both", "left", "right"), pattern="^WHITE_SPACE") {
+   # `both` is default for compatibility with stringr
+   side <- match.arg(side) # this is slow
+   
+   switch(side,
+          both  =stri_trim_both(str, pattern),
+          left  =stri_trim_left(str, pattern),
+          right =stri_trim_right(str, pattern)
+   )
+}
+
 
 
 #' @title
@@ -69,8 +104,8 @@ stri_rtrim <- function(str) {
 #' @family search_trim
 #' @family search_charclass
 #' @export
-stri_trim_all <- function(str) {
-   # prepare_arg done internally
+stri_trim_all <- function(str) { # rename to stri_trim_double, add pattern
+   warning("stri_trim_all: v0.2 TO DO")
    .Call("stri_trim_all", str, PACKAGE="stringi")
 }
 

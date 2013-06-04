@@ -91,12 +91,15 @@ void stri__locate_trim1(const char* s, int n, int& first, int& last)
 
 
 /** 
-   vectorized over s
-   if s is NA the result will be NA
-   
-   TO DO: Encoding marking!
+ * Trim characters from a charclass from both sides of the string
+ *  
+ * @param str character vector
+ * @param pattern character vector
+ * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)  
 */
-SEXP stri_trim(SEXP s)
+SEXP stri_trim_both(SEXP s, SEXP pattern)
 {
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    
@@ -127,55 +130,92 @@ SEXP stri_trim(SEXP s)
 
 
 /** 
-   vectorized over s
-   if s is NA the result will be NA
-   
+ * Trim characters from a charclass from the left of the string
+ *  
+ * @param str character vector
+ * @param pattern character vector
+ * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus) 
+ * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF16 and CharClass
 */
-SEXP stri_ltrim(SEXP s)
+SEXP stri_trim_left(SEXP str, SEXP pattern)
 {   
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
-   R_len_t ns = LENGTH(s);
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, ns));
-   int from=-1, to=-1;
+   PROTECT(ret = allocVector(STRSXP, nmax));
    
-   for (int i=0; i<ns; ++i)
-   {
-      SEXP ss = STRING_ELT(s, i);
-      if (ss == NA_STRING)
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      if (ss->isNA(i) || cur_pattern == NA_STRING) {
          SET_STRING_ELT(ret, i, NA_STRING);
-      else {
-         const char* string = CHAR(ss);
-         int nstring = LENGTH(ss);
-         from=-1;
-         to=NA_INTEGER;
-         stri__locate_trim1(string, nstring, from, to);
-         SET_STRING_ELT(ret, i, mkCharLen(string+from, max(0,nstring-from)));
+         continue;
       }
+      
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      }
+      
+      if (cc.isNA()) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j;
+      R_len_t jlast = 0;
+      UChar32 chr;
+      
+      for (j=0; j<curn; ) {
+         U8_NEXT(curs, j, curn, chr); // "look ahead"
+         if (cc.test(chr)) {
+            break; // break at first occurence
+         }
+         jlast = j;
+      }
+      
+      // now jlast is the index, from which we start copying
+      SET_STRING_ELT(ret, i, mkCharLenCE(curs+jlast, curn-jlast, CE_UTF8));
    }
+
+   delete ss;
    UNPROTECT(1);
    return ret;
 }
 
 
 /** 
-   vectorized over s
-   if s is NA the result will be NA
-   
+ * Trim characters from a charclass from the right of the string
+ *  
+ * @param str character vector
+ * @param pattern character vector
+ * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)  
 */
-SEXP stri_rtrim(SEXP s)
+SEXP stri_trim_right(SEXP str, SEXP pattern)
 {   
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
    
-   R_len_t ns = LENGTH(s);
+   R_len_t ns = LENGTH(str);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, ns));
    int from=-1, to=-1;
    
    for (int i=0; i<ns; ++i)
    {
-      SEXP ss = STRING_ELT(s, i);
+      SEXP ss = STRING_ELT(str, i);
       if (ss == NA_STRING)
          SET_STRING_ELT(ret, i, NA_STRING);
       else {

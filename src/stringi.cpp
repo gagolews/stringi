@@ -78,7 +78,6 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_locate_all_regex,           2), // TO DO
    STRI__MAKE_CALL_METHOD(stri_locate_first_or_last_fixed, 3), // TODO: split!
    STRI__MAKE_CALL_METHOD(stri_locate_first_regex,         2), // TODO
-   STRI__MAKE_CALL_METHOD(stri_ltrim,                      1),
    STRI__MAKE_CALL_METHOD(stri_numbytes,                   1),
    STRI__MAKE_CALL_METHOD(stri_order,                      3),
    STRI__MAKE_CALL_METHOD(stri_pad,                        4),
@@ -93,7 +92,6 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_logical_1,      2),
    STRI__MAKE_CALL_METHOD(stri_replace_all_regex,   	     3),
    STRI__MAKE_CALL_METHOD(stri_reverse,                    1),
-   STRI__MAKE_CALL_METHOD(stri_rtrim,                      1),
    STRI__MAKE_CALL_METHOD(stri_split_class,   	    	     2),
    STRI__MAKE_CALL_METHOD(stri_split_fixed,		    	     5),
    STRI__MAKE_CALL_METHOD(stri_split_pos,  		    	     3),
@@ -105,7 +103,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_test_returnasis,            1),
    STRI__MAKE_CALL_METHOD(stri_test_UnicodeContainer16,    1),
    STRI__MAKE_CALL_METHOD(stri_test_UnicodeContainer8,     1),
-   STRI__MAKE_CALL_METHOD(stri_trim,                       1),
+   STRI__MAKE_CALL_METHOD(stri_trim_both,                  2),
+   STRI__MAKE_CALL_METHOD(stri_trim_left,                  2),
+   STRI__MAKE_CALL_METHOD(stri_trim_right,                 2),
    STRI__MAKE_CALL_METHOD(stri_trim_all,                   1),
    STRI__MAKE_CALL_METHOD(stri_width,                      1),
    STRI__MAKE_CALL_METHOD(stri_wrap,                       4),
