@@ -106,7 +106,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_trim_both,                  2),
    STRI__MAKE_CALL_METHOD(stri_trim_left,                  2),
    STRI__MAKE_CALL_METHOD(stri_trim_right,                 2),
-   STRI__MAKE_CALL_METHOD(stri_trim_all,                   1),
+   STRI__MAKE_CALL_METHOD(stri_trim_double,                3),
    STRI__MAKE_CALL_METHOD(stri_width,                      1),
    STRI__MAKE_CALL_METHOD(stri_wrap,                       4),
    STRI__MAKE_CALL_METHOD(stri_wrap_greedy,                3),

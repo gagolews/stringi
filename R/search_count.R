@@ -29,7 +29,9 @@
 #' 
 #' @examples
 #' stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
-#' 
+#' stri_count_charclass(" \t\n", "WHITE_SPACE")
+#' stri_count_charclass(" \t\n", "Z") # whitespace - general category (note the difference)
+#'
 #' @export
 #' @family search_count
 #' @family search_charclass

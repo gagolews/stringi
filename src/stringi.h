@@ -255,7 +255,7 @@ SEXP stri_trim_left(SEXP str, SEXP pattern);    // DONE
 SEXP stri_trim_right(SEXP str, SEXP pattern);   // DONE
 
 
-SEXP stri_trim_all(SEXP str);   // ...TO DO...
+SEXP stri_trim_double(SEXP str, SEXP pattern, SEXP leave_first);   // ...TO DO...
 
 
 // pad.cpp

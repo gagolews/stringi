@@ -153,12 +153,18 @@ SEXP stri_trim_right(SEXP str, SEXP pattern)
 
 
 
+
 /** 
-   vectorized over s
-   if s is NA the result will be NA
-   
+ * Trim consecutive repeating characters from a charclass
+ *  
+ * @param str character vector
+ * @param pattern character vector
+ * @param leave_first logical vector
+ * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)  
 */
-SEXP stri_trim_all(SEXP s)
+SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first)
 {
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    R_len_t ns = LENGTH(s);

@@ -55,7 +55,7 @@
 #' 
 #' @examples
 #' stri_trim_left("               aaa")
-#' stri_trim_left("total of 23.5 bitcoins", "N")
+#' stri_trim_both("total of 23.5 bitcoins", "N")
 #' 
 #' @aliases stri_trim
 #' @family search_trim
@@ -97,17 +97,32 @@ stri_trim <- function(str, side=c("both", "left", "right"), pattern="^WHITE_SPAC
 
 
 #' @title
-#' Trim all unnecessary double whitespaces from string
+#' Trim All Unnecessary Consecutive Characters
 #' 
-#' @param str will be coerced to character
-#' @return trimmed character vector 
+#' @description
+#' The function may be used e.g. to get substitute all multiple
+#' whitespaces with a single space.
+#' 
+#' @details
+#' Vectorized over \code{str}, \code{pattern}, and \code{leave_first}.
+#' 
+#' Hint: to make single `ordinary` spaces to be word separators in a sentence,
+#' call \code{stri_replace_all_charclass(stri_trim_double(str), "WHITE_SPACE", " ")}.
+#' For more complex operations, feel free to use \link{stringi-search-regex}.
+#' 
+#' @param str character vector
+#' @param pattern character vector with character class identifiers that
+#' should be preserved, see !!TODO!!
+#' @param leave_first logical; should we leave the first or the last
+#' occurence of \code{pattern} in each seqence?
+#' @return character vector 
 #' 
 #' @family search_trim
 #' @family search_charclass
 #' @export
-stri_trim_all <- function(str) { # rename to stri_trim_double, add pattern
-   warning("stri_trim_all: v0.2 TO DO")
-   .Call("stri_trim_all", str, PACKAGE="stringi")
+stri_trim_double <- function(str, pattern="^WHITE_SPACE", leave_first=TRUE) {
+   warning("TO DO")
+   .Call("stri_trim_double", str, pattern, leave_first, PACKAGE="stringi")
 }
 
 
