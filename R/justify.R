@@ -17,21 +17,22 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+invisible(NULL) # TO BE DONE, version >= 0.2
 
-#' Justify text
-#' 
-#' Horizontal justification of the text.
-#' 
-#' @param str will be coerced to character
-#' @param width integer
-#' @return character vector
-#' @details ...
-#' @examples
-#' stri_justify(s, 50)
-#' 
-#' @export
-stri_justify <- function(str, width) {
-   # prepare_arg done internally
-   .Call("stri_justify", str, width, PACKAGE="stringi")
-}
+# #' Justify text
+# #' 
+# #' Horizontal justification of the text.
+# #' 
+# #' @param str will be coerced to character
+# #' @param width integer
+# #' @return character vector
+# #' @details ...
+# #' @examples
+# #' stri_justify(s, 50)
+# #' 
+# #' @export
+# stri_justify <- function(str, width) {
+#    # prepare_arg done internally
+#    .Call("stri_justify", str, width, PACKAGE="stringi")
+# }
 

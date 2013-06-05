@@ -58,21 +58,23 @@ test_that("stri_trim_right", {
    expect_equivalent(stri_trim_right(stri_dup(" ", 1:100)), rep("", 100))
 })
 
-# test_that("stri_trim_all", {
+
+
+# test_that("stri_trim_double", {
 #    
 #    # basic tests (ASCII, border-line):
-#    expect_equivalent(stri_trim_all(character(0)), character(0))
-#    expect_equivalent(stri_trim_all(NA), NA_character_)
-#    expect_equivalent(stri_trim_all(""),"")
-#    expect_equivalent(stri_trim_all("         "), "")
-#    expect_equivalent(stri_trim_all("  \t A \n "), "A")
-#    expect_equivalent(stri_trim_all(" A A  A  \t A  "), "A A A A")
+#    expect_equivalent(stri_trim_double(character(0)), character(0))
+#    expect_equivalent(stri_trim_double(NA), NA_character_)
+#    expect_equivalent(stri_trim_double(""),"")
+#    expect_equivalent(stri_trim_double("         "), "")
+#    expect_equivalent(stri_trim_double("  \t A \n "), "A")
+#    expect_equivalent(stri_trim_double(" A A  A  \t A  "), "A A A A")
 #  
-#    expect_equivalent(stri_trim_all(LETTERS), LETTERS)
+#    expect_equivalent(stri_trim_double(LETTERS), LETTERS)
 #  
-#    expect_equivalent(stri_trim_all(stri_dup(" ", 1:100)), rep("", 100))
+#    expect_equivalent(stri_trim_double(stri_dup(" ", 1:100)), rep("", 100))
 #    s <- stri_flatten(LETTERS%+%stri_dup(" ",1:26))
-#    expect_equivalent(stri_trim_all(s),stri_flatten(LETTERS," "))
+#    expect_equivalent(stri_trim_double(s),stri_flatten(LETTERS," "))
 # })
 
 

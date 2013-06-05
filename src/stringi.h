@@ -103,7 +103,7 @@ R_len_t stri__numbytes_max(SEXP str); // DONE
 SEXP stri_numbytes(SEXP str);         // DONE
 SEXP stri_length(SEXP str);           // DONE
 SEXP stri_isempty(SEXP str);          // DONE
-SEXP stri_width(SEXP str);            // ...TODO... [version >0.1]
+// SEXP stri_width(SEXP str);            // ...TODO... [version >0.1]
 
 
 
@@ -178,13 +178,13 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 
 // wrap.cpp
-SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);                // ...TO DO...
-SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);               // ...TO DO...
-SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);    // ...TO DO...
+// SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);                // TODO [version >= 0.2]
+// SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);               // TODO [version >= 0.2]
+// SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);    // TODO [version >= 0.2]
 
 
 // justify.cpp
-SEXP stri_justify(SEXP str, SEXP width);   // ...TO DO...
+// SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.2]
 
 
 
@@ -253,13 +253,11 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right); // DON
 SEXP stri_trim_both(SEXP str, SEXP pattern);    // DONE
 SEXP stri_trim_left(SEXP str, SEXP pattern);    // DONE
 SEXP stri_trim_right(SEXP str, SEXP pattern);   // DONE
-
-
-SEXP stri_trim_double(SEXP str, SEXP pattern, SEXP leave_first);   // ...TO DO...
+// SEXP stri_trim_double(SEXP str, SEXP pattern, SEXP leave_first);   // ...TO DO... [version >= 0.2]
 
 
 // pad.cpp
-SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);   // ...TO DO...
+// SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad);   // ...TO DO...  [version >= 0.2]
 
 
 

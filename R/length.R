@@ -123,6 +123,8 @@ stri_isempty <- function(str) {
 
 
 
+
+invisible(NULL) # TO BE DONE, version >= 0.2
 # #' Count the Width of Characters [version >0.1]
 # #' 
 # #' Missing values are handled properly.

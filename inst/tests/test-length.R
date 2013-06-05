@@ -29,6 +29,6 @@ test_that("stri_isempty", {
 })
 
 
-test_that("stri_width", {
+# test_that("stri_width", {
 #    expect_equivalent(stri_width(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
-})
+# })

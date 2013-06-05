@@ -154,46 +154,46 @@ SEXP stri_trim_right(SEXP str, SEXP pattern)
 
 
 
-/** 
- * Trim consecutive repeating characters from a charclass
- *  
- * @param str character vector
- * @param pattern character vector
- * @param leave_first logical vector
- * @return character vector
- * 
- * @version 0.1 (Bartek Tartanus)  
-*/
-SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first)
-{
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   R_len_t ns = LENGTH(s);
-   SEXP e,subs, curs, temp, temp2, white, space;
-   PROTECT(e = allocVector(STRSXP, ns));
-   PROTECT(white = allocVector(STRSXP, 1));
-   PROTECT(space = allocVector(STRSXP, 1));
-   SET_STRING_ELT(white,0,mkCharLen("^WHITE_SPACE",12));
-   SET_STRING_ELT(space,0,mkCharLen(" ",1));
-   subs = stri_locate_all_charclass(s, white, ScalarLogical(FALSE));
-   int n;
-   for(int i=0; i < ns; ++i){
-      curs = STRING_ELT(s, i);
-      if(curs == NA_STRING){
-         SET_STRING_ELT(e, i, NA_STRING);
-         continue;
-      }
-      temp = VECTOR_ELT(subs, 0);
-      n = LENGTH(temp)/2;
-      int* fromto = INTEGER(temp);
-      //if from==NA then string contains only white space -> return empty
-      if(fromto[0] == NA_INTEGER){
-         SET_STRING_ELT(e, i, mkCharLen("",0));
-         continue;
-      }
-      temp2 = stri__split_pos(CHAR(curs), fromto, fromto + n,LENGTH(curs),n);
-      SET_STRING_ELT(e, i,STRING_ELT(stri_flatten(temp2, space),0));
-   }
-   UNPROTECT(3);
-   return e;
-}
+///** 
+// * Trim consecutive repeating characters from a charclass
+// *  
+// * @param str character vector
+// * @param pattern character vector
+// * @param leave_first logical vector
+// * @return character vector
+// * 
+// * @version 0.1 (Bartek Tartanus)  
+//*/
+//SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first) 
+//{
+//   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+//   R_len_t ns = LENGTH(s);
+//   SEXP e,subs, curs, temp, temp2, white, space;
+//   PROTECT(e = allocVector(STRSXP, ns));
+//   PROTECT(white = allocVector(STRSXP, 1));
+//   PROTECT(space = allocVector(STRSXP, 1));
+//   SET_STRING_ELT(white,0,mkCharLen("^WHITE_SPACE",12));
+//   SET_STRING_ELT(space,0,mkCharLen(" ",1));
+//   subs = stri_locate_all_charclass(s, white, ScalarLogical(FALSE));
+//   int n;
+//   for(int i=0; i < ns; ++i){
+//      curs = STRING_ELT(s, i);
+//      if(curs == NA_STRING){
+//         SET_STRING_ELT(e, i, NA_STRING);
+//         continue;
+//      }
+//      temp = VECTOR_ELT(subs, 0);
+//      n = LENGTH(temp)/2;
+//      int* fromto = INTEGER(temp);
+//      //if from==NA then string contains only white space -> return empty
+//      if(fromto[0] == NA_INTEGER){
+//         SET_STRING_ELT(e, i, mkCharLen("",0));
+//         continue;
+//      }
+//      temp2 = stri__split_pos(CHAR(curs), fromto, fromto + n,LENGTH(curs),n);
+//      SET_STRING_ELT(e, i,STRING_ELT(stri_flatten(temp2, space),0));
+//   }
+//   UNPROTECT(3);
+//   return e;
+//}
 

@@ -218,32 +218,32 @@ SEXP stri_isempty(SEXP s)
 }
 
 
-/**
- * Determine the width of the string
- * e.g. some chinese chars have width > 1.
- * 
- * Note that ICU permits only strings of length < 2^31.
- * @param s R character vector
- * @return integer vector
- * @version 0.1 (WHO?) TO BE DONE
- * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
- */
-SEXP stri_width(SEXP s)
-{
-   s = stri_prepare_arg_string(s, "str");
-   R_len_t ns = LENGTH(s);
-   
-   
-   ///< @TODO ------------------------------------------------------------------------------------------------------
-   error("TODO: the function has not yet been implemented.");
-   
-   //UChar32 c;
-   SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, ns));
-   //int* retint = INTEGER(ret);   
-   
-
-   
-   UNPROTECT(1);
-   return ret;
-}
+///**
+// * Determine the width of the string
+// * e.g. some chinese chars have width > 1.
+// * 
+// * Note that ICU permits only strings of length < 2^31.
+// * @param s R character vector
+// * @return integer vector
+// * @version 0.1 (WHO?) TO BE DONE
+// * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
+// */
+//SEXP stri_width(SEXP s)
+//{
+//   s = stri_prepare_arg_string(s, "str");
+//   R_len_t ns = LENGTH(s);
+//   
+//   
+//   ///< @TODO ------------------------------------------------------------------------------------------------------
+//   error("TODO: the function has not yet been implemented.");
+//   
+//   //UChar32 c;
+//   SEXP ret;
+//   PROTECT(ret = allocVector(INTSXP, ns));
+//   //int* retint = INTEGER(ret);   
+//   
+//
+//   
+//   UNPROTECT(1);
+//   return ret;
+//}
