@@ -33,8 +33,8 @@
 static const R_CallMethodDef cCallMethods[] = {
    
    STRI__MAKE_CALL_METHOD(stri_casefold,                   3),
-   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>=0.2
-   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>=0.2
+//   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>=0.2
+//   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>=0.2
    STRI__MAKE_CALL_METHOD(stri_char_getcategoryid,         1),  // TO BE REMOVED
    STRI__MAKE_CALL_METHOD(stri_char_getpropertyid,         1),  // TO BE REMOVED
    STRI__MAKE_CALL_METHOD(stri_compare,                    3),

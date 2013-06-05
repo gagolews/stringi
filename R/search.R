@@ -19,11 +19,13 @@
 
 
 
-#' String Searching
+#' @title String Searching
 #' 
+#' @description
 #' This man page describes how to perform string search-based
 #' operations in \pkg{stringi}.
 #' 
+#' @details
 #' There are three string searching ``engines'' in \pkg{stringi}.
 #' \itemize{
 #'    \item \code{stri_*_regex} - ICU's regular expressions, see \link{stringi-search-regex},
@@ -56,8 +58,14 @@ invisible(NULL)
 
 
 
+#' @title
 #' Regular Expressions in \pkg{stringi}
 #'
+#' @description
+#' Something about regular expressions.....
+#' 
+#' 
+#' @details
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
 #' the \pkg{ICU} regex engine.
 #' 
@@ -66,6 +74,10 @@ invisible(NULL)
 #' all regex functions treat text as single line.
 #' if you want multiline facilities, do split (all \pkg{stringi} functions
 #' are nicely vectorized)
+#' 
+#' @section Syntax of Regular Expressions in ICU:
+#' 
+#' TO BE DONE......
 #'
 #' @references
 #' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
@@ -77,8 +89,14 @@ invisible(NULL)
 
 
 
-#' Locale-sensitive Text Searching in \pkg{stringi}
+#' @title
+#' Locale-Sensitive Text Searching in \pkg{stringi}
 #'
+#' @description
+#' something general....
+#' 
+#' 
+#' @details
 #' All \code{stri_*_fixed} functions in \pkg{stingi} use
 #' the \pkg{ICU} \code{StringSearch} engine.
 #' 
@@ -86,7 +104,7 @@ invisible(NULL)
 #' and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
 #' 
-#' \bold{String Search Engine}
+#' @section String Search Engine:
 #' 
 #' ...modified form of the Boyer Moore's search (cf. Werner, 1999),
 #' with time complexity of
@@ -111,27 +129,140 @@ invisible(NULL)
 
 
 
-#' Character Classes in \pkg{stringi}
+#' @title Character Classes in \pkg{stringi}
 #'
+#' @description
+#' some general info....
+#' 
+#' 
+#' @details
 #' All \code{stri_*_charclass} functions in \pkg{stingi} perform
 #' single character search-based operations....
 #' 
 #'
-#' There are two separate ways to specify character classes or
-#' their complements in \pkg{stringi}:
+#' There are two separate ways to specify character classes in \pkg{stringi}:
 #' 
-#' * with Unicode General Category Masks, e.g. \code{Lu} for Upper-Case Letters,
-#' see \code{\link{stri_char_getcategoryid}}
+#' \itemize{
+#' \item with Unicode General Category Masks, e.g. \code{"Lu"} for uppercase letters 
+#' (1-2 letter identifier, same may be used in regex)
+#' \item with Unicode Binary Property Identifies, e.g. \code{"WHITE_SPACE"}
+#' }
 #' 
-#' * with Unicode Binary Property Identifies, e.g. \code{ALPHABETIC} for
-#' alphabetic characters, see \code{\link{stri_char_getpropertyid}}
+#' differences.....
 #' 
 #' Note that e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} may match different character sets.
 #' 
+#' Each class may be preceeded with '^' (complement)...
+#' 
+#' @section Unicode General Categories:
+#' 
+#' \itemize{
+#' \item \code{Lu}: UPPERCASE_LETTER
+#' \item \code{Ll}: LOWERCASE_LETTER
+#' \item \code{Lt}: TITLECASE_LETTER
+#' \item \code{Lm}: MODIFIER_LETTER
+#' \item \code{Lo}: OTHER_LETTER
+#' \item \code{Mn}: NON_SPACING_MARK
+#' \item \code{Me}: ENCLOSING_MARK
+#' \item \code{Mc}: COMBINING_SPACING_MARK
+#' \item \code{Nd}: DECIMAL_DIGIT_NUMBER
+#' \item \code{Nl}: LETTER_NUMBER
+#' \item \code{No}: OTHER_NUMBER
+#' \item \code{Zs}: SPACE_SEPARATOR
+#' \item \code{Zl}: LINE_SEPARATOR
+#' \item \code{Zp}: PARAGRAPH_SEPARATOR
+#' \item \code{Cc}: CONTROL_CHAR
+#' \item \code{Cf}: FORMAT_CHAR
+#' \item \code{Co}: PRIVATE_USE_CHAR
+#' \item \code{Cs}: SURROGATE
+#' \item \code{Pd}: DASH_PUNCTUATION
+#' \item \code{Ps}: START_PUNCTUATION
+#' \item \code{Pe}: END_PUNCTUATION
+#' \item \code{Pc}: CONNECTOR_PUNCTUATION
+#' \item \code{Po}: OTHER_PUNCTUATION
+#' \item \code{Sm}: MATH_SYMBOL
+#' \item \code{Sc}: CURRENCY_SYMBOL
+#' \item \code{Sk}: MODIFIER_SYMBOL
+#' \item \code{So}: OTHER_SYMBOL
+#' \item \code{Pi}: INITIAL_PUNCTUATION
+#' \item \code{Pf}: FINAL_PUNCTUATION
+#' \item \code{L}: ...
+#' \item \code{Z}: ...
+#' \item \code{C}: ...
+#' \item \code{M}: ...
+#' \item \code{N}: ...
+#' \item \code{P}: ...
+#' \item \code{S}: ...
+#' }
+#' 
+#'
+#'
+#' @section Unicode Binary Properies:
+#' 
+#' \itemize{
+#' \item \code{ALPHABETIC}
+#' \item \code{ASCII_HEX_DIGIT}
+#' \item \code{BIDI_CONTROL}
+#' \item \code{BIDI_MIRRORED}
+#' \item \code{DASH}
+#' \item \code{DEFAULT_IGNORABLE_CODE_POINT}
+#' \item \code{DEPRECATED}
+#' \item \code{DIACRITIC}
+#' \item \code{EXTENDER}
+#' \item \code{FULL_COMPOSITION_EXCLUSION}
+#' \item \code{GRAPHEME_BASE}
+#' \item \code{GRAPHEME_EXTEND}
+#' \item \code{GRAPHEME_LINK}
+#' \item \code{HEX_DIGIT}
+#' \item \code{HYPHEN}
+#' \item \code{ID_CONTINUE}
+#' \item \code{ID_START}
+#' \item \code{IDEOGRAPHIC}
+#' \item \code{IDS_BINARY_OPERATOR}
+#' \item \code{IDS_TRINARY_OPERATOR}
+#' \item \code{JOIN_CONTROL}
+#' \item \code{LOGICAL_ORDER_EXCEPTION}
+#' \item \code{LOWERCASE}
+#' \item \code{MATH}
+#' \item \code{NONCHARACTER_CODE_POINT}
+#' \item \code{QUOTATION_MARK}
+#' \item \code{RADICAL}
+#' \item \code{SOFT_DOTTED}
+#' \item \code{TERMINAL_PUNCTUATION}
+#' \item \code{UNIFIED_IDEOGRAPH}
+#' \item \code{UPPERCASE}
+#' \item \code{WHITE_SPACE}
+#' \item \code{XID_CONTINUE}
+#' \item \code{XID_START}
+#' \item \code{CASE_SENSITIVE}
+#' \item \code{S_TERM}
+#' \item \code{VARIATION_SELECTOR}
+#' \item \code{NFD_INERT}
+#' \item \code{NFKD_INERT}
+#' \item \code{NFC_INERT}
+#' \item \code{NFKC_INERT}
+#' \item \code{SEGMENT_STARTER}
+#' \item \code{PATTERN_SYNTAX}
+#' \item \code{PATTERN_WHITE_SPACE}
+#' \item \code{POSIX_ALNUM}
+#' \item \code{POSIX_BLANK}
+#' \item \code{POSIX_GRAPH}
+#' \item \code{POSIX_PRINT}
+#' \item \code{POSIX_XDIGIT}
+#' \item \code{CASED}
+#' \item \code{CASE_IGNORABLE}
+#' \item \code{CHANGES_WHEN_LOWERCASED}
+#' \item \code{CHANGES_WHEN_UPPERCASED}
+#' \item \code{CHANGES_WHEN_TITLECASED}
+#' \item \code{CHANGES_WHEN_CASEFOLDED}
+#' \item \code{CHANGES_WHEN_CASEMAPPED}
+#' \item \code{CHANGES_WHEN_NFKC_CASEFOLDED}
+#' }
+#' 
+#' 
 #' @references
-#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
-#' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
+#' ?????? add something :-)
 #' 
 #' @name stringi-search-charclass
 #' @family search_charclass
