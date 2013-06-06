@@ -18,20 +18,23 @@
 
 
 
+#' @title
 #' Replace Occurences of a Character Class
 #' 
+#' @description
 #' Replaces with the given replacement string every/first/last
 #' character class occurence in the input string.
 #' 
+#' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #' 
 #' The function scans the input string for matches of the character class. 
 #' Input that is not part of any match is left unchanged; 
-#' each match is replaced in the result by the replacement string. 
+#' each match is replaced in the result by the same (fixed) replacement string. 
 #' 
-#' @param str character vector of strings to search in
-#' @param pattern character class identifiers specified by
-#' \code{\link{stri_char_getpropertyid}} or \code{\link{stri_char_getcategoryid}}
+#' @param str character vector with strings to search in
+#' @param pattern character vector with character class identifiers 
+#' to search for, see \link{stringi-search-charclass}
 #' @param replacement character vector of strings to replace with
 #' @return character vector
 #' 
@@ -41,30 +44,33 @@
 #' @family search_charclass
 #' @family search_replace
 stri_replace_all_charclass <- function(str, pattern, replacement) {
-   stop("TO DO: stri_replace_all_charclass")
+   .Call("stri_replace_all_charclass", str, pattern, replacement, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_first_charclass <- function(str, pattern, replacement) {
-   stop("TO DO: stri_replace_first_charclass")
+   .Call("stri_replace_first_charclass", str, pattern, replacement, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_last_charclass <- function(str, pattern, replacement) {
-   stop("TO DO: stri_replace_last_charclass")
+   .Call("stri_replace_last_charclass", str, pattern, replacement, PACKAGE="stringi")
 }
 
 
 
+#' @title
 #' Replace Occurences of a Fixed Pattern
 #' 
+#' @description
 #' Replaces with the given replacement string every/first/last
 #' substring of the input that matches the pattern.
 #' 
+#' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #' 
 #' The function scans the input string for matches of the pattern. 
@@ -108,12 +114,14 @@ stri_replace_last_fixed <- function(str, pattern, replacement, collator_opts=lis
 }
 
 
+#' @title
 #' Replace Occurences of a Regex Pattern
 #' 
-#' 
+#' @description
 #' Replaces with the given replacement string every/first/last
 #' substring of the input that matches the pattern.
 #' 
+#' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #' 
 #' The function scans the input string for matches of the pattern. 
@@ -163,9 +171,10 @@ stri_replace_last_regex <- function(str, pattern, replacement) {
 
 
 
+#' @title
 #' Replace All Occurences of a Pattern
 #' 
-#' 
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_all_regex}},
 #' \code{\link{stri_replace_all_fixed}}, or \code{\link{stri_replace_all_charclass}},
@@ -195,9 +204,10 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, charclass) {
 }
 
 
+#' @title
 #' Replace First Occurence of a Pattern
 #' 
-#' 
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_first_regex}},
 #' \code{\link{stri_replace_first_fixed}}, or \code{\link{stri_replace_first_charclass}},
@@ -228,9 +238,10 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
 
 
 
+#' @title
 #' Replace Last Occurence of a Pattern
 #' 
-#' 
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_last_regex}},
 #' \code{\link{stri_replace_last_fixed}}, or \code{\link{stri_replace_last_charclass}},
@@ -261,12 +272,16 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
 
 
 
+#' @title
 #' Replace Occurences of a Regex Pattern, Fixed Patter or Character Class
 #'
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_all}},
 #' \code{\link{stri_replace_first}}, or \code{\link{stri_replace_last}},
 #' depending on the argument used.
+#' 
+#' @details
 #' Note that this is slower than the direct call.
 #' 
 #' @param str character vector of strings to search in

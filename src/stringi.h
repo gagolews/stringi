@@ -219,13 +219,15 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DO
 
 
 
-SEXP stri_detect_charclass(SEXP str, SEXP pattern);                        // DONE
-SEXP stri_count_charclass(SEXP str, SEXP pattern);                         // DONE
-SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first); // DONE, internal
-SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                  // DONE
-SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                   // DONE
-SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);        // DONE
-
+SEXP stri_detect_charclass(SEXP str, SEXP pattern);                          // DONE
+SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
+SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);   // DONE, internal
+SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                    // DONE
+SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                     // DONE
+SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);          // DONE
+SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);  // ...TODO...
+SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement); // ...TODO...
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // ...TODO...
 
 
 // uchar.cpp:

@@ -28,7 +28,7 @@
 #' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
 #' 
 #' @param str character vector to search in
-#' @param pattern character vector with character class identifiers, see !!TODO!!
+#' @param pattern character vector with character class identifiers, see \link{stringi-search-charclass}
 #' @param merge logical [\code{stri_locate_all_charclass} only];
 #' should consecutive sequences of indices in resulting
 #' matrix be merged?

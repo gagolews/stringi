@@ -24,7 +24,7 @@
 #' 
 #' 
 #' @param str character vector to search in
-#' @param pattern character vector with character class identifiers, see !!TODO!!
+#' @param pattern character vector with character class identifiers, see \link{stringi-search-charclass}
 #' @return integer vector
 #' 
 #' @examples
