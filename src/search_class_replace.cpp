@@ -74,7 +74,9 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+   
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), npat, LENGTH(replacement));
 
 
    SEXP ret;
@@ -83,11 +85,65 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
    StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    StriContainerUTF8* rr = new StriContainerUTF8(replacement, nmax);
  
+   char* buf = 0;
+   R_len_t buf_len = 0;
+   
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      if (ss->isNA(i) || rr->isNA(i) || cur_pattern == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      }
+      
+      if (cc.isNA()) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j, jlast = 0;
+      UChar32 chr;
+      
+      for (j=0; j<curn; ) {
+         U8_NEXT(curs, j, curn, chr);
+         if (cc.test(chr)) {
+            break;
+         } 
+         jlast = j;
+      }
+      
+      // match is at jlast, and ends right before j
+      
+      if (jlast < curn) { // iff found
+         R_len_t repn = rr->get(i).length();
+         const char* reps = rr->get(i).c_str();
+         R_len_t buf_need = curn+repn-(j-jlast);
+         if (!buf || buf_len < buf_need) {
+            if (buf) delete [] buf;
+            buf_len = buf_need;
+            buf = new char[buf_len]; // NUL not needed
+         }
+         memcpy(buf, curs, jlast);
+         memcpy(buf+jlast, reps, repn);
+         memcpy(buf+jlast+repn, curs+j, curn-j);
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, buf_need, CE_UTF8));
+
+      }
+      else {
+         SET_STRING_ELT(ret, i, ss->toR(i)); // no change  
+      }
+   } 
  
- 
-   error("TO DO");
- 
- 
+   if (buf) delete [] buf;
    delete ss;
    delete rr;
    UNPROTECT(1);

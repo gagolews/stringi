@@ -1,5 +1,21 @@
 require(testthat)
 
+
+
+
+test_that("stri_replace_first_charclass", {
+   expect_identical(stri_replace_first_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_first_charclass(NA,"WHITE_SPACE","?"),NA_character_)
+   expect_identical(stri_replace_first_charclass("X","WHITE_SPACE",NA),NA_character_)
+   expect_identical(stri_replace_first_charclass("X",NA,"?"),NA_character_)
+   expect_identical(stri_replace_first_charclass(c("a a", " aa", "aa ", "aa"), "WHITE_SPACE", "X"), c("aXa", "Xaa", "aaX", "aa"))
+   expect_identical(stri_replace_first_charclass(c("a a ", " aa ", "aa  ", "aa"), "WHITE_SPACE", "X"), c("aXa ", "Xaa ", "aaX ", "aa"))
+   expect_identical(stri_replace_first_charclass("a1 ", c("Z", "Nd", "Ll", "P"), "X"), c("a1X", "aX ", "X1 ", "a1 "))
+   expect_identical(stri_replace_first_charclass("a1 ", "^Z", c("X", "Y")), c("X1 ", "Y1 "))
+})
+
+
+
 # test_that("stri_replace_fixed", {
 #    expect_identical(stri_replace_all_fixed(character(0),1,2),character(0))
 #    expect_identical(stri_replace_all_fixed("abab123 a","a",1),"1b1b123 1")

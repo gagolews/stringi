@@ -158,67 +158,79 @@ invisible(NULL)
 #' @section Unicode General Categories:
 #' 
 #' \itemize{
-#' \item \code{Lu}: UPPERCASE_LETTER
-#' \item \code{Ll}: LOWERCASE_LETTER
-#' \item \code{Lt}: TITLECASE_LETTER
-#' \item \code{Lm}: MODIFIER_LETTER
-#' \item \code{Lo}: OTHER_LETTER
-#' \item \code{Mn}: NON_SPACING_MARK
-#' \item \code{Me}: ENCLOSING_MARK
-#' \item \code{Mc}: COMBINING_SPACING_MARK
-#' \item \code{Nd}: DECIMAL_DIGIT_NUMBER
-#' \item \code{Nl}: LETTER_NUMBER
-#' \item \code{No}: OTHER_NUMBER
-#' \item \code{Zs}: SPACE_SEPARATOR
-#' \item \code{Zl}: LINE_SEPARATOR
-#' \item \code{Zp}: PARAGRAPH_SEPARATOR
-#' \item \code{Cc}: CONTROL_CHAR
-#' \item \code{Cf}: FORMAT_CHAR
-#' \item \code{Co}: PRIVATE_USE_CHAR
+#' \item \code{Cc}: CONTROL CHAR
+#' \item \code{Cf}: FORMAT CHAR
+#' \item \code{Co}: PRIVATE USE CHAR
 #' \item \code{Cs}: SURROGATE
-#' \item \code{Pd}: DASH_PUNCTUATION
-#' \item \code{Ps}: START_PUNCTUATION
-#' \item \code{Pe}: END_PUNCTUATION
-#' \item \code{Pc}: CONNECTOR_PUNCTUATION
-#' \item \code{Po}: OTHER_PUNCTUATION
-#' \item \code{Sm}: MATH_SYMBOL
-#' \item \code{Sc}: CURRENCY_SYMBOL
-#' \item \code{Sk}: MODIFIER_SYMBOL
-#' \item \code{So}: OTHER_SYMBOL
-#' \item \code{Pi}: INITIAL_PUNCTUATION
-#' \item \code{Pf}: FINAL_PUNCTUATION
-#' \item \code{L}: ...
-#' \item \code{Z}: ...
-#' \item \code{C}: ...
-#' \item \code{M}: ...
-#' \item \code{N}: ...
-#' \item \code{P}: ...
-#' \item \code{S}: ...
+#' \item \code{Ll}: LOWERCASE LETTER
+#' \item \code{Lm}: MODIFIER LETTER
+#' \item \code{Lo}: OTHER LETTER
+#' \item \code{Lt}: TITLECASE LETTER
+#' \item \code{Lu}: UPPERCASE LETTER
+#' \item \code{Mc}: COMBINING SPACING MARK
+#' \item \code{Me}: ENCLOSING MARK
+#' \item \code{Mn}: NON SPACING MARK
+#' \item \code{Nd}: DECIMAL DIGIT NUMBER
+#' \item \code{Nl}: LETTER NUMBER
+#' \item \code{No}: OTHER NUMBER
+#' \item \code{Pd}: DASH PUNCTUATION
+#' \item \code{Ps}: START PUNCTUATION
+#' \item \code{Pe}: END PUNCTUATION
+#' \item \code{Pc}: CONNECTOR PUNCTUATION
+#' \item \code{Po}: OTHER PUNCTUATION
+#' \item \code{Pi}: INITIAL PUNCTUATION
+#' \item \code{Pf}: FINAL PUNCTUATION
+#' \item \code{Sm}: MATH SYMBOL
+#' \item \code{Sc}: CURRENCY SYMBOL
+#' \item \code{Sk}: MODIFIER SYMBOL
+#' \item \code{So}: OTHER SYMBOL
+#' \item \code{Zs}: SPACE SEPARATOR
+#' \item \code{Zl}: LINE SEPARATOR
+#' \item \code{Zp}: PARAGRAPH SEPARATOR
+#' \item \code{C}: Union of ...
+#' \item \code{L}: Union of \code{Lu}, \code{Ll}, \code{Lt}, \code{Lm}, \code{Lo}
+#' \item \code{M}: Union of ...
+#' \item \code{N}: Union of ...
+#' \item \code{P}: Union of ..
+#' \item \code{S}: Union of \code{Sm}, \code{Sc}, \code{Sk}, \code{So}
+#' \item \code{Z}: Union of ..
 #' }
 #' 
 #'
 #'
-#' @section Unicode Binary Properies:
+#' @section Unicode Binary Properies
+#' 
+#' (matched case-insensitively, normalized like with ICU character encoding
+#' specification)
 #' 
 #' \itemize{
 #' \item \code{ALPHABETIC}
-#' \item \code{ASCII_HEX_DIGIT}
-#' \item \code{BIDI_CONTROL}
-#' \item \code{BIDI_MIRRORED}
-#' \item \code{DASH}
-#' \item \code{DEFAULT_IGNORABLE_CODE_POINT}
-#' \item \code{DEPRECATED}
-#' \item \code{DIACRITIC}
-#' \item \code{EXTENDER}
+#' \item \code{ASCII_HEX_DIGIT} - matches \code{[0-9A-Fa-f]} regex
+#' \item \code{BIDI_CONTROL} - format controls which have specific functions 
+#' in the Bidi (bidirectional text) Algorithm.
+#' \item \code{BIDI_MIRRORED} - Characters that may change display in right-to-left text.
+#' \item \code{DASH} - Variations of dashes.
+#' \item \code{DEFAULT_IGNORABLE_CODE_POINT} - Ignorable in most processing, 
+#' e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>
+#' \item \code{DEPRECATED} - a deprecated character according 
+#' to the current Unicode standard (the usage of deprecated characters 
+#' is strongly discouraged)
+#' \item \code{DIACRITIC} - Characters that linguistically modify the meaning of another character to which they apply.
+#' \item \code{EXTENDER} - Extend the value or shape of a preceding alphabetic character, e.g., length and iteration marks.
 #' \item \code{FULL_COMPOSITION_EXCLUSION}
 #' \item \code{GRAPHEME_BASE}
 #' \item \code{GRAPHEME_EXTEND}
 #' \item \code{GRAPHEME_LINK}
-#' \item \code{HEX_DIGIT}
-#' \item \code{HYPHEN}
-#' \item \code{ID_CONTINUE}
-#' \item \code{ID_START}
-#' \item \code{IDEOGRAPHIC}
+#' \item \code{HEX_DIGIT} - Characters commonly used for hexadecimal numbers, 
+#' cf. also \code{ASCII_HEX_DIGIT}
+#' \item \code{HYPHEN} - Dashes used to mark connections between 
+#' pieces of words, plus the Katakana middle dot.
+#' \item \code{ID_CONTINUE} - Characters that can continue an identifier,
+#'  \code{ID_START}+Mn+Mc+Nd+Pc
+#' \item \code{ID_START} - Characters that can start an identifier. 
+#' Lu+Ll+Lt+Lm+Lo+Nl
+#' \item \code{IDEOGRAPHIC} - CJKV (Chineese-Japaneese-Korean-Vietnameese) 
+#' ideographs.
 #' \item \code{IDS_BINARY_OPERATOR}
 #' \item \code{IDS_TRINARY_OPERATOR}
 #' \item \code{JOIN_CONTROL}
@@ -228,11 +240,13 @@ invisible(NULL)
 #' \item \code{NONCHARACTER_CODE_POINT}
 #' \item \code{QUOTATION_MARK}
 #' \item \code{RADICAL}
-#' \item \code{SOFT_DOTTED}
-#' \item \code{TERMINAL_PUNCTUATION}
+#' \item \code{SOFT_DOTTED} - Characters with a "soft dot", like i or j. 
+#' An accent placed on these characters causes the dot to disappear.
+#' \item \code{TERMINAL_PUNCTUATION} - Punctuation characters that generally 
+#' mark the end of textual units.
 #' \item \code{UNIFIED_IDEOGRAPH}
 #' \item \code{UPPERCASE}
-#' \item \code{WHITE_SPACE}
+#' \item \code{WHITE_SPACE} - Space characters+TAB+CR+LF-ZWSP-ZWNBSP
 #' \item \code{XID_CONTINUE}
 #' \item \code{XID_START}
 #' \item \code{CASE_SENSITIVE}
