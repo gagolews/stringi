@@ -140,13 +140,20 @@ invisible(NULL)
 #' single character search-based operations....
 #' 
 #'
-#' There are two separate ways to specify character classes in \pkg{stringi}:
+#' There are two separate ways to specify character classes or
+#' properties in \pkg{stringi}:
 #' 
 #' \itemize{
-#' \item with Unicode General Category Masks, e.g. \code{"Lu"} for uppercase letters 
+#' \item by Unicode General Categories, e.g. \code{"Lu"} for uppercase letters 
 #' (1-2 letter identifier, same may be used in regex)
-#' \item with Unicode Binary Property Identifies, e.g. \code{"WHITE_SPACE"}
+#' \item by Unicode Binary Properties, e.g. \code{"WHITE_SPACE"}
 #' }
+#' These provide access to the ICU's Unicode Character Database 
+#'
+#' Unicode assigns each code point (not just assigned character) 
+#' values for many properties. Most of them are simple boolean flags, 
+#' or constants from a small enumerated list. For some properties, 
+#' values are strings or other relatively more complex types.
 #' 
 #' differences.....
 #' 
@@ -157,48 +164,57 @@ invisible(NULL)
 #' 
 #' @section Unicode General Categories:
 #' 
+#' The General_Category property of a code point provides for the most 
+#' general classification of that code point.
+#' 
+#' TO DO: LC    Cased_Letter 	Lu,  Ll , Lt
+#' 
+#' TO DO: Cn    Unassigned 	a reserved unassigned code point or a noncharacter
+#' 
+#' 
+#' 
 #' \itemize{
-#' \item \code{Cc}: CONTROL CHAR
-#' \item \code{Cf}: FORMAT CHAR
-#' \item \code{Co}: PRIVATE USE CHAR
-#' \item \code{Cs}: SURROGATE
-#' \item \code{Ll}: LOWERCASE LETTER
-#' \item \code{Lm}: MODIFIER LETTER
-#' \item \code{Lo}: OTHER LETTER
-#' \item \code{Lt}: TITLECASE LETTER
-#' \item \code{Lu}: UPPERCASE LETTER
-#' \item \code{Mc}: COMBINING SPACING MARK
-#' \item \code{Me}: ENCLOSING MARK
-#' \item \code{Mn}: NON SPACING MARK
-#' \item \code{Nd}: DECIMAL DIGIT NUMBER
-#' \item \code{Nl}: LETTER NUMBER
-#' \item \code{No}: OTHER NUMBER
-#' \item \code{Pd}: DASH PUNCTUATION
-#' \item \code{Ps}: START PUNCTUATION
-#' \item \code{Pe}: END PUNCTUATION
-#' \item \code{Pc}: CONNECTOR PUNCTUATION
-#' \item \code{Po}: OTHER PUNCTUATION
-#' \item \code{Pi}: INITIAL PUNCTUATION
-#' \item \code{Pf}: FINAL PUNCTUATION
-#' \item \code{Sm}: MATH SYMBOL
-#' \item \code{Sc}: CURRENCY SYMBOL
-#' \item \code{Sk}: MODIFIER SYMBOL
-#' \item \code{So}: OTHER SYMBOL
-#' \item \code{Zs}: SPACE SEPARATOR
-#' \item \code{Zl}: LINE SEPARATOR
-#' \item \code{Zp}: PARAGRAPH SEPARATOR
-#' \item \code{C}: Union of ...
-#' \item \code{L}: Union of \code{Lu}, \code{Ll}, \code{Lt}, \code{Lm}, \code{Lo}
-#' \item \code{M}: Union of ...
-#' \item \code{N}: Union of ...
-#' \item \code{P}: Union of ..
-#' \item \code{S}: Union of \code{Sm}, \code{Sc}, \code{Sk}, \code{So}
-#' \item \code{Z}: Union of ..
+#' \item \code{Cc}: a C0 or C1 control code
+#' \item \code{Cf}: a format control character
+#' \item \code{Co}: a private-use character
+#' \item \code{Cs}: a surrogate code point
+#' \item \code{Ll}: a lowercase letter
+#' \item \code{Lm}: a modifier letter
+#' \item \code{Lo}: other letters, including syllables and ideographs
+#' \item \code{Lt}: a digraphic character, with first part uppercase
+#' \item \code{Lu}: an uppercase letter
+#' \item \code{Mc}: a spacing combining mark (positive advance width)
+#' \item \code{Me}: an enclosing combining mark
+#' \item \code{Mn}: a nonspacing combining mark (zero advance width)
+#' \item \code{Nd}: a decimal digit
+#' \item \code{Nl}: a letterlike numeric character
+#' \item \code{No}: a numeric character of other type
+#' \item \code{Pd}: a dash or hyphen punctuation mark
+#' \item \code{Ps}: an opening punctuation mark (of a pair)
+#' \item \code{Pe}: a closing punctuation mark (of a pair)
+#' \item \code{Pc}: a connecting punctuation mark, like a tie
+#' \item \code{Po}: a punctuation mark of other type
+#' \item \code{Pi}: an initial quotation mark
+#' \item \code{Pf}: a final quotation mark
+#' \item \code{Sm}: a symbol of mathematical use
+#' \item \code{Sc}: a currency sign
+#' \item \code{Sk}: a non-letterlike modifier symbol
+#' \item \code{So}: a symbol of other type
+#' \item \code{Zs}: a space character (of various non-zero widths)
+#' \item \code{Zl}: U+2028 LINE SEPARATOR only
+#' \item \code{Zp}: U+2029 PARAGRAPH SEPARATOR only
+#' \item \code{C}: Union of Cc, Cf, Cs, Co, Cn
+#' \item \code{L}: Union of Lu, Ll, Lt, Lm, Lo
+#' \item \code{M}: Union of Mn, Mc, Me
+#' \item \code{N}: Union of Nd, Nl, No
+#' \item \code{P}: Union of Pc, Pd, Ps, Pe, Pi, Pf, Po
+#' \item \code{S}: Union of Sm, Sc, Sk, So
+#' \item \code{Z}: Union of Zs, Zl, Zp
 #' }
 #' 
 #'
 #'
-#' @section Unicode Binary Properies
+#' @section Unicode Binary Properies:
 #' 
 #' (matched case-insensitively, normalized like with ICU character encoding
 #' specification)
@@ -276,7 +292,8 @@ invisible(NULL)
 #' 
 #' 
 #' @references
-#' ?????? add something :-)
+#' The Unicode Character Database, \url{http://www.unicode.org/ucd/}\cr
+#' UAX#44, \url{http://www.unicode.org/reports/tr44/}\cr
 #' 
 #' @name stringi-search-charclass
 #' @family search_charclass

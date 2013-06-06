@@ -8,10 +8,24 @@ test_that("stri_replace_first_charclass", {
    expect_identical(stri_replace_first_charclass(NA,"WHITE_SPACE","?"),NA_character_)
    expect_identical(stri_replace_first_charclass("X","WHITE_SPACE",NA),NA_character_)
    expect_identical(stri_replace_first_charclass("X",NA,"?"),NA_character_)
+   expect_identical(stri_replace_first_charclass("","WHITE_SPACE","?"),"")
    expect_identical(stri_replace_first_charclass(c("a a", " aa", "aa ", "aa"), "WHITE_SPACE", "X"), c("aXa", "Xaa", "aaX", "aa"))
    expect_identical(stri_replace_first_charclass(c("a a ", " aa ", "aa  ", "aa"), "WHITE_SPACE", "X"), c("aXa ", "Xaa ", "aaX ", "aa"))
    expect_identical(stri_replace_first_charclass("a1 ", c("Z", "Nd", "Ll", "P"), "X"), c("a1X", "aX ", "X1 ", "a1 "))
    expect_identical(stri_replace_first_charclass("a1 ", "^Z", c("X", "Y")), c("X1 ", "Y1 "))
+})
+
+
+test_that("stri_replace_last_charclass", {
+   expect_identical(stri_replace_last_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_last_charclass(NA,"WHITE_SPACE","?"),NA_character_)
+   expect_identical(stri_replace_last_charclass("X","WHITE_SPACE",NA),NA_character_)
+   expect_identical(stri_replace_last_charclass("X",NA,"?"),NA_character_)
+   expect_identical(stri_replace_last_charclass("","WHITE_SPACE","?"),"")
+   expect_identical(stri_replace_last_charclass(c("a a", " aa", "aa ", "aa"), "WHITE_SPACE", "X"), c("aXa", "Xaa", "aaX", "aa"))
+   expect_identical(stri_replace_last_charclass(c("a a ", " aa ", "aa  ", "aa", " aa"), "WHITE_SPACE", "X"), c("a aX", " aaX", "aa X", "aa", "Xaa"))
+   expect_identical(stri_replace_last_charclass("a1 ", c("Z", "Nd", "Ll", "P"), "X"), c("a1X", "aX ", "X1 ", "a1 "))
+   expect_identical(stri_replace_last_charclass("a1 ", "^Z", c("X", "Y")), c("aX ", "aY "))
 })
 
 

@@ -57,19 +57,18 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 }
 
 
-
 /** 
- * Replace first occurence of a character class
+ * Replace first or last occurence of a character class [internal]
  * 
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for
  * @param replacement character vector; strings to replace with
- * 
+ * @param first replace first (TRUE) or last (FALSE)?
  * @return character vector
  * 
  * @version 0.1 (Marek Gagolewski) 
  */
-SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
+SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
@@ -85,7 +84,7 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
    StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    StriContainerUTF8* rr = new StriContainerUTF8(replacement, nmax);
  
-   char* buf = 0;
+   char* buf = 0; // @TODO: consider calculating buflen a priori
    R_len_t buf_len = 0;
    
    CharClass cc;
@@ -110,20 +109,31 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
       
       R_len_t curn = ss->get(i).length();
       const char* curs = ss->get(i).c_str();
-      R_len_t j, jlast = 0;
+      R_len_t j, jlast;
       UChar32 chr;
       
-      for (j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr);
-         if (cc.test(chr)) {
-            break;
-         } 
-         jlast = j;
+      if (first) { // search for first
+         for (jlast=j=0; j<curn; ) {
+            U8_NEXT(curs, j, curn, chr); // "look ahead"
+            if (cc.test(chr)) {
+               break; // break at first occurence
+            } 
+            jlast = j;
+         }
+      }
+      else { // search for last
+        for (jlast=j=curn; jlast>0; ) {
+            U8_PREV(curs, 0, jlast, chr); // "look behind"
+            if (cc.test(chr)) {
+               break; // break at first occurence
+            }
+            j = jlast;
+         }
       }
       
       // match is at jlast, and ends right before j
       
-      if (jlast < curn) { // iff found
+      if (j != jlast) { // iff found
          R_len_t repn = rr->get(i).length();
          const char* reps = rr->get(i).c_str();
          R_len_t buf_need = curn+repn-(j-jlast);
@@ -153,6 +163,24 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 
 
 /** 
+ * Replace first occurence of a character class
+ * 
+ * @param str character vector; strings to search in
+ * @param pattern character vector; charclasses to search for
+ * @param replacement character vector; strings to replace with
+ * 
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski) 
+ */
+SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
+{
+   stri__replace_firstlast_charclass(str, pattern, replacement, true);
+}
+
+
+
+/** 
  * Replace last occurence of a character class
  * 
  * @param str character vector; strings to search in
@@ -165,25 +193,5 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
  */
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
-   str          = stri_prepare_arg_string(str, "str");
-   pattern      = stri_prepare_arg_string(pattern, "pattern");
-   replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
-
-
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
- 
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
-   StriContainerUTF8* rr = new StriContainerUTF8(replacement, nmax);
- 
- 
- 
-   error("TO DO");
- 
- 
-   delete ss;
-   delete rr;
-   UNPROTECT(1);
-   return ret;
+   stri__replace_firstlast_charclass(str, pattern, replacement, false);
 }
