@@ -43,6 +43,9 @@
 #' @aliases stri_replace_all_charclass stri_replace_first_charclass stri_replace_last_charclass
 #' @family search_charclass
 #' @family search_replace
+#' 
+#' @examples
+#' stri_replace_all_charclass("a\nb\tc d", "WHITE_SPACE", " ")
 stri_replace_all_charclass <- function(str, pattern, replacement) {
    .Call("stri_replace_all_charclass", str, pattern, replacement, PACKAGE="stringi")
 }
