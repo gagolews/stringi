@@ -76,48 +76,5 @@ enum StriNormalizationForm {
 #define UCHAR_REPLACEMENT_UTF8_BYTE2 0xbf
 #define UCHAR_REPLACEMENT_UTF8_BYTE3 0xbd
 
-// uchar.cpp:
-#define STRI__UCHAR_COMPLEMENT_MASK      0x40000000
-#define STRI__UCHAR_NOTUSED_MASK         0xffffffff
-#define STRI__UCHAR_CLASS_LENGTH         2
-
-#define STRI__UCHAR_IS_ANY_BINPROP(x) \
-   (((unsigned int)(x)[0] == STRI__UCHAR_NOTUSED_MASK) && \
-   ((unsigned int)(x)[1] != STRI__UCHAR_NOTUSED_MASK))
-#define STRI__UCHAR_IS_MATCHING_BINPROP(x) \
-   ((STRI__UCHAR_IS_ANY_BINPROP(x)) && \
-   (((unsigned int)(x)[1] & (~STRI__UCHAR_COMPLEMENT_MASK)) == (unsigned int)(x)[1]))
-#define STRI__UCHAR_IS_COMPLEMENT_BINPROP(x) \
-   ((STRI__UCHAR_IS_ANY_BINPROP(x)) && \
-   (((unsigned int)(x)[1] & STRI__UCHAR_COMPLEMENT_MASK) == STRI__UCHAR_COMPLEMENT_MASK))
-   
-#define STRI__UCHAR_CREATE_MATCHING_BINPROP(x,c) \
-   { (x)[0] = STRI__UCHAR_NOTUSED_MASK; (x)[1] = c; }
-#define STRI__UCHAR_CREATE_COMPLEMENT_BINPROP(x,c) \
-   { (x)[0] = STRI__UCHAR_NOTUSED_MASK; (x)[1] = (c | STRI__UCHAR_COMPLEMENT_MASK); }
-
-#define STRI__UCHAR_GET_MATCHING_BINPROP(x)         ((x)[1])
-#define STRI__UCHAR_GET_COMPLEMENT_BINPROP(x)       ((x)[1] & (~STRI__UCHAR_COMPLEMENT_MASK))
-
-
-#define STRI__UCHAR_IS_ANY_GCMASK(x) \
-   (((unsigned int)(x)[1] == STRI__UCHAR_NOTUSED_MASK) && \
-   ((unsigned int)(x)[0] != STRI__UCHAR_NOTUSED_MASK))
-#define STRI__UCHAR_IS_MATCHING_GCMASK(x) \
-   ((STRI__UCHAR_IS_ANY_GCMASK(x)) && \
-   (((unsigned int)(x)[0] & (~STRI__UCHAR_COMPLEMENT_MASK)) == (unsigned int)(x)[0]))
-#define STRI__UCHAR_IS_COMPLEMENT_GCMASK(x) \
-   ((STRI__UCHAR_IS_ANY_GCMASK(x)) && \
-   (((unsigned int)(x)[0] & STRI__UCHAR_COMPLEMENT_MASK) == STRI__UCHAR_COMPLEMENT_MASK))
-   
-#define STRI__UCHAR_CREATE_MATCHING_GCMASK(x,c) \
-   { (x)[1] = STRI__UCHAR_NOTUSED_MASK; (x)[0] = c; }
-#define STRI__UCHAR_CREATE_COMPLEMENT_GCMASK(x,c) \
-   { (x)[1] = STRI__UCHAR_NOTUSED_MASK; (x)[0] = (c | STRI__UCHAR_COMPLEMENT_MASK); }
-
-#define STRI__UCHAR_GET_MATCHING_GCMASK(x)         ((x)[0])
-#define STRI__UCHAR_GET_COMPLEMENT_GCMASK(x)       ((x)[0] & (~STRI__UCHAR_COMPLEMENT_MASK))
-
-   
 
 #endif

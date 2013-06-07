@@ -53,35 +53,3 @@ invisible(NULL) # version >= 0.2
 #    rownames(categories) <- categories[,2]
 #    categories[,-2]
 # }
-
-
-#' Get Unicode character General Category Mask
-#' 
-#' 
-#' @param name One- or two-letter category name
-#' @return Internal Unicode character General Category identifier
-#' @seealso \code{\link{stri_charcategories}}
-#' @export
-#' @family charclass
-stri_char_getcategoryid <- function(name)
-{
-   .Call("stri_char_getcategoryid", name, PACKAGE="stringi")   # to be removed!!!!!!!!!!!!!!!!!!!!!!!!!!!
-}
-
-
-
-#' Get Unicode character binary property identifier
-#' 
-#'
-#' @param name Property name
-#' @return Internal Unicode character Binary Property identifier
-#' @export
-#' @family charclass
-stri_char_getpropertyid <- function(name)
-{
-   .Call("stri_char_getpropertyid", name, PACKAGE="stringi")   # to be removed!!!!!!!!!!!!!!!!!!!!!!!!!!!
-}
-
-
-
-

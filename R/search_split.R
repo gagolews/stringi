@@ -17,32 +17,44 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Split the elements of a character vector by class
+#' @title
+#' Split up Each String By Elements of Given Character Class
 #' 
-#' Split the elements of a character vector str into substrings. Vectorized over \code{str} and \code{class}.
+#' @description
+#' Splits each element of \code{str} into substring.
+#' The characters falling into \code{charclass} stand for splitting
+#' boundaries.
 #' 
-#' @param str character vector to split
-#' @param class character class identifiers specified by stri_char_getpropertyid or stri_char_getcategoryid
-#' @return A list of the same length as the longest of vectors: str, split and omitempty. Shorter vectors are recycled. The i-th element of list contains splitted str[i] character vectors
+#' @details
+#' Vectorized over \code{str}, \code{pattern}, TODO..............
 #' 
-#' @details ...
+#' @param str character vector with strings to search in
+#' @param pattern character vector with character class identifiers 
+#' to search for, see \link{stringi-search-charclass}
+#' @param XXX TODO............................... merge? n?
+#' @return a list of character vectors
 #' 
-#' @seealso \link{stri_split_fixed} to split string by fixed pattern.
 #' 
 #' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_split_class(s,stri_char_getpropertyid("WHITE_SPACE"))
+#' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
 #' 
 #' @export
-stri_split_class <- function(str, class) {
-   # prepare_arg done internally
-   .Call("stri_split_class", str, class, PACKAGE="stringi")
+#' @rdname stri_split_charclass
+#' @aliases stri_split_charclass
+#' @family search_charclass
+#' @family search_split
+stri_split_charclass <- function(str, pattern) {
+#    .Call("stri_split_charclass", str, pattern, PACKAGE="stringi")
 }
 
 
+#' @title
 #' Split the elements of a character vector
 #' 
+#' @description
 #' Split the elements of a character vector str into substrings. Vectorized over str, split and omitempty.
+#' 
+#' @details If \code{n} is non-positive then empty vector is returned.
 #' 
 #' @param str character vector to split
 #' @param split character vector
@@ -51,7 +63,6 @@ stri_split_class <- function(str, class) {
 #' @param exact logical vector 
 #' @return A list of the same length as the longest of vectors: str, split and omitempty. Shorter vectors are recycled. The i-th element of list contains splitted str[i] character vectors
 #' 
-#' @details If \code{n} is non-positive then empty vector is returned.
 #' 
 #' @seealso \link{stri_split_pos} to split string by positions.
 #' 
@@ -64,9 +75,12 @@ stri_split_class <- function(str, class) {
 #' stri_split("babab","b",-1:4)
 #' 
 #' @export
+#' @rdname stri_split_fixed
+#' @aliases stri_split_fixed
+#' @family search_fixed
+#' @family search_split
 stri_split_fixed <- function(str, split='\n', n=Inf, omitempty=FALSE, exact=FALSE) {
-	# prepare_arg done internally
-	.Call("stri_split_fixed", str, split, n, omitempty, exact, PACKAGE="stringi")
+# 	.Call("stri_split_fixed", str, split, n, omitempty, exact, PACKAGE="stringi")
 }
 
 # TODO
@@ -92,11 +106,16 @@ stri_split_fixed <- function(str, split='\n', n=Inf, omitempty=FALSE, exact=FALS
 #' 
 #' @export
 stri_split_pos <- function(str, from, to) {
-   if(is.matrix(from) && ncol(from) == 2){
-      if(!missing(to))
-         warning("'from' is matrix, so 'to' is ignored")
-      to   <- from[ , 2]
-      from <- from[ , 1]
-   }
-   .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
+#    if(is.matrix(from) && ncol(from) == 2){
+#       if(!missing(to))
+#          warning("'from' is matrix, so 'to' is ignored")
+#       to   <- from[ , 2]
+#       from <- from[ , 1]
+#    }
+#    .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
 }
+
+
+
+
+# TO DO: convenience function

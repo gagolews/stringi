@@ -167,17 +167,14 @@ invisible(NULL)
 #' The General_Category property of a code point provides for the most 
 #' general classification of that code point.
 #' 
-#' TO DO: LC    Cased_Letter 	Lu,  Ll , Lt
-#' 
-#' TO DO: Cn    Unassigned 	a reserved unassigned code point or a noncharacter
-#' 
-#' 
 #' 
 #' \itemize{
 #' \item \code{Cc}: a C0 or C1 control code
 #' \item \code{Cf}: a format control character
+#' \item \code{Cn}: a reserved unassigned code point or a noncharacter
 #' \item \code{Co}: a private-use character
 #' \item \code{Cs}: a surrogate code point
+#' \item \code{Lc}: Union of Lu, Ll, Lt
 #' \item \code{Ll}: a lowercase letter
 #' \item \code{Lm}: a modifier letter
 #' \item \code{Lo}: other letters, including syllables and ideographs

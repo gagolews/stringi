@@ -96,37 +96,6 @@ SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
    return e;
 }
 
-/** 
- * .... 
- * @param s character vector
- * @param class character vector
- * @return list
- */
-SEXP stri_split_class(SEXP s, SEXP c)
-{
-   s = stri_prepare_arg_string(s, "str");
-   c = stri_prepare_arg_string(c, "class");
-   
-   R_len_t ns = LENGTH(s);
-   R_len_t nc = LENGTH(c);
-   R_len_t nmax = stri__recycling_rule(true, 2, ns, nc);
-   
-   SEXP ret, from, curs;
-   PROTECT(ret = allocVector(VECSXP,nmax));
-   PROTECT(from = allocVector(VECSXP,nc));
-   error("Not finished - stri_locate_all_class with merge is needed");
-//   from = stri_locate_all_charclass(s, c);
-   
-   for (int i=0; i<nmax; ++i) {
-      //const char* string = CHAR(STRING_ELT(s, i % ns));
-      //int* f = INTEGER(VECTOR_ELT(from, i % nc));
-      //SET_VECTOR_ELT(ret, i, stri__split_pos(string, f, f+LENGTH(f)/2,LENGTH(string),LENGTH(f)/2));
-   }
-   
-   UNPROTECT(2);
-   return ret;
-}
-
 
 /** 
  * .... 

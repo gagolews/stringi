@@ -29,7 +29,7 @@
  * 
  * @return character vector
  * 
- * @version 0.1 (Marek Gagolewski) 
+ * @version 0.1 (Marek Gagolewski, 2013-06-07) 
  */
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
@@ -133,7 +133,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
  * @param first replace first (TRUE) or last (FALSE)?
  * @return character vector
  * 
- * @version 0.1 (Marek Gagolewski) 
+ * @version 0.1 (Marek Gagolewski, 2013-06-06) 
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
@@ -237,7 +237,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
  * 
  * @return character vector
  * 
- * @version 0.1 (Marek Gagolewski) 
+ * @version 0.1 (Marek Gagolewski, 2013-06-06) 
  */
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
@@ -255,7 +255,7 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
  * 
  * @return character vector
  * 
- * @version 0.1 (Marek Gagolewski) 
+ * @version 0.1 (Marek Gagolewski, 2013-06-06) 
  */
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {

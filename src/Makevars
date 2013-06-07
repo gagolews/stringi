@@ -24,7 +24,6 @@ SRCS        =  stringi.cpp \
                length.cpp \
                pad.cpp \
                reverse.cpp \
-               split.cpp \
                stats.cpp \
                sub.cpp \
                wrap.cpp \
@@ -33,10 +32,12 @@ SRCS        =  stringi.cpp \
                search_class_count.cpp \
                search_class_locate.cpp \
                search_class_replace.cpp \
+               search_class_split.cpp \
                search_fixed_count.cpp \
                search_fixed_detect.cpp \
                search_fixed_replace.cpp \
                search_fixed_locate.cpp \
+               search_fixed_split.cpp \
                search_regex_count.cpp \
                search_regex_detect.cpp \
                search_regex_locate.cpp \
