@@ -229,7 +229,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // 
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first); // DONE, internal
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);  // DONE
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement); // DONE
-SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // ...TODO...
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // DONE
 
 
 // uchar.cpp:

@@ -1,6 +1,21 @@
 require(testthat)
 
 
+test_that("stri_replace_all_charclass", {
+   expect_identical(stri_replace_all_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_all_charclass(NA,"WHITE_SPACE","?"),NA_character_)
+   expect_identical(stri_replace_all_charclass("X","WHITE_SPACE",NA),NA_character_)
+   expect_identical(stri_replace_all_charclass("X",NA,"?"),NA_character_)
+   expect_identical(stri_replace_all_charclass("","WHITE_SPACE","?"),"")
+   expect_identical(stri_replace_all_charclass(c("a a", " aa", "aa ", "aa"), "WHITE_SPACE", "X"), c("aXa", "Xaa", "aaX", "aa"))
+   expect_identical(stri_replace_all_charclass(c("a a ", " aa ", "aa  ", "aa"), "WHITE_SPACE", "X"), c("aXaX", "XaaX", "aaXX", "aa"))
+   expect_identical(stri_replace_all_charclass("a1 ", c("Z", "Nd", "Ll", "P"), "X"), c("a1X", "aX ", "X1 ", "a1 "))
+   expect_identical(stri_replace_all_charclass("a1 ", "^Z", c("X", "Y")), c("XX ", "YY "))
+   expect_identical(stri_replace_all_charclass(c(stri_dup(" ", 0:1500)), "WHITE_SPACE", "X"), stri_dup("X", 0:1500))
+   expect_identical(stri_replace_all_charclass(c(stri_dup(" Y", 0:1500)), "WHITE_SPACE", "X"), stri_dup("XY", 0:1500))
+   expect_identical(stri_replace_all_charclass(c(stri_dup("Y ", 0:1500)), "WHITE_SPACE", "X"), stri_dup("YX", 0:1500))
+})
+
 
 
 test_that("stri_replace_first_charclass", {

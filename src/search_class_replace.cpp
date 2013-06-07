@@ -36,7 +36,9 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+   
+   R_len_t npat = LENGTH(pattern);
+   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), npat, LENGTH(replacement));
 
 
    SEXP ret;
@@ -45,16 +47,81 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
    StriContainerUTF8* rr = new StriContainerUTF8(replacement, nmax);
  
+   char* buf = 0; // @TODO: consider calculating buflen a priori
+   R_len_t buf_len = 0;
+   
+   CharClass cc;
+   const char* last_pattern = 0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+      
+      if (ss->isNA(i) || rr->isNA(i) || cur_pattern == NA_STRING) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      if (last_pattern != CHAR(cur_pattern)) {
+         last_pattern = CHAR(cur_pattern);
+         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      }
+      
+      if (cc.isNA()) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      R_len_t curn = ss->get(i).length();
+      const char* curs = ss->get(i).c_str();
+      R_len_t j, jlast;
+      UChar32 chr;
+      
+      R_len_t sumbytes = 0;
+      deque<R_len_t_x2> occurences;
+      for (jlast=j=0; j<curn; ) {
+         U8_NEXT(curs, j, curn, chr); 
+         if (cc.test(chr)) {
+            occurences.push_back(R_len_t_x2(jlast, j));
+            sumbytes += j-jlast;
+         } 
+         jlast = j;
+      }
+      
+      if (occurences.size() > 0) { // iff found any
+         R_len_t repn = rr->get(i).length();
+         const char* reps = rr->get(i).c_str();
+         R_len_t buf_need = curn+occurences.size()*repn-sumbytes;
+         if (!buf || buf_len < buf_need) {
+            if (buf) delete [] buf;
+            buf_len = buf_need;
+            buf = new char[buf_len]; // NUL not needed
+         }
+         
+         jlast = 0;
+         char* curbuf = buf;
+         deque<R_len_t_x2>::iterator iter = occurences.begin();
+         for (; iter != occurences.end(); ++iter) {
+            R_len_t_x2 match = *iter;
+            memcpy(curbuf, curs+jlast, match.v1-jlast);
+            curbuf += match.v1-jlast;
+            jlast = match.v2;
+            memcpy(curbuf, reps, repn);
+            curbuf += repn;
+         }
+         memcpy(curbuf, curs+jlast, curn-jlast);
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf, buf_need, CE_UTF8));
+      }
+      else {
+         SET_STRING_ELT(ret, i, ss->toR(i)); // no change  
+      }
+   } 
  
- 
-   error("TO DO");
- 
- 
+   if (buf) delete [] buf;
    delete ss;
    delete rr;
    UNPROTECT(1);
    return ret;
 }
+
 
 
 /** 
@@ -146,7 +213,6 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
          memcpy(buf+jlast, reps, repn);
          memcpy(buf+jlast+repn, curs+j, curn-j);
          SET_STRING_ELT(ret, i, mkCharLenCE(buf, buf_need, CE_UTF8));
-
       }
       else {
          SET_STRING_ELT(ret, i, ss->toR(i)); // no change  
@@ -175,7 +241,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
  */
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
-   stri__replace_firstlast_charclass(str, pattern, replacement, true);
+   return stri__replace_firstlast_charclass(str, pattern, replacement, true);
 }
 
 
@@ -193,5 +259,5 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
  */
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
-   stri__replace_firstlast_charclass(str, pattern, replacement, false);
+   return stri__replace_firstlast_charclass(str, pattern, replacement, false);
 }
