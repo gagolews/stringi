@@ -69,8 +69,6 @@ void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...);       // DONE
 SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
-char*   stri__asciiCopyToLowerCase(char* dest, const char* src);    // DONE
-char*   stri__asciiCopyToUpperCase(char* dest, const char* src);    // DONE
 SEXP    stri__emptyList();                                          // DONE
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
 

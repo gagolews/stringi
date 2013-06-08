@@ -137,59 +137,6 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
 }
 
 
-/** Copies one string to another, converting each ASCII lower case letter to upper case
- * 
- *  Useful for checking options.
- *  If non-ASCII string is given, an error is generated.
- * 
- *  @param dest destination buffer
- *  @param src NULL-terminated string
- *  @return \code{dest}
- * 
- * @version 0.1 (Marek Gagolewski)
- */
-char* stri__asciiCopyToUpperCase(char* dest, const char* src)
-{
-   int i;
-   for (i=0; src[i] != '\0'; ++i) {
-      if (src[i] & 0x80) // i.e. ASCII code > 127
-         error(MSG__EXPECTED_ASCII);
-      else if (src[i] >= 'a' && src[i] <= 'z')
-         dest[i] = src[i] - ('a'-'A');
-      else
-         dest[i] = src[i];
-   }
-   dest[i] = '\0';
-   return dest;
-}
-
-
-/** Copies one string to another, converting each ASCII upper case letter to lower case
- * 
- *  Useful for checking options.
- *  If non-ASCII string is given, an error is generated.
- * 
- *  @param dest destination buffer
- *  @param src NULL-terminated string
- *  @return \code{dest}
- * 
- * @version 0.1 (Marek Gagolewski)
- */
-char* stri__asciiCopyToLowerCase(char* dest, const char* src)
-{
-   int i;
-   for (i=0; src[i] != '\0'; ++i) {
-      if (src[i] & 0x80) // i.e. ASCII code > 127
-         error(MSG__EXPECTED_ASCII);
-      else if (src[i] >= 'A' && src[i] <= 'Z')
-         dest[i] = src[i] + ('a'-'A');
-      else
-         dest[i] = src[i];
-   }
-   dest[i] = '\0';
-   return dest;
-}
-
 
 /** Creates an empty R list
  * 
