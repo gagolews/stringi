@@ -190,8 +190,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          deque<R_len_t>::iterator iter = occurences.begin();
          occurences2.push_back(*iter);
          occurences2.push_back(*iter);
-         ++iter;
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         for (++iter; iter != occurences.end(); ++iter) {
             R_len_t curoccur = *iter;
             if (occurences2.back() == curoccur - 1) { // continue seq
                occurences2.back() = curoccur;  // change `end`
