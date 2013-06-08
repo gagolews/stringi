@@ -1,0 +1,47 @@
+require(testthat)
+
+
+test_that("stri_locate_all_fixed", {
+   
+   expect_is(stri_locate_all_fixed(character(0), "a"), "list")
+   
+   expect_equivalent(stri_locate_all_fixed(NA, character(0)), list())
+   expect_equivalent(stri_locate_all_fixed(character(0), NA), list())
+   expect_equivalent(stri_locate_all_fixed(LETTERS, character(0)), list())
+   expect_equivalent(stri_locate_all_fixed(NA, ""), list(matrix(c(NA,NA_integer_))))
+   
+   expect_equivalent(stri_locate_all_fixed("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
+   expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1,2))))
+   
+})
+
+test_that("stri_locate_first_fixed", {
+   
+   expect_is(stri_locate_first_fixed(character(0), "a"), "matrix")
+   
+   expect_equivalent(nrow(stri_locate_first_fixed(NA, character(0))), 0)
+   expect_equivalent(nrow(stri_locate_first_fixed(character(0), NA)), 0)
+   expect_equivalent(nrow(stri_locate_first_fixed(LETTERS, character(0))), 0)
+   expect_equivalent(stri_locate_first_fixed(NA, ""), matrix(c(NA_integer_,NA_integer_)))
+   
+   expect_equivalent(stri_locate_first_fixed("1a\u0105a", "\u0105"), matrix(c(3,3)))
+   expect_equivalent(stri_locate_first_fixed("aaa", "aa"), matrix(c(1,2)))
+   expect_equivalent(stri_locate_first_fixed("aa1a12aa123", "123"), matrix(c(9,11)))
+   expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32"), matrix(c(NA_integer_,NA_integer_)))
+   
+})
+
+
+test_that("stri_locate_last_fixed", {
+   
+   expect_is(stri_locate_last_fixed(character(0), "a"), "matrix")
+   
+   expect_equivalent(nrow(stri_locate_last_fixed(NA, character(0))), 0)
+   expect_equivalent(nrow(stri_locate_last_fixed(character(0), NA)), 0)
+   expect_equivalent(nrow(stri_locate_last_fixed(LETTERS, character(0))), 0)
+   expect_equivalent(stri_locate_last_fixed(NA, ""), matrix(c(NA,NA_integer_)))
+   
+   expect_equivalent(stri_locate_last_fixed("1a\u0105a", "\u0105"), matrix(c(3,3)))
+   expect_equivalent(stri_locate_last_fixed("aaa", "aa"), matrix(c(2,3)))
+   
+})

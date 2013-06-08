@@ -30,6 +30,7 @@ SRCS        =  stringi.cpp \
                search_common.cpp \
                search_class_detect.cpp \
                search_class_count.cpp \
+               search_class_extract.cpp \
                search_class_locate.cpp \
                search_class_replace.cpp \
                search_class_split.cpp \

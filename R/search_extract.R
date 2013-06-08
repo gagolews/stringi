@@ -41,6 +41,7 @@
 #' For \code{stri_extract_all_charclass},
 #' list of \code{max(length(str), length(pattern), length(merge))} character vectors.
 #' Otherwise, a character vector.
+#' \code{NA} if not found.
 #' 
 #' 
 #' @examples
@@ -92,6 +93,7 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' For \code{stri_extract_all_fixed},
 #' list of \code{max(length(str), length(pattern))} character vectors.
 #' Otherwise, a character vector.
+#' \code{NA} if not found.
 #' 
 #' @examples
 #' stri_extract_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
@@ -143,6 +145,7 @@ stri_extract_last_fixed <- function(str, pattern, collator_opts=list()) {
 #' For \code{stri_extract_all_regex},
 #' list of \code{max(length(str), length(pattern))} character vectors.
 #' Otherwise, a character vector.
+#' \code{NA} if not found.
 #' 
 #' @examples
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))

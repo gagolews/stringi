@@ -21,7 +21,7 @@
 
 
 /** 
- * Locate first or last occurences of a character class occurences in each string
+ * Locate first or last occurences of a character class in each string
  * 
  * @param str character vector
  * @param pattern character vector
@@ -88,7 +88,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 
 
 /** 
- * Locate first occurence of a character class occurences in each string
+ * Locate first occurence of a character class in each string
  * 
  * @param str character vector
  * @param pattern character vector
@@ -103,7 +103,7 @@ SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
 
 
 /** 
- * Locate last occurence of a character class occurences in each string
+ * Locate last occurence of a character class in each string
  * 
  * @param str character vector
  * @param pattern character vector
@@ -120,7 +120,7 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
 
 
 /** 
- * Locate first or last occurences of a character class occurences in each string
+ * Locate first or last occurences of a character class in each string
  * 
  * @param str character vector
  * @param pattern character vector

@@ -223,6 +223,10 @@ SEXP stri_split_class(SEXP str, SEXP c);   // ...TO DO...
 
 SEXP stri_detect_charclass(SEXP str, SEXP pattern);                          // DONE
 SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
+SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first);  // DONE, internal
+SEXP stri_extract_first_charclass(SEXP str, SEXP pattern);                   // DONE
+SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);                    // DONE
+SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge);         // DONE
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);   // DONE, internal
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                    // DONE
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                     // DONE
