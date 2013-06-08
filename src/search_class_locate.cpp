@@ -127,6 +127,7 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  * @return list of matrices with 2 columns
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ * @version 0.2 (Marek Gagolewski, 2013-06-09) use R_len_t_x2 for merge=TRUE
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -186,33 +187,29 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, notfound);
       else if (cur_merge && noccurences > 1) {
          // do merge  
-         deque<R_len_t> occurences2;
+         deque<R_len_t_x2> occurences2;
          deque<R_len_t>::iterator iter = occurences.begin();
-         occurences2.push_back(*iter);
-         occurences2.push_back(*iter);
+         occurences2.push_back(R_len_t_x2(*iter, *iter));
          for (++iter; iter != occurences.end(); ++iter) {
             R_len_t curoccur = *iter;
-            if (occurences2.back() == curoccur - 1) { // continue seq
-               occurences2.back() = curoccur;  // change `end`
+            if (occurences2.back().v2 == curoccur - 1) { // continue seq
+               occurences2.back().v2 = curoccur;  // change `end`
             }
             else { // new seq
-               occurences2.push_back(curoccur);
-               occurences2.push_back(curoccur);
+               occurences2.push_back(R_len_t_x2(curoccur, curoccur));
             }
          }
          
          // create resulting matrix from occurences2
-         R_len_t noccurences2 = occurences2.size()/2;
+         R_len_t noccurences2 = occurences2.size();
          SEXP cur_res;
          PROTECT(cur_res = allocMatrix(INTSXP, noccurences2, 2));
-         iter = occurences2.begin();
-         for (R_len_t j = 0; iter != occurences2.end(); ++iter, ++j) {
-            INTEGER(cur_res)[j] = *iter;
-            ++iter;
-#ifndef NDEBUG
-            if (iter == occurences2.end()) error(MSG__INTERNAL_ERROR);
-#endif
-            INTEGER(cur_res)[j+noccurences2] = *iter;
+         int* cur_res_int = INTEGER(cur_res);
+         deque<R_len_t_x2>::iterator iter2 = occurences2.begin();
+         for (R_len_t j = 0; iter2 != occurences2.end(); ++iter2, ++j) {
+            R_len_t_x2 curoccur = *iter2;
+            cur_res_int[j] = curoccur.v1;
+            cur_res_int[j+noccurences2] = curoccur.v2;
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
@@ -221,9 +218,10 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          // do not merge
          SEXP cur_res;
          PROTECT(cur_res = allocMatrix(INTSXP, noccurences, 2));
+         int* cur_res_int = INTEGER(cur_res);
          deque<R_len_t>::iterator iter = occurences.begin();
          for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j)
-            INTEGER(cur_res)[j] = INTEGER(cur_res)[j+noccurences] = *iter;
+            cur_res_int[j] = cur_res_int[j+noccurences] = *iter;
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
       }
