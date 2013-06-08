@@ -25,10 +25,13 @@
  * @param str a character vector
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-06-09) Use StriContainerUTF8
  */
 SEXP stri_stats_general(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
+   R_len_t nstr = LENGTH(str);
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nstr);
    
    enum {
       gsNumLines = 0,
@@ -41,23 +44,21 @@ SEXP stri_stats_general(SEXP str)
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, gsAll));
    int* stats = INTEGER(ret);
-   for (int i=0; i<gsAll; ++i) stats[i] = 0;
+   for (int i=0; i<gsAll; ++i) 
+      stats[i] = 0;
 
-   // @TODO: UNICODE!!!!
-   R_len_t ns = LENGTH(str);
-   for (R_len_t i=0; i<ns; ++i) {
-      SEXP curs = STRING_ELT(str, i);
-      if(curs == NA_STRING) continue; // ignore
+   for (R_len_t i=0; i<nstr; ++i) {
+      if (ss->isNA(i)) continue; // ignore
       
       ++stats[gsNumLines]; // another line
-      R_len_t     cn = LENGTH(curs);
-      const char* cs = CHAR(curs);
+      R_len_t     cn = ss->get(i).length();
+      const char* cs = ss->get(i).c_str();
       UChar32 c;
       bool AnyNonWhite = false;
       
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
-         if (c == (UChar32)'\n')
+         if (c == (UChar32)'\n' || c == (UChar32)'\r')
             error(MSG__NEWLINE_FOUND);
          ++stats[gsNumChars]; // another character [code point]
          // we test for UCHAR_WHITE_SPACE binary property
@@ -72,6 +73,7 @@ SEXP stri_stats_general(SEXP str)
    }
    
    stri__set_names(ret, gsAll, "Lines", "LinesNEmpty", "Chars", "CharsNWhite");
+   delete ss;
    UNPROTECT(1);
    return ret;
 }
@@ -88,10 +90,13 @@ SEXP stri_stats_general(SEXP str)
  * @param str a character vector
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-06-09) Use StriContainerUTF8
  */
 SEXP stri_stats_latex(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
+   R_len_t nstr = LENGTH(str);
+   StriContainerUTF8* ss = new StriContainerUTF8(str, nstr);
    
    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;
    // see http://kile.sourceforge.net/team.php
@@ -115,14 +120,12 @@ SEXP stri_stats_latex(SEXP str)
    int* stats = INTEGER(ret);
    for (int i=0; i<lsAll; ++i) stats[i] = 0;
 
-   // @TODO: UNICODE!!!!
-   R_len_t ns = LENGTH(str);
-   for (R_len_t i=0; i<ns; ++i) {
+   for (R_len_t i=0; i<nstr; ++i) {
+      if (ss->isNA(i)) continue; // ignore
       SEXP curs = STRING_ELT(str, i);
-      if(curs == NA_STRING) continue; // ignore
-      
-      R_len_t     cn = LENGTH(curs);
-      const char* cs = CHAR(curs);
+
+      R_len_t     cn = ss->get(i).length();
+      const char* cs = ss->get(i).c_str();
       UChar32 c;
       
       int state = stStandard;
@@ -246,6 +249,7 @@ SEXP stri_stats_latex(SEXP str)
    
    stri__set_names(ret, lsAll, "CharsWord", "CharsCmdEnvir", "CharsWhite",
       "Words", "Cmds", "Envirs");
+   delete ss;
    UNPROTECT(1);
    return ret;
 }

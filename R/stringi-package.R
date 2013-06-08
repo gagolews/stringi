@@ -39,6 +39,12 @@
 #' \link{stringi-search-regex}, \link{stringi-search-fixed}, and \link{stringi-search-charclass}
 #' }
 #' 
+#' Other interesting stuff:
+#' \itemize{
+#' \item \link{stri_stats_general} and \link{stri_stats_latex}  for gathering some
+#' statistics on character vector's contents.
+#' }
+#' 
 #' Information on default encodings and locales....
 #'
 #' @name stringi-package

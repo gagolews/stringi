@@ -17,13 +17,21 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-#' General statistics for a Character Vector
+#' @title
+#' General Statistics for a Character Vector
 #' 
+#' @description
 #' This function gives general statistics on the whole character vector.
 #' Such input vector will often be a text file loaded via the
 #' \code{\link{readLines}} function, where each text line
 #' is represented by a separate string.
 #' 
+#' @details
+#' By `white space` we mean the Unicode binary property
+#' \code{WHITE_SPACE}, see \code{stringi-search-charclass}.
+#' 
+#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
+#' otherwise you'll get at error.
 #' 
 #' @param str character vector to aggregate
 #' @return An integer vectors with the following named elements:
@@ -31,16 +39,17 @@
 #'    \item \code{Lines} - number of lines (number of 
 #'    not-\code{NA} strings in the vector)
 #'    \item \code{LinesNEmpty} - number of lines with at least 
-#'    one non-\code{WHITE_SPACE} character [WHITE_SPACE binary property....]
-#'    \item \code{Chars} - number of Unicode code points 
-#'    (total lengths of strings)
+#'    one non-\code{WHITE_SPACE} character
+#'    \item \code{Chars} - total number of Unicode code points detected)
 #'    \item \code{CharsNWhite} - number of Unicode code points 
 #'    that are  not \code{WHITE_SPACE}s
+#'    \item ... (Some other stuff that may appear in future releases)
 #' }
 #' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
-#'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
-#'       lorem. Etiam pellentesque aliquet tellus."
+#' s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+#'        "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
+#'        "Cras vel lorem. Etiam pellentesque aliquet tellus.",
+#'        "")
 #' stri_stats_general(s)
 #' 
 #' @family stats
@@ -50,31 +59,52 @@ stri_stats_general <- function(str) {
 }
 
 
+#' @title
 #' Statistics for a Character Vector Containing LaTeX Commands
 #' 
-#' We use a modified LaTeX Word Count algorithm taken from Kile 2.1.3,
-#' see http://kile.sourceforge.net/team.php for original contributors
-#' 
-#' This function gives general statistics on the whole character vector.
+#' @description
+#' This function gives LaTeX-oriented statistics on the whole character vector.
 #' Such input vector will often be a text file loaded via the
 #' \code{\link{readLines}} function, where each text line
 #' is represented by a separate string.
 #' 
+#' @details 
+#' We use a modified LaTeX Word Count algorithm taken from Kile 2.1.3,
+#' see http://kile.sourceforge.net/team.php for original contributors
+#' 
+#' 
+#' 
 #' @param str character vector to aggregate
-#' @return An integer vectors with the following named elements:
+#' @return An integer vector with the following named elements:
 #' \enumerate{
 #'    \item \code{CharsWord} - number of word characters
 #'    \item \code{CharsCmdEnvir} - command and words characters
-#'    \item \code{CharsWhite} - LaTeX white characters, including \{ and \} in some contexts
+#'    \item \code{CharsWhite} - LaTeX white spaces, including \{ and \} in some contexts
 #'    \item \code{Words} - number of words
 #'    \item \code{Cmds} - number of commands
 #'    \item \code{Envirs} - number of environments
 #' }
 #' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
-#'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
-#'       lorem. Etiam pellentesque aliquet tellus."
+#' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",
+#'        "\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
+#'        "")
 #' stri_stats_latex(s)
+#' \dontrun{
+#' # Stats for the preprint version of M. Gagolewski's book
+#' # "Programowanie w jezyku R", PWN, 2014.
+#' # http://rksiazka.rexamine.com
+#' apply(
+#'    sapply(
+#'       lapply(
+#'          list.files(path="~/Publikacje/ProgramowanieR/rozdzialy/", 
+#'             pattern="*.tex$", recursive=TRUE, full.names=TRUE),
+#'          readLines),
+#'       stri_stats_latex),
+#'    1, sum)
+#'    
+#' CharsWord CharsCmdEnvir    CharsWhite         Words          Cmds        Envirs 
+#'    718755        458403        281989        120202         37055          6119 
+#' }
 #' 
 #' @family stats
 #' @export
