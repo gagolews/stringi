@@ -78,8 +78,15 @@ stri_locate_last_charclass <- function(str, pattern) {
 }
 
 
+#' @title
 #' Locate Occurences of a Fixed Pattern
 #'
+#' @description
+#' ...
+#' 
+#' 
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector
@@ -135,8 +142,14 @@ stri_locate_last_fixed <- function(str, pattern, collator_opts=list()) {
 }
 
 
+#' @title
 #' Locate Occurences of a Regex Pattern
-#'
+#' 
+#' @description
+#' ...
+#' 
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector of strings to search in
@@ -187,8 +200,10 @@ stri_locate_last_regex <- function(str, pattern) {
 
 
 
+#' @title
 #' Locate All Occurences of a Regex Pattern, Fixed Patter or Character Class
 #'
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_all_regex}},
 #' \code{\link{stri_locate_all_fixed}}, or \code{\link{stri_locate_all_charclass}},
@@ -225,8 +240,10 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 
 
 
+#' @title
 #' Locate First Occurence of a Regex Pattern, Fixed Patter or Character Class
 #'
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_first_regex}},
 #' \code{\link{stri_locate_first_fixed}}, or \code{\link{stri_locate_first_charclass}},
@@ -263,8 +280,10 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 
 
 
+#' @title
 #' Locate Last Occurence of a Regex Pattern, Fixed Patter or Character Class
 #'
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_last_regex}},
 #' \code{\link{stri_locate_last_fixed}}, or \code{\link{stri_locate_last_charclass}},
@@ -301,8 +320,10 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
 
 
 
+#' @title
 #' Locate Occurences of a Regex Pattern, Fixed Patter or Character Class
 #'
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_all}},
 #' \code{\link{stri_locate_first}}, or \code{\link{stri_locate_last}},
