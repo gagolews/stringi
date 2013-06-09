@@ -302,7 +302,6 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nmax));
-   int* ret_tab = LOGICAL(ret);
    
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
@@ -355,11 +354,29 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          usearch_reset(matcher);
          err = U_ZERO_ERROR;
          
+         int start = (int)usearch_first(matcher, &err);
+         int patlen = cur_pat->length();
          //if we have match
-         if((int)usearch_first(matcher, &err) != USEARCH_DONE){
-            warning("TODO");
+         if(start != USEARCH_DONE){
+            deque<R_len_t_x2> occurences;
+            
+            while (start != USEARCH_DONE) {
+               occurences.push_back(R_len_t_x2(start+1, start+patlen));
+               err = U_ZERO_ERROR;
+               start = usearch_next(matcher, &err);
+               
+               if (U_FAILURE(err)) error(MSG__REGEXP_FAILED);
+            }
+            
+            R_len_t noccurences = occurences.size();
             SEXP ans;
-            PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // matrix with 0 rows and 2 columns
+            PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+            deque<R_len_t_x2>::iterator iter = occurences.begin();
+            for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+               R_len_t_x2 match = *iter;
+               INTEGER(ans)[j]             = match.v1; 
+               INTEGER(ans)[j+noccurences] = match.v2;
+            }
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
          }else{ //if dont, return 1x2 matrix with NA
