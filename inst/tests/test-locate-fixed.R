@@ -13,6 +13,9 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1,2))))
    
+   expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a"), list(matrix(c(1,1))))
+   expect_equivalent(stri_locate_all_fixed(stri_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,3))))
+   
 })
 
 test_that("stri_locate_first_fixed", {
