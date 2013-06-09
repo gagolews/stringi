@@ -119,8 +119,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @family indexing
 #' @family locale_sensitive
 stri_locate_all_fixed <- function(str, pattern, collator_opts=list()) {
-   warning("TO DO: use collator_opts")
-   .Call("stri_locate_all_fixed", str, pattern, PACKAGE="stringi")
+   .Call("stri_locate_all_fixed", str, pattern, collator_opts, PACKAGE="stringi")
 }
 
 
