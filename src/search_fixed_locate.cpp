@@ -147,9 +147,9 @@ void stri__locate_all_fixed1(const char* s, int ns, const char* p,  int np,
  * @param p character vector
  * @return list of integer matrices (2 columns)
  */
-SEXP stri_locate_all_fixed(SEXP s, SEXP p)
+SEXP stri_locate_all_fixed_byte(SEXP s, SEXP p)
 {
-   s = stri_prepare_arg_string(s, "stri"); // prepare string argument
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
    p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
    R_len_t ns = LENGTH(s);
    R_len_t np = LENGTH(p);
@@ -221,18 +221,13 @@ SEXP stri_locate_all_fixed(SEXP s, SEXP p)
 }
 
 
-/** Locate first or last occurences of pattern
+/** Locate first occurences of pattern
  * @param s character vector
  * @param p character vector
  * @return list of integer matrices (2 columns)
  */
-SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
+SEXP stri_locate_first_fixed_byte(SEXP s, SEXP p)
 {
-   // TODO: .....prepare....1??
-   first = stri_prepare_arg_logical(first, "first"); // prepare logical argument
-   if (LENGTH(first) != 1 || LOGICAL(first)[0] == NA_LOGICAL)
-      error(MSG__INCORRECT_INTERNAL_ARG);
-      
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
    R_len_t ns = LENGTH(s);
@@ -258,7 +253,57 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
       }
       else {
          stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
-            start, end, occurences, LOGICAL(first)[0]);
+            start, end, occurences, true);
+         
+         if (occurences > 0) {
+            iret[i] = start + 1; // 0-based index -> 1-based
+            iret[i+nmax] = end + 1;
+         }
+         else {
+            iret[i] = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
+         }
+      } 
+   }
+   
+   UNPROTECT(1);
+   return ret;
+}
+
+
+/** Locate last occurences of pattern
+ * @param s character vector
+ * @param p character vector
+ * @return list of integer matrices (2 columns)
+ */
+SEXP stri_locate_last_fixed_byte(SEXP s, SEXP p)
+{
+   s = stri_prepare_arg_string(s, "str"); // prepare string argument
+   p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
+   R_len_t ns = LENGTH(s);
+   R_len_t np = LENGTH(p);
+   R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
+   // this will work for nmax == 0:
+   
+   SEXP ret;
+   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
+   stri__locate_set_dimnames_matrix(ret);
+   int* iret = INTEGER(ret);
+   
+   int start, end, occurences=0;
+   for (R_len_t i=0; i<nmax; ++i) {
+      SEXP curs = STRING_ELT(s, i%ns);
+      SEXP curp = STRING_ELT(p, i%np);
+      R_len_t cursl = LENGTH(curs);
+      R_len_t curpl = LENGTH(curp);
+
+      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
+         iret[i] = NA_INTEGER; 
+         iret[i+nmax] = NA_INTEGER;
+      }
+      else {
+         stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
+            start, end, occurences, false);
          
          if (occurences > 0) {
             iret[i] = start + 1; // 0-based index -> 1-based
@@ -291,7 +336,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
    UCollator* col = stri__ucol_open(collator_opts);
    if (!col)
-      return stri_detect_fixed_byte(str, pattern);
+      return stri_locate_all_fixed_byte(str, pattern);
    
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -421,7 +466,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
    UCollator* col = stri__ucol_open(collator_opts);
    if (!col)
-      return stri_detect_fixed_byte(str, pattern);
+      return stri_locate_first_fixed_byte(str, pattern);
    
    str      = stri_prepare_arg_string(str, "str");
    pattern  = stri_prepare_arg_string(pattern, "pattern");
