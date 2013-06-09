@@ -40,6 +40,9 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
    StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
    
+   SEXP notfound; // this matrix will be set iff not found or NA
+   PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
+   
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nout));
 
@@ -48,20 +51,14 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
          i = pp->vectorize_next(i))
    {
       if (pp->isNA(i) || ss->isNA(i)) {
-         SEXP ans;
-         PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // 1x2 NA matrix
-         SET_VECTOR_ELT(ret, i, ans);
-         UNPROTECT(1);
+         SET_VECTOR_ELT(ret, i, notfound);
       }
       else {
          RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
          matcher->reset(ss->get(i));
          int found = (int)matcher->find();
          if (!found) {
-            SEXP ans;
-            PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // matrix with 1 rows and 2 columns
-            SET_VECTOR_ELT(ret, i, ans);
-            UNPROTECT(1);
+            SET_VECTOR_ELT(ret, i, notfound);
          }
          else {
             deque<R_len_t_x2> occurences;
@@ -101,7 +98,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
    delete ss;
    delete pp;
    stri__locate_set_dimnames_list(ret);
-   UNPROTECT(1);
+   UNPROTECT(2);
    return ret;
 }
 

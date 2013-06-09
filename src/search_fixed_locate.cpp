@@ -285,6 +285,7 @@ SEXP stri_locate_first_or_last_fixed(SEXP s, SEXP p, SEXP first)
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return list of integer matrices (2 columns)
  * @version 0.1 (Bartlomiej Tartanus)
+ * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
  */
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -296,16 +297,16 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
+   SEXP notfound; // this matrix will be set iff not found or NA
+   PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
+   
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nmax));
    int* ret_tab = LOGICAL(ret);
    
-   //clock_t c = clock(); ???
-   
    StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
    StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
    UErrorCode err = U_ZERO_ERROR;
-   
    
    const UnicodeString* last_str = NULL;
    const UnicodeString* last_pat = NULL;
@@ -321,10 +322,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    {
       //if string or pattern == NA then return matrix with NA
       if (pp->isNA(i) || ss->isNA(i)) {
-         SEXP ans;
-         PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // 1x2 NA matrix
-         SET_VECTOR_ELT(ret, i, ans);
-         UNPROTECT(1);
+         SET_VECTOR_ELT(ret, i, notfound);
       }
       else {
          const UnicodeString* cur_str = &(ss->get(i));
@@ -364,22 +362,20 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
             PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // matrix with 0 rows and 2 columns
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
-         }else{ //if dont, return empty matrix
-            SEXP ans;
-            PROTECT(ans = stri__matrix_NA_INTEGER(0, 2)); // matrix with 0 rows and 2 columns
-            SET_VECTOR_ELT(ret, i, ans);
-            UNPROTECT(1);
+         }else{ //if dont, return 1x2 matrix with NA
+            SET_VECTOR_ELT(ret, i, notfound);
          }
          
          if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
       }
    }
    
+   if (col) ucol_close(col);
    if (matcher) usearch_close(matcher);
    delete ss;
    delete pp;
    stri__locate_set_dimnames_list(ret);
-   UNPROTECT(1);
+   UNPROTECT(2);
    return ret;
 }
 

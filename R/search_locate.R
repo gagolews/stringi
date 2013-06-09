@@ -52,6 +52,7 @@
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
 #' stri_locate_first_charclass('AaBbCc', 'Ll')
 #' stri_locate_last_charclass('AaBbCc', 'Ll')
+#' stri_locate_all_charclass(c('REXAMINE'), 'Lu', merge=c(T,F))
 #' 
 #' @export
 #' @rdname stri_locate_charclass 
