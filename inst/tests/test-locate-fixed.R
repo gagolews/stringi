@@ -33,6 +33,9 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed("aa1a12aa123", "123"), matrix(c(9,11)))
    expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32"), matrix(c(NA_integer_,NA_integer_)))
    
+   expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
+   expect_equivalent(stri_locate_first_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))
 })
 
 

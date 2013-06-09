@@ -196,7 +196,8 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern);                   // DONE
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);    // DONE
 SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern);                  // DONE
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);//DONE
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);//DONE
 //SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ...TO DO...
 SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // ...TO DO... ----- delete this!!!
 //SEXP stri_locate_first_fixed(SEXP str, SEXP pattern); // ...TO DO...

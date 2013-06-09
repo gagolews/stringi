@@ -127,9 +127,7 @@ stri_locate_all_fixed <- function(str, pattern, collator_opts=list()) {
 #' @export
 #' @rdname stri_locate_fixed
 stri_locate_first_fixed <- function(str, pattern, collator_opts=list()) {
-   warning("TO DO: use collator_opts")
-   warning("TO DO: call stri_locate_first_fixed")
-   .Call("stri_locate_first_or_last_fixed", str, pattern, TRUE, PACKAGE="stringi")
+   .Call("stri_locate_first_fixed", str, pattern, collator_opts, PACKAGE="stringi")
 }
 
 
