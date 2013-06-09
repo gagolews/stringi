@@ -15,6 +15,7 @@ test_that("stri_locate_all_fixed", {
    
    expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a"), list(matrix(c(1,1))))
    expect_equivalent(stri_locate_all_fixed(stri_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,3))))
+   expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a"), list(matrix(c(1,1))))
    
 })
 
