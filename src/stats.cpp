@@ -122,7 +122,6 @@ SEXP stri_stats_latex(SEXP str)
 
    for (R_len_t i=0; i<nstr; ++i) {
       if (ss->isNA(i)) continue; // ignore
-      SEXP curs = STRING_ELT(str, i);
 
       R_len_t     cn = ss->get(i).length();
       const char* cs = ss->get(i).c_str();

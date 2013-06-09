@@ -165,6 +165,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       }
    }
    
+   if (col) ucol_close(col);
    if (matcher) usearch_close(matcher);
    delete ss;
    delete pp;

@@ -147,7 +147,7 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
          &err);
    }
    
-   ucol_close(col);
+   if (col) ucol_close(col);
    delete se1;
    delete se2;
    UNPROTECT(1);

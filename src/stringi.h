@@ -261,8 +261,8 @@ SEXP stri_trim_right(SEXP str, SEXP pattern);   // DONE
 
 
 // stats.cpp
-SEXP stri_stats_general(SEXP str);   // ...TO DO...
-SEXP stri_stats_latex(SEXP str);   // ...TO DO...
+SEXP stri_stats_general(SEXP str);            // DONE
+SEXP stri_stats_latex(SEXP str);              // DONE
 
 
 
