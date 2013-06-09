@@ -59,7 +59,7 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
          int found = (int)matcher->find();
          if (!found) {
             SEXP ans;
-            PROTECT(ans = stri__matrix_NA_INTEGER(0, 2)); // matrix with 0 rows and 2 columns
+            PROTECT(ans = stri__matrix_NA_INTEGER(1, 2)); // matrix with 1 rows and 2 columns
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
          }
