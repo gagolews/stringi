@@ -157,31 +157,22 @@ SEXP stri_locate_all_fixed_byte(SEXP s, SEXP p)
    if (nout <= 0) return stri__emptyList();
       
    SEXP ans;
-   SEXP dimnames;
-   SEXP colnames;
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nout));
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar("start"));
-   SET_STRING_ELT(colnames, 1, mkChar("end"));
-   SET_VECTOR_ELT(dimnames, 1, colnames);
-      /* @TODO: use stri__locate_set_dimnames or its modified version  */
-   /* @TODO: use STL stack class here */
+   /* @TODO: use STL stack class here - deque  */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      PROTECT(ans = stri__matrix_NA_INTEGER(1,2));    
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
-      
+      PROTECT(ans = stri__matrix_NA_INTEGER(1,2)); 
       for (R_len_t i=0; i<nout; ++i)
          SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(4);  
+      stri__locate_set_dimnames_list(ret);
+      UNPROTECT(2);
       return ret;
    }
       
    int* start = new int[nmax];
    int* end = new int[nmax];
-   int  occurences=0;
+   int  occurences = 0;
    
    for (R_len_t i=0; i<nout; ++i) {
       SEXP curs = STRING_ELT(s, i%ns);
@@ -208,15 +199,13 @@ SEXP stri_locate_all_fixed_byte(SEXP s, SEXP p)
             PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
          }
       }
-         
-      setAttrib(ans, R_DimNamesSymbol, dimnames); 
       SET_VECTOR_ELT(ret, i, ans);
       UNPROTECT(1);  
    }
-   
+   stri__locate_set_dimnames_list(ret);
    delete [] start;
    delete [] end;
-   UNPROTECT(3);
+   UNPROTECT(1);
    return ret;
 }
 
