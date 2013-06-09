@@ -361,7 +361,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
             deque<R_len_t_x2> occurences;
             
             while (start != USEARCH_DONE) {
-               occurences.push_back(R_len_t_x2(start+1, start+patlen));
+               occurences.push_back(R_len_t_x2(start, start+usearch_getMatchedLength(matcher)));
                err = U_ZERO_ERROR;
                start = usearch_next(matcher, &err);
                
@@ -377,6 +377,15 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
                INTEGER(ans)[j]             = match.v1; 
                INTEGER(ans)[j+noccurences] = match.v2;
             }
+            
+            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+                  ss->get(i).length(), INTEGER(ans),
+                  INTEGER(ans)+noccurences, noccurences,
+                  1, // 0-based index -> 1-based
+                  0  // end returns position of next character after match
+            );
+            
             SET_VECTOR_ELT(ret, i, ans);
             UNPROTECT(1);
          }else{ //if dont, return 1x2 matrix with NA
