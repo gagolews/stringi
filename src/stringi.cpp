@@ -39,11 +39,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_compare_codepoints,         2),
    STRI__MAKE_CALL_METHOD(stri_count_charclass,            2),
    STRI__MAKE_CALL_METHOD(stri_count_fixed,                3),
-   STRI__MAKE_CALL_METHOD(stri_count_fixed_byte,           2),
    STRI__MAKE_CALL_METHOD(stri_count_regex,                2),
    STRI__MAKE_CALL_METHOD(stri_detect_charclass,           2),
    STRI__MAKE_CALL_METHOD(stri_detect_fixed,               3),
-   STRI__MAKE_CALL_METHOD(stri_detect_fixed_byte,          2),
    STRI__MAKE_CALL_METHOD(stri_detect_regex,               2),
    STRI__MAKE_CALL_METHOD(stri_dup,                        2),
    STRI__MAKE_CALL_METHOD(stri_enc_info,                   1),
@@ -75,9 +73,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_locate_first_charclass,     2),
    STRI__MAKE_CALL_METHOD(stri_locate_last_charclass,      2),
    STRI__MAKE_CALL_METHOD(stri_locate_all_charclass,       3),
-   STRI__MAKE_CALL_METHOD(stri_locate_last_fixed,          3), // DONE
-   STRI__MAKE_CALL_METHOD(stri_locate_first_fixed,         3), // DONE
-   STRI__MAKE_CALL_METHOD(stri_locate_all_fixed,           3), // DONE
+   STRI__MAKE_CALL_METHOD(stri_locate_last_fixed,          3), 
+   STRI__MAKE_CALL_METHOD(stri_locate_first_fixed,         3), 
+   STRI__MAKE_CALL_METHOD(stri_locate_all_fixed,           3), 
    STRI__MAKE_CALL_METHOD(stri_locate_all_regex,           2), // TODO
    STRI__MAKE_CALL_METHOD(stri_locate_first_regex,         2), // TODO
    STRI__MAKE_CALL_METHOD(stri_locate_last_regex,          2), // TODO

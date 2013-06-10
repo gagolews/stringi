@@ -188,21 +188,22 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 // ----------- SEARCH --------------------------------------------
 
-void stri__locate_set_dimnames_list(SEXP list);                       // DONE
-void stri__locate_set_dimnames_matrix(SEXP matrix);                   // DONE
+void stri__locate_set_dimnames_list(SEXP list);                           // DONE, internal
+void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
+
+SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                      // DONE, internal
+SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                     // DONE, internal
+SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                 // DONE, internal
+SEXP stri__locate_first_fixed_byte(SEXP str, SEXP pattern);               // DONE, internal
+SEXP stri__locate_last_fixed_byte(SEXP str, SEXP pattern);                // DONE, internal
+
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);       // DONE
+SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);        // DONE
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts); // DONE
+SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);  // DONE
 
 
-SEXP stri_count_fixed_byte(SEXP str, SEXP pattern);                   // DONE
-SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);    // DONE
-SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern);                  // DONE
-SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);//DONE
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);//DONE
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);//DONE
-//SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);                   // ...TO DO...
-//SEXP stri_locate_first_or_last_fixed(SEXP str, SEXP pattern, SEXP first); // ...TO DO... ----- delete this!!!
-//SEXP stri_locate_first_fixed(SEXP str, SEXP pattern); // ...TO DO...
-//SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);  // ...TO DO...
 //SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);   // ...TO DO...
 //SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement); // ...TO DO...
 //SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...
@@ -222,27 +223,29 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DO
 SEXP stri_split_class(SEXP str, SEXP c);   // ...TO DO...
 
 
-SEXP stri_detect_charclass(SEXP str, SEXP pattern);                          // DONE
-SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
+
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first);  // DONE, internal
+SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);   // DONE, internal
+SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first); // DONE, internal
+
+SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
+SEXP stri_detect_charclass(SEXP str, SEXP pattern);                          // DONE
 SEXP stri_extract_first_charclass(SEXP str, SEXP pattern);                   // DONE
 SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);                    // DONE
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge);         // DONE
-SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);   // DONE, internal
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                    // DONE
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                     // DONE
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);          // DONE
-SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
-SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first); // DONE, internal
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);  // DONE
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement); // DONE
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // DONE
+// split.....
 
 
 // uchar.cpp:
 // void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
 void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,  
-   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // used only in search_regex ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
+   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // used only in search_regex and search_fixed ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
 // SEXP stri_charcategories();                                                 // ...TO DO... [version >= 0.2]
 // SEXP stri_chartype(SEXP str);                                               // ...TO DO... [version >= 0.2]
 

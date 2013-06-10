@@ -17,8 +17,13 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' @title
 #' Detect a Character Class Match in a String
 #' 
+#' @description
+#' ....
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' 
@@ -37,23 +42,17 @@ stri_detect_charclass <- function(str, pattern) {
 }
 
 
+#' @title
 #' Detect a Fixed Pattern Match in a String
 #' 
+#' @description
+#' ...
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' For more information on ICU's Collator & SearchEngine
-#' and how to tune it up
-#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
-#' 
-#' If \code{collator_opts} is \code{NA}, then a very fast (for small p)
-#' bytewise (locale independent) search is performed, with time complexity of
-#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
-#' For natural language, non-English text this is, however, not what
-#' you probably want.
-#' 
-#' Otherwise, ICU's implementation of Boyer Moore's search is used, 
-#' with time complexity of O(n+p), see \code{\link{stri_collator_genopts}}
-#' for more details.
+#' See \link{stringi-search-fixed} for more details on
+#' Locale-Sensitive Text Searching in \pkg{stringi}.
 #' 
 #' @param str character vector
 #' @param pattern character vector
@@ -74,8 +73,13 @@ stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
 }
 
 
+#' @title
 #' Detect a Regex Pattern Match in a String
 #' 
+#' @description
+#' ...
+#' 
+#' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' @param str character vector of strings to search in
@@ -95,8 +99,10 @@ stri_detect_regex <- function(str, pattern) {
 }
 
 
+#' @title
 #' Detect a Pattern Match in a String
 #' 
+#' @details
 #' A convenience function.
 #' Calls either \code{\link{stri_detect_regex}},
 #' \code{\link{stri_detect_fixed}}, or \code{\link{stri_detect_charclass}},

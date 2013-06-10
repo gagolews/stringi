@@ -38,6 +38,7 @@ SRCS        =  stringi.cpp \
                search_fixed_detect.cpp \
                search_fixed_replace.cpp \
                search_fixed_locate.cpp \
+               search_fixed_locate_bytes.cpp \
                search_fixed_split.cpp \
                search_regex_count.cpp \
                search_regex_detect.cpp \

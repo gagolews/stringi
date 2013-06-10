@@ -90,6 +90,14 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
+#' See \link{stringi-search-fixed} for more details on
+#' Locale-Sensitive Text Searching in \pkg{stringi}.
+#' 
+#' 
+#' TO DO: ....Note the difference between  \code{stri_locate_last_fixed}
+#' and \code{stri_locate_last_fixed} for overlapping pattern matches....
+#' 
+#' 
 #' @param str character vector
 #' @param pattern character vector
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
@@ -115,7 +123,8 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' #first row is 1-2 like in locate_first
 #' stri_locate_all_fixed('bbbbb', 'bb') 
 #' stri_locate_first_fixed('bbbbb', 'bb')
-#' #but last row is 3-4, unlike in locate_last, keep this in mind!
+#' # but last row is 3-4, unlike in locate_last,
+#' # keep this in mind [overlapping pattern match OK]!
 #' stri_locate_last_fixed('bbbbb', 'bb')
 #' 
 #' locate <- stri_locate_first_fixed('stringi - REXAMINE', letters)

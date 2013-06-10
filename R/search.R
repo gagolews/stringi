@@ -80,7 +80,7 @@ invisible(NULL)
 #' TO BE DONE......
 #'
 #' @references
-#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp} \cr
+#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp}\cr
 #' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
 #' 
 #' @name stringi-search-regex
@@ -97,8 +97,8 @@ invisible(NULL)
 #' 
 #' 
 #' @details
-#' All \code{stri_*_fixed} functions in \pkg{stingi} use
-#' the \pkg{ICU} \code{StringSearch} engine.
+#' By default, all \code{stri_*_fixed} functions in \pkg{stringi} utilize
+#' \pkg{ICU}'s \code{StringSearch} engine.
 #' 
 #' For more information on ICU's Collator & SearchEngine
 #' and how to tune it up
@@ -114,17 +114,27 @@ invisible(NULL)
 #' that properly takes into account accented letters, conjoined letters,
 #' and ignorable punctuation 
 #' 
-#' If you, however, still want to use bytewise comparisons,
-#' just pass \code{NA} as \code{collator_opts} in search
-#' functions... This will be the fastest approach, especially
-#' for short texts.
+#' 
+#' 
+#' 
+#' @section Byte Compare:
+#' 
+#' #' If \code{collator_opts} is \code{NA}, then a very fast (for small p)
+#' bytewise (locale independent) search is performed, with time complexity of
+#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
+#' For natural language, non-English text this is, however, not what
+#' you probably want.
+#' 
+#' However, note that - as usual - conversion of input data
+#' to Unicode is done as usual.
 #'
 #' @references
-#' ICU String Search Service - ICU User Guide - http://userguide.icu-project.org/collation/icu-string-search-service\cr
-#' L. Werner, Efficient Text Searching in Java, 1999, http://icu-project.org/docs/papers/efficient_text_searching_in_java.html
+#' ICU String Search Service - ICU User Guide - \url{http://userguide.icu-project.org/collation/icu-string-search-service}\cr
+#' L. Werner, Efficient Text Searching in Java, 1999, \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}\cr
 #' 
 #' @name stringi-search-fixed
 #' @family search_fixed
+#' @family locale_sensitive
 invisible(NULL)
 
 
