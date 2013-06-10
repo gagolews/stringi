@@ -96,7 +96,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' 
 #' TO DO: ....Note the difference between  \code{stri_locate_last_fixed}
 #' and \code{stri_locate_last_fixed} for overlapping pattern matches....
-#' 
+#' In \code{stri_locate_last_fixed}, search is done from-the-end.
 #' 
 #' @param str character vector
 #' @param pattern character vector

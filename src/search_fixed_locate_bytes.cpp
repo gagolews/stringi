@@ -158,6 +158,8 @@ SEXP stri__locate_all_fixed_byte(SEXP s, SEXP p)
    R_len_t np = LENGTH(p);
    R_len_t nout = stri__recycling_rule(true, 2, ns, np);
    if (nout <= 0) return stri__emptyList();
+   
+   warning("stri__locate_all_fixed_byte: TO DO: UTF8");
       
    SEXP ans;
    SEXP ret;
@@ -230,6 +232,8 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
    R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
    // this will work for nmax == 0:
    
+   warning("stri__locate_first_fixed_byte: TO DO: UTF8");
+   
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
    stri__locate_set_dimnames_matrix(ret);
@@ -282,6 +286,9 @@ SEXP stri__locate_last_fixed_byte(SEXP s, SEXP p)
    R_len_t np = LENGTH(p);
    R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
    // this will work for nmax == 0:
+   
+   warning("stri__locate_last_fixed_byte: TO DO: UTF8");
+   
    
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));

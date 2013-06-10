@@ -67,78 +67,80 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       //if string or pattern == NA then return matrix with NA
       if (pp->isNA(i) || ss->isNA(i)) {
          SET_VECTOR_ELT(ret, i, notfound);
+         continue;
       }
-      else {
-         const UnicodeString* cur_str = &(ss->get(i));
-         const UnicodeString* cur_pat = &(pp->get(i));
-         
-         if (!matcher) {
-            last_pat = cur_pat;
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
-               last_str->getBuffer(), last_str->length(), col, NULL, &err);
-            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
-//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
-         }
-         //if last pattern is equal to current then save time and dont change this   
-         if (cur_pat != last_pat) {
-            last_pat = cur_pat;
-            err = U_ZERO_ERROR;
-            usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         //as above, this time for string   
-         if (cur_str != last_str) {
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-            if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         
-         usearch_reset(matcher);
+
+      const UnicodeString* cur_str = &(ss->get(i));
+      const UnicodeString* cur_pat = &(pp->get(i));
+      
+      if (!matcher) {
+         last_pat = cur_pat;
+         last_str = cur_str;
          err = U_ZERO_ERROR;
-         
-         int start = (int)usearch_first(matcher, &err);
-         
-         //if we have match
-         if(start != USEARCH_DONE){
-            deque<R_len_t_x2> occurences;
-            
-            while (start != USEARCH_DONE) {
-               occurences.push_back(R_len_t_x2(start, start+usearch_getMatchedLength(matcher)));
-               err = U_ZERO_ERROR;
-               start = usearch_next(matcher, &err);
-               
-               if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-            }
-            
-            R_len_t noccurences = occurences.size();
-            SEXP ans;
-            PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
-            deque<R_len_t_x2>::iterator iter = occurences.begin();
-            for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-               R_len_t_x2 match = *iter;
-               INTEGER(ans)[j]             = match.v1; 
-               INTEGER(ans)[j+noccurences] = match.v2;
-            }
-            
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), INTEGER(ans),
-                  INTEGER(ans)+noccurences, noccurences,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-            
-            SET_VECTOR_ELT(ret, i, ans);
-            UNPROTECT(1);
-         }else{ //if dont, return 1x2 matrix with NA
-            SET_VECTOR_ELT(ret, i, notfound);
-         }
-         
+         matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
+            last_str->getBuffer(), last_str->length(), col, NULL, &err);
+         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
+      }
+      //if last pattern is equal to current then save time and dont change this   
+      if (cur_pat != last_pat) {
+         last_pat = cur_pat;
+         err = U_ZERO_ERROR;
+         usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
          if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
       }
+      //as above, this time for string   
+      if (cur_str != last_str) {
+         last_str = cur_str;
+         err = U_ZERO_ERROR;
+         usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
+         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+      }
+      
+      usearch_reset(matcher);
+      err = U_ZERO_ERROR;
+      
+      int start = (int)usearch_first(matcher, &err);
+      
+      
+      if (start == USEARCH_DONE) {
+         SET_VECTOR_ELT(ret, i, notfound);
+      }
+      else { // if we have match
+         deque<R_len_t_x2> occurences;
+         
+         while (start != USEARCH_DONE) {
+            occurences.push_back(R_len_t_x2(start, start+usearch_getMatchedLength(matcher)));
+            err = U_ZERO_ERROR;
+            start = usearch_next(matcher, &err);
+            
+            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
+         }
+         
+         R_len_t noccurences = occurences.size();
+         SEXP ans;
+         PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+         int* ans_tab = INTEGER(ans);
+         deque<R_len_t_x2>::iterator iter = occurences.begin();
+         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+            R_len_t_x2 match = *iter;
+            ans_tab[j]             = match.v1; 
+            ans_tab[j+noccurences] = match.v2;
+         }
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         stri__UChar16_to_UChar32_index(cur_str->getBuffer(),
+               cur_str->length(), ans_tab,
+               ans_tab+noccurences, noccurences,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+         
+         SET_VECTOR_ELT(ret, i, ans);
+         UNPROTECT(1);
+      }
+      
+      if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
    }
    
    if (col) ucol_close(col);
@@ -345,6 +347,9 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          err = U_ZERO_ERROR;
          
          int start = usearch_last(matcher, &err);
+         // this properly detects overlapping matches
+         // (search is performed from-the-end, and no from-beginning
+         
          
          //if we have match
          if(start != USEARCH_DONE){
