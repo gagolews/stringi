@@ -89,6 +89,8 @@ test_that("stri_locate_last_fixed", {
    expect_equivalent(stri_locate_last_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
    expect_equivalent(stri_locate_last_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
    expect_equivalent(stri_locate_last_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))
+   #additional test for overlapping pattern
+   expect_equivalent(stri_locate_last_fixed(stri_enc_nfkd("\u0105a\u0105a\u0105a"), "\u0105a\u0105a"), matrix(c(4,9)))
    
    #byte
    expect_is(stri_locate_last_fixed(character(0), "a", NA), "matrix")
