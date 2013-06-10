@@ -72,6 +72,13 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 
       const UnicodeString* cur_str = &(ss->get(i));
       const UnicodeString* cur_pat = &(pp->get(i));
+      int ns = cur_str->length();
+      int np = cur_pat->length();
+      
+      if(ns <= 0 || np <= 0){
+         SET_VECTOR_ELT(ret, i, notfound);
+         continue;
+      }
       
       if (!matcher) {
          last_pat = cur_pat;
@@ -205,6 +212,14 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       else {
          const UnicodeString* cur_str = &(ss->get(i));
          const UnicodeString* cur_pat = &(pp->get(i));
+         int ns = cur_str->length();
+         int np = cur_pat->length();
+      
+         if(ns <= 0 || np <= 0){
+            iret[i]      = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
+            continue;
+         }
          
          if (!matcher) {
             last_pat = cur_pat;
@@ -318,6 +333,14 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       else {
          const UnicodeString* cur_str = &(ss->get(i));
          const UnicodeString* cur_pat = &(pp->get(i));
+         int ns = cur_str->length();
+         int np = cur_pat->length();
+         
+         if(ns <= 0 || np <= 0){
+            iret[i]      = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
+            continue;
+         }
          
          if (!matcher) {
             last_pat = cur_pat;
