@@ -165,3 +165,76 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    UNPROTECT(1);
    return ret;
 }
+
+
+
+
+/** Locate first occurence of a regex pattern
+ * @param str character vector
+ * @param pattern character vector
+ * @return list of integer matrices (2 columns)
+ * @version 0.1 (Bartlomiej Tartanus, 2013-06-10) - StriContainerUTF16
+ */
+SEXP stri_locate_last_regex(SEXP str, SEXP pattern)
+{
+   str     = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   // this will work for nmax == 0:
+
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
+   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
+   
+   SEXP ret;
+   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
+   
+   int* iret = INTEGER(ret);
+   for (R_len_t i = pp->vectorize_init();
+         i != pp->vectorize_end();
+         i = pp->vectorize_next(i))
+   {
+      if (pp->isNA(i) || ss->isNA(i)) {
+         iret[i] = NA_INTEGER;
+         iret[i+nmax] = NA_INTEGER;
+      }
+      else {
+         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+         matcher->reset(ss->get(i));
+         int found = (int)matcher->find();
+         if (found) { //find first matches
+            int start, end;
+            while (found) {
+               UErrorCode status = U_ZERO_ERROR;
+               start = (int)matcher->start(status);
+               end   = (int)matcher->end(status);
+               if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
+               
+               found = (int)matcher->find();
+            }      
+            
+            iret[i] = start;
+            iret[i+nmax] = end;
+            
+            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+                  ss->get(i).length(), 
+                  iret+i, iret+i+nmax, 1,
+                  1, // 0-based index -> 1-based
+                  0  // end returns position of next character after match
+            );
+         }
+         else {
+            iret[i] = NA_INTEGER;
+            iret[i+nmax] = NA_INTEGER;
+         }
+      }   
+   }
+   
+   delete ss;
+   delete pp;
+   stri__locate_set_dimnames_matrix(ret);
+   UNPROTECT(1);
+   return ret;
+}
+
+

@@ -112,6 +112,16 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #' stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #' 
+#' #first row is 1-2 like in locate_first
+#' stri_locate_all_fixed('bbbbb', 'bb') 
+#' stri_locate_first_fixed('bbbbb', 'bb')
+#' #but last row is 3-4, unlike in locate_last, keep this in mind!
+#' stri_locate_last_fixed('bbbbb', 'bb')
+#' 
+#' locate <- stri_locate_first_fixed('stringi - REXAMINE', letters)
+#' rownames(locate) <- letters
+#' locate
+#' 
 #' @export
 #' @rdname stri_locate_fixed
 #' @aliases stri_locate_all_fixed, stri_locate_first_fixed, stri_locate_last_fixed
@@ -190,8 +200,7 @@ stri_locate_first_regex <- function(str, pattern) {
 #' @export
 #' @rdname stri_locate_regex 
 stri_locate_last_regex <- function(str, pattern) {
-   stop("TO DO")
-#    .Call("stri_locate_last_regex", str, pattern, PACKAGE="stringi")
+   .Call("stri_locate_last_regex", str, pattern, PACKAGE="stringi")
 }
 
 
