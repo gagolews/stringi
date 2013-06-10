@@ -42,3 +42,24 @@ test_that("stri_locate_first_regex", {
    expect_equivalent(stri_locate_first_regex("ala ola ela ula", "(e|u|z)la"), matrix(c(9,11)))
    
 })
+
+
+test_that("stri_locate_last_regex", {
+   
+   expect_is(stri_locate_last_regex(character(0), "a"), "matrix")
+   
+   expect_equivalent(nrow(stri_locate_last_regex(NA, character(0))), 0)
+   expect_equivalent(nrow(stri_locate_last_regex(character(0), NA)), 0)
+   expect_equivalent(nrow(stri_locate_last_regex(LETTERS, character(0))), 0)
+   expect_equivalent(stri_locate_last_regex(NA, ""), matrix(c(NA_integer_,NA_integer_)))
+   
+   expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u106X", "\u0105"), matrix(c(3L,3L)))
+   expect_equivalent(stri_locate_last_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,3L)))
+   expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U00024B63"), matrix(c(3L,3L)))
+   expect_equivalent(stri_locate_last_regex("aaa", "aa"), matrix(c(1L,2L)))
+   
+   expect_equivalent(stri_locate_last_regex("1a\u0105a", "a.a"), matrix(c(2,4)))
+   expect_equivalent(stri_locate_last_regex("ala ola ela ula", ".la"), matrix(c(13,15)))
+   expect_equivalent(stri_locate_last_regex("ala ola ela ula", "(e|u|z)la"), matrix(c(13,15)))
+   
+})
