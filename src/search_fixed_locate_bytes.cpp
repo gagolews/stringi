@@ -154,22 +154,23 @@ SEXP stri__locate_all_fixed_byte(SEXP s, SEXP p)
 {
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   R_len_t nout = stri__recycling_rule(true, 2, ns, np);
+   R_len_t nout = stri__recycling_rule(true, 2, LENGTH(s), LENGTH(p));
    if (nout <= 0) return stri__emptyList();
    
-   warning("stri__locate_all_fixed_byte: TO DO: UTF8");
-      
+   StriContainerUTF8* ss = new StriContainerUTF8(s, nout);
+   StriContainerUTF8* sp = new StriContainerUTF8(p, nout);
+   
+   SEXP notfound; // this matrix will be set iff not found or NA
+   PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
+   
    SEXP ans;
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, nout));
    /* @TODO: use STL stack class here - deque  */
    R_len_t nmax = stri__numbytes_max(s);
    if (nmax <= 0) {
-      PROTECT(ans = stri__matrix_NA_INTEGER(1,2)); 
       for (R_len_t i=0; i<nout; ++i)
-         SET_VECTOR_ELT(ret, i, ans);
+         SET_VECTOR_ELT(ret, i, notfound);
       stri__locate_set_dimnames_list(ret);
       UNPROTECT(2);
       return ret;
@@ -178,34 +179,36 @@ SEXP stri__locate_all_fixed_byte(SEXP s, SEXP p)
    int* start = new int[nmax];
    int* end = new int[nmax];
    int  occurences = 0;
-   
-   for (R_len_t i=0; i<nout; ++i) {
-      SEXP curs = STRING_ELT(s, i%ns);
-      SEXP curp = STRING_ELT(p, i%np);
-      R_len_t cursl = LENGTH(curs);
-      R_len_t curpl = LENGTH(curp);
 
-      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
+   for (R_len_t i=0; i<nout; ++i) {  
+      const String8* curs = &ss->get(i);
+      const String8* curp = &sp->get(i);
+      int ns = curs->length();
+      int np = curp->length();
+      
+      if (ss->isNA(i) || sp->isNA(i) || ns <= 0 || np <= 0) {
+         SET_VECTOR_ELT(ret, i, notfound);
+         continue;
+      }
+      
+      const char* chs = curs->c_str();
+      const char* chp = curp->c_str();
+      
+      stri__locate_all_fixed1(chs, ns, chp, np, start, end, occurences);
+         
+      if (occurences > 0) {
+         PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
+         int* ians = INTEGER(ans);
+         for(int j = 0; j < occurences; j++) {
+            ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
+            ians[j+1*occurences] = end[j] + 1;
+         }
+         SET_VECTOR_ELT(ret, i, ans);
+         UNPROTECT(1);
       }
       else {
-         stri__locate_all_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
-            start, end, occurences);
-         
-         if (occurences > 0) {
-            PROTECT(ans = allocMatrix(INTSXP, occurences, 2));
-            int* ians = INTEGER(ans);
-            for(int j = 0; j < occurences; j++) {
-               ians[j+0*occurences] = start[j] + 1; // 0-based index -> 1-based
-               ians[j+1*occurences] = end[j] + 1;
-            }
-         }
-         else {
-            PROTECT(ans = stri__matrix_NA_INTEGER(1,2));
-         }
+         SET_VECTOR_ELT(ret, i, notfound);
       }
-      SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);  
    }
    stri__locate_set_dimnames_list(ret);
    delete [] start;
@@ -227,12 +230,11 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
 {
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(s), LENGTH(p));
    // this will work for nmax == 0:
    
-   warning("stri__locate_first_fixed_byte: TO DO: UTF8");
+   StriContainerUTF8* ss = new StriContainerUTF8(s, nmax);
+   StriContainerUTF8* sp = new StriContainerUTF8(p, nmax);
    
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
@@ -240,29 +242,30 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
    int* iret = INTEGER(ret);
    
    int start, end, occurences=0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP curs = STRING_ELT(s, i%ns);
-      SEXP curp = STRING_ELT(p, i%np);
-      R_len_t cursl = LENGTH(curs);
-      R_len_t curpl = LENGTH(curp);
-
-      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         iret[i] = NA_INTEGER; 
+   for (R_len_t i=0; i<nmax; ++i) {  
+      const String8* curs = &ss->get(i);
+      const String8* curp = &sp->get(i);
+      int ns = curs->length();
+      int np = curp->length();
+      
+      if (ss->isNA(i) || sp->isNA(i) || ns <= 0 || np <= 0) {
+         iret[i]      = NA_INTEGER; 
          iret[i+nmax] = NA_INTEGER;
+         continue;
+      }
+      const char* chs = curs->c_str();
+      const char* chp = curp->c_str();
+      
+      stri__locate_first_and_last_fixed1(chs, ns, chp, np, start, end, occurences, true);
+      
+      if (occurences > 0) {
+         iret[i]      = start + 1; // 0-based index -> 1-based
+         iret[i+nmax] = end + 1;
       }
       else {
-         stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
-            start, end, occurences, true);
-         
-         if (occurences > 0) {
-            iret[i] = start + 1; // 0-based index -> 1-based
-            iret[i+nmax] = end + 1;
-         }
-         else {
-            iret[i] = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
-      } 
+         iret[i]      = NA_INTEGER;
+         iret[i+nmax] = NA_INTEGER;
+      }
    }
    
    UNPROTECT(1);
@@ -282,42 +285,41 @@ SEXP stri__locate_last_fixed_byte(SEXP s, SEXP p)
 {
    s = stri_prepare_arg_string(s, "str"); // prepare string argument
    p = stri_prepare_arg_string(p, "pattern"); // prepare integer argument
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   R_len_t nmax = stri__recycling_rule(true, 2, ns, np);
+   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(s), LENGTH(p));
    // this will work for nmax == 0:
-   
-   warning("stri__locate_last_fixed_byte: TO DO: UTF8");
-   
-   
+
+   StriContainerUTF8* ss = new StriContainerUTF8(s, nmax);
+   StriContainerUTF8* sp = new StriContainerUTF8(p, nmax);
+
    SEXP ret;
    PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* iret = INTEGER(ret);
    
    int start, end, occurences=0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP curs = STRING_ELT(s, i%ns);
-      SEXP curp = STRING_ELT(p, i%np);
-      R_len_t cursl = LENGTH(curs);
-      R_len_t curpl = LENGTH(curp);
-
-      if (curs == NA_STRING || cursl == 0 || curp == NA_STRING || curpl == 0) {
-         iret[i] = NA_INTEGER; 
+   for (R_len_t i=0; i<nmax; ++i) {  
+      const String8* curs = &ss->get(i);
+      const String8* curp = &sp->get(i);
+      int ns = curs->length();
+      int np = curp->length();
+      
+      if (ss->isNA(i) || sp->isNA(i) || ns <= 0 || np <= 0) {
+         iret[i]      = NA_INTEGER; 
          iret[i+nmax] = NA_INTEGER;
+         continue;
+      }
+      const char* chs = curs->c_str();
+      const char* chp = curp->c_str();
+      
+      stri__locate_first_and_last_fixed1(chs, ns, chp, np, start, end, occurences, false);
+      
+      if (occurences > 0) {
+         iret[i]      = start + 1; // 0-based index -> 1-based
+         iret[i+nmax] = end + 1;
       }
       else {
-         stri__locate_first_and_last_fixed1(CHAR(curs), cursl, CHAR(curp), curpl,
-            start, end, occurences, false);
-         
-         if (occurences > 0) {
-            iret[i] = start + 1; // 0-based index -> 1-based
-            iret[i+nmax] = end + 1;
-         }
-         else {
-            iret[i] = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
+         iret[i]      = NA_INTEGER;
+         iret[i+nmax] = NA_INTEGER;
       } 
    }
    
