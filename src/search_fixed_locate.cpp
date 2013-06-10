@@ -518,12 +518,12 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          usearch_reset(matcher);
          err = U_ZERO_ERROR;
          
-         int start = (int)usearch_first(matcher, &err);
+         int start = usearch_first(matcher, &err);
          
          //if we have match
          if(start != USEARCH_DONE){
             iret[i]      = start;
-            iret[i+nmax] = start+usearch_getMatchedLength(matcher);
+            iret[i+nmax] = start + usearch_getMatchedLength(matcher);
             
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
             stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
@@ -626,14 +626,13 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          usearch_reset(matcher);
          err = U_ZERO_ERROR;
          
-         int start = (int)usearch_first(matcher, &err);
+         int start = usearch_last(matcher, &err);
          
          //if we have match
          if(start != USEARCH_DONE){
-            error("TODO");
             iret[i]      = start;
-            iret[i+nmax] = start+usearch_getMatchedLength(matcher);
-            
+            iret[i+nmax] = start + usearch_getMatchedLength(matcher);
+   
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
             stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
                   ss->get(i).length(), 
