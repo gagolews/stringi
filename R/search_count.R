@@ -29,6 +29,7 @@
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' 
+#' 
 #' @param str character vector to search in
 #' @param pattern character vector with character class identifiers, see \link{stringi-search-charclass}
 #' @return integer vector
@@ -56,6 +57,8 @@ stri_count_charclass <- function(str, pattern) {
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' If \str{pattern} is empty, then the result is \code{NA}.
 #' 
 #' See \link{stringi-search-fixed} for more details on
 #' Locale-Sensitive Text Searching in \pkg{stringi}.

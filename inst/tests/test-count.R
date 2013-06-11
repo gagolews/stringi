@@ -9,6 +9,8 @@ test_that("stri_count_charclass", {
    expect_identical(suppressWarnings(stri_count_charclass("a", "WTF????")), NA_integer_)
    expect_warning(stri_count_charclass("a", "WTF????"))
    
+   expect_identical(stri_count_charclass(c(""), "L"), 0L)
+   
    expect_identical(stri_count_charclass(c("a", "ab", "abc", "1234"), "L"), c(1L,2L,3L,0L))
    expect_identical(stri_count_charclass("a\u0105bc", c("L", "Ll", "Lu")), c(4L,4L,0L))
    expect_identical(stri_count_charclass("a\u0105bc", c("l", "ll", "lu")), c(4L,4L,0L))
@@ -25,6 +27,9 @@ test_that("stri_count_fixed [byte compare]", {
    expect_identical(stri_count_fixed("###",c("#","##","###"), collator_opts=NA),c(3L,1L,1L))
    expect_identical(stri_count_fixed("a a","a", collator_opts=NA),2L)
    expect_identical(stri_count_fixed("aba","abcdef", collator_opts=NA),0L)
+   expect_identical(stri_count_fixed("","", collator_opts=NA), NA_integer_)
+   expect_identical(stri_count_fixed("a","", collator_opts=NA), NA_integer_)
+   expect_identical(stri_count_fixed("","a", collator_opts=NA), 0L)
    
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
 	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
@@ -61,6 +66,10 @@ test_that("stri_count_fixed [collation]", {
    expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
    expect_identical(stri_count_fixed("a a","a"),2L)
    expect_identical(stri_count_fixed("aba","abcdef"),0L)
+   expect_identical(stri_count_fixed("aba",""),NA_integer_)
+   expect_identical(stri_count_fixed("",""), NA_integer_)
+   expect_identical(stri_count_fixed("a",""), NA_integer_)
+   expect_identical(stri_count_fixed("","a"), 0L)
    
    expect_identical(stri_count_fixed("aaaaa", "aa"), 2L)
    expect_identical(stri_count_fixed("aaAAa-a", "aa"), 1L)

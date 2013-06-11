@@ -54,6 +54,8 @@ stri_detect_charclass <- function(str, pattern) {
 #' See \link{stringi-search-fixed} for more details on
 #' Locale-Sensitive Text Searching in \pkg{stringi}.
 #' 
+#' If \str{pattern} is empty, then the result is \code{NA}.
+#' 
 #' @param str character vector
 #' @param pattern character vector
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
