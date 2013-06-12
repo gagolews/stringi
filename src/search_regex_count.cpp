@@ -45,20 +45,17 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
-         INTEGER(ret)[i] = NA_INTEGER;
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, INTEGER(ret)[i] = NA_INTEGER, INTEGER(ret)[i] = 0)
+      
+      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(ss->get(i));
+      int count = 0;
+      bool found = (bool)matcher->find();
+      while (found) {
+         ++count;
+         found = (bool)matcher->find();
       }
-      else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         int count = 0;
-         bool found = (bool)matcher->find();
-         while(found) {
-            ++count;
-            found = (bool)matcher->find();
-         }
-         INTEGER(ret)[i] = count;
-      }
+      INTEGER(ret)[i] = count;
    }
 
    delete ss;

@@ -44,15 +44,11 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
-         LOGICAL(ret)[i] = NA_LOGICAL;
-      }
-      else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         int found = (int)matcher->find();
-         LOGICAL(ret)[i] = found;
-      }
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, LOGICAL(ret)[i] = NA_LOGICAL, LOGICAL(ret)[i] = FALSE)
+      
+      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(ss->get(i));
+      LOGICAL(ret)[i] = (int)matcher->find();
    }
    
    delete ss;

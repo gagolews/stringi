@@ -30,9 +30,9 @@ test_that("stri_detect_fixed [byte]", {
    expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), collator_opts=NA))
    expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105"), collator_opts=NA), FALSE)
    
-   expect_identical(stri_detect_fixed("","", collator_opts=NA), NA)
-   expect_identical(stri_detect_fixed("a","", collator_opts=NA), NA)
-   expect_identical(stri_detect_fixed("","a", collator_opts=NA), FALSE)
+   suppressWarnings(expect_identical(stri_detect_fixed("","", collator_opts=NA), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("a","", collator_opts=NA), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("","a", collator_opts=NA), FALSE))
 })
 
 
@@ -49,15 +49,19 @@ test_that("stri_detect_fixed [collator]", {
    expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2)))
    expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105")), TRUE)
    
-   expect_identical(stri_detect_fixed("",""), NA)
-   expect_identical(stri_detect_fixed("a",""), NA)
-   expect_identical(stri_detect_fixed("","a"), FALSE)
+   suppressWarnings(expect_identical(stri_detect_fixed("",""), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("a",""), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("","a"), FALSE))
 })
 
 
 test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex(NA, NA), NA)
    expect_identical(stri_detect_regex(character(0), character(0)), logical(0))
+   
+   suppressWarnings(expect_identical(stri_detect_regex("",""), NA))
+   suppressWarnings(expect_identical(stri_detect_regex("a",""), NA))
+   suppressWarnings(expect_identical(stri_detect_regex("","a"), FALSE))
    
    expect_identical(stri_detect_regex('a', c('a', 'b', 'c')), c(T,F,F))
    expect_identical(stri_detect_regex(c('a', 'b', 'c'), 'a'), c(T,F,F))

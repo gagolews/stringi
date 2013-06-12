@@ -58,7 +58,8 @@ stri_count_charclass <- function(str, pattern) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
-#' If \str{pattern} is empty, then the result is \code{NA}.
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #' 
 #' See \link{stringi-search-fixed} for more details on
 #' Locale-Sensitive Text Searching in \pkg{stringi}.
@@ -99,6 +100,8 @@ stri_count_fixed <- function(str, pattern, collator_opts=list()) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for

@@ -54,7 +54,8 @@ stri_detect_charclass <- function(str, pattern) {
 #' See \link{stringi-search-fixed} for more details on
 #' Locale-Sensitive Text Searching in \pkg{stringi}.
 #' 
-#' If \str{pattern} is empty, then the result is \code{NA}.
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #' 
 #' @param str character vector
 #' @param pattern character vector
@@ -83,6 +84,9 @@ stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for

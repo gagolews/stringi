@@ -172,4 +172,8 @@
 #define MSG__ARG_EXCLUSIVE \
    "arguments `%s` and `%s` are mutually exclusive in given context"
    
+   
+#define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \
+   "empty search patterns are not supported"
+   
 #endif

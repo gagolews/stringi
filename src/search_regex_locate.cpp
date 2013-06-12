@@ -50,48 +50,45 @@ SEXP stri_locate_all_regex(SEXP s, SEXP p)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, SET_VECTOR_ELT(ret, i, notfound), SET_VECTOR_ELT(ret, i, notfound))
+      
+      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(ss->get(i));
+      int found = (int)matcher->find();
+      if (!found) {
          SET_VECTOR_ELT(ret, i, notfound);
       }
       else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         int found = (int)matcher->find();
-         if (!found) {
-            SET_VECTOR_ELT(ret, i, notfound);
-         }
-         else {
-            deque<R_len_t_x2> occurences;
-            while (found) {
-               UErrorCode status = U_ZERO_ERROR;
-               int start = (int)matcher->start(status);
-               int end  =  (int)matcher->end(status);
-               if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-               
-               occurences.push_back(R_len_t_x2(start, end));
-               found = (int)matcher->find();
-            }
+         deque<R_len_t_x2> occurences;
+         while (found) {
+            UErrorCode status = U_ZERO_ERROR;
+            int start = (int)matcher->start(status);
+            int end  =  (int)matcher->end(status);
+            if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
             
-            R_len_t noccurences = occurences.size();
-            SEXP ans;
-            PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
-            deque<R_len_t_x2>::iterator iter = occurences.begin();
-            for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-               R_len_t_x2 match = *iter;
-               INTEGER(ans)[j]             = match.v1; 
-               INTEGER(ans)[j+noccurences] = match.v2;
-            }
-            
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), INTEGER(ans),
-                  INTEGER(ans)+noccurences, noccurences,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-            SET_VECTOR_ELT(ret, i, ans);
-            UNPROTECT(1);
+            occurences.push_back(R_len_t_x2(start, end));
+            found = (int)matcher->find();
          }
+         
+         R_len_t noccurences = occurences.size();
+         SEXP ans;
+         PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+         deque<R_len_t_x2>::iterator iter = occurences.begin();
+         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+            R_len_t_x2 match = *iter;
+            INTEGER(ans)[j]             = match.v1; 
+            INTEGER(ans)[j+noccurences] = match.v2;
+         }
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+               ss->get(i).length(), INTEGER(ans),
+               INTEGER(ans)+noccurences, noccurences,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+         SET_VECTOR_ELT(ret, i, ans);
+         UNPROTECT(1);
       }
    }
    
@@ -128,35 +125,29 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
-         iret[i] = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
+      iret[i] = NA_INTEGER;
+      iret[i+nmax] = NA_INTEGER;
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, /*nothing*/, /*nothing*/)
+      
+      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(ss->get(i));
+      int found = (int)matcher->find();
+      if (found) { //find first matches
+         UErrorCode status = U_ZERO_ERROR;
+         int start = (int)matcher->start(status);
+         int end   = (int)matcher->end(status);
+         if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
+         iret[i] = start;
+         iret[i+nmax] = end;
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+               ss->get(i).length(), 
+               iret+i, iret+i+nmax, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
       }
-      else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         int found = (int)matcher->find();
-         if (found) { //find first matches
-            UErrorCode status = U_ZERO_ERROR;
-            int start = (int)matcher->start(status);
-            int end   = (int)matcher->end(status);
-            if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-            iret[i] = start;
-            iret[i+nmax] = end;
-            
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), 
-                  iret+i, iret+i+nmax, 1,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-         }
-         else {
-            iret[i] = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
-      }   
    }
    
    delete ss;
@@ -193,41 +184,36 @@ SEXP stri_locate_last_regex(SEXP str, SEXP pattern)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
-         iret[i] = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
+      iret[i] = NA_INTEGER;
+      iret[i+nmax] = NA_INTEGER;
+     
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, /*nothing*/, /*nothing*/)
+     
+      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(ss->get(i));
+      int found = (int)matcher->find();
+      if (found) { //find first matches
+         int start, end;
+         while (found) {
+            UErrorCode status = U_ZERO_ERROR;
+            start = (int)matcher->start(status);
+            end   = (int)matcher->end(status);
+            if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
+            
+            found = (int)matcher->find();
+         }      
+         
+         iret[i] = start;
+         iret[i+nmax] = end;
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
+               ss->get(i).length(), 
+               iret+i, iret+i+nmax, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
       }
-      else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         int found = (int)matcher->find();
-         if (found) { //find first matches
-            int start, end;
-            while (found) {
-               UErrorCode status = U_ZERO_ERROR;
-               start = (int)matcher->start(status);
-               end   = (int)matcher->end(status);
-               if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-               
-               found = (int)matcher->find();
-            }      
-            
-            iret[i] = start;
-            iret[i+nmax] = end;
-            
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), 
-                  iret+i, iret+i+nmax, 1,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-         }
-         else {
-            iret[i] = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
-      }   
    }
    
    delete ss;

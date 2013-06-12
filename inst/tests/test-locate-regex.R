@@ -9,7 +9,9 @@ test_that("stri_locate_all_regex", {
    expect_equivalent(stri_locate_all_regex(NA, character(0)), list())
    expect_equivalent(stri_locate_all_regex(character(0), NA), list())
    expect_equivalent(stri_locate_all_regex(LETTERS, character(0)), list())
-   expect_equivalent(stri_locate_all_regex(NA, ""), list(matrix(c(NA,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_all_regex("abc", ""), list(matrix(c(NA_integer_,NA_integer_)))))
+   suppressWarnings(expect_equivalent(stri_locate_all_regex("", "abc"), list(matrix(c(NA_integer_,NA_integer_)))))
+   suppressWarnings(expect_equivalent(stri_locate_all_regex("", ""), list(matrix(c(NA_integer_,NA_integer_)))))
    
    expect_equivalent(stri_locate_all_regex("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_regex("X\U00024B62\U00024B63\U00024B64X",
@@ -30,7 +32,9 @@ test_that("stri_locate_first_regex", {
    expect_equivalent(nrow(stri_locate_first_regex(NA, character(0))), 0)
    expect_equivalent(nrow(stri_locate_first_regex(character(0), NA)), 0)
    expect_equivalent(nrow(stri_locate_first_regex(LETTERS, character(0))), 0)
-   expect_equivalent(stri_locate_first_regex(NA, ""), matrix(c(NA_integer_,NA_integer_)))
+   suppressWarnings(expect_equivalent(stri_locate_first_regex("abc", ""), matrix(c(NA_integer_,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_first_regex("", "abc"), matrix(c(NA_integer_,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_first_regex("", ""), matrix(c(NA_integer_,NA_integer_))))
    
    expect_equivalent(stri_locate_first_regex("X\u0104\u0105\u106X", "\u0105"), matrix(c(3L,3L)))
    expect_equivalent(stri_locate_first_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,3L)))
@@ -51,7 +55,9 @@ test_that("stri_locate_last_regex", {
    expect_equivalent(nrow(stri_locate_last_regex(NA, character(0))), 0)
    expect_equivalent(nrow(stri_locate_last_regex(character(0), NA)), 0)
    expect_equivalent(nrow(stri_locate_last_regex(LETTERS, character(0))), 0)
-   expect_equivalent(stri_locate_last_regex(NA, ""), matrix(c(NA_integer_,NA_integer_)))
+   suppressWarnings(expect_equivalent(stri_locate_last_regex("abc", ""), matrix(c(NA_integer_,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_last_regex("", "abc"), matrix(c(NA_integer_,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_last_regex("", ""), matrix(c(NA_integer_,NA_integer_))))
    
    expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u106X", "\u0105"), matrix(c(3L,3L)))
    expect_equivalent(stri_locate_last_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,3L)))

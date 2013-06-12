@@ -188,6 +188,19 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 // ----------- SEARCH --------------------------------------------
 
+#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, naset, zeroset) \
+      if ((ss)->isNA(i) || (pp)->isNA(i) || (pp)->get(i).length() <= 0) { \
+         if (!pp->isNA(i) && pp->get(i).length() <= 0)                    \
+            warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);               \
+         naset;                                                           \
+         continue;                                                        \
+      }                                                                   \
+      else if (ss->get(i).length() <= 0) {                                \
+         zeroset;                                                         \
+         continue;                                                        \
+      }                                                                   \
+      
+
 void stri__locate_set_dimnames_list(SEXP list);                           // DONE, internal
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
 

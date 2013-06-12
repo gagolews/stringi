@@ -69,6 +69,9 @@ invisible(NULL)
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
 #' the \pkg{ICU} regex engine.
 #' 
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
+#' 
 #' ignore_case.....
 #' 
 #' all regex functions treat text as single line.
@@ -99,6 +102,9 @@ invisible(NULL)
 #' @details
 #' By default, all \code{stri_*_fixed} functions in \pkg{stringi} utilize
 #' \pkg{ICU}'s \code{StringSearch} engine.
+#' 
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #' 
 #' For more information on ICU's Collator & SearchEngine
 #' and how to tune it up

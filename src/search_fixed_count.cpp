@@ -48,14 +48,7 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
    int* ret_tab = INTEGER(ret);
    
    for (R_len_t i=0; i<nmax; ++i) {  
-      if (ss->isNA(i) || sp->isNA(i) || sp->get(i).length() <= 0) {
-         ret_tab[i] = NA_INTEGER;
-         continue;
-      }
-      else if (ss->get(i).length() <= 0) {
-         ret_tab[i] = 0;
-         continue;  
-      }
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
       
       ret_tab[i] = 0;
       const String8* curs = &ss->get(i);
@@ -130,14 +123,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      if (ss->isNA(i) || pp->isNA(i) || pp->get(i).length() <= 0) {
-         ret_tab[i] = NA_INTEGER;
-         continue;
-      }
-      else if (ss->get(i).length() <= 0) {
-         ret_tab[i] = 0;
-         continue;  
-      }
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
       
       const UnicodeString* cur_str = &(ss->get(i));
       const UnicodeString* cur_pat = &(pp->get(i));
