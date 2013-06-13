@@ -127,7 +127,7 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern)
    {
       iret[i] = NA_INTEGER;
       iret[i+nmax] = NA_INTEGER;
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, /*nothing*/, /*nothing*/)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, ;/*nothing*/, ;/*nothing*/)
       
       RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
       matcher->reset(ss->get(i));
@@ -187,7 +187,7 @@ SEXP stri_locate_last_regex(SEXP str, SEXP pattern)
       iret[i] = NA_INTEGER;
       iret[i+nmax] = NA_INTEGER;
      
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, /*nothing*/, /*nothing*/)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, ;/*nothing*/, ;/*nothing*/)
      
       RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
       matcher->reset(ss->get(i));
