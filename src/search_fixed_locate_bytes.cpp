@@ -243,16 +243,15 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
    
    int start, end, occurences=0;
    for (R_len_t i=0; i<nmax; ++i) {  
+      iret[i]      = NA_INTEGER; 
+      iret[i+nmax] = NA_INTEGER;
+      
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, /*nothing*/, /*nothing*/ )
       const String8* curs = &ss->get(i);
       const String8* curp = &sp->get(i);
       int ns = curs->length();
       int np = curp->length();
       
-      if (ss->isNA(i) || sp->isNA(i) || ns <= 0 || np <= 0) {
-         iret[i]      = NA_INTEGER; 
-         iret[i+nmax] = NA_INTEGER;
-         continue;
-      }
       const char* chs = curs->c_str();
       const char* chp = curp->c_str();
       
@@ -261,10 +260,6 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
       if (occurences > 0) {
          iret[i]      = start + 1; // 0-based index -> 1-based
          iret[i+nmax] = end + 1;
-      }
-      else {
-         iret[i]      = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
       }
    }
    
@@ -297,17 +292,16 @@ SEXP stri__locate_last_fixed_byte(SEXP s, SEXP p)
    int* iret = INTEGER(ret);
    
    int start, end, occurences=0;
-   for (R_len_t i=0; i<nmax; ++i) {  
+   for (R_len_t i=0; i<nmax; ++i) {
+      iret[i]      = NA_INTEGER; 
+      iret[i+nmax] = NA_INTEGER;
+      
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, /*nothing*/, /*nothing*/ )
       const String8* curs = &ss->get(i);
       const String8* curp = &sp->get(i);
       int ns = curs->length();
       int np = curp->length();
       
-      if (ss->isNA(i) || sp->isNA(i) || ns <= 0 || np <= 0) {
-         iret[i]      = NA_INTEGER; 
-         iret[i+nmax] = NA_INTEGER;
-         continue;
-      }
       const char* chs = curs->c_str();
       const char* chp = curp->c_str();
       
@@ -317,10 +311,6 @@ SEXP stri__locate_last_fixed_byte(SEXP s, SEXP p)
          iret[i]      = start + 1; // 0-based index -> 1-based
          iret[i+nmax] = end + 1;
       }
-      else {
-         iret[i]      = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
-      } 
    }
    
    UNPROTECT(1);
