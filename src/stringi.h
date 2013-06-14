@@ -251,7 +251,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);          // 
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);  // DONE
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement); // DONE
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // DONE
-SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n);                   // ...TO DO...
+SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n);                   // DONE
 
 
 // uchar.cpp:

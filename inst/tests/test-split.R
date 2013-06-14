@@ -1,5 +1,19 @@
 require(testthat)
-require(stringr)
+
+
+test_that("stri_split_charclass", {
+   expect_identical(stri_split_charclass(character(0),"Z"),list())   
+   expect_identical(stri_split_charclass(NA,"Z"),list(NA_character_))
+   expect_identical(stri_split_charclass("???",NA),list(NA_character_))
+   expect_identical(stri_split_charclass("???","Z",NA),list(NA_character_))
+   expect_identical(stri_split_charclass("ala ma kota", "Z"), list(c("ala", "ma", "kota")))
+   expect_identical(stri_split_charclass("ala ma kota", "Z", 0), list(character(0)))
+   expect_identical(stri_split_charclass("ala ma kota", "Z", 1), list(c("ala ma kota")))
+   expect_identical(stri_split_charclass("ala ma kota", "Z", 2), list(c("ala", "ma kota")))
+   expect_identical(stri_split_charclass("a  b", "Z"), list(c("a", "", "b")))
+   expect_identical(stri_split_charclass("a  b", "Z", omit_empty=TRUE), list(c("a", "b")))
+   expect_identical(stri_split_charclass(c("a1a", "aXa"), c("N", "Lu")), list(c("a", "a"), c("a", "a")))
+})
 
 test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed(character(0)," "),list())   
@@ -25,14 +39,8 @@ test_that("stri_split_fixed", {
 	massa nibh nec erat."
    s <- rep(s,3)
    expect_warning(stri_split_fixed(s,c("o","a")))
-   expect_identical(stri_split_fixed(s), str_split(s,'\n'))
-   expect_identical(stri_split_fixed(s,' '),str_split(s,' '))
-   expect_identical(stri_split_fixed(s,'a'),str_split(s,'a'))
-   expect_identical(stri_split_fixed(s,"co"),str_split(s,"co"))
-   expect_identical(stri_split_fixed(s,"rem"),str_split(s,"rem"))
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_split_fixed(s,"bab"),strsplit(s,"bab"))
-   expect_identical(stri_split_fixed("lalal","l"),str_split("lalal","l"))
    
    expect_identical(stri_split_fixed("lalal","l",c(-Inf,-1,0)),
                                list(character(0),character(0),character(0)))
