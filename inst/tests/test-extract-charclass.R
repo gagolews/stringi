@@ -3,9 +3,9 @@ require(testthat)
 test_that("stri_extract_all_charclass", {
 
    expect_is(stri_extract_all_charclass(character(0), "Z"), "list")
-   expect_warning(stri_extract_all_charclass(c("", ""), 1))
+   expect_warning(stri_extract_all_charclass(c("", "Z"), 1))
    
-   expect_equivalent(stri_extract_all_charclass(character(0), 1), list())
+   expect_equivalent(stri_extract_all_charclass(character(0), "Z"), list())
    expect_equivalent(stri_extract_all_charclass(LETTERS, integer(0)), list())
    
    expect_equivalent(stri_extract_all_charclass("", "^WHITE_SPACE")[[1]], NA_character_)

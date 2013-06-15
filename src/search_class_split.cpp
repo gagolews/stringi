@@ -32,7 +32,7 @@
  * @return a list of character vectors
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-14)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty, use StriContainerInteger, StriContainerLogical
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty, use StriContainerInteger, StriContainerLogical, StriContainerCharClass
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -40,42 +40,28 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    
-   R_len_t str_length = LENGTH(str);
-   R_len_t pattern_length = LENGTH(pattern);
-   R_len_t n_max_length = LENGTH(n_max);
-   R_len_t omit_empty_length = LENGTH(omit_empty);
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, str_length, pattern_length, n_max_length, omit_empty_length);
-   
-   StriContainerUTF8    str_cont(str, vectorize_length);
-   StriContainerInteger n_max_cont(n_max, vectorize_length);
-   StriContainerLogical omit_empty_cont(omit_empty, vectorize_length);
+   StriContainerUTF8      str_cont(str, vectorize_length);
+   StriContainerInteger   n_max_cont(n_max, vectorize_length);
+   StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, vectorize_length));
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<vectorize_length; ++i) {
-      SEXP pattern_cur = STRING_ELT(pattern, i%pattern_length); // TO DO: same patterns should form a sequence
-      
-      if (str_cont.isNA(i) || pattern_cur == NA_STRING || n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         continue;
-      }
-         
-      if (last_pattern != CHAR(pattern_cur)) {
-         last_pattern = CHAR(pattern_cur);
-         cc = CharClass(pattern_cur); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {   
+      if (str_cont.isNA(i) || pattern_cont.isNA(i) || n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
       
-      int  n_max_cur = n_max_cont.get(i);
-      int  omit_empty_cur = omit_empty_cont.get(i);
+      CharClass pattern_cur = pattern_cont.get(i);
+      int  n_max_cur        = n_max_cont.get(i);
+      int  omit_empty_cur   = omit_empty_cont.get(i);
       
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
@@ -93,7 +79,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          
       for (j=0, k=1; j<str_cur_n && k < n_max_cur; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (cc.test(chr)) {
+         if (pattern_cur.test(chr)) {
             if (omit_empty_cur && fields.back().v2 == fields.back().v1)
                fields.back().v1 = fields.back().v2 = j; // don't start new field
             else {

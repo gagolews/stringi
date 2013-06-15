@@ -243,17 +243,17 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first);  // 
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);   // DONE, internal
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first); // DONE, internal
 
-SEXP stri_count_charclass(SEXP str, SEXP pattern);                           // DONE
-SEXP stri_detect_charclass(SEXP str, SEXP pattern);                          // DONE
-SEXP stri_extract_first_charclass(SEXP str, SEXP pattern);                   // DONE
-SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);                    // DONE
-SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge);         // DONE
-SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                    // DONE
-SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                     // DONE
-SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);          // DONE
-SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);  // DONE
-SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement); // DONE
-SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);   // DONE
+SEXP stri_count_charclass(SEXP str, SEXP pattern);                              // DONE
+SEXP stri_detect_charclass(SEXP str, SEXP pattern);                             // DONE
+SEXP stri_extract_first_charclass(SEXP str, SEXP pattern);                      // DONE
+SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);                       // DONE
+SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge);            // DONE
+SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);                       // DONE
+SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);                        // DONE
+SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);             // DONE
+SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);     // DONE
+SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);    // DONE
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);      // DONE
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty); // DONE
 
 

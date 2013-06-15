@@ -2,7 +2,7 @@ require(testthat)
 
 
 test_that("stri_replace_all_charclass", {
-   expect_identical(stri_replace_all_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_all_charclass(character(0),"Z",""),character(0))
    expect_identical(stri_replace_all_charclass(NA,"WHITE_SPACE","?"),NA_character_)
    expect_identical(stri_replace_all_charclass("X","WHITE_SPACE",NA),NA_character_)
    expect_identical(stri_replace_all_charclass("X",NA,"?"),NA_character_)
@@ -19,7 +19,7 @@ test_that("stri_replace_all_charclass", {
 
 
 test_that("stri_replace_first_charclass", {
-   expect_identical(stri_replace_first_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_first_charclass(character(0),"Z",""),character(0))
    expect_identical(stri_replace_first_charclass(NA,"WHITE_SPACE","?"),NA_character_)
    expect_identical(stri_replace_first_charclass("X","WHITE_SPACE",NA),NA_character_)
    expect_identical(stri_replace_first_charclass("X",NA,"?"),NA_character_)
@@ -32,7 +32,7 @@ test_that("stri_replace_first_charclass", {
 
 
 test_that("stri_replace_last_charclass", {
-   expect_identical(stri_replace_last_charclass(character(0),"",""),character(0))
+   expect_identical(stri_replace_last_charclass(character(0),"Z",""),character(0))
    expect_identical(stri_replace_last_charclass(NA,"WHITE_SPACE","?"),NA_character_)
    expect_identical(stri_replace_last_charclass("X","WHITE_SPACE",NA),NA_character_)
    expect_identical(stri_replace_last_charclass("X",NA,"?"),NA_character_)

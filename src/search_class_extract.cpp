@@ -28,57 +28,50 @@
  * @return character vector
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-08)
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
       SET_STRING_ELT(ret, i, NA_STRING);
       
-      if (ss->isNA(i) || cur_pattern == NA_STRING)
-         continue;
-         
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA())
+      if (str_cont.isNA(i) || pattern_cont.isNA(i))
          continue;
       
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, jlast;
       UChar32 chr;
       
       if (first) {
-         for (jlast=j=0; j<curn; ) {
-            U8_NEXT(curs, j, curn, chr);
-            if (cc.test(chr)) {
-               SET_STRING_ELT(ret, i, mkCharLenCE(curs+jlast, j-jlast, CE_UTF8));
+         for (jlast=j=0; j<str_cur_n; ) {
+            U8_NEXT(str_cur_s, j, str_cur_n, chr);
+            if (pattern_cur.test(chr)) {
+               SET_STRING_ELT(ret, i, mkCharLenCE(str_cur_s+jlast, j-jlast, CE_UTF8));
                break; // that's enough for first
             }
             jlast = j;
          }
       }
       else {
-         for (jlast=j=curn; j>0; ) {
-            U8_PREV(curs, 0, j, chr); // go backwards
-            if (cc.test(chr)) {
-               SET_STRING_ELT(ret, i, mkCharLenCE(curs+j, jlast-j, CE_UTF8));
+         for (jlast=j=str_cur_n; j>0; ) {
+            U8_PREV(str_cur_s, 0, j, chr); // go backwards
+            if (pattern_cur.test(chr)) {
+               SET_STRING_ELT(ret, i, mkCharLenCE(str_cur_s+j, jlast-j, CE_UTF8));
                break; // that's enough for last
             }
             jlast = j;
@@ -86,7 +79,6 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       }
    }
 
-   delete ss;
    UNPROTECT(1);
    return ret;
 }
@@ -133,54 +125,46 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  * @return list of character vectors
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-08)
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    merge = stri_prepare_arg_logical(merge, "merge");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmerge = LENGTH(merge);
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), npat, nmerge);
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(merge));
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+   StriContainerLogical merge_cont(merge, vectorize_length);
    
    SEXP notfound; // this vector will be set iff not found or NA
    PROTECT(notfound = stri__vector_NA_strings(1));
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nmax));
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      bool cur_merge = LOGICAL(merge)[i%nmerge];
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING || cur_merge == NA_LOGICAL) {
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
+      if (pattern_cont.isNA(i) || str_cont.isNA(i) || merge_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
-         
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
+        
       
-      if (cc.isNA()) {
-         SET_VECTOR_ELT(ret, i, notfound);
-         continue;
-      }
-      
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      bool merge_cur = merge_cont.get(i);
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, jlast;
       UChar32 chr;
       deque<R_len_t_x2> occurences; // codepoint based-indices
          
-      for (jlast=j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr);
-         if (cc.test(chr)) {
+      for (jlast=j=0; j<str_cur_n; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (pattern_cur.test(chr)) {
             occurences.push_back(R_len_t_x2(jlast, j));
          }
          jlast = j;
@@ -189,7 +173,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       R_len_t noccurences = occurences.size();
       if (noccurences == 0)
          SET_VECTOR_ELT(ret, i, notfound);
-      else if (cur_merge && noccurences > 1) {
+      else if (merge_cur && noccurences > 1) {
          // do merge  
          deque<R_len_t_x2> occurences2;
          deque<R_len_t_x2>::iterator iter = occurences.begin();
@@ -211,7 +195,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          iter = occurences2.begin();
          for (R_len_t j = 0; iter != occurences2.end(); ++iter, ++j) {
             R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, j, mkCharLenCE(curs+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            SET_STRING_ELT(cur_res, j, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
@@ -223,14 +207,13 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          deque<R_len_t_x2>::iterator iter = occurences.begin();
          for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
             R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, j, mkCharLenCE(curs+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            SET_STRING_ELT(cur_res, j, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
       }
    }
 
-   delete ss;
    UNPROTECT(2);
    return ret;
 }

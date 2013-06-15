@@ -5,7 +5,7 @@ test_that("stri_locate_all_charclass", {
    expect_is(stri_locate_all_charclass(character(0), "Z"), "list")
    expect_warning(stri_locate_all_charclass(c("", ""), 1))
    
-   expect_equivalent(stri_locate_all_charclass(character(0), 1), list())
+   expect_equivalent(stri_locate_all_charclass(character(0), "Z"), list())
    expect_equivalent(stri_locate_all_charclass(LETTERS, integer(0)), list())
    
    expect_equivalent(as.integer(stri_locate_all_charclass("", "^WHITE_SPACE")[[1]]),

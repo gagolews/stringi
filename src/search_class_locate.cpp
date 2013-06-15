@@ -28,59 +28,51 @@
  * @return matrix with 2 columns
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
  */
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
+   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
+      ret_tab[i]                  = NA_INTEGER;
+      ret_tab[i+vectorize_length] = NA_INTEGER;
       
-      ret_tab[i]      = NA_INTEGER;
-      ret_tab[i+nmax] = NA_INTEGER;
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING)
-         continue;
-         
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA())
+      if (str_cont.isNA(i) || pattern_cont.isNA(i))
          continue;
       
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j;
       R_len_t k = 0;
       UChar32 chr;
          
-      for (j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr);
+      for (j=0; j<str_cur_n; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
          k++; // 1-based index
-         if (cc.test(chr)) {
+         if (pattern_cur.test(chr)) {
             ret_tab[i]      = k;
             if (first) break; // that's enough for first
             // note that for last, we can't go backwards from the end, as we need a proper index!
          }
       }
-      ret_tab[i+nmax] = ret_tab[i];
+      ret_tab[i+vectorize_length] = ret_tab[i];
    }
 
-   delete ss;
    UNPROTECT(1);
    return ret;
 }
@@ -128,56 +120,47 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-04)
  * @version 0.2 (Marek Gagolewski, 2013-06-09) use R_len_t_x2 for merge=TRUE
+ * @version 0.3 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    merge = stri_prepare_arg_logical(merge, "merge");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmerge = LENGTH(merge);
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), npat, nmerge);
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(merge));
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+   StriContainerLogical merge_cont(merge, vectorize_length);
    
    SEXP notfound; // this matrix will be set iff not found or NA
    PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nmax));
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      bool cur_merge = LOGICAL(merge)[i%nmerge];
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING || cur_merge == NA_LOGICAL) {
-         SET_VECTOR_ELT(ret, i, notfound);
-         continue;
-      }
-         
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
+      if (pattern_cont.isNA(i) || str_cont.isNA(i) || merge_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
       
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      bool merge_cur = merge_cont.get(i);
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j;
       R_len_t k = 0;
       UChar32 chr;
       deque<R_len_t> occurences; // codepoint based-indices
          
-      for (j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr);
+      for (j=0; j<str_cur_n; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
          k++; // 1-based index
-         if (cc.test(chr)) {
+         if (pattern_cur.test(chr)) {
             occurences.push_back(k);
          }
       }
@@ -185,7 +168,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       R_len_t noccurences = occurences.size();
       if (noccurences == 0)
          SET_VECTOR_ELT(ret, i, notfound);
-      else if (cur_merge && noccurences > 1) {
+      else if (merge_cur && noccurences > 1) {
          // do merge  
          deque<R_len_t_x2> occurences2;
          deque<R_len_t>::iterator iter = occurences.begin();
@@ -227,7 +210,6 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       }
    }
 
-   delete ss;
    stri__locate_set_dimnames_list(ret);
    UNPROTECT(2);
    return ret;
