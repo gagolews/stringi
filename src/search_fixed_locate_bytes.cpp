@@ -246,7 +246,7 @@ SEXP stri__locate_first_fixed_byte(SEXP s, SEXP p)
       iret[i]      = NA_INTEGER; 
       iret[i+nmax] = NA_INTEGER;
       
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, /*nothing*/, /*nothing*/ )
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, ;/*nothing*/, ;/*nothing*/ )
       const String8* curs = &ss->get(i);
       const String8* curp = &sp->get(i);
       int ns = curs->length();
@@ -296,7 +296,7 @@ SEXP stri__locate_last_fixed_byte(SEXP s, SEXP p)
       iret[i]      = NA_INTEGER; 
       iret[i+nmax] = NA_INTEGER;
       
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, /*nothing*/, /*nothing*/ )
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, sp, ;/*nothing*/, ;/*nothing*/ )
       const String8* curs = &ss->get(i);
       const String8* curp = &sp->get(i);
       int ns = curs->length();

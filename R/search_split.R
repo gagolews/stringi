@@ -28,35 +28,32 @@
 #' the fields themselves.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{n}.
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 #' 
 #' If \code{n} is negative (default), then all pieces are extracted.
 #' 
-#' \code{omit_empty} is applied after splitting.
+#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' net empty strings will never appear in the resulting vector.
 #' 
 #' @param str character vector with strings to search in
 #' @param pattern character vector with character class identifiers 
 #' to search for, see \link{stringi-search-charclass}
-#' @param n integer vector, maximal number of pieces to return
-#' @param omit_empty single logical value; should empty strings be removed from result?
+#' @param n_max integer vector, maximal number of pieces to return
+#' @param omit_empty logical vector; should empty strings be removed from result?
 #' @return a list of character vectors
 #' 
 #' 
 #' @examples
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
-#' stri_split_charclass("Lorem  ipsum dolor", "WHITE_SPACE", n=3, omit_empty=TRUE) # note
+#' stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3, omit_empty=c(FALSE, TRUE))
 #' 
 #' @export
 #' @rdname stri_split_charclass
 #' @aliases stri_split_charclass
 #' @family search_charclass
 #' @family search_split
-stri_split_charclass <- function(str, pattern, n=-1L, omit_empty=FALSE) {
-   ret <- .Call("stri_split_charclass", str, pattern, n, PACKAGE="stringi")
-   if (!identical(omit_empty, FALSE))
-      lapply(ret, function(x) x[!stri_isempty(x)])
-   else
-      ret
+stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
+   .Call("stri_split_charclass", str, pattern, n_max, omit_empty, PACKAGE="stringi")
 }
 
 

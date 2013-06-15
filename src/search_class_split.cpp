@@ -22,44 +22,51 @@
 
 
 /** 
- * Split a string on a character class' occurences
+ * Split a string on by occurences of a character class
  * 
  * @param str character vector
  * @param pattern character vector
- * @param n integer vector
+ * @param n_max integer vector
+ * @param omit_empty logical vector
  * 
  * @return a list of character vectors
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-14)
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty
  */
-SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP splitmax)
+SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   splitmax = stri_prepare_arg_integer(splitmax, "n");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nsplitmax = LENGTH(splitmax);
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), npat, nsplitmax);
+   n_max = stri_prepare_arg_integer(n_max, "n_max");
+   omit_empty = stri_prepare_arg_integer(omit_empty, "omit_empty");
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   R_len_t str_length = LENGTH(str);
+   R_len_t pattern_length = LENGTH(pattern);
+   R_len_t n_max_length = LENGTH(n_max);
+   R_len_t omit_empty_length = LENGTH(omit_empty);
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, str_length, pattern_length, n_max_length, omit_empty_length);
+   
+   StriContainerUTF8* ss = new StriContainerUTF8(str, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nmax));
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
    
    CharClass cc;
    const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      int cur_splitmax = INTEGER(splitmax)[i%nsplitmax];
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      SEXP pattern_cur = STRING_ELT(pattern, i%pattern_length); // TO DO: same patterns should form a sequence
+      int  n_max_cur = INTEGER(n_max)[i%n_max_length];
+      int  omit_empty_cur = LOGICAL(omit_empty)[i%omit_empty_length];
       
-      if (ss->isNA(i) || cur_pattern == NA_STRING || cur_splitmax == NA_INTEGER) {
+      if (ss->isNA(i) || pattern_cur == NA_STRING || n_max_cur == NA_INTEGER || omit_empty_cur == NA_LOGICAL) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
          
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
+      if (last_pattern != CHAR(pattern_cur)) {
+         last_pattern = CHAR(pattern_cur);
+         cc = CharClass(pattern_cur); // it's a simple struct => fast copy
       }
       
       if (cc.isNA()) {
@@ -67,42 +74,47 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP splitmax)
          continue;
       }
       
-      if (cur_splitmax < 0)
-         cur_splitmax = INT_MAX;
-      else if (cur_splitmax == 0) {
+      if (n_max_cur < 0)
+         n_max_cur = INT_MAX;
+      else if (n_max_cur == 0) {
          SET_VECTOR_ELT(ret, i, allocVector(STRSXP, 0));
          continue;
       }
       
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
-      R_len_t j, jlast;
-      R_len_t k = 1;
+      R_len_t     str_cur_n = ss->get(i).length();
+      const char* str_cur_s = ss->get(i).c_str();
+      R_len_t j, k;
       UChar32 chr;
-      deque<R_len_t_x2> occurences; // codepoint based-indices
+      deque<R_len_t_x2> fields; // byte based-indices
+      fields.push_back(R_len_t_x2(0,0));
          
-      for (jlast=j=0; j<curn && k < cur_splitmax; ) {
-         U8_NEXT(curs, j, curn, chr);
+      for (j=0, k=1; j<str_cur_n && k < n_max_cur; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (cc.test(chr)) {
-            occurences.push_back(R_len_t_x2(jlast, j));
-            ++k;
+            if (omit_empty_cur && fields.back().v2 == fields.back().v1)
+               fields.back().v1 = fields.back().v2 = j; // don't start new field
+            else {
+               fields.push_back(R_len_t_x2(j, j)); // start new field here
+               ++k; // another field
+            }
          }
-         jlast = j;
+         else {
+            fields.back().v2 = j;
+         }
       }
+      if (k == n_max_cur)
+         fields.back().v2 = str_cur_n;
+      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+         fields.pop_back();
       
       SEXP ans;
-      PROTECT(ans = allocVector(STRSXP, k));
+      PROTECT(ans = allocVector(STRSXP, fields.size()));
       
-      j = 0;
-      
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
-      for (k = 0; iter != occurences.end(); ++iter, ++k) {
+      deque<R_len_t_x2>::iterator iter = fields.begin();
+      for (k = 0; iter != fields.end(); ++iter, ++k) {
          R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, k, mkCharLenCE(curs+j, curoccur.v1-j, CE_UTF8));
-         j = curoccur.v2;
+         SET_STRING_ELT(ans, k, mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
       }
-      
-      SET_STRING_ELT(ans, k, mkCharLenCE(curs+j, curn-j, CE_UTF8));
       
       SET_VECTOR_ELT(ret, i, ans);
       UNPROTECT(1);
