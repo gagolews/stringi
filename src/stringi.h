@@ -91,7 +91,7 @@ SEXP stri_info();                                      // DONE
 
 
 // join.cpp:
-SEXP stri_dup(SEXP str, SEXP c);                       // DONE
+SEXP stri_dup(SEXP str, SEXP times);                   // DONE
 SEXP stri_flatten(SEXP str, SEXP collapse);            // DONE
 SEXP stri_flatten_nosep(SEXP str);                     // DONE
 SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);     // DONE

@@ -64,36 +64,31 @@ SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
    
-   R_len_t ne1 = LENGTH(e1);
-   R_len_t ne2 = LENGTH(e2);
-   R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
-   
-   
-   StriContainerUTF8* se1 = new StriContainerUTF8(e1, nout);
-   StriContainerUTF8* se2 = new StriContainerUTF8(e2, nout);
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
    
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, nout));
+   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   int* ret_int = INTEGER(ret);
    
-   for (R_len_t i = se1->vectorize_init();
-         i != se1->vectorize_end();
-         i = se1->vectorize_next(i))
+   for (R_len_t i = e1_cont.vectorize_init();
+         i != e1_cont.vectorize_end();
+         i = e1_cont.vectorize_next(i))
    {
-      if (se1->isNA(i) || se2->isNA(i)) {
-         INTEGER(ret)[i] = NA_INTEGER;
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         ret_int[i] = NA_INTEGER;
       }
       else {
-         INTEGER(ret)[i] = stri__compare_codepoints(
-            se1->get(i).c_str(), se1->get(i).length(),
-            se2->get(i).c_str(), se2->get(i).length()
+         ret_int[i] = stri__compare_codepoints(
+            e1_cont.get(i).c_str(), e1_cont.get(i).length(),
+            e2_cont.get(i).c_str(), e2_cont.get(i).length()
          );
       }
    }
 
-   delete se1;
-   delete se2;
    UNPROTECT(1);
    return ret;
 }
@@ -119,37 +114,33 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
    
-   R_len_t ne1 = LENGTH(e1);
-   R_len_t ne2 = LENGTH(e2);
-   R_len_t nout = stri__recycling_rule(true, 2, ne1, ne2);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
    
-   
-   StriContainerUTF8* se1 = new StriContainerUTF8(e1, nout);
-   StriContainerUTF8* se2 = new StriContainerUTF8(e2, nout);
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
    
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, nout));
+   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   int* ret_int = INTEGER(ret);
    
-   for (R_len_t i = se1->vectorize_init();
-         i != se1->vectorize_end();
-         i = se1->vectorize_next(i))
+   for (R_len_t i = e1_cont.vectorize_init();
+         i != e1_cont.vectorize_end();
+         i = e1_cont.vectorize_next(i))
    {
-      if (se1->isNA(i) || se2->isNA(i)) {
-         INTEGER(ret)[i] = NA_INTEGER;
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         ret_int[i] = NA_INTEGER;
          continue;
       }
       
       UErrorCode err = U_ZERO_ERROR;
-      INTEGER(ret)[i] = (int)ucol_strcollUTF8(col,
-         se1->get(i).c_str(), se1->get(i).length(),
-         se2->get(i).c_str(), se2->get(i).length(),
+      ret_int[i] = (int)ucol_strcollUTF8(col,
+         e1_cont.get(i).c_str(), e1_cont.get(i).length(),
+         e2_cont.get(i).c_str(), e2_cont.get(i).length(),
          &err);
    }
    
    if (col) ucol_close(col);
-   delete se1;
-   delete se2;
    UNPROTECT(1);
    return ret;
 }
@@ -217,24 +208,24 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    UCollator* col = stri__ucol_open(collator_opts);      
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   R_len_t nout = LENGTH(str);
+   R_len_t vectorize_length = LENGTH(str);
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nout);
+   StriContainerUTF8 str_cont(str, vectorize_length);
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, nout));
+   PROTECT(ret = allocVector(INTSXP, vectorize_length));
    
    // count NA values
    R_len_t countNA = 0;
-   for (R_len_t i=0; i<nout; ++i)
-      if (ss->isNA(i))
+   for (R_len_t i=0; i<vectorize_length; ++i)
+      if (str_cont.isNA(i))
          ++countNA;
    
    // NAs must be put at end (note the stable sort behavior!)
    int* order = INTEGER(ret);
    R_len_t k1 = 0;
-   R_len_t k2 = nout-countNA;
-   for (R_len_t i=0; i<nout; ++i) {
-      if (ss->isNA(i))
+   R_len_t k2 = vectorize_length-countNA;
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      if (str_cont.isNA(i))
          order[k2++] = i+1;
       else
          order[k1++] = i+1;
@@ -245,32 +236,32 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    // however, now it's quite fast...
    
    // check if already sorted - if not - sort!
-   for (R_len_t i = 0; i<nout-countNA-1; ++i) {
+   for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
       UErrorCode err = U_ZERO_ERROR;
       
       int val;
       if (col) {
          val = (int)ucol_strcollUTF8(col,
-            ss->get(order[i]-1).c_str(), ss->get(order[i]-1).length(),
-            ss->get(order[i+1]-1).c_str(), ss->get(order[i+1]-1).length(),
+            str_cont.get(order[i]-1).c_str(),   str_cont.get(order[i]-1).length(),
+            str_cont.get(order[i+1]-1).c_str(), str_cont.get(order[i+1]-1).length(),
             &err);
       }
       else {
          val = stri__compare_codepoints(
-            ss->get(order[i]-1).c_str(), ss->get(order[i]-1).length(),
-            ss->get(order[i+1]-1).c_str(), ss->get(order[i+1]-1).length()
+            str_cont.get(order[i]-1).c_str(),   str_cont.get(order[i]-1).length(),
+            str_cont.get(order[i+1]-1).c_str(), str_cont.get(order[i+1]-1).length()
          );
       }
          
       if ((decr && val < 0) || (!decr && val > 0)) {
          // sort! 
          std::vector<int> data;
-         data.assign(order, order+nout-countNA);
+         data.assign(order, order+vectorize_length-countNA);
          if (col) {
-            StriSortCollator comp(ss, col, decr);
+            StriSortCollator comp(&str_cont, col, decr);
             std::stable_sort(data.begin(), data.end(), comp);
          } else {
-            StriSortCodepoints comp(ss, decr);
+            StriSortCodepoints comp(&str_cont, decr);
             std::stable_sort(data.begin(), data.end(), comp);
          }
          R_len_t i=0;
@@ -282,7 +273,6 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 
   
    if (col) ucol_close(col);
-   delete ss;
    UNPROTECT(1);
    return ret;
 }

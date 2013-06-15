@@ -44,7 +44,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
       
    int _type = INTEGER(type)[0];
    
-   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
+   StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
    
    
 ////  TO DO
@@ -56,26 +56,26 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 //   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
 //   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
    
-   for (R_len_t i = ss->vectorize_init();
-         i != ss->vectorize_end();
-         i = ss->vectorize_next(i))
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
    {
-      if (!ss->isNA(i)) {
+      if (!str_cont.isNA(i)) {
          switch (_type) {
             case 1:
-               ss->getWritable(i).toLower(loc);
+               str_cont.getWritable(i).toLower(loc);
                break;
             case 2:
-               ss->getWritable(i).toUpper(loc);
+               str_cont.getWritable(i).toUpper(loc);
                break;
             case 3:
-               ss->getWritable(i).toTitle(NULL, loc); // use default ICU's BreakIterator
+               str_cont.getWritable(i).toTitle(NULL, loc); // use default ICU's BreakIterator
                break;
             case 4:
-               ss->getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);
+               str_cont.getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);
                break;
             case 5:
-               ss->getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
+               str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
                break;
             default:
                error("stri_casefold: incorrect case conversion type");
@@ -84,8 +84,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
    }
    
    SEXP ret;
-   PROTECT(ret = ss->toR());
-   delete ss;
+   PROTECT(ret = str_cont.toR());
    // normalizer shall not be deleted at all
    UNPROTECT(1);
    return ret;
