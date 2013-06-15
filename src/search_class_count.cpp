@@ -36,7 +36,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
    R_len_t npat = LENGTH(pattern);
    R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   StriContainerUTF8 ss(str, nmax);
    
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, nmax));
@@ -47,7 +47,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
    for (R_len_t i=0; i<nmax; ++i) {
       SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
       
-      if (ss->isNA(i) || cur_pattern == NA_STRING) {
+      if (ss.isNA(i) || cur_pattern == NA_STRING) {
          ret_tab[i] = NA_INTEGER;
          continue;
       }
@@ -62,8 +62,8 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
          continue;
       }
       
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      R_len_t curn = ss.get(i).length();
+      const char* curs = ss.get(i).c_str();
       ret_tab[i] = 0;
       R_len_t j;
       UChar32 chr;
@@ -75,7 +75,6 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
       }
    }
 
-   delete ss;
    UNPROTECT(1);
    return ret;
 }

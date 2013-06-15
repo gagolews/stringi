@@ -6,6 +6,7 @@ test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass(NA,"Z"),list(NA_character_))
    expect_identical(stri_split_charclass("???",NA),list(NA_character_))
    expect_identical(stri_split_charclass("???","Z",NA),list(NA_character_))
+   expect_identical(stri_split_charclass("???","Z",2,NA),list(NA_character_))
    expect_identical(stri_split_charclass("","Z"),list(""))
    expect_identical(stri_split_charclass("  ","Z"),list(c("", "", "")))
    expect_identical(stri_split_charclass("  ","Z", omit_empty=TRUE),list(character(0)))

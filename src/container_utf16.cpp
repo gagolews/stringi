@@ -25,7 +25,7 @@
  * 
  */
 StriContainerUTF16::StriContainerUTF16()
-   : StriContainerUTF_Base()
+   : StriContainerBase()
 {
    this->str = NULL;
    this->lastMatcher = NULL;
@@ -132,7 +132,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
  * 
  */
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
-   :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
+   :    StriContainerBase((StriContainerBase&)container)
 {
    this->lastMatcher = NULL;
    if (container.str) {
@@ -155,7 +155,7 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
 StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
    this->~StriContainerUTF16();
-   (StriContainerUTF_Base&) (*this) = (StriContainerUTF_Base&)container;
+   (StriContainerBase&) (*this) = (StriContainerBase&)container;
    
    this->lastMatcher = NULL;
    if (container.str) {

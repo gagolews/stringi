@@ -30,7 +30,7 @@
  * @version 0.3 (Marek Gagolewski) - improved ASCII performance (seperate ucnv)
  * @version 0.4 (Marek Gagolewski) - now NAs are marked as NULLs in str
  */
-class StriContainerUTF16 : public StriContainerUTF_Base {
+class StriContainerUTF16 : public StriContainerBase {
    
    private:
       

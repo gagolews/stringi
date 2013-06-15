@@ -32,14 +32,14 @@
  * @return a list of character vectors
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-14)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty, use StriContainerInteger, StriContainerLogical
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
-   omit_empty = stri_prepare_arg_integer(omit_empty, "omit_empty");
+   omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
    
    R_len_t str_length = LENGTH(str);
    R_len_t pattern_length = LENGTH(pattern);
@@ -47,7 +47,9 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    R_len_t omit_empty_length = LENGTH(omit_empty);
    R_len_t vectorize_length = stri__recycling_rule(true, 4, str_length, pattern_length, n_max_length, omit_empty_length);
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, vectorize_length);
+   StriContainerUTF8    str_cont(str, vectorize_length);
+   StriContainerInteger n_max_cont(n_max, vectorize_length);
+   StriContainerLogical omit_empty_cont(omit_empty, vectorize_length);
    
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, vectorize_length));
@@ -56,10 +58,8 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    const char* last_pattern = 0;
    for (R_len_t i=0; i<vectorize_length; ++i) {
       SEXP pattern_cur = STRING_ELT(pattern, i%pattern_length); // TO DO: same patterns should form a sequence
-      int  n_max_cur = INTEGER(n_max)[i%n_max_length];
-      int  omit_empty_cur = LOGICAL(omit_empty)[i%omit_empty_length];
       
-      if (ss->isNA(i) || pattern_cur == NA_STRING || n_max_cur == NA_INTEGER || omit_empty_cur == NA_LOGICAL) {
+      if (str_cont.isNA(i) || pattern_cur == NA_STRING || n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
@@ -74,6 +74,9 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          continue;
       }
       
+      int  n_max_cur = n_max_cont.get(i);
+      int  omit_empty_cur = omit_empty_cont.get(i);
+      
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
@@ -81,8 +84,8 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          continue;
       }
       
-      R_len_t     str_cur_n = ss->get(i).length();
-      const char* str_cur_s = ss->get(i).c_str();
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, k;
       UChar32 chr;
       deque<R_len_t_x2> fields; // byte based-indices
@@ -120,7 +123,6 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
       UNPROTECT(1);
    }
 
-   delete ss;
    UNPROTECT(1);
    return ret;
 }

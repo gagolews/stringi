@@ -30,7 +30,7 @@
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 #' 
-#' If \code{n} is negative (default), then all pieces are extracted.
+#' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' net empty strings will never appear in the resulting vector.
@@ -53,6 +53,7 @@
 #' @family search_charclass
 #' @family search_split
 stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
+   # omit_empty defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_charclass", str, pattern, n_max, omit_empty, PACKAGE="stringi")
 }
 
@@ -67,13 +68,13 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' the fields themselves.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{n}.
+#' Vectorized over \code{str}, \code{pattern}, and \code{n_max}.
 #' 
-#' If \code{n} is negative (default), then all pieces are extracted.
+#' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
 #' @param str character vector with strings to search in
 #' @param pattern character vector with regex patterns
-#' @param n integer vector, maximal number of pieces to return
+#' @param n_max integer vector, maximal number of pieces to return
 #' @return a list of character vectors
 #' 
 #' 
@@ -85,8 +86,8 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' @aliases stri_split_regex
 #' @family search_regex
 #' @family search_split
-stri_split_regex <- function(str, pattern, n=-1L) {
-   .Call("stri_split_regex", str, pattern, n, PACKAGE="stringi")
+stri_split_regex <- function(str, pattern, n_max=-1L) {
+   .Call("stri_split_regex", str, pattern, n_max, PACKAGE="stringi")
 }
 
 
@@ -100,14 +101,14 @@ stri_split_regex <- function(str, pattern, n=-1L) {
 #' the fields themselves.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{n}.
+#' Vectorized over \code{str}, \code{pattern}, and \code{n_max}.
 #' 
-#' If \code{n} is negative (default), then all pieces are extracted.
+#' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
 #' 
 #' @param str character vector with strings to search in
 #' @param pattern character vector with patterns
-#' @param n integer vector, maximal number of pieces to return
+#' @param n_max integer vector, maximal number of pieces to return
 #' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return a list of character vectors
@@ -122,8 +123,8 @@ stri_split_regex <- function(str, pattern, n=-1L) {
 #' @family search_fixed
 #' @family search_split
 #' @family locale_sensitive
-stri_split_fixed <- function(str, pattern, n=-1L, collator_opts=list()) {
-	.Call("stri_split_fixed", str, split, n, collator_opts, PACKAGE="stringi")
+stri_split_fixed <- function(str, pattern, n_max=-1L, collator_opts=list()) {
+	.Call("stri_split_fixed", str, split, n_max, collator_opts, PACKAGE="stringi")
 }
 
 

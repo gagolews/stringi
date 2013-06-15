@@ -29,7 +29,7 @@
  * @version 0.2 (Marek Gagolewski) - removed ucnvNative, ucnvLatin1 (not needed per-object)
  * @version 0.3 (Marek Gagolewski) - removed enc array
  */
-class StriContainerUTF_Base {
+class StriContainerBase {
    
    protected:
       
@@ -40,19 +40,16 @@ class StriContainerUTF_Base {
       bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
 #endif
 
-      StriContainerUTF_Base();
-      StriContainerUTF_Base(StriContainerUTF_Base& container);
-      ~StriContainerUTF_Base();
+      StriContainerBase();
+      StriContainerBase(StriContainerBase& container);
+      ~StriContainerBase();
 
       void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle);
 
 
    public:
-      StriContainerUTF_Base& operator=(StriContainerUTF_Base& container);
+      StriContainerBase& operator=(StriContainerBase& container);
 
-      
-
-      
       
       /** Loop over vectorized container - init */
       inline R_len_t vectorize_init() const {

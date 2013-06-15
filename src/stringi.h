@@ -32,6 +32,8 @@
 #include "string8.h"
 #include "container_utf8.h"
 #include "container_utf16.h"
+#include "container_integer.h"
+#include "container_logical.h"
 #include "charclass.h"
 
 // ------------------------------------------------------------------------

@@ -25,7 +25,7 @@
  * 
  */
 StriContainerUTF8::StriContainerUTF8()
-   : StriContainerUTF_Base()
+   : StriContainerBase()
 {
    str = NULL;
    last_ind_back_str = NULL;
@@ -147,7 +147,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
 
 
 StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
-   :    StriContainerUTF_Base((StriContainerUTF_Base&)container)
+   :    StriContainerBase((StriContainerBase&)container)
 {
    if (container.str) {
       this->str = new String8*[this->n];
@@ -169,7 +169,7 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
 StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 {
    this->~StriContainerUTF8();
-   (StriContainerUTF_Base&) (*this) = (StriContainerUTF_Base&)container;
+   (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
    if (container.str) {
       this->str = new String8*[this->n];

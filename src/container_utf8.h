@@ -30,7 +30,7 @@
  * @version 0.3 (Marek Gagolewski, 2013-06-01) Now NAs are marked as NULLs in str
  * @version 0.4 (Marek Gagolewski, 2013-06-01) UChar32_to_UTF8_index_back, UChar32_to_UTF8_index_fwd added
  */
-class StriContainerUTF8 : public StriContainerUTF_Base {
+class StriContainerUTF8 : public StriContainerBase {
 
    private:
    

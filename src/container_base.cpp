@@ -25,7 +25,7 @@
  * Default constructor
  * 
  */
-StriContainerUTF_Base::StriContainerUTF_Base()
+StriContainerBase::StriContainerBase()
 {
    this->n = 0;
    this->nrecycle = 0;
@@ -40,10 +40,10 @@ StriContainerUTF_Base::StriContainerUTF_Base()
  * 
  * 
  */
-void StriContainerUTF_Base::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle)
+void StriContainerBase::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle)
 {
 #ifndef NDEBUG 
-   if (this->n != 0) error("StriContainerUTF_Base::init_Base(...): already initialized");
+   if (this->n != 0) error("StriContainerBase::init_Base(...): already initialized");
    this->isShallow = shallowrecycle;
 #endif
 
@@ -57,9 +57,9 @@ void StriContainerUTF_Base::init_Base(R_len_t n, R_len_t nrecycle, bool shallowr
       
 #ifndef NDEBUG 
    if (this->n < n)
-      error("StriContainerUTF_Base::init_Base(...): this->n < n");
+      error("StriContainerBase::init_Base(...): this->n < n");
    if (this->n > this->nrecycle)
-      error("StriContainerUTF_Base::init_Base(...): this->n > this->nrecycle");
+      error("StriContainerBase::init_Base(...): this->n > this->nrecycle");
 #endif
    }
 }
@@ -67,7 +67,7 @@ void StriContainerUTF_Base::init_Base(R_len_t n, R_len_t nrecycle, bool shallowr
 
 
 
-StriContainerUTF_Base::StriContainerUTF_Base(StriContainerUTF_Base& container)
+StriContainerBase::StriContainerBase(StriContainerBase& container)
 {
    this->n = container.n;
    this->nrecycle = container.nrecycle;
@@ -78,9 +78,9 @@ StriContainerUTF_Base::StriContainerUTF_Base(StriContainerUTF_Base& container)
 
 
 
-StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& container)
+StriContainerBase& StriContainerBase::operator=(StriContainerBase& container)
 {
-   this->~StriContainerUTF_Base();
+   this->~StriContainerBase();
    
    this->n = container.n;
    this->nrecycle = container.nrecycle;
@@ -93,7 +93,7 @@ StriContainerUTF_Base& StriContainerUTF_Base::operator=(StriContainerUTF_Base& c
 
 
 
-StriContainerUTF_Base::~StriContainerUTF_Base()
+StriContainerBase::~StriContainerBase()
 {
    this->n = 0;
    this->nrecycle = 0;
