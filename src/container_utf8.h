@@ -16,8 +16,8 @@
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
  
-#ifndef __unicoder8_h
-#define __unicoder8_h
+#ifndef __container_utf8_h
+#define __container_utf8_h
 
 
 

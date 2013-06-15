@@ -28,10 +28,10 @@
 #include "external.h"
 #include "messages.h"
 #include "macros.h"
-#include "unicoder_base.h"
+#include "container_base.h"
 #include "string8.h"
-#include "unicoder8.h"
-#include "unicoder16.h"
+#include "container_utf8.h"
+#include "container_utf16.h"
 #include "charclass.h"
 
 // ------------------------------------------------------------------------

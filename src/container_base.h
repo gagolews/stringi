@@ -16,15 +16,15 @@
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
  
-#ifndef __unicoder_base_h
-#define __unicoder_base_h
+#ifndef __container_base_h
+#define __container_base_h
 
 
 
 
 
 /**
- * Base class for StriContainerUTF8 and StriContainerUTF16
+ * Base class for StriContainers
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - removed ucnvNative, ucnvLatin1 (not needed per-object)
  * @version 0.3 (Marek Gagolewski) - removed enc array

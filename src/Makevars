@@ -8,9 +8,9 @@ SRCS        =  stringi.cpp \
                charclass.cpp \
                prepare_arg.cpp \
                ICU_settings.cpp \
-               unicoder_base.cpp \
-               unicoder8.cpp \
-               unicoder16.cpp \
+               container_base.cpp \
+               container_utf8.cpp \
+               container_utf16.cpp \
                collator.cpp \
                trim.cpp \
                casefold.cpp \
