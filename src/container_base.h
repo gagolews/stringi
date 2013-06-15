@@ -41,14 +41,14 @@ class StriContainerBase {
 #endif
 
       StriContainerBase();
-      StriContainerBase(StriContainerBase& container);
-      ~StriContainerBase();
+      //StriContainerBase(StriContainerBase& container); // use default (shallow)
+      //~StriContainerBase(); // use default (shallow)
 
       void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle);
 
 
    public:
-      StriContainerBase& operator=(StriContainerBase& container);
+      //StriContainerBase& operator=(StriContainerBase& container); // use default (shallow)
 
       
       /** Loop over vectorized container - init */

@@ -28,49 +28,40 @@
  * @return integer vector
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
  */
 SEXP stri_count_charclass(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
-   StriContainerUTF8 ss(str, nmax);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, nmax));
+   PROTECT(ret = allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      
-      if (ss.isNA(i) || cur_pattern == NA_STRING) {
-         ret_tab[i] = NA_INTEGER;
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
          continue;
       }
       
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
-         ret_tab[i] = NA_INTEGER;
-         continue;
-      }
-      
-      R_len_t curn = ss.get(i).length();
-      const char* curs = ss.get(i).c_str();
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       ret_tab[i] = 0;
       R_len_t j;
       UChar32 chr;
       
-      for (j=0; j<curn; ) {
-         U8_NEXT(curs, j, curn, chr);
-         if (cc.test(chr))
+      for (j=0; j<str_cur_n; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (pattern_cur.test(chr))
             ++ret_tab[i];
       }
    }

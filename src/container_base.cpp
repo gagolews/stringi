@@ -67,36 +67,36 @@ void StriContainerBase::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecyc
 
 
 
-StriContainerBase::StriContainerBase(StriContainerBase& container)
-{
-   this->n = container.n;
-   this->nrecycle = container.nrecycle;
-#ifndef NDEBUG
-   this->isShallow = container.isShallow;
-#endif
-}
+//StriContainerBase::StriContainerBase(StriContainerBase& container)
+//{
+//   this->n = container.n;
+//   this->nrecycle = container.nrecycle;
+//#ifndef NDEBUG
+//   this->isShallow = container.isShallow;
+//#endif
+//}
 
 
 
-StriContainerBase& StriContainerBase::operator=(StriContainerBase& container)
-{
-   this->~StriContainerBase();
-   
-   this->n = container.n;
-   this->nrecycle = container.nrecycle;
-#ifndef NDEBUG
-   this->isShallow = container.isShallow;
-#endif
-   
-   return *this;
-}
+//StriContainerBase& StriContainerBase::operator=(StriContainerBase& container)
+//{
+//   this->~StriContainerBase();
+//   
+//   this->n = container.n;
+//   this->nrecycle = container.nrecycle;
+//#ifndef NDEBUG
+//   this->isShallow = container.isShallow;
+//#endif
+//   
+//   return *this;
+//}
 
 
 
-StriContainerBase::~StriContainerBase()
-{
-   this->n = 0;
-   this->nrecycle = 0;
-}
+//StriContainerBase::~StriContainerBase()
+//{
+//   this->n = 0;
+//   this->nrecycle = 0;
+//}
 
 

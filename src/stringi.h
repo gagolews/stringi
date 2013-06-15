@@ -35,6 +35,7 @@
 #include "container_integer.h"
 #include "container_logical.h"
 #include "charclass.h"
+#include "container_charclass.h"
 
 // ------------------------------------------------------------------------
 

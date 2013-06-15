@@ -4,7 +4,7 @@ require(testthat)
 
 test_that("stri_count_charclass", {
    expect_identical(stri_count_charclass("a", NA), NA_integer_)
-   expect_identical(stri_count_charclass(NA, "a"), NA_integer_)
+   expect_identical(stri_count_charclass(NA, "Z"), NA_integer_)
    expect_identical(stri_count_charclass(NA, NA), NA_integer_)
    expect_identical(suppressWarnings(stri_count_charclass("a", "WTF????")), NA_integer_)
    expect_warning(stri_count_charclass("a", "WTF????"))
