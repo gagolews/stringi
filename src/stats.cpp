@@ -26,12 +26,15 @@
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-06-09) Use StriContainerUTF8
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_stats_general(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   R_len_t nstr = LENGTH(str);
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nstr);
+   R_len_t str_length = LENGTH(str);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, str_length);
    
    enum {
       gsNumLines = 0,
@@ -47,19 +50,19 @@ SEXP stri_stats_general(SEXP str)
    for (int i=0; i<gsAll; ++i) 
       stats[i] = 0;
 
-   for (R_len_t i=0; i<nstr; ++i) {
-      if (ss->isNA(i)) continue; // ignore
+   for (R_len_t i=0; i<str_length; ++i) {
+      if (str_cont.isNA(i)) continue; // ignore
       
       ++stats[gsNumLines]; // another line
-      R_len_t     cn = ss->get(i).length();
-      const char* cs = ss->get(i).c_str();
+      R_len_t     cn = str_cont.get(i).length();
+      const char* cs = str_cont.get(i).c_str();
       UChar32 c;
       bool AnyNonWhite = false;
       
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
          if (c == (UChar32)'\n' || c == (UChar32)'\r')
-            error(MSG__NEWLINE_FOUND);
+            throw StriException(MSG__NEWLINE_FOUND);
          ++stats[gsNumChars]; // another character [code point]
          // we test for UCHAR_WHITE_SPACE binary property
          if (!u_hasBinaryProperty(c, UCHAR_WHITE_SPACE)) {
@@ -73,9 +76,9 @@ SEXP stri_stats_general(SEXP str)
    }
    
    stri__set_names(ret, gsAll, "Lines", "LinesNEmpty", "Chars", "CharsNWhite");
-   delete ss;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -91,12 +94,15 @@ SEXP stri_stats_general(SEXP str)
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-06-09) Use StriContainerUTF8
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_stats_latex(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   R_len_t nstr = LENGTH(str);
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nstr);
+   R_len_t str_length = LENGTH(str);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, str_length);
    
    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;
    // see http://kile.sourceforge.net/team.php
@@ -120,11 +126,11 @@ SEXP stri_stats_latex(SEXP str)
    int* stats = INTEGER(ret);
    for (int i=0; i<lsAll; ++i) stats[i] = 0;
 
-   for (R_len_t i=0; i<nstr; ++i) {
-      if (ss->isNA(i)) continue; // ignore
+   for (R_len_t i=0; i<str_length; ++i) {
+      if (str_cont.isNA(i)) continue; // ignore
 
-      R_len_t     cn = ss->get(i).length();
-      const char* cs = ss->get(i).c_str();
+      R_len_t     cn = str_cont.get(i).length();
+      const char* cs = str_cont.get(i).c_str();
       UChar32 c;
       
       int state = stStandard;
@@ -133,7 +139,7 @@ SEXP stri_stats_latex(SEXP str)
          U8_NEXT(cs, j, cn, c);
          
          if (c == (UChar32)'\n')
-            error(MSG__NEWLINE_FOUND);
+            throw StriException(MSG__NEWLINE_FOUND);
             
          UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
          UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
@@ -241,14 +247,14 @@ SEXP stri_stats_latex(SEXP str)
             break;
       
             default:
-               error("DEBUG: stri_stats_latex() - this shouldn't happen :-(");
+               throw StriException("DEBUG: stri_stats_latex() - this shouldn't happen :-(");
          }
      }
    }
    
    stri__set_names(ret, lsAll, "CharsWord", "CharsCmdEnvir", "CharsWhite",
       "Words", "Cmds", "Envirs");
-   delete ss;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
