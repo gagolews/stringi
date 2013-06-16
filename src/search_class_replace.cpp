@@ -31,6 +31,7 @@
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-07) 
  * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
@@ -39,6 +40,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    replacement  = stri_prepare_arg_string(replacement, "replacement");
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
@@ -46,8 +48,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, vectorize_length));
  
-   char* buf = 0; // @TODO: consider calculating buflen a priori
-   R_len_t buf_len = 0;
+   String8 buf(0); // @TODO: calculate buf len a priori?
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -79,14 +80,10 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
          R_len_t     replacement_cur_n = replacement_cont.get(i).length();
          const char* replacement_cur_s = replacement_cont.get(i).c_str();
          R_len_t buf_need = str_cur_n+occurences.size()*replacement_cur_n-sumbytes;
-         if (!buf || buf_len < buf_need) {
-            if (buf) delete [] buf;
-            buf_len = buf_need;
-            buf = new char[buf_len]; // NUL not needed
-         }
+         buf.resize(buf_need);
          
          jlast = 0;
-         char* curbuf = buf;
+         char* curbuf = buf.data();
          deque<R_len_t_x2>::iterator iter = occurences.begin();
          for (; iter != occurences.end(); ++iter) {
             R_len_t_x2 match = *iter;
@@ -97,16 +94,16 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
             curbuf += replacement_cur_n;
          }
          memcpy(curbuf, str_cur_s+jlast, str_cur_n-jlast);
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf, buf_need, CE_UTF8));
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
       }
       else {
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change  
       }
    } 
  
-   if (buf) delete [] buf;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -122,6 +119,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-06) 
  * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
@@ -130,6 +128,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
    replacement  = stri_prepare_arg_string(replacement, "replacement");
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
@@ -138,8 +137,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, vectorize_length));
  
-   char* buf = 0; // @TODO: consider calculating buflen a priori
-   R_len_t buf_len = 0;
+   String8 buf(0); // @TODO: consider calculating buflen a priori
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -181,24 +179,20 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
          R_len_t     replacement_cur_n = replacement_cont.get(i).length();
          const char* replacement_cur_s = replacement_cont.get(i).c_str();
          R_len_t buf_need = str_cur_n+replacement_cur_n-(j-jlast);
-         if (!buf || buf_len < buf_need) {
-            if (buf) delete [] buf;
-            buf_len = buf_need;
-            buf = new char[buf_len]; // NUL not needed
-         }
-         memcpy(buf, str_cur_s, jlast);
-         memcpy(buf+jlast, replacement_cur_s, replacement_cur_n);
-         memcpy(buf+jlast+replacement_cur_n, str_cur_s+j, str_cur_n-j);
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf, buf_need, CE_UTF8));
+         buf.resize(buf_need);
+         memcpy(buf.data(), str_cur_s, jlast);
+         memcpy(buf.data()+jlast, replacement_cur_s, replacement_cur_n);
+         memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, str_cur_n-j);
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
       }
       else {
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change  
       }
    } 
  
-   if (buf) delete [] buf;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 

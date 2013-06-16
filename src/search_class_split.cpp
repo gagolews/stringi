@@ -33,6 +33,7 @@
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-14)
  * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty, use StriContainerInteger, StriContainerLogical, StriContainerCharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -42,6 +43,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
    R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8      str_cont(str, vectorize_length);
    StriContainerInteger   n_max_cont(n_max, vectorize_length);
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
@@ -111,4 +113,5 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

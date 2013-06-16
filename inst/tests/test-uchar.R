@@ -6,7 +6,7 @@
 #                      list(integer(0), NA_integer_))
 #    expect_equivalent(stri_chartype("aA0")[[1]],
 #                      c(2L, 1L, 9L))
-#    expect_equivalent(stri_chartype("ABC123abc\u104\u105\n")[[1]],
+#    expect_equivalent(stri_chartype("ABC123abc\u0104\u0105\n")[[1]],
 #                      c(1L, 1L, 1L, 9L, 9L, 9L, 2L, 2L, 2L, 1L, 2L, 15))
 # })
 # 

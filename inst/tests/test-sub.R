@@ -37,14 +37,14 @@ test_that("stri_sub<-", {
    #character(0) has priority over NA
    expect_identical(stri_sub(s)<-character(0), character(0))
    
-   s <- "\u0104a\u0105";  stri_sub(s,1,1) <- "x";   expect_identical(s, "xa\u0105")
-   s <- "\u0104a\u0105";  stri_sub(s,2,2) <- "x";   expect_identical(s, "\u0104x\u0105")
-   s <- "\u0104a\u0105";  stri_sub(s,3,3) <- "x";   expect_identical(s, "\u0104ax")
-   s <- "\u0104a\u0105";  stri_sub(s,9,9) <- "x";   expect_identical(s, "\u0104a\u0105x")
-   s <- "\u0104a\u0105";  stri_sub(s,0,0) <- "x";   expect_identical(s, "x\u0104a\u0105")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,1,1) <- "x";   expect_identical(s, "xa\u0105")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,2,2) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,3,3) <- "x";   expect_identical(s, "\U0010FFFFax")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,9,9) <- "x";   expect_identical(s, "\U0010FFFFa\u0105x")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,0,0) <- "x";   expect_identical(s, "x\U0010FFFFa\u0105")
 
-   s <- "\u0104a\u0105";  stri_sub(s,-3,length=1) <- "x";   expect_identical(s, "xa\u0105")
-   s <- "\u0104a\u0105";  stri_sub(s,-2,length=1) <- "x";   expect_identical(s, "\u0104x\u0105")
-   s <- "\u0104a\u0105";  stri_sub(s,-1,length=1) <- "x";   expect_identical(s, "\u0104ax")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,-3,length=1) <- "x";   expect_identical(s, "xa\u0105")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,-2,length=1) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
+   s <- "\U0010FFFFa\u0105";  stri_sub(s,-1,length=1) <- "x";   expect_identical(s, "\U0010FFFFax")
 
 })

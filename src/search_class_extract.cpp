@@ -29,6 +29,7 @@
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-08)
  * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -36,6 +37,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
@@ -81,6 +83,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -126,6 +129,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-08)
  * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -134,6 +138,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
    merge = stri_prepare_arg_logical(merge, "merge");
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(merge));
    
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
    StriContainerLogical merge_cont(merge, vectorize_length);
@@ -216,4 +221,5 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 
    UNPROTECT(2);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

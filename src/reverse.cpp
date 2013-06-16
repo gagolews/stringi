@@ -25,28 +25,64 @@
  * 
  *  
  * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly + StriContainerUTF8 (bug fix, do reversing manually)
  */
 SEXP stri_reverse(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
    
-   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
-
-   for (R_len_t i = ss->vectorize_init();
-         i != ss->vectorize_end();
-         i = ss->vectorize_next(i))
-   {
-      if (!ss->isNA(i)) {
-//         UErrorCode status = U_ZERO_ERROR;
-         ss->getWritable(i).reverse(); // Use ICU facilities
-      }
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t str_len = LENGTH(str);
+   StriContainerUTF8 str_cont(str, str_len); // writable, no recycle
+   
+   // STEP 1.
+   // Calculate the required buffer length
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<str_len; ++i) {
+      if (str_cont.isNA(i))
+         continue;
+         
+      R_len_t cursize = str_cont.get(i).size();
+      if (cursize > bufsize)
+         bufsize = cursize;
    }
    
+   // STEP 2.
+   // Alloc buffer & result vector
+   String8 buf(bufsize);
    SEXP ret;
-   PROTECT(ret = ss->toR());
-   delete ss;
+   PROTECT(ret = allocVector(STRSXP, str_len));
+   
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      R_len_t str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+      
+      R_len_t j, k;
+      UChar32 chr;
+      UBool isError = FALSE;
+      
+      for (j=str_cur_n, k=0; j>0; ) {
+         U8_PREV(str_cur_s, 0, j, chr); // go backwards
+         U8_APPEND((uint8_t*)buf.data(), k, str_cur_n, chr, isError);
+      }
+      
+      if (isError)
+         throw StriException(MSG__INTERNAL_ERROR);
+      
+      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), str_cur_n, CE_UTF8));
+   }
+   
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 

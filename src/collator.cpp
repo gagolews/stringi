@@ -22,10 +22,14 @@
 /** 
  * Create & set up an ICU Collator
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * @param collator_opts named R list or NA
  * @return NULL if no collator is requested (iff collator_opts equals NA);
  * otherwise, a Collator object that should be closed with ucol_close()
  * after use
+ * 
  * 
  * @version 0.1 (Marek Gagolewski)
  */

@@ -44,7 +44,7 @@
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
 */
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 {

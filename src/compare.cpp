@@ -148,9 +148,13 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
          &err);
    }
    
-   if (col) ucol_close(col);
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
    UNPROTECT(1);
    return ret;
+   
    STRI__ERROR_HANDLER_END({
       if (col) ucol_close(col);
    })
@@ -286,9 +290,13 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    }
 
   
-   if (col) ucol_close(col);
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
    UNPROTECT(1);
    return ret;
+   
    STRI__ERROR_HANDLER_END({
       if (col) ucol_close(col);
    })

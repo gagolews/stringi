@@ -25,6 +25,9 @@
  * 
  * If the object cannot be coerced, then an error will be generated
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * @param x a list
  * @param argname argument name (message formatting)
  * @return a list vector
@@ -61,6 +64,10 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  * 
  * If the object cannot be coerced, then an error will be generated
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x a character vector or an object that can be coerced to a character vector
  * @param argname argument name (message formatting)
  * @return character vector
@@ -96,6 +103,10 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  * 
  * If the object cannot be coerced, then an error will be generated
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x a numeric vector or an object that can be coerced to a numeric vector
  * @param argname argument name (message formatting)
  * @return numeric vector
@@ -128,6 +139,10 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  * 
  * If the object cannot be coerced, then an error will be generated
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x an integer vector or an object that can be coerced to an integer vector
  * @param argname argument name (message formatting)
  * @return integer vector
@@ -159,6 +174,10 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  * Prepare logical vector argument
  * 
  * If the object cannot be coerced, then an error will be generated
+ * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * 
  * @param x a logical vector or an object that can be coerced to a logical vector
  * @param argname argument name (message formatting)
@@ -194,6 +213,10 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  * 
  * If the object cannot be coerced, then an error will be generated
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x a raw vector or an object that can be coerced to a raw vector
  * @param argname argument name (message formatting)
  * @return raw vector
@@ -228,6 +251,10 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
  * @return always an R character vector with >=1 element
@@ -258,6 +285,10 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  * 
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
+ * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
@@ -290,6 +321,10 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
  * @return always an R integer vector with >=1 element
@@ -320,6 +355,10 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  * 
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
+ * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
@@ -353,6 +392,10 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
  * If there are 0 elements -> error
  * If there are >1 elements -> warning
  * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
+ * 
  * @param x R object to be checked/coerced
  * @param argname argument name (message formatting)
  * @return a boolean value
@@ -374,6 +417,10 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
  *
  * If the \code{loc} argument is incorrect, the an error is generated.
  * If something goes wrong, a warning is given.
+ * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * 
  * @param loc generally, a single character string
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
@@ -415,6 +462,10 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  *
  * If the \code{enc} argument is incorrect, the an error is generated.
  * If something goes wrong, a warning is given.
+ * 
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ * 
  * 
  * @param enc generally, a single character string
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string

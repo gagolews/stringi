@@ -87,6 +87,7 @@ SEXP stri_numbytes(SEXP s)
  * @return integer vector
  * @version 0.1 (Marcin Bujarski)
  * @version 0.2 (Marek Gagolewski) Multiple input encoding support
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_length(SEXP s)
 {
@@ -97,6 +98,8 @@ SEXP stri_length(SEXP s)
    UConverter* uconv = NULL;
    bool uconv_8bit = false;
    bool uconv_utf8 = false;
+   
+   STRI__ERROR_HANDLER_BEGIN
    
 /* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
 #define STRI_LENGTH_CALCULATE_UTF8 \
@@ -121,7 +124,7 @@ SEXP stri_length(SEXP s)
          if (IS_ASCII(q) || IS_LATIN1(q))
             retint[k] = nq;
          else if (IS_BYTES(q)) 
-            error(MSG__BYTESENC);
+            throw StriException(MSG__BYTESENC);
          else if (IS_UTF8(q)) {
             STRI_LENGTH_CALCULATE_UTF8
          }
@@ -150,7 +153,7 @@ SEXP stri_length(SEXP s)
                   UErrorCode err = U_ZERO_ERROR;
                   const char* name = ucnv_getName(uconv, &err);
                   if (U_FAILURE(err))
-                     error("could not query default converter");
+                     throw StriException("could not query default converter");
                   uconv_utf8 = !strncmp("UTF-8", name, 5);
                }
             }
@@ -183,10 +186,16 @@ SEXP stri_length(SEXP s)
    }
    UNPROTECT(1);
    
-   if (uconv)
+   if (uconv) {
       ucnv_close(uconv);
+      uconv = NULL;
+   }
       
    return ret;
+   STRI__ERROR_HANDLER_END({
+      if (uconv)
+        ucnv_close(uconv);
+   })
 }
 
 
