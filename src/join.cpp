@@ -40,6 +40,7 @@
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
+   STRI__ERROR_HANDLER_BEGIN
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    times = stri_prepare_arg_integer(times, "times"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(times));
@@ -62,9 +63,11 @@ SEXP stri_dup(SEXP str, SEXP times)
    
    // STEP 2.
    // Alloc buffer & result vector
-   char* buf = new char[bufsize+1];   
+   String8 buf(bufsize);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   
+      throw StriException("ala %d kota", 4);
 
    // STEP 3.
    // Duplicate
@@ -99,20 +102,20 @@ SEXP stri_dup(SEXP str, SEXP times)
       // we paste only "additional" duplicates
       R_len_t max_index = str_cur_n*times_cur;
       for (; str_last_index < max_index; str_last_index += str_cur_n) {
-         memcpy(buf+str_last_index, str_cur->c_str(), str_cur_n);
+         memcpy(buf.data()+str_last_index, str_cur->c_str(), str_cur_n);
       }
       
       // the result is always in UTF-8
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf, max_index, CE_UTF8));
+      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), max_index, CE_UTF8));
    }
    
    
    // STEP 4.
    // Clean up & finish
    
-   delete buf;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 

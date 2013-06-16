@@ -68,7 +68,6 @@
 #' 
 #' @name stringi-locale
 #' @rdname stringi-locale
-#' @concepts locale language 
 #' @family locale_management
 #' @family locale_sensitive
 #' @family stringi_general_topics

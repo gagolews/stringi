@@ -28,6 +28,7 @@
 #include "external.h"
 #include "messages.h"
 #include "macros.h"
+#include "exception.h"
 #include "container_base.h"
 #include "string8.h"
 #include "container_utf8.h"

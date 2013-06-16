@@ -71,7 +71,7 @@
 #' ICU: Converter names are case-insensitive. 
 #' Leading zeroes are ignored in sequences of digits (if further digits follow),
 #'  and all non-alphanumeric characters are ignored. Thus the strings 
-#'  "UTF-8", "utf_8", "u*T@f08" and "Utf 8" are equivalent. 
+#'  "UTF-8", "utf_8", "u*Tf08" and "Utf 8" are equivalent. 
 #'  
 #'  
 #' @section Character Encodings in R:
@@ -98,7 +98,6 @@
 #' TO DO ....
 #' 
 #' 
-#' @concepts character encoding utf8 utf-8 utf-16 utf16 uft-32 utf32 ascii iconv native bytes nfc normalization
 #' @name stringi-encoding
 #' @rdname string-encoding
 #' @aliases encoding

@@ -52,7 +52,6 @@
 #' @family search_replace
 #' @family search_split
 #' @family search_extract
-#' @concepts search regex collator character binary property class fixed
 #' @family stringi_general_topics
 invisible(NULL)
 

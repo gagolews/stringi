@@ -67,7 +67,6 @@
 #' A named R list object; missing options are left with default values.
 #' @export
 #' @aliases collator
-#' @concepts collator collation comparison ordering sorting fcd nfd locale language context
 #' @family locale_sensitive
 #' @family search_fixed
 #' 

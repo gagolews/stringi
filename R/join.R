@@ -70,7 +70,8 @@ stri_dup <- function(str, times) {
 #' 
 #' @return character vector
 #' 
-#' @TODO add family `join` (now Roxygen2 is broken)
+#' TODO add family `join` (now Roxygen2 is broken).....
+
 #' @examples
 #' c('abc','123','\u0105\u0104')%+%letters[1:5]
 #' 'ID_'%+%1:5
