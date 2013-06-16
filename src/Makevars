@@ -13,7 +13,6 @@ SRCS        =  stringi.cpp \
                container_listutf8.cpp \
                container_utf16.cpp \
                collator.cpp \
-               trim.cpp \
                casefold.cpp \
                join.cpp \
                justify.cpp \
@@ -35,6 +34,7 @@ SRCS        =  stringi.cpp \
                search_class_locate.cpp \
                search_class_replace.cpp \
                search_class_split.cpp \
+               search_class_trim.cpp \
                search_fixed_count.cpp \
                search_fixed_detect.cpp \
                search_fixed_replace.cpp \

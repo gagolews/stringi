@@ -32,60 +32,52 @@
  * 
  * @version 0.1 (Bartek Tartanus)  
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly & Use StrContainerCharClass
 */
 SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t npat = LENGTH(pattern);
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), npat);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    
-   StriContainerUTF8* ss = new StriContainerUTF8(str, nmax);
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
    
-   CharClass cc;
-   const char* last_pattern = 0;
-   for (R_len_t i=0; i<nmax; ++i) {
-      SEXP cur_pattern = STRING_ELT(pattern, i%npat); // TO DO: same patterns should form a sequence
-      
-      if (ss->isNA(i) || cur_pattern == NA_STRING) {
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   { 
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
       
-      if (last_pattern != CHAR(cur_pattern)) {
-         last_pattern = CHAR(cur_pattern);
-         cc = CharClass(cur_pattern); // it's a simple struct => fast copy
-      }
-      
-      if (cc.isNA()) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      R_len_t curn = ss->get(i).length();
-      const char* curs = ss->get(i).c_str();
+      CharClass pattern_cur = pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j;
       R_len_t jlast1 = 0;
-      R_len_t jlast2 = curn;
+      R_len_t jlast2 = str_cur_n;
       UChar32 chr;
       
       if (left) {
-         for (j=0; j<curn; ) {
-            U8_NEXT(curs, j, curn, chr); // "look ahead"
-            if (cc.test(chr)) {
+         for (j=0; j<str_cur_n; ) {
+            U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
+            if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
             jlast1 = j;
          }
       }
       
-      if (right && jlast1 < curn) {
-         for (j=curn; j>0; ) {
-            U8_PREV(curs, 0, j, chr); // "look behind"
-            if (cc.test(chr)) {
+      if (right && jlast1 < str_cur_n) {
+         for (j=str_cur_n; j>0; ) {
+            U8_PREV(str_cur_s, 0, j, chr); // "look behind"
+            if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
             jlast2 = j;
@@ -93,12 +85,12 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       }
       
       // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i, mkCharLenCE(curs+jlast1, (jlast2-jlast1), CE_UTF8));
+      SET_STRING_ELT(ret, i, mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
    }
 
-   delete ss;
    UNPROTECT(1);
    return ret;  
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -111,6 +103,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
  * 
  * @version 0.1 (Bartek Tartanus)  
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
 */
 SEXP stri_trim_both(SEXP str, SEXP pattern)
 {

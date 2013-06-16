@@ -67,9 +67,10 @@ SEXP stri_test_Rmark(SEXP s)
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str));
-   delete ss;
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 ss(str, LENGTH(str));
    return R_NilValue;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -80,9 +81,10 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   StriContainerUTF8* ss = new StriContainerUTF8(str, LENGTH(str));
-   delete ss;
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 ss(str, LENGTH(str));
    return R_NilValue;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 

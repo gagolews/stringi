@@ -30,7 +30,7 @@
 const Normalizer2* stri__normalizer_get(SEXP type)
 {
    if (!isInteger(type) || LENGTH(type) != 1)
-      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually   
+      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
    int _type = INTEGER(type)[0];
    
    UErrorCode status = U_ZERO_ERROR;
@@ -58,7 +58,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
          break;
          
       default:
-         error(MSG__INCORRECT_INTERNAL_ARG);
+         error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
    }
    
    return normalizer;
@@ -75,34 +75,34 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  * @return character vector
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16 & ICU facilities
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_enc_nf(SEXP str, SEXP type)
 {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
+   R_len_t str_length = LENGTH(str);
+
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here
 
-   
-   StriContainerUTF16* ss = new StriContainerUTF16(str, LENGTH(str), false); // writable, no recycle
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
 
-   for (R_len_t i = ss->vectorize_init();
-         i != ss->vectorize_end();
-         i = ss->vectorize_next(i))
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
    {
-      if (!ss->isNA(i)) {
+      if (!str_cont.isNA(i)) {
          UErrorCode status = U_ZERO_ERROR;
-         ss->set(i, normalizer->normalize(ss->get(i), status));
+         str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
          if (U_FAILURE(status))
-            error(MSG__RESOURCE_ERROR_APPLY);
+            throw StriException(MSG__RESOURCE_ERROR_APPLY);
       }
    }
    
-   SEXP ret;
-   PROTECT(ret = ss->toR());
-   delete ss;
    // normalizer shall not be deleted at all
-   UNPROTECT(1);
-   return ret;
+   return str_cont.toR();
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -113,39 +113,41 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
  * @param type normalization type [internal]
  * @return logical vector
  * @version 0.1 (Marek Gagolewski) - use StriContainerUTF16
+ * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
 SEXP stri_enc_isnf(SEXP str, SEXP type)
 {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
+   R_len_t str_length = LENGTH(str);
+
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here
 
-   R_len_t nstr = LENGTH(str);
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, str_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, nstr));
-   int* retlog = LOGICAL(ret);
-   
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nstr);
+   PROTECT(ret = allocVector(LGLSXP, str_length));
+   int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = ss->vectorize_init();
-         i != ss->vectorize_end();
-         i = ss->vectorize_next(i))
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
    {
-      if (!ss->isNA(i)) {
-         UErrorCode status = U_ZERO_ERROR;
-         retlog[i] = normalizer->isNormalized(ss->get(i), status);
-         if (U_FAILURE(status))
-            error(MSG__RESOURCE_ERROR_APPLY);
+      if (!str_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
       }
-      else
-         retlog[i] = NA_LOGICAL;
+    
+      UErrorCode status = U_ZERO_ERROR;
+      ret_tab[i] = normalizer->isNormalized(str_cont.get(i), status);
+      if (U_FAILURE(status))
+         throw StriException(MSG__RESOURCE_ERROR_APPLY);         
    }
    
-
-   delete ss;
    // normalizer shall not be deleted at all
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
