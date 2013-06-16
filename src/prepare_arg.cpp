@@ -21,6 +21,42 @@
 
 
 /**
+ * Prepare list of character vectors argument
+ * 
+ * If the object cannot be coerced, then an error will be generated
+ * 
+ * @param x a list
+ * @param argname argument name (message formatting)
+ * @return a list vector
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-16)
+ */
+SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
+{
+   if (!isVectorList(x))
+      error(MSG__ARG_EXPECTED_LIST_STRING, argname);
+      
+   R_len_t narg = LENGTH(x);
+   if (narg <= 0) return x;
+   
+   if (NAMED(x) > 0) {
+      // the object should be copied
+      SEXP xold = x;
+      PROTECT(x = allocVector(VECSXP, narg));
+      for (R_len_t i=0; i<narg; ++i)
+         SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(xold, i), argname));
+      UNPROTECT(1);
+   }
+   else {
+      // the object may be modified in place
+      for (R_len_t i=0; i<narg; ++i)
+         SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(x, i), argname));
+   }
+   return x;
+}
+
+
+/**
  * Prepare character vector argument
  * 
  * If the object cannot be coerced, then an error will be generated
@@ -384,8 +420,9 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
  *    to work as a default charset selector? (defaults \code{true})
  * @param argname argument name (message formatting)
- * @return string a \code{C} string with extracted locale name
- * (NULL for default charset so that it can be passed to ICU's \code{ucnv_open()}
+ * @return a \code{C} string with extracted locale name
+ * (NULL for default charset so that it can be passed to ICU's \code{ucnv_open()})
+ * Do not delete.
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - argname added

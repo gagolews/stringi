@@ -10,6 +10,7 @@ SRCS        =  stringi.cpp \
                ICU_settings.cpp \
                container_base.cpp \
                container_utf8.cpp \
+               container_listutf8.cpp \
                container_utf16.cpp \
                collator.cpp \
                trim.cpp \

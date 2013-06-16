@@ -37,15 +37,16 @@
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
  * @version 0.3 (Marek Gagolewski, 2013-06-15) use StriContainerInteger
+ * @version 0.4 (Marek Gagolewski, 2013-06-16) make StriException friendly
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
-   STRI__ERROR_HANDLER_BEGIN
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    times = stri_prepare_arg_integer(times, "times"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(times));
    if (vectorize_length <= 0) return allocVector(STRSXP, 0);
    
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerInteger times_cont(times, vectorize_length);
    
@@ -66,8 +67,6 @@ SEXP stri_dup(SEXP str, SEXP times)
    String8 buf(bufsize);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, vectorize_length));
-   
-      throw StriException("ala %d kota", 4);
 
    // STEP 3.
    // Duplicate
@@ -133,6 +132,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  *  
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException friendly
 */
 SEXP stri_join2(SEXP e1, SEXP e2)
 {
@@ -146,6 +146,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
    if (e1_length <= 0) return e1;
    if (e2_length <= 0) return e2;
    
+   STRI__ERROR_HANDLER_BEGIN   
    StriContainerUTF8 e1_cont(e1, vectorize_length);
    StriContainerUTF8 e2_cont(e2, vectorize_length);
    
@@ -162,7 +163,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
    }
    
    // 2. Create buf & retval
-   char* buf = new char[nchar+1]; // NULL not needed, but nchar could be == 0
+   String8 buf(nchar);
    SEXP ret;
    PROTECT(ret = allocVector(STRSXP, vectorize_length)); // output vector
    
@@ -183,20 +184,20 @@ SEXP stri_join2(SEXP e1, SEXP e2)
       if (cur_string_1 != last_string_1) {
          last_string_1 = cur_string_1;
          last_buf_idx = cur_string_1->length();
-         memcpy(buf, cur_string_1->c_str(), last_buf_idx);
+         memcpy(buf.data(), cur_string_1->c_str(), last_buf_idx);
       }
       
       const String8* cur_string_2 = &(e2_cont.get(i));
       R_len_t  cur_len_2 = cur_string_2->length();
-      memcpy(buf+last_buf_idx, cur_string_2->c_str(), cur_len_2);
+      memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), cur_len_2);
       // the result is always in UTF-8
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf, last_buf_idx+cur_len_2, CE_UTF8));
+      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), last_buf_idx+cur_len_2, CE_UTF8));
    }
    
    // 4. Cleanup & finish
-   delete buf;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -204,7 +205,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
 
 /**
  * Concatenate Character Vectors
- * @param s list of character vectors
+ * @param strlist list of character vectors
  * @param sep single string
  * @param collapse single string
  * @return character vector
@@ -212,89 +213,80 @@ SEXP stri_join2(SEXP e1, SEXP e2)
  *  
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8's vectorization
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly, useStriContainerListUTF8
  */
-SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
+SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
 {
-   // 1. Check whether s is a list, prepare string agrs,
-   //    calculate length of the longest char. vect.
-   if (!isVectorList(s))
-      error(MSG__INCORRECT_INTERNAL_ARG); // this shouldn't happen (see R call)
-   R_len_t narg = LENGTH(s);
-   if (narg <= 0) return stri__vector_empty_strings(0);
-   
-#ifndef NDEBUG
-   // check whether we are free to change s
-   // if this has been called in R as list(...) - it must be OK
-   if (NAMED(s) > 0) error(MSG__INTERNAL_ERROR);
-#endif
-   R_len_t vectorize_length = 0; // length of the longest character vector
-   for (R_len_t i=0; i<narg; ++i) {
-      SEXP cur = stri_prepare_arg_string(VECTOR_ELT(s, i), "...");  
-      R_len_t ncur = LENGTH(cur);
-      SET_VECTOR_ELT(s, i, cur); // Here we are sure that this is legal and does not influence other objects
-      if (ncur <= 0) return stri__vector_empty_strings(0);
-      if (ncur > vectorize_length) vectorize_length = ncur;
+   strlist = stri_prepare_arg_list_string(strlist, "...");
+   R_len_t strlist_length = LENGTH(strlist);
+   if (strlist_length <= 0) return stri__vector_empty_strings(0);
+
+   // get length of the longest character vector
+   R_len_t vectorize_length = 0; 
+   for (R_len_t i=0; i<strlist_length; ++i) {
+      R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
+      if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
+      if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
    }
-   
-   // 2. Prepare sep
+
    sep = stri_prepare_arg_string_1(sep, "sep");   
    if (STRING_ELT(sep, 0) == NA_STRING)
       return stri__vector_NA_strings(vectorize_length);
+
+   // an often occuring case - we have a specialized function for this :-)
+   if (LENGTH(STRING_ELT(sep,0)) == 0 && strlist_length == 2) {
+      if (isNull(collapse))
+         return stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
+      else
+         return stri_flatten(stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1)), collapse);
+   }
+   
+
+   
+   SEXP ret;
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 ssep(sep, 1);
    const char* sep_char = ssep.get(0).c_str();
    R_len_t     sep_len  = ssep.get(0).length();
    
    
-   // an often occuring case - we have a specialized function for this :-)
-   if (sep_len == 0 && narg == 2) {
-      if (isNull(collapse))
-         return stri_join2(VECTOR_ELT(s, 0), VECTOR_ELT(s, 1));
-      else
-         return stri_flatten(stri_join2(VECTOR_ELT(s, 0), VECTOR_ELT(s, 1)), collapse);
-   }
+   StriContainerListUTF8 strlist_cont(strlist, vectorize_length);
    
-   // 3. Convert character vectors to be concatenated
-   // @TODO: add StriContainerListUTF8 class
-   StriContainerUTF8** ss = new StriContainerUTF8*[narg];
-   for (R_len_t i=0; i<narg; ++i) {
-      ss[i] = new StriContainerUTF8(VECTOR_ELT(s, i), vectorize_length);
-   }
    
    // 4. Get buf size
-   R_len_t nchar = 0;
+   R_len_t buf_maxbytes = 0;
    for (R_len_t i=0; i<vectorize_length; ++i) {
       R_len_t curchar = 0;
-      for (R_len_t j=0; j<narg; ++j) {
-         if (ss[j]->isNA(i)) {
+      for (R_len_t j=0; j<strlist_length; ++j) {
+         if (strlist_cont.get(j).isNA(i)) {
             curchar = 0;
             break;
          }
-         curchar += ss[j]->get(i).length() + ((j<narg-1)?sep_len:0);
+         curchar += strlist_cont.get(j).get(i).length() + ((j<strlist_length-1)?sep_len:0);
       }
       
-      if (curchar > nchar) nchar = curchar;
+      if (curchar > buf_maxbytes) buf_maxbytes = curchar;
    }
    
    // 5. Create ret val
-   char* buf = new char[nchar+1];
-   SEXP ret;
+   String8 buf(buf_maxbytes);
    PROTECT(ret = allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i=0; i<vectorize_length; ++i) {
       bool anyNA = false;
       R_len_t cursize = 0;
-      for (R_len_t j=0; j<narg; ++j) {
-         if (ss[j]->isNA(i)) {
+      for (R_len_t j=0; j<strlist_length; ++j) {
+         if (strlist_cont.get(j).isNA(i)) {
             anyNA = true;
             break;
          }
          
-         const String8* curstring = &(ss[j]->get(i));
-         memcpy(buf+cursize, curstring->c_str(), curstring->length());
+         const String8* curstring = &(strlist_cont.get(j).get(i));
+         memcpy(buf.data()+cursize, curstring->c_str(), curstring->length());
          cursize += curstring->length();
          
-         if (j < narg-1 && sep_len > 0) {
-            memcpy(buf+cursize, sep_char, sep_len);
+         if (j < strlist_length-1 && sep_len > 0) {
+            memcpy(buf.data()+cursize, sep_char, sep_len);
             cursize += sep_len;
          }
       }
@@ -302,16 +294,12 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
       if (anyNA)
          SET_STRING_ELT(ret, i, NA_STRING);
       else
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf, cursize, CE_UTF8));
+         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), cursize, CE_UTF8));
    }
    
    
-   // 6. Clean up & return
-   for (R_len_t i=0; i<narg; ++i)  // |
-      delete ss[i];                // | @TODO: add StriContainerListUTF8 class
-   delete [] ss;                   // |
-   delete buf;
    UNPROTECT(1);
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
    
    if (isNull(collapse))
       return ret;
@@ -331,14 +319,15 @@ SEXP stri_join(SEXP s, SEXP sep, SEXP collapse)
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
 SEXP stri_flatten_nosep(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   
    R_len_t str_length = LENGTH(str);
    if (str_length <= 0) return str;
    
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, str_length);
    
    // 1. Get required buffer size
@@ -351,11 +340,11 @@ SEXP stri_flatten_nosep(SEXP str)
    }
    
    // 2. Fill the buf!
-   char* buf = new char[nchar+1]; // NULL not needed, but nchar could be == 0
+   String8 buf(nchar);
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf+cur, str_cont.get(i).c_str(), ncur);
+      memcpy(buf.data()+cur, str_cont.get(i).c_str(), ncur);
       cur += ncur;
    }
    
@@ -363,10 +352,10 @@ SEXP stri_flatten_nosep(SEXP str)
    // 3. Get ret val & solongfarewellaufwiedersehenadieu
    SEXP ret; 
    PROTECT(ret = allocVector(STRSXP, 1));
-   SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nchar, CE_UTF8));
-   delete buf;
+   SET_STRING_ELT(ret, 0, mkCharLenCE(buf.data(), nchar, CE_UTF8));
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -381,6 +370,7 @@ SEXP stri_flatten_nosep(SEXP str)
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Bartek Tartanus) - collapse arg added (1 sep supported)
  * @version 0.3 (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
+ * @version 0.4 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
 SEXP stri_flatten(SEXP str, SEXP collapse)
 {
@@ -393,7 +383,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    if (STRING_ELT(collapse, 0) == NA_STRING)
       return stri__vector_NA_strings(1);
    
-   
+   STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, str_length);
    StriContainerUTF8 collapse_cont(collapse, 1);
    R_len_t collapse_nbytes = collapse_cont.get(0).length();
@@ -412,14 +402,14 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
 
    
    // 2. Fill the buf!
-   char* buf = new char[nbytes+1]; // NULL not needed, but nbytes could be == 0
+   String8 buf(nbytes);
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf+cur, str_cont.get(i).c_str(), ncur);
+      memcpy(buf.data()+cur, str_cont.get(i).c_str(), ncur);
       cur += ncur;
       if (i < str_length-1 && collapse_nbytes > 0) {
-         memcpy(buf+cur, collapse_s, collapse_nbytes);
+         memcpy(buf.data()+cur, collapse_s, collapse_nbytes);
          cur += collapse_nbytes;  
       }
    }
@@ -428,9 +418,9 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    // 3. Get ret val & solongfarewellaufwiedersehenadieu
    SEXP ret; 
    PROTECT(ret = allocVector(STRSXP, 1));
-   SET_STRING_ELT(ret, 0, mkCharLenCE(buf, nbytes, CE_UTF8));
-   delete buf;
+   SET_STRING_ELT(ret, 0, mkCharLenCE(buf.data(), nbytes, CE_UTF8));
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 

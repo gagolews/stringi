@@ -30,20 +30,23 @@
  *  \code{Charset.native} == \code{stri_enc_info()})
  * 
  *  @version 0.1 (Marek Gagolewski)
+ *  @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
 */
 SEXP stri_info()
 {
+   STRI__ERROR_HANDLER_BEGIN
    const R_len_t infosize = 4;
    SEXP vals;
    
    PROTECT(vals = allocVector(VECSXP, infosize));
    SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
    SET_VECTOR_ELT(vals, 1, stri_locale_info(R_NilValue));
-   SET_VECTOR_ELT(vals, 2, mkString("UTF-8")); // this is fixed
+   SET_VECTOR_ELT(vals, 2, stri__make_character_vector(2, "UTF-8", "UTF-16")); // this is fixed
    SET_VECTOR_ELT(vals, 3, stri_enc_info(R_NilValue));
    
    stri__set_names(vals, infosize,
       "Unicode.version", "Locale", "Charset.internal", "Charset.native");
    UNPROTECT(1);
    return vals;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

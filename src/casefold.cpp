@@ -30,31 +30,36 @@
  *  @param type internal code of case conversion type 
  *  @param locale single string identifying the locale ("" or NULL for default locale)
  *  @return character vector
- *  
+ * 
+ * 
+ * ////  TO DO
+ * ////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
+ * //   UErrorCode err = U_ZERO_ERROR;
+ * //   BreakIterator* br = BreakIterator::createWordInstance(loc, err); // should be freed after use
+ * ////   if (!U_SUCCESS(err))
+ * //   cerr << (err == U_ZERO_ERROR) << endl;
+ * //   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
+ * //   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
+ *
+ * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
+ * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException friendly
 */
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   Locale loc = Locale::createFromName(qloc);
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   
+   STRI__ERROR_HANDLER_BEGIN
+   
    if (!isInteger(type) || LENGTH(type) != 1)
-      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
-      
+      throw StriException(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually     
    int _type = INTEGER(type)[0];
    
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   Locale loc = Locale::createFromName(qloc); // this will be freen automatically
+
    StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
-   
-   
-////  TO DO
-////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
-//   UErrorCode err = U_ZERO_ERROR;
-//   BreakIterator* br = BreakIterator::createWordInstance(loc, err); // should be freed after use
-////   if (!U_SUCCESS(err))
-//   cerr << (err == U_ZERO_ERROR) << endl;
-//   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
-//   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
    
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -85,7 +90,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
    
    SEXP ret;
    PROTECT(ret = str_cont.toR());
-   // normalizer shall not be deleted at all
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

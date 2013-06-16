@@ -47,6 +47,32 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 
 
 /** 
+ * Create a character vector with given C strings
+ * 
+ * @param numnames number of strings
+ * @param ... variable number of C strings
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-16)
+*/
+SEXP stri__make_character_vector(R_len_t numnames, ...)
+{
+   va_list arguments;                    
+   SEXP names;
+   PROTECT(names = allocVector(STRSXP, numnames));
+   
+   va_start(arguments, numnames);         
+   for (R_len_t i = 0; i < numnames; ++i)        
+      SET_STRING_ELT(names, i, mkChar(va_arg(arguments, char*)));
+   va_end(arguments);              
+   
+   UNPROTECT(1);
+   return names;
+}
+
+
+
+/** 
  *  Calculate the length of the output vector when applying a vectorized
  *  operation on >= 2  vectors
  * 

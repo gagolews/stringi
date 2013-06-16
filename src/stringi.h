@@ -33,6 +33,7 @@
 #include "string8.h"
 #include "container_utf8.h"
 #include "container_utf16.h"
+#include "container_listutf8.h"
 #include "container_integer.h"
 #include "container_logical.h"
 #include "charclass.h"
@@ -70,6 +71,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);               // DONE
 
 // common.cpp
 void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
+SEXP stri__make_character_vector(R_len_t numnames, ...);            // DONE
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...);       // DONE
 SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
@@ -95,7 +97,7 @@ SEXP stri_info();                                      // DONE
 SEXP stri_dup(SEXP str, SEXP times);                   // DONE
 SEXP stri_flatten(SEXP str, SEXP collapse);            // DONE
 SEXP stri_flatten_nosep(SEXP str);                     // DONE
-SEXP stri_join(SEXP str, SEXP sep, SEXP collapse);     // DONE
+SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse); // DONE
 SEXP stri_join2(SEXP e1, SEXP e2);                     // DONE
 
 
@@ -110,6 +112,7 @@ SEXP stri_isempty(SEXP str);          // DONE
 
 
 // prepare_arg.cpp:
+SEXP        stri_prepare_arg_list_string(SEXP x, const char* argname);     // DONE
 SEXP        stri_prepare_arg_string(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_double(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_integer(SEXP x, const char* argname);         // DONE

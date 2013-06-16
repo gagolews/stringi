@@ -28,7 +28,7 @@
 #' \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library
 #' \code{Locale} -- contains information on default locale,
 #' as returned by \code{stri_locale_info()}
-#' \code{Charset.internal} -- always \code{"UTF-8"}
+#' \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")}
 #' \code{Charset.native} -- information on default encoding,
 #' as returned by \code{stri_enc_info()}
 #' 

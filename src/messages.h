@@ -132,6 +132,9 @@
    
 #define MSG__ARG_EXPECTED_STRING \
    "argument `%s` should be a character vector (or an object coercible to)"
+   
+#define MSG__ARG_EXPECTED_LIST_STRING \
+   "argument `%s` should be a list of character vectors (or an object coercible to)"
 
 #define MSG__ARG_EXPECTED_RAW \
    "argument `%s` should be a raw vector (or an object coercible to)"

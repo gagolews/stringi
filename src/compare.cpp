@@ -20,7 +20,7 @@
 
 
 
-/** compare 2 strings in UTF8, Unicode codepoint comparison-only
+/** compare 2 strings in UTF8, Unicode codepoint comparison-only [internal]
  * @param str1 string in UTF8
  * @param str2 string in UTF8
  * @param n1 length of str1
@@ -59,11 +59,14 @@ int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_l
  * @return integer vector
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
 SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   
+   STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
    
    StriContainerUTF8 e1_cont(e1, vectorize_length);
@@ -91,6 +94,7 @@ SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
 
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -104,15 +108,19 @@ SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
  * @return integer vector
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
-   UCollator* col = stri__ucol_open(collator_opts);
+   e1 = stri_prepare_arg_string(e1, "e1");
+   e2 = stri_prepare_arg_string(e2, "e2");
+   
+   UCollator* col = NULL;
+   col = stri__ucol_open(collator_opts);
    if (!col)
       return stri_compare_codepoints(e1, e2);
       
-   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
-   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   STRI__ERROR_HANDLER_BEGIN
    
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
    
@@ -143,6 +151,9 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
    if (col) ucol_close(col);
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END({
+      if (col) ucol_close(col);
+   })
 }
 
 
@@ -202,14 +213,17 @@ struct StriSortCodepoints {
  * @return integer vector (permutation)
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
-   UCollator* col = stri__ucol_open(collator_opts);      
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   R_len_t vectorize_length = LENGTH(str);
+   UCollator* col = NULL;
+   col = stri__ucol_open(collator_opts);    
    
+   STRI__ERROR_HANDLER_BEGIN  
+   R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, vectorize_length));
@@ -275,6 +289,9 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    if (col) ucol_close(col);
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END({
+      if (col) ucol_close(col);
+   })
 }
 
 
