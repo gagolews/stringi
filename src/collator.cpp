@@ -25,18 +25,18 @@
  * WARNING: this fuction is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  * 
- * @param collator_opts named R list or NA
- * @return NULL if no collator is requested (iff collator_opts equals NA);
+ * @param opts_collator named R list or NA
+ * @return NULL if no collator is requested (iff opts_collator equals NA);
  * otherwise, a Collator object that should be closed with ucol_close()
  * after use
  * 
  * 
  * @version 0.1 (Marek Gagolewski)
  */
-UCollator* stri__ucol_open(SEXP collator_opts)
+UCollator* stri__ucol_open(SEXP opts_collator)
 {
-   if (isVectorList(collator_opts)) {
-      R_len_t narg = LENGTH(collator_opts);
+   if (isVectorList(opts_collator)) {
+      R_len_t narg = LENGTH(opts_collator);
       
       if (narg <= 0) { // no custom settings - Collator'll be default-as-hell
          UErrorCode err = U_ZERO_ERROR;
@@ -47,7 +47,7 @@ UCollator* stri__ucol_open(SEXP collator_opts)
          return col;
       }
       
-      SEXP names = getAttrib(collator_opts, R_NamesSymbol);
+      SEXP names = getAttrib(opts_collator, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
          error(MSG__RESOURCE_ERROR_GET);
       
@@ -59,7 +59,7 @@ UCollator* stri__ucol_open(SEXP collator_opts)
             error(MSG__RESOURCE_ERROR_GET);
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "locale")) {
-            const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(collator_opts, i), "locale", true);
+            const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true);
             col = ucol_open(qloc, &err);
             break;
          }
@@ -82,26 +82,26 @@ UCollator* stri__ucol_open(SEXP collator_opts)
          if (!strcmp(curname, "locale")) {
             // ignore            
          } else if  (!strcmp(curname, "strength")) {
-            SEXP val = stri_prepare_arg_integer_1(VECTOR_ELT(collator_opts, i), "strength");
+            SEXP val = stri_prepare_arg_integer_1(VECTOR_ELT(opts_collator, i), "strength");
             ucol_setAttribute(col, UCOL_STRENGTH, (UColAttributeValue)(INTEGER(val)[0]-1), &err);
          } else if  (!strcmp(curname, "alternate_shifted")) {
-            SEXP val = stri_prepare_arg_string_1(VECTOR_ELT(collator_opts, i), "alternate_shifted");
+            SEXP val = stri_prepare_arg_string_1(VECTOR_ELT(opts_collator, i), "alternate_shifted");
             ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, LOGICAL(val)[0]?UCOL_SHIFTED:UCOL_NON_IGNORABLE, &err);
          } else if  (!strcmp(curname, "french")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(collator_opts, i), "french");
+            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_collator, i), "french");
             ucol_setAttribute(col, UCOL_CASE_FIRST,
                (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:(LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST)), &err);
          } else if  (!strcmp(curname, "uppercase_first")) {
-            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "uppercase_first");
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "uppercase_first");
             ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "case_level")) {
-            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "case_level");
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "case_level");
             ucol_setAttribute(col, UCOL_CASE_LEVEL, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "normalization")) {
-            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "normalization");
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "normalization");
             ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else if  (!strcmp(curname, "numeric")) {
-            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(collator_opts, i), "numeric");
+            bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "numeric");
             ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, val_bool?UCOL_ON:UCOL_OFF, &err);
          } else {
             warning(MSG__INCORRECT_COLLATOR_OPTION, curname);
@@ -116,8 +116,8 @@ UCollator* stri__ucol_open(SEXP collator_opts)
    }
    else {
       // arg is not a list - is it a single NA then?
-      collator_opts = stri_prepare_arg_logical_1(collator_opts, "collator_opts_not_list");
-      if (LOGICAL(collator_opts)[0] != NA_LOGICAL)
+      opts_collator = stri_prepare_arg_logical_1(opts_collator, "opts_collator_not_list");
+      if (LOGICAL(opts_collator)[0] != NA_LOGICAL)
          error(MSG__INCORRECT_INTERNAL_ARG);
       return NULL;
    }

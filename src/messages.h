@@ -27,6 +27,9 @@
 #define MSG__INCORRECT_COLLATOR_OPTION \
    "incorrect collator option: `%s`. ignoring"
 
+#define MSG__INCORRECT_REGEX_OPTION \
+   "incorrect regex option: `%s`. ignoring"
+
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\u%08.8x"
 
@@ -132,7 +135,10 @@
    
 #define MSG__ARG_EXPECTED_STRING \
    "argument `%s` should be a character vector (or an object coercible to)"
-   
+
+#define MSG__ARG_EXPECTED_LIST \
+   "argument `%s` should be a list"
+
 #define MSG__ARG_EXPECTED_LIST_STRING \
    "argument `%s` should be a list of character vectors (or an object coercible to)"
 

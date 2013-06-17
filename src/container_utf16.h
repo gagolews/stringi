@@ -32,12 +32,12 @@
  */
 class StriContainerUTF16 : public StriContainerBase {
    
-   private:
+   protected:
       
       UnicodeString** str;       ///< data - \code{UnicodeString}s 
-      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
+      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher} [TO BE DELETED]
 #ifndef NDEBUG
-      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
+      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check) [TO BE DELETED]
 #endif
 
 
@@ -115,7 +115,7 @@ class StriContainerUTF16 : public StriContainerBase {
          *(str[i%n]) = s; // in fact, "%n" is not necessary
       }
       
-      RegexMatcher* vectorize_getMatcher(R_len_t i);
+      RegexMatcher* vectorize_getMatcher(R_len_t i); // [TO BE DELETED]
 };
 
 #endif

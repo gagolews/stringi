@@ -104,6 +104,8 @@ test_that("stri_count_regex", {
    s <- stri_dup(s,1:3)
    expect_warning(stri_count_regex(s,c("o","a")))
    expect_error(stri_count_regex(s,"[[:numbers:]]"))
+   expect_identical(stri_count_regex("ALA","ala"), 0L)
+   expect_identical(stri_count_regex("ALA","ala",stri_opts_regex(case_insensitive=TRUE)), 1L)
    expect_identical(stri_count_regex(s,"m [[a-z]]"), 1:3*7L)
    expect_identical(stri_count_regex(s,"m, [[a-z]]"), 1:3)
    expect_identical(stri_count_regex(s,"[[:digit:]]"), c(0L,0L,0L))

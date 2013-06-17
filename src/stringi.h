@@ -33,6 +33,7 @@
 #include "string8.h"
 #include "container_utf8.h"
 #include "container_utf16.h"
+#include "container_regex.h"
 #include "container_listutf8.h"
 #include "container_integer.h"
 #include "container_logical.h"
@@ -232,7 +233,7 @@ SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP collator_opts);  // ...
 
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern);                            // DONE
-SEXP stri_count_regex(SEXP str, SEXP pattern);                             // DONE
+SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);            // DONE
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                        // DONE
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern);                      // DONE
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern);                       // ...TO DO...

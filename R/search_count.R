@@ -105,6 +105,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' @return integer vector, with number of matches for vectorized
 #' search task
 #' 
@@ -120,9 +121,9 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' @export
 #' @family search_count
 #' @family search_regex
-stri_count_regex <- function(str, pattern) {
+stri_count_regex <- function(str, pattern, opts_regex=list()) {
    # prepare_arg done internally
-   .Call("stri_count_regex", str, pattern, PACKAGE="stringi")
+   .Call("stri_count_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 

@@ -39,7 +39,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_compare_codepoints,         2),
    STRI__MAKE_CALL_METHOD(stri_count_charclass,            2),
    STRI__MAKE_CALL_METHOD(stri_count_fixed,                3),
-   STRI__MAKE_CALL_METHOD(stri_count_regex,                2),
+   STRI__MAKE_CALL_METHOD(stri_count_regex,                3),
    STRI__MAKE_CALL_METHOD(stri_detect_charclass,           2),
    STRI__MAKE_CALL_METHOD(stri_detect_fixed,               3),
    STRI__MAKE_CALL_METHOD(stri_detect_regex,               2),

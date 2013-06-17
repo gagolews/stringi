@@ -12,6 +12,7 @@ SRCS        =  stringi.cpp \
                container_utf8.cpp \
                container_listutf8.cpp \
                container_utf16.cpp \
+               container_regex.cpp \
                collator.cpp \
                casefold.cpp \
                join.cpp \

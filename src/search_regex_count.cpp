@@ -28,19 +28,22 @@
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16's vectorization
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.4 (Marek Gagolewski, 2013-06-17) use StriContainerRegexPattern + opts_reges
  */
-SEXP stri_count_regex(SEXP str, SEXP pattern)
+SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t vectorization_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    // this will work for vectorization_length == 0:
    
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   
    STRI__ERROR_HANDLER_BEGIN
    
    StriContainerUTF16 str_cont(str, vectorization_length); 
    // MG: tried StriContainerUTF8 + utext_openUTF8 - this was slower
-   StriContainerUTF16 pattern_cont(pattern, vectorization_length);
+   StriContainerRegexPattern pattern_cont(pattern, vectorization_length, pattern_flags);
  
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, vectorization_length));
@@ -51,7 +54,7 @@ SEXP stri_count_regex(SEXP str, SEXP pattern)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN((&str_cont), (&pattern_cont), INTEGER(ret)[i] = NA_INTEGER, INTEGER(ret)[i] = 0)
       
-      RegexMatcher *matcher = pattern_cont.vectorize_getMatcher(i); // will be deleted automatically
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       int count = 0;
       bool found = (bool)matcher->find();
