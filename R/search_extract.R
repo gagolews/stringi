@@ -86,7 +86,7 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return
@@ -106,7 +106,7 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @family search_fixed
 #' @family search_locate
 #' @family search_extract
-stri_extract_all_fixed <- function(str, pattern, collator_opts=list()) {
+stri_extract_all_fixed <- function(str, pattern, opts_collator=list()) {
    stop("TO DO")
 #    .Call("stri_extract_all_fixed", str, pattern, PACKAGE="stringi")
 }
@@ -114,7 +114,7 @@ stri_extract_all_fixed <- function(str, pattern, collator_opts=list()) {
 
 #' @export
 #' @rdname stri_extract_fixed
-stri_extract_first_fixed <- function(str, pattern, collator_opts=list()) {
+stri_extract_first_fixed <- function(str, pattern, opts_collator=list()) {
    stop("TO DO")
 #    .Call("stri_extract_first_fixed", str, pattern, TRUE, PACKAGE="stringi")
 }
@@ -122,7 +122,7 @@ stri_extract_first_fixed <- function(str, pattern, collator_opts=list()) {
 
 #' @export
 #' @rdname stri_extract_fixed
-stri_extract_last_fixed <- function(str, pattern, collator_opts=list()) {
+stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
    stop("TO DO")
 #    .Call("stri_extract_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
 }

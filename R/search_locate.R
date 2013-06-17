@@ -100,7 +100,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return
@@ -138,22 +138,22 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @family search_locate
 #' @family indexing
 #' @family locale_sensitive
-stri_locate_all_fixed <- function(str, pattern, collator_opts=list()) {
-   .Call("stri_locate_all_fixed", str, pattern, collator_opts, PACKAGE="stringi")
+stri_locate_all_fixed <- function(str, pattern, opts_collator=list()) {
+   .Call("stri_locate_all_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_fixed
-stri_locate_first_fixed <- function(str, pattern, collator_opts=list()) {
-   .Call("stri_locate_first_fixed", str, pattern, collator_opts, PACKAGE="stringi")
+stri_locate_first_fixed <- function(str, pattern, opts_collator=list()) {
+   .Call("stri_locate_first_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_fixed
-stri_locate_last_fixed <- function(str, pattern, collator_opts=list()) {
-   .Call("stri_locate_last_fixed", str, pattern, collator_opts, PACKAGE="stringi")
+stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
+   .Call("stri_locate_last_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 

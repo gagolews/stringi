@@ -107,7 +107,7 @@ invisible(NULL)
 #' 
 #' For more information on ICU's Collator & SearchEngine
 #' and how to tune it up
-#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' 
 #' @section String Search Engine:
 #' 
@@ -124,7 +124,7 @@ invisible(NULL)
 #' 
 #' @section Byte Compare:
 #' 
-#' #' If \code{collator_opts} is \code{NA}, then a very fast (for small p)
+#' #' If \code{opts_collator} is \code{NA}, then a very fast (for small p)
 #' bytewise (locale independent) search is performed, with time complexity of
 #' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
 #' For natural language, non-English text this is, however, not what

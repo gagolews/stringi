@@ -59,20 +59,20 @@ stri_detect_charclass <- function(str, pattern) {
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' 
 #' @return logical vector 
 #' @examples
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), collator_opts=NA)
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', collator_opts=NA)
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), opts_collator=NA)
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', opts_collator=NA)
 #' @export
 #' 
 #' @family search_detect
 #' @family search_fixed
 #' @family locale_sensitive
-stri_detect_fixed <- function(str, pattern, collator_opts=list()) {
-   .Call("stri_detect_fixed", str, pattern, collator_opts, PACKAGE="stringi")
+stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
+   .Call("stri_detect_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 

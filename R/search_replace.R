@@ -83,7 +83,7 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param str character vector of strings to search in
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return character vector
 #' 
@@ -98,21 +98,21 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @family search_fixed
 #' @family search_replace
 #' @family locale_sensitive
-stri_replace_all_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+stri_replace_all_fixed <- function(str, pattern, replacement, opts_collator=list()) {
    stop("TO DO: stri_replace_all_fixed")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_first_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+stri_replace_first_fixed <- function(str, pattern, replacement, opts_collator=list()) {
    stop("TO DO: stri_replace_first_fixed")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_last_fixed <- function(str, pattern, replacement, collator_opts=list()) {
+stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=list()) {
    stop("TO DO: stri_replace_last_fixed")
 }
 

@@ -66,7 +66,7 @@ stri_count_charclass <- function(str, pattern) {
 #' 
 #' @param str character vector
 #' @param pattern character vector
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return integer vector, with number of matches for vectorized
 #' search task
@@ -84,9 +84,9 @@ stri_count_charclass <- function(str, pattern) {
 #' @family search_count
 #' @family search_fixed
 #' @family locale_sensitive
-stri_count_fixed <- function(str, pattern, collator_opts=list()) {
+stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 	# prepare_arg done internally
-	.Call("stri_count_fixed", str, pattern, collator_opts, PACKAGE="stringi")
+	.Call("stri_count_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 

@@ -76,10 +76,10 @@
 #' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
 #' 
 #' @examples
-#' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_collator_genopts(numeric=TRUE))
+#' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
 #' stri_cmp("above mentioned", "above-mentioned")
-#' stri_cmp("above mentioned", "above-mentioned", stri_collator_genopts(alternate_shifted=TRUE))
-stri_collator_genopts <- function(locale="", strength=3L,
+#' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
+stri_opts_collator <- function(locale="", strength=3L,
    alternate_shifted=FALSE, french=FALSE, 
    uppercase_first=NA, case_level=FALSE,
    normalization=FALSE, numeric=FALSE)
@@ -95,3 +95,59 @@ stri_collator_genopts <- function(locale="", strength=3L,
    if (!missing(numeric))           opts["numeric"]           <- numeric
    opts
 }
+
+
+
+#' @title
+#' Generate List with Regex Matcher Options
+#' 
+#' @description
+#' TO DO
+#' 
+#' @details
+#' TO DO
+#' 
+#' 
+#' @param case_insensitive logical; enable case insensitive matching
+#' @param comments logical; allow white space and comments within patterns
+#' @param dotall logical;  if set, `\code{.}` matches line terminators, otherwise `\code{.}` matching stops at line end
+#' @param literal logical; if set, treat the entire pattern as a literal string.
+#' Metacharacters or escape sequences in the input sequence will be given no special meaning
+#' @param multiline logical; controls behavior of `\code{$}` and `\code{^}`.
+#' If set, recognize line terminators within string, otherwise, match only at start and end of input string
+#' @param unix_lines logical; Unix-only line endings. 
+#' When this mode is enabled, only \code{U+000a} is recognized as a 
+#' line ending in the behavior of `\code{.}`, `\code{$}`, and `\code{^}`. 
+#' @param uword logical; Unicode word boundaries.
+#' If set, uses the Unicode TR 29 definition of word boundaries.
+#' Warning: Unicode word boundaries are quite different from traditional 
+#' regular expression word boundaries. See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
+#' @param error_on_unknown_escapes logical;
+#' Error on Unrecognized backslash escapes.
+#' If set, fail with an error on patterns that contain backslash-escaped ASCII
+#'  letters without a known special meaning. 
+#'  If this flag is not set, these escaped letters represent themselves. 
+#' @return
+#' A named R list object; missing options are left with default values.
+#' @export
+#' @aliases regex
+#' @family search_regex
+#' 
+#' @references
+#' ICU regex options, \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html#a874989dfec4cbeb6baf4d1a51cb529ae}\cr
+#' 
+stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
+                            multiline, unix_lines, uword, error_on_unknown_escapes)
+{
+   opts <- list()
+   if (!missing(case_insensitive))         opts["case_insensitive"]         <- case_insensitive
+   if (!missing(comments))                 opts["comments"]                 <- comments
+   if (!missing(dotall))                   opts["dotall"]                   <- dotall
+   if (!missing(literal))                  opts["literal"]                  <- literal
+   if (!missing(multiline))                opts["multiline"]                <- multiline
+   if (!missing(unix_lines))               opts["unix_lines"]               <- unix_lines
+   if (!missing(uword))                    opts["uword"]                    <- uword
+   if (!missing(error_on_unknown_escapes)) opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
+   opts
+}
+

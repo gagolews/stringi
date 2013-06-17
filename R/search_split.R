@@ -109,7 +109,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L) {
 #' @param str character vector with strings to search in
 #' @param pattern character vector with patterns
 #' @param n_max integer vector, maximal number of pieces to return
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return a list of character vectors
 #' 
@@ -123,8 +123,8 @@ stri_split_regex <- function(str, pattern, n_max=-1L) {
 #' @family search_fixed
 #' @family search_split
 #' @family locale_sensitive
-stri_split_fixed <- function(str, pattern, n_max=-1L, collator_opts=list()) {
-	.Call("stri_split_fixed", str, split, n_max, collator_opts, PACKAGE="stringi")
+stri_split_fixed <- function(str, pattern, n_max=-1L, opts_collator=list()) {
+	.Call("stri_split_fixed", str, split, n_max, opts_collator, PACKAGE="stringi")
 }
 
 

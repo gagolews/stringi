@@ -29,7 +29,6 @@ Authors@R: c(
 Collate:
     'casefold.R'
     'charclass.R'
-    'collator.R'
     'compare.R'
     'encoding_conversion.R'
     'encoding_detection.R'
@@ -58,3 +57,4 @@ Collate:
     'wrap.R'
     'search_extract.R'
     'pad.R'
+    'opts.R'

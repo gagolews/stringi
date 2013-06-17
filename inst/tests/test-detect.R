@@ -19,20 +19,20 @@ test_that("stri_detect_charclass", {
 
 
 test_that("stri_detect_fixed [byte]", {
-   expect_identical(stri_detect_fixed("a", NA, collator_opts=NA), NA)
-   expect_identical(stri_detect_fixed(NA, "a", collator_opts=NA), NA)
-   expect_identical(stri_detect_fixed(NA, NA, collator_opts=NA), NA)
-   expect_identical(stri_detect_fixed("kot lorem1", character(0), collator_opts=NA), logical(0))
-   expect_identical(stri_detect_fixed(character(0), "ipsum 1234", collator_opts=NA), logical(0))
-   expect_identical(stri_detect_fixed(character(0), character(0), collator_opts=NA), logical(0))
-   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab", collator_opts=NA), c(T, T, T, T))
-   expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105"), collator_opts=NA), c(F, F, F, T))
-   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), collator_opts=NA))
-   expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105"), collator_opts=NA), FALSE)
+   expect_identical(stri_detect_fixed("a", NA, opts_collator=NA), NA)
+   expect_identical(stri_detect_fixed(NA, "a", opts_collator=NA), NA)
+   expect_identical(stri_detect_fixed(NA, NA, opts_collator=NA), NA)
+   expect_identical(stri_detect_fixed("kot lorem1", character(0), opts_collator=NA), logical(0))
+   expect_identical(stri_detect_fixed(character(0), "ipsum 1234", opts_collator=NA), logical(0))
+   expect_identical(stri_detect_fixed(character(0), character(0), opts_collator=NA), logical(0))
+   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab", opts_collator=NA), c(T, T, T, T))
+   expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105"), opts_collator=NA), c(F, F, F, T))
+   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), opts_collator=NA))
+   expect_identical(stri_detect_fixed("\u0104\u0105", stri_enc_nfkd("\u0104\u0105"), opts_collator=NA), FALSE)
    
-   suppressWarnings(expect_identical(stri_detect_fixed("","", collator_opts=NA), NA))
-   suppressWarnings(expect_identical(stri_detect_fixed("a","", collator_opts=NA), NA))
-   suppressWarnings(expect_identical(stri_detect_fixed("","a", collator_opts=NA), FALSE))
+   suppressWarnings(expect_identical(stri_detect_fixed("","", opts_collator=NA), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("a","", opts_collator=NA), NA))
+   suppressWarnings(expect_identical(stri_detect_fixed("","a", opts_collator=NA), FALSE))
 })
 
 

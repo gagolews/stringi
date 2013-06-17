@@ -23,11 +23,11 @@
 #' Vectorized over \code{e1} and \code{e2}.
 #'
 #' For more information on ICU's Collator and how to tune it up
-#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' 
 #' @param e1 character vector
 #' @param e2 character vector
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
 #' 
 #' @return integer vector, elements are comparison results of corresponding
@@ -41,14 +41,14 @@
 #' 
 #' 
 #' @examples
-#' stri_cmp("hladny", "chladny", stri_collator_genopts(locale="pl_PL")) # in Polish ch < h
-#' stri_cmp("hladny", "chladny", stri_collator_genopts(locale="sk_SK")) # in Slovak ch > h
+#' stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
+#' stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 #' stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
-#' stri_cmp("hladny", "HLADNY", stri_collator_genopts(strength=2)) # ==
-#' stri_cmp("hladn\u00FD", "hladny", stri_collator_genopts(strength=1, locale="sk_SK")) # ==
+#' stri_cmp("hladny", "HLADNY", stri_opts_collator(strength=2)) # ==
+#' stri_cmp("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK")) # ==
 #' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
-stri_compare <- function(e1, e2, collator_opts=list()) {
-   .Call("stri_compare", e1, e2, collator_opts, PACKAGE="stringi")
+stri_compare <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_compare", e1, e2, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -61,7 +61,7 @@ stri_cmp <- stri_compare
 #' Ordering Permutation and Sorting, String Comparisons with Collation
 #' 
 #' For more information on ICU's Collator and how to tune it up
-#' in \pkg{stringi}, refer to \code{\link{stri_collator_genopts}}.
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' 
 #' Uses a stable sort algorithm (STL's stable_sort);
 #' performs up to \eqn{N*log^2(N)} element comparisons,
@@ -77,11 +77,11 @@ stri_cmp <- stri_compare
 #' it does not always return UTF-8-encoded strings,
 #' and preserves many input strings's attributes.
 #' This is because it is defined as
-#' \code{str[stri_order(str, decreasing, collator_opts)]}.
+#' \code{str[stri_order(str, decreasing, opts_collator)]}.
 #' 
 #' @param str character vector
 #' @param decreasing single logical value; should the sort order be increasing or decreasing?
-#' @param collator_opts a named R list as generated with \code{\link{stri_collator_genopts}}
+#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
 #' 
 #' @return for \code{stri_order} - an integer vector that gives the sort order;
@@ -92,15 +92,15 @@ stri_cmp <- stri_compare
 #' @rdname stri_order
 #' 
 #' @examples
-#' stri_sort(c("hladny", "chladny"), stri_collator_genopts(locale="pl_PL"))
-#' stri_sort(c("hladny", "chladny"), stri_collator_genopts(locale="sk_SK"))
-stri_order <- function(str, decreasing=FALSE, collator_opts=list()) {
-   .Call("stri_order", str, decreasing, collator_opts, PACKAGE="stringi")
+#' stri_sort(c("hladny", "chladny"), stri_opts_collator(locale="pl_PL"))
+#' stri_sort(c("hladny", "chladny"), stri_opts_collator(locale="sk_SK"))
+stri_order <- function(str, decreasing=FALSE, opts_collator=list()) {
+   .Call("stri_order", str, decreasing, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, collator_opts=list()) {
-   str[stri_order(str, decreasing, collator_opts)]
+stri_sort <-  function(str, decreasing=FALSE, opts_collator=list()) {
+   str[stri_order(str, decreasing, opts_collator)]
 }

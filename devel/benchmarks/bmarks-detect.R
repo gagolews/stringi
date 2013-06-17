@@ -21,38 +21,38 @@ local({
    sjoindup <- stri_dup(sjoin, 1:100)
    
    print(microbenchmark(
-      stri_detect_fixed(sjoin, "Nam", collator_opts=NA),
-      stri_detect_fixed(sjoin, "Nam", collator_opts=list()),
+      stri_detect_fixed(sjoin, "Nam", opts_collator=NA),
+      stri_detect_fixed(sjoin, "Nam", opts_collator=list()),
       str_detect(sjoin, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(s, "Nam", collator_opts=NA),
-      stri_detect_fixed(s, "Nam", collator_opts=list()),
+      stri_detect_fixed(s, "Nam", opts_collator=NA),
+      stri_detect_fixed(s, "Nam", opts_collator=list()),
       str_detect(s, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoindup, "Nam", collator_opts=NA),
-      stri_detect_fixed(sjoindup, "Nam", collator_opts=list()),
+      stri_detect_fixed(sjoindup, "Nam", opts_collator=NA),
+      stri_detect_fixed(sjoindup, "Nam", opts_collator=list()),
       str_detect(sjoindup, fixed("Nam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoin, "Bam", collator_opts=NA),
-      stri_detect_fixed(sjoin, "Bam", collator_opts=list()),
+      stri_detect_fixed(sjoin, "Bam", opts_collator=NA),
+      stri_detect_fixed(sjoin, "Bam", opts_collator=list()),
       str_detect(sjoin, fixed("Bam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(s, "Bam", collator_opts=NA),
-      stri_detect_fixed(s, "Bam", collator_opts=list()),
+      stri_detect_fixed(s, "Bam", opts_collator=NA),
+      stri_detect_fixed(s, "Bam", opts_collator=list()),
       str_detect(s, fixed("Bam"))
    ))
    
    print(microbenchmark(
-      stri_detect_fixed(sjoindup, "Bam", collator_opts=NA),
-      stri_detect_fixed(sjoindup, "Bam", collator_opts=list()),
+      stri_detect_fixed(sjoindup, "Bam", opts_collator=NA),
+      stri_detect_fixed(sjoindup, "Bam", opts_collator=list()),
       str_detect(sjoindup, fixed("Bam"))
    ))
    
@@ -61,9 +61,9 @@ local({
 
 longtext <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
 pattern <- c("ABC", "DSHFUD", "A", "GDSUI", "XVCXGUIE", "DGUHERE", rawToChar(as.raw(sample(65:90, 200, replace=TRUE))))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=NA)))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list(strength=1))))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=NA)))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=list())))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=list(strength=1))))
 print(system.time(str_detect(longtext, fixed(pattern))))
 
 longtext1 <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
@@ -71,14 +71,14 @@ longtext2 <- stri_flatten(stri_dup("A", 10000000), stri_dup("B", 10000000))
 longtext3 <- rawToChar(as.raw(sample(65:90, 10000000, replace=TRUE)))
 longtext <- c(longtext1, longtext2, longtext3)
 pattern <- stri_flatten(stri_dup("A", 5000000), stri_dup("B", 5000000))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=NA)))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list(strength=1))))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=NA)))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=list())))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=list(strength=1))))
 print(system.time(str_detect(longtext, fixed(pattern))))
 
 longtext <- longtext[1]
 pattern <- pattern[1:3]
-print(system.time(stri_detect_fixed(longtext, pattern, collator_opts=list())))
+print(system.time(stri_detect_fixed(longtext, pattern, opts_collator=list())))
 print(system.time(str_detect(longtext, fixed(pattern))))
 print(system.time({stringi:::stri_test_UnicodeContainer16(longtext);
                    stringi:::stri_test_UnicodeContainer16(pattern)})) # this is not THE critical part
