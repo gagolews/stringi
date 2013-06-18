@@ -38,7 +38,10 @@
 #' \itemize{
 #'    \item \code{stri_detect_*} - detects if a pattern occurs in a string, see e.g. \code{\link{stri_detect}}
 #'    \item \code{stri_count_*} - counts the number of pattern's occurences, see e.g. \code{\link{stri_count}}
-#'    \item \code{stri_locate_*} -locates all, first, or last occurences of a pattern, see e.g. \code{\link{stri_locate}}
+#'    \item \code{stri_locate_*} - locates all, first, or last occurences of a pattern, see e.g. \code{\link{stri_locate}}
+#'    \item \code{stri_extract_*} - extracts all, first, or last occurences of a pattern, see e.g. \code{\link{stri_extract}}
+#'    \item \code{stri_replace_*} - replaces all, first, or last occurences of a pattern, see e.g. \code{\link{stri_replace}}
+#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurences, see e.g. \code{\link{stri_split}}
 #' }
 #' 
 #' @name stringi-search
@@ -73,9 +76,10 @@ invisible(NULL)
 #' 
 #' ignore_case.....
 #' 
-#' all regex functions treat text as single line.
-#' if you want multiline facilities, do split (all \pkg{stringi} functions
-#' are nicely vectorized)
+#' By default, all regex functions treat text as single line.
+#' if you want multiline facilities, see \code{\link{stri_opts_regex}}
+#' 
+#' more options: \code{\link{stri_opts_regex}}
 #' 
 #' @section Syntax of Regular Expressions in ICU:
 #' 

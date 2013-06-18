@@ -50,7 +50,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern)
          i = pattern_cont.vectorize_next(i))
    { 
       if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
+         ret_tab[i] = NA_INTEGER;
          continue;
       }
       

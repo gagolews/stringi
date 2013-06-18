@@ -134,7 +134,7 @@ SEXP stri_enc_isnf(SEXP str, SEXP type)
          i != str_cont.vectorize_end();
          i = str_cont.vectorize_next(i))
    {
-      if (!str_cont.isNA(i)) {
+      if (str_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }

@@ -196,17 +196,17 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 // ----------- SEARCH --------------------------------------------
 
-#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, naset, zeroset) \
-      if ((ss)->isNA(i) || (pp)->isNA(i) || (pp)->get(i).length() <= 0) { \
-         if (!pp->isNA(i) && pp->get(i).length() <= 0)                    \
-            warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);               \
-         naset;                                                           \
-         continue;                                                        \
-      }                                                                   \
-      else if (ss->get(i).length() <= 0) {                                \
-         zeroset;                                                         \
-         continue;                                                        \
-      }                                                                   \
+#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset) \
+      if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
+         if (!(pattern_cont).isNA(i) && (pattern_cont).get(i).length() <= 0)                     \
+            warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                      \
+         naset;                                                                                  \
+         continue;                                                                               \
+      }                                                                                          \
+      else if ((str_cont).get(i).length() <= 0) {                                                \
+         zeroset;                                                                                \
+         continue;                                                                               \
+      }                                                                                          \
       
 
 void stri__locate_set_dimnames_list(SEXP list);                           // DONE, internal
@@ -232,7 +232,7 @@ SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP collator_opts);  // ...
 // SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
 
 
-SEXP stri_detect_regex(SEXP str, SEXP pattern);                            // DONE
+SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);           // DONE
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);            // DONE
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern);                        // DONE
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern);                      // DONE

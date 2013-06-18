@@ -90,6 +90,7 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' 
 #' @return logical vector
 #' @examples
@@ -97,11 +98,12 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
+#' stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
 #' @export
 #' @family search_detect
 #' @family search_regex
-stri_detect_regex <- function(str, pattern) {
-   .Call("stri_detect_regex", str, pattern, PACKAGE="stringi")
+stri_detect_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_detect_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 

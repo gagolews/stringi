@@ -21,40 +21,49 @@
 
 /** 
  * Detect if a pattern occurs in a string
+ * 
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
+ * @param opts_regex list
+ * 
  * @version 0.1 (Marcin Bujarski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
  * @version 0.3 (Marek Gagolewski) - use StriContainerUTF16's vectorization
+ * @version 0.4 (Marek Gagolewski, 2013-06-18) use StriContainerRegexPattern + opts_regex
  */
-SEXP stri_detect_regex(SEXP str, SEXP pattern)
+SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   // this will work for nmax == 0:
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   // this will work for vectorize_length == 0:
+   
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   
+   StriContainerUTF16 str_cont(str, vectorize_length); 
+   // MG: tried StriContainerUTF8 + utext_openUTF8 - this was slower
+   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, nmax));
+   PROTECT(ret = allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
  
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
-   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
- 
-   for (R_len_t i = pp->vectorize_init();
-         i != pp->vectorize_end();
-         i = pp->vectorize_next(i))
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(ss, pp, LOGICAL(ret)[i] = NA_LOGICAL, LOGICAL(ret)[i] = FALSE)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, ret_tab[i] = NA_LOGICAL, ret_tab[i] = FALSE)
       
-      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-      matcher->reset(ss->get(i));
-      LOGICAL(ret)[i] = (int)matcher->find();
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      matcher->reset(str_cont.get(i));
+      ret_tab[i] = (int)matcher->find();
    }
    
-   delete ss;
-   delete pp;
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
