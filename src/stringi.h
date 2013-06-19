@@ -263,9 +263,6 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty); 
 
 
 // uchar.cpp:
-// void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr, int* i1, const int ni);    
-void stri__UChar16_to_UChar32_index(const UChar* str, const int nstr,  
-   int* i1, int* i2, const int ni, int adj1=0, int adj2=0);                    // used only in search_regex and search_fixed ...DONE, but move somewhere else TO DO: ->StriContainerUTF16
 // SEXP stri_charcategories();                                                 // ...TO DO... [version >= 0.2]
 // SEXP stri_chartype(SEXP str);                                               // ...TO DO... [version >= 0.2]
 

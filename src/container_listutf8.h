@@ -52,7 +52,7 @@ class StriContainerListUTF8 : public StriContainerBase {
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerListUTF8::isNA(): INDEX OUT OF BOUNDS");
+            error("StriContainerListUTF8::isNA(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
 #endif
          return (data[i%n] == NULL);
       }
@@ -65,9 +65,9 @@ class StriContainerListUTF8 : public StriContainerBase {
       const StriContainerUTF8& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerListUTF8::get(): INDEX OUT OF BOUNDS");
+            error("StriContainerListUTF8::get(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
          if (data[i%n] == NULL)
-            error("StriContainerListUTF8::get(): isNA");
+            error("StriContainerListUTF8::get(): isNA"); // TO DO: throw StriException
 #endif
          return (*(data[i%n]));
       }

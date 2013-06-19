@@ -59,7 +59,7 @@ class StriContainerUTF16 : public StriContainerBase {
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
+            error("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
 #endif
          return (str[i%n] == NULL);
       }
@@ -72,9 +72,9 @@ class StriContainerUTF16 : public StriContainerBase {
       const UnicodeString& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerUTF16::get(): INDEX OUT OF BOUNDS");
+            error("StriContainerUTF16::get(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
          if (str[i%n] == NULL)
-            error("StriContainerUTF16::get(): isNA");
+            error("StriContainerUTF16::get(): isNA"); // TO DO: throw StriException
 #endif
          return (*(str[i%n]));
       }
@@ -86,13 +86,13 @@ class StriContainerUTF16 : public StriContainerBase {
       UnicodeString& getWritable(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)              
-            error("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
+            error("StriContainerUTF16::getWritable(): shallow StriContainerUTF16"); // TO DO: throw StriException
          if (n != nrecycle)          
-            error("StriContainerUTF16::getWritable(): n!=nrecycle");
+            error("StriContainerUTF16::getWritable(): n!=nrecycle"); // TO DO: throw StriException
          if (i < 0 || i >= n)        
-            error("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
+            error("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
          if (str[i%n] == NULL) 
-            error("StriContainerUTF16::getWritable(): isNA");
+            error("StriContainerUTF16::getWritable(): isNA"); // TO DO: throw StriException
 #endif
          return (*(str[i%n])); // in fact, "%n" is not necessary
       }
@@ -104,16 +104,18 @@ class StriContainerUTF16 : public StriContainerBase {
       void set(R_len_t i, const UnicodeString& s) {
 #ifndef NDEBUG
          if (isShallow)              
-            error("StriContainerUTF16::set(): shallow StriContainerUTF16");
+            error("StriContainerUTF16::set(): shallow StriContainerUTF16"); // TO DO: throw StriException
          if (n != nrecycle)          
-            error("StriContainerUTF16::set(): n!=nrecycle");
+            error("StriContainerUTF16::set(): n!=nrecycle"); // TO DO: throw StriException
          if (i < 0 || i >= n)        
-            error("StriContainerUTF16::set(): INDEX OUT OF BOUNDS");
+            error("StriContainerUTF16::set(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
          if (str[i%n] == NULL) 
-            error("StriContainerUTF16::set(): isNA");
+            error("StriContainerUTF16::set(): isNA"); // TO DO: throw StriException
 #endif
          *(str[i%n]) = s; // in fact, "%n" is not necessary
       }
+      
+      void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
       
       RegexMatcher* vectorize_getMatcher(R_len_t i); // [TO BE DELETED]
 };

@@ -45,7 +45,7 @@ class StriContainerInteger : public StriContainerBase {
          this->data = NULL;
 #ifndef NDEBUG 
          if (!isInteger(rvec))
-            error("DEBUG: !isInteger in StriContainerInteger");
+            error("DEBUG: !isInteger in StriContainerInteger"); // TO DO: throw StriException
 #endif
          R_len_t ndata = LENGTH(rvec);
          this->init_Base(ndata, nrecycle, true);
@@ -64,7 +64,7 @@ class StriContainerInteger : public StriContainerBase {
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerInteger::isNA(): INDEX OUT OF BOUNDS");
+            error("StriContainerInteger::isNA(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
 #endif
          return (data[i%n] == NA_INTEGER);
       }
@@ -77,9 +77,9 @@ class StriContainerInteger : public StriContainerBase {
       inline int get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerInteger::get(): INDEX OUT OF BOUNDS");
+            error("StriContainerInteger::get(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
          if (data[i%n] == NA_INTEGER)
-            error("StriContainerInteger::get(): isNA");
+            error("StriContainerInteger::get(): isNA"); // TO DO: throw StriException
 #endif
          return (data[i%n]);
       }

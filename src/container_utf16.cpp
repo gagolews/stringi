@@ -44,7 +44,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
    this->str = NULL;
 #ifndef NDEBUG 
    if (!isString(rstr))
-      error("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
+      error("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)"); // TO DO: throw StriException
 #endif
    R_len_t nrstr = LENGTH(rstr);
    this->init_Base(nrstr, nrecycle, shallowrecycle); // calling LENGTH(rstr) fails on constructor call
@@ -72,7 +72,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
                   ucnvASCII, status);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT);  
+                  error(MSG__ENC_ERROR_CONVERT);   // TO DO: throw StriException
                   
                // Performance improvement attempt #1:
                // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs))); // slower than the above
@@ -91,10 +91,10 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
                   ucnvLatin1, status);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT);  
+                  error(MSG__ENC_ERROR_CONVERT);   // TO DO: throw StriException
             }
             else if (IS_BYTES(curs)) 
-               error(MSG__BYTESENC);
+               error(MSG__BYTESENC); // TO DO: throw StriException
             else {
 //             Any encoding - detection needed
 //             Assume it's Native; this assumes the user working in an 8-bit environment
@@ -105,7 +105,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
                   ucnvNative, status);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT);  
+                  error(MSG__ENC_ERROR_CONVERT);   // TO DO: throw StriException
             }
          }
       }
@@ -233,7 +233,7 @@ SEXP StriContainerUTF16::toR() const
 SEXP StriContainerUTF16::toR(R_len_t i) const
 {
 #ifndef NDEBUG
-   if (i < 0 || i >= nrecycle) error("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS");
+   if (i < 0 || i >= nrecycle) error("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
 #endif
 
    if (str[i%n] == NULL)
@@ -260,7 +260,7 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
       if (i >= n) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
-         error("DEBUG: vectorize_getMatcher - matcher reuse failed!");
+         error("DEBUG: vectorize_getMatcher - matcher reuse failed!"); // TO DO: throw StriException
       }
 #endif
          return lastMatcher; // reuse
@@ -274,7 +274,7 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), 0, status);
    if (U_FAILURE(status)) {
-      error(u_errorName(status));
+      error(u_errorName(status)); // TO DO: throw StriException
    }
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
@@ -282,3 +282,83 @@ RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
 
    return lastMatcher;
 }
+
+
+
+/** Convert Unicode16-Char indices to Unicode32 (code points)
+ *
+ * \code{i1} and \code{i2} must be sorted increasingly
+ * 
+ * @param i element index
+ * @param i1 indices, 1-based [in/out]
+ * @param i2 indices, 1-based [in/out]
+ * @param ni size of \code{i1} and \code{i2}
+ * @param adj1 adjust for \code{i1}
+ * @param adj2 adjust for \code{i2}
+ * 
+ */
+void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
+   int* i1, int* i2, const int ni, int adj1, int adj2)
+{
+   const UnicodeString* str_data = &(this->get(i));
+   const UChar* str = str_data->getBuffer();
+   const int nstr = str_data->length();
+   
+   int j1 = 0;
+   int j2 = 0;
+   
+   int i16 = 0;
+   int i32 = 0;
+   while (i16 < nstr && (j1 < ni || j2 < ni)) {
+      
+//      cerr << i16 << " " << i32 << " " << j1 << " " << j2 << " " << ((j1 < ni)?i1[j1]:-1) << " " << ((j2 < ni)?i2[j2]:-1) << endl;
+      
+      if (j1 < ni && i1[j1] <= i16) {
+#ifndef NDEBUG
+      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
+         error("DEBUG: stri__UChar16_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i1[j1] = i32 + adj1;
+         ++j1;
+      }
+      
+      if (j2 < ni && i2[j2] <= i16) {
+#ifndef NDEBUG
+      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
+         error("DEBUG: stri__UChar16_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i2[j2] = i32 + adj2;
+         ++j2;
+      }
+      
+      // Next UChar32
+      U16_FWD_1(str, i16, nstr);
+      ++i32;
+   }
+   
+   // CONVERT LAST:
+   if (j1 < ni && i1[j1] <= nstr) {
+#ifndef NDEBUG
+      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
+         error("DEBUG: stri__UChar16_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i1[j1] = i32 + adj1;
+         ++j1;
+   }
+  
+   if (j2 < ni && i2[j2] <= nstr) {
+#ifndef NDEBUG
+      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
+         error("DEBUG: stri__UChar16_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i2[j2] = i32 + adj2;
+         ++j2;
+   }
+   
+   // CHECK:
+#ifndef NDEBUG
+      if (i16 >= nstr && (j1 < ni || j2 < ni))
+         error("DEBUG: stri__UChar16_to_UChar32_index()"); // TO DO: throw StriException
+#endif
+}
+

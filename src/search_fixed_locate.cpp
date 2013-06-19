@@ -136,8 +136,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          }
          
          // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-         stri__UChar16_to_UChar32_index(cur_str->getBuffer(),
-               cur_str->length(), ans_tab,
+         ss->UChar16_to_UChar32_index(i, ans_tab,
                ans_tab+noccurences, noccurences,
                1, // 0-based index -> 1-based
                0  // end returns position of next character after match
@@ -256,8 +255,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
             iret[i+nmax] = start + usearch_getMatchedLength(matcher);
             
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), 
+            ss->UChar16_to_UChar32_index(i, 
                   iret+i, iret+i+nmax, 1,
                   1, // 0-based index -> 1-based
                   0  // end returns position of next character after match
@@ -380,8 +378,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
             iret[i+nmax] = start + usearch_getMatchedLength(matcher);
    
             // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            stri__UChar16_to_UChar32_index(ss->get(i).getBuffer(),
-                  ss->get(i).length(), 
+            ss->UChar16_to_UChar32_index(i, 
                   iret+i, iret+i+nmax, 1,
                   1, // 0-based index -> 1-based
                   0  // end returns position of next character after match

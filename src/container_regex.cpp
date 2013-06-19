@@ -97,7 +97,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
       if (i >= n) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
-         error("DEBUG: vectorize_getMatcher - matcher reuse failed!");
+         error("DEBUG: vectorize_getMatcher - matcher reuse failed!"); // TO DO: throw StriException
       }
 #endif
          return lastMatcher; // reuse
@@ -111,7 +111,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
    if (U_FAILURE(status)) {
-      error(u_errorName(status));
+      error(u_errorName(status)); // TO DO: throw StriException
    }
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
@@ -126,7 +126,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
    uint32_t flags = 0;
    if (!isVectorList(opts_regex))
-      error(MSG__ARG_EXPECTED_LIST, "opts_regex");
+      error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // TO DO: throw StriException
       
    R_len_t narg = LENGTH(opts_regex);
       

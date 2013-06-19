@@ -43,7 +43,7 @@ StriContainerBase::StriContainerBase()
 void StriContainerBase::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle)
 {
 #ifndef NDEBUG 
-   if (this->n != 0) error("StriContainerBase::init_Base(...): already initialized");
+   if (this->n != 0) error("StriContainerBase::init_Base(...): already initialized"); // TO DO: throw StriException
    this->isShallow = shallowrecycle;
 #endif
 
@@ -57,9 +57,9 @@ void StriContainerBase::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecyc
       
 #ifndef NDEBUG 
    if (this->n < n)
-      error("StriContainerBase::init_Base(...): this->n < n");
+      error("StriContainerBase::init_Base(...): this->n < n"); // TO DO: throw StriException
    if (this->n > this->nrecycle)
-      error("StriContainerBase::init_Base(...): this->n > this->nrecycle");
+      error("StriContainerBase::init_Base(...): this->n > this->nrecycle"); // TO DO: throw StriException
 #endif
    }
 }
