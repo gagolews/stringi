@@ -59,6 +59,12 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_extract_first_charclass,    2),
    STRI__MAKE_CALL_METHOD(stri_extract_last_charclass,     2),
    STRI__MAKE_CALL_METHOD(stri_extract_all_charclass,      3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_first_fixed,    3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_last_fixed,     3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_all_fixed,      3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_first_regex,    3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_last_regex,     3),
+//   STRI__MAKE_CALL_METHOD(stri_extract_all_regex,      3),
    STRI__MAKE_CALL_METHOD(stri_flatten,                    2),
    STRI__MAKE_CALL_METHOD(stri_flatten_nosep,              1),
    STRI__MAKE_CALL_METHOD(stri_info,                       0),
@@ -76,9 +82,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_locate_last_fixed,          3), 
    STRI__MAKE_CALL_METHOD(stri_locate_first_fixed,         3), 
    STRI__MAKE_CALL_METHOD(stri_locate_all_fixed,           3), 
-   STRI__MAKE_CALL_METHOD(stri_locate_all_regex,           3), // TODO
-   STRI__MAKE_CALL_METHOD(stri_locate_first_regex,         2), // TODO
-   STRI__MAKE_CALL_METHOD(stri_locate_last_regex,          2), // TODO
+   STRI__MAKE_CALL_METHOD(stri_locate_all_regex,           3), 
+   STRI__MAKE_CALL_METHOD(stri_locate_first_regex,         3), 
+   STRI__MAKE_CALL_METHOD(stri_locate_last_regex,          3), 
    STRI__MAKE_CALL_METHOD(stri_numbytes,                   1),
    STRI__MAKE_CALL_METHOD(stri_order,                      3),
 //   STRI__MAKE_CALL_METHOD(stri_pad,                        4), // TODO: version >= 0.2

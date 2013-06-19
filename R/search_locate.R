@@ -201,16 +201,16 @@ stri_locate_all_regex <- function(str, pattern, opts_regex=list()) {
 
 #' @export
 #' @rdname stri_locate_regex 
-stri_locate_first_regex <- function(str, pattern) {
-   .Call("stri_locate_first_regex", str, pattern, PACKAGE="stringi")
+stri_locate_first_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_locate_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 
 #' @export
 #' @rdname stri_locate_regex 
-stri_locate_last_regex <- function(str, pattern) {
-   .Call("stri_locate_last_regex", str, pattern, PACKAGE="stringi")
+stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_locate_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
