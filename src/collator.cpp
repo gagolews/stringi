@@ -42,21 +42,21 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          UErrorCode err = U_ZERO_ERROR;
          UCollator* col = ucol_open(NULL, &err);
          if (!U_SUCCESS(err)) {
-            error(MSG__RESOURCE_ERROR_GET);
+            error(MSG__RESOURCE_ERROR_GET); // error() allowed here
          }
          return col;
       }
       
       SEXP names = getAttrib(opts_collator, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
-         error(MSG__RESOURCE_ERROR_GET);
+         error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       
       // search for locale & create collator
       UErrorCode err = U_ZERO_ERROR;
       UCollator* col = NULL;
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
-            error(MSG__RESOURCE_ERROR_GET);
+            error(MSG__RESOURCE_ERROR_GET); // error() allowed here
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "locale")) {
             const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true);
@@ -68,13 +68,13 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       if (!col) col = ucol_open(NULL, &err); // default locale
       
       if (!U_SUCCESS(err)) {
-         error(MSG__RESOURCE_ERROR_GET);
+         error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
       
       // other opts
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
-            error(MSG__RESOURCE_ERROR_GET);
+            error(MSG__RESOURCE_ERROR_GET); // error() allowed here
             
          const char* curname = CHAR(STRING_ELT(names, i));
          err = U_ZERO_ERROR;
@@ -108,7 +108,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          }
          
          if (!U_SUCCESS(err)) {
-            error(MSG__RESOURCE_ERROR_GET);
+            error(MSG__RESOURCE_ERROR_GET); // error() allowed here
          }
       }
 
@@ -118,7 +118,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       // arg is not a list - is it a single NA then?
       opts_collator = stri_prepare_arg_logical_1(opts_collator, "opts_collator_not_list");
       if (LOGICAL(opts_collator)[0] != NA_LOGICAL)
-         error(MSG__INCORRECT_INTERNAL_ARG);
+         error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
       return NULL;
    }
 }

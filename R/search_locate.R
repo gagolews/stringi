@@ -169,6 +169,7 @@ stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' 
 #' @return
 #' For \code{stri_locate_all_regex},
@@ -193,8 +194,8 @@ stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' @family search_regex
 #' @family search_locate
 #' @family indexing
-stri_locate_all_regex <- function(str, pattern) {
-   .Call("stri_locate_all_regex", str, pattern, PACKAGE="stringi")
+stri_locate_all_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_locate_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 

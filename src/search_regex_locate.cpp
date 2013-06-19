@@ -22,80 +22,86 @@
 
 
 /** Locate all occurences of a regex pattern
- * @param s character vector
- * @param p character vector
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param opts_regex list
  * @return list of integer matrices (2 columns)
+ * 
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - StriContainerUTF16+deque usage
+ * @version 0.3 (Marek Gagolewski, 2013-06-19) use StriContainerRegexPattern + opts_regex
  */
-SEXP stri_locate_all_regex(SEXP s, SEXP p)
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   p = stri_prepare_arg_string(p, "pattern"); // prepare string argument
-   R_len_t ns = LENGTH(s);
-   R_len_t np = LENGTH(p);
-   R_len_t nout = stri__recycling_rule(true, 2, ns, np);
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    // this will work for nmax == 0:
  
-   StriContainerUTF16* ss = new StriContainerUTF16(s, nout);
-   StriContainerUTF16* pp = new StriContainerUTF16(p, nout);
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP notfound; // this matrix will be set iff not found or NA
    PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, nout));
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
 
-   for (R_len_t i = pp->vectorize_init();
-         i != pp->vectorize_end();
-         i = pp->vectorize_next(i))
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(*ss, *pp, SET_VECTOR_ELT(ret, i, notfound), SET_VECTOR_ELT(ret, i, notfound))
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, notfound), SET_VECTOR_ELT(ret, i, notfound))
       
-      RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-      matcher->reset(ss->get(i));
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      matcher->reset(str_cont.get(i));
       int found = (int)matcher->find();
       if (!found) {
          SET_VECTOR_ELT(ret, i, notfound);
+         continue;
       }
-      else {
-         deque<R_len_t_x2> occurences;
-         while (found) {
-            UErrorCode status = U_ZERO_ERROR;
-            int start = (int)matcher->start(status);
-            int end  =  (int)matcher->end(status);
-            if (U_FAILURE(status)) error(MSG__REGEXP_FAILED);
-            
-            occurences.push_back(R_len_t_x2(start, end));
-            found = (int)matcher->find();
-         }
+
+      deque<R_len_t_x2> occurences;
+      do {
+         UErrorCode status = U_ZERO_ERROR;
+         int start = (int)matcher->start(status);
+         int end  =  (int)matcher->end(status);
+         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
          
-         R_len_t noccurences = occurences.size();
-         SEXP ans;
-         PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
-         deque<R_len_t_x2>::iterator iter = occurences.begin();
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-            R_len_t_x2 match = *iter;
-            INTEGER(ans)[j]             = match.v1; 
-            INTEGER(ans)[j+noccurences] = match.v2;
-         }
-         
-         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-         ss->UChar16_to_UChar32_index(i, INTEGER(ans),
-               INTEGER(ans)+noccurences, noccurences,
-               1, // 0-based index -> 1-based
-               0  // end returns position of next character after match
-         );
-         SET_VECTOR_ELT(ret, i, ans);
-         UNPROTECT(1);
+         occurences.push_back(R_len_t_x2(start, end));
+         found = (int)matcher->find();
+      } while (found);
+      
+      R_len_t noccurences = occurences.size();
+      SEXP ans;
+      PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+      int* ans_tab = INTEGER(ans);
+      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         R_len_t_x2 match = *iter;
+         ans_tab[j]             = match.v1; 
+         ans_tab[j+noccurences] = match.v2;
       }
+      
+      // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+      str_cont.UChar16_to_UChar32_index(i, ans_tab,
+            ans_tab+noccurences, noccurences,
+            1, // 0-based index -> 1-based
+            0  // end returns position of next character after match
+      );
+      SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(1);
    }
    
-   delete ss;
-   delete pp;
    stri__locate_set_dimnames_list(ret);
    UNPROTECT(2);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
