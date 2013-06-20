@@ -121,7 +121,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
 
 
 /** 
- * Extract first or last occurences of a character class in each string
+ * Extract all occurences of a character class in each string
  * 
  * @param str character vector
  * @param pattern character vector

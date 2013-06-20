@@ -140,6 +140,7 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' 
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' 
 #' @return
 #' For \code{stri_extract_all_regex},
@@ -157,26 +158,23 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' @aliases stri_extract_all_regex stri_extract_first_regex stri_extract_last_regex
 #' @family search_regex
 #' @family search_extract
-stri_extract_all_regex <- function(str, pattern) {
-   stop("TO DO")
-#    .Call("stri_extract_all_regex", str, pattern, PACKAGE="stringi")
+stri_extract_all_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_extract_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_extract_regex 
-stri_extract_first_regex <- function(str, pattern) {
-   stop("TO DO")
-#    .Call("stri_extract_first_regex", str, pattern, PACKAGE="stringi")
+stri_extract_first_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_extract_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 
 #' @export
 #' @rdname stri_extract_regex 
-stri_extract_last_regex <- function(str, pattern) {
-   stop("TO DO")
-   #    .Call("stri_extract_last_regex", str, pattern, PACKAGE="stringi")
+stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
+   .Call("stri_extract_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
