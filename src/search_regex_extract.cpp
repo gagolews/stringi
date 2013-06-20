@@ -34,7 +34,48 @@
  */
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   error("TO DO");
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+ 
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   
+   UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
+      
+      UErrorCode status = U_ZERO_ERROR;
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
+      if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
+      
+      matcher->reset(str_text);
+      if ((int)matcher->find()) { //find first matches
+         int m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
+         int m_end = (int)matcher->end(status);
+         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
+         SET_STRING_ELT(ret, i, mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
+      }
+   }
+   
+   if (str_text) {
+      utext_close(str_text);
+      str_text = NULL;
+   }
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
 }
 
 
