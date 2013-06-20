@@ -21,20 +21,20 @@
 
 
 
-
 /** 
  * Extract first occurence of a regex pattern in each string
  * 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
+ * @param firs logical - search for the first or the last occurence?
  * @return character vector
  * 
  * @version 0.1 (Marek Gagolewski, 2013-06-20)
  */
-SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
  
@@ -60,13 +60,28 @@ SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
       if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
       
+      int m_start = -1;
+      int m_end = -1;
       matcher->reset(str_text);
       if ((int)matcher->find()) { //find first matches
-         int m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
-         int m_end = (int)matcher->end(status);
+         m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
+         m_end   = (int)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
-         SET_STRING_ELT(ret, i, mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
       }
+      else {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      if (!first) { // continue searching
+         while ((int)matcher->find()) {
+            m_start = (int)matcher->start(status);
+            m_end   = (int)matcher->end(status);
+            if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED);
+         } 
+      }
+      
+      SET_STRING_ELT(ret, i, mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
    }
    
    if (str_text) {
@@ -76,6 +91,22 @@ SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
+}
+
+
+/** 
+ * Extract first occurence of a regex pattern in each string
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param opts_regex list
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ */
+SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+{
+   return stri__extract_firstlast_regex(str, pattern, opts_regex, true);
 }
 
 
@@ -92,7 +123,7 @@ SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  */
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   error("TO DO");
+   return stri__extract_firstlast_regex(str, pattern, opts_regex, false);
 }
 
 
