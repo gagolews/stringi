@@ -233,16 +233,16 @@ SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP collator_opts);  // ...
 
 SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);  // DONE, internal
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);   // DONE, internal
-//SEXP stri__replace_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, SEXP replacement, bool first); // ...TO DO...
+SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type); // DONE, internal
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);           // DONE
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);            // DONE
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);       // DONE
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);     // DONE
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);      // DONE
-SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement);     // DONE
-//SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement); // ...TO DO...
-//SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...
+SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex);   // DONE
+SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex); // DONE
+SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex);  // DONE
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_regex); // DONE
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);    // DONE
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);     // DONE

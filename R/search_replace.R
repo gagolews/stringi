@@ -131,7 +131,8 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' Input that is not part of any match is left unchanged; 
 #' each match is replaced in the result by the replacement string. 
 #' 
-#' The replacement string may contain references to capture groups.
+#' The replacement string may contain references to capture groups
+#' (in round parentheses).
 #' References are of the form \code{$n}, where \code{n} is the number
 #' of the capture group (numbering starts from 1).
 #' 
@@ -139,6 +140,7 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regex patterns to search for
 #' @param replacement character vector of strings to replace with
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' @return character vector
 #' 
 #' @examples
@@ -154,22 +156,22 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @aliases stri_replace_all_regex stri_replace_first_regex stri_replace_last_regex
 #' @family search_regex
 #' @family search_replace
-stri_replace_all_regex <- function(str, pattern, replacement) {
-   .Call("stri_replace_all_regex", str, pattern, replacement, PACKAGE="stringi")
+stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=list()) {
+   .Call("stri_replace_all_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_regex
-stri_replace_first_regex <- function(str, pattern, replacement) {
-   stop("TO DO: stri_replace_first_regex")
+stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=list()) {
+   .Call("stri_replace_first_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_regex
-stri_replace_last_regex <- function(str, pattern, replacement) {
-   stop("TO DO: stri_replace_last_regex")
+stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()) {
+   .Call("stri_replace_last_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
 }
 
 
