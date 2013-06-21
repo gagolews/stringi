@@ -38,7 +38,7 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
    UChar32 chr;
    
    if(first){
-      for (int i=0; i<ns; ++charnum) {
+      for (int i=0; i < ns; ++charnum) {
          k=0;
          while(k < np && i+k < ns && s[i+k]==p[k]){
             ++k;
@@ -47,7 +47,7 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
             o = 1;
             start = charnum;
             j=i+k;
-            for(/* NOOP */; i<j; ++charnum)
+            for(/* NOOP */; i < j; ++charnum)
                U8_NEXT(s, i, ns, chr);
             --charnum;
             end = charnum;
@@ -86,9 +86,9 @@ void stri__locate_first_and_last_fixed1(const char* s, int ns,const char* p,  in
          }
          if(k==np){
             o = 1;
-            for(j=0; j<i; ++charnum)
+            for(j=0; j < i; ++charnum)
                U8_NEXT(s, j, i, chr);
-            for(j=0; j<np; ++charnump)
+            for(j=0; j < np; ++charnump)
                U8_NEXT(p, j, np, chr);
             start = charnum;
             end = charnum + charnump - 1;
