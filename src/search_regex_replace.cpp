@@ -21,62 +21,137 @@
 
 
 /** 
- * Replace all occurences of \code{p} by \code{r} in \code{s}
+ * Replace all occurences of a regex pattern
  * 
- * @param s strings to search in
+ * @param str strings to search in
  * @param pattern regex patterns to search for
  * @param replacement replacements
+ * @param opts_regex list
  * @return character vector
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski)  - use StriContainerUTF16's vectorization
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-21)
  */
-SEXP stri_replace_all_regex(SEXP s, SEXP p, SEXP r)
+SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
-   s = stri_prepare_arg_string(s, "str");
-   p = stri_prepare_arg_string(p, "pattern");
-   r = stri_prepare_arg_string(r, "replacement");
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(s), LENGTH(p), LENGTH(r));
-   // this will work for nmax == 0:
-   
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
- 
-   StriContainerUTF16* ss = new StriContainerUTF16(s, nmax, false); // make a DEEP copy as the strings will be changed
-   StriContainerUTF16* pp = new StriContainerUTF16(p, nmax);
-   StriContainerUTF16* rr = new StriContainerUTF16(r, nmax);
-   
-   for (R_len_t i = pp->vectorize_init();
-         i != pp->vectorize_end();
-         i = pp->vectorize_next(i))
-   {
-      if (pp->isNA(i) || ss->isNA(i) || rr->isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-      }
-      else {
-         RegexMatcher *matcher = pp->vectorize_getMatcher(i); // will be deleted automatically
-         matcher->reset(ss->get(i));
-         
-         UErrorCode status = U_ZERO_ERROR;
-         ss->set(i, matcher->replaceAll(rr->get(i), status));  // this has length nmax now, we may modify it
-         if (U_FAILURE(status))
-            error(MSG__REGEXP_FAILED);
-         SET_STRING_ELT(ret, i, ss->toR(i));
-      }
-   }
-   
-   delete ss;
-   delete pp;
-   delete rr;
-   UNPROTECT(1);
-   return ret;
+   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
 }
 
 
+/** 
+ * Replace first occurence of a regex pattern
+ * 
+ * @param str strings to search in
+ * @param pattern regex patterns to search for
+ * @param replacement replacements
+ * @param opts_regex list
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-21)
+ */
+SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
+{
+   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 1);
+}
 
-// TO DO: stri_replace_first_regex (with capture groups: use icu::RegexMatcher::replaceFirst)
+
+/** 
+ * Replace last occurence of a regex pattern
+ * 
+ * @param str strings to search in
+ * @param pattern regex patterns to search for
+ * @param replacement replacements
+ * @param opts_regex list
+ * @return character vector
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-21)
+ */
+SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
+{
+   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, -1);
+}
 
 
+/** 
+ * Replace occurences of a regex pattern
+ * 
+ * @param str strings to search in
+ * @param pattern regex patterns to search for
+ * @param replacement replacements
+ * @param opts_regex list
+ * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski)  - use StriContainerUTF16's vectorization
+ * @version 0.3 (Marek Gagolewski, 2013-06-21)  - use StriContainerRegexPattern + more general
+ */
+SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
+{
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   replacement = stri_prepare_arg_string(replacement, "replacement");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+ 
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
+   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+   StriContainerUTF16 replacement_cont(replacement, vectorize_length);
+    
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_STRING_ELT(ret, i, NA_STRING);,
+         SET_STRING_ELT(ret, i, NA_STRING);)
+         
+      if (replacement_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
 
-
-// TO DO: stri_replace_last_regex (with capture groups: extract groups manually...)
+      RegexMatcher *matcher = pattern_cont.vectorize_getMatcher(i); // will be deleted automatically
+      matcher->reset(str_cont.get(i));
+      
+      UErrorCode status = U_ZERO_ERROR;
+      if (type == 0) { // all
+         str_cont.set(i, matcher->replaceAll(replacement_cont.get(i), status));
+      }
+      else if (type == 1) { // first
+         str_cont.set(i, matcher->replaceFirst(replacement_cont.get(i), status));
+      }
+      else if (type == -1) { // end
+         int start = -1;
+         int end = -1;
+         while (matcher->find()) { // find last match
+            start = matcher->start(status);
+            end = matcher->end(status);
+            if (U_FAILURE(status)) throw StriException(status);
+         }
+         if (start >= 0) {
+            matcher->find(start, status); // go back
+            if (U_FAILURE(status)) throw StriException(status);
+            UnicodeString out;
+            matcher->appendReplacement(out, replacement_cont.get(i), status);
+            out.append(str_cont.get(i), end, str_cont.get(i).length()-end);
+            str_cont.set(i, out);
+         }
+      }
+      else {
+         throw StriException(MSG__INTERNAL_ERROR);
+      }
+      
+      if (U_FAILURE(status))
+         throw StriException(status);
+      SET_STRING_ELT(ret, i, str_cont.toR(i));
+   }
+   
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
 
