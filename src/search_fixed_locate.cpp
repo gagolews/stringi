@@ -203,70 +203,58 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      //if string or pattern == NA then return matrix with NA
-      if (pp->isNA(i) || ss->isNA(i)) {
-         iret[i]      = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
-      }
-      else {
-         const UnicodeString* cur_str = &(ss->get(i));
-         const UnicodeString* cur_pat = &(pp->get(i));
-         int ns = cur_str->length();
-         int np = cur_pat->length();
+      iret[i]      = NA_INTEGER;
+      iret[i+nmax] = NA_INTEGER;
       
-         if(ns <= 0 || np <= 0){
-            iret[i]      = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-            continue;
-         }
-         
-         if (!matcher) {
-            last_pat = cur_pat;
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
-               last_str->getBuffer(), last_str->length(), col, NULL, &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
-         }
-         //if last pattern is equal to current then save time and dont change this   
-         if (cur_pat != last_pat) {
-            last_pat = cur_pat;
-            err = U_ZERO_ERROR;
-            usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         //as above, this time for string   
-         if (cur_str != last_str) {
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         
-         usearch_reset(matcher);
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(*ss, *pp, ;/*nothing*/, ;/*nothing*/ )
+
+      const UnicodeString* cur_str = &(ss->get(i));
+      const UnicodeString* cur_pat = &(pp->get(i));
+      int ns = cur_str->length();
+      int np = cur_pat->length();
+      
+      if (!matcher) {
+         last_pat = cur_pat;
+         last_str = cur_str;
          err = U_ZERO_ERROR;
-         
-         int start = usearch_first(matcher, &err);
-         
-         //if we have match
-         if(start != USEARCH_DONE){
-            iret[i]      = start;
-            iret[i+nmax] = start + usearch_getMatchedLength(matcher);
-            
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            ss->UChar16_to_UChar32_index(i, 
-                  iret+i, iret+i+nmax, 1,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-         }else{ //if dont, return NA
-            iret[i]      = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
-         
+         matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
+            last_str->getBuffer(), last_str->length(), col, NULL, &err);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
+//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
+      }
+      //if last pattern is equal to current then save time and dont change this   
+      if (cur_pat != last_pat) {
+         last_pat = cur_pat;
+         err = U_ZERO_ERROR;
+         usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
          if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
       }
+      //as above, this time for string   
+      if (cur_str != last_str) {
+         last_str = cur_str;
+         err = U_ZERO_ERROR;
+         usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
+      }
+         
+      usearch_reset(matcher);
+      err = U_ZERO_ERROR;
+      
+      int start = usearch_first(matcher, &err);
+      
+      //if we have match
+      if(start != USEARCH_DONE){
+         iret[i]      = start;
+         iret[i+nmax] = start + usearch_getMatchedLength(matcher);
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         ss->UChar16_to_UChar32_index(i, 
+               iret+i, iret+i+nmax, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+      }         
+      if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
    }
    
    if (col) ucol_close(col);
@@ -323,73 +311,60 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          i != pp->vectorize_end();
          i = pp->vectorize_next(i))
    {
-      //if string or pattern == NA then return matrix with NA
-      if (pp->isNA(i) || ss->isNA(i)) {
-         iret[i]      = NA_INTEGER;
-         iret[i+nmax] = NA_INTEGER;
-      }
-      else {
-         const UnicodeString* cur_str = &(ss->get(i));
-         const UnicodeString* cur_pat = &(pp->get(i));
-         int ns = cur_str->length();
-         int np = cur_pat->length();
+      iret[i]      = NA_INTEGER;
+      iret[i+nmax] = NA_INTEGER;
          
-         if(ns <= 0 || np <= 0){
-            iret[i]      = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-            continue;
-         }
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(*ss, *pp, ;/*nothing*/, ;/*nothing*/ )
+
+      const UnicodeString* cur_str = &(ss->get(i));
+      const UnicodeString* cur_pat = &(pp->get(i));
+      int ns = cur_str->length();
+      int np = cur_pat->length();
+      
          
-         if (!matcher) {
-            last_pat = cur_pat;
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
-               last_str->getBuffer(), last_str->length(), col, NULL, &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
-         }
-         //if last pattern is equal to current then save time and dont change this   
-         if (cur_pat != last_pat) {
-            last_pat = cur_pat;
-            err = U_ZERO_ERROR;
-            usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         //as above, this time for string   
-         if (cur_str != last_str) {
-            last_str = cur_str;
-            err = U_ZERO_ERROR;
-            usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-            if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-         }
-         
-         usearch_reset(matcher);
+      if (!matcher) {
+         last_pat = cur_pat;
+         last_str = cur_str;
          err = U_ZERO_ERROR;
-         
-         int start = usearch_last(matcher, &err);
-         // this properly detects overlapping matches
-         // (search is performed from-the-end, and no from-beginning
-         
-         
-         //if we have match
-         if(start != USEARCH_DONE){
-            iret[i]      = start;
-            iret[i+nmax] = start + usearch_getMatchedLength(matcher);
-   
-            // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-            ss->UChar16_to_UChar32_index(i, 
-                  iret+i, iret+i+nmax, 1,
-                  1, // 0-based index -> 1-based
-                  0  // end returns position of next character after match
-            );
-         }else{ //if dont, return NA
-            iret[i]      = NA_INTEGER;
-            iret[i+nmax] = NA_INTEGER;
-         }
-         
+         matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
+            last_str->getBuffer(), last_str->length(), col, NULL, &err);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
+//         usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
+      }
+      //if last pattern is equal to current then save time and dont change this   
+      if (cur_pat != last_pat) {
+         last_pat = cur_pat;
+         err = U_ZERO_ERROR;
+         usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
          if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
       }
+      //as above, this time for string   
+      if (cur_str != last_str) {
+         last_str = cur_str;
+         err = U_ZERO_ERROR;
+         usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
+      }
+         
+      usearch_reset(matcher);
+      err = U_ZERO_ERROR;
+      
+      int start = usearch_last(matcher, &err);
+      // this properly detects overlapping matches
+      // (search is performed from-the-end, and no from-beginning
+         
+      //if we have match
+      if(start != USEARCH_DONE){
+         iret[i]      = start;
+         iret[i+nmax] = start + usearch_getMatchedLength(matcher);
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         ss->UChar16_to_UChar32_index(i, 
+               iret+i, iret+i+nmax, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+      }         
+      if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
    }
    
    if (col) ucol_close(col);
