@@ -58,7 +58,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+      if (U_FAILURE(status)) throw StriException(status);
       
       int m_start = -1;
       int m_end = -1;
@@ -66,7 +66,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       if ((int)matcher->find()) { // find first matche
          m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
          m_end   = (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+         if (U_FAILURE(status)) throw StriException(status);
       }
       else {
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -77,7 +77,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
          while ((int)matcher->find()) {
             m_start = (int)matcher->start(status);
             m_end   = (int)matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+            if (U_FAILURE(status)) throw StriException(status);
          } 
       }
       
@@ -168,14 +168,14 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+      if (U_FAILURE(status)) throw StriException(status);
       
       matcher->reset(str_text);
       
       deque<R_len_t_x2> occurences;
       while ((int)matcher->find()) { 
          occurences.push_back(R_len_t_x2((R_len_t)matcher->start(status), (R_len_t)matcher->end(status)));
-         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+         if (U_FAILURE(status)) throw StriException(status);
       }
 
       R_len_t noccurences = occurences.size();

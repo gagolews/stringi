@@ -43,6 +43,9 @@
 #define MSG__INTERNAL_ERROR \
    "internal error"
    
+#define MSG__ICU_ERROR \
+   "%s (%s)"
+   
 #define MSG__EXPECTED_NONNEGATIVE \
    "incorrect argument: expected a nonnegative numeric value"
    

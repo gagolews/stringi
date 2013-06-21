@@ -41,7 +41,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       if (narg <= 0) { // no custom settings - Collator'll be default-as-hell
          UErrorCode err = U_ZERO_ERROR;
          UCollator* col = ucol_open(NULL, &err);
-         if (!U_SUCCESS(err)) {
+         if (U_FAILURE(err)) {
             error(MSG__RESOURCE_ERROR_GET); // error() allowed here
          }
          return col;
@@ -67,7 +67,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       
       if (!col) col = ucol_open(NULL, &err); // default locale
       
-      if (!U_SUCCESS(err)) {
+      if (U_FAILURE(err)) {
          error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
       
@@ -107,7 +107,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
             warning(MSG__INCORRECT_COLLATOR_OPTION, curname);
          }
          
-         if (!U_SUCCESS(err)) {
+         if (U_FAILURE(err)) {
             error(MSG__RESOURCE_ERROR_GET); // error() allowed here
          }
       }

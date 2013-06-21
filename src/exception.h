@@ -32,7 +32,7 @@
    
 
 
-#define StriException_BUFSIZE 256
+#define StriException_BUFSIZE 1024
 
 
 /**
@@ -56,10 +56,17 @@ public:
       va_end(args);
    }
    
+   StriException(UErrorCode status) {
+      msg = R_alloc(StriException_BUFSIZE, sizeof(char));
+      sprintf(msg, MSG__ICU_ERROR, getICUerrorName(status), u_errorName(status));
+   }
+   
    
    void throwRerror() {
       error(msg);  
    }
+   
+   static const char* getICUerrorName(UErrorCode status);
    
 };
 

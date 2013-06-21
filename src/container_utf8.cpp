@@ -103,7 +103,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                }
                UErrorCode status = U_ZERO_ERROR;
                UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvCurrent, status);
-               if (!U_SUCCESS(status))
+               if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT); // TO DO: throw StriException
                
                if (!buf) {
@@ -121,7 +121,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                
                u_strToUTF8(buf, bufsize, &realsize,
                		tmp.getBuffer(), tmp.length(), &status);
-               if (!U_SUCCESS(status))
+               if (U_FAILURE(status))
                   error(MSG__ENC_ERROR_CONVERT); // TO DO: throw StriException
                   
                this->str[i] = new String8(buf, realsize, true);

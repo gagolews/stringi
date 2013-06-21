@@ -110,9 +110,8 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
    
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
-   if (U_FAILURE(status)) {
-      throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
-   }
+   if (U_FAILURE(status))
+      throw StriException(status);
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
 #endif
@@ -126,7 +125,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
    uint32_t flags = 0;
    if (!isVectorList(opts_regex))
-      throw StriException(MSG__ARG_EXPECTED_LIST, "opts_regex");
+      error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
       
    R_len_t narg = LENGTH(opts_regex);
       

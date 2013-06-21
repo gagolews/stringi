@@ -280,12 +280,12 @@ const char* stri__ucnv_getFriendlyName(const char* canname)
 
    err = U_ZERO_ERROR;
    frname = ucnv_getStandardName(canname, "MIME", &err);
-   if (U_SUCCESS(err) && frname)
+   if (!U_FAILURE(err) && frname)
       return frname;
 
    err = U_ZERO_ERROR;
    frname = ucnv_getStandardName(canname, "JAVA", &err);
-   if (U_SUCCESS(err) && frname)
+   if (!U_FAILURE(err) && frname)
       return frname;
 
    return canname;
@@ -868,8 +868,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    // Get target encoding mark
    UErrorCode err = U_ZERO_ERROR;
    const char* uconv_to_name = ucnv_getName(uconv_to, &err);
-   if (!U_SUCCESS(err))
-      throw StriException(MSG__INTERNAL_ERROR); 
+   if (U_FAILURE(err))
+      throw StriException(err); 
    cetype_t encmark_to = CE_BYTES; // all other cases than the below ones - bytes enc (this is reasonable, isn't it?)
    if (!to_raw_logical) { // otherwise not needed
       if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
@@ -911,8 +911,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       
       err = U_ZERO_ERROR;
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
-      if (!U_SUCCESS(err))
-         throw StriException(MSG__INTERNAL_ERROR);  // error() allowed here
+      if (U_FAILURE(err))
+         throw StriException(err);  // error() allowed here
       
       R_len_t bufneed = encs.length()*ucnv_getMaxCharSize(uconv_to)+1;
       buf.resize(bufneed);
@@ -924,7 +924,9 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          buf.resize(bufneed);
          err = U_ZERO_ERROR;
          bufneed = encs.extract(buf.data(), buf.size(), uconv_to, err);
-         if (bufneed > buf.size() || !U_SUCCESS(err))
+         if (U_FAILURE(err))
+            throw StriException(err);
+         if (bufneed > buf.size())
             throw StriException(MSG__INTERNAL_ERROR);
       }
       

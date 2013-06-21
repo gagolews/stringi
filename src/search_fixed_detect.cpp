@@ -112,7 +112,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    err = U_ZERO_ERROR;
    UStringSearch *matcher = NULL;
    
-   if (!U_SUCCESS(err))
+   if (U_FAILURE(err))
       error(MSG__STRSEARCH_FAILED);
    
    for (R_len_t i = pp->vectorize_init();
@@ -130,7 +130,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          err = U_ZERO_ERROR;
          matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
             last_str->getBuffer(), last_str->length(), col, NULL, &err);
-         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
 //            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
       }
 
@@ -138,20 +138,20 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          last_pat = cur_pat;
          err = U_ZERO_ERROR;
          usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
       }
 
       if (cur_str != last_str) {
          last_str = cur_str;
          err = U_ZERO_ERROR;
          usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-         if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
       }
       
       usearch_reset(matcher);
       err = U_ZERO_ERROR;
       ret_tab[i] = ((int)usearch_first(matcher, &err) != USEARCH_DONE);  // this is F*G slow! :-(
-      if (!U_SUCCESS(err)) error(MSG__STRSEARCH_FAILED);
+      if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
    }
    
    if (col) ucol_close(col);

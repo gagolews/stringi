@@ -36,7 +36,7 @@
  * ////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
  * //   UErrorCode err = U_ZERO_ERROR;
  * //   BreakIterator* br = BreakIterator::createWordInstance(loc, err); // should be freed after use
- * ////   if (!U_SUCCESS(err))
+ * ////   if (U_FAILURE(err))
  * //   cerr << (err == U_ZERO_ERROR) << endl;
  * //   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
  * //   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
@@ -49,6 +49,7 @@
 SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
    
    STRI__ERROR_HANDLER_BEGIN
    
@@ -56,9 +57,8 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
       throw StriException(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually     
    int _type = INTEGER(type)[0];
    
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   
    Locale loc = Locale::createFromName(qloc); // this will be freen automatically
-
    StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
    
    for (R_len_t i = str_cont.vectorize_init();

@@ -96,7 +96,7 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
          UErrorCode status = U_ZERO_ERROR;
          str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
          if (U_FAILURE(status))
-            throw StriException(MSG__RESOURCE_ERROR_APPLY);
+            throw StriException(status);
       }
    }
    
@@ -142,7 +142,7 @@ SEXP stri_enc_isnf(SEXP str, SEXP type)
       UErrorCode status = U_ZERO_ERROR;
       ret_tab[i] = normalizer->isNormalized(str_cont.get(i), status);
       if (U_FAILURE(status))
-         throw StriException(MSG__RESOURCE_ERROR_APPLY);         
+         throw StriException(status);         
    }
    
    // normalizer shall not be deleted at all

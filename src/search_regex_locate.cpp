@@ -70,7 +70,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          UErrorCode status = U_ZERO_ERROR;
          int start = (int)matcher->start(status);
          int end  =  (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+         if (U_FAILURE(status)) throw StriException(status);
          
          occurences.push_back(R_len_t_x2(start, end));
          found = (int)matcher->find();
@@ -148,7 +148,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
       if ((int)matcher->find()) { //find first matches
          ret_tab[i] = (int)matcher->start(status);
          ret_tab[i+vectorize_length] = (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+         if (U_FAILURE(status)) throw StriException(status);
       }
       else
          continue; // no match
@@ -157,7 +157,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
          while ((int)matcher->find()) {
             ret_tab[i]                  = (int)matcher->start(status);
             ret_tab[i+vectorize_length] = (int)matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
+            if (U_FAILURE(status)) throw StriException(status);
          } 
       }
          
