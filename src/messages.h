@@ -88,7 +88,10 @@
 
 #define MSG__REGEXP_FAILED \
    "regexp search failed"
-   
+  
+#define MSG__REGEXP_FAILED_DETAILS \
+   "regexp search failed: %s"
+  
 #define MSG__STRSEARCH_FAILED \
    "string search failed"
    

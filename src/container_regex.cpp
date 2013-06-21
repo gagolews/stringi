@@ -97,7 +97,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
       if (i >= n) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
-         error("DEBUG: vectorize_getMatcher - matcher reuse failed!"); // TO DO: throw StriException
+         throw StriException("DEBUG: vectorize_getMatcher - matcher reuse failed!");
       }
 #endif
          return lastMatcher; // reuse
@@ -111,7 +111,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
    if (U_FAILURE(status)) {
-      error(u_errorName(status)); // TO DO: throw StriException
+      throw StriException(MSG__REGEXP_FAILED_DETAILS, u_errorName(status));
    }
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
@@ -126,7 +126,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
    uint32_t flags = 0;
    if (!isVectorList(opts_regex))
-      error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // TO DO: throw StriException
+      throw StriException(MSG__ARG_EXPECTED_LIST, "opts_regex");
       
    R_len_t narg = LENGTH(opts_regex);
       
@@ -134,11 +134,11 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
       
       SEXP names = getAttrib(opts_regex, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
-         error(MSG__RESOURCE_ERROR_GET);
+         error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
       
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
-            error(MSG__RESOURCE_ERROR_GET);
+            error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
             
          const char* curname = CHAR(STRING_ELT(names, i));
          
