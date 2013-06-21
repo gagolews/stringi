@@ -68,13 +68,16 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' the fields themselves.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{n_max}.
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 #' 
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
 #' @param str character vector with strings to search in
-#' @param pattern character vector with regex patterns
+#' @param pattern character vector with character class identifiers 
+#' to search for, see \link{stringi-search-charclass}
 #' @param n_max integer vector, maximal number of pieces to return
+#' @param omit_empty logical vector; should empty strings be removed from result?
+#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
 #' @return a list of character vectors
 #' 
 #' 
@@ -86,8 +89,8 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' @aliases stri_split_regex
 #' @family search_regex
 #' @family search_split
-stri_split_regex <- function(str, pattern, n_max=-1L) {
-   .Call("stri_split_regex", str, pattern, n_max, PACKAGE="stringi")
+stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_regex=list())  {
+   .Call("stri_split_regex", str, pattern, n_max, omit_empty, opts_regex, PACKAGE="stringi")
 }
 
 
@@ -105,6 +108,8 @@ stri_split_regex <- function(str, pattern, n_max=-1L) {
 #' 
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
+#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' net empty strings will never appear in the resulting vector.
 #' 
 #' @param str character vector with strings to search in
 #' @param pattern character vector with patterns

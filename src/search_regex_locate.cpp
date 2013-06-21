@@ -44,9 +44,6 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
-   SEXP notfound; // this matrix will be set iff not found or NA
-   PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
-   
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, vectorize_length));
 
@@ -55,13 +52,14 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, notfound), SET_VECTOR_ELT(ret, i, notfound))
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
       
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       int found = (int)matcher->find();
       if (!found) {
-         SET_VECTOR_ELT(ret, i, notfound);
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
          continue;
       }
 

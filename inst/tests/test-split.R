@@ -20,6 +20,26 @@ test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass(c("a1a", "aXa"), c("N", "Lu")), list(c("a", "a"), c("a", "a")))
 })
 
+
+test_that("stri_split_regex", {
+   expect_identical(stri_split_regex(character(0)," "),list())   
+   expect_identical(stri_split_regex(NA,"a"),list(NA_character_))
+   expect_identical(stri_split_regex("NA",NA),list(NA_character_))
+   expect_identical(stri_split_regex("NA","a",NA),list(NA_character_))
+   expect_identical(stri_split_regex("NA","a",1,NA),list(NA_character_))
+   expect_identical(stri_split_regex(" "," "),list(rep("",2)))
+   expect_identical(stri_split_regex("aa","a"),list(rep("",3)))
+   expect_identical(stri_split_regex("aa","a",-1L,TRUE),list(character(0)))
+   
+   # n
+   expect_identical(stri_split_regex(";123", ";", n=2), list(c("", "123")))
+   expect_identical(stri_split_regex(";123", ";", n=2, omit_empty=TRUE), list("123"))
+   expect_identical(stri_split_regex("123;456", ";", n=2), list(c("123", "456")))
+   expect_identical(stri_split_regex("123;456;789", ";", n=2), list(c("123", "456;789")))
+})
+
+
+
 test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed(character(0)," "),list())   
    expect_identical(stri_split_fixed(NA,"a"),list(NA_character_))
@@ -62,4 +82,8 @@ test_that("stri_split_fixed", {
    #if n==inf (default) then exact is not used
    expect_identical(stri_split_fixed("a","b",exact=T),stri_split_fixed("a","b"))
 })
+
+
+
+
 

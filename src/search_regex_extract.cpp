@@ -152,9 +152,6 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
-   SEXP notfound; // this vector will be set iff not found or NA
-   PROTECT(notfound = stri__vector_NA_strings(1));
-   
    SEXP ret;
    PROTECT(ret = allocVector(VECSXP, vectorize_length));
    
@@ -163,7 +160,8 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, notfound);, SET_VECTOR_ELT(ret, i, notfound);)
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
       
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -180,7 +178,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
       R_len_t noccurences = occurences.size();
       if (noccurences <= 0) {
-         SET_VECTOR_ELT(ret, i, notfound);
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
       
