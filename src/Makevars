@@ -14,6 +14,7 @@ SRCS        =  stringi.cpp \
                container_listutf8.cpp \
                container_utf16.cpp \
                container_regex.cpp \
+               container_usearch.cpp \
                collator.cpp \
                casefold.cpp \
                join.cpp \
@@ -56,9 +57,17 @@ HEADERS     =  stringi.h \
                messages.h \
                external.h \
                macros.h \
-               unicoder_base.h \
-               unicoder8.h \
-               unicoder16.h \
+               charclass.h \
+               exception.h \
+               container_base.h \
+               container_charclass.h \
+               container_integer.h \
+               container_listutf8.h \
+               container_logical.h \
+               container_regex.h \
+               container_usearch.h \
+               container_utf16.h \
+               container_utf8.h \
                string8.h
                
 

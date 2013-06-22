@@ -36,7 +36,7 @@ StriContainerRegexPattern::StriContainerRegexPattern()
  * Construct String Container from R character vector
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
- * @param shallowrecycle will \code{this->str} be ever modified?
+ * @param flags regexp flags
  */
 StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, uint32_t flags)
    : StriContainerUTF16(rstr, nrecycle, true)
