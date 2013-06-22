@@ -135,6 +135,9 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' These functions extract substrings of \code{str} that
 #' match a given \code{pattern}.
 #' 
+#' See also \code{\link{stri_match_all_regex}} for extracting 
+#' matches together with regex capture groups.
+#' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
@@ -316,7 +319,6 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
 #' 
 #' @export
 #' @family search_locate
-#' @family indexing
 stri_extract <- function(str, ..., regex, fixed, charclass, 
                         mode=c("first", "all", "last")) {
    # `first` is default for compatibility with stringr

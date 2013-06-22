@@ -34,8 +34,6 @@
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
-   error("TO DO: stri__match_firstlast_regex");
-   
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -47,49 +45,65 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool f
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   vector< vector<charptr_x2> > occurences(vectorize_length); // we don't know how many capture groups are there
+   R_len_t occurences_max = 1;
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
+         /*do nothing*/;,
+         int pattern_cur_groups = pattern_cont.getMatcher(i)->groupCount();
+         if (occurences_max < pattern_cur_groups+1) occurences_max=pattern_cur_groups+1;
+      )
       
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      int pattern_cur_groups = matcher->groupCount();
+      if (occurences_max < pattern_cur_groups+1) occurences_max=pattern_cur_groups+1;
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
       if (U_FAILURE(status)) throw StriException(status);
+      const char* str_cur_s = str_cont.get(i).c_str();
       
-      int m_start = -1;
-      int m_end = -1;
+      occurences[i] = vector<charptr_x2>(pattern_cur_groups+1);
       matcher->reset(str_text);
-      if ((int)matcher->find()) { // find first matche
-         m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
-         m_end   = (int)matcher->end(status);
+      while ((int)matcher->find()) {
+         occurences[i][0].v1 = str_cur_s+(int)matcher->start(status);
+         occurences[i][0].v2 = str_cur_s+(int)matcher->end(status);
+         for (R_len_t j=1; j<=pattern_cur_groups; ++j) {
+            int m_start = (int)matcher->start(j, status);
+            int m_end = (int)matcher->end(j, status);
+            if (m_start < 0 || m_end < 0)
+               occurences[i][j].v1 = occurences[i][j].v2 = NULL;
+            else {
+               occurences[i][j].v1 = str_cur_s+m_start;
+               occurences[i][j].v2 = str_cur_s+m_end;
+            }
+         }
          if (U_FAILURE(status)) throw StriException(status);
+         if (first) break;
       }
-      else {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      
-      if (!first) { // continue searching
-         while ((int)matcher->find()) {
-            m_start = (int)matcher->start(status);
-            m_end   = (int)matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(status);
-         } 
-      }
-      
-      SET_STRING_ELT(ret, i, mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
    }
    
    if (str_text) {
       utext_close(str_text);
       str_text = NULL;
    }
+   
+   SEXP ret;
+   PROTECT(ret = stri__matrix_NA_STRING(vectorize_length, occurences_max));
+   
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      R_len_t ni = occurences[i].size();
+      for (R_len_t j=0; j<ni; ++j) {
+         charptr_x2 retij = occurences[i][j];
+         if (retij.v1 != NULL && retij.v2 != NULL)
+            SET_STRING_ELT(ret, i+j*vectorize_length, mkCharLenCE(retij.v1, (R_len_t)(retij.v2-retij.v1), CE_UTF8));
+      }
+   }
+   
+   
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)

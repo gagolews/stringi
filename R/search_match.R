@@ -167,7 +167,6 @@ stri_match_last <- function(str, ..., regex) {
 #' 
 #' @export
 #' @family search_match
-#' @family indexing
 stri_match <- function(str, ..., regex, 
                         mode=c("first", "all", "last")) {
    # `first` is default for compatibility with stringr

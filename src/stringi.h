@@ -53,7 +53,15 @@ struct R_len_t_x2 {
 };
 
 
-
+/** Two \code{char*}s as one :)
+ * 
+ */
+struct charptr_x2 {
+   charptr_x2() { this->v1 = NULL; this->v2 = NULL; }
+   charptr_x2(const char* v1, const char* v2) { this->v1 = v1; this->v2 = v2; }
+   const char* v1;
+   const char* v2;
+};
 
 // ------------------------------------------------------------------------
 

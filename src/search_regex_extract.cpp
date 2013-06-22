@@ -63,7 +63,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       int m_start = -1;
       int m_end = -1;
       matcher->reset(str_text);
-      if ((int)matcher->find()) { // find first matche
+      if ((int)matcher->find()) { // find first match
          m_start = (int)matcher->start(status); // The **native** position in the input string :-) 
          m_end   = (int)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(status);
