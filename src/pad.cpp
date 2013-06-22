@@ -24,50 +24,50 @@
 /** 
  * Pad a string
  * 
- * vectorized over s, length and pad
- *  if str or pad is NA the result will be NA
+ * vectorized over str, length and pad
+ * if str or pad or length is NA the result will be NA
  *
- * @param str
- * @param length
- * @param pad
+ * @param str character vector
+ * @param length integer vector
+ * @param pad character vector
  * @return character vector
  * 
  * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Bartlomiej Tartanus 21-06-2013) uses StriContainerUTF16
+ * @version 0.2 (Bartlomiej Tartanus, 2013-06-21) uses StriContainerUTF16 & ICU's padLeading
 */
 SEXP stri_pad(SEXP str, SEXP length, SEXP pad)
 {
-   str   = stri_prepare_arg_string(str, "str"); // prepare string argument
-   length= stri_prepare_arg_integer(length, "length");
-   pad   = stri_prepare_arg_string(pad, "pad");
+   str    = stri_prepare_arg_string(str, "str"); // prepare string argument
+   length = stri_prepare_arg_integer(length, "length");
+   pad    = stri_prepare_arg_string(pad, "pad");
    
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(length), LENGTH(pad));
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(length), LENGTH(pad));
    
-   SEXP ret, curs;
-   PROTECT(ret = allocVector(STRSXP, nmax));
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
    
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax, false);
-   StriContainerUTF16* pp = new StriContainerUTF16(pad, nmax);
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, vectorize_length, false);
+   StriContainerUTF16 pad_cont(pad, vectorize_length);
+   StriContainerInteger length_cont(length, vectorize_length);
    
-   int* ilen = INTEGER(length);
-   int  nlen = LENGTH(length);
-   
-   for (R_len_t i = 0; i < nmax; i++)
+   for (R_len_t i = 0; i < vectorize_length; i++)
    {
-      if (pp->isNA(i) || ss->isNA(i)) {
+      if (pad_cont.isNA(i) || str_cont.isNA(i) || length_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
-      if(pp->get(i).length()){
-         UChar32 cur_pad = (pp->get(i))[0];
-         ss->getWritable(i).padLeading(ilen[i%nlen], cur_pad);
+      if (pad_cont.get(i).length() > 0) {
+         UChar cur_pad = (pad_cont.get(i))[0]; // This is Uchar - 16 bit.....
+         str_cont.getWritable(i).padLeading(length_cont.get(i), cur_pad);
       }
       
-      SET_STRING_ELT(ret, i, ss->toR(i));
+      SET_STRING_ELT(ret, i, str_cont.toR(i));
    }
    
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
