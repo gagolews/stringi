@@ -99,7 +99,7 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @family search_replace
 #' @family locale_sensitive
 stri_replace_all_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   stop("TO DO: stri_replace_all_fixed")
+   .Call("stri_replace_all_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
 }
 
 

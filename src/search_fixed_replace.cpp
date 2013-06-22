@@ -19,45 +19,43 @@
 #include "stringi.h"
 
 
-///** 
-// * .... 
-// * @param s ...
-// * @param pattern ...
-// * @param replacement ...
-// * @return ...
-// */
-//SEXP stri_replace_all_fixed(SEXP s, SEXP pat, SEXP rep)
-//{
-//   s   = stri_prepare_arg_string(s, "str");
-//   pat = stri_prepare_arg_string(pat, "pattern");
-//   rep = stri_prepare_arg_string(rep, "replacement");
-//   R_len_t ns   = LENGTH(s);
-//   R_len_t npat = LENGTH(pat);
-//   R_len_t nrep = LENGTH(rep);
-//   if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
-//   R_len_t nmax = stri__recycling_rule(false, 3, ns, npat, nrep); // disable warning here -> stri_split_fixed
-//   
-//   SEXP e, split, sexpfalse, temp, currep, inf;
-//   PROTECT(e = allocVector(STRSXP,nmax));
-//   PROTECT(sexpfalse = allocVector(LGLSXP,1));
-//   PROTECT(currep = allocVector(STRSXP,1));
-//   PROTECT(inf = allocVector(REALSXP,1));
-//   LOGICAL(sexpfalse)[0] = false;
-//   REAL(inf)[0] = R_PosInf;
-//   //if max(ns,npat) % ns || % npat != 0 then inside stri_split we get warn
-//   split = stri_split_fixed(s,pat,inf,sexpfalse,sexpfalse);
-//   int nsplit = LENGTH(split), nm=ns;
-//   if(npat > nm) nm=npat;
-//   if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
-//      warning(MSG__WARN_RECYCLING_RULE);
-//   for (int i=0; i<nmax; ++i) {
-//      temp = VECTOR_ELT(split, i % nsplit);
-//      SET_STRING_ELT(currep,0,STRING_ELT(rep,i % nrep));
-//      SET_STRING_ELT(e, i, STRING_ELT(stri_flatten(temp,currep),0));
-//   }
-//   UNPROTECT(4);
-//   return e;
-//}
+/** 
+ * .... 
+ * @param s ...
+ * @param pattern ...
+ * @param replacement ...
+ * @return ...
+ */
+SEXP stri_replace_all_fixed(SEXP str, SEXP pat, SEXP rep, SEXP collator_opts)
+{
+   str   = stri_prepare_arg_string(str, "str"); // prepare string argument
+   pat   = stri_prepare_arg_string(pat, "pat");
+   rep   = stri_prepare_arg_string(rep, "rep");
+   
+   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pat), LENGTH(rep));
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, nmax));
+   
+   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax, false);
+   StriContainerUTF16* pp = new StriContainerUTF16(pat, nmax);
+   StriContainerUTF16* rr = new StriContainerUTF16(rep, nmax);
+   
+   for (R_len_t i = 0; i < nmax; i++)
+   {
+      if (ss->isNA(i) || pp->isNA(i) || rr->isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      ss->getWritable(i).findAndReplace(pp->get(i), rr->get(i));
+      
+      SET_STRING_ELT(ret, i, ss->toR(i));
+   }
+   
+   UNPROTECT(1);
+   return ret;
+}
 
 
 
