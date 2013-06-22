@@ -58,3 +58,4 @@ Collate:
     'search_extract.R'
     'pad.R'
     'opts.R'
+    'search_match.R'

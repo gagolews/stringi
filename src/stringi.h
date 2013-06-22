@@ -78,7 +78,7 @@ SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 SEXP    stri__emptyList();                                          // DONE
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
-
+SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);            // DONE
 
 // collator.cpp:
 UCollator*  stri__ucol_open(SEXP collator_opts);
@@ -247,6 +247,9 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);    // DONE
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);     // DONE
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);      // DONE
+SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);      // DONE
+SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);       // DONE
+SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);        // DONE
 
 
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first);  // DONE, internal

@@ -47,6 +47,7 @@ SRCS        =  stringi.cpp \
                search_regex_detect.cpp \
                search_regex_extract.cpp \
                search_regex_locate.cpp \
+               search_regex_match.cpp \
                search_regex_replace.cpp \
                search_regex_split.cpp \
                test.cpp

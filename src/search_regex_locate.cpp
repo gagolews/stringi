@@ -96,7 +96,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    }
    
    stri__locate_set_dimnames_list(ret);
-   UNPROTECT(2);
+   UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

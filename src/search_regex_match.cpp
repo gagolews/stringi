@@ -22,18 +22,20 @@
 
 
 /** 
- * Extract first occurence of a regex pattern in each string
+ * Extract all capture groups of the first/last occurence of a regex pattern in each string
  * 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
  * @param firs logical - search for the first or the last occurence?
- * @return character vector
+ * @return character matrix
  * 
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1 (Marek Gagolewski, 2013-06-22)
  */
-SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
+SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
+   error("TO DO: stri__match_firstlast_regex");
+   
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -95,51 +97,51 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
 
 
 /** 
- * Extract first occurence of a regex pattern in each string
+ * Extract all capture groups of the first occurence of a regex pattern in each string
  * 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @return character vector
+ * @return character matrix
  * 
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1 (Marek Gagolewski, 2013-06-22)
  */
-SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   return stri__extract_firstlast_regex(str, pattern, opts_regex, true);
+   return stri__match_firstlast_regex(str, pattern, opts_regex, true);
 }
 
 
 
 /** 
- * Extract last occurence of a regex pattern in each string
+ * Extract all capture groups of the  last occurence of a regex pattern in each string
  * 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @return character vector
+ * @return character matrix
  * 
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1 (Marek Gagolewski, 2013-06-22)
  */
-SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   return stri__extract_firstlast_regex(str, pattern, opts_regex, false);
+   return stri__match_firstlast_regex(str, pattern, opts_regex, false);
 }
 
 
 
 
 /** 
- * Extract all occurences of a regex pattern in each string
+ * Extract all capture groups of  all occurences of a regex pattern in each string
  * 
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @return list of character vectors
+ * @return list of character matrices
  * 
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1 (Marek Gagolewski, 2013-06-22)
  */
-SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
@@ -160,11 +162,12 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1));,
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1+pattern_cont.getMatcher(i)->groupCount()));)
       
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      int pattern_cur_groups = matcher->groupCount();
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
       if (U_FAILURE(status)) throw StriException(status);
       
@@ -173,22 +176,32 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       deque<R_len_t_x2> occurences;
       while ((int)matcher->find()) { 
          occurences.push_back(R_len_t_x2((R_len_t)matcher->start(status), (R_len_t)matcher->end(status)));
+         for (R_len_t j=0; j<pattern_cur_groups; ++j)
+            occurences.push_back(R_len_t_x2((R_len_t)matcher->start(j+1, status), (R_len_t)matcher->end(j+1, status)));
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = occurences.size()/(pattern_cur_groups+1);
       if (noccurences <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
          continue;
       }
       
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
-      PROTECT(cur_res = allocVector(STRSXP, noccurences));
+      PROTECT(cur_res = allocMatrix(STRSXP, noccurences, pattern_cur_groups+1));
       deque<R_len_t_x2>::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+      for (R_len_t j = 0; iter != occurences.end(); ++j) {
          R_len_t_x2 curo = *iter;
          SET_STRING_ELT(cur_res, j, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+         ++iter;
+         for (R_len_t k = 0; iter != occurences.end() && k < pattern_cur_groups; ++iter, ++k) {
+            R_len_t_x2 curo = *iter;
+            if (curo.v1 < 0 || curo.v2 < 0)
+               SET_STRING_ELT(cur_res, j+(k+1)*noccurences, NA_STRING);
+            else
+               SET_STRING_ELT(cur_res, j+(k+1)*noccurences, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+         }
       }
       SET_VECTOR_ELT(ret, i, cur_res);
       UNPROTECT(1);

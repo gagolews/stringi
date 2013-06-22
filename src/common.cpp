@@ -194,3 +194,22 @@ SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
    UNPROTECT(1);
    return x;
 }
+
+
+/** Creates a character matrix filled with \code{NA_STRING}
+ * 
+ * @param nrow number of rows
+ * @param ncol number of columns
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-22)
+ */
+SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
+{
+   SEXP x;
+   PROTECT(x = allocMatrix(STRSXP, nrow, ncol));
+   for (R_len_t i=0; i<nrow*ncol; ++i)
+      SET_STRING_ELT(x, i, NA_STRING);
+   UNPROTECT(1);
+   return x;
+}
+
