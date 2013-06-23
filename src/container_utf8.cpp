@@ -387,3 +387,79 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 }
 
  
+ 
+ 
+ 
+ /** Convert UTF8-byte indices to Unicode32 (code points)
+ *
+ * \code{i1} and \code{i2} must be sorted increasingly
+ * 
+ * @param i element index
+ * @param i1 indices, 1-based [in/out]
+ * @param i2 indices, 1-based [in/out]
+ * @param ni size of \code{i1} and \code{i2}
+ * @param adj1 adjust for \code{i1}
+ * @param adj2 adjust for \code{i2}
+ * 
+ */
+void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
+   int* i1, int* i2, const int ni, int adj1, int adj2)
+{
+   const char* str = get(i).c_str();
+   const int nstr = get(i).length();
+   
+   int j1 = 0;
+   int j2 = 0;
+   
+   int i8 = 0;
+   int i32 = 0;
+   while (i8 < nstr && (j1 < ni || j2 < ni)) {
+
+      if (j1 < ni && i1[j1] <= i8) {
+#ifndef NDEBUG
+      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
+         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i1[j1] = i32 + adj1;
+         ++j1;
+      }
+      
+      if (j2 < ni && i2[j2] <= i8) {
+#ifndef NDEBUG
+      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
+         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i2[j2] = i32 + adj2;
+         ++j2;
+      }
+      
+      // Next UChar32
+      U8_FWD_1(str, i8, nstr);
+      ++i32;
+   }
+   
+   // CONVERT LAST:
+   if (j1 < ni && i1[j1] <= nstr) {
+#ifndef NDEBUG
+      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
+         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i1[j1] = i32 + adj1;
+         ++j1;
+   }
+  
+   if (j2 < ni && i2[j2] <= nstr) {
+#ifndef NDEBUG
+      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
+         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+#endif
+         i2[j2] = i32 + adj2;
+         ++j2;
+   }
+   
+   // CHECK:
+#ifndef NDEBUG
+      if (i8 >= nstr && (j1 < ni || j2 < ni))
+         error("DEBUG: stri__UTF8_to_UChar32_index()"); // TO DO: throw StriException
+#endif
+}

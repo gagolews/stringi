@@ -160,109 +160,101 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 
 
 
+
+/** 
+ * Locate first or last occurences of pattern in a string [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param collator_opts passed to stri__ucol_open(),
+ * if \code{NA}, then \code{stri__locate_firstlast_fixed_byte} is called
+ * @param first looking for first or last match?
+ * @return integer matrix (2 columns)
+ * 
+ * @version 0.1 (Bartlomiej Tartanus)
+ * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
+ * @version 0.3 (Bartlomiej Tartanus, 2013-06-23) StriException friendly, use StriContainerUStringSearch
+ */
+SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first)
+{
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* collator = stri__ucol_open(collator_opts);
+   if (!collator)
+      return stri__locate_firstlast_fixed_byte(str, pattern, first);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+   
+   SEXP ret;
+   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
+   stri__locate_set_dimnames_matrix(ret);
+   int* ret_tab = INTEGER(ret);
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      ret_tab[i]                  = NA_INTEGER;
+      ret_tab[i+vectorize_length] = NA_INTEGER;
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, 
+         ;/*nothing*/, ;/*nothing*/)
+
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      usearch_reset(matcher);
+      UErrorCode status = U_ZERO_ERROR;
+      
+      int start;
+      if (first) {
+         start = usearch_first(matcher, &status);
+      } else {
+         start = usearch_last(matcher, &status);
+      }
+      if (U_FAILURE(status)) throw StriException(status);
+      
+      // if we have match (otherwise don't do anything)
+      if (start != USEARCH_DONE) {
+         ret_tab[i]                  = start;
+         ret_tab[i+vectorize_length] = start + usearch_getMatchedLength(matcher);
+         
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         str_cont.UChar16_to_UChar32_index(i, 
+               ret_tab+i, ret_tab+i+vectorize_length, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+      }           
+   }
+   
+   if (collator) { ucol_close(collator); collator=NULL; }
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
+}
+
+
 /** 
  * Locate first occurences of pattern in a string [with collation]
  * 
  * @param str character vector
  * @param pattern character vector
- * @param collator_opts passed to stri__ucol_open(),
- * if \code{NA}, then \code{stri__locate_first_fixed_byte} is called
+ * @param collator_opts list
  * @return integer matrix (2 columns)
  * 
  * @version 0.1 (Bartlomiej Tartanus)
  * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
+ * @version 0.3 (Marek Gagolewski, 2013-06-23) use stri_locate_firstlast_fixed
  */
 SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
-   UCollator* col = stri__ucol_open(collator_opts);
-   if (!col)
-      return stri__locate_first_fixed_byte(str, pattern);
-   
-   str      = stri_prepare_arg_string(str, "str");
-   pattern  = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   
-   SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   stri__locate_set_dimnames_matrix(ret);
-   int* iret = INTEGER(ret);
-   
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
-   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
-   UErrorCode err = U_ZERO_ERROR;
-   
-   const UnicodeString* last_str = NULL;
-   const UnicodeString* last_pat = NULL;
-   err = U_ZERO_ERROR;
-   UStringSearch *matcher = NULL;
-   
-   if (U_FAILURE(err))
-      error(MSG__STRSEARCH_FAILED);
-   
-   for (R_len_t i = pp->vectorize_init();
-         i != pp->vectorize_end();
-         i = pp->vectorize_next(i))
-   {
-      iret[i]      = NA_INTEGER;
-      iret[i+nmax] = NA_INTEGER;
-      
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(*ss, *pp, ;/*nothing*/, ;/*nothing*/ )
-
-      const UnicodeString* cur_str = &(ss->get(i));
-      const UnicodeString* cur_pat = &(pp->get(i));
-      int ns = cur_str->length();
-      int np = cur_pat->length();
-      
-      if (!matcher) {
-         last_pat = cur_pat;
-         last_str = cur_str;
-         err = U_ZERO_ERROR;
-         matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
-            last_str->getBuffer(), last_str->length(), col, NULL, &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-//            usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
-      }
-      //if last pattern is equal to current then save time and dont change this   
-      if (cur_pat != last_pat) {
-         last_pat = cur_pat;
-         err = U_ZERO_ERROR;
-         usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-      }
-      //as above, this time for string   
-      if (cur_str != last_str) {
-         last_str = cur_str;
-         err = U_ZERO_ERROR;
-         usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-      }
-         
-      usearch_reset(matcher);
-      err = U_ZERO_ERROR;
-      
-      int start = usearch_first(matcher, &err);
-      
-      //if we have match
-      if(start != USEARCH_DONE){
-         iret[i]      = start;
-         iret[i+nmax] = start + usearch_getMatchedLength(matcher);
-         
-         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-         ss->UChar16_to_UChar32_index(i, 
-               iret+i, iret+i+nmax, 1,
-               1, // 0-based index -> 1-based
-               0  // end returns position of next character after match
-         );
-      }         
-      if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-   }
-   
-   if (col) ucol_close(col);
-   if (matcher) usearch_close(matcher);
-   delete ss;
-   delete pp;
-   UNPROTECT(1);
-   return ret;
+   return stri__locate_firstlast_fixed(str, pattern, collator_opts, true);
 }
 
 
@@ -273,104 +265,14 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * 
  * @param str character vector
  * @param pattern character vector
- * @param collator_opts passed to stri__ucol_open(),
- * if \code{NA}, then \code{stri__locate_last_fixed_byte} is called
+ * @param collator_opts list
  * @return integer matrix (2 columns)
  * 
  * @version 0.1 (Bartlomiej Tartanus)
  * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
+ * @version 0.3 (Marek Gagolewski, 2013-06-23) use stri_locate_firstlast_fixed
  */
 SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
-   UCollator* col = stri__ucol_open(collator_opts);
-   if (!col)
-      return stri__locate_last_fixed_byte(str, pattern);
-   
-   str      = stri_prepare_arg_string(str, "str");
-   pattern  = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t nmax = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   
-   SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, nmax, 2));
-   stri__locate_set_dimnames_matrix(ret);
-   int* iret = INTEGER(ret);
-   
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax);
-   StriContainerUTF16* pp = new StriContainerUTF16(pattern, nmax);
-   UErrorCode err = U_ZERO_ERROR;
-   
-   const UnicodeString* last_str = NULL;
-   const UnicodeString* last_pat = NULL;
-   err = U_ZERO_ERROR;
-   UStringSearch *matcher = NULL;
-   
-   if (U_FAILURE(err))
-      error(MSG__STRSEARCH_FAILED);
-   
-   for (R_len_t i = pp->vectorize_init();
-         i != pp->vectorize_end();
-         i = pp->vectorize_next(i))
-   {
-      iret[i]      = NA_INTEGER;
-      iret[i+nmax] = NA_INTEGER;
-         
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(*ss, *pp, ;/*nothing*/, ;/*nothing*/ )
-
-      const UnicodeString* cur_str = &(ss->get(i));
-      const UnicodeString* cur_pat = &(pp->get(i));
-      int ns = cur_str->length();
-      int np = cur_pat->length();
-      
-         
-      if (!matcher) {
-         last_pat = cur_pat;
-         last_str = cur_str;
-         err = U_ZERO_ERROR;
-         matcher = usearch_openFromCollator(last_pat->getBuffer(), last_pat->length(),
-            last_str->getBuffer(), last_str->length(), col, NULL, &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-//         usearch_setAttribute(matcher, USEARCH_OVERLAP, USEARCH_OFF, &err); // this is default
-      }
-      //if last pattern is equal to current then save time and dont change this   
-      if (cur_pat != last_pat) {
-         last_pat = cur_pat;
-         err = U_ZERO_ERROR;
-         usearch_setPattern(matcher, last_pat->getBuffer(), last_pat->length(), &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-      }
-      //as above, this time for string   
-      if (cur_str != last_str) {
-         last_str = cur_str;
-         err = U_ZERO_ERROR;
-         usearch_setText(matcher, last_str->getBuffer(), last_str->length(), &err);
-         if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-      }
-         
-      usearch_reset(matcher);
-      err = U_ZERO_ERROR;
-      
-      int start = usearch_last(matcher, &err);
-      // this properly detects overlapping matches
-      // (search is performed from-the-end, and no from-beginning
-         
-      //if we have match
-      if(start != USEARCH_DONE){
-         iret[i]      = start;
-         iret[i+nmax] = start + usearch_getMatchedLength(matcher);
-         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-         ss->UChar16_to_UChar32_index(i, 
-               iret+i, iret+i+nmax, 1,
-               1, // 0-based index -> 1-based
-               0  // end returns position of next character after match
-         );
-      }         
-      if (U_FAILURE(err)) error(MSG__STRSEARCH_FAILED);
-   }
-   
-   if (col) ucol_close(col);
-   if (matcher) usearch_close(matcher);
-   delete ss;
-   delete pp;
-   UNPROTECT(1);
-   return ret;
+   return stri__locate_firstlast_fixed(str, pattern, collator_opts, false);
 }

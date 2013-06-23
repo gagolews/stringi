@@ -8,7 +8,7 @@ Description: stringi is THE R package for correct, fast,
     rich variety of consistent functions known from other
     programming languages, like Java, Perl, Python and PHP.
 URL: http://www.rexamine.com/resources/stringi/
-BugReports: https://github.com/Rexamine/stringi/issues
+BugReports: http://github.com/Rexamine/stringi/issues
 ByteCompile: TRUE
 Type: Package
 Depends:

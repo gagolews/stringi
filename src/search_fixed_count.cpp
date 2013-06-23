@@ -33,7 +33,7 @@
  * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly,
  *    use StriContainerByteSearch
  */
-SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
+SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -91,7 +91,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = stri__ucol_open(collator_opts);
    if (!collator)
-      return stri_count_fixed_byte(str, pattern);
+      return stri__count_fixed_byte(str, pattern);
    
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));

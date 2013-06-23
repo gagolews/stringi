@@ -114,7 +114,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
          continue;
       }
 
-      RegexMatcher *matcher = pattern_cont.vectorize_getMatcher(i); // will be deleted automatically
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       
       UErrorCode status = U_ZERO_ERROR;

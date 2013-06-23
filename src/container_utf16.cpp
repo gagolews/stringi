@@ -28,7 +28,6 @@ StriContainerUTF16::StriContainerUTF16()
    : StriContainerBase()
 {
    this->str = NULL;
-   this->lastMatcher = NULL;
 }
 
 
@@ -40,7 +39,6 @@ StriContainerUTF16::StriContainerUTF16()
  */
 StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle)
 {
-   this->lastMatcher = NULL;
    this->str = NULL;
 #ifndef NDEBUG 
    if (!isString(rstr))
@@ -134,7 +132,6 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    :    StriContainerBase((StriContainerBase&)container)
 {
-   this->lastMatcher = NULL;
    if (container.str) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -157,7 +154,6 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
    this->~StriContainerUTF16();
    (StriContainerBase&) (*this) = (StriContainerBase&)container;
    
-   this->lastMatcher = NULL;
    if (container.str) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -179,11 +175,6 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
  */
 StriContainerUTF16::~StriContainerUTF16()
 {
-   if (lastMatcher) {
-      delete lastMatcher;
-      lastMatcher = NULL;
-   }
-
    if (str) {
       for (int i=0; i<this->n; ++i) {
          if (str[i])
@@ -246,42 +237,6 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
 }
  
  
-
-/** the returned matcher shall not be deleted by the user 
- * 
- * it is assumed that \code{vectorize_next()} is used:
- * for \code{i >= this->n} the last matcher is returned
- * 
- * @param i index
- */
-RegexMatcher* StriContainerUTF16::vectorize_getMatcher(R_len_t i)
-{
-   if (lastMatcher) {
-      if (i >= n) {
-#ifndef NDEBUG
-      if ((debugMatcherIndex % n) != (i % n)) {
-         error("DEBUG: vectorize_getMatcher - matcher reuse failed!"); // TO DO: throw StriException
-      }
-#endif
-         return lastMatcher; // reuse
-      }
-      else {
-         delete lastMatcher;
-         lastMatcher = NULL;
-      }
-   }
-   
-   UErrorCode status = U_ZERO_ERROR;
-   lastMatcher = new RegexMatcher(this->get(i), 0, status);
-   if (U_FAILURE(status)) {
-      error(u_errorName(status)); // TO DO: throw StriException
-   }
-#ifndef NDEBUG
-   debugMatcherIndex = (i % n);
-#endif
-
-   return lastMatcher;
-}
 
 
 

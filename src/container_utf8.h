@@ -87,7 +87,7 @@ class StriContainerUTF8 : public StriContainerBase {
       }
       
       
-
+      void UTF8_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
       R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
       R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);
 };

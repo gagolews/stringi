@@ -261,7 +261,7 @@ R_len_t StriContainerByteSearch::findLast()
 
 /** get start index of pattern match from the last search
  * 
- * @return byt index in searchStr
+ * @return byte index in searchStr
  */
 R_len_t StriContainerByteSearch::getMatchedStart()
 {
@@ -279,9 +279,9 @@ R_len_t StriContainerByteSearch::getMatchedStart()
 
 /** get length of pattern match from the last search
  * 
- * @return byt index in searchStr
+ * @return byte index in searchStr
  */
-R_len_t StriContainerByteSearch::getMatcherLength()
+R_len_t StriContainerByteSearch::getMatchedLength()
 {
 #ifndef NDEBUG
    if (!this->searchStr || !this->patternStr)
@@ -291,7 +291,7 @@ R_len_t StriContainerByteSearch::getMatcherLength()
    if (searchPos < 0 || searchPos > searchLen-patternLen)
       throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
       
-   return patternLen;
+   return patternLen; // trivial :>
 }
 
 

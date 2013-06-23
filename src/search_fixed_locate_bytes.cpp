@@ -19,6 +19,72 @@
 #include "stringi.h"
 
 
+
+
+/** 
+ * Locate first or last occurences of pattern in a string [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param first looking for first or last match?
+ * @return integer matrix (2 columns)
+ * 
+ * @version 0.1 (Bartlomiej Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-23) StriException friendly, use StriContainerByteSearch
+ */
+SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
+{
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   
+   STRI__ERROR_HANDLER_BEGIN
+   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+
+   SEXP ret;
+   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
+   stri__locate_set_dimnames_matrix(ret);
+   int* ret_tab = INTEGER(ret);
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+      i != pattern_cont.vectorize_end();
+      i = pattern_cont.vectorize_next(i))
+   {  
+      ret_tab[i]                  = NA_INTEGER;
+      ret_tab[i+vectorize_length] = NA_INTEGER;
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, 
+         ;/*nothing*/, ;/*nothing*/)
+      
+      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      
+      int start;
+      if (first) {
+         start = pattern_cont.findFirst();
+      } else {
+         start = pattern_cont.findLast();
+      }
+      
+      if (start != USEARCH_DONE) {
+         ret_tab[i]                  = start;
+         ret_tab[i+vectorize_length] = start+pattern_cont.getMatchedLength();
+            
+         // Adjust UTF8 byte index -> UChar32 index
+         str_cont.UTF8_to_UChar32_index(i, 
+               ret_tab+i, ret_tab+i+vectorize_length, 1,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+      }
+   }
+   
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+}
+
+
+
 /** Locate the first and/or the last occurence of character pattern in one string
  * 
  *  @param s string

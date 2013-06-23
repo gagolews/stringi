@@ -222,6 +222,10 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 void stri__locate_set_dimnames_list(SEXP list);                           // DONE, internal
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
 
+
+SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);   // DONE, internal
+SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
+
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                      // DONE, internal
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                     // DONE, internal
 SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                 // DONE, internal

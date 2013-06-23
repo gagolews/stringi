@@ -35,10 +35,6 @@ class StriContainerUTF16 : public StriContainerBase {
    protected:
       
       UnicodeString** str;       ///< data - \code{UnicodeString}s 
-      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher} [TO BE DELETED]
-#ifndef NDEBUG
-      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check) [TO BE DELETED]
-#endif
 
 
    public:
@@ -116,8 +112,6 @@ class StriContainerUTF16 : public StriContainerBase {
       }
       
       void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
-      
-      RegexMatcher* vectorize_getMatcher(R_len_t i); // [TO BE DELETED]
 };
 
 #endif

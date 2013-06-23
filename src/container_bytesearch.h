@@ -57,7 +57,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t findNext();
       R_len_t findLast();
       R_len_t getMatchedStart();
-      R_len_t getMatcherLength();
+      R_len_t getMatchedLength();
 };
 
 #endif
