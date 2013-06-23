@@ -35,6 +35,7 @@
 #include "container_utf16.h"
 #include "container_regex.h"
 #include "container_usearch.h"
+#include "container_bytesearch.h"
 #include "container_listutf8.h"
 #include "container_integer.h"
 #include "container_logical.h"
