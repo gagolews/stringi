@@ -29,7 +29,7 @@
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8, bugfix - loop could go to far
  * @version 0.3 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly
+ * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly, use StriContainerByteSearch
  */
 SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern) 
 {
@@ -39,7 +39,7 @@ SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern)
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, vectorize_length));
@@ -53,22 +53,8 @@ SEXP stri_detect_fixed_byte(SEXP str, SEXP pattern)
          ret_tab[i] = NA_LOGICAL,
          ret_tab[i] = FALSE)
    
-      const char* str_cur_s      = str_cont.get(i).c_str();
-      const char* pattern_cur_s  = pattern_cont.get(i).c_str();
-      R_len_t str_cur_n          = str_cont.get(i).length();
-      R_len_t pattern_cur_n      = pattern_cont.get(i).length();
-      
-      // Naive O(str_cur_n*pattern_cur_n) algorithm @TODO: change to KNP?
-      ret_tab[i] = false;
-      for (R_len_t j=0; j<str_cur_n-pattern_cur_n+1; ++j) {  
-         R_len_t k=0;
-         while (k<pattern_cur_n && str_cur_s[j+k] == pattern_cur_s[k])
-            k++;
-   		if (k == pattern_cur_n) {
-            ret_tab[i] = true;
-            break;
-   		}
-   	}
+      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      ret_tab[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
    }
    
    UNPROTECT(1);

@@ -30,7 +30,8 @@
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
  * @version 0.3 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly
+ * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly,
+ *    use StriContainerByteSearch
  */
 SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
 {
@@ -40,7 +41,7 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, vectorize_length));
@@ -53,22 +54,10 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
       ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
       
-      const char* str_cur_s      = str_cont.get(i).c_str();
-      const char* pattern_cur_s  = pattern_cont.get(i).c_str();
-      R_len_t str_cur_n          = str_cont.get(i).length();
-      R_len_t pattern_cur_n      = pattern_cont.get(i).length();
-      
+      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
       ret_tab[i] = 0;
-      for (R_len_t j=0; j<str_cur_n-pattern_cur_n+1; ++j) {  
-         R_len_t k=0;
-         while (k<pattern_cur_n && str_cur_s[j+k] == pattern_cur_s[k])
-            k++;
-      	if (k == pattern_cur_n) {
-            ++ret_tab[i];
-            // if match then skip and check next element of str_cur_s
-            j += pattern_cur_n-1; // skip next pattern_cur_n chars (-1, as we do ++j)
-   		}
-   	}
+      while (USEARCH_DONE != pattern_cont.findNext())
+         ++ret_tab[i];
    }
    
    UNPROTECT(1);
@@ -90,7 +79,8 @@ SEXP stri_count_fixed_byte(SEXP str, SEXP pattern)
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.3 (Marek Gagolewski, 2013-06-23) make StriException-friendly, use StriContainerUStringSearch
+ * @version 0.3 (Marek Gagolewski, 2013-06-23) make StriException-friendly, 
+ *    use StriContainerUStringSearch
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
