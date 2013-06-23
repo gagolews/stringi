@@ -148,6 +148,8 @@ SEXP stri_reverse(SEXP s);                                              // DONE
 // sub.cpp
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);      // DONE
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value);    // DONE
+// SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.2]
+// SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
 
 
 
@@ -206,7 +208,7 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 // ----------- SEARCH --------------------------------------------
 
-#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset) \
+#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset)        \
       if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
          if (!(pattern_cont).isNA(i) && (pattern_cont).get(i).length() <= 0)                     \
             warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                      \
@@ -223,14 +225,15 @@ void stri__locate_set_dimnames_list(SEXP list);                           // DON
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
 
 
-SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);   // DONE, internal
-SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
 
-SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                      // DONE, internal
-SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                     // DONE, internal
-SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                 // DONE, internal
-SEXP stri__locate_first_fixed_byte(SEXP str, SEXP pattern);               // DONE, internal
-SEXP stri__locate_last_fixed_byte(SEXP str, SEXP pattern);                // DONE, internal
+SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);                  // DONE, internal
+SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                                         // DONE, internal
+SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                                        // DONE, internal
+SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                                    // DONE, internal
+SEXP stri__locate_first_fixed_byte(SEXP str, SEXP pattern);                                  // DONE, internal
+SEXP stri__locate_last_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
+
+SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
 
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);       // DONE
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);        // DONE
@@ -242,8 +245,6 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
 //SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n, SEXP collator_opts);  // ...TO DO...
 
-// SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.2]
-// SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
 
 SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);  // DONE, internal
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);   // DONE, internal

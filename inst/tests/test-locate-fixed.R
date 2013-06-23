@@ -5,10 +5,10 @@ test_that("stri_locate_all_fixed", {
    #collator
    expect_is(stri_locate_all_fixed(character(0), "a"), "list")
    
-   expect_equivalent(stri_locate_all_fixed(NA, character(0)), list())
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(NA, character(0)), list()))
    expect_equivalent(stri_locate_all_fixed(character(0), NA), list())
-   expect_equivalent(stri_locate_all_fixed(LETTERS, character(0)), list())
-   expect_equivalent(stri_locate_all_fixed(NA, ""), list(matrix(c(NA,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(LETTERS, character(0)), list()))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(NA, ""), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_fixed("", NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed(NA, NA), list(matrix(c(NA,NA_integer_))))
    
@@ -19,18 +19,18 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,3))))
    expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a"), list(matrix(c(2,2))))
    
-   expect_equivalent(stri_locate_all_fixed("",  ""), list(matrix(c(NA,NA_integer_))))
-   expect_equivalent(stri_locate_all_fixed("a", ""), list(matrix(c(NA,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed("",  ""), list(matrix(c(NA,NA_integer_)))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed("a", ""), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_fixed("", "a"), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed(c("a",""), "a"), list(matrix(c(1,1)),matrix(c(NA,NA_integer_))))
    
    #byte
    expect_is(stri_locate_all_fixed(character(0), "a", NA), "list")
    
-   expect_equivalent(stri_locate_all_fixed(NA, character(0), NA), list())
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(NA, character(0), NA), list()))
    expect_equivalent(stri_locate_all_fixed(character(0), NA, NA), list())
-   expect_equivalent(stri_locate_all_fixed(LETTERS, character(0), NA), list())
-   expect_equivalent(stri_locate_all_fixed(NA, "", NA), list(matrix(c(NA,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(LETTERS, character(0), NA), list()))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed(NA, "", NA), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_fixed("", NA, NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed(NA, NA, NA), list(matrix(c(NA,NA_integer_))))
    
@@ -41,8 +41,8 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed(stri_enc_nfkd("\u0105a"), "\u0105a", NA), list(matrix(c(NA_integer_,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a", NA), list(matrix(c(2,2))))
    
-   expect_equivalent(stri_locate_all_fixed("",  "", NA), list(matrix(c(NA,NA_integer_))))
-   expect_equivalent(stri_locate_all_fixed("a", "", NA), list(matrix(c(NA,NA_integer_))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed("",  "", NA), list(matrix(c(NA,NA_integer_)))))
+   suppressWarnings(expect_equivalent(stri_locate_all_fixed("a", "", NA), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_fixed("", "a", NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed(c("a",""), "a", NA), list(matrix(c(1,1)),matrix(c(NA,NA_integer_))))
 })
