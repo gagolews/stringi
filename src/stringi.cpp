@@ -59,9 +59,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_extract_first_charclass,    2),
    STRI__MAKE_CALL_METHOD(stri_extract_last_charclass,     2),
    STRI__MAKE_CALL_METHOD(stri_extract_all_charclass,      3),
-//   STRI__MAKE_CALL_METHOD(stri_extract_first_fixed,    3),
-//   STRI__MAKE_CALL_METHOD(stri_extract_last_fixed,     3),
-//   STRI__MAKE_CALL_METHOD(stri_extract_all_fixed,      3),
+   STRI__MAKE_CALL_METHOD(stri_extract_first_fixed,        3),
+   STRI__MAKE_CALL_METHOD(stri_extract_last_fixed,         3),
+   STRI__MAKE_CALL_METHOD(stri_extract_all_fixed,          3),
    STRI__MAKE_CALL_METHOD(stri_extract_first_regex,        3),
    STRI__MAKE_CALL_METHOD(stri_extract_last_regex,         3),
    STRI__MAKE_CALL_METHOD(stri_extract_all_regex,          3),
@@ -153,6 +153,10 @@ extern "C" void R_init_stringi(DllInfo *dll)
    
 #ifndef NDEBUG
     cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
+//    UErrorCode status;
+//    u_init(&status);
+//    if (U_FAILURE(status))
+//      error("ICU init failed: %s", u_errorName(status));
 #endif
 }
 
@@ -166,6 +170,7 @@ extern "C" void R_init_stringi(DllInfo *dll)
 //{
 //#ifndef NDEBUG
 //   cerr << "DEBUG: Dynamic library 'stringi' unloaded." << endl;
+////   u_cleanup(); // this is just for DEBUG- memtrace
 //#endif
 //}
 

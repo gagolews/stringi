@@ -225,7 +225,7 @@ void stri__locate_set_dimnames_list(SEXP list);                           // DON
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
 
 
-
+SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);                 // DONE, internal
 SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);                  // DONE, internal
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                                         // DONE, internal
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                                        // DONE, internal
@@ -234,12 +234,15 @@ SEXP stri__locate_first_fixed_byte(SEXP str, SEXP pattern);                     
 SEXP stri__locate_last_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
 
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
-
-SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);       // DONE
-SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);        // DONE
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts); // DONE
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);  // DONE
+SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);  // DONE, internal
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);        // DONE
+SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);         // DONE
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);    // DONE
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);  // DONE
+SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
+SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts); // DONE
+SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);  // DONE
+SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);   // ...TO DO...
 //SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement); // ...TO DO...
 //SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);  // ...TO DO...

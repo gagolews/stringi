@@ -41,6 +41,7 @@ SRCS        =  stringi.cpp \
                search_class_trim.cpp \
                search_fixed_count.cpp \
                search_fixed_detect.cpp \
+               search_fixed_extract.cpp \
                search_fixed_replace.cpp \
                search_fixed_locate.cpp \
                search_fixed_split.cpp \

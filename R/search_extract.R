@@ -84,6 +84,9 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #' 
+#' If \code{collator_opts} is not \code{NA}, then the operation
+#' is not as dummy as it seems (for non-ASCII text).
+#' 
 #' @param str character vector
 #' @param pattern character vector
 #' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
@@ -97,8 +100,8 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' 
 #' @examples
 #' stri_extract_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
-#' stri_extract_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
-#' stri_extract_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
+#' stri_extract_first_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=2, locale="sk_SK"))
+#' stri_extract_last_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=1, locale="sk_SK"))
 #' 
 #' @export
 #' @rdname stri_extract_fixed
@@ -107,24 +110,21 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @family search_locate
 #' @family search_extract
 stri_extract_all_fixed <- function(str, pattern, opts_collator=list()) {
-   stop("TO DO")
-#    .Call("stri_extract_all_fixed", str, pattern, PACKAGE="stringi")
+   .Call("stri_extract_all_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_extract_fixed
 stri_extract_first_fixed <- function(str, pattern, opts_collator=list()) {
-   stop("TO DO")
-#    .Call("stri_extract_first_fixed", str, pattern, TRUE, PACKAGE="stringi")
+   .Call("stri_extract_first_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_extract_fixed
 stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
-   stop("TO DO")
-#    .Call("stri_extract_last_fixed", str, pattern, FALSE, PACKAGE="stringi")
+   .Call("stri_extract_last_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
