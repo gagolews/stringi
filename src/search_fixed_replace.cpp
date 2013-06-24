@@ -20,45 +20,68 @@
 
 
 /** 
- * .... 
- * @param s ...
- * @param pattern ...
- * @param replacement ...
- * @return ...
+ * Replace all occurences of a fixed pattern [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param collator_opts list
+ * @return character vector
  */
-SEXP stri_replace_all_fixed(SEXP str, SEXP pat, SEXP rep, SEXP collator_opts)
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
-   str   = stri_prepare_arg_string(str, "str"); // prepare string argument
-   pat   = stri_prepare_arg_string(pat, "pat");
-   rep   = stri_prepare_arg_string(rep, "rep");
+   str   = stri_prepare_arg_string(str, "str");
+   pattern   = stri_prepare_arg_string(pattern, "pattern");
+   replacement   = stri_prepare_arg_string(replacement, "replacement");
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
    
-   R_len_t nmax = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pat), LENGTH(rep));
-   
-   SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, nmax));
-   
-   StriContainerUTF16* ss = new StriContainerUTF16(str, nmax, false);
-   StriContainerUTF16* pp = new StriContainerUTF16(pat, nmax);
-   StriContainerUTF16* rr = new StriContainerUTF16(rep, nmax);
-   
-   for (R_len_t i = 0; i < nmax; i++)
-   {
-      if (ss->isNA(i) || pp->isNA(i) || rr->isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-
-      ss->getWritable(i).findAndReplace(pp->get(i), rr->get(i));
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* collator = stri__ucol_open(collator_opts);
+   if (!collator)
+      return stri__locate_all_fixed_byte(str, pattern);
       
-      SET_STRING_ELT(ret, i, ss->toR(i));
-   }
+   STRI__ERROR_HANDLER_BEGIN
+//   StriContainerUTF16 str_cont(str, vectorize_length, false);
+//   StriContainerUTF16 pattern_cont(pat, vectorize_length);
+//   StriContainerUTF16 replacement_cont(replacement, vectorize_length);
    
-   UNPROTECT(1);
-   return ret;
+//   for (R_len_t i = pattern_cont.vectorize_init();
+//         i != pattern_cont.vectorize_end();
+//         i = pattern_cont.vectorize_next(i))
+//   {
+//      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+//         SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
+
+/////// TO DO : this does not use collation....
+//      str_cont.getWritable(i).findAndReplace(pattern_cont.get(i), replacement_cont.get(i));
+//      
+//      SET_STRING_ELT(ret, i, ss->toR(i));
+//   }
+   
+
+   if (collator) { ucol_close(collator); collator=NULL; }
+//   UNPROTECT(1);
+//   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
 }
 
 
 
+
+
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
+{
+   error("TO DO");
+}
+
+
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
+{
+   error("TO DO");  
+}
 
 
 ///** 

@@ -72,9 +72,11 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' 
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
+#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' net empty strings will never appear in the resulting vector.
+#' 
 #' @param str character vector with strings to search in
-#' @param pattern character vector with character class identifiers 
-#' to search for, see \link{stringi-search-charclass}
+#' @param pattern pattern character vector of regex patterns to search for
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; should empty strings be removed from result?
 #' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
@@ -82,7 +84,7 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' 
 #' 
 #' @examples
-#' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
+#' stri_split_regex("Lorem ipsum dolor sit amet", "\\p{Z}+")
 #' 
 #' @export
 #' @rdname stri_split_regex
@@ -104,7 +106,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' the fields themselves.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{n_max}.
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 #' 
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' 
@@ -114,13 +116,14 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' @param str character vector with strings to search in
 #' @param pattern character vector with patterns
 #' @param n_max integer vector, maximal number of pieces to return
+#' @param omit_empty logical vector; should empty strings be removed from result?
 #' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy byte comparison
 #' @return a list of character vectors
 #' 
 #' 
 #' @examples
-#' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
+#' stri_split_fixed("Lorem ipsum dolor sit amet", " ")
 #' 
 #' @export
 #' @rdname stri_split_fixed
@@ -128,8 +131,8 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' @family search_fixed
 #' @family search_split
 #' @family locale_sensitive
-stri_split_fixed <- function(str, pattern, n_max=-1L, opts_collator=list()) {
-	.Call("stri_split_fixed", str, split, n_max, opts_collator, PACKAGE="stringi")
+stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=list()) {
+	.Call("stri_split_fixed", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
 }
 
 

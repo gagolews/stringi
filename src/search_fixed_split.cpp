@@ -21,84 +21,6 @@
 
 
 
-///** 
-// * .... 
-// * @param s ...
-// * @param from integer vector ...
-// * @param to integer vector ...
-// * @return ...
-// */
-//SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
-//{
-//   s = STRING_ELT(stri_prepare_arg_string(s, "str"),0);
-//   from = stri_prepare_arg_integer(from, "from");
-//   to = stri_prepare_arg_integer(to, "to");
-//   if(s == NA_STRING)
-//      return NA_STRING;
-//   int ns = LENGTH(s);
-//   int nfrom = LENGTH(from);
-//   if(nfrom!=LENGTH(to))
-//      error("'from' and 'to' lengths differ");
-//   UChar32 c;
-//   SEXP e;
-//   PROTECT(e = allocVector(STRSXP,nfrom));
-//   int j=0,lasti=0,k=0,st=0,i=0;
-//   for (i = 0; lasti < ns; ++j)
-//   {
-//      //printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
-//      if(j==INTEGER(from)[k]){
-//         //lasti is here, bacause without it you dont know if the last char
-//         //is one or two byte long so i-1 doesnt work every time
-//         st=lasti;
-//      }
-//      if(j==INTEGER(to)[k]){
-//         SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
-//         k++;
-//      }
-//      lasti = i;
-//      U8_NEXT(CHAR(s), i, ns, c);
-//   }
-//   if(INTEGER(to)[nfrom] > j)
-//      SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, ns-st));
-//   UNPROTECT(1);
-//   return e;
-//}
-
-
-///** 
-// * This function is implemented only for stri_trim_all
-// * @param s ...
-// * @param from integer vector ...
-// * @param to integer vector ...
-// * @param ns length of s
-// * @param n length of from and tos
-// * @return ...
-// */
-//SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
-//{
-//   UChar32 c;
-//   SEXP e;
-//   PROTECT(e = allocVector(STRSXP,n));
-//   int j=0,lasti=0,k=0,st=0,i=0;
-//   for (i = 0; lasti < ns; ++j)
-//   {
-//      if(j==from[k])
-//         //lasti is here, bacause without it you dont know if the last char
-//         //is one or two byte long so i-1 doesnt work every time
-//         st=lasti;
-//      if(j==to[k]){
-//         SET_STRING_ELT(e,k, mkCharLen(s+st, i-st));
-//         k++;
-//      }
-//      lasti = i;
-//      U8_NEXT(s, i, ns, c);
-//   }
-//   UNPROTECT(1);
-//   return e;
-//}
-
-
-
 
 /** 
  * Split a string into parts.
@@ -108,7 +30,8 @@
  * 
  * @param str character vector
  * @param pattern character vector
- * @param n integer vector
+ * @param n_max integer vector
+ * @param omit_empty logical vector
  * @param collator_opts passed to stri__ucol_open(),
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return list of character vectors
@@ -116,7 +39,7 @@
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (...)
  */
-SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP collator_opts)
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts)
 {
    error("TO DO: stri_split_fixed");
    return R_NilValue;
@@ -207,7 +130,7 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP collator_opts)
 //      st=0;
 //      where=0;
 //      for(int j=0; j<curslen; ++j){
-//   		string = CHAR(curs); 
+//      	string = CHAR(curs); 
 //         k=0;
 //         while(string[j+k]==spl[k] && k<spllen)
 //            k++;
@@ -235,3 +158,85 @@ SEXP stri_split_fixed(SEXP s, SEXP split, SEXP n, SEXP collator_opts)
 //   UNPROTECT(1);
 //   return ret;
 }
+
+
+
+///** 
+// * .... 
+// * @param s ...
+// * @param from integer vector ...
+// * @param to integer vector ...
+// * @return ...
+// */
+//SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
+//{
+//   s = STRING_ELT(stri_prepare_arg_string(s, "str"),0);
+//   from = stri_prepare_arg_integer(from, "from");
+//   to = stri_prepare_arg_integer(to, "to");
+//   if(s == NA_STRING)
+//      return NA_STRING;
+//   int ns = LENGTH(s);
+//   int nfrom = LENGTH(from);
+//   if(nfrom!=LENGTH(to))
+//      error("'from' and 'to' lengths differ");
+//   UChar32 c;
+//   SEXP e;
+//   PROTECT(e = allocVector(STRSXP,nfrom));
+//   int j=0,lasti=0,k=0,st=0,i=0;
+//   for (i = 0; lasti < ns; ++j)
+//   {
+//      //printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
+//      if(j==INTEGER(from)[k]){
+//         //lasti is here, bacause without it you dont know if the last char
+//         //is one or two byte long so i-1 doesnt work every time
+//         st=lasti;
+//      }
+//      if(j==INTEGER(to)[k]){
+//         SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
+//         k++;
+//      }
+//      lasti = i;
+//      U8_NEXT(CHAR(s), i, ns, c);
+//   }
+//   if(INTEGER(to)[nfrom] > j)
+//      SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, ns-st));
+//   UNPROTECT(1);
+//   return e;
+//}
+
+
+///** 
+// * This function is implemented only for stri_trim_all
+// * @param s ...
+// * @param from integer vector ...
+// * @param to integer vector ...
+// * @param ns length of s
+// * @param n length of from and tos
+// * @return ...
+// */
+//SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
+//{
+//   UChar32 c;
+//   SEXP e;
+//   PROTECT(e = allocVector(STRSXP,n));
+//   int j=0,lasti=0,k=0,st=0,i=0;
+//   for (i = 0; lasti < ns; ++j)
+//   {
+//      if(j==from[k])
+//         //lasti is here, bacause without it you dont know if the last char
+//         //is one or two byte long so i-1 doesnt work every time
+//         st=lasti;
+//      if(j==to[k]){
+//         SET_STRING_ELT(e,k, mkCharLen(s+st, i-st));
+//         k++;
+//      }
+//      lasti = i;
+//      U8_NEXT(s, i, ns, c);
+//   }
+//   UNPROTECT(1);
+//   return e;
+//}
+
+
+
+

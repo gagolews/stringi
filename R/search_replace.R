@@ -106,14 +106,14 @@ stri_replace_all_fixed <- function(str, pattern, replacement, opts_collator=list
 #' @export
 #' @rdname stri_replace_fixed
 stri_replace_first_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   stop("TO DO: stri_replace_first_fixed")
+   .Call("stri_replace_first_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
 stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   stop("TO DO: stri_replace_last_fixed")
+   .Call("stri_replace_last_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
 }
 
 
