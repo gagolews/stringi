@@ -40,6 +40,7 @@ class StriContainerUTF16 : public StriContainerBase {
    public:
       
       StriContainerUTF16();
+      StriContainerUTF16(R_len_t nrecycle);
       StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
       StriContainerUTF16(StriContainerUTF16& container);
       ~StriContainerUTF16();

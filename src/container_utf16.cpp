@@ -31,6 +31,22 @@ StriContainerUTF16::StriContainerUTF16()
 }
 
 
+
+/** container for nrecycle fresh, brand new, writable UnicodeStrings
+ * @param nrecycle number of strings
+ */
+StriContainerUTF16::StriContainerUTF16(R_len_t nrecycle)
+{
+   this->str = NULL;
+   this->init_Base(nrecycle, nrecycle, false);  
+   if (this->n > 0) {
+      this->str = new UnicodeString*[this->n];
+      for (R_len_t i = 0; i < this->n; ++i)
+         this->str[i] = new UnicodeString();
+   }
+}
+
+
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector

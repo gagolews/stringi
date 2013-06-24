@@ -230,8 +230,7 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);     
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                                         // DONE, internal
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                                        // DONE, internal
 SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                                    // DONE, internal
-SEXP stri__locate_first_fixed_byte(SEXP str, SEXP pattern);                                  // DONE, internal
-SEXP stri__locate_last_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
+SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
 
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);  // DONE, internal
