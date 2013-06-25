@@ -39,6 +39,23 @@ test_that("stri_split_regex", {
 })
 
 
+test_that("stri_split_fixed [byte]", {
+   expect_identical(stri_split_fixed(character(0)," "),list())   
+   expect_identical(stri_split_fixed(NA,"a"),list(NA_character_))
+   expect_identical(stri_split_fixed("NA",NA),list(NA_character_))
+   expect_identical(stri_split_fixed("NA","a",NA),list(NA_character_))
+   expect_identical(stri_split_fixed("NA","a",1,NA),list(NA_character_))
+   expect_identical(stri_split_fixed(" "," ", opts_collator=NA),list(rep("",2)))
+   expect_identical(stri_split_fixed("aa","a", opts_collator=NA),list(rep("",3)))
+   expect_identical(stri_split_fixed("aa","a",-1L,TRUE, opts_collator=NA),list(character(0)))
+   
+   # n
+   expect_identical(stri_split_fixed(";123", ";", n=2, opts_collator=NA), list(c("", "123")))
+   expect_identical(stri_split_fixed(";123", ";", n=2, omit_empty=TRUE, opts_collator=NA), list("123"))
+   expect_identical(stri_split_fixed("123;456", ";", n=2, opts_collator=NA), list(c("123", "456")))
+   expect_identical(stri_split_fixed("123;456;789", ";", n=2, opts_collator=NA), list(c("123", "456;789")))
+})
+
 
 test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed(character(0)," "),list())   

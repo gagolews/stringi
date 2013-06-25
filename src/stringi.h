@@ -234,6 +234,8 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                            
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);                                        // DONE, internal
 SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                                    // DONE, internal
 SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
+SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty);            // DONE, internal
+
 
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);  // DONE, internal
@@ -249,7 +251,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DO
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);     // ...TO DO...
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);   // ...TO DO...
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);    // ...TO DO...
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts);  // ...TO DO...
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts);  // DONE
 
 
 SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);  // DONE, internal

@@ -20,10 +20,107 @@
 
 
 
+/** 
+ * Split a string into parts [byte compare]
+ * 
+ * The pattern matches identify delimiters that separate the input into fields. 
+ * The input data between the matches becomes the fields themselves.
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param n_max integer vector
+ * @param omit_empty logical vector
+ * 
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF8
+ */
+SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
+{
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   n_max = stri_prepare_arg_integer(n_max, "n_max");
+   omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length);  
+   StriContainerInteger   n_max_cont(n_max, vectorize_length);
+   StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {  
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
+         
+      if (n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+      
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+      int  n_max_cur        = n_max_cont.get(i);
+      int  omit_empty_cur   = omit_empty_cont.get(i);
+      
+      if (n_max_cur < 0)
+         n_max_cur = INT_MAX;
+      else if (n_max_cur == 0) {
+         SET_VECTOR_ELT(ret, i, allocVector(STRSXP, 0));
+         continue;
+      }
+      
+      pattern_cont.setupMatcher(i, str_cur_s, str_cur_n);
+      R_len_t k;
+      deque<R_len_t_x2> fields; // byte based-indices
+      fields.push_back(R_len_t_x2(0,0));
+         
+      for (k=1; k < n_max_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
+         R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
+         R_len_t s2 = (R_len_t)pattern_cont.getMatchedLength() + s1;
+         
+         if (omit_empty_cur && fields.back().v1 == s1)
+            fields.back().v1 = s2; // don't start new field
+         else {
+            fields.back().v2 = s1;
+            fields.push_back(R_len_t_x2(s2, s2)); // start new field here
+            ++k; // another field
+         }
+      }
+      fields.back().v2 = str_cur_n;
+      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+         fields.pop_back();
+         
+      SEXP ans;
+      PROTECT(ans = allocVector(STRSXP, fields.size()));
+      
+      deque<R_len_t_x2>::iterator iter = fields.begin();
+      for (k = 0; iter != fields.end(); ++iter, ++k) {
+         R_len_t_x2 curoccur = *iter;
+         SET_STRING_ELT(ans, k, mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+      }
+      
+      SET_VECTOR_ELT(ret, i, ans);
+      UNPROTECT(1);
+   }
+   
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(; /* nothing interesting on error */)
+}
+
+
 
 
 /** 
- * Split a string into parts.
+ * Split a string into parts [search with collation]
  * 
  * The pattern matches identify delimiters that separate the input into fields. 
  * The input data between the matches becomes the fields themselves.
@@ -36,14 +133,70 @@
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return list of character vectors
  * 
+ * 
  * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (...)
+ * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF16
  */
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts)
+SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP collator_opts)
 {
-   error("TO DO: stri_split_fixed");
-   return R_NilValue;
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   n_max = stri_prepare_arg_integer(n_max, "n_max");
+   omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* collator = stri__ucol_open(collator_opts);
+   if (!collator)
+      return stri__split_fixed_byte(str, pattern, n_max, omit_empty);
    
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+   StriContainerInteger   n_max_cont(n_max, vectorize_length);
+   StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
+   
+   SEXP ret;
+   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
+         
+      if (n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      usearch_reset(matcher);
+      
+      
+//      R_len_t     str_cur_n = str_cont.get(i).length();
+//      const char* str_cur_s = str_cont.get(i).c_str();
+      int  n_max_cur        = n_max_cont.get(i);
+      int  omit_empty_cur   = omit_empty_cont.get(i);
+      
+      if (n_max_cur < 0)
+         n_max_cur = INT_MAX;
+      else if (n_max_cur == 0) {
+         SET_VECTOR_ELT(ret, i, allocVector(STRSXP, 0));
+         continue;
+      }
+   }
+   
+   if (collator) { ucol_close(collator); collator=NULL; }
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
+}
    
 //   s = stri_prepare_arg_string(s, "str");
 //   split = stri_prepare_arg_string(split, "split");
@@ -157,85 +310,11 @@ SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP co
 //   }
 //   UNPROTECT(1);
 //   return ret;
-}
 
 
 
-///** 
-// * .... 
-// * @param s ...
-// * @param from integer vector ...
-// * @param to integer vector ...
-// * @return ...
-// */
-//SEXP stri_split_pos(SEXP s, SEXP from, SEXP to)
-//{
-//   s = STRING_ELT(stri_prepare_arg_string(s, "str"),0);
-//   from = stri_prepare_arg_integer(from, "from");
-//   to = stri_prepare_arg_integer(to, "to");
-//   if(s == NA_STRING)
-//      return NA_STRING;
-//   int ns = LENGTH(s);
-//   int nfrom = LENGTH(from);
-//   if(nfrom!=LENGTH(to))
-//      error("'from' and 'to' lengths differ");
-//   UChar32 c;
-//   SEXP e;
-//   PROTECT(e = allocVector(STRSXP,nfrom));
-//   int j=0,lasti=0,k=0,st=0,i=0;
-//   for (i = 0; lasti < ns; ++j)
-//   {
-//      //printf("i=%d c=%c k=%d j=%d \n",i,c,k,j);
-//      if(j==INTEGER(from)[k]){
-//         //lasti is here, bacause without it you dont know if the last char
-//         //is one or two byte long so i-1 doesnt work every time
-//         st=lasti;
-//      }
-//      if(j==INTEGER(to)[k]){
-//         SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, i-st));
-//         k++;
-//      }
-//      lasti = i;
-//      U8_NEXT(CHAR(s), i, ns, c);
-//   }
-//   if(INTEGER(to)[nfrom] > j)
-//      SET_STRING_ELT(e,k, mkCharLen(CHAR(s)+st, ns-st));
-//   UNPROTECT(1);
-//   return e;
-//}
 
 
-///** 
-// * This function is implemented only for stri_trim_all
-// * @param s ...
-// * @param from integer vector ...
-// * @param to integer vector ...
-// * @param ns length of s
-// * @param n length of from and tos
-// * @return ...
-// */
-//SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n)
-//{
-//   UChar32 c;
-//   SEXP e;
-//   PROTECT(e = allocVector(STRSXP,n));
-//   int j=0,lasti=0,k=0,st=0,i=0;
-//   for (i = 0; lasti < ns; ++j)
-//   {
-//      if(j==from[k])
-//         //lasti is here, bacause without it you dont know if the last char
-//         //is one or two byte long so i-1 doesnt work every time
-//         st=lasti;
-//      if(j==to[k]){
-//         SET_STRING_ELT(e,k, mkCharLen(s+st, i-st));
-//         k++;
-//      }
-//      lasti = i;
-//      U8_NEXT(s, i, ns, c);
-//   }
-//   UNPROTECT(1);
-//   return e;
-//}
 
 
 
