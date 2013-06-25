@@ -44,7 +44,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
    this->str = NULL;
 #ifndef NDEBUG 
    if (!isString(rstr))
-      error("DEBUG: !isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)"); // TO DO: throw StriException
+      throw StriException("DEBUG: !isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)"); 
 #endif
    R_len_t nrstr = LENGTH(rstr);
    this->init_Base(nrstr, nrecycle, shallowrecycle); // calling LENGTH(rstr) fails on constructor call
@@ -72,7 +72,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                this->str[i] = new String8(CHAR(curs), LENGTH(curs), !shallowrecycle);
             }
             else if (IS_BYTES(curs)) 
-               error(MSG__BYTESENC); // TO DO: throw StriException
+               throw StriException(MSG__BYTESENC); 
             else {
 //             LATIN1 ------- OR ------ Any encoding - detection needed  
 //             Assume it's Native; this assumes the user working in an 8-bit environment
@@ -85,7 +85,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
 //               UErrorCode status = U_ZERO_ERROR;
 //               UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvNative, status);
 //               if (U_FAILURE(status))
-//                  error(MSG__ENC_ERROR_CONVERT); 
+//                  throw StriException(status); 
 //               std::string tmp2;
 //               tmp.toUTF8String(tmp2);
 //               this->str[i] = new String8(tmp2.c_str(), tmp2.size(), true);
@@ -104,7 +104,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                UErrorCode status = U_ZERO_ERROR;
                UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvCurrent, status);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT); // TO DO: throw StriException
+                  throw StriException(status);
                
                if (!buf) {
                   // calculate max string length
@@ -122,7 +122,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
                u_strToUTF8(buf, bufsize, &realsize,
                		tmp.getBuffer(), tmp.length(), &status);
                if (U_FAILURE(status))
-                  error(MSG__ENC_ERROR_CONVERT); // TO DO: throw StriException
+                  throw StriException(status);
                   
                this->str[i] = new String8(buf, realsize, true);
             }
@@ -237,7 +237,8 @@ SEXP StriContainerUTF8::toR() const
 SEXP StriContainerUTF8::toR(R_len_t i) const
 {
 #ifndef NDEBUG
-   if (i < 0 || i >= nrecycle) error("StriContainerUTF8::toR(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+   if (i < 0 || i >= nrecycle) 
+      throw StriException("StriContainerUTF8::toR(): INDEX OUT OF BOUNDS");
 #endif
 
    if (str[i%n] == NULL)
@@ -418,7 +419,7 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
       if (j1 < ni && i1[j1] <= i8) {
 #ifndef NDEBUG
       if (j1 < ni-1 && i1[j1] >= i1[j1+1])
-         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+         throw StriException("DEBUG: stri__UTF8_to_UChar32_index");
 #endif
          i1[j1] = i32 + adj1;
          ++j1;
@@ -427,7 +428,7 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
       if (j2 < ni && i2[j2] <= i8) {
 #ifndef NDEBUG
       if (j2 < ni-1 && i2[j2] >= i2[j2+1])
-         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+         throw StriException("DEBUG: stri__UTF8_to_UChar32_index");
 #endif
          i2[j2] = i32 + adj2;
          ++j2;
@@ -442,7 +443,7 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
    if (j1 < ni && i1[j1] <= nstr) {
 #ifndef NDEBUG
       if (j1 < ni-1 && i1[j1] >= i1[j1+1])
-         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+         throw StriException("DEBUG: stri__UTF8_to_UChar32_index");
 #endif
          i1[j1] = i32 + adj1;
          ++j1;
@@ -451,7 +452,7 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
    if (j2 < ni && i2[j2] <= nstr) {
 #ifndef NDEBUG
       if (j2 < ni-1 && i2[j2] >= i2[j2+1])
-         error("DEBUG: stri__UTF8_to_UChar32_index"); // TO DO: throw StriException
+         throw StriException("DEBUG: stri__UTF8_to_UChar32_index");
 #endif
          i2[j2] = i32 + adj2;
          ++j2;
@@ -460,6 +461,6 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
    // CHECK:
 #ifndef NDEBUG
       if (i8 >= nstr && (j1 < ni || j2 < ni))
-         error("DEBUG: stri__UTF8_to_UChar32_index()"); // TO DO: throw StriException
+         throw StriException("DEBUG: stri__UTF8_to_UChar32_index()"); 
 #endif
 }
