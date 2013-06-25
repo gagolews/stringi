@@ -24,6 +24,9 @@
 // for non-DEBUG mode:
 // #define NDEBUG
 
+//#define U_HIDE_DRAFT_API
+#define U_HIDE_DEPRECATED_API
+
 
 #include "external.h"
 #include "messages.h"

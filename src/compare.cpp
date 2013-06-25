@@ -141,11 +141,17 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
          continue;
       }
       
-      UErrorCode err = U_ZERO_ERROR;
+      UErrorCode status = U_ZERO_ERROR;
+//      StringPiece s1(e1_cont.get(i).c_str(), e1_cont.get(i).length());
+//      StringPiece s2(e2_cont.get(i).c_str(), e2_cont.get(i).length());
+//      ret_int[i] = (int)collator.compareUTF8(s1, s2, status);
+
       ret_int[i] = (int)ucol_strcollUTF8(col,
          e1_cont.get(i).c_str(), e1_cont.get(i).length(),
          e2_cont.get(i).c_str(), e2_cont.get(i).length(),
-         &err);
+         &status);
+      if (U_FAILURE(status))
+         throw StriException(status);
    }
    
    if (col) {
