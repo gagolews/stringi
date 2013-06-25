@@ -52,8 +52,8 @@ test_that("stri_split_fixed [byte]", {
    # n
    expect_identical(stri_split_fixed(";123", ";", n=2, opts_collator=NA), list(c("", "123")))
    expect_identical(stri_split_fixed(";123", ";", n=2, omit_empty=TRUE, opts_collator=NA), list("123"))
-   expect_identical(stri_split_fixed("123;456", ";", n=2, opts_collator=NA), list(c("123", "456")))
-   expect_identical(stri_split_fixed("123;456;789", ";", n=2, opts_collator=NA), list(c("123", "456;789")))
+   expect_identical(stri_split_fixed("123abc456", "abc", n=2, opts_collator=NA), list(c("123", "456")))
+   expect_identical(stri_split_fixed("123abc456abc789", "abc", n=2, opts_collator=NA), list(c("123", "456abc789")))
 })
 
 
@@ -65,7 +65,7 @@ test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed("NA","a",1,NA),list(NA_character_))
    expect_identical(stri_split_fixed(" "," "),list(rep("",2)))
    expect_identical(stri_split_fixed("aa","a"),list(rep("",3)))
-   expect_identical(stri_split_fixed("aa","a",Inf,TRUE),list(character(0)))
+   expect_identical(stri_split_fixed("aa","a",omit_empty=TRUE),list(character(0)))
    
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
 	nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
@@ -84,20 +84,13 @@ test_that("stri_split_fixed", {
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_split_fixed(s,"bab"),strsplit(s,"bab"))
    
-   expect_identical(stri_split_fixed("lalal","l",c(-Inf,-1,0)),
-                               list(character(0),character(0),character(0)))
    expect_identical(stri_split_fixed("sss","s",1:3),list("sss",c("","ss"),c("","","s")))
    
    # n
    expect_identical(stri_split_fixed(";123", ";", n=2), list(c("", "123")))
-   expect_identical(stri_split_fixed(";123", ";", n=2, omitempty=TRUE), list("123"))
+   expect_identical(stri_split_fixed(";123", ";", n=2, omit_empty=TRUE), list("123"))
    expect_identical(stri_split_fixed("123;456", ";", n=2), list(c("123", "456")))
    expect_identical(stri_split_fixed("123;456;789", ";", n=2), list(c("123", "456;789")))
-   
-   #exact
-   expect_identical(stri_split_fixed("a","b",3,exact=T),list(c("a","","")))
-   #if n==inf (default) then exact is not used
-   expect_identical(stri_split_fixed("a","b",exact=T),stri_split_fixed("a","b"))
 })
 
 

@@ -100,8 +100,6 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
    if (!lastMatcher) {
 #ifndef NDEBUG
       debugMatcherIndex = (i % n);
-      if (i != 0)
-         throw StriException("DEBUG: StriContainerUStringSearch::getMatcher: i!=0");
 #endif
       UErrorCode status = U_ZERO_ERROR;
       lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),

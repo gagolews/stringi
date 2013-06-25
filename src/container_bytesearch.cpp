@@ -119,11 +119,6 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* searchStr, R_l
    if (!this->searchStr || !this->patternStr) {
       // first call ever
       // setup [now nothing]
-#ifndef NDEBUG
-      debugMatcherIndex = (i % n);
-      if (i != 0)
-         throw StriException("DEBUG: StriContainerByteSearch::getMatcher: i!=0");
-#endif
    }
    
    if (i >= n) {

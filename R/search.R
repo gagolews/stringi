@@ -123,14 +123,16 @@ invisible(NULL)
 #' that properly takes into account accented letters, conjoined letters,
 #' and ignorable punctuation 
 #' 
+#' Currently, the ICU collator-search is a little bit slow...
 #' 
 #' 
 #' 
 #' @section Byte Compare:
 #' 
-#' #' If \code{opts_collator} is \code{NA}, then a very fast (for small p)
+#' If \code{opts_collator} is \code{NA}, then a very fast (for small p)
 #' bytewise (locale independent) search is performed, with time complexity of
-#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}).
+#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}) [Naive implementation
+#' - to be upgraded in future \pkg{stringi} version].
 #' For natural language, non-English text this is, however, not what
 #' you probably want.
 #' 

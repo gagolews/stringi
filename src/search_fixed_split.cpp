@@ -176,9 +176,6 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       
-      
-//      R_len_t     str_cur_n = str_cont.get(i).length();
-//      const char* str_cur_s = str_cont.get(i).c_str();
       int  n_max_cur        = n_max_cont.get(i);
       int  omit_empty_cur   = omit_empty_cont.get(i);
       
@@ -188,6 +185,38 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
          SET_VECTOR_ELT(ret, i, allocVector(STRSXP, 0));
          continue;
       }
+      
+      R_len_t k;
+      deque<R_len_t_x2> fields; // byte based-indices
+      fields.push_back(R_len_t_x2(0,0));
+      UErrorCode status = U_ZERO_ERROR;
+         
+      for (k=1; k < n_max_cur && USEARCH_DONE != usearch_next(matcher, &status) && !U_FAILURE(status); ) {
+         R_len_t s1 = (R_len_t)usearch_getMatchedStart(matcher);
+         R_len_t s2 = (R_len_t)usearch_getMatchedLength(matcher) + s1;
+         
+         if (omit_empty_cur && fields.back().v1 == s1)
+            fields.back().v1 = s2; // don't start new field
+         else {
+            fields.back().v2 = s1;
+            fields.push_back(R_len_t_x2(s2, s2)); // start new field here
+            ++k; // another field
+         }
+      }
+      if (U_FAILURE(status)) throw StriException(status);
+      fields.back().v2 = str_cont.get(i).length();
+      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+         fields.pop_back();
+         
+      R_len_t noccurences = fields.size();
+      StriContainerUTF16 out_cont(noccurences);
+      deque<R_len_t_x2>::iterator iter = fields.begin();
+      for (k = 0; iter != fields.end(); ++iter, ++k) {
+         R_len_t_x2 curoccur = *iter;
+         // this is a little bit slow, but anyway faster than the string USearch!
+         out_cont.getWritable(k).setTo(str_cont.get(i), curoccur.v1, curoccur.v2-curoccur.v1);
+      }
+      SET_VECTOR_ELT(ret, i, out_cont.toR());
    }
    
    if (collator) { ucol_close(collator); collator=NULL; }

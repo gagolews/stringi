@@ -112,7 +112,9 @@ stri_opts_collator <- function(locale="", strength=3L,
 #' @param comments logical; allow white space and comments within patterns
 #' @param dotall logical;  if set, `\code{.}` matches line terminators, otherwise `\code{.}` matching stops at line end
 #' @param literal logical; if set, treat the entire pattern as a literal string.
-#' Metacharacters or escape sequences in the input sequence will be given no special meaning
+#' Metacharacters or escape sequences in the input sequence will be given no special meaning;
+#' note that in most cases you would rather use the \link{stringi-search-fixed}
+#' facilities in this case (with \code{opts_collator=NA}).
 #' @param multiline logical; controls behavior of `\code{$}` and `\code{^}`.
 #' If set, recognize line terminators within string, otherwise, match only at start and end of input string
 #' @param unix_lines logical; Unix-only line endings. 
