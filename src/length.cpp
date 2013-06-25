@@ -32,13 +32,13 @@
  * @return maximal number of bytes
  * @version 0.1 (Marek Gagolewski)
  */
-R_len_t stri__numbytes_max(SEXP s)
+R_len_t stri__numbytes_max(SEXP str)
 {
-   R_len_t ns = LENGTH(s);
+   R_len_t ns = LENGTH(str);
    if (ns <= 0) return -1;
    R_len_t maxlen = -1;
    for (R_len_t i=0; i<ns; ++i) {
-      SEXP cs = STRING_ELT(s, i);
+      SEXP cs = STRING_ELT(str, i);
       if (cs != NA_STRING) {
          /* INPUT ENCODING CHECK: this function does not need this. */
          R_len_t cns = LENGTH(cs);
@@ -58,15 +58,15 @@ R_len_t stri__numbytes_max(SEXP s)
  * @return integer vector
  * @version 0.1 (Marcin Bujarski)
  */
-SEXP stri_numbytes(SEXP s)
+SEXP stri_numbytes(SEXP str)
 {
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   R_len_t n = LENGTH(s);
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   R_len_t n = LENGTH(str);
    SEXP ret;
    PROTECT(ret = allocVector(INTSXP, n));
    int* retint = INTEGER(ret);
    for (R_len_t i=0; i<n; ++i) {
-      SEXP curs = STRING_ELT(s, i);
+      SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       if (curs == NA_STRING)
          retint[i] = NA_INTEGER;
@@ -89,10 +89,10 @@ SEXP stri_numbytes(SEXP s)
  * @version 0.2 (Marek Gagolewski) Multiple input encoding support
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  */
-SEXP stri_length(SEXP s)
+SEXP stri_length(SEXP str)
 {
-   s = stri_prepare_arg_string(s, "str");
-   R_len_t ns = LENGTH(s);
+   str = stri_prepare_arg_string(str, "str");
+   R_len_t ns = LENGTH(str);
    SEXP ret;
    
    UConverter* uconv = NULL;
@@ -112,7 +112,7 @@ SEXP stri_length(SEXP s)
    PROTECT(ret = allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
    for (R_len_t k = 0; k < ns; k++) {
-      SEXP q = STRING_ELT(s, k);
+      SEXP q = STRING_ELT(str, k);
       if (q == NA_STRING)
          retint[k] = NA_INTEGER;
       else {
@@ -207,15 +207,15 @@ SEXP stri_length(SEXP s)
  * @return integer vector
  * @version 0.1 (Marek Gagolewski)
  */
-SEXP stri_isempty(SEXP s)
+SEXP stri_isempty(SEXP str)
 {
-   s = stri_prepare_arg_string(s, "str"); // prepare string argument
-   R_len_t n = LENGTH(s);
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   R_len_t n = LENGTH(str);
    SEXP ret;
    PROTECT(ret = allocVector(LGLSXP, n));
    int* retlog = LOGICAL(ret);
    for (R_len_t i=0; i<n; ++i) {
-      SEXP curs = STRING_ELT(s, i);
+      SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       if (curs == NA_STRING)
          retlog[i] = NA_LOGICAL;
@@ -237,10 +237,10 @@ SEXP stri_isempty(SEXP s)
 // * @version 0.1 (WHO?) TO BE DONE
 // * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
 // */
-//SEXP stri_width(SEXP s)
+//SEXP stri_width(SEXP str)
 //{
-//   s = stri_prepare_arg_string(s, "str");
-//   R_len_t ns = LENGTH(s);
+//   str = stri_prepare_arg_string(str, "str");
+//   R_len_t ns = LENGTH(str);
 //   
 //   
 //   ///< @TODO ------------------------------------------------------------------------------------------------------
