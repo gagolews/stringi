@@ -64,6 +64,10 @@ test_that("stri_replace_first_fixed", {
    expect_identical(stri_replace_first_fixed("abab123 a","a",1),"1bab123 a")
    expect_identical(stri_replace_first_fixed(NA,"A",1),NA_character_)
    expect_warning(stri_replace_first_fixed('fasgasgas',c(" ","o"),1:3))
+   
+   expect_identical(stri_replace_first_fixed("ALA MA  KOTA",c(" ", "A", NA) ,""), c("ALAMA  KOTA", "LA MA  KOTA", NA))
+   expect_identical(stri_replace_first_fixed("ALA","BF","HA"),"ALA")
+   expect_identical(stri_replace_first_fixed("ALA","ALA", c("","RYBA")), c("", "RYBA"))
 })
 
 
@@ -72,6 +76,10 @@ test_that("stri_replace_last_fixed", {
    expect_identical(stri_replace_last_fixed("abab123 a","a",1),"abab123 1")
    expect_identical(stri_replace_last_fixed(NA,"A",1),NA_character_)
    expect_warning(stri_replace_last_fixed('fasgasgas',c(" ","o"),1:3))
+   
+   expect_identical(stri_replace_last_fixed("ALA MA  KOTA",c(" ", "A", NA) ,""), c("ALA MA KOTA", "ALA MA  KOT", NA))
+   expect_identical(stri_replace_last_fixed("ALA","BF","HA"),"ALA")
+   expect_identical(stri_replace_last_fixed("ALA","ALA", c("","RYBA")), c("", "RYBA"))
 })
 
 

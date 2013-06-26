@@ -228,6 +228,7 @@ void stri__locate_set_dimnames_list(SEXP list);                           // DON
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal
 
 
+SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type); // DONE, internal
 SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);                 // DONE, internal
 SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);                  // DONE, internal
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);                                         // DONE, internal
@@ -236,7 +237,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);                       
 SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern);                                   // DONE, internal
 SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty);            // DONE, internal
 
-
+SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type); // DONE, internal
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);   // DONE, internal
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);  // DONE, internal
 

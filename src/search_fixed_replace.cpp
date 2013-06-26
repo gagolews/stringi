@@ -19,8 +19,9 @@
 #include "stringi.h"
 
 
+
 /** 
- * Replace all occurences of a fixed pattern [with collation]
+ * Replace all/first/last occurences of a fixed pattern [with collation]
  * 
  * @param str character vector
  * @param pattern character vector
@@ -28,7 +29,22 @@
  * @param collator_opts list
  * @return character vector
  */
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
+SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type)
+{
+   error("TO DO");
+   return R_NilValue;
+}
+
+/** 
+ * Replace all/first/last occurences of a fixed pattern [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param collator_opts list
+ * @return character vector
+ */
+SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type)
 {
    str = stri_prepare_arg_string(str, "str");
    replacement = stri_prepare_arg_string(replacement, "replacement");
@@ -37,8 +53,8 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = stri__ucol_open(collator_opts);
-//   if (!collator)
-//      return stri__replace_all_fixed_byte(str, pattern, replacement);
+   if (!collator)
+      return stri__replace_allfirstlast_fixed_byte(str, pattern, replacement, type);
    
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
@@ -63,21 +79,33 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
       usearch_reset(matcher);
       
       UErrorCode status = U_ZERO_ERROR;
-      int start = (int)usearch_first(matcher, &status);
-      if (U_FAILURE(status)) throw StriException(status);
-      
-      if (start == USEARCH_DONE) { // no match
-         continue; // no change in str_cont[i] at all
-      }
-      
       R_len_t remUChars = 0;
       deque<R_len_t_x2> occurences;
-      while (start != USEARCH_DONE) {
+      
+      if (type >= 0) { // first or all
+         int start = (int)usearch_first(matcher, &status);
+         if (U_FAILURE(status)) throw StriException(status);
+         
+         if (start == USEARCH_DONE) // no match
+            continue; // no change in str_cont[i] at all
+         
+         while (start != USEARCH_DONE) {
+            R_len_t mlen = usearch_getMatchedLength(matcher);
+            remUChars += mlen;
+            occurences.push_back(R_len_t_x2(start, start+mlen));
+            if (type > 0) break; // break if first and not all
+            start = usearch_next(matcher, &status);
+            if (U_FAILURE(status)) throw StriException(status);      
+         }
+      }
+      else { // if last
+         int start = (int)usearch_last(matcher, &status);
+         if (U_FAILURE(status)) throw StriException(status);
+         if (start == USEARCH_DONE) // no match
+            continue; // no change in str_cont[i] at all
          R_len_t mlen = usearch_getMatchedLength(matcher);
          remUChars += mlen;
          occurences.push_back(R_len_t_x2(start, start+mlen));
-         start = usearch_next(matcher, &status);
-         if (U_FAILURE(status)) throw StriException(status);      
       }
    
       R_len_t replacement_cur_n = replacement_cont.get(i).length();
@@ -124,17 +152,48 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
 
 
 
-
-
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
+/** 
+ * Replace all occurences of a fixed pattern [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param collator_opts list
+ * @return character vector
+ */
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
-   error("TO DO");
+   return stri__replace_allfirstlast_fixed(str, pattern, replacement, collator_opts, 0);
 }
 
 
+/** 
+ * Replace last occurence of a fixed pattern [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param collator_opts list
+ * @return character vector
+ */
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
+{
+   return stri__replace_allfirstlast_fixed(str, pattern, replacement, collator_opts, -1);
+}
+
+
+/** 
+ * Replace first occurence of a fixed pattern [with collation]
+ * 
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param collator_opts list
+ * @return character vector
+ */
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
-   error("TO DO");  
+   return stri__replace_allfirstlast_fixed(str, pattern, replacement, collator_opts, 1);
 }
 
 
