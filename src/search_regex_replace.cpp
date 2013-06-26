@@ -86,14 +86,13 @@ SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   str = stri_prepare_arg_string(str, "str");
    replacement = stri_prepare_arg_string(replacement, "replacement");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
- 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
    
    STRI__ERROR_HANDLER_BEGIN
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
    StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    StriContainerUTF16 replacement_cont(replacement, vectorize_length);

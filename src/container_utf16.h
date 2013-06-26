@@ -94,6 +94,26 @@ class StriContainerUTF16 : public StriContainerBase {
          return (*(str[i%n])); // in fact, "%n" is not necessary
       }
       
+      
+      /** set NA
+       * @param i index
+       * @return string
+       */
+      void setNA(R_len_t i) {
+#ifndef NDEBUG
+         if (isShallow)              
+            error("StriContainerUTF16::getWritable(): shallow StriContainerUTF16"); // TO DO: throw StriException
+         if (n != nrecycle)          
+            error("StriContainerUTF16::getWritable(): n!=nrecycle"); // TO DO: throw StriException
+         if (i < 0 || i >= n)        
+            error("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+#endif
+         if (str[i%n] != NULL) { // if not already NULL
+            delete str[i%n]; // in fact, "%n" is not necessary
+            str[i%n] = NULL;
+         }
+      }
+      
       /** set the vectorized ith element
        * @param i index
        * @param s string to be copied

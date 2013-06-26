@@ -121,7 +121,7 @@ R_len_t stri__numbytes_max(SEXP str); // DONE
 SEXP stri_numbytes(SEXP str);         // DONE
 SEXP stri_length(SEXP str);           // DONE
 SEXP stri_isempty(SEXP str);          // DONE
-// SEXP stri_width(SEXP str);            // ...TODO... [version >0.1]
+// SEXP stri_width(SEXP str);            // ...TODO... [version >= 0.2]
 
 
 
@@ -248,9 +248,9 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DO
 SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts); // DONE
 SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);  // DONE
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);   // DONE
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);     // ...TO DO...
-SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);   // ...TO DO...
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);    // ...TO DO...
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);     // DONE
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);   // DONE
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);    // DONE
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts);  // DONE
 
 
