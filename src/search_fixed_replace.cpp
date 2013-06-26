@@ -28,11 +28,92 @@
  * @param replacement character vector
  * @param collator_opts list
  * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
  */
 SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type)
 {
-   error("TO DO");
-   return R_NilValue;
+   str          = stri_prepare_arg_string(str, "str");
+   pattern      = stri_prepare_arg_string(pattern, "pattern");
+   replacement  = stri_prepare_arg_string(replacement, "replacement");
+   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   
+
+   SEXP ret;
+   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+ 
+   String8 buf(0); // @TODO: calculate buf len a priori?
+   
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {       
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_STRING_ELT(ret, i, NA_STRING);,
+         SET_STRING_ELT(ret, i, NA_STRING);)
+         
+      if (replacement_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      
+      R_len_t start;
+      if (type >= 0) { // first or all
+         start = pattern_cont.findFirst();
+      } else {
+         start = pattern_cont.findLast();
+      }
+      
+      if (start == USEARCH_DONE) {
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+         continue;
+      }
+      
+      R_len_t len = pattern_cont.getMatchedLength();
+      R_len_t sumbytes = len;
+      deque<R_len_t_x2> occurences;
+      occurences.push_back(R_len_t_x2(start, start+len));
+      
+      while (type == 0 && USEARCH_DONE != pattern_cont.findNext()) { // all
+         start = pattern_cont.getMatchedStart();
+         len = pattern_cont.getMatchedLength();
+         occurences.push_back(R_len_t_x2(start, start+len));
+         sumbytes += len;
+      }
+      
+      R_len_t str_cur_n     = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+      const char* replacement_cur_s = replacement_cont.get(i).c_str();
+      R_len_t buf_need = str_cur_n+occurences.size()*replacement_cur_n-sumbytes;
+      buf.resize(buf_need);
+      
+      R_len_t jlast = 0;
+      char* curbuf = buf.data();
+      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      for (; iter != occurences.end(); ++iter) {
+         R_len_t_x2 match = *iter;
+         memcpy(curbuf, str_cur_s+jlast, match.v1-jlast);
+         curbuf += match.v1-jlast;
+         jlast = match.v2;
+         memcpy(curbuf, replacement_cur_s, replacement_cur_n);
+         curbuf += replacement_cur_n;
+      }
+      memcpy(curbuf, str_cur_s+jlast, str_cur_n-jlast);
+      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+   } 
+ 
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 /** 
@@ -43,6 +124,9 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
  * @param replacement character vector
  * @param collator_opts list
  * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type)
 {
@@ -131,23 +215,6 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);
    )
-   
-//   StriContainerUTF16 str_cont(str, vectorize_length, false);
-//   StriContainerUTF16 pattern_cont(pat, vectorize_length);
-//   StriContainerUTF16 replacement_cont(replacement, vectorize_length);
-   
-//   for (R_len_t i = pattern_cont.vectorize_init();
-//         i != pattern_cont.vectorize_end();
-//         i = pattern_cont.vectorize_next(i))
-//   {
-//      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-//         SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
-
-/////// TO DO : this does not use collation....
-//      str_cont.getWritable(i).findAndReplace(pattern_cont.get(i), replacement_cont.get(i));
-//      
-//      SET_STRING_ELT(ret, i, ss->toR(i));
-//   }
 }
 
 
@@ -160,6 +227,9 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  * @param replacement character vector
  * @param collator_opts list
  * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
@@ -175,6 +245,9 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
  * @param replacement character vector
  * @param collator_opts list
  * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
@@ -190,51 +263,12 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP coll
  * @param replacement character vector
  * @param collator_opts list
  * @return character vector
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
    return stri__replace_allfirstlast_fixed(str, pattern, replacement, collator_opts, 1);
 }
-
-
-///** 
-// * .... 
-// * @param s ...
-// * @param pattern ...
-// * @param replacement ...
-// * @return ...
-// */
-//SEXP stri_replace_first_fixed(SEXP s, SEXP pat, SEXP rep)
-//{
-//   s   = stri_prepare_arg_string(s, "str");
-//   pat = stri_prepare_arg_string(pat, "pattern");
-//   rep = stri_prepare_arg_string(rep, "replacement");
-//   int ns   = LENGTH(s);
-//   int npat = LENGTH(pat);
-//   int nrep = LENGTH(rep);
-//   if (ns <= 0 || npat <= 0 || nrep <= 0) return allocVector(STRSXP, 0);
-//   R_len_t nmax = stri__recycling_rule(true, 3, ns, npat, nrep);
-//   
-//   SEXP e, split, sexpfalse, temp, currep, inf;
-//   PROTECT(e = allocVector(STRSXP,nmax));
-//   PROTECT(sexpfalse = allocVector(LGLSXP,1));
-//   PROTECT(currep = allocVector(STRSXP,1));
-//   PROTECT(inf = allocVector(REALSXP,1));
-//   LOGICAL(sexpfalse)[0] = false;
-//   REAL(inf)[0] = 2;
-//   //if max(ns,npat) % ns || % npat != 0 then inside stri_split we get warn
-//   split = stri_split_fixed(s,pat,inf,sexpfalse,sexpfalse);
-//   int nsplit = LENGTH(split), nm=ns;
-//   if(npat > nm) nm=npat;
-//   if((nm%ns==0 && nm%npat==0) && nmax%nm !=0)
-//      warning(MSG__WARN_RECYCLING_RULE);
-//   for (int i=0; i<nmax; ++i) {
-//      temp = VECTOR_ELT(split, i % nsplit);
-//      SET_STRING_ELT(currep,0,STRING_ELT(rep,i % nrep));
-//      SET_STRING_ELT(e, i, STRING_ELT(stri_flatten(temp,currep),0));
-//   }
-//   UNPROTECT(4);
-//   return e;
-//}
-
 
