@@ -30,6 +30,7 @@
  */
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
+   error("stri_replace_all_fixed TO DO");
    str   = stri_prepare_arg_string(str, "str");
    pattern   = stri_prepare_arg_string(pattern, "pattern");
    replacement   = stri_prepare_arg_string(replacement, "replacement");
