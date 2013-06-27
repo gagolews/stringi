@@ -24,9 +24,6 @@
 // for non-DEBUG mode:
 // #define NDEBUG
 
-//#define U_HIDE_DRAFT_API
-#define U_HIDE_DEPRECATED_API
-
 
 #include "external.h"
 #include "messages.h"
@@ -97,8 +94,9 @@ SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);            // DONE
 UCollator*  stri__ucol_open(SEXP collator_opts);
 
 // compare.cpp:
-int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2); // DONE
-SEXP stri_compare_codepoints(SEXP e1, SEXP e2);                     // DONE
+int  stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2); // DONE
+SEXP stri__compare_codepoints(SEXP e1, SEXP e2);                    // DONE, internal
+SEXP stri__order_codepoints(SEXP e1, SEXP decreasing);              // DONE, internal
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts);            // DONE
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);     // DONE
 

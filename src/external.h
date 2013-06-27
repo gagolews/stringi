@@ -26,6 +26,9 @@
 #endif
 
 
+//#define U_HIDE_DRAFT_API
+#define U_HIDE_DEPRECATED_API
+
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
 #define 	UNISTR_FROM_STRING_EXPLICIT explicit
 

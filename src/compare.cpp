@@ -61,7 +61,7 @@ int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_l
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
  */
-SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
+SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
@@ -109,6 +109,7 @@ SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * @version 0.3 (Marek Gagolewski, 2013-06-27) moved to UTF16, as ucol_strcollUTF8 is DRAFT
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
@@ -118,14 +119,14 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
    if (!col)
-      return stri_compare_codepoints(e1, e2);
+      return stri__compare_codepoints(e1, e2);
       
    STRI__ERROR_HANDLER_BEGIN
    
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
    
-   StriContainerUTF8 e1_cont(e1, vectorize_length);
-   StriContainerUTF8 e2_cont(e2, vectorize_length);
+   StriContainerUTF16 e1_cont(e1, vectorize_length);
+   StriContainerUTF16 e2_cont(e2, vectorize_length);
    
    
    SEXP ret;
@@ -141,17 +142,14 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
          continue;
       }
       
-      UErrorCode status = U_ZERO_ERROR;
+//      UErrorCode status = U_ZERO_ERROR;
 //      StringPiece s1(e1_cont.get(i).c_str(), e1_cont.get(i).length());
 //      StringPiece s2(e2_cont.get(i).c_str(), e2_cont.get(i).length());
 //      ret_int[i] = (int)collator.compareUTF8(s1, s2, status);
 
-      ret_int[i] = (int)ucol_strcollUTF8(col,
-         e1_cont.get(i).c_str(), e1_cont.get(i).length(),
-         e2_cont.get(i).c_str(), e2_cont.get(i).length(),
-         &status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      ret_int[i] = (int)ucol_strcoll(col,
+         e1_cont.get(i).getBuffer(), e1_cont.get(i).length(),
+         e2_cont.get(i).getBuffer(), e2_cont.get(i).length());
    }
    
    if (col) {
@@ -172,19 +170,17 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 
 /** help struct for stri_order **/
 struct StriSortCollator {
-   StriContainerUTF8* ss;
+   StriContainerUTF16* ss;
    bool decreasing;
    UCollator* col;
-   StriSortCollator(StriContainerUTF8* ss, UCollator* col, bool decreasing)
+   StriSortCollator(StriContainerUTF16* ss, UCollator* col, bool decreasing)
    { this->ss = ss; this->col = col; this->decreasing = decreasing; }
    
    bool operator() (int a, int b) const
    {
-      UErrorCode err = U_ZERO_ERROR;
-      int ret = (int)ucol_strcollUTF8(col,
-         ss->get(a-1).c_str(), ss->get(a-1).length(),
-         ss->get(b-1).c_str(), ss->get(b-1).length(),
-         &err);
+      int ret = (int)ucol_strcoll(col,
+         ss->get(a-1).getBuffer(), ss->get(a-1).length(),
+         ss->get(b-1).getBuffer(), ss->get(b-1).length());
       if (decreasing) return (ret > 0);
       else return (ret < 0);
    }
@@ -215,7 +211,7 @@ struct StriSortCodepoints {
 };
    
    
-/** Ordering Permutation (string comparison with collation or by unicode codepoints)
+/** Ordering Permutation (string comparison with collation)
  * 
  * @param str character vector
  * @param decreasing single logical value
@@ -224,13 +220,92 @@ struct StriSortCodepoints {
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * @version 0.3 (Marek Gagolewski, 2013-06-27) Use UTF16 as strcollutf8 is DRAFT
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
+
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);    
+   col = stri__ucol_open(collator_opts);
+   if (!col)
+      return stri__order_codepoints(str, decreasing);
+   
+   STRI__ERROR_HANDLER_BEGIN  
+   R_len_t vectorize_length = LENGTH(str);
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   
+   // count NA values
+   R_len_t countNA = 0;
+   for (R_len_t i=0; i<vectorize_length; ++i)
+      if (str_cont.isNA(i))
+         ++countNA;
+   
+   // NAs must be put at end (note the stable sort behavior!)
+   int* order = INTEGER(ret);
+   R_len_t k1 = 0;
+   R_len_t k2 = vectorize_length-countNA;
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      if (str_cont.isNA(i))
+         order[k2++] = i+1;
+      else
+         order[k1++] = i+1;
+   }
+   
+   
+   // TO DO: think of using sort keys...
+   // however, now it's quite fast...
+   
+   // check if already sorted - if not - sort!
+   for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {      
+      int val = (int)ucol_strcoll(col,
+            str_cont.get(order[i]-1).getBuffer(),   str_cont.get(order[i]-1).length(),
+            str_cont.get(order[i+1]-1).getBuffer(), str_cont.get(order[i+1]-1).length());
+         
+      if ((decr && val < 0) || (!decr && val > 0)) {
+         // sort! 
+         std::vector<int> data;
+         data.assign(order, order+vectorize_length-countNA);
+            StriSortCollator comp(&str_cont, col, decr);
+            std::stable_sort(data.begin(), data.end(), comp);
+         R_len_t i=0;
+         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
+            order[i] = *it;
+         break; // sorted, finish
+      }
+   }
+
+  
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+   UNPROTECT(1);
+   return ret;
+   
+   STRI__ERROR_HANDLER_END({
+      if (col) ucol_close(col);
+   })
+}
+
+
+
+/** Ordering Permutation (string comparison by unicode codepoints)
+ * 
+ * @param str character vector
+ * @param decreasing single logical value
+ * @param collator_opts passed to stri__ucol_open()
+ * @return integer vector (permutation)
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-06-27)
+ */
+SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
+{
+   bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
    
    STRI__ERROR_HANDLER_BEGIN  
    R_len_t vectorize_length = LENGTH(str);
@@ -261,33 +336,17 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    
    // check if already sorted - if not - sort!
    for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
-      UErrorCode err = U_ZERO_ERROR;
-      
-      int val;
-      if (col) {
-         val = (int)ucol_strcollUTF8(col,
-            str_cont.get(order[i]-1).c_str(),   str_cont.get(order[i]-1).length(),
-            str_cont.get(order[i+1]-1).c_str(), str_cont.get(order[i+1]-1).length(),
-            &err);
-      }
-      else {
-         val = stri__compare_codepoints(
+      int val = stri__compare_codepoints(
             str_cont.get(order[i]-1).c_str(),   str_cont.get(order[i]-1).length(),
             str_cont.get(order[i+1]-1).c_str(), str_cont.get(order[i+1]-1).length()
          );
-      }
          
       if ((decr && val < 0) || (!decr && val > 0)) {
          // sort! 
          std::vector<int> data;
          data.assign(order, order+vectorize_length-countNA);
-         if (col) {
-            StriSortCollator comp(&str_cont, col, decr);
-            std::stable_sort(data.begin(), data.end(), comp);
-         } else {
-            StriSortCodepoints comp(&str_cont, decr);
-            std::stable_sort(data.begin(), data.end(), comp);
-         }
+         StriSortCodepoints comp(&str_cont, decr);
+         std::stable_sort(data.begin(), data.end(), comp);
          R_len_t i=0;
          for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
             order[i] = *it;
@@ -295,17 +354,11 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
       }
    }
 
-  
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+
    UNPROTECT(1);
    return ret;
    
-   STRI__ERROR_HANDLER_END({
-      if (col) ucol_close(col);
-   })
+   STRI__ERROR_HANDLER_END( ; /*nothing special on error*/)
 }
 
 
