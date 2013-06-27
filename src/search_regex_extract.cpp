@@ -46,7 +46,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -81,7 +81,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
          } 
       }
       
-      SET_STRING_ELT(ret, i, mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+m_start, m_end-m_start, CE_UTF8));
    }
    
    if (str_text) {
@@ -153,7 +153,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -184,11 +184,11 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
-      PROTECT(cur_res = allocVector(STRSXP, noccurences));
+      PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
          R_len_t_x2 curo = *iter;
-         SET_STRING_ELT(cur_res, j, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+         SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, cur_res);
       UNPROTECT(1);

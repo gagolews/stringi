@@ -63,7 +63,7 @@ SEXP stri_numbytes(SEXP str)
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t n = LENGTH(str);
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, n));
+   PROTECT(ret = Rf_allocVector(INTSXP, n));
    int* retint = INTEGER(ret);
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);
@@ -109,7 +109,7 @@ SEXP stri_length(SEXP str)
       U8_FWD_1(qc, i, nq); \
    retint[k] = j;
    
-   PROTECT(ret = allocVector(INTSXP, ns));
+   PROTECT(ret = Rf_allocVector(INTSXP, ns));
    int* retint = INTEGER(ret);   
    for (R_len_t k = 0; k < ns; k++) {
       SEXP q = STRING_ELT(str, k);
@@ -175,7 +175,7 @@ SEXP stri_length(SEXP str)
                   ucnv_getNextUChar(uconv, &source, sourceLimit, &err);
                }
                if (U_FAILURE(err)) {  // error from last iteration
-                  warning("error determining length for native, neither 8-bit- nor UTF-8-encoded string.");
+                  Rf_warning("error determining length for native, neither 8-bit- nor UTF-8-encoded string.");
                   retint[k] = NA_INTEGER;
                }
                else
@@ -212,7 +212,7 @@ SEXP stri_isempty(SEXP str)
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t n = LENGTH(str);
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, n));
+   PROTECT(ret = Rf_allocVector(LGLSXP, n));
    int* retlog = LOGICAL(ret);
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);

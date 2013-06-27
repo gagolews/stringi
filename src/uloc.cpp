@@ -36,7 +36,7 @@ SEXP stri_locale_set(SEXP loc)
    UErrorCode err = U_ZERO_ERROR;
    uloc_setDefault(qloc, &err);
    if (U_FAILURE(err))
-      error(MSG__LOCALE_ERROR_SET);
+      Rf_error(MSG__LOCALE_ERROR_SET); // allowed here
    return R_NilValue;
 }
 
@@ -51,11 +51,11 @@ SEXP stri_locale_list()
 {
    R_len_t c = (R_len_t)uloc_countAvailable();
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, c));
+   PROTECT(ret = Rf_allocVector(STRSXP, c));
    
    for (R_len_t i=0; i<c; ++i) {
       const char* name = uloc_getAvailable(i);
-      SET_STRING_ELT(ret, i, mkChar(name));
+      SET_STRING_ELT(ret, i, Rf_mkChar(name));
    }
    
    UNPROTECT(1);
@@ -79,28 +79,28 @@ SEXP stri_locale_info(SEXP loc)
    const R_len_t infosize = 4;
    SEXP vals;
     
-   PROTECT(vals = allocVector(VECSXP, infosize));
+   PROTECT(vals = Rf_allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i) 
-      SET_VECTOR_ELT(vals, i, ScalarString(NA_STRING));
+      SET_VECTOR_ELT(vals, i, Rf_ScalarString(NA_STRING));
    
    UErrorCode err = U_ZERO_ERROR;
    char buf[ULOC_FULLNAME_CAPACITY]; // this is sufficient
    
    uloc_getLanguage(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 0, mkString(buf));
+   else SET_VECTOR_ELT(vals, 0, Rf_mkString(buf));
    
    uloc_getCountry(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 1, mkString(buf));
+   else SET_VECTOR_ELT(vals, 1, Rf_mkString(buf));
    
    uloc_getVariant(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 2, mkString(buf));
+   else SET_VECTOR_ELT(vals, 2, Rf_mkString(buf));
    
    uloc_canonicalize(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 3, mkString(buf));  
+   else SET_VECTOR_ELT(vals, 3, Rf_mkString(buf));  
 
    stri__set_names(vals, 4, "Language", "Country", "Variant", "Name");
    UNPROTECT(1);

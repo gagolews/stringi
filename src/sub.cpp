@@ -51,12 +51,12 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    R_len_t length_length        = 0;
    R_len_t vectorize_length     = 0; 
    
-   bool from_ismatrix = isMatrix(from);
+   bool from_ismatrix = Rf_isMatrix(from);
    if (from_ismatrix) {
-      SEXP t = getAttrib(from, R_DimSymbol);
+      SEXP t = Rf_getAttrib(from, R_DimSymbol);
       if (INTEGER(t)[1] == 1) from_ismatrix = false; // don't treat this as matrix
       else if (INTEGER(t)[1] > 2)
-         error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2); // error() is allowed here
+         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2); // error() is allowed here
    }
    from = stri_prepare_arg_integer(from, "from");
    
@@ -85,14 +85,14 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 
    
    if (vectorize_length <= 0)
-      return allocVector(STRSXP,0);
+      return Rf_allocVector(STRSXP,0);
       
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    
    // args prepared, let's go
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -139,11 +139,11 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       }
       
       if (cur_to2 > cur_from2) { // just copy
-         SET_STRING_ELT(ret, i, mkCharLenCE(str_cur_s+cur_from2, cur_to2-cur_from2, CE_UTF8));  
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+cur_from2, cur_to2-cur_from2, CE_UTF8));  
       }
       else {
          // maybe a warning here?
-         SET_STRING_ELT(ret, i, mkCharLen(NULL, 0));
+         SET_STRING_ELT(ret, i, Rf_mkCharLen(NULL, 0));
       }
    }
    
@@ -186,12 +186,12 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    R_len_t length_length = 0;
    R_len_t vectorize_length     = 0; 
    
-   bool from_ismatrix = isMatrix(from);
+   bool from_ismatrix = Rf_isMatrix(from);
    if (from_ismatrix) {
-      SEXP t = getAttrib(from, R_DimSymbol);
+      SEXP t = Rf_getAttrib(from, R_DimSymbol);
       if (INTEGER(t)[1] == 1) from_ismatrix = false; // don't treat this as matrix
       else if (INTEGER(t)[1] > 2)
-         error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2); // error() is allowed here
+         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2); // error() is allowed here
    }
    from = stri_prepare_arg_integer(from, "from");
    
@@ -220,7 +220,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
    
    if (vectorize_length <= 0)
-      return allocVector(STRSXP,0);
+      return Rf_allocVector(STRSXP, 0);
       
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -228,7 +228,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    
    // args prepared, let's go
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    String8 buf(0); // @TODO consider calculating bufsize a priori
    
    for (R_len_t i = str_cont.vectorize_init();
@@ -285,7 +285,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       memcpy(buf.data(), str_cur_s, cur_from2);
       memcpy(buf.data()+cur_from2, value_cur_s, value_cur_n);
       memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, str_cur_n-cur_to2);
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buflen, CE_UTF8));  
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buflen, CE_UTF8));  
    }
    
    UNPROTECT(1); 

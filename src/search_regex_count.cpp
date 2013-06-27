@@ -49,7 +49,7 @@ SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
  
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
    
    for (R_len_t i = pattern_cont.vectorize_init();

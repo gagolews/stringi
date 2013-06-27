@@ -52,7 +52,7 @@ SEXP stri_reverse(SEXP str)
    // Alloc buffer & result vector
    String8 buf(bufsize);
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, str_len));
+   PROTECT(ret = Rf_allocVector(STRSXP, str_len));
    
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -78,7 +78,7 @@ SEXP stri_reverse(SEXP str)
       if (isError)
          throw StriException(MSG__INTERNAL_ERROR);
       
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), str_cur_n, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), str_cur_n, CE_UTF8));
    }
    
    UNPROTECT(1);

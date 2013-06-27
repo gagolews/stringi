@@ -150,7 +150,7 @@ extern "C" void R_init_stringi(DllInfo *dll)
    
    if (!SUPPORT_UTF8) {
       /* Rconfig.h states that all R platforms supports that */
-      error("Your R version does not support UTF-8 encoding.");  
+      Rf_error("Your R version does not support UTF-8 encoding.");  
    }
    
 #ifndef NDEBUG

@@ -99,7 +99,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool f
       for (R_len_t j=0; j<ni; ++j) {
          charptr_x2 retij = occurences[i][j];
          if (retij.v1 != NULL && retij.v2 != NULL)
-            SET_STRING_ELT(ret, i+j*vectorize_length, mkCharLenCE(retij.v1, (R_len_t)(retij.v2-retij.v1), CE_UTF8));
+            SET_STRING_ELT(ret, i+j*vectorize_length, Rf_mkCharLenCE(retij.v1, (R_len_t)(retij.v2-retij.v1), CE_UTF8));
       }
    }
    
@@ -169,7 +169,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -203,18 +203,18 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
-      PROTECT(cur_res = allocMatrix(STRSXP, noccurences, pattern_cur_groups+1));
+      PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurences, pattern_cur_groups+1));
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++j) {
          R_len_t_x2 curo = *iter;
-         SET_STRING_ELT(cur_res, j, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+         SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          ++iter;
          for (R_len_t k = 0; iter != occurences.end() && k < pattern_cur_groups; ++iter, ++k) {
             R_len_t_x2 curo = *iter;
             if (curo.v1 < 0 || curo.v2 < 0)
                SET_STRING_ELT(cur_res, j+(k+1)*noccurences, NA_STRING);
             else
-               SET_STRING_ELT(cur_res, j+(k+1)*noccurences, mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+               SET_STRING_ELT(cur_res, j+(k+1)*noccurences, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          }
       }
       SET_VECTOR_ELT(ret, i, cur_res);

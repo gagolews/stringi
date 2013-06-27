@@ -124,20 +124,20 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
    uint32_t flags = 0;
-   if (!isVectorList(opts_regex))
-      error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
+   if (!Rf_isVectorList(opts_regex))
+      Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
       
    R_len_t narg = LENGTH(opts_regex);
       
    if (narg > 0) { 
       
-      SEXP names = getAttrib(opts_regex, R_NamesSymbol);
+      SEXP names = Rf_getAttrib(opts_regex, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
-         error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
       
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
-            error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
+            Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
             
          const char* curname = CHAR(STRING_ELT(names, i));
          
@@ -166,7 +166,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
             SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "error_on_unknown_escapes");
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_ERROR_ON_UNKNOWN_ESCAPES;
          } else {
-            warning(MSG__INCORRECT_REGEX_OPTION, curname);
+            Rf_warning(MSG__INCORRECT_REGEX_OPTION, curname);
          }
       }
    }

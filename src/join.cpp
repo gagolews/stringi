@@ -44,7 +44,7 @@ SEXP stri_dup(SEXP str, SEXP times)
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    times = stri_prepare_arg_integer(times, "times"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(times));
-   if (vectorize_length <= 0) return allocVector(STRSXP, 0);
+   if (vectorize_length <= 0) return Rf_allocVector(STRSXP, 0);
    
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -66,7 +66,7 @@ SEXP stri_dup(SEXP str, SEXP times)
    // Alloc buffer & result vector
    String8 buf(bufsize);
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    // STEP 3.
    // Duplicate
@@ -86,7 +86,7 @@ SEXP stri_dup(SEXP str, SEXP times)
       const String8* str_cur = &(str_cont.get(i));
       R_len_t str_cur_n = str_cur->length();
       if (times_cur <= 0 || str_cur_n <= 0) {
-         SET_STRING_ELT(ret, i, mkCharLen("", 0));
+         SET_STRING_ELT(ret, i, Rf_mkCharLen("", 0));
          continue;
       }
       
@@ -105,7 +105,7 @@ SEXP stri_dup(SEXP str, SEXP times)
       }
       
       // the result is always in UTF-8
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), max_index, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), max_index, CE_UTF8));
    }
    
    
@@ -165,7 +165,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
    // 2. Create buf & retval
    String8 buf(nchar);
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length)); // output vector
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length)); // output vector
    
    // 3. Set retval
    const String8* last_string_1 = NULL;
@@ -191,7 +191,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
       R_len_t  cur_len_2 = cur_string_2->length();
       memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), cur_len_2);
       // the result is always in UTF-8
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), last_buf_idx+cur_len_2, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), last_buf_idx+cur_len_2, CE_UTF8));
    }
    
    // 4. Cleanup & finish
@@ -270,7 +270,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
    
    // 5. Create ret val
    String8 buf(buf_maxbytes);
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i=0; i<vectorize_length; ++i) {
       bool anyNA = false;
@@ -294,7 +294,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
       if (anyNA)
          SET_STRING_ELT(ret, i, NA_STRING);
       else
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), cursize, CE_UTF8));
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), cursize, CE_UTF8));
    }
    
    
@@ -351,8 +351,8 @@ SEXP stri_flatten_nosep(SEXP str)
    
    // 3. Get ret val & solongfarewellaufwiedersehenadieu
    SEXP ret; 
-   PROTECT(ret = allocVector(STRSXP, 1));
-   SET_STRING_ELT(ret, 0, mkCharLenCE(buf.data(), nchar, CE_UTF8));
+   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+   SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), nchar, CE_UTF8));
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -417,8 +417,8 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    
    // 3. Get ret val & solongfarewellaufwiedersehenadieu
    SEXP ret; 
-   PROTECT(ret = allocVector(STRSXP, 1));
-   SET_STRING_ELT(ret, 0, mkCharLenCE(buf.data(), nbytes, CE_UTF8));
+   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+   SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), nbytes, CE_UTF8));
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

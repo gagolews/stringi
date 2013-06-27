@@ -45,7 +45,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -85,7 +85,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       }
       
       // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i, mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
    }
 
    UNPROTECT(1);

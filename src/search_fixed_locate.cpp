@@ -50,7 +50,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -81,7 +81,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       
       R_len_t noccurences = occurences.size();
       SEXP ans;
-      PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+      PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
@@ -143,7 +143,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bo
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    
    SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
+   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
    
@@ -255,7 +255,7 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
+   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
    
@@ -317,7 +317,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -343,7 +343,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
       
       R_len_t noccurences = occurences.size();
       SEXP ans;
-      PROTECT(ans = allocMatrix(INTSXP, noccurences, 2));
+      PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {

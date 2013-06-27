@@ -63,7 +63,7 @@ public:
    
    
    void throwRerror() {
-      error(msg);  
+      Rf_error(msg);  
    }
    
    static const char* getICUerrorName(UErrorCode status);

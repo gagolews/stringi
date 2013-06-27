@@ -43,7 +43,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
    int* ret_tab = LOGICAL(ret);
    
    for (R_len_t i = pattern_cont.vectorize_init();

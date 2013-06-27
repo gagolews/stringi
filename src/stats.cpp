@@ -45,7 +45,7 @@ SEXP stri_stats_general(SEXP str)
    };
 
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, gsAll));
+   PROTECT(ret = Rf_allocVector(INTSXP, gsAll));
    int* stats = INTEGER(ret);
    for (int i=0; i<gsAll; ++i) 
       stats[i] = 0;
@@ -122,7 +122,7 @@ SEXP stri_stats_latex(SEXP str)
    };
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, lsAll));
+   PROTECT(ret = Rf_allocVector(INTSXP, lsAll));
    int* stats = INTEGER(ret);
    for (int i=0; i<lsAll; ++i) stats[i] = 0;
 

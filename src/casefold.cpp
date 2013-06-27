@@ -53,7 +53,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
    
    STRI__ERROR_HANDLER_BEGIN
    
-   if (!isInteger(type) || LENGTH(type) != 1)
+   if (!Rf_isInteger(type) || LENGTH(type) != 1)
       throw StriException(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually     
    int _type = INTEGER(type)[0];
    
@@ -83,7 +83,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
                str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
                break;
             default:
-               error("stri_casefold: incorrect case conversion type");
+               throw StriException("stri_casefold: incorrect case conversion type");
          }
       }
    }

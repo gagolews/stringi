@@ -49,7 +49,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, b
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -152,7 +152,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -225,7 +225,7 @@ SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -272,7 +272,7 @@ SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -291,7 +291,7 @@ SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
       else {
          SEXP ans, match;
-         PROTECT(ans = allocVector(STRSXP, count));
+         PROTECT(ans = Rf_allocVector(STRSXP, count));
          PROTECT(match = pattern_cont.toR(i));
          for (R_len_t j=0; j<count; ++j)
             SET_STRING_ELT(ans, j, match);

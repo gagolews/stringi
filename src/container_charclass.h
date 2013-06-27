@@ -45,7 +45,7 @@ class StriContainerCharClass : public StriContainerBase {
          this->data = NULL;
 #ifndef NDEBUG 
          if (!isString(rvec))
-            error("DEBUG: !isString in StriContainerCharClass"); // TO DO: throw StriException
+            throw StriException("DEBUG: !isString in StriContainerCharClass");
 #endif
          R_len_t ndata = LENGTH(rvec);
          this->init_Base(ndata, nrecycle, true);
@@ -94,7 +94,7 @@ class StriContainerCharClass : public StriContainerBase {
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerCharClass::isNA(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+            throw StriException("StriContainerCharClass::isNA(): INDEX OUT OF BOUNDS");
 #endif
          return data[i%n].isNA();
       }
@@ -107,9 +107,9 @@ class StriContainerCharClass : public StriContainerBase {
       inline const CharClass& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerCharClass::get(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+            throw StriException("StriContainerCharClass::get(): INDEX OUT OF BOUNDS");
          if (data[i%n].isNA())
-            error("StriContainerCharClass::get(): isNA"); // TO DO: throw StriException
+            throw StriException("StriContainerCharClass::get(): isNA");
 #endif
          return (data[i%n]);
       }

@@ -41,7 +41,7 @@ StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t nrecycle, bool s
 {
    this->data = NULL;
 #ifndef NDEBUG 
-   if (!isVectorList(rvec))
+   if (!Rf_isVectorList(rvec))
       throw StriException("DEBUG: !isVectorList in StriContainerListUTF8::StriContainerListUTF8(SEXP rvec)");
 #endif
    R_len_t rvec_length = LENGTH(rvec);

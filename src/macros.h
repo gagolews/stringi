@@ -26,6 +26,20 @@
 #undef length
 
 
+#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset)        \
+      if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
+         if (!(pattern_cont).isNA(i) && (pattern_cont).get(i).length() <= 0)                     \
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                   \
+         naset;                                                                                  \
+         continue;                                                                               \
+      }                                                                                          \
+      else if ((str_cont).get(i).length() <= 0) {                                                \
+         zeroset;                                                                                \
+         continue;                                                                               \
+      }                                                                                          \
+      
+
+
 
 // taken from R's Defn.h - sorry, this is needed
 // CHARSXP charset bits

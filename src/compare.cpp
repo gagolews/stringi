@@ -74,7 +74,7 @@ SEXP stri_compare_codepoints(SEXP e1, SEXP e2)
    
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_int = INTEGER(ret);
    
    for (R_len_t i = e1_cont.vectorize_init();
@@ -129,7 +129,7 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
    
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_int = INTEGER(ret);
    
    for (R_len_t i = e1_cont.vectorize_init();
@@ -236,7 +236,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    
    // count NA values
    R_len_t countNA = 0;

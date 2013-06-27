@@ -38,8 +38,8 @@ SEXP stri_info()
    const R_len_t infosize = 4;
    SEXP vals;
    
-   PROTECT(vals = allocVector(VECSXP, infosize));
-   SET_VECTOR_ELT(vals, 0, mkString(U_UNICODE_VERSION));
+   PROTECT(vals = Rf_allocVector(VECSXP, infosize));
+   SET_VECTOR_ELT(vals, 0, Rf_mkString(U_UNICODE_VERSION));
    SET_VECTOR_ELT(vals, 1, stri_locale_info(R_NilValue));
    SET_VECTOR_ELT(vals, 2, stri__make_character_vector(2, "UTF-8", "UTF-16")); // this is fixed
    SET_VECTOR_ELT(vals, 3, stri_enc_info(R_NilValue));

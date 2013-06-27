@@ -36,8 +36,8 @@
  */
 SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
 {
-   if (!isVectorList(x))
-      error(MSG__ARG_EXPECTED_LIST_STRING, argname);
+   if (!Rf_isVectorList(x))
+      Rf_error(MSG__ARG_EXPECTED_LIST_STRING, argname); // error() allowed here
       
    R_len_t narg = LENGTH(x);
    if (narg <= 0) return x;
@@ -45,7 +45,7 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
    if (NAMED(x) > 0) {
       // the object should be copied
       SEXP xold = x;
-      PROTECT(x = allocVector(VECSXP, narg));
+      PROTECT(x = Rf_allocVector(VECSXP, narg));
       for (R_len_t i=0; i<narg; ++i)
          SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(xold, i), argname));
       UNPROTECT(1);
@@ -79,20 +79,20 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
    if (isString(x))
       return x; // return as-is
-   else if (isFactor(x))
+   else if (Rf_isFactor(x))
    {
       SEXP call;
-      PROTECT(call = lang2(install("as.character"), x));
-		x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+		x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
       return x;
    }
-   else if (isVectorAtomic(x))
-      return coerceVector(x, STRSXP);
+   else if (Rf_isVectorAtomic(x))
+      return Rf_coerceVector(x, STRSXP);
    else if (isSymbol(x))
-      return ScalarString(PRINTNAME(x));
+      return Rf_ScalarString(PRINTNAME(x));
       
-   error(MSG__ARG_EXPECTED_STRING, argname);
+   Rf_error(MSG__ARG_EXPECTED_STRING, argname); // allowed here
    return x; // avoid compiler warning
 }
 
@@ -116,20 +116,20 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
-   if (isFactor(x)) 
+   if (Rf_isFactor(x)) 
    {
       SEXP call;
-      PROTECT(call = lang2(install("as.character"), x));
-      x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x, REALSXP);
+      return Rf_coerceVector(x, REALSXP);
    }
    else if(isReal(x))
       return x; //return as-is
-   else if (isVectorAtomic(x))
-      return coerceVector(x, REALSXP);
+   else if (Rf_isVectorAtomic(x))
+      return Rf_coerceVector(x, REALSXP);
       
-   error(MSG__ARG_EXPECTED_NUMERIC, argname);
+   Rf_error(MSG__ARG_EXPECTED_NUMERIC, argname); // allowed here
    return x; // avoid compiler warning
 }
 
@@ -152,20 +152,20 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
-   if (isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
+   if (Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
    {
       SEXP call;
-      PROTECT(call = lang2(install("as.character"), x));
-   	x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+   	x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x, INTSXP);
+      return Rf_coerceVector(x, INTSXP);
    }
-   else if (isInteger(x))
+   else if (Rf_isInteger(x))
       return x; // return as-is
-   else if (isVectorAtomic(x))
-      return coerceVector(x, INTSXP);
+   else if (Rf_isVectorAtomic(x))
+      return Rf_coerceVector(x, INTSXP);
       
-   error(MSG__ARG_EXPECTED_INTEGER, argname);
+   Rf_error(MSG__ARG_EXPECTED_INTEGER, argname); //allowed here
    return x; // avoid compiler warning
 }
 
@@ -188,20 +188,20 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
-   if (isFactor(x))
+   if (Rf_isFactor(x))
    {
       SEXP call;
-      PROTECT(call = lang2(install("as.character"), x));
-      x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
 		UNPROTECT(1);
-      return coerceVector(x, LGLSXP);
+      return Rf_coerceVector(x, LGLSXP);
    }
    else if (isLogical(x))
       return x; // return as-is
-   else if (isVectorAtomic(x))
-      return coerceVector(x, LGLSXP);
+   else if (Rf_isVectorAtomic(x))
+      return Rf_coerceVector(x, LGLSXP);
       
-   error(MSG__ARG_EXPECTED_LOGICAL, argname);
+   Rf_error(MSG__ARG_EXPECTED_LOGICAL, argname); // allowed here
    return x; // avoid compiler warning
 }
 
@@ -225,20 +225,20 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
 {
-   if (isFactor(x))
+   if (Rf_isFactor(x))
    {
       SEXP call;
-      PROTECT(call = lang2(install("as.character"), x));
-      x = eval(call, R_GlobalEnv); // this will mark it's encoding manually
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
    	UNPROTECT(1);
-      return coerceVector(x, RAWSXP);
+      return Rf_coerceVector(x, RAWSXP);
    }
    else if ((TYPEOF(x) == RAWSXP))
       return x; // return as-is
-   else if (isVectorAtomic(x))
-      return coerceVector(x, RAWSXP);
+   else if (Rf_isVectorAtomic(x))
+      return Rf_coerceVector(x, RAWSXP);
       
-   error(MSG__ARG_EXPECTED_RAW, argname);
+   Rf_error(MSG__ARG_EXPECTED_RAW, argname); // allowed here
    return x; // avoid compiler warning
 }
 
@@ -267,12 +267,12 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
    R_len_t nx = LENGTH(x);
    
    if (nx <= 0)
-      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
    
    if (nx > 1) {
-      warning(MSG__ARG_EXPECTED_1_STRING, argname);
+      Rf_warning(MSG__ARG_EXPECTED_1_STRING, argname);
       SEXP xold = x;
-      PROTECT(x = allocVector(STRSXP, 1));
+      PROTECT(x = Rf_allocVector(STRSXP, 1));
       SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
       UNPROTECT(1);      
    }
@@ -302,12 +302,12 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
    R_len_t nx = LENGTH(x);
    
    if (nx <= 0)
-      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
    
    if (nx > 1) {
-      warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
+      Rf_warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
       double x0 = REAL(x)[0];
-      PROTECT(x = allocVector(REALSXP, 1));
+      PROTECT(x = Rf_allocVector(REALSXP, 1));
       REAL(x)[0] = x0;
       UNPROTECT(1);      
    }
@@ -337,12 +337,12 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
    R_len_t nx = LENGTH(x);
    
    if (nx <= 0)
-      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
    
    if (nx > 1) {
-      warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
+      Rf_warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
       int x0 = INTEGER(x)[0];
-      PROTECT(x = allocVector(INTSXP, 1));
+      PROTECT(x = Rf_allocVector(INTSXP, 1));
       INTEGER(x)[0] = x0;
       UNPROTECT(1);      
    }
@@ -372,12 +372,12 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
    R_len_t nx = LENGTH(x);
    
    if (nx <= 0)
-      error(MSG__ARG_EXPECTED_NOT_EMPTY, argname);
+      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
    
    if (nx > 1) {
-      warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
+      Rf_warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
       int x0 = LOGICAL(x)[0];
-      PROTECT(x = allocVector(LGLSXP, 1));
+      PROTECT(x = Rf_allocVector(LGLSXP, 1));
       LOGICAL(x)[0] = x0;
       UNPROTECT(1);      
    }
@@ -407,7 +407,7 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
    x = stri_prepare_arg_logical_1(x, argname);
    int xval = LOGICAL(x)[0];
    if (xval == NA_LOGICAL)
-      error(MSG__ARG_EXPECTED_NOT_NA, argname);
+      Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
    return (bool)xval;
 }
 
@@ -439,14 +439,14 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
    else {
       loc = stri_prepare_arg_string_1(loc, argname);
       if (STRING_ELT(loc, 0) == NA_STRING) {
-         error(MSG__ARG_EXPECTED_NOT_NA, argname);
+         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
       }
       
       if (LENGTH(STRING_ELT(loc, 0)) == 0) {
          if (allowdefault)
             return uloc_getDefault();
          else
-            error(MSG__LOCALE_INCORRECT_ID);
+            Rf_error(MSG__LOCALE_INCORRECT_ID); // allowed here
       }
       else
          return (const char*)CHAR(STRING_ELT(loc, 0));
@@ -486,14 +486,14 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
    else {
       enc = stri_prepare_arg_string_1(enc, argname);
       if (STRING_ELT(enc, 0) == NA_STRING) {
-         error(MSG__ARG_EXPECTED_NOT_NA, argname);
+         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
       }
 
       if (LENGTH(STRING_ELT(enc, 0)) == 0) {
          if (allowdefault)
             return (const char*)NULL;
          else
-            error(MSG__ENC_INCORRECT_ID);
+            Rf_error(MSG__ENC_INCORRECT_ID); // allowed here
       }
       else
          return (const char*)CHAR(STRING_ELT(enc, 0));

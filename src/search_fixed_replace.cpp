@@ -46,7 +46,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
    
 
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
  
    String8 buf(0); // @TODO: calculate buf len a priori?
    
@@ -108,7 +108,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
          curbuf += replacement_cur_n;
       }
       memcpy(curbuf, str_cur_s+jlast, str_cur_n-jlast);
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    } 
  
    UNPROTECT(1);

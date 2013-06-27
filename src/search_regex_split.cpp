@@ -52,7 +52,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -75,7 +75,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
-         SET_VECTOR_ELT(ret, i, allocVector(STRSXP, 0));
+         SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
       
@@ -109,12 +109,12 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
          fields.pop_back();
       
       SEXP ans;
-      PROTECT(ans = allocVector(STRSXP, fields.size()));
+      PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
       
       deque<R_len_t_x2>::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
          R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, k, mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+         SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
       }
       
       SET_VECTOR_ELT(ret, i, ans);

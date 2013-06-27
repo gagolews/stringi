@@ -27,13 +27,13 @@
 void stri__locate_set_dimnames_matrix(SEXP matrix) {
    SEXP dimnames;
    SEXP colnames;
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar(MSG__LOCATE_DIM_START));
-   SET_STRING_ELT(colnames, 1, mkChar(MSG__LOCATE_DIM_END));
+   PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+   PROTECT(colnames = Rf_allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
+   SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
    SET_VECTOR_ELT(dimnames, 0, R_NilValue);
    SET_VECTOR_ELT(dimnames, 1, colnames);
-   setAttrib(matrix, R_DimNamesSymbol, dimnames);
+   Rf_setAttrib(matrix, R_DimNamesSymbol, dimnames);
    UNPROTECT(2);
 }
 
@@ -46,14 +46,14 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
 void stri__locate_set_dimnames_list(SEXP list) {
    SEXP dimnames;
    SEXP colnames;
-   PROTECT(dimnames = allocVector(VECSXP, 2));
-   PROTECT(colnames = allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, mkChar(MSG__LOCATE_DIM_START));
-   SET_STRING_ELT(colnames, 1, mkChar(MSG__LOCATE_DIM_END));
+   PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+   PROTECT(colnames = Rf_allocVector(STRSXP, 2));
+   SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
+   SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
    SET_VECTOR_ELT(dimnames, 1, colnames);
    
    R_len_t n = LENGTH(list);
    for (R_len_t i = 0; i < n; ++i)
-      setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
+      Rf_setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
    UNPROTECT(2);
 }

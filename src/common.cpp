@@ -33,14 +33,14 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 {
    va_list arguments;                    
    SEXP names;
-   PROTECT(names = allocVector(STRSXP, numnames));
+   PROTECT(names = Rf_allocVector(STRSXP, numnames));
    
    va_start(arguments, numnames);         
    for (R_len_t i = 0; i < numnames; ++i)        
-      SET_STRING_ELT(names, i, mkChar(va_arg(arguments, char*)));
+      SET_STRING_ELT(names, i, Rf_mkChar(va_arg(arguments, char*)));
    va_end(arguments);              
    
-   setAttrib(object, R_NamesSymbol, names);
+   Rf_setAttrib(object, R_NamesSymbol, names);
    UNPROTECT(1);
 }
 
@@ -59,11 +59,11 @@ SEXP stri__make_character_vector(R_len_t numnames, ...)
 {
    va_list arguments;                    
    SEXP names;
-   PROTECT(names = allocVector(STRSXP, numnames));
+   PROTECT(names = Rf_allocVector(STRSXP, numnames));
    
    va_start(arguments, numnames);         
    for (R_len_t i = 0; i < numnames; ++i)        
-      SET_STRING_ELT(names, i, mkChar(va_arg(arguments, char*)));
+      SET_STRING_ELT(names, i, Rf_mkChar(va_arg(arguments, char*)));
    va_end(arguments);              
    
    UNPROTECT(1);
@@ -106,7 +106,7 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
       for (R_len_t i = 0; i < n; ++i) {
          R_len_t curlen = va_arg(arguments, R_len_t);
          if (nsm % curlen != 0) {
-            warning(MSG__WARN_RECYCLING_RULE);
+            Rf_warning(MSG__WARN_RECYCLING_RULE);
             break;
          }
       }
@@ -127,11 +127,13 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 */
 SEXP stri__vector_NA_strings(R_len_t howmany)
 {
-   if (howmany < 0)
-      error(MSG__EXPECTED_NONNEGATIVE);
+   if (howmany < 0) {
+      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+      howmany = 0;
+   }
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, howmany));
+   PROTECT(ret = Rf_allocVector(STRSXP, howmany));
    for (R_len_t i=0; i<howmany; ++i)
       SET_STRING_ELT(ret, i, NA_STRING);
    UNPROTECT(1);
@@ -150,11 +152,13 @@ SEXP stri__vector_NA_strings(R_len_t howmany)
 */
 SEXP stri__vector_empty_strings(R_len_t howmany)
 {
-   if (howmany < 0)
-      error(MSG__EXPECTED_NONNEGATIVE);
+   if (howmany < 0) {
+      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+      howmany = 0;
+   }
    
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, howmany));
+   PROTECT(ret = Rf_allocVector(STRSXP, howmany));
    for (R_len_t i=0; i<howmany; ++i)
       SET_STRING_ELT(ret, i, R_BlankString);
    UNPROTECT(1);
@@ -172,7 +176,7 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
  */
 SEXP stri__emptyList()
 {
-   SEXP ret = allocVector(VECSXP, 0);
+   SEXP ret = Rf_allocVector(VECSXP, 0);
    return ret;
 }
 
@@ -187,7 +191,7 @@ SEXP stri__emptyList()
 SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
 {
    SEXP x;
-   PROTECT(x = allocMatrix(INTSXP, nrow, ncol));
+   PROTECT(x = Rf_allocMatrix(INTSXP, nrow, ncol));
    int* ians = INTEGER(x);
    for (R_len_t i=0; i<nrow*ncol; ++i)
       ians[i] = NA_INTEGER;
@@ -206,7 +210,7 @@ SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
 SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
 {
    SEXP x;
-   PROTECT(x = allocMatrix(STRSXP, nrow, ncol));
+   PROTECT(x = Rf_allocMatrix(STRSXP, nrow, ncol));
    for (R_len_t i=0; i<nrow*ncol; ++i)
       SET_STRING_ELT(x, i, NA_STRING);
    UNPROTECT(1);

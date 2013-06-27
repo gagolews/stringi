@@ -40,7 +40,7 @@ UConverter* stri__ucnv_open(const char* enc)
 
    uconv = ucnv_open(enc, &err);
    if (U_FAILURE(err))
-      error(MSG__ENC_ERROR_SET); // error() allowed here
+      Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
    
    return uconv;
 }
@@ -72,7 +72,7 @@ SEXP stri_enc_set(SEXP enc)
    const char* name = ucnv_getName(uconv, &err); // get "official" encoding name
    ucnv_close(uconv); // no longer needed
    if (U_FAILURE(err))
-      error(MSG__ENC_ERROR_SET);  // error() allowed here
+      Rf_error(MSG__ENC_ERROR_SET);  // error() allowed here
    ucnv_setDefaultName(name); // set as default
   
    return R_NilValue;
@@ -96,8 +96,8 @@ SEXP stri_enc_list()
    
    SEXP ret;
    SEXP names;
-   PROTECT(ret = allocVector(VECSXP, c));
-   PROTECT(names = allocVector(STRSXP, c));
+   PROTECT(ret = Rf_allocVector(VECSXP, c));
+   PROTECT(names = Rf_allocVector(STRSXP, c));
 
    for (R_len_t i=0; i<c; ++i) {
       const char* canonical_name = ucnv_getAvailableName(i);
@@ -106,29 +106,29 @@ SEXP stri_enc_list()
          continue;
       }
 
-      SET_STRING_ELT(names, i, mkChar(canonical_name));
+      SET_STRING_ELT(names, i, Rf_mkChar(canonical_name));
 
       UErrorCode err = U_ZERO_ERROR;
       R_len_t ci = (R_len_t)ucnv_countAliases(canonical_name, &err);
       if (U_FAILURE(err) || ci <= 0)
-         SET_VECTOR_ELT(ret, i, ScalarString(NA_STRING));
+         SET_VECTOR_ELT(ret, i, Rf_ScalarString(NA_STRING));
       else {
          SEXP aliases;
-         PROTECT(aliases = allocVector(STRSXP, ci));
+         PROTECT(aliases = Rf_allocVector(STRSXP, ci));
          for (R_len_t j=0; j<ci; ++j) {
             err = U_ZERO_ERROR;
             const char* alias = ucnv_getAlias(canonical_name, j, &err);
             if (U_FAILURE(err) || !alias)
                SET_STRING_ELT(aliases, j, NA_STRING);
             else
-               SET_STRING_ELT(aliases, j, mkChar(alias));
+               SET_STRING_ELT(aliases, j, Rf_mkChar(alias));
          }
          UNPROTECT(1);
          SET_VECTOR_ELT(ret, i, aliases);
       }
    }
 
-   setAttrib(ret, R_NamesSymbol, names);
+   Rf_setAttrib(ret, R_NamesSymbol, names);
    UNPROTECT(2);
    return ret;
 }
@@ -155,7 +155,7 @@ SEXP stri_enc_isascii(SEXP str)
    R_len_t str_length = LENGTH(str);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, str_length));
+   PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret); // may be faster than LOGICAL(ret)[i] all the time
    
    for (R_len_t i=0; i < str_length; ++i) {
@@ -197,7 +197,7 @@ SEXP stri_enc_isutf8(SEXP str)
    R_len_t str_length = LENGTH(str);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, str_length));
+   PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret);
    
    for (R_len_t i=0; i < str_length; ++i) {
@@ -246,7 +246,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
 {
    UErrorCode err;
    cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
-   if (cs <= 0) error(MSG__ENC_ERROR_SET); // error() allowed here
+   if (cs <= 0) Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
    standards = (const char**)R_alloc(cs, sizeof(const char*)); // will be freed automatically
 
    for (R_len_t i=0; i<cs; ++i) {
@@ -254,7 +254,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
       standards[i] = ucnv_getStandard(i, &err);
       if (U_FAILURE(err)) {
 #ifndef NDEBUG
-         warning("could not get standard name (stri_list)");
+         Rf_warning("could not get standard name (stri_list)");
 #endif
          standards[i] = NULL;
       }
@@ -327,7 +327,7 @@ bool stri__ucnv_hasASCIIsubset(UConverter* conv)
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
 #ifndef NDEBUG
-         warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
+         Rf_warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
             (int)(unsigned char)ascii_last[0],
             ucnv_getName(conv, &err));
 #endif
@@ -387,7 +387,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       c = ucnv_getNextUChar(conv, &ascii1, ascii2, &err);
       if (U_FAILURE(err)) {
 #ifndef NDEBUG
-         warning("Cannot convert character 0x%2x (encoding=%s)",
+         Rf_warning("Cannot convert character 0x%2x (encoding=%s)",
             (int)(unsigned char)ascii_last[0],
             ucnv_getName(conv, &err));
 #endif
@@ -403,7 +403,7 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
       UChar lead = U16_LEAD(c); //, trail = U16_TRAIL(c);
       if (!U16_IS_SINGLE(lead)) {
 #ifndef NDEBUG
-         warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
+         Rf_warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
             (int)(unsigned char)ascii_last[0],
             c,
             ucnv_getName(conv, &err));
@@ -416,16 +416,16 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
          ucnv_fromUChars(conv, buf, buflen, (UChar*)&c, 1, &err);
          if (U_FAILURE(err)) {
 #ifndef NDEBUG
-            warning("Cannot convert character 0x%2x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
-            ucnv_getName(conv, &err));
+            Rf_warning("Cannot convert character 0x%2x (encoding=%s)",
+               (int)(unsigned char)ascii_last[0],
+               ucnv_getName(conv, &err));
 #endif
             return false;
          }
          
          if (buf[1] != '\0' || buf[0] != ascii_last[0]) {
 #ifndef NDEBUG
-            warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
+            Rf_warning("Problematic character 0x%2x -> \\u%8x -> 0x%2x (encoding=%s)",
                (int)(unsigned char)ascii_last[0],
                c,
                (int)buf[0],
@@ -467,18 +467,18 @@ SEXP stri_enc_info(SEXP enc)
    SEXP vals;
    SEXP names;
    const int nval = cs+2+5;
-   PROTECT(names = allocVector(STRSXP, nval));
-   SET_STRING_ELT(names, 0, mkChar("Name.friendly"));
-   SET_STRING_ELT(names, 1, mkChar("Name.ICU"));
+   PROTECT(names = Rf_allocVector(STRSXP, nval));
+   SET_STRING_ELT(names, 0, Rf_mkChar("Name.friendly"));
+   SET_STRING_ELT(names, 1, Rf_mkChar("Name.ICU"));
    for (R_len_t i=0; i<cs; ++i)
-      SET_STRING_ELT(names, i+2, mkChar((string("Name.")+standards[i]).c_str()));
-   SET_STRING_ELT(names, nval-5, mkChar("ASCII.subset"));
-   SET_STRING_ELT(names, nval-4, mkChar("Unicode.1to1"));
-   SET_STRING_ELT(names, nval-3, mkChar("CharSize.8bit"));
-   SET_STRING_ELT(names, nval-2, mkChar("CharSize.min"));
-   SET_STRING_ELT(names, nval-1, mkChar("CharSize.max"));
+      SET_STRING_ELT(names, i+2, Rf_mkChar((string("Name.")+standards[i]).c_str()));
+   SET_STRING_ELT(names, nval-5, Rf_mkChar("ASCII.subset"));
+   SET_STRING_ELT(names, nval-4, Rf_mkChar("Unicode.1to1"));
+   SET_STRING_ELT(names, nval-3, Rf_mkChar("CharSize.8bit"));
+   SET_STRING_ELT(names, nval-2, Rf_mkChar("CharSize.min"));
+   SET_STRING_ELT(names, nval-1, Rf_mkChar("CharSize.max"));
 
-   PROTECT(vals = allocVector(VECSXP, nval));
+   PROTECT(vals = Rf_allocVector(VECSXP, nval));
 
 
    // get canonical (ICU) name
@@ -486,47 +486,47 @@ SEXP stri_enc_info(SEXP enc)
    const char* canname = ucnv_getName(uconv, &err);
 
    if (U_FAILURE(err) || !canname) {
-      SET_VECTOR_ELT(vals, 1, ScalarString(NA_STRING));
-      warning(MSG__ENC_ERROR_GETNAME);
+      SET_VECTOR_ELT(vals, 1, Rf_ScalarString(NA_STRING));
+      Rf_warning(MSG__ENC_ERROR_GETNAME);
    }
    else {
-      SET_VECTOR_ELT(vals, 1, mkString(canname));
+      SET_VECTOR_ELT(vals, 1, Rf_mkString(canname));
 
       // friendly name
       const char* frname = stri__ucnv_getFriendlyName(canname);
-      if (frname)  SET_VECTOR_ELT(vals, 0, mkString(frname));
-      else         SET_VECTOR_ELT(vals, 0, ScalarString(NA_STRING));
+      if (frname)  SET_VECTOR_ELT(vals, 0, Rf_mkString(frname));
+      else         SET_VECTOR_ELT(vals, 0, Rf_ScalarString(NA_STRING));
 
 
       // has ASCII as its subset?
-      SET_VECTOR_ELT(vals, nval-5, ScalarLogical((int)stri__ucnv_hasASCIIsubset(uconv)));
+      SET_VECTOR_ELT(vals, nval-5, Rf_ScalarLogical((int)stri__ucnv_hasASCIIsubset(uconv)));
       
       // min,max character size, is 8bit?
       int mincharsize = (int)ucnv_getMinCharSize(uconv);
       int maxcharsize = (int)ucnv_getMaxCharSize(uconv);
       int is8bit = (mincharsize==1 && maxcharsize == 1);
-      SET_VECTOR_ELT(vals, nval-3, ScalarLogical(is8bit));
-      SET_VECTOR_ELT(vals, nval-2, ScalarInteger(mincharsize));
-      SET_VECTOR_ELT(vals, nval-1, ScalarInteger(maxcharsize));
+      SET_VECTOR_ELT(vals, nval-3, Rf_ScalarLogical(is8bit));
+      SET_VECTOR_ELT(vals, nval-2, Rf_ScalarInteger(mincharsize));
+      SET_VECTOR_ELT(vals, nval-1, Rf_ScalarInteger(maxcharsize));
       
       // is there a one-to-one correspondence with Unicode?
       if (!is8bit)
-         SET_VECTOR_ELT(vals, nval-4, ScalarLogical(NA_LOGICAL));
+         SET_VECTOR_ELT(vals, nval-4, Rf_ScalarLogical(NA_LOGICAL));
       else
-         SET_VECTOR_ELT(vals, nval-4, ScalarLogical((int)stri__ucnv_is1to1Unicode(uconv)));
+         SET_VECTOR_ELT(vals, nval-4, Rf_ScalarLogical((int)stri__ucnv_is1to1Unicode(uconv)));
          
       // other standard names
       for (R_len_t i=0; i<cs; ++i) {
          err = U_ZERO_ERROR;
          const char* stdname = ucnv_getStandardName(canname, standards[i], &err);
          if (U_FAILURE(err) || !stdname)
-            SET_VECTOR_ELT(vals, i+2, ScalarString(NA_STRING));
+            SET_VECTOR_ELT(vals, i+2, Rf_ScalarString(NA_STRING));
          else
-            SET_VECTOR_ELT(vals, i+2, mkString(stdname));
+            SET_VECTOR_ELT(vals, i+2, Rf_mkString(stdname));
       }
    }
    ucnv_close(uconv);
-   setAttrib(vals, R_NamesSymbol, names);
+   Rf_setAttrib(vals, R_NamesSymbol, names);
    UNPROTECT(2);
    return vals;
 }
@@ -553,7 +553,7 @@ R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize
       UChar32 c = data[k++];
       U8_APPEND((uint8_t*)buf, i, bufsize, c, err);
       if (err) {
-         warning(MSG__INVALID_CODE_POINT, (int)c);
+         Rf_warning(MSG__INVALID_CODE_POINT, (int)c);
          return -1;
       }
    }
@@ -570,22 +570,22 @@ R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
-   if (isVectorList(vec)) {
+   if (Rf_isVectorList(vec)) {
       R_len_t n = LENGTH(vec);
       R_len_t bufsize = 0;
       for (R_len_t i=0; i<n; ++i) {
          SEXP cur = VECTOR_ELT(vec, i);
          if (isNull(cur))
             continue;
-         if (!isInteger(cur)) // this cannot be treated with stri_prepare_arg*, as vec may be a mem-shared object
-            error(MSG__ARG_EXPECTED_INTEGER_NO_COERCION, "vec[[i]]"); // error() allowed here
+         if (!Rf_isInteger(cur)) // this cannot be treated with stri_prepare_arg*, as vec may be a mem-shared object
+            Rf_error(MSG__ARG_EXPECTED_INTEGER_NO_COERCION, "vec[[i]]"); // error() allowed here
          if (LENGTH(cur) > bufsize) bufsize = LENGTH(cur);
       }
       
       bufsize = U8_MAX_LENGTH*bufsize+1;
       char* buf = new char[bufsize]; // no call to error() between new and delete -> OK
       SEXP ret;
-      PROTECT(ret = allocVector(STRSXP, n));
+      PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
          SEXP cur = VECTOR_ELT(vec, i);
          if (isNull(cur)) {
@@ -596,7 +596,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
          if (chars < 0)
             SET_STRING_ELT(ret, i, NA_STRING);
          else
-            SET_STRING_ELT(ret, i, mkCharLenCE(buf, chars, CE_UTF8));
+            SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf, chars, CE_UTF8));
       }
       delete [] buf;
       UNPROTECT(1);
@@ -605,7 +605,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
    else {
       vec = stri_prepare_arg_integer(vec, "vec");  // integer vector
       SEXP ret;
-      PROTECT(ret = allocVector(STRSXP, 1));
+      PROTECT(ret = Rf_allocVector(STRSXP, 1));
       
       int* data = INTEGER(vec);
       R_len_t ndata = LENGTH(vec);
@@ -615,7 +615,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
       if (chars < 0)
          SET_STRING_ELT(ret, 0, NA_STRING);
       else
-         SET_STRING_ELT(ret, 0, mkCharLenCE(buf, chars, CE_UTF8));
+         SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf, chars, CE_UTF8));
       delete [] buf;
       UNPROTECT(1);
       return ret;
@@ -650,7 +650,7 @@ SEXP stri_enc_toutf32(SEXP str)
    int* buf = (int*)R_alloc(bufsize, sizeof(int));
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, n));
+   PROTECT(ret = Rf_allocVector(VECSXP, n));
    
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -672,7 +672,7 @@ SEXP stri_enc_toutf32(SEXP str)
       }
       
       SEXP conv;
-      PROTECT(conv = allocVector(INTSXP, k /*chars.size()*/));
+      PROTECT(conv = Rf_allocVector(INTSXP, k /*chars.size()*/));
       memcpy(INTEGER(conv), buf, sizeof(int)*k);
 //      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
 //         *(conv_tab++) = (int)*it;
@@ -708,7 +708,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
    STRI__ERROR_HANDLER_BEGIN
    if (is_unknown_8bit_logical) {
       SEXP ret;
-      PROTECT(ret = allocVector(STRSXP, n));
+      PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
          if (curs == NA_STRING) {
@@ -733,7 +733,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
                   buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
                }
             }
-            SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), k, CE_UTF8));
+            SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8));
          }
       }
       UNPROTECT(1);
@@ -766,7 +766,7 @@ SEXP stri_enc_toascii(SEXP str)
    
    STRI__ERROR_HANDLER_BEGIN
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, n));
+   PROTECT(ret = Rf_allocVector(STRSXP, n));
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       if (curs == NA_STRING) {
@@ -790,7 +790,7 @@ SEXP stri_enc_toascii(SEXP str)
             else
                buf.data()[k++] = (char)c;
          }
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
       }
       else { // some 8-bit encoding
          R_len_t curn = LENGTH(curs);
@@ -805,7 +805,7 @@ SEXP stri_enc_toascii(SEXP str)
                buf.data()[k++] = (char)ASCII_SUBSTITUTE; // subst char in ascii
             }
          }
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
       }
    }
    UNPROTECT(1);
@@ -838,14 +838,14 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
    
    // check is args passed are OK
-   if (isVectorList(str)) {
+   if (Rf_isVectorList(str)) {
       R_len_t nv = LENGTH(str);   
       for (R_len_t i=0; i<nv; ++i) {
          SEXP cur = VECTOR_ELT(str, i);
          if (isNull(cur))
             continue;
          if (!isRaw(cur))  // this cannot be treated with stri_prepare_arg*, as str may be a mem-shared object
-            error(MSG__ARG_EXPECTED_RAW_NO_COERCION, "str[[i]]");  // error() allowed here
+            Rf_error(MSG__ARG_EXPECTED_RAW_NO_COERCION, "str[[i]]");  // error() allowed here
             
       }
    }
@@ -854,8 +854,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    
    // get number of strings to convert, if == 0, then you know what's the result
    R_len_t ns = LENGTH(str);
-   if (ns <= 0) return allocVector(to_raw_logical?VECSXP:STRSXP, 0);
-   bool is_vector_arg = (bool)(isVectorList(str));
+   if (ns <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
+   bool is_vector_arg = (bool)(Rf_isVectorList(str));
    
    UConverter* uconv_from = NULL;
    UConverter* uconv_to = NULL;
@@ -882,7 +882,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    
    // Prepare out val
    SEXP ret;
-   PROTECT(ret = allocVector(to_raw_logical?VECSXP:STRSXP, ns));
+   PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, ns));
    
    String8 buf(0);
    
@@ -931,12 +931,12 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       }
       
       if (to_raw_logical) {
-         SEXP outobj = allocVector(RAWSXP, bufneed);
+         SEXP outobj = Rf_allocVector(RAWSXP, bufneed);
          memcpy(RAW(outobj), buf.data(), bufneed);
          SET_VECTOR_ELT(ret, i, outobj);
       }
       else {
-         SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), bufneed, encmark_to));
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), bufneed, encmark_to));
       }
    }
    

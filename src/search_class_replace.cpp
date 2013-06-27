@@ -46,7 +46,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
  
    String8 buf(0); // @TODO: calculate buf len a priori?
    
@@ -98,7 +98,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
          curbuf += replacement_cur_n;
       }
       memcpy(curbuf, str_cur_s+jlast, str_cur_n-jlast);
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    } 
  
    UNPROTECT(1);
@@ -135,7 +135,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
 
 
    SEXP ret;
-   PROTECT(ret = allocVector(STRSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
  
    String8 buf(0); // @TODO: consider calculating buflen a priori
    
@@ -187,7 +187,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       memcpy(buf.data(), str_cur_s, jlast);
       memcpy(buf.data()+jlast, replacement_cur_s, replacement_cur_n);
       memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, str_cur_n-j);
-      SET_STRING_ELT(ret, i, mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    } 
  
    UNPROTECT(1);

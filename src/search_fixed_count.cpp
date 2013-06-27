@@ -44,7 +44,7 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
    
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -99,7 +99,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    
    SEXP ret;
-   PROTECT(ret = allocVector(INTSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
    
    for (R_len_t i = pattern_cont.vectorize_init();

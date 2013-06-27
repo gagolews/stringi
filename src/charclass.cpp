@@ -92,7 +92,7 @@ CharClass::CharClass(SEXP charclass)
 {
 #ifndef NDEBUG
    if (TYPEOF(charclass) != CHARSXP)
-      error(MSG__INCORRECT_INTERNAL_ARG);
+      throw StriException(MSG__INCORRECT_INTERNAL_ARG);
 #endif
 
    binprop = (UProperty)-1;
@@ -112,7 +112,7 @@ CharClass::CharClass(SEXP charclass)
    }
 
    if (n == 0) {
-      warning(MSG__CHARCLASS_INCORRECT);
+      Rf_warning(MSG__CHARCLASS_INCORRECT);
    }
    else if (n <= 2) { // it's possibly a general category
       gencat = CharClass::getGeneralCategoryFromName(name, n);
@@ -219,7 +219,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
    }
    
    if (id == (UCharCategory)-1)
-      warning(MSG__CHARCLASS_INCORRECT);
+      Rf_warning(MSG__CHARCLASS_INCORRECT);
       
    return id;
 }
@@ -268,7 +268,7 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
          
 #ifndef NDEBUG
          if (i1 < 0 || i2 >= CharClass::binprop_length || im < i1 || im > i2)
-            error("CharClass::getBinaryPropertyFromName FAILED; %d, %d, %d", i1, i2, im);
+            throw StriException("CharClass::getBinaryPropertyFromName FAILED; %d, %d, %d", i1, i2, im);
 #endif
          int cmpres = strcmp(name2, CharClass::binprop_names_normalized[im]); // no collation needed
 
@@ -284,7 +284,7 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
    }
  
    if (id == (UProperty)-1)
-      warning(MSG__CHARCLASS_INCORRECT_WHICH, name);
+   Rf_warning(MSG__CHARCLASS_INCORRECT_WHICH, name);
 
    return id;
 }

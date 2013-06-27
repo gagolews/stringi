@@ -212,14 +212,14 @@ StriContainerUTF8::~StriContainerUTF8()
 SEXP StriContainerUTF8::toR() const
 {
    SEXP ret;   
-   PROTECT(ret = allocVector(STRSXP, nrecycle));
+   PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
    
    for (R_len_t i=0; i<nrecycle; ++i) {
       if (!str[i%n])
          SET_STRING_ELT(ret, i, NA_STRING);
       else {
          SET_STRING_ELT(ret, i,
-            mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8));
+            Rf_mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8));
       }
    }
    
@@ -245,7 +245,7 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
       return NA_STRING;
    else
       // This is already in UTF-8
-      return mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8);
+      return Rf_mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8);
 }
  
  

@@ -45,7 +45,7 @@ class StriContainerLogical : public StriContainerBase {
          this->data = NULL;
 #ifndef NDEBUG 
          if (!isLogical(rvec))
-            error("DEBUG: !isLogical in StriContainerLogical"); // TO DO: throw StriException
+            throw StriException("DEBUG: !isLogical in StriContainerLogical");
 #endif
          R_len_t ndata = LENGTH(rvec);
          this->init_Base(ndata, nrecycle, true);
@@ -64,7 +64,7 @@ class StriContainerLogical : public StriContainerBase {
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerLogical::isNA(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+            throw StriException("StriContainerLogical::isNA(): INDEX OUT OF BOUNDS"); 
 #endif
          return (data[i%n] == NA_LOGICAL);
       }
@@ -77,9 +77,9 @@ class StriContainerLogical : public StriContainerBase {
       inline int get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            error("StriContainerLogical::get(): INDEX OUT OF BOUNDS"); // TO DO: throw StriException
+            throw StriException("StriContainerLogical::get(): INDEX OUT OF BOUNDS");
          if (data[i%n] == NA_LOGICAL)
-            error("StriContainerLogical::get(): isNA"); // TO DO: throw StriException
+            throw StriException("StriContainerLogical::get(): isNA");
 #endif
          return (data[i%n]);
       }

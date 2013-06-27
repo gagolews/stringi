@@ -52,14 +52,13 @@
 using namespace std;
 using namespace icu;
 
-#include <R.h>
 #define USE_RINTERNALS
+#define R_NO_REMAP
+#include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
-
-// #include <pcre.h>
 
 
 #endif

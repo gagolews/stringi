@@ -29,8 +29,8 @@
  */
 const Normalizer2* stri__normalizer_get(SEXP type)
 {
-   if (!isInteger(type) || LENGTH(type) != 1)
-      error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
+   if (!Rf_isInteger(type) || LENGTH(type) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
    int _type = INTEGER(type)[0];
    
    UErrorCode status = U_ZERO_ERROR;
@@ -58,7 +58,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
          break;
          
       default:
-         error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
+         Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
    }
    
    return normalizer;
@@ -83,7 +83,7 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
    R_len_t str_length = LENGTH(str);
 
    const Normalizer2* normalizer =
-      stri__normalizer_get(type); // auto `type` check here
+      stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
@@ -121,13 +121,13 @@ SEXP stri_enc_isnf(SEXP str, SEXP type)
    R_len_t str_length = LENGTH(str);
 
    const Normalizer2* normalizer =
-      stri__normalizer_get(type); // auto `type` check here
+      stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 str_cont(str, str_length);
    
    SEXP ret;
-   PROTECT(ret = allocVector(LGLSXP, str_length));
+   PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret);
 
    for (R_len_t i = str_cont.vectorize_init();

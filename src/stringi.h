@@ -52,7 +52,7 @@
  * 
  */
 struct R_len_t_x2 {
-   R_len_t_x2(R_len_t v1, R_len_t v2) { this->v1 = v1; this->v2 = v2; }
+   R_len_t_x2(R_len_t _v1, R_len_t _v2) { this->v1 = _v1; this->v2 = _v2; }
    R_len_t v1;
    R_len_t v2;
 };
@@ -63,7 +63,7 @@ struct R_len_t_x2 {
  */
 struct charptr_x2 {
    charptr_x2() { this->v1 = NULL; this->v2 = NULL; }
-   charptr_x2(const char* v1, const char* v2) { this->v1 = v1; this->v2 = v2; }
+   charptr_x2(const char* _v1, const char* _v2) { this->v1 = _v1; this->v2 = _v2; }
    const char* v1;
    const char* v2;
 };
@@ -211,18 +211,6 @@ SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 // ----------- SEARCH --------------------------------------------
 
-#define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset)        \
-      if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
-         if (!(pattern_cont).isNA(i) && (pattern_cont).get(i).length() <= 0)                     \
-            warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                      \
-         naset;                                                                                  \
-         continue;                                                                               \
-      }                                                                                          \
-      else if ((str_cont).get(i).length() <= 0) {                                                \
-         zeroset;                                                                                \
-         continue;                                                                               \
-      }                                                                                          \
-      
 
 void stri__locate_set_dimnames_list(SEXP list);                           // DONE, internal
 void stri__locate_set_dimnames_matrix(SEXP matrix);                       // DONE, internal

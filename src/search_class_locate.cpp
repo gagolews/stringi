@@ -42,7 +42,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
    
    SEXP ret;
-   PROTECT(ret = allocMatrix(INTSXP, vectorize_length, 2));
+   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
    
@@ -142,7 +142,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
    PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
    
    SEXP ret;
-   PROTECT(ret = allocVector(VECSXP, vectorize_length));
+   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
    
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -191,7 +191,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          // create resulting matrix from occurences2
          R_len_t noccurences2 = occurences2.size();
          SEXP cur_res;
-         PROTECT(cur_res = allocMatrix(INTSXP, noccurences2, 2));
+         PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences2, 2));
          int* cur_res_int = INTEGER(cur_res);
          deque<R_len_t_x2>::iterator iter2 = occurences2.begin();
          for (R_len_t j = 0; iter2 != occurences2.end(); ++iter2, ++j) {
@@ -205,7 +205,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       else {
          // do not merge
          SEXP cur_res;
-         PROTECT(cur_res = allocMatrix(INTSXP, noccurences, 2));
+         PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences, 2));
          int* cur_res_int = INTEGER(cur_res);
          deque<R_len_t>::iterator iter = occurences.begin();
          for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j)
