@@ -92,8 +92,8 @@ stri_cmp <- stri_compare
 #' @rdname stri_order
 #' 
 #' @examples
-#' stri_sort(c("hladny", "chladny"), stri_opts_collator(locale="pl_PL"))
-#' stri_sort(c("hladny", "chladny"), stri_opts_collator(locale="sk_SK"))
+#' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
+#' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 stri_order <- function(str, decreasing=FALSE, opts_collator=list()) {
    .Call("stri_order", str, decreasing, opts_collator, PACKAGE="stringi")
 }

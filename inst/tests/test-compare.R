@@ -51,6 +51,8 @@ test_that("stri_order", {
    expect_equivalent(stri_order(rev(LETTERS)), length(LETTERS):1)
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, stri_opts_collator(locale="pl_PL")),2:1)
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, stri_opts_collator(locale="sk_SK")),1:2)
    
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6)) 
 })
@@ -65,4 +67,13 @@ test_that("stri_order [codepoints]", {
    
    
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA), opts_collator=NA), c(3, 5, 1, 2, 4, 6)) 
+})
+
+test_that("stri_sort", {
+   
+   expect_equivalent(stri_sort(character(0)), character(0))
+   expect_equivalent(stri_sort(NA),NA)
+   expect_equivalent(stri_sort(LETTERS[sample(length(LETTERS))]), LETTERS)
+   expect_equivalent(stri_sort(rev(LETTERS)), LETTERS)
+   
 })

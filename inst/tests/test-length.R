@@ -8,6 +8,7 @@ test_that("stri_numbytes", {
 test_that("stri_length", {
    expect_equivalent(stri_length(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
    expect_equivalent(stri_length('\U7fffffff'), 1)
+   expect_equivalent(stri_length(10:99), rep(2,90))
 })
   
 

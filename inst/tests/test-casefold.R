@@ -57,6 +57,8 @@ test_that("stri_totitle", {
    
    ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
    expect_equivalent(stri_toupper(ascii_non_letters), ascii_non_letters)
+   expect_equivalent(stri_totitle(letters), LETTERS)
+   expect_equivalent(stri_totitle(stri_flatten(letters)), stri_flatten(c("A",letters[-1])))
    
    expect_equivalent(stri_totitle("\u0105\u0104", "pl_PL"), "\u0104\u0105")
    

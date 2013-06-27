@@ -117,5 +117,7 @@ test_that("stri_count_regex", {
    expect_identical(stri_count_regex("X\U00024B62\U00024B63\U00024B64X",
                                c("\U00024B62", "\U00024B63", "\U00024B64", "X")),
                                       c(1L, 1L, 1L, 2L))
+   
+   expect_equivalent(stri_count_regex("ąaĄaAąłóa", c("A","ą","a"), 1:3)
 })
 

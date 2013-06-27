@@ -82,4 +82,6 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaa",  "aaaaaaaaaaaaaaa"), TRUE)
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
    
+   expect_equivalent(stri_detect_regex("ąąąąąąąb","ą+b$"),TRUE)
+   
 })
