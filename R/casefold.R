@@ -17,12 +17,15 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' @title
 #' Translate String to with Full Case Mapping
 #' 
+#' @description
 #' \code{stri_tolower} translates strings to lowercase,
 #' \code{stri_toupper} -- to UPPERCASE,
 #' and \code{stri_totitle} -- to Title Case.
 #' 
+#' @details
 #' ICU implements full Unicode string case mappings. In general,
 #' \itemize{
 #' \item case mapping can change the number of code points and/or code units of a string,

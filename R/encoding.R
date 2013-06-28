@@ -18,12 +18,14 @@
 
 
 
+#' @title
 #' Character Encodings and \pkg{stringi}
 #' 
+#' @description
 #' This section explains how we deal with character encoding
 #' issues in \pkg{stringi}.
 #' 
-#' 
+#' @details
 #' ICU: Unicode provides a single character set that covers the major 
 #' languages of the world, and a small number of machine-friendly encoding
 #'  forms and schemes to fit the needs of existing applications and protocols. 

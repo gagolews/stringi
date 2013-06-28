@@ -18,8 +18,14 @@
 
 
 
+#' @title
 #' Compare Strings, with Collation
 #' 
+#' @description
+#' ....TO DO...
+#' 
+#' 
+#' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
 #' For more information on ICU's Collator and how to tune it up
@@ -58,8 +64,15 @@ stri_cmp <- stri_compare
 
 
 
+#' @title
 #' Ordering Permutation and Sorting, String Comparisons with Collation
 #' 
+#' 
+#' @description
+#' ...TO DO...
+#' 
+#' 
+#' @details
 #' For more information on ICU's Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' 
@@ -67,9 +80,7 @@ stri_cmp <- stri_compare
 #' performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #' 
-#' \code{stri_order} is slightly slower than \code{order} only for
-#' already sorted data. In other cases it outperforms the base-R function
-#' (test yourself).
+#' \code{stri_order} is most often faster that R's \code{order}.
 #' 
 #' \code{NA}s are always put at the end.
 #' 

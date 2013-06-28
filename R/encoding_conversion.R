@@ -18,8 +18,13 @@
 
 
 
+#' @title
 #' Convert Strings Between Given Encodings 
 #' 
+#' @description
+#' ..TO DO...
+#' 
+#' @details
 #' \code{stri_conv} is an alias for \code{stri_encode}.
 #' 
 #' If enc is missing, NULL (default encoding) is used
@@ -63,12 +68,15 @@ stri_encode <- function(str, from, to=NULL, to_raw=FALSE) {
 stri_conv <- stri_encode
 
 
+#' @title
 #' Convert Strings To UTF-32
 #' 
+#' @description
 #' This is a vectorized version of \code{utf8ToInt(enc2utf8(str))},
 #' but works - as usual in \pkg{stringi} - for many different
 #' character encodings (native encoding is always converted to Unicode).
 #' 
+#' @details
 #' UTF-32 is a 32bit encoding in which each Unicode code point
 #' corresponds to exactly one integer value.
 #' 
@@ -85,12 +93,15 @@ stri_enc_toutf32 <- function(str) {
 
 
 
+#' @title
 #' Convert From UTF-32 
 #' 
+#' @description
 #' This is a vectorized version of \code{intToUtf8},
 #' as usual in \pkg{stringi}, it returns character strings
 #' in UTF-8.
 #' 
+#' @details
 #' UTF-32 is a 32bit encoding in which each Unicode code point
 #' corresponds to exactly one integer value.
 #' 
@@ -113,10 +124,13 @@ stri_enc_fromutf32 <- function(vec) {
 
 
 
+#' @title
 #' Convert Strings To UTF-8
 #' 
+#' @description
 #' Converts marked-encoding character strings to UTF-8 strings.
 #' 
+#' @details
 #' If \code{is_unknown_8bit} is set to \code{TRUE},
 #' the for strings marked by R as having neither ASCII
 #' nor UTF-8 encoding, then all bytecodes > 127 are replaced with
@@ -142,11 +156,14 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 
 
 
+#' @title
 #' Convert Strings To ASCII
 #' 
+#' @description
 #' Converts character strings to ASCII, i.e. strings with all
 #' codes <= 127.
 #' 
+#' @details
 #' All charcodes > 127 are replaced with ASCII SUBSTITUTE
 #' CHARACTER (0x1A).
 #' Always R encoding marking is used, to determine whether
