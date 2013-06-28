@@ -18,6 +18,8 @@ test_that("stri_trim_both", {
    expect_equivalent(stri_trim_both(LETTERS), LETTERS)
    
    expect_equivalent(stri_trim_both(stri_dup(" ", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_both(stri_dup(" \n \t", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_both(stri_dup("\n\t\n", 1:100)), rep("", 100))
 })
 
 test_that("stri_trim_left", {
@@ -37,6 +39,8 @@ test_that("stri_trim_left", {
    expect_equivalent(stri_trim_left(LETTERS), LETTERS)
    
    expect_equivalent(stri_trim_left(stri_dup(" ", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_left(stri_dup("\n", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_left(stri_dup(" \t \n", 1:100)), rep("", 100))
 })
 
 test_that("stri_trim_right", {
@@ -56,6 +60,8 @@ test_that("stri_trim_right", {
    expect_equivalent(stri_trim_right(LETTERS), LETTERS)
    
    expect_equivalent(stri_trim_right(stri_dup(" ", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_right(stri_dup("\n", 1:100)), rep("", 100))
+   expect_equivalent(stri_trim_right(stri_dup(" \t\n", 1:100)), rep("", 100))
 })
 
 

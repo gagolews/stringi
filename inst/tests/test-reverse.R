@@ -8,5 +8,6 @@ test_that("stri_reverse", {
 	expect_identical(stri_reverse(c("abc", 1:3, "123")), c("cba", 1:3, "321"))
    expect_identical(stri_reverse(letters), letters)
    expect_identical(stri_reverse(stri_flatten(letters)), stri_flatten(letters[26:1]))
-   
+   expect_identical(stri_reverse(stri_flatten(letters)), stri_flatten(letters[26:1]))
+   expect_identical(stri_reverse(stri_flatten(9:1)), stri_flatten(1:9))
 })

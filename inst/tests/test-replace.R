@@ -3,6 +3,8 @@ require(testthat)
 
 test_that("stri_replace_all_charclass", {
    expect_identical(stri_replace_all_charclass(character(0),"Z",""),character(0))
+   expect_identical(stri_replace_all_charclass("b",character(0),"a"),character(0))
+   suppressWarnings(expect_identical(stri_replace_all_charclass("b","","a"), NA_character_))
    expect_identical(stri_replace_all_charclass(NA,"WHITE_SPACE","?"),NA_character_)
    expect_identical(stri_replace_all_charclass("X","WHITE_SPACE",NA),NA_character_)
    expect_identical(stri_replace_all_charclass("X",NA,"?"),NA_character_)
