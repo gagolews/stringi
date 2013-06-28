@@ -18,10 +18,13 @@
 
 
 
+#' @title
 #' Reverse Each String
 #' 
+#' @description
 #' Reverses every string in given character vector.
 #' 
+#' @details
 #' Note that this operation is not very intelligent - it just reverses
 #' the order of all Unicode code points.
 #' It may result in non-Unicode-normalized

@@ -18,10 +18,13 @@
 
 
 
+#' @title
 #' Check if a String is Possibly in ASCII
 #'
+#' @description
 #' The function checks whether all character codes are in the set {1,2,...,127}.
 #'
+#' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
 #' 
@@ -41,8 +44,10 @@ stri_enc_isascii <- function(str) {
 }
 
 
+#' @title
 #' Check if a String is Possibly in UTF8
 #' 
+#' @description
 #' The function checks whether given sequences of bytes forms
 #' a propert UTF-8 string. 
 #' Negative answer means that a string is surely not in UTF-8.
@@ -58,6 +63,7 @@ stri_enc_isascii <- function(str) {
 #' 
 #' note that isascii => isutf8
 #' 
+#' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
 #' 

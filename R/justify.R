@@ -19,8 +19,10 @@
 
 invisible(NULL) # TO BE DONE, version >= 0.2
 
+# #' @title
 # #' Justify text
-# #' 
+# #'
+# #' @description
 # #' Horizontal justification of the text.
 # #' 
 # #' @param str will be coerced to character
