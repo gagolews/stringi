@@ -74,6 +74,7 @@ stri_enc_isascii <- function(str) {
 #' @examples
 #' stri_enc_isutf8(letters[1:3])
 #' stri_enc_isutf8("\u0105\u0104")
+#' stri_enc_isutf8("\u1234\u0222")
 #' 
 #' @family encoding_detection
 #' @export
