@@ -194,10 +194,10 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences2, 2));
          int* cur_res_int = INTEGER(cur_res);
          deque<R_len_t_x2>::iterator iter2 = occurences2.begin();
-         for (R_len_t j = 0; iter2 != occurences2.end(); ++iter2, ++j) {
+         for (R_len_t f = 0; iter2 != occurences2.end(); ++iter2, ++f) {
             R_len_t_x2 curoccur = *iter2;
-            cur_res_int[j] = curoccur.v1;
-            cur_res_int[j+noccurences2] = curoccur.v2;
+            cur_res_int[f] = curoccur.v1;
+            cur_res_int[f+noccurences2] = curoccur.v2;
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
@@ -208,8 +208,8 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences, 2));
          int* cur_res_int = INTEGER(cur_res);
          deque<R_len_t>::iterator iter = occurences.begin();
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j)
-            cur_res_int[j] = cur_res_int[j+noccurences] = *iter;
+         for (R_len_t f = 0; iter != occurences.end(); ++iter, ++f)
+            cur_res_int[f] = cur_res_int[f+noccurences] = *iter;
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
       }

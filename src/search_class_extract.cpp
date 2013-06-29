@@ -198,9 +198,9 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SEXP cur_res;
          PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences2));
          iter = occurences2.begin();
-         for (R_len_t j = 0; iter != occurences2.end(); ++iter, ++j) {
+         for (R_len_t f = 0; iter != occurences2.end(); ++iter, ++f) {
             R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            SET_STRING_ELT(cur_res, f, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
@@ -210,9 +210,9 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SEXP cur_res;
          PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
          deque<R_len_t_x2>::iterator iter = occurences.begin();
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         for (R_len_t f = 0; iter != occurences.end(); ++iter, ++f) {
             R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            SET_STRING_ELT(cur_res, f, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);

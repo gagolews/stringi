@@ -273,7 +273,7 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
    int* i1, int* i2, const int ni, int adj1, int adj2)
 {
    const UnicodeString* str_data = &(this->get(i));
-   const UChar* str = str_data->getBuffer();
+   const UChar* cstr = str_data->getBuffer();
    const int nstr = str_data->length();
    
    int j1 = 0;
@@ -304,7 +304,7 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
       }
       
       // Next UChar32
-      U16_FWD_1(str, i16, nstr);
+      U16_FWD_1(cstr, i16, nstr);
       ++i32;
    }
    

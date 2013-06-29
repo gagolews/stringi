@@ -210,7 +210,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
          ++iter;
          for (R_len_t k = 0; iter != occurences.end() && k < pattern_cur_groups; ++iter, ++k) {
-            R_len_t_x2 curo = *iter;
+            curo = *iter;
             if (curo.v1 < 0 || curo.v2 < 0)
                SET_STRING_ELT(cur_res, j+(k+1)*noccurences, NA_STRING);
             else

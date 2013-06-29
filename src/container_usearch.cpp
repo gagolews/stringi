@@ -38,11 +38,11 @@ StriContainerUStringSearch::StriContainerUStringSearch()
  * @param nrecycle extend length [vectorization]
  * @param col Collator; owned by external caller
  */
-StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecycle, UCollator* col)
+StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecycle, UCollator* _col)
    : StriContainerUTF16(rstr, _nrecycle, true)
 {
    this->lastMatcher = NULL;
-   this->col = col;
+   this->col = _col;
 }
 
 
@@ -95,7 +95,7 @@ StriContainerUStringSearch::~StriContainerUStringSearch()
  * @param i index
  * @param str string to search in
  */
-UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeString& str)
+UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeString& searchStr)
 {
    if (!lastMatcher) {
 #ifndef NDEBUG
@@ -103,7 +103,7 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
 #endif
       UErrorCode status = U_ZERO_ERROR;
       lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
-            str.getBuffer(), str.length(), col, NULL, &status);
+            searchStr.getBuffer(), searchStr.length(), col, NULL, &status);
       if (U_FAILURE(status)) throw StriException(status);
       return lastMatcher;
    }
@@ -122,7 +122,7 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
    }
    
    UErrorCode status = U_ZERO_ERROR;
-   usearch_setText(lastMatcher, str.getBuffer(), str.length(), &status);
+   usearch_setText(lastMatcher, searchStr.getBuffer(), searchStr.length(), &status);
    if (U_FAILURE(status)) throw StriException(status);
    
 #ifndef NDEBUG

@@ -406,7 +406,7 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
    int* i1, int* i2, const int ni, int adj1, int adj2)
 {
-   const char* str = get(i).c_str();
+   const char* cstr = get(i).c_str();
    const int nstr = get(i).length();
    
    int j1 = 0;
@@ -435,7 +435,7 @@ void StriContainerUTF8::UTF8_to_UChar32_index(R_len_t i,
       }
       
       // Next UChar32
-      U8_FWD_1(str, i8, nstr);
+      U8_FWD_1(cstr, i8, nstr);
       ++i32;
    }
    

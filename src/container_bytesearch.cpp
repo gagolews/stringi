@@ -114,7 +114,7 @@ StriContainerByteSearch::~StriContainerByteSearch()
  * @param searchStr string to search in
  * @param searchLen string length in bytes
  */
-void StriContainerByteSearch::setupMatcher(R_len_t i, const char* searchStr, R_len_t searchLen)
+void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
    if (!this->searchStr || !this->patternStr) {
       // first call ever
@@ -134,8 +134,8 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* searchStr, R_l
       this->patternLen = get(i).length();
    }
    
-   this->searchStr = searchStr;
-   this->searchLen = searchLen;
+   this->searchStr = _searchStr;
+   this->searchLen = _searchLen;
    this->resetMatcher();
    
 #ifndef NDEBUG

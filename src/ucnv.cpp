@@ -662,10 +662,10 @@ SEXP stri_enc_toutf32(SEXP str)
       
       UChar32 c;
       const char* s = str_cont.get(i).c_str();
-      R_len_t n = str_cont.get(i).length();
+      R_len_t sn = str_cont.get(i).length();
       R_len_t j = 0;
       R_len_t k = 0;
-      while (j < n) {
+      while (j < sn) {
          U8_NEXT_UNSAFE(s, j, c);
          buf[k++] = (int)c;
 //         chars.push_back(c);

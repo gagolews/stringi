@@ -347,9 +347,9 @@ SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
          data.assign(order, order+vectorize_length-countNA);
          StriSortCodepoints comp(&str_cont, decr);
          std::stable_sort(data.begin(), data.end(), comp);
-         R_len_t i=0;
-         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
-            order[i] = *it;
+         R_len_t j=0;
+         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++j)
+            order[j] = *it;
          break; // sorted, finish
       }
    }

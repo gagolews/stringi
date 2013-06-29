@@ -45,7 +45,7 @@ class StriContainerUStringSearch : public StriContainerUTF16 {
       StriContainerUStringSearch(StriContainerUStringSearch& container);
       ~StriContainerUStringSearch();
       StriContainerUStringSearch& operator=(StriContainerUStringSearch& container);      
-      UStringSearch* getMatcher(R_len_t i, const UnicodeString& str);
+      UStringSearch* getMatcher(R_len_t i, const UnicodeString& searchStr);
 };
 
 #endif
