@@ -1,6 +1,12 @@
 # Roxygen-generated man pages
 man/*.Rd
 
+# Autoconf
+config.status
+src/Makevars
+autom4te.cache
+config.log
+
 # R/RStudio files:
 stringi.Rproj
 .Rproj.user

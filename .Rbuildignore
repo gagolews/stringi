@@ -3,3 +3,9 @@
 ^devel
 ^src/.*\.o$
 ^README.md$
+
+^config\.status$
+^configure$
+^src/Makevars$
+^autom4te\.cache$
+^config\.log$

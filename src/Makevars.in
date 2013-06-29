@@ -1,8 +1,8 @@
 ## `stringi` Makevars
 ## Copyright 2013, M.Gagolewski, B.Tartanus, M.Bujarski
 
-PKG_LIBS     = -L/usr/local/lib  -licuuc -licudata -licui18n -licuio
-PKG_CXXFLAGS = -I/usr/local/include 
+PKG_LIBS     = @stringi_LIBS@
+PKG_CXXFLAGS = @stringi_CXXFLAGS@
 
 
 
