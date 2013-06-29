@@ -3,7 +3,7 @@
 
 ## Getting ICU4C
 
-ICU4C version >= 49 is required to build and use the package.
+ICU4C version >= 4.8 is required to build and use the package.
 To test whether ICU has been installed correctly, run:
 
 ```
