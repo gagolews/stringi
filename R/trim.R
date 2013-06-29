@@ -50,7 +50,7 @@
 #' @param str character vector
 #' @param pattern character vector with character class identifiers that
 #' should be preserved, see \link{stringi-search-charclass}
-#' @param mode character [\code{stri_trim} only]; defaults \code{both}
+#' @param side character [\code{stri_trim} only]; defaults \code{both}
 #' @return character vector
 #' 
 #' @examples

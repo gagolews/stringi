@@ -36,6 +36,9 @@
  */
 SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (!Rf_isVectorList(x))
       Rf_error(MSG__ARG_EXPECTED_LIST_STRING, argname); // error() allowed here
       
@@ -77,6 +80,9 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (isString(x))
       return x; // return as-is
    else if (Rf_isFactor(x))
@@ -116,6 +122,9 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (Rf_isFactor(x)) 
    {
       SEXP call;
@@ -152,6 +161,9 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
    {
       SEXP call;
@@ -188,6 +200,9 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (Rf_isFactor(x))
    {
       SEXP call;
@@ -225,6 +240,9 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    if (Rf_isFactor(x))
    {
       SEXP call;
@@ -263,6 +281,9 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    x = stri_prepare_arg_string(x, argname);
    R_len_t nx = LENGTH(x);
    
@@ -298,6 +319,9 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    x = stri_prepare_arg_double(x, argname);
    R_len_t nx = LENGTH(x);
    
@@ -333,6 +357,9 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    x = stri_prepare_arg_integer(x, argname);
    R_len_t nx = LENGTH(x);
    
@@ -368,6 +395,9 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 {
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
    x = stri_prepare_arg_logical(x, argname);
    R_len_t nx = LENGTH(x);
    

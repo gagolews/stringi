@@ -86,7 +86,7 @@
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from = 1L, to = -1L, length) {
+stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
    # Whoaaa! One of the longest-code R functions in stringi :)
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
@@ -106,7 +106,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from = 1L, to = -1L, length) <- value
-"stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {
+"stri_sub<-" <- function(str, from = 1L, to = -1L, length=.Machine$integer.max, value) {
    # Whoaaa! One of the longest-code R functions in stringi :)
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))

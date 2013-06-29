@@ -202,7 +202,7 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @examples
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', fixed='i')
-#' stri_extract_all(s, charclass='Zs') # all whitespaces
+#' stri_extract_all('stringi are so good!', charclass='Zs') # all whitespaces
 #' 
 #' @export
 #' @family search_extract

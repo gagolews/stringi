@@ -1,5 +1,5 @@
 Package: stringi
-Version: 0.1-3
+Version: 0.1-4
 Date: 2013-06-29
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast,

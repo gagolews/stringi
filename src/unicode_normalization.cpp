@@ -26,6 +26,7 @@
  * @return unmodifiable singleton instance. Do not delete it.
  * 
  * @version 0.1 (Marek Gagolewski)
+ * @version 0.1 (Marek Gagolewski, 2013-06-29) don't use getNFCInstance as it's in ICU DRAFT API
  */
 const Normalizer2* stri__normalizer_get(SEXP type)
 {
@@ -38,23 +39,28 @@ const Normalizer2* stri__normalizer_get(SEXP type)
 
    switch (_type) {
       case STRI_NFC:
-         normalizer = Normalizer2::getNFCInstance(status);
+         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_COMPOSE, status);
+//         normalizer = Normalizer2::getNFCInstance(status);
          break;
          
       case STRI_NFD:
-         normalizer = Normalizer2::getNFDInstance(status);
+         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_DECOMPOSE, status);
+//         normalizer = Normalizer2::getNFDInstance(status);
          break;
          
       case STRI_NFKC:
-         normalizer = Normalizer2::getNFKCInstance(status);
+         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_COMPOSE, status);
+//         normalizer = Normalizer2::getNFKCInstance(status);
          break;
          
       case STRI_NFKD:
-         normalizer = Normalizer2::getNFKDInstance(status);
+         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_DECOMPOSE, status);
+//         normalizer = Normalizer2::getNFKDInstance(status);
          break;
          
       case STRI_NFKC_CASEFOLD:
-         normalizer = Normalizer2::getNFKCCasefoldInstance(status);
+         normalizer = Normalizer2::getInstance(NULL, "nfkc_cf", UNORM2_COMPOSE, status);
+//         normalizer = Normalizer2::getNFKCCasefoldInstance(status);
          break;
          
       default:

@@ -2,7 +2,6 @@
 man/*.Rd
 
 # Autoconf
-config.status
 src/Makevars
 autom4te.cache
 config.log

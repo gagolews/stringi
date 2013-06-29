@@ -53,7 +53,7 @@ stri_match_all_regex <- function(str, pattern, opts_regex=list()) {
 
 
 #' @export
-#' @rdname stri_extract_regex 
+#' @rdname stri_match_regex 
 stri_match_first_regex <- function(str, pattern, opts_regex=list()) {
    .Call("stri_match_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
@@ -61,7 +61,7 @@ stri_match_first_regex <- function(str, pattern, opts_regex=list()) {
 
 
 #' @export
-#' @rdname stri_extract_regex 
+#' @rdname stri_match_regex 
 stri_match_last_regex <- function(str, pattern, opts_regex=list()) {
    .Call("stri_match_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }

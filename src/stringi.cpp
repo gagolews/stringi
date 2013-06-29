@@ -153,7 +153,13 @@ extern "C" void R_init_stringi(DllInfo *dll)
    }
    
 #ifndef NDEBUG
-    cerr << "DEBUG: Dynamic library 'stringi' loaded." << endl;
+    fprintf(stderr, "DEBUG: Dynamic library 'stringi' loaded\n");
+    fprintf(stderr, "       Check out http://stringi.rexamine.com\n");
+    fprintf(stderr, "       Please send bug reports to stringi@rexamine.com\n");
+    fprintf(stderr, "       or at https://github.com/Rexamine/stringi/issues\n");
+    fprintf(stderr, "       Have a nice testing! :-)\n");
+    
+    
 //    UErrorCode status;
 //    u_init(&status);
 //    if (U_FAILURE(status))

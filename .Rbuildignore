@@ -4,7 +4,6 @@
 ^src/.*\.o$
 ^README.md$
 
-^config\.status$
 ^src/Makevars$
 ^autom4te\.cache$
 ^config\.log$

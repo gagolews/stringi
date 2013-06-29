@@ -106,7 +106,7 @@ suppressWarnings(test_that("stri_prepare_arg_string_1", {
       as.factor(letters[c(1,1,1,2,1,1,1)])), letters[1]))
    
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_string_1(
-      matrix(1:10, nrow=2),  as.character(1))))
+      matrix(1:10, nrow=2)),  as.character(1)))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_string_1(
       matrix(letters[1:10], nrow=2)), letters[1]))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_string_1(ts(1:10)),

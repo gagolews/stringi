@@ -1,6 +1,4 @@
-AC_INIT([stringi], 0.1-3)
-
-
+AC_INIT([stringi], 0.1-4)
 
 
 AC_DEFUN([AC_CHECK_ICU], [
@@ -15,6 +13,7 @@ if test "$ICU_CONFIG" = "no" ; then
    AC_MSG_RESULT(failed)
    echo "*** The icu-config script could not be found. Make sure it is"
    echo "*** in your path, and that taglib is properly installed."
+   echo "*** Check out the file INSTALL.md in the root directory of stringi."
 else
    ICU_VERSION=`$ICU_CONFIG --version`
    AC_MSG_RESULT(found version $ICU_VERSION)
@@ -51,7 +50,7 @@ fi
 
 
 ICU_VERSION_NEEDED="49.1"
-AC_CHECK_ICU($ICU_VERSION_NEEDED, HAVE_ICU="1",  AC_MSG_ERROR(ICU version $ICU_VERSION_NEEDED required)) 
+AC_CHECK_ICU($ICU_VERSION_NEEDED, HAVE_ICU="1", AC_MSG_ERROR(ICU version $ICU_VERSION_NEEDED required)) 
 
 AC_CHECK_HEADERS(unicode/uconfig.h)
 if test "${ac_cv_header_uconfig_h}" = no; then
@@ -74,8 +73,6 @@ CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 AC_PROG_CC
 AC_PROG_CXX
-
-
 
 AC_SUBST(stringi_CXXFLAGS)
 AC_SUBST(stringi_LIBS)
