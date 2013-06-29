@@ -40,7 +40,7 @@ class StriContainerInteger : public StriContainerBase {
          data = NULL;
       }
       
-      StriContainerInteger(SEXP rvec, R_len_t nrecycle)
+      StriContainerInteger(SEXP rvec, R_len_t _nrecycle)
       {
          this->data = NULL;
 #ifndef NDEBUG 
@@ -48,7 +48,7 @@ class StriContainerInteger : public StriContainerBase {
             throw StriException("DEBUG: !isInteger in StriContainerInteger");
 #endif
          R_len_t ndata = LENGTH(rvec);
-         this->init_Base(ndata, nrecycle, true);
+         this->init_Base(ndata, _nrecycle, true);
          this->data = INTEGER(rvec);
       }
       

@@ -173,8 +173,8 @@ struct StriSortCollator {
    StriContainerUTF16* ss;
    bool decreasing;
    UCollator* col;
-   StriSortCollator(StriContainerUTF16* ss, UCollator* col, bool decreasing)
-   { this->ss = ss; this->col = col; this->decreasing = decreasing; }
+   StriSortCollator(StriContainerUTF16* _ss, UCollator* _col, bool _decreasing)
+   { this->ss = _ss; this->col = _col; this->decreasing = _decreasing; }
    
    bool operator() (int a, int b) const
    {
@@ -196,8 +196,8 @@ struct StriSortCollator {
 struct StriSortCodepoints {
    StriContainerUTF8* ss;
    bool decreasing;
-   StriSortCodepoints(StriContainerUTF8* ss, bool decreasing)
-   { this->ss = ss; this->decreasing = decreasing; }
+   StriSortCodepoints(StriContainerUTF8* _ss, bool _decreasing)
+   { this->ss = _ss; this->decreasing = _decreasing; }
    
    bool operator() (int a, int b) const
    {
@@ -271,9 +271,9 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
          data.assign(order, order+vectorize_length-countNA);
             StriSortCollator comp(&str_cont, col, decr);
             std::stable_sort(data.begin(), data.end(), comp);
-         R_len_t i=0;
-         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
-            order[i] = *it;
+         R_len_t j = 0;
+         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++j)
+            order[j] = *it;
          break; // sorted, finish
       }
    }

@@ -40,24 +40,24 @@ StriContainerBase::StriContainerBase()
  * 
  * 
  */
-void StriContainerBase::init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle)
+void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowrecycle)
 {
 #ifndef NDEBUG 
    if (this->n != 0)
       throw StriException("StriContainerBase::init_Base(...): already initialized");
-   this->isShallow = shallowrecycle;
+   this->isShallow = _shallowrecycle;
 #endif
 
-   if (n == 0 || nrecycle == 0) {
+   if (_n == 0 || _nrecycle == 0) {
       this->nrecycle = 0;
       this->n = 0;
    }
    else {
-      this->nrecycle = nrecycle;
-      this->n = (shallowrecycle)?n:nrecycle;
+      this->nrecycle = _nrecycle;
+      this->n = (_shallowrecycle)?_n:_nrecycle;
       
 #ifndef NDEBUG 
-   if (this->n < n)
+   if (this->n < _n)
       throw StriException("StriContainerBase::init_Base(...): this->n < n");
    if (this->n > this->nrecycle)
       throw StriException("StriContainerBase::init_Base(...): this->n > this->nrecycle");

@@ -35,10 +35,10 @@ StriContainerUTF16::StriContainerUTF16()
 /** container for nrecycle fresh, brand new, writable UnicodeStrings
  * @param nrecycle number of strings
  */
-StriContainerUTF16::StriContainerUTF16(R_len_t nrecycle)
+StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 {
    this->str = NULL;
-   this->init_Base(nrecycle, nrecycle, false);  
+   this->init_Base(_nrecycle, _nrecycle, false);  
    if (this->n > 0) {
       this->str = new UnicodeString*[this->n];
       for (R_len_t i = 0; i < this->n; ++i)
@@ -53,7 +53,7 @@ StriContainerUTF16::StriContainerUTF16(R_len_t nrecycle)
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
  */
-StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle)
+StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->str = NULL;
 #ifndef NDEBUG 
@@ -61,7 +61,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
       throw StriException("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)"); 
 #endif
    R_len_t nrstr = LENGTH(rstr);
-   this->init_Base(nrstr, nrecycle, shallowrecycle); // calling LENGTH(rstr) fails on constructor call
+   this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
    
 
    if (this->n > 0) {
@@ -129,7 +129,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallow
       if (ucnvLatin1) ucnv_close(ucnvLatin1);
       if (ucnvNative) ucnv_close(ucnvNative);
       
-      if (!shallowrecycle) {
+      if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
             if (this->str[i%nrstr] == NULL)
                this->str[i] = NULL;

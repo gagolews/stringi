@@ -39,7 +39,7 @@ StriContainerUTF8::StriContainerUTF8()
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
  */
-StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowrecycle)
+StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->str = NULL;
 #ifndef NDEBUG 
@@ -47,7 +47,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
       throw StriException("DEBUG: !isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)"); 
 #endif
    R_len_t nrstr = LENGTH(rstr);
-   this->init_Base(nrstr, nrecycle, shallowrecycle); // calling LENGTH(rstr) fails on constructor call
+   this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
    
    if (this->n > 0) {
       this->str = new String8*[this->n];
@@ -66,10 +66,10 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
          }
          else {
             if (IS_ASCII(curs)) { // ASCII - ultra fast 
-               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !shallowrecycle);
+               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
             }
             else if (IS_UTF8(curs)) { // UTF-8 - ultra fast 
-               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !shallowrecycle);
+               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
             }
             else if (IS_BYTES(curs)) 
                throw StriException(MSG__BYTESENC); 
@@ -134,7 +134,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowre
       if (buf) delete [] buf;
 
 
-      if (!shallowrecycle) {
+      if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
             if (this->str[i%nrstr] == NULL)
                this->str[i] = NULL;

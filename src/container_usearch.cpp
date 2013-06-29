@@ -38,8 +38,8 @@ StriContainerUStringSearch::StriContainerUStringSearch()
  * @param nrecycle extend length [vectorization]
  * @param col Collator; owned by external caller
  */
-StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t nrecycle, UCollator* col)
-   : StriContainerUTF16(rstr, nrecycle, true)
+StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecycle, UCollator* col)
+   : StriContainerUTF16(rstr, _nrecycle, true)
 {
    this->lastMatcher = NULL;
    this->col = col;

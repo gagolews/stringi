@@ -3319,6 +3319,19 @@ if test "${ac_cv_header_uconfig_h}" = no; then
    as_fn_error $? "\"ICU header unicode/uconfig.h not found\"" "$LINENO" 5
 fi
 
+for ac_header in deque
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "deque" "ac_cv_header_deque" "$ac_includes_default"
+if test "x$ac_cv_header_deque" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DEQUE 1
+_ACEOF
+
+fi
+
+done
+
+
 stringi_CXXFLAGS=$ICU_INCLUDEPATH
 stringi_LIBS="$ICU_LIBPATH -licuuc -licudata -licui18n -licuio"
 

@@ -40,7 +40,7 @@ class StriContainerLogical : public StriContainerBase {
          data = NULL;
       }
       
-      StriContainerLogical(SEXP rvec, R_len_t nrecycle)
+      StriContainerLogical(SEXP rvec, R_len_t _nrecycle)
       {
          this->data = NULL;
 #ifndef NDEBUG 
@@ -48,7 +48,7 @@ class StriContainerLogical : public StriContainerBase {
             throw StriException("DEBUG: !isLogical in StriContainerLogical");
 #endif
          R_len_t ndata = LENGTH(rvec);
-         this->init_Base(ndata, nrecycle, true);
+         this->init_Base(ndata, _nrecycle, true);
          this->data = LOGICAL(rvec);
       }
       

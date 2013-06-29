@@ -40,7 +40,7 @@ class StriContainerCharClass : public StriContainerBase {
          data = NULL;
       }
       
-      StriContainerCharClass(SEXP rvec, R_len_t nrecycle)
+      StriContainerCharClass(SEXP rvec, R_len_t _nrecycle)
       {
          this->data = NULL;
 #ifndef NDEBUG 
@@ -48,7 +48,7 @@ class StriContainerCharClass : public StriContainerBase {
             throw StriException("DEBUG: !isString in StriContainerCharClass");
 #endif
          R_len_t ndata = LENGTH(rvec);
-         this->init_Base(ndata, nrecycle, true);
+         this->init_Base(ndata, _nrecycle, true);
          if (ndata > 0) {
             this->data = new CharClass[ndata];
             for (int i=0; i<ndata; ++i)

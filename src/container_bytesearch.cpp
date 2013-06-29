@@ -43,8 +43,8 @@ StriContainerByteSearch::StriContainerByteSearch()
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  */
-StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t nrecycle)
-   : StriContainerUTF8(rstr, nrecycle, true)
+StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
+   : StriContainerUTF8(rstr, _nrecycle, true)
 {
    this->patternLen = 0;
    this->patternStr = NULL;

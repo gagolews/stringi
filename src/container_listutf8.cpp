@@ -37,7 +37,7 @@ StriContainerListUTF8::StriContainerListUTF8()
  * @param nrecycle extend length of each character vector stored [vectorization]
  * @param shallowrecycle will stored character vectors be ever modified?
  */
-StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t nrecycle, bool shallowrecycle)
+StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->data = NULL;
 #ifndef NDEBUG 
@@ -53,7 +53,7 @@ StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t nrecycle, bool s
          this->data[i] = NULL; // in case it fails during conversion (this is "NA")
          
       for (R_len_t i=0; i<this->n; ++i)
-         this->data[i] = new StriContainerUTF8(VECTOR_ELT(rvec, i), nrecycle, shallowrecycle);
+         this->data[i] = new StriContainerUTF8(VECTOR_ELT(rvec, i), _nrecycle, _shallowrecycle);
    }
 }
 

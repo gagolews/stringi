@@ -38,8 +38,8 @@ StriContainerRegexPattern::StriContainerRegexPattern()
  * @param nrecycle extend length [vectorization]
  * @param flags regexp flags
  */
-StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, uint32_t flags)
-   : StriContainerUTF16(rstr, nrecycle, true)
+StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycle, uint32_t flags)
+   : StriContainerUTF16(rstr, _nrecycle, true)
 {
    this->lastMatcher = NULL;
    this->flags = flags;
