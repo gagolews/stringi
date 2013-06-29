@@ -4,9 +4,9 @@ citEntry(entry = "Manual",
   title        = "stringi: THE string processing package for R",
   author       = personList(as.person("Marek Gagolewski"), as.person("Bartlomiej Tartanus")),
   year         = "2013",
-  url          = "http://www.rexamine.com/resources/stringo/",
+  url          = "http://stringi.rexamine.com",
   textVersion  =
   paste("Gagolewski M., Tartanus B. (2013).",
         "stringi: THE string processing package for R.",
-        "http://www.rexamine.com/resources/stringi/.")
+        "http://stringi.rexamine.com/.")
 )
