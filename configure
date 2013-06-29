@@ -2019,7 +2019,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ICU_VERSION_NEEDED="49.1"
+ICU_VERSION_NEEDED="4.8"
 
 succeeded=no
 

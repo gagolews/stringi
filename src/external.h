@@ -41,6 +41,7 @@
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
 #include <unicode/ucnv.h>
+#include <unicode/ustring.h>
 #include <unicode/stringpiece.h>
 #include <unicode/utf8.h>
 #include <unicode/utf16.h>
