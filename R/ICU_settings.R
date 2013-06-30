@@ -18,19 +18,25 @@
 
 
 
+#' @title
 #' Query Default Settings for \pkg{stringi}
 #' 
-#' @param short should only current locale and charset be returned?
+#' @description
+#' Gives current default settings in a concise form.
+#' 
+#' @param short logical; should only current locale and charset be returned?
 #' 
 #' @return If \code{short==TRUE}, then a single string containing 
 #' information on default character encoding and locale is returned.
 #' Otherwise, you get a list with the following components:
-#' \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library
-#' \code{Locale} -- contains information on default locale,
+#' \itemize{
+#' \item \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library
+#' \item \code{Locale} -- contains information on default locale,
 #' as returned by \code{stri_locale_info()}
-#' \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")}
-#' \code{Charset.native} -- information on default encoding,
+#' \item \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")}
+#' \item \code{Charset.native} -- information on default encoding,
 #' as returned by \code{stri_enc_info()}
+#' }
 #' 
 #' @export
 #' @family locale, encoding

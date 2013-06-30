@@ -18,8 +18,13 @@
 
 
 
+#' @title
 #' Perform Unicode Normalization
 #' 
+#' @description
+#' Converts a string to NFC, NFKC, NFD, NFKD, or NFKC_Casefold.
+#' 
+#' @details
 #' Unicode Normalization Forms are formally defined normalizations of Unicode 
 #' strings which make it possible to determine whether any two Unicode 
 #' strings are equivalent to each other.

@@ -49,9 +49,11 @@ stri_enc_isascii <- function(str) {
 #' 
 #' @description
 #' The function checks whether given sequences of bytes forms
-#' a propert UTF-8 string. 
+#' a proper UTF-8 string. 
+#' 
+#' #' @details
 #' Negative answer means that a string is surely not in UTF-8.
-#' Positive result does not mean that we should be absolutely sure.\
+#' Positive result does not mean that we should be absolutely sure.
 #'  E.g. (c4,85) properly
 #' represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
@@ -63,7 +65,6 @@ stri_enc_isascii <- function(str) {
 #' 
 #' note that isascii => isutf8
 #' 
-#' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
 #' 
