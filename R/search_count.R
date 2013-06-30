@@ -22,7 +22,8 @@
 #' Count the Number of Character Class Matches in a String
 #' 
 #' @description
-#' ....
+#' This function counts the number of characters that matches specific 
+#' character class (e.g. letters, digits, or whitespaces).
 #' 
 #' 
 #' @details
@@ -53,7 +54,7 @@ stri_count_charclass <- function(str, pattern) {
 #' Count the Number of Fixed Pattern Matches in a String
 #' 
 #' @description
-#' ....
+#' This function count the number of occurences of fixed pattern in a string.
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
@@ -95,7 +96,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' Count the Number of Regex Pattern Matches in a String
 #' 
 #' @description
-#' ...
+#' This function count the number of occurences of regex pattern in a string.
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.

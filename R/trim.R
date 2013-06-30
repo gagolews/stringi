@@ -55,6 +55,7 @@
 #' 
 #' @examples
 #' stri_trim_left("               aaa")
+#' stri_trim_right("rexamine.com/", "^P")
 #' stri_trim_both("total of 23.5 bitcoins", "N")
 #' 
 #' @aliases stri_trim
