@@ -67,10 +67,13 @@ if test -z "${R_HOME}"; then
 fi
 AC_MSG_RESULT($R_HOME)
 
+AC_LANG(C++)
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CXX=`"${R_HOME}/bin/R" CMD config CXX`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
 AC_PROG_CC
 AC_PROG_CXX
 
