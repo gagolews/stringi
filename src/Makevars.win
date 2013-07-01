@@ -1,5 +1,5 @@
 ## `stringi` Makevars
 ## Copyright 2013, M.Gagolewski, B.Tartanus, M.Bujarski
 
-PKG_LIBS     = -L$(ICU_PATH)/lib -licuuc -licudata -licui18n -licuio
+PKG_LIBS     = -L$(ICU_PATH)/lib -licuuc -licudt -licuin -licuio
 PKG_CPPFLAGS = -I$(ICU_PATH)/include -Wall -Wextra -pedantic -ansi

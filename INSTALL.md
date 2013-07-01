@@ -20,17 +20,16 @@ TO DO
 Make sure the environmental variable `PATH` points at
 `<ICU>\bin` and `<ICU>\lib`.
 
-### Linux
+### Linux, Unix
 
-#### Any Linux
+#### General
 
 ```
 cd /tmp
 wget http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-src.tgz
 tar -zxvf icu4c-51_2-src.tgz
-....TODO: download FULL ICU data & decompress it to icu/source/data.....
 cd icu/source/
-./configure
+./runConfigureICU <yourplatform>      # see ./runConfigureICU --help
 make
 sudo make install     # as root
 ```
@@ -39,25 +38,28 @@ sudo make install     # as root
 
 You may try with `yum install libicu-devel`.
 Note that this may provide you with an outdated version of the ICU library.
+You may try fetching the package from `updates` archive.
 
 #### Ubuntu
 
 TO DO
 
-### OS X
+### MacOSX
 
-TO DO
+Otherwise, check out the binary distribution
+[here](http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-MacOSX64_GCC.tgz)
+or compile yourself with `gcc`, see above (in Linux)
 
-### Solaris
-
-TO DO
+[NOT TESTED YET]
 
 
 ## Getting Development Version of **stringi** from GitHub
 
 ```
 cd /tmp
-git clone https://github.com/Rexamine/stringi.git
+wget https://github.com/Rexamine/stringi/archive/master.zip
+mv stringi-master stringi
+cd stringi
 ```
 
 Please note that the man pages are not included in our GitHub archive.
@@ -70,6 +72,7 @@ roxygenize('.', roclets=c('rd', 'collate', 'namespace'))
 To build & install:
 
 ```
+cd ..
 R CMD build stringi
 R CMD INSTALL --no-multiarch --html --byte-compile  stringi_VERSION.tar.gz
 ```
