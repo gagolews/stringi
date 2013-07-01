@@ -149,16 +149,19 @@ extern "C" void R_init_stringi(DllInfo *dll)
    
    if (!SUPPORT_UTF8) {
       /* Rconfig.h states that all R platforms supports that */
-      Rf_error("Your R version does not support UTF-8 encoding.");  
+      Rf_error("Your R does not support UTF-8 encoding.");  
    }
    
 #ifndef NDEBUG
-    fprintf(stderr, "DEBUG: Dynamic library 'stringi' loaded\n");
-    fprintf(stderr, "       Check out http://stringi.rexamine.com\n");
-    fprintf(stderr, "       Please send bug reports to stringi@rexamine.com\n");
-    fprintf(stderr, "       or at https://github.com/Rexamine/stringi/issues\n");
-    fprintf(stderr, "       Have a nice testing! :-)\n");
-    
+    fprintf(stdout, "*******************************************************\n");
+    fprintf(stdout, "DEBUG: Dynamic library `stringi` loaded\n");
+    fprintf(stdout, "       Check out http://stringi.rexamine.com\n");
+    fprintf(stdout, "\n");
+    fprintf(stdout, "DEBUG: Please send bug reports to stringi@rexamine.com\n");
+    fprintf(stdout, "       or at https://github.com/Rexamine/stringi/issues\n");
+    fprintf(stdout, "\n");
+    fprintf(stdout, "DEBUG: Have fun testing! :-)\n");
+    fprintf(stdout, "*******************************************************\n");
     
 //    UErrorCode status;
 //    u_init(&status);
