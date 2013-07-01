@@ -1,5 +1,10 @@
 ## `stringi` Makevars
 ## Copyright 2013, M.Gagolewski, B.Tartanus, M.Bujarski
 
-PKG_LIBS     = -L$(ICU_PATH)/lib -licuuc -licudt -licuin -licuio
+ifeq "$(WIN)" "64"
+PKG_LIBS = -L$(ICU_PATH)/lib -licuuc51_x64 -licudt51_x64 -licuin51_x64 -licuio51_x64
+else
+PKG_LIBS = -L$(ICU_PATH)/lib -licuuc51_i386 -licudt51_i386 -licuin51_i386 -licuio51_i386
+endif
+
 PKG_CPPFLAGS = -I$(ICU_PATH)/include -Wall -Wextra -pedantic -ansi
