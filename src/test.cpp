@@ -25,7 +25,12 @@
  */
 SEXP stri_test_returnasis(SEXP x)
 {
+#ifndef NDEBUG
    return x;  
+#else
+   Rf_error("This function is enabled only if NDEBUG is undef.");
+   return R_NilValue;
+#endif
 }
 
 
@@ -40,6 +45,7 @@ SEXP stri_test_returnasis(SEXP x)
  */
 SEXP stri_test_Rmark(SEXP s)
 {
+#ifndef NDEBUG
    s = stri_prepare_arg_string(s, "str");
    int ns = LENGTH(s);
    for (int i=0; i < ns; ++i) {
@@ -57,6 +63,10 @@ SEXP stri_test_Rmark(SEXP s)
       cerr << endl;
    }
    return R_NilValue;
+#else
+   Rf_error("This function is enabled only if NDEBUG is undef.");
+   return R_NilValue;
+#endif
 }
 
 
@@ -66,11 +76,16 @@ SEXP stri_test_Rmark(SEXP s)
  */
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
+#ifndef NDEBUG
    str = stri_prepare_arg_string(str, "str");
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 ss(str, LENGTH(str));
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+#else
+   Rf_error("This function is enabled only if NDEBUG is undef.");
+   return R_NilValue;
+#endif
 }
 
 
@@ -80,11 +95,16 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
  */
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
+#ifndef NDEBUG
    str = stri_prepare_arg_string(str, "str");
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 ss(str, LENGTH(str));
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+#else
+   Rf_error("This function is enabled only if NDEBUG is undef.");
+   return R_NilValue;
+#endif
 }
 
 

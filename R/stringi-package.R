@@ -90,6 +90,5 @@ invisible(NULL)
    # stri_info() produces a warning if current native charset
    # is problematic. The packageStartupMessage also indicates the user
    # whether ICU has guessed the locale used correctly. Leave it as is :)
-   info <- stri_info(short=TRUE)
-   packageStartupMessage("stringi (" %+% info %+% ")")
+   packageStartupMessage("stringi (" %+% stri_info(short=TRUE) %+% ")")
 }

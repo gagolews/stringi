@@ -52,7 +52,7 @@
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
 #' stri_locate_first_charclass('AaBbCc', 'Ll')
 #' stri_locate_last_charclass('AaBbCc', 'Ll')
-#' stri_locate_all_charclass(c('REXAMINE'), 'Lu', merge=c(T,F))
+#' stri_locate_all_charclass(c('REXAMINE'), 'Lu', merge=c(TRUE, FALSE))
 #' 
 #' @export
 #' @rdname stri_locate_charclass 
@@ -239,7 +239,7 @@ stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @examples
 #' stri_locate_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
-#' stri_locate_all(s, charclass='Zs') # all whitespaces
+#' stri_locate_all('a b c', charclass='Zs') # all whitespaces
 #' 
 #' @export
 #' @family search_locate
@@ -279,7 +279,7 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_locate_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_first('Bartolini', fixed=letters[1:3])
-#' stri_locate_first(s, charclass='Zs')
+#' stri_locate_first('a b c', charclass='Zs')
 #' 
 #' @export
 #' @family search_locate
@@ -319,7 +319,7 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_locate_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_last('Bartolini', fixed=letters[1:3])
-#' stri_locate_last(s, charclass='Zs')
+#' stri_locate_last('a b c', charclass='Zs')
 #' 
 #' @export
 #' @family search_locate
