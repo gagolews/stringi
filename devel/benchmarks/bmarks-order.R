@@ -72,7 +72,9 @@ system.time(stri_sort(x))
 system.time(sort(x))
 
 
-x <- sapply(1:100000, function(i) stri_flatten(sample(c("ą", "ę", "ś", "ć", "ź", "Ę", "Ł", "ó"), as.integer(runif(1, 10, 20)), replace=TRUE)))
+x <- sapply(1:100000, function(i) stri_flatten(sample(c(
+   "\u0105", "\u0119", "\u015b", "\u0107", "\u017a", "\u0118", "\u0141", "\u00f3"),
+      as.integer(runif(1, 10, 20)), replace=TRUE)))
 system.time(stri_sort(x))
 system.time(sort(x))
 

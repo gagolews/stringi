@@ -12,5 +12,5 @@ require('testthat')
 #    # something strange happens here - calling source() on this file
 #    # causes R not to mark the UTF-8 string (getOption('encoding')=="native.enc");
 #    # calling the following expression manually gives correct encmark
-# expect_that(stringi:::stri_enc_Rmark(c('abc', 'ąśćź', '\uc9')), is_equivalent_to(NULL))
+# expect_that(stringi:::stri_enc_Rmark(c('abc', '\u0105', '\uc9')), is_equivalent_to(NULL))
 # })

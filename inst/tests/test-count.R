@@ -52,7 +52,7 @@ test_that("stri_count_fixed [byte compare]", {
    expect_identical(stri_count_fixed(s,"rem", opts_collator=NA), 1:3*2L)
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_count_fixed(s,"bab", opts_collator=NA),c(5L,0L))
-   expect_identical(stri_count_fixed(c("lalal","12l34l56","ąólł"),"l", opts_collator=NA),3:1)
+   expect_identical(stri_count_fixed(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l", opts_collator=NA),3:1)
    
 })
 
@@ -112,12 +112,10 @@ test_that("stri_count_regex", {
    expect_identical(stri_count_regex(s," [[a-z]]*\\. Phasellus (ph|or|co)"), 1:3*3L)
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_count_regex(s,"bab"),c(5L,0L))
-   expect_identical(stri_count_regex(c("lalal","12l34l56","ąólł"),"l"),3:1)
+   expect_identical(stri_count_regex(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l"),3:1)
    
    expect_identical(stri_count_regex("X\U00024B62\U00024B63\U00024B64X",
                                c("\U00024B62", "\U00024B63", "\U00024B64", "X")),
                                       c(1L, 1L, 1L, 2L))
-   
-#    expect_equivalent(stri_count_regex("ąaĄaAąłóa", c("A","ą","a"), 1:3)
 })
 

@@ -70,7 +70,7 @@ test_that("stri_detect_regex", {
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:5]), c(T,T,F,F,F)))
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:4], LETTERS[1:5]), c(T,T,T,T,F)))
    
-   s <- c("Lorem", "123", " ", " ", "kota", "4\tą")
+   s <- c("Lorem", "123", " ", " ", "kota", "4\t\u0105")
    p <- c("[[:alpha:]]+", "[[:blank:]]+")
    expect_identical(stri_detect_regex(s, p), c(T, F, F, T, T, T))
    expect_identical(stri_detect_regex("Lo123\trem", c("[[:alpha:]]", "[4-9]+")), c(T, F))
@@ -82,6 +82,6 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaa",  "aaaaaaaaaaaaaaa"), TRUE)
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
    
-   expect_equivalent(stri_detect_regex("ąąąąąąąb","ą+b$"),TRUE)
+   expect_equivalent(stri_detect_regex("\u0105\u0105\u0105\u0105\u0105\u0105\u0105b","\u0105+b$"),TRUE)
    
 })

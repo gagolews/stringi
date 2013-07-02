@@ -26,7 +26,5 @@ test_that("stri_enc_nf*, stri_enc_isnf*", {
    expect_equivalent(stri_enc_nfc(x2), stri_enc_nfkc(x1))
    expect_equivalent(stri_enc_nfd(x2), stri_enc_nfkd(x1))
    expect_equivalent(stri_enc_nfkc_casefold(x1), x2)
-   
-   
-   # stri_enc_nfkc_casefold("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ")
+
 })

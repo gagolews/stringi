@@ -33,20 +33,3 @@ test_that("stri_dup", {
    expect_identical(stri_dup('\xa5\xb9', 2), '\u0104\u0105\u0104\u0105')
    stri_enc_set(oldenc)
 })
-
-
-# expect_that(stri_dup("A", 3), is_identical_to(str_dup("A", 3)))
-# expect_that(stri_dup(c("A", "B"), 3), is_identical_to(str_dup(c("A", "B"), 3)))
-# expect_that(stri_dup(c("A", "B"), c(2,3)), is_identical_to(str_dup(c("A", "B"), c(2,3))))
-
-# str_dup("A", -1)  # throws error
-# stri_dup("A", -1) # returns NA
-
-# str_dup("A", 0)  # empty
-# stri_dup("A", 0) # empty
-
-#  str_dup(c(NA, "A", "AA"), 3) # incorrect behavior
-#  stri_dup(c(NA, "A", "AA"), 3)
-
-# str_dup("A", c(NA, 1, 2))  # error
-# stri_dup("A", c(NA, 1, 2)) # NA, A, AA

@@ -1,7 +1,7 @@
 require(testthat)
 
 
-# test_that("stri_pad", {
+# test_that("stri_pad", { #### Don't depend on stringr
 #    expect_warning(stri_pad(letters,1:5))
 #    #vectorized over str
 #    expect_identical(stri_pad(letters,20),stri_join(stri_dup(" ",19),letters))

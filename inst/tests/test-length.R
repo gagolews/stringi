@@ -13,15 +13,15 @@ test_that("stri_length", {
   
 
 test_that("stri_length-cjk", {
-   cjk_test <- intToUtf8(c(24120, 29992, 22283, 23383, 27161, 28310, 23383, 39636, 34920)) # '常用國字標準字體表'
+   cjk_test <- stri_enc_fromutf32(c(24120, 29992, 22283, 23383, 27161, 28310, 23383, 39636, 34920))
    expect_equivalent(stri_numbytes(cjk_test), 27)
    expect_equivalent(stri_length(cjk_test), 9)
    
-   oldenc <- stri_enc_set('Big5')
+   suppressWarnings(oldenc <- stri_enc_set('Big5'))
    cjk_test_Big5 <- stri_encode(cjk_test, 'UTF-8', 'Big5')
    expect_equivalent(stri_numbytes(cjk_test_Big5), 18)
    expect_equivalent(stri_length(cjk_test_Big5), 9)
-   stri_enc_set(oldenc)
+   suppressWarnings(stri_enc_set(oldenc))
 })
 
 
