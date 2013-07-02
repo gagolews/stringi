@@ -14,7 +14,7 @@ during first call to `library()`/`require()`.
 
 Make sure the environmental variable `ICU_PATH` points
 to the directory where you decompressed our binary ICU4C distribution, e.g. c:/icu-distrib.
-It may be found [here](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib.zip).
+It may be found [here](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip).
 
 Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`.
 
