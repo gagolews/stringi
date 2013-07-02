@@ -66,9 +66,27 @@ invisible(NULL)
 
 
 
-#' @useDynLib stringi
-.onAttach <- function(lib, pkg)
+.onLoad <- function(lib, pkg)
 {
+   if (.Platform$OS.type == "windows") {
+      dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
+      
+      if (class(dll) != "DLLInfo") {
+         stop("Failed to load stringi dynamic library. Stay tuned for an automatic installer!", call.=FALSE)
+         ### TO DO - install libs....
+         if (.Platform$OS.type == "windows") 
+            .onLoad(lib, pkg) # try to load the package again
+      }
+   }
+   else {
+      dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
+      if (class(dll) != "DLLInfo") {
+         stop("Failed to load stringi dynamic library. 
+              Perhaps ICU4C is not in your search path. 
+              Please recompile the package.", call.=FALSE)
+      }
+   }
+   
    # stri_info() produces a warning if current native charset
    # is problematic. The packageStartupMessage also indicates the user
    # whether ICU has guessed the locale used correctly. Leave it as is :)

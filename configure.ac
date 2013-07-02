@@ -11,9 +11,9 @@ fi
 AC_MSG_CHECKING(for ICU installed)
 if test "$ICU_CONFIG" = "no" ; then
    AC_MSG_RESULT(failed)
-   echo "*** The icu-config script could not be found. Make sure it is"
-   echo "*** in your path, and that taglib is properly installed."
-   echo "*** Check out the file INSTALL.md in the root directory of stringi."
+   echo "*** The icu-config script could not be found."
+   echo "*** Make sure it is in your PATH."
+   echo "*** For more information check out the file stringi/INSTALL.md."
 else
    ICU_VERSION=`$ICU_CONFIG --version`
    AC_MSG_RESULT(found version $ICU_VERSION)
