@@ -1,4 +1,4 @@
-# **stringi** Package Installation & Building Information
+# **stringi** Package Installation & Building Info
 
 
 ## Getting ICU4C
@@ -32,25 +32,32 @@ Moreover, the `PATH` variable must point at `%ICU_PATH%\lib`.
 
 #### Compiling ICU4C yourself
 
-Rtools: .....
-MSYS: ....
-MinGW64: .....
+Tools needed:
+[Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes MinGW64),
+[MSYS](http://www.mingw.org/wiki/MSYS) (your gcc is in sth like C:/Rtools/gcc-4.6.3)
 
-Disable layout engine
 
-32bit version:
+
+To build 32bit version of ICU4C:
 
 ```
-./runConfigureICU MinGW --with-library-suffix=i386 --prefix=/c/icu-distrib-i386 --with-library-bits=32 --enable-samples=no  --enable-tests=no --enable-layout=no
-# edit uconfig.h as indicated by ./configure
+# run MSYS
+cd /c/icu/source # path to decompressed ICU sources
+CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
+   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
+   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
+   ./runConfigureICU MinGW --with-library-suffix=i386 --prefix=/c/icu-distrib-i386 \
+   --with-library-bits=32 --enable-samples=no  --enable-tests=no --enable-layout=no
 make
 make install
 ```
 
 
-64bit version:
+To build 64bit version of ICU4C:
 
 ```
+# run MSYS
+cd /c/icu/source # path to decompressed ICU sources
 CC="..." CXX="..." ./runConfigureICU MinGW --with-library-suffix=x64 --prefix=/c/icu-distrib-x64 --with-library-bits=64 --enable-samples=no  --enable-tests=no --enable-layout=no
 # edit uconfig.h as indicated by ./configure
 make
