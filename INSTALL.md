@@ -3,32 +3,20 @@
 
 ## Getting ICU4C
 
-ICU4C version >= 4.8 is required to build and use the package.
-To test whether ICU has been installed correctly, run:
-
-```
-icu-config --version
-```
-
-This should give you the ICU version that is in use.
-
-
 ### Windows 
-
-...TO DO...
 
 #### Using precompiled version of **stringi** (default)
 
-The necessary libraries should be downloaded
-and decompressed automatically.
+The necessary libraries should be automatically downloaded from our servers
+during first call to `library()`/`require()`.
 
 #### Compiling **stringi** with our precompiled version of ICU4C
 
 Make sure the environmental variable `ICU_PATH` points
-to the directory where you decompressed our ICU4C distribution, e.g. c:/icu-distrib.
-It may be found at: ....TO DO....
+to the directory where you decompressed our binary ICU4C distribution, e.g. c:/icu-distrib.
+It may be found [here](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib.zip).
 
-Moreover, the `PATH` variable must point at `%ICU_PATH%\lib`.
+Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`.
 
 #### Compiling ICU4C yourself
 
@@ -81,13 +69,32 @@ cd /c/icu-distrib/lib
 for f in *.lib; do mv $f `echo $f | sed -r "s/(.*)\.lib/\151.lib/"`; done
 ```
 
-Let the environmental variable `ICU_PATH` to point
+Set the environmental variable `ICU_PATH` to point
 to the directory where is the ICU4C distribution, e.g. `c:/icu-distrib`.
 Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`, i.e. dir with compiled DLLs.
 
-### Linux, Unix
+### GNU/Linux, Unix, MacOSX
 
-#### General
+ICU4C version >= 4.8 is required to build and use the package.
+To test whether ICU has been installed correctly, run:
+
+```
+icu-config --version
+```
+
+This should give you the ICU version that is in use.
+
+#### Fedora/RedHat Linux
+
+You may try with `yum install libicu-devel`.
+Note that this may provide you with an outdated version of the ICU library.
+You may try fetching the package from `updates` archive.
+
+#### Ubuntu
+
+TO DO
+
+#### Compiling ICU4C yourself (general)
 
 ```
 cd /tmp
@@ -100,7 +107,7 @@ sudo make install     # as root
 ```
 
 
-### Solaris
+#### Solaris
 
 ```
 ./runConfigureICU Solaris # or SolarisX86; compile with CC/cc
@@ -115,17 +122,7 @@ or
 You should use the same compiler which was used to build
 R and which R uses to build R packages.
 
-#### Fedora/RedHat Linux
-
-You may try with `yum install libicu-devel`.
-Note that this may provide you with an outdated version of the ICU library.
-You may try fetching the package from `updates` archive.
-
-#### Ubuntu
-
-TO DO
-
-### MacOSX
+#### MacOSX
 
 Otherwise, check out the binary distribution
 [here](http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-MacOSX64_GCC.tgz)
