@@ -48,6 +48,7 @@ CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
    CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
    ./runConfigureICU MinGW --with-library-suffix=i386 --prefix=/c/icu-distrib-i386 \
    --with-library-bits=32 --enable-samples=no  --enable-tests=no --enable-layout=no
+make clean # in case you run build previously
 make
 make install
 ```
@@ -58,8 +59,13 @@ To build 64bit version of ICU4C:
 ```
 # run MSYS
 cd /c/icu/source # path to decompressed ICU sources
-CC="..." CXX="..." ./runConfigureICU MinGW --with-library-suffix=x64 --prefix=/c/icu-distrib-x64 --with-library-bits=64 --enable-samples=no  --enable-tests=no --enable-layout=no
+CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
+   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
+   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
+   ./runConfigureICU MinGW --with-library-suffix=x64 --prefix=/c/icu-distrib-x64 \
+   --with-library-bits=64 --enable-samples=no  --enable-tests=no --enable-layout=no
 # edit uconfig.h as indicated by ./configure
+make clean # in case you run build previously
 make
 make install
 ```
