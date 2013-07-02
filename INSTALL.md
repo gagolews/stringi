@@ -25,7 +25,7 @@ and decompressed automatically.
 #### Compiling **stringi** with our precompiled version of ICU4C
 
 Make sure the environmental variable `ICU_PATH` points
-to the directory where you decompressed our ICU4C distribution.
+to the directory where you decompressed our ICU4C distribution, e.g. c:/icu-distrib.
 It may be found at: ....TO DO....
 
 Moreover, the `PATH` variable must point at `%ICU_PATH%\lib`.
@@ -43,11 +43,11 @@ To build 32bit version of ICU4C:
 ```
 # run MSYS
 cd /c/icu/source # path to decompressed ICU sources
-CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
-   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
-   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_i386" \
-   ./runConfigureICU MinGW --with-library-suffix=i386 --prefix=/c/icu-distrib-i386 \
-   --with-library-bits=32 --enable-samples=no  --enable-tests=no --enable-layout=no
+CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
+   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
+   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
+   ./runConfigureICU MinGW --with-library-suffix=_i386_ --prefix=/c/icu-distrib-i386 \
+   --with-library-bits=32 --disable-samples  --disable-tests --disable-layout
 make clean # in case you run build previously
 make
 make install
@@ -57,18 +57,33 @@ make install
 To build 64bit version of ICU4C:
 
 ```
-# run MSYS
-cd /c/icu/source # path to decompressed ICU sources
-CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
-   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
-   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=_x64" \
-   ./runConfigureICU MinGW --with-library-suffix=x64 --prefix=/c/icu-distrib-x64 \
-   --with-library-bits=64 --enable-samples=no  --enable-tests=no --enable-layout=no
-# edit uconfig.h as indicated by ./configure
-make clean # in case you run build previously
+make clean # clean after 32bit build
+CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
+   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
+   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
+   ./runConfigureICU MinGW --with-library-suffix=_x64_ --prefix=/c/icu-distrib-x64 \
+   --with-library-bits=64 --disable-samples  --disable-tests --disable-layout
 make
 make install
 ```
+
+Create minimal install:
+
+```
+mkdir /c/icu-distrib # your favorite dir
+cp -R /c/icu-distrib-i386/include /c/icu-distrib
+mkdir /c/icu-distrib/lib
+cp /c/icu-distrib-i386/lib/*51.dll /c/icu-distrib/lib
+cp /c/icu-distrib-x64/lib/*51.dll /c/icu-distrib/lib
+cp /c/icu-distrib-i386/lib/*.lib /c/icu-distrib/lib
+cp /c/icu-distrib-x64/lib/*.lib /c/icu-distrib/lib
+cd /c/icu-distrib/lib
+for f in *.lib; do mv $f `echo $f | sed -r "s/(.*)\.lib/\151.lib/"`; done
+```
+
+Let the environmental variable `ICU_PATH` to point
+to the directory where is the ICU4C distribution, e.g. `c:/icu-distrib`.
+Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`, i.e. dir with compiled DLLs.
 
 ### Linux, Unix
 
