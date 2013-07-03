@@ -72,13 +72,10 @@ invisible(NULL)
       dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
       
       if (class(dll) != "DLLInfo") {
-         stop("Failed to load stringi dynamic library. Stay tuned for an automatic installer!", call.=FALSE)
-         ### TO DO - install libs....
-         if (.Platform$OS.type == "windows") 
-            .onLoad(lib, pkg) # try to load the package again
+         return(.install_ICU4C_windows(lib, pkg, .Platform$r_arch))
       }
    }
-   else {
+   else { # "unix"
       dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
       if (class(dll) != "DLLInfo") {
          stop("Failed to load stringi dynamic library. 
@@ -91,4 +88,29 @@ invisible(NULL)
    # is problematic. The packageStartupMessage also indicates the user
    # whether ICU has guessed the locale used correctly. Leave it as is :)
    packageStartupMessage("stringi (" %+% stri_info(short=TRUE) %+% ")")
+}
+
+
+.install_ICU4C_windows <- function(lib, pkg, platform)
+{
+   ask1 <- "The ICU4C library has not been installed yet. Do you want to download it? [y/n] > ";
+   ask2 <- "Do you want to reload the package? [y/n] > "
+   
+   ans <- as.character(readline(prompt = ask1))
+   if (!identical(tolower(ans), "y"))
+      stop("Failed to load stringi dynamic library.", call.=FALSE)
+   
+   fname <- tempfile()
+   urlsrc <- paste0("http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-",
+                    platform, ".zip")
+   download.file(urlsrc, fname)
+   destdir <- file.path(lib, pkg, "libs", platform)
+   unzip(fname, exdir=destdir) 
+   
+   cat('ICU4C 51.2 has been installed successfully.\n')
+   ans <- as.character(readline(prompt = ask2))
+   if (!identical(tolower(ans), "y"))
+      stop("Failed to load stringi dynamic library.", call.=FALSE)
+   
+   .onLoad(lib, pkg)
 }
