@@ -160,6 +160,8 @@ stri_paste <- stri_join
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
 #' stri_flatten(c('abc','123','\u0105\u0104'))
+#' stri_flatten(stri_dup(letters[1:6],1:3))
+#' 
 #' @export
 #' @family join
 stri_flatten <- function(str, collapse="") {

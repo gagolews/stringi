@@ -22,7 +22,7 @@
 #' Compare Strings, with Collation
 #' 
 #' @description
-#' ....TO DO...
+#' Comparison of strings in character vectors with lexicographic order.
 #' 
 #' 
 #' @details
@@ -30,6 +30,8 @@
 #'
 #' For more information on ICU's Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#' Please note that different locale settings may lead to different results
+#' (see the examples below).
 #' 
 #' @param e1 character vector
 #' @param e2 character vector

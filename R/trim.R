@@ -19,7 +19,7 @@
 
 
 #' @title
-#' Trim Characters from Left or Right Side of a String
+#' Trim Characters from Left or/and Right Side of a String
 #' 
 #' @description
 #' These functions may e.g. be used to get rid of unnecessary
@@ -56,7 +56,8 @@
 #' @examples
 #' stri_trim_left("               aaa")
 #' stri_trim_right("rexamine.com/", "^P")
-#' stri_trim_both("total of 23.5 bitcoins", "N")
+#' stri_trim_both(" Total of 23.5 bitcoins. ", "N")
+#' stri_trim_both(" Total of 23.5 bitcoins. ", "L")
 #' 
 #' @aliases stri_trim
 #' @family search_trim
