@@ -22,33 +22,33 @@
 #' List Available Encodings
 #'
 #' @description
-#' ...TO DO..
-#' 
+#' Gives encodings that are supported by ICU.
+#'
 #' @details
 #' Please note that apart from given encodings, ICU tries to normalize
 #' encoding specifiers. E.g. \code{"UTF8"} is also valid,
 #' see \link{stringi-encoding} for more information.
 #'
-#' @param simplified logical value; return a character vector or a
+#' @param simplified single logical value; return a character vector or a
 #' list of character vectors?
-#' 
+#'
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of
 #'  character vectors is returned: Each element represents one unique
-#'  character encoding. The name of the list item gives the ICU canonical
-#'  name of the encodings. The elements (character vectors) are
+#'  character encoding. The \code{name} attribute gives the ICU canonical
+#'  name of an encoding family. The elements (character vectors) are
 #'  its aliases.
-#' 
+#'
 #' If \code{simplified} is \code{TRUE}, then the resulting list
 #' is coerced to a character vector, sorted, and its duplicates are removed.
-#' 
+#'
 #' @family encoding_management
 #' @export
 stri_enc_list <- function(simplified=FALSE) {
-   simplified <- identical(simplified, TRUE)
-   
+   simplified <- !identical(simplified, FALSE)
+
    ret <- .Call("stri_enc_list", PACKAGE="stringi")
    if (simplified)
-      return(sort(unique(unlist(ret))))
+      return(stri_sort(unique(unlist(ret))))
    else
       return(ret)
 }
@@ -56,14 +56,14 @@ stri_enc_list <- function(simplified=FALSE) {
 
 #' @title
 #' Query Given Encoding
-#' 
+#'
 #' @description
 #' Gets basic information on a given character encoding.
-#' 
+#'
 #' @param enc \code{NULL} or \code{""} for default encoding,
 #' or a single string with encoding name
-#' 
-#' @return If the encoding is unsupported, an error is generated.
+#'
+#' @return If the given encoding is unknown to ICU, an error is generated.
 #' Otherwise, you get a list with the following components:
 #' \itemize{
 #' \item \code{Name.friendly} - Friendly encoding name: MIME name or JAVA name or ICU Canonical name
@@ -71,7 +71,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #' \item \code{Name.ICU} - Encoding name as identified by ICU;
 #' \item \code{Name.*}, e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \item \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
-#' availiable for selected  encodings) - 
+#' availiable for selected  encodings) -
 #' \item \code{ASCII.subset} - has this encoding ASCII as its subset?
 #' \item \code{Unicode.1to1} - for 8-bit encodings only: does every character
 #' translate into one Unicode codepoint and is this translation reversible?
@@ -91,18 +91,18 @@ stri_enc_info <- function(enc=NULL) {
 #' Set Default Encoding
 #'
 #' @description
-#' ...TO DO...
-#' 
-#' 
+#' Sets encoding to be used to decode strings
+#' internally marked as Native, see \link{string-encoding}
+#'
 #' @param enc character encoding name,
 #' see \code{\link{stri_enc_list}}
 #' @return Previously set default encoding, invisibly.
-#' 
+#'
 #' @family encoding_management
 #' @export
 stri_enc_set <- function(enc) {
    previous <- stri_enc_get()
-   
+
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
    .Call("stri_enc_set", enc, PACKAGE="stringi")
@@ -113,10 +113,14 @@ stri_enc_set <- function(enc) {
 
 #' @title
 #' Get Default Encoding
-#' 
+#'
 #' @description
+#' Gets encoding used to decode strings
+#' internally marked as Native, see \link{string-encoding}
+#'
+#' @details
 #' Same as \code{stri_enc_info()$Name.friendly}.
-#' 
+#'
 #' @return a character string
 #' @family encoding_management
 #' @export

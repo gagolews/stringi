@@ -19,20 +19,21 @@
 
 
 #' @title
-#' Perform Unicode Normalization
-#' 
+#' Perform or Check For Unicode Normalization
+#'
 #' @description
-#' Converts a string to NFC, NFKC, NFD, NFKD, or NFKC_Casefold.
-#' 
+#' Converts a string to NFC, NFKC, NFD, NFKD, or NFKC_Casefold
+#' or checks whether a string is normalized.
+#'
 #' @details
-#' Unicode Normalization Forms are formally defined normalizations of Unicode 
-#' strings which make it possible to determine whether any two Unicode 
+#' Unicode Normalization Forms are formally defined normalizations of Unicode
+#' strings which e.g. make possible to determine whether any two Unicode
 #' strings are equivalent to each other.
-#' Essentially, the Unicode Normalization Algorithm puts all combining 
-#' marks in a specified order, and uses rules for decomposition 
-#' and composition to transform each string into one of the 
-#' Unicode Normalization Forms. 
-#' 
+#' Essentially, the Unicode Normalization Algorithm puts all combining
+#' marks in a specified order, and uses rules for decomposition
+#' and composition to transform each string into one of the
+#' Unicode Normalization Forms.
+#'
 #' The following Normalization Forms (NFs) are supported:
 #' \itemize{
 #' \item NFC (Canonical Decomposition, followed by Canonical Composition),
@@ -42,19 +43,19 @@
 #' \item NFKC_Casefold (combination of NFKC, case folding, and removing ignorable
 #'  characters which was introduced with Unicode 5.2)
 #' }
-#' 
+#'
 #' Note that many W3C Specifications recommend using NFC for all content,
-#' because this form avoids potential interoperability problems arising 
+#' because this form avoids potential interoperability problems arising
 #' from the use of canonically equivalent, yet different,
 #' character sequences in document formats on the Web.
-#' 
-#' The input character vector can be in any encoding.
 #'
-#' 
+#' The input character vector can, as usual in \pkg{stringi}, be in any encoding.
+#'
+#'
 #' @param str character vector to be encoded
 #' @return For \code{stri_enc_nf*}, a character vector
-#' of the same lenght as input will be returned. The output will always be in UTF-8.
-#' 
+#' of the same length as input will be returned. The output will always be in UTF-8.
+#'
 #' @references
 #' {Unicode Normalization Forms} - Unicode Standard Annex #15,
 #'    \url{http://unicode.org/reports/tr15}\cr
@@ -62,7 +63,7 @@
 #'    - W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}\cr
 #' {Normalization} - ICU User Guide,
 #'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
-#'    
+#'
 #' @export
 #' @rdname normalization
 #' @family encoding_normalization

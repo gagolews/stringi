@@ -19,7 +19,7 @@
 
 
 #' @title
-#' Check if a String is Possibly in ASCII
+#' Check If a String Is Possibly in ASCII
 #'
 #' @description
 #' The function checks whether all character codes are in the set {1,2,...,127}.
@@ -27,16 +27,16 @@
 #' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
-#' 
-#' 
+#'
+#'
 #' @param str character vector
-#' @return logical vector; ith element indicates whether the ith string
+#' @return logical vector; i-th element indicates whether the i-th string
 #' corresponds to a valid ASCII byte sequence
-#' 
+#'
 #' @examples
 #' stri_enc_isascii(letters[1:3])
 #' stri_enc_isascii("\u0105\u0104")
-#' 
+#'
 #' @family encoding_detection
 #' @export
 stri_enc_isascii <- function(str) {
@@ -45,38 +45,38 @@ stri_enc_isascii <- function(str) {
 
 
 #' @title
-#' Check if a String is Possibly in UTF8
-#' 
+#' Check If a String Is Possibly in UTF-8
+#'
 #' @description
 #' The function checks whether given sequences of bytes forms
-#' a proper UTF-8 string. 
-#' 
-#' #' @details
+#' a proper UTF-8 string.
+#'
+#' @details
 #' Negative answer means that a string is surely not in UTF-8.
 #' Positive result does not mean that we should be absolutely sure.
 #'  E.g. (c4,85) properly
 #' represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
-#' 
+#'
 #' However, the longer the seqeuence,
 #' the bigger the possibility that the result
-#' is indeed in UTF-8 -- this is becaues not all sequences of bytes 
+#' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
-#' 
-#' note that isascii => isutf8
-#' 
+#'
+#' note that \link{stri_enc_isutf8} => \link{stri_enc_isascii}
+#'
 #' This function is independent of the way R marks encodings in
 #' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
-#' 
+#'
 #' @param str character vector
-#' @return logical vector; ith element indicates whether the ith string
+#' @return logical vector; i-th element indicates whether the i-th string
 #' corresponds to a valid UTF-8 byte sequence
-#' 
+#'
 #' @examples
 #' stri_enc_isutf8(letters[1:3])
 #' stri_enc_isutf8("\u0105\u0104")
 #' stri_enc_isutf8("\u1234\u0222")
-#' 
+#'
 #' @family encoding_detection
 #' @export
 stri_enc_isutf8 <- function(str) {

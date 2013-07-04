@@ -141,6 +141,7 @@ or
 ```
 cd /tmp
 wget https://github.com/Rexamine/stringi/archive/master.zip
+unzip master.zip
 mv stringi-master stringi
 cd stringi
 ```

@@ -18,13 +18,12 @@
 
 
 #' @title
-#' Translate String to with Full Case Mapping
-#' 
+#' Translate String with Full Case Mapping
+#'
 #' @description
-#' \code{stri_tolower} translates strings to lowercase,
-#' \code{stri_toupper} -- to UPPERCASE,
-#' and \code{stri_totitle} -- to Title Case.
-#' 
+#' These functions translate strings either to lowercase,
+#' UPPERCASE, or to Title Case.
+#'
 #' @details
 #' ICU implements full Unicode string case mappings. In general,
 #' \itemize{
@@ -32,26 +31,27 @@
 #' \item is language-sensitive (results may differ depending on locale), and
 #' \item is context-sensitive (a character in the input string may map differently depending on surrounding characters).
 #' }
-#' 
+#'
 #' @param str character vector on which casefolding is applied
 #' @param locale \code{NULL} or \code{""} for casefolding following
-#' the conventions of the default locale, or a single string with locale identifier
+#' the conventions of the default locale, or a single string with locale identifier,
+#' see \link{stringi-locale}.
 #' @return character vector
-#' 
+#'
 #' @references
-#' Case Mappings - ICU User Guide, http://userguide.icu-project.org/transforms/casemappings
+#' Case Mappings - ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
 #' @family locale_sensitive
 #' @aliases casefold
 #' @export
 #' @rdname casefold
-#' 
+#'
 #' @examples
-#' stri_toupper("\u00DF", "de_DE") # small german double s
+#' stri_toupper("\u00DF", "de_DE") # small German double s
 #' stri_toupper("i", "en_US") != stri_toupper("i", "tr_TR")
 #' stri_toupper(c('abc','123','\u0105\u0104'))
-#' 
+#'
 #' stri_tolower(c('AbC','123','\u0105\u0104'))
-#' 
+#'
 #' stri_totitle(c('AbC','123','\u0105\u0104'))
 #' stri_totitle("aLA mA kOTA")
 stri_tolower <- function(str, locale=NULL) {

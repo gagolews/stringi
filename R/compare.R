@@ -19,12 +19,12 @@
 
 
 #' @title
-#' Compare Strings, with Collation
-#' 
+#' Compare Strings with or without Collation
+#'
 #' @description
-#' Comparison of strings in character vectors with lexicographic order.
-#' 
-#' 
+#' Comparison of strings with lexicographic order.
+#'
+#'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
@@ -32,22 +32,22 @@
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' Please note that different locale settings may lead to different results
 #' (see the examples below).
-#' 
+#'
 #' @param e1 character vector
 #' @param e2 character vector
-#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
+#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
-#' 
+#'
 #' @return integer vector, elements are comparison results of corresponding
 #' pairs;
 #' \code{-1} if \code{e1[...] < e2[...]},
 #' \code{0} if equal, and \code{1} if greater.
-#' 
+#'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_compare
-#' 
-#' 
+#'
+#'
 #' @examples
 #' stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 #' stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
@@ -67,43 +67,45 @@ stri_cmp <- stri_compare
 
 
 #' @title
-#' Ordering Permutation and Sorting, String Comparisons with Collation
-#' 
-#' 
+#' Ordering Permutation and Sorting
+#'
+#'
 #' @description
-#' ...TO DO...
-#' 
-#' 
+#' Determines a permutation which rearranges strings into ascending
+#' or descending order, and optionally sorts the vector.
+#'
+#'
 #' @details
 #' For more information on ICU's Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
-#' 
+#'
 #' Uses a stable sort algorithm (STL's stable_sort);
 #' performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
-#' 
+#'
 #' \code{stri_order} is most often faster that R's \code{order}.
-#' 
+#'
 #' \code{NA}s are always put at the end.
-#' 
+#'
 #' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
-#' it does not always return UTF-8-encoded strings,
-#' and preserves many input strings's attributes.
+#' it does not always return UTF-8-encoded strings.
+#' Moreover, it many input object's attributes.
 #' This is because it is defined as
 #' \code{str[stri_order(str, decreasing, opts_collator)]}.
-#' 
+#'
 #' @param str character vector
-#' @param decreasing single logical value; should the sort order be increasing or decreasing?
-#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
+#' @param decreasing single logical value; should the sort order be nondecreasing (\code{FALSE}, default)
+#' or nonincreasing (\code{TRUE})?
+#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
-#' 
-#' @return for \code{stri_order} - an integer vector that gives the sort order;
-#' for \code{stri_order} - a sorted version of \code{str}
-#' 
+#'
+#' @return for \code{stri_order}: an integer vector that gives the sort order;
+#' for \code{stri_order}: a sorted version of \code{str}
+#'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_order
-#' 
+#'
 #' @examples
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
