@@ -21,8 +21,8 @@
 #' General Statistics for a Character Vector
 #' 
 #' @description
-#' This function gives general statistics on the whole character vector.
-#' Such input vector will often be a text file loaded via the
+#' This function gives general statistics for a character vector,
+#' e.g. obtained by loading a text file with the
 #' \code{\link{readLines}} function, where each text line
 #' is represented by a separate string.
 #' 
@@ -40,10 +40,10 @@
 #'    not-\code{NA} strings in the vector)
 #'    \item \code{LinesNEmpty} - number of lines with at least 
 #'    one non-\code{WHITE_SPACE} character
-#'    \item \code{Chars} - total number of Unicode code points detected)
+#'    \item \code{Chars} - total number of Unicode code points detected
 #'    \item \code{CharsNWhite} - number of Unicode code points 
 #'    that are  not \code{WHITE_SPACE}s
-#'    \item ... (Some other stuff that may appear in future releases)
+#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi})
 #' }
 #' @examples
 #' s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
@@ -63,14 +63,14 @@ stri_stats_general <- function(str) {
 #' Statistics for a Character Vector Containing LaTeX Commands
 #' 
 #' @description
-#' This function gives LaTeX-oriented statistics on the whole character vector.
-#' Such input vector will often be a text file loaded via the
+#' This function gives LaTeX-oriented statistics for a character vector,
+#' e.g. obtained by loading a text file with the
 #' \code{\link{readLines}} function, where each text line
 #' is represented by a separate string.
 #' 
 #' @details 
 #' We use a modified LaTeX Word Count algorithm taken from Kile 2.1.3,
-#' see http://kile.sourceforge.net/team.php for original contributors
+#' see \url{http://kile.sourceforge.net/team.php} for original contributors
 #' 
 #' 
 #' 
@@ -83,6 +83,7 @@ stri_stats_general <- function(str) {
 #'    \item \code{Words} - number of words
 #'    \item \code{Cmds} - number of commands
 #'    \item \code{Envirs} - number of environments
+#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi})
 #' }
 #' @examples
 #' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",

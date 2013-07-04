@@ -19,38 +19,40 @@
 
 
 #' @title
-#' Trim Characters from Left or/and Right Side of a String
+#' Trim Characters from Left and/or Right Side of a String
 #' 
 #' @description
-#' These functions may e.g. be used to get rid of unnecessary
-#' whitespaces from strings. Trimming stops at the first
-#' \code{pattern} match.
+#' These functions may be used e.g. to get rid of unnecessary
+#' whitespaces from strings. Trimming ends at the first or
+#' starts at the last \code{pattern} match.
 #' 
 #' @details
+#' Vectorized over \code{str} and \code{pattern}.
+#'
 #' \code{stri_trim} is a convenience function, which dispatches
 #' control to \code{stri_trim_*}. Unless you are very lazy, don't use it:
 #' it's slower.
 #' 
-#' Unlike in many other string processing libraries,
-#' our trim functions are quite general. A character class
+#' Contrary to many other string processing libraries,
+#' our trimming functions are quite general. A character class
 #' given by \code{pattern} 
 #' may be adjusted to suit your needs (most often you will use the default
-#' value or a charclass negation, e.g. with \code{^} at the begining).
+#' value or a negation of some character class, i.e. with \code{^} 
+#' at the beginning).
 #' 
-#' With this function in some cases you may extract very quickly data, which
-#' normally requires using regular expressions. E.g. you may get
+#' With these functions you may very quickly extract data, which
+#' in some cases require using regular expressions. E.g. you may get
 #' \code{"23.5"} out of \code{"total of 23.5 bitcoins"}.
-#' 
-#' Vectorized over \code{str} and \code{pattern}.
 #' 
 #' For trimming whitespaces, please note the difference
 #' between Unicode binary property `\code{WHITE_SPACE}` (more general)
-#' and general character category `\code{Z}`.
+#' and general character category `\code{Z}`,
+#' see \link{stringi-search-charclass}
 #' 
 #' @param str character vector
 #' @param pattern character vector with character class identifiers that
 #' should be preserved, see \link{stringi-search-charclass}
-#' @param side character [\code{stri_trim} only]; defaults \code{both}
+#' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
 #' @return character vector
 #' 
 #' @examples

@@ -18,7 +18,7 @@
 
 
 
-# Check R encoding marking [internal]
+# Check R encoding marking [internal, DEBUG only]
 # 
 # This is an internal function (no-export & no-manual) - test how R marks
 # ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
@@ -33,7 +33,7 @@ stri_test_Rmark <- function(str) {
 
 
 
-# For testing StriContainerUTF16's performance [internal]
+# For testing StriContainerUTF16's performance [internal, DEBUG only]
 #
 # @param str character vector
 # @return who cares
@@ -42,7 +42,7 @@ stri_test_UnicodeContainer16 <- function(str) {
 }
 
 
-# For testing StriContainerUTF8's performance [internal]
+# For testing StriContainerUTF8's performance [internal, DEBUG only]
 #
 # @param str character vector
 # @return who cares
@@ -52,7 +52,7 @@ stri_test_UnicodeContainer8 <- function(str) {
 
 
 
-# For testing .Call performance [internal]
+# For testing .Call performance [internal, DEBUG only]
 #
 # @param str some object
 # @return \code{str}

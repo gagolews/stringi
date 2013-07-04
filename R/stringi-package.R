@@ -17,14 +17,16 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-
+#' @title THE String Processing Package
+#'
+#' @description
 #' \pkg{stringi} is an open source package for R.
 #' It allows for correct, fast, and simple string manipulation in each locale
 #' and any character encoding. 
 #'
-#' \bold{Keywords}: internationalization, localization, ICU, ICU4R, i18n, l10n, Unicode
 #' 
 #' 
+#' @details
 #' Man pages on general topics:
 #' \itemize{
 #' \item \link{stringi-arguments} - how \pkg{stringi} deals with its functions' arguments, 
@@ -47,14 +49,17 @@
 #' 
 #' Information on default encodings and locales....
 #'
+#' \bold{Keywords}: internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode
+#'
+#' \bold{Homepage}: \url{http://stringi.rexamine.com}
+#'
 #' @name stringi-package
 #' @docType package
-#' @title THE String Processing Package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
 #' with contributions from Marcin Bujarski.
 #' @references
-#' \pkg{stringi} Package homepage, \url{http://www.rexamine.com/resources/stringi/}.\cr
+#' \pkg{stringi} Package homepage, \url{http://stringi.rexamine.com}.\cr
 #' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
 #' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
 #' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
