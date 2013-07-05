@@ -31,9 +31,9 @@
 #'
 #' @param str character vector of strings to be duplicated
 #' @param times integer vector with number of times to duplicate each string
-#' 
+#'
 #' @return character vector
-#' 
+#'
 #' @export
 #' @family join
 #' @examples
@@ -49,29 +49,29 @@ stri_dup <- function(str, times) {
 
 #' @title
 #' Concatenate Two Character Vectors
-#' 
+#'
 #' @description
 #' A binary operator for joining (concatenating) two character vectors,
 #' with typical R look-and-feel.
-#' 
+#'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
-#' 
-#' This operator words as a call to \code{stri_join(e1, e2, sep="")}.
+#'
+#' This operator works like a call to \code{stri_join(e1, e2, sep="")}
+#' (but is slightly faster).
 #' Note that, however, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
-#' is slower than \code{stri_join(e1, e2, e3, sep="")}, 
+#' is slower than \code{stri_join(e1, e2, e3, sep="")},
 #' because it creates a new result each time
-#' 
+#'
 #' @usage
 #' e1 \%+\% e2
-#' 
+#'
 #' @param e1 character vector
 #' @param e2 character vector
-#' 
+#'
 #' @return character vector
-#' 
-#' TODO add family `join` (now Roxygen2 is broken).....
-
+#'
+#'
 #' @examples
 #' c('abc','123','\u0105\u0104')%+%letters[1:5]
 #' 'ID_'%+%1:5
@@ -84,32 +84,32 @@ stri_dup <- function(str, times) {
 
 #' @title
 #' Concatenate Character Vectors
-#' 
+#'
 #' @description
 #' The function is very similar to the built-in \code{paste()} function.
-#' 
+#'
 #' @details
 #' \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
 #' Use whichever you want, they are the same.
-#' 
+#'
 #' If \code{collapse} is set to non-\code{NULL}, the the result will be a single string.
 #' Otherwise, you will get a character vector of length equal
 #' to the length of the longest argument.
-#' 
+#'
 #' If any of the arguments in `\code{...}` is a vector of length 0, then in result
 #' you will get 0-length character vector.
-#' 
+#'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string
 #' will be used.
-#' 
+#'
 #' In case of any \code{NA}, \code{NA} is set to the corresponding element.
-#' 
+#'
 #' @param ... character vectors which corresponding elements should be concatenated
 #' @param sep single string, separates terms
 #' @param collapse single string, separates the results
-#' 
+#'
 #' @return character string
-#' 
+#'
 #' @export
 #' @examples
 #' stri_join(1:5,letters)
@@ -134,34 +134,34 @@ stri_paste <- stri_join
 
 #' @title
 #' Flatten a String
-#' 
+#'
 #' @description
 #' Joins elements of a character vector into one string.
-#' 
+#'
 #' @details
 #' \code{stri_flatten(str, collapse='XXX')} works the same as
 #' \code{paste(str, collapse='XXX', sep="")}.
-#' 
+#'
 #' If you wish to use some more fancy \code{collapse} separators
 #' between flattened strings,
 #' call \code{stri_join(str, separators, collapse='')}.
-#' 
+#'
 #' If \code{str} is not empty, then a single string is returned.
 #' If \code{collapse} has length > 1, then only first string
 #' will be used.
-#' 
+#'
 #' @param str vector of strings will be coerced to character
 #' @param collapse separator, a single string
-#' 
+#'
 #' @return
 #' character vector
-#' 
+#'
 #' @examples
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
 #' stri_flatten(c('abc','123','\u0105\u0104'))
 #' stri_flatten(stri_dup(letters[1:6],1:3))
-#' 
+#'
 #' @export
 #' @family join
 stri_flatten <- function(str, collapse="") {

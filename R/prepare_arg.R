@@ -18,211 +18,269 @@
 
 
 
+#' @title
 #' Passing Arguments to Functions in \pkg{stringi}
 #'
-#' Some notes:
-#' * How do we treat character vectors on input? What objects are automatically coerced?
-#' * Do we treat NA values consistently? Yes.
-#' * Do we preserve objects' attributes? No.
-#' 
+#' @description
+#' Below we explain how \pkg{stringi} deals (in almost all cases)
+#' with its functions' arguments
+#'
+#' @section Coercion of Arguments:
+#'
+#' When character vector argument is expected, factors and other vectors
+#' coercible to string vectors
+#' are converted with \link{as.character}, otherwise an error is generated.
+#'
+#' When logical, numeric or integer vector argument is expected,
+#' factors are converted with \code{as.*(\link{as.character}(...))},
+#' and other coercible vectors
+#' are converted with \code{as.character()}, otherwise an error is generated.
+#'
+#'
+#'
 #' See the man page links below for the description of internal methods used
 #' in all functions from the \pkg{stringi} package (just to get more insight,
-#' in case you're interested in details).
-#' 
-#' When character vector argument is expected: factors and other coercible vectors
-#' are converted with \code{as.character(...)}, otherwise an error is generated.
-#' 
-#' When logical, numeric or integer vector argument is expected:
-#' factors are converted with \code{as.*(as.character(...))} and other coercible vectors
-#' are converted with \code{as.character()}, otherwise an error is generated.
-#' 
-#' Some functions (like \code{\link{stri_join}}
-#' assume that a vector with one element is given;
-#' in that case, for empty vectors we get an error and for vectors with > 1
-#' elements - a warning....
-#' 
-#' *vectorization*
-#' 
-#' almost all functions are vectorized with respect to all arguments;
-#' this may sometimes lead to strange results - we assume you know what
-#' you are doing. you may e.g. apply pattern search on each string,
-#' or search for each pattern in a string
-#' 
-#' we took care of performance: e.g. in regex searching we reuse
-#' regex matchers from iteration to interation, as long it's possible....
-#' 
+#' in case you're interested in technical details).
+#' Anyway, this should work as you intuitively expect.
+#'
+#' @section Vectorization:
+#'
+#' Almost all functions are vectorized with respect to all arguments;
+#' This may sometimes lead to strange results - we assume you know what
+#' you are doing.
+#' However, thanks to this property you may e.g. search for one pattern in
+#' each given string,
+#' or search for each pattern in one given string.
+#'
+#' We of course took great care of performance issues: e.g. in regular expression
+#' searching we reuse
+#' regexp matchers from iteration to iteration, as long it's possible.
+#'
+#' Functions with some non-vectorized arguments are rare:
+#' e.g. regular expression matcher's setting are established once per each call.
+#'
+#' Some functions
+#' assume that a vector with one element is given
+#' as an argument (like \code{collapse} in \link{stri_join}).
+#' In such cases, if an empty vector is given you'll get an error
+#' and for vectors with > 1 elements - a warning (only first vector element
+#' will be used).
+#'
+#' You may find details on vectorization behavior in the man pages
+#' of each particular function of your interest.
+#'
+#' @section Handling Missing Values (\code{NA}s):
+#'
+#' \code{NA}s are handled consistently.
+#' For a vectorized operation, if at least one element is \code{NA},
+#' then the corresponding resulting value is always also \code{NA}.
+#'
+#' @section Preserving Input Objects' Attributes:
+#'
+#' Generally, all our functions drop input objects' attributes
+#' (e.g. \link{names}, \link{dim}, etc.). This is generally because
+#' of advanced vectorization and for efficiency reasons.
+#'
+#' Currently, there is only one exception to this rule:
+#' the \link{stri_sort} function.
+#'
+#' Remember then to copy important attributes manually
+#' or use e.g. the subsetting operation line \code{x[] <- stri_...(x, ...)}.
+#'
 #' @name stringi-arguments
 #' @family stringi_general_topics
 #' @family prepare_arg
 invisible(NULL)
 
 
-#' Prepare a String Vector Argument (Internal Method)
-#' 
+#' @title
+#' Prepare a String Vector Argument [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return if x is a string, it is returned with no change.
-#' if factor, as.character is called.
+#' @return if \code{x} is a string, it is returned with no change.
+#' if factor, \link{as.character} is called.
 #' if atomic vector (also a matrix), it is coerced to character vector.
-#' if name, a single string is generated.
+#' if name, a character vector of length 1 is generated.
 #' otherwise the function throws an error.
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_string <- function(x) {
-   .Call("stri_prepare_arg_string", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_string", x, NULL, PACKAGE="stringi")
 }
 
 
-#' Prepare a Numeric Vector Argument (Internal Method)
-#' 
+#' @title
+#' Prepare a Numeric Vector Argument [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return if x is a factor, as.character is called + coercion to numeric.
-#' if a double, it is returned with no change.
-#' if atomic vector (also a matrix), it is coerced to double vector.
+#' @return if \code{x} is a factor, \link{as.character} is called, and the
+#' resulting character vector is coerced to numeric.
+#' if numeric, it is returned with no change.
+#' if atomic vector (also a matrix) is given, it is coerced to a numeric vector.
 #' otherwise the function throws an error.
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_double <- function(x) {
-   .Call("stri_prepare_arg_double", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_double", x, NULL, PACKAGE="stringi")
 }
 
 
-#' Prepare an Integer Vector Argument (Internal Method)
-#' 
+#' @title
+#' Prepare an Integer Vector Argument [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return if x is a factor, as.character is called + coercion to integer.
-#' if an integer, it is returned with no change.
-#' if atomic vector (also a matrix), it is coerced to integer vector.
+#' if \code{x} is a factor, \link{as.character} is called, and the
+#' resulting character vector is coerced to integer.
+#' if integer, it is returned with no change.
+#' if atomic vector (also a matrix) is given, it is coerced to an integer vector.
 #' otherwise the function throws an error.
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
-   .Call("stri_prepare_arg_integer", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_integer", x, NULL, PACKAGE="stringi")
 }
 
 
 
-#' Prepare a Logical Vector Argument (Internal Method)
-#' 
+#' @title
+#' Prepare a Logical Vector Argument [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return if x is a logical vector, it is returned with no change.
-#' if factor, as.character is called + coercion to logical.
-#' if atomic vector (also a matrix), it is coerced to logical vector.
+#' @return if \code{x} is a logical vector, it is returned with no change.
+#' if \code{x} is a factor, \link{as.character} is called, and the
+#' resulting character vector is coerced to logical.
+#' if atomic vector (also a matrix) is given, it is coerced to logical vector.
 #' otherwise the function throws an error.
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
-   .Call("stri_prepare_arg_logical", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_logical", x, NULL, PACKAGE="stringi")
 }
 
 
-#' Prepare a Raw Vector Argument (Internal Method)
-#' 
+#' @title
+#' Prepare a Raw Vector Argument [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return if x is a raw vector, it is returned with no change.
-#' if factor, as.character is called + coercion to raw.
+#' @return if \code{x} is a raw vector, it is returned with no change.
+#' if \code{x} is a factor, \link{as.character} is called, and the
+#' resulting character vector is coerced to raw.
 #' if atomic vector (also a matrix), it is coerced to a raw vector.
 #' otherwise the function throws an error.
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_raw <- function(x) {
-   .Call("stri_prepare_arg_raw", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_raw", x, NULL, PACKAGE="stringi")
 }
 
 
 
-#' Prepare a String Vector Argument [Single Value] (Internal Method)
-#' 
+#' @title
+#' Prepare a String Vector Argument [Single Value]  [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return 
-#' first \code{\link{stri_prepare_arg_string}} is called;
+#' @return
+#' first, \link{stri_prepare_arg_string} is called;
 #' on empty vector, an error is generated;
 #' if there are are > 1 elems, a warning is generated;
-#' a vector with one (the first in \code{x}) is returned
-#' 
+#' a vector with one (the first in \code{x}) is returned.
+#'
 #' @family prepare_arg
 stri_prepare_arg_string_1 <- function(x) {
-   .Call("stri_prepare_arg_string_1", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_string_1", x, NULL, PACKAGE="stringi")
 }
 
 
-#' Prepare a Numeric Vector Argument [Single Value] (Internal Method)
-#' 
+#' @title
+#' Prepare a Numeric Vector Argument [Single Value]  [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
 #' @return
-#' first \code{\link{stri_prepare_arg_double}} is called;
+#' first, \link{stri_prepare_arg_double} is called;
 #' on empty vector, an error is generated;
 #' if there are are > 1 elems, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_double_1 <- function(x) {
-   .Call("stri_prepare_arg_double_1", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_double_1", x, NULL, PACKAGE="stringi")
 }
 
 
-#' Prepare an Integer Vector Argument [Single Value] (Internal Method)
-#' 
+#' @title
+#' Prepare an Integer Vector Argument [Single Value]  [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
 #' @return
-#' first \code{\link{stri_prepare_arg_integer}} is called;
+#' first, \link{stri_prepare_arg_integer} is called;
 #' on empty vector, an error is generated;
 #' if there are are > 1 elems, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_integer_1 <- function(x) {
-   .Call("stri_prepare_arg_integer_1", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_integer_1", x, NULL, PACKAGE="stringi")
 }
 
 
 
-#' Prepare a Logical Vector Argument [Single Value] (Internal Method)
-#' 
+#' @title
+#' Prepare a Logical Vector Argument [Single Value]  [internal]
+#'
+#' @description
 #' This is an internal function. However, the interested user may play with it
 #' in order to get more insight on how \pkg{stringi} deals with its
-#' functions' arguments.
-#' 
+#' functions' arguments. See `Value' section for details.
+#'
 #' @param x argument to be checked
-#' @return 
-#' first \code{\link{stri_prepare_arg_logical}} is called;
+#' @return
+#' first, \link{stri_prepare_arg_logical} is called;
 #' on empty vector, an error is generated;
 #' if there are are > 1 elems, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
-#' 
+#'
 #' @family prepare_arg
 stri_prepare_arg_logical_1 <- function(x) {
-   .Call("stri_prepare_arg_logical_1", x, NULL, PACKAGE="stringi")  
+   .Call("stri_prepare_arg_logical_1", x, NULL, PACKAGE="stringi")
 }
 

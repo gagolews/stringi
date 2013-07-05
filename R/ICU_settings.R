@@ -20,13 +20,13 @@
 
 #' @title
 #' Query Default Settings for \pkg{stringi}
-#' 
+#'
 #' @description
 #' Gives current default settings in a concise form.
-#' 
-#' @param short logical; should only current locale and charset be returned?
-#' 
-#' @return If \code{short==TRUE}, then a single string containing 
+#'
+#' @param short logical; should only default locale and character encoding be returned?
+#'
+#' @return If \code{short==TRUE}, then a single string containing
 #' information on default character encoding and locale is returned.
 #' Otherwise, you get a list with the following components:
 #' \itemize{
@@ -37,18 +37,18 @@
 #' \item \code{Charset.native} -- information on default encoding,
 #' as returned by \code{stri_enc_info()}
 #' }
-#' 
+#'
 #' @export
 #' @family locale, encoding
 stri_info <- function(short=FALSE) {
    stopifnot(is.logical(short), length(short) == 1)
-   
+
    info <- .Call("stri_info", PACKAGE="stringi")
    if (info$Charset.native$Name.friendly != "UTF-8") {
 #       if (!info$Charset.native$CharSize.8bit)    # this should not cause problems, e.g. in the Big5 encoding
 #          warning("You use a non-8bit native charset. " %+%
 #             "This may cause serious problems. Consider switching to UTF-8.")
-#       else 
+#       else
       if (!identical(info$Charset.native$ASCII.subset, TRUE))
          warning("Your native charset is not a superset of US-ASCII. " %+%
            "This may cause serious problems. Consider switching to UTF-8.")
@@ -56,13 +56,13 @@ stri_info <- function(short=FALSE) {
          warning("your native charset does not convert well to Unicode. " %+%
             "This may cause serious problems. Consider switching to UTF-8.")
    }
-   
+
    loclist <- stri_locale_list()
    if (!(info$Locale$Name %in% loclist))
       warning("Your current locale is not on the list of available " %+%
          "locales. Some functions may not work properly. Refer to stri_localelist() for more details " %+%
          "on known locale specifiers.")
-   
+
    if (!short)
       return(info)
    else {

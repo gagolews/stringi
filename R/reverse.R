@@ -20,21 +20,21 @@
 
 #' @title
 #' Reverse Each String
-#' 
+#'
 #' @description
-#' Reverses every string in given character vector.
-#' 
+#' Reverses characters in every string.
+#'
 #' @details
 #' Note that this operation is not very intelligent - it just reverses
 #' the order of all Unicode code points.
 #' It may result in non-Unicode-normalized
 #' strings and may give strange output for bidirectional strings.
-#' 
+#'
 #' @param str character vector
-#' 
+#'
 #' @return character vector in which every string from \code{str}
 #'  has been reversed
-#' 
+#'
 #' @examples
 #' stri_reverse(c("123", "abc d e f"))
 #' stri_reverse("ZXY (\u0105\u0104123$^).")
