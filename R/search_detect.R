@@ -21,7 +21,8 @@
 #' Detect a Character Class Match in a String
 #' 
 #' @description
-#' ....
+#' This function checks if any characters matches specific character
+#' class (e.g. letters, digits, or whitespaces).
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
@@ -46,7 +47,8 @@ stri_detect_charclass <- function(str, pattern) {
 #' Detect a Fixed Pattern Match in a String
 #' 
 #' @description
-#' ...
+#' This function checks if there is at least one occurence of fixed pattern
+#' in a string.
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
@@ -80,7 +82,8 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 #' Detect a Regex Pattern Match in a String
 #' 
 #' @description
-#' ...
+#' This function checks if there is at least one occurence of regex pattern
+#' in a string.
 #' 
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
