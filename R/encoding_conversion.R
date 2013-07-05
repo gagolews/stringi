@@ -107,7 +107,7 @@ stri_enc_toutf32 <- function(str) {
 #' corresponds to exactly one integer value.
 #'
 #' This functions roughly acts like a vectorized version of
-#' \code{\link{intToUtf8},
+#' \code{\link{intToUtf8}},
 #' as usual in \pkg{stringi}, it returns character strings
 #' in UTF-8.
 #'

@@ -92,7 +92,7 @@ stri_enc_info <- function(enc=NULL) {
 #'
 #' @description
 #' Sets encoding to be used to decode strings
-#' internally marked as Native, see \link{string-encoding}
+#' internally marked as Native, see \link{stringi-encoding}
 #'
 #' @param enc character encoding name,
 #' see \code{\link{stri_enc_list}}
@@ -116,7 +116,7 @@ stri_enc_set <- function(enc) {
 #'
 #' @description
 #' Gets encoding used to decode strings
-#' internally marked as Native, see \link{string-encoding}
+#' internally marked as Native, see \link{stringi-encoding}
 #'
 #' @details
 #' Same as \code{stri_enc_info()$Name.friendly}.
