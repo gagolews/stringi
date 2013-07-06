@@ -57,13 +57,16 @@
 #' of the same length as input will be returned. The output will always be in UTF-8.
 #'
 #' @references
-#' {Unicode Normalization Forms} - Unicode Standard Annex #15,
-#'    \url{http://unicode.org/reports/tr15}\cr
-#' {Character Model for the World Wide Web 1.0: Normalization}
-#'    - W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}\cr
-#' {Normalization} - ICU User Guide,
-#'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)\cr
-#' Wikipedia entry on Unicode Equivalence, \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
+#' \emph{Unicode Normalization Forms} - Unicode Standard Annex #15,
+#'    \url{http://unicode.org/reports/tr15}
+#'    
+#' \emph{Character Model for the World Wide Web 1.0: Normalization}
+#'    - W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}
+#'    
+#' \emph{Normalization} - ICU User Guide,
+#'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
+#'    
+#' \emph{Unicode Equivalence} - Wikipedia, \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @export
 #' @rdname normalization

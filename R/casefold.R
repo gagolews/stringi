@@ -39,7 +39,8 @@
 #' @return character vector
 #'
 #' @references
-#' Case Mappings - ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
+#' \emph{Case Mappings} - ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
+#' 
 #' @family locale_sensitive
 #' @aliases casefold
 #' @export

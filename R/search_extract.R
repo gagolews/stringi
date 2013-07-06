@@ -131,14 +131,14 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Extract Regexp Pattern Matches
+#' Extract Regex Pattern Matches
 #'
 #' @description
 #' These functions extract substrings of \code{str} that
 #' match a given \code{pattern}.
 #'
 #' See also \code{\link{stri_match_all_regex}} for extracting
-#' matches together with regexp capture groups.
+#' matches together with regex capture groups.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.

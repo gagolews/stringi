@@ -18,7 +18,7 @@
 
 
 #' @title
-#' Extract Regexp Pattern Matches, Together with Capture Groups
+#' Extract Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' These functions extract substrings of \code{str} that
@@ -69,7 +69,7 @@ stri_match_last_regex <- function(str, pattern, opts_regex=list()) {
 
 
 #' @title
-#' Extract All Regexp Pattern Matches, Together with Capture Groups
+#' Extract All Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
@@ -94,7 +94,7 @@ stri_match_all <- function(str, ..., regex) {
 
 
 #' @title
-#' Extract First Regexp Pattern Matches, Together with Capture Groups
+#' Extract First Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
@@ -119,7 +119,7 @@ stri_match_first <- function(str, ..., regex) {
 
 
 #' @title
-#' Extract Last Regexp Pattern Matches, Together with Capture Groups
+#' Extract Last Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
@@ -145,7 +145,7 @@ stri_match_last <- function(str, ..., regex) {
 
 
 #' @title
-#' Extract Regexp Pattern Matches, Together with Capture Groups
+#' Extract Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' A dummy function for compatibility with other search routines

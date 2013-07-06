@@ -123,11 +123,11 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 
 
 #' @title
-#' Replace Occurrences of a Regexp Pattern
+#' Replace Occurrences of a Regex Pattern
 #'
 #' @description
 #' Replaces with the given replacement string every/first/last
-#' substring of the input that matches the pattern.
+#' substring of the input that matches a regular expression
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.

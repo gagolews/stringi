@@ -53,8 +53,8 @@
 #' or search for each pattern in one given string.
 #'
 #' We of course took great care of performance issues: e.g. in regular expression
-#' searching we reuse
-#' regexp matchers from iteration to iteration, as long it's possible.
+#' searching, regex matchers are reused
+#' from iteration to iteration, as long it's possible.
 #'
 #' Functions with some non-vectorized arguments are rare:
 #' e.g. regular expression matcher's setting are established once per each call.

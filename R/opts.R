@@ -74,9 +74,14 @@
 #' @family search_fixed
 #'
 #' @references
-#' Collation - ICU User Guide - http://userguide.icu-project.org/collation\cr
-#' ICU Collation Service Architecture - ICU User Guide - http://userguide.icu-project.org/collation/architecture\cr
-#' http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html
+#' \emph{Collation} - ICU User Guide, 
+#' \url{http://userguide.icu-project.org/collation}
+#' 
+#' \emph{ICU Collation Service Architecture} - ICU User Guide, 
+#' \url{http://userguide.icu-project.org/collation/architecture}
+#' 
+#' \emph{\code{icu::Collator} Class Reference} - ICU4C API Documentation, 
+#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
 #' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
@@ -102,7 +107,7 @@ stri_opts_collator <- function(locale="", strength=3L,
 
 
 #' @title
-#' Generate List with Regexp Matcher Options
+#' Generate List with Regex Matcher Options
 #'
 #' @description
 #' Convenience function to tune regular expression matcher behavior,
@@ -137,7 +142,9 @@ stri_opts_collator <- function(locale="", strength=3L,
 #' @family search_regex
 #'
 #' @references
-#' ICU regex options, \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html#a874989dfec4cbeb6baf4d1a51cb529ae}\cr
+#' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes} 
+#' - ICU4C API Documentation, 
+#' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}\cr
 #'
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
                             multiline, unix_lines, uword, error_on_unknown_escapes)

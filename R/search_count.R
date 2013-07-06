@@ -97,10 +97,10 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Count the Number of Regexp Pattern Matches
+#' Count the Number of Regex Pattern Matches
 #'
 #' @description
-#' This function counts the number of occurrences of matches to a regexp pattern.
+#' This function counts the number of occurrences of matches to a regex pattern.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.

@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -36,12 +36,18 @@
 #' 
 #' Each ``engine'' is able to perform many search-based operations:
 #' \itemize{
-#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string, see e.g. \code{\link{stri_detect}}
-#'    \item \code{stri_count_*} - counts the number of pattern's occurences, see e.g. \code{\link{stri_count}}
-#'    \item \code{stri_locate_*} - locates all, first, or last occurences of a pattern, see e.g. \code{\link{stri_locate}}
-#'    \item \code{stri_extract_*} - extracts all, first, or last occurences of a pattern, see e.g. \code{\link{stri_extract}}
-#'    \item \code{stri_replace_*} - replaces all, first, or last occurences of a pattern, see e.g. \code{\link{stri_replace}}
-#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurences, see e.g. \code{\link{stri_split}}
+#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string, 
+#'    see e.g. \code{\link{stri_detect}}
+#'    \item \code{stri_count_*} - counts the number of pattern's occurrences, 
+#'    see e.g. \code{\link{stri_count}}
+#'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern, 
+#'    see e.g. \code{\link{stri_locate}}
+#'    \item \code{stri_extract_*} - extracts all, first, or last occurrences of a pattern, 
+#'    see e.g. \code{\link{stri_extract}}
+#'    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern, 
+#'    see e.g. \code{\link{stri_replace}}
+#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurrences, 
+#'    see e.g. \code{\link{stri_split}}
 #' }
 #' 
 #' @name stringi-search
@@ -64,30 +70,51 @@ invisible(NULL)
 #' Regular Expressions in \pkg{stringi}
 #'
 #' @description
-#' Something about regular expressions.....
+#' A regular expression is a pattern describing, possibly in a very
+#' abstract way, a part of text.
+#' Thanks to many regex functions in \pkg{stringi},
+#' regular expressions may be a very powerful tool in your hand
+#' to do string searching,
+#' substring extraction, string splitting, etc.
 #' 
 #' 
 #' @details
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
-#' the \pkg{ICU} regex engine.
+#' the \pkg{ICU} regex engine, which may be tuned
+#' with settings may be tuned up (for example
+#' to perform case-insensitive search) with the
+#' \code{\link{stri_opts_regex}} function.
 #' 
-#' If \code{pattern} is empty, then the result is \code{NA}
-#' and a warning is generated.
 #' 
-#' ignore_case.....
+#' Regular expression patterns in ICU are similar in form and behavior
+#' to Perl's regexes.  Their implementation loosely bases
+#' on JDK 1.4 package's \code{java.util.regex}.
+#' ICU Regular Expressions conform to Unicode Technical Standard #18
+#' (see References section) and its features are summarized in
+#' the ICU User Guide (see below). A good introduction
+#' to regexes is (Friedl, 2002).
 #' 
-#' By default, all regex functions treat text as single line.
-#' if you want multiline facilities, see \code{\link{stri_opts_regex}}
+#' @section Regexes in \pkg{stringi}:
+#' Note that if a given regex \code{pattern} is empty,
+#' then all functions in \pkg{stringi} give \code{NA} in result
+#' and generate a warning.
+#' On syntax error, a quite informative failure message is shown.
 #' 
-#' more options: \code{\link{stri_opts_regex}}
-#' 
-#' @section Syntax of Regular Expressions in ICU:
-#' 
-#' TO BE DONE......
+#' If you'd like to search for a fixed pattern,
+#' refer to \link{stringi-search-fixed}.
+#' This allows to do a locale-aware text lookup,
+#' or a very fast exact-byte search.
 #'
 #' @references
-#' Regular expressions - ICU User Guide, \url{http://userguide.icu-project.org/strings/regexp}\cr
-#' Unicode Regular Expressions \url{http://www.regular-expressions.info/unicode.html}\cr
+#' \emph{Regular expressions} - ICU User Guide,
+#'  \url{http://userguide.icu-project.org/strings/regexp}
+#'  
+#' J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
+#'  
+#' \emph{Unicode Regular Expressions} - Unicode Technical Standard #18,
+#' \url{http://www.unicode.org/reports/tr18/}
+#'  
+#' \emph{Unicode Regular Expressions} - Regex tutorial, \url{http://www.regular-expressions.info/unicode.html}
 #' 
 #' @name stringi-search-regex
 #' @family search_regex
@@ -140,8 +167,11 @@ invisible(NULL)
 #' to Unicode is done as usual.
 #'
 #' @references
-#' ICU String Search Service - ICU User Guide - \url{http://userguide.icu-project.org/collation/icu-string-search-service}\cr
-#' L. Werner, Efficient Text Searching in Java, 1999, \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}\cr
+#' \emph{ICU String Search Service} - ICU User Guide,
+#'  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
+#'  
+#' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
+#' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 #' 
 #' @name stringi-search-fixed
 #' @family search_fixed
@@ -310,8 +340,8 @@ invisible(NULL)
 #' 
 #' 
 #' @references
-#' The Unicode Character Database, \url{http://www.unicode.org/ucd/}\cr
-#' UAX#44, \url{http://www.unicode.org/reports/tr44/}\cr
+#' \emph{The Unicode Character Database} - Unicode Standard Annex #44,
+#' \url{http://www.unicode.org/reports/tr44/}
 #' 
 #' @name stringi-search-charclass
 #' @family search_charclass

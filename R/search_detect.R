@@ -84,10 +84,10 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Detect a Regexp Pattern Match
+#' Detect a Regex Pattern Match
 #'
 #' @description
-#' This function checks if there is at least one match to a regexp pattern
+#' This function checks if there is at least one match to a regex pattern
 #' in a string.
 #'
 #' @details

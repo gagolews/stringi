@@ -30,21 +30,50 @@
 #' Man pages on general topics:
 #' \itemize{
 #' \item \link{stringi-arguments} - how \pkg{stringi} deals with its functions' arguments, 
-#' \item \link{stringi-encoding} - encoding management,
-#' including encoding management, detection, conversion, and Unicode
-#' normalization,
-#' \item \link{stringi-locale} - locale management, 
-#' and the list locale-sensitive operations, especially
-#' \link{collator} for the description of string collation algorithm,
+#' \item \link{stringi-encoding} - character encoding issues,
+#' including information on encoding management in \pkg{stringi},
+#' detection, conversion, and Unicode normalization,
+#' \item \link{stringi-locale} - locale issues, i.a. locale management and
+#' specification in \pkg{stringi} 
+#' and the list locale-sensitive operations.
+#' See \code{\link{stri_opts_collator}}  for the description of string collation algorithm,
 #' used for string comparing, ordering, sorting, casefolding, and searching.
-#' \item \link{stringi-search} - string searching, especially
+#' \item \link{stringi-search} - string searching facilities
+#' by 3 separate search engines:
 #' \link{stringi-search-regex}, \link{stringi-search-fixed}, and \link{stringi-search-charclass}
+#' - includes pattern searching, matching, string splitting, and so on.
 #' }
 #' 
 #' Other interesting stuff:
 #' \itemize{
-#' \item \link{stri_stats_general} and \link{stri_stats_latex}  for gathering some
+#' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}} - functions for gathering some
 #' statistics on character vector's contents.
+#' 
+#' \item \code{\link{stri_join}}, \code{\link{stri_dup}}, and \code{\link{stri_flatten}} -
+#' concatenation-based operations.
+#' 
+#' \item \code{\link{stri_sub}} - extracting and replacing substrings,
+#' and \code{\link{stri_reverse}} for a funny function
+#' to reverse all characters in a string.
+#' 
+#' \item \code{\link{stri_trim}} (among others) - trimming characters from the beginning
+#' or/and end of a string, see also \link{stringi-search-charclass}.
+#' 
+#' \item \code{\link{stri_length}} (among others) - determining the number
+#' of codepoints in a string.
+#' 
+#' \item \code{\link{stri_tolower}} (among others) - case mapping,
+#' i.e. conversion to lower, UPPER, or Title case.
+#' 
+#' \item \code{\link{stri_compare}}, \code{\link{stri_order}},
+#' and \code{\link{stri_sort}} for comparison-based,
+#' locale-aware operations, see also \link{stringi-locale}.
+#' 
+#' \item TO DO [these will appear in future versions
+#' of \pkg{stringi}]: pad, wrap, justify, HTML entities,
+#' escape characters, MIME Base 64 encode/decode, text file read/write,
+#' random string generation, number and data/time formatting,
+#' and many more.
 #' }
 #' 
 #' Information on default encodings and locales....
@@ -59,11 +88,16 @@
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
 #' with contributions from Marcin Bujarski.
 #' @references
-#' \pkg{stringi} Package homepage, \url{http://stringi.rexamine.com}.\cr
-#' ICU - International Components for Unicode, \url{http://www.icu-project.org/}.\cr
-#' ICU4C API, \url{http://www.icu-project.org/apiref/icu4c/}.\cr
-#' The Unicode Consortium, \url{http://www.unicode.org/}.\cr
-#' RFC 3629: UTF-8, a transformation format of ISO 10646 \url{http://tools.ietf.org/html/rfc3629}.
+#' \emph{\pkg{stringi} Package homepage}, \url{http://stringi.rexamine.com}
+#' 
+#' \emph{ICU - International Components for Unicode}, \url{http://www.icu-project.org/}
+#' 
+#' \emph{ICU4C API Documentation}, \url{http://www.icu-project.org/apiref/icu4c/}
+#' 
+#' \emph{The Unicode Consortium}, \url{http://www.unicode.org/}
+#' 
+#' \emph{UTF-8, a transformation format of ISO 10646} - RFC 3629, \url{http://tools.ietf.org/html/rfc3629}
+#' 
 #' @family stringi_general_topics
 invisible(NULL)
 

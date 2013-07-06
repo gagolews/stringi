@@ -59,7 +59,7 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 
 
 #' @title
-#' Split up a String By Regexp Pattern Matches
+#' Split up a String By Regex Pattern Matches
 #'
 #' @description
 #' Splits each element of \code{str} into substrings.

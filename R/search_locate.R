@@ -164,11 +164,11 @@ stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Locate Occurrences of a Regexp Pattern
+#' Locate Occurrences of a Regex Pattern
 #'
 #' @description
 #' These functions find the indices, at which
-#' a regexp pattern matches a substring of the input string.
+#' a regex pattern matches a substring of the input string.
 #'
 #'
 #' @details

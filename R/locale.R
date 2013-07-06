@@ -17,10 +17,13 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
+#' @title
 #' Locales and \pkg{stringi}
 #'
+#' @description
 #' In this section we explain how we deal with locales in \pkg{stringi}.
 #' 
+#' @details
 #' Locales are most conviniently identified by character strings
 #' of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US"
@@ -63,7 +66,7 @@
 #' sorting, and searching.
 #' 
 #' @references
-#' Locale - ICU User Guide, \url{http://userguide.icu-project.org/locale}
+#' \emph{Locale} - ICU User Guide, \url{http://userguide.icu-project.org/locale}
 #' 
 #' @name stringi-locale
 #' @rdname stringi-locale
