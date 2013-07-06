@@ -22,8 +22,8 @@
 #'
 #' @description
 #' Convenience function to tune collator's behavior,
-#' e.g. in \link{stri_compare}, \link{stri_order},
-#' \link{stri_detect_fixed}, and other \link{stringi-search-fixed} functions.
+#' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
+#' \code{\link{stri_detect_fixed}}, and other \link{stringi-search-fixed} functions.
 #'
 #'
 #' @details
@@ -106,7 +106,7 @@ stri_opts_collator <- function(locale="", strength=3L,
 #'
 #' @description
 #' Convenience function to tune regular expression matcher behavior,
-#' e.g. in \link{stri_count_regex} and other \link{stringi-search-regex} functions.
+#' e.g. in \code{\link{stri_count_regex}} and other \link{stringi-search-regex} functions.
 #'
 #'
 #' @param case_insensitive logical; enable case insensitive matching

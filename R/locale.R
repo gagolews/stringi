@@ -56,10 +56,9 @@
 #' 
 #' @section Collation:
 #' 
-#' See \code{\link{collator}} for the description
+#' See \code{\link{stri_opts_collator}} for the description
 #' on how to tune the Collator, which performs
-#' a locale-aware, natural-language
-#' alike string comparison.
+#' a locale-aware string comparison.
 #' It is used for string casefolding, comparing, ordering,
 #' sorting, and searching.
 #' 

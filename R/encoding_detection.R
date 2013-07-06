@@ -26,7 +26,7 @@
 #'
 #' @details
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
+#' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #'
 #' @param str character vector
@@ -63,10 +63,10 @@ stri_enc_isascii <- function(str) {
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
 #'
-#' note that \link{stri_enc_isutf8} => \link{stri_enc_isascii}
+#' note that \code{\link{stri_enc_isutf8}} => \code{\link{stri_enc_isascii}}
 #'
 #' This function is independent of the way R marks encodings in
-#' character strings (see \code{\link{Encoding}} and \code{\link{stringi-encoding}}).
+#' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #' @param str character vector
 #' @return logical vector; i-th element indicates whether the i-th string

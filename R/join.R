@@ -57,11 +57,11 @@ stri_dup <- function(str, times) {
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
-#' This operator works like a call to \code{stri_join(e1, e2, sep="")}
+#' This operator works like a call to \code{\link{stri_join}(e1, e2, sep="")}
 #' (but is slightly faster).
 #' Note that, however, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
-#' is slower than \code{stri_join(e1, e2, e3, sep="")},
-#' because it creates a new result each time
+#' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
+#' because it creates a new resulting vector each time.
 #'
 #' @usage
 #' e1 \%+\% e2
@@ -86,17 +86,17 @@ stri_dup <- function(str, times) {
 #' Concatenate Character Vectors
 #'
 #' @description
-#' The function is very similar to the built-in \code{paste()} function.
+#' This is the \pkg{stringi}'s implementation of the built-in \code{\link{paste}} function.
 #'
 #' @details
 #' \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
-#' Use whichever you want, they are the same.
+#' Use whichever you want, they are equivalent.
 #'
-#' If \code{collapse} is set to non-\code{NULL}, the the result will be a single string.
+#' If \code{collapse} is not \code{NULL}, then the result will be a single string.
 #' Otherwise, you will get a character vector of length equal
 #' to the length of the longest argument.
 #'
-#' If any of the arguments in `\code{...}` is a vector of length 0, then in result
+#' If any of the arguments in `\code{...}` is a vector of length 0, then
 #' you will get 0-length character vector.
 #'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string
@@ -105,8 +105,8 @@ stri_dup <- function(str, times) {
 #' In case of any \code{NA}, \code{NA} is set to the corresponding element.
 #'
 #' @param ... character vectors which corresponding elements should be concatenated
-#' @param sep single string, separates terms
-#' @param collapse single string, separates the results
+#' @param sep single string; separates terms
+#' @param collapse single string; separates the results
 #'
 #' @return character string
 #'
@@ -139,12 +139,12 @@ stri_paste <- stri_join
 #' Joins elements of a character vector into one string.
 #'
 #' @details
-#' \code{stri_flatten(str, collapse='XXX')} works the same as
-#' \code{paste(str, collapse='XXX', sep="")}.
+#' \code{stri_flatten(str, collapse='XXX')} works like
+#' \code{\link{paste}(str, collapse='XXX', sep="")}.
 #'
 #' If you wish to use some more fancy \code{collapse} separators
 #' between flattened strings,
-#' call \code{stri_join(str, separators, collapse='')}.
+#' call \code{\link{stri_join}(str, separators, collapse='')}.
 #'
 #' If \code{str} is not empty, then a single string is returned.
 #' If \code{collapse} has length > 1, then only first string

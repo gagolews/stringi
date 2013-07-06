@@ -27,9 +27,9 @@
 #'
 #' @details
 #' This is often not the function you would normally use
-#' in your string processing activities. See rather \link{stri_length}.
+#' in your string processing activities. See rather \code{\link{stri_length}}.
 #'
-#' For 8-bit encoded strings, this is the same as \link{stri_length}.
+#' For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
 #' For UTF-8 strings, the returned values may be greater
 #' than the number of code points, as UTF-8 is not a fixed-byte encoding:
 #' one codepoint may be, at least theoretically, represented with 1-6 bytes (however,
@@ -71,7 +71,7 @@ stri_numbytes <- function(str) {
 #' printed on the screen.
 #'
 #' If a given string is in UTF-8 and not has been properly Unicode normalized
-#' (e.g. by \link{stri_enc_nfc}), this number may sometimes be
+#' (e.g. by \code{\link{stri_enc_nfc}}), this number may sometimes be
 #' misleading.
 #'
 #' Missing values are handled properly,

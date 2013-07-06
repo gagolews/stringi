@@ -18,23 +18,24 @@
 
 
 #' @title
-#' Detect a Character Class Match in a String
-#' 
+#' Detect a Character Class Match
+#'
 #' @description
-#' This function checks if any characters matches specific character
-#' class (e.g. letters, digits, or whitespaces).
-#' 
+#' This function checks if any character matches a given character
+#' class (e.g. letters, digits, or white spaces).
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
-#' 
+#'
+#'
 #' @param str character vector to search in
-#' @param pattern character vector with character class identifiers, see \link{stringi-search-charclass}
+#' @param pattern character vector; identifiers of character classes,
+#' see \link{stringi-search-charclass}
 #' @return logical vector
-#' 
+#'
 #' @examples
 #' stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
-#' 
+#'
 #' @export
 #' @family search_detect
 #' @family search_charclass
@@ -44,32 +45,36 @@ stri_detect_charclass <- function(str, pattern) {
 
 
 #' @title
-#' Detect a Fixed Pattern Match in a String
-#' 
+#' Detect a Fixed Pattern Match
+#'
 #' @description
-#' This function checks if there is at least one occurence of fixed pattern
+#' This function checks if there is at least one occurrence of a fixed pattern
 #' in a string.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' See \link{stringi-search-fixed} for more details on
-#' Locale-Sensitive Text Searching in \pkg{stringi}.
-#' 
+#' locale-sensitive text searching in \pkg{stringi}.
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
+#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
+#' locale unaware, (exact) byte comparisons. For natural language text
+#' this may be not what you really want.
+#'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy byte comparison
-#' 
-#' @return logical vector 
+#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
+#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
+#'
+#' @return logical vector
 #' @examples
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), opts_collator=NA)
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', opts_collator=NA)
 #' @export
-#' 
+#'
 #' @family search_detect
 #' @family search_fixed
 #' @family locale_sensitive
@@ -79,22 +84,22 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Detect a Regex Pattern Match in a String
-#' 
+#' Detect a Regexp Pattern Match
+#'
 #' @description
-#' This function checks if there is at least one occurence of regex pattern
+#' This function checks if there is at least one match to a regexp pattern
 #' in a string.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' @param str character vector of strings to search in
-#' @param pattern character vector of regex patterns to search for
-#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
-#' 
+#' @param pattern character vector of regular expressions
+#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#'
 #' @return logical vector
 #' @examples
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), 'R.')
@@ -111,21 +116,21 @@ stri_detect_regex <- function(str, pattern, opts_regex=list()) {
 
 
 #' @title
-#' Detect a Pattern Match in a String
-#' 
+#' Detect a Pattern Match
+#'
 #' @details
 #' A convenience function.
 #' Calls either \code{\link{stri_detect_regex}},
 #' \code{\link{stri_detect_fixed}}, or \code{\link{stri_detect_charclass}},
 #' depending on the argument used.
-#' 
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
-#' @param regex character vector of regex patterns to search for
-#' @param fixed character vector of fixed patterns to search for
-#' @param charclass character class identifiers
+#' @param regex character vector; regular expressions
+#' @param fixed character vector; fixed patterns
+#' @param charclass character vector; identifiers of character classes
 #' @return logical vector
-#' 
+#'
 #' @export
 #' @family search_detect
 stri_detect <- function(str, ..., regex, fixed, charclass) {

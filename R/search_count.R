@@ -19,25 +19,26 @@
 
 
 #' @title
-#' Count the Number of Character Class Matches in a String
-#' 
+#' Count the Number of Character Class Matches
+#'
 #' @description
-#' This function counts the number of characters that matches specific 
-#' character class (e.g. letters, digits, or whitespaces).
-#' 
-#' 
+#' This function counts the number of characters that matches a given
+#' character class (e.g. letters, digits, or white spaces).
+#'
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @param str character vector to search in
-#' @param pattern character vector with character class identifiers, see \link{stringi-search-charclass}
+#' @param pattern character vector; identifiers of character classes,
+#' see \link{stringi-search-charclass}
 #' @return integer vector
-#' 
+#'
 #' @examples
 #' stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
-#' stri_count_charclass(" \t\n", "WHITE_SPACE")
+#' stri_count_charclass(" \t\n", "WHITE_SPACE") # white space - binary property
 #' stri_count_charclass(" \t\n", "Z") # whitespace - general category (note the difference)
 #'
 #' @export
@@ -51,27 +52,30 @@ stri_count_charclass <- function(str, pattern) {
 
 
 #' @title
-#' Count the Number of Fixed Pattern Matches in a String
-#' 
+#' Count the Number of Fixed Pattern Matches
+#'
 #' @description
-#' This function count the number of occurences of fixed pattern in a string.
-#' 
+#' This function counts the number of occurrences of a fixed pattern in a string.
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' See \link{stringi-search-fixed} for more details on
 #' Locale-Sensitive Text Searching in \pkg{stringi}.
-#' 
+#'
+#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
+#' locale unaware, (exact) byte comparisons. For natural language text
+#' this may be not what you really want.
+#'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named R list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy byte comparison
-#' @return integer vector, with number of matches for vectorized
-#' search task
-#' 
+#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
+#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
+#' @return integer vector with the number of matches
+#'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count_fixed(s, " ")
@@ -80,7 +84,7 @@ stri_count_charclass <- function(str, pattern) {
 #' stri_count_fixed(s, letters)
 #' stri_count_fixed("babab", "b")
 #' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
-#' 
+#'
 #' @export
 #' @family search_count
 #' @family search_fixed
@@ -93,23 +97,22 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 
 
 #' @title
-#' Count the Number of Regex Pattern Matches in a String
-#' 
+#' Count the Number of Regexp Pattern Matches
+#'
 #' @description
-#' This function count the number of occurences of regex pattern in a string.
-#' 
+#' This function counts the number of occurrences of matches to a regexp pattern.
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' @param str character vector of strings to search in
-#' @param pattern character vector of regex patterns to search for
-#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
-#' @return integer vector, with number of matches for vectorized
-#' search task
-#' 
+#' @param pattern character vector of regular expressions
+#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @return integer vector
+#'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count_regex(s,"(s|el)it")
@@ -118,7 +121,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
-#' 
+#'
 #' @export
 #' @family search_count
 #' @family search_regex
@@ -131,26 +134,26 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 
 #' @title
 #' Count the Number of Pattern Matches in a String
-#' 
+#'
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_count_regex}},
 #' \code{\link{stri_count_fixed}}, or \code{\link{stri_count_charclass}},
 #' depending on the argument used.
-#' 
-#' 
+#'
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
-#' @param regex character vector of regex patterns to search for
-#' @param fixed character vector of fixed patterns to search for
-#' @param charclass character class identifiers
-#' @return logical vector
-#' 
+#' @param regex character vector; regular expressions
+#' @param fixed character vector; fixed patterns
+#' @param charclass character vector; identifiers of character classes
+#' @return integer vector
+#'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count(s, fixed=letters)
 #' stri_count(s, regex="[[:alpha:]]")
-#' 
+#'
 #' @export
 #' @family search_count
 stri_count <- function(str, ..., regex, fixed, charclass) {
