@@ -19,7 +19,7 @@
 
 
 #' @title
-#' List Available Encodings
+#' List Known Character Encodings
 #'
 #' @description
 #' Gives encodings that are supported by ICU.
@@ -33,7 +33,7 @@
 #' list of character vectors?
 #'
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of
-#'  character vectors is returned: Each element represents one unique
+#'  character vectors is returned: Each element represents a unique
 #'  character encoding. The \code{name} attribute gives the ICU canonical
 #'  name of an encoding family. The elements (character vectors) are
 #'  its aliases.
@@ -55,30 +55,36 @@ stri_enc_list <- function(simplified=FALSE) {
 
 
 #' @title
-#' Query Given Encoding
+#' Query Given Character Encoding
 #'
 #' @description
 #' Gets basic information on a given character encoding.
+#' 
+#' @details
+#' If the encoding provided is unknown to ICU (see \code{\link{stri_enc_list}}),
+#' an error is generated.
 #'
 #' @param enc \code{NULL} or \code{""} for default encoding,
 #' or a single string with encoding name
 #'
-#' @return If the given encoding is unknown to ICU, an error is generated.
-#' Otherwise, you get a list with the following components:
+#' @return 
+#' Returns a list with the following components:
 #' \itemize{
-#' \item \code{Name.friendly} - Friendly encoding name: MIME name or JAVA name or ICU Canonical name
+#' \item \code{Name.friendly} -- Friendly encoding name: MIME name or JAVA name or ICU Canonical name
 #'    (selecting the first of supported ones, see below);
-#' \item \code{Name.ICU} - Encoding name as identified by ICU;
-#' \item \code{Name.*}, e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
-#' \item \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
-#' availiable for selected  encodings) -
-#' \item \code{ASCII.subset} - has this encoding ASCII as its subset?
-#' \item \code{Unicode.1to1} - for 8-bit encodings only: does every character
-#' translate into one Unicode codepoint and is this translation reversible?
-#' \item \code{CharSize.8bit} - is this an 8-bit encoding, i.e. do we have
-#'    \code{CharSize.min == CharSize.max} and \code{CharSize.min == 1}?
-#' \item \code{CharSize.min} - minimal number of bytes used to represend a code point
-#' \item \code{CharSize.max} - maximal number of bytes used to represend a code point
+#' \item \code{Name.ICU} -- Encoding name as identified by ICU;
+#' \item \code{Name.*} -- other standardized encoding names, 
+#' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
+#' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
+#' availiable for selected  encodings);
+#' \item \code{ASCII.subset} -- is ASCII a subset of the given encoding?;
+#' \item \code{Unicode.1to1} -- for 8-bit encodings only: are all characters
+#' translated to exactly one Unicode codepoint and is this translation
+#' well reversible?;
+#' \item \code{CharSize.8bit} -- is this an 8-bit encoding, i.e. do we have
+#'    \code{CharSize.min == CharSize.max} and \code{CharSize.min == 1}?;
+#' \item \code{CharSize.min} -- minimal number of bytes used to represent a code point;
+#' \item \code{CharSize.max} -- maximal number of bytes used to represent a code point.
 #' }
 #' @family encoding_management
 #' @export
@@ -88,17 +94,26 @@ stri_enc_info <- function(enc=NULL) {
 
 
 #' @title
-#' Set Default Encoding
+#' Set or Get Default Character Encoding in \pkg{stringi}
 #'
 #' @description
-#' Sets encoding to be used to decode strings
-#' internally marked as Native, see \link{stringi-encoding}
+#' \code{stri_enc_set} sets encoding used to decode strings
+#' internally (i.e. by R) marked as Native, see \link{stringi-encoding}.
+#' \code{stri_enc_get} returns currenly used default encoding.
+#' 
+#' @details
+#' \code{stri_enc_get} is the same as \code{\link{stri_enc_info}(NULL)$Name.friendly}.
 #'
-#' @param enc character encoding name,
-#' see \code{\link{stri_enc_list}}
-#' @return Previously set default encoding, invisibly.
+#' @param enc single string; character encoding name,
+#' see \code{\link{stri_enc_list}} for the list of supported encodings.
+#' @return
+#' For \code{stri_enc_set}: a string with
+#' previously used character encoding, invisibly.
+#' 
+#' For \code{stri_enc_get}: a string with current default locale.
 #'
 #' @family encoding_management
+#' @rdname stri_enc_set
 #' @export
 stri_enc_set <- function(enc) {
    previous <- stri_enc_get()
@@ -111,18 +126,7 @@ stri_enc_set <- function(enc) {
 }
 
 
-#' @title
-#' Get Default Encoding
-#'
-#' @description
-#' Gets encoding used to decode strings
-#' internally marked as Native, see \link{stringi-encoding}
-#'
-#' @details
-#' Same as \code{stri_enc_info()$Name.friendly}.
-#'
-#' @return a character string
-#' @family encoding_management
+#' @rdname stri_enc_set
 #' @export
 stri_enc_get <- function() {
    stri_enc_info(NULL)$Name.friendly

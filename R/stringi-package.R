@@ -92,7 +92,7 @@
 #' @references
 #' \emph{\pkg{stringi} Package homepage}, \url{http://stringi.rexamine.com}
 #' 
-#' \emph{ICU - International Components for Unicode}, \url{http://www.icu-project.org/}
+#' \emph{ICU -- International Components for Unicode}, \url{http://www.icu-project.org/}
 #' 
 #' \emph{ICU4C API Documentation}, \url{http://www.icu-project.org/apiref/icu4c/}
 #' 

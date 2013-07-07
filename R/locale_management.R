@@ -58,13 +58,13 @@ stri_locale_list <- function() {
 #' 
 #' \code{stri_locale_get} is the same as \code{\link{stri_locale_info}(NULL)$Name}.
 #'
-#' @param locale character string of the form \code{Language},
+#' @param locale single string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
 #' see \code{\link{stri_locale_list}}.
 #' 
 #' @return
 #' For \code{stri_locale_set}: a string with
-#' previously set default locale, invisibly.
+#' previously used locale, invisibly.
 #' 
 #' For \code{stri_locale_get}: a string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US".

@@ -110,8 +110,8 @@
 #' @family encoding_conversion
 #'
 #' @references
-#' \emph{Conversion} - ICU User Guide, \url{http://userguide.icu-project.org/conversion}
+#' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
 #' 
-#' \emph{Converters} - ICU User Guide, 
+#' \emph{Converters} -- ICU User Guide, 
 #' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
 invisible(NULL)

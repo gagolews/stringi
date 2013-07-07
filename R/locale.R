@@ -22,52 +22,81 @@
 #'
 #' @description
 #' In this section we explain how we deal with locales in \pkg{stringi}.
+#' Locale is a fundamental concept in ICU.
+#' It identifies a specific user community, i.e. a group of users 
+#' who have similar culture and language expectations 
+#' for human-computer interaction.
+#' 
 #' 
 #' @details
-#' Locales are most conviniently identified by character strings
-#' of the form \code{Language},
-#' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US"
 #' 
-#' ICU4C API DOC: "Because a Locale is just an identifier for a region, 
+#' Because a locale is just an identifier for a region, 
 #' no validity check is performed when you specify a Locale. 
+#' ICU is implemented as a set of services.
 #' If you want to see whether particular resources are available 
 #' for the Locale you asked for, you must query those resources. (...)
 #' Note: When you ask for a resource for a particular locale, you get
-#' back the best available match, not necessarily precisely what you asked for."
+#' back the best available match, not necessarily precisely what you asked for.
 #' 
-#' ICU4C API DOC: "ICU is implemented as a set of services. One example 
-#' of a service is the formatting of a numeric value into a string. 
-#' Another is the sorting of a list of strings. When client code wants 
-#' to use a service, the first thing it does is request a service object 
-#' for a given locale. The resulting object is then expected to perform 
-#' its operations in a way that is culturally correct for the requested locale."
+#' @section Locale Identifiers:
 #' 
+#' ICU services are parameterized by locale,
+#' to deliver culturally correct results.
+#' Locales are identified by character strings
+#' of the form \code{Language} code,
+#' \code{Language_Country} code, or \code{Language_Country_Variant}
+#' code, e.g. "en_US".
 #' 
+#' The two-letter \code{Language} code uses the ISO-639-1 standard,
+#' e.g. "en" stands for English, "pl" -- Polish, "fr" -- French,
+#' and "de" for German.
+#' 
+#' \code{Country} is a two-letter code following the ISO-3166 standard.
+#' This is to reflect different language conventions within the same language,
+#' for example in US-English ("en_US") and Australian-English ("en_AU").
+#' 
+#' Differences may also appear in language conventions used within 
+#' the same country. For example, the Euro currency is used in several European 
+#' countries while the individual country's currency is still in circulation. 
+#' In such case, ICU \code{Variant} "_EURO" is for locales that support the Euro currency.
 #' 
 #' @section A Note on Default Locales:
 #' 
-#' Except for \code{\link{stri_locale_set}}, each function
+#' Each function in \pkg{stringi}
 #' selects default locale if an empty string or \code{NULL} is given as
-#' argument.
+#' argument. Default locales are available to all the functions:
+#' they are set to be the system locale on that platform,
+#' and may be changed with \code{\link{stri_locale_set}},
+#' for example if automatic  detection fails to recognize
+#' your locale properly.
 #' 
-#' "Default locales are available to all the objects in a program. 
-#' If you set a new default locale for one section of code, it can affect 
-#' the entire program [all other functions from \pkg{stringi}]. 
-#' Application programs should not set the default locale 
-#' as a way to request an international object. The default locale is set 
-#' to be the system locale on that platform."
+#' Generally, your program should avoid changing the default locale:
+#' it is not a good way to request an international object.
+#' All locale-sensitive functions may request
+#' any desired locale per-call (by specifying the \code{locale} argument),
+#' i.e. without referencing to the default locale.
 #' 
-#' @section Collation:
+#' @section Locale-Sensitive Functions in \pkg{stringi}:
 #' 
-#' See \code{\link{stri_opts_collator}} for the description
-#' on how to tune the Collator, which performs
+#' One of many examples of locale-dependent services
+#' is the Collator, which performs
 #' a locale-aware string comparison.
 #' It is used for string casefolding, comparing, ordering,
 #' sorting, and searching.
+#' See \code{\link{stri_opts_collator}} for the description
+#' on how to tune its settings, and its \code{locale}
+#' argument in particular.
+#' 
+#' Other locale-sensitive functions
+#' include e.g. \code{\link{stri_trans_tolower}} (that does character case mapping).
 #' 
 #' @references
-#' \emph{Locale} - ICU User Guide, \url{http://userguide.icu-project.org/locale}
+#' \emph{Locale} -- ICU User Guide, \url{http://userguide.icu-project.org/locale}
 #' 
+#' \emph{ISO 639: Language Codes},
+#' \url{http://www.iso.org/iso/home/standards/language_codes.htm}
+#' 
+#' \emph{ISO 3166: Country Codes}, \url{http://www.iso.org/iso/country_codes}
 #' @name stringi-locale
 #' @rdname stringi-locale
 #' @family locale_management

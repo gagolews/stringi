@@ -40,7 +40,7 @@
 #' Returns a character vector.
 #'
 #' @references
-#' \emph{Case Mappings} - ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
+#' \emph{Case Mappings} -- ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
 #' 
 #' @family locale_sensitive
 #' @export

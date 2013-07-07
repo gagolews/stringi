@@ -42,7 +42,8 @@
 #'
 #'
 #'
-#' @param locale single string, \code{""} for default locale
+#' @param locale single string, \code{NULL} or
+#' \code{""} for default locale
 #' @param strength single integer, collation strength, in \{1,2,...,4\};
 #' \code{1} for the most permissive collation rules, \code{4} for the most
 #' strict
@@ -74,20 +75,20 @@
 #' @family search_fixed
 #'
 #' @references
-#' \emph{Collation} - ICU User Guide, 
+#' \emph{Collation} -- ICU User Guide, 
 #' \url{http://userguide.icu-project.org/collation}
 #' 
-#' \emph{ICU Collation Service Architecture} - ICU User Guide, 
+#' \emph{ICU Collation Service Architecture} -- ICU User Guide, 
 #' \url{http://userguide.icu-project.org/collation/architecture}
 #' 
-#' \emph{\code{icu::Collator} Class Reference} - ICU4C API Documentation, 
+#' \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation, 
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
 #' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
 #' stri_cmp("above mentioned", "above-mentioned")
 #' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
-stri_opts_collator <- function(locale="", strength=3L,
+stri_opts_collator <- function(locale=NULL, strength=3L,
    alternate_shifted=FALSE, french=FALSE,
    uppercase_first=NA, case_level=FALSE,
    normalization=FALSE, numeric=FALSE)
@@ -143,7 +144,7 @@ stri_opts_collator <- function(locale="", strength=3L,
 #'
 #' @references
 #' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes} 
-#' - ICU4C API Documentation, 
+#' -- ICU4C API Documentation, 
 #' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}\cr
 #'
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,

@@ -43,13 +43,14 @@
  *
  * 
  * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
+ * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
 */
 SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   BreakIterator* briter = NULL;
    
    STRI__ERROR_HANDLER_BEGIN
    
@@ -58,8 +59,14 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    int _type = INTEGER(type)[0];
    
    
-   Locale loc = Locale::createFromName(qloc); // this will be freen automatically
+   Locale loc = Locale::createFromName(qloc); // this will be freed automatically
    StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
+   
+   if (_type == 6) {
+      UErrorCode status = U_ZERO_ERROR;
+      briter = BreakIterator::createWordInstance(loc, status);
+      if (U_FAILURE(status)) throw StriException(status);
+   }
    
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -82,15 +89,21 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
             case 5:
                str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
                break;
+            case 6:
+               str_cont.getWritable(i).toTitle(briter, loc); // how to get it working properly with English text???
+               break;
             default:
-               throw StriException("stri_casemap: incorrect case conversion type");
+               throw StriException("stri_trans_case: incorrect case conversion type");
          }
       }
    }
    
+   if (briter) { delete briter; briter = NULL; }
    SEXP ret;
    PROTECT(ret = str_cont.toR());
    UNPROTECT(1);
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END(
+      if (briter) delete briter;
+   )
 }
