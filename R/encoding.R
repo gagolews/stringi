@@ -57,7 +57,7 @@
 #' ???Most functions in \pkg{stringi} output results in UTF-8???
 #'
 #'
-#' codepoints input in R: uxxxxxx vs Uxxxxxx
+#' code points input in R: uxxxxxx vs Uxxxxxx
 #'
 #'
 #'

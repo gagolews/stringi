@@ -22,7 +22,7 @@
 #' Extract a Substring From or Replace a Substring In a Character Vector
 #' 
 #' @description
-#' The first function extracts substrings under given codepoint-based
+#' The first function extracts substrings under given code point-based
 #' index ranges. The second one allows you to substitute parts of
 #' a string with given strings.
 #' 
@@ -36,7 +36,7 @@
 #' as \code{from} and second as \code{to}. In such case arguments
 #' \code{to} and \code{length} are ignored.
 #' 
-#' The indices given are, of course, Unicode codepoint-based,
+#' The indices given are, of course, Unicode code point-based,
 #' and not byte-based.
 #' Note that for some Unicode strings, the extracted substrings may not
 #' be well-formed, especially if the input is not NFC-normalized,

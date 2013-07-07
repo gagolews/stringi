@@ -212,7 +212,7 @@ stri_prepare_arg_raw <- function(x) {
 #' @return
 #' first, \code{\link{stri_prepare_arg_string}} is called;
 #' on empty vector, an error is generated;
-#' if there are are > 1 elems, a warning is generated;
+#' if there are are > 1 elements, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned.
 #'
 #' @family prepare_arg
@@ -233,7 +233,7 @@ stri_prepare_arg_string_1 <- function(x) {
 #' @return
 #' first, \code{\link{stri_prepare_arg_double}} is called;
 #' on empty vector, an error is generated;
-#' if there are are > 1 elems, a warning is generated;
+#' if there are are > 1 elements, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
 #'
 #' @family prepare_arg
@@ -254,7 +254,7 @@ stri_prepare_arg_double_1 <- function(x) {
 #' @return
 #' first, \code{\link{stri_prepare_arg_integer}} is called;
 #' on empty vector, an error is generated;
-#' if there are are > 1 elems, a warning is generated;
+#' if there are are > 1 elements, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
 #'
 #' @family prepare_arg
@@ -276,7 +276,7 @@ stri_prepare_arg_integer_1 <- function(x) {
 #' @return
 #' first, \code{\link{stri_prepare_arg_logical}} is called;
 #' on empty vector, an error is generated;
-#' if there are are > 1 elems, a warning is generated;
+#' if there are are > 1 elements, a warning is generated;
 #' a vector with one (the first in \code{x}) is returned
 #'
 #' @family prepare_arg

@@ -37,7 +37,7 @@
 #' @return
 #' For \code{stri_locate_all_charclass},
 #' list of \code{max(length(str), length(pattern))} integer matrices.
-#' The first column gives start postions
+#' The first column gives start positions
 #' of matches, and the second column gives end position.
 #' Two \code{NA}s for no match or \code{NA} arguments.
 #'

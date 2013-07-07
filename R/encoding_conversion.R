@@ -115,7 +115,7 @@ stri_enc_toutf32 <- function(str) {
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
 #' to mark the end of a string (in C/C++/...).
 #'
-#' If an incorrect codepoint is given, a warning is generated
+#' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
 #'
 #' \code{NULL}s in the input list  are converted to \code{NA_character_}.

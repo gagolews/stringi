@@ -58,7 +58,7 @@ stri_enc_isascii <- function(str) {
 #' represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
 #'
-#' However, the longer the seqeuence,
+#' However, the longer the sequence,
 #' the bigger the possibility that the result
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.

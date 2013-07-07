@@ -36,7 +36,7 @@
 #' @param e1 character vector
 #' @param e2 character vector
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
+#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
 #' @return integer vector, elements are comparison results of corresponding
 #' pairs;
@@ -97,7 +97,7 @@ stri_cmp <- stri_compare
 #' @param decreasing single logical value; should the sort order be nondecreasing (\code{FALSE}, default)
 #' or nonincreasing (\code{TRUE})?
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy Unicode codepoint comparison
+#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
 #' @return for \code{stri_order}: an integer vector that gives the sort order;
 #' for \code{stri_order}: a sorted version of \code{str}

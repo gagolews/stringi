@@ -207,7 +207,7 @@ invisible(NULL)
 #' These provide access to the ICU's Unicode Character Database 
 #'
 #' Unicode assigns each code point (not just assigned character) 
-#' values for many properties. Most of them are simple boolean flags, 
+#' values for many properties. Most of them are simple Boolean flags, 
 #' or constants from a small enumerated list. For some properties, 
 #' values are strings or other relatively more complex types.
 #' 
@@ -216,7 +216,7 @@ invisible(NULL)
 #' Note that e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} may match different character sets.
 #' 
-#' Each class may be preceeded with '^' (complement)...
+#' Each class may be preceded with '^' (complement)...
 #' 
 #' @section Unicode General Categories:
 #' 
@@ -227,7 +227,7 @@ invisible(NULL)
 #' \itemize{
 #' \item \code{Cc}: a C0 or C1 control code
 #' \item \code{Cf}: a format control character
-#' \item \code{Cn}: a reserved unassigned code point or a noncharacter
+#' \item \code{Cn}: a reserved unassigned code point or a non-character
 #' \item \code{Co}: a private-use character
 #' \item \code{Cs}: a surrogate code point
 #' \item \code{Lc}: Union of Lu, Ll, Lt
@@ -238,9 +238,9 @@ invisible(NULL)
 #' \item \code{Lu}: an uppercase letter
 #' \item \code{Mc}: a spacing combining mark (positive advance width)
 #' \item \code{Me}: an enclosing combining mark
-#' \item \code{Mn}: a nonspacing combining mark (zero advance width)
+#' \item \code{Mn}: a non-spacing combining mark (zero advance width)
 #' \item \code{Nd}: a decimal digit
-#' \item \code{Nl}: a letterlike numeric character
+#' \item \code{Nl}: a letter-like numeric character
 #' \item \code{No}: a numeric character of other type
 #' \item \code{Pd}: a dash or hyphen punctuation mark
 #' \item \code{Ps}: an opening punctuation mark (of a pair)
@@ -251,7 +251,7 @@ invisible(NULL)
 #' \item \code{Pf}: a final quotation mark
 #' \item \code{Sm}: a symbol of mathematical use
 #' \item \code{Sc}: a currency sign
-#' \item \code{Sk}: a non-letterlike modifier symbol
+#' \item \code{Sk}: a non-letter-like modifier symbol
 #' \item \code{So}: a symbol of other type
 #' \item \code{Zs}: a space character (of various non-zero widths)
 #' \item \code{Zl}: U+2028 LINE SEPARATOR only
@@ -267,7 +267,7 @@ invisible(NULL)
 #' 
 #'
 #'
-#' @section Unicode Binary Properies:
+#' @section Unicode Binary Properties:
 #' 
 #' (matched case-insensitively, normalized like with ICU character encoding
 #' specification)
@@ -298,7 +298,7 @@ invisible(NULL)
 #'  \code{ID_START}+Mn+Mc+Nd+Pc
 #' \item \code{ID_START} - Characters that can start an identifier. 
 #' Lu+Ll+Lt+Lm+Lo+Nl
-#' \item \code{IDEOGRAPHIC} - CJKV (Chineese-Japaneese-Korean-Vietnameese) 
+#' \item \code{IDEOGRAPHIC} - CJKV (Chinese-Japanese-Korean-Vietnamese) 
 #' ideographs.
 #' \item \code{IDS_BINARY_OPERATOR}
 #' \item \code{IDS_TRINARY_OPERATOR}

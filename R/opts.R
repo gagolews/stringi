@@ -21,19 +21,21 @@
 #' Generate List with Collator Options
 #'
 #' @description
-#' Convenience function to tune collator's behavior,
+#' Convenience function to tune the Collator's behavior,
 #' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
-#' \code{\link{stri_detect_fixed}}, and other \link{stringi-search-fixed} functions.
+#' \code{\link{stri_detect_fixed}}, 
+#' and other \link{stringi-search-fixed} functions.
 #'
 #'
 #' @details
-#' ICU's collator performs a locale-aware, natural-language
+#' ICU's Collator performs a locale-aware, natural-language
 #' alike string comparison.
 #' This is a more intelligent form than that provided by base R
 #' (on some platforms), and definitely
 #' more complex than ordinary byte-comparison.
 #'
-#' A note on collation strength. Generally, \code{strength} set to 4 is
+#' A note on collation \code{strength}: 
+#' generally, \code{strength} set to 4 is
 #' the least permissive.
 #' Set to 2 to ignore case differences.
 #' Set to 1 to also ignore diacritical differences.
@@ -48,8 +50,8 @@
 #' \code{1} for the most permissive collation rules, \code{4} for the most
 #' strict
 #' @param alternate_shifted single logical value; \code{FALSE}
-#'  treats all the codepoints with non-ignorable primary weights in the same way,
-#'  \code{TRUE} causes codepoints with primary weights that are equal or below
+#'  treats all the code points with non-ignorable primary weights in the same way,
+#'  \code{TRUE} causes code points with primary weights that are equal or below
 #'  the variable top value to be ignored on primary level and moved to the quaternary level
 #' @param french single logical value; used in Canadian French;
 #' \code{TRUE} results in secondary weights being considered backwards
@@ -67,8 +69,10 @@
 #' when turned on, this attribute generates a collation key for
 #'  the numeric value of substrings of digits;
 #'  This is a way to get '100' to sort AFTER '2'.
+#'  
 #' @return
-#' a named list object; missing options are left with default values
+#' Returns a named list object; missing options are left with default values.
+#' 
 #' @export
 #' @aliases collator
 #' @family locale_sensitive
@@ -111,8 +115,9 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' Generate List with Regex Matcher Options
 #'
 #' @description
-#' Convenience function to tune regular expression matcher behavior,
-#' e.g. in \code{\link{stri_count_regex}} and other \link{stringi-search-regex} functions.
+#' A convenience function to tune regular expressions matcher behavior,
+#' e.g. in \code{\link{stri_count_regex}} 
+#' and other \link{stringi-search-regex} functions.
 #'
 #'
 #' @param case_insensitive logical; enable case insensitive matching
@@ -136,8 +141,10 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' If set, fail with an error on patterns that contain backslash-escaped ASCII
 #'  letters without a known special meaning.
 #'  If this flag is not set, these escaped letters represent themselves.
+#'  
 #' @return
-#' a named list object; missing options are left with default values
+#' Returns a named list object; missing options are left with default values.
+#' 
 #' @export
 #' @aliases regex
 #' @family search_regex

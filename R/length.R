@@ -32,7 +32,7 @@
 #' For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
 #' For UTF-8 strings, the returned values may be greater
 #' than the number of code points, as UTF-8 is not a fixed-byte encoding:
-#' one codepoint may be, at least theoretically, represented with 1-6 bytes (however,
+#' one code point may be, at least theoretically, represented with 1-6 bytes (however,
 #' current Unicode standard decided to use up to 4 bytes).
 #'
 #' Missing values are handled properly,

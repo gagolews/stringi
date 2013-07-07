@@ -60,7 +60,7 @@
 #' or/and end of a string, see also \link{stringi-search-charclass}.
 #' 
 #' \item \code{\link{stri_length}} (among others) - determining the number
-#' of codepoints in a string.
+#' of code points in a string.
 #' 
 #' \item \code{\link{stri_trans_tolower}} (among others) - case mapping,
 #' i.e. conversion to lower, UPPER, or Title case.

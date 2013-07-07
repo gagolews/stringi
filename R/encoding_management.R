@@ -76,10 +76,10 @@ stri_enc_list <- function(simplified=FALSE) {
 #' \item \code{Name.*} -- other standardized encoding names, 
 #' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
-#' availiable for selected  encodings);
+#' available for selected  encodings);
 #' \item \code{ASCII.subset} -- is ASCII a subset of the given encoding?;
 #' \item \code{Unicode.1to1} -- for 8-bit encodings only: are all characters
-#' translated to exactly one Unicode codepoint and is this translation
+#' translated to exactly one Unicode code point and is this translation
 #' well reversible?;
 #' \item \code{CharSize.8bit} -- is this an 8-bit encoding, i.e. do we have
 #'    \code{CharSize.min == CharSize.max} and \code{CharSize.min == 1}?;
@@ -99,7 +99,7 @@ stri_enc_info <- function(enc=NULL) {
 #' @description
 #' \code{stri_enc_set} sets encoding used to decode strings
 #' internally (i.e. by R) marked as Native, see \link{stringi-encoding}.
-#' \code{stri_enc_get} returns currenly used default encoding.
+#' \code{stri_enc_get} returns currently used default encoding.
 #' 
 #' @details
 #' \code{stri_enc_get} is the same as \code{\link{stri_enc_info}(NULL)$Name.friendly}.

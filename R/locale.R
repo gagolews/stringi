@@ -40,7 +40,7 @@
 #' 
 #' @section Locale Identifiers:
 #' 
-#' ICU services are parameterized by locale,
+#' ICU services are parametrized by locale,
 #' to deliver culturally correct results.
 #' Locales are identified by character strings
 #' of the form \code{Language} code,
