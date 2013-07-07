@@ -77,8 +77,8 @@ struct charptr_x2 {
 // ------------------------------------------------------------------------
 
 
-// casefold.cpp:
-SEXP stri_casefold(SEXP str, SEXP type, SEXP locale);               // DONE
+// casemap.cpp:
+SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale);             // DONE
 
 
 // common.cpp

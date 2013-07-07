@@ -46,7 +46,7 @@
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
 */
-SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
+SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
@@ -83,7 +83,7 @@ SEXP stri_casefold(SEXP str, SEXP type, SEXP locale)
                str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
                break;
             default:
-               throw StriException("stri_casefold: incorrect case conversion type");
+               throw StriException("stri_casemap: incorrect case conversion type");
          }
       }
    }

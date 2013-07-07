@@ -27,7 +27,6 @@ Authors@R: c(
     email = "marcin.bujarski@gmail.com")
     )
 Collate:
-    'casefold.R'
     'charclass.R'
     'compare.R'
     'encoding_conversion.R'
@@ -59,3 +58,4 @@ Collate:
     'pad.R'
     'opts.R'
     'search_match.R'
+    'casemap.R'

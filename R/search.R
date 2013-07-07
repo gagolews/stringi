@@ -93,6 +93,7 @@ invisible(NULL)
 #' (see References section) and its features are summarized in
 #' the ICU User Guide (see below). A good introduction
 #' to regexes is (Friedl, 2002).
+#' Some topics are also covered in R manual, see \link{regex}.
 #' 
 #' @section Regexes in \pkg{stringi}:
 #' Note that if a given regex \code{pattern} is empty,
@@ -117,7 +118,9 @@ invisible(NULL)
 #' \emph{Unicode Regular Expressions} - Regex tutorial, \url{http://www.regular-expressions.info/unicode.html}
 #' 
 #' @name stringi-search-regex
+#' @rdname stringi-search-regex
 #' @family search_regex
+#' @family stringi_general_topics
 invisible(NULL)
 
 
@@ -174,8 +177,10 @@ invisible(NULL)
 #' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 #' 
 #' @name stringi-search-fixed
+#' @rdname stringi-search-fixed
 #' @family search_fixed
 #' @family locale_sensitive
+#' @family stringi_general_topics
 invisible(NULL)
 
 
@@ -344,5 +349,7 @@ invisible(NULL)
 #' \url{http://www.unicode.org/reports/tr44/}
 #' 
 #' @name stringi-search-charclass
+#' @rdname stringi-search-charclass
 #' @family search_charclass
+#' @family stringi_general_topics
 invisible(NULL)

@@ -18,11 +18,11 @@
 
 
 #' @title
-#' Translate String with Full Case Mapping
+#' Translate String with Case Mapping
 #'
 #' @description
-#' These functions translate strings either to lowercase,
-#' UPPERCASE, or to Title Case.
+#' These functions translate strings either to lower case,
+#' UPPER CASE, or to Title Case.
 #'
 #' @details
 #' ICU implements full Unicode string case mappings. In general,
@@ -32,43 +32,43 @@
 #' \item is context-sensitive (a character in the input string may map differently depending on surrounding characters).
 #' }
 #'
-#' @param str character vector on which casefolding is applied
-#' @param locale \code{NULL} or \code{""} for casefolding following
+#' @param str character vector
+#' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with locale identifier,
 #' see \link{stringi-locale}.
-#' @return character vector
+#' @return 
+#' Returns a character vector.
 #'
 #' @references
 #' \emph{Case Mappings} - ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
 #' 
 #' @family locale_sensitive
-#' @aliases casefold
 #' @export
-#' @rdname casefold
+#' @rdname stri_trans_case
 #'
 #' @examples
-#' stri_toupper("\u00DF", "de_DE") # small German double s
-#' stri_toupper("i", "en_US") != stri_toupper("i", "tr_TR")
-#' stri_toupper(c('abc','123','\u0105\u0104'))
+#' stri_trans_toupper("\u00DF", "de_DE") # small German double s
+#' stri_trans_toupper("i", "en_US") != stri_toupper("i", "tr_TR")
+#' stri_trans_toupper(c('abc','123','\u0105\u0104'))
 #'
-#' stri_tolower(c('AbC','123','\u0105\u0104'))
+#' stri_trans_tolower(c('AbC','123','\u0105\u0104'))
 #'
-#' stri_totitle(c('AbC','123','\u0105\u0104'))
-#' stri_totitle("aLA mA kOTA")
-stri_tolower <- function(str, locale=NULL) {
-   .Call("stri_casefold", str, 1L, locale, PACKAGE="stringi")
+#' stri_trans_totitle(c('AbC','123','\u0105\u0104'))
+#' stri_trans_totitle("aLA mA kOTA")
+stri_trans_tolower <- function(str, locale=NULL) {
+   .Call("stri_trans_case", str, 1L, locale, PACKAGE="stringi")
 }
 
 
 #' @export
-#' @rdname casefold
-stri_toupper <- function(str, locale=NULL) {
-   .Call("stri_casefold", str, 2L, locale, PACKAGE="stringi")
+#' @rdname stri_trans_case
+stri_trans_toupper <- function(str, locale=NULL) {
+   .Call("stri_trans_case", str, 2L, locale, PACKAGE="stringi")
 }
 
 
 #' @export
-#' @rdname casefold
-stri_totitle <- function(str, locale=NULL) {
-   .Call("stri_casefold", str, 3L, locale, PACKAGE="stringi")
+#' @rdname stri_trans_case
+stri_trans_totitle <- function(str, locale=NULL) {
+   .Call("stri_trans_case", str, 3L, locale, PACKAGE="stringi")
 }

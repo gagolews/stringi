@@ -31,7 +31,10 @@
 #'
 #' See \link{stringi-locale} for more information.
 #'
-#' @return character vector of supported locale identifiers
+#' @return
+#' Returns a character vector with locale identifiers
+#' that are known to ICU.
+#' 
 #' @family locale_management
 #' @export
 stri_locale_list <- function() {
@@ -40,22 +43,43 @@ stri_locale_list <- function() {
 
 
 #' @title
-#' Set Default Locale
+#' Set or Get Default Locale in \pkg{stringi}
 #'
 #' @description
-#' Changes default locale for all \pkg{stringi} functions,
-#' i.e. establishes the meaning of the ``\code{NULL} locale''
-#' (in locale-sensitive functions).
+#' \code{stri_locale_set} changes default locale for all  functions
+#' in the \pkg{stringi} package,
+#' i.e. establishes the meaning of the ``\code{NULL} locale'' argument
+#' in locale-sensitive functions. \code{stri_locale_get}
+#' gets current default locale.
 #'
 #' @details
 #' See \link{stringi-locale} for more information on the effect of
 #' changing default locale.
+#' 
+#' \code{stri_locale_get} is the same as \code{\link{stri_locale_info}(NULL)$Name}.
 #'
-#' @param locale a character string of the form \code{Language},
+#' @param locale character string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
-#' see \code{\link{stri_locale_list}}
-#' @return previously set default locale, invisibly
+#' see \code{\link{stri_locale_list}}.
+#' 
+#' @return
+#' For \code{stri_locale_set}: a string with
+#' previously set default locale, invisibly.
+#' 
+#' For \code{stri_locale_get}: a string of the form \code{Language},
+#' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US".
+#' 
 #' @family locale_management
+#' @rdname stri_locale_set
+#' @examples
+#' \dontrun{
+#' oldloc <- stri_locale_set("pt_BR")
+#' # ... some locale-dependent operations
+#' # ... note that you may always modify locale per-function call
+#' # ... changing default locale is convinient if you perform
+#' # ... many operations
+#' stri_locale_set(oldloc) # restore previous default locale
+#' }
 #' @export
 stri_locale_set <- function(locale) {
    previous <- stri_locale_get()
@@ -68,22 +92,7 @@ stri_locale_set <- function(locale) {
 }
 
 
-#' @title
-#' Get Default Locale
-#'
-#' @description
-#' Gets current default locale in \pkg{stringi}, e.g.
-#' reveals the meaning of the ``\code{NULL} locale''
-#' (in locale-sensitive functions).
-#'
-#' @details
-#' Same as \code{\link{stri_locale_info}()$Name}.
-#'
-#' See \link{stringi-locale} for more information.
-#'
-#' @return a character string of the form \code{Language},
-#' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US"
-#' @family locale_management
+#' @rdname stri_locale_set
 #' @export
 stri_locale_get <- function() {
    stri_locale_info(NULL)$Name
@@ -97,15 +106,32 @@ stri_locale_get <- function() {
 #' Provides some basic information on a given locale identifier.
 #'
 #' @details
-#' With this function you may obtain some basic information on any provided locale identifier,
+#' With this function you may obtain some basic information 
+#' on any provided locale identifier,
 #' even if it is unsupported by ICU or if you pass a malformed locale
-#' identifier (e.g. not of the form Language_Country). See \link{stringi-locale}
-#' for discussion.
+#' identifier (e.g. not of the form Language_Country). 
+#' See \link{stringi-locale} for discussion.
+#' 
+#' This function does nothing complicated. In many
+#' cases it is similar to a call to
+#' \code{\link{as.list}(\link{stri_split_fixed}(locale, "_", 3L, opts_collator=NA)[[1]])},
+#' with \code{locale} case mapped.
+#' It may be used, however, to get insight on how ICU understands a provided
+#' locale identifier.
 #'
-#' @param locale \code{NULL} or \code{""} for default locale, or a single string with locale identifier
+#' @param locale \code{NULL} or \code{""} 
+#' for default locale,
+#' or a single string with locale identifier.
 #'
-#' @return A list with the following elements: \code{Language}, \code{Country}, \code{Variant} and
-#' their combination, \code{Name}. Each is a character string.
+#' @return 
+#' Returns a list with the following named character strings: 
+#' \code{Language}, \code{Country}, \code{Variant}, and
+#' \code{Name}, being their underscore separated combination.
+#' 
+#' @examples
+#' stri_locale_info("pl_PL")
+#' stri_locale_info("Pl_pL") # the same result
+#' 
 #' @family locale_management
 #' @export
 stri_locale_info <- function(locale=NULL) {

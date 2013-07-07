@@ -62,7 +62,7 @@
 #' \item \code{\link{stri_length}} (among others) - determining the number
 #' of codepoints in a string.
 #' 
-#' \item \code{\link{stri_tolower}} (among others) - case mapping,
+#' \item \code{\link{stri_trans_tolower}} (among others) - case mapping,
 #' i.e. conversion to lower, UPPER, or Title case.
 #' 
 #' \item \code{\link{stri_compare}}, \code{\link{stri_order}},
@@ -71,6 +71,7 @@
 #' 
 #' \item TO DO [these will appear in future versions
 #' of \pkg{stringi}]: pad, wrap, justify, HTML entities,
+#' character translation,
 #' escape characters, MIME Base 64 encode/decode, text file read/write,
 #' random string generation, number and data/time formatting,
 #' and many more.
@@ -83,6 +84,7 @@
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
 #' @name stringi-package
+#' @rdname stringi-package
 #' @docType package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
