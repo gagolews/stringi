@@ -49,12 +49,17 @@
 #' from the use of canonically equivalent, yet different,
 #' character sequences in document formats on the Web.
 #'
-#' The input character vector can, as usual in \pkg{stringi}, be in any encoding.
+#' As usual in \pkg{stringi},
+#' if the input character vector is in the native encoding,
+#' it will be converted to UTF-8 automatically.
 #'
 #'
 #' @param str character vector to be encoded
-#' @return For \code{stri_enc_nf*}, a character vector
-#' of the same length as input will be returned. The output will always be in UTF-8.
+#' 
+#' @return \code{stri_enc_nf*} return a character vector
+#' of the same length as input (the output is always in UTF-8).
+#' 
+#' \code{stri_enc_isnf*} return a logical vector.
 #'
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,

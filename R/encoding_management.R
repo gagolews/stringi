@@ -33,7 +33,7 @@
 #' list of character vectors?
 #'
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of
-#'  character vectors is returned: Each element represents a unique
+#'  character vectors is returned. Each list element represents a unique
 #'  character encoding. The \code{name} attribute gives the ICU canonical
 #'  name of an encoding family. The elements (character vectors) are
 #'  its aliases.
@@ -106,11 +106,13 @@ stri_enc_info <- function(enc=NULL) {
 #'
 #' @param enc single string; character encoding name,
 #' see \code{\link{stri_enc_list}} for the list of supported encodings.
+#' 
 #' @return
-#' For \code{stri_enc_set}: a string with
+#' \code{stri_enc_set} returns a string with
 #' previously used character encoding, invisibly.
 #' 
-#' For \code{stri_enc_get}: a string with current default locale.
+#' \code{stri_enc_get} returns a string with current default character
+#' encoding.
 #'
 #' @family encoding_management
 #' @rdname stri_enc_set

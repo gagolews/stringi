@@ -102,11 +102,13 @@ invisible(NULL)
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' @return if \code{x} is a string, it is returned with no change.
-#' if factor, \code{\link{as.character}} is called.
-#' if atomic vector (also a matrix), it is coerced to character vector.
-#' if name, a character vector of length 1 is generated.
-#' otherwise the function throws an error.
+#' 
+#' @return 
+#' If \code{x} is a string, it is returned with no change.
+#' If it is a factor, then \code{\link{as.character}} is called.
+#' If an atomic vector or a matrix is given, it is coerced to character vector.
+#' If it is a \code{name} object, a character vector of length 1 is generated.
+#' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
 stri_prepare_arg_string <- function(x) {
@@ -123,11 +125,13 @@ stri_prepare_arg_string <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' @return if \code{x} is a factor, \code{\link{as.character}} is called, and the
+#' 
+#' @return
+#' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to numeric.
-#' if numeric, it is returned with no change.
-#' if atomic vector (also a matrix) is given, it is coerced to a numeric vector.
-#' otherwise the function throws an error.
+#' If it is a numeric vector, then it is returned with no change.
+#' If atomic vector or a matrix is given, it is coerced to a numeric vector.
+#' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
 stri_prepare_arg_double <- function(x) {
@@ -144,11 +148,13 @@ stri_prepare_arg_double <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' if \code{x} is a factor, \code{\link{as.character}} is called, and the
+#' 
+#' @return
+#' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to integer.
-#' if integer, it is returned with no change.
-#' if atomic vector (also a matrix) is given, it is coerced to an integer vector.
-#' otherwise the function throws an error.
+#' If it is an integer vector, then it is returned with no change.
+#' If an atomic vector or a matrix is given, it is coerced to an integer vector.
+#' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
@@ -166,11 +172,13 @@ stri_prepare_arg_integer <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' @return if \code{x} is a logical vector, it is returned with no change.
-#' if \code{x} is a factor, \code{\link{as.character}} is called, and the
+#' 
+#' @return
+#' If \code{x} is a logical vector, it is returned with no change.
+#' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to logical.
-#' if atomic vector (also a matrix) is given, it is coerced to logical vector.
-#' otherwise the function throws an error.
+#' If atomic vector or a matrix is given, it is coerced to logical vector.
+#' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
@@ -187,11 +195,13 @@ stri_prepare_arg_logical <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' @return if \code{x} is a raw vector, it is returned with no change.
-#' if \code{x} is a factor, \code{\link{as.character}} is called, and the
+#' 
+#' @return 
+#' If \code{x} is a raw vector, it is returned with no change.
+#' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to raw.
-#' if atomic vector (also a matrix), it is coerced to a raw vector.
-#' otherwise the function throws an error.
+#' If atomic vector or a matrix is given, it is coerced to a raw vector.
+#' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
 stri_prepare_arg_raw <- function(x) {
@@ -210,10 +220,10 @@ stri_prepare_arg_raw <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' first, \code{\link{stri_prepare_arg_string}} is called;
-#' on empty vector, an error is generated;
-#' if there are are > 1 elements, a warning is generated;
-#' a vector with one (the first in \code{x}) is returned.
+#' First, \code{\link{stri_prepare_arg_string}} is called.
+#' On empty vector, an error is generated.
+#' If there are more than 1 elements, a warning is generated.
+#' A vector with one element (the first in \code{x}) is returned.
 #'
 #' @family prepare_arg
 stri_prepare_arg_string_1 <- function(x) {
@@ -231,10 +241,10 @@ stri_prepare_arg_string_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' first, \code{\link{stri_prepare_arg_double}} is called;
-#' on empty vector, an error is generated;
-#' if there are are > 1 elements, a warning is generated;
-#' a vector with one (the first in \code{x}) is returned
+#' First, \code{\link{stri_prepare_arg_double}} is called.
+#' On empty vector, an error is generated.
+#' If there are more than 1 elements, a warning is generated.
+#' A vector with one element (the first in \code{x}) is returned.
 #'
 #' @family prepare_arg
 stri_prepare_arg_double_1 <- function(x) {
@@ -252,10 +262,10 @@ stri_prepare_arg_double_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' first, \code{\link{stri_prepare_arg_integer}} is called;
-#' on empty vector, an error is generated;
-#' if there are are > 1 elements, a warning is generated;
-#' a vector with one (the first in \code{x}) is returned
+#' First, \code{\link{stri_prepare_arg_integer}} is called.
+#' On empty vector, an error is generated.
+#' If there are more than 1 elements, a warning is generated.
+#' A vector with one element (the first in \code{x}) is returned.
 #'
 #' @family prepare_arg
 stri_prepare_arg_integer_1 <- function(x) {
@@ -274,10 +284,10 @@ stri_prepare_arg_integer_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' first, \code{\link{stri_prepare_arg_logical}} is called;
-#' on empty vector, an error is generated;
-#' if there are are > 1 elements, a warning is generated;
-#' a vector with one (the first in \code{x}) is returned
+#' First, \code{\link{stri_prepare_arg_logical}} is called.
+#' On empty vector, an error is generated.
+#' If there are more than 1 elements, a warning is generated.
+#' A vector with one element (the first in \code{x}) is returned.
 #'
 #' @family prepare_arg
 stri_prepare_arg_logical_1 <- function(x) {

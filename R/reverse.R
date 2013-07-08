@@ -25,15 +25,14 @@
 #' Reverses characters in every string.
 #'
 #' @details
-#' Note that this operation is not very intelligent - it just reverses
+#' Note that this operation is not very intelligent -- it just reverses
 #' the order of all Unicode code points.
 #' It may result in non-Unicode-normalized
 #' strings and may give strange output for bidirectional strings.
 #'
 #' @param str character vector
 #'
-#' @return character vector in which every string from \code{str}
-#'  has been reversed
+#' @return Returns a character vector.
 #'
 #' @examples
 #' stri_reverse(c("123", "abc d e f"))

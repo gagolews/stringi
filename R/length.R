@@ -44,7 +44,8 @@
 #' which are used internally to mark the end of string data (in C).
 #'
 #' @param str character vector
-#' @return integer vector of the same length as \code{str}
+#' 
+#' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
 #' stri_numbytes(letters)
@@ -79,7 +80,7 @@ stri_numbytes <- function(str) {
 #' For `byte` encodings we get, as usual, an error.
 #'
 #' @param str character vector
-#' @return integer vector of the same length as \code{str}
+#' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
 #' stri_length(LETTERS)
@@ -110,7 +111,7 @@ stri_length <- function(str) {
 #' encoding conversion.
 #'
 #' @param str character vector
-#' @return logical vector of the same length as \code{str}
+#' @return Returns a logical vector of the same length as \code{str}.
 #'
 #' @examples
 #' stri_isempty(letters[1:3])

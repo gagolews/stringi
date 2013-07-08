@@ -22,16 +22,21 @@
 #' Convert Strings Between Given Encodings
 #'
 #' @description
-#' ..TO DO...
+#' Converts a character vector between encodings,
+#' see \code{\link{stri_enc_list}} for the list
+#' of supported encodings and \link{stringi-encoding}
+#' for general discussion.
 #'
 #' @details
 #' \code{stri_conv} is an alias for \code{stri_encode}.
+#' This function aims to replace R's \link{iconv} - it is slightly faster,
+#' and works in the same manner on all platforms.
 #'
 #' If \code{from}  is missing,
 #' \code{NULL} (default encoding) is used. The same holds for \code{to}.
 #'
-#' Note that possible problems may occur with \code{to}
-#' set to UTF-16 and UTF-32, as the output strings may have embedded NULs.
+#' Note that possible problems may occur when \code{to} is
+#' set to e.g. UTF-16 and UTF-32, as the output strings may have embedded NULs.
 #' In such cases use \code{to_raw=TRUE} and consider
 #' specifying a byte order marker (BOM) for portability reasons
 #' (e.g. set \code{UTF-16LE} or \code{UTF-16BE}).
@@ -46,15 +51,23 @@
 #' to be converted
 #' @param from input encoding:
 #'       \code{NULL} or \code{""} for default encoding,
-#'       or a single string with encoding name
+#'       or a single string with encoding name,
+#'       see \code{\link{stri_enc_list}}
 #' @param to target encoding:
 #'       \code{NULL} or \code{""} for default encoding,
 #'       or a single string with encoding name
 #' @param to_raw single logical value: should a list of raw vectors
 #' be returned rather than a character vector?
-#' @return if \code{to_raw} is \code{FALSE},
-#' then a character vector with encoded strings is returned;
-#' otherwise, you'll get a list of raw vectors.
+#' 
+#' @return If \code{to_raw} is \code{FALSE},
+#' then a character vector with encoded strings is returned.
+#' Otherwise, you'll get a list of raw vectors.
+#'
+#' @references
+#' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
+#' 
+#' \emph{Converters} -- ICU User Guide, 
+#' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
 #'
 #' @family encoding_conversion
 #' @rdname stri_encode
@@ -85,7 +98,7 @@ stri_conv <- stri_encode
 #' to \code{utf8ToInt(enc2utf8(str))}.
 #'
 #' @param str character vector to be converted
-#' @return list of integer vectors
+#' @return Returns a list of integer vectors.
 #'
 #' @family encoding_conversion
 #' @export
@@ -121,7 +134,7 @@ stri_enc_toutf32 <- function(str) {
 #' \code{NULL}s in the input list  are converted to \code{NA_character_}.
 #'
 #' @param vec list of integer vectors or, for convenience, a single integer vector
-#' @return character vector (in UTF-8)
+#' @return Returns a character vector (in UTF-8).
 #'
 #' @family encoding_conversion
 #' @export
@@ -155,7 +168,7 @@ stri_enc_fromutf32 <- function(vec) {
 #'
 #' @param str character vector to be converted
 #' @param is_unknown_8bit single logical value, see Details
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #' @family encoding_conversion
 #' @export
@@ -180,12 +193,11 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #'
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
-#' The  SUBSTITUTE
-#' CHARACTER may be interpreted as ASCII \code{NA} value
-#' for single characters.
+#' The SUBSTITUTE CHARACTER may be interpreted 
+#' as ASCII \code{NA} value for single characters.
 #'
 #' @param str character vector to be converted
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #' @family encoding_conversion
 #' @export

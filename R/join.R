@@ -32,7 +32,7 @@
 #' @param str character vector of strings to be duplicated
 #' @param times integer vector with number of times to duplicate each string
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #' @export
 #' @family join
@@ -69,7 +69,7 @@ stri_dup <- function(str, times) {
 #' @param e1 character vector
 #' @param e2 character vector
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #'
 #' @examples
@@ -108,7 +108,7 @@ stri_dup <- function(str, times) {
 #' @param sep single string; separates terms
 #' @param collapse single string; separates the results
 #'
-#' @return character string
+#' @return Returns a character vector.
 #'
 #' @export
 #' @examples
@@ -154,7 +154,8 @@ stri_paste <- stri_join
 #' @param collapse separator, a single string
 #'
 #' @return
-#' character vector
+#' Returns a single string, i.e. a character
+#' vector of length 1.
 #'
 #' @examples
 #' stri_flatten(LETTERS)
@@ -168,5 +169,4 @@ stri_flatten <- function(str, collapse="") {
    # prepare_arg done internally
    .Call("stri_flatten", str, collapse, PACKAGE="stringi")
 }
-
 

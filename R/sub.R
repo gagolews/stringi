@@ -66,7 +66,8 @@
 #' @param value character vector to be substituted [replacement function]
 #' 
 #' 
-#' @return character vector
+#' @return \code{stri_sub} returns a character vector.
+#' \code{stri_sub<-} changes the \code{value} object. 
 #' 
 #' The extract function \code{stri_sub} returns the indicated substrings.
 #' The replacement function \code{stri_sub<-}

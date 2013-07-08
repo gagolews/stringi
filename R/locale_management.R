@@ -63,10 +63,10 @@ stri_locale_list <- function() {
 #' see \code{\link{stri_locale_list}}.
 #' 
 #' @return
-#' For \code{stri_locale_set}: a string with
+#' \code{stri_locale_set} returns a string with
 #' previously used locale, invisibly.
 #' 
-#' For \code{stri_locale_get}: a string of the form \code{Language},
+#' \code{stri_locale_get} returns a string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US".
 #' 
 #' @family locale_management

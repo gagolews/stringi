@@ -38,10 +38,11 @@
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
-#' @return integer vector, elements are comparison results of corresponding
-#' pairs;
+#' @return Returns an integer vector
+#' with comparison results of corresponding
+#' pairs of elements from \code{e1} and \code{e2}:
 #' \code{-1} if \code{e1[...] < e2[...]},
-#' \code{0} if equal, and \code{1} if greater.
+#' \code{0} if they are equal, and \code{1} if greater.
 #'
 #' @family locale_sensitive
 #' @export
@@ -99,8 +100,11 @@ stri_cmp <- stri_compare
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
-#' @return for \code{stri_order}: an integer vector that gives the sort order;
-#' for \code{stri_order}: a sorted version of \code{str}
+#' @return For \code{stri_order}, an integer vector that gives the sort order
+#' is returned.
+#' 
+#' For \code{stri_order} you'll get a sorted version of \code{str},
+#' i.e. a character vector.
 #'
 #' @family locale_sensitive
 #' @export

@@ -53,7 +53,8 @@
 #' @param pattern character vector with character class identifiers that
 #' should be preserved, see \link{stringi-search-charclass}
 #' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
-#' @return character vector
+#' 
+#' @return Returns a character vector.
 #' 
 #' @examples
 #' stri_trim_left("               aaa")

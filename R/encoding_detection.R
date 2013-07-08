@@ -30,8 +30,10 @@
 #'
 #'
 #' @param str character vector
-#' @return logical vector; i-th element indicates whether the i-th string
-#' corresponds to a valid ASCII byte sequence
+#' 
+#' @return Returns a logical vector. 
+#' Its i-th element indicates whether the i-th string
+#' corresponds to a valid ASCII byte sequence.
 #'
 #' @examples
 #' stri_enc_isascii(letters[1:3])
@@ -54,7 +56,7 @@ stri_enc_isascii <- function(str) {
 #' @details
 #' Negative answer means that a string is surely not in UTF-8.
 #' Positive result does not mean that we should be absolutely sure.
-#'  E.g. (c4,85) properly
+#'  E.g. \code{(c4,85)} properly
 #' represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
 #'
@@ -63,14 +65,16 @@ stri_enc_isascii <- function(str) {
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
 #'
-#' note that \code{\link{stri_enc_isutf8}} => \code{\link{stri_enc_isascii}}
+#' Note that \code{\link{stri_enc_isutf8}} => \code{\link{stri_enc_isascii}}.
 #'
 #' This function is independent of the way R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #' @param str character vector
-#' @return logical vector; i-th element indicates whether the i-th string
-#' corresponds to a valid UTF-8 byte sequence
+#' 
+#' @return Returns a logical vector.
+#' Its i-th element indicates whether the i-th string
+#' corresponds to a valid UTF-8 byte sequence.
 #'
 #' @examples
 #' stri_enc_isutf8(letters[1:3])

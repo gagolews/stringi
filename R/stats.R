@@ -34,16 +34,16 @@
 #' otherwise you'll get at error.
 #' 
 #' @param str character vector to aggregate
-#' @return An integer vectors with the following named elements:
+#' @return Returns an integer vectors with the following named elements:
 #' \enumerate{
 #'    \item \code{Lines} - number of lines (number of 
-#'    not-\code{NA} strings in the vector)
+#'    not-\code{NA} strings in the vector);
 #'    \item \code{LinesNEmpty} - number of lines with at least 
-#'    one non-\code{WHITE_SPACE} character
-#'    \item \code{Chars} - total number of Unicode code points detected
+#'    one non-\code{WHITE_SPACE} character;
+#'    \item \code{Chars} - total number of Unicode code points detected;
 #'    \item \code{CharsNWhite} - number of Unicode code points 
-#'    that are  not \code{WHITE_SPACE}s
-#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi})
+#'    that are not \code{WHITE_SPACE}s;
+#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
 #' s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
@@ -75,15 +75,15 @@ stri_stats_general <- function(str) {
 #' 
 #' 
 #' @param str character vector to aggregate
-#' @return An integer vector with the following named elements:
+#' @return Returns an integer vector with the following named elements:
 #' \enumerate{
-#'    \item \code{CharsWord} - number of word characters
-#'    \item \code{CharsCmdEnvir} - command and words characters
-#'    \item \code{CharsWhite} - LaTeX white spaces, including \{ and \} in some contexts
-#'    \item \code{Words} - number of words
-#'    \item \code{Cmds} - number of commands
-#'    \item \code{Envirs} - number of environments
-#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi})
+#'    \item \code{CharsWord} - number of word characters;
+#'    \item \code{CharsCmdEnvir} - command and words characters;
+#'    \item \code{CharsWhite} - LaTeX white spaces, including \{ and \} in some contexts;
+#'    \item \code{Words} - number of words;
+#'    \item \code{Cmds} - number of commands;
+#'    \item \code{Envirs} - number of environments;
+#'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
 #' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",
