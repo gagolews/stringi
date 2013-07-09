@@ -237,6 +237,11 @@ stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
 #'
+#' @details
+#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
+#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
+#' one will be used.
+#'
 #' @return list of integer matrices.  First column gives start positions
 #' of matches, and second column gives end position.
 #' Double \code{NA}s iff not found or \code{NA} argument is given.
@@ -277,6 +282,11 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
 #'
+#' @details
+#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
+#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
+#' one will be used.
+#'
 #' @return integer matrix with two columns,
 #' double \code{NA}s if not found.
 #'
@@ -316,6 +326,11 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
+#'
+#' @details
+#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
+#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
+#' one will be used.
 #'
 #' @return integer matrix with two columns,
 #' double \code{NA}s if not found.
