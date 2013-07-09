@@ -22,8 +22,14 @@
 #' Character Encodings and \pkg{stringi}
 #'
 #' @description
-#' This section explains how we deal with character encodings
-#' in \pkg{stringi}.
+#' This manual page explains how to deal with different character encodings
+#' in \pkg{stringi}. In particular:
+#' \itemize{
+#'    \item Functions in \pkg{stringi} processes a string
+#'          in Unicode encoding.
+#'    \item Most functions always return UTF-8 encoded strings,
+#'    regardless of the input encoding.
+#' }
 #'
 #' @details
 #' ICU: Unicode provides a single character set that covers the major
