@@ -63,6 +63,10 @@ stri_enc_list <- function(simplified=FALSE) {
 #' @details
 #' If the encoding provided is unknown to ICU (see \code{\link{stri_enc_list}}),
 #' an error is generated.
+#' 
+#' If you set a default encoding that is not a superset of ASCII
+#' or it is not an 8-bit encoding, a warning will be generated,
+#' see \link{stringi-encoding} for discussion.
 #'
 #' @param enc \code{NULL} or \code{""} for default encoding,
 #' or a single string with encoding name
