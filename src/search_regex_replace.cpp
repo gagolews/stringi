@@ -82,7 +82,8 @@ SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski)  - use StriContainerUTF16's vectorization
- * @version 0.3 (Marek Gagolewski, 2013-06-21)  - use StriContainerRegexPattern + more general
+ * @version 0.3 (Marek Gagolewski, 2013-06-21) - use StriContainerRegexPattern + more general
+ * @version 0.4 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
@@ -106,7 +107,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_STRING_ELT(ret, i, NA_STRING);,
-         SET_STRING_ELT(ret, i, NA_STRING);)
+         /*just skip on empty str*/;)
 
       if (replacement_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);

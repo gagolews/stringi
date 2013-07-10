@@ -56,6 +56,7 @@ test_that("stri_replace_last_charclass", {
 test_that("stri_replace_all_fixed", {
    expect_identical(stri_replace_all_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_all_fixed("abab123 a","a",1),"1b1b123 1")
+   expect_identical(stri_replace_all_fixed("","WHITE_SPACE","?"),"")
    expect_identical(stri_replace_all_fixed(NA,"A","1"),NA_character_)
    expect_identical(stri_replace_all_fixed("ALA",NA,"1"),NA_character_)
    expect_identical(stri_replace_all_fixed("ALA","A",NA),NA_character_)
@@ -74,6 +75,7 @@ test_that("stri_replace_all_fixed", {
 test_that("stri_replace_first_fixed", {
    expect_identical(stri_replace_first_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_first_fixed("abab123 a","a",1),"1bab123 a")
+   expect_identical(stri_replace_first_fixed("","WHITE_SPACE","?"),"")
    expect_identical(stri_replace_first_fixed(NA,"A",1),NA_character_)
    expect_identical(stri_replace_first_fixed(NA,NA,"A"),NA_character_)
    expect_identical(stri_replace_first_fixed(NA,"A",NA),NA_character_)
@@ -90,6 +92,7 @@ test_that("stri_replace_first_fixed", {
 test_that("stri_replace_last_fixed", {
    expect_identical(stri_replace_last_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_last_fixed("abab123 a","a",1),"abab123 1")
+   expect_identical(stri_replace_last_fixed("","WHITE_SPACE","?"),"")
    expect_identical(stri_replace_last_fixed(NA,"A",1),NA_character_)
    expect_identical(stri_replace_last_fixed(NA,NA,"A"),NA_character_)
    expect_identical(stri_replace_last_fixed(NA,"A",NA),NA_character_)
@@ -106,6 +109,7 @@ test_that("stri_replace_last_fixed", {
 test_that("stri_replace_all_fixed [byte]", {
    expect_identical(stri_replace_all_fixed(character(0),1,2, opts_collator=NA),character(0))
    expect_identical(stri_replace_all_fixed("abab123 a","a",1, opts_collator=NA),"1b1b123 1")
+   expect_identical(stri_replace_all_fixed("","WHITE_SPACE","?", opts_collator=NA),"")
    expect_identical(stri_replace_all_fixed(NA,"A","1", opts_collator=NA),NA_character_)
    expect_identical(stri_replace_all_fixed("ALA",NA,"1", opts_collator=NA),NA_character_)
    expect_identical(stri_replace_all_fixed("ALA","A",NA, opts_collator=NA),NA_character_)
@@ -124,6 +128,7 @@ test_that("stri_replace_all_fixed [byte]", {
 test_that("stri_replace_first_fixed [byte]", {
    expect_identical(stri_replace_first_fixed(character(0),1,2, opts_collator=NA),character(0))
    expect_identical(stri_replace_first_fixed("abab123 a","a",1, opts_collator=NA),"1bab123 a")
+   expect_identical(stri_replace_first_fixed("","WHITE_SPACE","?", opts_collator=NA),"")
    expect_identical(stri_replace_first_fixed(NA,"A",1, opts_collator=NA),NA_character_)
    expect_identical(stri_replace_first_fixed("ALA",NA,"1", opts_collator=NA),NA_character_)
    expect_identical(stri_replace_first_fixed("ALA","A",NA, opts_collator=NA),NA_character_)
@@ -142,6 +147,7 @@ test_that("stri_replace_first_fixed [byte]", {
 test_that("stri_replace_last_fixed [byte]", {
    expect_identical(stri_replace_last_fixed(character(0),1,2, opts_collator=NA),character(0))
    expect_identical(stri_replace_last_fixed("abab123 a","a",1, opts_collator=NA),"abab123 1")
+   expect_identical(stri_replace_last_fixed("","WHITE_SPACE","?", opts_collator=NA),"")
    expect_identical(stri_replace_last_fixed(NA,"A",1, opts_collator=NA),NA_character_)
    expect_identical(stri_replace_last_fixed("ALA",NA,"1", opts_collator=NA),NA_character_)
    expect_identical(stri_replace_last_fixed("ALA","A",NA, opts_collator=NA),NA_character_)

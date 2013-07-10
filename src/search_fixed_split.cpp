@@ -34,6 +34,7 @@
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF8
+ * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
  */
 SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -56,19 +57,19 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
-
       if (n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
+      int  n_max_cur        = n_max_cont.get(i);
+      int  omit_empty_cur   = omit_empty_cont.get(i);
+      
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+         SET_VECTOR_ELT(ret, i, stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      int  n_max_cur        = n_max_cont.get(i);
-      int  omit_empty_cur   = omit_empty_cont.get(i);
 
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
@@ -136,6 +137,7 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF16
+ * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP collator_opts)
 {
@@ -164,20 +166,22 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
-
       if (n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
+      
+      int  n_max_cur        = n_max_cont.get(i);
+      int  omit_empty_cur   = omit_empty_cont.get(i);
+      
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+         SET_VECTOR_ELT(ret, i, stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
 
-      int  n_max_cur        = n_max_cont.get(i);
-      int  omit_empty_cur   = omit_empty_cont.get(i);
+
 
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;

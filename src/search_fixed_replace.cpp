@@ -31,6 +31,7 @@
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
+ * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type)
 {
@@ -56,7 +57,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_STRING_ELT(ret, i, NA_STRING);,
-         SET_STRING_ELT(ret, i, NA_STRING);)
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(NULL, 0, CE_UTF8));)
 
       if (replacement_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -127,6 +128,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
+ * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type)
 {
@@ -152,7 +154,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          str_cont.setNA(i);,
-         str_cont.setNA(i);)
+         /*just skip on empty str*/;)
 
       if (replacement_cont.isNA(i)) {
          str_cont.setNA(i);
