@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -58,15 +57,15 @@
 #'       or a single string with encoding name
 #' @param to_raw single logical value: should a list of raw vectors
 #' be returned rather than a character vector?
-#' 
+#'
 #' @return If \code{to_raw} is \code{FALSE},
 #' then a character vector with encoded strings is returned.
 #' Otherwise, you'll get a list of raw vectors.
 #'
 #' @references
 #' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
-#' 
-#' \emph{Converters} -- ICU User Guide, 
+#'
+#' \emph{Converters} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
 #'
 #' @family encoding_conversion
@@ -193,7 +192,7 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #'
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
-#' The SUBSTITUTE CHARACTER may be interpreted 
+#' The SUBSTITUTE CHARACTER may be interpreted
 #' as ASCII \code{NA} value for single characters.
 #'
 #' @param str character vector to be converted

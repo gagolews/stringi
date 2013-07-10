@@ -1,28 +1,28 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 
 #include "stringi.h"
 
 
-/** 
+/**
  * Default constructor
- * 
+ *
  */
 StriContainerListUTF8::StriContainerListUTF8()
    : StriContainerBase()
@@ -40,18 +40,18 @@ StriContainerListUTF8::StriContainerListUTF8()
 StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->data = NULL;
-#ifndef NDEBUG 
+#ifndef NDEBUG
    if (!Rf_isVectorList(rvec))
       throw StriException("DEBUG: !isVectorList in StriContainerListUTF8::StriContainerListUTF8(SEXP rvec)");
 #endif
    R_len_t rvec_length = LENGTH(rvec);
    this->init_Base(rvec_length, rvec_length, true);
-   
+
    if (this->n > 0) {
       this->data = new StriContainerUTF8*[this->n];
       for (R_len_t i=0; i<this->n; ++i)
          this->data[i] = NULL; // in case it fails during conversion (this is "NA")
-         
+
       for (R_len_t i=0; i<this->n; ++i)
          this->data[i] = new StriContainerUTF8(VECTOR_ELT(rvec, i), _nrecycle, _shallowrecycle);
    }
@@ -95,7 +95,7 @@ StriContainerListUTF8& StriContainerListUTF8::operator=(StriContainerListUTF8& c
    else {
       this->data = NULL;
    }
-   
+
    return *this;
 }
 

@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -59,11 +58,11 @@ stri_enc_list <- function(simplified=FALSE) {
 #'
 #' @description
 #' Gets basic information on a given character encoding.
-#' 
+#'
 #' @details
 #' If the encoding provided is unknown to ICU (see \code{\link{stri_enc_list}}),
 #' an error is generated.
-#' 
+#'
 #' If you set a default encoding that is not a superset of ASCII
 #' or it is not an 8-bit encoding, a warning will be generated,
 #' see \link{stringi-encoding} for discussion.
@@ -71,13 +70,13 @@ stri_enc_list <- function(simplified=FALSE) {
 #' @param enc \code{NULL} or \code{""} for default encoding,
 #' or a single string with encoding name
 #'
-#' @return 
+#' @return
 #' Returns a list with the following components:
 #' \itemize{
 #' \item \code{Name.friendly} -- Friendly encoding name: MIME name or JAVA name or ICU Canonical name
 #'    (selecting the first of supported ones, see below);
 #' \item \code{Name.ICU} -- Encoding name as identified by ICU;
-#' \item \code{Name.*} -- other standardized encoding names, 
+#' \item \code{Name.*} -- other standardized encoding names,
 #' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
 #' available for selected  encodings);
@@ -104,17 +103,17 @@ stri_enc_info <- function(enc=NULL) {
 #' \code{stri_enc_set} sets encoding used to decode strings
 #' internally (i.e. by R) marked as Native, see \link{stringi-encoding}.
 #' \code{stri_enc_get} returns currently used default encoding.
-#' 
+#'
 #' @details
 #' \code{stri_enc_get} is the same as \code{\link{stri_enc_info}(NULL)$Name.friendly}.
 #'
 #' @param enc single string; character encoding name,
 #' see \code{\link{stri_enc_list}} for the list of supported encodings.
-#' 
+#'
 #' @return
 #' \code{stri_enc_set} returns a string with
 #' previously used character encoding, invisibly.
-#' 
+#'
 #' \code{stri_enc_get} returns a string with current default character
 #' encoding.
 #'

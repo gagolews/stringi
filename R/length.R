@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
+## Copyright 2013 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -44,7 +43,7 @@
 #' which are used internally to mark the end of string data (in C).
 #'
 #' @param str character vector
-#' 
+#'
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
@@ -144,5 +143,4 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 # stri_width <- function(str) {
 #    .Call("stri_width", str, PACKAGE="stringi")
 # }
-
 

@@ -1,28 +1,28 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 
 #include "stringi.h"
 
 
-/** 
+/**
  * Default constructor
- * 
+ *
  */
 StriContainerByteSearch::StriContainerByteSearch()
    : StriContainerUTF8()
@@ -34,7 +34,7 @@ StriContainerByteSearch::StriContainerByteSearch()
    this->searchLen = 0;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
-#endif   
+#endif
 }
 
 
@@ -59,7 +59,7 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
 
 
 /** Copy constructor
- * 
+ *
  */
 StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& container)
    :    StriContainerUTF8((StriContainerUTF8&)container)
@@ -94,7 +94,7 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
 
 
 /** Destructor
- * 
+ *
  */
 StriContainerByteSearch::~StriContainerByteSearch()
 {
@@ -104,12 +104,12 @@ StriContainerByteSearch::~StriContainerByteSearch()
 
 
 
-/** the returned matcher shall not be deleted by the user 
- * 
+/** the returned matcher shall not be deleted by the user
+ *
  * it is assumed that \code{vectorize_next()} is used:
  * for \code{i >= this->n} the last matcher is returned
- * 
- * 
+ *
+ *
  * @param i index
  * @param searchStr string to search in
  * @param searchLen string length in bytes
@@ -120,7 +120,7 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
       // first call ever
       // setup [now nothing]
    }
-   
+
    if (i >= n) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
@@ -133,11 +133,11 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
       this->patternStr = get(i).c_str();
       this->patternLen = get(i).length();
    }
-   
+
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->resetMatcher();
-   
+
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
 #endif
@@ -145,7 +145,7 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
 
 
 /** reset matcher
- * 
+ *
  * will start search from the beginning next time
  */
 void StriContainerByteSearch::resetMatcher()
@@ -160,9 +160,9 @@ void StriContainerByteSearch::resetMatcher()
 
 
 /** find first match
- * 
- * resets the matcher 
- * 
+ *
+ * resets the matcher
+ *
  * @return USEARCH_DONE on no match, otherwise start index
  */
 R_len_t StriContainerByteSearch::findFirst()
@@ -171,10 +171,10 @@ R_len_t StriContainerByteSearch::findFirst()
    if (!this->searchStr || !this->patternStr)
       throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
 #endif
-   
+
    // Naive search algorithm
    // @TODO: to be changed to KNP(?) in future version
-   for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {  
+   for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {
       R_len_t k=0;
       while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
          k++;
@@ -183,7 +183,7 @@ R_len_t StriContainerByteSearch::findFirst()
          return searchPos;
 		}
 	}
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -191,9 +191,9 @@ R_len_t StriContainerByteSearch::findFirst()
 
 
 /** find next match
- * 
+ *
  * continues previous search
- * 
+ *
  * @return USEARCH_DONE on no match, otherwise start index
  */
 R_len_t StriContainerByteSearch::findNext()
@@ -204,10 +204,10 @@ R_len_t StriContainerByteSearch::findNext()
 #endif
 
    if (searchPos < 0) return findFirst();
-   
+
    // Naive search algorithm
    // @TODO: to be changed to KNP(?) in future version
-   for (searchPos = searchPos + patternLen; searchPos<searchLen-patternLen+1; ++searchPos) {  
+   for (searchPos = searchPos + patternLen; searchPos<searchLen-patternLen+1; ++searchPos) {
       R_len_t k=0;
       while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
          k++;
@@ -216,7 +216,7 @@ R_len_t StriContainerByteSearch::findNext()
          return searchPos;
    	}
 	}
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -224,9 +224,9 @@ R_len_t StriContainerByteSearch::findNext()
 
 
 /** find last match
- * 
- * resets the matcher 
- * 
+ *
+ * resets the matcher
+ *
  * @return USEARCH_DONE on no match, otherwise start index
  */
 R_len_t StriContainerByteSearch::findLast()
@@ -238,7 +238,7 @@ R_len_t StriContainerByteSearch::findLast()
 
    // Naive search algorithm
    // @TODO: to be changed to KNP(?) in future version
-   for (searchPos = searchLen - patternLen; searchPos>=0; --searchPos) {  
+   for (searchPos = searchLen - patternLen; searchPos>=0; --searchPos) {
       R_len_t k=0;
       while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
          k++;
@@ -247,7 +247,7 @@ R_len_t StriContainerByteSearch::findLast()
          return searchPos;
       }
 	}
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -255,7 +255,7 @@ R_len_t StriContainerByteSearch::findLast()
 
 
 /** get start index of pattern match from the last search
- * 
+ *
  * @return byte index in searchStr
  */
 R_len_t StriContainerByteSearch::getMatchedStart()
@@ -267,13 +267,13 @@ R_len_t StriContainerByteSearch::getMatchedStart()
 
    if (searchPos < 0 || searchPos > searchLen-patternLen)
       throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
-      
+
    return searchPos;
 }
 
 
 /** get length of pattern match from the last search
- * 
+ *
  * @return byte index in searchStr
  */
 R_len_t StriContainerByteSearch::getMatchedLength()
@@ -285,7 +285,7 @@ R_len_t StriContainerByteSearch::getMatchedLength()
 
    if (searchPos < 0 || searchPos > searchLen-patternLen)
       throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
-      
+
    return patternLen; // trivial :>
 }
 

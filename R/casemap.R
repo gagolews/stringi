@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -36,12 +36,12 @@
 #' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with locale identifier,
 #' see \link{stringi-locale}.
-#' @return 
+#' @return
 #' Returns a character vector.
 #'
 #' @references
 #' \emph{Case Mappings} -- ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
-#' 
+#'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_trans_case

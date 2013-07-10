@@ -21,12 +21,12 @@
 
 
 /** dummy fun to measure the performance of .Call
- * 
+ *
  */
 SEXP stri_test_returnasis(SEXP x)
 {
 #ifndef NDEBUG
-   return x;  
+   return x;
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
    return R_NilValue;
@@ -36,11 +36,11 @@ SEXP stri_test_returnasis(SEXP x)
 
 /** Check R encoding marking *for testing only*
  *  This function should not be exported
- * 
+ *
  *  @param s character vector
- * 
+ *
  *  Results are printed on STDERR
- * 
+ *
  * @version 0.1 (Marek Gagolewski)
  */
 SEXP stri_test_Rmark(SEXP s)

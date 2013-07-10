@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef __container_charclass_h
 #define __container_charclass_h
 
@@ -30,20 +30,20 @@
 class StriContainerCharClass : public StriContainerBase {
 
    private:
-   
+
       CharClass* data;
-      
+
    public:
-      
+
       StriContainerCharClass() : StriContainerBase()
       {
          data = NULL;
       }
-      
+
       StriContainerCharClass(SEXP rvec, R_len_t _nrecycle)
       {
          this->data = NULL;
-#ifndef NDEBUG 
+#ifndef NDEBUG
          if (!isString(rvec))
             throw StriException("DEBUG: !isString in StriContainerCharClass");
 #endif
@@ -55,7 +55,7 @@ class StriContainerCharClass : public StriContainerBase {
                this->data[i] = CharClass(STRING_ELT(rvec, i));
          }
       }
-      
+
       StriContainerCharClass(StriContainerCharClass& container)
          :StriContainerBase((StriContainerBase&)container)
       {
@@ -67,15 +67,15 @@ class StriContainerCharClass : public StriContainerBase {
          else
             this->data = NULL;
       }
-      
+
       ~StriContainerCharClass() {
-         if (data) delete [] data;  
+         if (data) delete [] data;
       }
-      
+
       StriContainerCharClass& operator=(StriContainerCharClass& container)
       {
          this->~StriContainerCharClass();
-         (StriContainerBase&) (*this) = (StriContainerBase&)container; 
+         (StriContainerBase&) (*this) = (StriContainerBase&)container;
          if (container.data) {
             this->data = new CharClass[container.n];
             for (int i=0; i<container.n; ++i)
@@ -98,8 +98,8 @@ class StriContainerCharClass : public StriContainerBase {
 #endif
          return data[i%n].isNA();
       }
-      
-      
+
+
       /** get the vectorized ith element
        * @param i index
        * @return integer

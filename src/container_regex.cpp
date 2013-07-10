@@ -1,28 +1,28 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 
 #include "stringi.h"
 
 
-/** 
+/**
  * Default constructor
- * 
+ *
  */
 StriContainerRegexPattern::StriContainerRegexPattern()
    : StriContainerUTF16()
@@ -48,7 +48,7 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
 
 
 /** Copy constructor
- * 
+ *
  */
 StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& container)
    :    StriContainerUTF16((StriContainerUTF16&)container)
@@ -71,7 +71,7 @@ StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerReg
 
 
 /** Destructor
- * 
+ *
  */
 StriContainerRegexPattern::~StriContainerRegexPattern()
 {
@@ -84,11 +84,11 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
 
 
 
-/** the returned matcher shall not be deleted by the user 
- * 
+/** the returned matcher shall not be deleted by the user
+ *
  * it is assumed that \code{vectorize_next()} is used:
  * for \code{i >= this->n} the last matcher is returned
- * 
+ *
  * @param i index
  */
 RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
@@ -107,7 +107,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
          lastMatcher = NULL;
       }
    }
-   
+
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
    if (U_FAILURE(status))
@@ -126,21 +126,21 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
    uint32_t flags = 0;
    if (!Rf_isVectorList(opts_regex))
       Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
-      
+
    R_len_t narg = LENGTH(opts_regex);
-      
-   if (narg > 0) { 
-      
+
+   if (narg > 0) {
+
       SEXP names = Rf_getAttrib(opts_regex, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
-      
+
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
             Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
-            
+
          const char* curname = CHAR(STRING_ELT(names, i));
-         
+
          if  (!strcmp(curname, "case_insensitive")) {
             SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "case_insensitive");
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_CASE_INSENSITIVE;
@@ -170,7 +170,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
          }
       }
    }
-   
+
    return flags;
 }
 

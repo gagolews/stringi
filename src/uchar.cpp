@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "stringi.h"
 
 
@@ -34,11 +34,11 @@
 //   s = stri_prepare_arg_string(s, "str");
 //   R_len_t ns = LENGTH(s);
 //   if (ns <= 0) return R_NilValue;
-//   
+//
 //   R_len_t bufsize = stri__numbytes_max(s);
 //   int* buf = 0;
 //   if (bufsize > 0) buf = new int[bufsize];
-//   
+//
 //   SEXP ret;
 //   PROTECT(ret = allocVector(VECSXP, ns));
 //   for (R_len_t i=0; i<ns; ++i) {
@@ -80,20 +80,20 @@
 //   PROTECT(id   = allocVector(INTSXP, numcategories));
 //   PROTECT(cat  = allocVector(STRSXP, numcategories));
 //   PROTECT(cat2 = allocVector(STRSXP, numcategories));
-//   
-// #define STRI_CHARCATEGORIES_CREATE(x, y, z) 
-//   INTEGER(id)[x-1] = x; 
-//   SET_STRING_ELT(cat,  x-1, mkChar(y)); 
-//   SET_STRING_ELT(cat2, x-1, mkChar(z)); 
 //
-//  
+// #define STRI_CHARCATEGORIES_CREATE(x, y, z)
+//   INTEGER(id)[x-1] = x;
+//   SET_STRING_ELT(cat,  x-1, mkChar(y));
+//   SET_STRING_ELT(cat2, x-1, mkChar(z));
+//
+//
 ////STRI_CHARCATEGORIES_CREATE( U_UNASSIGNED,             "UNASSIGNED",               "Cn" )
 //STRI_CHARCATEGORIES_CREATE( U_UPPERCASE_LETTER,       "UPPERCASE_LETTER",         "Lu" )
 //STRI_CHARCATEGORIES_CREATE( U_LOWERCASE_LETTER,       "LOWERCASE_LETTER",         "Ll" )
 //STRI_CHARCATEGORIES_CREATE( U_TITLECASE_LETTER,       "TITLECASE_LETTER",         "Lt" )
 //STRI_CHARCATEGORIES_CREATE( U_MODIFIER_LETTER,        "MODIFIER_LETTER",          "Lm" )
 //STRI_CHARCATEGORIES_CREATE( U_OTHER_LETTER,           "OTHER_LETTER",             "Lo" )
-//STRI_CHARCATEGORIES_CREATE( U_NON_SPACING_MARK,       "NON_SPACING_MARK",         "Mn" )        
+//STRI_CHARCATEGORIES_CREATE( U_NON_SPACING_MARK,       "NON_SPACING_MARK",         "Mn" )
 //STRI_CHARCATEGORIES_CREATE( U_ENCLOSING_MARK,         "ENCLOSING_MARK",           "Me" )
 //STRI_CHARCATEGORIES_CREATE( U_COMBINING_SPACING_MARK, "COMBINING_SPACING_MARK",   "Mc" )
 //STRI_CHARCATEGORIES_CREATE( U_DECIMAL_DIGIT_NUMBER,   "DECIMAL_DIGIT_NUMBER",     "Nd" )
@@ -123,7 +123,7 @@
 //   SET_VECTOR_ELT(vals, 0, id);
 //   SET_VECTOR_ELT(vals, 1, cat);
 //   SET_VECTOR_ELT(vals, 2, cat2);
-//   
+//
 //   stri__set_names(vals, numcolumns, "Identifier", "CategoryFull", "Category");
 //   UNPROTECT(4);
 //   return vals;

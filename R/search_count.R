@@ -17,7 +17,6 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 #' @title
 #' Count the Number of Character Class Matches
 #'

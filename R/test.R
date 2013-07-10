@@ -17,9 +17,8 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 # Check R encoding marking [internal, DEBUG only]
-# 
+#
 # This is an internal function (no-export & no-manual) - test how R marks
 # ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
 #

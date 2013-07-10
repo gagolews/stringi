@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -32,22 +32,22 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 # #' @param spaces length one character vector or expression ?...
 # #' @param spacecost positive integer which determines the cost of one space (gap between each word)
 # #' @details Greedy algorithm is simple way of word wrapping and it always puts as many words on each line as possible. This method minimize the number of space left at the end of every line and always uses the minimum number of lines. Disadvantage of this method could be fact that the number of empty space at the end of lines may be various. Dynamic algorithm is more complex, but it returns text wrapped more aesthetic. This method minimize the squared number of space, so the text is arranged evenly.
-# #' 
+# #'
 # #' @return character vector of reformatted strings
-# #' 
-# #' @examples 
+# #'
+# #' @examples
 # #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
-# #'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
+# #'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
 # #'       lorem. Etiam pellentesque aliquet tellus."
 # #' stri_wrap(s,20,"d")
 # #' cat(stri_wrap(s,20,"d"))
 # #' cat(stri_wrap(s,20,"g"))
-# #' 
+# #'
 # #' @export
-# 
+#
 # #  TODO the default parameter spaces should be different (class WHITESPACE)
 # #  TODO add indent and exdent parameter (see strwrap)
-# 
+#
 # stri_wrap <- function(str,width=76,method="greedy",spaces="(\\p{Z}|\\n|\\t)+",spacecost=1)
 # {
 #    str <- stri_prepare_arg_string(str)
@@ -62,5 +62,4 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 #    wordslist <- stri_split_fixed(enc2utf8(str), enc2utf8(" "), omitempty=TRUE)
 #    .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
 # }
-
 

@@ -1,41 +1,41 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "stringi.h"
 #include <limits>
 
-///** 
-// * .... 
+///**
+// * ....
 // * @param count ...
 // * @param width ...
 // * @param spacecost ...
 // * @return ...
 // */
-// 
+//
 //SEXP stri_wrap_greedy(SEXP count, int width, int spacecost)
 //{
 //   int n = LENGTH(count);
 //   int* icount = INTEGER(count);
 //   int cost = icount[0];
-//   
+//
 //	SEXP space;
 //	PROTECT(space = allocVector(LGLSXP, n));
-//   
+//
 //	for(int i=1;i<n;i++){
 //		if(cost+spacecost+icount[i]>width){
 //			LOGICAL(space)[i-1] = true;
@@ -52,14 +52,14 @@
 //
 //SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
 //{
-//   // maybe a call to stri_prepare_arg_integer? 
-//   
+//   // maybe a call to stri_prepare_arg_integer?
+//
 //	int n = LENGTH(count);
-//	double* costm = (double*)R_alloc(n*n, sizeof(double)); 
+//	double* costm = (double*)R_alloc(n*n, sizeof(double));
 //	double ct = 0;
 //	double sum = 0;
 //   int* icount = INTEGER(count);
-//   
+//
 //	for(int i=0;i<n;i++){
 //		for(int j=i;j<n;j++){
 //			sum=0;
@@ -120,15 +120,15 @@
 //	return(out);
 //}
 //
-///** 
-// * .... 
+///**
+// * ....
 // * @param wordslist list of words
 // * @param method integer vector of wraping methods (2==dynamic, else greedy)
-// * @param width 
+// * @param width
 // * @param spacecost ...
 // * @return character vector
 // */
-//   
+//
 // SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost)
 // {
 //   R_len_t nwordslist = LENGTH(wordslist);
@@ -136,17 +136,17 @@
 //   R_len_t nwidth = LENGTH(width);
 //   R_len_t nspacecost = LENGTH(spacecost);
 //   R_len_t nmax = stri__recycling_rule(true, 4, nwordslist, nmethod, nwidth, nspacecost);
-//   
+//
 //   SEXP ret, sep;
 //   PROTECT(ret = allocVector(STRSXP,nmax));
 //   //sep for stri_flatten
 //   PROTECT(sep = allocVector(STRSXP,1));
 //   SET_STRING_ELT(sep,0,mkCharLen("",0));
 //   SEXP words,count,temp,space,where;
-//   
+//
 //   int* iwidth     = INTEGER(width);
 //   int* ispacecost = INTEGER(spacecost);
-//   
+//
 //   for(int i=0;i<nmax;i++)
 //   {
 //      words = VECTOR_ELT(wordslist,i % nwordslist);

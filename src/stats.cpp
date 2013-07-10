@@ -1,27 +1,27 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
- 
+
+
 #include "stringi.h"
 
-/** 
+/**
  * General statistics for a character vector
- * 
+ *
  * @param str a character vector
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
@@ -32,10 +32,10 @@ SEXP stri_stats_general(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t str_length = LENGTH(str);
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, str_length);
-   
+
    enum {
       gsNumLines = 0,
       gsNumLinesNonEmpty = 1,
@@ -47,18 +47,18 @@ SEXP stri_stats_general(SEXP str)
    SEXP ret;
    PROTECT(ret = Rf_allocVector(INTSXP, gsAll));
    int* stats = INTEGER(ret);
-   for (int i=0; i<gsAll; ++i) 
+   for (int i=0; i<gsAll; ++i)
       stats[i] = 0;
 
    for (R_len_t i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) continue; // ignore
-      
+
       ++stats[gsNumLines]; // another line
       R_len_t     cn = str_cont.get(i).length();
       const char* cs = str_cont.get(i).c_str();
       UChar32 c;
       bool AnyNonWhite = false;
-      
+
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
          if (c == (UChar32)'\n' || c == (UChar32)'\r')
@@ -74,7 +74,7 @@ SEXP stri_stats_general(SEXP str)
       if (AnyNonWhite)
          ++stats[gsNumLinesNonEmpty]; // we have a non-empty line here
    }
-   
+
    stri__set_names(ret, gsAll, "Lines", "LinesNEmpty", "Chars", "CharsNWhite");
    UNPROTECT(1);
    return ret;
@@ -84,12 +84,12 @@ SEXP stri_stats_general(SEXP str)
 
 
 
-/** 
+/**
  * LaTeX, Kile-like statistics for a character vector
- * 
+ *
  * We use a modified LaTeX Word Count algorithm.
  * Original version from Kile 2.1.3, see http://kile.sourceforge.net/team.php
- * 
+ *
  * @param str a character vector
  * @return integer vector, see R man for details
  * @version 0.1 (Marek Gagolewski)
@@ -100,17 +100,17 @@ SEXP stri_stats_latex(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t str_length = LENGTH(str);
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, str_length);
-   
+
    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;
    // see http://kile.sourceforge.net/team.php
    enum State {
       stStandard = 0, stComment = 1, stControlSequence = 3,
       stControlSymbol = 4, stCommand = 5, stEnvironment = 6
    };
-   
+
    enum {
       lsCharsWord = 0,
       lsCharsCmdEnvir = 1,
@@ -120,7 +120,7 @@ SEXP stri_stats_latex(SEXP str)
       lsEnvir = 5,
       lsAll = 6
    };
-   
+
    SEXP ret;
    PROTECT(ret = Rf_allocVector(INTSXP, lsAll));
    int* stats = INTEGER(ret);
@@ -132,31 +132,31 @@ SEXP stri_stats_latex(SEXP str)
       R_len_t     cn = str_cont.get(i).length();
       const char* cs = str_cont.get(i).c_str();
       UChar32 c;
-      
+
       int state = stStandard;
       bool word = false; // we are not in a word currently
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
-         
+
          if (c == (UChar32)'\n')
             throw StriException(MSG__NEWLINE_FOUND);
-            
+
          UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
          UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
-         
+
          switch(state) {
             case stStandard:
                if (c == (UChar32)'\\') {
                   state = stControlSequence;
                   ++stats[lsCharsCmdEnvir];
-                  
+
                   if (j < cn) {
                      // Look Ahead:
                      UChar32 cnext;
                      int jnext = j;
                      U8_NEXT(cs, jnext, cn, cnext);
                      UBool isPunctNext = u_ispunct(cnext);
-                              
+
                      if (!isPunctNext || cnext == (UChar32)'~' || cnext == (UChar32)'^') {
                         // this is to avoid counting words like K\"ahler as two words
                         word = false;
@@ -182,7 +182,7 @@ SEXP stri_stats_latex(SEXP str)
                   }
               }
               break; // stStandard
-      
+
             case stControlSequence:
               if (isLetter) {
                   // "\begin{[a-zA-z]+}" is an environment, and you can't define a command like \begin
@@ -210,7 +210,7 @@ SEXP stri_stats_latex(SEXP str)
                   state = stStandard;
                }
                break;
-      
+
             case stCommand :
                if(isLetter) {
                   ++stats[lsCharsCmdEnvir];
@@ -227,7 +227,7 @@ SEXP stri_stats_latex(SEXP str)
                   state = stStandard;
                }
             break;
-      
+
             case stEnvironment :
                if(c == (UChar32)'}') { // until we find a closing } we have an environment
                   ++stats[lsCharsCmdEnvir];
@@ -240,18 +240,18 @@ SEXP stri_stats_latex(SEXP str)
                   ++stats[lsCharsCmdEnvir];
                }
             break;
-      
+
             case stComment:
                // ignore until the end - any newline will be detected
                // and the error will be thrown
             break;
-      
+
             default:
                throw StriException("DEBUG: stri_stats_latex() - this shouldn't happen :-(");
          }
      }
    }
-   
+
    stri__set_names(ret, lsAll, "CharsWord", "CharsCmdEnvir", "CharsWhite",
       "Words", "Cmds", "Envirs");
    UNPROTECT(1);

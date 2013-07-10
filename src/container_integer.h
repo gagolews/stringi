@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef __container_integer_h
 #define __container_integer_h
 
@@ -30,20 +30,20 @@
 class StriContainerInteger : public StriContainerBase {
 
    private:
-   
+
       int* data;
-      
+
    public:
-      
+
       StriContainerInteger() : StriContainerBase()
       {
          data = NULL;
       }
-      
+
       StriContainerInteger(SEXP rvec, R_len_t _nrecycle)
       {
          this->data = NULL;
-#ifndef NDEBUG 
+#ifndef NDEBUG
          if (!Rf_isInteger(rvec))
             throw StriException("DEBUG: !isInteger in StriContainerInteger");
 #endif
@@ -51,7 +51,7 @@ class StriContainerInteger : public StriContainerBase {
          this->init_Base(ndata, _nrecycle, true);
          this->data = INTEGER(rvec);
       }
-      
+
       //  StriContainerInteger(StriContainerInteger& container); // default-shallow
       // ~StriContainerInteger(); // default-shallow
       //  StriContainerInteger& operator=(StriContainerInteger& container); // default-shallow
@@ -68,8 +68,8 @@ class StriContainerInteger : public StriContainerBase {
 #endif
          return (data[i%n] == NA_INTEGER);
       }
-      
-      
+
+
       /** get the vectorized ith element
        * @param i index
        * @return integer

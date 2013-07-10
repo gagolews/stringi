@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef __stringi_h
 #define __stringi_h
 
@@ -47,7 +47,7 @@
 
 
 /** Two \code{R_len_t}s as one :)
- * 
+ *
  */
 struct R_len_t_x2 {
    R_len_t_x2(R_len_t _v1, R_len_t _v2) { this->v1 = _v1; this->v2 = _v2; }
@@ -57,7 +57,7 @@ struct R_len_t_x2 {
 
 
 /** Two \code{char*}s as one :)
- * 
+ *
  */
 struct charptr_x2 {
    charptr_x2() { this->v1 = NULL; this->v2 = NULL; }
@@ -88,7 +88,7 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...);       // DONE
 SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 SEXP    stri__emptyList();                                          // DONE
-SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE             
+SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);        // DONE
 SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);            // DONE
 
 // collator.cpp:

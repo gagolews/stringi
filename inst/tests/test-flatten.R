@@ -1,7 +1,7 @@
 require(testthat)
 
 test_that("stri_flatten", {
-   
+
    # basic tests (ASCII, border-line):
    expect_warning(stri_flatten(LETTERS, collapse=LETTERS))
    expect_identical(stri_flatten(c("", "", "", "", "")), "")
@@ -21,5 +21,5 @@ test_that("stri_flatten", {
    expect_identical(stri_flatten(letters, collapse=" "),paste(letters,  collapse=" "))
    expect_identical(stri_flatten(letters, collapse="#$"),paste(letters, collapse="#$"))
    expect_identical(stri_flatten(letters, collapse="\u0105\u0104"),paste(letters, collapse="\u0105\u0104"))
-   
+
 })

@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus and Marcin Bujarski
+## Copyright 2013 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -17,14 +17,12 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-
-
 #' @title String Searching
-#' 
+#'
 #' @description
 #' This man page describes how to perform string search-based
 #' operations in \pkg{stringi}.
-#' 
+#'
 #' @details
 #' There are three string searching ``engines'' in \pkg{stringi}.
 #' \itemize{
@@ -33,23 +31,23 @@
 #'    \item \code{stri_*_charclass} - character classes:
 #'    more exactly, either general character categories or binary properties, see \link{stringi-search-charclass},
 #' }
-#' 
+#'
 #' Each ``engine'' is able to perform many search-based operations:
 #' \itemize{
-#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string, 
+#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
 #'    see e.g. \code{\link{stri_detect}}
-#'    \item \code{stri_count_*} - counts the number of pattern's occurrences, 
+#'    \item \code{stri_count_*} - counts the number of pattern's occurrences,
 #'    see e.g. \code{\link{stri_count}}
-#'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern, 
+#'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_locate}}
-#'    \item \code{stri_extract_*} - extracts all, first, or last occurrences of a pattern, 
+#'    \item \code{stri_extract_*} - extracts all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_extract}}
-#'    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern, 
+#'    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_replace}}
-#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurrences, 
+#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurrences,
 #'    see e.g. \code{\link{stri_split}}
 #' }
-#' 
+#'
 #' @name stringi-search
 #' @rdname stringi-search
 #' @family search_regex
@@ -76,16 +74,16 @@ invisible(NULL)
 #' regular expressions may be a very powerful tool in your hand
 #' to do string searching,
 #' substring extraction, string splitting, etc.
-#' 
-#' 
+#'
+#'
 #' @details
 #' All \code{stri_*_regex} functions in \pkg{stingi} use
 #' the \pkg{ICU} regex engine, which may be tuned
 #' with settings may be tuned up (for example
 #' to perform case-insensitive search) with the
 #' \code{\link{stri_opts_regex}} function.
-#' 
-#' 
+#'
+#'
 #' Regular expression patterns in ICU are similar in form and behavior
 #' to Perl's regexes.  Their implementation loosely bases
 #' on JDK 1.4 package's \code{java.util.regex}.
@@ -94,13 +92,13 @@ invisible(NULL)
 #' the ICU User Guide (see below). A good introduction
 #' to regexes is (Friedl, 2002).
 #' Some topics are also covered in R manual, see \link{regex}.
-#' 
+#'
 #' @section Regexes in \pkg{stringi}:
 #' Note that if a given regex \code{pattern} is empty,
 #' then all functions in \pkg{stringi} give \code{NA} in result
 #' and generate a warning.
 #' On syntax error, a quite informative failure message is shown.
-#' 
+#'
 #' If you'd like to search for a fixed pattern,
 #' refer to \link{stringi-search-fixed}.
 #' This allows to do a locale-aware text lookup,
@@ -109,14 +107,14 @@ invisible(NULL)
 #' @references
 #' \emph{Regular expressions} -- ICU User Guide,
 #'  \url{http://userguide.icu-project.org/strings/regexp}
-#'  
+#'
 #' J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
-#'  
+#'
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 #' \url{http://www.unicode.org/reports/tr18/}
-#'  
+#'
 #' \emph{Unicode Regular Expressions} -- Regex tutorial, \url{http://www.regular-expressions.info/unicode.html}
-#' 
+#'
 #' @name stringi-search-regex
 #' @rdname stringi-search-regex
 #' @family search_regex
@@ -130,52 +128,52 @@ invisible(NULL)
 #'
 #' @description
 #' something general....
-#' 
-#' 
+#'
+#'
 #' @details
 #' By default, all \code{stri_*_fixed} functions in \pkg{stringi} utilize
 #' \pkg{ICU}'s \code{StringSearch} engine.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' For more information on ICU's Collator & SearchEngine
 #' and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
-#' 
+#'
 #' @section String Search Engine:
-#' 
+#'
 #' ...modified form of the Boyer Moore's search (cf. Werner, 1999),
 #' with time complexity of
 #' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)}).
-#' 
+#'
 #' Tuning Collator's parameter allow us to perform correct matching
 #' that properly takes into account accented letters, conjoined letters,
-#' and ignorable punctuation 
-#' 
+#' and ignorable punctuation
+#'
 #' Currently, the ICU collator-search is a little bit slow...
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @section Byte Compare:
-#' 
+#'
 #' If \code{opts_collator} is \code{NA}, then a very fast (for small p)
 #' bytewise (locale independent) search is performed, with time complexity of
 #' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)}) [Naive implementation
 #' - to be upgraded in future \pkg{stringi} version].
 #' For natural language, non-English text this is, however, not what
 #' you probably want.
-#' 
+#'
 #' However, note that - as usual - conversion of input data
 #' to Unicode is done as usual.
 #'
 #' @references
 #' \emph{ICU String Search Service} -- ICU User Guide,
 #'  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
-#'  
+#'
 #' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 #' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
-#' 
+#'
 #' @name stringi-search-fixed
 #' @rdname stringi-search-fixed
 #' @family search_fixed
@@ -189,41 +187,41 @@ invisible(NULL)
 #'
 #' @description
 #' some general info....
-#' 
-#' 
+#'
+#'
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stingi} perform
 #' single character search-based operations....
-#' 
+#'
 #'
 #' There are two separate ways to specify character classes or
 #' properties in \pkg{stringi}:
-#' 
+#'
 #' \itemize{
-#' \item by Unicode General Categories, e.g. \code{"Lu"} for uppercase letters 
+#' \item by Unicode General Categories, e.g. \code{"Lu"} for uppercase letters
 #' (1-2 letter identifier, same may be used in regex)
 #' \item by Unicode Binary Properties, e.g. \code{"WHITE_SPACE"}
 #' }
-#' These provide access to the ICU's Unicode Character Database 
+#' These provide access to the ICU's Unicode Character Database
 #'
-#' Unicode assigns each code point (not just assigned character) 
-#' values for many properties. Most of them are simple Boolean flags, 
-#' or constants from a small enumerated list. For some properties, 
+#' Unicode assigns each code point (not just assigned character)
+#' values for many properties. Most of them are simple Boolean flags,
+#' or constants from a small enumerated list. For some properties,
 #' values are strings or other relatively more complex types.
-#' 
+#'
 #' differences.....
-#' 
+#'
 #' Note that e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} may match different character sets.
-#' 
+#'
 #' Each class may be preceded with '^' (complement)...
-#' 
+#'
 #' @section Unicode General Categories:
-#' 
-#' The General_Category property of a code point provides for the most 
+#'
+#' The General_Category property of a code point provides for the most
 #' general classification of that code point.
-#' 
-#' 
+#'
+#'
 #' \itemize{
 #' \item \code{Cc}: a C0 or C1 control code
 #' \item \code{Cf}: a format control character
@@ -264,25 +262,25 @@ invisible(NULL)
 #' \item \code{S}: Union of Sm, Sc, Sk, So
 #' \item \code{Z}: Union of Zs, Zl, Zp
 #' }
-#' 
+#'
 #'
 #'
 #' @section Unicode Binary Properties:
-#' 
+#'
 #' (matched case-insensitively, normalized like with ICU character encoding
 #' specification)
-#' 
+#'
 #' \itemize{
 #' \item \code{ALPHABETIC}
 #' \item \code{ASCII_HEX_DIGIT} - matches \code{[0-9A-Fa-f]} regex
-#' \item \code{BIDI_CONTROL} - format controls which have specific functions 
+#' \item \code{BIDI_CONTROL} - format controls which have specific functions
 #' in the Bidi (bidirectional text) Algorithm.
 #' \item \code{BIDI_MIRRORED} - Characters that may change display in right-to-left text.
 #' \item \code{DASH} - Variations of dashes.
-#' \item \code{DEFAULT_IGNORABLE_CODE_POINT} - Ignorable in most processing, 
+#' \item \code{DEFAULT_IGNORABLE_CODE_POINT} - Ignorable in most processing,
 #' e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>
-#' \item \code{DEPRECATED} - a deprecated character according 
-#' to the current Unicode standard (the usage of deprecated characters 
+#' \item \code{DEPRECATED} - a deprecated character according
+#' to the current Unicode standard (the usage of deprecated characters
 #' is strongly discouraged)
 #' \item \code{DIACRITIC} - Characters that linguistically modify the meaning of another character to which they apply.
 #' \item \code{EXTENDER} - Extend the value or shape of a preceding alphabetic character, e.g., length and iteration marks.
@@ -290,15 +288,15 @@ invisible(NULL)
 #' \item \code{GRAPHEME_BASE}
 #' \item \code{GRAPHEME_EXTEND}
 #' \item \code{GRAPHEME_LINK}
-#' \item \code{HEX_DIGIT} - Characters commonly used for hexadecimal numbers, 
+#' \item \code{HEX_DIGIT} - Characters commonly used for hexadecimal numbers,
 #' cf. also \code{ASCII_HEX_DIGIT}
-#' \item \code{HYPHEN} - Dashes used to mark connections between 
+#' \item \code{HYPHEN} - Dashes used to mark connections between
 #' pieces of words, plus the Katakana middle dot.
 #' \item \code{ID_CONTINUE} - Characters that can continue an identifier,
 #'  \code{ID_START}+Mn+Mc+Nd+Pc
-#' \item \code{ID_START} - Characters that can start an identifier. 
+#' \item \code{ID_START} - Characters that can start an identifier.
 #' Lu+Ll+Lt+Lm+Lo+Nl
-#' \item \code{IDEOGRAPHIC} - CJKV (Chinese-Japanese-Korean-Vietnamese) 
+#' \item \code{IDEOGRAPHIC} - CJKV (Chinese-Japanese-Korean-Vietnamese)
 #' ideographs.
 #' \item \code{IDS_BINARY_OPERATOR}
 #' \item \code{IDS_TRINARY_OPERATOR}
@@ -309,9 +307,9 @@ invisible(NULL)
 #' \item \code{NONCHARACTER_CODE_POINT}
 #' \item \code{QUOTATION_MARK}
 #' \item \code{RADICAL}
-#' \item \code{SOFT_DOTTED} - Characters with a "soft dot", like i or j. 
+#' \item \code{SOFT_DOTTED} - Characters with a "soft dot", like i or j.
 #' An accent placed on these characters causes the dot to disappear.
-#' \item \code{TERMINAL_PUNCTUATION} - Punctuation characters that generally 
+#' \item \code{TERMINAL_PUNCTUATION} - Punctuation characters that generally
 #' mark the end of textual units.
 #' \item \code{UNIFIED_IDEOGRAPH}
 #' \item \code{UPPERCASE}
@@ -342,12 +340,12 @@ invisible(NULL)
 #' \item \code{CHANGES_WHEN_CASEMAPPED}
 #' \item \code{CHANGES_WHEN_NFKC_CASEFOLDED}
 #' }
-#' 
-#' 
+#'
+#'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
 #' \url{http://www.unicode.org/reports/tr44/}
-#' 
+#'
 #' @name stringi-search-charclass
 #' @rdname stringi-search-charclass
 #' @family search_charclass

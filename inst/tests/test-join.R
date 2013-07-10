@@ -1,7 +1,7 @@
 require(testthat)
 
 test_that("stri_join", {
-   
+
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(character(0), character(0)), character(0))
@@ -18,5 +18,5 @@ test_that("stri_join", {
    expect_identical(stri_join(LETTERS, letters, sep='!'), paste(LETTERS, letters, sep='!'))
    expect_identical(stri_join(LETTERS, letters, '?', sep='!'), paste(LETTERS, letters, '?', sep='!'))
    expect_identical(stri_join(LETTERS, letters, sep='!', collapse='?'), paste(LETTERS, letters, sep='!', collapse='?'))
-   
+
 })

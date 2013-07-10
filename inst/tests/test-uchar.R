@@ -1,5 +1,5 @@
 # require(testthat)
-# 
+#
 # test_that("stri_chartype", {
 #    expect_equivalent(stri_chartype(character(0)), NULL)
 #    expect_equivalent(stri_chartype(c("", NA_character_)),
@@ -9,9 +9,9 @@
 #    expect_equivalent(stri_chartype("ABC123abc\u0104\u0105\n")[[1]],
 #                      c(1L, 1L, 1L, 9L, 9L, 9L, 2L, 2L, 2L, 1L, 2L, 15))
 # })
-# 
-# 
-# 
+#
+#
+#
 # test_that("stri_charcategories", {
 #    categories <- stri_charcategories()
 #    expect_equivalent(nrow(categories), 29)

@@ -17,7 +17,6 @@
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 #' @title
 #' Split up a String by a Character Class
 #'

@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -102,8 +101,8 @@ invisible(NULL)
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' 
-#' @return 
+#'
+#' @return
 #' If \code{x} is a string, it is returned with no change.
 #' If it is a factor, then \code{\link{as.character}} is called.
 #' If an atomic vector or a matrix is given, it is coerced to character vector.
@@ -125,7 +124,7 @@ stri_prepare_arg_string <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' 
+#'
 #' @return
 #' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to numeric.
@@ -148,7 +147,7 @@ stri_prepare_arg_double <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' 
+#'
 #' @return
 #' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to integer.
@@ -172,7 +171,7 @@ stri_prepare_arg_integer <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' 
+#'
 #' @return
 #' If \code{x} is a logical vector, it is returned with no change.
 #' If \code{x} is a factor, \code{\link{as.character}} is called, and the
@@ -195,8 +194,8 @@ stri_prepare_arg_logical <- function(x) {
 #' functions' arguments. See `Value' section for details.
 #'
 #' @param x argument to be checked
-#' 
-#' @return 
+#'
+#' @return
 #' If \code{x} is a raw vector, it is returned with no change.
 #' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to raw.

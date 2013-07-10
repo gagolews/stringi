@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 
 #include "stringi.h"
 
@@ -79,13 +79,13 @@ const UProperty CharClass::binprop_code[] = { // sorted by binprop_names_normali
    UCHAR_TERMINAL_PUNCTUATION, UCHAR_UNIFIED_IDEOGRAPH, UCHAR_UPPERCASE,
    UCHAR_VARIATION_SELECTOR, UCHAR_WHITE_SPACE, UCHAR_XID_CONTINUE, UCHAR_XID_START
 };
-      
-      
-      
+
+
+
 /** Get desired character class code from given name
- * 
+ *
  * @param charclass CHARSXP, can be NA
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 CharClass::CharClass(SEXP charclass)
@@ -98,13 +98,13 @@ CharClass::CharClass(SEXP charclass)
    binprop = (UProperty)-1;
    gencat = (UCharCategory)-1;
    complement = false;
-   
+
    if (charclass == NA_STRING)
       return; // leave (-1, -1) == NA
-   
+
    R_len_t n = LENGTH(charclass);
    const char* name = CHAR(charclass);
-   
+
    if (name[0] == '^') { // if n==0, then name[0] == '\0'
       complement = true;
       name++;
@@ -125,23 +125,23 @@ CharClass::CharClass(SEXP charclass)
 
 /**
  * Get unicode general category mask from name
- * 
+ *
  * @param name character string
  * @param n \code{name}'s length
  * @return general category mask
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
 {
    UCharCategory id = (UCharCategory)(-1);
-   
+
    if (n >= 1 && n <= 2) {
-      
+
       // compare case-insensitively
       char name1 = (U8_IS_SINGLE(name[0]) && name[0]!=0)?(char)u_toupper((UChar32)name[0]):0;
       char name2 = (U8_IS_SINGLE(name[1]) && name[1]!=0)?(char)u_toupper((UChar32)name[1]):0;
-   
+
       switch(name1) {
          case 'C':
             switch (name2) {
@@ -153,7 +153,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_C_MASK;  break;
             }
             break;
-            
+
          case 'L':
             switch (name2) {
                case 'U':  id = (UCharCategory)U_GC_LU_MASK; break;
@@ -165,7 +165,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_L_MASK;  break;
             }
             break;
-            
+
          case 'M':
             switch (name2) {
                case 'N':  id = (UCharCategory)U_GC_MN_MASK; break;
@@ -174,7 +174,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_M_MASK;  break;
             }
             break;
-            
+
          case 'N':
             switch (name2) {
                case 'D':  id = (UCharCategory)U_GC_ND_MASK; break;
@@ -183,7 +183,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_N_MASK;  break;
             }
             break;
-            
+
          case 'P':
             switch (name2) {
                case 'D':  id = (UCharCategory)U_GC_PD_MASK; break;
@@ -196,7 +196,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_P_MASK;  break;
             }
             break;
-            
+
          case 'S':
             switch (name2) {
                case 'M':  id = (UCharCategory)U_GC_SM_MASK; break;
@@ -206,7 +206,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
                case '\0': id = (UCharCategory)U_GC_S_MASK;  break;
             }
             break;
-            
+
          case 'Z':
             switch (name2) {
                case 'S':  id = (UCharCategory)U_GC_ZS_MASK; break;
@@ -217,21 +217,21 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
             break;
       }
    }
-   
+
    if (id == (UCharCategory)-1)
       Rf_warning(MSG__CHARCLASS_INCORRECT);
-      
+
    return id;
 }
 
 
 /**
  * Get binary property code from name
- * 
+ *
  * @param name character string
  * @param n \code{name}'s length
  * @return general category mask
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
@@ -250,22 +250,22 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
          name2[n2++] = (char)chr;
       else if (u_ispunct(chr) || u_isspace(chr))
          ; // ignore
-      else 
+      else
          name2[n2++] = ASCII_SUBSTITUTE;
    }
    name2[n2] = '\0';
 
    // -------------------------------------------------------------------
-   
+
    UProperty id = (UProperty)(-1);
-   
+
    if (n2 >= 1) {
       // binprop_names is sorted; apply binary search
       R_len_t i1 = 0;
       R_len_t i2 = CharClass::binprop_length-1;
       while (i1 <= i2) {
          int im = i1+(i2-i1)/2;
-         
+
 #ifndef NDEBUG
          if (i1 < 0 || i2 >= CharClass::binprop_length || im < i1 || im > i2)
             throw StriException("CharClass::getBinaryPropertyFromName FAILED; %d, %d, %d", i1, i2, im);
@@ -282,7 +282,7 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
             i2 = im - 1;
       }
    }
- 
+
    if (id == (UProperty)-1)
    Rf_warning(MSG__CHARCLASS_INCORRECT_WHICH, name);
 
@@ -292,10 +292,10 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 
 
 /** Test if a character falls into a given charclass
- * 
+ *
  * @param c UTF-32 char code
  * @return TRUE (1) or FALSE (0)
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 int CharClass::test(UChar32 c)

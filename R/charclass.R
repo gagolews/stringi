@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
+## Copyright 2013 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -18,10 +18,6 @@
 
 
 invisible(NULL) # version >= 0.2
-
-
-
-
 
 
 # #' Get character types (general character category identifier)

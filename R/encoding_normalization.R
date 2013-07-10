@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -55,22 +54,22 @@
 #'
 #'
 #' @param str character vector to be encoded
-#' 
+#'
 #' @return \code{stri_enc_nf*} return a character vector
 #' of the same length as input (the output is always in UTF-8).
-#' 
+#'
 #' \code{stri_enc_isnf*} return a logical vector.
 #'
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,
 #'    \url{http://unicode.org/reports/tr15}
-#'    
+#'
 #' \emph{Character Model for the World Wide Web 1.0: Normalization}
 #' -- W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}
-#'    
+#'
 #' \emph{Normalization} -- ICU User Guide,
 #'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
-#'    
+#'
 #' \emph{Unicode Equivalence} -- Wikipedia, \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @export

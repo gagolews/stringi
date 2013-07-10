@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "stringi.h"
 
 
@@ -23,10 +23,10 @@
 /**
  * Get the largest number of bytes in its strings
  * (useful for allocating temporary buffers)
- * 
+ *
  * if all strings are NA or an empty character vector is given, -1 is returned
  * Prior to memory allocation, you should check for < 0!
- * 
+ *
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return maximal number of bytes
@@ -50,9 +50,9 @@ R_len_t stri__numbytes_max(SEXP str)
 
 
 
-/** 
+/**
  * Get number of bytes in each string
- * 
+ *
  * Note that ICU permits only strings of length < 2^31.
  * @param s R object coercible to a character vector
  * @return integer vector
@@ -81,7 +81,7 @@ SEXP stri_numbytes(SEXP str)
 
 /**
  * Count the number of characters in a string
- * 
+ *
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
@@ -94,13 +94,13 @@ SEXP stri_length(SEXP str)
    str = stri_prepare_arg_string(str, "str");
    R_len_t ns = LENGTH(str);
    SEXP ret;
-   
+
    UConverter* uconv = NULL;
    bool uconv_8bit = false;
    bool uconv_utf8 = false;
-   
+
    STRI__ERROR_HANDLER_BEGIN
-   
+
 /* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
 #define STRI_LENGTH_CALCULATE_UTF8  \
    const char* qc = CHAR(q);        \
@@ -108,9 +108,9 @@ SEXP stri_length(SEXP str)
    for (R_len_t i = 0; i < nq; j++) \
       U8_FWD_1(qc, i, nq);          \
    retint[k] = j;
-   
+
    PROTECT(ret = Rf_allocVector(INTSXP, ns));
-   int* retint = INTEGER(ret);   
+   int* retint = INTEGER(ret);
    for (R_len_t k = 0; k < ns; k++) {
       SEXP q = STRING_ELT(str, k);
       if (q == NA_STRING)
@@ -123,7 +123,7 @@ SEXP stri_length(SEXP str)
          // the string may have any encoding (ascii, latin1, utf8, native)
          if (IS_ASCII(q) || IS_LATIN1(q))
             retint[k] = nq;
-         else if (IS_BYTES(q)) 
+         else if (IS_BYTES(q))
             throw StriException(MSG__BYTESENC);
          else if (IS_UTF8(q)) {
             STRI_LENGTH_CALCULATE_UTF8
@@ -141,7 +141,7 @@ SEXP stri_length(SEXP str)
 //            2. Assume it's Native; this assumes the user working in an 8-bit environment
 //                would convert strings to UTF-8 manually if needed - I think is's
 //                a more reasonable approach (Native --> input via keyboard)
-      
+
             if (!uconv) { // open ucnv on demand
                uconv = stri__ucnv_open((const char*)NULL); // native decoder
                if (!uconv) {
@@ -157,7 +157,7 @@ SEXP stri_length(SEXP str)
                   uconv_utf8 = !strncmp("UTF-8", name, 5);
                }
             }
-             
+
             if (uconv_8bit) {
                retint[k] = nq; // it's an 8-bit encoding :-)
             }
@@ -185,12 +185,12 @@ SEXP stri_length(SEXP str)
       }
    }
    UNPROTECT(1);
-   
+
    if (uconv) {
       ucnv_close(uconv);
       uconv = NULL;
    }
-      
+
    return ret;
    STRI__ERROR_HANDLER_END({
       if (uconv)
@@ -201,7 +201,7 @@ SEXP stri_length(SEXP str)
 
 /**
  * Check whether a string is empty
- * 
+ *
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
@@ -223,14 +223,14 @@ SEXP stri_isempty(SEXP str)
          retlog[i] = (CHAR(curs)[0] == '\0'); // (LENGTH(curs) == 0); // slower?
    }
    UNPROTECT(1);
-   return ret;  
+   return ret;
 }
 
 
 ///**
 // * Determine the width of the string
 // * e.g. some chinese chars have width > 1.
-// * 
+// *
 // * Note that ICU permits only strings of length < 2^31.
 // * @param s R character vector
 // * @return integer vector
@@ -241,18 +241,18 @@ SEXP stri_isempty(SEXP str)
 //{
 //   str = stri_prepare_arg_string(str, "str");
 //   R_len_t ns = LENGTH(str);
-//   
-//   
+//
+//
 //   ///< @TODO ------------------------------------------------------------------------------------------------------
 //   error("TODO: the function has not yet been implemented.");
-//   
+//
 //   //UChar32 c;
 //   SEXP ret;
 //   PROTECT(ret = allocVector(INTSXP, ns));
-//   //int* retint = INTEGER(ret);   
-//   
+//   //int* retint = INTEGER(ret);
 //
-//   
+//
+//
 //   UNPROTECT(1);
 //   return ret;
 //}

@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.1-7
-Date: 2013-07-05
+Date: 2013-07-10
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast,
     and simple string processing in each locale and native charset.

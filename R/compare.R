@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -102,7 +101,7 @@ stri_cmp <- stri_compare
 #'
 #' @return For \code{stri_order}, an integer vector that gives the sort order
 #' is returned.
-#' 
+#'
 #' For \code{stri_order} you'll get a sorted version of \code{str},
 #' i.e. a character vector.
 #'

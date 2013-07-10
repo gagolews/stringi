@@ -1,36 +1,36 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "stringi.h"
 
 
 
 
-/** 
+/**
  * Trim characters from a charclass from left AND/OR right side of the string
- *  
+ *
  * @param str character vector
  * @param pattern character vector
  * @param left from left?
  * @param right from left?
  * @return character vector
- * 
- * @version 0.1 (Bartek Tartanus)  
+ *
+ * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly & Use StrContainerCharClass
 */
@@ -39,23 +39,23 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
-   
+
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
-   
+
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
-   { 
+   {
       if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       CharClass pattern_cur = pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
@@ -63,7 +63,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       R_len_t jlast1 = 0;
       R_len_t jlast2 = str_cur_n;
       UChar32 chr;
-      
+
       if (left) {
          for (j=0; j<str_cur_n; ) {
             U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
@@ -73,7 +73,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             jlast1 = j;
          }
       }
-      
+
       if (right && jlast1 < str_cur_n) {
          for (j=str_cur_n; j>0; ) {
             U8_PREV(str_cur_s, 0, j, chr); // "look behind"
@@ -83,25 +83,25 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             jlast2 = j;
          }
       }
-      
+
       // now jlast is the index, from which we start copying
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
    }
 
    UNPROTECT(1);
-   return ret;  
+   return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
-/** 
+/**
  * Trim characters from a charclass from both sides of the string
- *  
+ *
  * @param str character vector
  * @param pattern character vector
  * @return character vector
- * 
- * @version 0.1 (Bartek Tartanus)  
+ *
+ * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
 */
@@ -113,51 +113,51 @@ SEXP stri_trim_both(SEXP str, SEXP pattern)
 
 
 
-/** 
+/**
  * Trim characters from a charclass from the left of the string
- *  
+ *
  * @param str character vector
  * @param pattern character vector
  * @return character vector
- * 
- * @version 0.1 (Bartek Tartanus) 
+ *
+ * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
 */
 SEXP stri_trim_left(SEXP str, SEXP pattern)
-{   
+{
    return stri__trim_leftright(str, pattern, true, false);
 }
 
 
-/** 
+/**
  * Trim characters from a charclass from the right of the string
- *  
+ *
  * @param str character vector
  * @param pattern character vector
  * @return character vector
- * 
- * @version 0.1 (Bartek Tartanus)  
+ *
+ * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
 */
 SEXP stri_trim_right(SEXP str, SEXP pattern)
-{   
+{
    return stri__trim_leftright(str, pattern, false, true);
 }
 
 
 
 
-///** 
+///**
 // * Trim consecutive repeating characters from a charclass
-// *  
+// *
 // * @param str character vector
 // * @param pattern character vector
 // * @param leave_first logical vector
 // * @return character vector
-// * 
-// * @version 0.1 (Bartek Tartanus)  
+// *
+// * @version 0.1 (Bartek Tartanus)
 //*/
-//SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first) 
+//SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first)
 //{
 //   s = stri_prepare_arg_string(s, "str"); // prepare string argument
 //   R_len_t ns = LENGTH(s);

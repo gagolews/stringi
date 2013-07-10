@@ -18,7 +18,7 @@ test_that("stri_sub", {
    expect_identical(stri_sub(s,matrix(1:6,ncol=2)),stri_sub(s,1:3,4:6))
    expect_warning(stri_sub(s,matrix(1:6,ncol=2),to=-1))
    expect_identical(stri_sub(s,length=-1:1),c("","","a"))
-   
+
    expect_identical(stri_sub("123",-1),"3")
 	expect_identical(stri_sub("123",-3),"123")
 	expect_identical(stri_sub("123",3,length=-1:3),c("","","3","3","3"))
@@ -36,7 +36,7 @@ test_that("stri_sub<-", {
    expect_identical(stri_sub(s)<-NA, NA)
    #character(0) has priority over NA
    expect_identical(stri_sub(s)<-character(0), character(0))
-   
+
    s <- "\U0010FFFFa\u0105";  stri_sub(s,1,1) <- "x";   expect_identical(s, "xa\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,2,2) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,3,3) <- "x";   expect_identical(s, "\U0010FFFFax")

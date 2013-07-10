@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -23,7 +23,7 @@
 #' @description
 #' Convenience function to tune the Collator's behavior,
 #' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
-#' \code{\link{stri_detect_fixed}}, 
+#' \code{\link{stri_detect_fixed}},
 #' and other \link{stringi-search-fixed} functions.
 #'
 #'
@@ -34,7 +34,7 @@
 #' (on some platforms), and definitely
 #' more complex than ordinary byte-comparison.
 #'
-#' A note on collation \code{strength}: 
+#' A note on collation \code{strength}:
 #' generally, \code{strength} set to 4 is
 #' the least permissive.
 #' Set to 2 to ignore case differences.
@@ -69,23 +69,23 @@
 #' when turned on, this attribute generates a collation key for
 #'  the numeric value of substrings of digits;
 #'  This is a way to get '100' to sort AFTER '2'.
-#'  
+#'
 #' @return
 #' Returns a named list object; missing options are left with default values.
-#' 
+#'
 #' @export
 #' @aliases collator
 #' @family locale_sensitive
 #' @family search_fixed
 #'
 #' @references
-#' \emph{Collation} -- ICU User Guide, 
+#' \emph{Collation} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/collation}
-#' 
-#' \emph{ICU Collation Service Architecture} -- ICU User Guide, 
+#'
+#' \emph{ICU Collation Service Architecture} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/collation/architecture}
-#' 
-#' \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation, 
+#'
+#' \emph{\code{icu::Collator} Class Reference} -- ICU4C API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
@@ -116,7 +116,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #'
 #' @description
 #' A convenience function to tune regular expressions matcher behavior,
-#' e.g. in \code{\link{stri_count_regex}} 
+#' e.g. in \code{\link{stri_count_regex}}
 #' and other \link{stringi-search-regex} functions.
 #'
 #'
@@ -141,17 +141,17 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' If set, fail with an error on patterns that contain backslash-escaped ASCII
 #'  letters without a known special meaning.
 #'  If this flag is not set, these escaped letters represent themselves.
-#'  
+#'
 #' @return
 #' Returns a named list object; missing options are left with default values.
-#' 
+#'
 #' @export
 #' @aliases regex
 #' @family search_regex
 #'
 #' @references
-#' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes} 
-#' -- ICU4C API Documentation, 
+#' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
+#' -- ICU4C API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}\cr
 #'
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,

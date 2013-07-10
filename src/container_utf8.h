@@ -1,21 +1,21 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef __container_utf8_h
 #define __container_utf8_h
 
@@ -33,10 +33,10 @@
 class StriContainerUTF8 : public StriContainerBase {
 
    private:
-   
-      String8** str;  ///< data - \code{string}s 
-      
-      
+
+      String8** str;  ///< data - \code{string}s
+
+
       // the following are used in UChar32_to_UTF8_index_back
       // and UChar32_to_UTF8_index_fwd to speed up computations
       // on the same strings
@@ -46,10 +46,10 @@ class StriContainerUTF8 : public StriContainerBase {
       R_len_t last_ind_back_codepoint;
       R_len_t last_ind_back_utf8;
       const char* last_ind_back_str;
-      
-      
+
+
    public:
-      
+
       StriContainerUTF8();
       StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
       StriContainerUTF8(StriContainerUTF8& container);
@@ -70,8 +70,8 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return (str[i%n] == NULL);
       }
-      
-      
+
+
       /** get the vectorized ith element
        * @param i index
        * @return string, read only
@@ -85,8 +85,8 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return (*(str[i%n]));
       }
-      
-      
+
+
       void UTF8_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
       R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
       R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);

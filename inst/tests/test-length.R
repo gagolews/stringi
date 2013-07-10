@@ -10,13 +10,13 @@ test_that("stri_length", {
    expect_equivalent(stri_length('\U7fffffff'), 1)
    expect_equivalent(stri_length(10:99), rep(2,90))
 })
-  
+
 
 test_that("stri_length-cjk", {
    cjk_test <- stri_enc_fromutf32(c(24120, 29992, 22283, 23383, 27161, 28310, 23383, 39636, 34920))
    expect_equivalent(stri_numbytes(cjk_test), 27)
    expect_equivalent(stri_length(cjk_test), 9)
-   
+
    suppressWarnings(oldenc <- stri_enc_set('Big5'))
    cjk_test_Big5 <- stri_encode(cjk_test, 'UTF-8', 'Big5')
    expect_equivalent(stri_numbytes(cjk_test_Big5), 18)

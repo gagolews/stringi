@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -30,8 +29,8 @@
 #'
 #'
 #' @param str character vector
-#' 
-#' @return Returns a logical vector. 
+#'
+#' @return Returns a logical vector.
 #' Its i-th element indicates whether the i-th string
 #' corresponds to a valid ASCII byte sequence.
 #'
@@ -71,7 +70,7 @@ stri_enc_isascii <- function(str) {
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #' @param str character vector
-#' 
+#'
 #' @return Returns a logical vector.
 #' Its i-th element indicates whether the i-th string
 #' corresponds to a valid UTF-8 byte sequence.

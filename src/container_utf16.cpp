@@ -1,28 +1,28 @@
 /* This file is part of the 'stringi' library.
- * 
+ *
  * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
- * 
+ *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * 'stringi' is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 
 #include "stringi.h"
 
 
-/** 
+/**
  * Default constructor
- * 
+ *
  */
 StriContainerUTF16::StriContainerUTF16()
    : StriContainerBase()
@@ -38,7 +38,7 @@ StriContainerUTF16::StriContainerUTF16()
 StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 {
    this->str = NULL;
-   this->init_Base(_nrecycle, _nrecycle, false);  
+   this->init_Base(_nrecycle, _nrecycle, false);
    if (this->n > 0) {
       this->str = new UnicodeString*[this->n];
       for (R_len_t i = 0; i < this->n; ++i)
@@ -56,19 +56,19 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->str = NULL;
-#ifndef NDEBUG 
+#ifndef NDEBUG
    if (!isString(rstr))
-      throw StriException("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)"); 
+      throw StriException("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
 #endif
    R_len_t nrstr = LENGTH(rstr);
    this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
-   
+
 
    if (this->n > 0) {
       this->str = new UnicodeString*[this->n];
       for (R_len_t i=0; i<this->n; ++i)
          this->str[i] = NULL; // in case it fails during conversion (this is NA)
-      
+
       UConverter* ucnvASCII = NULL;
 //      UConverter* ucnvUTF8 = NULL;
       UConverter* ucnvLatin1 = NULL;
@@ -80,17 +80,17 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             continue; // keep NA
          }
          else {
-            if (IS_ASCII(curs)) {         
-               if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");      
+            if (IS_ASCII(curs)) {
+               if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");
                UErrorCode status = U_ZERO_ERROR;
                this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
                   ucnvASCII, status);
                if (U_FAILURE(status))
                   throw StriException(status);
-                  
+
                // Performance improvement attempt #1:
                // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs))); // slower than the above
-               
+
                // Performance improvement attempt #2:
                // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
                // This wasn't faster tham the ucnvASCII approach.
@@ -107,7 +107,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                if (U_FAILURE(status))
                   throw StriException(status);
             }
-            else if (IS_BYTES(curs)) 
+            else if (IS_BYTES(curs))
                throw StriException(MSG__BYTESENC);
             else {
 //             Any encoding - detection needed
@@ -123,12 +123,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             }
          }
       }
-      
+
       if (ucnvASCII) ucnv_close(ucnvASCII);
 //      if (ucnvUTF8)  ucnv_close(ucnvUTF8);
       if (ucnvLatin1) ucnv_close(ucnvLatin1);
       if (ucnvNative) ucnv_close(ucnvNative);
-      
+
       if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
             if (this->str[i%nrstr] == NULL)
@@ -143,7 +143,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
 
 /** Copy constructor
- * 
+ *
  */
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    :    StriContainerBase((StriContainerBase&)container)
@@ -169,7 +169,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
    this->~StriContainerUTF16();
    (StriContainerBase&) (*this) = (StriContainerBase&)container;
-   
+
    if (container.str) {
       this->str = new UnicodeString*[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -187,7 +187,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 
 
 /** Destructor
- * 
+ *
  */
 StriContainerUTF16::~StriContainerUTF16()
 {
@@ -211,10 +211,10 @@ StriContainerUTF16::~StriContainerUTF16()
  */
 SEXP StriContainerUTF16::toR() const
 {
-   SEXP ret;   
+   SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
    std::string buf;
-   
+
    for (R_len_t i=0; i<nrecycle; ++i) {
       if (!str[i%n])
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -225,7 +225,7 @@ SEXP StriContainerUTF16::toR() const
             Rf_mkCharLenCE(buf.c_str(), buf.length(), CE_UTF8));
       }
    }
-   
+
    UNPROTECT(1);
    return ret;
 }
@@ -240,8 +240,8 @@ SEXP StriContainerUTF16::toR() const
 SEXP StriContainerUTF16::toR(R_len_t i) const
 {
 #ifndef NDEBUG
-   if (i < 0 || i >= nrecycle) 
-      throw StriException("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS"); 
+   if (i < 0 || i >= nrecycle)
+      throw StriException("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS");
 #endif
 
    if (str[i%n] == NULL)
@@ -252,22 +252,22 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
       return Rf_mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
    }
 }
- 
- 
+
+
 
 
 
 /** Convert Unicode16-Char indices to Unicode32 (code points)
  *
  * \code{i1} and \code{i2} must be sorted increasingly
- * 
+ *
  * @param i element index
  * @param i1 indices, 1-based [in/out]
  * @param i2 indices, 1-based [in/out]
  * @param ni size of \code{i1} and \code{i2}
  * @param adj1 adjust for \code{i1}
  * @param adj2 adjust for \code{i2}
- * 
+ *
  */
 void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
    int* i1, int* i2, const int ni, int adj1, int adj2)
@@ -275,39 +275,39 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
    const UnicodeString* str_data = &(this->get(i));
    const UChar* cstr = str_data->getBuffer();
    const int nstr = str_data->length();
-   
+
    int j1 = 0;
    int j2 = 0;
-   
+
    int i16 = 0;
    int i32 = 0;
    while (i16 < nstr && (j1 < ni || j2 < ni)) {
-      
+
 //      cerr << i16 << " " << i32 << " " << j1 << " " << j2 << " " << ((j1 < ni)?i1[j1]:-1) << " " << ((j2 < ni)?i2[j2]:-1) << endl;
-      
+
       if (j1 < ni && i1[j1] <= i16) {
 #ifndef NDEBUG
       if (j1 < ni-1 && i1[j1] >= i1[j1+1])
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index"); 
+         throw StriException("DEBUG: stri__UChar16_to_UChar32_index");
 #endif
          i1[j1] = i32 + adj1;
          ++j1;
       }
-      
+
       if (j2 < ni && i2[j2] <= i16) {
 #ifndef NDEBUG
       if (j2 < ni-1 && i2[j2] >= i2[j2+1])
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index"); 
+         throw StriException("DEBUG: stri__UChar16_to_UChar32_index");
 #endif
          i2[j2] = i32 + adj2;
          ++j2;
       }
-      
+
       // Next UChar32
       U16_FWD_1(cstr, i16, nstr);
       ++i32;
    }
-   
+
    // CONVERT LAST:
    if (j1 < ni && i1[j1] <= nstr) {
 #ifndef NDEBUG
@@ -317,16 +317,16 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
          i1[j1] = i32 + adj1;
          ++j1;
    }
-  
+
    if (j2 < ni && i2[j2] <= nstr) {
 #ifndef NDEBUG
       if (j2 < ni-1 && i2[j2] >= i2[j2+1])
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index"); 
+         throw StriException("DEBUG: stri__UChar16_to_UChar32_index");
 #endif
          i2[j2] = i32 + adj2;
          ++j2;
    }
-   
+
    // CHECK:
 #ifndef NDEBUG
       if (i16 >= nstr && (j1 < ni || j2 < ni))

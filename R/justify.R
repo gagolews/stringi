@@ -10,7 +10,7 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
@@ -24,14 +24,14 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 # #'
 # #' @description
 # #' Horizontal justification of the text.
-# #' 
+# #'
 # #' @param str will be coerced to character
 # #' @param width integer
 # #' @return character vector
 # #' @details ...
 # #' @examples
 # #' stri_justify(s, 50)
-# #' 
+# #'
 # #' @export
 # stri_justify <- function(str, width) {
 #    # prepare_arg done internally

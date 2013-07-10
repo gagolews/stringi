@@ -10,12 +10,11 @@
 ##
 ## 'stringi' is distributed in the hope that it will be useful,
 ## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ## GNU Lesser General Public License for more details.
 ##
 ## You should have received a copy of the GNU Lesser General Public License
 ## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
-
 
 
 #' @title
@@ -42,7 +41,7 @@
 #'  and their encodings. Programs have been written to handle either
 #'  one single encoding at a time and switch between them, or to convert
 #'   between external and internal encodings.
-#'   
+#'
 #' Unicode provides a single character set that covers the major
 #' languages of the world, and a small number of machine-friendly encoding
 #'  forms and schemes to fit the needs of existing applications and protocols.
@@ -51,12 +50,12 @@
 #'  used in almost all applications and protocols (see the ICU User Guide).
 #'
 #' The Unicode Standard determines the way to map any possible character
-#' to a numeric value -- a so-called code points. 
-#' Such code points, however, have to be stored 
+#' to a numeric value -- a so-called code points.
+#' Such code points, however, have to be stored
 #' somehow in computer's memory.
-#' The Unicode Standard encodes characters in the range U+0000..U+10FFFF, 
-#' which amounts to a 21-bit code space. Depending on the encoding 
-#' form (UTF-8, UTF-16, or UTF-32), each character will 
+#' The Unicode Standard encodes characters in the range U+0000..U+10FFFF,
+#' which amounts to a 21-bit code space. Depending on the encoding
+#' form (UTF-8, UTF-16, or UTF-32), each character will
 #' then be represented either as a sequence of one to four 8-bit bytes,
 #'  one or two 16-bit code units, or a single 32-bit code unit
 #'  (cf. the ICU FAQ).
@@ -65,7 +64,7 @@
 #'
 #' The UTF-8 encoding is the most natural choice in R.
 #' UTF-8 has ASCII as its subset (code points 1--127 are the same
-#' in both of them). Code points larger than 127 
+#' in both of them). Code points larger than 127
 #' are represented by multi-byte sequences
 #' (from 2 to 4 bytes:
 #' not all sequences of bytes are valid UTF-8).
@@ -76,7 +75,7 @@
 #' Most of the computations in \pkg{stringi} are performed internally
 #' using either UTF-8 or UTF-16 encodings
 #' (this depends on type of service you request:
-#' often ICU is designed to work only with UTF-16). 
+#' often ICU is designed to work only with UTF-16).
 #' Thanks to that choice, with \pkg{stringi}
 #' you get the same result on each platform,
 #' which is -- unfortunately -- not the case of base R's functions
@@ -85,7 +84,7 @@
 #' to those obtained under Windows).
 #' We really had portability in our minds while developing
 #' our package!
-#' 
+#'
 #' As R handles UTF-8 strings well regardless of your platform's Native encoding
 #' (see below), most functions in \pkg{stringi} output results in UTF-8
 #' -- this speeds ups computations on cascading calls to our functions:
@@ -112,7 +111,7 @@
 #' \pkg{stringi} checks that when your native encoding
 #' is being autodetected on ICU initialization and each time
 #' when you change it manually by calling \code{\link{stri_enc_set}}.
-#' 
+#'
 #' Character strings in R (internally) can be declared to be in:
 #' \itemize{
 #' \item ASCII -- strings consist only of bytes codes not greater than 127;
@@ -127,7 +126,7 @@
 #' encoding mark) -- strings are
 #' assumed to be in platform's Native (default) encoding.
 #' }
-#' 
+#'
 #' Native strings often appear as result of inputing
 #' a string from keyboard or file. This makes sense: you operating
 #' system works in some encoding and provides R with some data.
@@ -136,7 +135,7 @@
 #' encoding, i.e. that returned by \code{\link{stri_enc_get}}
 #' (default encoding should only be changed if autodetect fails
 #' on \pkg{stringi} load).
-#' 
+#'
 #' Functions which allow \code{"bytes"} encoding marks are very rare in \pkg{stringi},
 #' and were carefully selected. These are: \code{\link{stri_enc_toutf8}}
 #' (with argument \code{is_unknown_8bit=TRUE}), \code{\link{stri_enc_toascii}},
@@ -169,9 +168,9 @@
 #'
 #' @references
 #' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
-#' 
-#' \emph{Converters} -- ICU User Guide, 
+#'
+#' \emph{Converters} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
-#' 
+#'
 #' \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{http://www.unicode.org/faq/utf_bom.html}
 invisible(NULL)
