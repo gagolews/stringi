@@ -125,7 +125,7 @@ stri_enc_toutf32 <- function(str) {
 #'
 #'
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
-#' to mark the end of a string (in C/C++/...).
+#' to internally mark the end of a string (in the C API).
 #'
 #' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
@@ -158,8 +158,7 @@ stri_enc_fromutf32 <- function(vec) {
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
 #' Otherwise, R encoding marks is assumed
-#' to be trustworthy (ASCII, UTF-8, Latin1, or Native
-#' set by \code{\link{stri_enc_set}}.
+#' to be trustworthy (ASCII, UTF-8, Latin1, or Native).
 #'
 #' Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
 #' \code{NA} value for single characters.
