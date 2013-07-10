@@ -181,8 +181,8 @@ R_len_t StriContainerByteSearch::findFirst()
       if (k == patternLen) {
          // found!
          return searchPos;
-		}
-	}
+   	}
+   }
 
    // not found
    searchPos = searchLen;
@@ -215,7 +215,7 @@ R_len_t StriContainerByteSearch::findNext()
          // found!
          return searchPos;
    	}
-	}
+   }
 
    // not found
    searchPos = searchLen;
@@ -246,7 +246,7 @@ R_len_t StriContainerByteSearch::findLast()
          // found!
          return searchPos;
       }
-	}
+   }
 
    // not found
    searchPos = searchLen;

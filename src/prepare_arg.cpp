@@ -89,8 +89,8 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-		x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-		UNPROTECT(1);
+   	x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
+   	UNPROTECT(1);
       return x;
    }
    else if (Rf_isVectorAtomic(x))
@@ -130,7 +130,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
       x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-		UNPROTECT(1);
+   	UNPROTECT(1);
       return Rf_coerceVector(x, REALSXP);
    }
    else if(isReal(x))
@@ -169,7 +169,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
    	x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-		UNPROTECT(1);
+   	UNPROTECT(1);
       return Rf_coerceVector(x, INTSXP);
    }
    else if (Rf_isInteger(x))
@@ -208,7 +208,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
       x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-		UNPROTECT(1);
+   	UNPROTECT(1);
       return Rf_coerceVector(x, LGLSXP);
    }
    else if (isLogical(x))

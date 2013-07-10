@@ -39,7 +39,7 @@
 #' see \link{stringi-search-charclass}
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; should empty strings be removed from result?
-#' 
+#'
 #' @return Returns a list of character vectors.
 #'
 #'
@@ -74,14 +74,14 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #'
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
-#' 
+#'
 #'
 #' @param str character vector with strings to search in
 #' @param pattern pattern character; regular expressions
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; should empty strings be removed from result?
 #' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
-#' 
+#'
 #' @return Returns a list of character vectors.
 #'
 #'
@@ -127,7 +127,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' @param omit_empty logical vector; should empty strings be removed from result?
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
-#' 
+#'
 #' @return Returns a list of character vectors.
 #'
 #'
@@ -142,7 +142,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' @family locale_sensitive
 stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=list()) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
-	.Call("stri_split_fixed", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
+   .Call("stri_split_fixed", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -168,7 +168,7 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
-#' 
+#'
 #' @return Returns a list of character vectors.
 #'
 #'

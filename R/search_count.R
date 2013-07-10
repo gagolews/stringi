@@ -89,8 +89,8 @@ stri_count_charclass <- function(str, pattern) {
 #' @family search_fixed
 #' @family locale_sensitive
 stri_count_fixed <- function(str, pattern, opts_collator=list()) {
-	# prepare_arg done internally
-	.Call("stri_count_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+   # prepare_arg done internally
+   .Call("stri_count_fixed", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 

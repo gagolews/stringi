@@ -10,7 +10,7 @@ for (f in srcfiles) {
    cf <- readLines(f)
    stopifnot(all(stri_enc_isascii(cf)))
    cf <- stri_trim_right(cf)
-  # cf <- stri_replace_first_regex(cf, "^\\t", "   ")
+   cf <- stri_replace_first_regex(cf, "^\\t", "   ")
    while (stri_numbytes(cf[length(cf)]) == 0)
       cf <- cf[-length(cf)]
    writeLines(cf, f)
