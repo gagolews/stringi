@@ -360,5 +360,3 @@ SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
 
    STRI__ERROR_HANDLER_END( ; /*nothing special on error*/)
 }
-
-

@@ -122,4 +122,3 @@ stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
       .Call("stri_sub_replacement", str, from, NULL, length, value, PACKAGE="stringi")
    }
 }
-

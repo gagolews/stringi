@@ -143,4 +143,3 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 # stri_width <- function(str) {
 #    .Call("stri_width", str, PACKAGE="stringi")
 # }
-

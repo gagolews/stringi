@@ -143,4 +143,3 @@ stri_detect <- function(str, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-

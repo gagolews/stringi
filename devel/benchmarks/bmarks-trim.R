@@ -7,14 +7,14 @@ bmarks <- NULL
 test <- paste(stri_dup(" ", 1:1000), "A", stri_dup(" ", 1:1000), sep="")
 flat <- stri_flatten(test)
 
-microbenchmark(str_trim(test),stri_trim_both(test)) 
-microbenchmark(str_trim(flat),stri_trim_both(flat)) 
+microbenchmark(str_trim(test),stri_trim_both(test))
+microbenchmark(str_trim(flat),stri_trim_both(flat))
 
 microbenchmark(str_trim(test,"left"),stri_trim_left(test))
 microbenchmark(str_trim(flat,"left"),stri_trim_left(flat))
 
-microbenchmark(str_trim(test,"right"),stri_trim_right(test)) 
-microbenchmark(str_trim(flat,"right"),stri_trim_right(flat)) 
+microbenchmark(str_trim(test,"right"),stri_trim_right(test))
+microbenchmark(str_trim(flat,"right"),stri_trim_right(flat))
 
 
 

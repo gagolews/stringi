@@ -216,4 +216,3 @@ SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
    UNPROTECT(1);
    return x;
 }
-

@@ -367,4 +367,3 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
-

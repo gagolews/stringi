@@ -85,5 +85,3 @@ stri_enc_isascii <- function(str) {
 stri_enc_isutf8 <- function(str) {
    .Call("stri_enc_isutf8", str, PACKAGE="stringi")
 }
-
-

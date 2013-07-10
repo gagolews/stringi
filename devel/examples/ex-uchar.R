@@ -16,7 +16,7 @@ local({
    ascii <- sapply(1:127, intToUtf8)
    ascii_ct <- simplify2array(stri_chartype(ascii))
    categories <- stri_charcategories()
-   
+
    ascii_dt <- data.frame(char=ascii, cat_id=ascii_ct,
                           cat=categories$Category[ascii_ct],
                           cat_desc=rownames(categories)[ascii_ct])

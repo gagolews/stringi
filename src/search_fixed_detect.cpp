@@ -119,5 +119,3 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       if (collator) ucol_close(collator);
    )
 }
-
-

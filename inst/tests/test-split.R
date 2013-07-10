@@ -104,8 +104,3 @@ test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed("123;456", ";", n=2), list(c("123", "456")))
    expect_identical(stri_split_fixed("123;456;789", ";", n=2), list(c("123", "456;789")))
 })
-
-
-
-
-

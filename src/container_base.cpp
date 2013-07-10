@@ -99,5 +99,3 @@ void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowre
 //   this->n = 0;
 //   this->nrecycle = 0;
 //}
-
-

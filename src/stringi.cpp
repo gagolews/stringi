@@ -183,4 +183,3 @@ extern "C" void R_init_stringi(DllInfo *dll)
 ////   u_cleanup(); // this is just for DEBUG- memtrace
 //#endif
 //}
-

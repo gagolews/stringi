@@ -106,5 +106,3 @@ SEXP stri_test_UnicodeContainer8(SEXP str)
    return R_NilValue;
 #endif
 }
-
-

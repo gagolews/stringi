@@ -118,4 +118,3 @@ test_that("stri_count_regex", {
                                c("\U00024B62", "\U00024B63", "\U00024B64", "X")),
                                       c(1L, 1L, 1L, 2L))
 })
-

@@ -62,4 +62,3 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 #    wordslist <- stri_split_fixed(enc2utf8(str), enc2utf8(" "), omitempty=TRUE)
 #    .Call("stri_wrap",wordslist,method,width,spacecost,PACKAGE="stringi")
 # }
-

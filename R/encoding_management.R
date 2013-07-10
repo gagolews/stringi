@@ -136,4 +136,3 @@ stri_enc_set <- function(enc) {
 stri_enc_get <- function() {
    stri_enc_info(NULL)$Name.friendly
 }
-

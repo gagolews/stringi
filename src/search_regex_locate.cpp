@@ -205,5 +205,3 @@ SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    return stri__locate_firstlast_regex(str, pattern, opts_regex, false);
 }
-
-

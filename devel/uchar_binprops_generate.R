@@ -140,5 +140,3 @@ cat('\n\n\n')
 
 print(length(binprops))
 print(max(stri_length(names(binprops))))
-
-

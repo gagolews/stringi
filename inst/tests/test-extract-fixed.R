@@ -50,4 +50,3 @@ test_that("stri_extract_last_fixed", {
    expect_identical(stri_extract_last_fixed("alaALA", "ala", NA), c("ala"))
 
 })
-

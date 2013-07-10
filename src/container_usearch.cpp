@@ -131,4 +131,3 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
 
    return lastMatcher;
 }
-

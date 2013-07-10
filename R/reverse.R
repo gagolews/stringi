@@ -41,4 +41,3 @@
 stri_reverse <- function(str) {
    .Call("stri_reverse", str, PACKAGE="stringi")
 }
-

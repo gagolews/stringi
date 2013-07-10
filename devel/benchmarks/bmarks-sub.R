@@ -2,18 +2,18 @@ require(microbenchmark)
 require(stringr)
 
 local({
-   
-   s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin 
-      nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel 
-   	lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac 
-   	diam. Quisque semper justo at risus. Donec venenatis, turpis vel 
-   	hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui 
-   	id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate 
-   	arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est 
-   	congue mollis. Phasellus congue lacus eget neque. Phasellus ornare, 
-   	ante vitae consectetuer consequat, purus sapien ultricies dolor, et 
-   	mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras 
-   	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum 
+
+   s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
+      nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
+   	lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac
+   	diam. Quisque semper justo at risus. Donec venenatis, turpis vel
+   	hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui
+   	id orci. Nam congue, pede vitae dapibus aliquet, elit magna vulputate
+   	arcu, vel tempus metus leo non est. Etiam sit amet lectus quis est
+   	congue mollis. Phasellus congue lacus eget neque. Phasellus ornare,
+   	ante vitae consectetuer consequat, purus sapien ultricies dolor, et
+   	mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras
+   	suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum
    	massa nibh nec erat."
    to <- stri_length(s)
    print(microbenchmark(
@@ -22,25 +22,25 @@ local({
       str_sub(s)
    ))
    stopifnot(all(stri_sub(s)==str_sub(s)))
-   
+
    print(microbenchmark(
       stri_sub(s,to-5,to),
       substr(s,to-5,to),
       str_sub(s,to-5,to)
    ))
-   
+
    print(microbenchmark(
       stri_sub(s,1:10,11:20),
       str_sub(s,1:10,11:20)
    ))
-   
+
    srep <- rep(s,10)
    print(microbenchmark(
       stri_sub(srep,10,20),
       substr(srep,10,20),
       str_sub(srep,10,20)
    ))
-   
+
    print(microbenchmark(
       stri_sub(s,1:100,-(1:100)),
       str_sub(s,1:100,-(1:100))
@@ -53,34 +53,34 @@ local({
       str_sub(srepdup,1:100,1:100)
    ))
    stopifnot(all(stri_sub(srepdup,1:100,1:100)==str_sub(srepdup,1:100,1:100)))
-   
+
    print(microbenchmark(
       stri_sub(srepdup,100:1,1:100),
       str_sub(srepdup,100:1,1:100)
    ))
    stopifnot(all(stri_sub(srepdup,100:1,1:100)==str_sub(srepdup,100:1,1:100)))
-   
+
    print(microbenchmark(
       stri_sub(srepdup,100:1,100:1),
       str_sub(srepdup,100:1,100:1)
    ))
    stopifnot(all(stri_sub(srepdup,100:1,100:1)==str_sub(srepdup,100:1,100:1)))
-   
+
    print(microbenchmark(
       stri_sub(srepdup,1:100,-(1:100)),
       str_sub(srepdup,1:100,-(1:100))
    ))
    stopifnot(all(stri_sub(srepdup,1:100,-(1:100))==str_sub(srepdup,1:100,-(1:100))))
-   
+
    print(microbenchmark(
       stri_sub(srepdup,-(1:100),-(1:100)),
       str_sub(srepdup,-(1:100),-(1:100))
    ))
    stopifnot(all(stri_sub(srepdup,-(1:100),-(1:100))==str_sub(srepdup,-(1:100),-(1:100))))
-   
+
    print(microbenchmark(
       stri_sub(srepdup,1:100),
       str_sub(srepdup,1:100)
    ))
-   
+
 })

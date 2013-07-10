@@ -319,4 +319,3 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
           all  =stri_replace_all(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass)
    )
 }
-

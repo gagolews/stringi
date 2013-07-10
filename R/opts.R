@@ -168,4 +168,3 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
    if (!missing(error_on_unknown_escapes)) opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
    opts
 }
-

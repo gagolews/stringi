@@ -131,4 +131,3 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 #    warning("TO DO")
 #    .Call("stri_trim_double", str, pattern, leave_first, PACKAGE="stringi")
 # }
-

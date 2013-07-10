@@ -113,4 +113,3 @@ StriContainerListUTF8::~StriContainerListUTF8()
 //      cerr << "~StriContainerListUTF8()" << endl;
    }
 }
-

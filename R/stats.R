@@ -112,4 +112,3 @@ stri_stats_general <- function(str) {
 stri_stats_latex <- function(str) {
    .Call("stri_stats_latex", str, PACKAGE="stringi")
 }
-

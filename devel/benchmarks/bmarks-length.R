@@ -12,5 +12,5 @@ microbenchmark(
 )
 
 microbenchmark(
-   nzchar(x), stri_isempty(x), times=1000 
+   nzchar(x), stri_isempty(x), times=1000
 )

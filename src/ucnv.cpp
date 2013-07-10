@@ -959,5 +959,3 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          ucnv_close(uconv_to);
    })
 }
-
-

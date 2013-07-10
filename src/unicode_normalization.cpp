@@ -156,4 +156,3 @@ SEXP stri_enc_isnf(SEXP str, SEXP type)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-

@@ -271,4 +271,3 @@ SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP col
 {
    return stri__replace_allfirstlast_fixed(str, pattern, replacement, collator_opts, 1);
 }
-

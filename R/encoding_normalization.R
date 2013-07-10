@@ -156,4 +156,3 @@ stri_enc_isnfkc <- function(str) {
 stri_enc_isnfkc_casefold <- function(str) {
    .Call("stri_enc_isnf", str, 12L, PACKAGE="stringi")
 }
-

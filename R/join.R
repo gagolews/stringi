@@ -167,4 +167,3 @@ stri_flatten <- function(str, collapse="") {
    # prepare_arg done internally
    .Call("stri_flatten", str, collapse, PACKAGE="stringi")
 }
-

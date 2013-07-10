@@ -189,4 +189,3 @@ SEXP stri_trim_right(SEXP str, SEXP pattern)
 //   UNPROTECT(3);
 //   return e;
 //}
-

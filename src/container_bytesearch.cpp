@@ -288,6 +288,3 @@ R_len_t StriContainerByteSearch::getMatchedLength()
 
    return patternLen; // trivial :>
 }
-
-
-

@@ -134,4 +134,3 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 //   UNPROTECT(1);
 //   return ret;
 //}
-

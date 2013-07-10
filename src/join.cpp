@@ -423,4 +423,3 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-

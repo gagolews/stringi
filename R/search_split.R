@@ -206,4 +206,3 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 # #    }
 # #    .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
 # }
-

@@ -532,4 +532,3 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
    // won't come here anyway
    return NULL; // avoid compiler warning
 }
-

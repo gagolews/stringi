@@ -393,4 +393,3 @@ stri_locate <- function(str, ..., regex, fixed, charclass,
       all  =stri_locate_all(str, ..., regex=regex, fixed=fixed, charclass=charclass)
    )
 }
-

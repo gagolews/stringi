@@ -1,7 +1,7 @@
 require(microbenchmark)
 
 local({
-   
+
    require('compiler')
    stri_test_returnasis_compiled <- cmpfun(stringi:::stri_test_returnasis)
    s <- ""
@@ -10,12 +10,12 @@ local({
      identity(s),
      stri_test_returnasis_compiled(s),
      stringi:::stri_test_returnasis(s),          # !!!!!!!!   O_O
-     stringi:::stri_prepare_arg_string(s), 
+     stringi:::stri_prepare_arg_string(s),
      stringi:::stri_test_UnicodeContainer8(s),
      stringi:::stri_test_UnicodeContainer16(s)
    ))
-   
-   
+
+
 
 })
 
@@ -34,11 +34,11 @@ local({
 
 
 local({
-   
+
    s <- stri_dup(stri_flatten(stri_dup(c("aa", "bb"), 1000), " "), 1:10)
    stringi:::stri_test_Rmark(s)
    print(microbenchmark(
-      stringi:::stri_prepare_arg_string(s), 
+      stringi:::stri_prepare_arg_string(s),
       stringi:::stri_test_UnicodeContainer8(s),
       stringi:::stri_test_UnicodeContainer16(s)
    ))
@@ -55,15 +55,15 @@ local({
 
 
 local({
-   
+
    s <- stri_dup(stri_flatten(stri_dup(c("\u0105", "\u0104"), 1000), " "), 1:10)
    stringi:::stri_test_Rmark(s)
    print(microbenchmark(
-      stringi:::stri_prepare_arg_string(s), 
+      stringi:::stri_prepare_arg_string(s),
       stringi:::stri_test_UnicodeContainer8(s),
       stringi:::stri_test_UnicodeContainer16(s)
    ))
-   
+
 })
 
 # Measurement #1 (2013-05-19, MG)
@@ -76,13 +76,13 @@ local({
 
 
 local({
-   
+
    oldenc <- stri_enc_set("latin2")
    s <- stri_dup(stri_flatten(stri_dup(c("\u0105", "\u0104"), 1000), " "), 1:10)
    s <- stri_encode(s, "", "latin2")
    stringi:::stri_test_Rmark(s)
    print(microbenchmark(
-      stringi:::stri_prepare_arg_string(s), 
+      stringi:::stri_prepare_arg_string(s),
       stringi:::stri_test_UnicodeContainer8(s),
       stringi:::stri_test_UnicodeContainer16(s),
       iconv(s, "latin2", "utf-8")

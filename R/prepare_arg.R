@@ -292,4 +292,3 @@ stri_prepare_arg_integer_1 <- function(x) {
 stri_prepare_arg_logical_1 <- function(x) {
    .Call("stri_prepare_arg_logical_1", x, NULL, PACKAGE="stringi")
 }
-

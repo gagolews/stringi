@@ -1,4 +1,4 @@
-# detects whitespaces at EOLs
+# trims whitespaces from source files
 require('stringi')
 
 # we are in the root dir of stringi
@@ -8,17 +8,10 @@ srcfiles <- dir('.', pattern='\\.(R|cpp|h)$', recursive=TRUE, ignore.case=TRUE)
 
 for (f in srcfiles) {
    cf <- readLines(f)
-   whnasc <- which(stri_detect_regex(cf, "[ \\t]$"))
-   if (length(whnasc) != 0) {
-      cat(sprintf('%s: %d\n', f, whnasc))
-   }
-}
-
-
-for (f in srcfiles) {
-   cf <- readLines(f)
-   whnasc <- which(stri_detect_regex(cf, "\\t"))
-   if (length(whnasc) != 0) {
-      cat(sprintf('%s: %d\n', f, whnasc))
-   }
+   stopifnot(all(stri_enc_isascii(cf)))
+   cf <- stri_trim_right(cf)
+  # cf <- stri_replace_first_regex(cf, "^\\t", "   ")
+   while (stri_numbytes(cf[length(cf)]) == 0)
+      cf <- cf[-length(cf)]
+   writeLines(cf, f)
 }

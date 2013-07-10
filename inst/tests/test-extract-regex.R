@@ -30,4 +30,3 @@ test_that("stri_extract_last_regex", {
    expect_identical(stri_extract_last_regex("b!d\U00f0ffffb\u0105de", "B.D", stri_opts_regex(case_insensitive=TRUE)), "b\u0105d")
 
 })
-

@@ -203,4 +203,3 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 stri_enc_toascii <- function(str) {
    .Call("stri_enc_toascii", str, PACKAGE="stringi")
 }
-

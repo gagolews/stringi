@@ -37,4 +37,3 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 #    # prepare_arg done internally
 #    .Call("stri_justify", str, width, PACKAGE="stringi")
 # }
-

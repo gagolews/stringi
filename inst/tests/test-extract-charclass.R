@@ -56,4 +56,3 @@ test_that("stri_extract_last_charclass", {
    expect_equivalent(stri_extract_last_charclass("    yzx\n\t \v   \n", c("WHITE_SPACE", "^WHITE_SPACE")), c("\n", "x"))
 
 })
-

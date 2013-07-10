@@ -339,12 +339,3 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
 //   }
 //   UNPROTECT(1);
 //   return ret;
-
-
-
-
-
-
-
-
-

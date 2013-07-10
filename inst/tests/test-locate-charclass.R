@@ -95,4 +95,3 @@ test_that("stri_locate_last_charclass", {
               ("^WHITE_SPACE")))[,2],
       c(15L, 7L))
 })
-

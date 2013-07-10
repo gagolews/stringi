@@ -173,4 +173,3 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 
    return flags;
 }
-

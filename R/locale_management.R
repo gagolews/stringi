@@ -136,4 +136,3 @@ stri_locale_get <- function() {
 stri_locale_info <- function(locale=NULL) {
    .Call("stri_locale_info", locale, PACKAGE="stringi")
 }
-

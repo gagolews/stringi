@@ -333,4 +333,3 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
          throw StriException("DEBUG: stri__UChar16_to_UChar32_index()");
 #endif
 }
-
