@@ -174,10 +174,10 @@ R_len_t StriContainerByteSearch::findFirst()
 
    // Naive search algorithm
    // @TODO: to be changed to KNP(?) in future version
-   bool kmp = true;
+   bool kmp = false;
    if(kmp){
       //deque<int> T;
-      int* T = new int(patternLen);
+      int* T = new int[patternLen];
       int i = 0, j = -1;
       T[i] = j;
       while (i<patternLen)
@@ -199,6 +199,7 @@ R_len_t StriContainerByteSearch::findFirst()
             break;
          }
       }
+      delete T;
       return searchPos;
    }else{
       for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {
