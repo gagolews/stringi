@@ -30,6 +30,8 @@ test_that("stri_count_fixed [byte compare]", {
    suppressWarnings(expect_identical(stri_count_fixed("","", opts_collator=NA), NA_integer_))
    suppressWarnings(expect_identical(stri_count_fixed("a","", opts_collator=NA), NA_integer_))
    expect_identical(stri_count_fixed("","a", opts_collator=NA), 0L)
+   expect_equivalent(stri_count_fixed("aaaab", "ab", NA), 1L)
+   expect_equivalent(stri_count_fixed("bababababaab", "aab", NA), 1L)
 
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
@@ -74,6 +76,9 @@ test_that("stri_count_fixed [collation]", {
    expect_identical(stri_count_fixed("aaAAa-a", "aa"), 1L)
    expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=list(strength=1)), 2L)
    expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=stri_opts_collator(strength=1, alternate_shifted=TRUE)), 3L)
+   
+   expect_equivalent(stri_count_fixed("aaaab", "ab"), 1L)
+   expect_equivalent(stri_count_fixed("bababababaab", "aab"), 1L)
 })
 
 
@@ -113,6 +118,8 @@ massa nibh nec erat."
    s <- c("abababab babab abab bbaba","a")
    expect_identical(stri_count_regex(s,"bab"),c(5L,0L))
    expect_identical(stri_count_regex(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l"),3:1)
+   expect_equivalent(stri_count_regex("aaaab", "ab"), 1L)
+   expect_equivalent(stri_count_regex("bababababaab", "aab"), 1L)
 
    expect_identical(stri_count_regex("X\U00024B62\U00024B63\U00024B64X",
                                c("\U00024B62", "\U00024B63", "\U00024B64", "X")),
