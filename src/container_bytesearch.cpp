@@ -176,7 +176,6 @@ R_len_t StriContainerByteSearch::findFirst()
    // @TODO: to be changed to KNP(?) in future version
    bool kmp = false;
    if(kmp){
-      //deque<int> T;
       int* T = new int[patternLen];
       int i = 0, j = -1;
       T[i] = j;
