@@ -164,6 +164,9 @@ void StriContainerByteSearch::resetMatcher()
  * resets the matcher
  *
  * @return USEARCH_DONE on no match, otherwise start index
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Bartek Tartanus) use KMP
  */
 R_len_t StriContainerByteSearch::findFirst()
 {
@@ -172,49 +175,49 @@ R_len_t StriContainerByteSearch::findFirst()
       throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
 #endif
 
-   // Naive search algorithm
-   // @TODO: to be changed to KNP(?) in future version
-   bool kmp = false;
-   if(kmp){
-      int* T = new int[patternLen];
-      int i = 0, j = -1;
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   int* T = new int[patternLen]; // this should be a class member (one for each pattern instance)
+   int i = 0, j = -1;
+   T[i] = j;
+   while (i<patternLen)
+   {
+      while (j>=0 && patternStr[i]!=patternStr[j]) 
+         j = T[j];
+      i++; j++;
       T[i] = j;
-      while (i<patternLen)
+   }
+   i=0; j=0;
+   while (i<searchLen)
+   {
+      while (j>=0 && searchStr[i]!=patternStr[j]) 
+         j = T[j];
+      i++; j++;
+      if (j==patternLen)
       {
-         while (j>=0 && patternStr[i]!=patternStr[j]) 
-            j = T[j];
-         i++; j++;
-         T[i] = j;
-      }
-      i=0; j=0;
-      while (i<searchLen)
-      {
-         while (j>=0 && searchStr[i]!=patternStr[j]) 
-            j = T[j];
-         i++; j++;
-         if (j==patternLen)
-         {
-            searchPos = i-j;
-            break;
-         }
-      }
-      delete T;
-      return searchPos;
-   }else{
-      for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {
-         R_len_t k=0;
-         while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
-            k++;
-         if (k == patternLen) {
-            // found!
-            return searchPos;
-      	}
+         searchPos = i-j;
+         delete T;
+         return searchPos;
       }
    }
-
+   delete T;
+   searchPos = searchLen;
+   return USEARCH_DONE;
+#else
+   // Naive search algorithm
+   for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {
+      R_len_t k=0;
+      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
+         k++;
+      if (k == patternLen) {
+         // found!
+         return searchPos;
+   	}
+   }
+   
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
+#endif
 }
 
 
@@ -233,8 +236,10 @@ R_len_t StriContainerByteSearch::findNext()
 
    if (searchPos < 0) return findFirst();
 
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   throw StriException("KMP: TO DO");
+#else
    // Naive search algorithm
-   // @TODO: to be changed to KNP(?) in future version
    for (searchPos = searchPos + patternLen; searchPos<searchLen-patternLen+1; ++searchPos) {
       R_len_t k=0;
       while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
@@ -244,10 +249,11 @@ R_len_t StriContainerByteSearch::findNext()
          return searchPos;
    	}
    }
-
+   
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
+#endif
 }
 
 
@@ -264,8 +270,10 @@ R_len_t StriContainerByteSearch::findLast()
       throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
 #endif
 
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   throw StriException("KMP: TO DO");
+#else
    // Naive search algorithm
-   // @TODO: to be changed to KNP(?) in future version
    for (searchPos = searchLen - patternLen; searchPos>=0; --searchPos) {
       R_len_t k=0;
       while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
@@ -275,10 +283,11 @@ R_len_t StriContainerByteSearch::findLast()
          return searchPos;
       }
    }
-
+   
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
+#endif
 }
 
 

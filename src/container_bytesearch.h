@@ -20,7 +20,7 @@
 #define __container_bytesearch_h
 
 
-
+#define STRI__BYTESEARCH_DISABLE_KMP
 
 
 /**
