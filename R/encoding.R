@@ -175,7 +175,9 @@
 #' bytes with the SUBSTITUTE CHARACTER,
 #' which plays a similar role as R's \code{NA} value).
 #'
-#'
+#' There are also some routines for automated encoding detection,
+#' see e.g. \code{\link{stri_enc_detect}}.
+#' 
 #' @name stringi-encoding
 #' @rdname string-encoding
 #' @aliases encoding

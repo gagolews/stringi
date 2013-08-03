@@ -31,8 +31,8 @@
 #' \itemize{
 #' \item \link{stringi-arguments} - how \pkg{stringi} deals with its functions' arguments,
 #' \item \link{stringi-encoding} - character encoding issues,
-#' including information on encoding management in \pkg{stringi},
-#' detection, conversion, and Unicode normalization,
+#' including information on encoding management in \pkg{stringi}, as well as
+#' encoding detection, conversion, and Unicode normalization,
 #' \item \link{stringi-locale} - locale issues, i.a. locale management and
 #' specification in \pkg{stringi}
 #' and the list locale-sensitive operations.

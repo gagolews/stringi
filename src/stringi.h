@@ -176,7 +176,7 @@ SEXP stri_enc_toutf32(SEXP str);                        // DONE
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);   // DONE
 SEXP stri_enc_toascii(SEXP str);                        // DONE
 
-
+SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets); // DONE
 SEXP stri_enc_isascii(SEXP str);                          // DONE
 SEXP stri_enc_isutf8(SEXP str);                           // DONE
 

@@ -959,3 +959,19 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          ucnv_close(uconv_to);
    })
 }
+
+
+/** Detect encoding and language
+ * 
+ * @param str character;
+ * @param filter_angle_brackets logical;
+ * 
+ * @return list
+ * 
+ * @version 0.1 (2013-08-03) Marek Gagolewski
+ */
+SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
+{
+   Rf_error("TO DO");
+}
+
