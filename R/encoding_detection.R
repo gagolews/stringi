@@ -116,6 +116,8 @@ stri_enc_isutf8 <- function(str) {
 #' This function should most often be used for byte-marked input strings,
 #' especially after loading them from text files and before the main
 #' conversion with \code{\link{stri_encode}}.
+#' The input encoding is of course not taken into account here, even
+#' if marked.
 #' 
 #' The following table shows all the encodings that can be detected:
 #'
@@ -157,19 +159,24 @@ stri_enc_isutf8 <- function(str) {
 #' @param filter_angle_brackets logical; If filtering is enabled, 
 #' text within angle brackets ("<" and ">") will be removed before detection,
 #' which will remove most HTML or XML markup.
-#' 
-#' 
 #'
 #' @return Returns a list of length equal to the length of \code{str}.
 #' Each list element is a list with the following three named components:
 #' \itemize{
-#'    \item \code{Encoding} -- string; guessed encoding; \code{NULL} on failure,
-#'    \item \code{Language} -- string; guessed language; \code{NULL} if the language could
+#'    \item \code{Encoding} -- string; guessed encoding; \code{NA} on failure,
+#'    \item \code{Language} -- string; guessed language; \code{NA} if the language could
 #'    not be determined (e.g. in case of UTF-8),
 #'    \item \code{Confidence} -- integer from 0 to 100; the higher the value, 
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #'
+#'# 
+#' @examples
+#' \dontrun{
+#' f <- rawToChar(readBin("test.txt", "raw", 1024))
+#' stri_enc_detect(f)
+#' }
+
 #' @references
 #' \emph{Character Set Detection} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/detection}

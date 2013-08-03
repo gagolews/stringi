@@ -143,6 +143,31 @@ SEXP stri__vector_NA_strings(R_len_t howmany)
 
 
 /**
+ *  Creates a character vector filled with \code{NA_integer_}
+ *
+ *  @param howmany length of the vector, \code{howmany >= 0}
+ *  @return a character vector of length \code{howmany}
+ *
+ * @version 0.1 (Marek Gagolewski)
+*/
+SEXP stri__vector_NA_integers(R_len_t howmany)
+{
+   if (howmany < 0) {
+      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+      howmany = 0;
+   }
+
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(INTSXP, howmany));
+   for (R_len_t i=0; i<howmany; ++i)
+      INTEGER(ret)[i] = NA_INTEGER;
+   UNPROTECT(1);
+
+   return ret;
+}
+
+
+/**
  *  Creates a character vector filled with empty strings
  *
  *  @param howmany length of the vector, \code{howmany >= 0}

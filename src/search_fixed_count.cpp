@@ -39,7 +39,7 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
    STRI__ERROR_HANDLER_BEGIN
-   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 

@@ -85,6 +85,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale);             // DONE
 void stri__set_names(SEXP object, R_len_t numnames, ...);           // DONE
 SEXP stri__make_character_vector(R_len_t numnames, ...);            // DONE
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...);       // DONE
+SEXP stri__vector_NA_integers(R_len_t howmany);                     // DONE
 SEXP    stri__vector_NA_strings(R_len_t howmany);                   // DONE
 SEXP    stri__vector_empty_strings(R_len_t howmany);                // DONE
 SEXP    stri__emptyList();                                          // DONE
