@@ -281,6 +281,8 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);    
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement);      // DONE
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty); // DONE
 
+SEXP stri_split_lines(SEXP str);                                                // DONE
+
 
 // uchar.cpp:
 // SEXP stri_charcategories();                                                 // ...TO DO... [version >= 0.2]

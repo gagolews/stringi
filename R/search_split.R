@@ -147,12 +147,6 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 
 
 
-# @TODO: ADD stri_split_chars - split into chars
-# @TODO: ADD stri_split_pos
-
-
-
-
 #' @title
 #' Split a String Into Fields
 #'
@@ -186,6 +180,57 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 }
 
 
+
+#' @title
+#' Split a String into Text Lines
+#' 
+#' @description
+#' The functions splits each character string
+#' into text lines.
+#' 
+#' @details
+#' Newlines are represented on different platforms e.g. by carriage return 
+#' (CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85). 
+#' Moreover, the Unicode Standard defines two unambiguous separator characters,
+#' Paragraph Separator (PS, 0x2029) and Line Separator (LS, 0x2028).
+#' Sometimes also vertical tab (VT, 0x0B) and form feed (FF, 0x0C)
+#' are used.
+#' 
+#' This function follows UTR#18 rules, where a newline sequence 
+#' corresponds to the following regular expression: 
+#' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
+#' Each match is used to split text line.
+#' 
+#' However, each newline sequence occurence is counted.
+#' If inconsistent settings are detected, a warning is generated.
+#' In such case you may use \code{\link{stri_split_fixed}(..., opts_collator=NA)}.
+#' 
+#' 
+#' @param str character vector
+#' 
+#' @return Returns list of character vectors.
+#' If any input string is \code{NA}, then the corresponding list element
+#' is a \code{NA} string.
+#' 
+#' @references
+#' \emph{Unicode Newline Guidelines} -- Unicode Technical Report 13,
+#' \url{http://www.unicode.org/standard/reports/tr13/tr13-5.html}
+#' 
+#' \emph{Unicode Regular Expressions} -- Unicode Technical Standard 18,
+#' \url{http://www.unicode.org/reports/tr18/}
+#'
+#' @family search_split
+#' @export
+stri_split_lines <- function(str) {
+   .Call("stri_split_lines", str, PACKAGE="stringi")
+}
+
+
+
+
+
+# @TODO: ADD stri_split_chars - split into chars
+# @TODO: ADD stri_split_pos
 
 
 # #' Split the elements of a character vector by position

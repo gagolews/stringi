@@ -91,8 +91,8 @@ stri_enc_isutf8 <- function(str) {
 #' Detect Character Set and Language
 #'
 #' @description
-#' This function tries to determine the character set, or encoding, of character data
-#'  in an unknown format.
+#' This function uses the ICU engine to determine the character set, 
+#' or encoding, of character data in an unknown format.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{filter_angle_brackets}.
@@ -176,7 +176,7 @@ stri_enc_isutf8 <- function(str) {
 #' f <- rawToChar(readBin("test.txt", "raw", 1024))
 #' stri_enc_detect(f)
 #' }
-
+#'
 #' @references
 #' \emph{Character Set Detection} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/detection}

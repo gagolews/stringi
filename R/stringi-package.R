@@ -68,6 +68,8 @@
 #' \item \code{\link{stri_compare}}, \code{\link{stri_order}},
 #' and \code{\link{stri_sort}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
+#' 
+#' \item \code{stri_split_lines} to split a string into text lines.
 #'
 #' \item TO DO [these will appear in future versions
 #' of \pkg{stringi}]: pad, wrap, justify, HTML entities,
