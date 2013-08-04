@@ -89,6 +89,12 @@ enum StriNormalizationForm {
 #define UCHAR_REPLACEMENT_UTF8_BYTE1 0xef
 #define UCHAR_REPLACEMENT_UTF8_BYTE2 0xbf
 #define UCHAR_REPLACEMENT_UTF8_BYTE3 0xbd
-
+#define ASCII_CR 0x0D
+#define ASCII_LF 0x0A
+#define ASCII_FF 0x0C
+#define ASCII_VT 0x0B
+#define UCHAR_NEL 0x0085
+#define UCHAR_LS  0x2028
+#define UCHAR_PS  0x2029
 
 #endif

@@ -1,5 +1,22 @@
 require(testthat)
 
+test_that("stri_split_lines", {
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota"), list(c("ala", "ma", "kota")))
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota\r\n"), list(c("ala", "ma", "kota", "")))
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota\r\n", omit_empty=TRUE), list(c("ala", "ma", "kota")))
+   expect_identical(stri_split_lines(NA_character_), list(NA_character_))
+   expect_identical(stri_split_lines(character(0)), list())
+   expect_identical(stri_split_lines(""), list(""))
+   expect_identical(stri_split_lines("", omit_empty=TRUE), list(character(0)))
+   expect_identical(stri_split_lines("\n"), list(c("", "")))
+   expect_identical(stri_split_lines("\n", omit_empty=TRUE), list(character(0)))
+   expect_identical(stri_split_lines("\n\n"), list(c("", "", "")))
+   expect_identical(stri_split_lines("a\n\n\na"), list(c("a", "", "", "a")))
+   expect_identical(stri_split_lines("a\n\n\na", omit_empty=TRUE), list(c("a", "a")))
+   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3), list(c("a", "", "\na\n\na")))
+   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3, omit_empty=TRUE), list(c("a", "a", "\na")))
+})
+
 
 test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass(character(0),"Z"),list())

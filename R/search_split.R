@@ -189,6 +189,14 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' into text lines.
 #' 
 #' @details
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
+#'
+#' If \code{n_max} is negative (default), then all pieces are extracted.
+#'
+#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' then empty strings will never appear in the resulting vector.
+#'
+#' 
 #' Newlines are represented on different platforms e.g. by carriage return 
 #' (CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85). 
 #' Moreover, the Unicode Standard defines two unambiguous separator characters,
@@ -200,13 +208,13 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' corresponds to the following regular expression: 
 #' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
 #' Each match is used to split text line.
-#' 
-#' However, each newline sequence occurence is counted.
-#' If inconsistent settings are detected, a warning is generated.
-#' In such case you may use \code{\link{stri_split_fixed}(..., opts_collator=NA)}.
+#' Of course, the search is not performed via regexes here, for efficiency
+#' reasons.
 #' 
 #' 
 #' @param str character vector
+#' @param n_max integer vector, maximal number of pieces to return
+#' @param omit_empty logical vector; should empty strings be removed from result?
 #' 
 #' @return Returns list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element
@@ -221,8 +229,8 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #'
 #' @family search_split
 #' @export
-stri_split_lines <- function(str) {
-   .Call("stri_split_lines", str, PACKAGE="stringi")
+stri_split_lines <- function(str, n_max=-1L, omit_empty=FALSE) {
+   .Call("stri_split_lines", str, n_max, omit_empty, PACKAGE="stringi")
 }
 
 
