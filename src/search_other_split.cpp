@@ -18,7 +18,86 @@
 
 #include "stringi.h"
 
+/**
+ * Split a single string into text lines
+ *
+ * @param str character vector
+ * 
+ * @return character vector
+ *
+ * @version 0.1 (Marek Gagolewski, 2013-08-04)
+ */
+SEXP stri_split_lines1(SEXP str)
+{
+   str = stri_prepare_arg_string_1(str, "str");
+   R_len_t vectorize_length = LENGTH(str);
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, vectorize_length);
 
+   if (str_cont.isNA(0))
+      return str;
+
+   const char* str_cur_s = str_cont.get(0).c_str();
+   R_len_t str_cur_n = str_cont.get(0).length();
+      
+   UChar32 c;
+   R_len_t jlast;
+   deque<R_len_t_x2> occurences;
+   occurences.push_back(R_len_t_x2(0, 0));
+   for (R_len_t j=0; j < str_cur_n; /* null */) {
+      jlast = j;
+      U8_NEXT(str_cur_s, j, str_cur_n, c);
+      
+      switch (c) {
+         case ASCII_CR: /* CR */
+            /* check if next is LF */
+            if (str_cur_s[j] == ASCII_LF) { // look ahead one byte
+               j++; // just one byte
+            }
+            break;
+            
+         case ASCII_LF: /* LF */
+            break;
+            
+         case UCHAR_NEL: /* NEL */
+            break;
+            
+         case ASCII_VT: /* VT */
+            break;
+            
+         case ASCII_FF: /* FF */
+            break;
+            
+         case UCHAR_LS: /* LS */
+            break;
+            
+         case UCHAR_PS: /* PS */
+            break;
+       
+         default:
+            /* not a newline character */
+            occurences.back().v2 = j;
+            continue;
+      }
+      
+      occurences.back().v2 = jlast;
+      if (j < str_cur_n)
+         occurences.push_back(R_len_t_x2(j, j));
+   }
+      
+   SEXP ans;
+   PROTECT(ans = Rf_allocVector(STRSXP, occurences.size()));
+   deque<R_len_t_x2>::iterator iter = occurences.begin();
+   for (R_len_t k = 0; iter != occurences.end(); ++iter, ++k) {
+      R_len_t_x2 curoccur = *iter;
+      SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+   }
+   UNPROTECT(1);
+   return ans;
+   
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
 
 /**
  * Split a string into text lines

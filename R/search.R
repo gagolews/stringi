@@ -186,12 +186,13 @@ invisible(NULL)
 #' @title Character Classes in \pkg{stringi}
 #'
 #' @description
-#' some general info....
+#' In this man page we describe how character classes are
+#' declared in the \pkg{stringi} package.
 #'
 #'
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stingi} perform
-#' single character search-based operations....
+#' single character (i.e. Unicode codepoint) search-based operations.
 #'
 #'
 #' There are two separate ways to specify character classes or
@@ -204,17 +205,18 @@ invisible(NULL)
 #' }
 #' These provide access to the ICU's Unicode Character Database
 #'
-#' Unicode assigns each code point (not just assigned character)
+#' The Unicode standard assigns to each code point (not just assigned character)
 #' values for many properties. Most of them are simple Boolean flags,
 #' or constants from a small enumerated list. For some properties,
 #' values are strings or other relatively more complex types.
 #'
-#' differences.....
+#' On the other hand, a codepoint may follow only one binary property,
+#' hence the name.
 #'
 #' Note that e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} may match different character sets.
 #'
-#' Each class may be preceded with '^' (complement)...
+#' In \pkg{stringi}, each class may be preceded with '^' (complement).
 #'
 #' @section Unicode General Categories:
 #'
@@ -267,8 +269,8 @@ invisible(NULL)
 #'
 #' @section Unicode Binary Properties:
 #'
-#' (matched case-insensitively, normalized like with ICU character encoding
-#' specification)
+#' Binary properties identifiers are matched case-insensitively,
+#' and are slightly normalized.
 #'
 #' \itemize{
 #' \item \code{ALPHABETIC}

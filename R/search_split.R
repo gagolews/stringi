@@ -185,7 +185,7 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' Split a String into Text Lines
 #' 
 #' @description
-#' The functions splits each character string
+#' These functions split each character string
 #' into text lines.
 #' 
 #' @details
@@ -216,24 +216,38 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; should empty strings be removed from result?
 #' 
-#' @return Returns list of character vectors.
+#' @return \code{stri_split_lines} returns a list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element
 #' is a \code{NA} string.
 #' 
+#' \code{stri_split_lines1(str)} is like \code{stri_split_lines(str[1])[[1]]}
+#' (with default parameters),
+#' thus it returns a character vector. Moreover, if the input string ends at
+#' a newline sequence, the last empty string is omitted from the result.
+#' Therefore, this function is convenient for splitting a loaded text file
+#' into lines.
+#' 
 #' @references
-#' \emph{Unicode Newline Guidelines} -- Unicode Technical Report 13,
+#' \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
 #' \url{http://www.unicode.org/standard/reports/tr13/tr13-5.html}
 #' 
-#' \emph{Unicode Regular Expressions} -- Unicode Technical Standard 18,
+#' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 #' \url{http://www.unicode.org/reports/tr18/}
 #'
 #' @family search_split
 #' @export
+#' @rdname stri_split_lines
+#' @aliases stri_split_lines stri_split_lines1
 stri_split_lines <- function(str, n_max=-1L, omit_empty=FALSE) {
    .Call("stri_split_lines", str, n_max, omit_empty, PACKAGE="stringi")
 }
 
 
+#' @rdname stri_split_lines
+#' @export
+stri_split_lines1 <- function(str) {
+   .Call("stri_split_lines1", str, PACKAGE="stringi")
+}
 
 
 
