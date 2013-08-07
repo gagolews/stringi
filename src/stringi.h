@@ -180,6 +180,9 @@ SEXP stri_enc_toascii(SEXP str);                                  // DONE
 
 
 // encoding_detection.cpp:
+R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n); // DONE [internal]
+R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n);  // DONE [internal]
+
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters); // DONE
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);       // DONE
 SEXP stri_enc_isascii(SEXP str);                                  // DONE

@@ -16,5 +16,7 @@ test_that("stri_enc_isascii, stri_enc_isutf8", {
    expect_equivalent(stri_enc_isutf8(x1),  c(T, NA, T, T, T))
    expect_equivalent(stri_enc_isascii(letters), rep(T,26))
    expect_equivalent(stri_enc_isutf8(letters), rep(T,26))
+   expect_equivalent(stri_enc_isascii('abc'), TRUE)
+   expect_equivalent(stri_enc_isutf8('abc'),  TRUE)
 
 })
