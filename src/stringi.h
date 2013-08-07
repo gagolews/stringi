@@ -158,7 +158,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
 
 
-// ucnv.cpp:
+// encoding_management.cpp:
 UConverter* stri__ucnv_open(const char* enc);                              // DONE
 bool        stri__ucnv_hasASCIIsubset(UConverter* conv);                   // DONE
 bool        stri__ucnv_is1to1Unicode(UConverter* conv);                    // DONE
@@ -169,14 +169,17 @@ SEXP stri_enc_list();                                   // DONE
 SEXP stri_enc_info(SEXP enc);                           // DONE
 SEXP stri_enc_set(SEXP loc);                            // DONE
 
-SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);   // DONE
 
+// encoding_conversion.cpp:
+SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);      // DONE
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize); // DONE [internal]
 SEXP stri_enc_fromutf32(SEXP str);                                // DONE
 SEXP stri_enc_toutf32(SEXP str);                                  // DONE
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);             // DONE
 SEXP stri_enc_toascii(SEXP str);                                  // DONE
 
+
+// encoding_detection.cpp:
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters); // DONE
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);       // DONE
 SEXP stri_enc_isascii(SEXP str);                                  // DONE
@@ -184,6 +187,10 @@ SEXP stri_enc_isutf8(SEXP str);                                   // DONE
 
 
 
+// encoding_normalization.cpp:
+const Normalizer2* stri__normalizer_get(SEXP type);     // DONE
+SEXP stri_enc_nf(SEXP s, SEXP type);                    // DONE
+SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
 
 
 
@@ -193,10 +200,8 @@ SEXP stri_locale_list();                                // DONE
 SEXP stri_locale_set(SEXP loc);                         // DONE
 
 
-// unicode_normalization.cpp:
-const Normalizer2* stri__normalizer_get(SEXP type);     // DONE
-SEXP stri_enc_nf(SEXP s, SEXP type);                    // DONE
-SEXP stri_enc_isnf(SEXP s, SEXP type);                  // DONE
+
+
 
 
 // wrap.cpp

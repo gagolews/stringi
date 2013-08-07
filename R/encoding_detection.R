@@ -156,7 +156,7 @@ stri_enc_isutf8 <- function(str) {
 #' }
 #' 
 #' If you have some initial guess on language and encoding, try with
-#' \code{\link{str_enc_detect2}}.
+#' \code{\link{stri_enc_detect2}}.
 #'
 #' @param str character vector
 #' @param filter_angle_brackets logical; If filtering is enabled, 
@@ -203,7 +203,8 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' Vectorized over \code{str}.
 #' 
 #' First, the text is checked whether it is valid
-#' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 (as in \code{\link{str_enc_detect}},
+#' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 
+#' (as in \code{\link{stri_enc_detect}},
 #' this bases on ICU's \code{i18n/csrucode.cpp})
 #' or ASCII. 
 #' 
@@ -224,7 +225,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' Polish diacritic \code{characters}: a with ogonek, s with acute, and so on.
 #' 
 #' If you have no initial guess on language and encoding, try with
-#' \code{\link{str_enc_detect}}.
+#' \code{\link{stri_enc_detect}}.
 #' If \code{encodings} is not an empty vector,
 #' so should \code{characters} be, and vice versa.
 #' Note that always one string from \code{encodings} is used
