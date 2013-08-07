@@ -172,14 +172,15 @@ SEXP stri_enc_set(SEXP loc);                            // DONE
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);   // DONE
 
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize); // DONE [internal]
-SEXP stri_enc_fromutf32(SEXP str);                      // DONE
-SEXP stri_enc_toutf32(SEXP str);                        // DONE
-SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);   // DONE
-SEXP stri_enc_toascii(SEXP str);                        // DONE
+SEXP stri_enc_fromutf32(SEXP str);                                // DONE
+SEXP stri_enc_toutf32(SEXP str);                                  // DONE
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);             // DONE
+SEXP stri_enc_toascii(SEXP str);                                  // DONE
 
-SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets); // DONE
-SEXP stri_enc_isascii(SEXP str);                          // DONE
-SEXP stri_enc_isutf8(SEXP str);                           // DONE
+SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters); // DONE
+SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);       // DONE
+SEXP stri_enc_isascii(SEXP str);                                  // DONE
+SEXP stri_enc_isutf8(SEXP str);                                   // DONE
 
 
 

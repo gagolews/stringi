@@ -154,6 +154,9 @@ stri_enc_isutf8 <- function(str) {
 #' IBM420 \tab Arabic \cr
 #' IBM424 \tab Hebrew \cr
 #' }
+#' 
+#' If you have some initial guess on language and encoding, try with
+#' \code{\link{str_enc_detect2}}.
 #'
 #' @param str character vector
 #' @param filter_angle_brackets logical; If filtering is enabled, 
@@ -170,7 +173,7 @@ stri_enc_isutf8 <- function(str) {
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #'
-#'# 
+#'
 #' @examples
 #' \dontrun{
 #' f <- rawToChar(readBin("test.txt", "raw", 1024))
@@ -185,5 +188,72 @@ stri_enc_isutf8 <- function(str) {
 #' @export
 stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
    .Call("stri_enc_detect", str, filter_angle_brackets, PACKAGE="stringi")
+}
+
+
+#' @title
+#' Detect Character Encoding
+#'
+#' @description
+#' This function tries to detect character encoding
+#' in case the language of text is known and the set
+#' of possible encodings is known a priori.
+#'
+#' @details
+#' Vectorized over \code{str}.
+#' 
+#' First, the text is checked whether it is valid
+#' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 (as in \code{\link{str_enc_detect}},
+#' this bases on ICU's \code{i18n/csrucode.cpp})
+#' or ASCII. 
+#' 
+#' Otherwise the text is checked for the number of occurences
+#' of \code{characters} (you may specify them
+#' in single string or separate strings)
+#' converted to given 8-bit \code{encodings}.
+#' The encoding is selected basing on the greatest number of total
+#' byte hits.
+#' 
+#' The guess is of course imprecise, as it is obtained using statistics.
+#' Because of this, detection works best if you supply at least a few hundred 
+#' bytes of character data that's in a single language.
+#' 
+#' The function works fine e.g. for Polish text, when one
+#' wants to detect whether a given file is UTF-8, WINDOWS-1250,
+#' or ISO-8859-2-encoded. In such case you may provide
+#' Polish diacritic \code{characters}: a with ogonek, s with acute, and so on.
+#' 
+#' If you have no initial guess on language and encoding, try with
+#' \code{\link{str_enc_detect}}.
+#' If \code{encodings} is not an empty vector,
+#' so should \code{characters} be, and vice versa.
+#' Note that always one string from \code{encodings} is used
+#' as fallback encoding in case when Unicode or ASCII detection fails.
+#'
+#' @param str character vector
+#' @param encodings character vector with names of 8-bit encodigs to be tested
+#' @param characters character vector with Unicode codepoints
+#' that should be detected
+#'
+#' @return Returns a list of length equal to the length of \code{str}.
+#' Each list element is a list with the following three named components:
+#' \itemize{
+#'    \item \code{Encoding} -- string; guessed encoding; \code{NA} on failure
+#'    (iff \code{encodings} is empty),
+#'    \item \code{Language} -- always \code{NA},
+#'    \item \code{Confidence} -- integer from 0 to 100; the higher the value, 
+#'    the more confidence there is in the match; \code{NA} on failure.
+#' }
+#'
+#'
+#'
+#' @references
+#' \emph{Character Set Detection} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/conversion/detection}
+#'
+#' @family encoding_detection
+#' @export
+stri_enc_detect2 <- function(str, encodings=c(), characters=c()) {
+   .Call("stri_enc_detect2", str, encodings, characters, PACKAGE="stringi")
 }
 
