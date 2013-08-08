@@ -28,38 +28,51 @@
 #'
 #' @details
 #' \code{stri_conv} is an alias for \code{stri_encode}.
-#' This function aims to replace R's \link{iconv} - it is slightly faster,
+#' This function aims to replace R's \link{iconv} -- 
+#' however, it is slightly faster,
 #' and works in the same manner on all platforms.
 #'
-#' If \code{from}  is missing,
-#' \code{NULL} (default encoding) is used. The same holds for \code{to}.
+#' If \code{from} is either missing, \code{""}, or \code{NULL}
+#' and \code{str} is a character vector,
+#' then the input string encoding marks are used
+#' (just like in almost all \pkg{stringi} functions:
+#' bytes marks are disallowed).
+#' Otherwise, the internal encoding marks are completely ignored.
 #'
 #' Note that possible problems may occur when \code{to} is
 #' set to e.g. UTF-16 and UTF-32, as the output strings may have embedded NULs.
 #' In such cases use \code{to_raw=TRUE} and consider
 #' specifying a byte order marker (BOM) for portability reasons
-#' (e.g. set \code{UTF-16LE} or \code{UTF-16BE}).
+#' (e.g. set \code{UTF-16} or \code{UTF-32} which automatically
+#' adds BOMs).
 #'
-#' For \code{to_raw=FALSE}, the strings always have marked encodings
-#' according to the converter
+#' For \code{to_raw=FALSE}, the output
+#' strings always have marked encodings according to the converter
 #' used (as specified by \code{to}) and the current default Encoding
 #' (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
 #' or \code{bytes} in all other cases).
+#' 
+#' Note that \code{stri_encode(as.raw(data), "8bitencodingname")}
+#' is a wise substitute for \code{\link{rawToChar}}.
+#' On the other hand, 
 #'
-#' @param str character vector or a list of \code{raw} vectors
-#' to be converted
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors to be converted
 #' @param from input encoding:
-#'       \code{NULL} or \code{""} for default encoding,
-#'       or a single string with encoding name,
+#'       \code{NULL} or \code{""} for default encoding
+#'       or internal encoding marks usage (see Details);
+#'       otherwise, a single string with encoding name,
 #'       see \code{\link{stri_enc_list}}
 #' @param to target encoding:
-#'       \code{NULL} or \code{""} for default encoding,
+#'       \code{NULL} or \code{""} for default encoding 
+#'       (see \code{\link{stri_enc_get}}),
 #'       or a single string with encoding name
 #' @param to_raw single logical value: should a list of raw vectors
 #' be returned rather than a character vector?
 #'
 #' @return If \code{to_raw} is \code{FALSE},
-#' then a character vector with encoded strings is returned.
+#' then a character vector with encoded strings (and sensible
+#' encoding marks) is returned.
 #' Otherwise, you'll get a list of raw vectors.
 #'
 #' @references
@@ -72,7 +85,12 @@
 #' @rdname stri_encode
 #' @export
 stri_encode <- function(str, from, to=NULL, to_raw=FALSE) {
-   .Call("stri_encode", str, from, to, to_raw, PACKAGE="stringi")
+   if (is.character(str) && (missing(from) || is.null(from) || from == "")) {
+      str <- stri_enc_toutf8(str)
+      .Call("stri_encode", str, "UTF-8", to, to_raw, PACKAGE="stringi")
+   }
+   else
+      .Call("stri_encode", str, from, to, to_raw, PACKAGE="stringi")
 }
 
 
@@ -89,12 +107,15 @@ stri_conv <- stri_encode
 #' corresponds to exactly one integer value.
 #' This function converts a character vector to a list
 #' of integer vectors.
+#' The individual code points then may easily be manipulated.
 #'
 #' @details
 #' \code{NA_character_}s are converted to \code{NULL}.
 #'
-#' This function is roughly equivalent to the vectorized call
+#' This function is roughly equivalent to a vectorized call
 #' to \code{utf8ToInt(enc2utf8(str))}.
+#' If you want a list of raw vector on output,
+#' use \code{\link{stri_encode}}.
 #'
 #' @param str character vector to be converted
 #' @return Returns a list of integer vectors.
@@ -122,6 +143,8 @@ stri_enc_toutf32 <- function(str) {
 #' \code{\link{intToUtf8}},
 #' as usual in \pkg{stringi}, it returns character strings
 #' in UTF-8.
+#' If you have a list of raw vector on input,
+#' use \code{\link{stri_encode}}.
 #'
 #'
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
@@ -130,9 +153,10 @@ stri_enc_toutf32 <- function(str) {
 #' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
 #'
-#' \code{NULL}s in the input list  are converted to \code{NA_character_}.
+#' \code{NULL}s in the input list are converted to \code{NA_character_}.
 #'
-#' @param vec list of integer vectors or, for convenience, a single integer vector
+#' @param vec list of integer vectors or, 
+#' for convenience, a single integer vector
 #' @return Returns a character vector (in UTF-8).
 #'
 #' @family encoding_conversion
@@ -147,18 +171,19 @@ stri_enc_fromutf32 <- function(vec) {
 #' Convert To UTF-8
 #'
 #' @description
-#' Converts character strings with internally marked encodings
+#' Converts character strings with (possibly) internally marked encodings
 #' to UTF-8 strings.
 #'
 #' @details
 #' If \code{is_unknown_8bit} is set to \code{TRUE}
-#' and a string marked (internally) as being neither ASCII
-#' nor UTF-8 encoded is given, then all bytecodes > 127 are replaced with
+#' and a string is marked (internally) as being neither ASCII
+#' nor UTF-8-encoded, then all bytecodes > 127 are replaced with
 #' the Unicode REPLACEMENT CHARACTER (\\Ufffd).
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
 #' Otherwise, R encoding marks is assumed
 #' to be trustworthy (ASCII, UTF-8, Latin1, or Native).
+#' Bytes encoding fail here.
 #'
 #' Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
 #' \code{NA} value for single characters.
@@ -191,7 +216,7 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #'
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
-#' The SUBSTITUTE CHARACTER may be interpreted
+#' The SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
 #' as ASCII \code{NA} value for single characters.
 #'
 #' @param str character vector to be converted

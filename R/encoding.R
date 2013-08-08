@@ -188,7 +188,11 @@
 #' @family encoding_conversion
 #'
 #' @references
-#' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
+#' \emph{Unicode Basics} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/unicode}
+#' 
+#' \emph{Conversion} -- ICU User Guide, 
+#' \url{http://userguide.icu-project.org/conversion}
 #'
 #' \emph{Converters} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/conversion/converters}  (technical details)

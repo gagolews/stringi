@@ -38,6 +38,7 @@
 #include "container_usearch.h"
 #include "container_bytesearch.h"
 #include "container_listutf8.h"
+#include "container_listraw.h"
 #include "container_integer.h"
 #include "container_logical.h"
 #include "charclass.h"
@@ -127,6 +128,7 @@ SEXP stri_isempty(SEXP str);          // DONE
 
 // prepare_arg.cpp:
 SEXP        stri_prepare_arg_list_string(SEXP x, const char* argname);     // DONE
+SEXP        stri_prepare_arg_list_raw(SEXP x, const char* argname);        // DONE
 SEXP        stri_prepare_arg_string(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_double(SEXP x, const char* argname);          // DONE
 SEXP        stri_prepare_arg_integer(SEXP x, const char* argname);         // DONE

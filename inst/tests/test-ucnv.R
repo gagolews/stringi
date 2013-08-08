@@ -6,10 +6,17 @@ test_that("stri_encode", {
    expect_error(stri_encode("", "blahblahblah", "nosuchencoding"))
 
    expect_equivalent(stri_encode("", "", ""), "")
+   expect_equivalent(stri_encode(NA_character_, "", ""), NA_character_)
    expect_equivalent(stri_encode(LETTERS, "", ""), LETTERS)
 
    expect_equivalent(stri_encode(LETTERS, "US-ASCII", "latin1"), LETTERS)
    expect_equivalent(stri_encode(letters, "latin1",   "UTF-8"),  letters)
+   
+   expect_equivalent(charToRaw(stri_encode("\u0105a", "", "cp1250")), as.raw(c(0xb9, 0x61)))
+   expect_equivalent(stri_encode(NULL, "cp-1250", ""), NA_character_)
+   expect_equivalent(stri_encode(as.raw(165), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
+   expect_equivalent(stri_encode(list(as.raw(165)), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
+   expect_error(stri_encode(list("shouldberaw"), "", ""))
 
    .polish_chars_latin2  <- rawToChar(as.raw(c(161, 198, 202, 163, 209,
       211, 166, 172, 175, 177, 230, 234, 179, 241, 243, 182, 188, 191)))

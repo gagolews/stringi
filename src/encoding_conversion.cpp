@@ -317,37 +317,25 @@ SEXP stri_enc_toascii(SEXP str)
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) arg to_raw_added, encoding marking
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.4 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
+   str = stri_prepare_arg_list_raw(str, "str");
    const char* selected_from = stri__prepare_arg_enc(from, "from", true);
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
-
-   // check is args passed are OK
-   if (Rf_isVectorList(str)) {
-      R_len_t nv = LENGTH(str);
-      for (R_len_t i=0; i<nv; ++i) {
-         SEXP cur = VECTOR_ELT(str, i);
-         if (isNull(cur))
-            continue;
-         if (!isRaw(cur))  // this cannot be treated with stri_prepare_arg*, as str may be a mem-shared object
-            Rf_error(MSG__ARG_EXPECTED_RAW_NO_COERCION, "str[[i]]");  // error() allowed here
-
-      }
-   }
-   else
-      str = stri_prepare_arg_string(str, "str");
-
-   // get number of strings to convert, if == 0, then you know what's the result
-   R_len_t ns = LENGTH(str);
-   if (ns <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
-   bool is_vector_arg = (bool)(Rf_isVectorList(str));
 
    UConverter* uconv_from = NULL;
    UConverter* uconv_to = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
+   StriContainerListRaw str_cont(str);
+   R_len_t str_n = str_cont.get_n();
+   
+   // get number of strings to convert, if == 0, then you know what's the result
+   if (str_n <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
+   
    // Open converters
    uconv_from = stri__ucnv_open(selected_from);
    uconv_to = stri__ucnv_open(selected_to);
@@ -369,32 +357,19 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
    // Prepare out val
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, ns));
+   PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8 buf(0);
+   String8 buf(0); // TO DO: some estimate?
 
-   for (R_len_t i=0; i<ns; ++i) {
-      SEXP curs;
-      bool isNA = false;
-      const char* curd = 0;
-      if (is_vector_arg) {
-         curs = VECTOR_ELT(str, i);
-         if (isNull(curs)) isNA = true;
-         else curd = (const char*)RAW(curs);
-      }
-      else {
-         curs = STRING_ELT(str, i);
-         if (curs == NA_STRING) isNA = true;
-         else curd = (const char*)CHAR(curs);
-      }
-
-      if (isNA) {
+   for (R_len_t i=0; i<str_n; ++i) {
+      if (str_cont.isNA(i)) {
          if (to_raw_logical) SET_VECTOR_ELT(ret, i, R_NilValue);
          else                SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
-      R_len_t curn = LENGTH(curs);
+      const char* curd = str_cont.get(i).c_str();
+      R_len_t curn     = str_cont.get(i).length();
 
       err = U_ZERO_ERROR;
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
