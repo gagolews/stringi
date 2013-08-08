@@ -67,28 +67,33 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n)
  *  @return logical vector
  *
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
  */
 SEXP stri_enc_isascii(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
-   R_len_t str_length = LENGTH(str);
+   str = stri_prepare_arg_list_raw(str, "str");
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerListRaw str_cont(str);
+   R_len_t str_length = str_cont.get_n();
 
    SEXP ret;
    PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret); // may be faster than LOGICAL(ret)[i] all the time
 
    for (R_len_t i=0; i < str_length; ++i) {
-      SEXP str_cur = STRING_ELT(str, i);
-      if (str_cur == NA_STRING) {
+      if (str_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
 
-      ret_tab[i] = (stri__enc_check_ascii(CHAR(str_cur), LENGTH(str_cur)) > 0);
+      ret_tab[i] = (stri__enc_check_ascii(str_cont.get(i).c_str(), str_cont.get(i).length()) >= 100);
    }
 
    UNPROTECT(1);
    return ret;
+   
+   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
 
 
@@ -102,28 +107,33 @@ SEXP stri_enc_isascii(SEXP str)
  *  @return logical vector
  *
  * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
  */
 SEXP stri_enc_isutf8(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
-   R_len_t str_length = LENGTH(str);
+   str = stri_prepare_arg_list_raw(str, "str");
+
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerListRaw str_cont(str);
+   R_len_t str_length = str_cont.get_n();
 
    SEXP ret;
    PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret);
 
    for (R_len_t i=0; i < str_length; ++i) {
-      SEXP str_cur = STRING_ELT(str, i);
-      if (str_cur == NA_STRING){
+      if (str_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
       
-      ret_tab[i] = (stri__enc_check_utf8(CHAR(str_cur), LENGTH(str_cur)) > 0);
+      ret_tab[i] = (stri__enc_check_utf8(str_cont.get(i).c_str(), str_cont.get(i).length()) >= 100);
    }
 
    UNPROTECT(1);
    return ret;
+   
+   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
 
 
@@ -138,21 +148,28 @@ SEXP stri_enc_isutf8(SEXP str)
  * 
  * @return list
  * 
- * @version 0.1 (2013-08-03) Marek Gagolewski
+ * @version 0.1 (Marek Gagolewski, 2013-08-03) 
+ * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw + BUGFIX 
  */
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 {
-   str = stri_prepare_arg_string(str, "str");
+   str = stri_prepare_arg_list_raw(str, "str");
    filter_angle_brackets = stri_prepare_arg_logical(filter_angle_brackets, "filter_angle_brackets");
    
    UCharsetDetector* ucsdet = NULL;   
+   
+   
    STRI__ERROR_HANDLER_BEGIN
+   
    UErrorCode status = U_ZERO_ERROR;
    ucsdet = ucsdet_open(&status);
    if (U_FAILURE(status)) throw StriException(status);
    
-   R_len_t str_n = LENGTH(str);
+   StriContainerListRaw str_cont(str);
+   R_len_t str_n = str_cont.get_n();
+   
    R_len_t vectorize_length = stri__recycling_rule(true, 2, str_n, LENGTH(filter_angle_brackets));
+   str_cont.set_nrecycle(vectorize_length); // must be set after container creation
    
    SEXP ret, names, wrong;
    PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
@@ -170,21 +187,22 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 
    StriContainerLogical filter(filter_angle_brackets, vectorize_length);
    for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (STRING_ELT(str, i%str_n) == NA_STRING || filter.isNA(i)) {
+      if (str_cont.isNA(i) || filter.isNA(i)) {
          SET_VECTOR_ELT(ret, i, wrong);
          continue;
       }
       
-      const char* str_cur_s = CHAR(STRING_ELT(str, i%str_n));
-      R_len_t str_cur_n = LENGTH(STRING_ELT(str, i%str_n));
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t str_cur_n     = str_cont.get(i).length();
       
       status = U_ZERO_ERROR;
       ucsdet_setText(ucsdet, str_cur_s, str_cur_n, &status);
 		if (U_FAILURE(status)) throw StriException(status);
       ucsdet_enableInputFilter(ucsdet, filter.get(i));
       
+      status = U_ZERO_ERROR;
       const UCharsetMatch* match = ucsdet_detect(ucsdet, &status);
-		if (U_FAILURE(status)) {
+		if (U_FAILURE(status) || !match) {
          SET_VECTOR_ELT(ret, i, wrong);
          continue;
 		}

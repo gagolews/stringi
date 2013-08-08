@@ -21,14 +21,15 @@
 #' Check If a String Is Possibly in ASCII
 #'
 #' @description
-#' The function checks whether all character codes are in the set {1,2,...,127}.
+#' The function checks whether all bytes in a string are in the set {1,2,...,127}.
 #'
 #' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #'
-#' @param str character vector
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors
 #'
 #' @return Returns a logical vector.
 #' Its i-th element indicates whether the i-th string
@@ -69,7 +70,8 @@ stri_enc_isascii <- function(str) {
 #' This function is independent of the way R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
-#' @param str character vector
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors
 #'
 #' @return Returns a logical vector.
 #' Its i-th element indicates whether the i-th string
@@ -158,7 +160,9 @@ stri_enc_isutf8 <- function(str) {
 #' If you have some initial guess on language and encoding, try with
 #' \code{\link{stri_enc_detect2}}.
 #'
-#' @param str character vector
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors
+#' 
 #' @param filter_angle_brackets logical; If filtering is enabled, 
 #' text within angle brackets ("<" and ">") will be removed before detection,
 #' which will remove most HTML or XML markup.
@@ -192,7 +196,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 
 
 #' @title
-#' Detect Character Encoding
+#' Detect Character Encoding (With Initial Guess)
 #'
 #' @description
 #' This function tries to detect character encoding
@@ -231,7 +235,8 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' Note that always one string from \code{encodings} is used
 #' as fallback encoding in case when Unicode or ASCII detection fails.
 #'
-#' @param str character vector
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors
 #' @param encodings character vector with names of 8-bit encodigs to be tested
 #' @param characters character vector with Unicode codepoints
 #' that should be detected

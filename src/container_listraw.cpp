@@ -34,8 +34,8 @@ StriContainerListRaw::StriContainerListRaw()
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector
- * @param nrecycle extend length [vectorization]
- * @param shallowrecycle will \code{this->str} be ever modified?
+ * 
+ * if you want nrecycle > n, call set_nrecycle
  */
 StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 {
