@@ -77,6 +77,18 @@ LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
 AC_PROG_CC
 AC_PROG_CXX
 
+my_save_cflags="$CFLAGS"
+CFLAGS="-Wall -Wextra -ansi -pedantic"
+stringi_ADDCXXFLAGS=""
+AC_MSG_CHECKING([whether CC supports -Wall -Wextra -ansi -pedantic])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
+    [AC_MSG_RESULT([yes])]
+    [stringi_ADDCXXFLAGS="-Wall -Wextra -ansi -pedantic"],
+    [AC_MSG_RESULT([no])]
+)
+CFLAGS="$my_save_cflags"
+AC_SUBST(stringi_ADDCXXFLAGS)
+
 AC_SUBST(stringi_CXXFLAGS)
 AC_SUBST(stringi_LIBS)
 AC_CONFIG_FILES([src/Makevars])

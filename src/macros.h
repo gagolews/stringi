@@ -39,6 +39,17 @@
       }                                                                                          \
 
 
+#define STRI__GET_INT32_BE(input, index) \
+   uint32_t(((uint8_t*)input)[index+0] << 24 | ((uint8_t*)input)[index+1] << 16 | ((uint8_t*)input)[index+2] << 8 | ((uint8_t*)input)[index+3])
+
+#define STRI__GET_INT32_LE(input, index) \
+   uint32_t(((uint8_t*)input)[index+3] << 24 | ((uint8_t*)input)[index+2] << 16 | ((uint8_t*)input)[index+1] << 8 | ((uint8_t*)input)[index+0])
+
+#define STRI__GET_INT16_BE(input, index) \
+   uint16_t(((uint8_t*)input)[index+0] << 8 | ((uint8_t*)input)[index+1])
+
+#define STRI__GET_INT16_LE(input, index) \
+   uint16_t(((uint8_t*)input)[index+1] << 8 | ((uint8_t*)input)[index+0])
 
 
 // taken from R's Defn.h - sorry, this is needed

@@ -38,6 +38,7 @@
 #include <queue>
 #include <algorithm>
 #include <vector>
+#include <unicode/ptypes.h>
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
 #include <unicode/ucnv.h>

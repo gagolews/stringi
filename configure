@@ -622,6 +622,7 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 stringi_LIBS
 stringi_CXXFLAGS
+stringi_ADDCXXFLAGS
 ac_ct_CXX
 CXXFLAGS
 CXX
@@ -2072,9 +2073,9 @@ $as_echo_n "checking for ICU installed... " >&6; }
 if test "$ICU_CONFIG" = "no" ; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: failed" >&5
 $as_echo "failed" >&6; }
-   echo "*** The icu-config script could not be found. Make sure it is"
-   echo "*** in your path, and that taglib is properly installed."
-   echo "*** Check out the file INSTALL.md in the root directory of stringi."
+   echo "*** The icu-config script could not be found."
+   echo "*** Make sure it is in your PATH."
+   echo "*** For more information check out the file stringi/INSTALL.md."
 else
    ICU_VERSION=`$ICU_CONFIG --version`
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: found version $ICU_VERSION" >&5
@@ -4138,6 +4139,36 @@ ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
+
+my_save_cflags="$CFLAGS"
+CFLAGS="-Wall -Wextra -ansi -pedantic"
+stringi_ADDCXXFLAGS=""
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether CC supports -Wall -Wextra -ansi -pedantic" >&5
+$as_echo_n "checking whether CC supports -Wall -Wextra -ansi -pedantic... " >&6; }
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+    stringi_ADDCXXFLAGS="-Wall -Wextra -ansi -pedantic"
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+CFLAGS="$my_save_cflags"
 
 
 

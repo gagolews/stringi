@@ -27,7 +27,7 @@
  * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
- * @param get_confidence determine confidence value or to exact check
+ * @param get_confidence determine confidence value or do exact check
  * 
  * @return confidence value or 0/1
  * 
@@ -36,7 +36,7 @@
  */
 R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    for (R_len_t j=0; j < str_cur_n; ++j) {
-      if (!U8_IS_SINGLE(str_cur_s[j])) { // i.e. <= 127
+      if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) { // i.e. 0 < c <= 127
          return 0;
       }
    }
@@ -53,7 +53,7 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
  * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
- * @param get_confidence determine confidence value or to exact check
+ * @param get_confidence determine confidence value or do exact check
  * 
  * @return confidence value or 0/1
  * 
@@ -62,12 +62,17 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
  */
 R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
+   //bool hasBOM = (str_cur_n >= 3 && input[0] == (char)0xEF 
+   //              && input[1] == (char)0xBB && input[2] == (char)0xBF);
+   
    UChar32 c;
    for (R_len_t j=0; j < str_cur_n; ) {
-      U8_NEXT(str_cur_s, j, str_cur_n, c);
-      if (c < 0) { // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error
+      if (str_cur_s[j] == 0)
          return 0; // definitely not valid UTF-8
-      }
+      
+      U8_NEXT(str_cur_s, j, str_cur_n, c);
+      if (c < 0) // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error
+         return 0; // definitely not valid UTF-8
    }
    return (get_confidence?100:1);
 }
@@ -85,8 +90,34 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
  */
 R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   throw StriException("TO DO");
-   return 0;
+   if (str_cur_n % 2 != 0)
+      return 0;
+      
+//   bool hasBE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFE && str_cur_s[1] == (char)0xFF);
+   bool hasLE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFF && str_cur_s[1] == (char)0xFE 
+      && (str_cur_n <= 4 || (str_cur_s[2] != (char)0x00 || str_cur_s != (char)0x00)));
+      
+   if (hasLE_BOM)
+      return 0;
+      
+   for (R_len_t i=0; i<str_cur_n; i += 2) {
+      uint16_t c = STRI__GET_INT16_BE(str_cur_s, i);
+      if (!U16_IS_SINGLE(c)) {
+         if (!U16_IS_SURROGATE_LEAD(c))
+            return 0;
+            
+         i += 2;
+         if (i >= str_cur_n)
+            return 0;
+         c = STRI__GET_INT16_BE(str_cur_s, i);
+         if (!U16_IS_SURROGATE_TRAIL(c))
+            return 0;
+      }
+      else if (c == 0)
+         return 0;
+   }
+   
+   return (get_confidence?100:1);
 }
 
 
@@ -94,7 +125,7 @@ R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool g
  * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
- * @param get_confidence determine confidence value or to exact check
+ * @param get_confidence determine confidence value or do exact check
  * 
  * @return confidence value or 0/1
  * 
@@ -102,8 +133,34 @@ R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool g
  */
 R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   throw StriException("TO DO");
-   return 0;
+   if (str_cur_n % 2 != 0)
+      return 0;
+      
+   bool hasBE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFE && str_cur_s[1] == (char)0xFF);
+//   bool hasLE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFF && str_cur_s[1] == (char)0xFE 
+//      && (str_cur_n <= 4 || (str_cur_s[2] != (char)0x00 || str_cur_s != (char)0x00)));
+      
+   if (hasBE_BOM)
+      return 0;
+      
+   for (R_len_t i=0; i<str_cur_n; i += 2) {
+      uint16_t c = STRI__GET_INT16_LE(str_cur_s, i);
+      if (!U16_IS_SINGLE(c)) {
+         if (!U16_IS_LEAD(c))
+            return 0;
+            
+         i += 2;
+         if (i >= str_cur_n)
+            return 0;
+         c = STRI__GET_INT16_LE(str_cur_s, i);
+         if (!U16_IS_TRAIL(c))
+            return 0;
+      }
+      else if (c == 0)
+         return 0;
+   }
+   
+   return (get_confidence?100:1);
 }
 
 
@@ -111,7 +168,7 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
  * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
- * @param get_confidence determine confidence value or to exact check
+ * @param get_confidence determine confidence value or do exact check
  * 
  * @return confidence value or 0/1
  * 
@@ -119,8 +176,23 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
  */
 R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   throw StriException("TO DO");
-   return 0;
+   if (str_cur_n % 4 != 0)
+      return 0;
+      
+//   bool hasBE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_BE(str_cur_s, 0) == 0x0000FEFFUL);
+   bool hasLE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL);
+   
+   if (hasLE_BOM)
+      return 0;
+
+   for (R_len_t i=0; i<str_cur_n; i+=4) {
+      int32_t ch = (int32_t)STRI__GET_INT32_BE(str_cur_s, i);
+      
+      if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF))
+         return 0;
+   }
+   
+   return (get_confidence?100:1);
 }
 
 
@@ -129,7 +201,7 @@ R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool g
  * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
- * @param get_confidence determine confidence value or to exact check
+ * @param get_confidence determine confidence value or do exact check
  * 
  * @return confidence value or 0/1
  * 
@@ -137,8 +209,23 @@ R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool g
  */
 R_len_t stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   throw StriException("TO DO");
-   return 0;
+   if (str_cur_n % 4 != 0)
+      return 0;
+      
+   bool hasBE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_BE(str_cur_s, 0) == 0x0000FEFFUL);
+//   bool hasLE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL);
+   
+   if (hasBE_BOM)
+      return 0;
+
+   for (R_len_t i=0; i<str_cur_n; i+=4) {
+      int32_t ch = (int32_t)STRI__GET_INT32_LE(str_cur_s, i);
+      
+      if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF))
+         return 0;
+   }
+   
+   return (get_confidence?100:1);
 }
 
 
@@ -321,6 +408,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
  */
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 {
+   // for 8-bit: check for 0...
    Rf_error("TO DO");
    return R_NilValue;
 }
