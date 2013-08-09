@@ -107,18 +107,19 @@ stri_enc_isascii <- function(str) {
 #' a proper UTF-8 string.
 #'
 #' @details
-#' Negative answer means that a string is surely not in UTF-8.
+#' Negative answer means that a string is surely not valid UTF-8.
 #' Positive result does not mean that we should be absolutely sure.
 #'  E.g. \code{(c4,85)} properly
 #' represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
+#' Also note that UTF-8, as well as most 8-bit encodings,
+#' have ASCII as their subsets
+#' (note that \code{\link{stri_enc_isascii}} => \code{\link{stri_enc_isutf8}}).
 #'
 #' However, the longer the sequence,
 #' the bigger the possibility that the result
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
-#'
-#' Note that \code{\link{stri_enc_isutf8}} => \code{\link{stri_enc_isascii}}.
 #'
 #' This function is independent of the way R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
