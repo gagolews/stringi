@@ -18,7 +18,61 @@
 
 
 #' @title
-#' Check If a String Is Possibly in ASCII
+#' Check If a Data Stream Is Possibly in UTF16 or UTF32
+#'
+#' @description
+#' These functions detect whether a given byte stream is
+#' valid UTF-16LE, UTF-16BE, UTF-32LE, or UTF-32BE.
+#'
+#' @details
+#' These functions are independent of the way R marks encodings in
+#' character strings (see \link{Encoding} and \link{stringi-encoding}).
+#' Anyway, most often, you will provide input data as raw vectors here.
+#'
+#' Negative answer means that a string is surely not in valid UTF-16 or UTF-32.
+#' Positive result does not mean that we should be absolutely sure.
+#' 
+#' @param str character vector, a raw vector, or
+#' a list of \code{raw} vectors
+#'
+#' @return Returns a logical vector.
+#'
+#' @rdname stri_enc_isutf16
+#' @family encoding_detection
+#' @export
+stri_enc_isutf16be <- function(str) {
+   .Call("stri_enc_isenc", str, 3L, PACKAGE="stringi")
+}
+
+
+#' @rdname stri_enc_isutf16
+#' @export
+stri_enc_isutf16le <- function(str) {
+   .Call("stri_enc_isenc", str, 4L, PACKAGE="stringi")
+}
+
+
+
+#' @rdname stri_enc_isutf16
+#' @export
+stri_enc_isutf32be <- function(str) {
+   .Call("stri_enc_isenc", str, 5L, PACKAGE="stringi")
+}
+
+
+#' @rdname stri_enc_isutf16
+#' @export
+stri_enc_isutf32le <- function(str) {
+   .Call("stri_enc_isenc", str, 6L, PACKAGE="stringi")
+}
+
+
+
+
+
+
+#' @title
+#' Check If a Data Stream Is Possibly in ASCII
 #'
 #' @description
 #' The function checks whether all bytes in a string are in the set {1,2,...,127}.
@@ -26,7 +80,6 @@
 #' @details
 #' This function is independent of the way R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
-#'
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
@@ -42,12 +95,12 @@
 #' @family encoding_detection
 #' @export
 stri_enc_isascii <- function(str) {
-   .Call("stri_enc_isascii", str, PACKAGE="stringi")
+   .Call("stri_enc_isenc", str, 1L, PACKAGE="stringi")
 }
 
 
 #' @title
-#' Check If a String Is Possibly in UTF-8
+#' Check If a Data Stream Is Possibly in UTF-8
 #'
 #' @description
 #' The function checks whether given sequences of bytes forms
@@ -85,7 +138,7 @@ stri_enc_isascii <- function(str) {
 #' @family encoding_detection
 #' @export
 stri_enc_isutf8 <- function(str) {
-   .Call("stri_enc_isutf8", str, PACKAGE="stringi")
+   .Call("stri_enc_isenc", str, 2L, PACKAGE="stringi")
 }
 
 

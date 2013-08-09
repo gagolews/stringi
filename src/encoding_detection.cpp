@@ -22,30 +22,45 @@
 
 /** Check if a string is valid ASCII
  * 
+ *  simple check whether charcodes are in [1..127]
+ * by using U8_IS_SINGLE
+ * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
  * 
- * @return confidence value 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
  */
-R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n) {
+R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    for (R_len_t j=0; j < str_cur_n; ++j) {
       if (!U8_IS_SINGLE(str_cur_s[j])) { // i.e. <= 127
          return 0;
       }
    }
-   return 100;
+   return (get_confidence?100:1);
 }
 
 
 
 /** Check if a string is valid UTF-8
  * 
+ * checks if a string is probably UTF-8-encoded; 
+ * simple check with U8_NEXT
+ *
+ * 
  * @param str_cur_s character vector
  * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
  * 
- * @return confidence value 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
  */
-R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n)
+R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    UChar32 c;
    for (R_len_t j=0; j < str_cur_n; ) {
@@ -54,23 +69,109 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n)
          return 0; // definitely not valid UTF-8
       }
    }
-   return 100;
+   return (get_confidence?100:1);
 }
 
 
-/** Which string is ASCII-encoded
+/** Check if a string is valid UTF-16BE
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ */
+R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+{
+   throw StriException("TO DO");
+   return 0;
+}
+
+
+/** Check if a string is valid UTF-16LE
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ */
+R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+{
+   throw StriException("TO DO");
+   return 0;
+}
+
+
+/** Check if a string is valid UTF-32BE
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ */
+R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+{
+   throw StriException("TO DO");
+   return 0;
+}
+
+
+
+/** Check if a string is valid UTF-32LE
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or to exact check
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ */
+R_len_t stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+{
+   throw StriException("TO DO");
+   return 0;
+}
+
+
+
+
+/** Which string is in given encoding
  *
- * simple check whether charcodes are in [1..127]
- * by using U8_IS_SINGLE
  *
- *  @param s character vector
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @param type (single integer, internal)
  *  @return logical vector
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
+ * @version 0.3 (Marek Gagolewski, 2013-08-09) one function for is_*, do dispatch
  */
-SEXP stri_enc_isascii(SEXP str)
+SEXP stri_enc_isenc(SEXP str, SEXP type)
 {
+   if (!Rf_isInteger(type) || LENGTH(type) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
+   int _type = INTEGER(type)[0];
+   int (*isenc)(const char*, R_len_t, bool) = NULL;
+   switch (_type) {
+      case 1:  isenc = stri__enc_check_ascii;   break;
+      case 2:  isenc = stri__enc_check_utf8;    break;
+      case 3:  isenc = stri__enc_check_utf16be; break;
+      case 4:  isenc = stri__enc_check_utf16le; break;
+      case 5:  isenc = stri__enc_check_utf32be; break;
+      case 6:  isenc = stri__enc_check_utf32le; break;
+      default: Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() call allowed here
+   }
+   
+
    str = stri_prepare_arg_list_raw(str, "str");
    
    STRI__ERROR_HANDLER_BEGIN
@@ -86,48 +187,9 @@ SEXP stri_enc_isascii(SEXP str)
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-
-      ret_tab[i] = (stri__enc_check_ascii(str_cont.get(i).c_str(), str_cont.get(i).length()) >= 100);
-   }
-
-   UNPROTECT(1);
-   return ret;
-   
-   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
-}
-
-
-
-
-/** Which string is probably UTF-8-encoded
- *
- * simple check with U8_NEXT
- *
- *  @param s character vector
- *  @return logical vector
- *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
- */
-SEXP stri_enc_isutf8(SEXP str)
-{
-   str = stri_prepare_arg_list_raw(str, "str");
-
-   STRI__ERROR_HANDLER_BEGIN
-   StriContainerListRaw str_cont(str);
-   R_len_t str_length = str_cont.get_n();
-
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
-   int* ret_tab = LOGICAL(ret);
-
-   for (R_len_t i=0; i < str_length; ++i) {
-      if (str_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
-         continue;
-      }
       
-      ret_tab[i] = (stri__enc_check_utf8(str_cont.get(i).c_str(), str_cont.get(i).length()) >= 100);
+      bool get_confidence = false; // TO BE DONE
+      ret_tab[i] = isenc(str_cont.get(i).c_str(), str_cont.get(i).length(), get_confidence);
    }
 
    UNPROTECT(1);
@@ -135,10 +197,6 @@ SEXP stri_enc_isutf8(SEXP str)
    
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
-
-
-
-
 
 
 /** Detect encoding and language
