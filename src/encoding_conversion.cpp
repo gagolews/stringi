@@ -339,6 +339,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    // Open converters
    uconv_from = stri__ucnv_open(selected_from);
    uconv_to = stri__ucnv_open(selected_to);
+   
 
    // Get target encoding mark
    UErrorCode err = U_ZERO_ERROR;
@@ -359,7 +360,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    SEXP ret;
    PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8 buf(0); // TO DO: some estimate?
+   String8 buf(0); // will be extended in a moment
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -375,13 +376,25 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
       if (U_FAILURE(err))
          throw StriException(err);  // error() allowed here
+         
+      R_len_t curn_tmp = encs.length();
+      const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated. 
+      if (!curs_tmp)
+         throw StriException(MSG__INTERNAL_ERROR);
 
-      R_len_t bufneed = encs.length()*ucnv_getMaxCharSize(uconv_to)+1;
+      R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
+      // "The calculated size is guaranteed to be sufficient for this conversion."
       buf.resize(bufneed);
 
       err = U_ZERO_ERROR;
-      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, err); // UTF-16 -> TO
-      if (bufneed > buf.size()) { // larger buffer needed
+//      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, err); // UTF-16 -> TO
+      ucnv_resetFromUnicode(uconv_to);
+      bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
+      if (bufneed <= buf.size()) {
+         if (U_FAILURE(err))
+            throw StriException(err);
+      }
+      else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
          buf.resize(bufneed);
          err = U_ZERO_ERROR;
@@ -421,3 +434,4 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          ucnv_close(uconv_to);
    })
 }
+

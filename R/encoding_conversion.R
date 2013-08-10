@@ -27,6 +27,10 @@
 #' for general discussion.
 #'
 #' @details
+#' Currently, if an incorrect code point is found
+#' on input, it is replaced by the default (for that target encoding)
+#' substitute character and a warning is generated.
+#' 
 #' \code{stri_conv} is an alias for \code{stri_encode}.
 #' This function aims to replace R's \link{iconv} -- 
 #' however, it is slightly faster,
@@ -54,7 +58,6 @@
 #' 
 #' Note that \code{stri_encode(as.raw(data), "8bitencodingname")}
 #' is a wise substitute for \code{\link{rawToChar}}.
-#' On the other hand, 
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors to be converted

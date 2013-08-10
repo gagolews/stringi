@@ -32,6 +32,9 @@
 #' Negative answer means that a string is surely not in valid UTF-16 or UTF-32.
 #' Positive result does not mean that we should be absolutely sure.
 #' 
+#' Also, note that sometimes a data stream may be classified
+#' as both valid UTF-16LE and UTF-16BE.
+#' 
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
 #'
@@ -286,8 +289,6 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' \code{\link{stri_enc_detect}}.
 #' If \code{encodings} is not an empty vector,
 #' so should \code{characters} be, and vice versa.
-#' Note that always one string from \code{encodings} is used
-#' as fallback encoding in case when Unicode or ASCII detection fails.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
