@@ -346,39 +346,50 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
       ucsdet_enableInputFilter(ucsdet, filter.get(i));
       
       status = U_ZERO_ERROR;
-      const UCharsetMatch* match = ucsdet_detect(ucsdet, &status);
-		if (U_FAILURE(status) || !match) {
+      int matchesFound;
+      const UCharsetMatch** match = ucsdet_detectAll(ucsdet, &matchesFound, &status);
+		if (U_FAILURE(status) || !match || matchesFound <= 0) {
          SET_VECTOR_ELT(ret, i, wrong);
          continue;
 		}
       
+
+      SEXP val_enc, val_lang, val_conf;
+      PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
+      PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
+      PROTECT(val_conf = Rf_allocVector(INTSXP, matchesFound));
+      
+      for (R_len_t j=0; j<matchesFound; ++j) {
+         status = U_ZERO_ERROR;
+         const char* name = ucsdet_getName(match[j], &status);
+         if (U_FAILURE(status) || !name)
+            SET_STRING_ELT(val_enc, j, NA_STRING);
+         else
+            SET_STRING_ELT(val_enc, j, Rf_mkChar(name));
+         
+         status = U_ZERO_ERROR;
+    	   int32_t conf = ucsdet_getConfidence(match[j], &status);
+         if (U_FAILURE(status))
+            INTEGER(val_conf)[j] = NA_INTEGER;
+         else
+            INTEGER(val_conf)[j] = conf;
+         
+         status = U_ZERO_ERROR;
+    	   const char* lang = ucsdet_getLanguage(match[j], &status);
+         if (U_FAILURE(status) || !lang)
+            SET_STRING_ELT(val_lang, j, NA_STRING);
+         else
+            SET_STRING_ELT(val_lang, j, Rf_mkChar(lang));
+      }
+      
       SEXP val;
       PROTECT(val = Rf_allocVector(VECSXP, 3));
-      
-      status = U_ZERO_ERROR;
-      const char* name = ucsdet_getName(match, &status);
-      if (U_FAILURE(status))
-         SET_VECTOR_ELT(val, 0, stri__vector_NA_strings(1));
-      else
-         SET_VECTOR_ELT(val, 0, Rf_mkString(name));
-      
-      status = U_ZERO_ERROR;
- 	   int32_t conf = ucsdet_getConfidence(match, &status);
-      if (U_FAILURE(status))
-         SET_VECTOR_ELT(val, 2, stri__vector_NA_integers(1));
-      else
-         SET_VECTOR_ELT(val, 2, Rf_ScalarInteger(conf));
-      
-      status = U_ZERO_ERROR;
- 	   const char* lang = ucsdet_getLanguage(match, &status);
-      if (U_FAILURE(status))
-         SET_VECTOR_ELT(val, 1, stri__vector_NA_strings(1));
-      else
-         SET_VECTOR_ELT(val, 1, Rf_mkString(lang));
-      
+      SET_VECTOR_ELT(val, 0, val_enc);
+      SET_VECTOR_ELT(val, 1, val_lang);
+      SET_VECTOR_ELT(val, 2, val_conf);
       Rf_setAttrib(val, R_NamesSymbol, names);
       SET_VECTOR_ELT(ret, i, val);
-      UNPROTECT(1);
+      UNPROTECT(4);
    }
    
    if (ucsdet) {

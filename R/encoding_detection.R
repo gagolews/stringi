@@ -158,7 +158,10 @@ stri_enc_isutf8 <- function(str) {
 #' 
 #' This is, at best, an imprecise operation using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred 
-#' bytes of character data that's mostly in a single language. In some cases, 
+#' bytes of character data that's mostly in a single language. 
+#' However, Because the detection only looks at a limited amount of the input 
+#' byte data, some of the returned charsets may fail to handle the 
+#' all of input data. Note that in some cases, 
 #' the language can be determined along with the encoding.
 #'
 #' Several different techniques are used for character set detection. 
@@ -169,7 +172,8 @@ stri_enc_isutf8 <- function(str) {
 #' for each language that can be written using that encoding. 
 #'
 #' The detection process can be configured to optionally ignore 
-#' HTML or XML style markup, which can interfere with the detection 
+#' HTML or XML style markup (using ICU's internal facilities),
+#' which can interfere with the detection 
 #' process by changing the statistics.
 #' 
 #' This function should most often be used for byte-marked input strings,
@@ -225,15 +229,16 @@ stri_enc_isutf8 <- function(str) {
 #' which will remove most HTML or XML markup.
 #'
 #' @return Returns a list of length equal to the length of \code{str}.
-#' Each list element is a list with the following three named components:
+#' Each list element is a list with the following three named vectors
+#' representing all guesses:
 #' \itemize{
-#'    \item \code{Encoding} -- string; guessed encoding; \code{NA} on failure,
-#'    \item \code{Language} -- string; guessed language; \code{NA} if the language could
+#'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure,
+#'    \item \code{Language} -- string; guessed languages; \code{NA} if the language could
 #'    not be determined (e.g. in case of UTF-8),
-#'    \item \code{Confidence} -- integer from 0 to 100; the higher the value, 
+#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value, 
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
-#'
+#' The guesses are ordered w.r.t. nonincreasing confidence.
 #'
 #' @examples
 #' \dontrun{
@@ -266,8 +271,8 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' First, the text is checked whether it is valid
 #' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 
 #' (as in \code{\link{stri_enc_detect}},
-#' this bases on ICU's \code{i18n/csrucode.cpp})
-#' or ASCII. 
+#' this slightly bases on ICU's \code{i18n/csrucode.cpp},
+#' but we do it in our own way, however) or ASCII. 
 #' 
 #' Otherwise the text is checked for the number of occurences
 #' of \code{characters} (you may specify them
@@ -286,7 +291,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' Polish diacritic \code{characters}: a with ogonek, s with acute, and so on.
 #' 
 #' If you have no initial guess on language and encoding, try with
-#' \code{\link{stri_enc_detect}}.
+#' \code{\link{stri_enc_detect}} (uses ICU facilities).
 #' If \code{encodings} is not an empty vector,
 #' so should \code{characters} be, and vice versa.
 #'
@@ -296,15 +301,18 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' @param characters character vector with Unicode codepoints
 #' that should be detected
 #'
-#' @return Returns a list of length equal to the length of \code{str}.
+#' @return 
+#' Just like \code{\link{stri_enc_detect}},
+#' this function returns a list of length equal to the length of \code{str}.
 #' Each list element is a list with the following three named components:
 #' \itemize{
-#'    \item \code{Encoding} -- string; guessed encoding; \code{NA} on failure
+#'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure
 #'    (iff \code{encodings} is empty),
 #'    \item \code{Language} -- always \code{NA},
-#'    \item \code{Confidence} -- integer from 0 to 100; the higher the value, 
+#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value, 
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
+#' The guesses are ordered w.r.t. nonincreasing confidence.
 #'
 #'
 #'

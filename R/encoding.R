@@ -180,6 +180,21 @@
 #' There are also some routines for automated encoding detection,
 #' see e.g. \code{\link{stri_enc_detect}}.
 #' 
+#' 
+#' @section Encoding Detection:
+#' 
+#' Given a text file, one has to know how to interpret (encode)
+#' raw data in order to obtain meaningful information.
+#' 
+#' Encoding detection is always an imprecise operation and
+#' needs a considerable amount of data. However, in case of some
+#' encodings (like UTF-8, ASCII, or UTF-32) a ``false positive'' byte
+#' sequence is quite rare (statistically).
+#' 
+#' Check out \code{\link{stri_enc_detect}} and
+#' \code{\link{stri_enc_detect2}} (among others) for useful
+#' functions from this category.
+#' 
 #' @name stringi-encoding
 #' @rdname string-encoding
 #' @aliases encoding
