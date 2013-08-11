@@ -135,6 +135,32 @@ test_that("stri_enc_isascii, stri_enc_isutf8", {
 
 test_that("stri_enc_detect", {
    
-   expect_equivalent(stri_enc_detect(as.raw(c(65:100)))[[1]]$Encoding, "UTF-8")
+   expect_equivalent(stri_enc_detect(as.raw(c(65:100)))[[1]]$Encoding[1], "UTF-8")
    
+   expect_equivalent(stri_enc_detect2("abc")[[1]]$Encoding, "ASCII")
+   
+   stri_enc_detect2(stri_encode("abc", "", "UTF-16", to_raw=TRUE))
+   stri_enc_detect2(stri_encode("abc", "", "UTF-16LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode("abc", "", "UTF-16BE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode("abc", "", "UTF-32", to_raw=TRUE))
+   stri_enc_detect2(stri_encode("abc", "", "UTF-32LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode("abc", "", "UTF-32BE", to_raw=TRUE))
+   
+   text <- as.raw(c(65:100))
+   stri_enc_detect2(stri_encode(text, "", "UTF-8", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16BE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32BE", to_raw=TRUE))
+   
+   text <- stri_flatten(letters)
+   stri_enc_detect2(stri_encode(text, "", "UTF-8", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-16BE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32LE", to_raw=TRUE))
+   stri_enc_detect2(stri_encode(text, "", "UTF-32BE", to_raw=TRUE))
 })

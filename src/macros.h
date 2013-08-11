@@ -52,6 +52,37 @@
    uint16_t(((uint8_t*)input)[index+1] << 8 | ((uint8_t*)input)[index+0])
 
 
+#define STRI__ENC_HAS_BOM_UTF8(s, n)   \
+   bool(n >= 3 &&                      \
+   (uint8_t)(s[0]) == (uint8_t)0xEF && \
+   (uint8_t)(s[1]) == (uint8_t)0xBB && \
+   (uint8_t)(s[2]) == (uint8_t)0xBF)
+
+
+#define STRI__ENC_HAS_BOM_UTF16LE(s, n)           \
+   bool(n >= 2 &&                                 \
+   (uint8_t)(s[0]) == (uint8_t)0xFF &&            \
+   (uint8_t)(s[1]) == (uint8_t)0xFE &&            \
+   (n < 4 || ((uint8_t)(s[2]) != (uint8_t)0x00 || \
+              (uint8_t)(s[3]) != (uint8_t)0x00)))
+
+
+#define STRI__ENC_HAS_BOM_UTF16BE(s, n) \
+   bool(n >= 2 &&                       \
+   (uint8_t)(s[0]) == (uint8_t)0xFE &&  \
+   (uint8_t)(s[1]) == (uint8_t)0xFF)
+
+
+#define STRI__ENC_HAS_BOM_UTF32BE(s, n) \
+   bool(n >= 4 &&                       \
+   (STRI__GET_INT32_BE(str_cur_s, 0) == 0x0000FEFFUL))
+
+
+#define STRI__ENC_HAS_BOM_UTF32LE(s, n) \
+   bool(n >= 4 &&                       \
+   (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL))
+   
+
 // taken from R's Defn.h - sorry, this is needed
 // CHARSXP charset bits
 #define BYTES_MASK (1<<1)

@@ -322,7 +322,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' @family encoding_detection
 #' @export
-stri_enc_detect2 <- function(str, encodings=c(), characters=c()) {
+stri_enc_detect2 <- function(str, encodings=NULL, characters=NULL) {
    .Call("stri_enc_detect2", str, encodings, characters, PACKAGE="stringi")
 }
 

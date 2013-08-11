@@ -182,6 +182,7 @@ SEXP stri_enc_toascii(SEXP str);                                  // DONE
 
 
 // encoding_detection.cpp:
+R_len_t stri__enc_check_8bit(const char* str_cur_s,    R_len_t str_cur_n, bool get_confidence);  // DONE [internal]
 R_len_t stri__enc_check_ascii(const char* str_cur_s,   R_len_t str_cur_n, bool get_confidence);  // DONE [internal]
 R_len_t stri__enc_check_utf8(const char* str_cur_s,    R_len_t str_cur_n, bool get_confidence);  // DONE [internal]
 R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence);  // DONE [internal]

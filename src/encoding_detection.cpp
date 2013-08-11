@@ -20,6 +20,29 @@
 #include "stringi.h"
 
 
+/** Check if a string may be valid 8-bit (including UTF-8) encoded
+ * 
+ *  simple check whether all charcodes are nonzero
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or do exact check
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Bartek Tartanus)
+ * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
+ */
+R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
+   for (R_len_t j=0; j < str_cur_n; ++j) {
+      if (str_cur_s[j] == 0) {
+         return 0;
+      }
+   }
+   return (get_confidence?100:1);
+}
+
+
 /** Check if a string is valid ASCII
  * 
  *  simple check whether charcodes are in [1..127]
@@ -62,9 +85,6 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
  */
 R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   //bool hasBOM = (str_cur_n >= 3 && input[0] == (char)0xEF 
-   //              && input[1] == (char)0xBB && input[2] == (char)0xBF);
-   
    UChar32 c;
    for (R_len_t j=0; j < str_cur_n; ) {
       if (str_cur_s[j] == 0)
@@ -93,9 +113,7 @@ R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool g
    if (str_cur_n % 2 != 0)
       return 0;
       
-//   bool hasBE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFE && str_cur_s[1] == (char)0xFF);
-   bool hasLE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFF && str_cur_s[1] == (char)0xFE 
-      && (str_cur_n <= 4 || (str_cur_s[2] != (char)0x00 || str_cur_s != (char)0x00)));
+   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n);
       
    if (hasLE_BOM)
       return 0;
@@ -136,9 +154,7 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
    if (str_cur_n % 2 != 0)
       return 0;
       
-   bool hasBE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFE && str_cur_s[1] == (char)0xFF);
-//   bool hasLE_BOM = (str_cur_n >= 2 && str_cur_s[0] == (char)0xFF && str_cur_s[1] == (char)0xFE 
-//      && (str_cur_n <= 4 || (str_cur_s[2] != (char)0x00 || str_cur_s != (char)0x00)));
+   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n);
       
    if (hasBE_BOM)
       return 0;
@@ -179,8 +195,7 @@ R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool g
    if (str_cur_n % 4 != 0)
       return 0;
       
-//   bool hasBE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_BE(str_cur_s, 0) == 0x0000FEFFUL);
-   bool hasLE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL);
+   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n);
    
    if (hasLE_BOM)
       return 0;
@@ -212,8 +227,7 @@ R_len_t stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool g
    if (str_cur_n % 4 != 0)
       return 0;
       
-   bool hasBE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_BE(str_cur_s, 0) == 0x0000FEFFUL);
-//   bool hasLE_BOM = str_cur_n >= 4 && (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL);
+   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n);
    
    if (hasBE_BOM)
       return 0;
@@ -407,7 +421,23 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 }
 
 
-/** Detect encoding
+/** help struct for stri_enc_detect2 */
+struct EncGuess {
+   const char* name;
+   int confidence;
+   
+   EncGuess(const char* _name, int _confidence) {
+      name = _name; 
+      confidence = _confidence;
+   }
+   
+   friend bool operator<(const EncGuess& e1, const EncGuess& e2) {
+      return (e1.confidence < e2.confidence);  
+   }
+};
+
+
+/** Detect encoding with initial guess
  * 
  * @param str character vector
  * @param encodings character vector
@@ -415,13 +445,151 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
  * 
  * @return list
  * 
- * @version 0.1 (2013-08-07) Marek Gagolewski
+ * @version 0.1 (2013-08-11) Marek Gagolewski
  */
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 {
-   // for 8-bit: check for 0...
-   Rf_error("TO DO");
-   return R_NilValue;
+   str = stri_prepare_arg_list_raw(str, "str");
+   if (encodings != R_NilValue)
+      encodings = stri_prepare_arg_string(encodings, "encodings");
+   if (characters != R_NilValue)
+      characters = stri_flatten(stri_prepare_arg_string(characters, "characters"), R_NilValue);
+   
+   STRI__ERROR_HANDLER_BEGIN
+
+   StriContainerListRaw str_cont(str);
+   R_len_t str_n = str_cont.get_n();
+   
+   SEXP ret, names, wrong;
+   PROTECT(ret = Rf_allocVector(VECSXP, str_n));
+   
+   PROTECT(names = Rf_allocVector(STRSXP, 3));
+   SET_STRING_ELT(names, 0, Rf_mkChar("Encoding"));
+   SET_STRING_ELT(names, 1, Rf_mkChar("Language"));
+   SET_STRING_ELT(names, 2, Rf_mkChar("Confidence"));
+   
+   PROTECT(wrong = Rf_allocVector(VECSXP, 3));
+   SET_VECTOR_ELT(wrong, 0, stri__vector_NA_strings(1));
+   SET_VECTOR_ELT(wrong, 1, stri__vector_NA_strings(1));
+   SET_VECTOR_ELT(wrong, 2, stri__vector_NA_integers(1));
+   Rf_setAttrib(wrong, R_NamesSymbol, names);
+
+   for (R_len_t i=0; i<str_n; ++i) {
+      if (str_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, wrong);
+         continue;
+      }
+      
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t str_cur_n     = str_cont.get(i).length();
+      
+      
+      vector<EncGuess> guesses;
+      guesses.reserve(6);
+      
+      // first check if we deal with non-8-bit encoding
+      // if so, only utf-32 and utf-16 will be checked      
+      
+      /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
+      int isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
+      int isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
+      if (isutf32le > 0 && isutf32be > 0) {
+         // no BOM, both valid
+         // i think this will never happen
+         guesses.push_back(EncGuess("UTF-32LE", isutf32le));
+         guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+      }
+      else if (isutf32le > 0) {
+         if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-32LE", isutf32le));
+      }
+      else if (isutf32be > 0) {
+         if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+      }
+      
+      /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
+      int isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
+      int isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
+      if (isutf16le > 0 && isutf16be > 0) {
+         // no BOM, both valid
+         // this may sometimes happen
+         guesses.push_back(EncGuess("UTF-16LE", isutf16le));
+         guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+      }
+      else if (isutf16le > 0) {
+         if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-16LE", isutf16le));
+      }
+      else if (isutf16be > 0) {
+         if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+      }
+      
+      bool is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
+      if (is8bit) {
+         // may be an 8-bit encoding
+         int isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
+         if (isascii > 0) // i.e. equal to 100 => nothing more to check
+            guesses.push_back(EncGuess("ASCII", isascii));
+         else {
+            // not ascii
+            int isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
+            if (isutf8 > 0)
+               guesses.push_back(EncGuess("UTF-8", isutf8));
+               
+            Rf_warning("TO DO");
+            
+//guesses.reserve(4+1+1)
+//   R_len_t encodings_n = LENGTH(encodings);
+//   StriContainerUTF8 encodings_cont(encodings, encodings_n);
+   
+//   StriContainerUTF8 characters_cont(characters, 1);
+//   R_len_t characters_nchar = ...
+         }
+      }
+      
+      R_len_t matchesFound = guesses.size();
+      if (matchesFound <= 0) {
+         SET_VECTOR_ELT(ret, i, wrong);
+         continue;
+      }
+      
+      // TO DO: sort
+      
+      SEXP val_enc, val_lang, val_conf;
+      PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
+      PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
+      PROTECT(val_conf = Rf_allocVector(INTSXP, matchesFound));
+      
+      for (R_len_t j=0; j<matchesFound; ++j) {
+         SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].name));
+         INTEGER(val_conf)[j] = guesses[j].confidence;
+    	   SET_STRING_ELT(val_lang, j, NA_STRING); // always no lang
+      }
+      
+      SEXP val;
+      PROTECT(val = Rf_allocVector(VECSXP, 3));
+      SET_VECTOR_ELT(val, 0, val_enc);
+      SET_VECTOR_ELT(val, 1, val_lang);
+      SET_VECTOR_ELT(val, 2, val_conf);
+      Rf_setAttrib(val, R_NamesSymbol, names);
+      SET_VECTOR_ELT(ret, i, val);
+      UNPROTECT(4);
+   }
+   
+   UNPROTECT(3);
+   return ret;
+
+   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
 
 

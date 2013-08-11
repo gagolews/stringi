@@ -71,8 +71,11 @@ stri_read_raw <- function(fname) {
 stri_read_lines <- function(fname, encoding='auto') {
    stopifnot(is.character(encoding), length(encoding) == 1)
    txt <- stri_read_raw(fname)
-   if (identical(encoding, 'auto'))
-      encoding <- stri_enc_detect(txt)[[1]]$Encoding
+   if (identical(encoding, 'auto')) {
+      encoding <- stri_enc_detect(txt)[[1]]$Encoding[1]
+      if (is.na(encoding))
+         error('could not auto-detect encoding')
+   }
    txt <- stri_encode(txt, encoding, "UTF-8")
    stri_split_lines1(txt)
 }
