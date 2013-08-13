@@ -24,7 +24,7 @@
 /**
  * Prepare list of raw vectors argument, single raw vector,
  * or character vector argument
- * 
+ *
  * Useful when dealing with raw data, like in string encoding
  * conversion or detection.
  *
@@ -66,7 +66,7 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
 
 /**
  * Prepare list of character vectors argument
- * 
+ *
  * This is used by functions like stri_join, which allows
  * for passing strings as "...".
  *

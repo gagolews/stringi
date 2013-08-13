@@ -76,7 +76,7 @@ test_that("stri_count_fixed [collation]", {
    expect_identical(stri_count_fixed("aaAAa-a", "aa"), 1L)
    expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=list(strength=1)), 2L)
    expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=stri_opts_collator(strength=1, alternate_shifted=TRUE)), 3L)
-   
+
    expect_equivalent(stri_count_fixed("aaaab", "ab"), 1L)
    expect_equivalent(stri_count_fixed("bababababaab", "aab"), 1L)
 })

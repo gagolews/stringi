@@ -49,7 +49,7 @@ class StriContainerBase {
 
    public:
       //StriContainerBase& operator=(StriContainerBase& container); // use default (shallow)
-      
+
       inline R_len_t get_n() { return n; }
       inline R_len_t get_nrecycle() { return nrecycle; }
       inline void set_nrecycle(R_len_t nval) { nrecycle = nval; }

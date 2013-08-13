@@ -81,7 +81,7 @@
 #define STRI__ENC_HAS_BOM_UTF32LE(s, n) \
    bool(n >= 4 &&                       \
    (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL))
-   
+
 
 // taken from R's Defn.h - sorry, this is needed
 // CHARSXP charset bits

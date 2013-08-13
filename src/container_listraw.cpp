@@ -34,7 +34,7 @@ StriContainerListRaw::StriContainerListRaw()
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector
- * 
+ *
  * if you want nrecycle > n, call set_nrecycle
  */
 StriContainerListRaw::StriContainerListRaw(SEXP rstr)
@@ -45,7 +45,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
       this->init_Base(1, 1, true);
       this->data = new String8*[this->n];
       this->data[0] = NULL;
-   }      
+   }
    else if (isRaw(rstr)) {
       this->init_Base(1, 1, true);
       this->data = new String8*[this->n];

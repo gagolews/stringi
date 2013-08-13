@@ -32,7 +32,7 @@ test_that("stri_detect_fixed [byte]", {
    expect_equivalent(stri_detect_fixed("aaaab", "ab", NA), TRUE)
    expect_equivalent(stri_detect_fixed("bababababaab", "aab", NA), TRUE)
 
-   
+
    suppressWarnings(expect_identical(stri_detect_fixed("","", opts_collator=NA), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("a","", opts_collator=NA), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("","a", opts_collator=NA), FALSE))
@@ -88,7 +88,7 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex("aaaaaaaaaaaaaaaa", "aaaaaaaaaaaaaaa"), TRUE)
 
    expect_equivalent(stri_detect_regex("\u0105\u0105\u0105\u0105\u0105\u0105\u0105b","\u0105+b$"),TRUE)
-   
+
    expect_equivalent(stri_detect_regex("aaaab", "ab"), TRUE)
    expect_equivalent(stri_detect_regex("bababababaab", "aab"), TRUE)
 

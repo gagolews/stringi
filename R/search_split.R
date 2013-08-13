@@ -183,11 +183,11 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 
 #' @title
 #' Split a String into Text Lines
-#' 
+#'
 #' @description
 #' These functions split each character string
 #' into text lines.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 #'
@@ -196,41 +196,41 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
-#' 
-#' Newlines are represented on different platforms e.g. by carriage return 
-#' (CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85). 
+#'
+#' Newlines are represented on different platforms e.g. by carriage return
+#' (CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85).
 #' Moreover, the Unicode Standard defines two unambiguous separator characters,
 #' Paragraph Separator (PS, 0x2029) and Line Separator (LS, 0x2028).
 #' Sometimes also vertical tab (VT, 0x0B) and form feed (FF, 0x0C)
 #' are used.
-#' 
-#' This function follows UTR#18 rules, where a newline sequence 
-#' corresponds to the following regular expression: 
+#'
+#' This function follows UTR#18 rules, where a newline sequence
+#' corresponds to the following regular expression:
 #' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
 #' Each match is used to split text line.
 #' Of course, the search is not performed via regexes here, for efficiency
 #' reasons.
-#' 
-#' 
+#'
+#'
 #' @param str character vector
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; should empty strings be removed from result?
-#' 
+#'
 #' @return \code{stri_split_lines} returns a list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element
 #' is a \code{NA} string.
-#' 
+#'
 #' \code{stri_split_lines1(str)} is like \code{stri_split_lines(str[1])[[1]]}
 #' (with default parameters),
 #' thus it returns a character vector. Moreover, if the input string ends at
 #' a newline sequence, the last empty string is omitted from the result.
 #' Therefore, this function is convenient for splitting a loaded text file
 #' into lines.
-#' 
+#'
 #' @references
 #' \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
 #' \url{http://www.unicode.org/standard/reports/tr13/tr13-5.html}
-#' 
+#'
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 #' \url{http://www.unicode.org/reports/tr18/}
 #'

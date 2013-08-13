@@ -29,7 +29,7 @@
  * Useful for encoding conversion or detection.
  * Each string is represented by the String8 class,
  * with shallow copy of byte data.
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-08-08)
  */
 class StriContainerListRaw : public StriContainerBase {

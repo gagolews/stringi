@@ -22,7 +22,7 @@
  * Split a single string into text lines
  *
  * @param str character vector
- * 
+ *
  * @return character vector
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-04)
@@ -31,7 +31,7 @@ SEXP stri_split_lines1(SEXP str)
 {
    str = stri_prepare_arg_string_1(str, "str");
    R_len_t vectorize_length = LENGTH(str);
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
 
@@ -40,7 +40,7 @@ SEXP stri_split_lines1(SEXP str)
 
    const char* str_cur_s = str_cont.get(0).c_str();
    R_len_t str_cur_n = str_cont.get(0).length();
-      
+
    UChar32 c;
    R_len_t jlast;
    deque<R_len_t_x2> occurences;
@@ -48,7 +48,7 @@ SEXP stri_split_lines1(SEXP str)
    for (R_len_t j=0; j < str_cur_n; /* null */) {
       jlast = j;
       U8_NEXT(str_cur_s, j, str_cur_n, c);
-      
+
       switch (c) {
          case ASCII_CR: /* CR */
             /* check if next is LF */
@@ -56,36 +56,36 @@ SEXP stri_split_lines1(SEXP str)
                j++; // just one byte
             }
             break;
-            
+
          case ASCII_LF: /* LF */
             break;
-            
+
          case UCHAR_NEL: /* NEL */
             break;
-            
+
          case ASCII_VT: /* VT */
             break;
-            
+
          case ASCII_FF: /* FF */
             break;
-            
+
          case UCHAR_LS: /* LS */
             break;
-            
+
          case UCHAR_PS: /* PS */
             break;
-       
+
          default:
             /* not a newline character */
             occurences.back().v2 = j;
             continue;
       }
-      
+
       occurences.back().v2 = jlast;
       if (j < str_cur_n)
          occurences.push_back(R_len_t_x2(j, j));
    }
-      
+
    SEXP ans;
    PROTECT(ans = Rf_allocVector(STRSXP, occurences.size()));
    deque<R_len_t_x2>::iterator iter = occurences.begin();
@@ -95,7 +95,7 @@ SEXP stri_split_lines1(SEXP str)
    }
    UNPROTECT(1);
    return ans;
-   
+
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
@@ -105,7 +105,7 @@ SEXP stri_split_lines1(SEXP str)
  * @param str character vector
  * @param n_max integer vector
  * @param omit_empty logical vector
- * 
+ *
  * @return list of character vectors
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-04)
@@ -138,14 +138,14 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
       R_len_t str_cur_n = str_cont.get(i).length();
       int  n_max_cur        = n_max_cont.get(i);
       int  omit_empty_cur   = omit_empty_cont.get(i);
-      
+
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
-      
+
 //#define STRI_INDEX_NEWLINE_CR   0
 //#define STRI_INDEX_NEWLINE_LF   1
 //#define STRI_INDEX_NEWLINE_CRLF 2
@@ -159,7 +159,7 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
 //      int counts[STRI_INDEX_NEWLINE_LAST];
 //      for (R_len_t j=0; j<STRI_INDEX_NEWLINE_LAST; ++j)
 //         counts[j] = 0;
-      
+
       UChar32 c;
       R_len_t jlast, k=1;
       deque<R_len_t_x2> occurences;
@@ -167,7 +167,7 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
       for (R_len_t j=0; j < str_cur_n && k < n_max_cur; /* null */) {
          jlast = j;
          U8_NEXT(str_cur_s, j, str_cur_n, c);
-         
+
          switch (c) {
             case ASCII_CR: /* CR */
 //               counts[STRI_INDEX_NEWLINE_CR]++;
@@ -178,37 +178,37 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
                   j++; // just one byte
                }
                break;
-               
+
             case ASCII_LF: /* LF */
 //               counts[STRI_INDEX_NEWLINE_LF]++;
                break;
-               
+
             case UCHAR_NEL: /* NEL */
 //               counts[STRI_INDEX_NEWLINE_NEL]++;
                break;
-               
+
             case ASCII_VT: /* VT */
 //               counts[STRI_INDEX_NEWLINE_VT]++;
                break;
-               
+
             case ASCII_FF: /* FF */
 //               counts[STRI_INDEX_NEWLINE_FF]++;
                break;
-               
+
             case UCHAR_LS: /* LS */
 //               counts[STRI_INDEX_NEWLINE_LS]++;
                break;
-               
+
             case UCHAR_PS: /* PS */
 //               counts[STRI_INDEX_NEWLINE_PS]++;
                break;
-          
+
             default:
                /* not a newline character */
                occurences.back().v2 = j;
                continue;
          }
-         
+
          // if here, then at newline
          if (omit_empty_cur && occurences.back().v2 == occurences.back().v1)
             occurences.back().v1 = occurences.back().v2 = j; // don't start new field
@@ -218,21 +218,21 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
             ++k; // another field
          }
       }
-      
+
       if (k == n_max_cur)
          occurences.back().v2 = str_cur_n;
       if (omit_empty_cur && occurences.back().v1 == occurences.back().v2)
          occurences.pop_back();
-         
+
       SEXP ans;
       PROTECT(ans = Rf_allocVector(STRSXP, occurences.size()));
-      
+
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t k = 0; iter != occurences.end(); ++iter, ++k) {
          R_len_t_x2 curoccur = *iter;
          SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
       }
-      
+
       SET_VECTOR_ELT(ret, i, ans);
       UNPROTECT(1);
    }

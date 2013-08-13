@@ -2,16 +2,16 @@ require(testthat)
 
 
 test_that("stri_enc_list, stri_enc_info", {
-   
+
    # basic tests (ASCII, border-line):
-   
+
    expect_true(length(stri_enc_list())>0)
-   
+
    suppressWarnings(expect_true(length(sapply(
       stri_enc_list(),
       function(enc) stri_enc_info(enc[[1]])$Name.friendly
    )) > 0))
-   
+
    expect_equivalent(stri_enc_info("CP-1250")$Name.friendly, "windows-1250") # CE
    expect_equivalent(stri_enc_info("CP-1251")$Name.friendly, "windows-1251") # Cyrillic
    expect_equivalent(stri_enc_info("CP-1252")$Name.friendly, "windows-1252") # WE
@@ -31,5 +31,3 @@ test_that("stri_enc_list, stri_enc_info", {
    expect_equivalent(stri_enc_info("Shift-JIS")$Name.friendly, "Shift_JIS") # Japanese
    expect_equivalent(stri_enc_info("EUC-KR")$Name.friendly, "EUC-KR") # Korean
 })
-
-

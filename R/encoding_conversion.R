@@ -30,9 +30,9 @@
 #' Currently, if an incorrect code point is found
 #' on input, it is replaced by the default (for that target encoding)
 #' substitute character and a warning is generated.
-#' 
+#'
 #' \code{stri_conv} is an alias for \code{stri_encode}.
-#' This function aims to replace R's \link{iconv} -- 
+#' This function aims to replace R's \link{iconv} --
 #' however, it is slightly faster,
 #' and works in the same manner on all platforms.
 #'
@@ -55,7 +55,7 @@
 #' used (as specified by \code{to}) and the current default Encoding
 #' (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
 #' or \code{bytes} in all other cases).
-#' 
+#'
 #' Note that \code{stri_encode(as.raw(data), "8bitencodingname")}
 #' is a wise substitute for \code{\link{rawToChar}}.
 #'
@@ -67,7 +67,7 @@
 #'       otherwise, a single string with encoding name,
 #'       see \code{\link{stri_enc_list}}
 #' @param to target encoding:
-#'       \code{NULL} or \code{""} for default encoding 
+#'       \code{NULL} or \code{""} for default encoding
 #'       (see \code{\link{stri_enc_get}}),
 #'       or a single string with encoding name
 #' @param to_raw single logical value: should a list of raw vectors
@@ -158,7 +158,7 @@ stri_enc_toutf32 <- function(str) {
 #'
 #' \code{NULL}s in the input list are converted to \code{NA_character_}.
 #'
-#' @param vec list of integer vectors or, 
+#' @param vec list of integer vectors or,
 #' for convenience, a single integer vector
 #' @return Returns a character vector (in UTF-8).
 #'

@@ -77,7 +77,7 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed(c("a",""), "a"), matrix(c(1,NA,1,NA_integer_)))
    expect_equivalent(stri_locate_first_fixed("aaaab", "ab"), matrix(4:5))
    expect_equivalent(stri_locate_first_fixed("bababababaab", "aab"), matrix(5:6*2))
-   
+
    #byte
    expect_is(stri_locate_first_fixed(character(0), "a", NA), "matrix")
 

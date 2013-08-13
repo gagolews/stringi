@@ -32,7 +32,7 @@
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
-   
+
 #define MSG__UNCONVERTABLE_CODE_POINT \
    "the Unicode codepoint \\U%08.8x cannot be converted to destination encoding"
 
@@ -41,10 +41,10 @@
 
 #define MSG__UNCONVERTABLE_BINARY_2 \
    "input data \\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
-   
+
 #define MSG__UNCONVERTABLE_BINARY_3 \
    "input data \\x%02.2x\\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
-   
+
 #define MSG__UNCONVERTABLE_BINARY_4 \
    "input data \\x%02.2x\\x%02.2x\\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
 

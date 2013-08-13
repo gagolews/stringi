@@ -29,40 +29,40 @@
 #' @details
 #' Man pages on general topics:
 #' \itemize{
-#' \item \link{stringi-arguments} - how \pkg{stringi} 
+#' \item \link{stringi-arguments} - how \pkg{stringi}
 #' deals with its functions' arguments,
-#' 
+#'
 #' \item \link{stringi-encoding} - character encoding issues,
 #' including information on encoding management in \pkg{stringi}, as well as
 #' encoding detection, conversion, and Unicode normalization,
-#' 
+#'
 #' \item \link{stringi-locale} - locale issues, i.a. locale management and
 #' specification in \pkg{stringi} and the list locale-sensitive operations.
-#' See \code{\link{stri_opts_collator}}  for the description 
-#' of string collation algorithm, used for string comparing, ordering, 
+#' See \code{\link{stri_opts_collator}}  for the description
+#' of string collation algorithm, used for string comparing, ordering,
 #' sorting, casefolding, and searching.
-#' 
+#'
 #' \item \link{stringi-search} - string searching facilities
 #' by 3 separate search engines:
-#' \link{stringi-search-regex}, \link{stringi-search-fixed}, 
+#' \link{stringi-search-regex}, \link{stringi-search-fixed},
 #' and \link{stringi-search-charclass}
 #' - includes pattern searching, matching, string splitting, and so on.
 #' }
 #'
 #' Other interesting stuff:
 #' \itemize{
-#' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}} 
+#' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
 #' for gathering some statistics on character vector's contents.
 #'
-#' \item \code{\link{stri_join}}, \code{\link{stri_dup}}, 
+#' \item \code{\link{stri_join}}, \code{\link{stri_dup}},
 #' and \code{\link{stri_flatten}} for concatenation-based operations.
 #'
 #' \item \code{\link{stri_sub}} for extracting and replacing substrings,
 #' and \code{\link{stri_reverse}} for a funny function
 #' to reverse all characters in a string.
 #'
-#' \item \code{\link{stri_trim}} (among others) for 
-#' trimming characters from the beginning or/and end of a string, 
+#' \item \code{\link{stri_trim}} (among others) for
+#' trimming characters from the beginning or/and end of a string,
 #' see also \link{stringi-search-charclass}.
 #'
 #' \item \code{\link{stri_length}} (among others) for determining the number
@@ -74,9 +74,9 @@
 #' \item \code{\link{stri_compare}}, \code{\link{stri_order}},
 #' and \code{\link{stri_sort}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
-#' 
+#'
 #' \item \code{\link{stri_split_lines}} to split a string into text lines.
-#' 
+#'
 #' \item DRAFT API: \code{\link{stri_read_raw}},
 #' \code{\link{stri_read_lines}}, and  \code{\link{stri_write_lines}}
 #' for reading and writing text files.

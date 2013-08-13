@@ -31,10 +31,10 @@
 #'
 #' Negative answer means that a string is surely not in valid UTF-16 or UTF-32.
 #' Positive result does not mean that we should be absolutely sure.
-#' 
+#'
 #' Also, note that sometimes a data stream may be classified
 #' as both valid UTF-16LE and UTF-16BE.
-#' 
+#'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
 #'
@@ -150,38 +150,38 @@ stri_enc_isutf8 <- function(str) {
 #' Detect Character Set and Language
 #'
 #' @description
-#' This function uses the ICU engine to determine the character set, 
+#' This function uses the ICU engine to determine the character set,
 #' or encoding, of character data in an unknown format.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{filter_angle_brackets}.
-#' 
+#'
 #' This is, at best, an imprecise operation using statistics and heuristics.
-#' Because of this, detection works best if you supply at least a few hundred 
-#' bytes of character data that's mostly in a single language. 
-#' However, Because the detection only looks at a limited amount of the input 
-#' byte data, some of the returned charsets may fail to handle the 
-#' all of input data. Note that in some cases, 
+#' Because of this, detection works best if you supply at least a few hundred
+#' bytes of character data that's mostly in a single language.
+#' However, Because the detection only looks at a limited amount of the input
+#' byte data, some of the returned charsets may fail to handle the
+#' all of input data. Note that in some cases,
 #' the language can be determined along with the encoding.
 #'
-#' Several different techniques are used for character set detection. 
+#' Several different techniques are used for character set detection.
 #' For multi-byte encodings, the sequence of bytes is checked for legal patterns.
-#' The detected characters are also check against a list of frequently 
-#' used characters in that encoding. For single byte encodings, the data 
-#' is checked against a list of the most commonly occurring three letter groups 
-#' for each language that can be written using that encoding. 
+#' The detected characters are also check against a list of frequently
+#' used characters in that encoding. For single byte encodings, the data
+#' is checked against a list of the most commonly occurring three letter groups
+#' for each language that can be written using that encoding.
 #'
-#' The detection process can be configured to optionally ignore 
+#' The detection process can be configured to optionally ignore
 #' HTML or XML style markup (using ICU's internal facilities),
-#' which can interfere with the detection 
+#' which can interfere with the detection
 #' process by changing the statistics.
-#' 
+#'
 #' This function should most often be used for byte-marked input strings,
 #' especially after loading them from text files and before the main
 #' conversion with \code{\link{stri_encode}}.
 #' The input encoding is of course not taken into account here, even
 #' if marked.
-#' 
+#'
 #' The following table shows all the encodings that can be detected:
 #'
 #' \tabular{ll}{
@@ -217,14 +217,14 @@ stri_enc_isutf8 <- function(str) {
 #' IBM420 \tab Arabic \cr
 #' IBM424 \tab Hebrew \cr
 #' }
-#' 
+#'
 #' If you have some initial guess on language and encoding, try with
 #' \code{\link{stri_enc_detect2}}.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
-#' 
-#' @param filter_angle_brackets logical; If filtering is enabled, 
+#'
+#' @param filter_angle_brackets logical; If filtering is enabled,
 #' text within angle brackets ("<" and ">") will be removed before detection,
 #' which will remove most HTML or XML markup.
 #'
@@ -235,7 +235,7 @@ stri_enc_isutf8 <- function(str) {
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure,
 #'    \item \code{Language} -- string; guessed languages; \code{NA} if the language could
 #'    not be determined (e.g. in case of UTF-8),
-#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value, 
+#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #' The guesses are ordered w.r.t. nonincreasing confidence.
@@ -267,33 +267,33 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' First, the text is checked whether it is valid
-#' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 
+#' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8
 #' (as in \code{\link{stri_enc_detect}},
 #' this slightly bases on ICU's \code{i18n/csrucode.cpp},
-#' but we do it in our own way, however) or ASCII. 
-#' 
+#' but we do it in our own way, however) or ASCII.
+#'
 #' The function has been optimized for detecting
 #' Latin-based alphabets.
-#' 
-#' Otherwise the text is checked for the number of occurences
+#'
+#' Otherwise the text is checked for the number of occurrences
 #' of \code{characters} (you may specify them
 #' in single string or separate strings)
 #' converted to given 8-bit \code{encodings} (it is assumed that
 #' they are ASCII supersets).
 #' The encoding is selected basing on the greatest number of total
 #' byte hits.
-#' 
+#'
 #' The guess is of course imprecise, as it is obtained using statistics.
-#' Because of this, detection works best if you supply at least a few hundred 
+#' Because of this, detection works best if you supply at least a few hundred
 #' bytes of character data that's in a single language.
-#' 
+#'
 #' The function works fine e.g. for Polish text, when one
 #' wants to detect whether a given file is UTF-8, WINDOWS-1250,
 #' or ISO-8859-2-encoded. In such case you may provide
 #' Polish diacritic \code{characters}: a with ogonek, s with acute, and so on.
-#' 
+#'
 #' If you have no initial guess on language and encoding, try with
 #' \code{\link{stri_enc_detect}} (uses ICU facilities).
 #' If \code{encodings} is not an empty vector,
@@ -305,7 +305,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' @param characters character vector with Unicode codepoints
 #' that should be detected
 #'
-#' @return 
+#' @return
 #' Just like \code{\link{stri_enc_detect}},
 #' this function returns a list of length equal to the length of \code{str}.
 #' Each list element is a list with the following three named components:
@@ -313,7 +313,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure
 #'    (iff \code{encodings} is empty),
 #'    \item \code{Language} -- always \code{NA},
-#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value, 
+#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #' The guesses are ordered w.r.t. nonincreasing confidence.
@@ -329,4 +329,3 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 stri_enc_detect2 <- function(str, encodings=NULL, characters=NULL) {
    .Call("stri_enc_detect2", str, encodings, characters, PACKAGE="stringi")
 }
-

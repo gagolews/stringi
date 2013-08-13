@@ -8,7 +8,7 @@ srcfiles <- dir('.', pattern='\\.(R|cpp|h)$', recursive=TRUE, ignore.case=TRUE)
 
 for (f in srcfiles) {
    cf <- readLines(f)
-   stopifnot(all(stri_enc_isascii(cf)))
+   if (!all(stri_enc_isascii(cf))) next;
    cf <- stri_trim_right(cf)
    cf <- stri_replace_first_regex(cf, "^\\t", "   ")
    while (stri_numbytes(cf[length(cf)]) == 0)

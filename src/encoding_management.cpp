@@ -24,7 +24,7 @@
 
 
 /** Own fallback function for ucnv conversion: substitute & warn
- * 
+ *
  *
  * @param context  The function currently recognizes the callback options:
  *                 UCNV_SUB_STOP_ON_ILLEGAL: STOPS at the ILLEGAL_SEQUENCE,
@@ -36,7 +36,7 @@
  * @param reason Defines the reason the callback was invoked
  * @param err Return value will be set to success if the callback was handled,
  *      otherwise this value will be set to a failure status.
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-08-10)
  */
 void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
@@ -47,12 +47,12 @@ void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
                  UConverterCallbackReason reason,
                  UErrorCode * err)
 {
-   bool wasSubstitute = (reason <= UCNV_IRREGULAR && 
+   bool wasSubstitute = (reason <= UCNV_IRREGULAR &&
       (context == NULL || (*((char*)context) == *UCNV_SUB_STOP_ON_ILLEGAL && reason == UCNV_UNASSIGNED)));
-      
+
    // "DO NOT CALL THIS FUNCTION DIRECTLY!" :>
    UCNV_TO_U_CALLBACK_SUBSTITUTE(context, toArgs, codeUnits, length, reason, err);
-   
+
    if (*err == U_ZERO_ERROR && wasSubstitute) {
       // substitute char was induced
       switch (length) {
@@ -67,7 +67,7 @@ void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
 
 
 /** Own fallback function for ucnv conversion: substitute & warn
- * 
+ *
  *
  * @param context The function currently recognizes the callback options:
  *                 UCNV_SUB_STOP_ON_ILLEGAL: STOPS at the ILLEGAL_SEQUENCE,
@@ -81,7 +81,7 @@ void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
  * @param err Return value will be set to success if the callback was handled,
  *      otherwise this value will be set to a failure status.
  * @see ucnv_setSubstChars
- * 
+ *
  * @version 0.1 (Marek Gagolewski, 2013-08-10)
  */
 void STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
@@ -93,12 +93,12 @@ void STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
                   UConverterCallbackReason reason,
                   UErrorCode * err)
 {
-   bool wasSubstitute = (reason <= UCNV_IRREGULAR && 
+   bool wasSubstitute = (reason <= UCNV_IRREGULAR &&
       (context == NULL || (*((char*)context) == *UCNV_SUB_STOP_ON_ILLEGAL && reason == UCNV_UNASSIGNED)));
-      
+
    // "DO NOT CALL THIS FUNCTION DIRECTLY!" :>
    UCNV_FROM_U_CALLBACK_SUBSTITUTE(context, fromArgs, codeUnits, length, codePoint, reason, err);
-   
+
    if (*err == U_ZERO_ERROR && wasSubstitute) {
       // substitute char was induced
       Rf_warning(MSG__UNCONVERTABLE_CODE_POINT, codePoint);
@@ -125,11 +125,11 @@ UConverter* stri__ucnv_open(const char* enc)
    uconv = ucnv_open(enc, &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
-      
+
    ucnv_setFromUCallBack(uconv, STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN, NULL, NULL, NULL, &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
-      
+
    ucnv_setToUCallBack  (uconv, STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,   NULL, NULL, NULL, &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
@@ -457,12 +457,12 @@ SEXP stri_enc_info(SEXP enc)
    const char* selected_enc = stri__prepare_arg_enc(enc, "enc", true);
    UConverter* uconv = stri__ucnv_open(selected_enc);
    UErrorCode err = U_ZERO_ERROR;
-   
+
    // set default fallbacks
    ucnv_setFromUCallBack(uconv, UCNV_FROM_U_CALLBACK_SUBSTITUTE, NULL, NULL, NULL, &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
-      
+
    ucnv_setToUCallBack  (uconv, UCNV_TO_U_CALLBACK_SUBSTITUTE,   NULL, NULL, NULL, &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here

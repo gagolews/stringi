@@ -164,7 +164,7 @@ void StriContainerByteSearch::resetMatcher()
  * resets the matcher
  *
  * @return USEARCH_DONE on no match, otherwise start index
- * 
+ *
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Bartek Tartanus) use KMP
  */
@@ -181,7 +181,7 @@ R_len_t StriContainerByteSearch::findFirst()
    T[i] = j;
    while (i<patternLen)
    {
-      while (j>=0 && patternStr[i]!=patternStr[j]) 
+      while (j>=0 && patternStr[i]!=patternStr[j])
          j = T[j];
       i++; j++;
       T[i] = j;
@@ -189,7 +189,7 @@ R_len_t StriContainerByteSearch::findFirst()
    i=0; j=0;
    while (i<searchLen)
    {
-      while (j>=0 && searchStr[i]!=patternStr[j]) 
+      while (j>=0 && searchStr[i]!=patternStr[j])
          j = T[j];
       i++; j++;
       if (j==patternLen)
@@ -213,7 +213,7 @@ R_len_t StriContainerByteSearch::findFirst()
          return searchPos;
    	}
    }
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -249,7 +249,7 @@ R_len_t StriContainerByteSearch::findNext()
          return searchPos;
    	}
    }
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -283,7 +283,7 @@ R_len_t StriContainerByteSearch::findLast()
          return searchPos;
       }
    }
-   
+
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
