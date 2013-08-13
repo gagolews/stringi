@@ -274,10 +274,14 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' this slightly bases on ICU's \code{i18n/csrucode.cpp},
 #' but we do it in our own way, however) or ASCII. 
 #' 
+#' The function has been optimized for detecting
+#' Latin-based alphabets.
+#' 
 #' Otherwise the text is checked for the number of occurences
 #' of \code{characters} (you may specify them
 #' in single string or separate strings)
-#' converted to given 8-bit \code{encodings}.
+#' converted to given 8-bit \code{encodings} (it is assumed that
+#' they are ASCII supersets).
 #' The encoding is selected basing on the greatest number of total
 #' byte hits.
 #' 

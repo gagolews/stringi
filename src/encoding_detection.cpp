@@ -32,14 +32,26 @@
  * 
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
+ * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
  */
 R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
+   R_len_t warnchars = 0;
    for (R_len_t j=0; j < str_cur_n; ++j) {
-      if (str_cur_s[j] == 0) {
+      if (str_cur_s[j] == 0)
          return 0;
+      if (get_confidence && (str_cur_s[j] <= 31 || str_cur_s[j] == 127)) {
+         switch (str_cur_s[j]) {
+            case 9:  // \t
+            case 10: // \n
+            case 13: // \r
+            case 26: // ASCII SUBSTITUTE
+               break; // ignore
+            default:
+               warnchars++;
+         }
       }
    }
-   return (get_confidence?100:1);
+   return (get_confidence?(R_len_t)round(warnchars/double(str_cur_n)):1);
 }
 
 
@@ -56,14 +68,26 @@ R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_
  * 
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
+ * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
  */
 R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
+   R_len_t warnchars = 0;
    for (R_len_t j=0; j < str_cur_n; ++j) {
-      if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) { // i.e. 0 < c <= 127
+      if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) // i.e. 0 < c <= 127
          return 0;
+      if (get_confidence && (str_cur_s[j] <= 31 || str_cur_s[j] == 127)) {
+         switch (str_cur_s[j]) {
+            case 9:  // \t
+            case 10: // \n
+            case 13: // \r
+            case 26: // ASCII SUBSTITUTE
+               break; // ignore
+            default:
+               warnchars++;
+         }
       }
    }
-   return (get_confidence?100:1);
+   return (get_confidence?(R_len_t)round(100.0*(str_cur_n-warnchars)/double(str_cur_n)):1);
 }
 
 
@@ -82,19 +106,94 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
  * 
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
+ * @version 0.3 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csrutf8.cpp
  */
 R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   UChar32 c;
-   for (R_len_t j=0; j < str_cur_n; ) {
-      if (str_cur_s[j] == 0)
-         return 0; // definitely not valid UTF-8
-      
-      U8_NEXT(str_cur_s, j, str_cur_n, c);
-      if (c < 0) // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error
-         return 0; // definitely not valid UTF-8
+   if (!get_confidence) {
+      UChar32 c;
+      for (R_len_t j=0; j < str_cur_n; ) {
+         if (str_cur_s[j] == 0)
+            return 0; // definitely not valid UTF-8
+         
+         U8_NEXT(str_cur_s, j, str_cur_n, c);
+         if (c < 0) // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error
+            return 0; // definitely not valid UTF-8
+      }
+      return 1;
    }
-   return (get_confidence?100:1);
+   else {
+      // Based on ICU's i18n/csrutf8.cpp [with own mods]
+      bool hasBOM = (str_cur_n >= 3 && 
+            (uint8_t)(str_cur_s[0]) == (uint8_t)0xEF && 
+            (uint8_t)(str_cur_s[1]) == (uint8_t)0xBB &&
+            (uint8_t)(str_cur_s[2]) == (uint8_t)0xBF);
+      R_len_t numValid = 0;   // counts only valid UTF-8 multibyte seqs
+      R_len_t numInvalid = 0;
+      
+      // Scan for multi-byte sequences
+      for (R_len_t i=0; i < str_cur_n; i += 1) {
+         uint32_t b = str_cur_s[i];
+         
+         if ((b & 0x80) == 0) {
+            continue;   // ASCII => OK
+         }
+         
+         // Hi bit on char found.  Figure out how long the sequence should be
+         R_len_t trailBytes = 0;
+         if ((b & 0x0E0) == 0x0C0)
+            trailBytes = 1;
+         else if ((b & 0x0F0) == 0x0E0)
+            trailBytes = 2;
+         else if ((b & 0x0F8) == 0xF0)
+            trailBytes = 3;
+         else {
+            numInvalid += 1;
+            if (numInvalid > 5)
+                break; // that's enough => not UTF-8
+            continue;
+         }
+         
+         // Verify that we've got the right number of trail bytes in the sequence
+         while (true) {
+            i += 1;
+         
+            if (i >= str_cur_n)
+                break;
+         
+            b = str_cur_s[i];
+         
+            if ((b & 0xC0) != 0x080) {
+                numInvalid += 1;
+                break;
+            }
+         
+            if (--trailBytes == 0) {
+                numValid += 1;
+                break;
+            }
+         }
+      }
+      
+      // Cook up some sort of confidence score, based on presense of a BOM
+      //    and the existence of valid and/or invalid multi-byte sequences.
+      if (hasBOM && numInvalid == 0)
+         return 100;
+      else if (hasBOM && numValid > numInvalid*10)
+         return 75;
+      else if (numValid > 3 && numInvalid == 0)
+         return 100;
+      else if (numValid > 0 && numInvalid == 0)
+         return 50; // to few multibyte UTF-8 seqs to be quite sure
+      else if (numValid == 0 && numInvalid == 0)
+         // Plain ASCII. => It's OK for UTF-8
+         return 50;
+      else if (numValid > numInvalid*10)
+         // Probably corrupt utf-8 data.  Valid sequences aren't likely by chance.
+         return 25;
+      else
+         return 0;
+   }
 }
 
 
@@ -180,6 +279,66 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
 }
 
 
+/** Check if a string is valid UTF-32LE or UTF-32BE
+ * 
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or do exact check
+ * @param le check for UTF-32LE?
+ * 
+ * @return confidence value or 0/1
+ * 
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.2 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csucode.cpp
+ */
+R_len_t stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
+   bool get_confidence, bool le)
+{
+   if (str_cur_n % 4 != 0)
+      return 0;
+      
+   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n);
+   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n);
+   
+   if ((!le && hasLE_BOM) || (le && hasBE_BOM))
+      return 0;
+
+   R_len_t numValid = 0;
+   R_len_t numInvalid = 0;
+
+   for (R_len_t i=0; i<str_cur_n; i+=4) {
+      int32_t ch = le?
+         (int32_t)STRI__GET_INT32_LE(str_cur_s, i):
+         (int32_t)STRI__GET_INT32_BE(str_cur_s, i);
+      
+      if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF)) {
+         if (!get_confidence)
+            return 0;
+         else
+            numInvalid++;
+      }
+      else
+         numValid++;
+   }
+   
+   if (!get_confidence)
+      return 1;
+
+   if ((hasLE_BOM || hasBE_BOM) && numInvalid==0)
+      return 100;
+   else if ((hasLE_BOM || hasBE_BOM) && numValid > numInvalid*10)
+      return 80;
+   else if (numValid > 3 && numInvalid == 0)
+      return 100;            
+   else if (numValid > 0 && numInvalid == 0)
+      return 80;
+   else if (numValid > numInvalid*10)
+      return 25; // Probably corruput UTF-32BE data. Valid sequences aren't likely by chance.
+   else
+      return 0;
+}
+
+
 /** Check if a string is valid UTF-32BE
  * 
  * @param str_cur_s character vector
@@ -188,26 +347,11 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
  * 
  * @return confidence value or 0/1
  * 
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.1 (Marek Gagolewski, 2013-08-13)
  */
 R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   if (str_cur_n % 4 != 0)
-      return 0;
-      
-   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n);
-   
-   if (hasLE_BOM)
-      return 0;
-
-   for (R_len_t i=0; i<str_cur_n; i+=4) {
-      int32_t ch = (int32_t)STRI__GET_INT32_BE(str_cur_s, i);
-      
-      if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF))
-         return 0;
-   }
-   
-   return (get_confidence?100:1);
+   return stri__enc_check_utf32(str_cur_s, str_cur_n, get_confidence, false);
 }
 
 
@@ -220,26 +364,11 @@ R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool g
  * 
  * @return confidence value or 0/1
  * 
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.1 (Marek Gagolewski, 2013-08-13)
  */
 R_len_t stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   if (str_cur_n % 4 != 0)
-      return 0;
-      
-   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n);
-   
-   if (hasBE_BOM)
-      return 0;
-
-   for (R_len_t i=0; i<str_cur_n; i+=4) {
-      int32_t ch = (int32_t)STRI__GET_INT32_LE(str_cur_s, i);
-      
-      if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF))
-         return 0;
-   }
-   
-   return (get_confidence?100:1);
+   return stri__enc_check_utf32(str_cur_s, str_cur_n, get_confidence, true);
 }
 
 
@@ -592,67 +721,6 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
 
-
-// i18n/csrucode.cpp
-
-//CharsetRecog_Unicode::~CharsetRecog_Unicode()
-//{
-//    // nothing to do
-//}
-//
-//CharsetRecog_UTF_16_BE::~CharsetRecog_UTF_16_BE()
-//{
-//    // nothing to do
-//}
-//
-//const char *CharsetRecog_UTF_16_BE::getName() const
-//{
-//    return "UTF-16BE";
-//}
-//
-//UBool CharsetRecog_UTF_16_BE::match(InputText* textIn, CharsetMatch *results) const
-//{
-//    const uint8_t *input = textIn->fRawInput;
-//    int32_t confidence = 0;
-//
-//    if (input[0] == 0xFE && input[1] == 0xFF) {
-//        confidence = 100;
-//    }
-//
-//    // TODO: Do some statastics to check for unsigned UTF-16BE
-//    results->set(textIn, this, confidence);
-//    return (confidence > 0);
-//}
-//
-//CharsetRecog_UTF_16_LE::~CharsetRecog_UTF_16_LE()
-//{
-//    // nothing to do
-//}
-//
-//const char *CharsetRecog_UTF_16_LE::getName() const
-//{
-//    return "UTF-16LE";
-//}
-//
-//UBool CharsetRecog_UTF_16_LE::match(InputText* textIn, CharsetMatch *results) const
-//{
-//    const uint8_t *input = textIn->fRawInput;
-//    int32_t confidence = 0;
-//
-//    if (input[0] == 0xFF && input[1] == 0xFE && (input[2] != 0x00 || input[3] != 0x00)) {
-//        confidence = 100;
-//    }
-//
-//    // TODO: Do some statastics to check for unsigned UTF-16LE
-//    results->set(textIn, this, confidence);
-//    return (confidence > 0);
-//}
-//
-//CharsetRecog_UTF_32::~CharsetRecog_UTF_32()
-//{
-//    // nothing to do
-//}
-//
 //UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
 //{
 //    const uint8_t *input = textIn->fRawInput;
@@ -679,141 +747,8 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 //
 //    // Cook up some sort of confidence score, based on presense of a BOM
 //    //    and the existence of valid and/or invalid multi-byte sequences.
-//    if (hasBOM && numInvalid==0) {
-//        confidence = 100;
-//    } else if (hasBOM && numValid > numInvalid*10) {
-//        confidence = 80;
-//    } else if (numValid > 3 && numInvalid == 0) {
-//        confidence = 100;            
-//    } else if (numValid > 0 && numInvalid == 0) {
-//        confidence = 80;
-//    } else if (numValid > numInvalid*10) {
-//        // Probably corruput UTF-32BE data.  Valid sequences aren't likely by chance.
-//        confidence = 25;
-//    }
+
 //
 //    results->set(textIn, this, confidence);
 //    return (confidence > 0);
 //}
-//
-//CharsetRecog_UTF_32_BE::~CharsetRecog_UTF_32_BE()
-//{
-//    // nothing to do
-//}
-//
-//const char *CharsetRecog_UTF_32_BE::getName() const
-//{
-//    return "UTF-32BE";
-//}
-//
-//int32_t CharsetRecog_UTF_32_BE::getChar(const uint8_t *input, int32_t index) const
-//{
-//    return input[index + 0] << 24 | input[index + 1] << 16 |
-//           input[index + 2] <<  8 | input[index + 3];
-//} 
-//
-//CharsetRecog_UTF_32_LE::~CharsetRecog_UTF_32_LE()
-//{
-//    // nothing to do
-//}
-//
-//const char *CharsetRecog_UTF_32_LE::getName() const
-//{
-//    return "UTF-32LE";
-//}
-//
-//int32_t CharsetRecog_UTF_32_LE::getChar(const uint8_t *input, int32_t index) const
-//{
-//    return input[index + 3] << 24 | input[index + 2] << 16 |
-//           input[index + 1] <<  8 | input[index + 0];
-//}
-
-
-// i18n/csrutf8.cpp
-
-//UBool CharsetRecog_UTF8::match(InputText* input, CharsetMatch *results) const {
-//    bool hasBOM = FALSE;
-//    int32_t numValid = 0;
-//    int32_t numInvalid = 0;
-//    const uint8_t *inputBytes = input->fRawInput;
-//    int32_t i;
-//    int32_t trailBytes = 0;
-//    int32_t confidence;
-//
-//    if (input->fRawLength >= 3 && 
-//        inputBytes[0] == 0xEF && inputBytes[1] == 0xBB && inputBytes[2] == 0xBF) {
-//            hasBOM = TRUE;
-//    }
-//
-//    // Scan for multi-byte sequences
-//    for (i=0; i < input->fRawLength; i += 1) {
-//        int32_t b = inputBytes[i];
-//
-//        if ((b & 0x80) == 0) {
-//            continue;   // ASCII
-//        }
-//
-//        // Hi bit on char found.  Figure out how long the sequence should be
-//        if ((b & 0x0E0) == 0x0C0) {
-//            trailBytes = 1;
-//        } else if ((b & 0x0F0) == 0x0E0) {
-//            trailBytes = 2;
-//        } else if ((b & 0x0F8) == 0xF0) {
-//            trailBytes = 3;
-//        } else {
-//            numInvalid += 1;
-//
-//            if (numInvalid > 5) {
-//                break;
-//            }
-//
-//            trailBytes = 0;
-//        }
-//
-//        // Verify that we've got the right number of trail bytes in the sequence
-//        for (;;) {
-//            i += 1;
-//
-//            if (i >= input->fRawLength) {
-//                break;
-//            }
-//
-//            b = inputBytes[i];
-//
-//            if ((b & 0xC0) != 0x080) {
-//                numInvalid += 1;
-//                break;
-//            }
-//
-//            if (--trailBytes == 0) {
-//                numValid += 1;
-//                break;
-//            }
-//        }
-//
-//    }
-//
-//    // Cook up some sort of confidence score, based on presense of a BOM
-//    //    and the existence of valid and/or invalid multi-byte sequences.
-//    confidence = 0;
-//    if (hasBOM && numInvalid == 0) {
-//        confidence = 100;
-//    } else if (hasBOM && numValid > numInvalid*10) {
-//        confidence = 80;
-//    } else if (numValid > 3 && numInvalid == 0) {
-//        confidence = 100;
-//    } else if (numValid > 0 && numInvalid == 0) {
-//        confidence = 80;
-//    } else if (numValid == 0 && numInvalid == 0) {
-//        // Plain ASCII.
-//        confidence = 10;
-//    } else if (numValid > numInvalid*10) {
-//        // Probably corruput utf-8 data.  Valid sequences aren't likely by chance.
-//        confidence = 25;
-//    }
-//
-//    results->set(input, this, confidence);
-//    return (confidence > 0);
-//}
-
-
