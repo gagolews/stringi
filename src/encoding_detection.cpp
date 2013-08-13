@@ -560,8 +560,8 @@ struct EncGuess {
       confidence = _confidence;
    }
 
-   friend bool operator<(const EncGuess& e1, const EncGuess& e2) {
-      return (e1.confidence < e2.confidence);
+   bool operator<(const EncGuess& e2) const {
+      return (this->confidence < e2.confidence);
    }
 };
 
@@ -692,7 +692,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
          continue;
       }
 
-      // TO DO: sort
+      std::stable_sort(guesses.begin(), guesses.end());
 
       SEXP val_enc, val_lang, val_conf;
       PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
@@ -720,35 +720,3 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
-
-//UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
-//{
-//    const uint8_t *input = textIn->fRawInput;
-//    int32_t limit = (textIn->fRawLength / 4) * 4;
-//    int32_t numValid = 0;
-//    int32_t numInvalid = 0;
-//    bool hasBOM = FALSE;
-//    int32_t confidence = 0;
-//
-//    if (getChar(input, 0) == 0x0000FEFFUL) {
-//        hasBOM = TRUE;
-//    }
-//
-//    for(int32_t i = 0; i < limit; i += 4) {
-//        int32_t ch = getChar(input, i);
-//
-//        if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF)) {
-//            numInvalid += 1;
-//        } else {
-//            numValid += 1;
-//        }
-//    }
-//
-//
-//    // Cook up some sort of confidence score, based on presense of a BOM
-//    //    and the existence of valid and/or invalid multi-byte sequences.
-
-//
-//    results->set(textIn, this, confidence);
-//    return (confidence > 0);
-//}
