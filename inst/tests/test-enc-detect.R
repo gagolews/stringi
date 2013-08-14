@@ -138,6 +138,8 @@ test_that("stri_enc_detect", {
    expect_equivalent(stri_enc_detect(as.raw(c(65:100)))[[1]]$Encoding[1], "UTF-8")
 
    expect_equivalent(stri_enc_detect2("abc")[[1]]$Encoding, "ASCII")
+   
+   expect_error(stri_enc_detect2("abc", encodings=c("don't know what's that")))
 
    expect_equivalent(stri_enc_detect2(stri_encode("abc", "", "UTF-16", to_raw=TRUE))[[1]]$Encoding, "UTF-16")
    expect_equivalent(stri_enc_detect2(stri_encode("abc", "", "UTF-16LE", to_raw=TRUE))[[1]]$Encoding, "UTF-16LE")

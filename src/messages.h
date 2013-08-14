@@ -104,6 +104,9 @@
 #define MSG__ENC_INCORRECT_ID \
    "incorrect character encoding identifier"
 
+#define MSG__ENC_INCORRECT_ID_WHAT \
+   "incorrect character encoding identifier: %s"
+   
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
 

@@ -581,17 +581,47 @@ struct EncGuess {
  *
  * @return list
  *
- * @version 0.1 (2013-08-11) Marek Gagolewski
+ * @version 0.1 (2013-08-14) Marek Gagolewski
  */
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 {
    str = stri_prepare_arg_list_raw(str, "str");
-   if (encodings != R_NilValue)
-      encodings = stri_prepare_arg_string(encodings, "encodings");
-   if (characters != R_NilValue)
-      characters = stri_flatten(stri_prepare_arg_string(characters, "characters"), R_NilValue);
+   
+   if (encodings != R_NilValue) {
+      encodings = stri_enc_toutf8(
+               stri_prepare_arg_string(encodings, "encodings"),
+               Rf_ScalarLogical(FALSE)
+            );
+   }
+   
+   if (characters != R_NilValue) {
+      characters = stri_enc_toutf8(
+            stri_flatten(
+               stri_prepare_arg_string(characters, "characters"), R_NilValue),
+               Rf_ScalarLogical(FALSE)
+            );
+   }
 
+   vector<UConverter*> converters;
    STRI__ERROR_HANDLER_BEGIN
+   
+   R_len_t converters_num = 0;
+   if (encodings != R_NilValue && LENGTH(encodings) > 0) {
+      converters.reserve(LENGTH(encodings));
+      for (R_len_t i=0; i<LENGTH(encodings); ++i) {
+         SEXP enc_cur = STRING_ELT(encodings, i);
+         if (enc_cur == NA_STRING) converters.push_back(NULL);
+         else {
+            UErrorCode err = U_ZERO_ERROR;
+            UConverter* ucnv = ucnv_open(CHAR(enc_cur), &err);
+            if (U_FAILURE(err))
+               throw StriException(MSG__ENC_INCORRECT_ID_WHAT, CHAR(enc_cur));
+            // leave default fallbacks
+            converters.push_back(ucnv);
+            ++converters_num;
+         }
+      }
+   }
 
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();
@@ -623,8 +653,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       vector<EncGuess> guesses;
       guesses.reserve(6);
 
-      // first check if we deal with non-8-bit encoding
-      // if so, only utf-32 and utf-16 will be checked
+      // first check if we deal with a non-8-bit encoding
 
       /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
       R_len_t isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
@@ -681,14 +710,17 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
             R_len_t isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
             if (isutf8 >= 25)
                guesses.push_back(EncGuess("UTF-8", isutf8));
-            else {
-               Rf_warning("TO DO");
-             //guesses.reserve(4+1+1)
-//   R_len_t encodings_n = LENGTH(encodings);
-//   StriContainerUTF8 encodings_cont(encodings, encodings_n);
+            else if (converters_num > 0) {
 
-//   StriContainerUTF8 characters_cont(characters, 1);
-//   R_len_t characters_nchar = ...  
+               // count all bytes
+               R_len_t counts[256-128];
+               for (R_len_t j=0; j<str_cur_n; ++j)
+                  if (str_cur_s[j] >= 128)
+                     counts[str_cur_s[j]-128]++;
+                     
+               Rf_warning("TO DO");
+               // 1. Check which bytes are BAD in this encoding
+               // 2. Count indicated characters
             }
          }
       }
@@ -722,8 +754,20 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       UNPROTECT(4);
    }
 
+   for (R_len_t i=0; i<converters.size(); ++i)
+      if (converters[i]) {
+         ucnv_close(converters[i]);
+         converters[i] = NULL;
+      }
+   
    UNPROTECT(3);
    return ret;
 
-   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
+   STRI__ERROR_HANDLER_END(   
+      for (R_len_t i=0; i<converters.size(); ++i)
+         if (converters[i]) {
+            ucnv_close(converters[i]);
+            converters[i] = NULL;
+         }
+   )
 }
