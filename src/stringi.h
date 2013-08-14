@@ -193,6 +193,8 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
 R_len_t stri__enc_check_utf8(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
+R_len_t stri__enc_check_utf16(const char* str_cur_s,
+                              R_len_t str_cur_n, bool get_confidence, bool le);
 R_len_t stri__enc_check_utf16le(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
 R_len_t stri__enc_check_utf16be(const char* str_cur_s,
@@ -244,18 +246,23 @@ void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
 
 
-SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type);
+SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, 
+                                           SEXP replacement, int type);
 SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);
 SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first);
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern);
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern);
 SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern);
 SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern);
-SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty);
+SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, 
+                            SEXP omit_empty);
 
-SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type);
-SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);
-SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first);
+SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
+                                      SEXP collator_opts, int type);
+SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, 
+                                  bool first);
+SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, 
+                                   bool first);
 
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
@@ -265,25 +272,36 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
 SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
 SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);
-SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts);
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, SEXP collator_opts);
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, 
+                            SEXP collator_opts);
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, 
+                              SEXP collator_opts);
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, 
+                             SEXP collator_opts);
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, 
+                      SEXP collator_opts);
 
 
-SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);
-SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first);
-SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type);
+SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, 
+                                   SEXP opts_regex, bool first);
+SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, 
+                                  SEXP opts_regex, bool first);
+SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement,
+                                      SEXP opts_regex, int type);
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
-SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex);
-SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex);
-SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex);
-SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_regex);
+SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, 
+                           SEXP opts_regex);
+SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, 
+                              SEXP opts_regex);
+SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, 
+                             SEXP opts_regex);
+SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, 
+                      SEXP opts_regex);
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
@@ -294,7 +312,8 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first);
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first);
-SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first);
+SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, 
+                                       SEXP replacement, bool first);
 
 SEXP stri_count_charclass(SEXP str, SEXP pattern);
 SEXP stri_detect_charclass(SEXP str, SEXP pattern);
@@ -314,8 +333,8 @@ SEXP stri_split_lines1(SEXP str);
 
 
 // uchar.cpp:
-// SEXP stri_charcategories();                                                 // ...TO DO... [version >= 0.2]
-// SEXP stri_chartype(SEXP str);                                               // ...TO DO... [version >= 0.2]
+// SEXP stri_charcategories();        // ...TO DO... [version >= 0.2]
+// SEXP stri_chartype(SEXP str);      // ...TO DO... [version >= 0.2]
 
 
 

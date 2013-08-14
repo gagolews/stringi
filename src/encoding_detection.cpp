@@ -184,7 +184,7 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
       else if (numValid > 3 && numInvalid == 0)
          return 100;
       else if (numValid > 0 && numInvalid == 0)
-         return 50; // to few multibyte UTF-8 seqs to be quite sure
+         return 50; // too few multibyte UTF-8 seqs to be quite sure
       else if (numValid == 0 && numInvalid == 0)
          // Plain ASCII. => It's OK for UTF-8
          return 50;
@@ -194,6 +194,63 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
       else
          return 0;
    }
+}
+
+
+
+/** Check if a string is valid UTF-16LE or UTF-16BE
+ *
+ * @param str_cur_s character vector
+ * @param str_cur_n number of bytes
+ * @param get_confidence determine confidence value or do exact check
+ * @param le check for UTF-16LE?
+ *
+ * @return confidence value or 0/1
+ *
+ * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.2 (Marek Gagolewski, 2013-08-14) confidence calculation basing on ICU's i18n/csucode.cpp
+ */
+R_len_t stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
+   bool get_confidence, bool le)
+{
+   if (str_cur_n % 2 != 0)
+      return 0;
+
+   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n);
+   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n);
+
+   if ((!le && hasLE_BOM) || (le && hasBE_BOM))
+      return 0;
+
+   R_len_t warnchars = 0;
+   
+   for (R_len_t i=0; i<str_cur_n; i += 2) {
+      uint16_t c = (le)?
+                  STRI__GET_INT16_LE(str_cur_s, i):
+                  STRI__GET_INT16_BE(str_cur_s, i);
+                  
+      if (U16_IS_SINGLE(c)) {
+         if (c == 0)
+            return 0;
+         else if (c >= 0x0530) // last cyrrilic supplement
+            warnchars += 2;
+         continue;
+      }
+         
+      if (!U16_IS_SURROGATE_LEAD(c))
+         return 0;
+
+      i += 2;
+      if (i >= str_cur_n)
+         return 0;
+      c = (le)?
+          STRI__GET_INT16_LE(str_cur_s, i):
+          STRI__GET_INT16_BE(str_cur_s, i);
+      if (!U16_IS_SURROGATE_TRAIL(c))
+         return 0;
+   }
+
+   return (get_confidence?(R_len_t)round(100.0*(str_cur_n-warnchars)/double(str_cur_n)):1);
 }
 
 
@@ -209,32 +266,7 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
  */
 R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   if (str_cur_n % 2 != 0)
-      return 0;
-
-   bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n);
-
-   if (hasLE_BOM)
-      return 0;
-
-   for (R_len_t i=0; i<str_cur_n; i += 2) {
-      uint16_t c = STRI__GET_INT16_BE(str_cur_s, i);
-      if (!U16_IS_SINGLE(c)) {
-         if (!U16_IS_SURROGATE_LEAD(c))
-            return 0;
-
-         i += 2;
-         if (i >= str_cur_n)
-            return 0;
-         c = STRI__GET_INT16_BE(str_cur_s, i);
-         if (!U16_IS_SURROGATE_TRAIL(c))
-            return 0;
-      }
-      else if (c == 0)
-         return 0;
-   }
-
-   return (get_confidence?100:1);
+   return stri__enc_check_utf16(str_cur_s, str_cur_n, get_confidence, false);
 }
 
 
@@ -250,32 +282,7 @@ R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool g
  */
 R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
-   if (str_cur_n % 2 != 0)
-      return 0;
-
-   bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n);
-
-   if (hasBE_BOM)
-      return 0;
-
-   for (R_len_t i=0; i<str_cur_n; i += 2) {
-      uint16_t c = STRI__GET_INT16_LE(str_cur_s, i);
-      if (!U16_IS_SINGLE(c)) {
-         if (!U16_IS_LEAD(c))
-            return 0;
-
-         i += 2;
-         if (i >= str_cur_n)
-            return 0;
-         c = STRI__GET_INT16_LE(str_cur_s, i);
-         if (!U16_IS_TRAIL(c))
-            return 0;
-      }
-      else if (c == 0)
-         return 0;
-   }
-
-   return (get_confidence?100:1);
+   return stri__enc_check_utf16(str_cur_s, str_cur_n, get_confidence, true);
 }
 
 
@@ -620,21 +627,21 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       // if so, only utf-32 and utf-16 will be checked
 
       /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
-      int isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
-      int isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
-      if (isutf32le > 0 && isutf32be > 0) {
+      R_len_t isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
+      R_len_t isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
+      if (isutf32le >= 25 && isutf32be >= 25) {
          // no BOM, both valid
          // i think this will never happen
          guesses.push_back(EncGuess("UTF-32LE", isutf32le));
          guesses.push_back(EncGuess("UTF-32BE", isutf32be));
       }
-      else if (isutf32le > 0) {
+      else if (isutf32le >= 25) {
          if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-32LE", isutf32le));
       }
-      else if (isutf32be > 0) {
+      else if (isutf32be >= 25) {
          if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
          else
@@ -642,47 +649,47 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       }
 
       /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
-      int isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
-      int isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
-      if (isutf16le > 0 && isutf16be > 0) {
+      R_len_t isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
+      R_len_t isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
+      if (isutf16le >= 25 && isutf16be >= 25) {
          // no BOM, both valid
          // this may sometimes happen
          guesses.push_back(EncGuess("UTF-16LE", isutf16le));
          guesses.push_back(EncGuess("UTF-16BE", isutf16be));
       }
-      else if (isutf16le > 0) {
+      else if (isutf16le >= 25) {
          if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-16LE", isutf16le));
       }
-      else if (isutf16be > 0) {
+      else if (isutf16be >= 25) {
          if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-16BE", isutf16be));
       }
 
-      bool is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
+      R_len_t is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
       if (is8bit) {
          // may be an 8-bit encoding
-         int isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
-         if (isascii > 0) // i.e. equal to 100 => nothing more to check
+         R_len_t isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
+         if (isascii >= 25) // i.e. equal to 100 => nothing more to check
             guesses.push_back(EncGuess("ASCII", isascii));
          else {
             // not ascii
-            int isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
-            if (isutf8 > 0)
+            R_len_t isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
+            if (isutf8 >= 25)
                guesses.push_back(EncGuess("UTF-8", isutf8));
-
-            Rf_warning("TO DO");
-
-//guesses.reserve(4+1+1)
+            else {
+               Rf_warning("TO DO");
+             //guesses.reserve(4+1+1)
 //   R_len_t encodings_n = LENGTH(encodings);
 //   StriContainerUTF8 encodings_cont(encodings, encodings_n);
 
 //   StriContainerUTF8 characters_cont(characters, 1);
-//   R_len_t characters_nchar = ...
+//   R_len_t characters_nchar = ...  
+            }
          }
       }
 
