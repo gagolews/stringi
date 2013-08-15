@@ -235,7 +235,7 @@ stri_enc_isutf8 <- function(str) {
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure,
 #'    \item \code{Language} -- string; guessed languages; \code{NA} if the language could
 #'    not be determined (e.g. in case of UTF-8),
-#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value,
+#'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #' The guesses are ordered w.r.t. nonincreasing confidence.
@@ -313,7 +313,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure
 #'    (iff \code{encodings} is empty),
 #'    \item \code{Language} -- always \code{NA},
-#'    \item \code{Confidence} -- integers from 0 to 100; the higher the value,
+#'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
 #' The guesses are ordered w.r.t. nonincreasing confidence.

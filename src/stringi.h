@@ -187,23 +187,23 @@ SEXP    stri_enc_toascii(SEXP str);
 
 
 // encoding_detection.cpp:
-R_len_t stri__enc_check_8bit(const char* str_cur_s,
+double stri__enc_check_8bit(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_ascii(const char* str_cur_s,
+double stri__enc_check_ascii(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_utf8(const char* str_cur_s,
+double stri__enc_check_utf8(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_utf16(const char* str_cur_s,
+double stri__enc_check_utf16(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence, bool le);
-R_len_t stri__enc_check_utf16le(const char* str_cur_s,
+double stri__enc_check_utf16le(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_utf16be(const char* str_cur_s,
+double stri__enc_check_utf16be(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_utf32(const char* str_cur_s,
+double stri__enc_check_utf32(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence, bool le);
-R_len_t stri__enc_check_utf32le(const char* str_cur_s,
+double stri__enc_check_utf32le(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
-R_len_t stri__enc_check_utf32be(const char* str_cur_s,
+double stri__enc_check_utf32be(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
 
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters);

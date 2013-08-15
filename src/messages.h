@@ -107,6 +107,9 @@
 #define MSG__ENC_INCORRECT_ID_WHAT \
    "incorrect character encoding identifier: %s"
    
+#define MSG__ENC_NOT8BIT \
+   "encoding %s is not an 8-bit encoding"
+   
 #define MSG__BYTESENC \
    "bytes encoding is not supported by this function"
 

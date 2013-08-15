@@ -28,17 +28,17 @@
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
  * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
  */
-R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
+double stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    R_len_t warnchars = 0;
    for (R_len_t j=0; j < str_cur_n; ++j) {
       if (str_cur_s[j] == 0)
-         return 0;
+         return 0.0;
       if (get_confidence && (str_cur_s[j] <= 31 || str_cur_s[j] == 127)) {
          switch (str_cur_s[j]) {
             case 9:  // \t
@@ -51,7 +51,7 @@ R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_
          }
       }
    }
-   return (get_confidence?(R_len_t)round(warnchars/double(str_cur_n)):1);
+   return (get_confidence?(double)warnchars/double(str_cur_n):1.0);
 }
 
 
@@ -64,17 +64,17 @@ R_len_t stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
  * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
  */
-R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
+double stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    R_len_t warnchars = 0;
    for (R_len_t j=0; j < str_cur_n; ++j) {
       if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) // i.e. 0 < c <= 127
-         return 0;
+         return 0.0;
       if (get_confidence && (str_cur_s[j] <= 31 || str_cur_s[j] == 127)) {
          switch (str_cur_s[j]) {
             case 9:  // \t
@@ -87,7 +87,7 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
          }
       }
    }
-   return (get_confidence?(R_len_t)round(100.0*(str_cur_n-warnchars)/double(str_cur_n)):1);
+   return (get_confidence?(double)(str_cur_n-warnchars)/double(str_cur_n):1.0);
 }
 
 
@@ -102,25 +102,25 @@ R_len_t stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Bartek Tartanus)
  * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
  * @version 0.3 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csrutf8.cpp
  */
-R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    if (!get_confidence) {
       UChar32 c;
       for (R_len_t j=0; j < str_cur_n; ) {
          if (str_cur_s[j] == 0)
-            return 0; // definitely not valid UTF-8
+            return 0.0; // definitely not valid UTF-8
 
          U8_NEXT(str_cur_s, j, str_cur_n, c);
          if (c < 0) // ICU utf8.h doc for U8_NEXT: c -> output UChar32 variable, set to <0 in case of an error
-            return 0; // definitely not valid UTF-8
+            return 0.0; // definitely not valid UTF-8
       }
-      return 1;
+      return 1.0;
    }
    else {
       // Based on ICU's i18n/csrutf8.cpp [with own mods]
@@ -178,21 +178,21 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
       // Cook up some sort of confidence score, based on presense of a BOM
       //    and the existence of valid and/or invalid multi-byte sequences.
       if (hasBOM && numInvalid == 0)
-         return 100;
+         return 1.0;
       else if (hasBOM && numValid > numInvalid*10)
-         return 75;
+         return 0.75;
       else if (numValid > 3 && numInvalid == 0)
-         return 100;
+         return 1.0;
       else if (numValid > 0 && numInvalid == 0)
-         return 50; // too few multibyte UTF-8 seqs to be quite sure
+         return 0.50; // too few multibyte UTF-8 seqs to be quite sure
       else if (numValid == 0 && numInvalid == 0)
          // Plain ASCII. => It's OK for UTF-8
-         return 50;
+         return 0.50;
       else if (numValid > numInvalid*10)
          // Probably corrupt utf-8 data.  Valid sequences aren't likely by chance.
-         return 25;
+         return 0.25;
       else
-         return 0;
+         return 0.0;
    }
 }
 
@@ -205,22 +205,22 @@ R_len_t stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_
  * @param get_confidence determine confidence value or do exact check
  * @param le check for UTF-16LE?
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-09)
  * @version 0.2 (Marek Gagolewski, 2013-08-14) confidence calculation basing on ICU's i18n/csucode.cpp
  */
-R_len_t stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
+double stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
    bool get_confidence, bool le)
 {
    if (str_cur_n % 2 != 0)
-      return 0;
+      return 0.0;
 
    bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n);
    bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n);
 
    if ((!le && hasLE_BOM) || (le && hasBE_BOM))
-      return 0;
+      return 0.0;
 
    R_len_t warnchars = 0;
    
@@ -231,26 +231,26 @@ R_len_t stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
                   
       if (U16_IS_SINGLE(c)) {
          if (c == 0)
-            return 0;
+            return 0.0;
          else if (c >= 0x0530) // last cyrrilic supplement
             warnchars += 2;
          continue;
       }
          
       if (!U16_IS_SURROGATE_LEAD(c))
-         return 0;
+         return 0.0;
 
       i += 2;
       if (i >= str_cur_n)
-         return 0;
+         return 0.0;
       c = (le)?
           STRI__GET_INT16_LE(str_cur_s, i):
           STRI__GET_INT16_BE(str_cur_s, i);
       if (!U16_IS_SURROGATE_TRAIL(c))
-         return 0;
+         return 0.0;
    }
 
-   return (get_confidence?(R_len_t)round(100.0*(str_cur_n-warnchars)/double(str_cur_n)):1);
+   return (get_confidence?(double)(str_cur_n-warnchars)/double(str_cur_n):1.0);
 }
 
 
@@ -260,11 +260,11 @@ R_len_t stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or to exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-09)
  */
-R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+double stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    return stri__enc_check_utf16(str_cur_s, str_cur_n, get_confidence, false);
 }
@@ -276,11 +276,11 @@ R_len_t stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool g
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-09)
  */
-R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+double stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    return stri__enc_check_utf16(str_cur_s, str_cur_n, get_confidence, true);
 }
@@ -293,22 +293,22 @@ R_len_t stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool g
  * @param get_confidence determine confidence value or do exact check
  * @param le check for UTF-32LE?
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-09)
  * @version 0.2 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csucode.cpp
  */
-R_len_t stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
+double stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
    bool get_confidence, bool le)
 {
    if (str_cur_n % 4 != 0)
-      return 0;
+      return 0.0;
 
    bool hasLE_BOM = STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n);
    bool hasBE_BOM = STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n);
 
    if ((!le && hasLE_BOM) || (le && hasBE_BOM))
-      return 0;
+      return 0.0;
 
    R_len_t numValid = 0;
    R_len_t numInvalid = 0;
@@ -320,7 +320,7 @@ R_len_t stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
 
       if (ch < 0 || ch >= 0x10FFFF || (ch >= 0xD800 && ch <= 0xDFFF)) {
          if (!get_confidence)
-            return 0;
+            return 0.0;
          else
             numInvalid++;
       }
@@ -329,20 +329,20 @@ R_len_t stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
    }
 
    if (!get_confidence)
-      return 1;
+      return 1.0;
 
    if ((hasLE_BOM || hasBE_BOM) && numInvalid==0)
-      return 100;
+      return 1.0;
    else if ((hasLE_BOM || hasBE_BOM) && numValid > numInvalid*10)
-      return 80;
+      return 0.80;
    else if (numValid > 3 && numInvalid == 0)
-      return 100;
+      return 1.0;
    else if (numValid > 0 && numInvalid == 0)
-      return 80;
+      return 0.80;
    else if (numValid > numInvalid*10)
-      return 25; // Probably corruput UTF-32BE data. Valid sequences aren't likely by chance.
+      return 0.25; // Probably corruput UTF-32BE data. Valid sequences aren't likely by chance.
    else
-      return 0;
+      return 0.0;
 }
 
 
@@ -352,11 +352,11 @@ R_len_t stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-13)
  */
-R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+double stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    return stri__enc_check_utf32(str_cur_s, str_cur_n, get_confidence, false);
 }
@@ -369,11 +369,11 @@ R_len_t stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool g
  * @param str_cur_n number of bytes
  * @param get_confidence determine confidence value or do exact check
  *
- * @return confidence value or 0/1
+ * @return confidence value in [0,1]
  *
  * @version 0.1 (Marek Gagolewski, 2013-08-13)
  */
-R_len_t stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
+double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
    return stri__enc_check_utf32(str_cur_s, str_cur_n, get_confidence, true);
 }
@@ -397,7 +397,7 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
    int _type = INTEGER(type)[0];
-   int (*isenc)(const char*, R_len_t, bool) = NULL;
+   double (*isenc)(const char*, R_len_t, bool) = NULL;
    switch (_type) {
       case 1:  isenc = stri__enc_check_ascii;   break;
       case 2:  isenc = stri__enc_check_utf8;    break;
@@ -426,7 +426,7 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
       }
 
       bool get_confidence = false; // TO BE DONE
-      ret_tab[i] = isenc(str_cont.get(i).c_str(), str_cont.get(i).length(), get_confidence);
+      ret_tab[i] = isenc(str_cont.get(i).c_str(), str_cont.get(i).length(), get_confidence) != 0.0;
    }
 
    UNPROTECT(1);
@@ -507,7 +507,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
       SEXP val_enc, val_lang, val_conf;
       PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
       PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_conf = Rf_allocVector(INTSXP, matchesFound));
+      PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
 
       for (R_len_t j=0; j<matchesFound; ++j) {
          status = U_ZERO_ERROR;
@@ -520,9 +520,9 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
          status = U_ZERO_ERROR;
     	   int32_t conf = ucsdet_getConfidence(match[j], &status);
          if (U_FAILURE(status))
-            INTEGER(val_conf)[j] = NA_INTEGER;
+            REAL(val_conf)[j] = NA_REAL;
          else
-            INTEGER(val_conf)[j] = conf;
+            REAL(val_conf)[j] = (double)(conf)/100.0;
 
          status = U_ZERO_ERROR;
     	   const char* lang = ucsdet_getLanguage(match[j], &status);
@@ -560,15 +560,90 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 /** help struct for stri_enc_detect2 */
 struct EncGuess {
    const char* name;
-   int confidence;
+   double confidence;
 
-   EncGuess(const char* _name, int _confidence) {
+   EncGuess(const char* _name, double _confidence) {
       name = _name;
       confidence = _confidence;
    }
 
    bool operator<(const EncGuess& e2) const {
-      return (this->confidence < e2.confidence);
+      return (this->confidence > e2.confidence); // decreasing sort
+   }
+};
+
+
+/** help struct for stri_enc_detect2 */
+struct Converter8bit {
+   bool isNA;
+   bool countChars[256-128];
+   bool badChars[256-128];
+   const char* name;
+   
+   Converter8bit(SEXP enc_cur, SEXP chr_cur) {    
+      isNA = true;
+      name = NULL;
+      
+      if (enc_cur == NA_STRING) 
+         return;
+
+      UErrorCode err = U_ZERO_ERROR;
+      UConverter* ucnv = ucnv_open(CHAR(enc_cur), &err);
+      if (U_FAILURE(err)) {
+         throw StriException(MSG__ENC_INCORRECT_ID_WHAT, CHAR(enc_cur));
+      }
+      
+      if (ucnv_getMaxCharSize(ucnv) != 1 || ucnv_getMinCharSize(ucnv) != 1) {
+         ucnv_close(ucnv);
+         throw StriException(MSG__ENC_NOT8BIT, CHAR(enc_cur));
+      }
+      
+      isNA = false;
+      name = CHAR(enc_cur);
+
+      // Check which characters in given encoding
+      // are not mapped to Unicode [badChars]
+      char allChars[256-128+1]; // all bytes 128-256
+      for (R_len_t i=128; i<256; ++i)
+         allChars[i-128] = (char)i;
+      allChars[256-128] = '\0';
+      
+      const char* text_start = allChars;
+      const char* text_end   = allChars+(256-128);
+      ucnv_reset(ucnv);
+      for (R_len_t i=128; i<256; ++i) {
+         UErrorCode err = U_ZERO_ERROR;
+         UChar32 c = ucnv_getNextUChar(ucnv, &text_start, text_end, &err);
+         if (U_FAILURE(err)) {
+            ucnv_close(ucnv);
+            throw StriException("Cannot convert character 0x%2x (encoding=%s)",
+               (int)(unsigned char)*(text_start-1), CHAR(enc_cur));
+         }
+         else {
+            badChars[i-128] = (c == UCHAR_REPLACEMENT);
+         }
+      }
+      
+      for (R_len_t i=128; i<256; ++i)
+            countChars[i-128] = false; // reset
+            
+      if (chr_cur != NA_STRING && LENGTH(chr_cur) > 0) {
+         // determine which characters the user wants to count [countChars]
+      
+         UnicodeString encs = UnicodeString::fromUTF8(std::string(CHAR(chr_cur)));
+         R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(encs.length(), 1);
+         // "The calculated size is guaranteed to be sufficient for this conversion."
+         String8 buf(bufneed);
+         err = U_ZERO_ERROR;
+         encs.extract(buf.data(), buf.size(), ucnv, err); // UTF-16 -> TO
+         if (U_FAILURE(err)) throw StriException(err);
+         for (R_len_t i=0; i<buf.size() && buf.data()[i]; ++i) {
+            if ((uint8_t)(buf.data()[i]) >= (uint8_t)128)
+               countChars[(uint8_t)(buf.data()[i])-(uint8_t)128] = true;
+         }
+      }
+      
+      ucnv_close(ucnv);
    }
 };
 
@@ -581,7 +656,7 @@ struct EncGuess {
  *
  * @return list
  *
- * @version 0.1 (2013-08-14) Marek Gagolewski
+ * @version 0.1 (2013-08-15) Marek Gagolewski
  */
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 {
@@ -591,35 +666,30 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       encodings = stri_enc_toutf8(
                stri_prepare_arg_string(encodings, "encodings"),
                Rf_ScalarLogical(FALSE)
-            );
+            ); /* now definitely in UTF-8 */
    }
    
    if (characters != R_NilValue) {
       characters = stri_enc_toutf8(
             stri_flatten(
-               stri_prepare_arg_string(characters, "characters"), R_NilValue),
-               Rf_ScalarLogical(FALSE)
-            );
+               stri_prepare_arg_string(characters, "characters"), Rf_mkString("")
+            ),
+            Rf_ScalarLogical(FALSE)
+         ); /* now definitely in UTF-8 */
    }
 
-   vector<UConverter*> converters;
    STRI__ERROR_HANDLER_BEGIN
-   
+
+   vector<Converter8bit> converters;
    R_len_t converters_num = 0;
    if (encodings != R_NilValue && LENGTH(encodings) > 0) {
       converters.reserve(LENGTH(encodings));
       for (R_len_t i=0; i<LENGTH(encodings); ++i) {
          SEXP enc_cur = STRING_ELT(encodings, i);
-         if (enc_cur == NA_STRING) converters.push_back(NULL);
-         else {
-            UErrorCode err = U_ZERO_ERROR;
-            UConverter* ucnv = ucnv_open(CHAR(enc_cur), &err);
-            if (U_FAILURE(err))
-               throw StriException(MSG__ENC_INCORRECT_ID_WHAT, CHAR(enc_cur));
-            // leave default fallbacks
-            converters.push_back(ucnv);
+         SEXP chr_cur = STRING_ELT(characters, 0);
+         converters.push_back(Converter8bit(enc_cur, chr_cur));
+         if (!converters[i].isNA)
             ++converters_num;
-         }
       }
    }
 
@@ -648,7 +718,10 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t str_cur_n     = str_cont.get(i).length();
-
+      if (str_cur_n <= 0) {
+         SET_VECTOR_ELT(ret, i, wrong);
+         continue;
+      }
 
       vector<EncGuess> guesses;
       guesses.reserve(6);
@@ -656,21 +729,21 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       // first check if we deal with a non-8-bit encoding
 
       /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
-      R_len_t isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
-      R_len_t isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
-      if (isutf32le >= 25 && isutf32be >= 25) {
+      double isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
+      double isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
+      if (isutf32le >= 0.25 && isutf32be >= 0.25) {
          // no BOM, both valid
          // i think this will never happen
          guesses.push_back(EncGuess("UTF-32LE", isutf32le));
          guesses.push_back(EncGuess("UTF-32BE", isutf32be));
       }
-      else if (isutf32le >= 25) {
+      else if (isutf32le >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-32LE", isutf32le));
       }
-      else if (isutf32be >= 25) {
+      else if (isutf32be >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
          else
@@ -678,49 +751,74 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       }
 
       /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
-      R_len_t isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
-      R_len_t isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
-      if (isutf16le >= 25 && isutf16be >= 25) {
+      double isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
+      double isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
+      if (isutf16le >= 0.25 && isutf16be >= 0.25) {
          // no BOM, both valid
          // this may sometimes happen
          guesses.push_back(EncGuess("UTF-16LE", isutf16le));
          guesses.push_back(EncGuess("UTF-16BE", isutf16be));
       }
-      else if (isutf16le >= 25) {
+      else if (isutf16le >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-16LE", isutf16le));
       }
-      else if (isutf16be >= 25) {
+      else if (isutf16be >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
             guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
          else
             guesses.push_back(EncGuess("UTF-16BE", isutf16be));
       }
 
-      R_len_t is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
-      if (is8bit) {
+      double is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
+      if (is8bit != 0.0) {
          // may be an 8-bit encoding
-         R_len_t isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
-         if (isascii >= 25) // i.e. equal to 100 => nothing more to check
+         double isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
+         if (isascii >= 0.25) // i.e. equal to 1.0 => nothing more to check
             guesses.push_back(EncGuess("ASCII", isascii));
          else {
             // not ascii
-            R_len_t isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
-            if (isutf8 >= 25)
+            double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
+            if (isutf8 >= 0.25)
                guesses.push_back(EncGuess("UTF-8", isutf8));
-            else if (converters_num > 0) {
+            if (converters_num > 0 && isutf8 < 1.0) {
 
                // count all bytes
                R_len_t counts[256-128];
+               for (R_len_t k=0; k<256-128; ++k)
+                  counts[k] = 0;
                for (R_len_t j=0; j<str_cur_n; ++j)
-                  if (str_cur_s[j] >= 128)
-                     counts[str_cur_s[j]-128]++;
+                  if ((uint8_t)(str_cur_s[j]) >= (uint8_t)128)
+                     counts[(uint8_t)(str_cur_s[j])-(uint8_t)(128)]++;
                      
-               Rf_warning("TO DO");
-               // 1. Check which bytes are BAD in this encoding
-               // 2. Count indicated characters
+               std::vector<int> badCounts(converters.size(),0);
+               std::vector<int> desiredCounts(converters.size(),0);
+               R_len_t maxDesiredCounts = 0;
+               
+               
+               for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) {
+                  if (converters[j].isNA) continue;
+                  for (R_len_t k=0; k<256-128; ++k) {
+                     // 1. Count bytes that are BAD in this encoding
+                     badCounts[j] += (int)(counts[k])*converters[j].badChars[k];
+                     // 2. Count indicated characters
+                     desiredCounts[j] += (int)(counts[k])*converters[j].countChars[k];
+                  }
+                  if (desiredCounts[j] > maxDesiredCounts)
+                     maxDesiredCounts = desiredCounts[j];
+               }
+               
+               // add guesses
+               for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) {
+                  if (converters[j].isNA) continue;
+                  guesses.push_back(EncGuess(converters[j].name, 
+                     1.0-badCounts[j]/(double)str_cur_n
+                     -(double)(maxDesiredCounts-desiredCounts[j])/(double)str_cur_n));
+               }
+               
+               
             }
          }
       }
@@ -736,11 +834,11 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       SEXP val_enc, val_lang, val_conf;
       PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
       PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_conf = Rf_allocVector(INTSXP, matchesFound));
+      PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
 
       for (R_len_t j=0; j<matchesFound; ++j) {
          SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].name));
-         INTEGER(val_conf)[j] = guesses[j].confidence;
+         REAL(val_conf)[j] = guesses[j].confidence;
     	   SET_STRING_ELT(val_lang, j, NA_STRING); // always no lang
       }
 
@@ -754,20 +852,8 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       UNPROTECT(4);
    }
 
-   for (R_len_t i=0; i<converters.size(); ++i)
-      if (converters[i]) {
-         ucnv_close(converters[i]);
-         converters[i] = NULL;
-      }
-   
    UNPROTECT(3);
    return ret;
 
-   STRI__ERROR_HANDLER_END(   
-      for (R_len_t i=0; i<converters.size(); ++i)
-         if (converters[i]) {
-            ucnv_close(converters[i]);
-            converters[i] = NULL;
-         }
-   )
+   STRI__ERROR_HANDLER_END({ /* no-op on error */ })
 }
