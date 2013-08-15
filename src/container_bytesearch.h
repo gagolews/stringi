@@ -26,6 +26,7 @@
 /**
  * A class to handle StriByteSearch patterns
  * @version 0.1 (Marek Gagolewski, 2013-06-23)
+ * @version 0.1 (Bartek Tartanus, 2013-08-15) added table T for KMP algorithm
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
@@ -42,6 +43,9 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
 #endif
 
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   int* T;
+#endif
 
    public:
 

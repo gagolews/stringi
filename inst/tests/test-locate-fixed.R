@@ -38,6 +38,8 @@ test_that("stri_locate_all_fixed", {
 
    expect_equivalent(stri_locate_all_fixed("1a\u0105a", "\u0105", NA), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_fixed("aaa", "aa", NA), list(matrix(c(1,2))))
+   expect_equivalent(stri_locate_all_fixed("aaa", "a", NA), list(matrix(rep(1:3,2),ncol=2)))
+   expect_equivalent(stri_locate_all_fixed("abbabbab", "ab", NA), list(matrix(c(1,4,7,2,5,8),ncol=2)))
 
    expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a", NA), list(matrix(c(1,2))))
    expect_equivalent(stri_locate_all_fixed(stri_enc_nfkd("\u0105a"), "\u0105a", NA), list(matrix(c(NA_integer_,NA_integer_))))

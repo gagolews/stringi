@@ -35,6 +35,9 @@ StriContainerByteSearch::StriContainerByteSearch()
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->T = new int[0];
+#endif
 }
 
 
@@ -54,6 +57,9 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->T = new int[0];
+#endif
 }
 
 
@@ -72,6 +78,9 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->T = new int[0];
+#endif
 }
 
 
@@ -89,6 +98,9 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->T = new int[0];
+#endif
    return *this;
 }
 
@@ -99,6 +111,9 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
 StriContainerByteSearch::~StriContainerByteSearch()
 {
    // nothing to clean
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   delete T;
+#endif
 }
 
 
@@ -113,6 +128,8 @@ StriContainerByteSearch::~StriContainerByteSearch()
  * @param i index
  * @param searchStr string to search in
  * @param searchLen string length in bytes
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
  */
 void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
@@ -141,6 +158,17 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
 #endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->T = new int[patternLen+1];
+   int j = -1;
+   T[0] = -1;
+   for(int i=0; i < patternLen; i++){
+      while (j>=0 && patternStr[i]!=patternStr[j])
+         j = T[j];
+      j++;
+      T[i+1] = j;
+   }
+#endif
 }
 
 
@@ -166,7 +194,7 @@ void StriContainerByteSearch::resetMatcher()
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Bartek Tartanus) use KMP
+ * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
  */
 R_len_t StriContainerByteSearch::findFirst()
 {
@@ -176,30 +204,17 @@ R_len_t StriContainerByteSearch::findFirst()
 #endif
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int* T = new int[patternLen]; // this should be a class member (one for each pattern instance)
-   int i = 0, j = -1;
-   T[i] = j;
-   while (i<patternLen)
-   {
-      while (j>=0 && patternStr[i]!=patternStr[j])
-         j = T[j];
-      i++; j++;
-      T[i] = j;
-   }
-   i=0; j=0;
-   while (i<searchLen)
-   {
+   int j=0;
+   for(int i=0; i < searchLen; i++){
       while (j>=0 && searchStr[i]!=patternStr[j])
          j = T[j];
-      i++; j++;
+      j++;
       if (j==patternLen)
       {
-         searchPos = i-j;
-         delete T;
+         searchPos = i-j+1;
          return searchPos;
       }
    }
-   delete T;
    searchPos = searchLen;
    return USEARCH_DONE;
 #else
@@ -213,7 +228,6 @@ R_len_t StriContainerByteSearch::findFirst()
          return searchPos;
    	}
    }
-
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
@@ -226,6 +240,8 @@ R_len_t StriContainerByteSearch::findFirst()
  * continues previous search
  *
  * @return USEARCH_DONE on no match, otherwise start index
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
  */
 R_len_t StriContainerByteSearch::findNext()
 {
@@ -237,7 +253,19 @@ R_len_t StriContainerByteSearch::findNext()
    if (searchPos < 0) return findFirst();
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   throw StriException("KMP: TO DO");
+   int j=0;
+   for(int i = searchPos + patternLen; i < searchLen; i++){
+      while (j>=0 && searchStr[i]!=patternStr[j])
+         j = T[j];
+      j++;
+      if (j==patternLen)
+      {
+         searchPos = i-j+1;
+         return searchPos;
+      }
+   }
+   searchPos = searchLen;
+   return USEARCH_DONE;
 #else
    // Naive search algorithm
    for (searchPos = searchPos + patternLen; searchPos<searchLen-patternLen+1; ++searchPos) {
