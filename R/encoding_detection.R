@@ -326,33 +326,33 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' @family encoding_detection
 #' @export
-stri_enc_detect2 <- function(str, locale=NULL, encodings=NULL, characters=NULL) {
-   if (missing(encodings) && missing(characters)) {
-      lang <- stri_locale_info(locale)$Language
-      if (lang == "pl") {
-         encodings <- c("ISO-8859-2", "WINDOWS-1250")
-         characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
-                         "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
-      }
-      else if (lang == "cz") {
-         encodings <- c("ISO-8859-2", "WINDOWS-1250")
-         characters <- c("\u00C1\u00E1\u00C9\u00E9\u011A\u011B\u00CD\u00ED",
-                         "\u00D3\u00F3\u00D9\u00FA\u016E\u016F\u00DD\u00FD",
-                         "\u010C\u010D\u010E\u010F\u0147\u0148\u0158\u0159",
-                         "\u0160\u0161\u0164\u0165\u017D\u017E")
-      }
-      else if (lang == "sk") {
-         encodings <- c("ISO-8859-2", "WINDOWS-1250")
-         characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
-                         "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
-      }
-      else {
-         stop("given locale is not supported")
-      }
-   }
-   else if (!missing(locale) && (!missing(encodings) || !missing(characters))) {
-      stop("arguments `locale` and `encodings` or `characters` are mutually exclusive")
-   }
+stri_enc_detect2 <- function(str, encodings=NULL, characters=NULL) {
+#    if (missing(encodings) && missing(characters)) {
+#       lang <- stri_locale_info(locale)$Language
+#       if (lang == "pl") {
+#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
+#          characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
+#                          "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
+#       }
+#       else if (lang == "cz") {
+#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
+#          characters <- c("\u00C1\u00E1\u00C9\u00E9\u011A\u011B\u00CD\u00ED",
+#                          "\u00D3\u00F3\u00D9\u00FA\u016E\u016F\u00DD\u00FD",
+#                          "\u010C\u010D\u010E\u010F\u0147\u0148\u0158\u0159",
+#                          "\u0160\u0161\u0164\u0165\u017D\u017E")
+#       }
+#       else if (lang == "sk") {
+#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
+#          characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
+#                          "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
+#       }
+#       else {
+#          stop("given locale is not supported")
+#       }
+#    }
+#    else if (!missing(locale) && (!missing(encodings) || !missing(characters))) {
+#       stop("arguments `locale` and `encodings` or `characters` are mutually exclusive")
+#    }
    
    .Call("stri_enc_detect2", str, encodings, characters, PACKAGE="stringi")
 }
