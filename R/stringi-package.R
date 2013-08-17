@@ -76,6 +76,9 @@
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
 #' \item \code{\link{stri_split_lines}} to split a string into text lines.
+#' 
+#' \item \code{\link{stri_escape_unicode}} (amont others) for escaping
+#' certain code points.
 #'
 #' \item DRAFT API: \code{\link{stri_read_raw}},
 #' \code{\link{stri_read_lines}}, and  \code{\link{stri_write_lines}}
@@ -83,8 +86,7 @@
 #'
 #' \item TO DO [these will appear in future versions
 #' of \pkg{stringi}]: pad, wrap, justify, HTML entities,
-#' character translation,
-#' escape characters, MIME Base 64 encode/decode,
+#' character translation, MIME Base 64 encode/decode,
 #' random string generation, number and data/time formatting,
 #' and many more.
 #' }

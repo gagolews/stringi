@@ -109,6 +109,10 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);
 SEXP stri_info();
 
 
+// escape.cpp
+SEXP stri_escape_unicode(SEXP str);
+
+
 // join.cpp:
 SEXP stri_dup(SEXP str, SEXP times);
 SEXP stri_flatten(SEXP str, SEXP collapse);
