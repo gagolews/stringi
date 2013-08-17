@@ -111,7 +111,7 @@ SEXP stri_info();
 
 // escape.cpp
 SEXP stri_escape_unicode(SEXP str);
-
+SEXP stri_unescape_unicode(SEXP str);
 
 // join.cpp:
 SEXP stri_dup(SEXP str, SEXP times);

@@ -33,6 +33,9 @@
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
 
+#define MSG__INVALID_ESCAPE \
+   "invalid escape sequence detected. Setting NA"
+
 #define MSG__UNCONVERTABLE_CODE_POINT \
    "the Unicode codepoint \\U%08.8x cannot be converted to destination encoding"
 

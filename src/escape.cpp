@@ -53,9 +53,25 @@ SEXP stri_escape_unicode(SEXP str)
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
       std::string out;
-      out.reserve(str_cur_n);
+      
+      // estimate buf size
+      R_len_t bufsize = 0;
       UChar32 c;
       R_len_t j = 0;
+
+      while (j < str_cur_n) {
+         U8_NEXT(str_cur_s, j, str_cur_n, c);
+         if ((char)c >= 32 || (char)c <= 126)
+            bufsize += 1;
+         else if (c <= 0xff)
+            bufsize += 6; // for \a, \n this will be overestimated
+         else
+            bufsize += 10;
+      }
+      out.reserve(bufsize);
+      
+      // do escape
+      j = 0;
       char buf[11];
       while (j < str_cur_n) {
          U8_NEXT(str_cur_s, j, str_cur_n, c);
@@ -96,5 +112,42 @@ SEXP stri_escape_unicode(SEXP str)
 
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+
+/**
+ *  Unescape Unicode code points
+ *
+ *  @param str character vector
+ *  @return character vector
+ *
+ * @version 0.1 (Marek Gagolewski, 2013-08-17)
+*/
+SEXP stri_unescape_unicode(SEXP str)
+{
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t str_length = LENGTH(str);
+   StriContainerUTF16 str_cont(str, str_length, false); // writable
+
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i) || str_cont.get(i).length() == 0)
+         continue; // leave as-is
+         
+      str_cont.getWritable(i).setTo(str_cont.get(i).unescape());
+      
+      if (str_cont.get(i).length() == 0) {
+         Rf_warning(MSG__INVALID_ESCAPE);
+         str_cont.setNA(i); // something went wrong
+      }
+   }
+   
+   return str_cont.toR();
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
