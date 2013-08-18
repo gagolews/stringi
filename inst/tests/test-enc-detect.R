@@ -192,6 +192,4 @@ test_that("stri_enc_detect", {
                     encodings=c('latin2', 'cp1250'), characters='\u0105\u015b\u017a')[[1]]$Encoding[1], "latin2")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "", "utf-8",  to_raw=TRUE), 
                     encodings=c('latin2', 'cp1250'), characters='\u0105\u015b\u017a')[[1]]$Encoding[1], "UTF-8")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "", "cp1250", to_raw=TRUE), 
-                    encodings=c('latin2', 'cp1250'), characters=c('\u0105'))[[1]]$Encoding[1], "cp1250")
 })

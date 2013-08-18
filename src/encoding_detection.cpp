@@ -557,20 +557,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 }
 
 
-/** help struct for stri_enc_detect2 */
-struct EncGuess {
-   const char* name;
-   double confidence;
 
-   EncGuess(const char* _name, double _confidence) {
-      name = _name;
-      confidence = _confidence;
-   }
-
-   bool operator<(const EncGuess& e2) const {
-      return (this->confidence > e2.confidence); // decreasing sort
-   }
-};
 
 
 /** help struct for stri_enc_detect2 */
@@ -579,16 +566,18 @@ struct Converter8bit {
    bool countChars[256-128];
    bool badChars[256-128];
    const char* name;
+   UConverter* ucnv;
    
    Converter8bit(SEXP enc_cur, SEXP chr_cur) {    
       isNA = true;
       name = NULL;
+      ucnv = NULL;
       
       if (enc_cur == NA_STRING) 
          return;
 
       UErrorCode err = U_ZERO_ERROR;
-      UConverter* ucnv = ucnv_open(CHAR(enc_cur), &err);
+      ucnv = ucnv_open(CHAR(enc_cur), &err);
       if (U_FAILURE(err)) {
          throw StriException(MSG__ENC_INCORRECT_ID_WHAT, CHAR(enc_cur));
       }
@@ -620,7 +609,10 @@ struct Converter8bit {
                (int)(unsigned char)*(text_start-1), CHAR(enc_cur));
          }
          else {
-            badChars[i-128] = (c == UCHAR_REPLACEMENT);
+            if (c == UCHAR_REPLACEMENT || !u_isdefined(c) || u_isalpha(c))
+               badChars[i-128] = true; // letters are bad if they are not counted
+            else
+               badChars[i-128] = false;
          }
       }
       
@@ -631,21 +623,173 @@ struct Converter8bit {
          // determine which characters the user wants to count [countChars]
       
          UnicodeString encs = UnicodeString::fromUTF8(std::string(CHAR(chr_cur)));
+         R_len_t encs_count = encs.countChar32();
          R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(encs.length(), 1);
          // "The calculated size is guaranteed to be sufficient for this conversion."
          String8 buf(bufneed);
          err = U_ZERO_ERROR;
          encs.extract(buf.data(), buf.size(), ucnv, err); // UTF-16 -> TO
          if (U_FAILURE(err)) throw StriException(err);
+         R_len_t buf_count = 0;
          for (R_len_t i=0; i<buf.size() && buf.data()[i]; ++i) {
-            if ((uint8_t)(buf.data()[i]) >= (uint8_t)128)
+            if ((uint8_t)(buf.data()[i]) >= (uint8_t)128) {
                countChars[(uint8_t)(buf.data()[i])-(uint8_t)128] = true;
+               buf_count++;
+            }
          }
+         if (buf_count != encs_count)
+            throw StriException(MSG__INTERNAL_ERROR); // we use internal chr_cur, everything should be OK
       }
       
       ucnv_close(ucnv);
+      ucnv = NULL;
+   }
+   
+   ~Converter8bit() {
+      if (ucnv) {
+         ucnv_close(ucnv);
+         ucnv = NULL;
+      }
    }
 };
+
+
+
+/** help struct for stri_enc_detect2 */
+struct EncGuess {
+   const char* name;
+   double confidence;
+
+   EncGuess(const char* _name, double _confidence) {
+      name = _name;
+      confidence = _confidence;
+   }
+
+   bool operator<(const EncGuess& e2) const {
+      return (this->confidence > e2.confidence); // decreasing sort
+   }
+   
+   static void do_utf32(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n)
+   {
+      /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
+      double isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
+      double isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
+      if (isutf32le >= 0.25 && isutf32be >= 0.25) {
+         // no BOM, both valid
+         // i think this will never happen
+         guesses.push_back(EncGuess("UTF-32LE", isutf32le));
+         guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+      }
+      else if (isutf32le >= 0.25) {
+         if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-32LE", isutf32le));
+      }
+      else if (isutf32be >= 0.25) {
+         if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+      }
+   }
+   
+   static void do_utf16(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n)
+   {
+      /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
+      double isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
+      double isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
+      if (isutf16le >= 0.25 && isutf16be >= 0.25) {
+         // no BOM, both valid
+         // this may sometimes happen
+         guesses.push_back(EncGuess("UTF-16LE", isutf16le));
+         guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+      }
+      else if (isutf16le >= 0.25) {
+         if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-16LE", isutf16le));
+      }
+      else if (isutf16be >= 0.25) {
+         if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
+            guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
+         else
+            guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+      }
+   }
+   
+   static void do_8bit(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n,
+      vector<Converter8bit>& converters, R_len_t converters_num)
+   {
+      double is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
+      if (is8bit != 0.0) {
+         // may be an 8-bit encoding
+         double isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
+         if (isascii >= 0.25) // i.e. equal to 1.0 => nothing more to check
+            guesses.push_back(EncGuess("ASCII", isascii));
+         else {
+            // not ascii
+            double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
+            if (isutf8 >= 0.25)
+               guesses.push_back(EncGuess("UTF-8", isutf8));
+            if (converters_num > 0 && isutf8 < 1.0) {
+               do_8bit_locale(guesses, str_cur_s, str_cur_n, converters);
+            }
+         }
+      }
+   }
+   
+   static void do_8bit_locale(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n,
+      vector<Converter8bit>& converters)
+   {
+      // count all bytes with codes >= 128 in str_cur_s
+      R_len_t counts[256-128];
+      R_len_t countsge128 = 0; // total count
+      for (R_len_t k=0; k<256-128; ++k)
+         counts[k] = 0; // reset tab
+      for (R_len_t j=0; j<str_cur_n; ++j) {
+         if ((uint8_t)(str_cur_s[j]) >= (uint8_t)128) {
+            counts[(uint8_t)(str_cur_s[j])-(uint8_t)(128)]++;
+            countsge128++;
+         }
+      }
+            
+      std::vector<int> badCounts(converters.size(), 0); // filled with 0
+      std::vector<int> desiredCounts(converters.size(),0);
+      R_len_t maxDesiredCounts = 0;
+      
+      
+      for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) { // for each converter
+         if (converters[j].isNA) continue;
+         for (R_len_t k=0; k<256-128; ++k) { // for each character
+            // 1. Count bytes that are BAD and NOT COUNTED in this encoding
+            if (converters[j].badChars[k] && !converters[j].countChars[k]) {
+               badCounts[j] += (int)counts[k];
+            }
+            // 2. Count indicated characters
+            if (converters[j].countChars[k]) {
+               desiredCounts[j] += (int)counts[k];
+            }
+         }
+         if (desiredCounts[j] > maxDesiredCounts)
+            maxDesiredCounts = desiredCounts[j];
+      }
+      
+      // add guesses
+      for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) { // for each converter
+         if (converters[j].isNA) continue;
+         guesses.push_back(EncGuess(converters[j].name, 
+            // some heuristic:
+            min(1.0, max(0.0, 
+               (double)(countsge128-0.5*badCounts[j]-maxDesiredCounts+desiredCounts[j])/
+               (double)(countsge128)))
+         ));
+      }
+   }
+};
+
+
 
 
 /** Detect encoding with initial guess
@@ -656,7 +800,9 @@ struct Converter8bit {
  *
  * @return list
  *
- * @version 0.1 (2013-08-15) Marek Gagolewski
+ * @version 0.1 (2013-08-15, Marek Gagolewski)
+ * @version 0.2 (2013-08-18, Marek Gagolewski) improved 8-bit confidence measurement, 
+ * some code moved to structs
  */
 SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 {
@@ -726,102 +872,9 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
       vector<EncGuess> guesses;
       guesses.reserve(6);
 
-      // first check if we deal with a non-8-bit encoding
-
-      /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
-      double isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
-      double isutf32be = stri__enc_check_utf32be(str_cur_s, str_cur_n, true);
-      if (isutf32le >= 0.25 && isutf32be >= 0.25) {
-         // no BOM, both valid
-         // i think this will never happen
-         guesses.push_back(EncGuess("UTF-32LE", isutf32le));
-         guesses.push_back(EncGuess("UTF-32BE", isutf32be));
-      }
-      else if (isutf32le >= 0.25) {
-         if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
-         else
-            guesses.push_back(EncGuess("UTF-32LE", isutf32le));
-      }
-      else if (isutf32be >= 0.25) {
-         if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
-         else
-            guesses.push_back(EncGuess("UTF-32BE", isutf32be));
-      }
-
-      /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
-      double isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
-      double isutf16be = stri__enc_check_utf16be(str_cur_s, str_cur_n, true);
-      if (isutf16le >= 0.25 && isutf16be >= 0.25) {
-         // no BOM, both valid
-         // this may sometimes happen
-         guesses.push_back(EncGuess("UTF-16LE", isutf16le));
-         guesses.push_back(EncGuess("UTF-16BE", isutf16be));
-      }
-      else if (isutf16le >= 0.25) {
-         if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
-         else
-            guesses.push_back(EncGuess("UTF-16LE", isutf16le));
-      }
-      else if (isutf16be >= 0.25) {
-         if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
-         else
-            guesses.push_back(EncGuess("UTF-16BE", isutf16be));
-      }
-
-      double is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
-      if (is8bit != 0.0) {
-         // may be an 8-bit encoding
-         double isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
-         if (isascii >= 0.25) // i.e. equal to 1.0 => nothing more to check
-            guesses.push_back(EncGuess("ASCII", isascii));
-         else {
-            // not ascii
-            double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
-            if (isutf8 >= 0.25)
-               guesses.push_back(EncGuess("UTF-8", isutf8));
-            if (converters_num > 0 && isutf8 < 1.0) {
-
-               // count all bytes
-               R_len_t counts[256-128];
-               for (R_len_t k=0; k<256-128; ++k)
-                  counts[k] = 0;
-               for (R_len_t j=0; j<str_cur_n; ++j)
-                  if ((uint8_t)(str_cur_s[j]) >= (uint8_t)128)
-                     counts[(uint8_t)(str_cur_s[j])-(uint8_t)(128)]++;
-                     
-               std::vector<int> badCounts(converters.size(),0);
-               std::vector<int> desiredCounts(converters.size(),0);
-               R_len_t maxDesiredCounts = 0;
-               
-               
-               for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) {
-                  if (converters[j].isNA) continue;
-                  for (R_len_t k=0; k<256-128; ++k) {
-                     // 1. Count bytes that are BAD in this encoding
-                     badCounts[j] += (int)(counts[k])*converters[j].badChars[k];
-                     // 2. Count indicated characters
-                     desiredCounts[j] += (int)(counts[k])*converters[j].countChars[k];
-                  }
-                  if (desiredCounts[j] > maxDesiredCounts)
-                     maxDesiredCounts = desiredCounts[j];
-               }
-               
-               // add guesses
-               for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) {
-                  if (converters[j].isNA) continue;
-                  guesses.push_back(EncGuess(converters[j].name, 
-                     1.0-badCounts[j]/(double)str_cur_n
-                     -(double)(maxDesiredCounts-desiredCounts[j])/(double)str_cur_n));
-               }
-               
-               
-            }
-         }
-      }
+      EncGuess::do_utf32(guesses, str_cur_s, str_cur_n);
+      EncGuess::do_utf16(guesses, str_cur_s, str_cur_n);
+      EncGuess::do_8bit(guesses, str_cur_s, str_cur_n, converters, converters_num);  // includes UTF-8
 
       R_len_t matchesFound = guesses.size();
       if (matchesFound <= 0) {
