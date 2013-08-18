@@ -38,6 +38,7 @@
 #include <queue>
 #include <algorithm>
 #include <vector>
+#include <map>
 #include <unicode/ptypes.h>
 #include <unicode/uchar.h>
 #include <unicode/utypes.h>
@@ -55,6 +56,8 @@
 #include <unicode/ucol.h>
 #include <unicode/ucsdet.h>
 #include <unicode/stsearch.h>
+#include <unicode/ulocdata.h>
+#include <unicode/uniset.h>
 using namespace std;
 using namespace icu;
 

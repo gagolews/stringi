@@ -558,104 +558,126 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 
 
 
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 
-/** help struct for stri_enc_detect2 */
+/** locale-dependent 8-bit converter check
+ * 
+ * help struct for stri_enc_detect2 
+ *
+ * @version 0.1
+ * @version 0.2 (Marek Gagolewski, 2013-08-18) be locale-dependent, use ICU ulocdata
+ */
 struct Converter8bit {
    bool isNA;
-   bool countChars[256-128];
-   bool badChars[256-128];
+   bool countChars[256];
+   bool badChars[256];
    const char* name;
-   UConverter* ucnv;
-   
-   Converter8bit(SEXP enc_cur, SEXP chr_cur) {    
+
+   Converter8bit(const char* _name, const UnicodeSet* exset) {    
       isNA = true;
       name = NULL;
-      ucnv = NULL;
+      UConverter* ucnv = NULL;
       
-      if (enc_cur == NA_STRING) 
-         return;
-
       UErrorCode err = U_ZERO_ERROR;
-      ucnv = ucnv_open(CHAR(enc_cur), &err);
+      ucnv = ucnv_open(_name, &err);
       if (U_FAILURE(err)) {
-         throw StriException(MSG__ENC_INCORRECT_ID_WHAT, CHAR(enc_cur));
+         throw StriException(MSG__INTERNAL_ERROR);
       }
       
       if (ucnv_getMaxCharSize(ucnv) != 1 || ucnv_getMinCharSize(ucnv) != 1) {
+         // not an 8-bit converter
          ucnv_close(ucnv);
-         throw StriException(MSG__ENC_NOT8BIT, CHAR(enc_cur));
+         return;
       }
-      
-      isNA = false;
-      name = CHAR(enc_cur);
 
       // Check which characters in given encoding
       // are not mapped to Unicode [badChars]
-      char allChars[256-128+1]; // all bytes 128-256
-      for (R_len_t i=128; i<256; ++i)
-         allChars[i-128] = (char)i;
-      allChars[256-128] = '\0';
+      char allChars[256+1]; // all bytes 0-255
+      for (R_len_t i=0; i<256; ++i)
+         allChars[i] = (char)i;
+      allChars[256] = '\0';
       
-      const char* text_start = allChars;
-      const char* text_end   = allChars+(256-128);
+      // reset tabs
+      for (R_len_t i=0; i<256; ++i) {
+         countChars[i] = false;
+         badChars[i]   = false;
+      }
+      
+      UnicodeSet curset;
+      std::map<UChar32, uint8_t> curmap;
+      const char* text_start = allChars+1;
+      const char* text_end   = allChars+256;
       ucnv_reset(ucnv);
-      for (R_len_t i=128; i<256; ++i) {
+      for (R_len_t i=1; i<256; ++i) {
          UErrorCode err = U_ZERO_ERROR;
          UChar32 c = ucnv_getNextUChar(ucnv, &text_start, text_end, &err);
          if (U_FAILURE(err)) {
+//            throw StriException(err);
             ucnv_close(ucnv);
-            throw StriException("Cannot convert character 0x%2x (encoding=%s)",
-               (int)(unsigned char)*(text_start-1), CHAR(enc_cur));
+            return;
+         }
+         if (c == UCHAR_REPLACEMENT || c < 0) {
+            badChars[i] = true;
          }
          else {
-            if (c == UCHAR_REPLACEMENT || !u_isdefined(c) || u_isalpha(c))
-               badChars[i-128] = true; // letters are bad if they are not counted
-            else
-               badChars[i-128] = false;
+            if (!u_isdefined(c) || u_isalpha(c))
+               badChars[i] = true;
+            curset.add(c);
+            curmap[c] = i;
          }
       }
       
-      for (R_len_t i=128; i<256; ++i)
-            countChars[i-128] = false; // reset
-            
-      if (chr_cur != NA_STRING && LENGTH(chr_cur) > 0) {
-         // determine which characters the user wants to count [countChars]
-      
-         UnicodeString encs = UnicodeString::fromUTF8(std::string(CHAR(chr_cur)));
-         R_len_t encs_count = encs.countChar32();
-         R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(encs.length(), 1);
-         // "The calculated size is guaranteed to be sufficient for this conversion."
-         String8 buf(bufneed);
-         err = U_ZERO_ERROR;
-         encs.extract(buf.data(), buf.size(), ucnv, err); // UTF-16 -> TO
-         if (U_FAILURE(err)) throw StriException(err);
-         R_len_t buf_count = 0;
-         for (R_len_t i=0; i<buf.size() && buf.data()[i]; ++i) {
-            if ((uint8_t)(buf.data()[i]) >= (uint8_t)128) {
-               countChars[(uint8_t)(buf.data()[i])-(uint8_t)128] = true;
-               buf_count++;
-            }
-         }
-         if (buf_count != encs_count)
-            throw StriException(MSG__INTERNAL_ERROR); // we use internal chr_cur, everything should be OK
+      /* // DEBUG
+      UnicodeSet tmp = *exset; tmp.removeAll(curset);
+      if (tmp.size() <= 3) {
+      cerr << _name << " " << curset.size() << " " << exset->size() << " " << tmp.size() << endl;
+      for (int k=0; k<tmp.size(); ++k)
+         cerr << tmp.charAt(k) << " ";
+      cerr << endl;
       }
+      */
       
-      ucnv_close(ucnv);
-      ucnv = NULL;
-   }
-   
-   ~Converter8bit() {
-      if (ucnv) {
+      
+      if (!curset.containsAll(*exset)) {
+         // not all characters are representable in given encoding
          ucnv_close(ucnv);
-         ucnv = NULL;
+         return;
       }
+
+      
+      // now mark all characters form exset to be counted
+      R_len_t exset_size = exset->size();
+      for (R_len_t k=0; k<exset_size; ++k) {
+         UChar32 c = exset->charAt(k);
+         if (c >= 0) {
+            uint8_t ind = curmap[c];
+            countChars[ind] = true;
+         }
+      }
+      
+      isNA = false;
+      this->name = _name;
+      ucnv_close(ucnv);
    }
 };
 
 
 
-/** help struct for stri_enc_detect2 */
+
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+
+
+
+/** Guesses text encoding; help struct for stri_enc_detect2 
+ * 
+ * @version 0.1 (Marek Gagolewski)
+ * @version 0.2 (Marek Gagolewski, 2013-08-18) locale-dependent, use ulocdata
+ */
 struct EncGuess {
    const char* name;
    double confidence;
@@ -669,7 +691,8 @@ struct EncGuess {
       return (this->confidence > e2.confidence); // decreasing sort
    }
    
-   static void do_utf32(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n)
+   static void do_utf32(vector<EncGuess>& guesses, const char* str_cur_s, 
+      R_len_t str_cur_n)
    {
       /* check UTF-32LE, UTF-32BE or UTF-32+BOM */
       double isutf32le = stri__enc_check_utf32le(str_cur_s, str_cur_n, true);
@@ -694,7 +717,8 @@ struct EncGuess {
       }
    }
    
-   static void do_utf16(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n)
+   static void do_utf16(vector<EncGuess>& guesses, const char* str_cur_s, 
+      R_len_t str_cur_n)
    {
       /* check UTF-16LE, UTF-16BE or UTF-16+BOM */
       double isutf16le = stri__enc_check_utf16le(str_cur_s, str_cur_n, true);
@@ -719,8 +743,8 @@ struct EncGuess {
       }
    }
    
-   static void do_8bit(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n,
-      vector<Converter8bit>& converters, R_len_t converters_num)
+   static void do_8bit(vector<EncGuess>& guesses, const char* str_cur_s, 
+      R_len_t str_cur_n, const char* qloc)
    {
       double is8bit = stri__enc_check_8bit(str_cur_s, str_cur_n, false);
       if (is8bit != 0.0) {
@@ -733,36 +757,71 @@ struct EncGuess {
             double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
             if (isutf8 >= 0.25)
                guesses.push_back(EncGuess("UTF-8", isutf8));
-            if (converters_num > 0 && isutf8 < 1.0) {
-               do_8bit_locale(guesses, str_cur_s, str_cur_n, converters);
+            if (isutf8 < 1.0) {
+               do_8bit_locale(guesses, str_cur_s, str_cur_n, qloc);
             }
          }
       }
    }
    
-   static void do_8bit_locale(vector<EncGuess>& guesses, const char* str_cur_s, R_len_t str_cur_n,
-      vector<Converter8bit>& converters)
+   static void do_8bit_locale(vector<EncGuess>& guesses, const char* str_cur_s, 
+      R_len_t str_cur_n, const char* qloc)
    {
+      vector<Converter8bit> converters;
+      
+      UErrorCode status = U_ZERO_ERROR;
+      ULocaleData* uld = ulocdata_open(qloc, &status);
+		if (U_FAILURE(status))
+         throw StriException(status);
+         
+      USet* exset_tmp = ulocdata_getExemplarSet(uld, NULL,
+         USET_ADD_CASE_MAPPINGS, ULOCDATA_ES_STANDARD, &status);
+   	if (U_FAILURE(status))
+         throw StriException(status);
+      UnicodeSet* exset = UnicodeSet::fromUSet(exset_tmp); // don't delete, just a pointer
+      exset->removeAllStrings();
+      
+      /*// DEBUG
+      R_len_t exset_size = exset->size();
+      cerr << "stri_enc_fromutf32(c(";
+      for (R_len_t k=0; k<exset_size; ++k) {
+         UChar32 c = exset->charAt(k);
+         if (c >= 0) cerr << ((k > 0)?", ":"") << c;
+      }
+      cerr << "))" << endl;*/
+      
+      R_len_t ucnv_count = (R_len_t)ucnv_countAvailable();
+      for (R_len_t i=0; i<ucnv_count; ++i) { // for each converter
+         Converter8bit conv(stri__ucnv_getFriendlyName(ucnv_getAvailableName(i)), exset);
+         if (!conv.isNA) converters.push_back(conv);
+      }
+
+      uset_close(exset_tmp); exset = NULL;
+	   ulocdata_close(uld);
+      
+      if (converters.size() <= 0)
+         return;
+   
       // count all bytes with codes >= 128 in str_cur_s
-      R_len_t counts[256-128];
+      R_len_t counts[256];
       R_len_t countsge128 = 0; // total count
-      for (R_len_t k=0; k<256-128; ++k)
+      for (R_len_t k=0; k<256; ++k)
          counts[k] = 0; // reset tab
       for (R_len_t j=0; j<str_cur_n; ++j) {
          if ((uint8_t)(str_cur_s[j]) >= (uint8_t)128) {
-            counts[(uint8_t)(str_cur_s[j])-(uint8_t)(128)]++;
+            counts[(uint8_t)(str_cur_s[j])]++;
             countsge128++;
          }
       }
-            
+      // assert: countsge128 > 0 (otherwise ASCII, so this function hasn't been not called)
+       
       std::vector<int> badCounts(converters.size(), 0); // filled with 0
       std::vector<int> desiredCounts(converters.size(),0);
       R_len_t maxDesiredCounts = 0;
       
       
       for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) { // for each converter
-         if (converters[j].isNA) continue;
-         for (R_len_t k=0; k<256-128; ++k) { // for each character
+         for (R_len_t k=128; k<256; ++k) { // for each character
             // 1. Count bytes that are BAD and NOT COUNTED in this encoding
             if (converters[j].badChars[k] && !converters[j].countChars[k]) {
                badCounts[j] += (int)counts[k];
@@ -778,66 +837,38 @@ struct EncGuess {
       
       // add guesses
       for (R_len_t j=0; j<(R_len_t)converters.size(); ++j) { // for each converter
-         if (converters[j].isNA) continue;
-         guesses.push_back(EncGuess(converters[j].name, 
-            // some heuristic:
-            min(1.0, max(0.0, 
+         // some heuristic:
+         double conf = min(1.0, max(0.0, 
                (double)(countsge128-0.5*badCounts[j]-maxDesiredCounts+desiredCounts[j])/
-               (double)(countsge128)))
-         ));
+               (double)(countsge128)));
+         if (conf > 0.25)
+            guesses.push_back(EncGuess(converters[j].name, conf));
       }
    }
 };
 
 
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 
 /** Detect encoding with initial guess
  *
  * @param str character vector
- * @param encodings character vector
- * @param characters character vector
+ * @param loc locale id
  *
  * @return list
  *
  * @version 0.1 (2013-08-15, Marek Gagolewski)
  * @version 0.2 (2013-08-18, Marek Gagolewski) improved 8-bit confidence measurement, 
- * some code moved to structs
+ * some code moved to structs, use locale & ICU locdata
  */
-SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
+SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {
    str = stri_prepare_arg_list_raw(str, "str");
+   const char* qloc = stri__prepare_arg_locale(loc, "locale", true);
    
-   if (encodings != R_NilValue) {
-      encodings = stri_enc_toutf8(
-               stri_prepare_arg_string(encodings, "encodings"),
-               Rf_ScalarLogical(FALSE)
-            ); /* now definitely in UTF-8 */
-   }
-   
-   if (characters != R_NilValue) {
-      characters = stri_enc_toutf8(
-            stri_flatten(
-               stri_prepare_arg_string(characters, "characters"), Rf_mkString("")
-            ),
-            Rf_ScalarLogical(FALSE)
-         ); /* now definitely in UTF-8 */
-   }
-
    STRI__ERROR_HANDLER_BEGIN
-
-   vector<Converter8bit> converters;
-   R_len_t converters_num = 0;
-   if (encodings != R_NilValue && LENGTH(encodings) > 0) {
-      converters.reserve(LENGTH(encodings));
-      for (R_len_t i=0; i<LENGTH(encodings); ++i) {
-         SEXP enc_cur = STRING_ELT(encodings, i);
-         SEXP chr_cur = STRING_ELT(characters, 0);
-         converters.push_back(Converter8bit(enc_cur, chr_cur));
-         if (!converters[i].isNA)
-            ++converters_num;
-      }
-   }
 
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();
@@ -874,7 +905,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters)
 
       EncGuess::do_utf32(guesses, str_cur_s, str_cur_n);
       EncGuess::do_utf16(guesses, str_cur_s, str_cur_n);
-      EncGuess::do_8bit(guesses, str_cur_s, str_cur_n, converters, converters_num);  // includes UTF-8
+      EncGuess::do_8bit(guesses, str_cur_s, str_cur_n, qloc);  // includes UTF-8
 
       R_len_t matchesFound = guesses.size();
       if (matchesFound <= 0) {

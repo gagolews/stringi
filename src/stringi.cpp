@@ -44,7 +44,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_detect_regex,               3),
    STRI__MAKE_CALL_METHOD(stri_dup,                        2),
    STRI__MAKE_CALL_METHOD(stri_enc_detect,                 2),
-   STRI__MAKE_CALL_METHOD(stri_enc_detect2,                3),
+   STRI__MAKE_CALL_METHOD(stri_enc_detect2,                2),
    STRI__MAKE_CALL_METHOD(stri_enc_info,                   1),
    STRI__MAKE_CALL_METHOD(stri_enc_isenc,                  2),
    STRI__MAKE_CALL_METHOD(stri_enc_list,                   0),

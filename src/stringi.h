@@ -210,7 +210,7 @@ double stri__enc_check_utf32le(const char* str_cur_s,
 double stri__enc_check_utf32be(const char* str_cur_s,
                               R_len_t str_cur_n, bool get_confidence);
 
-SEXP stri_enc_detect2(SEXP str, SEXP encodings, SEXP characters);
+SEXP stri_enc_detect2(SEXP str, SEXP loc);
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);
 SEXP stri_enc_isenc(SEXP str, SEXP type);
 

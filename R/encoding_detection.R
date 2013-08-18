@@ -258,12 +258,11 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 
 
 #' @title
-#' Detect Character Encoding (With Initial Guess)
+#' Detect Locale-Sensitive Character Encoding
 #'
 #' @description
 #' This function tries to detect character encoding
-#' in case the language of text is known and the set
-#' of possible encodings is known a priori.
+#' in case the language of text is known.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -275,13 +274,12 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' but we do it in our own way, however) or ASCII.
 #'
 #' The function has been optimized for detecting
-#' Latin-based alphabets.
+#' languages that are based on Latin alphabets.
 #'
 #' Otherwise the text is checked for the number of occurrences
-#' of \code{characters} (you may specify them
-#' in single string or separate strings)
-#' converted to given 8-bit \code{encodings} (it is assumed that
-#' they are ASCII supersets).
+#' of language-specific code points (data provided by the ICU library)
+#' converted to all possible 8-bit encodings
+#' that fully cover the indicated language. 
 #' The encoding is selected basing on the greatest number of total
 #' byte hits.
 #'
@@ -291,19 +289,19 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' The function works fine e.g. for Polish text, when one
 #' wants to detect whether a given file is UTF-8, WINDOWS-1250,
-#' or ISO-8859-2-encoded. In such case you may provide
-#' Polish diacritic \code{characters}: a with ogonek, s with acute, and so on.
+#' or ISO-8859-2-encoded.
 #'
 #' If you have no initial guess on language and encoding, try with
 #' \code{\link{stri_enc_detect}} (uses ICU facilities).
-#' If \code{encodings} is not an empty vector,
-#' so should \code{characters} be, and vice versa.
+#' However, it turns out that (empirically) our functions
+#' works better than the ICU-based one if UTF-* text
+#' is provided. Test yourself.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
-#' @param encodings character vector with names of 8-bit encodigs to be tested
-#' @param characters character vector with Unicode codepoints
-#' that should be detected
+#' @param locale \code{NULL} or \code{""}
+#' for default locale,
+#' or a single string with locale identifier.
 #'
 #' @return
 #' Just like \code{\link{stri_enc_detect}},
@@ -318,41 +316,9 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' }
 #' The guesses are ordered w.r.t. nonincreasing confidence.
 #'
-#'
-#'
-#' @references
-#' \emph{Character Set Detection} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/conversion/detection}
-#'
+#' @family locale_sensitive
 #' @family encoding_detection
 #' @export
-stri_enc_detect2 <- function(str, encodings=NULL, characters=NULL) {
-#    if (missing(encodings) && missing(characters)) {
-#       lang <- stri_locale_info(locale)$Language
-#       if (lang == "pl") {
-#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
-#          characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
-#                          "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
-#       }
-#       else if (lang == "cz") {
-#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
-#          characters <- c("\u00C1\u00E1\u00C9\u00E9\u011A\u011B\u00CD\u00ED",
-#                          "\u00D3\u00F3\u00D9\u00FA\u016E\u016F\u00DD\u00FD",
-#                          "\u010C\u010D\u010E\u010F\u0147\u0148\u0158\u0159",
-#                          "\u0160\u0161\u0164\u0165\u017D\u017E")
-#       }
-#       else if (lang == "sk") {
-#          encodings <- c("ISO-8859-2", "WINDOWS-1250")
-#          characters <- c("\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B",
-#                          "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C")
-#       }
-#       else {
-#          stop("given locale is not supported")
-#       }
-#    }
-#    else if (!missing(locale) && (!missing(encodings) || !missing(characters))) {
-#       stop("arguments `locale` and `encodings` or `characters` are mutually exclusive")
-#    }
-   
-   .Call("stri_enc_detect2", str, encodings, characters, PACKAGE="stringi")
+stri_enc_detect2 <- function(str, locale=NULL) {
+   .Call("stri_enc_detect2", str, locale, PACKAGE="stringi")
 }

@@ -178,7 +178,8 @@
 #' which plays a similar role as R's \code{NA} value).
 #'
 #' There are also some routines for automated encoding detection,
-#' see e.g. \code{\link{stri_enc_detect}}.
+#' see e.g. \code{\link{stri_enc_detect}} (for ICU-provided facilities)
+#' or \code{\link{stri_enc_detect2}} for our own, locale-sensitive solution.
 #'
 #'
 #' @section Encoding Detection:
