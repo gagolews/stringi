@@ -21,11 +21,12 @@
 #' [DRAFT API] Read Whole Text File as Raw
 #'
 #' @description
-#' T.B.D.
+#' Reads a text file as-is, with no conversion or text line spliting.
 #'
+#' @details
 #' After reading a text file into memory (vast majority of them
-#' will fit into RAM without any problems), you may do
-#' encoding detection (cf. \code{\link{stri_enc_detect}}),
+#' will fit into RAM without any problems), you may e.g.perform
+#' encoding detection (cf. \code{\link{stri_enc_detect2}}),
 #' conversion (cf. \code{\link{stri_encode}}),
 #' and e.g. split it into text lines with
 #' \code{\link{stri_split_lines1}}.
@@ -38,7 +39,7 @@
 #' @family files
 #' @export
 stri_read_raw <- function(fname) {
-   stopifnot(is.character(fname), file.exists(fname))
+   stopifnot(is.character(fname), length(fname) == 1, file.exists(fname))
    fsize <- file.info(fname)$size
    readBin(fname, what='raw', size=1, n=fsize)
 }
@@ -49,18 +50,22 @@ stri_read_raw <- function(fname) {
 #' [DRAFT API] Read Text Lines from a Text File
 #'
 #' @description
-#' T.B.D.
+#' Reads a text file, re-encodes it, and splits it into text lines.
 #'
+#' @details
 #' It is a substitute for the system's \code{\link{readLines}} function,
 #' with the ability to auto-detect input encodings (or specify
-#' one manually), re-encode input without any strange function calls,
+#' one manually), re-encode input without any strange function calls
+#' or sys options change,
 #' and split the text into lines with \code{\link{stri_split_lines1}}
-#' (which conforms to Unicode guidelines for newline markers).
+#' (which conforms with the Unicode guidelines for newline markers).
 #'
 #' @param fname file name
 #' @param encoding input encoding, \code{"auto"} for automatic
-#' detection with \code{\link{stri_enc_detect}},
-#' and \code{NULL} or \code{""} for the default encoding.
+#' detection with \code{\link{stri_enc_detect2}},
+#' and \code{NULL} or \code{""} for the current default encoding.
+#' @param locale passed to \code{\link{stri_enc_detect2}};
+#' \code{NULL} or \code{""} for default locale.
 #'
 #' @return
 #' Returns a character vector, with each line of text
@@ -68,11 +73,11 @@ stri_read_raw <- function(fname) {
 #'
 #' @family files
 #' @export
-stri_read_lines <- function(fname, encoding='auto') {
+stri_read_lines <- function(fname, encoding='auto', locale=NULL) {
    stopifnot(is.character(encoding), length(encoding) == 1)
    txt <- stri_read_raw(fname)
    if (identical(encoding, 'auto')) {
-      encoding <- stri_enc_detect(txt)[[1]]$Encoding[1]
+      encoding <- stri_enc_detect2(txt, locale)[[1]]$Encoding[1]
       if (is.na(encoding))
          error('could not auto-detect encoding')
    }
@@ -85,8 +90,10 @@ stri_read_lines <- function(fname, encoding='auto') {
 #' [DRAFT API] Write Text Lines to a Text File
 #'
 #' @description
-#' T.B.D.
+#' Writes a text file such that each element of a given
+#' character vector becomes a separate text line.
 #'
+#' @details
 #' It is a substitute for the system's \code{\link{writeLines}} function,
 #' with the ability to re-encode output without any strange function calls.
 #'
@@ -96,7 +103,10 @@ stri_read_lines <- function(fname, encoding='auto') {
 #' @param str character vector
 #' @param fname file name
 #' @param output encoding, \code{NULL} or \code{""} for
-#' the default one
+#' the current default one.
+#' 
+#' @return
+#' This function does not return anything interesting
 #'
 #' @family files
 #' @export
