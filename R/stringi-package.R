@@ -167,7 +167,6 @@ invisible(NULL)
    ask1 <- "The ICU4C library has not been installed yet. Do you wish to download it? [y/n] > ";
    ask2 <- "Do you want to reload the package? [y/n] > "
    errmsg <- "Failed to load stringi's dynamic library."
-   okmsg  <- 'ICU4C 51.2 has been successfully installed.\n'
 
    ans <- as.character(readline(prompt = ask1))
    if (!identical(tolower(ans), "y"))
@@ -179,11 +178,22 @@ invisible(NULL)
                     "&version=51_2",
                     "&os=windows",
                     "&arch=", platform)
-   download.file(urlsrc, fname)
+   
+   cat('Downloading ICU4C ->', fname, '...\n', file=stderr())
+   if (0 != download.file(urlsrc, fname))
+      stop('Download error.')
+   else
+      cat('OK.\n', file=stderr())
+   
+   cat('Decompressing files...\n', file=stderr())
    destdir <- file.path(lib, pkg, "libs", platform)
-   unzip(fname, exdir=destdir)
+   ret <- unzip(fname, exdir=destdir, unzip=getOption('unzip'))
+   if (length(ret) == 0)
+      stop('Error decompressing downloaded archive.')
+   else
+      cat('OK.\n', file=stderr())
 
-   cat(okmsg)
+   cat('ICU4C 51.2 has been successfully installed.\n', file=stderr())
    ans <- as.character(readline(prompt = ask2))
    if (!identical(tolower(ans), "y"))
       stop(errmsg, call.=FALSE)
