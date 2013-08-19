@@ -24,7 +24,9 @@ Tools needed:
 [Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes MinGW64),
 [MSYS](http://www.mingw.org/wiki/MSYS) (your gcc is in sth like C:/Rtools/gcc-4.6.3)
 
-
+Pre-compiled minimal install is available at 
+http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip. 
+Below we describe the steps we performed to obtain it.
 
 To build 32bit version of ICU4C:
 
