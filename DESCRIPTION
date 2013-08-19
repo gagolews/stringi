@@ -1,11 +1,11 @@
 Package: stringi
 Version: 0.1-9
-Date: 2013-08-18
+Date: 2013-08-19
 Title: THE string processing package for R
-Description: stringi is THE R package for correct, fast,
-    and simple string processing in each locale and native charset.
-    ICU API bindings offer R users a platform- and system-locale-independent
-    rich variety of consistent functions known from other
+Description: stringi is THE R package for correct, fast, and convenient
+    string processing in each locale and any native character encoding.
+    ICU API bindings offer R users a platform-independent and properly localized
+    variety of functions known from other
     programming languages, like Java, Perl, Python and PHP.
 URL: http://stringi.rexamine.com/
 BugReports: http://github.com/Rexamine/stringi/issues

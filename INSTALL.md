@@ -1,32 +1,51 @@
 # **stringi** Package Installation & Building Info
 
 
-## Getting ICU4C
+## Obtaining `ICU4C`
 
 ### Windows 
 
 #### Using precompiled version of **stringi** (default)
 
-The necessary libraries should be automatically downloaded from our servers
-during first call to `library()`/`require()`.
+The pre-compiled version of the `ICU4C` library will be downloaded 
+from our servers automatically on the first call to `library()`/`require()`.
 
 #### Compiling **stringi** with our precompiled version of ICU4C
 
-Make sure the environmental variable `ICU_PATH` points
-to the directory where you decompressed our binary ICU4C distribution, e.g. c:/icu-distrib.
-It may be found [here](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip).
+If you're an advanced `R` user, you may wish to
+use the [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
+chain to compile `stringi` on your own.
 
-Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`.
+In such case, download and decompress
+[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip),
+e.g. to `c:\icu-distrib`.
 
-#### Compiling ICU4C yourself
+Set up the environmental variable `ICU_PATH` so that it points
+to the above-mentioned directory. Otherwise, the compilation process
+will fail.
+
+Moreover, the `PATH` variable must point to the `lib` subdirectory,
+e.g. `c:\icu-distrib\lib`.
+This folder contains DLLs needed to work with `stringi`.
+If this is not set, `stringi` will have to download the necessary
+libraries from our server.
+
+
+
+#### Compiling `ICU4C` yourself
+
+If you're a true geek, you may wish to set up everything on your own.
+Below you'll find a description on how we created 
+[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip).
 
 Tools needed:
-[Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes MinGW64),
-[MSYS](http://www.mingw.org/wiki/MSYS) (your gcc is in sth like C:/Rtools/gcc-4.6.3)
+[Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes `MinGW64`),
+[MSYS](http://www.mingw.org/wiki/MSYS) (the `gcc` compiler is located
+in sth like `C:/Rtools/gcc-4.6.3`)
 
 
 
-To build 32bit version of ICU4C:
+To build a 32bit version of `ICU4C`:
 
 ```
 # run MSYS
@@ -42,7 +61,7 @@ make install
 ```
 
 
-To build 64bit version of ICU4C:
+To build a 64bit version of `ICU4C`:
 
 ```
 make clean # clean after 32bit build
@@ -55,7 +74,7 @@ make
 make install
 ```
 
-Create minimal install:
+Create minimal install of `ICU4C`:
 
 ```
 mkdir /c/icu-distrib # your favorite dir
@@ -70,13 +89,19 @@ for f in *.lib; do mv $f `echo $f | sed -r "s/(.*)\.lib/\151.lib/"`; done
 ```
 
 Set the environmental variable `ICU_PATH` to point
-to the directory where is the ICU4C distribution, e.g. `c:/icu-distrib`.
-Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`, i.e. dir with compiled DLLs.
+to the directory with your pre-compiled
+`ICU4C ` distribution, e.g. `c:\icu-distrib`.
+Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`,
+i.e. the directory containing the compiled DLLs.
+
 
 ### GNU/Linux, Unix, MacOSX
 
-ICU4C version >= 4.8 is required to build and use the package.
-To test whether ICU has been installed correctly, run:
+[ICU4C](http://site.icu-project.org/download) version >= 4.8
+is required to build and use the package (however, the latest
+version is recommended).
+To test whether `ICU4C` is properly prepared to build
+its derivatives, run:
 
 ```
 icu-config --version
@@ -120,11 +145,11 @@ or
 ```
 
 You should use the same compiler which was used to build
-R and which R uses to build R packages.
+`R` and which `R` uses to build R packages.
 
 #### MacOSX
 
-Otherwise, check out the binary distribution
+You may check out the binary distribution
 [here](http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-MacOSX64_GCC.tgz)
 or compile yourself with `gcc`, see above (in Linux)
 
@@ -136,7 +161,7 @@ or
 ./runConfigureICU MacOSX # Use the GNU gcc/g++ compilers on MacOS X (Darwin)
 ```
 
-## Getting Development Version of **stringi** from GitHub
+## Fetching a Development Version of **stringi** from GitHub
 
 ```
 cd /tmp
@@ -146,8 +171,10 @@ mv stringi-master stringi
 cd stringi
 ```
 
-Please note that the man pages are not included in our GitHub archive.
-You may generate them automatically with Roxygen2. Call:
+Please note that the man pages are not included in our GitHub archive
+(they are, however, [available online](http://stringi.rexamine.com/)).
+You may generate them automatically with the `roxygen2` package.
+To do that, call:
 
 ```
 roxygenize('.', roclets=c('rd', 'collate', 'namespace'))

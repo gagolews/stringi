@@ -84,7 +84,7 @@
 #' the \code{\link{stri_sort}} function.
 #'
 #' Remember then to copy important attributes manually
-#' or use e.g. the subsetting operation line \code{x[] <- stri_...(x, ...)}.
+#' or use e.g. the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 #'
 #' @name stringi-arguments
 #' @family stringi_general_topics
