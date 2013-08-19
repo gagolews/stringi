@@ -17,7 +17,7 @@ use the [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
 chain to compile `stringi` on your own.
 
 In such case, download and decompress
-[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip),
+[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/download.php?package=icu4c&version=51_2&os=windows&arch=devel),
 e.g. to `c:\icu-distrib`.
 
 Set up the environmental variable `ICU_PATH` so that it points
@@ -36,12 +36,14 @@ libraries from our server.
 
 If you're a true geek, you may wish to set up everything on your own.
 Below you'll find a description on how we created 
-[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip).
+[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/download.php?package=icu4c&version=51_2&os=windows&arch=devel).
 
 Tools needed:
 [Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes `MinGW64`),
 [MSYS](http://www.mingw.org/wiki/MSYS) (the `gcc` compiler is located
 in sth like `C:/Rtools/gcc-4.6.3`)
+
+Download the source package for [ICU4C 51](http://site.icu-project.org/download/51).
 
 To build a 32bit version of `ICU4C`:
 

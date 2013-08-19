@@ -1,4 +1,4 @@
-AC_INIT([stringi], 0.1-4)
+AC_INIT([stringi], 0.1)
 
 
 AC_DEFUN([AC_CHECK_ICU], [
@@ -33,7 +33,7 @@ else
       else
             ICU_INCLUDEPATH=""
             ICU_LIBPATH=""
-            ifelse([$3], ,echo "can't find ICU >= $1",)
+            ifelse([$3], ,echo "cannot find ICU >= $1",)
       fi
 
       AC_SUBST(ICU_CFLAGS)
@@ -57,13 +57,34 @@ if test "${ac_cv_header_uconfig_h}" = no; then
    AC_MSG_ERROR("ICU header unicode/uconfig.h not found")
 fi
 
+AC_CHECK_HEADERS(unicode/uchar.h)
+if test "${ac_cv_header_uchar_h}" = no; then
+   AC_MSG_ERROR("ICU header unicode/uchar.h not found")
+fi
+
+AC_CHECK_HEADERS(unicode/ucnv.h)
+if test "${ac_cv_header_ucnv_h}" = no; then
+   AC_MSG_ERROR("ICU header unicode/ucnv.h not found")
+fi
+
+AC_CHECK_HEADERS(unicode/regex.h)
+if test "${ac_cv_header_regex_h}" = no; then
+   AC_MSG_ERROR("ICU header unicode/regex.h not found")
+fi
+
+AC_CHECK_HEADERS(unicode/normalizer2.h)
+if test "${ac_cv_header_normalizer2_h}" = no; then
+   AC_MSG_ERROR("ICU header unicode/normalizer2.h not found")
+fi
+
+
 stringi_CXXFLAGS=$ICU_INCLUDEPATH
 stringi_LIBS="$ICU_LIBPATH -licuuc -licudata -licui18n -licuio"
 
 AC_MSG_CHECKING(R_HOME)
 : ${R_HOME=`R RHOME`}
 if test -z "${R_HOME}"; then
-  AC_MSG_ERROR(Could not determine R_HOME)
+  AC_MSG_ERROR(Could not determine R_HOME. Do you have R installed. Is it in your PATH?)
 fi
 AC_MSG_RESULT($R_HOME)
 

@@ -30,6 +30,8 @@
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #' 
+#' \bold{License}: GNU LGPL version 3 or later (open source)
+#' 
 #' 
 #' @details
 #' Man pages on general topics (must-read):
@@ -146,9 +148,10 @@ invisible(NULL)
    else { # "unix"
       dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
       if (class(dll) != "DLLInfo") {
-         stop("Failed to load stringi dynamic library.
+         stop("Failed to load stringi's dynamic library.
               Perhaps ICU4C is not in your search path.
-              Please recompile the package.", call.=FALSE)
+              Please recompile the package. See INSTALL.md for more details",
+              call.=FALSE)
       }
    }
 
@@ -161,24 +164,29 @@ invisible(NULL)
 
 .install_ICU4C_windows <- function(lib, pkg, platform)
 {
-   ask1 <- "The ICU4C library has not been installed yet. Do you want to download it? [y/n] > ";
+   ask1 <- "The ICU4C library has not been installed yet. Do you wish to download it? [y/n] > ";
    ask2 <- "Do you want to reload the package? [y/n] > "
+   errmsg <- "Failed to load stringi's dynamic library."
+   okmsg  <- 'ICU4C 51.2 has been successfully installed.\n'
 
    ans <- as.character(readline(prompt = ask1))
    if (!identical(tolower(ans), "y"))
-      stop("Failed to load stringi dynamic library.", call.=FALSE)
+      stop(errmsg, call.=FALSE)
 
    fname <- tempfile()
-   urlsrc <- paste0("http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-",
-                    platform, ".zip")
+   urlsrc <- paste0("http://static.rexamine.com/packages/download.php",
+                    "?package=icu4c",
+                    "&version=51_2",
+                    "&os=windows",
+                    "&arch=", platform)
    download.file(urlsrc, fname)
    destdir <- file.path(lib, pkg, "libs", platform)
    unzip(fname, exdir=destdir)
 
-   cat('ICU4C 51.2 has been installed successfully.\n')
+   cat(okmsg)
    ans <- as.character(readline(prompt = ask2))
    if (!identical(tolower(ans), "y"))
-      stop("Failed to load stringi dynamic library.", call.=FALSE)
+      stop(errmsg, call.=FALSE)
 
    .onLoad(lib, pkg)
 }
