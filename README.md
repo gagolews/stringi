@@ -20,4 +20,4 @@ with contributions from Marcin Bujarski
 
 **System requirements**: *ICU4C >= 4.8*
 ([more info](https://github.com/Rexamine/stringi/blob/master/INSTALL.md)),
-*R >= 2.14.0*
+*R >= 2.15.0*
