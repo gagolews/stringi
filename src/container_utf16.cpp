@@ -282,9 +282,6 @@ void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
    int i16 = 0;
    int i32 = 0;
    while (i16 < nstr && (j1 < ni || j2 < ni)) {
-
-//      cerr << i16 << " " << i32 << " " << j1 << " " << j2 << " " << ((j1 < ni)?i1[j1]:-1) << " " << ((j2 < ni)?i2[j2]:-1) << endl;
-
       if (j1 < ni && i1[j1] <= i16) {
 #ifndef NDEBUG
       if (j1 < ni-1 && i1[j1] >= i1[j1+1])

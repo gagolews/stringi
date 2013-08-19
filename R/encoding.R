@@ -197,8 +197,7 @@
 #' functions from this category.
 #'
 #' @name stringi-encoding
-#' @rdname string-encoding
-#' @aliases encoding
+#' @rdname stringi-encoding
 #' @family stringi_general_topics
 #' @family encoding_management
 #' @family encoding_normalization

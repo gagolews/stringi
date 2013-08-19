@@ -74,7 +74,6 @@
 #' Returns a named list object; missing options are left with default values.
 #'
 #' @export
-#' @aliases collator
 #' @family locale_sensitive
 #' @family search_fixed
 #'
@@ -146,7 +145,6 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' Returns a named list object; missing options are left with default values.
 #'
 #' @export
-#' @aliases regex
 #' @family search_regex
 #'
 #' @references

@@ -197,7 +197,6 @@ StriContainerUTF8::~StriContainerUTF8()
       }
       delete [] str;
       str = NULL;
-//      cerr << "~StriContainerUTF8()" << endl;
    }
 }
 

@@ -394,7 +394,6 @@ bool stri__ucnv_is1to1Unicode(UConverter* conv)
          return false;
       }
 
-//      cerr << (int)(unsigned char)ascii_last[0] << " -> " << c << endl;
       if (ascii_last != ascii1-1) // one byte should be consumed
          return false;
 

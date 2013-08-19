@@ -102,8 +102,9 @@ stri_read_lines <- function(fname, encoding='auto', locale=NULL) {
 #'
 #' @param str character vector
 #' @param fname file name
-#' @param output encoding, \code{NULL} or \code{""} for
-#' the current default one.
+#' @param encoding output encoding, \code{NULL} or \code{""} for
+#' the current default one
+#' @param sep newline separator
 #' 
 #' @return
 #' This function does not return anything interesting

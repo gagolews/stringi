@@ -110,6 +110,5 @@ StriContainerListUTF8::~StriContainerListUTF8()
       }
       delete [] data;
       data = NULL;
-//      cerr << "~StriContainerListUTF8()" << endl;
    }
 }
