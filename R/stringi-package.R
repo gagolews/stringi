@@ -173,11 +173,14 @@ invisible(NULL)
       stop(errmsg, call.=FALSE)
 
    fname <- tempfile()
-   urlsrc <- paste0("http://static.rexamine.com/packages/download.php",
-                    "?package=icu4c",
-                    "&version=51_2",
-                    "&os=windows",
-                    "&arch=", platform)
+#    urlsrc <- paste0("http://static.rexamine.com/packages/download.php",
+#                     "?package=icu4c",
+#                     "&version=51_2",
+#                     "&os=windows",
+#                     "&arch=", platform)
+   urlsrc <- paste0("http://static.rexamine.com/packages/",
+                    "windows/icu4c_51_2-mingw-distrib-",
+                    platform, ".zip")
    
    cat('Downloading ICU4C ->', fname, '...\n', file=stderr())
    if (0 != download.file(urlsrc, fname))
