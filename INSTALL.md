@@ -43,7 +43,9 @@ Tools needed:
 [MSYS](http://www.mingw.org/wiki/MSYS) (the `gcc` compiler is located
 in sth like `C:/Rtools/gcc-4.6.3`)
 
-
+Pre-compiled minimal install is available at 
+http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip. 
+Below we describe the steps we performed to obtain it.
 
 To build a 32bit version of `ICU4C`:
 
