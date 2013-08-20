@@ -21,3 +21,11 @@ with contributions from Marcin Bujarski
 **System requirements**: *ICU4C >= 4.8*
 ([more info](https://github.com/Rexamine/stringi/blob/master/INSTALL.md)),
 *R >= 2.15.0*
+
+**Auto-installer**: A quite recent development release (for testing purposes)
+can be automatically dowloaded by calling in R:
+```
+source('http://static.rexamine.com/packages/stringi_install.R')
+```
+The auto-installer gives access to a Windows i386/x64 build for R 3.0
+or allows building the package from sources on Linux or MacOS.

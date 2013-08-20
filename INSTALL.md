@@ -117,7 +117,8 @@ You may try fetching the package from `updates` archive.
 
 #### Ubuntu
 
-TO DO
+You may try with `sudo apt-get install libicu-dev`.
+Note that this may provide you with an outdated version of the ICU library.
 
 #### Compiling ICU4C yourself (general)
 
