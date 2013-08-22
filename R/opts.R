@@ -141,6 +141,11 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #'  letters without a known special meaning.
 #'  If this flag is not set, these escaped letters represent themselves.
 #'
+#' Note that the regex options may be changed using ICU regex flag
+#' settings inside regexes. For example, \code{"(i:)pattern"} does
+#' a case-insetive match of a given pattern,
+#' see the ICU User Guide entry in the References section.
+#'
 #' @return
 #' Returns a named list object; missing options are left with default values.
 #'
@@ -150,8 +155,15 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' @references
 #' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
 #' -- ICU4C API Documentation,
-#' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}\cr
+#' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}
+#' 
+#' \emph{Regular Expressions} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/strings/regexp}
 #'
+#' @examples
+#' stri_detect_regex("ala", "ALA") # case-sensitive by default
+#' stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
+#' stri_detect_regex("ala", "(?i:)ALA") # equivalent
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
                             multiline, unix_lines, uword, error_on_unknown_escapes)
 {
