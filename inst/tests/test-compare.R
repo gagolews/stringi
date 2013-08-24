@@ -49,6 +49,7 @@ test_that("stri_order", {
    expect_equivalent(stri_order(character(0)), integer(0))
    expect_equivalent(stri_order(LETTERS), 1:length(LETTERS))
    expect_equivalent(stri_order(rev(LETTERS)), length(LETTERS):1)
+   expect_equivalent(stri_order(rev(LETTERS)), rev(stri_order(LETTERS)))
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
    expect_equivalent(stri_order(c("hladny", "chladny"), F, stri_opts_collator(locale="pl_PL")),2:1)
@@ -75,5 +76,7 @@ test_that("stri_sort", {
    expect_equivalent(stri_sort(NA),NA)
    expect_equivalent(stri_sort(LETTERS[sample(length(LETTERS))]), LETTERS)
    expect_equivalent(stri_sort(rev(LETTERS)), LETTERS)
-
+   expect_equivalent(stri_sort(rev(letters)), letters)
+   expect_equivalent(stri_sort(c("abc","aab","baa","ab","aba")),c("aab","ab","aba","abc","baa"))
+   expect_equivalent(stri_sort(c("abc","aab","aąb","ąbc","abć")),c("aab","aąb","abc","abć","ąbc"))
 })

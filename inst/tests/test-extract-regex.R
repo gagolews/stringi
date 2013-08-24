@@ -1,7 +1,9 @@
 require(testthat)
 
 test_that("stri_extract_all_regex", {
-
+   expect_identical(stri_extract_all_regex(character(0), "test"), list())
+   expect_identical(stri_extract_all_regex("test", character(0)), list())
+   expect_identical(stri_extract_all_regex(character(0), character(0)), list())
    expect_identical(stri_extract_all_regex(NA, "test"), list(NA_character_))
    expect_identical(stri_extract_all_regex("test", NA), list(NA_character_))
    suppressWarnings(expect_identical(stri_extract_all_regex("test", ""), list(NA_character_)))
@@ -11,7 +13,9 @@ test_that("stri_extract_all_regex", {
 
 
 test_that("stri_extract_first_regex", {
-
+   expect_identical(stri_extract_first_regex(character(0), "test"), character(0))
+   expect_identical(stri_extract_first_regex("test", character(0)), character(0))
+   expect_identical(stri_extract_first_regex(character(0), character(0)), character(0))
    expect_identical(stri_extract_first_regex(NA, "test"), NA_character_)
    expect_identical(stri_extract_first_regex("test", NA), NA_character_)
    suppressWarnings(expect_identical(stri_extract_first_regex("test", ""), NA_character_))
@@ -23,6 +27,9 @@ test_that("stri_extract_first_regex", {
 
 test_that("stri_extract_last_regex", {
 
+   expect_identical(stri_extract_last_regex(character(0), "test"), character(0))
+   expect_identical(stri_extract_last_regex("test", character(0)), character(0))
+   expect_identical(stri_extract_last_regex(character(0), character(0)), character(0))
    expect_identical(stri_extract_last_regex(NA, "test"), NA_character_)
    expect_identical(stri_extract_last_regex("test", NA), NA_character_)
    suppressWarnings(expect_identical(stri_extract_last_regex("test", ""), NA_character_))

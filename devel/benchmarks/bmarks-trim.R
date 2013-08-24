@@ -5,15 +5,19 @@ require("stringr")
 bmarks <- NULL
 
 test <- paste(stri_dup(" ", 1:1000), "A", stri_dup(" ", 1:1000), sep="")
+tess <- paste(stri_dup("\t\n", 1:1000), "A", stri_dup("\n\t", 1:1000), sep="")
 flat <- stri_flatten(test)
 
 microbenchmark(str_trim(test),stri_trim_both(test))
+microbenchmark(str_trim(tess),stri_trim_both(tess))
 microbenchmark(str_trim(flat),stri_trim_both(flat))
 
 microbenchmark(str_trim(test,"left"),stri_trim_left(test))
+microbenchmark(str_trim(tess,"left"),stri_trim_left(tess))
 microbenchmark(str_trim(flat,"left"),stri_trim_left(flat))
 
 microbenchmark(str_trim(test,"right"),stri_trim_right(test))
+microbenchmark(str_trim(tess,"right"),stri_trim_right(tess))
 microbenchmark(str_trim(flat,"right"),stri_trim_right(flat))
 
 

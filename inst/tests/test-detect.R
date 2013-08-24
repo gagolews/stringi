@@ -92,4 +92,9 @@ test_that("stri_detect_regex", {
    expect_equivalent(stri_detect_regex("aaaab", "ab"), TRUE)
    expect_equivalent(stri_detect_regex("bababababaab", "aab"), TRUE)
 
+   expect_equivalent(stri_detect_regex("caabaab", "(a+b)+"), TRUE)
+   expect_equivalent(stri_detect_regex("caacbaab", "(a+b)+"), TRUE)
+   expect_equivalent(stri_detect_regex("caacbacab", "(a+b)+"), TRUE)
+   expect_equivalent(stri_detect_regex("caacbacacb", "(a+b)+"), FALSE)
+   
 })

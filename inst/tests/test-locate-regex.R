@@ -23,6 +23,14 @@ test_that("stri_locate_all_regex", {
    expect_equivalent(stri_locate_all_regex("ala ola ela ula", ".la"), list(matrix(c(1,5,9,13,3,7,11,15),ncol=2)))
    expect_equivalent(stri_locate_all_regex("ala ola ela ula", "(a|u|z)la"), list(matrix(c(1,13,3,15),ncol=2)))
 
+   expect_equivalent(stri_locate_all_regex("aabaaaba", "(a+b)+"), list(matrix(c(1,7))))
+   expect_equivalent(stri_locate_all_regex("aabaacba", "(a+b)+"), list(matrix(c(1,3))))
+   expect_equivalent(stri_locate_all_regex("ababacba", "(a+b)+"), list(matrix(c(1,4))))
+   
+   expect_equivalent(stri_locate_all_regex("aabdaaaba", "(a+b)+"), list(matrix(c(1,5,3,8),ncol=2)))
+   expect_equivalent(stri_locate_all_regex("aabdaacba", "(a+b)+"), list(matrix(c(1,3))))
+   expect_equivalent(stri_locate_all_regex("ababdacba", "(a+b)+"), list(matrix(c(1,4))))
+   
 })
 
 test_that("stri_locate_first_regex", {
@@ -44,6 +52,14 @@ test_that("stri_locate_first_regex", {
    expect_equivalent(stri_locate_first_regex("1a\u0105a", "a.a"), matrix(c(2,4)))
    expect_equivalent(stri_locate_first_regex("ala ola ela ula", ".la"), matrix(c(1,3)))
    expect_equivalent(stri_locate_first_regex("ala ola ela ula", "(e|u|z)la"), matrix(c(9,11)))
+
+   expect_equivalent(stri_locate_first_regex("aabaaaba", "(a+b)+"), matrix(c(1,7)))
+   expect_equivalent(stri_locate_first_regex("aabaacba", "(a+b)+"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_first_regex("ababacba", "(a+b)+"), matrix(c(1,4)))
+   
+   expect_equivalent(stri_locate_first_regex("aabdaaaba", "(a+b)+"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_first_regex("aabdaacba", "(a+b)+"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_first_regex("ababdacba", "(a+b)+"), matrix(c(1,4)))
 
 })
 
@@ -70,4 +86,12 @@ test_that("stri_locate_last_regex", {
    expect_equivalent(stri_locate_last_regex("ala ola ela ula", ".la"), matrix(c(13,15)))
    expect_equivalent(stri_locate_last_regex("ala ola ela ula", "(e|u|z)la"), matrix(c(13,15)))
 
+   expect_equivalent(stri_locate_last_regex("aabaaaba", "(a+b)+"), matrix(c(1,7)))
+   expect_equivalent(stri_locate_last_regex("aabaacba", "(a+b)+"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_last_regex("ababacba", "(a+b)+"), matrix(c(1,4)))
+   
+   expect_equivalent(stri_locate_last_regex("aabdaaaba", "(a+b)+"), matrix(c(5,8)))
+   expect_equivalent(stri_locate_last_regex("aabdaacba", "(a+b)+"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_last_regex("ababdacba", "(a+b)+"), matrix(c(1,4)))
+   
 })
