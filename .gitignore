@@ -5,6 +5,7 @@ man/*.Rd
 src/Makevars
 autom4te.cache
 config.log
+config.status
 
 # R/RStudio files:
 stringi.Rproj
