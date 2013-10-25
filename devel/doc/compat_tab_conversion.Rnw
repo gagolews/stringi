@@ -1,0 +1,304 @@
+\documentclass[11pt]{article}
+%\VignetteIndexEntry{A Guide to the agop Package}
+%\VignetteEngine{knitr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage[dvips,a4paper,landscape,left=0cm,right=0cm,foot=1.0cm,
+   headheight=1.0cm,top=2.0cm,margin=1.5cm]{geometry}
+\linespread{1.1}
+
+\usepackage{fancyhdr}
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\selectlanguage{english}
+\usepackage{xspace}
+\usepackage{lmodern}
+
+% \usepackage[x11names, rgb]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\RequirePackage{graphicx,verbatim,longtable}
+\usepackage{mdwlist}
+\usepackage{multirow,multicol}
+\usepackage[nottoc]{tocbibind}
+\usepackage{rotating}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\renewcommand{\emph}[1]{\textbf{\textsl{#1}}}
+
+\newcommand{\package}[1]{\textsf{#1}\xspace}
+\newcommand{\program}[1]{\textsf{#1}\xspace}
+\newcommand{\os}[1]{\textsf{#1}\xspace}
+\newcommand{\lang}[1]{\textsf{#1}\xspace}
+\newcommand{\Cpp}{\lang{C++}}
+\newcommand{\R}{\lang{R}}
+
+\newcommand{\func}[1]{\texttt{\hlkwd{#1}}}
+\newcommand{\argument}[1]{\texttt{\hlkwc{#1}}}
+\newcommand{\str}[1]{\texttt{\hlstr{#1}}}
+\newcommand{\key}[1]{{$\langle$\texttt{#1}$\rangle$}\xspace} % skrot klawiszowy
+
+\setlength{\pdfpagewidth}{\paperwidth}
+\setlength{\pdfpageheight}{\paperheight}
+
+
+\usepackage{xcolor}
+\definecolor{blue2}{rgb}{0,0.2,0.7}
+\definecolor{red2}{rgb}{0.4,0.1,0.1}
+\usepackage{colortbl}
+\definecolor{navy}{rgb}{0,0.0,0.4}
+\definecolor{navy2}{rgb}{0.4,0.1,0.3}
+\definecolor{red2}{rgb}{0.6,0.1,0.2}
+\definecolor{green2}{rgb}{0.1,0.4,0.2}
+
+\newtheorem{example}{Example}
+
+\usepackage{hyperref}
+
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=period,justification=centering}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
+\addto\captionsenglish{\renewcommand{\tablename}{Tab.}}
+
+
+\setlength{\topsep}{3pt} % wpływa m.in. na odstęp dla verbatim
+\tolerance=500
+\predisplaypenalty=0
+\clubpenalty=1000
+\widowpenalty=1000
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyhead[C]{\footnotesize\sf \href{http://stringi.rexamine.com}{\package{stringi}} %
+\Sexpr{packageDescription("stringi")$Version}
+(\Sexpr{packageDescription("stringi")$Date})
+Compatibility Tables: Conversion.}
+
+\newcommand{\ColumnOne}{\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{base}~\hrulefill
+
+   \medskip}
+
+\newcommand{\ColumnTwo}{\vfill\end{minipage}\hspace*{0.02\textwidth}%
+\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{stringr}~\hrulefill
+
+   \medskip}
+
+\newcommand{\ColumnThree}{\vfill\end{minipage}\hspace*{0.02\textwidth}%
+\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{stringi}~\hrulefill
+
+   \medskip}
+
+
+\newcommand{\ColumnEnd}{\vfill\end{minipage}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<echo=FALSE,results='hide',warning=FALSE,message=FALSE,cache=FALSE>>=
+options(digits=7)
+options(width=120)
+require("knitr")
+require("stringi")
+require("microbenchmark")
+
+opts_knit$set(progress = TRUE, verbose = TRUE)
+
+opts_chunk$set(
+   keep.source=TRUE,
+   out.width='4.5in',
+   fig.width=6,
+   fig.height=6/sqrt(2),
+   fig.path='figures-knitr/conversion/',
+   cache.path='cache-knitr/conversion/',
+   cache=TRUE,
+   tidy=FALSE,
+   fig.align='center',
+   size='small'
+)
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conversion to Raw Vectors}
+
+\ColumnOne
+   \func{charToRaw()} --- single string to a raw vector only
+
+<<>>=
+charToRaw("aA1")
+@
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_encode()} with argument \texttt{\argument{to\_raw}=TRUE}
+   is vectorized over the first argument;
+   it returns a list of raw vectors.
+
+<<>>=
+stri_encode("aA1", "", "", to_raw=TRUE)[[1]]
+stri_encode(c("aA1", " "), "", "", to_raw=TRUE)
+@
+
+{\bfseries TODO:} add \func{stri\_enc\_toraw()} (?)
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+<<>>=
+test1 <- "abcdefghijklmnopqrstuvwxyz"
+microbenchmark(charToRaw(test1), stri_encode(test1, "", "", to_raw=TRUE)[[1]])
+
+test2 <- rep(c("abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789"), 10)
+microbenchmark(lapply(test2, charToRaw), stri_encode(test2, "", "", to_raw=TRUE))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion from Raw Vectors}
+
+\ColumnOne
+   \func{rawToChar()} --- single raw vector to a single string only
+
+<<>>=
+rawToChar(as.raw(c(97, 65, 49)))
+@
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_encode()} also accepts a raw vector
+   or a list of raw vectors as its first argument;
+   by default, i.e.~when \texttt{\argument{to\_raw}=FALSE},
+   the result is a character vector.
+
+<<>>=
+stri_encode(as.raw(c(97, 65, 49)), "")
+stri_encode(list(as.raw(c(97, 65, 49)),
+   as.raw(32)), "")
+@
+
+{\bfseries TODO:} add \func{stri\_enc\_fromraw()} (?)
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+<<>>=
+test1 <- as.raw(97:122)
+microbenchmark(rawToChar(test1), stri_encode(test1, ""))
+
+test2 <- rep(list(as.raw(97:122), as.raw(65:90), as.raw(48:57)), 10)
+microbenchmark(lapply(test2, rawToChar), stri_encode(test2, ""))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion to Integer Vectors (i.e.~UTF-32)}
+
+
+\ColumnOne
+   \func{utf8ToInt()} --- single string in UTF-8 to an integer vector only
+
+<<>>=
+utf8ToInt(enc2utf8("aA1"))
+@
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_enc\_toutf32()} accepts a character vector on input
+   and returns a list of integer vectors;
+   like in all other functions from our package, native and UTF-8
+   encodings are handled properly
+
+<<>>=
+stri_enc_toutf32("aA1")[[1]]
+stri_enc_toutf32(c("aA1", " "))
+@
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+<<>>=
+test1 <- enc2utf8("abcdefghijklmnopqrstuvwxyz")
+microbenchmark(utf8ToInt(test1), stri_enc_toutf32(test1)[[1]])
+
+test2 <- enc2utf8(rep(c("abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789"), 10))
+microbenchmark(lapply(test2, utf8ToInt), stri_enc_toutf32(test2))
+@
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion from Integer Vectors (i.e.~UTF-32)}
+
+
+\ColumnOne
+   \func{intToUtf8()} --- single integer vector to a single string only
+
+<<>>=
+intToUtf8(c(97L, 65L, 49L))
+@
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_enc\_fromutf32()} a single integer vector
+   or a list of integer vectors as its argument;
+   the result is a UTF-8-encoded character vector.
+
+<<>>=
+stri_enc_fromutf32(c(97L, 65L, 49L))
+stri_enc_fromutf32(list(c(97L, 65L, 49L), 32L))
+@
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+<<>>=
+test1 <- 97:122
+microbenchmark(intToUtf8(test1), stri_enc_fromutf32(test1))
+
+test2 <- rep(list(97:122, 65:90, 48:57), 10)
+microbenchmark(lapply(test2, intToUtf8), stri_enc_fromutf32(test2))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

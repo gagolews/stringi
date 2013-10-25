@@ -27,3 +27,10 @@ src-x64/
 
 # KDevelop project files:
 *.kdev4
+
+# LaTeX/knitr dirt:
+*.aux
+*.log
+*.out
+cache-knitr/
+

@@ -1,0 +1,498 @@
+\documentclass[11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+%\VignetteIndexEntry{A Guide to the agop Package}
+%\VignetteEngine{knitr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage[dvips,a4paper,landscape,left=0cm,right=0cm,foot=1.0cm,
+   headheight=1.0cm,top=2.0cm,margin=1.5cm]{geometry}
+\linespread{1.1}
+
+\usepackage{fancyhdr}
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\selectlanguage{english}
+\usepackage{xspace}
+\usepackage{lmodern}
+
+% \usepackage[x11names, rgb]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\RequirePackage{graphicx,verbatim,longtable}
+\usepackage{mdwlist}
+\usepackage{multirow,multicol}
+\usepackage[nottoc]{tocbibind}
+\usepackage{rotating}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\renewcommand{\emph}[1]{\textbf{\textsl{#1}}}
+
+\newcommand{\package}[1]{\textsf{#1}\xspace}
+\newcommand{\program}[1]{\textsf{#1}\xspace}
+\newcommand{\os}[1]{\textsf{#1}\xspace}
+\newcommand{\lang}[1]{\textsf{#1}\xspace}
+\newcommand{\Cpp}{\lang{C++}}
+\newcommand{\R}{\lang{R}}
+
+\newcommand{\func}[1]{\texttt{\hlkwd{#1}}}
+\newcommand{\argument}[1]{\texttt{\hlkwc{#1}}}
+\newcommand{\str}[1]{\texttt{\hlstr{#1}}}
+\newcommand{\key}[1]{{$\langle$\texttt{#1}$\rangle$}\xspace} % skrot klawiszowy
+
+\setlength{\pdfpagewidth}{\paperwidth}
+\setlength{\pdfpageheight}{\paperheight}
+
+
+\usepackage{xcolor}
+\definecolor{blue2}{rgb}{0,0.2,0.7}
+\definecolor{red2}{rgb}{0.4,0.1,0.1}
+\usepackage{colortbl}
+\definecolor{navy}{rgb}{0,0.0,0.4}
+\definecolor{navy2}{rgb}{0.4,0.1,0.3}
+\definecolor{red2}{rgb}{0.6,0.1,0.2}
+\definecolor{green2}{rgb}{0.1,0.4,0.2}
+
+\newtheorem{example}{Example}
+
+\usepackage{hyperref}
+
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,labelsep=period,justification=centering}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
+\addto\captionsenglish{\renewcommand{\tablename}{Tab.}}
+
+
+\setlength{\topsep}{3pt} % wpływa m.in. na odstęp dla verbatim
+\tolerance=500
+\predisplaypenalty=0
+\clubpenalty=1000
+\widowpenalty=1000
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{fancy}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyhead[C]{\footnotesize\sf \href{http://stringi.rexamine.com}{\package{stringi}} %
+0.1-10
+(2013-08-22)
+Compatibility Tables: Conversion.}
+
+\newcommand{\ColumnOne}{\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{base}~\hrulefill
+
+   \medskip}
+
+\newcommand{\ColumnTwo}{\vfill\end{minipage}\hspace*{0.02\textwidth}%
+\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{stringr}~\hrulefill
+
+   \medskip}
+
+\newcommand{\ColumnThree}{\vfill\end{minipage}\hspace*{0.02\textwidth}%
+\begin{minipage}[t]{0.32\textwidth}
+   \hrulefill~\package{stringi}~\hrulefill
+
+   \medskip}
+
+
+\newcommand{\ColumnEnd}{\vfill\end{minipage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conversion to Raw Vectors}
+
+\ColumnOne
+   \func{charToRaw()} --- single string to a raw vector only
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{charToRaw}\hlstd{(}\hlstr{"aA1"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 61 41 31
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_encode()} with argument \texttt{\argument{to\_raw}=TRUE}
+   is vectorized over the first argument;
+   it returns a list of raw vectors.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{stri_encode}\hlstd{(}\hlstr{"aA1"}\hlstd{,} \hlstr{""}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{)[[}\hlnum{1}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] 61 41 31
+\end{verbatim}
+\begin{alltt}
+\hlkwd{stri_encode}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"aA1"}\hlstd{,} \hlstr{" "}\hlstd{),} \hlstr{""}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [[1]]
+## [1] 61 41 31
+## 
+## [[2]]
+## [1] 20
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+{\bfseries TODO:} add \func{stri\_enc\_toraw()} (?)
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{test1} \hlkwb{<-} \hlstr{"abcdefghijklmnopqrstuvwxyz"}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{charToRaw}\hlstd{(test1),} \hlkwd{stri_encode}\hlstd{(test1,} \hlstr{""}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{)[[}\hlnum{1}\hlstd{]])}
+\end{alltt}
+\begin{verbatim}
+## Unit: nanoseconds
+##                                            expr  min     lq median     uq    max neval
+##                                charToRaw(test1)  474  629.5  942.0 1081.5  26494   100
+##  stri_encode(test1, "", "", to_raw = TRUE)[[1]] 8462 8876.0 9205.5 9581.5 257945   100
+\end{verbatim}
+\begin{alltt}
+\hlstd{test2} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcdefghijklmnopqrstuvwxyz"}\hlstd{,} \hlstr{"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}\hlstd{,} \hlstr{"0123456789"}\hlstd{),} \hlnum{10}\hlstd{)}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{lapply}\hlstd{(test2, charToRaw),} \hlkwd{stri_encode}\hlstd{(test2,} \hlstr{""}\hlstd{,} \hlstr{""}\hlstd{,} \hlkwc{to_raw}\hlstd{=}\hlnum{TRUE}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## Unit: microseconds
+##                                       expr    min      lq  median      uq     max neval
+##                   lapply(test2, charToRaw) 24.832 30.7825 34.1955 36.0160 249.735   100
+##  stri_encode(test2, "", "", to_raw = TRUE) 27.963 29.1155 29.9735 31.2885 114.889   100
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion from Raw Vectors}
+
+\ColumnOne
+   \func{rawToChar()} --- single raw vector to a single string only
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rawToChar}\hlstd{(}\hlkwd{as.raw}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97}\hlstd{,} \hlnum{65}\hlstd{,} \hlnum{49}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_encode()} also accepts a raw vector
+   or a list of raw vectors as its first argument;
+   by default, i.e.~when \texttt{\argument{to\_raw}=FALSE},
+   the result is a character vector.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{stri_encode}\hlstd{(}\hlkwd{as.raw}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97}\hlstd{,} \hlnum{65}\hlstd{,} \hlnum{49}\hlstd{)),} \hlstr{""}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{stri_encode}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwd{as.raw}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97}\hlstd{,} \hlnum{65}\hlstd{,} \hlnum{49}\hlstd{)),}
+   \hlkwd{as.raw}\hlstd{(}\hlnum{32}\hlstd{)),} \hlstr{""}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1" " "
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+{\bfseries TODO:} add \func{stri\_enc\_fromraw()} (?)
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{test1} \hlkwb{<-} \hlkwd{as.raw}\hlstd{(}\hlnum{97}\hlopt{:}\hlnum{122}\hlstd{)}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{rawToChar}\hlstd{(test1),} \hlkwd{stri_encode}\hlstd{(test1,} \hlstr{""}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## Unit: nanoseconds
+##                    expr  min     lq median     uq    max neval
+##        rawToChar(test1)  802  908.5   1232 1380.5  24935   100
+##  stri_encode(test1, "") 4004 4206.5   4321 4603.5 159494   100
+\end{verbatim}
+\begin{alltt}
+\hlstd{test2} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwd{as.raw}\hlstd{(}\hlnum{97}\hlopt{:}\hlnum{122}\hlstd{),} \hlkwd{as.raw}\hlstd{(}\hlnum{65}\hlopt{:}\hlnum{90}\hlstd{),} \hlkwd{as.raw}\hlstd{(}\hlnum{48}\hlopt{:}\hlnum{57}\hlstd{)),} \hlnum{10}\hlstd{)}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{lapply}\hlstd{(test2, rawToChar),} \hlkwd{stri_encode}\hlstd{(test2,} \hlstr{""}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## Unit: microseconds
+##                      expr    min      lq median     uq     max neval
+##  lapply(test2, rawToChar) 33.956 40.0195 42.468 45.448 101.053   100
+##    stri_encode(test2, "") 19.399 20.3780 20.888 21.477  60.833   100
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion to Integer Vectors (i.e.~UTF-32)}
+
+
+\ColumnOne
+   \func{utf8ToInt()} --- single string in UTF-8 to an integer vector only
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{utf8ToInt}\hlstd{(}\hlkwd{enc2utf8}\hlstd{(}\hlstr{"aA1"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 97 65 49
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_enc\_toutf32()} accepts a character vector on input
+   and returns a list of integer vectors;
+   like in all other functions from our package, native and UTF-8
+   encodings are handled properly
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{stri_enc_toutf32}\hlstd{(}\hlstr{"aA1"}\hlstd{)[[}\hlnum{1}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] 97 65 49
+\end{verbatim}
+\begin{alltt}
+\hlkwd{stri_enc_toutf32}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"aA1"}\hlstd{,} \hlstr{" "}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [[1]]
+## [1] 97 65 49
+## 
+## [[2]]
+## [1] 32
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{test1} \hlkwb{<-} \hlkwd{enc2utf8}\hlstd{(}\hlstr{"abcdefghijklmnopqrstuvwxyz"}\hlstd{)}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{utf8ToInt}\hlstd{(test1),} \hlkwd{stri_enc_toutf32}\hlstd{(test1)[[}\hlnum{1}\hlstd{]])}
+\end{alltt}
+\begin{verbatim}
+## Unit: nanoseconds
+##                          expr  min     lq median     uq   max neval
+##              utf8ToInt(test1)  550  698.5  838.5  927.0  8137   100
+##  stri_enc_toutf32(test1)[[1]] 2141 2244.5 2314.5 2422.5 62685   100
+\end{verbatim}
+\begin{alltt}
+\hlstd{test2} \hlkwb{<-} \hlkwd{enc2utf8}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"abcdefghijklmnopqrstuvwxyz"}\hlstd{,} \hlstr{"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}\hlstd{,} \hlstr{"0123456789"}\hlstd{),} \hlnum{10}\hlstd{))}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{lapply}\hlstd{(test2, utf8ToInt),} \hlkwd{stri_enc_toutf32}\hlstd{(test2))}
+\end{alltt}
+\begin{verbatim}
+## Unit: microseconds
+##                      expr    min      lq  median      uq     max neval
+##  lapply(test2, utf8ToInt) 31.083 35.6960 38.3550 41.3805 116.385   100
+##   stri_enc_toutf32(test2)  7.899  9.0695  9.7565 12.8870  31.685   100
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\section{Conversion from Integer Vectors (i.e.~UTF-32)}
+
+
+\ColumnOne
+   \func{intToUtf8()} --- single integer vector to a single string only
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{intToUtf8}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97L}\hlstd{,} \hlnum{65L}\hlstd{,} \hlnum{49L}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\ColumnTwo
+
+\textit{(none)}
+
+\ColumnThree
+   \func{stri\_enc\_fromutf32()} a single integer vector
+   or a list of integer vectors as its argument;
+   the result is a UTF-8-encoded character vector.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{stri_enc_fromutf32}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97L}\hlstd{,} \hlnum{65L}\hlstd{,} \hlnum{49L}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{stri_enc_fromutf32}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{97L}\hlstd{,} \hlnum{65L}\hlstd{,} \hlnum{49L}\hlstd{),} \hlnum{32L}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] "aA1" " "
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\ColumnEnd
+
+\bigskip
+\noindent\textbf{Performance comparison:}
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{test1} \hlkwb{<-} \hlnum{97}\hlopt{:}\hlnum{122}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{intToUtf8}\hlstd{(test1),} \hlkwd{stri_enc_fromutf32}\hlstd{(test1))}
+\end{alltt}
+\begin{verbatim}
+## Unit: microseconds
+##                       expr   min    lq median     uq    max neval
+##           intToUtf8(test1) 1.293 1.408 1.4875 1.6225 30.481   100
+##  stri_enc_fromutf32(test1) 1.711 1.764 1.8550 1.9560 89.277   100
+\end{verbatim}
+\begin{alltt}
+\hlstd{test2} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{list}\hlstd{(}\hlnum{97}\hlopt{:}\hlnum{122}\hlstd{,} \hlnum{65}\hlopt{:}\hlnum{90}\hlstd{,} \hlnum{48}\hlopt{:}\hlnum{57}\hlstd{),} \hlnum{10}\hlstd{)}
+\hlkwd{microbenchmark}\hlstd{(}\hlkwd{lapply}\hlstd{(test2, intToUtf8),} \hlkwd{stri_enc_fromutf32}\hlstd{(test2))}
+\end{alltt}
+\begin{verbatim}
+## Unit: microseconds
+##                       expr    min      lq  median      uq     max neval
+##   lapply(test2, intToUtf8) 45.814 52.8155 55.6190 62.6930 106.162   100
+##  stri_enc_fromutf32(test2)  6.255  6.7910  7.1695  7.9545  24.922   100
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
