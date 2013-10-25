@@ -1,0 +1,451 @@
+<html>
+
+
+
+   
+<head>
+<style type="text/css">.knitr.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+},
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0em 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage.left {
+  text-align: left;
+}
+.rimage.right {
+  text-align: right;
+}
+.rimage.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}</style>
+<title>stringi &ndash; Compatibility Tables</title>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--    <meta charset='UTF-8' /> -->
+   <meta name="Author" content="Marek Gągolewski" />
+   <meta http-equiv="Content-Language" content="pl-PL" />
+   
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<style>
+body {
+   font-family: "Segoe UI";
+   font-size: 14px;
+}
+
+h1 {
+   font-size: 40px;
+   font-weight: 500;
+   background: white;
+   color: black;
+   padding: 5px;
+   border-bottom: 3px solid black;
+}
+
+h2 {
+   font-size: 25px;
+   border-bottom: 1px solid gray;
+   font-weight: 500;
+   background: #d0d0d0;
+   padding: 5px;
+}
+
+h3 {
+   font-size: 20px;
+   border-bottom: 1px solid #fafafa;
+   font-weight: 500;
+   background: #f0f0f0;
+   padding: 5px;
+}
+
+
+h4 {
+   font-size: 15px;
+   font-weight: 500;
+   background: #eaeaff;
+   padding: 3px;
+}
+
+th {
+   text-align: left;
+   font-size: 10pt;
+   padding: 3px;
+}
+
+table {
+   border: 1px black solid;
+}
+
+td {
+   border: 1px gray solid;
+   padding: 3px;
+}
+
+div.columntitle {
+   margin-bottom: 1ex;
+   font-weight: bold;
+   text-align: center;
+}
+
+div.column1, div.column2 {
+   width: 30%;
+   clear: none;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+
+div.column3 {
+   width: 30%;
+   clear: bottom;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+</style>
+</head>
+
+<body>
+
+
+
+<body>
+<h1><a href='http://stringi.rexamine.com'>stringi</a>
+<span class="hl num">0.1</span><span class="hl opt">-</span><span class="hl num">10</span>
+(<span class="hl num">2013</span><span class="hl opt">-</span><span class="hl num">10</span><span class="hl opt">-</span><span class="hl num">25</span>)
+Compatibility Tables: <span class="hl std">Conversion</span>
+</h1>
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion to Raw Vectors</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><span class="hl kwd">charToRaw</span><span class="hl std">()</span></code> &ndash; single string to a raw vector only
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">charToRaw</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 61 41 31
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+<code><span class="hl kwd">stri_encode</span><span class="hl std">()</span></code>
+with argument <code><span class="hl std">to_raw</span><span class="hl kwb">=</span><span class="hl num">TRUE</span></code>
+   is vectorized over the first argument;
+   it returns a list of raw vectors.
+
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)[[</span><span class="hl num">1</span><span class="hl std">]]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 61 41 31
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">,</span> <span class="hl str">&quot; &quot;</span><span class="hl std">),</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [[1]]
+## [1] 61 41 31
+## 
+## [[2]]
+## [1] 20
+</pre></div>
+</div></div>
+
+
+<strong>TODO:</strong> add <code><span class="hl kwd">stri_enc_toraw</span><span class="hl std">()</span></code> (?)
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">charToRaw</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)[[</span><span class="hl num">1</span><span class="hl std">]])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: nanoseconds
+##                                            expr  min      lq  median      uq    max neval
+##                                charToRaw(test1)  474   812.5  1130.0  1453.5  27763   100
+##  stri_encode(test1, "", "", to_raw = TRUE)[[1]] 9601 10267.5 10735.5 19443.0 109719   100
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;0123456789&quot;</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, charToRaw),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test2,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                                       expr    min     lq  median     uq    max neval
+##                   lapply(test2, charToRaw) 25.384 28.548 32.0020 33.397 51.029   100
+##  stri_encode(test2, "", "", to_raw = TRUE) 33.179 34.720 35.4035 36.403 94.468   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion from Raw Vectors</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><span class="hl kwd">rawToChar</span><span class="hl std">()</span></code> 
+&ndash; single raw vector to a single string only
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">rawToChar</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl num">49</span><span class="hl std">)))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1"
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_encode</span><span class="hl std">()</span></code>  also accepts a raw vector
+   or a list of raw vectors as its first argument;
+   by default, i.e. when <code><span class="hl std">to_raw</span><span class="hl kwb">=</span><span class="hl num">FALSE</span></code>,
+   the result is a character vector.
+
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl num">49</span><span class="hl std">)),</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1"
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl num">49</span><span class="hl std">)),</span>
+   <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">32</span><span class="hl std">)),</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1" " "
+</pre></div>
+</div></div>
+
+
+
+<strong>TODO:</strong> add <code><span class="hl kwd">stri_enc_fromraw</span><span class="hl std">()</span></code> (?)
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">rawToChar</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: nanoseconds
+##                    expr  min   lq median   uq   max neval
+##        rawToChar(test1)  789  922 1250.5 1371  7158   100
+##  stri_encode(test1, "") 4810 4999 5142.5 5305 87940   100
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span><span class="hl std">),</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">65</span><span class="hl opt">:</span><span class="hl num">90</span><span class="hl std">),</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">48</span><span class="hl opt">:</span><span class="hl num">57</span><span class="hl std">)),</span> <span class="hl num">10</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, rawToChar),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test2,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                      expr    min      lq median      uq    max neval
+##  lapply(test2, rawToChar) 34.124 36.9910 39.975 43.0305 78.831   100
+##    stri_encode(test2, "") 22.311 23.5145 24.309 25.6370 89.874   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion to Integer Vectors (i.e. UTF-32)</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><span class="hl kwd">utf8ToInt</span><span class="hl std">()</span></code> 
+   &ndash; single string in UTF-8 to an integer vector only
+
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">utf8ToInt</span><span class="hl std">(</span><span class="hl kwd">enc2utf8</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 97 65 49
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_enc_toutf32</span><span class="hl std">()</span></code>  accepts a character vector on input
+   and returns a list of integer vectors;
+   like in all other functions from our package, native and UTF-8
+   encodings are handled properly
+
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">)[[</span><span class="hl num">1</span><span class="hl std">]]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 97 65 49
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;aA1&quot;</span><span class="hl std">,</span> <span class="hl str">&quot; &quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [[1]]
+## [1] 97 65 49
+## 
+## [[2]]
+## [1] 32
+</pre></div>
+</div></div>
+
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">enc2utf8</span><span class="hl std">(</span><span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">utf8ToInt</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(test1)[[</span><span class="hl num">1</span><span class="hl std">]])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: nanoseconds
+##                          expr  min     lq median   uq   max neval
+##              utf8ToInt(test1)  596  755.5    949 1096 13713   100
+##  stri_enc_toutf32(test1)[[1]] 2490 2629.0   2755 2858 35089   100
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">enc2utf8</span><span class="hl std">(</span><span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;0123456789&quot;</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">))</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, utf8ToInt),</span> <span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(test2))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                      expr    min      lq  median      uq    max neval
+##  lapply(test2, utf8ToInt) 31.457 33.3165 35.8315 37.7895 62.885   100
+##   stri_enc_toutf32(test2) 10.106 11.1005 11.5470 12.1635 70.570   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion from Integer Vectors (i.e. UTF-32)</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><span class="hl kwd">intToUtf8</span><span class="hl std">()</span></code> 
+   &ndash; single integer vector to a single string only
+
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">intToUtf8</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97L</span><span class="hl std">,</span> <span class="hl num">65L</span><span class="hl std">,</span> <span class="hl num">49L</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1"
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">()</span></code> 
+   a single integer vector
+   or a list of integer vectors as its argument;
+   the result is a UTF-8-encoded character vector.
+
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97L</span><span class="hl std">,</span> <span class="hl num">65L</span><span class="hl std">,</span> <span class="hl num">49L</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1"
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97L</span><span class="hl std">,</span> <span class="hl num">65L</span><span class="hl std">,</span> <span class="hl num">49L</span><span class="hl std">),</span> <span class="hl num">32L</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "aA1" " "
+</pre></div>
+</div></div>
+
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">intToUtf8</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(test1))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                       expr   min     lq median    uq    max neval
+##           intToUtf8(test1) 1.341 1.5665 1.6715 1.800 26.446   100
+##  stri_enc_fromutf32(test1) 2.000 2.1065 2.2310 2.399 29.054   100
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl opt">:</span><span class="hl num">90</span><span class="hl std">,</span> <span class="hl num">48</span><span class="hl opt">:</span><span class="hl num">57</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, intToUtf8),</span> <span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(test2))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                       expr    min      lq  median      uq     max neval
+##   lapply(test2, intToUtf8) 45.718 48.4925 50.4020 52.4545 103.093   100
+##  stri_enc_fromutf32(test2)  6.581  7.0200  7.2535  7.6730  28.219   100
+</pre></div>
+</div></div>
+
+
+
+<!-- -------------------------------------------------------------- -->
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<html>
+
+<!--begin.rcode message=FALSE,echo=FALSE,error=FALSE
+options(digits=7)
+options(width=120)
+require("knitr")
+require("stringi")
+require("microbenchmark")
+title <- 'Conversion'
+
+hook_inline <- knit_hooks$get('inline')
+ knit_hooks$set(inline = function(x) {
+      if (is.character(x)) highr::hi_html(x) else hook_inline(x)
+    })
+
+opts_chunk$set(
+   keep.source=TRUE,
+   out.width='4.5in',
+   fig.width=6,
+   fig.height=6/sqrt(2),
+   fig.path='figures-knitr/conversion/',
+   cache.path='cache-knitr/conversion/',
+   cache=TRUE,
+   tidy=FALSE,
+   fig.align='center',
+   size='small'
+)
+end.rcode-->
+   
+<head>
+<title>stringi &ndash; Compatibility Tables</title>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--    <meta charset='UTF-8' /> -->
+   <meta name="Author" content="Marek Gągolewski" />
+   <meta http-equiv="Content-Language" content="pl-PL" />
+   
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<style>
+body {
+   font-family: "Segoe UI";
+   font-size: 14px;
+}
+
+h1 {
+   font-size: 40px;
+   font-weight: 500;
+   background: white;
+   color: black;
+   padding: 5px;
+   border-bottom: 3px solid black;
+}
+
+h2 {
+   font-size: 25px;
+   border-bottom: 1px solid gray;
+   font-weight: 500;
+   background: #d0d0d0;
+   padding: 5px;
+}
+
+h3 {
+   font-size: 20px;
+   border-bottom: 1px solid #fafafa;
+   font-weight: 500;
+   background: #f0f0f0;
+   padding: 5px;
+}
+
+
+h4 {
+   font-size: 15px;
+   font-weight: 500;
+   background: #eaeaff;
+   padding: 3px;
+}
+
+th {
+   text-align: left;
+   font-size: 10pt;
+   padding: 3px;
+}
+
+table {
+   border: 1px black solid;
+}
+
+td {
+   border: 1px gray solid;
+   padding: 3px;
+}
+
+div.columntitle {
+   margin-bottom: 1ex;
+   font-weight: bold;
+   text-align: center;
+}
+
+div.column1, div.column2 {
+   width: 30%;
+   clear: none;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+
+div.column3 {
+   width: 30%;
+   clear: bottom;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+</style>
+</head>
+
+<body>
+
+
+
+<body>
+<h1><a href='http://stringi.rexamine.com'>stringi</a>
+<!--rinline packageDescription("stringi")$Version -->
+(<!--rinline packageDescription("stringi")$Date -->)
+Compatibility Tables: <!--rinline title -->
+</h1>
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion to Raw Vectors</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><!--rinline "charToRaw()" --></code> &ndash; single string to a raw vector only
+
+<!--begin.rcode
+charToRaw("aA1")
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+<code><!--rinline "stri_encode()" --></code>
+with argument <code><!--rinline "to_raw=TRUE" --></code>
+   is vectorized over the first argument;
+   it returns a list of raw vectors.
+
+<!--begin.rcode
+stri_encode("aA1", "", "", to_raw=TRUE)[[1]]
+stri_encode(c("aA1", " "), "", "", to_raw=TRUE)
+end.rcode-->
+
+<strong>TODO:</strong> add <code><!--rinline "stri_enc_toraw()" --></code> (?)
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- "abcdefghijklmnopqrstuvwxyz"
+microbenchmark(charToRaw(test1), stri_encode(test1, "", "", to_raw=TRUE)[[1]])
+
+test2 <- rep(c("abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789"), 10)
+microbenchmark(lapply(test2, charToRaw), stri_encode(test2, "", "", to_raw=TRUE))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion from Raw Vectors</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><!--rinline "rawToChar()" --></code> 
+&ndash; single raw vector to a single string only
+
+<!--begin.rcode
+rawToChar(as.raw(c(97, 65, 49)))
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_encode()" --></code>  also accepts a raw vector
+   or a list of raw vectors as its first argument;
+   by default, i.e. when <code><!--rinline "to_raw=FALSE" --></code>,
+   the result is a character vector.
+
+<!--begin.rcode
+stri_encode(as.raw(c(97, 65, 49)), "")
+stri_encode(list(as.raw(c(97, 65, 49)),
+   as.raw(32)), "")
+end.rcode-->
+
+
+<strong>TODO:</strong> add <code><!--rinline "stri_enc_fromraw()" --></code> (?)
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- as.raw(97:122)
+microbenchmark(rawToChar(test1), stri_encode(test1, ""))
+
+test2 <- rep(list(as.raw(97:122), as.raw(65:90), as.raw(48:57)), 10)
+microbenchmark(lapply(test2, rawToChar), stri_encode(test2, ""))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion to Integer Vectors (i.e. UTF-32)</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "utf8ToInt()" --></code> 
+   &ndash; single string in UTF-8 to an integer vector only
+
+<!--begin.rcode
+utf8ToInt(enc2utf8("aA1"))
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_enc_toutf32()" --></code>  accepts a character vector on input
+   and returns a list of integer vectors;
+   like in all other functions from our package, native and UTF-8
+   encodings are handled properly
+
+<!--begin.rcode
+stri_enc_toutf32("aA1")[[1]]
+stri_enc_toutf32(c("aA1", " "))
+end.rcode-->
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- enc2utf8("abcdefghijklmnopqrstuvwxyz")
+microbenchmark(utf8ToInt(test1), stri_enc_toutf32(test1)[[1]])
+
+test2 <- enc2utf8(rep(c("abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789"), 10))
+microbenchmark(lapply(test2, utf8ToInt), stri_enc_toutf32(test2))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conversion from Integer Vectors (i.e. UTF-32)</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "intToUtf8()" --></code> 
+   &ndash; single integer vector to a single string only
+
+<!--begin.rcode
+intToUtf8(c(97L, 65L, 49L))
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_enc_fromutf32()" --></code> 
+   a single integer vector
+   or a list of integer vectors as its argument;
+   the result is a UTF-8-encoded character vector.
+
+<!--begin.rcode
+stri_enc_fromutf32(c(97L, 65L, 49L))
+stri_enc_fromutf32(list(c(97L, 65L, 49L), 32L))
+end.rcode-->
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- 97:122
+microbenchmark(intToUtf8(test1), stri_enc_fromutf32(test1))
+
+test2 <- rep(list(97:122, 65:90, 48:57), 10)
+microbenchmark(lapply(test2, intToUtf8), stri_enc_fromutf32(test2))
+end.rcode-->
+
+
+<!-- -------------------------------------------------------------- -->
+
+</body>
+</html>
