@@ -447,5 +447,227 @@ with argument <code><span class="hl std">to_raw</span><span class="hl kwb">=</sp
 
 <!-- -------------------------------------------------------------- -->
 
+<h2>List of Supported Encodings</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><span class="hl kwd">iconvlist</span><span class="hl std">()</span></code> 
+   &ndash; returns a character vector with supported encoding
+   names (as well as its aliases).
+   
+   <p>Note that, as R manual states, the names are rarely valid
+   across all platforms.</p>
+
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">iconvlist</span><span class="hl std">(),</span> <span class="hl num">4</span><span class="hl std">)</span> <span class="hl com"># a sample of supported encodings</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "CSISO2022CN" "EUC-CN"      "CP918"       "ISO-IR-203"
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">iconvlist</span><span class="hl std">())</span> <span class="hl com"># count; Fedora Linux 19 x64_86</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 1168
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_enc_list</span><span class="hl std">()</span></code> 
+   with argument <code></code>
+   provides a character vector with all supported encodings and
+   their aliases in many different forms.
+   
+   <p>By default, howewer, a list of character vectors
+   is returned. Each list element contains the list of aliases for 
+   the given encoding.</p>
+   
+   <p>Please, note that apart from given encodings,
+   ICU tries to normalize encoding specifiers, e.g. "utf8" is a valid
+   specifier for "UTF-8".</p>
+   
+   <p>Depending on the version of the ICU library used,
+   each encoding should be supported across all platforms.</p>
+   
+   <p>By the way, <code><span class="hl kwd">stri_enc_info</span><span class="hl std">()</span></code>
+   returns detailed information of a given encoding specifier.</p>
+
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">stri_enc_list</span><span class="hl std">(</span><span class="hl num">TRUE</span><span class="hl std">),</span> <span class="hl num">4</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] "ibm-13488"  "ibm-1253"   "CCSID01144" "915"
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">stri_enc_list</span><span class="hl std">(</span><span class="hl num">TRUE</span><span class="hl std">))</span> <span class="hl com"># includes aliases</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 1198
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">stri_enc_list</span><span class="hl std">())</span> <span class="hl com"># true number of supported encodings</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 229
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">str</span><span class="hl std">(</span><span class="hl kwd">stri_enc_info</span><span class="hl std">(</span><span class="hl str">&quot;cp1250&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## List of 13
+##  $ Name.friendly: chr "windows-1250"
+##  $ Name.ICU     : chr "ibm-5346_P100-1998"
+##  $ Name.UTR22   : chr "ibm-5346_P100-1998"
+##  $ Name.IBM     : chr "ibm-5346"
+##  $ Name.WINDOWS : chr "windows-1250"
+##  $ Name.JAVA    : chr "windows-1250"
+##  $ Name.IANA    : chr "windows-1250"
+##  $ Name.MIME    : chr NA
+##  $ ASCII.subset : logi TRUE
+##  $ Unicode.1to1 : logi TRUE
+##  $ CharSize.8bit: logi TRUE
+##  $ CharSize.min : int 1
+##  $ CharSize.max : int 1
+</pre></div>
+</div></div>
+
+
+</div>
+</div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Convert Strings Between Encodings</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><span class="hl kwd">iconv</span><span class="hl std">()</span></code> 
+   &ndash; converts a character vector between two given encodings.
+   Argument <code><span class="hl std">from</span></code>
+   or <code><span class="hl std">to</span></code> equal to ""
+   denotes default (native) encoding,
+   which is used by R session.
+
+<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">utf8ToInt</span><span class="hl std">(</span>
+   <span class="hl kwd">iconv</span><span class="hl std">(</span><span class="hl kwd">rawToChar</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">177</span><span class="hl std">,</span> <span class="hl num">182</span><span class="hl std">))),</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf-8&quot;</span><span class="hl std">)</span>
+<span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 261 347
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_encode</span><span class="hl std">()</span></code> 
+   provides a very similar functionality
+   as <code><span class="hl kwd">iconv</span><span class="hl std">()</span></code>.
+   
+   <p>Note that currently used default encoding may be obtained by calling
+   <code><span class="hl kwd">stri_enc_get</span><span class="hl std">()</span></code>
+   and changed any time with a call to <code><span class="hl kwd">stri_enc_set</span><span class="hl std">()</span></code>.
+   This is not dangerous as almost every function in stringi
+   returns UTF-8-encoded strings.</p>
+   
+   <p><code><span class="hl kwd">stri_encode</span><span class="hl std">()</span></code> and
+   <code><span class="hl kwd">iconv</span><span class="hl std">()</span></code> differ in the treatment of
+   unsupported characters. If an incorrect code point is found on input,
+   <code><span class="hl kwd">stri_encode</span><span class="hl std">()</span></code>  replaces it by the default
+   (for that target encoding) substitute character and generates a warning.
+   <code><span class="hl kwd">iconv</span><span class="hl std">()</span></code> in turn, by default silently returns
+   <code>NA</code>.
+
+<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(</span>
+   <span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">rawToChar</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">177</span><span class="hl std">,</span> <span class="hl num">182</span><span class="hl std">))),</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf-8&quot;</span><span class="hl std">)</span>
+<span class="hl std">)[[</span><span class="hl num">1</span><span class="hl std">]]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 261 347
+</pre></div>
+</div></div>
+
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">128</span><span class="hl opt">:</span><span class="hl num">255</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">iconv</span><span class="hl std">(test1,</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf8&quot;</span><span class="hl std">),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf8&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                                  expr    min      lq  median      uq      max neval
+##        iconv(test1, "latin2", "utf8") 55.477 56.8405 58.5135 59.0710 4183.496   100
+##  stri_encode(test1, "latin2", "utf8")  8.037  8.9225 10.9470 11.4075  216.486   100
+</pre></div>
+</div></div>
+
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Unicode Normalization</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_enc_isnfc</span>(), <span class="hl kwd">stri_enc_isnfkc</span>(), <span class="hl kwd">stri_enc_isnfd</span>(), <span class="hl kwd">stri_enc_isnfkd</span>(), <span class="hl kwd">stri_enc_isnfkc_casefold</span>()</code>
+   check whether given UTF-8-encoded strings are properly normalized.
+   
+   <p>Moreover, <code><span class="hl kwd">stri_enc_tonfc</span>(), <span class="hl kwd">stri_enc_tonfkc</span>(), <span class="hl kwd">stri_enc_tonfd</span>(), <span class="hl kwd">stri_enc_tonfkd</span>(), <span class="hl kwd">stri_enc_tonfkc_casefold</span>()</code>
+   perform the desired normalization.</p>
+</div>
+</div>
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Automatic Encoding Detection</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><span class="hl kwd">stri_enc_detect</span><span class="hl std">()</span></code>
+   and <code><span class="hl kwd">stri_enc_detect2</span><span class="hl std">()</span></code>
+   provide two experimental facilities for automatic encoding detection.
+   The first one uses ICU's native algorithm and the second one
+   provides our own implementation for locale-dependent guessing.
+   
+   <p>Moreover, the functions
+   <code><span class="hl kwd">stri_enc_isascii</span>(), <span class="hl kwd">stri_enc_utf8</span>(), <span class="hl kwd">str_enci_isutf16le</span>(), <span class="hl kwd">stri_enc_isutf16le</span>(), <span class="hl kwd">stri_enc_isutf32le</span>(), <span class="hl kwd">stri_enc_isutf32le</span>()</code>
+   check whether given byte sequences
+   form a valid character sequence in a given encoding.</p>
+</div>
+</div>
+
+
+<!-- -------------------------------------------------------------- -->
+
 </body>
 </html>

@@ -323,5 +323,184 @@ end.rcode-->
 
 <!-- -------------------------------------------------------------- -->
 
+<h2>List of Supported Encodings</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "iconvlist()" --></code> 
+   &ndash; returns a character vector with supported encoding
+   names (as well as its aliases).
+   
+   <p>Note that, as R manual states, the names are rarely valid
+   across all platforms.</p>
+
+<!--begin.rcode
+sample(iconvlist(), 4) # a sample of supported encodings
+length(iconvlist()) # count; Fedora Linux 19 x64_86
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_enc_list()" --></code> 
+   with argument <code><!--rinline simplified=TRUE --></code>
+   provides a character vector with all supported encodings and
+   their aliases in many different forms.
+   
+   <p>By default, howewer, a list of character vectors
+   is returned. Each list element contains the list of aliases for 
+   the given encoding.</p>
+   
+   <p>Please, note that apart from given encodings,
+   ICU tries to normalize encoding specifiers, e.g. "utf8" is a valid
+   specifier for "UTF-8".</p>
+   
+   <p>Depending on the version of the ICU library used,
+   each encoding should be supported across all platforms.</p>
+   
+   <p>By the way, <code><!--rinline "stri_enc_info()" --></code>
+   returns detailed information of a given encoding specifier.</p>
+
+<!--begin.rcode
+sample(stri_enc_list(TRUE), 4)
+length(stri_enc_list(TRUE)) # includes aliases
+length(stri_enc_list()) # true number of supported encodings
+str(stri_enc_info("cp1250"))
+end.rcode-->
+
+</div>
+</div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Convert Strings Between Encodings</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "iconv()" --></code> 
+   &ndash; converts a character vector between two given encodings.
+   Argument <code><!--rinline "from" --></code>
+   or <code><!--rinline "to" --></code> equal to ""
+   denotes default (native) encoding,
+   which is used by R session.
+
+<!--begin.rcode
+utf8ToInt(
+   iconv(rawToChar(as.raw(c(177, 182))), "latin2", "utf-8")
+)
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_encode()" --></code> 
+   provides a very similar functionality
+   as <code><!--rinline "iconv()" --></code>.
+   
+   <p>Note that currently used default encoding may be obtained by calling
+   <code><!--rinline "stri_enc_get()" --></code>
+   and changed any time with a call to <code><!--rinline "stri_enc_set()" --></code>.
+   This is not dangerous as almost every function in stringi
+   returns UTF-8-encoded strings.</p>
+   
+   <p><code><!--rinline "stri_encode()" --></code> and
+   <code><!--rinline "iconv()" --></code> differ in the treatment of
+   unsupported characters. If an incorrect code point is found on input,
+   <code><!--rinline "stri_encode()" --></code>  replaces it by the default
+   (for that target encoding) substitute character and generates a warning.
+   <code><!--rinline "iconv()" --></code> in turn, by default silently returns
+   <code>NA</code>.
+
+<!--begin.rcode
+stri_enc_toutf32(
+   stri_encode(rawToChar(as.raw(c(177, 182))), "latin2", "utf-8")
+)[[1]]
+end.rcode-->
+
+</div>
+</div>
+
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- as.raw(128:255)
+microbenchmark(iconv(test1, "latin2", "utf8"), stri_encode(test1, "latin2", "utf8"))
+end.rcode-->
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Unicode Normalization</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_enc_isnfc(), stri_enc_isnfkc(), stri_enc_isnfd(), stri_enc_isnfkd(), stri_enc_isnfkc_casefold()" --></code>
+   check whether given UTF-8-encoded strings are properly normalized.
+   
+   <p>Moreover, <code><!--rinline "stri_enc_tonfc(), stri_enc_tonfkc(), stri_enc_tonfd(), stri_enc_tonfkd(), stri_enc_tonfkc_casefold()" --></code>
+   perform the desired normalization.</p>
+</div>
+</div>
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Automatic Encoding Detection</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_enc_detect()" --></code>
+   and <code><!--rinline "stri_enc_detect2()" --></code>
+   provide two experimental facilities for automatic encoding detection.
+   The first one uses ICU's native algorithm and the second one
+   provides our own implementation for locale-dependent guessing.
+   
+   <p>Moreover, the functions
+   <code><!--rinline "stri_enc_isascii(), stri_enc_utf8(), str_enci_isutf16le(), stri_enc_isutf16le(), stri_enc_isutf32le(), stri_enc_isutf32le()" --></code>
+   check whether given byte sequences
+   form a valid character sequence in a given encoding.</p>
+</div>
+</div>
+
+
+<!-- -------------------------------------------------------------- -->
+
 </body>
 </html>
