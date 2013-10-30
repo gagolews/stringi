@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+           "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!--
+TO DO:
+enc2native
+enc2utf8
+stri_enc_toascii
+-->
+
+<!--begin.rcode message=FALSE,echo=FALSE,error=FALSE
+source('compat_tab_init.R')
+title <- 'Computing "length" of a string'
+end.rcode-->
+   
+<head>
+<title>stringi &ndash; Compatibility Tables</title>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--    <meta charset='UTF-8' /> -->
+   <meta name="Author" content="Marek Gągolewski" />
+   <meta http-equiv="Content-Language" content="en-US" />
+   
+   <meta name="Keywords" content="Rexamine, stringi, ICU, R" />
+   <meta name="Description" content="stringi Compatibility Tables" />
+   <meta name="Robots" content="index, follow" />
+   
+<style>
+<!--begin.rcode results='asis',echo=FALSE,cache=FALSE
+cat(readLines('compat_tab_style.css'),sep='\n') # embed CSS
+end.rcode-->
+</style>
+</head>
+
+<body>
+
+
+
+<body>
+
+<h1>
+<!--begin.rcode results='asis',echo=FALSE,cache=FALSE
+cat('<a href="http://stringi.rexamine.com">stringi</a> ')
+cat(packageDescription("stringi")$Version, ' (')
+cat(packageDescription("stringi")$Date, ') ')
+cat('Compatibility Tables: ',  title)
+end.rcode-->
+</h1>
+
+<!-- -------------------------------------------------------------- -->
+
+<!-- <h2>Introduction</h2>
+
+<p></p>
+-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Determining whether a given string is empty</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><!--rinline "nzchar()" --></code> &ndash; returns a logical vector;
+determines whether a string is NOT empty
+
+<p>Note that missing values are not handled properly.</p>
+
+<!--begin.rcode
+!nzchar(c("", "not empty", NA))
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(not available directly)</em>
+
+<p>You may use the following, keeping in mind performance issues,
+especially for UTF-8-encoded strings:</p>
+
+<!--begin.rcode
+(str_length(c("", "not empty", NA)) == 0)
+end.rcode-->
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+<code><!--rinline "stri_isempty()" --></code>
+&ndash; handles missing values properly.
+
+<!--begin.rcode
+stri_isempty(c("", "not empty", NA))
+end.rcode-->
+
+
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- rep(c("", "not empty", NA), 100)
+microbenchmark(nzchar(test1), str_length(test1) == 0, stri_isempty(test1))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Calculate the number of code points (characters) in a string</h2>
+
+
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><!--rinline "nchar()" --></code> 
+&ndash; does not handle NAs properly
+
+<!--begin.rcode
+nchar(c("ąśćźół", "abc", NA, ""))
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<code><!--rinline "str_length()" --></code> 
+&ndash; handles NAs properly
+
+<!--begin.rcode
+str_length(c("ąśćźół", "abc", NA, ""))
+end.rcode-->
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+<code><!--rinline "stri_length()" --></code> 
+&ndash; handles NAs properly
+
+<!--begin.rcode
+stri_length(c("ąśćźół", "abc", NA, ""))
+end.rcode-->
+
+
+</div>
+</div>
+
+<h3>General Remark</h3>
+
+If a given string is in UTF-8 and not has been properly 
+Unicode normalized (e.g. by stri_enc_nfc), 
+the returned number may sometimes be misleading.
+
+<p>Determining the length of an 8-bit-encoded string is O(1)
+[as it is not the same as calculating the number of bytes
+in a string],
+and in UTF-8 has linear time complexity.</p>
+
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- rep(c("ąśćźół", "abc", NA, ""), 100)                # first string is in UTF-8
+microbenchmark(nchar(test1), str_length(test1), stri_length(test1))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Calculate the number of bytes in a string</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "nchar()" --></code>
+   with argument <!--rinline "type='bytes'"-->
+   &ndash; does not handle NAs properly
+
+<!--begin.rcode
+nchar(c("ąśćźół", "abc", NA, ""), type='bytes')   
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><!--rinline "stri_numbytes()" --></code>  
+   handles missing values properly.
+
+<!--begin.rcode
+stri_numbytes(c("ąśćźół", "abc", NA, ""))
+end.rcode-->
+
+</div>
+</div>
+
+<h3>General Remark</h3>
+
+This group of functions
+count the number of bytes needed to store all the characters of
+each string in computer's memory.
+These are not the functions you would normally use
+in your string processing activities &ndash; see rather <!--rinline "stri_length()" -->.
+
+<h3>Performance comparison</h3>
+
+<!--begin.rcode
+test1 <- rep(c("ąśćźół", "abc", NA, ""), 100)              # first string is in UTF-8 
+microbenchmark(nchar(test1, type='bytes'), stri_numbytes(test1))
+end.rcode-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conunt the width of characters in a string</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><!--rinline "nchar()" --></code>
+   with argument <!--rinline "type='width'"-->
+   &ndash; does not handle NAs properly;
+   Returns the estimated number of columns that
+   the <!--rinline "cat()"--> function
+   will use to print the string in a monospaced font.
+   The same as chars if this cannot be calculated.
+   
+   <p>The R manual does not state how the numbers are determined.</p>
+   
+<!--begin.rcode
+nchar(c("gryzeldą", "", NA,
+   "持続可能な統計環境"), type='width')
+end.rcode-->
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+
+(not available yet)
+
+<p>TO DO: add <!--rinline "stri_width()" -->.
+</div>
+</div>
+
+
+<!-- <h3>Performance comparison</h3> -->
+
+
+
+
+<!-- -------------------------------------------------------------- -->
+
+<!--begin.rcode echo=FALSE,results='asis',cache=FALSE
+source('compat_tab_footer.R')
+end.rcode-->
+
+</body>
+</html>

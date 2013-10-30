@@ -11,30 +11,8 @@ stri_enc_toascii
 -->
 
 <!--begin.rcode message=FALSE,echo=FALSE,error=FALSE
-options(digits=7)
-options(width=120)
-require("knitr")
-require("stringi")
-require("microbenchmark")
+source('compat_tab_init.R')
 title <- 'Character Encodings'
-
-hook_inline <- knit_hooks$get('inline')
- knit_hooks$set(inline = function(x) {
-      if (is.character(x)) highr::hi_html(x) else hook_inline(x)
-    })
-
-opts_chunk$set(
-   keep.source=TRUE,
-   out.width='4.5in',
-   fig.width=6,
-   fig.height=6/sqrt(2),
-   fig.path='figures-knitr/conversion/',
-   cache.path='cache-knitr/conversion/',
-   cache=TRUE,
-   tidy=FALSE,
-   fig.align='center',
-   size='small'
-)
 end.rcode-->
    
 <head>
@@ -50,86 +28,9 @@ end.rcode-->
    <meta name="Robots" content="index, follow" />
    
 <style>
-body {
-   font-family: "Segoe UI";
-   font-size: 14px;
-}
-
-h1 {
-   font-size: 40px;
-   font-weight: 500;
-   background: white;
-   color: black;
-   padding: 5px;
-   border-bottom: 3px solid black;
-}
-
-h2 {
-   font-size: 25px;
-   border-bottom: 1px solid gray;
-   font-weight: 500;
-   background: #d0d0d0;
-   padding: 5px;
-}
-
-h3 {
-   font-size: 20px;
-   border-bottom: 1px solid #fafafa;
-   font-weight: 500;
-   background: #f0f0f0;
-   padding: 5px;
-}
-
-
-h4 {
-   font-size: 15px;
-   font-weight: 500;
-   background: #eaeaff;
-   padding: 3px;
-}
-
-th {
-   text-align: left;
-   font-size: 10pt;
-   padding: 3px;
-}
-
-table {
-   border: 1px black solid;
-}
-
-td {
-   border: 1px gray solid;
-   padding: 3px;
-}
-
-div.columntitle {
-   margin-bottom: 1ex;
-   font-weight: bold;
-   text-align: center;
-}
-
-div.column1, div.column2 {
-   width: 30%;
-   clear: none;
-   border: 0;
-   margin: 0;
-   padding: 1ex;
-   display: inline-block;
-   height: auto;
-   vertical-align: top;
-}
-
-div.column3 {
-   width: 30%;
-   clear: bottom;
-   border: 0;
-   margin: 0;
-   padding: 1ex;
-   display: inline-block;
-   height: auto;
-   vertical-align: top;
-}
+<!--begin.rcode results='asis',echo=FALSE,cache=FALSE
+cat(readLines('compat_tab_style.css'),sep='\n') # embed CSS
+end.rcode-->
 </style>
 </head>
 
@@ -138,11 +39,43 @@ div.column3 {
 
 
 <body>
-<h1><a href='http://stringi.rexamine.com'>stringi</a>
-<!--rinline packageDescription("stringi")$Version -->
-(<!--rinline packageDescription("stringi")$Date -->)
-Compatibility Tables: <!--rinline title -->
+
+<h1>
+<!--begin.rcode results='asis',echo=FALSE,cache=FALSE
+cat('<a href="http://stringi.rexamine.com">stringi</a> ')
+cat(packageDescription("stringi")$Version, ' (')
+cat(packageDescription("stringi")$Date, ') ')
+cat('Compatibility Tables: ',  title)
+end.rcode-->
 </h1>
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Introduction</h2>
+
+<p>As we know, character vectors in R in computer's memory
+resemble lists of raw vectors (each ended up with a 00 byte).
+Each string has to be properly "decoded"
+so that textual information may be read from such a byte stream.
+This "decoding scheme" is simply called a character encoding.</p>
+
+<p>In other words, data in computer's memory are just bytes (small integer values) 
+&ndash; an encoding is a way to represent characters with such numbers,
+it is a semantic "key" to understand a given byte sequence.
+For example, in ISO-8859-2 (Central European), the value 177 represents Polish
+“a with ogonek”, and in ISO-8859-1 (Western European),
+the same value meas the “plus-minus” sign.
+Thus, a character encoding is a translation scheme.</p>
+
+<p>Below you will find a list of functions that deal with character encodings.
+Mostly, you will use them when reading or writing a text file.
+Functions in <a href="http://stringi.rexamine.com">stringi</a>
+process each string internally in Unicode,
+which is a superset of all character representation schemes.
+This is why while working with <a href="http://stringi.rexamine.com">stringi</a>
+you will often use (sometimes without even knowing that explicitly) the following
+workflow scheme: READ FILE -> CONVERT TO UTF-8 -> PROCESS -> CONVERT BACK TO
+DESIRED ENCODING -> WRITE FILE.</p>
 
 <!-- -------------------------------------------------------------- -->
 
@@ -502,6 +435,9 @@ end.rcode-->
    The first one uses ICU's native algorithm and the second one
    provides our own implementation for locale-dependent guessing.
    
+   <p>TO DO: <code><!--rinline "stri_enc_detect2()" --></code> - choose best
+   match from a given list of guesses.</p>
+   
    <p>Moreover, the functions
    <code><!--rinline "stri_enc_isascii(), stri_enc_utf8(), str_enci_isutf16le(), stri_enc_isutf16le(), stri_enc_isutf32le(), stri_enc_isutf32le()" --></code>
    check whether given byte sequences
@@ -512,16 +448,9 @@ end.rcode-->
 
 <!-- -------------------------------------------------------------- -->
 
-<div>
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">
-<img alt="Creative Commons License" style="border-width:0; float: left; margin: 8px" src="http://i.creativecommons.org/l/by/3.0/88x31.png"></a>
-<a href='http://www.rexamine.com/'><img style='float: right; margin: 8px' src='http://static.rexamine.com/img/Rexamine_logo_transparent3.png' alt='Rexamine' /></a>
-
-<div style='text-align: center'>Licensed under the <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.<br />
-Copyleft 2013, <a href='http://gagolewski.rexamine.com'>Marek Gagolewski</a></div>
-
-
-</div>
+<!--begin.rcode echo=FALSE,results='asis',cache=FALSE
+source('compat_tab_footer.R')
+end.rcode-->
 
 </body>
 </html>

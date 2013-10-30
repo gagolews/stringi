@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+           "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!--
+TO DO:
+enc2native
+enc2utf8
+stri_enc_toascii
+-->
+
+
+
+   
+<head>
+<style type="text/css">.knitr.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+},
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0em 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage.left {
+  text-align: left;
+}
+.rimage.right {
+  text-align: right;
+}
+.rimage.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}</style>
+<title>stringi &ndash; Compatibility Tables</title>
+
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--    <meta charset='UTF-8' /> -->
+   <meta name="Author" content="Marek Gągolewski" />
+   <meta http-equiv="Content-Language" content="en-US" />
+   
+   <meta name="Keywords" content="Rexamine, stringi, ICU, R" />
+   <meta name="Description" content="stringi Compatibility Tables" />
+   <meta name="Robots" content="index, follow" />
+   
+<style>
+body {
+   font-family: "Segoe UI";
+   font-size: 14px;
+}
+
+h1 {
+   font-size: 40px;
+   font-weight: 500;
+   background: white;
+   color: black;
+   padding: 5px;
+   border-bottom: 3px solid black;
+}
+
+h2 {
+   font-size: 25px;
+   border-bottom: 1px solid gray;
+   font-weight: 500;
+   background: #d0d0d0;
+   padding: 5px;
+}
+
+h3 {
+   font-size: 20px;
+   border-bottom: 1px solid #fafafa;
+   font-weight: 500;
+   background: #f0f0f0;
+   padding: 5px;
+}
+
+
+h4 {
+   font-size: 15px;
+   font-weight: 500;
+   background: #eaeaff;
+   padding: 3px;
+}
+
+th {
+   text-align: left;
+   font-size: 10pt;
+   padding: 3px;
+}
+
+table {
+   border: 1px black solid;
+}
+
+td {
+   border: 1px gray solid;
+   padding: 3px;
+}
+
+div.columntitle {
+   margin-bottom: 1ex;
+   font-weight: bold;
+   text-align: center;
+}
+
+div.column1, div.column2 {
+   width: 30%;
+   clear: none;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+
+div.column3 {
+   width: 30%;
+   clear: bottom;
+   border: 0;
+   margin: 0;
+   padding: 1ex;
+   display: inline-block;
+   height: auto;
+   vertical-align: top;
+}
+
+div.footer {
+   margin: 0;
+   padding: 1ex;
+   background: #f0f0f0;
+   font-size: 90%;
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+
+<body>
+
+<h1>
+<a href="http://stringi.rexamine.com">stringi</a> 0.1-10  (2013-10-26 ) Compatibility Tables:  Computing "length" of a string
+
+</h1>
+
+<!-- -------------------------------------------------------------- -->
+
+<!-- <h2>Introduction</h2>
+
+<p></p>
+-->
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Determining whether a given string is empty</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><code class="knitr inline">nzchar()</code></code> &ndash; returns a logical vector;
+determines whether a string is NOT empty
+
+<p>Note that missing values are not handled properly.</p>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl opt">!</span><span class="hl kwd">nzchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;not empty&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  TRUE FALSE FALSE
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(not available directly)</em>
+
+<p>You may use the following, keeping in mind performance issues,
+especially for UTF-8-encoded strings:</p>
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">(</span><span class="hl kwd">str_length</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;not empty&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">))</span> <span class="hl opt">==</span> <span class="hl num">0</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  TRUE FALSE    NA
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+<code><code class="knitr inline">stri_isempty()</code></code>
+&ndash; handles missing values properly.
+
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_isempty</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;not empty&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  TRUE FALSE    NA
+</pre></div>
+</div></div>
+
+
+
+</div>
+</div>
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;not empty&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">),</span> <span class="hl num">100</span><span class="hl std">)</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">nzchar</span><span class="hl std">(test1),</span> <span class="hl kwd">str_length</span><span class="hl std">(test1)</span> <span class="hl opt">==</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwd">stri_isempty</span><span class="hl std">(test1))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: nanoseconds
+##                    expr   min      lq  median      uq    max neval
+##           nzchar(test1)   812   961.5  1086.0  1230.5   6353   100
+##  str_length(test1) == 0 54266 56532.5 57738.0 59300.5 111372   100
+##     stri_isempty(test1)  1991  2667.0  3627.5  4159.5  17073   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Calculate the number of code points (characters) in a string</h2>
+
+
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+<code><code class="knitr inline">nchar()</code></code> 
+&ndash; does not handle NAs properly
+
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">nchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 6 3 2 0
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<code><code class="knitr inline">str_length()</code></code> 
+&ndash; handles NAs properly
+
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">str_length</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  6  3 NA  0
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+<code><code class="knitr inline">stri_length()</code></code> 
+&ndash; handles NAs properly
+
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_length</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  6  3 NA  0
+</pre></div>
+</div></div>
+
+
+
+</div>
+</div>
+
+<h3>General Remark</h3>
+
+If a given string is in UTF-8 and not has been properly 
+Unicode normalized (e.g. by stri_enc_nfc), 
+the returned number may sometimes be misleading.
+
+<p>Determining the length of an 8-bit-encoded string is O(1)
+[as it is not the same as calculating the number of bytes
+in a string],
+and in UTF-8 has linear time complexity.</p>
+
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl num">100</span><span class="hl std">)</span>          <span class="hl com"># first string is in UTF-8</span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">nchar</span><span class="hl std">(test1),</span> <span class="hl kwd">str_length</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_length</span><span class="hl std">(test1))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                expr    min      lq  median      uq     max neval
+##        nchar(test1) 36.585 37.6235 37.8960 38.1500  52.016   100
+##   str_length(test1) 65.619 68.5270 69.6670 71.0245 131.478   100
+##  stri_length(test1)  6.771  7.3205  8.6315  9.2270  82.120   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Calculate the number of bytes in a string</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><code class="knitr inline">nchar()</code></code>
+   with argument <code class="knitr inline">type='bytes'</code>
+   &ndash; does not handle NAs properly
+
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">nchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'bytes'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 12  3  2  0
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+   <code><code class="knitr inline">stri_numbytes()</code></code>  
+   handles missing values properly.
+
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_numbytes</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 12  3 NA  0
+</pre></div>
+</div></div>
+
+
+</div>
+</div>
+
+<h3>General Remark</h3>
+
+This group of functions
+count the number of bytes needed to store all the characters of
+each string in computer's memory.
+These are not the functions you would normally use
+in your string processing activities &ndash; see rather <code class="knitr inline">stri_length()</code>.
+
+<h3>Performance comparison</h3>
+
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl num">100</span><span class="hl std">)</span>        <span class="hl com"># first string is in UTF-8 </span>
+<span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">nchar</span><span class="hl std">(test1,</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'bytes'</span><span class="hl std">),</span> <span class="hl kwd">stri_numbytes</span><span class="hl std">(test1))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                          expr   min     lq median     uq    max neval
+##  nchar(test1, type = "bytes") 9.439 9.6200 9.7155 9.9255 21.714   100
+##          stri_numbytes(test1) 2.278 2.4195 2.5295 2.6610 76.426   100
+</pre></div>
+</div></div>
+
+
+<!-- -------------------------------------------------------------- -->
+
+<h2>Conunt the width of characters in a string</h2>
+
+<h3>Basic Functionality</h3>
+
+<div class='columns'>
+<div class='column1'><div class='columntitle'>base</div>
+   <code><code class="knitr inline">nchar()</code></code>
+   with argument <code class="knitr inline">type='width'</code>
+   &ndash; does not handle NAs properly;
+   Returns the estimated number of columns that
+   the <code class="knitr inline">cat()</code> function
+   will use to print the string in a monospaced font.
+   The same as chars if this cannot be calculated.
+   
+   <p>The R manual does not state how the numbers are determined.</p>
+   
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">nchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;gryzeldą&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span>
+   <span class="hl str">&quot;持続可能な統計環境&quot;</span><span class="hl std">),</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'width'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  8  0  2 18
+</pre></div>
+</div></div>
+
+
+</div>
+<div class='column2'><div class='columntitle'>stringr</div>
+
+<em>(none)</em>
+
+</div>
+<div class='column3'><div class='columntitle'>stringi</div>
+
+
+(not available yet)
+
+<p>TO DO: add <code class="knitr inline">stri_width()</code>.
+</div>
+</div>
+
+
+<!-- <h3>Performance comparison</h3> -->
+
+
+
+
+<!-- -------------------------------------------------------------- -->
+
+<div class="footer"><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0; float: left; margin: 8px" src="http://i.creativecommons.org/l/by/3.0/88x31.png"></a><a href="http://www.rexamine.com/">
+<img style="float: right; margin: 8px"
+src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexamine" alt="Rexamine" /></a><div style="text-align: center">Licensed under the 
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative 
+Commons Attribution 3.0 Unported License</a>.<br />Copyleft 2013, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />Last updated:  2013-10-30 12:51:19 </div></div>
+
+
+</body>
+</html>
