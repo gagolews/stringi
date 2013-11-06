@@ -9,9 +9,8 @@ processing in each locale and any native character encoding.
 variety of functions known from other
 programming languages, like  *Java*, *Perl*, *Python* and *PHP*.
 
-**Authors**: [Marek Gagolewski](http://staff.rexamine.com/gagolews),
-[Bartlomiej Tartanus](http://staff.rexamine.com/tartanus), 
-with contributions from Marcin Bujarski
+**Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
+[Bartlomiej Tartanus](http://tartanus.rexamine.com/)
 
 **Homepage**: http://stringi.rexamine.com/
 
