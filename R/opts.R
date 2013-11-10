@@ -127,22 +127,24 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' note that in most cases you would rather use the \link{stringi-search-fixed}
 #' facilities in this case (with \code{opts_collator=NA}).
 #' @param multiline logical; controls behavior of `\code{$}` and `\code{^}`.
-#' If set, recognize line terminators within string, otherwise, match only at start and end of input string
+#' If set, recognize line terminators within string, otherwise,
+#'  match only at start and end of input string
 #' @param unix_lines logical; Unix-only line endings.
 #' When this mode is enabled, only \code{U+000a} is recognized as a
-#' line ending in the behavior of `\code{.}`, `\code{$}`, and `\code{^}`.
+#' line ending by `\code{.}`, `\code{$}`, and `\code{^}`.
 #' @param uword logical; Unicode word boundaries.
 #' If set, uses the Unicode TR 29 definition of word boundaries.
 #' Warning: Unicode word boundaries are quite different from traditional
-#' regular expression word boundaries. See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
+#' regular expression word boundaries.
+#' See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
 #' @param error_on_unknown_escapes logical;
 #' Error on Unrecognized backslash escapes.
 #' If set, fail with an error on patterns that contain backslash-escaped ASCII
-#'  letters without a known special meaning.
-#'  If this flag is not set, these escaped letters represent themselves.
+#' letters without a known special meaning.
+#' If this flag is not set, these escaped letters represent themselves.
 #'
 #' Note that the regex options may be changed using ICU regex flag
-#' settings inside regexes. For example, \code{"(i:)pattern"} does
+#' settings inside regexes. For example, \code{"(?i)pattern"} does
 #' a case-insetive match of a given pattern,
 #' see the ICU User Guide entry in the References section.
 #'
