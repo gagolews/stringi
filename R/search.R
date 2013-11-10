@@ -77,7 +77,7 @@ invisible(NULL)
 #'
 #'
 #' @details
-#' All \code{stri_*_regex} functions in \pkg{stingi} use
+#' All \code{stri_*_regex} functions in \pkg{stringi} use
 #' the \pkg{ICU} regex engine, which may be tuned
 #' with settings may be tuned up (for example
 #' to perform case-insensitive search) with the
@@ -191,7 +191,7 @@ invisible(NULL)
 #'
 #'
 #' @details
-#' All \code{stri_*_charclass} functions in \pkg{stingi} perform
+#' All \code{stri_*_charclass} functions in \pkg{stringi} perform
 #' single character (i.e. Unicode codepoint) search-based operations.
 #'
 #'
