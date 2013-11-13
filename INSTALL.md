@@ -90,7 +90,7 @@ for f in *.lib; do mv $f `echo $f | sed -r "s/(.*)\.lib/\151.lib/"`; done
 
 Set the environmental variable `ICU_PATH` to point
 to the directory with your pre-compiled
-`ICU4C ` distribution, e.g. `c:\icu-distrib`.
+`ICU4C ` distribution, e.g. `c:/icu-distrib` (note the slash).
 Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`,
 i.e. the directory containing the compiled DLLs.
 
