@@ -1,5 +1,5 @@
 Package: stringi
-Version: 0.1-10
+Version: 0.1-11
 Date: 2013-11-13
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast, and convenient
@@ -22,9 +22,7 @@ Authors@R: c(
     person("Marek", "Gagolewski", role = c("aut", "cre"),
     email = "gagolews@rexamine.com"),
     person("Bartek", "Tartanus", role = "aut",
-    email = "tartanus@rexamine.com"),
-    person("Marcin", "Bujarski", role = "ctb",
-    email = "marcin.bujarski@gmail.com")
+    email = "tartanus@rexamine.com")
     )
 Collate:
     'charclass.R'

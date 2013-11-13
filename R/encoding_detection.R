@@ -263,7 +263,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' @description
 #' This function tries to detect character encoding
 #' in case the language of text is known.
-#' 
+#'
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
@@ -280,7 +280,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' the text is checked for the number of occurrences
 #' of language-specific code points (data provided by the ICU library)
 #' converted to all possible 8-bit encodings
-#' that fully cover the indicated language. 
+#' that fully cover the indicated language.
 #' The encoding is selected basing on the greatest number of total
 #' byte hits.
 #'

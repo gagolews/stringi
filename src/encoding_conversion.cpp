@@ -375,7 +375,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       err = U_ZERO_ERROR;
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
       if (U_FAILURE(err))
-         throw StriException(err); 
+         throw StriException(err);
 
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.

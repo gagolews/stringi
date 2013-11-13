@@ -29,10 +29,10 @@
 #' \bold{Keywords}: internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
-#' 
+#'
 #' \bold{License}: GNU LGPL version 3 or later (open source)
-#' 
-#' 
+#'
+#'
 #' @details
 #' Man pages on general topics (must-read):
 #' \itemize{
@@ -45,14 +45,14 @@
 #' In particular, see \code{\link{stri_opts_collator}} for a description
 #' of string collation algorithm, which is used for string comparing, ordering,
 #' sorting, casefolding, and searching.
-#' 
+#'
 #' \item \link{stringi-arguments} -- how \pkg{stringi}
 #' deals with its functions' arguments.
 #' }
-#' 
+#'
 #'
 #' @section Facilities available:
-#' 
+#'
 #' Please, refer to the following:
 #' \itemize{
 #' \item \link{stringi-search} for string searching facilities;
@@ -65,8 +65,8 @@
 #' \item \link{stringi-search-charclass} -- for finding character classes,
 #' like ``all whitespaces'' or ``all digits''.
 #' }
-#' 
-#' 
+#'
+#'
 #' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
 #' for gathering some statistics on character vector's contents.
 #'
@@ -92,7 +92,7 @@
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
 #' \item \code{\link{stri_split_lines}} to split a string into text lines.
-#' 
+#'
 #' \item \code{\link{stri_escape_unicode}} (amont others) for escaping
 #' certain code points.
 #'
@@ -106,7 +106,7 @@
 #' random string generation, number and data/time formatting,
 #' and many more.
 #' }
-#' 
+#'
 #' Note that each man page has many links to other interesting facilities.
 #'
 #'
@@ -116,7 +116,7 @@
 #' @docType package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
-#' with contributions from Marcin Bujarski.
+#' with some contributions from Marcin Bujarski.
 #' @references
 #' \emph{\pkg{stringi} Package homepage}, \url{http://stringi.rexamine.com}
 #'
@@ -126,7 +126,7 @@
 #'
 #' \emph{The Unicode Consortium}, \url{http://www.unicode.org/}
 #'
-#' \emph{UTF-8, a transformation format of ISO 10646} -- RFC 3629, 
+#' \emph{UTF-8, a transformation format of ISO 10646} -- RFC 3629,
 #' \url{http://tools.ietf.org/html/rfc3629}
 #'
 #' @family stringi_general_topics
@@ -181,13 +181,13 @@ invisible(NULL)
    urlsrc <- paste0("http://static.rexamine.com/packages/",
                     "windows/icu4c_51_2-mingw-distrib-",
                     platform, ".zip")
-   
+
    cat('Downloading ICU4C ->', fname, '...\n', file=stderr())
    if (0 != download.file(urlsrc, fname))
       stop('Download error.')
    else
       cat('OK.\n', file=stderr())
-   
+
    cat('Decompressing files...\n', file=stderr())
    destdir <- file.path(lib, pkg, "libs", platform)
    ret <- unzip(fname, exdir=destdir, unzip=getOption('unzip'))

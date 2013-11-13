@@ -12,11 +12,11 @@ test_that("stri_trans_tolower", {
    expect_equivalent(stri_flatten(stri_trans_tolower(LETTERS)), stri_flatten(letters))
    expect_equivalent(stri_trans_tolower(LETTERS), letters) # vectors of length 26
    expect_equivalent(stri_trans_tolower(letters), letters) # vectors of length 26
-   expect_equivalent(stri_trans_tolower("ALA\tLUBI\nPSA"),"ala\tlubi\npsa") 
+   expect_equivalent(stri_trans_tolower("ALA\tLUBI\nPSA"),"ala\tlubi\npsa")
    #lower(lower(x))==lower(x)
    expect_equivalent(stri_trans_tolower(stri_trans_tolower("ALA\tLUBI\nPSA")),
-                     stri_trans_tolower("ALA\tLUBI\nPSA")) 
-   
+                     stri_trans_tolower("ALA\tLUBI\nPSA"))
+
    ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
    expect_equivalent(stri_trans_tolower(ascii_non_letters), ascii_non_letters)
 
@@ -36,11 +36,11 @@ test_that("stri_trans_toupper", {
    expect_equivalent(stri_flatten(stri_trans_toupper(letters)), stri_flatten(LETTERS))
    expect_equivalent(stri_trans_toupper(LETTERS), LETTERS) # vectors of length 26
    expect_equivalent(stri_trans_toupper(letters), LETTERS) # vectors of length 26
-   expect_equivalent(stri_trans_toupper("ala\tlubi\npsa"), "ALA\tLUBI\nPSA") 
+   expect_equivalent(stri_trans_toupper("ala\tlubi\npsa"), "ALA\tLUBI\nPSA")
    #toupper(toupper(x))==toupper(x)
-   expect_equivalent(stri_trans_toupper(stri_trans_toupper("ala\tlubi\npsa")), 
-                     stri_trans_toupper("ala\tlubi\npsa")) 
-   
+   expect_equivalent(stri_trans_toupper(stri_trans_toupper("ala\tlubi\npsa")),
+                     stri_trans_toupper("ala\tlubi\npsa"))
+
    ascii_non_letters <- rawToChar(as.raw(c(1:64, 91:96, 123:127)))
    expect_equivalent(stri_trans_toupper(ascii_non_letters), ascii_non_letters)
 
@@ -74,6 +74,6 @@ test_that("stri_trans_totitle", {
    expect_equivalent(stri_trans_totitle("ala\tma\tkota"), "Ala\tMa\tKota")
    expect_equivalent(stri_trans_totitle("ala\nma\nKota"), "Ala\nMa\nKota")
    #totitle(totitle(x))==totitle(x)
-   expect_equivalent(stri_trans_totitle(stri_trans_totitle("Ala\nMa\nKota")), 
+   expect_equivalent(stri_trans_totitle(stri_trans_totitle("Ala\nMa\nKota")),
                      stri_trans_totitle("Ala\nMa\nKota"))
 })

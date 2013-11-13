@@ -158,7 +158,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
 #' -- ICU4C API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/uregex_8h.html}
-#' 
+#'
 #' \emph{Regular Expressions} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/regexp}
 #'

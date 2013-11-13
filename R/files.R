@@ -22,7 +22,7 @@
 #'
 #' @description
 #' Reads a text file as-is, with no conversion or text line spliting.
-#' 
+#'
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
@@ -53,7 +53,7 @@ stri_read_raw <- function(fname) {
 #'
 #' @description
 #' Reads a text file, re-encodes it, and splits it into text lines.
-#' 
+#'
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
@@ -63,7 +63,7 @@ stri_read_raw <- function(fname) {
 #' or sys options change,
 #' and split the text into lines with \code{\link{stri_split_lines1}}
 #' (which conforms with the Unicode guidelines for newline markers).
-#' 
+#'
 #' If \code{locale} is \code{NA} and auto-detect of UTF-32/16/8 fails,
 #' then system's default encoding, see \code{\link{stri_enc_get}}, is used.
 #'
@@ -89,7 +89,7 @@ stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding
    if (identical(encoding, 'auto')) {
       encoding <- stri_enc_detect2(txt, locale)[[1]]$Encoding[1]
       if (is.na(encoding)) {
-         if (is.na(locale)) 
+         if (is.na(locale))
             encoding <- fallback_encoding
          else
             stop('could not auto-detect encoding')
@@ -106,7 +106,7 @@ stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding
 #' @description
 #' Writes a text file such that each element of a given
 #' character vector becomes a separate text line.
-#' 
+#'
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
@@ -121,7 +121,7 @@ stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding
 #' @param encoding output encoding, \code{NULL} or \code{""} for
 #' the current default one
 #' @param sep newline separator
-#' 
+#'
 #' @return
 #' This function does not return anything interesting
 #'

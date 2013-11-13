@@ -49,11 +49,11 @@ SEXP stri_escape_unicode(SEXP str)
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
       std::string out;
-      
+
       // estimate buf size
       R_len_t bufsize = 0;
       UChar32 c;
@@ -69,7 +69,7 @@ SEXP stri_escape_unicode(SEXP str)
             bufsize += 10;
       }
       out.reserve(bufsize);
-      
+
       // do escape
       j = 0;
       char buf[11];
@@ -106,7 +106,7 @@ SEXP stri_escape_unicode(SEXP str)
             out.append(buf, 10);
          }
       }
-      
+
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(out.c_str(), out.size(), CE_UTF8));
    }
 
@@ -139,15 +139,15 @@ SEXP stri_unescape_unicode(SEXP str)
    {
       if (str_cont.isNA(i) || str_cont.get(i).length() == 0)
          continue; // leave as-is
-         
+
       str_cont.getWritable(i).setTo(str_cont.get(i).unescape());
-      
+
       if (str_cont.get(i).length() == 0) {
          Rf_warning(MSG__INVALID_ESCAPE);
          str_cont.setNA(i); // something went wrong
       }
    }
-   
+
    return str_cont.toR();
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

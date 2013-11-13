@@ -138,7 +138,7 @@ test_that("stri_enc_detect", {
    expect_equivalent(stri_enc_detect(as.raw(c(65:100)))[[1]]$Encoding[1], "UTF-8")
 
    expect_equivalent(stri_enc_detect2("abc")[[1]]$Encoding, "ASCII")
-   
+
    expect_error(stri_enc_detect2("abc", encodings=c("don't know what's that")))
 
    expect_equivalent(stri_enc_detect2(stri_encode("abc", "UTF-8", "UTF-16", to_raw=TRUE))[[1]]$Encoding, "UTF-16")
@@ -165,7 +165,7 @@ test_that("stri_enc_detect", {
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32", to_raw=TRUE))[[1]]$Encoding, "UTF-32")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32LE", to_raw=TRUE))[[1]]$Encoding, "UTF-32LE")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32BE", to_raw=TRUE))[[1]]$Encoding, "UTF-32BE")
-   
+
    fnames <- c(file.path(path.package('stringi'), 'textfiles/CS_utf8.txt'),
                file.path(path.package('stringi'), 'textfiles/DE_utf8.txt'),
                file.path(path.package('stringi'), 'textfiles/PL_utf8.txt'),
@@ -173,7 +173,7 @@ test_that("stri_enc_detect", {
                file.path(path.package('stringi'), 'textfiles/RU_utf8.txt')
 #                file.path(path.package('stringi'), 'textfiles/TH_utf8.txt')
                )
-   
+
    for (f in fnames) {
       text <- stri_read_raw(f)
       expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8", to_raw=TRUE))[[1]]$Encoding, "UTF-8")
@@ -184,49 +184,49 @@ test_that("stri_enc_detect", {
       expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32LE", to_raw=TRUE))[[1]]$Encoding, "UTF-32LE")
       expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32BE", to_raw=TRUE))[[1]]$Encoding, "UTF-32BE")
    }
-   
+
    text <- stri_read_raw(file.path(path.package('stringi'), 'textfiles/PL_utf8.txt'))
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp1250", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp1250", to_raw=TRUE),
                     "pl_PL")[[1]]$Encoding[1], "windows-1250")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE),
                     "pl_PL")[[1]]$Encoding[1], "ISO-8859-2")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
                                       "pl_PL")[[1]]$Encoding[1], "cp852")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE),
                                       "pl_PL")[[1]]$Encoding[1], "x-mac-centraleurroman")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE),
                     "pl_PL")[[1]]$Encoding[1], "UTF-8")
-   
+
    text <- stri_read_raw(file.path(path.package('stringi'), 'textfiles/CS_utf8.txt'))
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp1250", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp1250", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "windows-1250")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "ISO-8859-2")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "cp852")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "x-mac-centraleurroman")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "UTF-8")
-   
+
    text <- stri_read_raw(file.path(path.package('stringi'), 'textfiles/DE_utf8.txt'))
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin1", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin1", to_raw=TRUE),
                                       "de_DE")[[1]]$Encoding[1], "ISO-8859-1") # windows-1250 is a superset
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE),
                                       "de_DE")[[1]]$Encoding[1], "UTF-8")
-   
+
    text <- stri_read_raw(file.path(path.package('stringi'), 'textfiles/ES_utf8.txt'))
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin1", to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin1", to_raw=TRUE),
                                       "es_ES")[[1]]$Encoding[1], "ISO-8859-1") # windows-1250 is a superset
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE), 
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE),
                                       "es_ES")[[1]]$Encoding[1], "UTF-8")
-   
+
    # distinguishing between KOI8-R and Windows-1251 is not so easy
    #text <- stri_encode(stri_read_raw(file.path(path.package('stringi'), 'textfiles/RU_utf8.txt')), "UTF-8", "UTF-8")
-   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "KOI8-R", to_raw=TRUE), 
+   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "KOI8-R", to_raw=TRUE),
    #                                   "ru_RU")[[1]]$Encoding[1], "KOI8-R")
-   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "windows-1251", to_raw=TRUE), 
+   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "windows-1251", to_raw=TRUE),
    #                                   "ru_RU")[[1]]$Encoding[1], "windows-1251")
-   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE), 
+   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "utf-8",  to_raw=TRUE),
    #                                   "ru_RU")[[1]]$Encoding[1], "UTF-8")
 })
