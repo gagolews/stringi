@@ -626,6 +626,10 @@ stringi_ADDCXXFLAGS
 ac_ct_CXX
 CXXFLAGS
 CXX
+R
+ICU_LIBS
+ICU_CXXFLAGS
+ICU_CFLAGS
 EGREP
 GREP
 CPP
@@ -636,10 +640,8 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
-ICU_LIBS
-ICU_CXXFLAGS
-ICU_CFLAGS
 ICU_CONFIG
+PKG_CONFIG
 target_alias
 host_alias
 build_alias
@@ -2015,15 +2017,78 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-
-
-
-
-
 ICU_VERSION_NEEDED="4.8"
+
+
+
+# check for ICU (fun)
+
+# check for ICU (/fun)
+
+
+
+
+
 
 succeeded=no
 
+# Retrieve pkg-config's path [it may be provided by env. var.]
+if test -z "$PKG_CONFIG"; then
+   # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  test -z "$ac_cv_path_PKG_CONFIG" && ac_cv_path_PKG_CONFIG="no"
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+elif test ! -e "$PKG_CONFIG"; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pkg-config" >&5
+$as_echo_n "checking for pkg-config... " >&6; }
+   PKG_CONFIG=no
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+# According to http://userguide.icu-project.org/howtouseicu,
+# icu-config is supported, but no longer recommended for production use.
+# However, some systems still don't support pkg-config
+# Thus, we use icu-config iff pkg-config fails.
+
+# Retrieve icu-config's path [it may be provided by env. var.]
 if test -z "$ICU_CONFIG"; then
    # Extract the first word of "icu-config", so it can be a program name with args.
 set dummy icu-config; ac_word=$2
@@ -2066,48 +2131,79 @@ $as_echo "no" >&6; }
 fi
 
 
+elif test ! -e "$ICU_CONFIG"; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pkg-config" >&5
+$as_echo_n "checking for pkg-config... " >&6; }
+   ICU_CONFIG=no
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU installed" >&5
 $as_echo_n "checking for ICU installed... " >&6; }
-if test "$ICU_CONFIG" = "no" ; then
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: failed" >&5
-$as_echo "failed" >&6; }
-   echo "*** The icu-config script could not be found."
-   echo "*** Make sure it is in your PATH."
-   echo "*** For more information check out the file stringi/INSTALL.md."
-else
-   ICU_VERSION=`$ICU_CONFIG --version`
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found version $ICU_VERSION" >&5
-$as_echo "found version $ICU_VERSION" >&6; }
+if test "$PKG_CONFIG" != "no" && `$PKG_CONFIG --exists icu-uc`
+then
+   ICU_VERSION=`$PKG_CONFIG --modversion icu-uc`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found version $ICU_VERSION using $PKG_CONFIG" >&5
+$as_echo "found version $ICU_VERSION using $PKG_CONFIG" >&6; }
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU >= $ICU_VERSION_NEEDED" >&5
 $as_echo_n "checking for ICU >= $ICU_VERSION_NEEDED... " >&6; }
-      VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
-      if test "$VERSION_CHECK" = "1" ; then
-            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+   VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+   # this could also be done with pkg-config --atleast-pkgconfig-version=VERSION
+   if test "$VERSION_CHECK" = "1" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-            succeeded=yes
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU includepath compiler flags" >&5
+      succeeded=yes
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU includepath compiler flags" >&5
 $as_echo_n "checking for ICU includepath compiler flags... " >&6; }
-            ICU_INCLUDEPATH=`$ICU_CONFIG --cppflags-searchpath`
-            { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_INCLUDEPATH" >&5
-$as_echo "$ICU_INCLUDEPATH" >&6; }
+      ICU_FLAG_I=`$PKG_CONFIG --cflags-only-I icu-uc icu-i18n icu-io`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_I" >&5
+$as_echo "$ICU_FLAG_I" >&6; }
 
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU libpath compiler flags" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU libpath compiler flags" >&5
 $as_echo_n "checking for ICU libpath compiler flags... " >&6; }
-            ICU_LIBPATH=`$ICU_CONFIG --ldflags-searchpath`
-            { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_LIBPATH" >&5
-$as_echo "$ICU_LIBPATH" >&6; }
-      else
-            ICU_INCLUDEPATH=""
-            ICU_LIBPATH=""
+      ICU_FLAG_L=`$PKG_CONFIG  --libs-only-l icu-uc icu-i18n icu-io`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_L" >&5
+$as_echo "$ICU_FLAG_L" >&6; }
+   else
+      ICU_FLAG_I=""
+      ICU_FLAG_L=""
 
-      fi
+   fi
+elif test "$ICU_CONFIG" != "no" ; then
+   ICU_VERSION=`$ICU_CONFIG --version`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found version $ICU_VERSION using $ICU_CONFIG" >&5
+$as_echo "found version $ICU_VERSION using $ICU_CONFIG" >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU >= $ICU_VERSION_NEEDED" >&5
+$as_echo_n "checking for ICU >= $ICU_VERSION_NEEDED... " >&6; }
+   VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+   if test "$VERSION_CHECK" = "1" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+      succeeded=yes
 
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU compiler flags" >&5
+$as_echo_n "checking for ICU compiler flags... " >&6; }
+      ICU_FLAG_I=`$ICU_CONFIG --cppflags-searchpath`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_I" >&5
+$as_echo "$ICU_FLAG_I" >&6; }
 
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU linker flags" >&5
+$as_echo_n "checking for ICU linker flags... " >&6; }
+      ICU_FLAG_L=`$ICU_CONFIG --ldflags-searchpath --ldflags-icuio --ldflags-libsonly`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_L" >&5
+$as_echo "$ICU_FLAG_L" >&6; }
+   else
+      ICU_FLAG_I=""
+      ICU_FLAG_L=""
 
-
+   fi
+else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: failed" >&5
+$as_echo "failed" >&6; }
+   echo "*** The pkg-config or icu-config script could not be found."
+   echo "*** Make sure it is in your system PATH."
+   echo "*** For more information check out the file stringi/INSTALL.md."
 fi
 
 if test $succeeded = yes; then
@@ -3385,17 +3481,63 @@ if test "${ac_cv_header_normalizer2_h}" = no; then
 fi
 
 
-stringi_CXXFLAGS=$ICU_INCLUDEPATH
-stringi_LIBS="$ICU_LIBPATH -licuuc -licudata -licui18n -licuio"
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking R_HOME" >&5
-$as_echo_n "checking R_HOME... " >&6; }
-: ${R_HOME=`R RHOME`}
-if test -z "${R_HOME}"; then
-  as_fn_error $? "Could not determine R_HOME. Do you have R installed. Is it in your PATH?" "$LINENO" 5
+
+stringi_CXXFLAGS=$ICU_FLAG_I
+stringi_LIBS=$ICU_FLAG_L
+
+
+
+# check for R
+if test -z "$R"; then
+   # Extract the first word of "R", so it can be a program name with args.
+set dummy R; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_R+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $R in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_R="$R" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_R="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  test -z "$ac_cv_path_R" && ac_cv_path_R="no"
+  ;;
+esac
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $R_HOME" >&5
-$as_echo "$R_HOME" >&6; }
+R=$ac_cv_path_R
+if test -n "$R"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $R" >&5
+$as_echo "$R" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+fi
+if test ! -e "$R"; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R" >&5
+$as_echo_n "checking for R... " >&6; }
+   as_fn_error $? "Could not find R. Do you have R installed? Is it in your PATH?" "$LINENO" 5
+fi
+# /check for R
 
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
@@ -3403,12 +3545,12 @@ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-CC=`"${R_HOME}/bin/R" CMD config CC`
-CXX=`"${R_HOME}/bin/R" CMD config CXX`
-CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
-LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
+CC=`"${R}" CMD config CC`
+CXX=`"${R}" CMD config CXX`
+CFLAGS=`"${R}" CMD config CFLAGS`
+CPPFLAGS=`"${R}" CMD config CPPFLAGS`
+CXXFLAGS=`"${R}" CMD config CXXFLAGS`
+LDFLAGS=`"${R}" CMD config LDFLAGS`
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -4230,6 +4372,7 @@ $as_echo "yes" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+    stringi_ADDCXXFLAGS=""
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
