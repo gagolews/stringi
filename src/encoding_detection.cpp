@@ -569,6 +569,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
  *
  * @version 0.1
  * @version 0.2 (Marek Gagolewski, 2013-08-18) be locale-dependent, use ICU ulocdata
+ * @version 0.3 (Marek Gagolewski, 2013-11-13) allow only ASCII-supersets
  */
 struct Converter8bit {
    bool isNA;
@@ -619,6 +620,12 @@ struct Converter8bit {
             ucnv_close(ucnv);
             return;
          }
+         if (i >= 32 && i <= 127 && c != (UChar32)i) {
+            // allow only ASCII supersets
+            ucnv_close(ucnv);
+            return;
+         }
+         
          if (c == UCHAR_REPLACEMENT || c < 0) {
             badChars[i] = true;
          }
@@ -677,6 +684,7 @@ struct Converter8bit {
  * 
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski, 2013-08-18) locale-dependent, use ulocdata
+ * @version 0.3 (Marek Gagolewski, 2013-11-13) allow qloc==NULL in 8bit check
  */
 struct EncGuess {
    const char* name;
@@ -757,7 +765,7 @@ struct EncGuess {
             double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
             if (isutf8 >= 0.25)
                guesses.push_back(EncGuess("UTF-8", isutf8));
-            if (isutf8 < 1.0) {
+            if (isutf8 < 1.0 && qloc) {
                do_8bit_locale(guesses, str_cur_s, str_cur_n, qloc);
             }
          }
@@ -768,6 +776,7 @@ struct EncGuess {
       R_len_t str_cur_n, const char* qloc)
    {
       vector<Converter8bit> converters;
+      if (!qloc) throw StriException(MSG__INTERNAL_ERROR); // just to be sure
       
       UErrorCode status = U_ZERO_ERROR;
       ULocaleData* uld = ulocdata_open(qloc, &status);
@@ -862,11 +871,12 @@ struct EncGuess {
  * @version 0.1 (2013-08-15, Marek Gagolewski)
  * @version 0.2 (2013-08-18, Marek Gagolewski) improved 8-bit confidence measurement, 
  * some code moved to structs, use locale & ICU locdata
+ * @version 0.3 (2013-11-13, Marek Gagolewski) added loc NA handling (no locale)
  */
 SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {
    str = stri_prepare_arg_list_raw(str, "str");
-   const char* qloc = stri__prepare_arg_locale(loc, "locale", true);
+   const char* qloc = stri__prepare_arg_locale(loc, "locale", true, true); // allowdefault, allowna
    
    STRI__ERROR_HANDLER_BEGIN
 

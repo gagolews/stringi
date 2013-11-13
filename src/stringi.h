@@ -145,7 +145,7 @@ SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
 SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
 bool        stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname);
 const char* stri__prepare_arg_locale(SEXP loc,        const char* argname,
-                                     bool allowdefault);
+                                     bool allowdefault, bool allowna=false);
 const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
                                      bool allowdefault);
 

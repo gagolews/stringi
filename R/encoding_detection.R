@@ -258,11 +258,13 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 
 
 #' @title
-#' Detect Locale-Sensitive Character Encoding
+#' [DRAFT API] Detect Locale-Sensitive Character Encoding
 #'
 #' @description
 #' This function tries to detect character encoding
 #' in case the language of text is known.
+#' 
+#' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -273,27 +275,25 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' this slightly bases on ICU's \code{i18n/csrucode.cpp},
 #' but we do it in our own way, however) or ASCII.
 #'
-#' The function has been optimized for detecting
-#' languages that are based on Latin alphabets.
 #'
-#' Otherwise the text is checked for the number of occurrences
+#' If \code{locale} is not \code{NA} and the above fails,
+#' the text is checked for the number of occurrences
 #' of language-specific code points (data provided by the ICU library)
 #' converted to all possible 8-bit encodings
 #' that fully cover the indicated language. 
 #' The encoding is selected basing on the greatest number of total
 #' byte hits.
 #'
-#' The guess is of course imprecise, as it is obtained using statistics.
+#' The guess is of course imprecise
+#' [\bold{This is DRAFT API - still does not work as expected}],
+#' as it is obtained using statistics.
 #' Because of this, detection works best if you supply at least a few hundred
 #' bytes of character data that's in a single language.
 #'
-#' The function works fine e.g. for Polish text, when one
-#' wants to detect whether a given file is UTF-8, WINDOWS-1250,
-#' or ISO-8859-2-encoded.
 #'
 #' If you have no initial guess on language and encoding, try with
 #' \code{\link{stri_enc_detect}} (uses ICU facilities).
-#' However, it turns out that (empirically) our functions
+#' However, it turns out that (empirically) \code{stri_enc_detect2}
 #' works better than the ICU-based one if UTF-* text
 #' is provided. Test yourself.
 #'
@@ -301,6 +301,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' a list of \code{raw} vectors
 #' @param locale \code{NULL} or \code{""}
 #' for default locale,
+#' \code{NA} for just checking the UTF-* family,
 #' or a single string with locale identifier.
 #'
 #' @return

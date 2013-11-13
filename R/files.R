@@ -22,6 +22,8 @@
 #'
 #' @description
 #' Reads a text file as-is, with no conversion or text line spliting.
+#' 
+#' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
 #' After reading a text file into memory (vast majority of them
@@ -51,6 +53,8 @@ stri_read_raw <- function(fname) {
 #'
 #' @description
 #' Reads a text file, re-encodes it, and splits it into text lines.
+#' 
+#' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
 #' It is a substitute for the system's \code{\link{readLines}} function,
@@ -59,13 +63,19 @@ stri_read_raw <- function(fname) {
 #' or sys options change,
 #' and split the text into lines with \code{\link{stri_split_lines1}}
 #' (which conforms with the Unicode guidelines for newline markers).
+#' 
+#' If \code{locale} is \code{NA} and auto-detect of UTF-32/16/8 fails,
+#' then system's default encoding, see \code{\link{stri_enc_get}}, is used.
 #'
 #' @param fname file name
 #' @param encoding input encoding, \code{"auto"} for automatic
 #' detection with \code{\link{stri_enc_detect2}},
 #' and \code{NULL} or \code{""} for the current default encoding.
 #' @param locale passed to \code{\link{stri_enc_detect2}};
-#' \code{NULL} or \code{""} for default locale.
+#' \code{NULL} or \code{""} for default locale,
+#' \code{NA} for checking just UTF-* family
+#' @param fallback_encoding encoding to be used if encoding detection fails;
+#' defaults to the current default encoding, see \code{\link{stri_enc_get}}
 #'
 #' @return
 #' Returns a character vector, with each line of text
@@ -73,13 +83,17 @@ stri_read_raw <- function(fname) {
 #'
 #' @family files
 #' @export
-stri_read_lines <- function(fname, encoding='auto', locale=NULL) {
+stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding=stri_enc_get()) {
    stopifnot(is.character(encoding), length(encoding) == 1)
    txt <- stri_read_raw(fname)
    if (identical(encoding, 'auto')) {
       encoding <- stri_enc_detect2(txt, locale)[[1]]$Encoding[1]
-      if (is.na(encoding))
-         error('could not auto-detect encoding')
+      if (is.na(encoding)) {
+         if (is.na(locale)) 
+            encoding <- fallback_encoding
+         else
+            stop('could not auto-detect encoding')
+      }
    }
    txt <- stri_encode(txt, encoding, "UTF-8")
    stri_split_lines1(txt)
@@ -92,6 +106,8 @@ stri_read_lines <- function(fname, encoding='auto', locale=NULL) {
 #' @description
 #' Writes a text file such that each element of a given
 #' character vector becomes a separate text line.
+#' 
+#' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
 #' It is a substitute for the system's \code{\link{writeLines}} function,

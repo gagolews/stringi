@@ -501,7 +501,9 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
  *
  * @param loc generally, a single character string
  * @param allowdefault do we allow \code{R_NilValue} or a single empty string
- *    to work as a default locale selector? (defaults \code{true})
+ *    to work as a default locale selector?
+ * @param allowna do we allow \code{NA} in \code{loc}?
+ *    This will return \code{NULL} as result
  * @param argname argument name (message formatting)
  * @return string a \code{C} string with extracted locale name
  *
@@ -509,14 +511,17 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - argname added
  */
-const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault)
+const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault, bool allowna)
 {
    if (allowdefault && isNull(loc))
       return uloc_getDefault();
    else {
       loc = stri_prepare_arg_string_1(loc, argname);
       if (STRING_ELT(loc, 0) == NA_STRING) {
-         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
+         if (allowna)
+            return NULL;
+         else
+            Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
       }
 
       if (LENGTH(STRING_ELT(loc, 0)) == 0) {

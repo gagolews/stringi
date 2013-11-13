@@ -92,17 +92,17 @@ SEXP stri_escape_unicode(SEXP str)
                   if ((char)c >= 32 || (char)c <= 126) // printable characters
                      out.append(1, (char)c);
                   else {
-                     sprintf(buf, "\\u%04.4x", (uint16_t)c);
+                     sprintf(buf, "\\u%4.4x", (uint16_t)c);
                      out.append(buf, 6);
                   }
             }
          }
          else if (c <= 0xffff) {
-            sprintf(buf, "\\u%04.4x", (uint16_t)c);
+            sprintf(buf, "\\u%4.4x", (uint16_t)c);
             out.append(buf, 6);
          }
          else {
-            sprintf(buf, "\\U%08.8x", (uint32_t)c);
+            sprintf(buf, "\\U%8.8x", (uint32_t)c);
             out.append(buf, 10);
          }
       }
