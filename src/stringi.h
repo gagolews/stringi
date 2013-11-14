@@ -19,13 +19,6 @@
 #ifndef __stringi_h
 #define __stringi_h
 
-// for DEBUG mode
-#undef NDEBUG
-// for non-DEBUG mode:
-// #ifndef NDEBUG
-// #define NDEBUG
-// #endif
-
 #include "external.h"
 #include "messages.h"
 #include "macros.h"

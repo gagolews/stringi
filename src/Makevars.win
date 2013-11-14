@@ -1,5 +1,5 @@
 ## `stringi` Makevars
-## Copyright 2013, M.Gagolewski, B.Tartanus
+## Copyright 2013 M.Gagolewski
 
 ifeq "$(WIN)" "64"
 PKG_LIBS = -L$(ICU_PATH)/lib -licuuc_x64_51 -licudt_x64_51 -licuin_x64_51 -licuio_x64_51

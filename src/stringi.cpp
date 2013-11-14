@@ -158,15 +158,15 @@ extern "C" void R_init_stringi(DllInfo *dll)
    }
 
 #ifndef NDEBUG
-    fprintf(stdout, "*******************************************************\n");
-    fprintf(stdout, "DEBUG: Dynamic library `stringi` loaded\n");
-    fprintf(stdout, "       Check out http://stringi.rexamine.com\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout, "DEBUG: Please send bug reports to stringi@rexamine.com\n");
-    fprintf(stdout, "       or at https://github.com/Rexamine/stringi/issues\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout, "DEBUG: Have fun testing! :-)\n");
-    fprintf(stdout, "*******************************************************\n");
+    fprintf(stdout, "!NDEBUG: ************************************************\n");
+    fprintf(stdout, "!NDEBUG: Dynamic library `stringi` loaded\n");
+    fprintf(stdout, "!NDEBUG: Check out http://stringi.rexamine.com\n");
+    fprintf(stdout, "!NDEBUG: \n");
+    fprintf(stdout, "!NDEBUG: Please send bug reports to stringi@rexamine.com \n");
+    fprintf(stdout, "!NDEBUG: or at https://github.com/Rexamine/stringi/issues\n");
+    fprintf(stdout, "!NDEBUG: \n");
+    fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
+    fprintf(stdout, "!NDEBUG: ************************************************\n");
 
 //    UErrorCode status;
 //    u_init(&status);
@@ -184,7 +184,7 @@ extern "C" void R_init_stringi(DllInfo *dll)
 //extern "C" void  R_unload_stringi(DllInfo *info)
 //{
 //#ifndef NDEBUG
-//   cerr << "DEBUG: Dynamic library 'stringi' unloaded." << endl;
+//   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
 ////   u_cleanup(); // this is just for DEBUG- memtrace
 //#endif
 //}

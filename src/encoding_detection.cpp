@@ -637,16 +637,6 @@ struct Converter8bit {
          }
       }
 
-      /* // DEBUG
-      UnicodeSet tmp = *exset; tmp.removeAll(curset);
-      if (tmp.size() <= 3) {
-      cerr << _name << " " << curset.size() << " " << exset->size() << " " << tmp.size() << endl;
-      for (int k=0; k<tmp.size(); ++k)
-         cerr << tmp.charAt(k) << " ";
-      cerr << endl;
-      }
-      */
-
 
       if (!curset.containsAll(*exset)) {
          // not all characters are representable in given encoding
@@ -790,14 +780,6 @@ struct EncGuess {
       UnicodeSet* exset = UnicodeSet::fromUSet(exset_tmp); // don't delete, just a pointer
       exset->removeAllStrings();
 
-      /*// DEBUG
-      R_len_t exset_size = exset->size();
-      cerr << "stri_enc_fromutf32(c(";
-      for (R_len_t k=0; k<exset_size; ++k) {
-         UChar32 c = exset->charAt(k);
-         if (c >= 0) cerr << ((k > 0)?", ":"") << c;
-      }
-      cerr << "))" << endl;*/
 
       R_len_t ucnv_count = (R_len_t)ucnv_countAvailable();
       for (R_len_t i=0; i<ucnv_count; ++i) { // for each converter

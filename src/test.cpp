@@ -29,7 +29,7 @@ SEXP stri_test_returnasis(SEXP x)
    return x;
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
-   return R_NilValue;
+   return x;  // x here avoids compiler warning
 #endif
 }
 
@@ -49,23 +49,23 @@ SEXP stri_test_Rmark(SEXP s)
    s = stri_prepare_arg_string(s, "str");
    int ns = LENGTH(s);
    for (int i=0; i < ns; ++i) {
-      cerr << "Element #" <<  i << ":";
+      fprintf(stdout, "!NDEBUG: Element #%d:\n");
       SEXP curs = STRING_ELT(s, i);
       if (curs == NA_STRING){
-         cerr << "\tNA" << endl;
+         fprintf(stdout, "!NDEBUG: \tNA\n");
          continue;
       }
       //const char* string = CHAR(curs);
-      cerr << "\tMARK_ASCII =" << (IS_ASCII(curs) > 0);
-      cerr << "\tMARK_UTF8  =" << (IS_UTF8(curs) > 0);
-      cerr << "\tMARK_LATIN1=" << (IS_LATIN1(curs) > 0);
-      cerr << "\tMARK_BYTES =" << (IS_BYTES(curs) > 0);
-      cerr << endl;
+      fprintf(stdout, "!NDEBUG: \tMARK_ASCII = %d\n", (IS_ASCII(curs) > 0));
+      fprintf(stdout, "!NDEBUG: \tMARK_UTF8  = %d\n", (IS_UTF8(curs) > 0));
+      fprintf(stdout, "!NDEBUG: \tMARK_LATIN1= %d\n", (IS_LATIN1(curs) > 0));
+      fprintf(stdout, "!NDEBUG: \tMARK_BYTES = %d\n", (IS_BYTES(curs) > 0));
+      fprintf(stdout, "!NDEBUG: \n");
    }
    return R_NilValue;
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
-   return R_NilValue;
+   return s;  // s here avoids compiler warning
 #endif
 }
 
@@ -84,7 +84,7 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
-   return R_NilValue;
+   return str; // str here avoids compiler warning
 #endif
 }
 
@@ -103,6 +103,6 @@ SEXP stri_test_UnicodeContainer8(SEXP str)
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
-   return R_NilValue;
+   return str;  // str here avoids compiler warning
 #endif
 }
