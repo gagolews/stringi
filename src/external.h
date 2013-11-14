@@ -25,9 +25,10 @@
 #undef U_CHARSET_IS_UTF8
 #endif
 
-
+#ifndef NDEBUG
 //#define U_HIDE_DRAFT_API
 #define U_HIDE_DEPRECATED_API
+#endif
 
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
 #define 	UNISTR_FROM_STRING_EXPLICIT explicit

@@ -1,5 +1,5 @@
 ## `stringi` Makevars
-## Copyright 2013 M.Gagolewski
+## Copyright 2013 M. Gagolewski
 
 PKG_LIBS     = @stringi_LIBS@
-PKG_CXXFLAGS = @stringi_CXXFLAGS@ @stringi_ADDCXXFLAGS@
+PKG_CXXFLAGS = @stringi_CXXFLAGS@ @stringi_CXXFLAGSDEBUG@

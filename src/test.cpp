@@ -49,7 +49,7 @@ SEXP stri_test_Rmark(SEXP s)
    s = stri_prepare_arg_string(s, "str");
    int ns = LENGTH(s);
    for (int i=0; i < ns; ++i) {
-      fprintf(stdout, "!NDEBUG: Element #%d:\n");
+      fprintf(stdout, "!NDEBUG: Element #%d:\n", i);
       SEXP curs = STRING_ELT(s, i);
       if (curs == NA_STRING){
          fprintf(stdout, "!NDEBUG: \tNA\n");
