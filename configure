@@ -645,7 +645,8 @@ ac_user_opts='
 enable_option_checking
 enable_icu_guess
 enable_pkg_config
-enable_debug
+enable_gcc_debug
+enable_gcc_pedantic
 with_extra_cflags
 with_extra_cppflags
 with_extra_cxxflags
@@ -1278,7 +1279,10 @@ Optional Features:
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel.
                           Note that pkg-config will be used only after failure
                           of auto-guessing or if you pass --disable-icu-guess
-  --enable-debug          Undefine NDEBUG when compiling stringi
+  --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
+                          /for stringi developers/
+  --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
+                          stringi with gcc/g++ /for stringi developers/
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -1946,15 +1950,26 @@ else
    enable_pkg_config="no"
 fi
 
-# Check whether --enable-debug was given.
-if test "${enable_debug+set}" = set; then :
-  enableval=$enable_debug;
+# Check whether --enable-gcc_debug was given.
+if test "${enable_gcc_debug+set}" = set; then :
+  enableval=$enable_gcc_debug;
 fi
 
-if test "x$enable_debug" == "xyes"; then
-   enable_debug="yes"
+if test "x$enable_gcc_debug" == "xyes"; then
+   enable_gcc_debug="yes"
 else
-   enable_debug="no"
+   enable_gcc_debug="no"
+fi
+
+# Check whether --enable-gcc_pedantic was given.
+if test "${enable_gcc_pedantic+set}" = set; then :
+  enableval=$enable_gcc_pedantic;
+fi
+
+if test "x$enable_gcc_pedantic" == "xyes"; then
+   enable_gcc_pedantic="yes"
+else
+   enable_gcc_pedantic="no"
 fi
 
 
@@ -2001,7 +2016,8 @@ fi
 #echo PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 #echo enable_pkg_config=$enable_pkg_config
 #echo enable_icu_guess=$enable_icu_guess
-#echo enable_debug=$enable_debug
+#echo enable_gcc_debug=$enable_gcc_debug
+#echo enable_gcc_pedantic=$enable_gcc_pedantic
 #echo with_extra_cflags=$with_extra_cflags
 #echo with_extra_cppflags=$with_extra_cppflags
 #echo with_extra_cxxflags=$with_extra_cxxflags
@@ -3370,13 +3386,16 @@ stringi_CXXFLAGS="${with_extra_cxxflags}"
 stringi_LIBS="${ICU_FLAG_L} ${with_extra_ldflags}"
 stringi_CPPFLAGS="${ICU_FLAG_I} ${with_extra_cppflags}"
 stringi_CFLAGS="${with_extra_cflags}"
-if test "$enable_debug" == "yes"; then
+if test "$enable_gcc_debug" == "yes"; then
    stringi_CXXFLAGS="${stringi_CXXFLAGS} -UNDEBUG"
    stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
-else
-   stringi_CXXFLAGS="${stringi_CXXFLAGS} -DNDEBUG"
-   stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
 fi
+
+if test "$enable_gcc_pedantic" == "yes"; then
+   stringi_CXXFLAGS="${stringi_CXXFLAGS} -Wall -Wextra -ansi -pedantic"
+   stringi_CFLAGS="${stringi_CFLAGS} -Wall -Wextra -ansi -pedantic"
+fi
+
 
 
 
