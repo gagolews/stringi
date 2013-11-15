@@ -587,7 +587,8 @@ PACKAGE_URL=''
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 stringi_LIBS
-stringi_CXXFLAGSDEBUG
+stringi_CPPFLAGS
+stringi_CFLAGS
 stringi_CXXFLAGS
 ac_ct_CXX
 CXXFLAGS
@@ -3200,7 +3201,7 @@ $as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
          if test "$VERSION_CHECK" = "1" ; then
             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-            ICU_FLAG_I="" # leave defaults
+            ICU_FLAG_I="" # leave defaults, this just works with-extra-cpp-flags
             ICU_FLAG_L=$with_icu_libs # add given libs
             ICU_GUESS="yes"
          else
@@ -3365,13 +3366,18 @@ fi
 # AC_CONFIG_SRCDIR([src/stringi.cpp])
 # AC_CONFIG_HEADER([src/stringi.h])
 
-stringi_CXXFLAGS=$ICU_FLAG_I
-stringi_LIBS=$ICU_FLAG_L
+stringi_CXXFLAGS="${with_extra_cxxflags}"
+stringi_LIBS="${ICU_FLAG_L} ${with_extra_ldflags}"
+stringi_CPPFLAGS="${ICU_FLAG_I} ${with_extra_cppflags}"
+stringi_CFLAGS="${with_extra_cflags}"
 if test "$enable_debug" == "yes"; then
-   stringi_CXXFLAGSDEBUG="-UNDEBUG"
+   stringi_CXXFLAGS="${stringi_CXXFLAGS} -UNDEBUG"
+   stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
 else
-   stringi_CXXFLAGSDEBUG="-DNDEBUG"
+   stringi_CXXFLAGS="${stringi_CXXFLAGS} -DNDEBUG"
+   stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
 fi
+
 
 
 

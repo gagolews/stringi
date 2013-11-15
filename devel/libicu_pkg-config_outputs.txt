@@ -1,0 +1,71 @@
+mysza@andromeda:~$ uname -a
+Linux andromeda 3.11.0-12-generic #19-Ubuntu SMP Wed Oct 9 16:12:00 UTC 2013 i686 i686 i686 GNU/Linux
+mysza@andromeda:~$ pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata
+mysza@andromeda:~$ pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+-I/usr/include/i386-linux-gnu
+mysza@andromeda:~$ pkg-config --libs icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata
+mysza@andromeda:~$ pkg-config --static icu-uc icu-i18n icu-io
+mysza@andromeda:~$ pkg-config --cflags icu-uc icu-i18n icu-io
+-I/usr/include/i386-linux-gnu
+mysza@andromeda:~$ pkg-config --modversion icu-uc icu-i18n icu-io
+4.8.1.1
+4.8.1.1
+4.8.1.1
+mysza@andromeda:~$ 
+
+
+================================
+
+[gagolews@eurydike stringi]$ pkg-config --libs icu-uc
+-licuuc -licudata  
+[gagolews@eurydike stringi]$ pkg-config --static icu-uc
+[gagolews@eurydike stringi]$ pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+[gagolews@eurydike stringi]$ pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+ 
+[gagolews@eurydike stringi]$ pkg-config --libs icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+[gagolews@eurydike stringi]$ pkg-config --static icu-uc icu-i18n icu-io
+[gagolews@eurydike stringi]$ pkg-config --cflags icu-uc icu-i18n icu-io
+ 
+[gagolews@eurydike stringi]$ uname -a
+Linux eurydike 3.11.7-200.fc19.x86_64 #1 SMP Mon Nov 4 14:09:03 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
+[gagolews@eurydike stringi]$ pkg-config --libs-only-other icu-uc icu-i18n icu-io
+ 
+[gagolews@eurydike stringi]$ pkg-config --modversion icu-uc icu-i18n icu-io
+50.1.2
+50.1.2
+50.1.2
+
+
+=================================
+
+gagolews@oxygene ~ $ uname -a
+Linux oxygene.ibspan.waw.pl 3.9.10-100.fc17.x86_64 #1 SMP Sun Jul 14 01:31:27 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
+gagolews@oxygene ~ $ pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+gagolews@oxygene ~ $ pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+ 
+gagolews@oxygene ~ $ pkg-config --libs icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+gagolews@oxygene ~ $ pkg-config --static icu-uc icu-i18n icu-io
+gagolews@oxygene ~ $ pkg-config --cflags icu-uc icu-i18n icu-io 
+ 
+gagolews@oxygene ~ $ pkg-config --modversion icu-uc icu-i18n icu-io 
+4.8.1.1
+4.8.1.1
+4.8.1.1
+
+=================================
+
+header files:
+/usr/include
+/usr/local/include
+/usr/include/x86_64-linux-gnu
+/usr/include/i386-linux-gnu
+
+Compile with clang [gagolews@eurydike]:
+PATH="/usr/local-clang/bin/:$PATH" R CMD INSTALL /home/gagolews/Projekty/stringi_0.1-11.tar.gz --configure-args="--with-extra-cxxflags=' -Weverything -pedantic'" 2> /home/gagolews/Desktop/clang.log
+

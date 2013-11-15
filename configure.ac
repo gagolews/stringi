@@ -191,7 +191,7 @@ then
          VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
          if test "$VERSION_CHECK" = "1" ; then
             AC_MSG_RESULT(yes)
-            ICU_FLAG_I="" # leave defaults
+            ICU_FLAG_I="" # leave defaults, this just works with-extra-cpp-flags
             ICU_FLAG_L=$with_icu_libs # add given libs
             ICU_GUESS="yes"
          else
@@ -289,16 +289,21 @@ fi
 # AC_CONFIG_SRCDIR([src/stringi.cpp])
 # AC_CONFIG_HEADER([src/stringi.h])
 
-stringi_CXXFLAGS=$ICU_FLAG_I
-stringi_LIBS=$ICU_FLAG_L
+stringi_CXXFLAGS="${with_extra_cxxflags}"
+stringi_LIBS="${ICU_FLAG_L} ${with_extra_ldflags}"
+stringi_CPPFLAGS="${ICU_FLAG_I} ${with_extra_cppflags}"
+stringi_CFLAGS="${with_extra_cflags}"
 if test "$enable_debug" == "yes"; then
-   stringi_CXXFLAGSDEBUG="-UNDEBUG"
+   stringi_CXXFLAGS="${stringi_CXXFLAGS} -UNDEBUG"
+   stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
 else
-   stringi_CXXFLAGSDEBUG="-DNDEBUG"
+   stringi_CXXFLAGS="${stringi_CXXFLAGS} -DNDEBUG"
+   stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
 fi
 
 AC_SUBST(stringi_CXXFLAGS)
-AC_SUBST(stringi_CXXFLAGSDEBUG)
+AC_SUBST(stringi_CFLAGS)
+AC_SUBST(stringi_CPPFLAGS)
 AC_SUBST(stringi_LIBS)
 
 

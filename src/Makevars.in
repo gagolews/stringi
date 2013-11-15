@@ -2,4 +2,6 @@
 ## Copyright 2013 M. Gagolewski
 
 PKG_LIBS     = @stringi_LIBS@
-PKG_CXXFLAGS = @stringi_CXXFLAGS@ @stringi_CXXFLAGSDEBUG@
+PKG_CXXFLAGS = @stringi_CXXFLAGS@
+PKG_CFLAGS   = @stringi_CFLAGS@
+PKG_CPPFLAGS = @stringi_CPPFLAGS@
