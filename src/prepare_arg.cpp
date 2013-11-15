@@ -298,7 +298,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    	UNPROTECT(1);
       return Rf_coerceVector(x, RAWSXP);
    }
-   else if ((TYPEOF(x) == RAWSXP))
+   else if (TYPEOF(x) == RAWSXP)
       return x; // return as-is
    else if (Rf_isVectorAtomic(x))
       return Rf_coerceVector(x, RAWSXP);
