@@ -5,56 +5,52 @@
 
 ### Windows 
 
-#### Using precompiled version of **stringi** (default)
+#### Using binary version of **stringi** (default)
 
-The pre-compiled version of the `ICU4C` library will be downloaded 
-from our servers automatically on the first call to `library()`/`require()`.
+`ICU4C` since stringi-0.1-11 is statically linked with stringi.dll.
+Everything works out of the box.
 
-#### Compiling **stringi** with our precompiled version of ICU4C
+#### Compiling **stringi** with our binary version of ICU4C
 
-If you're an advanced `R` user, you may wish to
+If you are an advanced `R` user, you may wish to
 use the [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
-chain to compile `stringi` on your own.
+chain to compile `stringi` manually.
 
 In such case, download and decompress
-[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip),
-e.g. to `c:\icu-distrib`.
+[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip),
+which allows for static linking, e.g. to `c:\icu-distrib`.
 
 Set up the environmental variable `ICU_PATH` so that it points
-to the above-mentioned directory. Otherwise, the compilation process
-will fail.
-
-Moreover, the `PATH` variable must point to the `lib` subdirectory,
-e.g. `c:\icu-distrib\lib`.
-This folder contains DLLs needed to work with `stringi`.
-If this is not set, `stringi` will have to download the necessary
-libraries from our server.
+to the above-mentioned directory, e.g. `c:/icu-distrib` (note the slash).
+Make sure this directory contains `lib/` and `include`.
+Not doing so will result in compilation process failure.
 
 
 
-#### Compiling `ICU4C` yourself
+#### Compiling `ICU4C` manually
 
 If you're a true geek, you may wish to set up everything on your own.
 Below you'll find a description on how we created 
-[our pre-compiled binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_51_2-mingw-distrib-devel.zip).
+[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip)
+on an 64-bit Windows 8 system.
 
 Tools needed:
 [Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes `MinGW64`),
 [MSYS](http://www.mingw.org/wiki/MSYS) (the `gcc` compiler is located
 in sth like `C:/Rtools/gcc-4.6.3`)
 
-Download the source package for [ICU4C 51](http://site.icu-project.org/download/51).
+Download the source package for [ICU4C 52.1](http://site.icu-project.org/download/52).
 
 To build a 32bit version of `ICU4C`:
 
 ```
 # run MSYS
 cd /c/icu/source # path to decompressed ICU sources
-CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
-   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
-   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_" \
-   ./runConfigureICU MinGW --with-library-suffix=_i386_ --prefix=/c/icu-distrib-i386 \
-   --with-library-bits=32 --disable-samples  --disable-tests --disable-layout
+./runConfigureICU MinGW  --prefix=/c/icu-distrib-i386 \
+   --with-library-bits=32 --disable-samples --disable-tests \
+   --disable-layout --disable-shared --enable-static \
+   --disable-extras --enable-icuio --with-data-packaging=static
+# (ignore warnings and continue)
 make clean # in case you run build previously
 make
 make install
@@ -64,12 +60,12 @@ make install
 To build a 64bit version of `ICU4C`:
 
 ```
-make clean # clean after 32bit build
-CFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
-   CPPFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
-   CXXFLAGS="-DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_" \
-   ./runConfigureICU MinGW --with-library-suffix=_x64_ --prefix=/c/icu-distrib-x64 \
-   --with-library-bits=64 --disable-samples  --disable-tests --disable-layout
+make clean # clean after the 32bit build
+./runConfigureICU MinGW  --prefix=/c/icu-distrib-x64 \
+   --with-library-bits=64 --disable-samples --disable-tests \
+   --disable-layout --disable-shared --enable-static \
+   --disable-extras --enable-icuio --with-data-packaging=static
+# (ignore warnings and continue)
 make
 make install
 ```
@@ -80,19 +76,19 @@ Create minimal install of `ICU4C`:
 mkdir /c/icu-distrib # your favorite dir
 cp -R /c/icu-distrib-i386/include /c/icu-distrib
 mkdir /c/icu-distrib/lib
-cp /c/icu-distrib-i386/lib/*51.dll /c/icu-distrib/lib
-cp /c/icu-distrib-x64/lib/*51.dll /c/icu-distrib/lib
-cp /c/icu-distrib-i386/lib/*.lib /c/icu-distrib/lib
-cp /c/icu-distrib-x64/lib/*.lib /c/icu-distrib/lib
-cd /c/icu-distrib/lib
-for f in *.lib; do mv $f `echo $f | sed -r "s/(.*)\.lib/\151.lib/"`; done
+cd /c/icu-distrib-i386/lib/
+for f in *.a; do cp $f /c/icu-distrib/lib/`echo $f | sed -r "s/(.*)\.a/\1_i386.a/"`; done
+rm /c/icu-distrib/lib/libsicudt.a -f
+cp sicudt.a /c/icu-distrib/lib/libsicudt_i386.a -f
+cd /c/icu-distrib-x64/lib/
+for f in *.a; do cp $f /c/icu-distrib/lib/`echo $f | sed -r "s/(.*)\.a/\1_x64.a/"`; done
+rm /c/icu-distrib/lib/libsicudt.a -f
+cp sicudt.a /c/icu-distrib/lib/libsicudt_x64.a -f
 ```
 
 Set the environmental variable `ICU_PATH` to point
-to the directory with your pre-compiled
+at the directory with your pre-compiled
 `ICU4C ` distribution, e.g. `c:/icu-distrib` (note the slash).
-Moreover, the `PATH` variable must point at `c:\icu-distrib\lib`,
-i.e. the directory containing the compiled DLLs.
 
 
 ### GNU/Linux, Unix, MacOSX
