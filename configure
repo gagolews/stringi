@@ -3326,7 +3326,7 @@ $as_echo "$ICU_FLAG_I" >&6; }
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C libpath compiler flags" >&5
 $as_echo_n "checking for ICU4C libpath compiler flags... " >&6; }
-         ICU_FLAG_L=`"$PKG_CONFIG_PATH"  --libs-only-l icu-uc icu-i18n icu-io`
+         ICU_FLAG_L=`"$PKG_CONFIG_PATH" --libs-only-L --libs-only-l icu-uc icu-i18n icu-io`
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_L" >&5
 $as_echo "$ICU_FLAG_L" >&6; }
 
