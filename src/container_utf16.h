@@ -97,7 +97,6 @@ class StriContainerUTF16 : public StriContainerBase {
 
       /** set NA
        * @param i index
-       * @return string
        */
       void setNA(R_len_t i) {
 #ifndef NDEBUG

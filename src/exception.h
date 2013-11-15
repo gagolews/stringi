@@ -44,7 +44,7 @@ class StriException {
 
 private:
 
-   char* msg; //< message to be passed to error(); allocated by R_alloc -> freed automatically
+   char* msg; ///< message to be passed to error(); allocated by R_alloc -> freed automatically
 
 public:
 

@@ -282,9 +282,9 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
       R_len_t buflen = str_cur_n-(cur_to2-cur_from2)+value_cur_n;
       buf.resize(buflen);
-      memcpy(buf.data(), str_cur_s, cur_from2);
-      memcpy(buf.data()+cur_from2, value_cur_s, value_cur_n);
-      memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, str_cur_n-cur_to2);
+      memcpy(buf.data(), str_cur_s, (size_t)cur_from2);
+      memcpy(buf.data()+cur_from2, value_cur_s, (size_t)value_cur_n);
+      memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, (size_t)str_cur_n-cur_to2);
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buflen, CE_UTF8));
    }
 

@@ -297,7 +297,6 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
  *
  * @param str character vector
  * @param decreasing single logical value
- * @param collator_opts passed to stri__ucol_open()
  * @return integer vector (permutation)
  *
  * @version 0.1 (Marek Gagolewski, 2013-06-27)

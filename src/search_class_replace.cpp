@@ -91,13 +91,13 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (; iter != occurences.end(); ++iter) {
          R_len_t_x2 match = *iter;
-         memcpy(curbuf, str_cur_s+jlast, match.v1-jlast);
+         memcpy(curbuf, str_cur_s+jlast, (size_t)match.v1-jlast);
          curbuf += match.v1-jlast;
          jlast = match.v2;
-         memcpy(curbuf, replacement_cur_s, replacement_cur_n);
+         memcpy(curbuf, replacement_cur_s, (size_t)replacement_cur_n);
          curbuf += replacement_cur_n;
       }
-      memcpy(curbuf, str_cur_s+jlast, str_cur_n-jlast);
+      memcpy(curbuf, str_cur_s+jlast, (size_t)str_cur_n-jlast);
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
@@ -184,9 +184,9 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need = str_cur_n+replacement_cur_n-(j-jlast);
       buf.resize(buf_need);
-      memcpy(buf.data(), str_cur_s, jlast);
-      memcpy(buf.data()+jlast, replacement_cur_s, replacement_cur_n);
-      memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, str_cur_n-j);
+      memcpy(buf.data(), str_cur_s, (size_t)jlast);
+      memcpy(buf.data()+jlast, replacement_cur_s, (size_t)replacement_cur_n);
+      memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, (size_t)str_cur_n-j);
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 

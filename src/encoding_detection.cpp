@@ -613,7 +613,7 @@ struct Converter8bit {
       const char* text_end   = allChars+256;
       ucnv_reset(ucnv);
       for (R_len_t i=1; i<256; ++i) {
-         UErrorCode err = U_ZERO_ERROR;
+         err = U_ZERO_ERROR;
          UChar32 c = ucnv_getNextUChar(ucnv, &text_start, text_end, &err);
          if (U_FAILURE(err)) {
 //            throw StriException(err);
@@ -633,7 +633,7 @@ struct Converter8bit {
             if (!u_isdefined(c) || u_isalpha(c))
                badChars[i] = true;
             curset.add(c);
-            curmap[c] = i;
+            curmap[c] = (uint8_t)i;
          }
       }
 

@@ -95,8 +95,8 @@ CharClass::CharClass(SEXP charclass)
       throw StriException(MSG__INCORRECT_INTERNAL_ARG);
 #endif
 
-   binprop = (UProperty)-1;
-   gencat = (UCharCategory)-1;
+   binprop = UCHAR_INVALID_CODE;
+   gencat = U_CHAR_CATEGORY_COUNT;
    complement = false;
 
    if (charclass == NA_STRING)
@@ -127,14 +127,14 @@ CharClass::CharClass(SEXP charclass)
  * Get unicode general category mask from name
  *
  * @param name character string
- * @param n \code{name}'s length
+ * @param n name's length
  * @return general category mask
  *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
  */
 UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
 {
-   UCharCategory id = (UCharCategory)(-1);
+   UCharCategory id = U_CHAR_CATEGORY_COUNT;
 
    if (n >= 1 && n <= 2) {
 
@@ -218,7 +218,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
       }
    }
 
-   if (id == (UCharCategory)-1)
+   if (id == U_CHAR_CATEGORY_COUNT)
       Rf_warning(MSG__CHARCLASS_INCORRECT);
 
    return id;
@@ -229,7 +229,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
  * Get binary property code from name
  *
  * @param name character string
- * @param n \code{name}'s length
+ * @param n name's length
  * @return general category mask
  *
  * @version 0.1 (Marek Gagolewski, 2013-06-02)
@@ -257,7 +257,7 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 
    // -------------------------------------------------------------------
 
-   UProperty id = (UProperty)(-1);
+   UProperty id = UCHAR_INVALID_CODE;
 
    if (n2 >= 1) {
       // binprop_names is sorted; apply binary search
@@ -283,7 +283,7 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
       }
    }
 
-   if (id == (UProperty)-1)
+   if (id == UCHAR_INVALID_CODE)
    Rf_warning(MSG__CHARCLASS_INCORRECT_WHICH, name);
 
    return id;
@@ -300,12 +300,12 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
  */
 int CharClass::test(UChar32 c)
 {
-   if (binprop != (UProperty)-1) {
+   if (binprop != UCHAR_INVALID_CODE) {
       int res = (u_hasBinaryProperty(c, binprop) != 0);
       if (complement) return !(res);
       else            return  (res);
    }
-   else if (gencat != (UCharCategory)-1) {
+   else if (gencat != U_CHAR_CATEGORY_COUNT) {
       int res = ((U_GET_GC_MASK(c) & gencat) != 0);
       if (complement) return !(res);
       else            return  (res);

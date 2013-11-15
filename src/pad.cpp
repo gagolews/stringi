@@ -139,30 +139,30 @@
 //         //pad from left
 //         case 1:
 //         for(int j=0; j<needed; ++j){
-//            memcpy(buf2, p, ipnum[i%np]);
+//            memcpy(buf2, p, (size_t)ipnum[i%np]);
 //            buf2 += ipnum[i%np];
 //         }
-//         memcpy(buf2, CHAR(curs), isnum[i % ns]);
+//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
 //         break;
 //         //right
 //         case 2:
-//         memcpy(buf2, CHAR(curs), isnum[i % ns]);
+//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
 //         buf2 += isnum[i % ns];
 //         for(int j=0; j<needed; ++j){
-//            memcpy(buf2, p, ipnum[i%np]);
+//            memcpy(buf2, p, (size_t)ipnum[i%np]);
 //            buf2 += ipnum[i%np];
 //         }
 //         break;
 //         //both
 //         case 3:
 //         for(int j=0; j<floor(needed/2); ++j){
-//            memcpy(buf2, p, ipnum[i%np]);
+//            memcpy(buf2, p, (size_t)ipnum[i%np]);
 //            buf2 += ipnum[i%np];
 //         }
-//         memcpy(buf2, CHAR(curs), isnum[i % ns]);
+//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
 //         buf2 += isnum[i % ns];
 //         for(int j=0; j<ceil(double(needed)/2); ++j){
-//            memcpy(buf2, p, ipnum[i%np]);
+//            memcpy(buf2, p, (size_t)ipnum[i%np]);
 //            buf2 += ipnum[i%np];
 //         }
 //         break;

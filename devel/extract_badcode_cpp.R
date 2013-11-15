@@ -2,13 +2,13 @@
 require('stringi')
 
 # we are in the root dir of stringi
-srcfiles <- dir('src', pattern='\\.cpp$', recursive=TRUE, ignore.case=TRUE, full.names=TRUE)
+srcfiles <- dir('src', pattern='\\.cpp|\\.h$', recursive=TRUE, ignore.case=TRUE, full.names=TRUE)
 
 # sprintf("%x", unlist(stri_enc_toutf32(c(UTF8chars))))
 
 for (f in srcfiles) {
    cf <- readLines(f)
-   whnasc <- which(stri_detect_regex(cf, "<<|>>|printf|scanf", stri_opts_regex(case_insensitive=TRUE)))
+   whnasc <- which(stri_detect_regex(cf, "<<|>>|[^s]printf|scanf|[^/]//<", stri_opts_regex(case_insensitive=TRUE)))
    if (length(whnasc) != 0) {
       cat(stri_trim(sprintf('%-30s: %5d: %s', f, whnasc, cf[whnasc])), sep='\n')
    }

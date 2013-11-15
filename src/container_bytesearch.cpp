@@ -44,7 +44,7 @@ StriContainerByteSearch::StriContainerByteSearch()
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector
- * @param nrecycle extend length [vectorization]
+ * @param _nrecycle extend length [vectorization]
  */
 StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
    : StriContainerUTF8(rstr, _nrecycle, true)
@@ -85,7 +85,10 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
 
 
 
-
+/** Copy operator
+ * @param container source
+ * @return *this
+ */
 StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSearch& container)
 {
    this->~StriContainerByteSearch();

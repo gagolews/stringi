@@ -160,7 +160,7 @@ SEXP stri_enc_toutf32(SEXP str)
 
       SEXP conv;
       PROTECT(conv = Rf_allocVector(INTSXP, k /*chars.size()*/));
-      memcpy(INTEGER(conv), buf, sizeof(int)*k);
+      memcpy(INTEGER(conv), buf, (size_t)sizeof(int)*k);
 //      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
 //         *(conv_tab++) = (int)*it;
       SET_VECTOR_ELT(ret, i, conv);
@@ -407,7 +407,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
       if (to_raw_logical) {
          SEXP outobj = Rf_allocVector(RAWSXP, bufneed);
-         memcpy(RAW(outobj), buf.data(), bufneed);
+         memcpy(RAW(outobj), buf.data(), (size_t)bufneed);
          SET_VECTOR_ELT(ret, i, outobj);
       }
       else {

@@ -27,7 +27,7 @@
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @param firs logical - search for the first or the last occurence?
+ * @param first logical - search for the first or the last occurence?
  * @return character vector
  *
  * @version 0.1 (Marek Gagolewski, 2013-06-20)

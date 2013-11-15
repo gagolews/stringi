@@ -80,7 +80,7 @@ class String8  {
          if (memalloc) {
 //            cerr << "DEBUG: String8: memalloc!" << endl;
             this->m_str = new char[this->m_size];
-            memcpy(this->m_str, str, this->m_size);
+            memcpy(this->m_str, str, (size_t)this->m_size);
          }
          else {
             this->m_str = (char*)(str); // we know what we're doing
@@ -105,7 +105,7 @@ class String8  {
          if (s.m_memalloc) {
 //            cerr << "DEBUG: String8: memalloc!" << endl;
             this->m_str = new char[this->m_size];
-            memcpy(this->m_str, s.m_str, this->m_size);
+            memcpy(this->m_str, s.m_str, (size_t)this->m_size);
          }
          else {
             this->m_str = s.m_str;
@@ -124,7 +124,7 @@ class String8  {
          if (s.m_memalloc) {
 //            cerr << "DEBUG: String8: memalloc!" << endl;
             this->m_str = new char[this->m_size];
-            memcpy(this->m_str, s.m_str, this->m_size);
+            memcpy(this->m_str, s.m_str, (size_t)this->m_size);
          }
          else {
             this->m_str = s.m_str;
@@ -172,7 +172,7 @@ class String8  {
          char* newstr = new char[this->m_size];
          if (this->m_str) {
             if (copy) {
-               memcpy(newstr, this->m_str, this->m_size);
+               memcpy(newstr, this->m_str, (size_t)this->m_size);
                //this->n = this->n;
             }
             else {

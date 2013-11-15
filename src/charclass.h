@@ -33,22 +33,30 @@ struct CharClass {
 
    private:
 
-      UProperty     binprop;    //< Unicode Binary Property, -1 if not used
-      UCharCategory gencat;     //< Unicode General Category, -1 if not used
-      bool complement;          //< Are we interested in the complement of a char class?
+      UProperty     binprop;    ///< Unicode Binary Property, UCHAR_INVALID_CODE if not used
+      UCharCategory gencat;     ///< Unicode General Category, U_CHAR_CATEGORY_COUNT if not used
+      bool complement;          ///< Are we interested in the complement of a char class?
 
 
-      static const char* binprop_names[];             //< textual identifiers binary properties
-      static const char* binprop_names_normalized[];  //< normalized identifiers binary properties (only uppercase ascii)
-      static const UProperty binprop_code[];          //< corresponding codes for \code{binprop_names}
-      static const R_len_t binprop_length;            //< length of \code{binprop_*} arrays
-      static const R_len_t binprop_maxchars;          //< maximal number of characters in \code{binprop_*} arrays
+      static const char* binprop_names[];             ///< textual identifiers binary properties
+      static const char* binprop_names_normalized[];  ///< normalized identifiers binary properties (only uppercase ascii)
+      static const UProperty binprop_code[];          ///< corresponding codes for \code{binprop_names}
+      static const R_len_t binprop_length;            ///< length of \code{binprop_*} arrays
+      static const R_len_t binprop_maxchars;          ///< maximal number of characters in \code{binprop_*} arrays
 
    public:
 
-      CharClass() { binprop = (UProperty)-1; gencat = (UCharCategory)-1; complement = false; }
+      CharClass() { 
+         binprop = UCHAR_INVALID_CODE;
+         gencat = U_CHAR_CATEGORY_COUNT;
+         complement = false;
+      }
+      
       CharClass(SEXP charclass);
-      inline bool isNA() { return (binprop == (UProperty)-1 && gencat == (UCharCategory)-1); }
+      
+      inline bool isNA() {
+         return (binprop == UCHAR_INVALID_CODE && gencat == U_CHAR_CATEGORY_COUNT ); 
+      }
 
       int test(UChar32 c);
 

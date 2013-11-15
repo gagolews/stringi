@@ -101,7 +101,7 @@ SEXP stri_dup(SEXP str, SEXP times)
       // we paste only "additional" duplicates
       R_len_t max_index = str_cur_n*times_cur;
       for (; str_last_index < max_index; str_last_index += str_cur_n) {
-         memcpy(buf.data()+str_last_index, str_cur->c_str(), str_cur_n);
+         memcpy(buf.data()+str_last_index, str_cur->c_str(), (size_t)str_cur_n);
       }
 
       // the result is always in UTF-8
@@ -184,12 +184,12 @@ SEXP stri_join2(SEXP e1, SEXP e2)
       if (cur_string_1 != last_string_1) {
          last_string_1 = cur_string_1;
          last_buf_idx = cur_string_1->length();
-         memcpy(buf.data(), cur_string_1->c_str(), last_buf_idx);
+         memcpy(buf.data(), cur_string_1->c_str(), (size_t)last_buf_idx);
       }
 
       const String8* cur_string_2 = &(e2_cont.get(i));
       R_len_t  cur_len_2 = cur_string_2->length();
-      memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), cur_len_2);
+      memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), (size_t)cur_len_2);
       // the result is always in UTF-8
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), last_buf_idx+cur_len_2, CE_UTF8));
    }
@@ -282,11 +282,11 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
          }
 
          const String8* curstring = &(strlist_cont.get(j).get(i));
-         memcpy(buf.data()+cursize, curstring->c_str(), curstring->length());
+         memcpy(buf.data()+cursize, curstring->c_str(), (size_t)curstring->length());
          cursize += curstring->length();
 
          if (j < strlist_length-1 && sep_len > 0) {
-            memcpy(buf.data()+cursize, sep_char, sep_len);
+            memcpy(buf.data()+cursize, sep_char, (size_t)sep_len);
             cursize += sep_len;
          }
       }
@@ -344,7 +344,7 @@ SEXP stri_flatten_nosep(SEXP str)
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf.data()+cur, str_cont.get(i).c_str(), ncur);
+      memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
       cur += ncur;
    }
 
@@ -406,10 +406,10 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf.data()+cur, str_cont.get(i).c_str(), ncur);
+      memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
       cur += ncur;
       if (i < str_length-1 && collapse_nbytes > 0) {
-         memcpy(buf.data()+cur, collapse_s, collapse_nbytes);
+         memcpy(buf.data()+cur, collapse_s, (size_t)collapse_nbytes);
          cur += collapse_nbytes;
       }
    }
