@@ -130,76 +130,79 @@
 #' \url{http://tools.ietf.org/html/rfc3629}
 #'
 #' @family stringi_general_topics
+#' @useDynLib stringi
 invisible(NULL)
-
 
 
 
 
 .onLoad <- function(lib, pkg)
 {
-   if (.Platform$OS.type == "windows") {
-      dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
-
-      if (class(dll) != "DLLInfo") {
-         return(.install_ICU4C_windows(lib, pkg, .Platform$r_arch))
-      }
-   }
-   else { # "unix"
-      dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
-      if (class(dll) != "DLLInfo") {
-         stop("Failed to load stringi's dynamic library.
-              Perhaps ICU4C is not in your search path.
-              Please recompile the package. See INSTALL.md for more details",
-              call.=FALSE)
-      }
-   }
+   # This code was valid when we didn't link ICU4C statically on Windows:
+   # if (.Platform$OS.type == "windows") {
+   #   dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
+   #
+   #   if (class(dll) != "DLLInfo") {
+   #      return(.install_ICU4C_windows(lib, pkg, .Platform$r_arch))
+   #   }
+   #}
+   #else { # "unix"
+   #   dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
+   #   if (class(dll) != "DLLInfo") {
+   #      stop("Failed to load stringi's dynamic library.
+   #           Perhaps ICU4C is not in your search path.
+   #           Please recompile the package. See INSTALL.md for more details",
+   #           call.=FALSE)
+   #   }
+   #}
 
    # stri_info() produces a warning if current native charset
    # is problematic. The packageStartupMessage also indicates the user
    # whether ICU has guessed the locale used correctly. Leave it as is :)
-   packageStartupMessage("stringi (" %+% stri_info(short=TRUE) %+% ")")
+   # BTW, We know about Good Practices in Writing R Extensions.
+   # This information, however, is very important to the user.
+   packageStartupMessage("stringi.rexamine.com (" %+% stri_info(short=TRUE) %+% ")")
 }
 
-
-.install_ICU4C_windows <- function(lib, pkg, platform)
-{
-   ask1 <- "The ICU4C library has not been installed yet. Do you wish to download it? [y/n] > ";
-   ask2 <- "Do you want to reload the package? [y/n] > "
-   errmsg <- "Failed to load stringi's dynamic library."
-
-   ans <- as.character(readline(prompt = ask1))
-   if (!identical(tolower(ans), "y"))
-      stop(errmsg, call.=FALSE)
-
-   fname <- tempfile()
-#    urlsrc <- paste0("http://static.rexamine.com/packages/download.php",
-#                     "?package=icu4c",
-#                     "&version=51_2",
-#                     "&os=windows",
-#                     "&arch=", platform)
-   urlsrc <- paste0("http://static.rexamine.com/packages/",
-                    "windows/icu4c_51_2-mingw-distrib-",
-                    platform, ".zip")
-
-   cat('Downloading ICU4C ->', fname, '...\n', file=stderr())
-   if (0 != download.file(urlsrc, fname))
-      stop('Download error.')
-   else
-      cat('OK.\n', file=stderr())
-
-   cat('Decompressing files...\n', file=stderr())
-   destdir <- file.path(lib, pkg, "libs", platform)
-   ret <- unzip(fname, exdir=destdir, unzip=getOption('unzip'))
-   if (length(ret) == 0)
-      stop('Error decompressing downloaded archive.')
-   else
-      cat('OK.\n', file=stderr())
-
-   cat('ICU4C 51.2 has been successfully installed.\n', file=stderr())
-   ans <- as.character(readline(prompt = ask2))
-   if (!identical(tolower(ans), "y"))
-      stop(errmsg, call.=FALSE)
-
-   .onLoad(lib, pkg)
-}
+# no longer needed as ICU4C is statically linked since 2013-11-15 :)
+#.install_ICU4C_windows <- function(lib, pkg, platform)
+#{
+#   ask1 <- "The ICU4C library has not been installed yet. Do you wish to download it? [y/n] > ";
+#   ask2 <- "Do you want to reload the package? [y/n] > "
+#   errmsg <- "Failed to load stringi's dynamic library."
+#
+#   ans <- as.character(readline(prompt = ask1))
+#   if (!identical(tolower(ans), "y"))
+#      stop(errmsg, call.=FALSE)
+#
+#   fname <- tempfile()
+##    urlsrc <- paste0("http://static.rexamine.com/packages/download.php",
+##                     "?package=icu4c",
+##                     "&version=51_2",
+##                     "&os=windows",
+##                     "&arch=", platform)
+#   urlsrc <- paste0("http://static.rexamine.com/packages/",
+#                    "windows/icu4c_51_2-mingw-distrib-",
+#                    platform, ".zip")
+#
+#   cat('Downloading ICU4C ->', fname, '...\n', file=stderr())
+#   if (0 != download.file(urlsrc, fname))
+#      stop('Download error.')
+#   else
+#      cat('OK.\n', file=stderr())
+#
+#   cat('Decompressing files...\n', file=stderr())
+#   destdir <- file.path(lib, pkg, "libs", platform)
+#   ret <- unzip(fname, exdir=destdir, unzip=getOption('unzip'))
+#   if (length(ret) == 0)
+#      stop('Error decompressing downloaded archive.')
+#   else
+#      cat('OK.\n', file=stderr())
+#
+#   cat('ICU4C 51.2 has been successfully installed.\n', file=stderr())
+#   ans <- as.character(readline(prompt = ask2))
+#   if (!identical(tolower(ans), "y"))
+#      stop(errmsg, call.=FALSE)
+#
+#   .onLoad(lib, pkg)
+#}

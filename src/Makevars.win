@@ -2,11 +2,11 @@
 ## Copyright 2013 M. Gagolewski
 
 ifeq "$(WIN)" "64"
-PKG_LIBS = -L$(ICU_PATH)/lib -licuuc_x64_51 -licudt_x64_51 -licuin_x64_51 -licuio_x64_51
-PKG_CPPFLAGS = -I$(ICU_PATH)/include -Wall -Wextra -pedantic -ansi -DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__x64_
+PKG_LIBS = -L"$(ICU_PATH)/lib" -lsicuuc_x64 -lsicudt_x64 -lsicuin_x64 -lsicuio_x64 -lsicutest_x64 -lsicuuc_x64
+PKG_CPPFLAGS = -I"$(ICU_PATH)/include" -DU_STATIC_IMPLEMENTATION
 else
-PKG_LIBS = -L$(ICU_PATH)/lib -licuuc_i386_51 -licudt_i386_51 -licuin_i386_51 -licuio_i386_51
-PKG_CPPFLAGS = -I$(ICU_PATH)/include -Wall -Wextra -pedantic -ansi -DU_HAVE_LIB_SUFFIX=1 -DU_LIB_SUFFIX_C_NAME=__i386_
+PKG_LIBS = -L"$(ICU_PATH)/lib" -lsicuuc_i386 -lsicudt_i386 -lsicuin_i386 -lsicuio_i386 -lsicutest_i386 -lsicuuc_i386
+PKG_CPPFLAGS = -I"$(ICU_PATH)/include" -DU_STATIC_IMPLEMENTATION
 endif
 
 
