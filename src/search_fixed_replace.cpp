@@ -95,7 +95,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need =
-         replacement_cur_n*str_cur_n+(R_len_t)occurences.size()-sumbytes;
+         str_cur_n+replacement_cur_n*(R_len_t)occurences.size()-sumbytes;
       buf.resize(buf_need);
 
       R_len_t jlast = 0;
