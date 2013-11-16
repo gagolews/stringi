@@ -134,7 +134,7 @@ SEXP stri_enc_toutf32(SEXP str)
    }
 
    bufsize = bufsize + 1; // at most 4 times too large... well, have to be
-   int* buf = (int*)R_alloc(bufsize, sizeof(int));
+   int* buf = (int*)R_alloc(bufsize, (int)sizeof(int));
 
    SEXP ret;
    PROTECT(ret = Rf_allocVector(VECSXP, n));

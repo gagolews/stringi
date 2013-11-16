@@ -126,11 +126,20 @@ UConverter* stri__ucnv_open(const char* enc)
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
 
-   ucnv_setFromUCallBack(uconv, STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN, NULL, NULL, NULL, &err);
+   ucnv_setFromUCallBack((UConverter*)uconv, 
+      (UConverterFromUCallback)STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN, 
+      (const void *)NULL, (UConverterFromUCallback *)NULL,
+      (const void **)NULL,
+      &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
 
-   ucnv_setToUCallBack  (uconv, STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,   NULL, NULL, NULL, &err);
+   ucnv_setToUCallBack  ((UConverter*)uconv, 
+      (UConverterToUCallback)STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,
+      (const void *)NULL, 
+      (UConverterToUCallback *)NULL, 
+      (const void **)NULL, 
+      &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
 
@@ -247,7 +256,7 @@ void stri__ucnv_getStandards(const char**& standards, R_len_t& cs)
    UErrorCode err;
    cs = (R_len_t)ucnv_countStandards()-1; // -1 - this is not documented in ICU4C
    if (cs <= 0) Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
-   standards = (const char**)R_alloc(cs, sizeof(const char*)); // will be freed automatically
+   standards = (const char**)R_alloc(cs, (int)sizeof(const char*)); // will be freed automatically
 
    for (R_len_t i=0; i<cs; ++i) {
       err = U_ZERO_ERROR;

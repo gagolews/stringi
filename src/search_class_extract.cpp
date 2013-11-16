@@ -175,7 +175,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          jlast = j;
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       if (noccurences == 0)
          SET_VECTOR_ELT(ret, i, notfound);
       else if (merge_cur && noccurences > 1) {
@@ -194,7 +194,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          }
 
          // create resulting matrix from occurences2
-         R_len_t noccurences2 = occurences2.size();
+         R_len_t noccurences2 = (R_len_t)occurences2.size();
          SEXP cur_res;
          PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences2));
          iter = occurences2.begin();

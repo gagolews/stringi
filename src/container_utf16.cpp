@@ -222,7 +222,7 @@ SEXP StriContainerUTF16::toR() const
          buf.clear();
          str[i%n]->toUTF8String(buf);
          SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(buf.c_str(), buf.length(), CE_UTF8));
+            Rf_mkCharLenCE(buf.c_str(), (int)buf.length(), (cetype_t)CE_UTF8));
       }
    }
 
@@ -249,7 +249,7 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
    else {
       std::string s;
       str[i%n]->toUTF8String(s);
-      return Rf_mkCharLenCE(s.c_str(), s.length(), CE_UTF8);
+      return Rf_mkCharLenCE(s.c_str(), (int)s.length(), (cetype_t)CE_UTF8);
    }
 }
 

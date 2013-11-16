@@ -55,7 +55,7 @@
 //   // maybe a call to stri_prepare_arg_integer?
 //
 //	int n = LENGTH(count);
-//	double* costm = (double*)R_alloc(n*n, sizeof(double));
+//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double));
 //	double ct = 0;
 //	double sum = 0;
 //   int* icount = INTEGER(count);
@@ -73,7 +73,7 @@
 //		}
 //	}
 //	//i-th element of f - cost of
-//	double* f = (double*)R_alloc(n, sizeof(double));
+//	double* f = (double*)R_alloc(n, (int)sizeof(double));
 //	int j=0;
 //	//where to put space (false) and where break line (true)
 //	SEXP space;
@@ -87,7 +87,7 @@
 //	}
 //	double min=0;
 //	int w=0;
-//	double* temp = (double*)R_alloc(n, sizeof(double));
+//	double* temp = (double*)R_alloc(n, (int)sizeof(double));
 //	if(j<n){
 //	    for(int i=j;i<n;i++){
 //			//to find min we use array "temp"

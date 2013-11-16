@@ -49,7 +49,7 @@ private:
 public:
 
    StriException(const char* format, ...) {
-      msg = R_alloc(StriException_BUFSIZE, sizeof(char));
+      msg = R_alloc(StriException_BUFSIZE, (int)sizeof(char));
       va_list args;
       va_start(args, format);
       vsprintf(msg, format, args);
@@ -57,7 +57,7 @@ public:
    }
 
    StriException(UErrorCode status) {
-      msg = R_alloc(StriException_BUFSIZE, sizeof(char));
+      msg = R_alloc(StriException_BUFSIZE, (int)sizeof(char));
       sprintf(msg, MSG__ICU_ERROR, getICUerrorName(status), u_errorName(status));
    }
 

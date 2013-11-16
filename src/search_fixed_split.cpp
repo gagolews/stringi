@@ -212,7 +212,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       if (omit_empty_cur && fields.back().v1 == fields.back().v2)
          fields.pop_back();
 
-      R_len_t noccurences = fields.size();
+      R_len_t noccurences = (R_len_t)fields.size();
       StriContainerUTF16 out_cont(noccurences);
       deque<R_len_t_x2>::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {

@@ -899,7 +899,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
       EncGuess::do_utf16(guesses, str_cur_s, str_cur_n);
       EncGuess::do_8bit(guesses, str_cur_s, str_cur_n, qloc);  // includes UTF-8
 
-      R_len_t matchesFound = guesses.size();
+      R_len_t matchesFound = (R_len_t)guesses.size();
       if (matchesFound <= 0) {
          SET_VECTOR_ELT(ret, i, wrong);
          continue;

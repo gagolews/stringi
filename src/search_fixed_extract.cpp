@@ -181,7 +181,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       StriContainerUTF16 out_cont(noccurences);
       deque<R_len_t_x2>::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {

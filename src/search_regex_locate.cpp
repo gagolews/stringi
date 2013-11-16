@@ -74,7 +74,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          found = (int)matcher->find();
       } while (found);
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);

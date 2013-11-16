@@ -176,7 +176,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       if (noccurences <= 0) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;

@@ -95,7 +95,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool f
    PROTECT(ret = stri__matrix_NA_STRING(vectorize_length, occurences_max));
 
    for (R_len_t i=0; i<vectorize_length; ++i) {
-      R_len_t ni = occurences[i].size();
+      R_len_t ni = (R_len_t)occurences[i].size();
       for (R_len_t j=0; j<ni; ++j) {
          charptr_x2 retij = occurences[i][j];
          if (retij.v1 != NULL && retij.v2 != NULL)
@@ -195,7 +195,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = occurences.size()/(pattern_cur_groups+1);
+      R_len_t noccurences = (R_len_t)occurences.size()/(pattern_cur_groups+1);
       if (noccurences <= 0) {
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
          continue;

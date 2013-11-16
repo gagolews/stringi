@@ -60,6 +60,21 @@ gagolews@oxygene ~ $ pkg-config --modversion icu-uc icu-i18n icu-io
 
 =================================
 
+root@bartolini-Studio-1555:/home/bartolini/stringi# pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+root@bartolini-Studio-1555:/home/bartolini/stringi# pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+-I/usr/local/include  
+root@bartolini-Studio-1555:/home/bartolini/stringi# pkg-config --libs icu-uc icu-i18n icu-io
+-L/usr/local/lib -licuio -licui18n -licuuc -licudata  
+root@bartolini-Studio-1555:/home/bartolini/stringi# pkg-config --static icu-uc icu-i18n icu-io
+root@bartolini-Studio-1555:/home/bartolini/stringi# pkg-config --cflags icu-uc icu-i18n icu-io
+-I/usr/local/include  
+root@bartolini-Studio-1555:/home/bartolini/stringi# uname -a
+Linux bartolini-Studio-1555 3.8.0-33-generic #48-Ubuntu SMP Wed Oct 23 09:16:58 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
+root@bartolini-Studio-1555:/home/bartolini/stringi# 
+
+=================================
+
 header files:
 /usr/include
 /usr/local/include

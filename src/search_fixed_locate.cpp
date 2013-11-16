@@ -79,7 +79,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
@@ -341,7 +341,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
          start = pattern_cont.findNext();
       }
 
-      R_len_t noccurences = occurences.size();
+      R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);

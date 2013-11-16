@@ -133,7 +133,7 @@
 //         SET_STRING_ELT(ret, i, curs);
 //         continue;
 //      }
-//      char* buf = R_alloc(isnum[i%ns]+ipnum[i%np]*needed, sizeof(char));
+//      char* buf = R_alloc(isnum[i%ns]+ipnum[i%np]*needed, (int)sizeof(char));
 //      char* buf2 = buf;
 //      switch(iside[i % nside]){
 //         //pad from left
