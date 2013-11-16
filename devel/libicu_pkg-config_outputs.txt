@@ -42,6 +42,37 @@ Linux eurydike 3.11.7-200.fc19.x86_64 #1 SMP Mon Nov 4 14:09:03 UTC 2013 x86_64 
 
 =================================
 
+uname -a
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --libs icu-uc icu-i18n icu-io
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --static icu-uc icu-i18n icu-io
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --cflags icu-uc icu-i18n icu-io 
+PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --modversion icu-uc icu-i18n icu-io 
+
+===================================
+
+[root@eurydike pkgconfig]# uname -a
+Linux eurydike 3.11.7-200.fc19.x86_64 #1 SMP Mon Nov 4 14:09:03 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io
+-licuio -licui18n -licuuc -licudata  
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --cflags-only-I icu-uc icu-i18n icu-io
+-I/root/icu/compiled4.8/include  
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --libs icu-uc icu-i18n icu-io
+-L/root/icu/compiled4.8/lib -licuio -licui18n -licuuc -licudata  
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --static icu-uc icu-i18n icu-io
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --cflags icu-uc icu-i18n icu-io 
+-I/root/icu/compiled4.8/include  
+[root@eurydike pkgconfig]# PKG_CONFIG_PATH="/root/icu/compiled4.8/lib/pkgconfig/" pkg-config --modversion icu-uc icu-i18n icu-io 
+4.8.1.1
+4.8.1.1
+4.8.1.1
+
+===================================
+
+
+
+
 gagolews@oxygene ~ $ uname -a
 Linux oxygene.ibspan.waw.pl 3.9.10-100.fc17.x86_64 #1 SMP Sun Jul 14 01:31:27 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
 gagolews@oxygene ~ $ pkg-config --libs-only-L --libs-only-l icu-uc icu-i18n icu-io

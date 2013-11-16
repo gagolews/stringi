@@ -259,11 +259,11 @@ then
          # detected version of ICU4C is sufficient
          AC_MSG_RESULT(yes)
          AC_MSG_CHECKING(for ICU4C includepath compiler flags)
-         ICU_FLAG_I=`"$PKG_CONFIG_PATH" --cflags-only-I icu-uc icu-i18n icu-io`
+         ICU_FLAG_I=`"$PKG_CONFIG_PATH" --cflags icu-uc icu-i18n icu-io`
          AC_MSG_RESULT($ICU_FLAG_I)
    
          AC_MSG_CHECKING(for ICU4C libpath compiler flags)
-         ICU_FLAG_L=`"$PKG_CONFIG_PATH" --libs-only-L --libs-only-l icu-uc icu-i18n icu-io`
+         ICU_FLAG_L=`"$PKG_CONFIG_PATH" --libs icu-uc icu-i18n icu-io`
          AC_MSG_RESULT($ICU_FLAG_L)
 
          PKG_GUESS="yes" # DONE
