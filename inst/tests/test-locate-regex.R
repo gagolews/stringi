@@ -79,7 +79,10 @@ test_that("stri_locate_last_regex", {
    expect_equivalent(stri_locate_last_regex("X\u0104\u0105\u106X", "\u0105"), matrix(c(3L,3L)))
    expect_equivalent(stri_locate_last_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,3L)))
    expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U00024B63"), matrix(c(3L,3L)))
+   
+   # ICU 4.8.1 - problems with UREGEX_LITERAL on clang:
    expect_equivalent(stri_locate_last_regex("X\U00024B62\U00024B63\U00024B64X", "\U00024B63", stri_opts_regex(literal=TRUE)), matrix(c(3L,3L)))
+   
    expect_equivalent(stri_locate_last_regex("aaa", "aa"), matrix(c(1L,2L)))
 
    expect_equivalent(stri_locate_last_regex("1a\u0105a", "a.a"), matrix(c(2,4)))

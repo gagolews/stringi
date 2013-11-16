@@ -142,9 +142,10 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
 
-      UErrorCode status = U_ZERO_ERROR;
       if ((int)matcher->find()) { //find first matches
+         UErrorCode status = U_ZERO_ERROR;
          ret_tab[i] = (int)matcher->start(status);
+         if (U_FAILURE(status)) throw StriException(status);
          ret_tab[i+vectorize_length] = (int)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(status);
       }
@@ -153,7 +154,9 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
 
       if (!first) { // continue searching
          while ((int)matcher->find()) {
+            UErrorCode status = U_ZERO_ERROR;
             ret_tab[i]                  = (int)matcher->start(status);
+            if (U_FAILURE(status)) throw StriException(status);
             ret_tab[i+vectorize_length] = (int)matcher->end(status);
             if (U_FAILURE(status)) throw StriException(status);
          }

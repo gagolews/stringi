@@ -590,6 +590,7 @@ stringi_LIBS
 stringi_CPPFLAGS
 stringi_CFLAGS
 stringi_CXXFLAGS
+PKG_CONFIG
 ac_ct_CXX
 CXXFLAGS
 CXX
@@ -1310,7 +1311,8 @@ Some influential environment variables:
               /usr/lib64/R. Note that $R_HOME/bin/R should point to R
               executable.
   PKG_CONFIG_PATH
-              Override default path to pkg-config, e.g. /usr/bin/pkg-config
+              A colon-separated (on Windows, semicolon-separated) list of
+              directories to search for pkg-config's .pc files.
   CC          C compiler command
   CFLAGS      C compiler flags
   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
@@ -3258,30 +3260,28 @@ fi
 PKG_GUESS="no"
 if test $ICU_GUESS == "no" && test $enable_pkg_config == "yes"
 then
-   # Retrieve pkg-config's path [it may be provided by an env.var.]
-   if test -z "${PKG_CONFIG_PATH}"
-   then
-      # Extract the first word of "pkg-config", so it can be a program name with args.
+   # Retrieve pkg-config's path
+   # Extract the first word of "pkg-config", so it can be a program name with args.
 set dummy pkg-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_PKG_CONFIG_PATH+:} false; then :
+if ${ac_cv_path_PKG_CONFIG+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  case $PKG_CONFIG_PATH in
+  case $PKG_CONFIG in
   [\\/]* | ?:[\\/]*)
-  ac_cv_path_PKG_CONFIG_PATH="$PKG_CONFIG_PATH" # Let the user override the test with a path.
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/local/bin:ext/bin:ext:/sw/bin:/opt/bin"
+as_dummy="$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
     for ac_exec_ext in '' $ac_executable_extensions; do
   if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_PKG_CONFIG_PATH="$as_dir/$ac_word$ac_exec_ext"
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
     $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -3289,40 +3289,36 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_PKG_CONFIG_PATH" && ac_cv_path_PKG_CONFIG_PATH="no"
+  test -z "$ac_cv_path_PKG_CONFIG" && ac_cv_path_PKG_CONFIG="no"
   ;;
 esac
 fi
-PKG_CONFIG_PATH=$ac_cv_path_PKG_CONFIG_PATH
-if test -n "$PKG_CONFIG_PATH"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG_PATH" >&5
-$as_echo "$PKG_CONFIG_PATH" >&6; }
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 
  # auto-detect
-   elif test ! -f "${PKG_CONFIG_PATH}"; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pkg-config" >&5
-$as_echo_n "checking for pkg-config... " >&6; }
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
+
+   if test ! -f "${PKG_CONFIG}"; then
       echo "*** The pkg-config script could not be found"
-      echo "*** Make sure it is in your system PATH or provide PKG_CONFIG_PATH"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** Make sure it is installed"
       exit 1 # you may exit here
    fi
 
    # check if pkg-config knows about icu-uc
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for ICU4C installed" >&5
 $as_echo_n "checking with pkg-config for ICU4C installed... " >&6; }
-   if `"${PKG_CONFIG_PATH}" --exists icu-uc`
+   if `"${PKG_CONFIG}" --exists icu-uc`
    then
       # pkg config knows about icu-uc
 
       # check which version of ICU4C is installed
-      ICU_VERSION=`"${PKG_CONFIG_PATH}" --modversion icu-uc`
+      ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
 $as_echo "$ICU_VERSION" >&6; }
 
@@ -3337,13 +3333,13 @@ $as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
 $as_echo "yes" >&6; }
          { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C includepath compiler flags" >&5
 $as_echo_n "checking for ICU4C includepath compiler flags... " >&6; }
-         ICU_FLAG_I=`"$PKG_CONFIG_PATH" --cflags icu-uc icu-i18n icu-io`
+         ICU_FLAG_I=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_I" >&5
 $as_echo "$ICU_FLAG_I" >&6; }
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C libpath compiler flags" >&5
 $as_echo_n "checking for ICU4C libpath compiler flags... " >&6; }
-         ICU_FLAG_L=`"$PKG_CONFIG_PATH" --libs icu-uc icu-i18n icu-io`
+         ICU_FLAG_L=`"${PKG_CONFIG}" --libs icu-uc icu-i18n icu-io`
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_L" >&5
 $as_echo "$ICU_FLAG_L" >&6; }
 

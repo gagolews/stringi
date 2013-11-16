@@ -3,6 +3,12 @@
 
 ## Obtaining `ICU4C`
 
+The package compiles with ICU4C >= 4.8.
+However, note that we have observed some issues with UREGEX_LITERAL
+regex flag in ICU4C 4.8.1.
+Everything is OK with ICU4C 50, 51, and 52.
+
+
 ### Windows 
 
 #### Using binary version of **stringi** (default)
@@ -32,7 +38,8 @@ Not doing so will result in compilation process failure.
 If you're a true geek, you may wish to set up everything on your own.
 Below you'll find a description on how we created 
 [our binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip)
-on an 64-bit Windows 8 system.
+on an 64-bit Windows 8 system. This will enable static linking of ICU4C
+libs.
 
 Tools needed:
 [Rtools](http://cran.r-project.org/bin/windows/Rtools/) (includes `MinGW64`),
@@ -120,8 +127,8 @@ Note that this may provide you with an outdated version of the ICU library.
 
 ```
 cd /tmp
-wget http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-src.tgz
-tar -zxvf icu4c-51_2-src.tgz
+wget http://download.icu-project.org/files/icu4c/52.1/icu4c-52_1-src.tgz
+tar -zxvf icu4c-52_1-src.tgz
 cd icu/source/
 ./runConfigureICU <yourplatform>      # see ./runConfigureICU --help
 make

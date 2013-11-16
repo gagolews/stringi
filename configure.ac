@@ -15,8 +15,8 @@ AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/li
                     Note that $R_HOME/bin/R should point to R executable.])
 
 # PKG_CONFIG_PATH - full path to pkg-config
-AC_ARG_VAR(PKG_CONFIG_PATH, [Override default path to pkg-config,
-                     e.g. /usr/bin/pkg-config])
+AC_ARG_VAR(PKG_CONFIG_PATH, [A colon-separated (on Windows, semicolon-separated) 
+   list of directories to search for pkg-config's .pc files.])
 
 
 AC_ARG_ENABLE([icu_guess],
@@ -227,28 +227,24 @@ fi
 PKG_GUESS="no"
 if test $ICU_GUESS == "no" && test $enable_pkg_config == "yes"
 then
-   # Retrieve pkg-config's path [it may be provided by an env.var.]
-   if test -z "${PKG_CONFIG_PATH}"
-   then
-      AC_PATH_PROG(PKG_CONFIG_PATH, pkg-config, no,
-         [$PATH:/usr/local/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
-   elif test ! -f "${PKG_CONFIG_PATH}"; then
-      AC_MSG_CHECKING(for pkg-config)
-      AC_MSG_RESULT(no)
+   # Retrieve pkg-config's path 
+   AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
+         [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
+
+   if test ! -f "${PKG_CONFIG}"; then
       echo "*** The pkg-config script could not be found"
-      echo "*** Make sure it is in your system PATH or provide PKG_CONFIG_PATH"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** Make sure it is installed"
       exit 1 # you may exit here
    fi
 
    # check if pkg-config knows about icu-uc
    AC_MSG_CHECKING(with pkg-config for ICU4C installed)
-   if `"${PKG_CONFIG_PATH}" --exists icu-uc`
+   if `"${PKG_CONFIG}" --exists icu-uc`
    then
       # pkg config knows about icu-uc
 
       # check which version of ICU4C is installed
-      ICU_VERSION=`"${PKG_CONFIG_PATH}" --modversion icu-uc`
+      ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
       AC_MSG_RESULT($ICU_VERSION)
 
       # check for a suitable version
@@ -259,11 +255,11 @@ then
          # detected version of ICU4C is sufficient
          AC_MSG_RESULT(yes)
          AC_MSG_CHECKING(for ICU4C includepath compiler flags)
-         ICU_FLAG_I=`"$PKG_CONFIG_PATH" --cflags icu-uc icu-i18n icu-io`
+         ICU_FLAG_I=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`
          AC_MSG_RESULT($ICU_FLAG_I)
    
          AC_MSG_CHECKING(for ICU4C libpath compiler flags)
-         ICU_FLAG_L=`"$PKG_CONFIG_PATH" --libs icu-uc icu-i18n icu-io`
+         ICU_FLAG_L=`"${PKG_CONFIG}" --libs icu-uc icu-i18n icu-io`
          AC_MSG_RESULT($ICU_FLAG_L)
 
          PKG_GUESS="yes" # DONE
