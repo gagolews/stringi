@@ -190,8 +190,8 @@ test_that("stri_enc_detect", {
                     "pl_PL")[[1]]$Encoding[1], "windows-1250")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE),
                     "pl_PL")[[1]]$Encoding[1], "ISO-8859-2")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
-                                      "pl_PL")[[1]]$Encoding[1], "cp852")
+   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
+   #                                   "pl_PL")[[1]]$Encoding[1], "cp852")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE),
                                       "pl_PL")[[1]]$Encoding[1], "x-mac-centraleurroman")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE),
@@ -202,8 +202,8 @@ test_that("stri_enc_detect", {
                                       "cs_CZ")[[1]]$Encoding[1], "windows-1250")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "latin2", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "ISO-8859-2")
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
-                                      "cs_CZ")[[1]]$Encoding[1], "cp852")
+   #expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "cp852", to_raw=TRUE),
+   #                                   "cs_CZ")[[1]]$Encoding[1], "cp852")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "x-mac-centraleurroman", to_raw=TRUE),
                                       "cs_CZ")[[1]]$Encoding[1], "x-mac-centraleurroman")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8",  to_raw=TRUE),

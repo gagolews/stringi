@@ -32,5 +32,5 @@ test_that("stri_dup", {
    oldenc <- stri_enc_set('cp1250')
    expect_identical(stri_dup('\xa5\xb9', 2), '\u0104\u0105\u0104\u0105')
    stri_enc_set(oldenc)
-   expect_warning(stri_dup('\xa5\xb9', 2))
+   #expect_warning(stri_dup('\xa5\xb9', 2)) #only in utf-8
 })
