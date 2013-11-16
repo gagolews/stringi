@@ -78,5 +78,7 @@ test_that("stri_sort", {
    expect_equivalent(stri_sort(rev(LETTERS)), LETTERS)
    expect_equivalent(stri_sort(rev(letters)), letters)
    expect_equivalent(stri_sort(c("abc","aab","baa","ab","aba")),c("aab","ab","aba","abc","baa"))
-   expect_equivalent(stri_sort(c("abc","aab","aąb","ąbc","abć")),c("aab","aąb","abc","abć","ąbc"))
+   expect_equivalent(stri_sort(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107"),
+      opts_collator=list(locale="pl_PL")),
+      c("aab", "a\u0105b", "abc", "ab\u0107", "\u0105bc"))
 })

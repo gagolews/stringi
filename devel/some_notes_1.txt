@@ -1,0 +1,136 @@
+http://cran.r-project.org/web/packages/Unicode/
+
+strtolower
+strtoupper
+
+For more information about the Unicode properties, please see » http://www.unicode.org/unicode/reports/tr21/.
+'alphabetic' is determined by the Unicode character properties.
+Thus the behaviour of this function is not affected by locale settings
+and it can convert any characters that have 'alphabetic' property,
+such as a-umlaut (ä).
+
+ucfirst — Make a string's first character uppercase
+ucwords — Uppercase the first character of each word in a string
+(The definition of a word is any string of characters that is immediately
+after a whitespace (These are: space, form-feed, newline, carriage return,
+horizontal tab, and vertical tab). )
+
+toupper("Τάχιστη αλώπηξ βαφής ψημένη γη, δρασκελίζει υπέρ νωθρού κυνός")
+toupper("R — язык программирования для статистической обработки данных и работы с графикой, а также свободная программная среда вычислений с открытым исходным кодом в рамках проекта GNU.")
+tolower("R — язык программирования для статистической обработки данных и работы с графикой, а также свободная программная среда вычислений с открытым исходным кодом в рамках проекта GNU.")
+toupper("R là một ngôn ngữ lập trình và môi trường phần mềm dành cho tính toán và đồ họa thống kê.")
+tolower("R là một ngôn ngữ lập trình và môi trường phần mềm dành cho tính toán và đồ họa thống kê.")
+toupper("R言語(アールげんご)は、オープンソースでフリーソフトウェアの統計解析向けプログラミング言語、及びその開発実行環境である。")
+tolower("R言語(アールげんご)は、オープンソースでフリーソフトウェアの統計解析向けプログラミング言語、及びその開発実行環境である。")
+   stri_enc_nfkc_casefold("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ")
+ š ť ž ľ č ě ď ň ř ů ĺ cz,sk
+ Š Ť Ž Ľ Č Ě Ď Ň Ř Ů Ĺ
+ ł ą ż ę ć ń ś ź pl
+ Ł Ą Ż Ę Ć Ń Ś Ź
+ ă ş ţ ro
+ Ă Ş Ţ
+ š č ž ć đ cr,slov
+ Š Č Ž Ć Đ
+ ő ű hung
+ Ő Ű
+ ä ö ü ß de
+ Ä Ö Ü
+ абвгдеёжзийклмнопрстуфхцчшчьыъэюя
+ АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ
+ ў є ґ ukr,bel
+ Ў Є Ґ
+
+
+mb_strwidth - Returns the width of string str.
+Multi-byte characters are usually twice the width of single byte characters.
+Characters width Chars  Width
+U+0000 - U+0019   0
+U+0020 - U+1FFF   1
+U+2000 - U+FF60   2
+U+FF61 - U+FF9F   1
+U+FFA0 -    2
+
+jak to zrobic??? ::
+Converts a string into canonical form, standardizing such issues as whether
+a character with an accent is represented as a base character and combining
+accent or as a single precomposed character. The string has to be valid UTF-8,
+otherwise NULL is returned. You should generally call g_utf8_normalize()
+before comparing two Unicode strings.
+
+x1 <- c("\u0105", "\u00F1")
+x2 <- c("\u0061\u0328", "\u006E\u0303")
+x1
+x2
+x1 == x2
+
+toupper(x1)
+toupper(x2)
+nchar(x1)
+nchar(x2)
+str_length(x1)
+str_length(x2)
+http://www.fileformat.info/info/unicode/block/combining_diacritical_marks/index.htm
+http://en.wikipedia.org/wiki/Unicode_equivalence
+
+    Combining Diacritical Marks (0300–036F), since version 1.0, with modifications in subsequent versions down to 4.1
+    Combining Diacritical Marks Supplement (1DC0–1DFF), versions 4.1 to 5.2
+    Combining Diacritical Marks for Symbols (20D0–20FF), since version 1.0, with modifications in subsequent versions down to 5.1
+    Combining Half Marks (FE20–FE2F), versions 1.0, updates in 5.2
+
+
+x2 == iconv(x2, "UTF-8", "UTF-8") :-(
+str_extract_all(x2, perl("\\p{L}*")) :(
+
+toupper("\u00DF") # powinno być: SS
+
+porównywanie napisów case-insensitive
+
+Normalization Form D (NFD)    Canonical Decomposition
+Normalization Form C (NFC)    Canonical Decomposition, followed by Canonical Composition
+Normalization Form KD (NFKD)  Compatibility Decomposition
+Normalization Form KC (NFKC)  Compatibility Decomposition, followed by Canonical Composition
+http://unicode.org/reports/tr15/
+
+Text exclusively containing Latin-1 characters (U+0000..U+00FF) is left unaffected by NFC. This is effectively the same as saying that all Latin-1 text is already normalized to NFC.
+
+Programs should always compare canonical-equivalent Unicode strings as equal (For the details of this requirement, see Section 3.2, Conformance Requirements and Section 3.7, Decomposition, in The Unicode Standard). One of the easiest ways to do this is to use a normalized form for the strings: if strings are transformed into their normalized forms, then canonical-equivalent ones will also have precisely the same binary representation. The Unicode Standard provides well-defined normalization forms that can be used for this: NFC and NFD.
+
+For loose matching, programs may want to use the normalization forms NFKC and NFKD, which remove compatibility distinctions. These two latter normalization forms, however, do lose information and are thus most appropriate for a restricted domain such as identifiers.
+
+A: The choice of which to use depends on the particular program or system. NFC is the best form for general text, since it is more compatible with strings converted from legacy encodings. NFKC is the preferred form for identifiers, especially where there are security concerns (see UTR #36). NFD and NFKD are most useful for internal processing.
+
+Any string of all characters < U+0300 is unaffected by normalizing to NFC.
+
+http://userguide.icu-project.org/transforms/normalization
+
+http://en.wikipedia.org/wiki/List_of_Unicode_characters
+
+Because it is rare to have non-NFC text, an optimized implementation can do such comparison very quickly.
+
+mb_stripos — Finds position of first occurrence of a string within another, case insensitive
+mb_stristr — Finds first occurrence of a string within another, case insensitive
+mb_strrchr — Finds the last occurrence of a character in a string within another
+mb_substr_count — Count the number of substring occurrences
+
+http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WindowsBestFit/
+
+
+    874 — Thai
+    932 — Japanese
+    936 — Chinese (simplified) (PRC, Singapore)
+    949 — Korean
+    950 — Chinese (traditional) (Taiwan, Hong Kong)
+    1200 — Unicode (BMP of ISO 10646, UTF-16LE)
+    1201 — Unicode (BMP of ISO 10646, UTF-16BE)
+    1250 — Latin (Central European languages)
+    1251 — Cyrillic
+    1252 — Latin (Western European languages, replacing Code page 850)
+    1253 — Greek
+    1254 — Turkish
+    1255 — Hebrew
+    1256 — Arabic
+    1257 — Latin (Baltic languages)
+    1258 — Vietnamese
+    65000 — Unicode (BMP of ISO 10646, UTF-7)
+    65001 — Unicode (BMP of ISO 10646, UTF-8)
+
