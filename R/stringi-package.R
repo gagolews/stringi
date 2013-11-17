@@ -22,7 +22,7 @@
 #' @description
 #' \pkg{stringi} is THE R package for correct, fast, and convenient
 #' string manipulation in each locale and any character encoding.
-#' We've been putting great effort to create software that
+#' We are putting great effort to create software that
 #' works as you expect on any platform, in each locale, and any
 #' ``default'' system encoding.
 #'
@@ -30,7 +30,10 @@
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
-#' \bold{License}: GNU LGPL version 3 or later (open source)
+#' \bold{License}: GNU LGPL version 3 or later (open source).
+#' Note that binary builds of stringi on certain platforms (e.g. Windows, OS X)
+#' may include statically linked ICU4C library and ICU Unicode data library,
+#' which is distributed in under the conditions listed in the LICESE file.
 #'
 #'
 #' @details
@@ -116,7 +119,8 @@
 #' @docType package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
-#' with some contributions from Marcin Bujarski.
+#' with some contributions from Marcin Bujarski at the early stage
+#' of package development.
 #' @references
 #' \emph{\pkg{stringi} Package homepage}, \url{http://stringi.rexamine.com}
 #'
