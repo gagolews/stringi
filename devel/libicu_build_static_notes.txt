@@ -1,0 +1,11 @@
+# shared lib build
+CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./runConfigureICU Linux \
+   --prefix=/root/icu/compiled4.8 \
+   --enable-static --disable-shared --disable-samples --disable-layout --disable-tests
+
+ln -s libicudata.a libicudata_static.a
+ln -s libicui18n.a libicui18n_static.a
+ln -s libicuio.a libicuio_static.a
+ln -s libicutest.a libicutest_static.a
+ln -s libicutu.a libicutu_static.a
+ln -s libicuuc.a libicuuc_static.a

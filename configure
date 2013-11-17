@@ -197,7 +197,8 @@ test -x / || exit 1"
   as_suggested="  as_lineno_1=";as_suggested=$as_suggested$LINENO;as_suggested=$as_suggested" as_lineno_1a=\$LINENO
   as_lineno_2=";as_suggested=$as_suggested$LINENO;as_suggested=$as_suggested" as_lineno_2a=\$LINENO
   eval 'test \"x\$as_lineno_1'\$as_run'\" != \"x\$as_lineno_2'\$as_run'\" &&
-  test \"x\`expr \$as_lineno_1'\$as_run' + 1\`\" = \"x\$as_lineno_2'\$as_run'\"' || exit 1"
+  test \"x\`expr \$as_lineno_1'\$as_run' + 1\`\" = \"x\$as_lineno_2'\$as_run'\"' || exit 1
+test \$(( 1 + 1 )) = 2 || exit 1"
   if (eval "$as_required") 2>/dev/null; then :
   as_have_required=yes
 else
@@ -587,9 +588,10 @@ PACKAGE_URL=''
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 stringi_LIBS
-stringi_CPPFLAGS
 stringi_CFLAGS
+stringi_CPPFLAGS
 stringi_CXXFLAGS
+SED
 PKG_CONFIG
 ac_ct_CXX
 CXXFLAGS
@@ -646,6 +648,7 @@ ac_user_opts='
 enable_option_checking
 enable_icu_guess
 enable_pkg_config
+enable_prefer_static
 enable_gcc_debug
 enable_gcc_pedantic
 with_extra_cflags
@@ -1276,10 +1279,15 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-icu-guess     Disable auto-detection of ICU4C-devel
+  --disable-icu-guess     Disable auto-detection of ICU4C-devel if pkg-config
+                          fails.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel.
-                          Note that pkg-config will be used only after failure
-                          of auto-guessing or if you pass --disable-icu-guess
+  --disable-prefer-static Disable preferring static linking of ICU4C to
+                          dynamic linking. Note that normally you will not
+                          have static libraries installed anyway. Static
+                          linking is used to prepary binary distributions of
+                          stringi. Static libraries may not be detected if
+                          pkg-config fails.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
                           /for stringi developers/
   --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
@@ -1952,6 +1960,18 @@ else
    enable_pkg_config="no"
 fi
 
+
+# Check whether --enable-prefer_static was given.
+if test "${enable_prefer_static+set}" = set; then :
+  enableval=$enable_prefer_static;
+fi
+
+if test "x$enable_prefer_static" != "xno"; then
+   enable_prefer_static="yes"
+else
+   enable_prefer_static="no"
+fi
+
 # Check whether --enable-gcc_debug was given.
 if test "${enable_gcc_debug+set}" = set; then :
   enableval=$enable_gcc_debug;
@@ -2019,6 +2039,7 @@ fi
 #echo enable_pkg_config=$enable_pkg_config
 #echo enable_icu_guess=$enable_icu_guess
 #echo enable_gcc_debug=$enable_gcc_debug
+#echo enable_prefer_static=$enable_prefer_static
 #echo enable_gcc_pedantic=$enable_gcc_pedantic
 #echo with_extra_cflags=$with_extra_cflags
 #echo with_extra_cppflags=$with_extra_cppflags
@@ -2068,41 +2089,54 @@ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CC" >&5
-$as_echo_n "checking CC... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CC proposed by R" >&5
+$as_echo_n "checking CC proposed by R... " >&6; }
 CC=`"${R_PATH}" CMD config CC`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CC" >&5
 $as_echo "$CC" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXX" >&5
-$as_echo_n "checking CXX... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXX proposed by R" >&5
+$as_echo_n "checking CXX proposed by R... " >&6; }
 CXX=`"${R_PATH}" CMD config CXX`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CXX" >&5
 $as_echo "$CXX" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CFLAGS" >&5
-$as_echo_n "checking CFLAGS... " >&6; }
-CFLAGS=`"${R_PATH}" CMD config CFLAGS`" $with_extra_cflags"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CFLAGS proposed by R" >&5
+$as_echo_n "checking CFLAGS proposed by R... " >&6; }
+CFLAGS=`"${R_PATH}" CMD config CFLAGS`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CFLAGS" >&5
 $as_echo "$CFLAGS" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CPPFLAGS" >&5
-$as_echo_n "checking CPPFLAGS... " >&6; }
-CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`" $with_extra_cppflags"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CPPFLAGS proposed by R" >&5
+$as_echo_n "checking CPPFLAGS proposed by R... " >&6; }
+CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CPPFLAGS" >&5
 $as_echo "$CPPFLAGS" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXXFLAGS" >&5
-$as_echo_n "checking CXXFLAGS... " >&6; }
-CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`" $with_extra_cxxflags"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXXFLAGS proposed by R" >&5
+$as_echo_n "checking CXXFLAGS proposed by R... " >&6; }
+CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $CXXFLAGS" >&5
 $as_echo "$CXXFLAGS" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking LDFLAGS" >&5
-$as_echo_n "checking LDFLAGS... " >&6; }
-LDFLAGS=`"${R_PATH}" CMD config LDFLAGS`" $with_extra_ldflags"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking LDFLAGS proposed by R" >&5
+$as_echo_n "checking LDFLAGS proposed by R... " >&6; }
+LDFLAGS=`"${R_PATH}" CMD config LDFLAGS`
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $LDFLAGS" >&5
 $as_echo "$LDFLAGS" >&6; }
+
+original_CFLAGS=$CFLAGS
+original_CXXFLAGS=$CXXFLAGS
+original_CPPFLAGS=$CPPFLAGS
+original_LDFLAGS=$LDFLAGS
+extra_CFLAGS=$with_extra_cflags
+extra_CXXFLAGS=$with_extra_cxxflags
+extra_CPPFLAGS=$with_extra_cppflags
+extra_LDFLAGS=$with_extra_ldflags
+CFLAGS="${original_CFLAGS} ${extra_CFLAGS}"
+CXXFLAGS="${original_CXXFLAGS} ${extra_CXXFLAGS}"
+CPPFLAGS="${original_CPPFLAGS} ${extra_CPPFLAGS}"
+LDFLAGS="${original_LDFLAGS} ${extra_LDFLAGS}"
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -3152,114 +3186,23 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
+
 ##### CHECK FOR ICU4C ##########################################################
 
-##### 1. Maybe it will just work : ICU4C auto-guess
-
-ICU_GUESS="no"
-if test $enable_icu_guess == "yes"
-then
-   save_LDFLAGS=$LDFLAGS
-   LDFLAGS="${LDFLAGS} $with_icu_libs"
-
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C-devel" >&5
-$as_echo_n "checking for ICU4C-devel... " >&6; }
-
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-   #include <unicode/unistr.h>
-   #include <unicode/uvernum.h>
-   #include <stdio.h>
-   using namespace icu;
-
-   int main() {
-     UnicodeString x;
-     x = x+x;
-     printf(U_ICU_VERSION);
-     return 0;
-   }
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C-devel version" >&5
-$as_echo_n "checking for ICU4C-devel version... " >&6; }
-      if test "$cross_compiling" = yes; then :
-  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "cannot run test program while cross compiling
-See \`config.log' for more details" "$LINENO" 5; }
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      #include <unicode/unistr.h>
-      #include <unicode/uvernum.h>
-      #include <stdio.h>
-      using namespace icu;
-
-      int main() {
-        FILE* fp = fopen("conftest.out", "w");
-        fprintf(fp, U_ICU_VERSION);
-        fclose(fp);
-        return 0;
-      }
-_ACEOF
-if ac_fn_cxx_try_run "$LINENO"; then :
-
-         ICU_VERSION=`cat conftest.out`
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
-$as_echo "$ICU_VERSION" >&6; }
-
-         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
-$as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
-         VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
-         if test "$VERSION_CHECK" = "1" ; then
-            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-            ICU_FLAG_I="" # leave defaults, this just works with-extra-cpp-flags
-            ICU_FLAG_L=$with_icu_libs # add given libs
-            ICU_GUESS="yes"
-         else
-            { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-            echo "*** ICU4C ${ICU_VERSION} has been detected"
-            echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-            echo "*** For more information check out the file stringi/INSTALL.md"
-         fi
-
-else
-
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; } # could not detect icu version
-
-fi
-rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-  conftest.$ac_objext conftest.beam conftest.$ac_ext
-fi
 
 
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; } # could not compile an ICU-based project
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
-   LDFLAGS=$save_LDFLAGS # restore ldflags
-fi
-
-##### 2. Get settings from pkg-lib
-# Note that According to http://userguide.icu-project.org/howtouseicu,
+##### 1. Get settings from pkg-lib
+# Note that according to http://userguide.icu-project.org/howtouseicu,
 # icu-config is supported, but no longer recommended for production use.
+# It has been indicated that icu-config may return 32bit libs
+# when 64bit libs are not available, even though we compile a 64bit version.
 
-PKG_GUESS="no"
-if test $ICU_GUESS == "no" && test $enable_pkg_config == "yes"
-then
+detect_icu_with_pkg_config() {
+   if test $enable_pkg_config = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      return 1
+   fi
+
    # Retrieve pkg-config's path
    # Extract the first word of "pkg-config", so it can be a program name with args.
 set dummy pkg-config; ac_word=$2
@@ -3307,66 +3250,350 @@ fi
    if test ! -f "${PKG_CONFIG}"; then
       echo "*** The pkg-config script could not be found"
       echo "*** Make sure it is installed"
-      exit 1 # you may exit here
+      return 1 # go back immediately
    fi
 
    # check if pkg-config knows about icu-uc
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for ICU4C installed" >&5
 $as_echo_n "checking with pkg-config for ICU4C installed... " >&6; }
-   if `"${PKG_CONFIG}" --exists icu-uc`
-   then
-      # pkg config knows about icu-uc
-
-      # check which version of ICU4C is installed
-      ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
-$as_echo "$ICU_VERSION" >&6; }
-
-      # check for a suitable version
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
-$as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
-      VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
-      # this could also be done with pkg-config --atleast-pkgconfig-version=VERSION
-      if test "$VERSION_CHECK" = "1" ; then
-         # detected version of ICU4C is sufficient
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C includepath compiler flags" >&5
-$as_echo_n "checking for ICU4C includepath compiler flags... " >&6; }
-         ICU_FLAG_I=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_I" >&5
-$as_echo "$ICU_FLAG_I" >&6; }
-
-         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C libpath compiler flags" >&5
-$as_echo_n "checking for ICU4C libpath compiler flags... " >&6; }
-         ICU_FLAG_L=`"${PKG_CONFIG}" --libs icu-uc icu-i18n icu-io`
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_FLAG_L" >&5
-$as_echo "$ICU_FLAG_L" >&6; }
-
-         PKG_GUESS="yes" # DONE
-      else
-         # a newer version of ICU4C is required
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-         echo "*** ICU4C ${ICU_VERSION} has been detected"
-         echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-         echo "*** For more information check out the file stringi/INSTALL.md"
-         exit 1 # you may exit here
-      fi
-   else
+   if ! `"${PKG_CONFIG}" --exists icu-uc`; then
       # pkg config doesn't know about icu-uc
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
       echo "*** The pkg-config script did not detect ICU4C-devel libraries installed"
       echo "*** For more information check out the file stringi/INSTALL.md"
-      exit 1 #you may exit here
+      return 1 # nothing more to do
    fi
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking yes" >&5
+$as_echo_n "checking yes... " >&6; } # pkg config recognized icu-uc
+
+   # check which version of ICU4C is installed
+   ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
+$as_echo "$ICU_VERSION" >&6; }
+
+   # check for a suitable version
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
+$as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
+   VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+   # this could also be done with pkg-config --atleast-pkgconfig-version=VERSION
+   if test "$VERSION_CHECK" != "1" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      echo "*** ICU4C ${ICU_VERSION} has been detected"
+      echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+      echo "*** For more information check out the file stringi/INSTALL.md"
+      return 1 # you may quit querying pkg-config here
+   fi
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; } # detected version of ICU4C is sufficient
+
+   export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
+   if test $enable_prefer_static = "yes"; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a sed that does not truncate output" >&5
+$as_echo_n "checking for a sed that does not truncate output... " >&6; }
+if ${ac_cv_path_SED+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+            ac_script=s/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/
+     for ac_i in 1 2 3 4 5 6 7; do
+       ac_script="$ac_script$as_nl$ac_script"
+     done
+     echo "$ac_script" 2>/dev/null | sed 99q >conftest.sed
+     { ac_script=; unset ac_script;}
+     if test -z "$SED"; then
+  ac_path_SED_found=false
+  # Loop through the user's path and test for each of PROGNAME-LIST
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_prog in sed gsed; do
+    for ac_exec_ext in '' $ac_executable_extensions; do
+      ac_path_SED="$as_dir/$ac_prog$ac_exec_ext"
+      as_fn_executable_p "$ac_path_SED" || continue
+# Check for GNU ac_path_SED and select it if it is found.
+  # Check for GNU $ac_path_SED
+case `"$ac_path_SED" --version 2>&1` in
+*GNU*)
+  ac_cv_path_SED="$ac_path_SED" ac_path_SED_found=:;;
+*)
+  ac_count=0
+  $as_echo_n 0123456789 >"conftest.in"
+  while :
+  do
+    cat "conftest.in" "conftest.in" >"conftest.tmp"
+    mv "conftest.tmp" "conftest.in"
+    cp "conftest.in" "conftest.nl"
+    $as_echo '' >> "conftest.nl"
+    "$ac_path_SED" -f conftest.sed < "conftest.nl" >"conftest.out" 2>/dev/null || break
+    diff "conftest.out" "conftest.nl" >/dev/null 2>&1 || break
+    as_fn_arith $ac_count + 1 && ac_count=$as_val
+    if test $ac_count -gt ${ac_path_SED_max-0}; then
+      # Best one so far, save it but keep looking for a better one
+      ac_cv_path_SED="$ac_path_SED"
+      ac_path_SED_max=$ac_count
+    fi
+    # 10*(2^10) chars as input seems more than enough
+    test $ac_count -gt 10 && break
+  done
+  rm -f conftest.in conftest.tmp conftest.nl conftest.out;;
+esac
+
+      $ac_path_SED_found && break 3
+    done
+  done
+  done
+IFS=$as_save_IFS
+  if test -z "$ac_cv_path_SED"; then
+    as_fn_error $? "no acceptable sed could be found in \$PATH" "$LINENO" 5
+  fi
+else
+  ac_cv_path_SED=$SED
 fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_path_SED" >&5
+$as_echo "$ac_cv_path_SED" >&6; }
+ SED="$ac_cv_path_SED"
+  rm -f conftest.sed
+
+      if test -z "${SED}"; then
+         echo "*** Giving up trying to find ICU4C static libraries"
+         echo "*** as egrep or sed does work sufficiently well"
+      else
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ICU4C may be statically linked" >&5
+$as_echo_n "checking whether ICU4C may be statically linked... " >&6; }
+         icu_original_libs=`"${PKG_CONFIG}" --libs-only-l --static icu-uc icu-i18n icu-io`
+         icu_static_libs=`echo $icu_original_libs \
+            | ${SED} -r 's/-licu(\S+|"^"+")/-licu\1_static/g'`
+         icu_static_include=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`" -DU_STATIC_IMPLEMENTATION"
+         icu_static_ldflags=`"${PKG_CONFIG}" --libs-only-L --static icu-uc icu-i18n icu-io`
+
+         save_LIBS=$LIBS
+         LIBS="${LIBS} ${icu_static_libs}"
+         save_LDFLAGS=$LDFLAGS
+         LDFLAGS="${LDFLAGS} ${icu_static_ldflags}"
+         save_CPPFLAGS=$CPPFLAGS
+         CPPFLAGS="${CPPFLAGS} ${icu_static_include}"
+
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <stdio.h>
+         using namespace icu;
+
+         int main() {
+           UnicodeString x;
+           x = x+x;
+           printf(U_ICU_VERSION);
+           return 0;
+         }
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+            ICU_CPPFLAGS=$icu_static_include
+            ICU_LDFLAGS=$icu_static_ldflags
+            ICU_LIBS=$icu_static_libs
+            ICU_FOUND=1
+
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+         CPPFLAGS=$save_CPPFLAGS
+         LDFLAGS=$save_LDFLAGS
+         LIBS=$save_LIBS
+
+         if test $ICU_FOUND = 1; then
+            return 0 # nothing more to do
+         fi
+      fi
+   fi
+
+         #ICU_FOUND=1
+         #return 0 # success
+
+         #icu_lib_dirs=`echo $icu_libs_original \
+         #   | ${EGREP} -E -o -e '-L(\S+|"[^"]+")' \
+         #   | cut -c 3-`
+         #icu_libs=`echo $icu_libs_original \
+         #   | ${EGREP} -E -o -e '-licu(\S+|"[^"]+")' \
+         #   | cut -c 3- \
+         #   | ${SED} -r 's/(\S+)/lib\1.a/g'`
+         ##echo $icu_lib_dirs
+         ##echo $icu_libs
+         #icu_static_libs=""
+         #found=0
+         #all=0
+         #for l in $icu_libs; do
+         #   ((all++)) # count libs
+         #   for d in $icu_lib_dirs; do
+         #      if test -f "${d}/${l}"; then
+         #         icu_static_libs="${icu_static_libs} ${d}/${l}"
+         #         ((found++)) # count found libs
+         #         break # first match (if there are many)
+         #      fi
+         #   done
+         #done
+         #if test $found != $all; then
+         #   AC_MSG_RESULT(no)
+         #else
+         #   AC_MSG_RESULT(yes)
+         #
+         #   AC_MSG_CHECKING(for proper ICU4C CPPFLAGS)
+         #   ICU_FLAG_I=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`" -DU_STATIC_IMPLEMENTATION"
+         #   AC_MSG_RESULT($ICU_FLAG_I)
+         #
+         #   AC_MSG_CHECKING(for proper ICU4C LDFLAGS (static libs))
+         #   ICU_FLAG_L=$icu_static_libs
+         #   #ICU_FLAG_L=`echo $icu_libs_original \
+         #   #         | ${SED} -r 's/-licu(\S+|"[^"]+")//g'`" ${icu_static_libs}"
+         #   AC_MSG_RESULT($ICU_FLAG_L)
+         #
+         #   ICU_FOUND=1
+         #   return 0 # success
+         #fi
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for proper CPPFLAGS, LDFLAGS, and LIBS" >&5
+$as_echo_n "checking for proper CPPFLAGS, LDFLAGS, and LIBS... " >&6; }
+   ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`
+   ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n icu-io`
+   ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n icu-io`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
+$as_echo "done" >&6; }
+
+   ICU_FOUND=1 # DONE
+   return 0
+}
+
+
+
+##### 2. Maybe it will just work : ICU4C auto-guess
+
+detect_icu_with_guess() {
+   if test $enable_icu_guess != "yes"; then
+      # Use of icu-guess disabled, nothing to do
+      return 1
+   fi
+
+   save_LIBS=$LIBS
+   LIBS="${LIBS} $with_icu_libs"
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C-devel" >&5
+$as_echo_n "checking for ICU4C-devel... " >&6; }
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      #include <unicode/unistr.h>
+      #include <unicode/uvernum.h>
+      #include <stdio.h>
+      using namespace icu;
+
+      int main() {
+        UnicodeString x;
+        x = x+x;
+        printf(U_ICU_VERSION);
+        return 0;
+      }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C-devel version" >&5
+$as_echo_n "checking for ICU4C-devel version... " >&6; }
+      if test "$cross_compiling" = yes; then :
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <stdio.h>
+         using namespace icu;
+
+         int main() {
+           FILE* fp = fopen("conftest.out", "w");
+           fprintf(fp, U_ICU_VERSION);
+           fclose(fp);
+           return 0;
+         }
+
+_ACEOF
+if ac_fn_cxx_try_run "$LINENO"; then :
+
+         ICU_VERSION=`cat conftest.out`
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
+$as_echo "$ICU_VERSION" >&6; }
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
+$as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
+         VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+         if test "$VERSION_CHECK" = "1" ; then
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+            ICU_CPPFLAGS="" # leave defaults, this just works with-extra-cppflags
+            ICU_LDFLAGS=""  # leave defaults, this just works with-extra-ldflags
+            ICU_LIBS=$with_icu_libs # add given libs
+            ICU_FOUND=1
+         else
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+            echo "*** ICU4C ${ICU_VERSION} has been detected"
+            echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+            echo "*** For more information check out the file stringi/INSTALL.md"
+         fi
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; } # could not detect icu version
+
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+
+else
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; } # could not compile an ICU-based project
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+   LIBS=$save_LIBS # restore ldflags
+}
+
 # check for ICU
 
-#### 3. Final check
-if test $ICU_GUESS == "no" && test $PKG_GUESS == "no"
-then
+ICU_FOUND=0
+if test $ICU_FOUND = 0; then
+   detect_icu_with_pkg_config
+fi
+
+if test $ICU_FOUND = 0; then
+   detect_icu_with_guess
+fi
+
+if test $ICU_FOUND = 0; then
    echo "*** ICU4C-devel libraries cannot be found"
    echo "*** For more information check out the file stringi/INSTALL.md"
    exit 1
@@ -3378,10 +3605,11 @@ fi
 # AC_CONFIG_SRCDIR([src/stringi.cpp])
 # AC_CONFIG_HEADER([src/stringi.h])
 
-stringi_CXXFLAGS="${with_extra_cxxflags}"
-stringi_LIBS="${ICU_FLAG_L} ${with_extra_ldflags}"
-stringi_CPPFLAGS="${ICU_FLAG_I} ${with_extra_cppflags}"
-stringi_CFLAGS="${with_extra_cflags}"
+stringi_CXXFLAGS="${extra_CXXFLAGS}"
+stringi_LIBS="${ICU_LDFLAGS} ${ICU_LIBS} ${extra_LDFLAGS}"
+stringi_CPPFLAGS="${ICU_CPPFLAGS} ${extra_CPPFLAGS}"
+stringi_CFLAGS="${extra_CFLAGS}"
+
 if test "$enable_gcc_debug" == "yes"; then
    stringi_CXXFLAGS="${stringi_CXXFLAGS} -UNDEBUG"
    stringi_CFLAGS="${stringi_CFLAGS} -UNDEBUG"
@@ -3392,12 +3620,29 @@ if test "$enable_gcc_pedantic" == "yes"; then
    stringi_CFLAGS="${stringi_CFLAGS} -Wall -Wextra -ansi -pedantic"
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking PKG_CXXFLAGS" >&5
+$as_echo_n "checking PKG_CXXFLAGS... " >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stringi_CXXFLAGS" >&5
+$as_echo "$stringi_CXXFLAGS" >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking PKG_CPPFLAGS" >&5
+$as_echo_n "checking PKG_CPPFLAGS... " >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stringi_CPPFLAGS" >&5
+$as_echo "$stringi_CPPFLAGS" >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking PKG_CFLAGS" >&5
+$as_echo_n "checking PKG_CFLAGS... " >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stringi_CFLAGS" >&5
+$as_echo "$stringi_CFLAGS" >&6; }
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking PKG_LIBS" >&5
+$as_echo_n "checking PKG_LIBS... " >&6; }
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stringi_LIBS" >&5
+$as_echo "$stringi_LIBS" >&6; }
 
 
 ac_config_files="$ac_config_files src/Makevars"
