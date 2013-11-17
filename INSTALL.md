@@ -19,7 +19,7 @@ Everything works out of the box.
 #### Compiling **stringi** with our binary version of ICU4C
 
 If you are an advanced `R` user, you may wish to
-use the [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
+use [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
 chain to compile `stringi` manually.
 
 In such case, download and decompress
@@ -33,7 +33,7 @@ Not doing so will result in compilation process failure.
 
 
 
-#### Compiling `ICU4C` manually
+#### Compiling `ICU4C` manually (for static linking)
 
 If you're a true geek, you may wish to set up everything on your own.
 Below you'll find a description on how we created 
@@ -98,12 +98,52 @@ at the directory with your pre-compiled
 `ICU4C ` distribution, e.g. `c:/icu-distrib` (note the slash).
 
 
-### GNU/Linux, Unix, MacOSX
+### OS X ***TO DO***
 
+A typical OS X user, just like the one who uses Windows,
+does not possess any C++ compiler.
+Note that OS X 10.X is shipped with ICU, but the lib version 
+is much below our requirements.
+
+#### Using binary version of **stringi** (default)
+
+`ICU4C` WILL BE statically linked with stringi.dylib.
+Everything works out of the box.
+
+#### Compiling **stringi** with our binary version of ICU4C ***TO DO***
+
+If you are an advanced `R` user, you may wish to
+use [`Xcode`](http://www.cyberciti.biz/faq/howto-apple-mac-os-x-install-gcc-compiler/) 
+with the `GCC` compiler.
+
+In such case, download and decompress
+[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/osx/TO_BE_DONE),
+which allows for static linking, e.g. to `TO DO`.
+
+
+#### Compiling `ICU4C` manually (for static linking) ***TO DO***
+
+
+```
+TO DO
+...download...
+...decompress...
+cd....
+CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./runConfigureICU MacOSX \
+   --prefix=../compiled \
+   --enable-static --disable-shared --disable-samples \
+   --disable-layout --disable-tests
+...
+TO DO
+```
+
+
+### GNU/Linux, Unix, OS X (with dynamically linked ICU4C)
+
+Except OS X, for which prepared binary builds will be prepared,
 [ICU4C](http://site.icu-project.org/download) version >= 4.8
 is required to build and use the package (however, the latest
-version is recommended).
-To test whether `ICU4C` is properly prepared to build
+version is recommended). To test whether `ICU4C` is ready to build
 its derivatives, run:
 
 ```
@@ -126,7 +166,7 @@ Fedora 19 has currently ICU4C 50.
 You may try with `sudo apt-get install libicu-dev`.
 Note that this may provide you with an outdated version of the ICU library.
 
-#### Compiling ICU4C yourself (general)
+#### Compiling ICU4C manually 
 
 ```
 cd /tmp
@@ -154,15 +194,10 @@ or
 You should use the same compiler which was used to build
 `R` and which `R` uses to build R packages.
 
-#### MacOSX
+#### OS X
 
-You may check out the binary distribution
-[here](http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-MacOSX64_GCC.tgz)
-or compile yourself with `gcc`, see above (in Linux)
 
-[NOT TESTED YET]
-
-or
+Make sure you have Xcode Tools installed.
 
 ```
 ./runConfigureICU MacOSX # Use the GNU gcc/g++ compilers on MacOS X (Darwin)
@@ -192,5 +227,5 @@ To build & install:
 ```
 cd ..
 R CMD build stringi
-R CMD INSTALL --no-multiarch --html --byte-compile  stringi_VERSION.tar.gz
+R CMD INSTALL --html --byte-compile  stringi_VERSION.tar.gz
 ```

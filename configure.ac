@@ -5,7 +5,8 @@
 ##### INIT ####################################################################
 
 AC_INIT(stringi, 0.1, gagolews@rexamine.com)
-ICU_VERSION_NEEDED="4.8" # next version after 4.8 == 49
+ICU_VERSION_NEEDED="4.8" # minimal version of ICU4C required to build stringi;
+                         # note that the next version after 4.8 == 49
 
 ##### OPTIONS #################################################################
 
@@ -14,7 +15,7 @@ ICU_VERSION_NEEDED="4.8" # next version after 4.8 == 49
 AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/lib64/R.
                     Note that $R_HOME/bin/R should point to R executable.])
 
-# PKG_CONFIG_PATH - full path to pkg-config
+# PKG_CONFIG_PATH - full path to pkg-config's .pc files
 AC_ARG_VAR(PKG_CONFIG_PATH, [A colon-separated (on Windows, semicolon-separated) 
    list of directories to search for pkg-config's .pc files.])
 
@@ -37,20 +38,6 @@ else
    enable_pkg_config="no"
 fi
 
-
-AC_ARG_ENABLE([prefer_static],
-    AS_HELP_STRING([--disable-prefer-static],
-      [Disable preferring static linking of ICU4C to dynamic linking.
-       Note that normally you will not have static libraries installed
-       anyway. Static linking is used to prepary binary distributions
-       of stringi. Static libraries may not be detected if pkg-config
-       fails.]))
-if test "x$enable_prefer_static" != "xno"; then
-   enable_prefer_static="yes"
-else
-   enable_prefer_static="no"
-fi
-
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
       [Enable -UNDEBUG when compiling stringi with gcc/g++ /for stringi developers/]))
@@ -67,6 +54,30 @@ if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else
    enable_gcc_pedantic="no"
+fi
+
+
+AC_ARG_ENABLE([prefer_static],
+    AS_HELP_STRING([--disable-prefer-static],
+      [Disable preferring static linking of ICU4C to dynamic linking.
+       Note that normally you will not have static libraries installed
+       anyway. Static linking is used to prepary binary distributions
+       of stringi, especially on OS X. Static libraries are only detected
+       with pkg-config.]))
+if test "x$enable_prefer_static" != "xno"; then
+   enable_prefer_static="yes"
+else
+   enable_prefer_static="no"
+fi
+
+AC_ARG_WITH([suffix_static],
+    AS_HELP_STRING([--with-suffix-static="suffix"],
+      [searches for pkg-config .pc files or static libraries names
+      with given suffix; defaults to "_static" - in such case
+      this script looks for e.g libicuuc_static.a and
+      icu-uc_static.pc.]))
+if test -z "${with_suffix_static}"; then
+   with_suffix_static="_static" # default value
 fi
 
 AC_ARG_WITH([extra_cflags],
@@ -104,6 +115,7 @@ fi
 #echo enable_icu_guess=$enable_icu_guess
 #echo enable_gcc_debug=$enable_gcc_debug
 #echo enable_prefer_static=$enable_prefer_static
+#echo with_suffix_static=$with_suffix_static
 #echo enable_gcc_pedantic=$enable_gcc_pedantic
 #echo with_extra_cflags=$with_extra_cflags
 #echo with_extra_cppflags=$with_extra_cppflags
@@ -194,6 +206,60 @@ AC_PROG_CXX
 # It has been indicated that icu-config may return 32bit libs
 # when 64bit libs are not available, even though we compile a 64bit version.
 
+
+detect_static_icu_with_pkg_config() {
+   if test $enable_pkg_config = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      return 1
+   fi
+
+   if test $enable_prefer_static = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      return 1
+   fi
+
+   # Retrieve pkg-config's path 
+   AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
+         [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
+
+   if test ! -f "${PKG_CONFIG}"; then
+      return 1 # go back immediately
+   fi
+
+   AC_MSG_CHECKING([with pkg-config for ICU4C$with_suffix_static installed])
+   if ! `"${PKG_CONFIG}" --exists icu-uc$with_suffix_static`; then
+      # pkg config doesn't know about icu-uc
+      AC_MSG_RESULT(no)
+      return 1 # nothing more to do
+   fi
+   
+   # pkg config recognized icu-uc_suffix
+   # check which version of ICU4C is installed
+   ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc$with_suffix_static`
+   AC_MSG_RESULT($ICU_VERSION)
+
+   # check for a suitable version
+   AC_MSG_CHECKING(for ICU4C >= $ICU_VERSION_NEEDED)
+   VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+   if test "$VERSION_CHECK" != "1" ; then
+      AC_MSG_RESULT(no)
+      return 1 # you may quit querying pkg-config here
+   fi
+   AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
+
+   AC_MSG_CHECKING([for proper CPPFLAGS, LDFLAGS, and LIBS])
+   ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   AC_MSG_RESULT(done)
+
+   ICU_FOUND=1 # DONE
+   return 0
+}
+
 detect_icu_with_pkg_config() {
    if test $enable_pkg_config = "no"; then
       # Use of pkg-config disabled, nothing to do
@@ -219,7 +285,6 @@ detect_icu_with_pkg_config() {
       echo "*** For more information check out the file stringi/INSTALL.md"
       return 1 # nothing more to do
    fi
-   AC_MSG_CHECKING(yes) # pkg config recognized icu-uc
 
    # check which version of ICU4C is installed
    ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
@@ -245,10 +310,10 @@ detect_icu_with_pkg_config() {
          echo "*** Giving up trying to find ICU4C static libraries"
          echo "*** as egrep or sed does work sufficiently well"
       else
-         AC_MSG_CHECKING(whether ICU4C may be statically linked)
+         AC_MSG_CHECKING(whether ICU4C may be statically linked by guessing .a names)
          icu_original_libs=`"${PKG_CONFIG}" --libs-only-l --static icu-uc icu-i18n icu-io`
          icu_static_libs=`echo $icu_original_libs \
-            | ${SED} -r 's/-licu(\S+|"[^"]+")/-licu\1_static/g'`
+            | ${SED} -r "s/-licu(\S+|\"[^\"]+\")/-licu\1${with_suffix_static}/g"`
          icu_static_include=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`" -DU_STATIC_IMPLEMENTATION"
          icu_static_ldflags=`"${PKG_CONFIG}" --libs-only-L --static icu-uc icu-i18n icu-io`
 
@@ -415,6 +480,11 @@ detect_icu_with_guess() {
 # check for ICU
 
 ICU_FOUND=0
+
+if test $ICU_FOUND = 0; then
+   detect_static_icu_with_pkg_config
+fi
+
 if test $ICU_FOUND = 0; then
    detect_icu_with_pkg_config
 fi

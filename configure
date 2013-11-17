@@ -648,9 +648,10 @@ ac_user_opts='
 enable_option_checking
 enable_icu_guess
 enable_pkg_config
-enable_prefer_static
 enable_gcc_debug
 enable_gcc_pedantic
+enable_prefer_static
+with_suffix_static
 with_extra_cflags
 with_extra_cppflags
 with_extra_cxxflags
@@ -1282,20 +1283,25 @@ Optional Features:
   --disable-icu-guess     Disable auto-detection of ICU4C-devel if pkg-config
                           fails.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel.
-  --disable-prefer-static Disable preferring static linking of ICU4C to
-                          dynamic linking. Note that normally you will not
-                          have static libraries installed anyway. Static
-                          linking is used to prepary binary distributions of
-                          stringi. Static libraries may not be detected if
-                          pkg-config fails.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
                           /for stringi developers/
   --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
                           stringi with gcc/g++ /for stringi developers/
+  --disable-prefer-static Disable preferring static linking of ICU4C to
+                          dynamic linking. Note that normally you will not
+                          have static libraries installed anyway. Static
+                          linking is used to prepary binary distributions of
+                          stringi, especially on OS X. Static libraries are
+                          only detected with pkg-config.
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-suffix-static="suffix"
+                          searches for pkg-config .pc files or static
+                          libraries names with given suffix; defaults to
+                          "_static" - in such case this script looks for e.g
+                          libicuuc_static.a and icu-uc_static.pc.
   --with-extra-cflags=FLAGS
                           Additional C compiler flags (except for those
                           indicated by R)
@@ -1926,7 +1932,8 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-ICU_VERSION_NEEDED="4.8" # next version after 4.8 == 49
+ICU_VERSION_NEEDED="4.8" # minimal version of ICU4C required to build stringi;
+                         # note that the next version after 4.8 == 49
 
 ##### OPTIONS #################################################################
 
@@ -1934,7 +1941,7 @@ ICU_VERSION_NEEDED="4.8" # next version after 4.8 == 49
 # R_HOME - R's home dir
 
 
-# PKG_CONFIG_PATH - full path to pkg-config
+# PKG_CONFIG_PATH - full path to pkg-config's .pc files
 
 
 
@@ -1960,18 +1967,6 @@ else
    enable_pkg_config="no"
 fi
 
-
-# Check whether --enable-prefer_static was given.
-if test "${enable_prefer_static+set}" = set; then :
-  enableval=$enable_prefer_static;
-fi
-
-if test "x$enable_prefer_static" != "xno"; then
-   enable_prefer_static="yes"
-else
-   enable_prefer_static="no"
-fi
-
 # Check whether --enable-gcc_debug was given.
 if test "${enable_gcc_debug+set}" = set; then :
   enableval=$enable_gcc_debug;
@@ -1992,6 +1987,28 @@ if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else
    enable_gcc_pedantic="no"
+fi
+
+
+# Check whether --enable-prefer_static was given.
+if test "${enable_prefer_static+set}" = set; then :
+  enableval=$enable_prefer_static;
+fi
+
+if test "x$enable_prefer_static" != "xno"; then
+   enable_prefer_static="yes"
+else
+   enable_prefer_static="no"
+fi
+
+
+# Check whether --with-suffix_static was given.
+if test "${with_suffix_static+set}" = set; then :
+  withval=$with_suffix_static;
+fi
+
+if test -z "${with_suffix_static}"; then
+   with_suffix_static="_static" # default value
 fi
 
 
@@ -2040,6 +2057,7 @@ fi
 #echo enable_icu_guess=$enable_icu_guess
 #echo enable_gcc_debug=$enable_gcc_debug
 #echo enable_prefer_static=$enable_prefer_static
+#echo with_suffix_static=$with_suffix_static
 #echo enable_gcc_pedantic=$enable_gcc_pedantic
 #echo with_extra_cflags=$with_extra_cflags
 #echo with_extra_cppflags=$with_extra_cppflags
@@ -3197,6 +3215,108 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 # It has been indicated that icu-config may return 32bit libs
 # when 64bit libs are not available, even though we compile a 64bit version.
 
+
+detect_static_icu_with_pkg_config() {
+   if test $enable_pkg_config = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      return 1
+   fi
+
+   if test $enable_prefer_static = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      return 1
+   fi
+
+   # Retrieve pkg-config's path
+   # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+as_dummy="$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin"
+for as_dir in $as_dummy
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  test -z "$ac_cv_path_PKG_CONFIG" && ac_cv_path_PKG_CONFIG="no"
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+ # auto-detect
+
+   if test ! -f "${PKG_CONFIG}"; then
+      return 1 # go back immediately
+   fi
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for ICU4C$with_suffix_static installed" >&5
+$as_echo_n "checking with pkg-config for ICU4C$with_suffix_static installed... " >&6; }
+   if ! `"${PKG_CONFIG}" --exists icu-uc$with_suffix_static`; then
+      # pkg config doesn't know about icu-uc
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      return 1 # nothing more to do
+   fi
+
+   # pkg config recognized icu-uc_suffix
+   # check which version of ICU4C is installed
+   ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc$with_suffix_static`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
+$as_echo "$ICU_VERSION" >&6; }
+
+   # check for a suitable version
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
+$as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
+   VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+   if test "$VERSION_CHECK" != "1" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      return 1 # you may quit querying pkg-config here
+   fi
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; } # detected version of ICU4C is sufficient
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for proper CPPFLAGS, LDFLAGS, and LIBS" >&5
+$as_echo_n "checking for proper CPPFLAGS, LDFLAGS, and LIBS... " >&6; }
+   ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc$with_suffix_static \
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
+$as_echo "done" >&6; }
+
+   ICU_FOUND=1 # DONE
+   return 0
+}
+
 detect_icu_with_pkg_config() {
    if test $enable_pkg_config = "no"; then
       # Use of pkg-config disabled, nothing to do
@@ -3264,8 +3384,6 @@ $as_echo "no" >&6; }
       echo "*** For more information check out the file stringi/INSTALL.md"
       return 1 # nothing more to do
    fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking yes" >&5
-$as_echo_n "checking yes... " >&6; } # pkg config recognized icu-uc
 
    # check which version of ICU4C is installed
    ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-uc`
@@ -3363,11 +3481,11 @@ $as_echo "$ac_cv_path_SED" >&6; }
          echo "*** Giving up trying to find ICU4C static libraries"
          echo "*** as egrep or sed does work sufficiently well"
       else
-         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ICU4C may be statically linked" >&5
-$as_echo_n "checking whether ICU4C may be statically linked... " >&6; }
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ICU4C may be statically linked by guessing .a names" >&5
+$as_echo_n "checking whether ICU4C may be statically linked by guessing .a names... " >&6; }
          icu_original_libs=`"${PKG_CONFIG}" --libs-only-l --static icu-uc icu-i18n icu-io`
          icu_static_libs=`echo $icu_original_libs \
-            | ${SED} -r 's/-licu(\S+|"^"+")/-licu\1_static/g'`
+            | ${SED} -r "s/-licu(\S+|\"^\"+\")/-licu\1${with_suffix_static}/g"`
          icu_static_include=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`" -DU_STATIC_IMPLEMENTATION"
          icu_static_ldflags=`"${PKG_CONFIG}" --libs-only-L --static icu-uc icu-i18n icu-io`
 
@@ -3585,6 +3703,11 @@ rm -f core conftest.err conftest.$ac_objext \
 # check for ICU
 
 ICU_FOUND=0
+
+if test $ICU_FOUND = 0; then
+   detect_static_icu_with_pkg_config
+fi
+
 if test $ICU_FOUND = 0; then
    detect_icu_with_pkg_config
 fi
