@@ -107,16 +107,19 @@ To test whether `ICU4C` is properly prepared to build
 its derivatives, run:
 
 ```
-icu-config --version
+pkg-config --modversion icu-uc
 ```
 
-This should give you the ICU version that is in use.
+This should give you the ICU version that is available to the build chain.
+
+
 
 #### Fedora/RedHat Linux
 
 You may try with `yum install libicu-devel`.
-Note that this may provide you with an outdated version of the ICU library.
+Note that this may sometimes give you a quite old version of the ICU library.
 You may try fetching the package from `updates` archive.
+Fedora 19 has currently ICU4C 50.
 
 #### Ubuntu
 
