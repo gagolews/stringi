@@ -30,6 +30,7 @@
 #' Otherwise, you get a list with the following components:
 #' \itemize{
 #' \item \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library;
+#' \item \code{ICU.version} -- \pkg{ICU} library version used;
 #' \item \code{Locale} -- contains information on default locale,
 #' as returned by \code{\link{stri_locale_info}};
 #' \item \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")};
@@ -52,14 +53,15 @@ stri_info <- function(short=FALSE) {
          warning("Your native charset is not a superset of US-ASCII. " %+%
            "This may cause serious problems. Consider switching to UTF-8.")
       else if (!identical(info$Charset.native$Unicode.1to1, TRUE))
-         warning("your native charset does not convert well to Unicode. " %+%
+         warning("Your native charset does not convert to Unicode well. " %+%
             "This may cause serious problems. Consider switching to UTF-8.")
    }
 
    loclist <- stri_locale_list()
    if (!(info$Locale$Name %in% loclist))
       warning("Your current locale is not on the list of available " %+%
-         "locales. Some functions may not work properly. Refer to stri_localelist() for more details " %+%
+         "locales. Some functions may not work properly. " %+%
+         "Refer to stri_localelist() for more details " %+%
          "on known locale specifiers.")
 
    if (!short)
@@ -67,6 +69,8 @@ stri_info <- function(short=FALSE) {
    else {
       locale <- info$Locale$Name
       charset <- info$Charset.native$Name.friendly
-      return(locale %+% "." %+% charset)
+      return(stri_paste(locale, ".", charset,
+         "; ICU4C ", info$ICU.version,
+         "; Unicode ", info$Unicode.version))
    }
 }

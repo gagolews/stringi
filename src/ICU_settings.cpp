@@ -25,27 +25,30 @@
  *
  *  @return an R named list with 4 components:
  *  \code{Unicode.version} == ICU Unicode version,
+ *  \code{ICU.version} == U_ICU_VERSION 
  *  \code{Locale} == \code{stri_locale_info()},
- *  \code{Charset.internal} == \code{"UTF-8"},
+ *  \code{Charset.internal} == \code{"UTF-8", "UTF-16"},
  *  \code{Charset.native} == \code{stri_enc_info()})
  *
  *  @version 0.1 (Marek Gagolewski)
  *  @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
+ *  @version 0.3 (Marek Gagolewski, 2013-11-17) added U_ICU_VERSION
 */
 SEXP stri_info()
 {
    STRI__ERROR_HANDLER_BEGIN
-   const R_len_t infosize = 4;
+   const R_len_t infosize = 5;
    SEXP vals;
 
    PROTECT(vals = Rf_allocVector(VECSXP, infosize));
    SET_VECTOR_ELT(vals, 0, Rf_mkString(U_UNICODE_VERSION));
-   SET_VECTOR_ELT(vals, 1, stri_locale_info(R_NilValue));
-   SET_VECTOR_ELT(vals, 2, stri__make_character_vector(2, "UTF-8", "UTF-16")); // this is fixed
-   SET_VECTOR_ELT(vals, 3, stri_enc_info(R_NilValue));
+   SET_VECTOR_ELT(vals, 1, Rf_mkString(U_ICU_VERSION ));
+   SET_VECTOR_ELT(vals, 2, stri_locale_info(R_NilValue));
+   SET_VECTOR_ELT(vals, 3, stri__make_character_vector(2, "UTF-8", "UTF-16")); // this is fixed
+   SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));
 
    stri__set_names(vals, infosize,
-      "Unicode.version", "Locale", "Charset.internal", "Charset.native");
+      "Unicode.version", "ICU.version", "Locale", "Charset.internal", "Charset.native");
    UNPROTECT(1);
    return vals;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
