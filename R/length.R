@@ -31,8 +31,8 @@
 #' For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
 #' For UTF-8 strings, the returned values may be greater
 #' than the number of code points, as UTF-8 is not a fixed-byte encoding:
-#' one code point may be, at least theoretically, represented with 1-6 bytes (however,
-#' current Unicode standard decided to use up to 4 bytes).
+#' one code point may be represented with 1-4 bytes
+#' (according to the current Unicode standard).
 #'
 #' Missing values are handled properly,
 #' as opposed to the built-in \code{\link{nchar}(str, "bytes")} function call.
@@ -66,16 +66,16 @@ stri_numbytes <- function(str) {
 #' in each string.
 #'
 #' @details
-#' Note that the number of code points
+#' Note that the number of code points is
 #' not the same as the `width` of the string when
 #' printed on the screen.
 #'
-#' If a given string is in UTF-8 and not has been properly Unicode normalized
+#' If a given string is in UTF-8 and  has not been properly Unicode normalized
 #' (e.g. by \code{\link{stri_enc_nfc}}), this number may sometimes be
 #' misleading.
 #'
 #' Missing values are handled properly,
-#' as opposed to the builtin \code{\link{nchar}} function.
+#' as opposed to the built-in \code{\link{nchar}} function.
 #' For `byte` encodings we get, as usual, an error.
 #'
 #' @param str character vector
@@ -99,15 +99,12 @@ stri_length <- function(str) {
 #' Determine if a String is Empty
 #'
 #' @description
-#' This is the fast way to find out
-#' if consecutive elements of a character vector are empty strings or not.
+#' This is the fastest way to find out
+#' whether the elements of a character vector are empty strings or not.
 #'
 #' @details
 #' Missing values are handled properly,
-#' as opposed to the builtin \code{\link{nzchar}} function.
-#'
-#' Unlike \code{(stri_length(str) == 0)}, does not need any character
-#' encoding conversion.
+#' as opposed to the built-in \code{\link{nzchar}} function.
 #'
 #' @param str character vector
 #' @return Returns a logical vector of the same length as \code{str}.

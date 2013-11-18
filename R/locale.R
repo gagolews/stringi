@@ -29,18 +29,17 @@
 #'
 #'
 #' @details
-#'
 #' Because a locale is just an identifier for a region,
 #' no validity check is performed when you specify a Locale.
-#' ICU is implemented as a set of services.
+#' \pkg{ICU} is implemented as a set of services.
 #' If you want to see whether particular resources are available
-#' for the Locale you asked for, you must query those resources. (...)
+#' for the locale you asked for, you must query those resources.
 #' Note: When you ask for a resource for a particular locale, you get
-#' back the best available match, not necessarily precisely what you asked for.
+#' back the best available match, not necessarily precisely what you requested.
 #'
 #' @section Locale Identifiers:
 #'
-#' ICU services are parametrized by locale,
+#' \pkg{ICU} services are parametrized by locale,
 #' to deliver culturally correct results.
 #' Locales are identified by character strings
 #' of the form \code{Language} code,
@@ -56,32 +55,39 @@
 #' for example in US-English ("en_US") and Australian-English ("en_AU").
 #'
 #' Differences may also appear in language conventions used within
-#' the same country. For example, the Euro currency is used in several European
+#' the same country. For example, the Euro currency may be used in several European
 #' countries while the individual country's currency is still in circulation.
-#' In such case, ICU \code{Variant} "_EURO" is for locales that support the Euro currency.
+#' In such case, ICU \code{Variant} "_EURO" could be used for selecting locales 
+#' that support the Euro currency.
+#'
+#' For a list of locales that are recognized by \pkg{ICU},
+#' call \code{\link{stri_locale_list}}.
 #'
 #' @section A Note on Default Locales:
 #'
-#' Each function in \pkg{stringi}
-#' selects default locale if an empty string or \code{NULL} is given as
-#' argument. Default locales are available to all the functions:
-#' they are set to be the system locale on that platform,
+#' Each locale-sensitive function in \pkg{stringi}
+#' selects the current default locale if an empty string or \code{NULL} is given as
+#' as its \code{locale} argument. Default locales are available to all the functions:
+#' they are initially set to be the system locale on that platform,
 #' and may be changed with \code{\link{stri_locale_set}},
 #' for example if automatic  detection fails to recognize
 #' your locale properly.
 #'
-#' Generally, your program should avoid changing the default locale:
-#' it is not a good way to request an international object.
+#' Sometimes it is suggested that your program should avoid changing the default locale:
+#' it is not a good way to request an international object, especially
+#' only for a single function call..
 #' All locale-sensitive functions may request
 #' any desired locale per-call (by specifying the \code{locale} argument),
 #' i.e. without referencing to the default locale.
+#' During many tests, however, we did not observe any improper
+#' behavior of \pkg{stringi} while using a modified default locale.
 #'
 #' @section Locale-Sensitive Functions in \pkg{stringi}:
 #'
 #' One of many examples of locale-dependent services
 #' is the Collator, which performs
 #' a locale-aware string comparison.
-#' It is used for string casefolding, comparing, ordering,
+#' It is used for string comparing, ordering,
 #' sorting, and searching.
 #' See \code{\link{stri_opts_collator}} for the description
 #' on how to tune its settings, and its \code{locale}

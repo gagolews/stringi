@@ -27,7 +27,7 @@
 #'
 #' @details
 #' After reading a text file into memory (vast majority of them
-#' will fit into RAM without any problems), you may e.g.perform
+#' will fit into RAM without any problems), you may perform e.g.
 #' encoding detection (cf. \code{\link{stri_enc_detect2}}),
 #' conversion (cf. \code{\link{stri_encode}}),
 #' and e.g. split it into text lines with
@@ -65,16 +65,16 @@ stri_read_raw <- function(fname) {
 #' (which conforms with the Unicode guidelines for newline markers).
 #'
 #' If \code{locale} is \code{NA} and auto-detect of UTF-32/16/8 fails,
-#' then system's default encoding, see \code{\link{stri_enc_get}}, is used.
+#' then \code{fallback_encoding} is used.
 #'
-#' @param fname file name
-#' @param encoding input encoding, \code{"auto"} for automatic
+#' @param fname single string with file name
+#' @param encoding single string; input encoding, \code{"auto"} for automatic
 #' detection with \code{\link{stri_enc_detect2}},
 #' and \code{NULL} or \code{""} for the current default encoding.
-#' @param locale passed to \code{\link{stri_enc_detect2}};
+#' @param locale single string passed to \code{\link{stri_enc_detect2}};
 #' \code{NULL} or \code{""} for default locale,
 #' \code{NA} for checking just UTF-* family
-#' @param fallback_encoding encoding to be used if encoding detection fails;
+#' @param fallback_encoding single string; encoding to be used if encoding detection fails;
 #' defaults to the current default encoding, see \code{\link{stri_enc_get}}
 #'
 #' @return
@@ -110,11 +110,11 @@ stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
-#' It is a substitute for the system's \code{\link{writeLines}} function,
+#' It is a substitute for the \R \code{\link{writeLines}} function,
 #' with the ability to re-encode output without any strange function calls.
 #'
 #' Note that we suggest using the UTF-8 encoding for all text files:
-#' thus, it's the default one for the output.
+#' thus, it is the default one for the output.
 #'
 #' @param str character vector
 #' @param fname file name

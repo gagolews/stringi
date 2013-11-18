@@ -27,8 +27,8 @@
 #'    \item Functions in \pkg{stringi} process each string
 #'    internally in Unicode,
 #'    which is a superset of all character representation schemes.
-#'    Even if a string is given in Native, i.e. your platform's
-#'    default encoding,
+#'    Even if a string is given in the native encoding, i.e. your platform's
+#'    default one,
 #'    it will be converted to Unicode.
 #'    \item Most functions always return UTF-8 encoded strings,
 #'    regardless of the input encoding.
@@ -61,12 +61,13 @@
 #' one or two 16-bit code units, or a single 32-bit integer
 #' (cf. the ICU FAQ).
 #'
-#'  In most cases, Unicode is a superset of the characters supported by any given codepage.
+#'  In most cases, Unicode is a superset of the characters 
+#' supported by any given codepage.
 #'
 #' @section UTF-8 and UTF-16:
 #'
 #' The UTF-8 encoding is the most natural choice for representing
-#' Unicode characters in R.
+#' Unicode characters in \R.
 #' UTF-8 has ASCII as its subset (code points 1--127 are the same
 #' in both of them). Code points larger than 127
 #' are represented by multi-byte sequences
@@ -77,18 +78,19 @@
 #' Most of the computations in \pkg{stringi} are performed internally
 #' using either UTF-8 or UTF-16 encodings
 #' (this depends on type of service you request:
-#' some ICU services are designed to work only with UTF-16).
+#' some \pkg{ICU} services are designed to work only with UTF-16).
 #' Thanks to that choice, with \pkg{stringi}
 #' you get the same result on each platform,
-#' which is -- unfortunately -- not the case of base R's functions
+#' which is -- unfortunately -- not the case of base \R's functions
 #' (it is for example known that performing a regular expression
-#' search under Linux on some texts may give you a different results
+#' search under Linux on some texts may give you a different result
 #' to those obtained under Windows).
 #' We really had portability in our minds while developing
 #' our package!
 #'
-#' As R correctly handles UTF-8 strings regardless of your platform's Native
-#' encoding (see below), we decided that most functions
+#' We have observed that \R correctly handles UTF-8 strings regardless of your
+#' platform's Native encoding (see below).
+#' Therefore, we decided that most functions
 #' in \pkg{stringi} will output its results in UTF-8
 #' -- this speeds ups computations on cascading calls to our functions:
 #' the strings does not have to be re-encoded each time.
@@ -102,7 +104,7 @@
 #' do appear very rarely in typical string processing activities.
 #'
 #'
-#' @section Character Encodings in R:
+#' @section Character Encodings in \R:
 #'
 #' You should keep in mind that data in memory are just bytes
 #' (small integer values) -- an en\emph{coding} is a way to represent
@@ -114,17 +116,17 @@
 #' meas the ``plus-minus'' sign.
 #' Thus, a character encoding is a translation scheme:
 #' we need to communicate
-#' with R somehow, relying on how it represents strings.
+#' with \R somehow, relying on how it represents strings.
 #'
-#' Basically, R has a very simple encoding-marking mechanism,
+#' Basically, \R has a very simple encoding-marking mechanism,
 #' see \link{Encoding}. There is an implicit assumption
 #' that your platform's default (native) encoding is
 #' always an 8-bit one and it is a superset of ASCII --
 #' \pkg{stringi} checks that when your native encoding
-#' is being autodetected on ICU initialization and each time
+#' is being detected automatically on \pkg{ICU} initialization and each time
 #' when you change it manually by calling \code{\link{stri_enc_set}}.
 #'
-#' Character strings in R (internally) can be declared to be in:
+#' Character strings in \R (internally) can be declared to be in:
 #' \itemize{
 #' \item ASCII (here, strings consist only of bytes codes not greater than 127);
 #' \item \code{"UTF-8"};
@@ -133,35 +135,35 @@
 #' Moreover, there are two other cases:
 #' \itemize{
 #' \item \code{"bytes"} -- strings should be manipulated as bytes;
-#' encoding is unknown;
+#' encoding is not set;
 #' \item \code{"unknown"} (quite misleading name: no explicit
 #' encoding mark) -- strings are
-#' assumed to be in platform's Native (default) encoding.
+#' assumed to be in your platform's native (default) encoding.
 #' }
 #'
 #' Native strings often appear as result of inputing
 #' a string from keyboard or file. This makes sense: you operating
-#' system works in some encoding and provides R with some data.
-#' Each time when a \pkg{stringi} function encounters a Native string,
+#' system works in some encoding and provides \R with some data.
+#' Each time when a \pkg{stringi} function encounters a native string,
 #' it assumes that data should be translated from the default
-#' encoding, i.e. that returned by \code{\link{stri_enc_get}}
+#' encoding, i.e. the one returned by \code{\link{stri_enc_get}}
 #' (default encoding should only be changed if autodetect fails
 #' on \pkg{stringi} load).
 #'
-#' Functions which allow \code{"bytes"} encoding marks are very rare in \pkg{stringi},
+#' Functions which allow \code{"bytes"} encoding markings are very rare in \pkg{stringi},
 #' and were carefully selected. These are: \code{\link{stri_enc_toutf8}}
 #' (with argument \code{is_unknown_8bit=TRUE}), \code{\link{stri_enc_toascii}},
 #' and \code{\link{stri_encode}}.
 #'
 #' @section Encoding Conversion:
 #'
-#' Apart from automatic conversion from Native encoding,
-#' you may reencode a string manually, for example
-#' when you load in from a file saved in different platform.
+#' Apart from automatic conversion from the native encoding,
+#' you may re-encode a string manually, for example
+#' when you load it from a file saved in different platform.
 #' Call \code{\link{stri_enc_list}} for the list of
-#' encodings supported by ICU.
+#' encodings supported by \pkg{ICU}.
 #' Note that converter names are case-insensitive
-#' and ICU tries to normalize the encoding specifiers.
+#' and \pkg{ICU} tries to normalize the encoding specifiers.
 #' Leading zeroes are ignored in sequences of digits (if further digits follow),
 #' and all non-alphanumeric characters are ignored. Thus the strings
 #' "UTF-8", "utf_8", "u*Tf08" and "Utf 8" are equivalent.
@@ -175,10 +177,10 @@
 #' of integers, where one code point is exactly one numeric value)
 #' or \code{\link{stri_enc_toascii}} (substitutes all non-ASCII
 #' bytes with the SUBSTITUTE CHARACTER,
-#' which plays a similar role as R's \code{NA} value).
+#' which plays a similar role as \R's \code{NA} value).
 #'
 #' There are also some routines for automated encoding detection,
-#' see e.g. \code{\link{stri_enc_detect}} (for ICU-provided facilities)
+#' see e.g. \code{\link{stri_enc_detect}} (for \pkg{ICU}-provided facilities)
 #' or \code{\link{stri_enc_detect2}} for our own, locale-sensitive solution.
 #'
 #'

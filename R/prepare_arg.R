@@ -34,7 +34,7 @@
 #' When a logical, numeric or integer vector argument is expected,
 #' factors are converted with \code{as.*(\link{as.character}(...))},
 #' and other coercible vectors
-#' are converted with \code{\link{as.*}},
+#' are converted with \code{as.*},
 #' otherwise an error is generated.
 #'
 #'

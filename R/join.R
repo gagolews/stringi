@@ -28,7 +28,7 @@
 #' Vectorized over \code{str} and \code{times}.
 #'
 #' @param str character vector of strings to be duplicated
-#' @param times integer vector with number of times to duplicate each string
+#' @param times integer vector with the numbers of times to duplicate each string
 #'
 #' @return Returns a character vector.
 #'
@@ -50,16 +50,17 @@ stri_dup <- function(str, times) {
 #'
 #' @description
 #' A binary operator for joining (concatenating) two character vectors,
-#' with typical R look-and-feel.
+#' with a typical \R look-and-feel.
 #'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
 #' This operator works like a call to \code{\link{stri_join}(e1, e2, sep="")}
 #' (but is slightly faster).
-#' Note that, however, joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
+#' However, note that joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
 #' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
-#' because it creates a new resulting vector each time.
+#' because it creates a new (temporary) resulting vector each time
+#' the operator is applied.
 #'
 #' @usage
 #' e1 \%+\% e2
@@ -84,7 +85,7 @@ stri_dup <- function(str, times) {
 #' Concatenate Character Vectors
 #'
 #' @description
-#' This is the \pkg{stringi}'s implementation of the built-in \code{\link{paste}} function.
+#' This is the \pkg{stringi}'s equivalents of the built-in \code{\link{paste}} function.
 #'
 #' @details
 #' \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
@@ -94,8 +95,9 @@ stri_dup <- function(str, times) {
 #' Otherwise, you will get a character vector of length equal
 #' to the length of the longest argument.
 #'
-#' If any of the arguments in `\code{...}` is a vector of length 0, then
-#' you will get 0-length character vector.
+#' If any of the arguments in `\code{...}` is a vector of length 0
+#' (not to be confused with vectors of empty strings), then
+#' you will get a 0-length character vector in result.
 #'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string
 #' will be used.
@@ -134,7 +136,7 @@ stri_paste <- stri_join
 #' Flatten a String
 #'
 #' @description
-#' Joins elements of a character vector into one string.
+#' Joins the elements of a character vector into one string.
 #'
 #' @details
 #' \code{stri_flatten(str, collapse='XXX')} works like
@@ -148,8 +150,8 @@ stri_paste <- stri_join
 #' If \code{collapse} has length > 1, then only first string
 #' will be used.
 #'
-#' @param str vector of strings will be coerced to character
-#' @param collapse separator, a single string
+#' @param str vector of strings to be coerced to character
+#' @param collapse single string denoting the separator
 #'
 #' @return
 #' Returns a single string, i.e. a character

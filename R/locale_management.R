@@ -26,13 +26,13 @@
 #' @details
 #' Note that not all services may be available for all locales.
 #' Queries for locale-specific services are always performed
-#' during resource request.
+#' during the resource request.
 #'
 #' See \link{stringi-locale} for more information.
 #'
 #' @return
 #' Returns a character vector with locale identifiers
-#' that are known to ICU.
+#' that are known to \pkg{ICU}.
 #'
 #' @family locale_management
 #' @export
@@ -48,7 +48,7 @@ stri_locale_list <- function() {
 #' \code{stri_locale_set} changes default locale for all  functions
 #' in the \pkg{stringi} package,
 #' i.e. establishes the meaning of the ``\code{NULL} locale'' argument
-#' in locale-sensitive functions. \code{stri_locale_get}
+#' of locale-sensitive functions. On the other hand, \code{stri_locale_get}
 #' gets current default locale.
 #'
 #' @details
@@ -59,7 +59,7 @@ stri_locale_list <- function() {
 #'
 #' @param locale single string of the form \code{Language},
 #' \code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
-#' see \code{\link{stri_locale_list}}.
+#' see \code{\link{stri_locale_list}}
 #'
 #' @return
 #' \code{stri_locale_set} returns a string with
@@ -74,7 +74,7 @@ stri_locale_list <- function() {
 #' \dontrun{
 #' oldloc <- stri_locale_set("pt_BR")
 #' # ... some locale-dependent operations
-#' # ... note that you may always modify locale per-function call
+#' # ... note that you may always modify a locale per-call
 #' # ... changing default locale is convinient if you perform
 #' # ... many operations
 #' stri_locale_set(oldloc) # restore previous default locale
@@ -107,8 +107,8 @@ stri_locale_get <- function() {
 #' @details
 #' With this function you may obtain some basic information
 #' on any provided locale identifier,
-#' even if it is unsupported by ICU or if you pass a malformed locale
-#' identifier (e.g. not of the form Language_Country).
+#' even if it is unsupported by \pkg{ICU} or if you pass a malformed locale
+#' identifier (the one that is not e.g. of the form Language_Country).
 #' See \link{stringi-locale} for discussion.
 #'
 #' This function does nothing complicated. In many

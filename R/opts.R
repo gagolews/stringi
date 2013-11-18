@@ -18,21 +18,21 @@
 
 
 #' @title
-#' Generate List with Collator Options
+#' Generate a List with Collator Options
 #'
 #' @description
-#' Convenience function to tune the Collator's behavior,
+#' A convenience function to tune the Collator's behavior,
 #' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
 #' \code{\link{stri_detect_fixed}},
 #' and other \link{stringi-search-fixed} functions.
 #'
 #'
 #' @details
-#' ICU's Collator performs a locale-aware, natural-language
+#' \pkg{ICU}'s \emph{collator} performs a locale-aware, natural-language
 #' alike string comparison.
-#' This is a more intelligent form than that provided by base R
-#' (on some platforms), and definitely
-#' more complex than ordinary byte-comparison.
+#' This is a more reliable way of establishing relationships between
+#' string than that provided by base \R, and definitely
+#' one that is more complex than ordinary byte-comparison.
 #'
 #' A note on collation \code{strength}:
 #' generally, \code{strength} set to 4 is
@@ -46,9 +46,9 @@
 #'
 #' @param locale single string, \code{NULL} or
 #' \code{""} for default locale
-#' @param strength single integer, collation strength, in \{1,2,...,4\};
+#' @param strength single integer in \{1,2,3,4\}, which defines collation strength;
 #' \code{1} for the most permissive collation rules, \code{4} for the most
-#' strict
+#' strict ones
 #' @param alternate_shifted single logical value; \code{FALSE}
 #'  treats all the code points with non-ignorable primary weights in the same way,
 #'  \code{TRUE} causes code points with primary weights that are equal or below
@@ -111,7 +111,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 
 
 #' @title
-#' Generate List with Regex Matcher Options
+#' Generate a List with Regex Matcher Options
 #'
 #' @description
 #' A convenience function to tune regular expressions matcher behavior,
@@ -121,32 +121,33 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #'
 #' @param case_insensitive logical; enable case insensitive matching
 #' @param comments logical; allow white space and comments within patterns
-#' @param dotall logical;  if set, `\code{.}` matches line terminators, otherwise `\code{.}` matching stops at line end
-#' @param literal logical; if set, treat the entire pattern as a literal string.
-#' Metacharacters or escape sequences in the input sequence will be given no special meaning;
+#' @param dotall logical;  if set, `\code{.}` matches line terminators,
+#'  otherwise matching of `\code{.}`  stops at a line end
+#' @param literal logical; if set, treat the entire pattern as a literal string:
+#' metacharacters or escape sequences in the input sequence will be given no special meaning;
 #' note that in most cases you would rather use the \link{stringi-search-fixed}
 #' facilities in this case (with \code{opts_collator=NA}).
-#' @param multiline logical; controls behavior of `\code{$}` and `\code{^}`.
-#' If set, recognize line terminators within string, otherwise,
+#' @param multiline logical; controls the behavior of `\code{$}` and `\code{^}`.
+#' If set, recognize line terminators within a string, otherwise,
 #'  match only at start and end of input string
 #' @param unix_lines logical; Unix-only line endings.
 #' When this mode is enabled, only \code{U+000a} is recognized as a
 #' line ending by `\code{.}`, `\code{$}`, and `\code{^}`.
 #' @param uword logical; Unicode word boundaries.
-#' If set, uses the Unicode TR 29 definition of word boundaries.
-#' Warning: Unicode word boundaries are quite different from traditional
-#' regular expression word boundaries.
+#' If set, uses the Unicode TR 29 definition of word boundaries;
+#' warning: Unicode word boundaries are quite different from traditional
+#' regex word boundaries.
 #' See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
 #' @param error_on_unknown_escapes logical;
-#' Error on Unrecognized backslash escapes.
-#' If set, fail with an error on patterns that contain backslash-escaped ASCII
-#' letters without a known special meaning.
-#' If this flag is not set, these escaped letters represent themselves.
+#' whether to generate an error on unrecognized backslash escapes;
+#' if set, fail with an error on patterns that contain backslash-escaped ASCII
+#' letters without a known special meaning;
+#' otherwise, these escaped letters represent themselves.
 #'
-#' Note that the regex options may be changed using ICU regex flag
+#' Note that some regex options may be changed using ICU regex flag
 #' settings inside regexes. For example, \code{"(?i)pattern"} does
-#' a case-insetive match of a given pattern,
-#' see the ICU User Guide entry in the References section.
+#' a case-insensitive match of a given pattern,
+#' see the ICU User Guide entry on Regular Expressions in the References section.
 #'
 #' @return
 #' Returns a named list object; missing options are left with default values.

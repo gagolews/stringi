@@ -24,11 +24,11 @@
 #' Presents current default settings used by the \pkg{ICU} library.
 #'
 #' @param short logical; whether or not the results should be given
-#' in a concise form; default \code{TRUE}
+#' in a concise form; defaults to \code{TRUE}
 #'
 #' @return If \code{short==TRUE}, then a single string containing
 #' information on default character encoding, locale, and Unicode
-#' as well as ICU version is returned.
+#' as well as \pkg{ICU} version is returned.
 #'
 #' Otherwise, you a list with the following components is returned:
 #' \itemize{
