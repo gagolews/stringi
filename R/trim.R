@@ -18,7 +18,7 @@
 
 
 #' @title
-#' Trim Characters from Left and/or Right Side of a String
+#' Trim Characters from the Left and/or Right Side of a String
 #'
 #' @description
 #' These functions may be used e.g. to get rid of unnecessary
@@ -29,12 +29,12 @@
 #' Vectorized over \code{str} and \code{pattern}.
 #'
 #' \code{stri_trim} is a convenience function, which dispatches
-#' control to \code{stri_trim_*}. Unless you are very lazy, don't use it:
-#' it's slower.
+#' control to \code{stri_trim_*}. Unless you are very lazy, do not use it:
+#' it is slower.
 #'
 #' Contrary to many other string processing libraries,
-#' our trimming functions are quite general. A character class
-#' given by \code{pattern}
+#' our trimming functions are quite general. A character class,
+#' given by \code{pattern},
 #' may be adjusted to suit your needs (most often you will use the default
 #' value or a negation of some character class, i.e. with \code{^}
 #' at the beginning).
@@ -50,10 +50,11 @@
 #'
 #' @param str character vector
 #' @param pattern character vector with character class identifiers that
-#' should be preserved, see \link{stringi-search-charclass}
+#' should be preserved, see \link{stringi-search-charclass},
+#' defaults `\code{^WHITE_SPACE}`
 #' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
 #'
-#' @return Returns a character vector.
+#' @return All these functions return a character vector.
 #'
 #' @examples
 #' stri_trim_left("               aaa")

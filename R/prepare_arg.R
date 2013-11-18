@@ -22,68 +22,69 @@
 #'
 #' @description
 #' Below we explain how \pkg{stringi} deals (in almost all cases)
-#' with its functions' arguments
+#' with its functions' arguments.
 #'
 #' @section Coercion of Arguments:
 #'
-#' When character vector argument is expected, factors and other vectors
-#' coercible to string vectors
-#' are converted with \code{\link{as.character}}, otherwise an error is generated.
+#' When a character vector argument is expected, factors and other vectors
+#' coercible to characters vectors
+#' are silently converted with \code{\link{as.character}},
+#' otherwise an error is generated.
 #'
-#' When logical, numeric or integer vector argument is expected,
+#' When a logical, numeric or integer vector argument is expected,
 #' factors are converted with \code{as.*(\link{as.character}(...))},
 #' and other coercible vectors
-#' are converted with \code{\link{as.character}}, otherwise an error is generated.
+#' are converted with \code{\link{as.*}},
+#' otherwise an error is generated.
 #'
 #'
 #'
-#' See the man page links below for the description of internal methods used
+#' See the links below for the description of internal methods used
 #' in all functions from the \pkg{stringi} package (just to get more insight,
-#' in case you're interested in technical details).
-#' Anyway, this should work as you intuitively expect.
+#' in case you are interested in technical details).
+#' Anyway, we hope that everything works as you intuitively expect.
 #'
 #' @section Vectorization:
 #'
-#' Almost all functions are vectorized with respect to all arguments;
+#' Almost all functions are vectorized with respect to all their arguments;
 #' This may sometimes lead to strange results - we assume you know what
-#' you are doing.
-#' However, thanks to this property you may e.g. search for one pattern in
-#' each given string,
+#' you are doing. However, thanks to this property you may 
+#' e.g. search for one pattern in each given string,
 #' or search for each pattern in one given string.
 #'
 #' We of course took great care of performance issues: e.g. in regular expression
 #' searching, regex matchers are reused
-#' from iteration to iteration, as long it's possible.
+#' from iteration to iteration, as long it is possible.
 #'
 #' Functions with some non-vectorized arguments are rare:
-#' e.g. regular expression matcher's setting are established once per each call.
+#' e.g. regular expression matcher's settings are established
+#' once per each call.
 #'
 #' Some functions
 #' assume that a vector with one element is given
 #' as an argument (like \code{collapse} in \code{\link{stri_join}}).
-#' In such cases, if an empty vector is given you'll get an error
-#' and for vectors with > 1 elements - a warning (only first vector element
-#' will be used).
+#' In such cases, if an empty vector is given you will get an error
+#' and for vectors with more than 1 elements - a warning will be
+#' generator (only the first element will be used).
 #'
 #' You may find details on vectorization behavior in the man pages
-#' of each particular function of your interest.
+#' on each particular function of your interest.
 #'
 #' @section Handling Missing Values (\code{NA}s):
 #'
-#' \code{NA}s are handled consistently.
-#' For a vectorized operation, if at least one element is \code{NA},
-#' then the corresponding resulting value is always also \code{NA}.
+#' \pkg{stringi} handles missing values consistently.
+#' For any vectorized operation, if at least one vector element is missing,
+#' then the corresponding resulting value is also set to \code{NA}.
 #'
 #' @section Preserving Input Objects' Attributes:
 #'
 #' Generally, all our functions drop input objects' attributes
-#' (e.g. \code{\link{names}}, \code{\link{dim}}, etc.). This is generally because
+#' (e.g. \code{\link{names}}, \code{\link{dim}}, etc.).
+#' This is generally because
 #' of advanced vectorization and for efficiency reasons.
-#'
 #' Currently, there is only one exception to this rule:
 #' the \code{\link{stri_sort}} function.
-#'
-#' Remember then to copy important attributes manually
+#' Thus, if this is needed, please remember to copy important attributes manually
 #' or use e.g. the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 #'
 #' @name stringi-arguments
@@ -105,7 +106,7 @@ invisible(NULL)
 #' @return
 #' If \code{x} is a string, it is returned with no change.
 #' If it is a factor, then \code{\link{as.character}} is called.
-#' If an atomic vector or a matrix is given, it is coerced to character vector.
+#' If an atomic vector or a matrix is given, it is coerced to a character vector.
 #' If it is a \code{name} object, a character vector of length 1 is generated.
 #' Otherwise the function throws an error.
 #'
@@ -176,7 +177,7 @@ stri_prepare_arg_integer <- function(x) {
 #' If \code{x} is a logical vector, it is returned with no change.
 #' If \code{x} is a factor, \code{\link{as.character}} is called, and the
 #' resulting character vector is coerced to logical.
-#' If atomic vector or a matrix is given, it is coerced to logical vector.
+#' If atomic vector or a matrix is given, it is coerced to a logical vector.
 #' Otherwise the function throws an error.
 #'
 #' @family prepare_arg
@@ -219,8 +220,8 @@ stri_prepare_arg_raw <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' First, \code{\link{stri_prepare_arg_string}} is called.
-#' On empty vector, an error is generated.
+#' In the first place, \code{\link{stri_prepare_arg_string}} is called.
+#' On an empty vector, an error is generated.
 #' If there are more than 1 elements, a warning is generated.
 #' A vector with one element (the first in \code{x}) is returned.
 #'
@@ -240,8 +241,8 @@ stri_prepare_arg_string_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' First, \code{\link{stri_prepare_arg_double}} is called.
-#' On empty vector, an error is generated.
+#' In the first place, \code{\link{stri_prepare_arg_double}} is called.
+#' On an empty vector, an error is generated.
 #' If there are more than 1 elements, a warning is generated.
 #' A vector with one element (the first in \code{x}) is returned.
 #'
@@ -261,8 +262,8 @@ stri_prepare_arg_double_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' First, \code{\link{stri_prepare_arg_integer}} is called.
-#' On empty vector, an error is generated.
+#' In the first place, \code{\link{stri_prepare_arg_integer}} is called.
+#' On ab empty vector, an error is generated.
 #' If there are more than 1 elements, a warning is generated.
 #' A vector with one element (the first in \code{x}) is returned.
 #'
@@ -283,8 +284,8 @@ stri_prepare_arg_integer_1 <- function(x) {
 #'
 #' @param x argument to be checked
 #' @return
-#' First, \code{\link{stri_prepare_arg_logical}} is called.
-#' On empty vector, an error is generated.
+#' In the first place, \code{\link{stri_prepare_arg_logical}} is called.
+#' On an empty vector, an error is generated.
 #' If there are more than 1 elements, a warning is generated.
 #' A vector with one element (the first in \code{x}) is returned.
 #'

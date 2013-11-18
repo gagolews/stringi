@@ -21,13 +21,16 @@
 #' Query Default Settings for \pkg{stringi}
 #'
 #' @description
-#' Gives current default settings in a concise form.
+#' Presents current default settings used by the \pkg{ICU} library.
 #'
-#' @param short logical; should only default locale and character encoding be returned?
+#' @param short logical; whether or not the results should be given
+#' in a concise form; default \code{TRUE}
 #'
 #' @return If \code{short==TRUE}, then a single string containing
-#' information on default character encoding and locale is returned.
-#' Otherwise, you get a list with the following components:
+#' information on default character encoding, locale, and Unicode
+#' as well as ICU version is returned.
+#'
+#' Otherwise, you a list with the following components is returned:
 #' \itemize{
 #' \item \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library;
 #' \item \code{ICU.version} -- \pkg{ICU} library version used;
@@ -59,9 +62,9 @@ stri_info <- function(short=FALSE) {
 
    loclist <- stri_locale_list()
    if (!(info$Locale$Name %in% loclist))
-      warning("Your current locale is not on the list of available " %+%
+      warning("Your current locale is not in the list of available " %+%
          "locales. Some functions may not work properly. " %+%
-         "Refer to stri_localelist() for more details " %+%
+         "Refer to stri_locale_list() for more details " %+%
          "on known locale specifiers.")
 
    if (!short)

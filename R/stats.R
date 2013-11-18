@@ -23,21 +23,21 @@
 #' @description
 #' This function gives general statistics for a character vector,
 #' e.g. obtained by loading a text file with the
-#' \code{\link{readLines}} function, where each text line
-#' is represented by a separate string.
+#' \code{\link{readLines}} or \code{\link{stri_read_lines}} function,
+#' where each text line' is represented by a separate string.
 #'
 #' @details
-#' By `white space` we mean the Unicode binary property
+#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
+#' otherwise you will get at error.
+#'
+#' Below by `white space` we mean the Unicode binary property
 #' \code{WHITE_SPACE}, see \code{stringi-search-charclass}.
 #'
-#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
-#' otherwise you'll get at error.
-#'
-#' @param str character vector to aggregate
-#' @return Returns an integer vectors with the following named elements:
+#' @param str character vector to be aggregated
+#' @return Returns an integer vector with the following named elements:
 #' \enumerate{
 #'    \item \code{Lines} - number of lines (number of
-#'    not-\code{NA} strings in the vector);
+#'    non-missing strings in the vector);
 #'    \item \code{LinesNEmpty} - number of lines with at least
 #'    one non-\code{WHITE_SPACE} character;
 #'    \item \code{Chars} - total number of Unicode code points detected;
@@ -69,12 +69,12 @@ stri_stats_general <- function(str) {
 #' is represented by a separate string.
 #'
 #' @details
-#' We use a modified LaTeX Word Count algorithm taken from Kile 2.1.3,
-#' see \url{http://kile.sourceforge.net/team.php} for original contributors
+#' We use a slightly modified LaTeX Word Count algorithm taken from Kile 2.1.3,
+#' see \url{http://kile.sourceforge.net/team.php} for original contributors.
 #'
 #'
 #'
-#' @param str character vector to aggregate
+#' @param str character vector to be aggregated
 #' @return Returns an integer vector with the following named elements:
 #' \enumerate{
 #'    \item \code{CharsWord} - number of word characters;
@@ -92,8 +92,8 @@ stri_stats_general <- function(str) {
 #' stri_stats_latex(s)
 #' \dontrun{
 #' # Stats for the preprint version of M. Gagolewski's book
-#' # "Programowanie w jezyku R", PWN, 2014.
-#' # http://rksiazka.rexamine.com
+#' # "Programowanie w jezyku R", Wydawnictwo Naukowe PWN, 2014.
+#' # see http://rksiazka.rexamine.com
 #' apply(
 #'    sapply(
 #'       lapply(

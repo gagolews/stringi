@@ -26,37 +26,40 @@
 #' works as you expect on any platform, in each locale, and any
 #' ``default'' system encoding.
 #'
-#' \bold{Keywords}: internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode
+#' \bold{Keywords}: internationalization, localization, 
+#'     ICU, ICU4C, i18n, l10n, Unicode
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
 #' \bold{License}: GNU LGPL version 3 or later (open source).
 #' Note that binary builds of stringi on certain platforms (e.g. Windows, OS X)
-#' may include statically linked ICU4C library and ICU Unicode data library,
-#' which is distributed in under the conditions listed in the LICESE file.
+#' may include statically linked \pkg{ICU4C} library and \pkg{ICU} Unicode
+#' Data library, which is distributed under the conditions listed
+#' in the LICENSE file.
 #'
 #'
 #' @details
-#' Man pages on general topics (must-read):
+#' Manual pages on general topics (must-read):
 #' \itemize{
 #' \item \link{stringi-encoding} -- character encoding issues,
-#' including information on encoding management in \pkg{stringi}, as well as
-#' encoding detection, conversion, and Unicode normalization.
+#'      including information on encoding management in \pkg{stringi}, as well as
+#'      on encoding detection, conversion, and Unicode normalization.
 #'
-#' \item \link{stringi-locale} -- locale issues, i.a. locale management and
-#' specification in \pkg{stringi} and the list locale-sensitive operations.
-#' In particular, see \code{\link{stri_opts_collator}} for a description
-#' of string collation algorithm, which is used for string comparing, ordering,
-#' sorting, casefolding, and searching.
+#' \item \link{stringi-locale} -- locale issues, including i.a. locale
+#'      management and specification in \pkg{stringi}, and the list of
+#'      locale-sensitive operations.
+#'      In particular, see \code{\link{stri_opts_collator}} for a description
+#'      of the string collation algorithm, which is used for
+#'      string comparing, ordering, sorting, casefolding, and searching.
 #'
 #' \item \link{stringi-arguments} -- how \pkg{stringi}
-#' deals with its functions' arguments.
+#'      deals with its functions' arguments.
 #' }
 #'
 #'
 #' @section Facilities available:
 #'
-#' Please, refer to the following:
+#' Refer to the following:
 #' \itemize{
 #' \item \link{stringi-search} for string searching facilities;
 #' these include pattern searching, matching, string splitting, and so on.
@@ -71,7 +74,7 @@
 #'
 #'
 #' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
-#' for gathering some statistics on character vector's contents.
+#' for gathering some statistics on a character vector's contents.
 #'
 #' \item \code{\link{stri_join}}, \code{\link{stri_dup}},
 #' and \code{\link{stri_flatten}} for concatenation-based operations.
@@ -94,9 +97,10 @@
 #' and \code{\link{stri_sort}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
-#' \item \code{\link{stri_split_lines}} to split a string into text lines.
+#' \item \code{\link{stri_split_lines}} (among others) 
+#' to split a string into text lines.
 #'
-#' \item \code{\link{stri_escape_unicode}} (amont others) for escaping
+#' \item \code{\link{stri_escape_unicode}} (among others) for escaping
 #' certain code points.
 #'
 #' \item DRAFT API: \code{\link{stri_read_raw}},
