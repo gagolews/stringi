@@ -21,10 +21,10 @@
 #' List Known Character Encodings
 #'
 #' @description
-#' Gives encodings that are supported by ICU.
+#' Gives encodings that are supported by \pkg{ICU}.
 #'
 #' @details
-#' Please note that apart from given encodings, ICU tries to normalize
+#' Please note that apart from given encodings, \pkg{ICU} tries to normalize
 #' encoding specifiers. E.g. \code{"UTF8"} is also valid,
 #' see \link{stringi-encoding} for more information.
 #'
@@ -33,8 +33,8 @@
 #'
 #' @return If \code{simplified} is \code{FALSE} (the default), a list of
 #'  character vectors is returned. Each list element represents a unique
-#'  character encoding. The \code{name} attribute gives the ICU canonical
-#'  name of an encoding family. The elements (character vectors) are
+#'  character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
+#'  Name of an encoding family. The elements (character vectors) are
 #'  its aliases.
 #'
 #' If \code{simplified} is \code{TRUE}, then the resulting list
@@ -60,7 +60,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #' Gets basic information on a given character encoding.
 #'
 #' @details
-#' If the encoding provided is unknown to ICU (see \code{\link{stri_enc_list}}),
+#' If the encoding provided is unknown to \pkg{ICU} (see \code{\link{stri_enc_list}}),
 #' an error is generated.
 #'
 #' If you set a default encoding that is not a superset of ASCII
@@ -73,9 +73,10 @@ stri_enc_list <- function(simplified=FALSE) {
 #' @return
 #' Returns a list with the following components:
 #' \itemize{
-#' \item \code{Name.friendly} -- Friendly encoding name: MIME name or JAVA name or ICU Canonical name
+#' \item \code{Name.friendly} -- Friendly encoding name: MIME Name or JAVA Name 
+#'     or \pkg{ICU} Canonical Name
 #'    (selecting the first of supported ones, see below);
-#' \item \code{Name.ICU} -- Encoding name as identified by ICU;
+#' \item \code{Name.ICU} -- Encoding name as identified by \pkg{ICU};
 #' \item \code{Name.*} -- other standardized encoding names,
 #' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some may be not
@@ -100,12 +101,15 @@ stri_enc_info <- function(enc=NULL) {
 #' Set or Get Default Character Encoding in \pkg{stringi}
 #'
 #' @description
-#' \code{stri_enc_set} sets encoding used to decode strings
-#' internally (i.e. by R) marked as Native, see \link{stringi-encoding}.
+#' \code{stri_enc_set} sets the encoding used to decode strings
+#' internally (i.e. by \R) marked as Native, see \link{stringi-encoding}.
 #' \code{stri_enc_get} returns currently used default encoding.
 #'
 #' @details
-#' \code{stri_enc_get} is the same as \code{\link{stri_enc_info}(NULL)$Name.friendly}.
+#' \code{stri_enc_get} is the same as 
+#' \code{\link{stri_enc_info}(NULL)$Name.friendly}.
+#'
+#' Note that changing the default encoding may have undesired consequences.
 #'
 #' @param enc single string; character encoding name,
 #' see \code{\link{stri_enc_list}} for the list of supported encodings.

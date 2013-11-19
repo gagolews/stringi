@@ -20,7 +20,7 @@
 #' @title THE String Processing Package
 #'
 #' @description
-#' \pkg{stringi} is THE R package for correct, fast, and convenient
+#' \pkg{stringi} is THE \R package for correct, fast, and convenient
 #' string manipulation in each locale and any character encoding.
 #' We are putting great effort to create software that
 #' works as you expect on any platform, in each locale, and any

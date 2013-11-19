@@ -25,7 +25,7 @@
 #' valid UTF-16LE, UTF-16BE, UTF-32LE, or UTF-32BE.
 #'
 #' @details
-#' These functions are independent of the way R marks encodings in
+#' These functions are independent of the way \R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #' Anyway, most often, you will provide input data as raw vectors here.
 #'
@@ -81,7 +81,7 @@ stri_enc_isutf32le <- function(str) {
 #' The function checks whether all bytes in a string are in the set {1,2,...,127}.
 #'
 #' @details
-#' This function is independent of the way R marks encodings in
+#' This function is independent of the way \R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #' @param str character vector, a raw vector, or
@@ -124,7 +124,7 @@ stri_enc_isascii <- function(str) {
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
 #'
-#' This function is independent of the way R marks encodings in
+#' This function is independent of the way \R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
 #'
 #' @param str character vector, a raw vector, or
@@ -147,10 +147,10 @@ stri_enc_isutf8 <- function(str) {
 
 
 #' @title
-#' Detect Character Set and Language
+#' [DRAFT API] Detect Character Set and Language
 #'
 #' @description
-#' This function uses the ICU engine to determine the character set,
+#' This function uses the \pkg{ICU} engine to determine the character set,
 #' or encoding, of character data in an unknown format.
 #'
 #' @details

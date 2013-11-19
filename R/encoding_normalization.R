@@ -21,8 +21,9 @@
 #' Perform or Check For Unicode Normalization
 #'
 #' @description
-#' Converts a string to NFC, NFKC, NFD, NFKD, or NFKC_Casefold
-#' or checks whether a string is normalized.
+#' These functions convert strings to NFC, NFKC, NFD, NFKD, or NFKC_Casefold
+#' Unicode Normalization Form
+#' or check whether strings are normalized.
 #'
 #' @details
 #' Unicode Normalization Forms are formally defined normalizations of Unicode
@@ -40,13 +41,16 @@
 #' \item NFKC (Compatibility Decomposition, followed by Canonical Composition),
 #' \item NFKD (Compatibility Decomposition),
 #' \item NFKC_Casefold (combination of NFKC, case folding, and removing ignorable
-#'  characters which was introduced with Unicode 5.2)
+#'  characters which was introduced with Unicode 5.2).
 #' }
 #'
 #' Note that many W3C Specifications recommend using NFC for all content,
 #' because this form avoids potential interoperability problems arising
 #' from the use of canonically equivalent, yet different,
 #' character sequences in document formats on the Web.
+#' Thus, you will rather not use these functions in typical
+#' stringi processing activities. Most often you may assume
+#' that a string is in NFC.
 #'
 #' As usual in \pkg{stringi},
 #' if the input character vector is in the native encoding,
@@ -55,10 +59,10 @@
 #'
 #' @param str character vector to be encoded
 #'
-#' @return \code{stri_enc_nf*} return a character vector
+#' @return The \code{stri_enc_nf*} functions return a character vector
 #' of the same length as input (the output is always in UTF-8).
 #'
-#' \code{stri_enc_isnf*} return a logical vector.
+#' On the other hand, \code{stri_enc_isnf*} return a logical vector.
 #'
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,
