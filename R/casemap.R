@@ -25,22 +25,25 @@
 #' UPPER CASE, or to Title Case.
 #'
 #' @details
-#' ICU implements full Unicode string case mappings. In general,
+#' \pkg{ICU} implements full Unicode string case mappings. In general,
 #' \itemize{
-#' \item case mapping can change the number of code points and/or code units of a string,
+#' \item case mapping can change the number of code points and/or code units 
+#'    of a string,
 #' \item is language-sensitive (results may differ depending on locale), and
-#' \item is context-sensitive (a character in the input string may map differently depending on surrounding characters).
+#' \item is context-sensitive (a character in the input string may map 
+#'    differently depending on surrounding characters).
 #' }
 #'
 #' @param str character vector
 #' @param locale \code{NULL} or \code{""} for case mapping following
-#' the conventions of the default locale, or a single string with locale identifier,
-#' see \link{stringi-locale}.
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}.
 #' @return
-#' Returns a character vector.
+#' Each function returns a character vector.
 #'
 #' @references
-#' \emph{Case Mappings} -- ICU User Guide, \url{http://userguide.icu-project.org/transforms/casemappings}
+#' \emph{Case Mappings} -- ICU User Guide, 
+#' \url{http://userguide.icu-project.org/transforms/casemappings}
 #'
 #' @family locale_sensitive
 #' @export
@@ -55,6 +58,8 @@
 #'
 #' stri_trans_totitle(c('AbC','123','\u0105\u0104'))
 #' stri_trans_totitle("aLA mA kOTA")
+#'
+#' stri_trans_totitle('taming of the shrew', locale='en_US') # TODO: we are working on this
 stri_trans_tolower <- function(str, locale=NULL) {
    .Call("stri_trans_case", str, 1L, locale, PACKAGE="stringi")
 }

@@ -32,78 +32,141 @@
  *  @return character vector
  *
  *
- * ////  TO DO
- * ////   stri_totitle("pining for the fjords-yes, i'm brian", "en_US")
- * //   UErrorCode err = U_ZERO_ERROR;
- * //   BreakIterator* br = BreakIterator::createWordInstance(loc, err); // should be freed after use
- * ////   if (U_FAILURE(err))
- * //   cerr << (err == U_ZERO_ERROR) << endl;
- * //   cerr << (err == U_USING_DEFAULT_WARNING) << endl;
- * //   cerr << (err == U_USING_FALLBACK_WARNING) << endl;
- *
- *
  * @version 0.1 (Marek Gagolewski)
  * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.4 (Marek Gagolewski, 2013-11-19) use UCaseMap + StriContainerUTF8
 */
 SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   BreakIterator* briter = NULL;
+   
+   UCaseMap* ucasemap = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
 
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       throw StriException(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
    int _type = INTEGER(type)[0];
+   if (_type < 1 || _type > 3)
+      throw StriException(MSG__INTERNAL_ERROR);
 
+   UErrorCode status = U_ZERO_ERROR;
+   ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
+   if (U_FAILURE(status)) throw StriException(status);
 
-   Locale loc = Locale::createFromName(qloc); // this will be freed automatically
-   StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
-
-   if (_type == 6) {
-      UErrorCode status = U_ZERO_ERROR;
-      briter = BreakIterator::createWordInstance(loc, status);
-      if (U_FAILURE(status)) throw StriException(status);
-   }
-
+   R_len_t str_n = LENGTH(str);
+   StriContainerUTF8 str_cont(str, str_n);
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(STRSXP, str_n));
+   
+   String8 buf(0); // @TODO: calculate buf len a priori?
+   
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
          i = str_cont.vectorize_next(i))
    {
-      if (!str_cont.isNA(i)) {
-         switch (_type) {
-            case 1:
-               str_cont.getWritable(i).toLower(loc);
-               break;
-            case 2:
-               str_cont.getWritable(i).toUpper(loc);
-               break;
-            case 3:
-               str_cont.getWritable(i).toTitle(NULL, loc); // use default ICU's BreakIterator
-               break;
-            case 4:
-               str_cont.getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);
-               break;
-            case 5:
-               str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
-               break;
-            case 6:
-               str_cont.getWritable(i).toTitle(briter, loc); // how to get it working properly with English text???
-               break;
-            default:
-               throw StriException("stri_trans_case: incorrect case conversion type");
-         }
+      if (str_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
       }
+      
+      R_len_t str_cur_n     = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+      status = U_ZERO_ERROR;
+      int buf_need;
+      if (_type == 1)
+         buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),
+            (const char*)str_cur_s, str_cur_n, &status);
+      else if (_type == 2)
+         buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),
+            (const char*)str_cur_s, str_cur_n, &status);
+      else
+         buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
+            (const char*)str_cur_s, str_cur_n, &status);
+      
+      if (U_FAILURE(status)) {
+         buf.resize(buf_need+1);
+         status = U_ZERO_ERROR;
+         if (_type == 1)
+            buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),
+               (const char*)str_cur_s, str_cur_n, &status);
+         else if (_type == 2)
+            buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),
+               (const char*)str_cur_s, str_cur_n, &status);
+         else
+            buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
+               (const char*)str_cur_s, str_cur_n, &status);
+      }
+      if (U_FAILURE(status))
+         throw StriException(status);
+
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
-   if (briter) { delete briter; briter = NULL; }
-   SEXP ret;
-   PROTECT(ret = str_cont.toR());
+   if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(
-      if (briter) delete briter;
+      if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    )
+   
+// v0.3 - UTF-16
+//   BreakIterator* briter = NULL;
+//
+//   STRI__ERROR_HANDLER_BEGIN
+//
+//   if (!Rf_isInteger(type) || LENGTH(type) != 1)
+//      throw StriException(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
+//   int _type = INTEGER(type)[0];
+//
+//
+//   Locale loc = Locale::createFromName(qloc); // this will be freed automatically
+//   StriContainerUTF16 str_cont(str, LENGTH(str), false); // writable, no recycle
+//
+//   if (_type == 6) {
+//      UErrorCode status = U_ZERO_ERROR;
+//      briter = BreakIterator::createWordInstance(loc, status);
+//      if (U_FAILURE(status)) throw StriException(status);
+//   }
+//
+//   for (R_len_t i = str_cont.vectorize_init();
+//         i != str_cont.vectorize_end();
+//         i = str_cont.vectorize_next(i))
+//   {
+//      if (!str_cont.isNA(i)) {
+//         switch (_type) {
+//            case 1:
+//               str_cont.getWritable(i).toLower(loc);
+//               break;
+//            case 2:
+//               str_cont.getWritable(i).toUpper(loc);
+//               break;
+//            case 3:
+//               str_cont.getWritable(i).toTitle(NULL, loc); // use default ICU's BreakIterator
+//               break;
+//            case 4:
+//               str_cont.getWritable(i).foldCase(U_FOLD_CASE_DEFAULT);
+//               break;
+//            case 5:
+//               str_cont.getWritable(i).foldCase(U_FOLD_CASE_EXCLUDE_SPECIAL_I);
+//               break;
+//            case 6:
+//               str_cont.getWritable(i).toTitle(briter, loc); // how to get it working properly with English text???
+//               break;
+//            default:
+//               throw StriException("stri_trans_case: incorrect case conversion type");
+//         }
+//      }
+//   }
+//
+//   if (briter) { delete briter; briter = NULL; }
+//   SEXP ret;
+//   PROTECT(ret = str_cont.toR());
+//   UNPROTECT(1);
+//   return ret;
+//   STRI__ERROR_HANDLER_END(
+//      if (briter) delete briter;
+//   )
 }
