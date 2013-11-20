@@ -27,10 +27,10 @@
 #' @details
 #' \pkg{ICU} implements full Unicode string case mappings. In general,
 #' \itemize{
-#' \item case mapping can change the number of code points and/or code units 
+#' \item case mapping can change the number of code points and/or code units
 #'    of a string,
 #' \item is language-sensitive (results may differ depending on locale), and
-#' \item is context-sensitive (a character in the input string may map 
+#' \item is context-sensitive (a character in the input string may map
 #'    differently depending on surrounding characters).
 #' }
 #'
@@ -42,7 +42,7 @@
 #' Each function returns a character vector.
 #'
 #' @references
-#' \emph{Case Mappings} -- ICU User Guide, 
+#' \emph{Case Mappings} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/transforms/casemappings}
 #'
 #' @family locale_sensitive

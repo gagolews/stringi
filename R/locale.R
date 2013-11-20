@@ -57,7 +57,7 @@
 #' Differences may also appear in language conventions used within
 #' the same country. For example, the Euro currency may be used in several European
 #' countries while the individual country's currency is still in circulation.
-#' In such case, ICU \code{Variant} "_EURO" could be used for selecting locales 
+#' In such case, ICU \code{Variant} "_EURO" could be used for selecting locales
 #' that support the Euro currency.
 #'
 #' For a list of locales that are recognized by \pkg{ICU},

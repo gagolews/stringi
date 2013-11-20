@@ -73,7 +73,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #' @return
 #' Returns a list with the following components:
 #' \itemize{
-#' \item \code{Name.friendly} -- Friendly encoding name: MIME Name or JAVA Name 
+#' \item \code{Name.friendly} -- Friendly encoding name: MIME Name or JAVA Name
 #'     or \pkg{ICU} Canonical Name
 #'    (selecting the first of supported ones, see below);
 #' \item \code{Name.ICU} -- Encoding name as identified by \pkg{ICU};
@@ -106,7 +106,7 @@ stri_enc_info <- function(enc=NULL) {
 #' \code{stri_enc_get} returns currently used default encoding.
 #'
 #' @details
-#' \code{stri_enc_get} is the same as 
+#' \code{stri_enc_get} is the same as
 #' \code{\link{stri_enc_info}(NULL)$Name.friendly}.
 #'
 #' Note that changing the default encoding may have undesired consequences.

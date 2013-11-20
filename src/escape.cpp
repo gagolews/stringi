@@ -107,7 +107,7 @@ SEXP stri_escape_unicode(SEXP str)
          }
       }
 
-      SET_STRING_ELT(ret, i, 
+      SET_STRING_ELT(ret, i,
          Rf_mkCharLenCE(out.c_str(), (int)out.size(), (cetype_t)CE_UTF8)
       );
    }

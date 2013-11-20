@@ -48,7 +48,7 @@
 #'
 #' Almost all functions are vectorized with respect to all their arguments;
 #' This may sometimes lead to strange results - we assume you know what
-#' you are doing. However, thanks to this property you may 
+#' you are doing. However, thanks to this property you may
 #' e.g. search for one pattern in each given string,
 #' or search for each pattern in one given string.
 #'

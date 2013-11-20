@@ -126,19 +126,19 @@ UConverter* stri__ucnv_open(const char* enc)
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
 
-   ucnv_setFromUCallBack((UConverter*)uconv, 
-      (UConverterFromUCallback)STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN, 
+   ucnv_setFromUCallBack((UConverter*)uconv,
+      (UConverterFromUCallback)STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN,
       (const void *)NULL, (UConverterFromUCallback *)NULL,
       (const void **)NULL,
       &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here
 
-   ucnv_setToUCallBack  ((UConverter*)uconv, 
+   ucnv_setToUCallBack  ((UConverter*)uconv,
       (UConverterToUCallback)STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,
-      (const void *)NULL, 
-      (UConverterToUCallback *)NULL, 
-      (const void **)NULL, 
+      (const void *)NULL,
+      (UConverterToUCallback *)NULL,
+      (const void **)NULL,
       &err);
    if (U_FAILURE(err))
       Rf_error(MSG__ENC_ERROR_SET); // error() allowed here

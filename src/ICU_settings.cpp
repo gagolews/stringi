@@ -25,7 +25,7 @@
  *
  *  @return an R named list with 4 components:
  *  \code{Unicode.version} == ICU Unicode version,
- *  \code{ICU.version} == U_ICU_VERSION 
+ *  \code{ICU.version} == U_ICU_VERSION
  *  \code{Locale} == \code{stri_locale_info()},
  *  \code{Charset.internal} == \code{"UTF-8", "UTF-16"},
  *  \code{Charset.native} == \code{stri_enc_info()})

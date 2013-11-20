@@ -60,7 +60,7 @@
 #' adds BOMs).
 #'
 #' Note that \code{stri_encode(as.raw(data), "8bitencodingname")}
-#' is a wise substitute for \code{\link{rawToChar}}.'
+#' is a wise substitute for \code{\link{rawToChar}}.
 #'
 #' Currently, if an incorrect code point is found
 #' on input, it is replaced by the default (for that target encoding)

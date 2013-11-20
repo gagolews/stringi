@@ -46,16 +46,16 @@ struct CharClass {
 
    public:
 
-      CharClass() { 
+      CharClass() {
          binprop = UCHAR_INVALID_CODE;
          gencat = U_CHAR_CATEGORY_COUNT;
          complement = false;
       }
-      
+
       CharClass(SEXP charclass);
-      
+
       inline bool isNA() {
-         return (binprop == UCHAR_INVALID_CODE && gencat == U_CHAR_CATEGORY_COUNT ); 
+         return (binprop == UCHAR_INVALID_CODE && gencat == U_CHAR_CATEGORY_COUNT );
       }
 
       int test(UChar32 c);

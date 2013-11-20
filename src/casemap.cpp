@@ -41,7 +41,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   
+
    UCaseMap* ucasemap = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
@@ -60,9 +60,9 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    StriContainerUTF8 str_cont(str, str_n);
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, str_n));
-   
+
    String8 buf(0); // @TODO: calculate buf len a priori?
-   
+
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
          i = str_cont.vectorize_next(i))
@@ -71,7 +71,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       R_len_t str_cur_n     = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       status = U_ZERO_ERROR;
@@ -85,7 +85,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
       else
          buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
             (const char*)str_cur_s, str_cur_n, &status);
-      
+
       if (U_FAILURE(status)) {
          buf.resize(buf_need+1);
          status = U_ZERO_ERROR;
@@ -111,7 +111,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    STRI__ERROR_HANDLER_END(
       if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    )
-   
+
 // v0.3 - UTF-16
 //   BreakIterator* briter = NULL;
 //

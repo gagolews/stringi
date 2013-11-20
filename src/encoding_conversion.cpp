@@ -338,7 +338,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    const char* uconv_to_name = ucnv_getName(uconv_to, &err);
    if (U_FAILURE(err))
       throw StriException(err);
-   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones 
+   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones
       // - bytes enc (this is reasonable, isn't it?)
    if (!to_raw_logical) { // otherwise not needed
       if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
@@ -426,14 +426,14 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
  * @version 0.2 (Marek Gagolewski) arg to_raw_added, encoding marking
  * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
  * @version 0.4 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
- * @version 0.5 (Marek Gagolewski, 2013-11-20) BUGFIX call stri_encode_from_marked if necessary 
+ * @version 0.5 (Marek Gagolewski, 2013-11-20) BUGFIX call stri_encode_from_marked if necessary
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
    const char* selected_from = stri__prepare_arg_enc(from, "from", true);
    if (!selected_from && Rf_isVectorAtomic(str))
       return stri_encode_from_marked(str, to, to_raw);
-   
+
    str = stri_prepare_arg_list_raw(str, "str");
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
@@ -458,7 +458,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    const char* uconv_to_name = ucnv_getName(uconv_to, &err);
    if (U_FAILURE(err))
       throw StriException(err);
-   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones 
+   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones
       // - bytes enc (this is reasonable, isn't it?)
    if (!to_raw_logical) { // otherwise not needed
       if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))

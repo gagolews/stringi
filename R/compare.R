@@ -103,7 +103,7 @@ stri_cmp <- stri_compare
 #' \code{str[stri_order(str, decreasing, opts_collator)]}.
 #'
 #' @param str character vector
-#' @param decreasing single logical value; should the sort order 
+#' @param decreasing single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
 #'    or nonincreasing (\code{TRUE})?
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}

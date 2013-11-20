@@ -26,7 +26,7 @@
 #' works as you expect on any platform, in each locale, and any
 #' ``default'' system encoding.
 #'
-#' \bold{Keywords}: internationalization, localization, 
+#' \bold{Keywords}: internationalization, localization,
 #'     ICU, ICU4C, i18n, l10n, Unicode
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
@@ -97,7 +97,7 @@
 #' and \code{\link{stri_sort}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
-#' \item \code{\link{stri_split_lines}} (among others) 
+#' \item \code{\link{stri_split_lines}} (among others)
 #' to split a string into text lines.
 #'
 #' \item \code{\link{stri_escape_unicode}} (among others) for escaping

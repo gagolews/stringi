@@ -61,7 +61,7 @@
 #' one or two 16-bit code units, or a single 32-bit integer
 #' (cf. the ICU FAQ).
 #'
-#'  In most cases, Unicode is a superset of the characters 
+#'  In most cases, Unicode is a superset of the characters
 #' supported by any given codepage.
 #'
 #' @section UTF-8 and UTF-16:

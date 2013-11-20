@@ -133,7 +133,7 @@ invisible(NULL)
 #' provide a way to detect and extract a specific piece of
 #' text. Note that locale-sensitive searching , especially on a non-English language
 #' text, is a much more complex process than one may think at the first glance.
-#' 
+#'
 #'
 #'
 #' @details
