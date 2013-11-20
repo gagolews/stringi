@@ -41,6 +41,17 @@ test_that("stri_encode", {
       stri_encode(stri_encode(c("\u0105abc\u0104", NA, "\ufffd\u5432"),
          "UTF-8", "latin2", to_raw=TRUE), "latin2", "UTF-8"),
       c("\u0105abc\u0104",    NA,         "\032\032")))
+   
+   #### mixed encoding marks:
+   suppressMessages(defenc <- stri_enc_set("iso-8859-2"))
+   expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+   expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", ""), c("a", "\xb1", NA, "\xb1"))
+   suppressMessages(stri_enc_set(defenc))
+   
+   suppressMessages(defenc <- stri_enc_set("cp-1250"))
+   expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105"), NULL, "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+   expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105")), c("a", "\xb9", NA, "\xb9"))
+   suppressMessages(stri_enc_set(defenc))
 })
 
 

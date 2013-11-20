@@ -175,6 +175,7 @@ SEXP stri_enc_set(SEXP loc);
 
 // encoding_conversion.cpp:
 SEXP    stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
+SEXP    stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata,
                             char* buf, R_len_t bufsize);
 SEXP    stri_enc_fromutf32(SEXP str);

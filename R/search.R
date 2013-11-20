@@ -20,32 +20,34 @@
 #' @title String Searching
 #'
 #' @description
-#' This man page describes how to perform string search-based
+#' This man page explains how to perform string search-based
 #' operations in \pkg{stringi}.
 #'
 #' @details
-#' There are three string searching ``engines'' in \pkg{stringi}.
+#' There are three independent string searching ``engines'' in \pkg{stringi}.
 #' \itemize{
-#'    \item \code{stri_*_regex} - ICU's regular expressions, see \link{stringi-search-regex},
-#'    \item \code{stri_*_fixed} - ICU's \code{StringSearch}, locale-sensitive ``fixed'' patterns, see \link{stringi-search-fixed},
-#'    \item \code{stri_*_charclass} - character classes:
+#'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions, see \link{stringi-search-regex},
+#'    \item \code{stri_*_fixed} -- \pkg{ICU}'s \code{StringSearch}, locale-sensitive ``fixed'' patterns, see \link{stringi-search-fixed},
+#'    \item \code{stri_*_charclass} -- character classes:
 #'    more exactly, either general character categories or binary properties, see \link{stringi-search-charclass},
 #' }
 #'
 #' Each ``engine'' is able to perform many search-based operations:
 #' \itemize{
 #'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
-#'    see e.g. \code{\link{stri_detect}}
-#'    \item \code{stri_count_*} - counts the number of pattern's occurrences,
-#'    see e.g. \code{\link{stri_count}}
+#'    see e.g. \code{\link{stri_detect}},
+#'    \item \code{stri_count_*} - counts the number of occurrences of text
+#'      matching a pattern,
+#'    see e.g. \code{\link{stri_count}},
 #'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
-#'    see e.g. \code{\link{stri_locate}}
+#'    see e.g. \code{\link{stri_locate}},
 #'    \item \code{stri_extract_*} - extracts all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_extract}}
+#'    and, in case of regexes, \code{\link{stri_match}},
 #'    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern,
-#'    see e.g. \code{\link{stri_replace}}
-#'    \item \code{stri_split_*} - splits a strings into chunks indicated by pattern's occurrences,
-#'    see e.g. \code{\link{stri_split}}
+#'    see e.g. \code{\link{stri_replace}},
+#'    \item \code{stri_split_*} - splits a string into chunks indicated by occurrences of a pattern,
+#'    see e.g. \code{\link{stri_split}}.
 #' }
 #'
 #' @name stringi-search
@@ -55,6 +57,7 @@
 #' @family search_charclass
 #' @family search_detect
 #' @family search_count
+#' @family search_match
 #' @family search_locate
 #' @family search_replace
 #' @family search_split
@@ -78,20 +81,19 @@ invisible(NULL)
 #'
 #' @details
 #' All \code{stri_*_regex} functions in \pkg{stringi} use
-#' the \pkg{ICU} regex engine, which may be tuned
-#' with settings may be tuned up (for example
+#' the \pkg{ICU} regex engine, which settings may be tuned up (for example
 #' to perform case-insensitive search) with the
 #' \code{\link{stri_opts_regex}} function.
 #'
 #'
-#' Regular expression patterns in ICU are similar in form and behavior
+#' Regular expression patterns in \pkg{ICU} are quite similar in form and behavior
 #' to Perl's regexes.  Their implementation loosely bases
-#' on JDK 1.4 package's \code{java.util.regex}.
-#' ICU Regular Expressions conform to Unicode Technical Standard #18
+#' on JDK 1.4 package \code{java.util.regex}.
+#' \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 #' (see References section) and its features are summarized in
-#' the ICU User Guide (see below). A good introduction
+#' the ICU User Guide (see below). A good general introduction
 #' to regexes is (Friedl, 2002).
-#' Some topics are also covered in R manual, see \link{regex}.
+#' Some topics are also covered in the \R manual, see \link{regex}.
 #'
 #' @section Regexes in \pkg{stringi}:
 #' Note that if a given regex \code{pattern} is empty,
@@ -99,7 +101,7 @@ invisible(NULL)
 #' and generate a warning.
 #' On syntax error, a quite informative failure message is shown.
 #'
-#' If you'd like to search for a fixed pattern,
+#' If you would like to search for a fixed pattern,
 #' refer to \link{stringi-search-fixed}.
 #' This allows to do a locale-aware text lookup,
 #' or a very fast exact-byte search.
@@ -127,17 +129,23 @@ invisible(NULL)
 #' Locale-Sensitive Text Searching in \pkg{stringi}
 #'
 #' @description
-#' something general....
+#' String searching facilities described in this very man page
+#' provide a way to detect and extract a specific piece of
+#' text. Note that locale-sensitive searching , especially on a non-English language
+#' text, is a much more complex process than one may think at the first glance.
+#' 
 #'
 #'
 #' @details
+#' ***TO DO: this man page is under construction***
+#'
 #' By default, all \code{stri_*_fixed} functions in \pkg{stringi} utilize
 #' \pkg{ICU}'s \code{StringSearch} engine.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
 #'
-#' For more information on ICU's Collator & SearchEngine
+#' For more information on \pkg{ICU}'s Collator and SearchEngine
 #' and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
@@ -151,7 +159,7 @@ invisible(NULL)
 #' that properly takes into account accented letters, conjoined letters,
 #' and ignorable punctuation
 #'
-#' Currently, the ICU collator-search is a little bit slow...
+#' Currently, the \pkg{ICU} collator-search is a little bit slow...
 #'
 #'
 #'
@@ -187,40 +195,44 @@ invisible(NULL)
 #'
 #' @description
 #' In this man page we describe how character classes are
-#' declared in the \pkg{stringi} package.
+#' declared in the \pkg{stringi} package
+#' so that you may search for their occurrences in your search activities.
 #'
 #'
 #' @details
+#' ***TO DO: this man page is under construction***
+#'
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
-#' single character (i.e. Unicode codepoint) search-based operations.
+#' a single character (i.e. Unicode codepoint) search-based operations.
 #'
 #'
 #' There are two separate ways to specify character classes or
 #' properties in \pkg{stringi}:
-#'
 #' \itemize{
 #' \item by Unicode General Categories, e.g. \code{"Lu"} for uppercase letters
-#' (1-2 letter identifier, same may be used in regex)
+#' (1-2 letter identifier, the same may be used in regexes)
 #' \item by Unicode Binary Properties, e.g. \code{"WHITE_SPACE"}
 #' }
-#' These provide access to the ICU's Unicode Character Database
+#' Both of them provide access to the \pkg{ICU}'s Unicode Character Database.
 #'
-#' The Unicode standard assigns to each code point (not just assigned character)
-#' values for many properties. Most of them are simple Boolean flags,
+#' In \pkg{stringi}, each class may be preceded with '^' (complement).
+#'
+#' The Unicode standard assigns to each code point
+#'  many properties. Most of them are simple Boolean flags,
 #' or constants from a small enumerated list. For some properties,
 #' values are strings or other relatively more complex types.
 #'
 #' On the other hand, a codepoint may follow only one binary property,
 #' hence the name.
 #'
-#' Note that e.g. General Category \code{Z} (some space) and Binary Property
+#' Moreover, some properties and general categories may seem to overlap.
+#' However, note that e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} may match different character sets.
 #'
-#' In \pkg{stringi}, each class may be preceded with '^' (complement).
 #'
 #' @section Unicode General Categories:
 #'
-#' The General_Category property of a code point provides for the most
+#' The General_Category property of a code point provides the most
 #' general classification of that code point.
 #'
 #'

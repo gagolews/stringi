@@ -116,6 +116,8 @@ If you are an advanced `R` user, you may wish to
 use [`Xcode`](http://www.cyberciti.biz/faq/howto-apple-mac-os-x-install-gcc-compiler/) 
 with the `GCC` compiler.
 
+`xcode-select --install`
+
 In such case, download and decompress
 [our binary distribution of `ICU4C'](http://static.rexamine.com/packages/osx/TO_BE_DONE),
 which allows for static linking, e.g. to `TO DO`.

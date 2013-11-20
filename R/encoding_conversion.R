@@ -21,27 +21,36 @@
 #' Convert Strings Between Given Encodings
 #'
 #' @description
-#' Converts a character vector between encodings,
-#' see \code{\link{stri_enc_list}} for the list
+#' These functions convert a character vector between encodings.
+#'
+#' @details
+#' These two functions aim to replace \R's \link{iconv} --
+#' note only it is slightly faster,
+#' and works in the same manner on all platforms.
+#' \code{stri_conv} is an alias for \code{stri_encode}.
+#'
+#' Please, refer to \code{\link{stri_enc_list}} for the list
 #' of supported encodings and \link{stringi-encoding}
 #' for general discussion.
 #'
-#' @details
-#' Currently, if an incorrect code point is found
-#' on input, it is replaced by the default (for that target encoding)
-#' substitute character and a warning is generated.
-#'
-#' \code{stri_conv} is an alias for \code{stri_encode}.
-#' This function aims to replace R's \link{iconv} --
-#' however, it is slightly faster,
-#' and works in the same manner on all platforms.
-#'
 #' If \code{from} is either missing, \code{""}, or \code{NULL}
-#' and \code{str} is a character vector,
-#' then the input string encoding marks are used
+#' and \code{str} is an atomic vector,
+#' then the input strings' encoding marks are used
 #' (just like in almost all \pkg{stringi} functions:
 #' bytes marks are disallowed).
-#' Otherwise, the internal encoding marks are completely ignored.
+#' In other words, the input string will be converted from
+#' ASCII, UTF-8, or current default encoding, see \code{\link{stri_enc_get}}.
+#' Otherwise, the internal encoding marks are overridden
+#' by the given encoding.
+#' On the other hand, for \code{str} being a list of raw vectors,
+#' we assume that the input encoding is the current default encoding.
+#'
+#' For \code{to_raw=FALSE}, the output
+#' strings always have marked encodings according to the target converter
+#' used (as specified by \code{to}) and the current default Encoding
+#' (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
+#' or \code{bytes} in all other cases).
+#'
 #'
 #' Note that possible problems may occur when \code{to} is
 #' set to e.g. UTF-16 and UTF-32, as the output strings may have embedded NULs.
@@ -50,14 +59,13 @@
 #' (e.g. set \code{UTF-16} or \code{UTF-32} which automatically
 #' adds BOMs).
 #'
-#' For \code{to_raw=FALSE}, the output
-#' strings always have marked encodings according to the converter
-#' used (as specified by \code{to}) and the current default Encoding
-#' (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
-#' or \code{bytes} in all other cases).
-#'
 #' Note that \code{stri_encode(as.raw(data), "8bitencodingname")}
-#' is a wise substitute for \code{\link{rawToChar}}.
+#' is a wise substitute for \code{\link{rawToChar}}.'
+#'
+#' Currently, if an incorrect code point is found
+#' on input, it is replaced by the default (for that target encoding)
+#' substitute character and a warning is generated.
+#'
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors to be converted
@@ -70,13 +78,13 @@
 #'       \code{NULL} or \code{""} for default encoding
 #'       (see \code{\link{stri_enc_get}}),
 #'       or a single string with encoding name
-#' @param to_raw single logical value: should a list of raw vectors
-#' be returned rather than a character vector?
+#' @param to_raw single logical value; indicates whether a list of raw vectors
+#' shall be returned rather than a character vector
 #'
 #' @return If \code{to_raw} is \code{FALSE},
 #' then a character vector with encoded strings (and sensible
 #' encoding marks) is returned.
-#' Otherwise, you'll get a list of raw vectors.
+#' Otherwise, you get a list of raw vectors.
 #'
 #' @references
 #' \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
@@ -87,13 +95,8 @@
 #' @family encoding_conversion
 #' @rdname stri_encode
 #' @export
-stri_encode <- function(str, from, to=NULL, to_raw=FALSE) {
-   if (is.character(str) && (missing(from) || is.null(from) || from == "")) {
-      str <- stri_enc_toutf8(str)
-      .Call("stri_encode", str, "UTF-8", to, to_raw, PACKAGE="stringi")
-   }
-   else
-      .Call("stri_encode", str, from, to, to_raw, PACKAGE="stringi")
+stri_encode <- function(str, from=NULL, to=NULL, to_raw=FALSE) {
+   .Call("stri_encode", str, from, to, to_raw, PACKAGE="stringi")
 }
 
 
@@ -146,7 +149,7 @@ stri_enc_toutf32 <- function(str) {
 #' \code{\link{intToUtf8}},
 #' as usual in \pkg{stringi}, it returns character strings
 #' in UTF-8.
-#' If you have a list of raw vector on input,
+#' If you have a list of raw vectors on input,
 #' use \code{\link{stri_encode}}.
 #'
 #'
@@ -214,13 +217,13 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #' @details
 #' All charcodes > 127 are replaced with ASCII SUBSTITUTE
 #' CHARACTER (0x1A).
-#' R encoding marking is always used, to determine whether
+#' \R encoding marking is always used, to determine whether
 #' an 8-bit encoding or rather UTF-8 is used on input.
 #'
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
 #' The SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
-#' as ASCII \code{NA} value for single characters.
+#' as ASCII missing value for single characters.
 #'
 #' @param str character vector to be converted
 #' @return Returns a character vector.
