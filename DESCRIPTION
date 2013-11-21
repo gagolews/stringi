@@ -4,7 +4,7 @@ Date: 2013-11-21
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast, and convenient
     string processing in each locale and any native character encoding.
-    The use of ICU library gives R users a platform-independent and properly
+    The use of the ICU library gives R users a platform-independent and properly
     localized toolbox of functions with behavior known from other
     programming languages, like Java, Perl, Python, and PHP.
 URL: http://stringi.rexamine.com/

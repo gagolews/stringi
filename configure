@@ -3381,7 +3381,7 @@ $as_echo_n "checking with pkg-config for ICU4C installed... " >&6; }
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
       echo "*** The pkg-config script did not detect ICU4C-devel libraries installed"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** For more information check out the file stringi/INSTALL"
       return 1 # nothing more to do
    fi
 
@@ -3400,7 +3400,7 @@ $as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
 $as_echo "no" >&6; }
       echo "*** ICU4C ${ICU_VERSION} has been detected"
       echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** For more information check out the file stringi/INSTALL"
       return 1 # you may quit querying pkg-config here
    fi
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
@@ -3674,7 +3674,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
             echo "*** ICU4C ${ICU_VERSION} has been detected"
             echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-            echo "*** For more information check out the file stringi/INSTALL.md"
+            echo "*** For more information check out the file stringi/INSTALL"
          fi
 
 else
@@ -3718,7 +3718,7 @@ fi
 
 if test $ICU_FOUND = 0; then
    echo "*** ICU4C-devel libraries cannot be found"
-   echo "*** For more information check out the file stringi/INSTALL.md"
+   echo "*** For more information check out the file stringi/INSTALL"
    exit 1
 fi
 

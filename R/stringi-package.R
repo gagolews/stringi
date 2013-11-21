@@ -159,7 +159,7 @@ invisible(NULL)
    #   if (class(dll) != "DLLInfo") {
    #      stop("Failed to load stringi's dynamic library.
    #           Perhaps ICU4C is not in your search path.
-   #           Please recompile the package. See INSTALL.md for more details",
+   #           Please recompile the package. See INSTALL for more details",
    #           call.=FALSE)
    #   }
    #}

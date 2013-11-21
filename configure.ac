@@ -282,7 +282,7 @@ detect_icu_with_pkg_config() {
       # pkg config doesn't know about icu-uc
       AC_MSG_RESULT(no)
       echo "*** The pkg-config script did not detect ICU4C-devel libraries installed"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** For more information check out the file stringi/INSTALL"
       return 1 # nothing more to do
    fi
 
@@ -298,7 +298,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT(no)
       echo "*** ICU4C ${ICU_VERSION} has been detected"
       echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-      echo "*** For more information check out the file stringi/INSTALL.md"
+      echo "*** For more information check out the file stringi/INSTALL"
       return 1 # you may quit querying pkg-config here
    fi
    AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
@@ -465,7 +465,7 @@ detect_icu_with_guess() {
             AC_MSG_RESULT(no)
             echo "*** ICU4C ${ICU_VERSION} has been detected"
             echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-            echo "*** For more information check out the file stringi/INSTALL.md"
+            echo "*** For more information check out the file stringi/INSTALL"
          fi
       ],[
          AC_MSG_RESULT([no]) # could not detect icu version
@@ -495,7 +495,7 @@ fi
 
 if test $ICU_FOUND = 0; then
    echo "*** ICU4C-devel libraries cannot be found"
-   echo "*** For more information check out the file stringi/INSTALL.md"
+   echo "*** For more information check out the file stringi/INSTALL"
    exit 1
 fi
 

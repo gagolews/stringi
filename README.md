@@ -14,14 +14,17 @@ like  *Java*, *Perl*, *Python*, and *PHP*.
 
 **Homepage**: http://stringi.rexamine.com/
 
+**License**: GNU LGPL v3 and, additionally, the ICU license
+for the binary builds with static *ICU* included.
+
 **Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html 
 [for current development version]
 
 **System requirements**: *ICU4C >= 4.8*
-([more info](https://github.com/Rexamine/stringi/blob/master/INSTALL.md)),
+([more info](https://github.com/Rexamine/stringi/blob/master/INSTALL)),
 *R >= 2.15.0*
 
-**Auto-installer**: A quite recent development release (for testing purposes)
+**Auto-installer [devel]**: A quite recent development release (for testing purposes)
 can be automatically dowloaded by calling in R:
 ```
 source('http://stringi.rexamine.com/install.R')
