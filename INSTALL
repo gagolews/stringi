@@ -23,7 +23,7 @@ use [`Rtools`](http://cran.r-project.org/bin/windows/Rtools/)
 chain to compile `stringi` manually.
 
 In such case, download and decompress
-[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip),
+[our binary distribution of `ICU4C`](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip),
 which allows for static linking, e.g. to `c:\icu-distrib`.
 
 Set up the environmental variable `ICU_PATH` so that it points
@@ -37,7 +37,7 @@ Not doing so will result in compilation process failure.
 
 If you're a true geek, you may wish to set up everything on your own.
 Below you'll find a description on how we created 
-[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip)
+[our binary distribution of `ICU4C`](http://static.rexamine.com/packages/windows/icu4c_52_1-mingw-distrib-static-devel.zip)
 on an 64-bit Windows 8 system. This will enable static linking of ICU4C
 libs.
 
@@ -46,7 +46,8 @@ Tools needed:
 [MSYS](http://www.mingw.org/wiki/MSYS) (the `gcc` compiler is located
 in sth like `C:/Rtools/gcc-4.6.3`)
 
-Download the source package for [ICU4C 52.1](http://site.icu-project.org/download/52).
+Download the source package for 
+[`ICU4C 52.1`](http://site.icu-project.org/download/52).
 
 To build a 32bit version of `ICU4C`:
 
@@ -102,41 +103,66 @@ at the directory with your pre-compiled
 
 A typical OS X user, just like the one who uses Windows,
 does not possess any C++ compiler.
-Note that OS X 10.X is shipped with ICU, but the lib version 
-is much below our requirements.
+Note that OS X 10.X may be shipped with ICU, but the lib version 
+is can be much below our requirements.
 
 #### Using binary version of **stringi** (default)
 
-`ICU4C` WILL BE statically linked with stringi.dylib.
-Everything works out of the box.
+`ICU4C` WILL BE statically linked with stringi.so.
+Everything should work out of the box.
 
-#### Compiling **stringi** with our binary version of ICU4C ***TO DO***
+#### Compiling **stringi** with our binary version of ICU4C
 
 If you are an advanced `R` user, you may wish to
 use [`Xcode`](http://www.cyberciti.biz/faq/howto-apple-mac-os-x-install-gcc-compiler/) 
 with the `GCC` compiler.
 
-`xcode-select --install`
+You may also want to check out
+[this page](http://cran.r-project.org/bin/macosx/tools/).
 
-In such case, download and decompress
-[our binary distribution of `ICU4C'](http://static.rexamine.com/packages/osx/TO_BE_DONE),
-which allows for static linking, e.g. to `TO DO`.
+If you are building the package just for yourself,
+check out the GNU/Linux, Unix, OS X (with dynamically linked ICU4C) 
+section below. `ICU4C` may already be installed on your system.
+
+In other case, you may use
+[our binary distribution of `ICU4C`](http://static.rexamine.com/packages/macosx/icu4c_52_1-gcc-distrib-static-devel.tgz),
+which allows for static linking of the `ICU` library.
+
+Download the above-mentioned package and decompress it
+into `/usr/local`. If you prefer another place,
+make sure that `<YOUR_DIR>/lib/pkgconfig` is in the PKG_CONFIG_PATH
+and edit all `<YOUR_DIR>/lib/pkgconfig/*.pc` files
+by changing the prefix= to an appropriate path, i.e. `<YOUR_DIR>`.
 
 
-#### Compiling `ICU4C` manually (for static linking) ***TO DO***
+
+#### Compiling `ICU4C` manually (for static linking)
+
+Below we describe how we have created
+[our binary distribution of `ICU4C`](http://static.rexamine.com/packages/macosx/icu4c_52_1-gcc-distrib-static-devel.tgz)
+
+You will need `Xcode` installed, i.e. a working `gcc` compiler.
 
 
 ```
-TO DO
-...download...
-...decompress...
-cd....
-CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./runConfigureICU MacOSX \
+cd /tmp
+wget http://download.icu-project.org/files/icu4c/52.1/icu4c-52_1-src.tgz
+tar -zxvf icu4c-52_1-src.tgz
+cd icu/source/
+CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./runConfigureICU MacOSX/GCC \
    --prefix=../compiled \
    --enable-static --disable-shared --disable-samples \
    --disable-layout --disable-tests
-...
-TO DO
+make
+make install
+cd ../compiled/lib/
+# rename all *.a files to *_static.a...
+cd pkgconfig
+# rename all *.pc files to *_static.pc...
+# edit all *.pc files...
+# change prefix= to /usr/local
+# change Name:, Libs:, and Requires: by adding the _static suffix
+# compress and publish or move the contents of ../../compiled/ into /usr/local
 ```
 
 
@@ -153,8 +179,9 @@ pkg-config --modversion icu-uc
 ```
 
 This should give you the ICU version that is available to the build chain.
-
-
+If you are sure that `ICU4C` is installed properly and `pkg-config`
+gives incorrect results, try providing a different `PKG_CONFIG_PATH`
+to the `./configure` script.
 
 #### Fedora/RedHat Linux
 
@@ -178,31 +205,6 @@ cd icu/source/
 ./runConfigureICU <yourplatform>      # see ./runConfigureICU --help
 make
 sudo make install     # as root
-```
-
-
-#### Solaris
-
-```
-./runConfigureICU Solaris # or SolarisX86; compile with CC/cc
-```
-
-or
-
-```
-./runConfigureICU Solaris/GCC # compile with CC/cc
-```
-
-You should use the same compiler which was used to build
-`R` and which `R` uses to build R packages.
-
-#### OS X
-
-
-Make sure you have Xcode Tools installed.
-
-```
-./runConfigureICU MacOSX # Use the GNU gcc/g++ compilers on MacOS X (Darwin)
 ```
 
 ## Fetching a Development Version of **stringi** from GitHub

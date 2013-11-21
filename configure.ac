@@ -249,7 +249,7 @@ detect_static_icu_with_pkg_config() {
 
    AC_MSG_CHECKING([for proper CPPFLAGS, LDFLAGS, and LIBS])
    ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc$with_suffix_static \
-      icu-i18n$with_suffix_static icu-io$with_suffix_static`
+      icu-i18n$with_suffix_static icu-io$with_suffix_static`" -DU_STATIC_IMPLEMENTATION"
    ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc$with_suffix_static \
       icu-i18n$with_suffix_static icu-io$with_suffix_static`
    ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc$with_suffix_static \
@@ -312,8 +312,10 @@ detect_icu_with_pkg_config() {
       else
          AC_MSG_CHECKING(whether ICU4C may be statically linked by guessing .a names)
          icu_original_libs=`"${PKG_CONFIG}" --libs-only-l --static icu-uc icu-i18n icu-io`
+         # GNU sed: -E is an undocumented option for compatibility 
+         # with BSD sed, the same as -r
          icu_static_libs=`echo $icu_original_libs \
-            | ${SED} -r "s/-licu(\S+|\"[^\"]+\")/-licu\1${with_suffix_static}/g"`
+            | ${SED} -E "s/-licu(\S+|\"[^\"]+\")/-licu\1${with_suffix_static}/g"`
          icu_static_include=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n icu-io`" -DU_STATIC_IMPLEMENTATION"
          icu_static_ldflags=`"${PKG_CONFIG}" --libs-only-L --static icu-uc icu-i18n icu-io`
 
@@ -362,7 +364,7 @@ detect_icu_with_pkg_config() {
          #icu_libs=`echo $icu_libs_original \
          #   | ${EGREP} -E -o -e '-licu(\S+|"[^"]+")' \
          #   | cut -c 3- \
-         #   | ${SED} -r 's/(\S+)/lib\1.a/g'`
+         #   | ${SED} -E 's/(\S+)/lib\1.a/g'`
          ##echo $icu_lib_dirs
          ##echo $icu_libs
          #icu_static_libs=""
@@ -390,7 +392,7 @@ detect_icu_with_pkg_config() {
          #   AC_MSG_CHECKING(for proper ICU4C LDFLAGS (static libs))
          #   ICU_FLAG_L=$icu_static_libs
          #   #ICU_FLAG_L=`echo $icu_libs_original \
-         #   #         | ${SED} -r 's/-licu(\S+|"[^"]+")//g'`" ${icu_static_libs}"
+         #   #         | ${SED} -E 's/-licu(\S+|"[^"]+")//g'`" ${icu_static_libs}"
          #   AC_MSG_RESULT($ICU_FLAG_L)
          #
          #   ICU_FOUND=1
