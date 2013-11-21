@@ -144,8 +144,8 @@ invisible(NULL)
 
 
 
-.onLoad <- function(lib, pkg)
-{
+# .onLoad <- function(lib, pkg)
+# {
    # This code was valid when we didn't link ICU4C statically on Windows:
    # if (.Platform$OS.type == "windows") {
    #   dll <- try(library.dynam("stringi", pkg, lib), silent=getOption("verbose"))
@@ -163,14 +163,18 @@ invisible(NULL)
    #           call.=FALSE)
    #   }
    #}
+# }
 
-   # stri_info() produces a warning if current native charset
-   # is problematic. The packageStartupMessage also indicates the user
-   # whether ICU has guessed the locale used correctly. Leave it as is :)
-   # BTW, We know about Good Practices in Writing R Extensions.
-   # This information, however, is very important to the user.
-   packageStartupMessage("stringi.rexamine.com (" %+% stri_info(short=TRUE) %+% ")")
-}
+
+#.onAttach <- function(lib, pkg)
+#{
+#   # stri_info() produces a warning if current native charset
+#   # is problematic. The packageStartupMessage also indicates the user
+#   # whether ICU has guessed the locale used correctly. Leave it as is :)
+#   # BTW, We know about Good Practices in Writing R Extensions.
+#   # This information, however, is very important to the user.
+#   packageStartupMessage("stringi.rexamine.com (" %+% stri_info(short=TRUE) %+% ")")
+#}
 
 # no longer needed as ICU4C is statically linked since 2013-11-15 :)
 #.install_ICU4C_windows <- function(lib, pkg, platform)
