@@ -27,7 +27,7 @@
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #'
-#' These functions scan the input string for matches of the character class.
+#' These functions scan the input string for matches of a character class.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the same (fixed) replacement string.
 #'
@@ -138,7 +138,7 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' The replacement string may contain references to capture groups
 #' (in round parentheses).
 #' References are of the form \code{$n}, where \code{n} is the number
-#' of the capture group (numbering starts from 1).
+#' of the capture group (their numbering starts from 1).
 #'
 #'
 #' @param str character vector of strings to search in
@@ -189,6 +189,9 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 #' Calls either \code{\link{stri_replace_all_regex}},
 #' \code{\link{stri_replace_all_fixed}}, or \code{\link{stri_replace_all_charclass}},
 #' depending on the argument used.
+#'
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions

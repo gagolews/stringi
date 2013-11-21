@@ -31,14 +31,16 @@
 #'
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #'
-#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' \code{omit_empty} is applied during the split process: if it is
+#' set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
 #' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; should empty strings be removed from result?
+#' @param omit_empty logical vector; determines whether empty
+#' strings should be removed from the result
 #'
 #' @return Returns a list of character vectors.
 #'
@@ -63,7 +65,7 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #'
 #' @description
 #' Splits each element of \code{str} into substrings.
-#' \code{pattern} indicates delimiters that separate
+#' A \code{pattern} indicates delimiters that separate
 #' the input into fields. The input data between the matches become
 #' the fields themselves.
 #'
@@ -75,18 +77,22 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
+#' Note that if you want to split a string by characters from a
+#' specific class (e.g. whitespaces), \code{\link{stri_split_charclass}}
+#' will be much faster.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern pattern character; regular expressions
 #' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; should empty strings be removed from result?
+#' @param omit_empty logical vector; determines whether empty
+#' strings should be removed from the result
 #' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
 #'
 #' @return Returns a list of character vectors.
 #'
 #'
 #' @examples
-#' stri_split_regex("Lorem ipsum dolor sit amet", "\\p{Z}+")
+#' stri_split_regex("Lorem ipsum dolor sit amet", "\\p{Z}+") # see also stri_split_charclass
 #'
 #' @export
 #' @rdname stri_split_regex
@@ -117,14 +123,15 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' then empty strings will never appear in the resulting vector.
 #'
 #'
-#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
-#' locale unaware, (exact) byte comparisons. For natural language text
-#' this may be not what you really want.
+#' Pass \code{opts_collator} that is equal to \code{NA} for a much faster, but
+#' locale unaware, (exact) bitwise string comparisons. For natural language text,
+#' however, this may not be  what you really want.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern character vector with fixed patterns
 #' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; should empty strings be removed from result?
+#' @param omit_empty logical vector; determines whether empty
+#' strings should be removed from the result
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
 #'
@@ -155,6 +162,9 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 #' Calls either \code{\link{stri_split_regex}},
 #' \code{\link{stri_split_fixed}}, or \code{\link{stri_split_charclass}},
 #' depending on the argument used.
+#'
+#' Unless you are a very lazy person, please call the underlying functions
+#' directly for better performance.
 #'
 #'
 #' @param str character vector of strings to be split
@@ -207,14 +217,15 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 #' This function follows UTR#18 rules, where a newline sequence
 #' corresponds to the following regular expression:
 #' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
-#' Each match is used to split text line.
+#' Each match is used to split a text line.
 #' Of course, the search is not performed via regexes here, for efficiency
 #' reasons.
 #'
 #'
 #' @param str character vector
 #' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; should empty strings be removed from result?
+#' @param omit_empty logical vector; determines whether empty
+#' strings should be removed from the result
 #'
 #' @return \code{stri_split_lines} returns a list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element

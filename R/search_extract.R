@@ -40,8 +40,9 @@
 #'
 #' @return
 #' For \code{stri_extract_all_charclass},
-#' list of \code{max(length(str), length(pattern), length(merge))} character vectors.
-#' Otherwise, a character vector.
+#' a list of \code{max(length(str), length(pattern), length(merge))}
+#' character vectors is returned.
+#' Otherwise, you get a character vector.
 #' \code{NA} if not found.
 #'
 #'
@@ -96,8 +97,8 @@ stri_extract_last_charclass <- function(str, pattern) {
 #'
 #' @return
 #' For \code{stri_extract_all_fixed},
-#' list of \code{max(length(str), length(pattern))} character vectors.
-#' Otherwise, a character vector.
+#' a list of \code{max(length(str), length(pattern))} character vectors is returned.
+#' Otherwise, you get a character vector.
 #' \code{NA} if not found.
 #'
 #' @examples
@@ -149,8 +150,8 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 #'
 #' @return
 #' For \code{stri_extract_all_regex},
-#' list of \code{max(length(str), length(pattern))} character vectors.
-#' Otherwise, a character vector.
+#' list of \code{max(length(str), length(pattern))} character vectors is returned.
+#' Otherwise, you get a character vector.
 #' \code{NA} if not found.
 #'
 #' @examples
@@ -193,13 +194,17 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' \code{\link{stri_extract_all_fixed}}, or \code{\link{stri_extract_all_charclass}},
 #' depending on the argument used.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
 #'
-#' @return list of character vectors
+#' @return Returns a list of character vectors.
 #'
 #' @examples
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
@@ -230,13 +235,17 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
 #' \code{\link{stri_extract_first_fixed}}, or \code{\link{stri_extract_first_charclass}},
 #' depending on the argument used.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -268,13 +277,17 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 #' \code{\link{stri_extract_last_fixed}}, or \code{\link{stri_extract_last_charclass}},
 #' depending on the argument used.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -307,6 +320,10 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
 #' depending on the argument used.
 #' Note that this is slower than the direct call.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
@@ -315,7 +332,7 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
 #' @param mode single string; whether to look for all, or only the first/last
 #'             occurrence of the pattern
 #'
-#' @return same as the underlying functions called, i.e.
+#' @return The return value is the same as the underlying functions called, i.e.
 #' a character vector or a list of character vectors.
 #'
 #'

@@ -21,7 +21,7 @@
 #' Count the Number of Character Class Matches
 #'
 #' @description
-#' This function counts the number of characters that matches a given
+#' This function counts the number of characters that falls into a given
 #' character class (e.g. letters, digits, or white spaces).
 #'
 #'
@@ -33,7 +33,7 @@
 #' @param str character vector to search in
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
-#' @return integer vector
+#' @return Returns an integer vector.
 #'
 #' @examples
 #' stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
@@ -73,7 +73,8 @@ stri_count_charclass <- function(str, pattern) {
 #' @param pattern character vector
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
-#' @return integer vector with the number of matches
+#'
+#' @return Returns an integer vector with the number of matches.
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -110,7 +111,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
 #' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
-#' @return integer vector
+#' @return Returns an integer vector.
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
@@ -140,13 +141,17 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #' \code{\link{stri_count_fixed}}, or \code{\link{stri_count_charclass}},
 #' depending on the argument used.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
 #' @param charclass character vector; identifiers of character classes
-#' @return integer vector
+#'
+#' @return Returns an integer vector.
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."

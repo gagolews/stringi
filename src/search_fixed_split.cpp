@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  *
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus, Marcin Bujarski
+ * Copyright 2013 Marek Gagolewski, Bartek Tartanus
  *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #include "stringi.h"
 

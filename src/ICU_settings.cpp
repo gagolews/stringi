@@ -16,6 +16,7 @@
  * along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "stringi.h"
 
 

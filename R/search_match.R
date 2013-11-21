@@ -30,16 +30,16 @@
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions to search for
-#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
 #'
 #' @return
 #' For \code{stri_match_all_regex},
-#' list of character matrices.
-#' Otherwise, a character matrix.
+#' a list of character matrices is returned.
+#' Otherwise, a character matrix is given.
 #' \code{NA} if not found or if given capture group is unavailable.
 #'
 #' The first column gives the whole match. The second one corresponds to
-#' the first capture group, the third - second capture group, and so on.
+#' the first capture group, the third -- the second capture group, and so on.
 #'
 #'
 #' @export

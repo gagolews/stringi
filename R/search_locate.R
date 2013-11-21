@@ -22,7 +22,7 @@
 #'
 #' @description
 #' These functions may be used e.g. to find the indices, at which
-#' we find letters, digits, or white spaces in a given string.
+#' letters, digits, or white spaces occur in a given string.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
@@ -31,21 +31,23 @@
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
 #' @param merge logical [\code{stri_locate_all_charclass} only];
-#' should consecutive sequences of indices in resulting
-#' matrix be merged?
+#' indicates whether consecutive sequences of indices in the resulting
+#' matrix shall be merged
 #'
 #' @return
 #' For \code{stri_locate_all_charclass},
-#' list of \code{max(length(str), length(pattern))} integer matrices.
-#' The first column gives start positions
-#' of matches, and the second column gives end position.
-#' Two \code{NA}s for no match or \code{NA} arguments.
+#' a list of \code{max(length(str), length(pattern))} integer matrices
+#' is returned .
+#' The first column gives the start positions
+#' of matches, and the second column gives the end position.
+#' Moreover, you may gen two \code{NA}s in one row
+#' for no match or \code{NA} arguments.
 #'
 #' For \code{stri_locate_first_charclass} and \code{stri_locate_last_charclass},
-#' integer matrix with \code{max(length(str), length(pattern))} rows,
-#' and two columns, giving the start and end positions of first
-#' or last matches, respectively, and two \code{NA}s iff not found.
-#' Note that the first column is always equal to the same column, as
+#' you get an integer matrix with \code{max(length(str), length(pattern))} rows,
+#' and two columns, giving the start and end positions of the first
+#' or the last matches, respectively, and two \code{NA}s iff not found.
+#' Note that the first column is always equal to the second column, as
 #' we look for single code points in these two cases.
 #'
 #' @examples
@@ -85,7 +87,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #'
 #' @description
 #' These functions find the indices, at which
-#' a given pattern is matches a substring of the input string.
+#' a given pattern matches a substring of the input string.
 #'
 #'
 #'
@@ -97,11 +99,11 @@ stri_locate_last_charclass <- function(str, pattern) {
 #'
 #'
 #' Note the difference between  \code{stri_locate_last_fixed}
-#' and \code{stri_locate_last_fixed} for overlapping pattern matches.
+#' and \code{\link{stri_locate_last_regex}} for overlapping pattern matches.
 #' In \code{stri_locate_last_fixed}, search is done from-the-end.
 #'
 #' Pass \code{opts_collator} equal to \code{NA} for much faster, but
-#' locale unaware, (exact) byte comparisons. For natural language text
+#' locale unaware, (exact) bitwise comparisons. For a natural language text
 #' this may be not what you really want.
 #'
 #' @param str character vector
@@ -110,16 +112,18 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return
-#' For \code{stri_locate_all_fixed},
-#' list of \code{max(length(str), length(pattern))} integer matrices.
-#' The first column gives start positions
-#' of matches, and the second column gives end position.
-#' Two \code{NA}s for no match.
+#' For \code{stri_locate_all_charclass},
+#' a list of \code{max(length(str), length(pattern))} integer matrices
+#' is returned .
+#' The first column gives the start positions
+#' of matches, and the second column gives the end position.
+#' Moreover, you may gen two \code{NA}s in one row
+#' for no match or \code{NA} arguments.
 #'
 #' For \code{stri_locate_first_fixed} and \code{stri_locate_last_fixed},
-#' integer matrix with \code{max(length(str), length(pattern))} rows,
-#' and two columns, giving the start and end positions of first
-#' or last matches, respectively, and \code{NA}s iff not found.
+#' you get an integer matrix with \code{max(length(str), length(pattern))} rows,
+#' and two columns, giving the start and end positions of the first
+#' or the last matches, respectively, and \code{NA}s iff not found.
 #'
 #' @examples
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
@@ -176,19 +180,21 @@ stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
-#' @param opts_regex a named R list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
 #'
 #' @return
-#' For \code{stri_locate_all_regex},
-#' list of \code{max(length(str), length(pattern))} integer matrices.
-#' The first column gives start positions
-#' of matches, and the second column gives end position.
-#' Two \code{NA}s for no match.
+#' For \code{stri_locate_all_charclass},
+#' a list of \code{max(length(str), length(pattern))} integer matrices
+#' is returned .
+#' The first column gives the start positions
+#' of matches, and the second column gives the end position.
+#' Moreover, you may gen two \code{NA}s in one row
+#' for no match or \code{NA} arguments.
 #'
-#' For \code{stri_locate_first_regex} and \code{stri_locate_last_regex},
-#' integer matrix with \code{max(length(str), length(pattern))} rows,
-#' and two columns, giving the start and end positions of first
-#' or last matches, respectively, and \code{NA}s iff not found.
+#' For \code{stri_locate_first_fixed} and \code{stri_locate_last_fixed},
+#' you get an integer matrix with \code{max(length(str), length(pattern))} rows,
+#' and two columns, giving the start and end positions of the first
+#' or the last matches, respectively, and \code{NA}s iff not found.
 #'
 #' @examples
 #' stri_locate_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
@@ -238,12 +244,17 @@ stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @details
-#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
-#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
-#' one will be used.
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
 #'
-#' @return list of integer matrices.  First column gives start positions
-#' of matches, and second column gives end position.
+#' Please note that the parameters are considered in the following order:
+#' \code{regex}, \code{fixed}
+#' and \code{class}. Thus, if you specify \code{regex} and \code{class},
+#' only the first one will be used.
+#'
+#' @return Returns a list of integer matrices. The first column gives the
+#' start positions
+#' of the matches, and the second one gives the end position.
 #' Double \code{NA}s iff not found or \code{NA} argument is given.
 #'
 #' @examples
@@ -283,12 +294,16 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @details
-#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
-#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
-#' one will be used.
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
 #'
-#' @return integer matrix with two columns,
-#' double \code{NA}s if not found.
+#' Please note that the parameters are considered in the following order:
+#' \code{regex}, \code{fixed}
+#' and \code{class}. Thus, if you specify \code{regex} and \code{class},
+#' only the first one will be used.
+#'
+#' @return Returns an integer matrix with two columns, with
+#' double \code{NA}s in a row if a pattern not found.
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -328,12 +343,16 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @details
-#' Please note that parameters are checked as follows \code{regex}, \code{fixed}
-#' and \code{class}. So if you specify \code{regex} and \code{class}, the first
-#' one will be used.
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
 #'
-#' @return integer matrix with two columns,
-#' double \code{NA}s if not found.
+#' Please note that the parameters are considered in the following order:
+#' \code{regex}, \code{fixed}
+#' and \code{class}. Thus, if you specify \code{regex} and \code{class},
+#' only the first one will be used.
+#'
+#' @return Returns an integer matrix with two columns, with
+#' double \code{NA}s in a row if a pattern  not found.
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
@@ -367,6 +386,11 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
 #' depending on the argument used.
 #' Note that this is slower than the direct call.
 #'
+#' @details
+#' Unless you are very lazy, please call the underlying functions
+#' directly for better performance.
+#'
+#'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
@@ -375,8 +399,9 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
 #' @param mode single string; whether to look for all, or only the first/last
 #'             occurrence of the pattern
 #'
-#' @return same as the underlying functions called, i.e.
-#' a 2-column matrix or a list of matrices.
+#' @return The return value is the same as that of the underlying
+#' functions called, i.e.
+#' a two-column matrix or a list of matrices.
 #'
 #'
 #' @export
