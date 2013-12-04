@@ -18,5 +18,8 @@ test_that("stri_join", {
    expect_identical(stri_join(LETTERS, letters, sep='!'), paste(LETTERS, letters, sep='!'))
    expect_identical(stri_join(LETTERS, letters, '?', sep='!'), paste(LETTERS, letters, '?', sep='!'))
    expect_identical(stri_join(LETTERS, letters, sep='!', collapse='?'), paste(LETTERS, letters, sep='!', collapse='?'))
-
+   expect_identical(stri_paste(stri_dup("aaaa",1000),"kot",NA), NA_character_)
+   expect_identical(stri_paste(stri_dup("aaaa",1000),NA), NA_character_)
+   expect_identical(stri_join(stri_dup(LETTERS, 1000), stri_dup(letters, 1000), stri_dup(LETTERS,100), NA),
+      rep(NA_character_, 26))
 })

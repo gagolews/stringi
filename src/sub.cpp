@@ -86,7 +86,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 
    if (vectorize_length <= 0)
       return Rf_allocVector(STRSXP,0);
-
+   
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
 
