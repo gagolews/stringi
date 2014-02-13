@@ -1,8 +1,8 @@
 ## `stringi` Makefile
 ## Copyright 2013-2014 M. Gagolewski
 
-CXXFLAGS=-c -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fpic  
-CFLAGS=-c -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fpic  
+CXXFLAGS=-c -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fpic   -UNDEBUG -Wall -Wextra -ansi -pedantic
+CFLAGS=-c -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fpic   -UNDEBUG -Wall -Wextra -ansi -pedantic
 CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
 -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG -I/usr/local/include -I/usr/include/R 
@@ -394,19 +394,19 @@ stubdata/stubdata.c
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 
-ICU_PKGDATA_SOURCES_CPP=\
-pkgdata/dbgutil.cpp pkgdata/filetools.cpp pkgdata/pkgdata.cpp \
-pkgdata/pkgitems.cpp pkgdata/swapimpl.cpp pkgdata/udbgutil.cpp \
-pkgdata/denseranges.cpp pkgdata/package.cpp pkgdata/pkg_icu.cpp \
-pkgdata/ppucd.cpp pkgdata/toolutil.cpp pkgdata/xmlparser.cpp
-
-ICU_PKGDATA_SOURCES_C=\
-pkgdata/filestrm.c pkgdata/pkg_genc.c pkgdata/pkgtypes.c \
-pkgdata/ucln_tu.c pkgdata/ucmstate.c pkgdata/uoptions.c pkgdata/writesrc.c \
-pkgdata/flagparser.c pkgdata/pkg_gencmn.c pkgdata/ucbuf.c pkgdata/ucm.c \
-pkgdata/unewdata.c pkgdata/uparse.c
-
-ICU_PKGDATA_OBJECTS=$(ICU_PKGDATA_SOURCES_CPP:.cpp=.o) $(ICU_PKGDATA_SOURCES_C:.c=.o)
+# ICU_PKGDATA_SOURCES_CPP=\
+# pkgdata/dbgutil.cpp pkgdata/filetools.cpp pkgdata/pkgdata.cpp \
+# pkgdata/pkgitems.cpp pkgdata/swapimpl.cpp pkgdata/udbgutil.cpp \
+# pkgdata/denseranges.cpp pkgdata/package.cpp pkgdata/pkg_icu.cpp \
+# pkgdata/ppucd.cpp pkgdata/toolutil.cpp pkgdata/xmlparser.cpp
+#
+# ICU_PKGDATA_SOURCES_C=\
+# pkgdata/filestrm.c pkgdata/pkg_genc.c pkgdata/pkgtypes.c \
+# pkgdata/ucln_tu.c pkgdata/ucmstate.c pkgdata/uoptions.c pkgdata/writesrc.c \
+# pkgdata/flagparser.c pkgdata/pkg_gencmn.c pkgdata/ucbuf.c pkgdata/ucm.c \
+# pkgdata/unewdata.c pkgdata/uparse.c
+#
+# ICU_PKGDATA_OBJECTS=$(ICU_PKGDATA_SOURCES_CPP:.cpp=.o) $(ICU_PKGDATA_SOURCES_C:.c=.o)
 
 
 
@@ -422,10 +422,10 @@ icu_i18n: $(ICU_I18N_OBJECTS)
 
 icu_stubdata:  $(ICU_STUBDATA_OBJECTS)
 
-icu_data: icu_pkgdata
-
-icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
-	$(CXX) $(ICU_PKGDATA_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS)  $(ICU_STUBDATA_OBJECTS) -o icu_pkgdata -ldl
+# icu_data: icu_pkgdata
+#
+# icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
+# 	$(CXX) $(ICU_PKGDATA_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS)  $(ICU_STUBDATA_OBJECTS) -o icu_pkgdata -ldl
 
 .cpp.o:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
@@ -436,4 +436,4 @@ icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
 
 .PHONY: clean
 clean:
-	rm -f *.o common/*.o i18n/*.o stubdata/*.o pkgdata/*.o $(STRINGI_SHLIB)
+	rm -f *.o common/*.o i18n/*.o stubdata/*.o $(STRINGI_SHLIB) #pkgdata/*.o 

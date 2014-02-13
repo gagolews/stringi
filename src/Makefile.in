@@ -394,19 +394,19 @@ stubdata/stubdata.c
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 
-ICU_PKGDATA_SOURCES_CPP=\
-pkgdata/dbgutil.cpp pkgdata/filetools.cpp pkgdata/pkgdata.cpp \
-pkgdata/pkgitems.cpp pkgdata/swapimpl.cpp pkgdata/udbgutil.cpp \
-pkgdata/denseranges.cpp pkgdata/package.cpp pkgdata/pkg_icu.cpp \
-pkgdata/ppucd.cpp pkgdata/toolutil.cpp pkgdata/xmlparser.cpp
-
-ICU_PKGDATA_SOURCES_C=\
-pkgdata/filestrm.c pkgdata/pkg_genc.c pkgdata/pkgtypes.c \
-pkgdata/ucln_tu.c pkgdata/ucmstate.c pkgdata/uoptions.c pkgdata/writesrc.c \
-pkgdata/flagparser.c pkgdata/pkg_gencmn.c pkgdata/ucbuf.c pkgdata/ucm.c \
-pkgdata/unewdata.c pkgdata/uparse.c
-
-ICU_PKGDATA_OBJECTS=$(ICU_PKGDATA_SOURCES_CPP:.cpp=.o) $(ICU_PKGDATA_SOURCES_C:.c=.o)
+# ICU_PKGDATA_SOURCES_CPP=\
+# pkgdata/dbgutil.cpp pkgdata/filetools.cpp pkgdata/pkgdata.cpp \
+# pkgdata/pkgitems.cpp pkgdata/swapimpl.cpp pkgdata/udbgutil.cpp \
+# pkgdata/denseranges.cpp pkgdata/package.cpp pkgdata/pkg_icu.cpp \
+# pkgdata/ppucd.cpp pkgdata/toolutil.cpp pkgdata/xmlparser.cpp
+#
+# ICU_PKGDATA_SOURCES_C=\
+# pkgdata/filestrm.c pkgdata/pkg_genc.c pkgdata/pkgtypes.c \
+# pkgdata/ucln_tu.c pkgdata/ucmstate.c pkgdata/uoptions.c pkgdata/writesrc.c \
+# pkgdata/flagparser.c pkgdata/pkg_gencmn.c pkgdata/ucbuf.c pkgdata/ucm.c \
+# pkgdata/unewdata.c pkgdata/uparse.c
+#
+# ICU_PKGDATA_OBJECTS=$(ICU_PKGDATA_SOURCES_CPP:.cpp=.o) $(ICU_PKGDATA_SOURCES_C:.c=.o)
 
 
 
@@ -422,10 +422,10 @@ icu_i18n: $(ICU_I18N_OBJECTS)
 
 icu_stubdata:  $(ICU_STUBDATA_OBJECTS)
 
-icu_data: icu_pkgdata
-
-icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
-	$(CXX) $(ICU_PKGDATA_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS)  $(ICU_STUBDATA_OBJECTS) -o icu_pkgdata -ldl
+# icu_data: icu_pkgdata
+#
+# icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
+# 	$(CXX) $(ICU_PKGDATA_OBJECTS) $(ICU_COMMON_OBJECTS) $(ICU_I18N_OBJECTS)  $(ICU_STUBDATA_OBJECTS) -o icu_pkgdata -ldl
 
 .cpp.o:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
@@ -436,4 +436,4 @@ icu_pkgdata: $(ICU_PKGDATA_OBJECTS) icu_common icu_i18n icu_stubdata
 
 .PHONY: clean
 clean:
-	rm -f *.o common/*.o i18n/*.o stubdata/*.o pkgdata/*.o $(STRINGI_SHLIB)
+	rm -f *.o common/*.o i18n/*.o stubdata/*.o $(STRINGI_SHLIB) #pkgdata/*.o 

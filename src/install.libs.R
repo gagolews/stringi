@@ -5,10 +5,11 @@ dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
 # copy icudt:
-if (.Platform$endian == 'little') {
+icudtpath <- 'data/icudt52l.dat'
+if (.Platform$endian == 'little' && file.exists(icudtpath)) {
    # we're shipping stringi only with little-endian ASCII version of icudt
    icudatadir <- file.path(R_PACKAGE_DIR, paste0('libs'))
-   file.copy('data/icudt52l.dat', icudatadir, overwrite=TRUE)
+   file.copy(icudtpath, icudatadir, overwrite=TRUE)
 }
 
 # not used:
