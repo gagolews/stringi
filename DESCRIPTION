@@ -1,61 +1,24 @@
 Package: stringi
-Version: 0.1-12
-Date: 2013-12-23
+Version: 0.1-13
+Date: 2014-02-13
 Title: THE string processing package for R
 Description: stringi is THE R package for correct, fast, and convenient
     string processing in each locale and any native character encoding.
-    The use of the ICU library gives R users a platform-independent and properly
-    localized toolbox of functions with behavior known from other
+    The use of the ICU library gives R users a platform-independent
+    and properly localized toolbox of functions with behavior known from other
     programming languages, like Java, Perl, Python, and PHP.
 URL: http://stringi.rexamine.com/
 BugReports: http://github.com/Rexamine/stringi/issues
 ByteCompile: TRUE
 Type: Package
 Depends:
-    R (>= 2.15.0),
-    base
-SystemRequirements: ICU4C (>= 4.8)
+    R (>= 2.15.0)
 License: LGPL-3 | file LICENSE
 Suggests:
     testthat
 Authors@R: c(
     person("Marek", "Gagolewski", role = c("aut", "cre"),
     email = "gagolews@rexamine.com"),
-    person("Bartek", "Tartanus", role = "aut",
+    person("Bartek", "Tartanus", role = "ctb",
     email = "tartanus@rexamine.com")
     )
-Collate:
-    'charclass.R'
-    'compare.R'
-    'encoding_conversion.R'
-    'encoding_detection.R'
-    'encoding_management.R'
-    'encoding_normalization.R'
-    'encoding.R'
-    'ICU_settings.R'
-    'join.R'
-    'justify.R'
-    'length.R'
-    'locale_management.R'
-    'locale.R'
-    'prepare_arg.R'
-    'reverse.R'
-    'search_count.R'
-    'search_detect.R'
-    'search_locate.R'
-    'search_replace.R'
-    'search_split.R'
-    'search.R'
-    'stats.R'
-    'stringi-package.R'
-    'sub.R'
-    'test.R'
-    'trim.R'
-    'wrap.R'
-    'search_extract.R'
-    'pad.R'
-    'opts.R'
-    'search_match.R'
-    'casemap.R'
-    'files.R'
-    'escape.R'
