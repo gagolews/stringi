@@ -83,63 +83,73 @@ CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 
-CFLAGS=`"${R_PATH}" CMD config CFLAGS`
-CFLAGS+=" "
-CFLAGS+=`"${R_PATH}" CMD config CPICFLAGS`
-CFLAGS+=" "
-CFLAGS+=`"${R_PATH}" CMD config SHLIB_CFLAGS`
+#CFLAGS=`"${R_PATH}" CMD config CFLAGS`
+#CFLAGS+=" "
+#CFLAGS+=`"${R_PATH}" CMD config CPICFLAGS`
+#CFLAGS+=" "
+#CFLAGS+=`"${R_PATH}" CMD config SHLIB_CFLAGS`
 
-CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
-CPPFLAGS+=" "
-CPPFLAGS+=`"${R_PATH}" CMD config --cppflags`
+#CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+#CPPFLAGS+=" "
+#CPPFLAGS+=`"${R_PATH}" CMD config --cppflags`
 
-CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
-CXXFLAGS+=" "
-CXXFLAGS+=`"${R_PATH}" CMD config CXXPICFLAGS`
-CXXFLAGS+=" "
-CXXFLAGS+=`"${R_PATH}" CMD config SHLIB_CFLAGS`
+#CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+#CXXFLAGS+=" "
+#CXXFLAGS+=`"${R_PATH}" CMD config CXXPICFLAGS`
+#CXXFLAGS+=" "
+#CXXFLAGS+=`"${R_PATH}" CMD config SHLIB_CFLAGS`
+
+#LDFLAGS=`"${R_PATH}" CMD config LDFLAGS`
+#LDFLAGS+=" "
+#LDFLAGS+=`"${R_PATH}" CMD config SHLIB_CXXLDFLAGS`
+#LDFLAGS+=" "
+#LDFLAGS+=`"${R_PATH}" CMD config --ldflags`
+
+#SHLIB_EXT=`"${R_PATH}" CMD config SHLIB_EXT`
 
 
+if test "$enable_gcc_debug" == "yes"; then
+   with_extra_cflags="${with_extra_cflags} -UNDEBUG"
+   with_extra_cxxflags="${with_extra_cxxflags} -UNDEBUG"
+fi
+
+if test "$enable_gcc_pedantic" == "yes"; then
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic"
+fi
+
+STRINGI_CFLAGS="${with_extra_cflags}"
+STRINGI_CPPFLAGS="${with_extra_cppflags}"
+STRINGI_CXXFLAGS="${with_extra_cxxflags}"
+STRINGI_LDFLAGS="${with_extra_ldflags}"
 
 CFLAGS="${CFLAGS} ${with_extra_cflags}"
 CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
 CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
 LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
 
-if test "$enable_gcc_debug" == "yes"; then
-   CXXFLAGS="${CXXFLAGS} -UNDEBUG"
-   CFLAGS="${CFLAGS} -UNDEBUG"
-fi
-
-if test "$enable_gcc_pedantic" == "yes"; then
-   CXXFLAGS="${CXXFLAGS} -Wall -Wextra -ansi -pedantic"
-   CFLAGS="${CFLAGS} -Wall -Wextra -ansi -pedantic"
-fi
-
-SHLIB_EXT=`"${R_PATH}" CMD config SHLIB_EXT`
-
 AC_PROG_CC
 AC_PROG_CXX
 
-LDFLAGS=`"${R_PATH}" CMD config LDFLAGS`
-LDFLAGS+=" "
-LDFLAGS+=`"${R_PATH}" CMD config SHLIB_CXXLDFLAGS`
-LDFLAGS+=" "
-LDFLAGS+=`"${R_PATH}" CMD config --ldflags`
 
+#AC_SUBST(CXXFLAGS)
+#AC_SUBST(CPPFLAGS)
+#AC_SUBST(CFLAGS)
+#AC_SUBST(LDFLAGS)
+#
+#AC_SUBST(CC)
+#AC_SUBST(CPP)
+#AC_SUBST(CXX)
+#AC_SUBST(LD)
+#
+#AC_SUBST(SHLIB_EXT)
+#
+#AC_CONFIG_FILES([src/Makefile])
 
-AC_SUBST(CXXFLAGS)
-AC_SUBST(CPPFLAGS)
-AC_SUBST(CFLAGS)
-AC_SUBST(LDFLAGS)
+AC_SUBST(STRINGI_CXXFLAGS)
+AC_SUBST(STRINGI_CPPFLAGS)
+AC_SUBST(STRINGI_CFLAGS)
+AC_SUBST(STRINGI_LDFLAGS)
 
-AC_SUBST(CC)
-AC_SUBST(CPP)
-AC_SUBST(CXX)
-AC_SUBST(LD)
-
-AC_SUBST(SHLIB_EXT)
-
-
-AC_CONFIG_FILES([src/Makefile])
+AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
