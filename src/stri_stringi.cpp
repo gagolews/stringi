@@ -1,6 +1,6 @@
 /* This file is part of the 'stringi' library.
  *
- * Copyright 2013 Marek Gagolewski, Bartek Tartanus
+ * Copyright 2013-2014 Marek Gagolewski, Bartek Tartanus
  *
  * 'stringi' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -149,7 +149,7 @@ void stri_set_icu_data_directory(const char* libpath)
    string dir(libpath);
    int idx = dir.rfind("libs");
    if (idx < 0) return; // this shouldn't happen
-   
+
    dir = dir.substr(0, idx+5); // strlen("libs/") or strlen("libs\\")
    u_setDataDirectory(dir.c_str());
 }
@@ -171,7 +171,7 @@ extern "C" void R_init_stringi(DllInfo *dll)
    }
 
    stri_set_icu_data_directory((char*)*(char**)(dll) /* dll->path */);
-   
+
 
 #ifndef NDEBUG
    fprintf(stdout, "!NDEBUG: ************************************************\n");

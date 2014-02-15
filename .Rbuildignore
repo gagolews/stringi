@@ -2,6 +2,8 @@
 ^\.Rproj\.user$
 ^devel
 ^src/.*\.o$
+^src/.*\.so$
+^src/.*\.dll$
 ^README.md$
 
 ^src/Makevars$

@@ -1,0 +1,25 @@
+** stringi package NEWS and CHANGELOG **
+========================================
+
+* 0.1-20 (2014-02-13)
+   ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
+   loaded dynamically). Compilation via Makevars.
+   stringi now does not depend on any external libraries.
+
+* 0.1-11 (2013-11-16)
+   ICU4C is now statically linked on Windows.
+   First OS X binary build.
+   The package is being intensively tested by our students @ FMIS WUT
+
+* 0.1-10 (2013-11-13)
+   Using pkg-config via ./configure to look for ICU4C libs
+
+* 0.1-6 (2013-07-05)
+   First Windows binary build.
+   Compilation passed on Oracle Sun Studio compiler collection
+   By now we have implemented most of the functionality
+   scheduled for milestone 0.1
+
+* 0.1-1 (2013-01-05)
+   The stringi project has been started on github.
+

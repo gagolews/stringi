@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus
+## Copyright 2013-2014 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@
 #' @title THE String Processing Package
 #'
 #' @description
-#' \pkg{stringi} is THE \R package for correct, fast, and convenient
-#' string manipulation in each locale and any character encoding.
+#' \pkg{stringi} is THE \R package for very fast, correct, consistent,
+#' and convenient string manipulation in each locale and any character encoding.
 #' We are putting great effort to create software that
 #' works as you expect on any platform, in each locale, and any
 #' ``default'' system encoding.
@@ -31,11 +31,9 @@
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
-#' \bold{License}: GNU LGPL version 3 or later (open source).
-#' Note that binary builds of stringi on certain platforms (e.g. Windows, OS X)
-#' may include statically linked \pkg{ICU4C} library and \pkg{ICU} Unicode
-#' Data library, which is distributed under the conditions listed
-#' in the LICENSE file.
+#' \bold{License}: GNU LGPL version 3 or later (open source)
+#' for the package code and the ICU license for accompanying
+#' ICU4C distribution.
 #'
 #'
 #' @details
