@@ -63,7 +63,7 @@ class FixedDecimal;
 // explicit template instantiation. see digitlst.h
 #if defined (_MSC_VER)
 template class U_I18N_API    EnumSet<UNumberFormatAttribute,
-            UNUM_MAX_NONBOOLEAN_ATTRIBUTE+1, 
+            UNUM_MAX_NONBOOLEAN_ATTRIBUTE+1,
             UNUM_LIMIT_BOOLEAN_ATTRIBUTE>;
 #endif
 
@@ -678,8 +678,8 @@ public:
         kRoundHalfUp,   /**< Round towards the nearest integer, or
                              away from zero if equidistant */
         /**
-          *  Return U_FORMAT_INEXACT_ERROR if number does not format exactly. 
-          *  @stable ICU 4.8 
+          *  Return U_FORMAT_INEXACT_ERROR if number does not format exactly.
+          *  @stable ICU 4.8
           */
         kRoundUnnecessary
     };
@@ -1065,7 +1065,7 @@ public:
 
 
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
      * to a double and formats that.
@@ -1085,10 +1085,10 @@ public:
                                   UErrorCode& status) const;
 
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
-     * to a double and formats that.  
+     * to a double and formats that.
      *
      * @param number    The number, a DigitList format Decimal Floating Point.
      * @param appendTo  Output parameter to receive result.
@@ -1337,7 +1337,7 @@ public:
     virtual ERoundingMode getRoundingMode(void) const;
 
     /**
-     * Set the rounding mode.  
+     * Set the rounding mode.
      * @param roundingMode A rounding mode
      * @see #setRoundingIncrement
      * @see #getRoundingIncrement
@@ -1988,7 +1988,7 @@ private:
     UnicodeString& subformat(UnicodeString& appendTo,
                              FieldPositionHandler& handler,
                              DigitList&     digits,
-                             UBool          isInteger, 
+                             UBool          isInteger,
                              UErrorCode &status) const;
 
 
@@ -2192,7 +2192,7 @@ private:
     ChoiceFormat*           fCurrencyChoice;
 
     DigitList *             fMultiplier;   // NULL for multiplier of one
-    int32_t                 fScale;        
+    int32_t                 fScale;
     int32_t                 fGroupingSize;
     int32_t                 fGroupingSize2;
     UBool                   fDecimalSeparatorAlwaysShown;
@@ -2207,8 +2207,8 @@ private:
     UBool                   fExponentSignAlwaysShown;
 
     EnumSet<UNumberFormatAttribute,
-            UNUM_MAX_NONBOOLEAN_ATTRIBUTE+1, 
-            UNUM_LIMIT_BOOLEAN_ATTRIBUTE>  
+            UNUM_MAX_NONBOOLEAN_ATTRIBUTE+1,
+            UNUM_LIMIT_BOOLEAN_ATTRIBUTE>
                             fBoolFlags;
 
     DigitList*              fRoundingIncrement;  // NULL if no rounding increment specified.
@@ -2381,7 +2381,7 @@ protected:
 #if UCONFIG_FORMAT_FASTPATHS_49
  private:
     /**
-     * Internal state. 
+     * Internal state.
      * @internal
      */
     uint8_t fReserved[UNUM_DECIMALFORMAT_INTERNAL_SIZE];

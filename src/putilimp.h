@@ -214,10 +214,10 @@ typedef size_t uintptr_t;
 #elif __clang__ && __clang_major__==3 && __clang_minor__<=1
     /* Clang 3.1, has atomic variable initializer bug. */
 #   define U_HAVE_STD_ATOMICS 0
-#else 
+#else
     /* U_HAVE_ATOMIC is typically set by an autoconf test of #include <atomic>  */
     /*   Can be set manually, or left undefined, on platforms without autoconf. */
-#   if defined(U_HAVE_ATOMIC) &&  U_HAVE_ATOMIC 
+#   if defined(U_HAVE_ATOMIC) &&  U_HAVE_ATOMIC
 #      define U_HAVE_STD_ATOMICS 1
 #   else
 #      define U_HAVE_STD_ATOMICS 0
@@ -240,7 +240,7 @@ typedef size_t uintptr_t;
 #elif defined(_MSC_VER) && defined(_M_IX86) && !defined(_MANAGED)
 #   define U_ALIGN_CODE(boundarySize) __asm  align boundarySize
 #else
-#   define U_ALIGN_CODE(boundarySize) 
+#   define U_ALIGN_CODE(boundarySize)
 #endif
 
 /** @} */
@@ -409,7 +409,7 @@ U_INTERNAL double  U_EXPORT2 uprv_round(double x);
  * Return the default codepage for this platform and locale.
  * This function can call setlocale() on Unix platforms. Please read the
  * platform documentation on setlocale() before calling this function.
- * @return the default codepage for this platform 
+ * @return the default codepage for this platform
  * @internal
  */
 U_INTERNAL const char*  U_EXPORT2 uprv_getDefaultCodepage(void);
@@ -418,7 +418,7 @@ U_INTERNAL const char*  U_EXPORT2 uprv_getDefaultCodepage(void);
 /**
  * Please use uloc_getDefault() instead.
  * Return the default locale ID string by querying ths system, or
- *     zero if one cannot be found. 
+ *     zero if one cannot be found.
  * This function can call setlocale() on Unix platforms. Please read the
  * platform documentation on setlocale() before calling this function.
  * @return the default locale ID string

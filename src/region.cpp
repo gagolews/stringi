@@ -239,13 +239,13 @@ void Region::loadRegionData() {
 
     // Now fill in the special cases for WORLD, UNKNOWN, CONTINENTS, and GROUPINGS
     Region *r;
-	UnicodeString WORLD_ID_STRING(WORLD_ID);
+   UnicodeString WORLD_ID_STRING(WORLD_ID);
     r = (Region *) uhash_get(regionIDMap,(void *)&WORLD_ID_STRING);
     if ( r ) {
         r->type = URGN_WORLD;
     }
 
-	UnicodeString UNKNOWN_REGION_ID_STRING(UNKNOWN_REGION_ID);
+   UnicodeString UNKNOWN_REGION_ID_STRING(UNKNOWN_REGION_ID);
     r = (Region *) uhash_get(regionIDMap,(void *)&UNKNOWN_REGION_ID_STRING);
     if ( r ) {
         r->type = URGN_UNKNOWN;
@@ -270,7 +270,7 @@ void Region::loadRegionData() {
     // Special case: The region code "QO" (Outlying Oceania) is a subcontinent code added by CLDR
     // even though it looks like a territory code.  Need to handle it here.
 
-	UnicodeString OUTLYING_OCEANIA_REGION_ID_STRING(OUTLYING_OCEANIA_REGION_ID);
+   UnicodeString OUTLYING_OCEANIA_REGION_ID_STRING(OUTLYING_OCEANIA_REGION_ID);
     r = (Region *) uhash_get(regionIDMap,(void *)&OUTLYING_OCEANIA_REGION_ID_STRING);
     if ( r ) {
         r->type = URGN_SUBCONTINENT;

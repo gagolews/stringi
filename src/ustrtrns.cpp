@@ -36,7 +36,7 @@
 
 #define LENGTHOF(array) (int32_t)(sizeof(array)/sizeof((array)[0]))
 
-U_CAPI UChar* U_EXPORT2 
+U_CAPI UChar* U_EXPORT2
 u_strFromUTF32WithSub(UChar *dest,
                int32_t destCapacity,
                int32_t *pDestLength,
@@ -132,13 +132,13 @@ u_strFromUTF32WithSub(UChar *dest,
 
     /* Terminate the buffer */
     u_terminateUChars(dest, destCapacity, reqLength, pErrorCode);
-    
+
     return dest;
 }
 
-U_CAPI UChar* U_EXPORT2 
+U_CAPI UChar* U_EXPORT2
 u_strFromUTF32(UChar *dest,
-               int32_t destCapacity, 
+               int32_t destCapacity,
                int32_t *pDestLength,
                const UChar32 *src,
                int32_t srcLength,
@@ -150,7 +150,7 @@ u_strFromUTF32(UChar *dest,
             pErrorCode);
 }
 
-U_CAPI UChar32* U_EXPORT2 
+U_CAPI UChar32* U_EXPORT2
 u_strToUTF32WithSub(UChar32 *dest,
              int32_t destCapacity,
              int32_t *pDestLength,
@@ -242,11 +242,11 @@ u_strToUTF32WithSub(UChar32 *dest,
     return dest;
 }
 
-U_CAPI UChar32* U_EXPORT2 
-u_strToUTF32(UChar32 *dest, 
+U_CAPI UChar32* U_EXPORT2
+u_strToUTF32(UChar32 *dest,
              int32_t destCapacity,
              int32_t *pDestLength,
-             const UChar *src, 
+             const UChar *src,
              int32_t srcLength,
              UErrorCode *pErrorCode) {
     return u_strToUTF32WithSub(
@@ -418,7 +418,7 @@ u_strFromUTF8WithSub(UChar *dest,
     if(pErrorCode==NULL || U_FAILURE(*pErrorCode)){
         return NULL;
     }
-        
+
     if( (src==NULL && srcLength!=0) || srcLength < -1 ||
         (destCapacity<0) || (dest == NULL && destCapacity > 0) ||
         subchar > 0x10ffff || U_IS_SURROGATE(subchar)
@@ -752,7 +752,7 @@ u_strFromUTF8Lenient(UChar *dest,
     if(pErrorCode==NULL || U_FAILURE(*pErrorCode)){
         return NULL;
     }
-        
+
     if( (src==NULL && srcLength!=0) || srcLength < -1 ||
         (destCapacity<0) || (dest == NULL && destCapacity > 0)
     ) {
@@ -974,8 +974,8 @@ _appendUTF8(uint8_t *pDest, UChar32 c) {
     return pDest;
 }
 
-   
-U_CAPI char* U_EXPORT2 
+
+U_CAPI char* U_EXPORT2
 u_strToUTF8WithSub(char *dest,
             int32_t destCapacity,
             int32_t *pDestLength,
@@ -993,7 +993,7 @@ u_strToUTF8WithSub(char *dest,
     if(pErrorCode==NULL || U_FAILURE(*pErrorCode)){
         return NULL;
     }
-        
+
     if( (pSrc==NULL && srcLength!=0) || srcLength < -1 ||
         (destCapacity<0) || (dest == NULL && destCapacity > 0) ||
         subchar > 0x10ffff || U_IS_SURROGATE(subchar)
@@ -1038,7 +1038,7 @@ u_strToUTF8WithSub(char *dest,
                 int32_t length;
 
                 /*need not check for NUL because NUL fails U16_IS_TRAIL() anyway*/
-                if(U16_IS_SURROGATE_LEAD(ch) && U16_IS_TRAIL(ch2=*pSrc)) { 
+                if(U16_IS_SURROGATE_LEAD(ch) && U16_IS_TRAIL(ch2=*pSrc)) {
                     ++pSrc;
                     ch=U16_GET_SUPPLEMENTARY(ch, ch2);
                 } else if(subchar>=0) {
@@ -1125,7 +1125,7 @@ u_strToUTF8WithSub(char *dest,
                         break;  /* recompute count */
                     }
 
-                    if(U16_IS_SURROGATE_LEAD(ch) && U16_IS_TRAIL(ch2=*pSrc)) { 
+                    if(U16_IS_SURROGATE_LEAD(ch) && U16_IS_TRAIL(ch2=*pSrc)) {
                         ++pSrc;
                         ch=U16_GET_SUPPLEMENTARY(ch, ch2);
 
@@ -1180,7 +1180,7 @@ u_strToUTF8WithSub(char *dest,
             } else /* ch is a surrogate */ {
                 int32_t length;
 
-                if(U16_IS_SURROGATE_LEAD(ch) && pSrc<pSrcLimit && U16_IS_TRAIL(ch2=*pSrc)) { 
+                if(U16_IS_SURROGATE_LEAD(ch) && pSrc<pSrcLimit && U16_IS_TRAIL(ch2=*pSrc)) {
                     ++pSrc;
                     ch=U16_GET_SUPPLEMENTARY(ch, ch2);
                 } else if(subchar>=0) {
@@ -1239,7 +1239,7 @@ u_strToUTF8WithSub(char *dest,
     return dest;
 }
 
-U_CAPI char* U_EXPORT2 
+U_CAPI char* U_EXPORT2
 u_strToUTF8(char *dest,
             int32_t destCapacity,
             int32_t *pDestLength,
@@ -1506,12 +1506,12 @@ u_strFromJavaModifiedUTF8WithSub(
     return dest;
 }
 
-U_CAPI char* U_EXPORT2 
+U_CAPI char* U_EXPORT2
 u_strToJavaModifiedUTF8(
         char *dest,
         int32_t destCapacity,
         int32_t *pDestLength,
-        const UChar *src, 
+        const UChar *src,
         int32_t srcLength,
         UErrorCode *pErrorCode) {
     int32_t reqLength=0;

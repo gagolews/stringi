@@ -84,7 +84,7 @@ class TimeZoneFormat;
  *         <td style="text-align: center" rowspan="3">G</td>
  *         <td style="text-align: center">1..3</td>
  *         <td>AD</td>
- *         <td rowspan="3">Era - Replaced with the Era string for the current date. One to three letters for the 
+ *         <td rowspan="3">Era - Replaced with the Era string for the current date. One to three letters for the
  *         abbreviated form, four letters for the long form, five for the narrow form.</td>
  *     </tr>
  *     <tr>
@@ -198,7 +198,7 @@ class TimeZoneFormat;
  *         <td rowspan="3" style="text-align: center">Q</td>
  *         <td style="text-align: center">1..2</td>
  *         <td>02</td>
- *         <td rowspan="3">Quarter - Use one or two for the numerical quarter, three for the abbreviation, or four 
+ *         <td rowspan="3">Quarter - Use one or two for the numerical quarter, three for the abbreviation, or four
  *         for the full name.</td>
  *     </tr>
  *     <tr>
@@ -213,7 +213,7 @@ class TimeZoneFormat;
  *         <td rowspan="3" style="text-align: center">q</td>
  *         <td style="text-align: center">1..2</td>
  *         <td>02</td>
- *         <td rowspan="3"><b>Stand-Alone</b> Quarter - Use one or two for the numerical quarter, three for the abbreviation, 
+ *         <td rowspan="3"><b>Stand-Alone</b> Quarter - Use one or two for the numerical quarter, three for the abbreviation,
  *         or four for the full name.</td>
  *     </tr>
  *     <tr>
@@ -248,7 +248,7 @@ class TimeZoneFormat;
  *         <td rowspan="4" style="text-align: center">L</td>
  *         <td style="text-align: center">1..2</td>
  *         <td>09</td>
- *         <td rowspan="4"><b>Stand-Alone</b> Month - Use one or two for the numerical month, three for the abbreviation, 
+ *         <td rowspan="4"><b>Stand-Alone</b> Month - Use one or two for the numerical month, three for the abbreviation,
  *         or four for the full name, or 5 for the narrow name.</td>
  *     </tr>
  *     <tr>
@@ -301,7 +301,7 @@ class TimeZoneFormat;
  *         <td>2451334</td>
  *         <td>Modified Julian day. This is different from the conventional Julian day number in two regards.
  *         First, it demarcates days at local zone midnight, rather than noon GMT. Second, it is a local number;
- *         that is, it depends on the local time zone. It can be thought of as a single number that encompasses 
+ *         that is, it depends on the local time zone. It can be thought of as a single number that encompasses
  *         all the date-related fields.</td>
  *     </tr>
  *     <tr>
@@ -310,7 +310,7 @@ class TimeZoneFormat;
  *         <td rowspan="4" style="text-align: center">E</td>
  *         <td style="text-align: center">1..3</td>
  *         <td>Tues</td>
- *         <td rowspan="4">Day of week - Use one through three letters for the short day, or four for the full name, 
+ *         <td rowspan="4">Day of week - Use one through three letters for the short day, or four for the full name,
  *         five for the narrow name, or six for the short name.</td>
  *     </tr>
  *     <tr>
@@ -527,7 +527,7 @@ class TimeZoneFormat;
  *         <td>The <i>generic location format</i>.
  *         Where that is unavailable, falls back to the <i>long localized GMT format</i> ("OOOO";
  *         Note: Fallback is only necessary with a GMT-style Time Zone ID, like Etc/GMT-830.)<br>
- *         This is especially useful when presenting possible timezone choices for user selection, 
+ *         This is especially useful when presenting possible timezone choices for user selection,
  *         since the naming is more uniform than the "v" format.</td>
  *     </tr>
  *     <tr>
@@ -1090,7 +1090,7 @@ public:
      * @param value The UDisplayContext value to set.
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
-     *               updated with any new status from the function. 
+     *               updated with any new status from the function.
      * @draft ICU 51
      */
     virtual void setContext(UDisplayContext value, UErrorCode& status);
@@ -1102,7 +1102,7 @@ public:
      * @param type The UDisplayContextType whose value to return
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
-     *               updated with any new status from the function. 
+     *               updated with any new status from the function.
      * @return The UDisplayContextValue for the specified type.
      * @draft ICU 51
      */
@@ -1234,7 +1234,7 @@ private:
      * having a number of digits between "minDigits" and
      * "maxDigits".  Uses the DateFormat's NumberFormat.
      *
-     * @param currentNumberFormat 
+     * @param currentNumberFormat
      * @param appendTo  Output parameter to receive result.
      *                  Formatted number is appended to existing contents.
      * @param value     Value to format.
@@ -1330,7 +1330,7 @@ private:
      */
     int32_t matchQuarterString(const UnicodeString& text, int32_t start, UCalendarDateFields field,
                                const UnicodeString* stringArray, int32_t stringArrayCount, Calendar& cal) const;
-    
+
     /**
      * Private function used by subParse to match literal pattern text.
      *
@@ -1346,7 +1346,7 @@ private:
      */
     static UBool matchLiterals(const UnicodeString &pattern, int32_t &patternOffset,
                                const UnicodeString &text, int32_t &textOffset, UBool lenient);
-    
+
     /**
      * Private member function that converts the parsed date strings into
      * timeFields. Returns -start (for ParsePosition) if failed.

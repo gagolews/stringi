@@ -413,7 +413,7 @@ udat_applyPattern(  UDateFormat     *format,
     if(U_FAILURE(status)) {
         return;
     }
-    
+
     if(localized)
         ((SimpleDateFormat*)format)->applyLocalizedPattern(pat, status);
     else
@@ -962,7 +962,7 @@ udat_setSymbols(    UDateFormat             *format,
     default:
         *status = U_UNSUPPORTED_ERROR;
         break;
-        
+
     }
 }
 
@@ -1015,7 +1015,7 @@ static void verifyIsRelativeDateFormat(const UDateFormat* fmt, UErrorCode *statu
 }
 
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 udat_toPatternRelativeDate(const UDateFormat *fmt,
                            UChar             *result,
                            int32_t           resultLength,
@@ -1034,7 +1034,7 @@ udat_toPatternRelativeDate(const UDateFormat *fmt,
     return datePattern.extract(result, resultLength, *status);
 }
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 udat_toPatternRelativeTime(const UDateFormat *fmt,
                            UChar             *result,
                            int32_t           resultLength,
@@ -1053,7 +1053,7 @@ udat_toPatternRelativeTime(const UDateFormat *fmt,
     return timePattern.extract(result, resultLength, *status);
 }
 
-U_CAPI void U_EXPORT2 
+U_CAPI void U_EXPORT2
 udat_applyPatternRelative(UDateFormat *format,
                           const UChar *datePattern,
                           int32_t     datePatternLength,

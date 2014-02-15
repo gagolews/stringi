@@ -14,11 +14,11 @@
 #include "unicode/uobject.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: An interface that defines both lookup protocol and parsing of
  * symbolic names.
  */
- 
+
 U_NAMESPACE_BEGIN
 
 class ParsePosition;

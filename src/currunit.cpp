@@ -48,11 +48,11 @@ UObject* CurrencyUnit::clone() const {
 
 CurrencyUnit::~CurrencyUnit() {
 }
-    
+
 UBool CurrencyUnit::operator==(const UObject& other) const {
     const CurrencyUnit& c = (const CurrencyUnit&) other;
     return typeid(*this) == typeid(other) &&
-        u_strcmp(isoCode, c.isoCode) == 0;    
+        u_strcmp(isoCode, c.isoCode) == 0;
 }
 
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(CurrencyUnit)

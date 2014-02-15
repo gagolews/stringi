@@ -86,7 +86,7 @@ public:
     }
     virtual ~MultiplierSubstitution();
 
-    virtual void setDivisor(int32_t radix, int32_t exponent, UErrorCode& status) { 
+    virtual void setDivisor(int32_t radix, int32_t exponent, UErrorCode& status) {
         divisor = uprv_pow(radix, exponent);
         ldivisor = util64_fromDouble(divisor);
 
@@ -138,7 +138,7 @@ public:
         UErrorCode& status);
     virtual ~ModulusSubstitution();
 
-    virtual void setDivisor(int32_t radix, int32_t exponent, UErrorCode& status) { 
+    virtual void setDivisor(int32_t radix, int32_t exponent, UErrorCode& status) {
         divisor = uprv_pow(radix, exponent);
         ldivisor = util64_fromDouble(divisor);
 
@@ -155,7 +155,7 @@ public:
     virtual int64_t transformNumber(int64_t number) const { return number % ldivisor; }
     virtual double transformNumber(double number) const { return uprv_fmod(number, divisor); }
 
-    virtual UBool doParse(const UnicodeString& text, 
+    virtual UBool doParse(const UnicodeString& text,
         ParsePosition& parsePosition,
         double baseValue,
         double upperBound,
@@ -172,7 +172,7 @@ public:
 
     virtual UChar tokenChar() const { return (UChar)0x003e; } // '>'
 
-	virtual void toString(UnicodeString& result) const;
+   virtual void toString(UnicodeString& result) const;
 
 public:
     static UClassID getStaticClassID(void);
@@ -282,7 +282,7 @@ public:
         const RuleBasedNumberFormat* formatter,
         const UnicodeString& description,
         UErrorCode& status)
-        : NFSubstitution(_pos, _ruleSet, formatter, fixdesc(description), status), denominator(_denominator) 
+        : NFSubstitution(_pos, _ruleSet, formatter, fixdesc(description), status), denominator(_denominator)
     {
         ldenominator = util64_fromDouble(denominator);
         withZeros = description.endsWith(LTLT, 2);
@@ -296,7 +296,7 @@ public:
 
     virtual void doSubstitution(int64_t /*number*/, UnicodeString& /*toInsertInto*/, int32_t /*_pos*/) const {}
     virtual void doSubstitution(double number, UnicodeString& toInsertInto, int32_t pos) const;
-    virtual UBool doParse(const UnicodeString& text, 
+    virtual UBool doParse(const UnicodeString& text,
         ParsePosition& parsePosition,
         double baseValue,
         double upperBound,
@@ -332,7 +332,7 @@ public:
     virtual int64_t transformNumber(int64_t /*number*/) const { return 0; }
     virtual double transformNumber(double /*number*/) const { return 0; }
     virtual UBool doParse(const UnicodeString& /*text*/,
-        ParsePosition& /*parsePosition*/, 
+        ParsePosition& /*parsePosition*/,
         double baseValue,
         double /*upperBound*/,
         UBool /*lenientParse*/,
@@ -998,7 +998,7 @@ ModulusSubstitution::toString(UnicodeString& text) const
       text.append(tokenChar());
       text.append(tokenChar());
   } else { // Otherwise just use the super-class function.
-	  NFSubstitution::toString(text);
+     NFSubstitution::toString(text);
   }
 }
 //===================================================================
@@ -1092,7 +1092,7 @@ FractionalPartSubstitution::doSubstitution(double number, UnicodeString& toInser
     dl.set(number);
     dl.roundFixedPoint(20);     // round to 20 fraction digits.
     dl.reduce();                // Removes any trailing zeros.
-    
+
     UBool pad = FALSE;
     for (int32_t didx = dl.getCount()-1; didx>=dl.getDecimalAt(); didx--) {
       // Loop iterates over fraction digits, starting with the LSD.
@@ -1268,8 +1268,8 @@ NumeratorSubstitution::doSubstitution(double number, UnicodeString& toInsertInto
     }
 }
 
-UBool 
-NumeratorSubstitution::doParse(const UnicodeString& text, 
+UBool
+NumeratorSubstitution::doParse(const UnicodeString& text,
                                ParsePosition& parsePosition,
                                double baseValue,
                                double upperBound,
@@ -1350,7 +1350,7 @@ NumeratorSubstitution::operator==(const NFSubstitution& rhs) const
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(NumeratorSubstitution)
 
 const UChar NumeratorSubstitution::LTLT[] = { 0x003c, 0x003c };
-        
+
 //===================================================================
 // NullSubstitution
 //===================================================================
@@ -1361,4 +1361,3 @@ U_NAMESPACE_END
 
 /* U_HAVE_RBNF */
 #endif
-

@@ -9,7 +9,7 @@
 * Modification History:
 *
 * Date        Name        Description
-* 02/15/2001  synwee      Modified all methods to process its own function 
+* 02/15/2001  synwee      Modified all methods to process its own function
 *                         instead of calling the equivalent c++ api (coleitr.h)
 ******************************************************************************/
 
@@ -339,28 +339,28 @@ ucol_openElements(const UCollator  *coll,
 U_CAPI void U_EXPORT2
 ucol_closeElements(UCollationElements *elems)
 {
-	if (elems != NULL) {
-	  collIterate *ci = &elems->iteratordata_;
+   if (elems != NULL) {
+     collIterate *ci = &elems->iteratordata_;
 
-	  if (ci->extendCEs) {
-		  uprv_free(ci->extendCEs);
-	  }
+     if (ci->extendCEs) {
+   	  uprv_free(ci->extendCEs);
+     }
 
-	  if (ci->offsetBuffer) {
-		  uprv_free(ci->offsetBuffer);
-	  }
+     if (ci->offsetBuffer) {
+   	  uprv_free(ci->offsetBuffer);
+     }
 
-	  if (elems->isWritable && elems->iteratordata_.string != NULL)
-	  {
-		uprv_free((UChar *)elems->iteratordata_.string);
-	  }
+     if (elems->isWritable && elems->iteratordata_.string != NULL)
+     {
+   	uprv_free((UChar *)elems->iteratordata_.string);
+     }
 
-	  if (elems->pce != NULL) {
-		  delete elems->pce;
-	  }
+     if (elems->pce != NULL) {
+   	  delete elems->pce;
+     }
 
-	  delete elems;
-	}
+     delete elems;
+   }
 }
 
 U_CAPI void U_EXPORT2
@@ -382,7 +382,7 @@ ucol_reset(UCollationElements *elems)
     ci->fcdPosition = NULL;
 
   //ci->offsetReturn = ci->offsetStore = NULL;
-	ci->offsetRepeatCount = ci->offsetRepeatValue = 0;
+   ci->offsetRepeatCount = ci->offsetRepeatValue = 0;
 }
 
 U_CAPI void U_EXPORT2
@@ -401,7 +401,7 @@ ucol_forceHanImplicit(UCollationElements *elems, UErrorCode *status)
 }
 
 U_CAPI int32_t U_EXPORT2
-ucol_next(UCollationElements *elems, 
+ucol_next(UCollationElements *elems,
           UErrorCode         *status)
 {
     int32_t result;
@@ -412,7 +412,7 @@ ucol_next(UCollationElements *elems,
     elems->reset_ = FALSE;
 
     result = (int32_t)ucol_getNextCE(elems->iteratordata_.coll,
-                                     &elems->iteratordata_, 
+                                     &elems->iteratordata_,
                                      status);
 
     if (result == UCOL_NO_MORE_CES) {
@@ -480,7 +480,7 @@ ucol_previous(UCollationElements *elems,
 
         if (elems->reset_ && (elems->iteratordata_.pos == elems->iteratordata_.string)) {
             if (elems->iteratordata_.endp == NULL) {
-                elems->iteratordata_.endp = elems->iteratordata_.string + 
+                elems->iteratordata_.endp = elems->iteratordata_.string +
                                             u_strlen(elems->iteratordata_.string);
                 elems->iteratordata_.flags |= UCOL_ITER_HASLEN;
             }
@@ -491,7 +491,7 @@ ucol_previous(UCollationElements *elems,
         elems->reset_ = FALSE;
 
         result = (int32_t)ucol_getPrevCE(elems->iteratordata_.coll,
-                                         &(elems->iteratordata_), 
+                                         &(elems->iteratordata_),
                                          status);
 
         if (result == UCOL_NO_MORE_CES) {
@@ -520,10 +520,10 @@ ucol_previousProcessed(UCollationElements *elems,
         return UCOL_PROCESSED_NULLORDER;
     }
 
-    if (elems->reset_ && 
+    if (elems->reset_ &&
         (elems->iteratordata_.pos == elems->iteratordata_.string)) {
         if (elems->iteratordata_.endp == NULL) {
-            elems->iteratordata_.endp = elems->iteratordata_.string + 
+            elems->iteratordata_.endp = elems->iteratordata_.string +
                                         u_strlen(elems->iteratordata_.string);
             elems->iteratordata_.flags |= UCOL_ITER_HASLEN;
         }
@@ -544,7 +544,7 @@ ucol_previousProcessed(UCollationElements *elems,
         // buffer raw CEs up to non-ignorable primary
         RCEBuffer rceb;
         uint32_t ce;
-        
+
         // **** do we need to reset rceb, or will it always be empty at this point ****
         do {
             high = ucol_getOffset(elems);
@@ -580,7 +580,7 @@ finish:
     	if (ixLow != NULL) {
     		*ixLow = -1;
     	}
-    	
+
     	if (ixHigh != NULL) {
     		*ixHigh = -1
     		;
@@ -617,7 +617,7 @@ ucol_getMaxExpansion(const UCollationElements *elems,
           uint32_t strengthMask = 0;
           uint32_t mOrder = (uint32_t) order;
 
-    switch (coll->strength) 
+    switch (coll->strength)
     {
     default:
         strengthMask |= UCOL_TERTIARYORDERMASK;
@@ -660,7 +660,7 @@ ucol_getMaxExpansion(const UCollationElements *elems,
 
     return result;
 }
- 
+
 U_CAPI void U_EXPORT2
 ucol_setText(      UCollationElements *elems,
              const UChar              *text,
@@ -681,14 +681,14 @@ ucol_setText(      UCollationElements *elems,
     }
 
     elems->isWritable = FALSE;
-    
+
     /* free offset buffer to avoid memory leak before initializing. */
     ucol_freeOffsetBuffer(&(elems->iteratordata_));
     /* Ensure that previously allocated extendCEs is freed before setting to NULL. */
     if (elems->iteratordata_.extendCEs != NULL) {
         uprv_free(elems->iteratordata_.extendCEs);
     }
-    uprv_init_collIterate(elems->iteratordata_.coll, text, textLength, 
+    uprv_init_collIterate(elems->iteratordata_.coll, text, textLength,
                           &elems->iteratordata_, status);
 
     elems->reset_   = TRUE;
@@ -707,10 +707,10 @@ ucol_getOffset(const UCollationElements *elems)
       return *ci->offsetReturn;
   }
 
-  // while processing characters in normalization buffer getOffset will 
-  // return the next non-normalized character. 
+  // while processing characters in normalization buffer getOffset will
+  // return the next non-normalized character.
   // should be inline with the old implementation since the old codes uses
-  // nextDecomp in normalizer which also decomposes the string till the 
+  // nextDecomp in normalizer which also decomposes the string till the
   // first base character is found.
   if (ci->flags & UCOL_ITER_INNORMBUF) {
       if (ci->fcdPosition == NULL) {
@@ -732,7 +732,7 @@ ucol_setOffset(UCollationElements    *elems,
         return;
     }
 
-    // this methods will clean up any use of the writable buffer and points to 
+    // this methods will clean up any use of the writable buffer and points to
     // the original string
     collIterate *ci = &(elems->iteratordata_);
     ci->pos         = ci->string + offset;
@@ -747,27 +747,27 @@ ucol_setOffset(UCollationElements    *elems,
     ci->fcdPosition = NULL;
     elems->reset_ = FALSE;
 
-	ci->offsetReturn = NULL;
+   ci->offsetReturn = NULL;
     ci->offsetStore = ci->offsetBuffer;
-	ci->offsetRepeatCount = ci->offsetRepeatValue = 0;
+   ci->offsetRepeatCount = ci->offsetRepeatValue = 0;
 }
 
 U_CAPI int32_t U_EXPORT2
-ucol_primaryOrder (int32_t order) 
+ucol_primaryOrder (int32_t order)
 {
     order &= UCOL_PRIMARYMASK;
     return (order >> UCOL_PRIMARYORDERSHIFT);
 }
 
 U_CAPI int32_t U_EXPORT2
-ucol_secondaryOrder (int32_t order) 
+ucol_secondaryOrder (int32_t order)
 {
     order &= UCOL_SECONDARYMASK;
     return (order >> UCOL_SECONDARYORDERSHIFT);
 }
 
 U_CAPI int32_t U_EXPORT2
-ucol_tertiaryOrder (int32_t order) 
+ucol_tertiaryOrder (int32_t order)
 {
     return (order & UCOL_TERTIARYMASK);
 }

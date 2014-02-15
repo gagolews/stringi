@@ -655,7 +655,7 @@ static const UEnumeration defaultEncodings = {
     ucnvsel_close_selector_iterator,
     ucnvsel_count_encodings,
     uenum_unextDefault,
-    ucnvsel_next_encoding, 
+    ucnvsel_next_encoding,
     ucnvsel_reset_iterator
 };
 
@@ -764,7 +764,7 @@ ucnvsel_selectForString(const UConverterSelector* sel,
     } else {
       limit = NULL;
     }
-    
+
     while (limit == NULL ? *s != 0 : s != limit) {
       UChar32 c;
       uint16_t pvIndex;
@@ -805,7 +805,7 @@ ucnvsel_selectForUTF8(const UConverterSelector* sel,
 
   if(s!=NULL) {
     const char *limit = s + length;
-    
+
     while (s != limit) {
       uint16_t pvIndex;
       UTRIE2_U8_NEXT16(sel->trie, s, limit, pvIndex);

@@ -166,7 +166,7 @@ class Grego {
      * @return the day number, with day 0 == Jan 1 1970
      */
     static double fieldsToDay(int32_t year, int32_t month, int32_t dom);
-    
+
     /**
      * Convert a 1970-epoch day number to proleptic Gregorian year,
      * month, day-of-month, and day-of-week.
@@ -239,9 +239,9 @@ class Grego {
      */
     static inline int32_t millisToJulianDay(double millis);
 
-    /** 
+    /**
      * Calculates the Gregorian day shift value for an extended year.
-     * @param eyear Extended year 
+     * @param eyear Extended year
      * @returns number of days to ADD to Julian in order to convert from J->G
      */
     static inline int32_t gregorianShift(int32_t eyear);
@@ -292,15 +292,15 @@ inline int32_t Grego::gregorianShift(int32_t eyear) {
 }
 
 /**
- * This utility class provides convenient access to the data needed for a calendar. 
+ * This utility class provides convenient access to the data needed for a calendar.
  * @internal ICU 3.0
  */
 class CalendarData : public UMemory {
-public: 
+public:
     /**
      * Construct a CalendarData from the given locale.
      * @param loc locale to use. The 'calendar' keyword will be ignored.
-     * @param type calendar type. NULL indicates the gregorian calendar. 
+     * @param type calendar type. NULL indicates the gregorian calendar.
      * No default lookup is done.
      * @param status error code
      */

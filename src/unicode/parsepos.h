@@ -19,14 +19,14 @@
 #include "unicode/utypes.h"
 #include "unicode/uobject.h"
 
- 
+
 U_NAMESPACE_BEGIN
 
 /**
  * \file
  * \brief C++ API: Canonical Iterator
  */
-/** 
+/**
  * <code>ParsePosition</code> is a simple class used by <code>Format</code>
  * and its subclasses to keep track of the current position during parsing.
  * The <code>parseObject</code> method in the various <code>Format</code>

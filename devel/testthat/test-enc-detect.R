@@ -170,7 +170,7 @@ test_that("stri_enc_detect", {
       path <- 'devel/examples'
    else
       path <- '../examples'
-   
+
    fnames <- c(file.path(path, 'CS_utf8.txt'),
                file.path(path, 'DE_utf8.txt'),
                file.path(path, 'PL_utf8.txt'),

@@ -15,7 +15,7 @@
 *
 *   This program reads the Franctional UCA table and generates
 *   internal format for UCA table as well as inverse UCA table.
-*   It then writes binary files containing the data: ucadata.dat 
+*   It then writes binary files containing the data: ucadata.dat
 *   & invuca.dat
 */
 #ifndef UCOL_UCAELEMS_H
@@ -44,7 +44,7 @@ a problem. Normally, less than 32K are tailored.
 */
 #define UCOL_ELM_TRIE_CAPACITY 0x40000
 
-/* This is the maxmun capacity for temparay combining class 
+/* This is the maxmun capacity for temparay combining class
  * table.  The table will be compacted after scanning all the
  * Unicode codepoints.
 */
@@ -99,8 +99,8 @@ typedef struct {
 
 typedef struct {
   /*CompactEIntArray      *mapping; */
-  UNewTrie                 *mapping; 
-  ExpansionTable        *expansions; 
+  UNewTrie                 *mapping;
+  ExpansionTable        *expansions;
   struct CntTable       *contractions;
   UCATableHeader        *image;
   UColOptionSet         *options;
@@ -111,7 +111,7 @@ typedef struct {
   const UCollator       *UCA;
   UHashtable      *prefixLookup;
   CombinClassTable      *cmLookup;  /* combining class lookup for tailoring. */
-} tempUCATable; 
+} tempUCATable;
 
 typedef struct {
     UChar cp;

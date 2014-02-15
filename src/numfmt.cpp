@@ -408,13 +408,13 @@ NumberFormat::format(int64_t number,
 
 
 // -------------------------------------
-// Decimal Number format() default implementation 
+// Decimal Number format() default implementation
 // Subclasses do not normally override this function, but rather the DigitList
 // formatting functions..
 //   The expected call chain from here is
 //      this function ->
 //      NumberFormat::format(Formattable  ->
-//      DecimalFormat::format(DigitList    
+//      DecimalFormat::format(DigitList
 //
 //   Or, for subclasses of Formattable that do not know about DigitList,
 //       this Function ->
@@ -516,7 +516,7 @@ UnicodeString&
 NumberFormat::format(const DigitList &number,
                      UnicodeString& appendTo,
                      FieldPosition& pos,
-                     UErrorCode &status) const { 
+                     UErrorCode &status) const {
     // DecimalFormat overrides this function, and handles DigitList based big decimals.
     // Other subclasses (ChoiceFormat, RuleBasedNumberFormat) do not (yet) handle DigitLists,
     // so this default implementation falls back to formatting decimal numbers as doubles.
@@ -962,10 +962,10 @@ NumberFormat::registerFactory(NumberFormatFactory* toAdopt, UErrorCode& status)
 {
   ICULocaleService *service = getNumberFormatService();
   if (service) {
-	  NFFactory *tempnnf = new NFFactory(toAdopt);
-	  if (tempnnf != NULL) {
-		  return service->registerFactory(tempnnf, status);
-	  }
+     NFFactory *tempnnf = new NFFactory(toAdopt);
+     if (tempnnf != NULL) {
+   	  return service->registerFactory(tempnnf, status);
+     }
   }
   status = U_MEMORY_ALLOCATION_ERROR;
   return NULL;
@@ -1302,7 +1302,7 @@ NumberFormat::makeInstance(const Locale& desiredLocale,
         const UChar *patResStr = ures_getStringByKeyWithFallback(resource, gFormatKeys[style], &patLen, &status);
 
         // Didn't find a pattern specific to the numbering system, so fall back to "latn"
-        if ( status == U_MISSING_RESOURCE_ERROR && uprv_strcmp(gLatn,ns->getName())) {  
+        if ( status == U_MISSING_RESOURCE_ERROR && uprv_strcmp(gLatn,ns->getName())) {
             status = U_ZERO_ERROR;
             resource = ures_getByKeyWithFallback(numElements, gLatn, resource, &status);
             resource = ures_getByKeyWithFallback(resource, gPatterns, resource, &status);

@@ -25,15 +25,15 @@
  * \file
  * \brief C API: Wrapper for icu::DateTimePatternGenerator (unicode/dtptngen.h).
  *
- * UDateTimePatternGenerator provides flexible generation of date format patterns, 
- * like "yy-MM-dd". The user can build up the generator by adding successive 
- * patterns. Once that is done, a query can be made using a "skeleton", which is 
- * a pattern which just includes the desired fields and lengths. The generator 
+ * UDateTimePatternGenerator provides flexible generation of date format patterns,
+ * like "yy-MM-dd". The user can build up the generator by adding successive
+ * patterns. Once that is done, a query can be made using a "skeleton", which is
+ * a pattern which just includes the desired fields and lengths. The generator
  * will return the "best fit" pattern corresponding to that skeleton.
  * <p>The main method people will use is udatpg_getBestPattern, since normally
- * UDateTimePatternGenerator is pre-built with data from a particular locale. 
+ * UDateTimePatternGenerator is pre-built with data from a particular locale.
  * However, generators can be built directly from other data as well.
- * <p><i>Issue: may be useful to also have a function that returns the list of 
+ * <p><i>Issue: may be useful to also have a function that returns the list of
  * fields in a pattern, in order, since we have that internally.
  * That would be useful for getting the UI order of field elements.</i>
  */
@@ -186,13 +186,13 @@ udatpg_clone(const UDateTimePatternGenerator *dtpg, UErrorCode *pErrorCode);
 /**
  * Get the best pattern matching the input skeleton. It is guaranteed to
  * have all of the fields in the skeleton.
- * 
+ *
  * Note that this function uses a non-const UDateTimePatternGenerator:
  * It uses a stateful pattern parser which is set up for each generator object,
  * rather than creating one for each function call.
  * Consecutive calls to this function do not affect each other,
  * but this function cannot be used concurrently on a single generator object.
- * 
+ *
  * @param dtpg a pointer to UDateTimePatternGenerator.
  * @param skeleton
  *            The skeleton is a pattern containing only the variable fields.
@@ -215,13 +215,13 @@ udatpg_getBestPattern(UDateTimePatternGenerator *dtpg,
 /**
  * Get the best pattern matching the input skeleton. It is guaranteed to
  * have all of the fields in the skeleton.
- * 
+ *
  * Note that this function uses a non-const UDateTimePatternGenerator:
  * It uses a stateful pattern parser which is set up for each generator object,
  * rather than creating one for each function call.
  * Consecutive calls to this function do not affect each other,
  * but this function cannot be used concurrently on a single generator object.
- * 
+ *
  * @param dtpg a pointer to UDateTimePatternGenerator.
  * @param skeleton
  *            The skeleton is a pattern containing only the variable fields.
@@ -252,7 +252,7 @@ udatpg_getBestPatternWithOptions(UDateTimePatternGenerator *dtpg,
 /**
   * Get a unique skeleton from a given pattern. For example,
   * both "MMM-dd" and "dd/MMM" produce the skeleton "MMMdd".
-  * 
+  *
   * Note that this function uses a non-const UDateTimePatternGenerator:
   * It uses a stateful pattern parser which is set up for each generator object,
   * rather than creating one for each function call.
@@ -308,7 +308,7 @@ udatpg_getBaseSkeleton(UDateTimePatternGenerator *dtpg,
  * Adds a pattern to the generator. If the pattern has the same skeleton as
  * an existing pattern, and the override parameter is set, then the previous
  * value is overriden. Otherwise, the previous value is retained. In either
- * case, the conflicting status is set and previous vale is stored in 
+ * case, the conflicting status is set and previous vale is stored in
  * conflicting pattern.
  * <p>
  * Note that single-field patterns (like "MMM") are automatically added, and
@@ -317,14 +317,14 @@ udatpg_getBaseSkeleton(UDateTimePatternGenerator *dtpg,
  * @param dtpg     a pointer to UDateTimePatternGenerator.
  * @param pattern  input pattern, such as "dd/MMM"
  * @param patternLength the length of pattern.
- * @param override  When existing values are to be overridden use true, 
+ * @param override  When existing values are to be overridden use true,
  *                  otherwise use false.
  * @param conflictingPattern  Previous pattern with the same skeleton.
  * @param capacity the capacity of conflictingPattern.
  * @param pLength a pointer to the length of conflictingPattern.
  * @param pErrorCode a pointer to the UErrorCode which must not indicate a
  *                  failure before the function call.
- * @return conflicting status. The value could be UDATPG_NO_CONFLICT, 
+ * @return conflicting status. The value could be UDATPG_NO_CONFLICT,
  *                  UDATPG_BASE_CONFLICT or UDATPG_CONFLICT.
  * @stable ICU 3.8
  */
@@ -463,7 +463,7 @@ udatpg_setDecimal(UDateTimePatternGenerator *dtpg,
 
 /**
  * Getter corresponding to setDecimal.
- * 
+ *
  * @param dtpg a pointer to UDateTimePatternGenerator.
  * @param pLength A pointer that will receive the length of the decimal string.
  * @return corresponding to the decimal point.
@@ -546,7 +546,7 @@ udatpg_replaceFieldTypesWithOptions(UDateTimePatternGenerator *dtpg,
 /**
  * Return a UEnumeration list of all the skeletons in canonical form.
  * Call udatpg_getPatternForSkeleton() to get the corresponding pattern.
- * 
+ *
  * @param dtpg a pointer to UDateTimePatternGenerator.
  * @param pErrorCode a pointer to the UErrorCode which must not indicate a
  *                  failure before the function call
@@ -572,9 +572,9 @@ udatpg_openBaseSkeletons(const UDateTimePatternGenerator *dtpg, UErrorCode *pErr
 
 /**
  * Get the pattern corresponding to a given skeleton.
- * 
+ *
  * @param dtpg a pointer to UDateTimePatternGenerator.
- * @param skeleton 
+ * @param skeleton
  * @param skeletonLength pointer to the length of skeleton.
  * @param pLength pointer to the length of return pattern.
  * @return pattern corresponding to a given skeleton.

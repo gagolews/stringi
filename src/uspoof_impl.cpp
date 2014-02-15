@@ -29,7 +29,7 @@ U_NAMESPACE_BEGIN
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(SpoofImpl)
 
 SpoofImpl::SpoofImpl(SpoofData *data, UErrorCode &status) :
-        fMagic(0), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) , 
+        fMagic(0), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) ,
         fAllowedLocales(NULL), fCachedIdentifierInfo(NULL) {
     if (U_FAILURE(status)) {
         return;
@@ -50,7 +50,7 @@ SpoofImpl::SpoofImpl(SpoofData *data, UErrorCode &status) :
 
 
 SpoofImpl::SpoofImpl() :
-        fMagic(USPOOF_MAGIC), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) , 
+        fMagic(USPOOF_MAGIC), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) ,
         fAllowedLocales(NULL), fCachedIdentifierInfo(NULL) {
     UnicodeSet *allowedCharsSet = new UnicodeSet(0, 0x10ffff);
     allowedCharsSet->freeze();
@@ -62,7 +62,7 @@ SpoofImpl::SpoofImpl() :
 
 // Copy Constructor, used by the user level clone() function.
 SpoofImpl::SpoofImpl(const SpoofImpl &src, UErrorCode &status)  :
-        fMagic(0), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) , 
+        fMagic(0), fChecks(USPOOF_ALL_CHECKS), fSpoofData(NULL), fAllowedCharsSet(NULL) ,
         fAllowedLocales(NULL), fCachedIdentifierInfo(NULL) {
     if (U_FAILURE(status)) {
         return;
@@ -157,7 +157,7 @@ int32_t SpoofImpl::confusableLookup(UChar32 inChar, int32_t tableMask, UnicodeSt
         int i = 0;
         dest.append(inChar);
         return i;
-    } 
+    }
   foundChar:
     int32_t keyFlags = *mid & 0xff000000;
     if ((keyFlags & tableMask) == 0) {
@@ -309,7 +309,7 @@ void SpoofImpl::setAllowedLocales(const char *localesList, UErrorCode &status) {
         if (fAllowedLocales == NULL || tmpSet == NULL) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
-        } 
+        }
         tmpSet->freeze();
         delete fAllowedCharsSet;
         fAllowedCharsSet = tmpSet;
@@ -317,14 +317,14 @@ void SpoofImpl::setAllowedLocales(const char *localesList, UErrorCode &status) {
         return;
     }
 
-        
+
     // Add all common and inherited characters to the set of allowed chars.
     UnicodeSet tempSet;
     tempSet.applyIntPropertyValue(UCHAR_SCRIPT, USCRIPT_COMMON, status);
     allowedChars.addAll(tempSet);
     tempSet.applyIntPropertyValue(UCHAR_SCRIPT, USCRIPT_INHERITED, status);
     allowedChars.addAll(tempSet);
-    
+
     // If anything went wrong, we bail out without changing
     // the state of the spoof checker.
     if (U_FAILURE(status)) {
@@ -547,7 +547,7 @@ SpoofData::SpoofData(UErrorCode &status) {
     // Just in case it's not, round it up.
     uint32_t initialSize = (sizeof(SpoofDataHeader) + 15) & ~15;
     U_ASSERT(initialSize == sizeof(SpoofDataHeader));
-    
+
     fRawData = static_cast<SpoofDataHeader *>(uprv_malloc(initialSize));
     fMemLimit = initialSize;
     if (fRawData == NULL) {
@@ -627,7 +627,7 @@ void SpoofData::initPtrs(UErrorCode &status) {
         fLowerCaseTrie = utrie2_openFromSerialized(UTRIE2_16_VALUE_BITS,
             (char *)fRawData + fRawData->fLowerCaseTrie, fRawData->fLowerCaseTrieLength, NULL, &status);
     }
-    
+
     if (fRawData->fScriptSets != 0) {
         fScriptSets = (ScriptSet *)((char *)fRawData + fRawData->fScriptSets);
     }
@@ -741,7 +741,7 @@ uspoof_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *ou
     const uint8_t   *inBytes =(const uint8_t *)inData+headerSize;
     SpoofDataHeader *spoofDH = (SpoofDataHeader *)inBytes;
     if (ds->readUInt32(spoofDH->fMagic)   != USPOOF_MAGIC ||
-        ds->readUInt32(spoofDH->fLength)  <  sizeof(SpoofDataHeader)) 
+        ds->readUInt32(spoofDH->fLength)  <  sizeof(SpoofDataHeader))
     {
         udata_printError(ds, "uspoof_swap(): Spoof Data header is invalid.\n");
         *status=U_UNSUPPORTED_ERROR;
@@ -841,5 +841,3 @@ uspoof_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *ou
 }
 
 #endif
-
-

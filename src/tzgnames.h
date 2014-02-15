@@ -8,7 +8,7 @@
 #define __TZGNAMES_H
 
 /**
- * \file 
+ * \file
  * \brief C API: Time zone generic names classe
  */
 

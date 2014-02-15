@@ -389,7 +389,7 @@ static UBool divisors_equal(const double* lhs, const double* rhs) {
   return TRUE;
 }
 
-// getCDFLocaleStyleData returns pointer to formatting data for given locale and 
+// getCDFLocaleStyleData returns pointer to formatting data for given locale and
 // style within the global cache. On cache miss, getCDFLocaleStyleData loads
 // the data from CLDR into the global cache before returning the pointer. If a
 // UNUM_LONG data is requested for a locale, and that locale does not have
@@ -598,7 +598,7 @@ static UResourceBundle* tryGetDecimalFallback(const UResourceBundle* numberSyste
 // fillIn = tryGetByKeyWithFallback(rb, "wrong", &fillIn, ANY, status);
 //
 // ures_close(fillIn);
-// 
+//
 static UResourceBundle* tryGetByKeyWithFallback(const UResourceBundle* rb, const char* path, UResourceBundle** fillIn, FallbackFlags flags, UErrorCode& status) {
   if (U_FAILURE(status)) {
     return NULL;
@@ -845,7 +845,7 @@ static void fixQuotes(UnicodeString& s) {
 //
 // First this function figures out for which log10 values, the other
 // variant already had data. These are the same log10 values defined
-// in CLDR. 
+// in CLDR.
 //
 // For each log10 value not defined in CLDR, it uses the divisor for
 // the last defined log10 value or 1.

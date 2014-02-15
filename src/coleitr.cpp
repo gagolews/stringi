@@ -8,7 +8,7 @@
 /*
 * File coleitr.cpp
 *
-* 
+*
 *
 * Created by: Helena Shih
 *
@@ -20,7 +20,7 @@
 * 08/03/98   erm         Synched with 1.2 version of CollationElementIterator.java
 * 12/10/99   aliu        Ported Thai collation support from Java.
 * 01/25/01   swquek      Modified to a C++ wrapper calling C APIs (ucoliter.h)
-* 02/19/01   swquek      Removed CollationElementsIterator() since it is 
+* 02/19/01   swquek      Removed CollationElementsIterator() since it is
 *                        private constructor and no calls are made to it
 */
 
@@ -44,11 +44,11 @@ UOBJECT_DEFINE_RTTI_IMPLEMENTATION(CollationElementIterator)
 /* CollationElementIterator public constructor/destructor ------------------ */
 
 CollationElementIterator::CollationElementIterator(
-                                         const CollationElementIterator& other) 
+                                         const CollationElementIterator& other)
                                          : UObject(other), isDataOwned_(TRUE)
 {
     UErrorCode status = U_ZERO_ERROR;
-    m_data_ = ucol_openElements(other.m_data_->iteratordata_.coll, NULL, 0, 
+    m_data_ = ucol_openElements(other.m_data_->iteratordata_.coll, NULL, 0,
                                 &status);
 
     *this = other;
@@ -70,7 +70,7 @@ int32_t CollationElementIterator::getOffset() const
 
 /**
 * Get the ordering priority of the next character in the string.
-* @return the next character's ordering. Returns NULLORDER if an error has 
+* @return the next character's ordering. Returns NULLORDER if an error has
 *         occured or if the end of string has been reached
 */
 int32_t CollationElementIterator::next(UErrorCode& status)
@@ -102,13 +102,13 @@ UBool CollationElementIterator::operator==(
     // buffer
     int thislength = (int)(m_data_->iteratordata_.endp - m_data_->iteratordata_.string);
     int thatlength = (int)(that.m_data_->iteratordata_.endp - that.m_data_->iteratordata_.string);
-    
+
     if (thislength != thatlength) {
         return FALSE;
     }
 
-    if (uprv_memcmp(m_data_->iteratordata_.string, 
-                    that.m_data_->iteratordata_.string, 
+    if (uprv_memcmp(m_data_->iteratordata_.string,
+                    that.m_data_->iteratordata_.string,
                     thislength * U_SIZEOF_UCHAR) != 0) {
         return FALSE;
     }
@@ -122,9 +122,9 @@ UBool CollationElementIterator::operator==(
             return FALSE;
         }
         // both are in the normalization buffer
-        if (m_data_->iteratordata_.pos 
+        if (m_data_->iteratordata_.pos
             - m_data_->iteratordata_.writableBuffer.getBuffer()
-            != that.m_data_->iteratordata_.pos 
+            != that.m_data_->iteratordata_.pos
             - that.m_data_->iteratordata_.writableBuffer.getBuffer()) {
             // not in the same position in the normalization buffer
             return FALSE;
@@ -135,14 +135,14 @@ UBool CollationElementIterator::operator==(
     }
     // checking ce position
     return (m_data_->iteratordata_.CEpos - m_data_->iteratordata_.CEs)
-            == (that.m_data_->iteratordata_.CEpos 
+            == (that.m_data_->iteratordata_.CEpos
                                         - that.m_data_->iteratordata_.CEs);
 }
 
 /**
 * Get the ordering priority of the previous collation element in the string.
 * @param status the error code status.
-* @return the previous element's ordering. Returns NULLORDER if an error has 
+* @return the previous element's ordering. Returns NULLORDER if an error has
 *         occured or if the start of string has been reached.
 */
 int32_t CollationElementIterator::previous(UErrorCode& status)
@@ -158,7 +158,7 @@ void CollationElementIterator::reset()
     ucol_reset(m_data_);
 }
 
-void CollationElementIterator::setOffset(int32_t newOffset, 
+void CollationElementIterator::setOffset(int32_t newOffset,
                                          UErrorCode& status)
 {
     ucol_setOffset(m_data_, newOffset, &status);
@@ -200,17 +200,17 @@ void CollationElementIterator::setText(const UnicodeString& source,
     }
     /* Free offsetBuffer before initializing it. */
     ucol_freeOffsetBuffer(&(m_data_->iteratordata_));
-    uprv_init_collIterate(m_data_->iteratordata_.coll, string, length, 
+    uprv_init_collIterate(m_data_->iteratordata_.coll, string, length,
         &m_data_->iteratordata_, &status);
 
     m_data_->reset_   = TRUE;
 }
 
 // Sets the source to the new character iterator.
-void CollationElementIterator::setText(CharacterIterator& source, 
+void CollationElementIterator::setText(CharacterIterator& source,
                                        UErrorCode& status)
 {
-    if (U_FAILURE(status)) 
+    if (U_FAILURE(status))
         return;
 
     int32_t length = source.getLength();
@@ -232,7 +232,7 @@ void CollationElementIterator::setText(CharacterIterator& source,
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
-        /* 
+        /*
         Using this constructor will prevent buffer from being removed when
         string gets removed
         */
@@ -247,7 +247,7 @@ void CollationElementIterator::setText(CharacterIterator& source,
     m_data_->isWritable = TRUE;
     /* Free offsetBuffer before initializing it. */
     ucol_freeOffsetBuffer(&(m_data_->iteratordata_));
-    uprv_init_collIterate(m_data_->iteratordata_.coll, buffer, length, 
+    uprv_init_collIterate(m_data_->iteratordata_.coll, buffer, length,
         &m_data_->iteratordata_, &status);
     m_data_->reset_   = TRUE;
 }
@@ -268,7 +268,7 @@ int32_t CollationElementIterator::strengthOrder(int32_t order) const
 
 /* CollationElementIterator private constructors/destructors --------------- */
 
-/** 
+/**
 * This is the "real" constructor for this class; it constructs an iterator
 * over the source text using the specified collator
 */
@@ -292,7 +292,7 @@ CollationElementIterator::CollationElementIterator(
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
-        /* 
+        /*
         Using this constructor will prevent buffer from being removed when
         string gets removed
         */
@@ -316,8 +316,8 @@ CollationElementIterator::CollationElementIterator(
     m_data_->isWritable = TRUE;
 }
 
-/** 
-* This is the "real" constructor for this class; it constructs an iterator over 
+/**
+* This is the "real" constructor for this class; it constructs an iterator over
 * the source text using the specified collator
 */
 CollationElementIterator::CollationElementIterator(
@@ -334,18 +334,18 @@ CollationElementIterator::CollationElementIterator(
     if ( sourceText.endIndex() != 0 )
     {
         // A CollationElementIterator is really a two-layered beast.
-        // Internally it uses a Normalizer to munge the source text into a form 
-        // where all "composed" Unicode characters (such as \u00FC) are split into a 
-        // normal character and a combining accent character.  
+        // Internally it uses a Normalizer to munge the source text into a form
+        // where all "composed" Unicode characters (such as \u00FC) are split into a
+        // normal character and a combining accent character.
         // Afterward, CollationElementIterator does its own processing to handle
         // expanding and contracting collation sequences, ignorables, and so on.
-        
+
         Normalizer::EMode decomp = order->getStrength() == Collator::IDENTICAL
                                 ? Normalizer::NO_OP : order->getDecomposition();
-          
+
         text = new Normalizer(sourceText, decomp);
         if (text == NULL)
-        status = U_MEMORY_ALLOCATION_ERROR;    
+        status = U_MEMORY_ALLOCATION_ERROR;
     }
     */
     int32_t length = sourceText.getLength();
@@ -357,7 +357,7 @@ CollationElementIterator::CollationElementIterator(
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
-        /* 
+        /*
         Using this constructor will prevent buffer from being removed when
         string gets removed
         */
@@ -397,7 +397,7 @@ const CollationElementIterator& CollationElementIterator::operator=(
         collIterate        *othercoliter  = &(otherucolelem->iteratordata_);
         int                length         = 0;
 
-        // checking only UCOL_ITER_HASLEN is not enough here as we may be in 
+        // checking only UCOL_ITER_HASLEN is not enough here as we may be in
         // the normalization buffer
         length = (int)(othercoliter->endp - othercoliter->string);
 
@@ -429,15 +429,15 @@ const CollationElementIterator& CollationElementIterator::operator=(
         }
 
         /* current position */
-        if (othercoliter->pos >= othercoliter->string && 
+        if (othercoliter->pos >= othercoliter->string &&
             othercoliter->pos <= othercoliter->endp)
         {
             U_ASSERT(coliter->string != NULL);
-            coliter->pos = coliter->string + 
+            coliter->pos = coliter->string +
                 (othercoliter->pos - othercoliter->string);
         }
         else {
-            coliter->pos = coliter->writableBuffer.getTerminatedBuffer() + 
+            coliter->pos = coliter->writableBuffer.getTerminatedBuffer() +
                 (othercoliter->pos - othercoliter->writableBuffer.getBuffer());
         }
 
@@ -450,7 +450,7 @@ const CollationElementIterator& CollationElementIterator::operator=(
                 othercoliter->extendCEs = (uint32_t *)uprv_malloc(CEsize);
                 uprv_memcpy(coliter->extendCEs, othercoliter->extendCEs, CEsize);
             }
-            coliter->toReturn = coliter->extendCEs + 
+            coliter->toReturn = coliter->extendCEs +
                 (othercoliter->toReturn - othercoliter->extendCEs);
             coliter->CEpos    = coliter->extendCEs + CEsize;
         } else {
@@ -458,15 +458,15 @@ const CollationElementIterator& CollationElementIterator::operator=(
             if (CEsize > 0) {
                 uprv_memcpy(coliter->CEs, othercoliter->CEs, CEsize);
             }
-            coliter->toReturn = coliter->CEs + 
+            coliter->toReturn = coliter->CEs +
                 (othercoliter->toReturn - othercoliter->CEs);
             coliter->CEpos    = coliter->CEs + CEsize;
         }
 
         if (othercoliter->fcdPosition != NULL) {
             U_ASSERT(coliter->string != NULL);
-            coliter->fcdPosition = coliter->string + 
-                (othercoliter->fcdPosition 
+            coliter->fcdPosition = coliter->string +
+                (othercoliter->fcdPosition
                 - othercoliter->string);
         }
         else {

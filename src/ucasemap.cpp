@@ -344,10 +344,10 @@ ucasemap_internalUTF8ToTitle(const UCaseMap *csm,
                 destIndex=appendResult(dest, destIndex, destCapacity, c, s);
 
                 /* Special case Dutch IJ titlecasing */
-                if ( titleStart+1 < idx && 
+                if ( titleStart+1 < idx &&
                      ucase_getCaseLocale(csm->locale, &locCache) == UCASE_LOC_DUTCH &&
                      ( src[titleStart] == 0x0049 || src[titleStart] == 0x0069 ) &&
-                     ( src[titleStart+1] == 0x004A || src[titleStart+1] == 0x006A )) { 
+                     ( src[titleStart+1] == 0x004A || src[titleStart+1] == 0x006A )) {
                             c=0x004A;
                             destIndex=appendResult(dest, destIndex, destCapacity, c, s);
                             titleLimit++;

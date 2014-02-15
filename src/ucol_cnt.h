@@ -15,7 +15,7 @@
 *
 * This module maintains a contraction table structure in expanded form
 * and provides means to flatten this structure
-* 
+*
 */
 
 #ifndef UCOL_CNTTABLE_H
@@ -56,43 +56,43 @@ struct CntTable {
     UColCETags currentTag;
 };
 
-U_CAPI CntTable* U_EXPORT2 
+U_CAPI CntTable* U_EXPORT2
 /*uprv_cnttab_open(CompactEIntArray *mapping, UErrorCode *status);*/
 uprv_cnttab_open(UNewTrie *mapping, UErrorCode *status);
-U_CAPI CntTable* U_EXPORT2 
+U_CAPI CntTable* U_EXPORT2
 uprv_cnttab_clone(CntTable *table, UErrorCode *status);
-U_CAPI void U_EXPORT2 
+U_CAPI void U_EXPORT2
 uprv_cnttab_close(CntTable *table);
 
 /* construct the table for output */
-U_CAPI int32_t U_EXPORT2 
-uprv_cnttab_constructTable(CntTable *table, uint32_t mainOffset, UErrorCode *status); 
+U_CAPI int32_t U_EXPORT2
+uprv_cnttab_constructTable(CntTable *table, uint32_t mainOffset, UErrorCode *status);
 /* adds more contractions in table. If element is non existant, it creates on. Returns element handle */
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_addContraction(CntTable *table, uint32_t element, UChar codePoint, uint32_t value, UErrorCode *status);
 /* sets a part of contraction sequence in table. If element is non existant, it creates on. Returns element handle */
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_setContraction(CntTable *table, uint32_t element, uint32_t offset, UChar codePoint, uint32_t value, UErrorCode *status);
 /* inserts a part of contraction sequence in table. Sequences behind the offset are moved back. If element is non existant, it creates on. Returns element handle */
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_insertContraction(CntTable *table, uint32_t element, UChar codePoint, uint32_t value, UErrorCode *status);
 /* this is for adding non contractions */
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_changeLastCE(CntTable *table, uint32_t element, uint32_t value, UErrorCode *status);
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 uprv_cnttab_findCP(CntTable *table, uint32_t element, UChar codePoint, UErrorCode *status);
 
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_getCE(CntTable *table, uint32_t element, uint32_t position, UErrorCode *status);
 
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_changeContraction(CntTable *table, uint32_t element, UChar codePoint, uint32_t newCE, UErrorCode *status);
 
-U_CAPI uint32_t U_EXPORT2 
+U_CAPI uint32_t U_EXPORT2
 uprv_cnttab_findCE(CntTable *table, uint32_t element, UChar codePoint, UErrorCode *status);
 
-U_CAPI UBool U_EXPORT2 
+U_CAPI UBool U_EXPORT2
 uprv_cnttab_isTailored(CntTable *table, uint32_t element, UChar *ztString, UErrorCode *status);
 
 U_CDECL_END

@@ -6,14 +6,14 @@
  */
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Collation Element Iterator.
  */
 
 /**
 * File coleitr.h
 *
-* 
+*
 *
 * Created by: Helena Shih
 *
@@ -25,7 +25,7 @@
 * 08/03/98    erm         Synched with 1.2 version CollationElementIterator.java
 * 12/10/99    aliu        Ported Thai collation support from Java.
 * 01/25/01    swquek      Modified into a C++ wrapper calling C APIs (ucoliter.h)
-* 02/19/01    swquek      Removed CollationElementsIterator() since it is 
+* 02/19/01    swquek      Removed CollationElementsIterator() since it is
 *                         private constructor and no calls are made to it
 */
 
@@ -34,14 +34,14 @@
 
 #include "unicode/utypes.h"
 
- 
+
 #if !UCONFIG_NO_COLLATION
 
 #include "unicode/uobject.h"
 #include "unicode/tblcoll.h"
 #include "unicode/ucoleitr.h"
 
-/** 
+/**
  * The UCollationElements struct.
  * For usage in C programs.
  * @stable ICU 2.0
@@ -51,10 +51,10 @@ typedef struct UCollationElements UCollationElements;
 U_NAMESPACE_BEGIN
 
 /**
-* The CollationElementIterator class is used as an iterator to walk through     
+* The CollationElementIterator class is used as an iterator to walk through
 * each character of an international string. Use the iterator to return the
-* ordering priority of the positioned character. The ordering priority of a 
-* character, which we refer to as a key, defines how a character is collated in 
+* ordering priority of the positioned character. The ordering priority of a
+* character, which we refer to as a key, defines how a character is collated in
 * the given collation object.
 * For example, consider the following in Spanish:
 * <pre>
@@ -64,9 +64,9 @@ U_NAMESPACE_BEGIN
 * <pre> \htmlonly       "&#x00E6;b"-> the first key is key('a'), the second key is key('e'), and
 *        the third key is key('b'). \endhtmlonly </pre>
 * The key of a character, is an integer composed of primary order(short),
-* secondary order(char), and tertiary order(char). Java strictly defines the 
+* secondary order(char), and tertiary order(char). Java strictly defines the
 * size and signedness of its primitive data types. Therefore, the static
-* functions primaryOrder(), secondaryOrder(), and tertiaryOrder() return 
+* functions primaryOrder(), secondaryOrder(), and tertiaryOrder() return
 * int32_t to ensure the correctness of the key value.
 * <p>Example of the iterator usage: (without error checking)
 * <pre>
@@ -92,8 +92,8 @@ U_NAMESPACE_BEGIN
 * the comparison level of the collator. The method previous() returns the
 * collation order of the previous character based on the comparison level of
 * the collator. The Collation Element Iterator moves only in one direction
-* between calls to reset(), setOffset(), or setText(). That is, next() 
-* and previous() can not be inter-used. Whenever previous() is to be called after 
+* between calls to reset(), setOffset(), or setText(). That is, next()
+* and previous() can not be inter-used. Whenever previous() is to be called after
 * next() or vice versa, reset(), setOffset() or setText() has to be called first
 * to reset the status, shifting pointers to either the end or the start of
 * the string (reset() or setText()), or the specified position (setOffset()).
@@ -104,9 +104,9 @@ U_NAMESPACE_BEGIN
 * The result of a forward iterate (next()) and reversed result of the backward
 * iterate (previous()) on the same string are equivalent, if collation orders
 * with the value UCOL_IGNORABLE are ignored.
-* Character based on the comparison level of the collator.  A collation order 
-* consists of primary order, secondary order and tertiary order.  The data 
-* type of the collation order is <strong>t_int32</strong>. 
+* Character based on the comparison level of the collator.  A collation order
+* consists of primary order, secondary order and tertiary order.  The data
+* type of the collation order is <strong>t_int32</strong>.
 *
 * Note, CollationElementIterator should not be subclassed.
 * @see     Collator
@@ -114,7 +114,7 @@ U_NAMESPACE_BEGIN
 * @version 1.8 Jan 16 2001
 */
 class U_I18N_API CollationElementIterator : public UObject {
-public: 
+public:
 
     // CollationElementIterator public data member ------------------------------
 
@@ -136,7 +136,7 @@ public:
     */
     CollationElementIterator(const CollationElementIterator& other);
 
-    /** 
+    /**
     * Destructor
     * @stable ICU 2.0
     */
@@ -171,7 +171,7 @@ public:
     /**
     * Gets the ordering priority of the next character in the string.
     * @param status the error code status.
-    * @return the next character's ordering. otherwise returns NULLORDER if an 
+    * @return the next character's ordering. otherwise returns NULLORDER if an
     *         error has occured or if the end of string has been reached
     * @stable ICU 2.0
     */
@@ -180,7 +180,7 @@ public:
     /**
     * Get the ordering priority of the previous collation element in the string.
     * @param status the error code status.
-    * @return the previous element's ordering. otherwise returns NULLORDER if an 
+    * @return the previous element's ordering. otherwise returns NULLORDER if an
     *         error has occured or if the start of string has been reached
     * @stable ICU 2.0
     */
@@ -211,11 +211,11 @@ public:
     static inline int32_t tertiaryOrder(int32_t order);
 
     /**
-    * Return the maximum length of any expansion sequences that end with the 
+    * Return the maximum length of any expansion sequences that end with the
     * specified comparison order.
     * @param order a collation order returned by previous or next.
-    * @return maximum size of the expansion sequences ending with the collation 
-    *         element or 1 if collation element does not occur at the end of any 
+    * @return maximum size of the expansion sequences ending with the collation
+    *         element or 1 if collation element does not occur at the end of any
     *         expansion sequence
     * @stable ICU 2.0
     */
@@ -287,9 +287,9 @@ private:
     friend class RuleBasedCollator;
 
     /**
-    * CollationElementIterator constructor. This takes the source string and the 
-    * collation object. The cursor will walk thru the source string based on the 
-    * predefined collation rules. If the source string is empty, NULLORDER will 
+    * CollationElementIterator constructor. This takes the source string and the
+    * collation object. The cursor will walk thru the source string based on the
+    * predefined collation rules. If the source string is empty, NULLORDER will
     * be returned on the calls to next().
     * @param sourceText    the source string.
     * @param order         the collation object.
@@ -299,9 +299,9 @@ private:
         const RuleBasedCollator* order, UErrorCode& status);
 
     /**
-    * CollationElementIterator constructor. This takes the source string and the 
-    * collation object.  The cursor will walk thru the source string based on the 
-    * predefined collation rules.  If the source string is empty, NULLORDER will 
+    * CollationElementIterator constructor. This takes the source string and the
+    * collation object.  The cursor will walk thru the source string based on the
+    * predefined collation rules.  If the source string is empty, NULLORDER will
     * be returned on the calls to next().
     * @param sourceText    the source string.
     * @param order         the collation object.

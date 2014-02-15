@@ -51,7 +51,7 @@ Measure::~Measure() {
 UBool Measure::operator==(const UObject& other) const {
     const Measure* m = (const Measure*) &other;
     return typeid(*this) == typeid(other) &&
-        number == m->getNumber() && 
+        number == m->getNumber() &&
         (unit != NULL && *unit == m->getUnit());
 }
 

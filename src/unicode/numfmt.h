@@ -524,7 +524,7 @@ public:
                                   UErrorCode& status) const;
 public:
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
      * to a double and formats that.  Subclasses of NumberFormat that want
@@ -546,7 +546,7 @@ public:
                                   UErrorCode& status) const;
 
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
      * to a double and formats that.  Subclasses of NumberFormat that want
@@ -1008,7 +1008,7 @@ private:
   protected:
     static const int32_t gDefaultMaxIntegerDigits;
     static const int32_t gDefaultMinIntegerDigits;
- 
+
   private:
     UBool      fParseIntegerOnly;
     UBool      fLenient; // TRUE => lenient parse is enabled

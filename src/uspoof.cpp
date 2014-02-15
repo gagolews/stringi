@@ -125,7 +125,7 @@ uspoof_openFromSerialized(const void *data, int32_t length, int32_t *pActualLeng
         delete si;
         return NULL;
     }
-        
+
     if (pActualLength != NULL) {
         *pActualLength = sd->fRawData->fLength;
     }
@@ -163,10 +163,10 @@ uspoof_setChecks(USpoofChecker *sc, int32_t checks, UErrorCode *status) {
         return;
     }
 
-    // Verify that the requested checks are all ones (bits) that 
+    // Verify that the requested checks are all ones (bits) that
     //   are acceptable, known values.
     if (checks & ~USPOOF_ALL_CHECKS) {
-        *status = U_ILLEGAL_ARGUMENT_ERROR; 
+        *status = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
 
@@ -271,7 +271,7 @@ uspoof_check(const USpoofChecker *sc,
              const UChar *id, int32_t length,
              int32_t *position,
              UErrorCode *status) {
-             
+
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
     if (This == NULL) {
         return 0;
@@ -314,7 +314,7 @@ uspoof_areConfusable(const USpoofChecker *sc,
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
-        
+
     UnicodeString id1Str((length1==-1), id1, length1);  // Aliasing constructor
     UnicodeString id2Str((length2==-1), id2, length2);  // Aliasing constructor
     return uspoof_areConfusableUnicodeString(sc, id1Str, id2Str, status);
@@ -339,7 +339,7 @@ uspoof_areConfusableUTF8(const USpoofChecker *sc,
     int32_t results = uspoof_areConfusableUnicodeString(sc, id1Str, id2Str, status);
     return results;
 }
- 
+
 
 U_CAPI int32_t U_EXPORT2
 uspoof_areConfusableUnicodeString(const USpoofChecker *sc,
@@ -350,15 +350,15 @@ uspoof_areConfusableUnicodeString(const USpoofChecker *sc,
     if (U_FAILURE(*status)) {
         return 0;
     }
-    // 
+    //
     // See section 4 of UAX 39 for the algorithm for checking whether two strings are confusable,
     //   and for definitions of the types (single, whole, mixed-script) of confusables.
-    
+
     // We only care about a few of the check flags.  Ignore the others.
     // If no tests relavant to this function have been specified, return an error.
     // TODO:  is this really the right thing to do?  It's probably an error on the caller's part,
     //        but logically we would just return 0 (no error).
-    if ((This->fChecks & (USPOOF_SINGLE_SCRIPT_CONFUSABLE | USPOOF_MIXED_SCRIPT_CONFUSABLE | 
+    if ((This->fChecks & (USPOOF_SINGLE_SCRIPT_CONFUSABLE | USPOOF_MIXED_SCRIPT_CONFUSABLE |
                           USPOOF_WHOLE_SCRIPT_CONFUSABLE)) == 0) {
         *status = U_INVALID_STATE_ERROR;
         return 0;
@@ -397,9 +397,9 @@ uspoof_areConfusableUnicodeString(const USpoofChecker *sc,
          return result;
     }
 
-    // Two identifiers are whole script confusable if each is of a single script 
+    // Two identifiers are whole script confusable if each is of a single script
     // and they are mixed script confusable.
-    UBool possiblyWholeScriptConfusables = 
+    UBool possiblyWholeScriptConfusables =
         id1ScriptCount <= 1 && id2ScriptCount <= 1 && (This->fChecks & USPOOF_WHOLE_SCRIPT_CONFUSABLE);
 
     //
@@ -430,7 +430,7 @@ uspoof_areConfusableUnicodeString(const USpoofChecker *sc,
 
 U_CAPI int32_t U_EXPORT2
 uspoof_checkUnicodeString(const USpoofChecker *sc,
-                          const icu::UnicodeString &id, 
+                          const icu::UnicodeString &id,
                           int32_t *position,
                           UErrorCode *status) {
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
@@ -488,7 +488,7 @@ uspoof_checkUnicodeString(const USpoofChecker *sc,
         }
     }
 
-    if (This->fChecks & 
+    if (This->fChecks &
         (USPOOF_WHOLE_SCRIPT_CONFUSABLE | USPOOF_MIXED_SCRIPT_CONFUSABLE | USPOOF_INVISIBLE)) {
         // These are the checks that need to be done on NFD input
         UnicodeString nfdText;
@@ -496,15 +496,15 @@ uspoof_checkUnicodeString(const USpoofChecker *sc,
         int32_t nfdLength = nfdText.length();
 
         if (This->fChecks & USPOOF_INVISIBLE) {
-           
+
             // scan for more than one occurence of the same non-spacing mark
             // in a sequence of non-spacing marks.
             int32_t     i;
             UChar32     c;
             UChar32     firstNonspacingMark = 0;
-            UBool       haveMultipleMarks = FALSE;  
+            UBool       haveMultipleMarks = FALSE;
             UnicodeSet  marksSeenSoFar;   // Set of combining marks in a single combining sequence.
-            
+
             for (i=0; i<nfdLength ;) {
                 c = nfdText.char32At(i);
                 i += U16_LENGTH(c);
@@ -533,8 +533,8 @@ uspoof_checkUnicodeString(const USpoofChecker *sc,
                 marksSeenSoFar.add(c);
             }
         }
-       
-        
+
+
         if (This->fChecks & (USPOOF_WHOLE_SCRIPT_CONFUSABLE | USPOOF_MIXED_SCRIPT_CONFUSABLE)) {
             // The basic test is the same for both whole and mixed script confusables.
             // Compute the set of scripts that every input character has a confusable in.
@@ -559,18 +559,18 @@ uspoof_checkUnicodeString(const USpoofChecker *sc,
             }
 
             int32_t scriptCount = identifierInfo->getScriptCount();
-            
+
             ScriptSet scripts;
             This->wholeScriptCheck(nfdText, &scripts, *status);
             int32_t confusableScriptCount = scripts.countMembers();
             //printf("confusableScriptCount = %d\n", confusableScriptCount);
-            
+
             if ((This->fChecks & USPOOF_WHOLE_SCRIPT_CONFUSABLE) &&
                 confusableScriptCount >= 2 &&
                 scriptCount == 1) {
                 result |= USPOOF_WHOLE_SCRIPT_CONFUSABLE;
             }
-        
+
             if ((This->fChecks & USPOOF_MIXED_SCRIPT_CONFUSABLE) &&
                 confusableScriptCount >= 1 &&
                 scriptCount > 1) {
