@@ -3,11 +3,12 @@
 ### THE string processing package for *R*
 
 
-**stringi** is THE *R* package for correct, fast, and convenient string 
-processing in each locale and any native character encoding.
-The use of *ICU* library gives R users a  platform-independent and properly 
-localized variety of functions known from other programming languages,
-like  *Java*, *Perl*, *Python*, and *PHP*.
+**stringi** is THE *R* package for for very fast, correct, consistent,
+and convenient string/text processing in each locale and any native
+character encoding. The use of the *ICU 51.2* library gives R users a
+platform-independent set of functions known to *Java*, *Perl*, *Python*,
+and *PHP* programmers. The package's API was inspired by Hadley Wickham's
+[stringr](http://cran.r-project.org/web/packages/stringr) package.
 
 **Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
 [Bartlomiej Tartanus](http://tartanus.rexamine.com/)
