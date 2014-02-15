@@ -21,10 +21,10 @@
 #'
 #' @description
 #' \pkg{stringi} is THE \R package for very fast, correct, consistent,
-#' and convenient string manipulation in each locale and any character encoding.
-#' We are putting great effort to create software that
+#' and convenient string/text manipulation in each locale and any
+#' character encoding. We are putting great effort to create software that
 #' works as you expect on any platform, in each locale, and any
-#' ``default'' system encoding.
+#' ``native'' system encoding.
 #'
 #' \bold{Keywords}: internationalization, localization,
 #'     ICU, ICU4C, i18n, l10n, Unicode
