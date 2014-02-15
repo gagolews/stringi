@@ -147,7 +147,7 @@ static const R_CallMethodDef cCallMethods[] = {
 void stri_set_icu_data_directory(const char* libpath)
 {
    string dir(libpath);
-   int idx = dir.rfind("libs");
+   size_t idx = dir.rfind("libs");
    if (idx < 0) return; // this shouldn't happen
 
    dir = dir.substr(0, idx+5); // strlen("libs/") or strlen("libs\\")
