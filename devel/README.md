@@ -11,7 +11,7 @@ TO DO list - Preparing `stringi` for submission
 4. Call R CMD check --as-cran
 5. Make sure string_*.tar.gz does not contain devel/
 6. Check how the package compiles with Oracle Solaris Studio, on Win and OS X
-
+      Win: *** http://win-builder.r-project.org/ ***
 
 clang and Solaris Studio compile/check:
 ```
