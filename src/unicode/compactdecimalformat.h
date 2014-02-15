@@ -220,7 +220,7 @@ public:
      * Format a decimal number. Currently sets status to U_UNSUPPORTED_ERROR.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
-     * to a double and formats that.  
+     * to a double and formats that.
      *
      * @param number    The number, a DigitList format Decimal Floating Point.
      * @param appendTo  Output parameter to receive result.
@@ -253,7 +253,7 @@ public:
      * CompactDecimalFormat does not support parsing. This implementation
      * sets status to U_UNSUPPORTED_ERROR
      *
-     * @param text      Unused. 
+     * @param text      Unused.
      * @param result    Does not change.
      * @param status    Always set to U_UNSUPPORTED_ERROR.
      * @draft ICU 51

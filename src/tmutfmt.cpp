@@ -126,13 +126,13 @@ TimeUnitFormat::~TimeUnitFormat() {
 }
 
 
-Format* 
+Format*
 TimeUnitFormat::clone(void) const {
     return new TimeUnitFormat(*this);
 }
 
 
-TimeUnitFormat& 
+TimeUnitFormat&
 TimeUnitFormat::operator=(const TimeUnitFormat& other) {
     if (this == &other) {
         return *this;
@@ -162,7 +162,7 @@ TimeUnitFormat::operator=(const TimeUnitFormat& other) {
             delete fTimeUnitToCountToPatterns[i];
             fTimeUnitToCountToPatterns[i] = NULL;
         }
-    } 
+    }
     if (other.fPluralRules) {
         fPluralRules = (PluralRules*)other.fPluralRules->clone();
     } else {
@@ -173,16 +173,16 @@ TimeUnitFormat::operator=(const TimeUnitFormat& other) {
 }
 
 
-UBool 
+UBool
 TimeUnitFormat::operator==(const Format& other) const {
     if (typeid(*this) == typeid(other)) {
         TimeUnitFormat* fmt = (TimeUnitFormat*)&other;
         UBool ret =  ( ((fNumberFormat && fmt->fNumberFormat && *fNumberFormat == *fmt->fNumberFormat)
-                            || fNumberFormat == fmt->fNumberFormat ) 
-                        && fLocale == fmt->fLocale 
-                        && ((fPluralRules && fmt->fPluralRules && *fPluralRules == *fmt->fPluralRules) 
-                            || fPluralRules == fmt->fPluralRules) 
-                        && fStyle == fmt->fStyle); 
+                            || fNumberFormat == fmt->fNumberFormat )
+                        && fLocale == fmt->fLocale
+                        && ((fPluralRules && fmt->fPluralRules && *fPluralRules == *fmt->fPluralRules)
+                            || fPluralRules == fmt->fPluralRules)
+                        && fStyle == fmt->fStyle);
         if (ret) {
             for (TimeUnit::UTimeUnitFields i = TimeUnit::UTIMEUNIT_YEAR;
                  i < TimeUnit::UTIMEUNIT_FIELD_COUNT && ret;
@@ -196,7 +196,7 @@ TimeUnitFormat::operator==(const Format& other) const {
 }
 
 
-UnicodeString& 
+UnicodeString&
 TimeUnitFormat::format(const Formattable& obj, UnicodeString& toAppendTo,
                        FieldPosition& pos, UErrorCode& status) const {
     if (U_FAILURE(status)) {
@@ -221,7 +221,7 @@ TimeUnitFormat::format(const Formattable& obj, UnicodeString& toAppendTo,
 #ifdef TMUTFMT_DEBUG
             char result[1000];
             count.extract(0, count.length(), result, "UTF-8");
-            std::cout << "number: " << number << "; format plural count: " << result << "\n";           
+            std::cout << "number: " << number << "; format plural count: " << result << "\n";
 #endif
             MessageFormat* pattern = ((MessageFormat**)countToPattern->get(count))[fStyle];
             Formattable formattable[1];
@@ -234,11 +234,11 @@ TimeUnitFormat::format(const Formattable& obj, UnicodeString& toAppendTo,
 }
 
 
-void 
-TimeUnitFormat::parseObject(const UnicodeString& source, 
+void
+TimeUnitFormat::parseObject(const UnicodeString& source,
                             Formattable& result,
                             ParsePosition& pos) const {
-    double resultNumber = -1; 
+    double resultNumber = -1;
     UBool withNumberFormat = false;
     TimeUnit::UTimeUnitFields resultTimeUnit = TimeUnit::UTIMEUNIT_FIELD_COUNT;
     int32_t oldPos = pos.getIndex();
@@ -248,7 +248,7 @@ TimeUnitFormat::parseObject(const UnicodeString& source,
 #ifdef TMUTFMT_DEBUG
     char res[1000];
     source.extract(0, source.length(), res, "UTF-8");
-    std::cout << "parse source: " << res << "\n";           
+    std::cout << "parse source: " << res << "\n";
 #endif
     // parse by iterating through all available patterns
     // and looking for the longest match.
@@ -263,7 +263,7 @@ TimeUnitFormat::parseObject(const UnicodeString& source,
             UnicodeString* count = (UnicodeString*)keyTok.pointer;
 #ifdef TMUTFMT_DEBUG
             count->extract(0, count->length(), res, "UTF-8");
-            std::cout << "parse plural count: " << res << "\n";           
+            std::cout << "parse plural count: " << res << "\n";
 #endif
             const UHashTok valueTok = elem->value;
             // the value is a pair of MessageFormat*
@@ -297,7 +297,7 @@ TimeUnitFormat::parseObject(const UnicodeString& source,
                     UnicodeString select = fPluralRules->select(tmpNumber);
     #ifdef TMUTFMT_DEBUG
                     select.extract(0, select.length(), res, "UTF-8");
-                    std::cout << "parse plural select count: " << res << "\n"; 
+                    std::cout << "parse plural select count: " << res << "\n";
     #endif
                     if (*count != select) {
                         continue;
@@ -378,11 +378,11 @@ TimeUnitFormat::create(const Locale& locale, UTimeUnitFormatStyle style, UErrorC
     //In Java, create an empty instance does not setup locale as
     //default locale. If it followed by setNumberFormat(),
     //in format(), the locale will set up as the locale in fNumberFormat.
-    //But in C++, this sets the locale as the default locale. 
+    //But in C++, this sets the locale as the default locale.
     setup(status);
 }
 
-void 
+void
 TimeUnitFormat::setup(UErrorCode& err) {
     initDataMembers(err);
 
@@ -452,8 +452,8 @@ TimeUnitFormat::readFromCurrentLocale(UTimeUnitFormatStyle style, const char* ke
                 ures_close(oneTimeUnit);
                 continue;
             }
-            UResourceBundle* countsToPatternRB = ures_getByKey(unitsRes, 
-                                                             timeUnitName, 
+            UResourceBundle* countsToPatternRB = ures_getByKey(unitsRes,
+                                                             timeUnitName,
                                                              NULL, &status);
             if (countsToPatternRB == NULL || U_FAILURE(status)) {
                 ures_close(countsToPatternRB);
@@ -517,12 +517,12 @@ TimeUnitFormat::readFromCurrentLocale(UTimeUnitFormatStyle style, const char* ke
                     if (U_FAILURE(err)) {
                         uprv_free(formatters);
                     }
-                  } 
+                  }
                   if (U_SUCCESS(err)) {
                       //delete formatters[style];
                       formatters[style] = messageFormat;
                   }
-                } 
+                }
                 if (U_FAILURE(err)) {
                     ures_close(countsToPatternRB);
                     ures_close(oneTimeUnit);
@@ -545,13 +545,13 @@ TimeUnitFormat::readFromCurrentLocale(UTimeUnitFormatStyle style, const char* ke
 }
 
 
-void 
+void
 TimeUnitFormat::checkConsistency(UTimeUnitFormatStyle style, const char* key, UErrorCode& err) {
     if (U_FAILURE(err)) {
         return;
     }
     // there should be patterns for each plural rule in each time unit.
-    // For each time unit, 
+    // For each time unit,
     //     for each plural rule, following is unit pattern fall-back rule:
     //         ( for example: "one" hour )
     //         look for its unit pattern in its locale tree.
@@ -562,8 +562,8 @@ TimeUnitFormat::checkConsistency(UTimeUnitFormatStyle style, const char* key, UE
     //         fallback to plural count "other",
     //         look for the pattern of "other" in the locale tree:
     //         "de_DE" to "de" to "root".
-    //         If not found, fall back to value of 
-    //         static variable DEFAULT_PATTERN_FOR_xxx, such as "{0} h". 
+    //         If not found, fall back to value of
+    //         static variable DEFAULT_PATTERN_FOR_xxx, such as "{0} h".
     //
     // Following is consistency check to create pattern for each
     // plural rule in each time unit using above fall-back rule.
@@ -574,7 +574,7 @@ TimeUnitFormat::checkConsistency(UTimeUnitFormatStyle style, const char* key, UE
         while ((pluralCount = keywords->snext(err)) != NULL) {
             if ( U_SUCCESS(err) ) {
                 for (int32_t i = 0; i < TimeUnit::UTIMEUNIT_FIELD_COUNT; ++i) {
-                    // for each time unit, 
+                    // for each time unit,
                     // get all the patterns for each plural rule in this locale.
                     Hashtable* countToPatterns = fTimeUnitToCountToPatterns[i];
                     if ( countToPatterns == NULL ) {
@@ -592,8 +592,8 @@ TimeUnitFormat::checkConsistency(UTimeUnitFormatStyle style, const char* key, UE
                         CharString pluralCountChars;
                         pluralCountChars.appendInvariantChars(*pluralCount, err);
                         searchInLocaleChain(style, key, localeName,
-                                            (TimeUnit::UTimeUnitFields)i, 
-                                            *pluralCount, pluralCountChars.data(), 
+                                            (TimeUnit::UTimeUnitFields)i,
+                                            *pluralCount, pluralCountChars.data(),
                                             countToPatterns, err);
                     }
                 }
@@ -610,14 +610,14 @@ TimeUnitFormat::checkConsistency(UTimeUnitFormatStyle style, const char* key, UE
 // searchPluralCount is the fallback plural count.
 // For example, to search for pattern for ""one" hour",
 // "one" is the srcPluralCount,
-// if the pattern is not found even in root, fallback to 
-// using patterns of plural count "other", 
+// if the pattern is not found even in root, fallback to
+// using patterns of plural count "other",
 // then, "other" is the searchPluralCount.
-void 
+void
 TimeUnitFormat::searchInLocaleChain(UTimeUnitFormatStyle style, const char* key, const char* localeName,
                                 TimeUnit::UTimeUnitFields srcTimeUnitField,
                                 const UnicodeString& srcPluralCount,
-                                const char* searchPluralCount, 
+                                const char* searchPluralCount,
                                 Hashtable* countToPatterns,
                                 UErrorCode& err) {
     if (U_FAILURE(err)) {
@@ -656,7 +656,7 @@ TimeUnitFormat::searchInLocaleChain(UTimeUnitFormatStyle style, const char* key,
                         uprv_free(formatters);
                         delete messageFormat;
                     }
-                } 
+                }
                 if (U_SUCCESS(err)) {
                     //delete formatters[style];
                     formatters[style] = messageFormat;
@@ -745,12 +745,12 @@ TimeUnitFormat::searchInLocaleChain(UTimeUnitFormatStyle style, const char* key,
         }
     } else {
         // fall back to rule "other", and search in parents
-        searchInLocaleChain(style, key, localeName, srcTimeUnitField, srcPluralCount, 
+        searchInLocaleChain(style, key, localeName, srcTimeUnitField, srcPluralCount,
                             gPluralCountOther, countToPatterns, err);
     }
 }
 
-void 
+void
 TimeUnitFormat::setLocale(const Locale& locale, UErrorCode& status) {
     if (U_SUCCESS(status) && fLocale != locale) {
         fLocale = locale;
@@ -759,7 +759,7 @@ TimeUnitFormat::setLocale(const Locale& locale, UErrorCode& status) {
 }
 
 
-void 
+void
 TimeUnitFormat::setNumberFormat(const NumberFormat& format, UErrorCode& status){
     if (U_FAILURE(status) || (fNumberFormat && format == *fNumberFormat)) {
         return;
@@ -829,7 +829,7 @@ TimeUnitFormat::copyHash(const Hashtable* source, Hashtable* target, UErrorCode&
 }
 
 
-U_CDECL_BEGIN 
+U_CDECL_BEGIN
 
 /**
  * set hash table value comparator
@@ -860,7 +860,7 @@ TimeUnitFormat::initHash(UErrorCode& status) {
         return NULL;
     }
     if ( U_FAILURE(status) ) {
-        delete hTable; 
+        delete hTable;
         return NULL;
     }
     hTable->setValueComparator(tmutfmtHashTableValueComparator);
@@ -869,7 +869,7 @@ TimeUnitFormat::initHash(UErrorCode& status) {
 
 
 const char*
-TimeUnitFormat::getTimeUnitName(TimeUnit::UTimeUnitFields unitField, 
+TimeUnitFormat::getTimeUnitName(TimeUnit::UTimeUnitFields unitField,
                                 UErrorCode& status) {
     if (U_FAILURE(status)) {
         return NULL;

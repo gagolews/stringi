@@ -22,7 +22,7 @@
 U_NAMESPACE_BEGIN
 
 /**
- * enum bitset for boolean fields. Similar to Java EnumSet<>. 
+ * enum bitset for boolean fields. Similar to Java EnumSet<>.
  * Needs to range check.
  * @internal
  */
@@ -44,9 +44,9 @@ public:
         fBools = other.fBools;
         return *this;
     }
-  
+
     inline uint32_t getAll() const {
-        return fBools; 
+        return fBools;
     }
 
 private:

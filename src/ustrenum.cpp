@@ -8,7 +8,7 @@
 * Since: ICU 2.4
 **********************************************************************
 */
-#include "utypeinfo.h"  // for 'typeid' to work 
+#include "utypeinfo.h"  // for 'typeid' to work
 
 #include "unicode/ustring.h"
 #include "unicode/strenum.h"
@@ -118,9 +118,9 @@ StringEnumeration::setChars(const char *s, int32_t length, UErrorCode &status) {
 
     return NULL;
 }
-UBool 
+UBool
 StringEnumeration::operator==(const StringEnumeration& that)const {
-    return typeid(*this) == typeid(that); 
+    return typeid(*this) == typeid(that);
 }
 
 UBool
@@ -242,7 +242,7 @@ U_CDECL_END
  * delete it (regardless of error status).
  */
 U_CAPI UEnumeration* U_EXPORT2
-uenum_openFromStringEnumeration(icu::StringEnumeration* adopted, UErrorCode* ec) { 
+uenum_openFromStringEnumeration(icu::StringEnumeration* adopted, UErrorCode* ec) {
     UEnumeration* result = NULL;
     if (U_SUCCESS(*ec) && adopted != NULL) {
         result = (UEnumeration*) uprv_malloc(sizeof(UEnumeration));

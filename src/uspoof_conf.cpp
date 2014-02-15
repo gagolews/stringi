@@ -106,7 +106,7 @@ SPUString *SPUStringPool::getByIndex(int32_t index) {
 // Conforms to the type signature for a USortComparator in uvector.h
 
 static int8_t U_CALLCONV SPUStringCompare(UHashTok left, UHashTok right) {
-	const SPUString *sL = const_cast<const SPUString *>(
+   const SPUString *sL = const_cast<const SPUString *>(
         static_cast<SPUString *>(left.pointer));
  	const SPUString *sR = const_cast<const SPUString *>(
  	    static_cast<SPUString *>(right.pointer));
@@ -602,4 +602,3 @@ UnicodeString ConfusabledataBuilder::getMapping(int32_t index) {
 
 #endif
 #endif // !UCONFIG_NO_REGULAR_EXPRESSIONS
-

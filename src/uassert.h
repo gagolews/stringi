@@ -28,5 +28,3 @@
 #   define U_ASSERT(exp)
 #endif
 #endif
-
-

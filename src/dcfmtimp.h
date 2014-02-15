@@ -26,7 +26,7 @@ enum EDecimalFormatFastpathStatus {
 struct DecimalFormatInternal {
   uint8_t    fFastFormatStatus;
   uint8_t    fFastParseStatus;
-  
+
 #ifdef FMT_DEBUG
   void dump() const {
     printf("DecimalFormatInternal: fFastFormatStatus=%c, fFastParseStatus=%c\n",
@@ -34,7 +34,7 @@ struct DecimalFormatInternal {
            "NY?"[(int)fFastParseStatus&3]
            );
   }
-#endif  
+#endif
 };
 
 

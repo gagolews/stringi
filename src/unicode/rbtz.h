@@ -10,7 +10,7 @@
 #include "unicode/utypes.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Rule based customizable time zone
  */
 

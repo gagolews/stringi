@@ -162,7 +162,7 @@ class AndConstraint;
  * <p>
  * The difference between 'in' and 'within' is that 'in' only includes
  * integers in the specified range, while 'within' includes all values.
- * Using 'within' with a range_list consisting entirely of values is the 
+ * Using 'within' with a range_list consisting entirely of values is the
  * same as using 'in' (it's not an error).
  *</p>
  * <p>

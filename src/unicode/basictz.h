@@ -8,7 +8,7 @@
 #define BASICTZ_H
 
 /**
- * \file 
+ * \file
  * \brief C++ API: ICU TimeZone base class
  */
 

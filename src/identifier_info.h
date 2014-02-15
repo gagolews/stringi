@@ -5,7 +5,7 @@
 **********************************************************************
 *
 * indentifier_info.h
-* 
+*
 * created on: 2013 Jan 7
 * created by: Andy Heninger
 */
@@ -38,7 +38,7 @@ class ScriptSet;
  * the identifier.
  * <li>call getRestrictionLevel to see what the UTS36 restriction level is.
  * </ol>
- * 
+ *
  * This is a port from ICU4J of class com.ibm.icu.text.IdentifierInfo
  */
 class U_I18N_API IdentifierInfo : public UMemory {
@@ -60,10 +60,10 @@ class U_I18N_API IdentifierInfo : public UMemory {
     IdentifierInfo(const IdentifierInfo &other);
 
   public:
-     
+
     /**
      * Set the identifier profile: the characters that are to be allowed in the identifier.
-     * 
+     *
      * @param identifierProfile the characters that are to be allowed in the identifier
      * @return this
      * @internal
@@ -72,7 +72,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Get the identifier profile: the characters that are to be allowed in the identifier.
-     * 
+     *
      * @return The characters that are to be allowed in the identifier.
      * @internal
      */
@@ -81,7 +81,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Set an identifier to analyze. Afterwards, call methods like getScripts()
-     * 
+     *
      * @param identifier the identifier to analyze
      * @param status Errorcode, set if errors occur.
      * @return this
@@ -93,16 +93,16 @@ class U_I18N_API IdentifierInfo : public UMemory {
     /**
      * Get the identifier that was analyzed. The returned string is owned by the ICU library,
      * and must not be deleted by the caller.
-     * 
+     *
      * @return the identifier that was analyzed.
      * @internal
      */
     const UnicodeString *getIdentifier() const;
-    
+
 
     /**
      * Get the scripts found in the identifiers.
-     * 
+     *
      * @return the set of explicit scripts.
      * @internal
      */
@@ -111,11 +111,11 @@ class U_I18N_API IdentifierInfo : public UMemory {
     /**
      * Get the set of alternate scripts found in the identifiers. That is, when a character can be in two scripts, then
      * the set consisting of those scripts will be returned.
-     * 
-     * @return a uhash, with each key being of type (ScriptSet *). 
+     *
+     * @return a uhash, with each key being of type (ScriptSet *).
      *         This is a set, not a map, so the value stored in the uhash is not relevant.
      *         (It is, in fact, 1).
-     *         Ownership of the uhash and its contents remains with the IndetifierInfo object, 
+     *         Ownership of the uhash and its contents remains with the IndetifierInfo object,
      *         and remains valid until a new identifer is set or until the object is deleted.
      * @internal
      */
@@ -123,7 +123,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Get the representative characters (zeros) for the numerics found in the identifier.
-     * 
+     *
      * @return the set of explicit scripts.
      * @internal
      */
@@ -131,7 +131,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Find out which scripts are in common among the alternates.
-     * 
+     *
      * @return the set of scripts that are in common among the alternates.
      * @internal
      */
@@ -151,7 +151,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Find the "tightest" restriction level that the identifier satisfies.
-     * 
+     *
      * @return the restriction level.
      * @internal
      */
@@ -163,7 +163,7 @@ class U_I18N_API IdentifierInfo : public UMemory {
 
     /**
      * Produce a readable string of alternates.
-     * 
+     *
      * @param alternates a UHashtable of UScriptSets.
      *        Keys only, no meaningful values in the UHash.
      * @return display form
@@ -201,4 +201,3 @@ class U_I18N_API IdentifierInfo : public UMemory {
 U_NAMESPACE_END
 
 #endif // __IDENTIFIER_INFO_H__
-

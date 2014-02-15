@@ -15,7 +15,7 @@
 #include "unicode/utypes.h"
 
 #if !UCONFIG_NO_FORMATTING
-    
+
 #include "unicode/numsys.h"
 #include "uvector.h"
 #include "unicode/strenum.h"

@@ -1,4 +1,4 @@
-/*  
+/*
 ********************************************************************************
 *   Copyright (C) 1997-2013, International Business Machines
 *   Corporation and others.  All Rights Reserved.
@@ -14,10 +14,10 @@
 *                            Changed to match C++ conventions
 ********************************************************************************
 */
-     
+
 #ifndef DTFMTSYM_H
 #define DTFMTSYM_H
- 
+
 #include "unicode/utypes.h"
 
 #if !UCONFIG_NO_FORMATTING
@@ -29,7 +29,7 @@
 #include "unicode/ures.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Symbols for formatting dates.
  */
 
@@ -115,7 +115,7 @@ public:
      * data for the default locale, it will return a last-resort object
      * based on hard-coded strings.
      *
-     * @param type      Type of calendar (as returned by Calendar::getType). 
+     * @param type      Type of calendar (as returned by Calendar::getType).
      *                  Will be used to access the correct set of strings.
      *                  (NULL or empty string defaults to "gregorian".)
      * @param status    Status code.  Failure
@@ -130,7 +130,7 @@ public:
      * resources for the given locale, in the default calendar (Gregorian).
      *
      * @param locale    Locale to load format data from.
-     * @param type      Type of calendar (as returned by Calendar::getType). 
+     * @param type      Type of calendar (as returned by Calendar::getType).
      *                  Will be used to access the correct set of strings.
      *                  (NULL or empty string defaults to "gregorian".)
      * @param status    Status code.  Failure
@@ -698,7 +698,7 @@ private:
      * entry containing the localized names for a single TimeZone.
      *
      * Each such row contains (with i ranging from 0..n-1):
-     * 
+     *
      * zoneStrings[i][0] - time zone ID
      *  example: America/Los_Angeles
      * zoneStrings[i][1] - long name of zone in standard time
@@ -748,7 +748,7 @@ private:
      UBool fCapitalization[kCapContextUsageTypeCount][2];
 
 private:
-    /** valid/actual locale information 
+    /** valid/actual locale information
      *  these are always ICU locales, so the length should not be a problem
      */
     char validLocale[ULOC_FULLNAME_CAPACITY];

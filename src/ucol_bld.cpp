@@ -497,14 +497,14 @@ static uint32_t ucol_getCEGenerator(ucolCEGenerator *g, uint32_t* lows, uint32_t
                 if(strength == UCOL_SECONDARY) {
                     if (low < UCOL_COMMON_TOP2<<24 ) {
                        // Override if low range is less than UCOL_COMMON_TOP2.
-		        low = UCOL_COMMON_TOP2<<24;
+   	        low = UCOL_COMMON_TOP2<<24;
                     }
                     high = 0xFFFFFFFF;
                 } else {
                     // Override if low range is less than UCOL_COMMON_BOT3.
-		    if ( low < UCOL_COMMON_BOT3<<24 ) {
+   	    if ( low < UCOL_COMMON_BOT3<<24 ) {
                         low = UCOL_COMMON_BOT3<<24;
-		    }
+   	    }
                     high = 0x40000000;
                 }
                 break;
@@ -1264,7 +1264,7 @@ ucol_assembleTailoringTable(UColTokenParser *src, UErrorCode *status) {
                         UChar str[4] = { 0 };
                         int32_t len=0;
                         int32_t preKeyLen=0;
-                        
+
                         el.cPoints = el.uchars;
                         el.noOfCEs = 0;
                         el.uchars[0] = *conts;
@@ -1289,11 +1289,11 @@ ucol_assembleTailoringTable(UColTokenParser *src, UErrorCode *status) {
                         str[len]=0;
                         ucol_setText(ucaEl, str, len, status);
                         // Skip the keys for prefix character, then copy the rest to el.
-                        while ((preKeyLen-->0) && 
+                        while ((preKeyLen-->0) &&
                                (int32_t)(el.CEs[el.noOfCEs] = ucol_next(ucaEl, status)) != UCOL_NULLORDER) {
                             continue;
                         }
-                           
+
                     }
                     while ((int32_t)(el.CEs[el.noOfCEs] = ucol_next(ucaEl, status)) != UCOL_NULLORDER) {
                         el.noOfCEs++;
@@ -1395,7 +1395,7 @@ static void toUpper(const char* src, char* dst, uint32_t length) {
    *dst = '\0';
 }
 
-U_INTERNAL int32_t U_EXPORT2 
+U_INTERNAL int32_t U_EXPORT2
 ucol_findReorderingEntry(const char* name) {
     char buffer[32];
     toUpper(name, buffer, 32);

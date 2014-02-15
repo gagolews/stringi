@@ -53,7 +53,7 @@ U_CDECL_END
 
 
 IdentifierInfo::IdentifierInfo(UErrorCode &status):
-         fIdentifier(NULL), fRequiredScripts(NULL), fScriptSetSet(NULL), 
+         fIdentifier(NULL), fRequiredScripts(NULL), fScriptSetSet(NULL),
          fCommonAmongAlternates(NULL), fNumerics(NULL), fIdentifierProfile(NULL) {
     if (U_FAILURE(status)) {
         return;
@@ -66,7 +66,7 @@ IdentifierInfo::IdentifierInfo(UErrorCode &status):
             CHINESE  = new ScriptSet();
             KOREAN   = new ScriptSet();
             CONFUSABLE_WITH_LATIN = new ScriptSet();
-            if (ASCII == NULL || JAPANESE == NULL || CHINESE == NULL || KOREAN == NULL 
+            if (ASCII == NULL || JAPANESE == NULL || CHINESE == NULL || KOREAN == NULL
                     || CONFUSABLE_WITH_LATIN == NULL) {
                 status = U_MEMORY_ALLOCATION_ERROR;
                 return;
@@ -159,7 +159,7 @@ IdentifierInfo &IdentifierInfo::setIdentifier(const UnicodeString &identifier, U
             fRequiredScripts->Union(scriptsForCP);
             break;
           default:
-            if (!fRequiredScripts->intersects(scriptsForCP) 
+            if (!fRequiredScripts->intersects(scriptsForCP)
                     && !uhash_geti(fScriptSetSet, &scriptsForCP)) {
                 // If the set hasn't been added already, add it
                 //    (Add a copy, fScriptSetSet takes ownership of the copy.)
@@ -244,7 +244,7 @@ URestrictionLevel IdentifierInfo::getRestrictionLevel(UErrorCode &status) const 
 
     // Note: the requiredScripts set omits COMMON and INHERITED; they are taken out at the
     //       time it is created, in setIdentifier().
-    int32_t cardinalityPlus = fRequiredScripts->countMembers() + 
+    int32_t cardinalityPlus = fRequiredScripts->countMembers() +
             (fCommonAmongAlternates->countMembers() == 0 ? uhash_count(fScriptSetSet) : 1);
     if (cardinalityPlus < 2) {
         return USPOOF_HIGHLY_RESTRICTIVE;
@@ -253,8 +253,8 @@ URestrictionLevel IdentifierInfo::getRestrictionLevel(UErrorCode &status) const 
             || containsWithAlternates(*KOREAN, *fRequiredScripts)) {
         return USPOOF_HIGHLY_RESTRICTIVE;
     }
-    if (cardinalityPlus == 2 && 
-            fRequiredScripts->test(USCRIPT_LATIN, status) && 
+    if (cardinalityPlus == 2 &&
+            fRequiredScripts->test(USCRIPT_LATIN, status) &&
             !fRequiredScripts->intersects(*CONFUSABLE_WITH_LATIN)) {
         return USPOOF_MODERATELY_RESTRICTIVE;
     }
@@ -269,7 +269,7 @@ int32_t IdentifierInfo::getScriptCount() const {
             (fCommonAmongAlternates->countMembers() == 0 ? uhash_count(fScriptSetSet) : 1);
     return count;
 }
-    
+
 
 
 UBool IdentifierInfo::containsWithAlternates(const ScriptSet &container, const ScriptSet &containee) const {
@@ -315,4 +315,3 @@ UnicodeString &IdentifierInfo::displayAlternates(UnicodeString &dest, const UHas
 }
 
 U_NAMESPACE_END
-

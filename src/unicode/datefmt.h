@@ -43,7 +43,7 @@ class DateTimePatternGenerator;
 // explicit template instantiation. see digitlst.h
 #if defined (_MSC_VER)
 template class U_I18N_API EnumSet<UDateFormatBooleanAttribute,
-            0, 
+            0,
             UDAT_BOOLEAN_ATTRIBUTE_COUNT>;
 #endif
 
@@ -748,7 +748,7 @@ private:
      */
     static DateFormat* U_EXPORT2 create(EStyle timeStyle, EStyle dateStyle, const Locale& inLocale);
 
-     
+
     /**
      * enum set of active boolean attributes for this instance
      */

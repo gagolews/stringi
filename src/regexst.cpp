@@ -167,10 +167,10 @@ fEmptyText(NULL)
     fPropSets[URX_GC_T]        = new UnicodeSet(UnicodeString(TRUE, gGC_TPattern, -1),       *status);
     fPropSets[URX_GC_LV]       = new UnicodeSet(UnicodeString(TRUE, gGC_LVPattern, -1),      *status);
     fPropSets[URX_GC_LVT]      = new UnicodeSet(UnicodeString(TRUE, gGC_LVTPattern, -1),     *status);
-    
+
     // Check for null pointers
-    if (fPropSets[URX_ISWORD_SET] == NULL || fPropSets[URX_ISSPACE_SET] == NULL || fPropSets[URX_GC_EXTEND] == NULL || 
-        fPropSets[URX_GC_CONTROL] == NULL || fPropSets[URX_GC_L] == NULL || fPropSets[URX_GC_V] == NULL || 
+    if (fPropSets[URX_ISWORD_SET] == NULL || fPropSets[URX_ISSPACE_SET] == NULL || fPropSets[URX_GC_EXTEND] == NULL ||
+        fPropSets[URX_GC_CONTROL] == NULL || fPropSets[URX_GC_L] == NULL || fPropSets[URX_GC_V] == NULL ||
         fPropSets[URX_GC_T] == NULL || fPropSets[URX_GC_LV] == NULL || fPropSets[URX_GC_LVT] == NULL) {
         goto ExitConstrDeleteAll;
     }
@@ -218,10 +218,10 @@ fEmptyText(NULL)
     for (i=0; i<(int32_t)(sizeof(fRuleSets)/sizeof(fRuleSets[0])); i++) {
         fRuleSets[i].compact();
     }
-    
+
     // Finally, initialize an empty string for utility purposes
     fEmptyText = utext_openUChars(NULL, NULL, 0, status);
-    
+
     return; // If we reached this point, everything is fine so just exit
 
 ExitConstrDeleteAll: // Remove fPropSets and fRuleSets and return error
@@ -241,7 +241,7 @@ RegexStaticSets::~RegexStaticSets() {
         fPropSets[i] = NULL;
     }
     fRuleDigitsAlias = NULL;
-    
+
     utext_close(fEmptyText);
 }
 

@@ -190,7 +190,7 @@ static UBool gDefaultConverterContainsOption;
 static const char DATA_TYPE[] = "cnv";
 
 /* ucnv_flushAvailableConverterCache. This is only called from ucnv_cleanup().
- *                       If it is ever to be called from elsewhere, synchronization 
+ *                       If it is ever to be called from elsewhere, synchronization
  *                       will need to be considered.
  */
 static void
@@ -1324,7 +1324,7 @@ ucnv_setDefaultName(const char *converterName) {
 
         /* The close may make the current name go away. */
         ucnv_close(cnv);
-  
+
         /* reset the converter cache */
         u_flushDefaultConverter();
     }

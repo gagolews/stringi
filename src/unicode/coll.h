@@ -6,10 +6,10 @@
 */
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Collation Service.
  */
- 
+
 /**
 * File coll.h
 *
@@ -641,7 +641,7 @@ public:
      * @see Collator#setReorderCodes
      * @see UScriptCode
      * @see UColReorderCode
-     * @stable ICU 4.8 
+     * @stable ICU 4.8
      */
      virtual int32_t getReorderCodes(int32_t *dest,
                                      int32_t destCapacity,
@@ -651,7 +651,7 @@ public:
      * Sets the ordering of scripts for this collator.
      *
      * <p>The reordering codes are a combination of script codes and reorder codes.
-     * @param reorderCodes An array of script codes in the new order. This can be NULL if the 
+     * @param reorderCodes An array of script codes in the new order. This can be NULL if the
      * length is also set to 0. An empty array will clear any reordering codes on the collator.
      * @param reorderCodesLength The length of reorderCodes.
      * @param status error code
@@ -659,7 +659,7 @@ public:
      * @see Collator#getEquivalentReorderCodes
      * @see UScriptCode
      * @see UColReorderCode
-     * @stable ICU 4.8 
+     * @stable ICU 4.8
      */
      virtual void setReorderCodes(const int32_t* reorderCodes,
                                   int32_t reorderCodesLength,
@@ -668,12 +668,12 @@ public:
     /**
      * Retrieves the reorder codes that are grouped with the given reorder code. Some reorder
      * codes will be grouped and must reorder together.
-     * @param reorderCode The reorder code to determine equivalence for. 
+     * @param reorderCode The reorder code to determine equivalence for.
      * @param dest The array to fill with the script equivalene reordering codes.
-     * @param destCapacity The length of dest. If it is 0, then dest may be NULL and the 
-     * function will only return the length of the result without writing any of the result 
+     * @param destCapacity The length of dest. If it is 0, then dest may be NULL and the
+     * function will only return the length of the result without writing any of the result
      * string (pre-flighting).
-     * @param status A reference to an error code value, which must not indicate 
+     * @param status A reference to an error code value, which must not indicate
      * a failure before the function call.
      * @return The length of the of the reordering code equivalence array.
      * @see ucol_setReorderCodes
@@ -681,7 +681,7 @@ public:
      * @see Collator#setReorderCodes
      * @see UScriptCode
      * @see UColReorderCode
-     * @stable ICU 4.8 
+     * @stable ICU 4.8
      */
     static int32_t U_EXPORT2 getEquivalentReorderCodes(int32_t reorderCode,
                                 int32_t* dest,
@@ -1082,18 +1082,18 @@ public:
 #endif
 
     /** Get the short definition string for a collator. This internal API harvests the collator's
-     *  locale and the attribute set and produces a string that can be used for opening 
+     *  locale and the attribute set and produces a string that can be used for opening
      *  a collator with the same properties using the ucol_openFromShortString API.
      *  This string will be normalized.
      *  The structure and the syntax of the string is defined in the "Naming collators"
-     *  section of the users guide: 
+     *  section of the users guide:
      *  http://icu-project.org/userguide/Collate_Concepts.html#Naming_Collators
      *  This function supports preflighting.
-     * 
+     *
      *  This is internal, and intended to be used with delegate converters.
      *
      *  @param locale a locale that will appear as a collators locale in the resulting
-     *                short string definition. If NULL, the locale will be harvested 
+     *                short string definition. If NULL, the locale will be harvested
      *                from the collator.
      *  @param buffer space to hold the resulting string
      *  @param capacity capacity of the buffer

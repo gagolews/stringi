@@ -18,10 +18,10 @@
 #include "unicode/fmtable.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: A unit for measuring a quantity.
  */
- 
+
 U_NAMESPACE_BEGIN
 
 /**
@@ -47,7 +47,7 @@ class U_I18N_API MeasureUnit: public UObject {
      * @stable ICU 3.0
      */
     virtual ~MeasureUnit();
-    
+
     /**
      * Equality operator.  Return true if this object is equal
      * to the given object.

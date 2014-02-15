@@ -42,7 +42,7 @@ UObject* CurrencyAmount::clone() const {
 
 CurrencyAmount::~CurrencyAmount() {
 }
-    
+
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(CurrencyAmount)
 
 U_NAMESPACE_END

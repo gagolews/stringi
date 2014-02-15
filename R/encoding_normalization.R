@@ -72,10 +72,10 @@
 #' -- W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}
 #'
 #' \emph{Normalization} -- ICU User Guide,
-#'    \url{http://userguide.icu-project.org/transforms/normalization} 
+#'    \url{http://userguide.icu-project.org/transforms/normalization}
 #'    (technical details)
 #'
-#' \emph{Unicode Equivalence} -- Wikipedia, 
+#' \emph{Unicode Equivalence} -- Wikipedia,
 #' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @export

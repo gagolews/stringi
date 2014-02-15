@@ -12,10 +12,10 @@
 #include "unicode/chariter.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: UChar Character Iterator
  */
- 
+
 U_NAMESPACE_BEGIN
 
 /**

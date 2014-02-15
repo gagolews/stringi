@@ -83,7 +83,7 @@ static UChar* copySpec(const UChar* spec) {
     }
     ++len;
     UChar *result = (UChar *)uprv_malloc(len*sizeof(UChar));
-    // Check for memory allocation error. 
+    // Check for memory allocation error.
     if (result != NULL) {
     	uprv_memcpy(result, spec, len*sizeof(result[0]));
     }

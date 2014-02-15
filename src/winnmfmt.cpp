@@ -59,7 +59,7 @@ UOBJECT_DEFINE_RTTI_IMPLEMENTATION(Win32NumberFormat)
 static UINT getGrouping(const char *grouping)
 {
     UINT g = 0;
-	const char *s;
+   const char *s;
 
     for (s = grouping; *s != '\0'; s += 1) {
         if (*s > '0' && *s < '9') {

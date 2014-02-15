@@ -60,7 +60,7 @@ void RuleBasedTransliterator::_construct(const UnicodeString& rules,
  * @param rules         rules, separated by ';'
  * @param direction     either FORWARD or REVERSE.
  * @param adoptedFilter the filter for this transliterator.
- * @param parseError    Struct to recieve information on position 
+ * @param parseError    Struct to recieve information on position
  *                      of error if an error is encountered
  * @param status        Output param set to success/failure code.
  * @exception IllegalArgumentException if rules are malformed
@@ -233,11 +233,11 @@ RuleBasedTransliterator::handleTransliterate(Replaceable& text, UTransPosition& 
     }
 
     // Transliterator locking.  Rule-based Transliterators are not thread safe; concurrent
-    //   operations must be prevented.  
+    //   operations must be prevented.
     // A Complication: compound transliterators can result in recursive entries to this
-    //   function, sometimes with different "This" objects, always with the same text. 
+    //   function, sometimes with different "This" objects, always with the same text.
     //   Double-locking must be prevented in these cases.
-    //   
+    //
 
     // If the transliteration data is exclusively owned by this transliterator object,
     //   we don't need to do any locking.  No sharing between transliterators is possible,
@@ -245,7 +245,7 @@ RuleBasedTransliterator::handleTransliterate(Replaceable& text, UTransPosition& 
     UBool    lockedMutexAtThisLevel = FALSE;
     if (isDataOwned == FALSE) {
         // Test whether this request is operating on the same text string as some
-        //   some other transliteration that is still in progress and holding the 
+        //   some other transliteration that is still in progress and holding the
         //   transliteration mutex.  If so, do not lock the transliteration
         //    mutex again.
         // TODO(andy): Need a better scheme for handling this.
@@ -259,14 +259,14 @@ RuleBasedTransliterator::handleTransliterate(Replaceable& text, UTransPosition& 
             lockedMutexAtThisLevel = TRUE;
         }
     }
-    
+
     // Check to make sure we don't dereference a null pointer.
     if (fData != NULL) {
-	    while (index.start < index.limit &&
-	           loopCount <= loopLimit &&
-	           fData->ruleSet.transliterate(text, index, isIncremental)) {
-	        ++loopCount;
-	    }
+       while (index.start < index.limit &&
+              loopCount <= loopLimit &&
+              fData->ruleSet.transliterate(text, index, isIncremental)) {
+           ++loopCount;
+       }
     }
     if (lockedMutexAtThisLevel) {
         gLockedText = NULL;

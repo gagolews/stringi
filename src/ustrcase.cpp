@@ -248,13 +248,13 @@ ustrcase_internalToTitle(const UCaseMap *csm,
                 csc.cpStart=titleStart;
                 csc.cpLimit=titleLimit;
                 c=ucase_toFullTitle(csm->csp, c, utf16_caseContextIterator, &csc, &s, csm->locale, &locCache);
-                destIndex=appendResult(dest, destIndex, destCapacity, c, s); 
+                destIndex=appendResult(dest, destIndex, destCapacity, c, s);
 
                 /* Special case Dutch IJ titlecasing */
-                if ( titleStart+1 < idx && 
+                if ( titleStart+1 < idx &&
                      ucase_getCaseLocale(csm->locale,&locCache) == UCASE_LOC_DUTCH &&
                      ( src[titleStart] == (UChar32) 0x0049 || src[titleStart] == (UChar32) 0x0069 ) &&
-                     ( src[titleStart+1] == (UChar32) 0x004A || src[titleStart+1] == (UChar32) 0x006A )) { 
+                     ( src[titleStart+1] == (UChar32) 0x004A || src[titleStart+1] == (UChar32) 0x006A )) {
                             c=(UChar32) 0x004A;
                             destIndex=appendResult(dest, destIndex, destCapacity, c, s);
                             titleLimit++;

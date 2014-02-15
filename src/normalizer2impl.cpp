@@ -1809,7 +1809,7 @@ enumCIDRangeHandler(const void *context, UChar32 start, UChar32 end, uint32_t va
 
 // UInitOnce instantiation function for CanonIterData
 
-static void U_CALLCONV 
+static void U_CALLCONV
 initCanonIterData(Normalizer2Impl *impl, UErrorCode &errorCode) {
     U_ASSERT(impl->fCanonIterData == NULL);
     impl->fCanonIterData = new CanonIterData(errorCode);

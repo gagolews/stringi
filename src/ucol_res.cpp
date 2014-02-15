@@ -205,7 +205,7 @@ ucol_open_internal(const char *loc,
 
     UResourceBundle *binary = NULL;
     UResourceBundle *reorderRes = NULL;
-    
+
     if(*status == U_MISSING_RESOURCE_ERROR) { /* We didn't find the tailoring data, we fallback to the UCA */
         *status = U_USING_DEFAULT_WARNING;
         result = ucol_initCollator(UCA->image, result, UCA, status);
@@ -264,7 +264,7 @@ ucol_open_internal(const char *loc,
                     result->hasRealData = FALSE;
                 }
                 result->freeImageOnClose = FALSE;
-                
+
                 reorderRes = ures_getByKey(collElem, "%%ReorderCodes", NULL, &intStatus);
                 if (U_SUCCESS(intStatus)) {
                     int32_t reorderCodesLen = 0;
@@ -857,20 +857,20 @@ ucol_getKeywordValuesForLocale(const char* /*key*/, const char* locale,
 
                     ures_getNextResource(&collres, &defres, status);
 #if U_CHARSET_FAMILY==U_ASCII_FAMILY
-			/* optimize - use the utf-8 string */
+   		/* optimize - use the utf-8 string */
                     ures_getUTF8String(&defres, defcoll, &defcollLength, TRUE, status);
 #else
                     {
                        const UChar* defString = ures_getString(&defres, &defcollLength, status);
                        if(U_SUCCESS(*status)) {
-			   if(defcollLength+1 > ULOC_KEYWORDS_CAPACITY) {
-				*status = U_BUFFER_OVERFLOW_ERROR;
-			   } else {
+   		   if(defcollLength+1 > ULOC_KEYWORDS_CAPACITY) {
+   			*status = U_BUFFER_OVERFLOW_ERROR;
+   		   } else {
                            	u_UCharsToChars(defString, defcoll, defcollLength+1);
-			   }
+   		   }
                        }
                     }
-#endif	
+#endif
 
                     ulist_addItemBeginList(results, defcoll, TRUE, status);
                 }
@@ -1035,16 +1035,16 @@ ucol_getTailoredSet(const UCollator *coll, UErrorCode *status)
 /*
  * Collation Reordering
  */
- 
+
 void ucol_setReorderCodesFromParser(UCollator *coll, UColTokenParser *parser, UErrorCode *status) {
     if (U_FAILURE(*status)) {
         return;
     }
-    
+
     if (parser->reorderCodesLength == 0 || parser->reorderCodes == NULL) {
         return;
     }
-    
+
     coll->reorderCodesLength = 0;
     if (coll->reorderCodes != NULL && coll->freeReorderCodesOnClose == TRUE) {
         uprv_free(coll->reorderCodes);
@@ -1064,7 +1064,7 @@ void ucol_setReorderCodesFromParser(UCollator *coll, UColTokenParser *parser, UE
     }
     uprv_memcpy(coll->defaultReorderCodes, parser->reorderCodes, coll->defaultReorderCodesLength * sizeof(int32_t));
     coll->freeDefaultReorderCodesOnClose = TRUE;
-    
+
     coll->reorderCodesLength = parser->reorderCodesLength;
     coll->reorderCodes = (int32_t*) uprv_malloc(coll->reorderCodesLength * sizeof(int32_t));
     if (coll->reorderCodes == NULL) {
@@ -1085,14 +1085,14 @@ void ucol_setReorderCodesFromParser(UCollator *coll, UColTokenParser *parser, UE
  *      - if an offset has the high bit set then it is not an offset but a single data entry
  *        once the high bit is stripped off
  *  data[data size] - array of unsigned short (2 bytes each entry)
- *      - the data is an usigned short count followed by count number 
+ *      - the data is an usigned short count followed by count number
  *        of lead bytes stored in an unsigned short
  */
 U_CFUNC int U_EXPORT2
 ucol_getLeadBytesForReorderCode(const UCollator *uca, int reorderCode, uint16_t* returnLeadBytes, int returnCapacity) {
     uint16_t reorderCodeIndexLength = *((uint16_t*) ((uint8_t *)uca->image + uca->image->scriptToLeadByte));
     uint16_t* reorderCodeIndex = (uint16_t*) ((uint8_t *)uca->image + uca->image->scriptToLeadByte + 2 *sizeof(uint16_t));
-    
+
     // reorder code index is 2 uint16_t's - reorder code + offset
     for (int i = 0; i < reorderCodeIndexLength; i++) {
         if (reorderCode == reorderCodeIndex[i*2]) {
@@ -1166,7 +1166,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
     // are we filling from the bottom?
     bool fromTheBottom = true;
     int32_t reorderCodesIndex = -1;
-    
+
     // lead bytes that have alread been assigned to the permutation table
     bool newLeadByteUsed[256];
     // permutation table slots that have already been filled
@@ -1176,9 +1176,9 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
     if(U_FAILURE(*status) || coll == NULL) {
         return;
     }
-    
+
     // clear the reordering
-    if (coll->reorderCodes == NULL || coll->reorderCodesLength == 0 
+    if (coll->reorderCodes == NULL || coll->reorderCodesLength == 0
             || (coll->reorderCodesLength == 1 && coll->reorderCodes[0] == UCOL_REORDER_CODE_NONE)) {
         if (coll->leadBytePermutationTable != NULL) {
             if (coll->freeLeadBytePermutationTableOnClose) {
@@ -1212,7 +1212,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
         if (coll->defaultReorderCodesLength == 0) {
             return;
         }
-        
+
         coll->reorderCodes = (int32_t*)uprv_malloc(coll->defaultReorderCodesLength * sizeof(int32_t));
         if (coll->reorderCodes == NULL) {
             *status = U_MEMORY_ALLOCATION_ERROR;
@@ -1267,7 +1267,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
             coll->leadBytePermutationTable[i] = 0;
         }
     }
-    
+
     /* Start from the front of the list and place each script we encounter at the
      * earliest possible locatation in the permutation table. If we encounter
      * UNKNOWN, start processing from the back, and place each script in the last
@@ -1296,7 +1296,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
             reorderCodesIndex = internalReorderCodesLength;
             continue;
         }
-        
+
         uint16_t leadByteCount = ucol_getLeadBytesForReorderCode(coll->UCA, next, leadBytes, leadBytesSize);
         if (fromTheBottom) {
             for (int leadByteIndex = 0; leadByteIndex < leadByteCount; leadByteIndex++) {
@@ -1312,7 +1312,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
                     coll->reorderCodesLength = 0;
                     return;
                 }
-   
+
                 coll->leadBytePermutationTable[leadBytes[leadByteIndex]] = toBottom;
                 newLeadByteUsed[toBottom] = true;
                 permutationSlotFilled[leadBytes[leadByteIndex]] = true;
@@ -1340,7 +1340,7 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
             }
         }
     }
-    
+
 #ifdef REORDER_DEBUG
     fprintf(stdout, "\n@@@@ Partial Script Reordering Table\n");
     for (int i = 0; i < 256; i++) {
@@ -1367,13 +1367,13 @@ ucol_buildPermutationTable(UCollator *coll, UErrorCode *status) {
             permutationSlotFilled[i] = true;
             newLeadByteUsed[reorderCode] = true;
         }
-    } 
-    
+    }
+
 #ifdef REORDER_DEBUG
     fprintf(stdout, "\n@@@@ Script Reordering Table\n");
     for (int i = 0; i < 256; i++) {
         fprintf(stdout, "\t%02x = %02x\n", i, coll->leadBytePermutationTable[i]);
-    } 
+    }
 #endif
 
     // force a regen of the latin one table since it is affected by the script reordering

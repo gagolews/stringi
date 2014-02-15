@@ -50,10 +50,10 @@ IndianCalendar::IndianCalendar(const IndianCalendar& other) : Calendar(other) {
 IndianCalendar::~IndianCalendar()
 {
 }
-const char *IndianCalendar::getType() const { 
+const char *IndianCalendar::getType() const {
    return "indian";
 }
-  
+
 static const int32_t LIMITS[UCAL_FIELD_COUNT][4] = {
     // Minimum  Greatest     Least   Maximum
     //           Minimum   Maximum
@@ -91,13 +91,13 @@ int32_t IndianCalendar::handleGetLimit(UCalendarDateFields field, ELimitType lim
 }
 
 /*
- * Determine whether the given gregorian year is a Leap year 
+ * Determine whether the given gregorian year is a Leap year
  */
 static UBool isGregorianLeap(int32_t year)
 {
-    return ((year % 4) == 0) && (!(((year % 100) == 0) && ((year % 400) != 0))); 
+    return ((year % 4) == 0) && (!(((year % 100) == 0) && ((year % 400) != 0)));
 }
-  
+
 //----------------------------------------------------------------------
 // Calendar framework
 //----------------------------------------------------------------------
@@ -189,7 +189,7 @@ static int32_t* jdToGregorian(double jd, int32_t gregorianDate[3]) {
    return gregorianDate;
 }
 
-   
+
 //-------------------------------------------------------------------------
 // Functions for converting from field values to milliseconds....
 //-------------------------------------------------------------------------
@@ -203,7 +203,7 @@ static double IndianToJD(int32_t year, int32_t month, int32_t date) {
    if(isGregorianLeap(gyear)) {
       leapMonth = 31;
       start = gregorianToJD(gyear, 3, 21);
-   } 
+   }
    else {
       leapMonth = 30;
       start = gregorianToJD(gyear, 3, 22);
@@ -239,7 +239,7 @@ static double IndianToJD(int32_t year, int32_t month, int32_t date) {
  */
 int32_t IndianCalendar::handleComputeMonthStart(int32_t eyear, int32_t month, UBool /* useMonth */ ) const {
 
-   //month is 0 based; converting it to 1-based 
+   //month is 0 based; converting it to 1-based
    int32_t imonth;
 
     // If the month is out of range, adjust it into range, and adjust the extended eyar accordingly
@@ -250,9 +250,9 @@ int32_t IndianCalendar::handleComputeMonthStart(int32_t eyear, int32_t month, UB
    if(month == 12){
        imonth = 1;
    } else {
-       imonth = month + 1; 
+       imonth = month + 1;
    }
-   
+
    double jd = IndianToJD(eyear ,imonth, 1);
 
    return (int32_t)jd;
@@ -283,7 +283,7 @@ int32_t IndianCalendar::handleGetExtendedYear() {
  * <li>MONTH
  * <li>DAY_OF_MONTH
  * <li>EXTENDED_YEAR</ul>
- * 
+ *
  * The DAY_OF_WEEK and DOW_LOCAL fields are already set when this
  * method is called. The getGregorianXxx() methods return Gregorian
  * calendar equivalents for the given Julian day.
@@ -330,7 +330,7 @@ void IndianCalendar::handleComputeFields(int32_t julianDay, UErrorCode&  /* stat
    internalSet(UCAL_MONTH, IndianMonth);
    internalSet(UCAL_DAY_OF_MONTH, IndianDayOfMonth);
    internalSet(UCAL_DAY_OF_YEAR, yday + 1); // yday is 0-based
-}    
+}
 
 UBool
 IndianCalendar::inDaylightTime(UErrorCode& status) const
@@ -374,7 +374,7 @@ IndianCalendar::internalGetDefaultCenturyStart() const
 {
     // lazy-evaluate systemDefaultCenturyStart
     UBool needsUpdate;
-    { 
+    {
         Mutex m;
         needsUpdate = (fgSystemDefaultCenturyStart == fgSystemDefaultCentury);
     }
@@ -394,7 +394,7 @@ IndianCalendar::internalGetDefaultCenturyStartYear() const
 {
     // lazy-evaluate systemDefaultCenturyStartYear
     UBool needsUpdate;
-    { 
+    {
         Mutex m;
 
         needsUpdate = (fgSystemDefaultCenturyStart == fgSystemDefaultCentury);
@@ -446,4 +446,3 @@ UOBJECT_DEFINE_RTTI_IMPLEMENTATION(IndianCalendar)
 U_NAMESPACE_END
 
 #endif
-

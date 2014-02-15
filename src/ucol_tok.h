@@ -13,9 +13,9 @@
 *   created 02/22/2001
 *   created by: Vladimir Weinstein
 *
-* This module reads a tailoring rule string and produces a list of 
+* This module reads a tailoring rule string and produces a list of
 * tokens that will be turned into collation elements
-* 
+*
 */
 
 #ifndef UCOL_TOKENS_H
@@ -86,7 +86,7 @@ struct UColToken {
   uint16_t flags;
 };
 
-/* 
+/*
  * This is a token that has been parsed
  * but not yet processed. Used to reduce
  * the number of arguments in the parser
@@ -135,7 +135,7 @@ typedef struct {
   UBool inRange;                     /* Are we in a range? */
   UChar32 currentRangeCp;           /* Current code point in the range. */
   UChar32 lastRangeCp;              /* The last code point in the range. */
-  
+
   /* reorder codes for collation reordering */
   int32_t* reorderCodes;
   int32_t reorderCodesLength;
@@ -164,9 +164,9 @@ typedef struct {
       (ch) == 0x007B))
 
 
-U_CFUNC 
+U_CFUNC
 uint32_t ucol_tok_assembleTokenList(UColTokenParser *src,
-                                    UParseError *parseError, 
+                                    UParseError *parseError,
                                     UErrorCode *status);
 
 U_CFUNC
@@ -180,15 +180,15 @@ void ucol_tok_initTokenList(UColTokenParser *src,
 
 U_CFUNC void ucol_tok_closeTokenList(UColTokenParser *src);
 
-U_CAPI const UChar* U_EXPORT2 ucol_tok_parseNextToken(UColTokenParser *src, 
+U_CAPI const UChar* U_EXPORT2 ucol_tok_parseNextToken(UColTokenParser *src,
                         UBool startOfRules,
                         UParseError *parseError,
                         UErrorCode *status);
 
 
 U_CAPI const UChar * U_EXPORT2
-ucol_tok_getNextArgument(const UChar *start, const UChar *end, 
-                               UColAttribute *attrib, UColAttributeValue *value, 
+ucol_tok_getNextArgument(const UChar *start, const UChar *end,
+                               UColAttribute *attrib, UColAttributeValue *value,
                                UErrorCode *status);
 U_CAPI int32_t U_EXPORT2 ucol_inv_getNextCE(const UColTokenParser *src,
                                             uint32_t CE, uint32_t contCE,

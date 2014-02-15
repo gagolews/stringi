@@ -23,10 +23,10 @@
 #include "unicode/uchriter.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: String Character Iterator
  */
- 
+
 U_NAMESPACE_BEGIN
 /**
  * A concrete subclass of CharacterIterator that iterates over the

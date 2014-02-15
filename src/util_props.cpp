@@ -211,4 +211,3 @@ int32_t ICU_Utility::parseNumber(const UnicodeString& text,
 }
 
 U_NAMESPACE_END
-

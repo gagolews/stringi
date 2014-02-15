@@ -18,14 +18,14 @@
 #include "unicode/format.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Formatter for measure objects.
  */
 
 U_NAMESPACE_BEGIN
 
 /**
- * 
+ *
  * A formatter for measure objects.  This is an abstract base class.
  *
  * <p>To format or parse a measure object, first create a formatter

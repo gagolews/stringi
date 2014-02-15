@@ -14,7 +14,7 @@
 #include "unicode/unimatch.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Unicode Filter
  */
 

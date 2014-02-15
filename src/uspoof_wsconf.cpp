@@ -23,7 +23,7 @@
 
 #if !UCONFIG_NO_NORMALIZATION
 
-#if !UCONFIG_NO_REGULAR_EXPRESSIONS 
+#if !UCONFIG_NO_REGULAR_EXPRESSIONS
 
 #include "unicode/unorm.h"
 #include "unicode/uregex.h"
@@ -52,7 +52,7 @@ U_NAMESPACE_USE
 //
 // The expression will match _all_ lines, including erroneous lines.
 // The result of the parse is returned via the contents of the (match) groups.
-static const char *parseExp = 
+static const char *parseExp =
         "(?m)"                                         // Multi-line mode
         "^([ \\t]*(?:#.*?)?)$"                         // A blank or comment line.  Matches Group 1.
         "|^(?:"                                        //   OR
@@ -71,7 +71,7 @@ static const char *parseExp =
 // Extract a regular expression match group into a char * string.
 //    The group must contain only invariant characters.
 //    Used for script names
-// 
+//
 static void extractGroup(
     URegularExpression *e, int32_t group, char *destBuf, int32_t destCapacity, UErrorCode &status) {
 
@@ -99,7 +99,7 @@ U_NAMESPACE_BEGIN
 //                         state in WSConfusableDataBuilder.
 //
 void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
-          int32_t confusablesWSLen, UParseError *pe, UErrorCode &status) 
+          int32_t confusablesWSLen, UParseError *pe, UErrorCode &status)
 {
     if (U_FAILURE(status)) {
         return;
@@ -108,7 +108,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
     int32_t             inputLen    = 0;
     UChar              *input       = NULL;
     int32_t             lineNum     = 0;
-    
+
     UVector            *scriptSets        = NULL;
     uint32_t            rtScriptSetsCount = 2;
 
@@ -131,7 +131,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
     //
     // Because Trie values are indexes into the ScriptSets vector, pre-fill
     // vector positions 0 and 1 to avoid conflicts with the reserved values.
-    
+
     scriptSets = new UVector(status);
     if (scriptSets == NULL) {
         status = U_MEMORY_ALLOCATION_ERROR;
@@ -292,7 +292,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
         // printf("Number of distinct script sets: %d\n", rtScriptSetsCount);
     }
 
-    
+
 
     // Update the Trie values to be reflect the run time script indexes (after duplicate merging).
     //    (Trie Values 0 and 1 are reserved, and the corresponding slots in scriptSets
@@ -338,7 +338,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
         spImpl->fSpoofData->fAnyCaseTrie = anyCaseTrie;
         void *where = spImpl->fSpoofData->reserveSpace(size, status);
         utrie2_serialize(anyCaseTrie, where, size, &status);
-        
+
         utrie2_freeze(lowerCaseTrie, UTRIE2_16_VALUE_BITS, &status);
         size = utrie2_serialize(lowerCaseTrie, NULL, 0, &status);
         // printf("Lower case Trie size: %d\n", size);
@@ -375,7 +375,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
     //   An alternative would be to not pre-serialize the Trie data, but that makes the
     //   spoof detector data different, depending on how the detector was constructed.
     //   It's simpler to keep the data always the same.
-    
+
     spImpl->fSpoofData->fAnyCaseTrie = utrie2_openFromSerialized(
             UTRIE2_16_VALUE_BITS,
             (const char *)spImpl->fSpoofData->fRawData + spImpl->fSpoofData->fRawData->fAnyCaseTrie,
@@ -390,7 +390,7 @@ void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
             NULL,
             &status);
 
-    
+
 
 cleanup:
     if (U_FAILURE(status)) {
@@ -432,5 +432,4 @@ BuilderScriptSet::~BuilderScriptSet() {
 }
 
 #endif
-#endif //  !UCONFIG_NO_REGULAR_EXPRESSIONS 
-
+#endif //  !UCONFIG_NO_REGULAR_EXPRESSIONS
