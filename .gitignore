@@ -15,9 +15,10 @@ stringi.Rproj
 .RData
 
 # compiled/precompiled files
-*.o
-*.so
-*.dll
+src/*.o
+src/*.so
+src/*.dll
+src/*.a
 src-i386/
 src-x64/
 
