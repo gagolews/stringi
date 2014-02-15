@@ -1,6 +1,6 @@
 ## This file is part of the 'stringi' library.
 ##
-## Copyright 2013 Marek Gagolewski, Bartek Tartanus
+## Copyright 2013-2014 Marek Gagolewski, Bartek Tartanus
 ##
 ##
 ## 'stringi' is free software: you can redistribute it and/or modify
@@ -72,9 +72,11 @@
 #' -- W3C Working Draft, \url{http://www.w3.org/TR/charmod-norm/}
 #'
 #' \emph{Normalization} -- ICU User Guide,
-#'    \url{http://userguide.icu-project.org/transforms/normalization} (technical details)
+#'    \url{http://userguide.icu-project.org/transforms/normalization} 
+#'    (technical details)
 #'
-#' \emph{Unicode Equivalence} -- Wikipedia, \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
+#' \emph{Unicode Equivalence} -- Wikipedia, 
+#' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @export
 #' @rdname stri_enc_nf

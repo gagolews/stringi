@@ -1,5 +1,5 @@
 # Roxygen-generated man pages
-man/*.Rd
+# man/*.Rd
 
 # Autoconf
 src/Makevars
