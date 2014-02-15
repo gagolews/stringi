@@ -4,10 +4,10 @@
 \title{THE String Processing Package}
 \description{
 \pkg{stringi} is THE \R package for very fast, correct,
-consistent, and convenient string manipulation in each
+consistent, and convenient string/text manipulation in each
 locale and any character encoding. We are putting great
 effort to create software that works as you expect on any
-platform, in each locale, and any ``default'' system
+platform, in each locale, and any ``native'' system
 encoding.
 
 \bold{Keywords}: internationalization, localization, ICU,

@@ -3,11 +3,11 @@ Version: 0.1-20
 Date: 2014-02-15
 Title: THE string processing package for R
 Description: stringi is THE R package for very fast, correct, consistent,
-    and convenient string processing in each locale and any native
+    and convenient string/text processing in each locale and any native
     character encoding. The use of the ICU 52.1 library gives R users
-    a platform-independent and properly localized toolbox of functions
-    inspired by those available in other programming languages, like Java,
-    Perl, Python and PHP, as well as Hadley Wickham's stringr package.
+    a platform-independent set of functions known from other programming
+    languages, like Java, Perl, Python, and PHP.
+    Package API was inspired by Hadley Wickham's stringr package.
 URL: http://stringi.rexamine.com/
 BugReports: http://github.com/Rexamine/stringi/issues
 ByteCompile: TRUE
