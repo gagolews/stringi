@@ -1,6 +1,41 @@
-## `stringi` Makevars
+## `stringi` Makevars.win
 ## Copyright 2013-2014 M. Gagolewski
 
-PKG_CPPFLAGS=-I. -Iunicode -DU_STATIC_IMPLEMENTATION \
+PKG_CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
 -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
+
+
+STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
+STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
+
+ICU_COMMON_SOURCES_CPP=$(wildcard icu52_common_*.cpp)
+ICU_COMMON_SOURCES_C=$(wildcard icu52_common_*.c)
+ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
+
+ICU_I18N_SOURCES_CPP=$(wildcard icu52_i18n_*.cpp)
+ICU_I18N_SOURCES_C=$(wildcard icu52_i18n_*.c)
+ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
+
+ICU_STUBDATA_SOURCES_C=icu52_stubdata.c
+ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_C:.c=.o)
+
+OBJECTS=cmp_stringi.o cmp_common.o cmp_i18n.o cmp_stubdata.o
+
+.PHONY: all
+
+all: $(SHLIB)
+
+$(SHLIB): $(OBJECTS)
+
+cmp_stringi.o: $(STRI_OBJECTS)
+	$(LD) -r $(STRI_OBJECTS) -o $@
+
+cmp_common.o: $(ICU_COMMON_OBJECTS)
+	$(LD) -r $(ICU_COMMON_OBJECTS) -o $@
+
+cmp_i18n.o: $(ICU_I18N_OBJECTS)
+	$(LD) -r $(ICU_I18N_OBJECTS) -o $@
+
+cmp_stubdata.o: $(ICU_STUBDATA_OBJECTS)
+	$(LD) -r $(ICU_STUBDATA_OBJECTS) -o $@
