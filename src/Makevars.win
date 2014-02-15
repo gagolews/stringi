@@ -5,6 +5,10 @@ PKG_CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
 -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
 
+## There is a Cygwin bug, which reports "mem alloc error" while linking
+## too much .o files at once (I suppose this is the reason, at least).
+## Thus, below we split the process into 4 parts, using static libs.
+## Voila, it's fixed.
 
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
@@ -20,22 +24,21 @@ ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
 ICU_STUBDATA_SOURCES_C=icu52_stubdata.c
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_C:.c=.o)
 
-OBJECTS=cmp_stringi.o cmp_common.o cmp_i18n.o cmp_stubdata.o
+OBJECTS=$(STRI_OBJECTS)
 
 .PHONY: all
 
 all: $(SHLIB)
 
-$(SHLIB): $(OBJECTS)
+$(SHLIB): $(OBJECTS) libicu_common.a libicu_i18n.a libicu_stubdata.a
 
-cmp_stringi.o: $(STRI_OBJECTS)
-	$(LD) -r $(STRI_OBJECTS) -o $@
+PKG_LIBS=-L. -licu_common -licu_i18n -licu_stubdata
 
-cmp_common.o: $(ICU_COMMON_OBJECTS)
-	$(LD) -r $(ICU_COMMON_OBJECTS) -o $@
+libicu_common.a: $(ICU_COMMON_OBJECTS)
+	ar rcs -o libicu_common.a $(ICU_COMMON_OBJECTS)
 
-cmp_i18n.o: $(ICU_I18N_OBJECTS)
-	$(LD) -r $(ICU_I18N_OBJECTS) -o $@
+libicu_i18n.a: $(ICU_I18N_OBJECTS)
+	ar rcs -o libicu_i18n.a $(ICU_I18N_OBJECTS)
 
-cmp_stubdata.o: $(ICU_STUBDATA_OBJECTS)
-	$(LD) -r $(ICU_STUBDATA_OBJECTS) -o $@
+libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
+	ar rcs -o libicu_stubdata.a $(ICU_STUBDATA_OBJECTS)
