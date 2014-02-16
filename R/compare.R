@@ -56,12 +56,14 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 #' stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 #' stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
 #' stri_cmp("hladny", "HLADNY", stri_opts_collator(strength=2)) # ==
 #' stri_cmp("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK")) # ==
 #' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
+#' }
 stri_compare <- function(e1, e2, opts_collator=list()) {
    .Call("stri_compare", e1, e2, opts_collator, PACKAGE="stringi")
 }
@@ -120,8 +122,10 @@ stri_cmp <- stri_compare
 #' @rdname stri_order
 #'
 #' @examples
+#' \dontrun{
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
+#' }
 stri_order <- function(str, decreasing=FALSE, opts_collator=list()) {
    .Call("stri_order", str, decreasing, opts_collator, PACKAGE="stringi")
 }

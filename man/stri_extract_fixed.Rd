@@ -39,9 +39,11 @@ locale-aware search), then the operation is not as dummy as
 it seems (for non-ASCII text).
 }
 \examples{
+\dontrun{
 stri_extract_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_extract_first_fixed(c('Yy\\u00FD', 'AAA'), 'y', stri_opts_collator(strength=2, locale="sk_SK"))
 stri_extract_last_fixed(c('Yy\\u00FD', 'AAA'), 'y', stri_opts_collator(strength=1, locale="sk_SK"))
+}
 }
 \seealso{
 Other search_extract:

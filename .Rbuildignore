@@ -1,12 +1,16 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^devel
+^src-i386
+^src-x64
 ^src/.*\.o$
+^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$
 ^README.md$
-
+^\.git
 ^src/Makevars$
 ^autom4te\.cache$
 ^config\.log$
 ^config\.status$
+^\.gitignore$

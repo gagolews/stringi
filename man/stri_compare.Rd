@@ -41,12 +41,14 @@ different locale settings may lead to different results
 (see the examples below).
 }
 \examples{
+\dontrun{
 stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
 stri_cmp("hladny", "HLADNY", stri_opts_collator(strength=2)) # ==
 stri_cmp("hladn\\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK")) # ==
 stri_cmp(stri_enc_nfkd('\\u0105'), '\\u105') # but cf. stri_enc_nfkd('\\u0105') != '\\u105'
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_count_fixed}};

@@ -47,7 +47,7 @@ In case of any \code{NA}, \code{NA} is set to the
 corresponding element.
 }
 \examples{
-stri_join(1:5,letters)
+stri_join(1:13, letters)
 stri_join(c('abc','123','\\u0105\\u0104'),'###', 1:5, sep='...')
 stri_join(c('abc','123','\\u0105\\u0104'),'###', 1:5, sep='...', collapse='?')
 }

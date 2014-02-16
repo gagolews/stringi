@@ -9,7 +9,7 @@ config.status
 .lineno
 
 # R/RStudio files:
-stringi.Rproj
+*.Rproj
 .Rproj.user
 .Rhistory
 .RData
@@ -30,7 +30,7 @@ src-x64/
 # KDevelop project files:
 *.kdev4
 
-# LaTeX/knitr dirt:
+# LaTeX/knitr dust:
 *.aux
 *.log
 *.out

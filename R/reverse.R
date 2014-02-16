@@ -36,7 +36,9 @@
 #' @examples
 #' stri_reverse(c("123", "abc d e f"))
 #' stri_reverse("ZXY (\u0105\u0104123$^).")
+#' \dontrun{
 #' stri_reverse(stri_enc_nfd('\u0105')) == stri_enc_nfd('\u0105') # A, ogonek -> agonek, A
+#' }
 #' @export
 stri_reverse <- function(str) {
    .Call("stri_reverse", str, PACKAGE="stringi")

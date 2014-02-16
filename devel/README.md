@@ -13,6 +13,14 @@ TO DO list - Preparing `stringi` for submission
 6. Check how the package compiles with Oracle Solaris Studio, on Win and OS X
       Win: *** http://win-builder.r-project.org/ ***
 
+Check PDF manual:
+```
+R CMD Rd2pdf stringi/
+```
+
+Check examples when there is no icu52dt
+(comment appropriate section in `src/install.libs.R`)
+
 clang and Solaris Studio compile/check:
 ```
 ###
@@ -25,7 +33,8 @@ make
 setenv PATH /opt/oracle/solarisstudio12.3/bin:$PATH
 setenv MANPATH /opt/oracle/solarisstudio12.3/man:$MANPATH
 
- /opt/R-devel-clang/bin/R CMD INSTALL --configure-vars="CC=cc CXX=CC" /home/gagolews/Projekty/stringi_0.1-20.tar.gz
+/opt/R-devel-clang/bin/R CMD INSTALL --configure-vars="CC=cc CXX=CC" \
+   /home/gagolews/Projekty/stringi_0.1-20.tar.gz
 
 PATH=/opt/oracle/solarisstudio12.3/bin:$PATH
 MANPATH=/opt/oracle/solarisstudio12.3/man:$MANPATH

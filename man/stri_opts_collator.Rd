@@ -72,9 +72,11 @@ diacritical differences.
 The strings are Unicode-normalized before the comparison.
 }
 \examples{
+\dontrun{
 stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
 stri_cmp("above mentioned", "above-mentioned")
 stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
+}
 }
 \references{
 \emph{Collation} -- ICU User Guide,

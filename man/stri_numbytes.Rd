@@ -39,7 +39,11 @@ string data (in C).
 \examples{
 stri_numbytes(letters)
 stri_numbytes(c('abc','123','\\u0105\\u0104'))
+\dontrun{
+# this may fail on Windows, as there is no native support for 4-bytes
+# Unicode characters; see, however, stri_escape_unicode():
 stri_numbytes('\\U7fffffff') # compare stri_length('\\U7fffffff')
+}
 }
 \seealso{
 Other length: \code{\link{stri_isempty}};

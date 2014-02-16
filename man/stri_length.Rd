@@ -30,8 +30,10 @@ we get, as usual, an error.
 stri_length(LETTERS)
 stri_length(c('abc','123','\\u0105\\u0104'))
 stri_length('\\u0105') # length is equal to one, but...
-stri_length(stri_enc_nfkd('\\u0105')) # ...two code points (!)
 stri_numbytes('\\u0105') # just like here
+\dontrun{
+stri_length(stri_enc_nfkd('\\u0105')) # ...two code points (!)
+}
 }
 \seealso{
 Other length: \code{\link{stri_isempty}};

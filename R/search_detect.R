@@ -72,10 +72,12 @@ stri_detect_charclass <- function(str, pattern) {
 #' @return Returns a logical vector.
 #'
 #' @examples
+#' \dontrun{
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), opts_collator=NA)
 #' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', opts_collator=NA)
+#' }
+#' 
 #' @export
-#'
 #' @family search_detect
 #' @family search_fixed
 #' @family locale_sensitive
@@ -107,11 +109,14 @@ stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
 #' @return Returns a logical vector.
 #'
 #' @examples
+#' \dontrun{
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), 'R.')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
 #' stri_detect_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
+#' }
+#' 
 #' @export
 #' @family search_detect
 #' @family search_regex

@@ -108,8 +108,9 @@ stri_locate_last_charclass <- function(str, pattern) {
 #'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
+#' @param opts_collator a named list as generated with 
+#' \code{\link{stri_opts_collator}} with Collator options,
+#' or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return
 #' For \code{stri_locate_all_charclass},
@@ -126,10 +127,11 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' or the last matches, respectively, and \code{NA}s iff not found.
 #'
 #' @examples
+#' \dontrun{
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #' stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
-#'
+#' 
 #' #first row is 1-2 like in locate_first
 #' stri_locate_all_fixed('bbbbb', 'bb')
 #' stri_locate_first_fixed('bbbbb', 'bb')
@@ -140,6 +142,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' locate <- stri_locate_first_fixed('stringi - REXAMINE', letters)
 #' rownames(locate) <- letters
 #' locate
+#' }
 #'
 #' @export
 #' @rdname stri_locate_fixed
@@ -197,10 +200,15 @@ stri_locate_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' or the last matches, respectively, and \code{NA}s iff not found.
 #'
 #' @examples
-#' stri_locate_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_locate_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_locate_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#'
+#' \dontrun{
+#' stri_locate_all_regex('XaaaaX',
+#'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_first_regex('XaaaaX',
+#'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_last_regex('XaaaaX',
+#'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' }
+#' 
 #' @export
 #' @rdname stri_locate_regex
 #' @aliases stri_locate_all_regex stri_locate_first_regex stri_locate_last_regex
@@ -234,7 +242,8 @@ stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_all_regex}},
-#' \code{\link{stri_locate_all_fixed}}, or \code{\link{stri_locate_all_charclass}},
+#' \code{\link{stri_locate_all_fixed}},
+#' or \code{\link{stri_locate_all_charclass}},
 #' depending on the argument used.
 #'
 #' @param str character vector of strings to search in
@@ -258,9 +267,12 @@ stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
 #' Double \code{NA}s iff not found or \code{NA} argument is given.
 #'
 #' @examples
-#' stri_locate_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' \dontrun{
+#' stri_locate_all('XaaaaX',
+#'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
 #' stri_locate_all('a b c', charclass='Zs') # all white spaces
+#' }
 #'
 #' @export
 #' @family search_locate
@@ -284,7 +296,8 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_first_regex}},
-#' \code{\link{stri_locate_first_fixed}}, or \code{\link{stri_locate_first_charclass}},
+#' \code{\link{stri_locate_first_fixed}},
+#' or \code{\link{stri_locate_first_charclass}},
 #' depending on the argument used.
 #'
 #' @param str character vector of strings to search in
@@ -306,11 +319,14 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 #' double \code{NA}s in a row if a pattern not found.
 #'
 #' @examples
+#' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-#' stri_locate_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_first('XaaaaX',
+#'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_first('Bartolini', fixed=letters[1:3])
 #' stri_locate_first('a b c', charclass='Zs')
-#'
+#' }
+#' 
 #' @export
 #' @family search_locate
 #' @family indexing
@@ -333,7 +349,8 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_locate_last_regex}},
-#' \code{\link{stri_locate_last_fixed}}, or \code{\link{stri_locate_last_charclass}},
+#' \code{\link{stri_locate_last_fixed}},
+#' or \code{\link{stri_locate_last_charclass}},
 #' depending on the argument used.
 #'
 #' @param str character vector of strings to search in
@@ -355,11 +372,14 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' double \code{NA}s in a row if a pattern  not found.
 #'
 #' @examples
+#' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-#' stri_locate_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#' stri_locate_last('XaaaaX',
+#'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_last('Bartolini', fixed=letters[1:3])
 #' stri_locate_last('a b c', charclass='Zs')
-#'
+#' }
+#' 
 #' @export
 #' @family search_locate
 #' @family indexing

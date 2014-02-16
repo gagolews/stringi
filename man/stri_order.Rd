@@ -53,8 +53,10 @@ it is defined as \code{str[stri_order(str, decreasing,
 opts_collator)]}.
 }
 \examples{
+\dontrun{
 stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},
