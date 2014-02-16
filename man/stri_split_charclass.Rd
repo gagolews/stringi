@@ -38,7 +38,8 @@ appear in the resulting vector.
 }
 \examples{
 stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
-stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3, omit_empty=c(FALSE, TRUE))
+stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3,
+   omit_empty=c(FALSE, TRUE))
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

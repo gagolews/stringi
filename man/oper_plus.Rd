@@ -24,11 +24,11 @@ This operator works like a call to
 faster). However, note that joining 3 vectors, e.g.
 \code{e1 \%+\% e2 \%+\% e3} is slower than
 \code{\link{stri_join}(e1, e2, e3, sep="")}, because it
-creates a new (temporary) resulting vector each time the
+creates a new (temporary) result vector each time the
 operator is applied.
 }
 \examples{
-c('abc','123','\\u0105\\u0104')\%+\%letters[1:5]
+c('abc','123','\\u0105\\u0104')\%+\%letters[1:6]
 'ID_'\%+\%1:5
 }
 

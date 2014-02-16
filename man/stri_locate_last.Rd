@@ -38,10 +38,13 @@ following order: \code{regex}, \code{fixed} and
 \code{class}, only the first one will be used.
 }
 \examples{
+\dontrun{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-stri_locate_last('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+stri_locate_last('XaaaaX',
+   regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_last('Bartolini', fixed=letters[1:3])
 stri_locate_last('a b c', charclass='Zs')
+}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

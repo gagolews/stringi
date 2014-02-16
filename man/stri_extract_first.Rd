@@ -32,10 +32,12 @@ Unless you are very lazy, please call the underlying
 functions directly for better performance.
 }
 \examples{
+\dontrun{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 stri_extract_first('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first('Bartolini', fixed=letters[1:3])
 stri_extract_first(s, charclass='Zs')
+}
 }
 \seealso{
 Other search_extract:

@@ -34,8 +34,10 @@ faster, but locale unaware, (exact) byte comparisons. For
 natural language text this may be not what you really want.
 }
 \examples{
+\dontrun{
 stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), opts_collator=NA)
 stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', opts_collator=NA)
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},

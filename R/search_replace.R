@@ -87,15 +87,18 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param str character vector of strings to search in
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
+#' @param opts_collator a named list as generated with 
+#' \code{\link{stri_opts_collator}} with Collator options,
+#' or \code{NA} for fast but locale-unaware byte comparison
 #' @return character vector
 #'
 #' @examples
+#' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_replace_all_fixed(s," ","#")
 #' stri_replace_all_fixed(s,"o","0")
-#'
+#' }
+#' 
 #' @export
 #' @rdname stri_replace_fixed
 #' @aliases stri_replace_all_fixed stri_replace_first_fixed stri_replace_last_fixed
@@ -149,13 +152,15 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @return character vector
 #'
 #' @examples
+#' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_replace_all_regex(s, " .*? ", "#")
 #' stri_replace_all_regex(s, "(el|s)it", "1234")
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' stri_replace_all_regex(c("stringi w R","REXAMINE","123"), '( R|R.)', ' r ')
-#'
+#' }
+#' 
 #' @export
 #' @rdname stri_replace_regex
 #' @aliases stri_replace_all_regex stri_replace_first_regex stri_replace_last_regex

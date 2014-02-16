@@ -27,7 +27,8 @@
 #' the fields themselves.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max},
+#' and \code{omit_empty}.
 #'
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #'
@@ -47,7 +48,8 @@
 #'
 #' @examples
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
-#' stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3, omit_empty=c(FALSE, TRUE))
+#' stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3, 
+#'    omit_empty=c(FALSE, TRUE))
 #'
 #' @export
 #' @rdname stri_split_charclass
@@ -70,7 +72,8 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' the fields themselves.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max},
+#' and \code{omit_empty}.
 #'
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #'
@@ -92,8 +95,11 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #'
 #'
 #' @examples
-#' stri_split_regex("Lorem ipsum dolor sit amet", "\\p{Z}+") # see also stri_split_charclass
-#'
+#' \dontrun{
+#' stri_split_regex("Lorem ipsum dolor sit amet",
+#'    "\\p{Z}+") # see also stri_split_charclass
+#' }
+#' 
 #' @export
 #' @rdname stri_split_regex
 #' @aliases stri_split_regex
@@ -139,8 +145,10 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #'
 #'
 #' @examples
+#' \dontrun{
 #' stri_split_fixed("Lorem ipsum dolor sit amet", " ")
-#'
+#' }
+#' 
 #' @export
 #' @rdname stri_split_fixed
 #' @aliases stri_split_fixed

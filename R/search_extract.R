@@ -102,10 +102,12 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' \code{NA} if not found.
 #'
 #' @examples
+#' \dontrun{
 #' stri_extract_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_extract_first_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=2, locale="sk_SK"))
 #' stri_extract_last_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=1, locale="sk_SK"))
-#'
+#' }
+#' 
 #' @export
 #' @rdname stri_extract_fixed
 #' @aliases stri_extract_all_fixed, stri_extract_first_fixed, stri_extract_last_fixed
@@ -155,10 +157,12 @@ stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
 #' \code{NA} if not found.
 #'
 #' @examples
+#' \dontrun{
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#'
+#' }
+#' 
 #' @export
 #' @rdname stri_extract_regex
 #' @aliases stri_extract_all_regex stri_extract_first_regex stri_extract_last_regex
@@ -207,10 +211,12 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @return Returns a list of character vectors.
 #'
 #' @examples
+#' \dontrun{
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', fixed='i')
 #' stri_extract_all('stringi are so good!', charclass='Zs') # all whitespaces
-#'
+#' }
+#' 
 #' @export
 #' @family search_extract
 stri_extract_all <- function(str, ..., regex, fixed, charclass) {
@@ -248,11 +254,13 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
 #' @return Returns a character vector.
 #'
 #' @examples
+#' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first('Bartolini', fixed=letters[1:3])
 #' stri_extract_first(s, charclass='Zs')
-#'
+#' }
+#' 
 #' @export
 #' @family search_extract
 stri_extract_first <- function(str, ..., regex, fixed, charclass) {
@@ -290,11 +298,13 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 #' @return Returns a character vector.
 #'
 #' @examples
+#' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_last('Bartolini', fixed=letters[1:3])
 #' stri_extract_last(s, charclass='Zs')
-#'
+#' }
+#' 
 #' @export
 #' @family search_extract
 stri_extract_last <- function(str, ..., regex, fixed, charclass) {

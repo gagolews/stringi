@@ -41,9 +41,14 @@ matches a substring of the input string.
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-stri_locate_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-stri_locate_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-stri_locate_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+\dontrun{
+stri_locate_all_regex('XaaaaX',
+   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+stri_locate_first_regex('XaaaaX',
+   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+stri_locate_last_regex('XaaaaX',
+   c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

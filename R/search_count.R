@@ -77,6 +77,7 @@ stri_count_charclass <- function(str, pattern) {
 #' @return Returns an integer vector with the number of matches.
 #'
 #' @examples
+#' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count_fixed(s, " ")
 #' stri_count_fixed(s, "o")
@@ -84,7 +85,8 @@ stri_count_charclass <- function(str, pattern) {
 #' stri_count_fixed(s, letters)
 #' stri_count_fixed("babab", "b")
 #' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
-#'
+#' }
+#' 
 #' @export
 #' @family search_count
 #' @family search_fixed
@@ -114,6 +116,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' @return Returns an integer vector.
 #'
 #' @examples
+#' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count_regex(s,"(s|el)it")
 #' stri_count_regex(s,"i.i")
@@ -121,7 +124,8 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
-#'
+#' }
+#' 
 #' @export
 #' @family search_count
 #' @family search_regex
@@ -154,10 +158,12 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #' @return Returns an integer vector.
 #'
 #' @examples
+#' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count(s, fixed=letters)
 #' stri_count(s, regex="[[:alpha:]]")
-#'
+#' }
+#' 
 #' @export
 #' @family search_count
 stri_count <- function(str, ..., regex, fixed, charclass) {

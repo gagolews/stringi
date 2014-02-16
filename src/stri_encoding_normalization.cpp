@@ -67,6 +67,9 @@ const Normalizer2* stri__normalizer_get(SEXP type)
       default:
          Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
    }
+   
+   if (U_FAILURE(status))
+      Rf_error(MSG__RESOURCE_ERROR_GET);
 
    return normalizer;
 }

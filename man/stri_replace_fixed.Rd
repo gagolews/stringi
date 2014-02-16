@@ -44,9 +44,11 @@ faster, but locale unaware, (exact) byte comparisons. For
 natural language text this may be not what you really want.
 }
 \examples{
+\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_fixed(s," ","#")
 stri_replace_all_fixed(s,"o","0")
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},

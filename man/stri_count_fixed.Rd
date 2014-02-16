@@ -34,6 +34,7 @@ faster, but locale unaware, (exact) byte comparisons. For
 natural language text this may be not what you really want.
 }
 \examples{
+\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_count_fixed(s, " ")
 stri_count_fixed(s, "o")
@@ -41,6 +42,7 @@ stri_count_fixed(s, "it")
 stri_count_fixed(s, letters)
 stri_count_fixed("babab", "b")
 stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},

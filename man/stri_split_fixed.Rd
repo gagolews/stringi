@@ -46,7 +46,9 @@ comparisons. For natural language text, however, this may
 not be what you really want.
 }
 \examples{
+\dontrun{
 stri_split_fixed("Lorem ipsum dolor sit amet", " ")
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},

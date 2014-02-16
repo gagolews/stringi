@@ -43,12 +43,14 @@ groups (in round parentheses). References are of the form
 group (their numbering starts from 1).
 }
 \examples{
+\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_regex(s, " .*? ", "#")
 stri_replace_all_regex(s, "(el|s)it", "1234")
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
 stri_replace_all_regex('123|456|789', '(\\\\p{N}).(\\\\p{N})', '$2-$1')
 stri_replace_all_regex(c("stringi w R","REXAMINE","123"), '( R|R.)', ' r ')
+}
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};

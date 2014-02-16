@@ -59,7 +59,7 @@ stri_dup <- function(str, times) {
 #' (but is slightly faster).
 #' However, note that joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
 #' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
-#' because it creates a new (temporary) resulting vector each time
+#' because it creates a new (temporary) result vector each time
 #' the operator is applied.
 #'
 #' @usage
@@ -72,7 +72,7 @@ stri_dup <- function(str, times) {
 #'
 #'
 #' @examples
-#' c('abc','123','\u0105\u0104')%+%letters[1:5]
+#' c('abc','123','\u0105\u0104')%+%letters[1:6]
 #' 'ID_'%+%1:5
 #' @rdname oper_plus
 #' @export
@@ -112,7 +112,7 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 #' @examples
-#' stri_join(1:5,letters)
+#' stri_join(1:13, letters)
 #' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...')
 #' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
 #' @family join
