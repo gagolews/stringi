@@ -17,7 +17,7 @@
  * \file
  * \brief C++ API: Defines macros for interval format implementation
  */
- 
+
 #if !UCONFIG_NO_FORMATTING
 
 #include "unicode/unistr.h"
@@ -89,5 +89,5 @@
 
 #endif /* #if !UCONFIG_NO_FORMATTING */
 
-#endif 
+#endif
 //eof

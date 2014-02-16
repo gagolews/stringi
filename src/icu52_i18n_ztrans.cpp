@@ -6,7 +6,7 @@
 */
 
 /**
- * \file 
+ * \file
  * \brief C API: Time zone transition classes
  */
 

@@ -419,7 +419,7 @@ DecimalFormatSymbols::initialize() {
     fSymbols[kInfinitySymbol] = (UChar)0x221e;          // 'oo' infinite
     fSymbols[kNaNSymbol] = (UChar)0xfffd;               // SUB NaN
     fSymbols[kSignificantDigitSymbol] = (UChar)0x0040;  // '@' significant digit
-    fSymbols[kMonetaryGroupingSeparatorSymbol].remove(); // 
+    fSymbols[kMonetaryGroupingSeparatorSymbol].remove(); //
 }
 
 Locale

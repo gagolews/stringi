@@ -342,7 +342,7 @@ void RBBINode::printTree(UBool printHeading) {
             if (fLeftChild != NULL) {
                 fLeftChild->printTree(FALSE);
             }
-            
+
             if (fRightChild != NULL) {
                 fRightChild->printTree(FALSE);
             }

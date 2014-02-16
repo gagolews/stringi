@@ -75,7 +75,7 @@ DictionaryBreakEngine::findBreaks( UText *text,
         result = divideUpDictionaryRange(text, rangeStart, rangeEnd, foundBreaks);
         utext_setNativeIndex(text, current);
     }
-    
+
     return result;
 }
 
@@ -111,20 +111,20 @@ private:
 public:
     PossibleWord();
     ~PossibleWord();
-  
+
     // Fill the list of candidates if needed, select the longest, and return the number found
     int       candidates( UText *text, DictionaryMatcher *dict, int32_t rangeEnd );
-  
+
     // Select the currently marked candidate, point after it in the text, and invalidate self
     int32_t   acceptMarked( UText *text );
-  
+
     // Back up from the current candidate to the next shorter one; return TRUE if that exists
     // and point the text after it
     UBool     backUp( UText *text );
-  
+
     // Return the longest prefix this candidate location shares with a dictionary word
     int32_t   longestPrefix();
-  
+
     // Mark the current candidate as the one we like
     void      markCurrent();
 };
@@ -254,15 +254,15 @@ ThaiBreakEngine::divideUpDictionaryRange( UText *text,
     UErrorCode status = U_ZERO_ERROR;
     PossibleWord words[THAI_LOOKAHEAD];
     UChar32 uc;
-    
+
     utext_setNativeIndex(text, rangeStart);
-    
+
     while (U_SUCCESS(status) && (current = (int32_t)utext_getNativeIndex(text)) < rangeEnd) {
         wordLength = 0;
 
         // Look for candidate words at the current position
         int candidates = words[wordsFound%THAI_LOOKAHEAD].candidates(text, fDictionary, rangeEnd);
-        
+
         // If we found exactly one, use that
         if (candidates == 1) {
             wordLength = words[wordsFound % THAI_LOOKAHEAD].acceptMarked(text);
@@ -282,12 +282,12 @@ ThaiBreakEngine::divideUpDictionaryRange( UText *text,
                         words[wordsFound%THAI_LOOKAHEAD].markCurrent();
                         wordsMatched = 2;
                     }
-                    
+
                     // If we're already at the end of the range, we're done
                     if ((int32_t)utext_getNativeIndex(text) >= rangeEnd) {
                         goto foundBest;
                     }
-                    
+
                     // See if any of the possible second words is followed by a third word
                     do {
                         // If we find a third word, stop right away
@@ -304,7 +304,7 @@ foundBest:
             wordLength = words[wordsFound % THAI_LOOKAHEAD].acceptMarked(text);
             wordsFound += 1;
         }
-        
+
         // We come here after having either found a word or not. We look ahead to the
         // next word. If it's not a dictionary word, we will combine it withe the word we
         // just found (if there is one), but only if the preceding word does not exceed
@@ -345,12 +345,12 @@ foundBest:
                     }
                     pc = uc;
                 }
-                
+
                 // Bump the word count if there wasn't already one
                 if (wordLength <= 0) {
                     wordsFound += 1;
                 }
-                
+
                 // Update the length with the passed-over characters
                 wordLength += chars;
             }
@@ -359,14 +359,14 @@ foundBest:
                 utext_setNativeIndex(text, current+wordLength);
             }
         }
-        
+
         // Never stop before a combining mark.
         int32_t currPos;
         while ((currPos = (int32_t)utext_getNativeIndex(text)) < rangeEnd && fMarkSet.contains(utext_current32(text))) {
             utext_next32(text);
             wordLength += (int32_t)utext_getNativeIndex(text) - currPos;
         }
-        
+
         // Look ahead for possible suffixes if a dictionary word does not follow.
         // We do this in code rather than using a rule so that the heuristic
         // resynch continues to function. For example, one of the suffix characters
@@ -482,15 +482,15 @@ LaoBreakEngine::divideUpDictionaryRange( UText *text,
     UErrorCode status = U_ZERO_ERROR;
     PossibleWord words[LAO_LOOKAHEAD];
     UChar32 uc;
-    
+
     utext_setNativeIndex(text, rangeStart);
-    
+
     while (U_SUCCESS(status) && (current = (int32_t)utext_getNativeIndex(text)) < rangeEnd) {
         wordLength = 0;
 
         // Look for candidate words at the current position
         int candidates = words[wordsFound%LAO_LOOKAHEAD].candidates(text, fDictionary, rangeEnd);
-        
+
         // If we found exactly one, use that
         if (candidates == 1) {
             wordLength = words[wordsFound % LAO_LOOKAHEAD].acceptMarked(text);
@@ -510,12 +510,12 @@ LaoBreakEngine::divideUpDictionaryRange( UText *text,
                         words[wordsFound%LAO_LOOKAHEAD].markCurrent();
                         wordsMatched = 2;
                     }
-                    
+
                     // If we're already at the end of the range, we're done
                     if ((int32_t)utext_getNativeIndex(text) >= rangeEnd) {
                         goto foundBest;
                     }
-                    
+
                     // See if any of the possible second words is followed by a third word
                     do {
                         // If we find a third word, stop right away
@@ -532,7 +532,7 @@ foundBest:
             wordLength = words[wordsFound % LAO_LOOKAHEAD].acceptMarked(text);
             wordsFound += 1;
         }
-        
+
         // We come here after having either found a word or not. We look ahead to the
         // next word. If it's not a dictionary word, we will combine it withe the word we
         // just found (if there is one), but only if the preceding word does not exceed
@@ -569,12 +569,12 @@ foundBest:
                     }
                     pc = uc;
                 }
-                
+
                 // Bump the word count if there wasn't already one
                 if (wordLength <= 0) {
                     wordsFound += 1;
                 }
-                
+
                 // Update the length with the passed-over characters
                 wordLength += chars;
             }
@@ -583,14 +583,14 @@ foundBest:
                 utext_setNativeIndex(text, current+wordLength);
             }
         }
-        
+
         // Never stop before a combining mark.
         int32_t currPos;
         while ((currPos = (int32_t)utext_getNativeIndex(text)) < rangeEnd && fMarkSet.contains(utext_current32(text))) {
             utext_next32(text);
             wordLength += (int32_t)utext_getNativeIndex(text) - currPos;
         }
-        
+
         // Look ahead for possible suffixes if a dictionary word does not follow.
         // We do this in code rather than using a rule so that the heuristic
         // resynch continues to function. For example, one of the suffix characters
@@ -836,7 +836,7 @@ foundBest:
             foundBreaks.push((current+wordLength), status);
         }
     }
-    
+
     // Don't return a break for the end of the dictionary range if there is one there.
     if (foundBreaks.peeki() >= rangeEnd) {
         (void) foundBreaks.popi();
@@ -899,7 +899,7 @@ static inline bool isKatakana(uint16_t value) {
 }
 
 // A very simple helper class to streamline the buffer handling in
-// divideUpDictionaryRange. 
+// divideUpDictionaryRange.
 template<class T, size_t N>
 class AutoBuffer {
 public:
@@ -951,7 +951,7 @@ private:
  * @param foundBreaks Output of C array of int32_t break positions, or 0
  * @return The number of breaks found
  */
-int32_t 
+int32_t
 CjkBreakEngine::divideUpDictionaryRange( UText *text,
         int32_t rangeStart,
         int32_t rangeEnd,
@@ -1028,7 +1028,7 @@ CjkBreakEngine::divideUpDictionaryRange( UText *text,
         bestSnlp[i] = kuint32max;
     }
 
-    // prev[i] is the index of the last CJK character in the previous word in 
+    // prev[i] is the index of the last CJK character in the previous word in
     // the best segmentation of the first i characters.
     // TODO: Replace by UVector32.
     AutoBuffer<int, defaultInputLength> prev(numChars + 1);
@@ -1055,8 +1055,8 @@ CjkBreakEngine::divideUpDictionaryRange( UText *text,
 
         fDictionary->matches(&normalizedText, maxSearchLength, lengths.elems(), count, maxSearchLength, values.elems());
 
-        // if there are no single character matches found in the dictionary 
-        // starting with this charcter, treat character as a 1-character word 
+        // if there are no single character matches found in the dictionary
+        // starting with this charcter, treat character as a 1-character word
         // with the highest value possible, i.e. the least likely to occur.
         // Exclude Korean characters from this treatment, as they should be left
         // together by default.
@@ -1127,7 +1127,7 @@ CjkBreakEngine::divideUpDictionaryRange( UText *text,
         t_boundary[numBreaks++] = 0;
     }
 
-    // Now that we're done, convert positions in t_bdry[] (indices in 
+    // Now that we're done, convert positions in t_bdry[] (indices in
     // the normalized input string) back to indices in the raw input string
     // while reversing t_bdry and pushing values to foundBreaks.
     for (int i = numBreaks-1; i >= 0; i--) {
@@ -1142,4 +1142,3 @@ CjkBreakEngine::divideUpDictionaryRange( UText *text,
 U_NAMESPACE_END
 
 #endif /* #if !UCONFIG_NO_BREAK_ITERATION */
-

@@ -49,14 +49,14 @@ struct SpoofStringLengthsElement;
   */
 class SpoofImpl : public UObject  {
 public:
-	SpoofImpl(SpoofData *data, UErrorCode &status);
-	SpoofImpl();
-	virtual ~SpoofImpl();
+   SpoofImpl(SpoofData *data, UErrorCode &status);
+   SpoofImpl();
+   virtual ~SpoofImpl();
 
     /** Copy constructor, used by the user level uspoof_clone() function.
      */
     SpoofImpl(const SpoofImpl &src, UErrorCode &status);
-    
+
     static SpoofImpl *validateThis(USpoofChecker *sc, UErrorCode &status);
     static const SpoofImpl *validateThis(const USpoofChecker *sc, UErrorCode &status);
 
@@ -65,7 +65,7 @@ public:
      *  @param    tableMask  bit flag specifying which confusable table to use.
      *                       One of USPOOF_SL_TABLE_FLAG, USPOOF_MA_TABLE_FLAG, etc.
      *  @return   The length in UTF-16 code units of the substition string.
-     */  
+     */
     int32_t confusableLookup(UChar32 inChar, int32_t tableMask, UnicodeString &destBuf) const;
 
     /** Set and Get AllowedLocales, implementations of the corresponding API */
@@ -85,7 +85,7 @@ public:
     //    if a Spoof opportunity is detected.
     void wholeScriptCheck(
         const UnicodeString &text, ScriptSet *result, UErrorCode &status) const;
-	    
+
     static UClassID U_EXPORT2 getStaticClassID(void);
     virtual UClassID getDynamicClassID(void) const;
 
@@ -93,7 +93,7 @@ public:
     //                       Maintain a one-element cache, which is sufficient to avoid repeatedly
     //                       creating new ones unless we get multi-thread concurrency in spoof
     //                       check operations, which should be statistically uncommon.
-    IdentifierInfo *getIdentifierInfo(UErrorCode &status) const; 
+    IdentifierInfo *getIdentifierInfo(UErrorCode &status) const;
     void releaseIdentifierInfo(IdentifierInfo *idInfo) const;
 
     //
@@ -104,9 +104,9 @@ public:
     int32_t           fChecks;            // Bit vector of checks to perform.
 
     SpoofData        *fSpoofData;
-    
+
     const UnicodeSet *fAllowedCharsSet;   // The UnicodeSet of allowed characters.
-                                          //   for this Spoof Checker.  Defaults to all chars. 
+                                          //   for this Spoof Checker.  Defaults to all chars.
 
     const char       *fAllowedLocales;    // The list of allowed locales.
     URestrictionLevel fRestrictionLevel;  // The maximum restriction level for an acceptable identifier.
@@ -198,7 +198,7 @@ class SpoofData: public UMemory {
     static SpoofData *getDefault(UErrorCode &status);   // Load standard ICU spoof data.
     SpoofData(UErrorCode &status);   // Create new spoof data wrapper.
                                      // Only used when building new data from rules.
-    
+
     // Constructor for use when creating from prebuilt default data.
     //   A UDataMemory is what the ICU internal data loading functions provide.
     //   The udm is adopted by the SpoofData.
@@ -217,7 +217,7 @@ class SpoofData: public UMemory {
     //    Clone of a user-level spoof detector increments the ref count on the data.
     //    Close of a user-level spoof detector decrements the ref count.
     //    If the data is owned by us, it will be deleted when count goes to zero.
-    SpoofData *addReference(); 
+    SpoofData *addReference();
     void removeReference();
 
     // Reserve space in the raw data.  For use by builder when putting together a
@@ -233,7 +233,7 @@ class SpoofData: public UMemory {
     // Reset all fields to an initial state.
     // Called from the top of all constructors.
     void reset();
-    
+
     SpoofDataHeader             *fRawData;          // Ptr to the raw memory-mapped data
     UBool                       fDataOwned;         // True if the raw data is owned, and needs
                                                     //  to be deleted when refcount goes to zero.
@@ -255,7 +255,7 @@ class SpoofData: public UMemory {
     UTrie2                      *fLowerCaseTrie;
     ScriptSet                   *fScriptSets;
     };
-    
+
 
 //---------------------------------------------------------------------------------------
 //
@@ -289,27 +289,27 @@ struct SpoofDataHeader {
 
 
     // The following sections are for data from confusablesWholeScript.txt
-    
+
     int32_t       fAnyCaseTrie;           // byte offset to the serialized Any Case Trie
     int32_t       fAnyCaseTrieLength;     // Length (bytes) of the serialized Any Case Trie
-    
+
     int32_t       fLowerCaseTrie;         // byte offset to the serialized Lower Case Trie
     int32_t       fLowerCaseTrieLength;   // Length (bytes) of the serialized Lower Case Trie
 
     int32_t       fScriptSets;            // byte offset to array of ScriptSets
     int32_t       fScriptSetsLength;      // Number of ScriptSets (24 bytes each)
-    
+
 
     // The following sections are for data from xidmodifications.txt
-    
-    
+
+
     int32_t       unused[15];              // Padding, Room for Expansion
-    
- }; 
+
+ };
 
 
 
-    
+
 //
 //  Structure for the Whole Script Confusable Data
 //    See Unicode UAX-39, Unicode Security Mechanisms, for a description of the
@@ -342,4 +342,3 @@ uspoof_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *ou
 #endif
 
 #endif  /* USPOOFIM_H */
-

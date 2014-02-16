@@ -74,7 +74,7 @@ void RBBIDataWrapper::init(const RBBIDataHeader *data, UErrorCode &status) {
         return;
     }
     fHeader = data;
-    if (fHeader->fMagic != 0xb1a0 || fHeader->fFormatVersion[0] != 3) 
+    if (fHeader->fMagic != 0xb1a0 || fHeader->fFormatVersion[0] != 3)
     {
         status = U_INVALID_FORMAT_ERROR;
         return;
@@ -314,16 +314,16 @@ ubrk_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *outD
     //
     // Get the RRBI Data Header, and check that it appears to be OK.
     //
-    //    Note:  ICU 3.2 and earlier, RBBIDataHeader::fDataFormat was actually 
+    //    Note:  ICU 3.2 and earlier, RBBIDataHeader::fDataFormat was actually
     //           an int32_t with a value of 1.  Starting with ICU 3.4,
     //           RBBI's fDataFormat matches the dataFormat field from the
     //           UDataInfo header, four int8_t bytes.  The value is {3,1,0,0}
     //
     const uint8_t  *inBytes =(const uint8_t *)inData+headerSize;
     RBBIDataHeader *rbbiDH = (RBBIDataHeader *)inBytes;
-    if (ds->readUInt32(rbbiDH->fMagic) != 0xb1a0 || 
+    if (ds->readUInt32(rbbiDH->fMagic) != 0xb1a0 ||
         rbbiDH->fFormatVersion[0] != 3 ||
-        ds->readUInt32(rbbiDH->fLength)  <  sizeof(RBBIDataHeader)) 
+        ds->readUInt32(rbbiDH->fLength)  <  sizeof(RBBIDataHeader))
     {
         udata_printError(ds, "ubrk_swap(): RBBI Data header is invalid.\n");
         *status=U_UNSUPPORTED_ERROR;
@@ -376,23 +376,23 @@ ubrk_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *outD
     //
     int32_t         topSize = offsetof(RBBIStateTable, fTableData);
 
-    // Forward state table.  
+    // Forward state table.
     tableStartOffset = ds->readUInt32(rbbiDH->fFTable);
     tableLength      = ds->readUInt32(rbbiDH->fFTableLen);
 
     if (tableLength > 0) {
-        ds->swapArray32(ds, inBytes+tableStartOffset, topSize, 
+        ds->swapArray32(ds, inBytes+tableStartOffset, topSize,
                             outBytes+tableStartOffset, status);
         ds->swapArray16(ds, inBytes+tableStartOffset+topSize, tableLength-topSize,
                             outBytes+tableStartOffset+topSize, status);
     }
-    
+
     // Reverse state table.  Same layout as forward table, above.
     tableStartOffset = ds->readUInt32(rbbiDH->fRTable);
     tableLength      = ds->readUInt32(rbbiDH->fRTableLen);
 
     if (tableLength > 0) {
-        ds->swapArray32(ds, inBytes+tableStartOffset, topSize, 
+        ds->swapArray32(ds, inBytes+tableStartOffset, topSize,
                             outBytes+tableStartOffset, status);
         ds->swapArray16(ds, inBytes+tableStartOffset+topSize, tableLength-topSize,
                             outBytes+tableStartOffset+topSize, status);
@@ -403,7 +403,7 @@ ubrk_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *outD
     tableLength      = ds->readUInt32(rbbiDH->fSFTableLen);
 
     if (tableLength > 0) {
-        ds->swapArray32(ds, inBytes+tableStartOffset, topSize, 
+        ds->swapArray32(ds, inBytes+tableStartOffset, topSize,
                             outBytes+tableStartOffset, status);
         ds->swapArray16(ds, inBytes+tableStartOffset+topSize, tableLength-topSize,
                             outBytes+tableStartOffset+topSize, status);
@@ -414,7 +414,7 @@ ubrk_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *outD
     tableLength      = ds->readUInt32(rbbiDH->fSRTableLen);
 
     if (tableLength > 0) {
-        ds->swapArray32(ds, inBytes+tableStartOffset, topSize, 
+        ds->swapArray32(ds, inBytes+tableStartOffset, topSize,
                             outBytes+tableStartOffset, status);
         ds->swapArray16(ds, inBytes+tableStartOffset+topSize, tableLength-topSize,
                             outBytes+tableStartOffset+topSize, status);

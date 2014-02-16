@@ -14,7 +14,7 @@
 *   created by: Vladimir Weinstein
 *
 * This module builds a collator based on the rule set.
-* 
+*
 */
 
 #ifndef UCOL_BLD_H
@@ -48,7 +48,7 @@ typedef struct {
   uint32_t fHigh; /*forbidden High */
 } ucolCEGenerator;
 
-U_CFUNC uint32_t U_EXPORT2 ucol_getCEStrengthDifference(uint32_t CE, uint32_t contCE, 
+U_CFUNC uint32_t U_EXPORT2 ucol_getCEStrengthDifference(uint32_t CE, uint32_t contCE,
                                             uint32_t prevCE, uint32_t prevContCE);
 
 U_INTERNAL int32_t U_EXPORT2 ucol_findReorderingEntry(const char* name);

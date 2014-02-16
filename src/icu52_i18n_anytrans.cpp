@@ -39,7 +39,7 @@ U_CDECL_BEGIN
  */
 static void U_CALLCONV
 _deleteTransliterator(void *obj) {
-    delete (icu::Transliterator*) obj;    
+    delete (icu::Transliterator*) obj;
 }
 U_CDECL_END
 
@@ -85,7 +85,7 @@ public:
      * The end of the run, exclusive, valid after next() returns.
      */
     int32_t limit;
-    
+
     /**
      * Constructs a run iterator over the given text from start
      * (inclusive) to limit (exclusive).
@@ -180,7 +180,7 @@ AnyTransliterator::AnyTransliterator(const UnicodeString& id,
                                      UScriptCode theTargetScript,
                                      UErrorCode& ec) :
     Transliterator(id, NULL),
-    targetScript(theTargetScript) 
+    targetScript(theTargetScript)
 {
     cache = uhash_open(uhash_hashLong, uhash_compareLong, NULL, &ec);
     if (U_FAILURE(ec)) {
@@ -239,7 +239,7 @@ void AnyTransliterator::handleTransliterate(Replaceable& text, UTransPosition& p
         // Try to instantiate transliterator from it.scriptCode to
         // our target or target/variant
         Transliterator* t = getTransliterator(it.scriptCode);
-       
+
         if (t == NULL) {
             // We have no transliterator.  Do nothing, but keep
             // pos.start up to date.
@@ -251,7 +251,7 @@ void AnyTransliterator::handleTransliterate(Replaceable& text, UTransPosition& p
         // a non-incremental transliteration.  Otherwise do an
         // incremental one.
         UBool incremental = isIncremental && (it.limit >= allLimit);
-        
+
         pos.start = uprv_max(allStart, it.start);
         pos.limit = uprv_min(allLimit, it.limit);
         int32_t limit = pos.limit;
@@ -281,11 +281,11 @@ Transliterator* AnyTransliterator::getTransliterator(UScriptCode source) const {
         UnicodeString sourceName(uscript_getName(source), -1, US_INV);
         UnicodeString id(sourceName);
         id.append(TARGET_SEP).append(target);
-        
+
         t = Transliterator::createInstance(id, UTRANS_FORWARD, ec);
         if (U_FAILURE(ec) || t == NULL) {
             delete t;
-            
+
             // Try to pivot around Latin, our most common script
             id = sourceName;
             id.append(LATIN_PIVOT, -1).append(target);
@@ -313,7 +313,7 @@ static UScriptCode scriptNameToCode(const UnicodeString& name) {
     UErrorCode ec = U_ZERO_ERROR;
     int32_t nameLen = name.length();
     UBool isInvariant = uprv_isInvariantUString(name.getBuffer(), nameLen);
-    
+
     if (isInvariant) {
         name.extract(0, nameLen, buf, (int32_t)sizeof(buf), US_INV);
         buf[127] = 0;   // Make sure that we NULL terminate the string.
@@ -352,7 +352,7 @@ void AnyTransliterator::registerIDs() {
             if (seen.geti(target) != 0) continue;
             ec = U_ZERO_ERROR;
             seen.puti(target, 1, ec);
-            
+
             // Get the script code for the target.  If not a script, ignore.
             UScriptCode targetScript = scriptNameToCode(target);
             if (targetScript == USCRIPT_INVALID_CODE) continue;
@@ -362,7 +362,7 @@ void AnyTransliterator::registerIDs() {
             for (int32_t v=0; v<variantCount; ++v) {
                 UnicodeString variant;
                 Transliterator::_getAvailableVariant(v, source, target, variant);
-                
+
                 UnicodeString id;
                 TransliteratorIDParser::STVtoID(UnicodeString(TRUE, ANY, 3), target, variant, id);
                 ec = U_ZERO_ERROR;

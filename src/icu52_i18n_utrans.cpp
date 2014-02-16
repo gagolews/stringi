@@ -144,11 +144,11 @@ utrans_openU(const UChar *id,
         return NULL;
     }
     UParseError temp;
-    
+
     if(parseError == NULL){
         parseError = &temp;
     }
-    
+
     UnicodeString ID(idLength<0, id, idLength); // r-o alias
 
     if(rules==NULL){
@@ -156,7 +156,7 @@ utrans_openU(const UChar *id,
         Transliterator *trans = NULL;
 
         trans = Transliterator::createInstance(ID, dir, *parseError, *status);
-        
+
         if(U_FAILURE(*status)){
             return NULL;
         }
@@ -167,8 +167,8 @@ utrans_openU(const UChar *id,
                               rulesLength); // r-o alias
 
         Transliterator *trans = NULL;
-        trans = Transliterator::createFromRules(ID, ruleStr, dir, *parseError, *status); 
-        if(U_FAILURE(*status)) { 
+        trans = Transliterator::createFromRules(ID, ruleStr, dir, *parseError, *status);
+        if(U_FAILURE(*status)) {
             return NULL;
         }
 
@@ -180,7 +180,7 @@ U_CAPI UTransliterator* U_EXPORT2
 utrans_open(const char* id,
             UTransDirection dir,
             const UChar* rules,         /* may be Null */
-            int32_t rulesLength,        /* -1 if null-terminated */ 
+            int32_t rulesLength,        /* -1 if null-terminated */
             UParseError* parseError,    /* may be Null */
             UErrorCode* status) {
     UnicodeString ID(id, -1, US_INV); // use invariant converter
@@ -446,7 +446,7 @@ utrans_transUChars(const UTransliterator* trans,
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
- 
+
     int32_t textLen = (textLength == NULL || *textLength < 0)
         ? u_strlen(text) : *textLength;
     // writeable alias: for this ct, len CANNOT be -1 (why?)

@@ -159,16 +159,16 @@ U_NAMESPACE_BEGIN
 typedef int32_t u_atomic_int32_t;
 #define ATOMIC_INT32_T_INITIALIZER(val) val
 
-U_COMMON_API int32_t U_EXPORT2 
+U_COMMON_API int32_t U_EXPORT2
 umtx_loadAcquire(u_atomic_int32_t &var);
 
-U_COMMON_API void U_EXPORT2 
+U_COMMON_API void U_EXPORT2
 umtx_storeRelease(u_atomic_int32_t &var, int32_t val);
 
-U_COMMON_API int32_t U_EXPORT2 
+U_COMMON_API int32_t U_EXPORT2
 umtx_atomic_inc(u_atomic_int32_t *p);
 
-U_COMMON_API int32_t U_EXPORT2 
+U_COMMON_API int32_t U_EXPORT2
 umtx_atomic_dec(u_atomic_int32_t *p);
 
 U_NAMESPACE_END

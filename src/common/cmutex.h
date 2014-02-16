@@ -7,7 +7,7 @@
 * File cmutex.h
 *
 *     Minimal plain C declarations for ICU mutex functions.
-*     This header provides a transition path for plain C files that 
+*     This header provides a transition path for plain C files that
 *     formerly included mutex.h, which is now a C++ only header.
 *
 *     This header should not be used for new code.
@@ -27,7 +27,7 @@ typedef struct UMutex UMutex;
  *              the global ICU mutex.  Recursive locks are an error
  *              and may cause a deadlock on some platforms.
  */
-U_INTERNAL void U_EXPORT2 umtx_lock(UMutex* mutex); 
+U_INTERNAL void U_EXPORT2 umtx_lock(UMutex* mutex);
 
 /* Unlock a mutex.
  * @param mutex The given mutex to be unlocked.  Pass NULL to specify
@@ -36,4 +36,3 @@ U_INTERNAL void U_EXPORT2 umtx_lock(UMutex* mutex);
 U_INTERNAL void U_EXPORT2 umtx_unlock (UMutex* mutex);
 
 #endif
-

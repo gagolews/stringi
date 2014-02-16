@@ -275,21 +275,21 @@ RegexPattern::compile(const UnicodeString &regex,
     if (U_FAILURE(status)) {
         return NULL;
     }
-    
+
     const uint32_t allFlags = UREGEX_CANON_EQ | UREGEX_CASE_INSENSITIVE | UREGEX_COMMENTS |
     UREGEX_DOTALL   | UREGEX_MULTILINE        | UREGEX_UWORD |
     UREGEX_ERROR_ON_UNKNOWN_ESCAPES           | UREGEX_UNIX_LINES | UREGEX_LITERAL;
-    
+
     if ((flags & ~allFlags) != 0) {
         status = U_REGEX_INVALID_FLAG;
         return NULL;
     }
-    
+
     if ((flags & UREGEX_CANON_EQ) != 0) {
         status = U_REGEX_UNIMPLEMENTED;
         return NULL;
     }
-    
+
     RegexPattern *This = new RegexPattern;
     if (This == NULL) {
         status = U_MEMORY_ALLOCATION_ERROR;
@@ -301,15 +301,15 @@ RegexPattern::compile(const UnicodeString &regex,
         return NULL;
     }
     This->fFlags = flags;
-    
+
     RegexCompile     compiler(This, status);
     compiler.compile(regex, pe, status);
-    
+
     if (U_FAILURE(status)) {
         delete This;
         This = NULL;
     }
-    
+
     return This;
 }
 
@@ -355,7 +355,7 @@ RegexPattern::compile(UText                *regex,
 
     RegexCompile     compiler(This, status);
     compiler.compile(regex, pe, status);
-    
+
     if (U_FAILURE(status)) {
         delete This;
         This = NULL;
@@ -538,12 +538,12 @@ UnicodeString RegexPattern::pattern() const {
         int64_t nativeLen = utext_nativeLength(fPattern);
         int32_t len16 = utext_extract(fPattern, 0, nativeLen, NULL, 0, &status); // buffer overflow error
         UnicodeString result;
-        
+
         status = U_ZERO_ERROR;
         UChar *resultChars = result.getBuffer(len16);
         utext_extract(fPattern, 0, nativeLen, resultChars, len16, &status); // unterminated warning
         result.releaseBuffer(len16);
-        
+
         return result;
     }
 }
@@ -756,7 +756,7 @@ RegexPatternDump(const RegexPattern *This) {
             c = '.';
         }
         REGEX_DUMP_DEBUG_PRINTF(("%c", c));
-        
+
         c = UTEXT_NEXT32(This->fPattern);
     }
     REGEX_DUMP_DEBUG_PRINTF(("\n"));

@@ -160,7 +160,7 @@ uprv_init_collIterate(const UCollator *collator, const UChar *sourceString,
     IInit_collIterate(collator, sourceString, sourceLen, s, status);
 }
 
-U_CAPI collIterate * U_EXPORT2 
+U_CAPI collIterate * U_EXPORT2
 uprv_new_collIterate(UErrorCode *status) {
     if(U_FAILURE(*status)) {
         return NULL;
@@ -173,7 +173,7 @@ uprv_new_collIterate(UErrorCode *status) {
     return s;
 }
 
-U_CAPI void U_EXPORT2 
+U_CAPI void U_EXPORT2
 uprv_delete_collIterate(collIterate *s) {
     delete s;
 }
@@ -653,22 +653,22 @@ ucol_safeClone(const UCollator *coll, void * /*stackBuffer*/, int32_t * pBufferS
         localCollator->freeRulesOnClose = FALSE;
         localCollator->rulesLength = coll->rulesLength;
     }
-    
+
     // collator reordering
     if (coll->defaultReorderCodes) {
-        localCollator->defaultReorderCodes = 
+        localCollator->defaultReorderCodes =
             (int32_t*) uprv_memcpy(defaultReorderCodes, coll->defaultReorderCodes, coll->defaultReorderCodesLength * sizeof(int32_t));
         localCollator->defaultReorderCodesLength = coll->defaultReorderCodesLength;
         localCollator->freeDefaultReorderCodesOnClose = FALSE;
     }
     if (coll->reorderCodes) {
-        localCollator->reorderCodes = 
+        localCollator->reorderCodes =
             (int32_t*)uprv_memcpy(reorderCodes, coll->reorderCodes, coll->reorderCodesLength * sizeof(int32_t));
         localCollator->reorderCodesLength = coll->reorderCodesLength;
         localCollator->freeReorderCodesOnClose = FALSE;
     }
     if (coll->leadBytePermutationTable) {
-        localCollator->leadBytePermutationTable = 
+        localCollator->leadBytePermutationTable =
             (uint8_t*) uprv_memcpy(leadBytePermutationTable, coll->leadBytePermutationTable, 256);
         localCollator->freeLeadBytePermutationTableOnClose = FALSE;
     }
@@ -3990,7 +3990,7 @@ uint32_t ucol_prv_getSpecialPrevCE(const UCollator *coll, UChar ch, uint32_t CE,
                         jamoOffset = source->pos - source->string;
                         source->fcdPosition       = source->pos-1;
                     }
-                    
+
                     // Append offsets for the additional chars
                     // (not the 0, and not the L whose offsets match the original Hangul)
                     int32_t jamoRemaining = tempbufferLength - 2;
@@ -6046,7 +6046,7 @@ saveState:
 
     /* To avoid memory leak, free the offset buffer if necessary. */
     ucol_freeOffsetBuffer(&s);
-    
+
     // Return number of meaningful sortkey bytes.
     UTRACE_DATA4(UTRACE_VERBOSE, "dest = %vb, state=%d %d",
                   dest,i, state[0], state[1]);
@@ -6213,7 +6213,7 @@ ucol_setUpLatinOne(UCollator *coll, UErrorCode *status) {
     }
     UChar ch = 0;
     UCollationElements *it = ucol_openElements(coll, &ch, 1, status);
-    // Check for null pointer 
+    // Check for null pointer
     if (U_FAILURE(*status)) {
         ucol_closeElements(it);
         return FALSE;
@@ -6463,7 +6463,7 @@ ucol_setVariableTop(UCollator *coll, const UChar *varTop, int32_t len, UErrorCod
         coll->variableTopValueisDefault = FALSE;
         coll->variableTopValue = (CE & UCOL_PRIMARYMASK)>>16;
     }
-    
+
     /* To avoid memory leak, free the offset buffer if necessary. */
     ucol_freeOffsetBuffer(&s);
 
@@ -6681,7 +6681,7 @@ ucol_getStrength(const UCollator *coll)
     return ucol_getAttribute(coll, UCOL_STRENGTH, &status);
 }
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 ucol_getReorderCodes(const UCollator *coll,
                     int32_t *dest,
                     int32_t destCapacity,
@@ -6714,7 +6714,7 @@ ucol_getReorderCodes(const UCollator *coll,
     return coll->reorderCodesLength;
 }
 
-U_CAPI void U_EXPORT2 
+U_CAPI void U_EXPORT2
 ucol_setReorderCodes(UCollator* coll,
                     const int32_t* reorderCodes,
                     int32_t reorderCodesLength,
@@ -6732,7 +6732,7 @@ ucol_setReorderCodes(UCollator* coll,
       ((Collator*)coll->delegate)->setReorderCodes(reorderCodes, reorderCodesLength, *status);
       return;
     }
-    
+
     if (coll->reorderCodes != NULL && coll->freeReorderCodesOnClose == TRUE) {
         uprv_free(coll->reorderCodes);
     }
@@ -6760,7 +6760,7 @@ ucol_setReorderCodes(UCollator* coll,
     ucol_buildPermutationTable(coll, status);
 }
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 ucol_getEquivalentReorderCodes(int32_t reorderCode,
                     int32_t* dest,
                     int32_t destCapacity,
@@ -6772,10 +6772,10 @@ ucol_getEquivalentReorderCodes(int32_t reorderCode,
     int16_t reorderCodesForLeadByte[USCRIPT_CODE_LIMIT];
     int reorderCodesForLeadByteCount;
     int reorderCodeIndex;
-    
+
     int32_t equivalentCodesCount = 0;
     int setIndex;
-    
+
     if (U_FAILURE(*pErrorCode)) {
         return 0;
     }
@@ -6789,7 +6789,7 @@ ucol_getEquivalentReorderCodes(int32_t reorderCode,
 
     const UCollator* uca = ucol_initUCA(pErrorCode);
     if (U_FAILURE(*pErrorCode)) {
-	return 0;
+   return 0;
     }
     leadBytesCount = ucol_getLeadBytesForReorderCode(uca, reorderCode, leadBytes, 256);
     for (leadByteIndex = 0; leadByteIndex < leadBytesCount; leadByteIndex++) {
@@ -6799,17 +6799,17 @@ ucol_getEquivalentReorderCodes(int32_t reorderCode,
             equivalentCodesSet[reorderCodesForLeadByte[reorderCodeIndex]] = true;
         }
     }
-    
+
     for (setIndex = 0; setIndex < USCRIPT_CODE_LIMIT; setIndex++) {
         if (equivalentCodesSet[setIndex] == true) {
             equivalentCodesCount++;
         }
     }
-    
+
     if (destCapacity == 0) {
         return equivalentCodesCount;
     }
-    
+
     equivalentCodesCount = 0;
     for (setIndex = 0; setIndex < USCRIPT_CODE_LIMIT; setIndex++) {
         if (equivalentCodesSet[setIndex] == true) {
@@ -6817,7 +6817,7 @@ ucol_getEquivalentReorderCodes(int32_t reorderCode,
             if (equivalentCodesCount >= destCapacity) {
                 break;
             }
-        }        
+        }
     }
     return equivalentCodesCount;
 }
@@ -8550,7 +8550,7 @@ ucol_strcoll( const UCollator    *coll,
         /* There is an identical portion at the beginning of the two strings.        */
         /*   If the identical portion ends within a contraction or a comibining      */
         /*   character sequence, back up to the start of that sequence.              */
-        
+
         // These values should already be set by the code above.
         //pSrc  = source + equalLength;        /* point to the first differing chars   */
         //pTarg = target + equalLength;

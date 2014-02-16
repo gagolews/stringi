@@ -105,7 +105,7 @@ UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
     } else if (hasBOM && numValid > numInvalid*10) {
         confidence = 80;
     } else if (numValid > 3 && numInvalid == 0) {
-        confidence = 100;            
+        confidence = 100;
     } else if (numValid > 0 && numInvalid == 0) {
         confidence = 80;
     } else if (numValid > numInvalid*10) {
@@ -131,7 +131,7 @@ int32_t CharsetRecog_UTF_32_BE::getChar(const uint8_t *input, int32_t index) con
 {
     return input[index + 0] << 24 | input[index + 1] << 16 |
            input[index + 2] <<  8 | input[index + 3];
-} 
+}
 
 CharsetRecog_UTF_32_LE::~CharsetRecog_UTF_32_LE()
 {
@@ -151,4 +151,3 @@ int32_t CharsetRecog_UTF_32_LE::getChar(const uint8_t *input, int32_t index) con
 
 U_NAMESPACE_END
 #endif
-

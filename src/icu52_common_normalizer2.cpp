@@ -496,10 +496,10 @@ static UBool U_CALLCONV uprv_normalizer2_cleanup() {
     noopSingleton = NULL;
     uhash_close(cache);
     cache=NULL;
-    nfcInitOnce.reset(); 
-    nfkcInitOnce.reset(); 
-    nfkc_cfInitOnce.reset(); 
-    noopInitOnce.reset(); 
+    nfcInitOnce.reset();
+    nfkcInitOnce.reset();
+    nfkc_cfInitOnce.reset();
+    noopInitOnce.reset();
     return TRUE;
 }
 

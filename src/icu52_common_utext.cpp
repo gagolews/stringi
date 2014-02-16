@@ -1575,7 +1575,7 @@ utf8TextClose(UText *ut) {
 U_CDECL_END
 
 
-static const struct UTextFuncs utf8Funcs = 
+static const struct UTextFuncs utf8Funcs =
 {
     sizeof(UTextFuncs),
     0, 0, 0,             // Reserved alignment padding
@@ -1862,7 +1862,7 @@ repTextExtract(UText *ut,
     UnicodeString buffer(dest, 0, destCapacity); // writable alias
     rep->extractBetween(start32, limit32, buffer);
     repTextAccess(ut, limit32, TRUE);
-    
+
     return u_terminateUChars(dest, destCapacity, length, status);
 }
 
@@ -1984,7 +1984,7 @@ repTextCopy(UText *ut,
     repTextAccess(ut, nativeIterIndex, TRUE);
 }
 
-static const struct UTextFuncs repFuncs = 
+static const struct UTextFuncs repFuncs =
 {
     sizeof(UTextFuncs),
     0, 0, 0,           // Reserved alignment padding
@@ -1992,8 +1992,8 @@ static const struct UTextFuncs repFuncs =
     repTextLength,
     repTextAccess,
     repTextExtract,
-    repTextReplace,   
-    repTextCopy,   
+    repTextReplace,
+    repTextCopy,
     NULL,              // MapOffsetToNative,
     NULL,              // MapIndexToUTF16,
     repTextClose,
@@ -2235,7 +2235,7 @@ unistrTextCopy(UText *ut,
 
 }
 
-static const struct UTextFuncs unistrFuncs = 
+static const struct UTextFuncs unistrFuncs =
 {
     sizeof(UTextFuncs),
     0, 0, 0,             // Reserved alignment padding
@@ -2243,8 +2243,8 @@ static const struct UTextFuncs unistrFuncs =
     unistrTextLength,
     unistrTextAccess,
     unistrTextExtract,
-    unistrTextReplace,   
-    unistrTextCopy,   
+    unistrTextReplace,
+    unistrTextCopy,
     NULL,                // MapOffsetToNative,
     NULL,                // MapIndexToUTF16,
     unistrTextClose,
@@ -2548,7 +2548,7 @@ ucstrTextExtract(UText *ut,
     return di;
 }
 
-static const struct UTextFuncs ucstrFuncs = 
+static const struct UTextFuncs ucstrFuncs =
 {
     sizeof(UTextFuncs),
     0, 0, 0,           // Reserved alignment padding
@@ -2765,14 +2765,14 @@ charIterTextExtract(UText *ut,
         }
         srci += len;
     }
-    
+
     charIterTextAccess(ut, copyLimit, TRUE);
 
     u_terminateUChars(dest, destCapacity, desti, status);
     return desti;
 }
 
-static const struct UTextFuncs charIterFuncs = 
+static const struct UTextFuncs charIterFuncs =
 {
     sizeof(UTextFuncs),
     0, 0, 0,             // Reserved alignment padding
@@ -2832,6 +2832,3 @@ utext_openCharacterIterator(UText *ut, CharacterIterator *ci, UErrorCode *status
     }
     return ut;
 }
-
-
-

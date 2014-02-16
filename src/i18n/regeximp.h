@@ -22,11 +22,11 @@
 
 U_NAMESPACE_BEGIN
 
-// For debugging, define REGEX_DEBUG 
+// For debugging, define REGEX_DEBUG
 // To define with configure,
 //   ./runConfigureICU --enable-debug --disable-release Linux CPPFLAGS="-DREGEX_DEBUG"
 
-#ifdef REGEX_DEBUG   
+#ifdef REGEX_DEBUG
 //
 //  debugging options.  Enable one or more of the three #defines immediately following
 //
@@ -373,9 +373,9 @@ class CaseFoldingUTextIterator: public UMemory {
         CaseFoldingUTextIterator(UText &text);
         ~CaseFoldingUTextIterator();
 
-        UChar32 next();           // Next case folded character 
+        UChar32 next();           // Next case folded character
 
-        UBool   inExpansion();    // True if last char returned from next() and the 
+        UBool   inExpansion();    // True if last char returned from next() and the
                                   //  next to be returned both originated from a string
                                   //  folding of the same code point from the orignal UText.
       private:
@@ -398,9 +398,9 @@ class CaseFoldingUCharIterator: public UMemory {
         CaseFoldingUCharIterator(const UChar *chars, int64_t start, int64_t limit);
         ~CaseFoldingUCharIterator();
 
-        UChar32 next();           // Next case folded character 
+        UChar32 next();           // Next case folded character
 
-        UBool   inExpansion();    // True if last char returned from next() and the 
+        UBool   inExpansion();    // True if last char returned from next() and the
                                   //  next to be returned both originated from a string
                                   //  folding of the same code point from the orignal UText.
 
@@ -419,4 +419,3 @@ class CaseFoldingUCharIterator: public UMemory {
 
 U_NAMESPACE_END
 #endif
-

@@ -628,7 +628,7 @@ void ucol_tok_parseScriptReorder(UColTokenParser *src, UErrorCode *status) {
     char conversion[64];
     int32_t tokenLength = 0;
     const UChar* space;
-    
+
     const UChar* current = src->current;
     const UChar* end = u_memchr(src->current, 0x005d, src->end - src->current);
 
@@ -637,7 +637,7 @@ void ucol_tok_parseScriptReorder(UColTokenParser *src, UErrorCode *status) {
         current++;
     }
 
-    while(current < end) {    
+    while(current < end) {
         space = u_memchr(current, 0x0020, end - current);
         space = space == 0 ? end : space;
         tokenLength = space - current;
@@ -655,17 +655,17 @@ void ucol_tok_parseScriptReorder(UColTokenParser *src, UErrorCode *status) {
     if (codeCount == 0) {
         *status = U_INVALID_FORMAT_ERROR;
     }
-    
+
     src->reorderCodesLength = codeCount;
     src->reorderCodes = (int32_t*)uprv_malloc(codeCount * sizeof(int32_t));
     current = src->current;
-    
+
     // eat leading whitespace
     while(current < end && u_isWhitespace(*current)) {
         current++;
     }
 
-    while(current < end) {    
+    while(current < end) {
         space = u_memchr(current, 0x0020, end - current);
         space = space == 0 ? end : space;
         tokenLength = space - current;
@@ -1416,7 +1416,7 @@ ucol_tok_parseNextToken(UColTokenParser *src,
     // The current token indicates the second code point of the range.
     // Process just that, and then proceed with the star.
     src->currentStarredCharIndex = src->parsedToken.charsOffset;
-    U16_NEXT(src->source, src->currentStarredCharIndex, 
+    U16_NEXT(src->source, src->currentStarredCharIndex,
              (uint32_t)(src->end - src->source), src->lastRangeCp);
     if (src->lastRangeCp <= src->previousCp) {
         *status = U_INVALID_FORMAT_ERROR;
@@ -2018,7 +2018,7 @@ uint32_t ucol_tok_assembleTokenList(UColTokenParser *src, UParseError *parseErro
                         uint32_t CE = UCOL_NOT_FOUND, SecondCE = UCOL_NOT_FOUND;
 
                         UCAConstants *consts = (UCAConstants *)((uint8_t *)src->UCA->image + src->UCA->image->UCAConsts);
-                        if((baseCE & 0xFF000000) >= (consts->UCA_PRIMARY_IMPLICIT_MIN<<24) && 
+                        if((baseCE & 0xFF000000) >= (consts->UCA_PRIMARY_IMPLICIT_MIN<<24) &&
                            (baseCE & 0xFF000000) <= (consts->UCA_PRIMARY_IMPLICIT_MAX<<24) ) { /* implicits - */
                             uint32_t primary = (baseCE & UCOL_PRIMARYMASK) | ((baseContCE & UCOL_PRIMARYMASK) >> 16);
                             uint32_t raw = uprv_uca_getRawFromImplicit(primary);
@@ -2155,7 +2155,7 @@ void ucol_tok_initTokenList(
     uint32_t rulesLength,
     const UCollator *UCA,
     GetCollationRulesFunction importFunc,
-    void* context, 
+    void* context,
     UErrorCode *status) {
     U_NAMESPACE_USE
 
