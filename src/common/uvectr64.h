@@ -60,7 +60,7 @@ private:
     int32_t   count;
 
     int32_t   capacity;
-    
+
     int32_t   maxCapacity;   // Limit beyond which capacity is not permitted to grow.
 
     int64_t*  elements;
@@ -99,7 +99,7 @@ public:
     void setElementAt(int64_t elem, int32_t index);
 
     void insertElementAt(int64_t elem, int32_t index, UErrorCode &status);
-    
+
     int64_t elementAti(int32_t index) const;
 
     //UBool equals(const UVector64 &other) const;
@@ -187,9 +187,9 @@ public:
     //UBool empty(void) const;   // TODO:  redundant, same as empty().  Remove it?
 
     //int64_t peeki(void) const;
-    
+
     int64_t popi(void);
-    
+
     int64_t push(int64_t i, UErrorCode &status);
 
     int64_t *reserveBlock(int32_t size, UErrorCode &status);

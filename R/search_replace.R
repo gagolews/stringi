@@ -1,20 +1,25 @@
-## This file is part of the 'stringi' library.
+## This file is part of the 'stringi' package for R.
 ##
-## Copyright 2013-2014 Marek Gagolewski, Bartek Tartanus
+## Copyright (C) 2013-2014 Marek Gagolewski, Bartek Tartanus
 ##
 ##
-## 'stringi' is free software: you can redistribute it and/or modify
-## it under the terms of the GNU Lesser General Public License as published by
-## the Free Software Foundation, either version 3 of the License, or
-## (at your option) any later version.
+## Permission is hereby granted, free of charge, to any person obtaining
+## a copy of this software and associated documentation files (the "Software"),
+## to deal in the Software without restriction, including without limitation
+## the rights to use, copy, modify, merge, publish, distribute, sublicense,
+## and/or sell copies of the Software, and to permit persons to whom
+## the Software is furnished to do so, subject to the following conditions:
 ##
-## 'stringi' is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-## GNU Lesser General Public License for more details.
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
 ##
-## You should have received a copy of the GNU Lesser General Public License
-## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+## EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+## OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+## DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+## THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 #' @title
@@ -87,7 +92,7 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param str character vector of strings to search in
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
-#' @param opts_collator a named list as generated with 
+#' @param opts_collator a named list as generated with
 #' \code{\link{stri_opts_collator}} with Collator options,
 #' or \code{NA} for fast but locale-unaware byte comparison
 #' @return character vector
@@ -98,7 +103,7 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' stri_replace_all_fixed(s," ","#")
 #' stri_replace_all_fixed(s,"o","0")
 #' }
-#' 
+#'
 #' @export
 #' @rdname stri_replace_fixed
 #' @aliases stri_replace_all_fixed stri_replace_first_fixed stri_replace_last_fixed
@@ -160,7 +165,7 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' stri_replace_all_regex(c("stringi w R","REXAMINE","123"), '( R|R.)', ' r ')
 #' }
-#' 
+#'
 #' @export
 #' @rdname stri_replace_regex
 #' @aliases stri_replace_all_regex stri_replace_first_regex stri_replace_last_regex

@@ -57,4 +57,3 @@ typedef struct USetAdder USetAdder;
 U_CDECL_END
 
 #endif
-

@@ -1,0 +1,15 @@
+** The R and C++ source code of the stringi package **
+
+Copyright (C) 2013-2014 Marek Gagolewski and Bartek Tartanus
+
+
+** The ICU4C library **
+
+Copyright (C) 1995-2014 IBM and others
+See also http://source.icu-project.org/repos/icu/icuhtml/trunk/legal/copyright.html
+
+
+** The Unicode Character Database **
+
+Copyright (C) 1991-2014 Unicode, Inc.
+For more details refer to http://www.unicode.org/copyright.html

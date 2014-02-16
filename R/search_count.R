@@ -1,20 +1,25 @@
-## This file is part of the 'stringi' library.
+## This file is part of the 'stringi' package for R.
 ##
-## Copyright 2013-2014 Marek Gagolewski, Bartek Tartanus
+## Copyright (C) 2013-2014 Marek Gagolewski, Bartek Tartanus
 ##
 ##
-## 'stringi' is free software: you can redistribute it and/or modify
-## it under the terms of the GNU Lesser General Public License as published by
-## the Free Software Foundation, either version 3 of the License, or
-## (at your option) any later version.
+## Permission is hereby granted, free of charge, to any person obtaining
+## a copy of this software and associated documentation files (the "Software"),
+## to deal in the Software without restriction, including without limitation
+## the rights to use, copy, modify, merge, publish, distribute, sublicense,
+## and/or sell copies of the Software, and to permit persons to whom
+## the Software is furnished to do so, subject to the following conditions:
 ##
-## 'stringi' is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-## GNU Lesser General Public License for more details.
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
 ##
-## You should have received a copy of the GNU Lesser General Public License
-## along with 'stringi'. If not, see <http://www.gnu.org/licenses/>.
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+## EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+## OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+## DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+## THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 #' @title
@@ -86,7 +91,7 @@ stri_count_charclass <- function(str, pattern) {
 #' stri_count_fixed("babab", "b")
 #' stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
 #' }
-#' 
+#'
 #' @export
 #' @family search_count
 #' @family search_fixed
@@ -125,7 +130,7 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
 #' stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
 #' }
-#' 
+#'
 #' @export
 #' @family search_count
 #' @family search_regex
@@ -163,7 +168,7 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #' stri_count(s, fixed=letters)
 #' stri_count(s, regex="[[:alpha:]]")
 #' }
-#' 
+#'
 #' @export
 #' @family search_count
 stri_count <- function(str, ..., regex, fixed, charclass) {

@@ -852,7 +852,7 @@ SimpleDateFormat::_format(Calendar& cal, UnicodeString& appendTo,
                             FieldPositionHandler& handler, UErrorCode& status) const
 {
     if ( U_FAILURE(status) ) {
-       return appendTo; 
+       return appendTo;
     }
     Calendar* workCal = &cal;
     Calendar* calClone = NULL;
@@ -1230,7 +1230,7 @@ SimpleDateFormat::subFormat(UnicodeString &appendTo,
 
     currentNumberFormat = getNumberFormatByIndex(patternCharIndex);
     UnicodeString hebr("hebr", 4, US_INV);
-    
+
     switch (patternCharIndex) {
 
     // for any "G" symbol, write out the appropriate era string
@@ -1734,7 +1734,7 @@ SimpleDateFormat::parse(const UnicodeString& text, Calendar& cal, ParsePosition&
             goto ExitParse;
         }
     }
-    
+
     if (fSymbols->fLeapMonthPatterns != NULL && fSymbols->fLeapMonthPatternsCount >= DateFormatSymbols::kMonthPatternsCount) {
         numericLeapMonthFormatter = new MessageFormat(fSymbols->fLeapMonthPatterns[DateFormatSymbols::kLeapMonthPatternNumeric], fLocale, status);
         if (numericLeapMonthFormatter == NULL) {
@@ -1846,7 +1846,7 @@ SimpleDateFormat::parse(const UnicodeString& text, Calendar& cal, ParsePosition&
         else {
 
             abutPat = -1; // End of any abutting fields
-            
+
             if (! matchLiterals(fPattern, i, text, pos, getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status))) {
                 status = U_PARSE_ERROR;
                 goto ExitParse;
@@ -2134,15 +2134,15 @@ UBool SimpleDateFormat::matchLiterals(const UnicodeString &pattern,
     UBool inQuote = FALSE;
     UnicodeString literal;
     int32_t i = patternOffset;
-    
+
     // scan pattern looking for contiguous literal characters
     for ( ; i < pattern.length(); i += 1) {
         UChar ch = pattern.charAt(i);
-        
+
         if (!inQuote && ((ch >= 0x41 && ch <= 0x5A) || (ch >= 0x61 && ch <= 0x7A))) { // unquoted [A-Za-z]
             break;
         }
-        
+
         if (ch == QUOTE) {
             // Match a quote literal ('') inside OR outside of quotes
             if ((i + 1) < pattern.length() && pattern.charAt(i + 1) == QUOTE) {
@@ -2152,47 +2152,47 @@ UBool SimpleDateFormat::matchLiterals(const UnicodeString &pattern,
                 continue;
             }
         }
-        
+
         literal += ch;
     }
-    
+
     // at this point, literal contains the literal text
     // and i is the index of the next non-literal pattern character.
     int32_t p;
     int32_t t = textOffset;
-    
+
     if (lenient) {
         // trim leading, trailing whitespace from
         // the literal text
         literal.trim();
-        
+
         // ignore any leading whitespace in the text
         while (t < text.length() && u_isWhitespace(text.charAt(t))) {
             t += 1;
         }
     }
-        
+
     for (p = 0; p < literal.length() && t < text.length();) {
         UBool needWhitespace = FALSE;
-        
+
         while (p < literal.length() && PatternProps::isWhiteSpace(literal.charAt(p))) {
             needWhitespace = TRUE;
             p += 1;
         }
-        
+
         if (needWhitespace) {
             int32_t tStart = t;
-            
+
             while (t < text.length()) {
                 UChar tch = text.charAt(t);
-                
+
                 if (!u_isUWhiteSpace(tch) && !PatternProps::isWhiteSpace(tch)) {
                     break;
                 }
-                
+
                 t += 1;
             }
-            
+
             // TODO: should we require internal spaces
             // in lenient mode? (There won't be any
             // leading or trailing spaces)
@@ -2201,14 +2201,14 @@ UBool SimpleDateFormat::matchLiterals(const UnicodeString &pattern,
                 // an error in strict mode
                 return FALSE;
             }
-            
+
             // In strict mode, this run of whitespace
             // may have been at the end.
             if (p >= literal.length()) {
                 break;
             }
         }
-        
+
         if (t >= text.length() || literal.charAt(p) != text.charAt(t)) {
             // Ran out of text, or found a non-matching character:
             // OK in lenient mode, an error in strict mode.
@@ -2222,13 +2222,13 @@ UBool SimpleDateFormat::matchLiterals(const UnicodeString &pattern,
                 }
                 break;
             }
-            
+
             return FALSE;
         }
         ++p;
         ++t;
     }
-    
+
     // At this point if we're in strict mode we have a complete match.
     // If we're in lenient mode we may have a partial match, or no
     // match at all.
@@ -2240,20 +2240,20 @@ UBool SimpleDateFormat::matchLiterals(const UnicodeString &pattern,
         if (patternCharIndex != UDAT_FIELD_COUNT) {
             ignorables = SimpleDateFormatStaticSets::getIgnorables(patternCharIndex);
         }
-        
+
         for (t = textOffset; t < text.length(); t += 1) {
             UChar ch = text.charAt(t);
-            
+
             if (ignorables == NULL || !ignorables->contains(ch)) {
                 break;
             }
         }
     }
-    
+
     // if we get here, we've got a complete match.
     patternOffset = i - 1;
     textOffset = t;
-    
+
     return TRUE;
 }
 
@@ -2514,7 +2514,7 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
         if (txtLoc > parseStart) {
             value = number.getLong();
             gotNumber = TRUE;
-            
+
             // suffix processing
             if (value < 0 ) {
                 txtLoc = checkIntSuffix(text, txtLoc, patLoc+1, TRUE);
@@ -2537,7 +2537,7 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
             pos.setIndex(txtLoc);
         }
     }
-    
+
     // Make sure that we got a number if
     // we want one, and didn't get one
     // if we don't want one.
@@ -2550,9 +2550,9 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
             if (value < 0 || value > 24) {
                 return -start;
             }
-            
+
             // fall through to gotNumber check
-            
+
         case UDAT_YEAR_FIELD:
         case UDAT_YEAR_WOY_FIELD:
         case UDAT_FRACTIONAL_SECOND_FIELD:
@@ -2560,9 +2560,9 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
             if (! gotNumber) {
                 return -start;
             }
-            
+
             break;
-            
+
         default:
             // we check the rest of the fields below.
             break;
@@ -2733,9 +2733,9 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
         // [We computed 'value' above.]
         if (value == cal.getMaximum(UCAL_HOUR_OF_DAY) + 1)
             value = 0;
-            
+
         // fall through to set field
-            
+
     case UDAT_HOUR_OF_DAY0_FIELD:
         cal.set(UCAL_HOUR_OF_DAY, value);
         return pos.getIndex();
@@ -2827,9 +2827,9 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
         // [We computed 'value' above.]
         if (value == cal.getLeastMaximum(UCAL_HOUR)+1)
             value = 0;
-            
+
         // fall through to set field
-            
+
     case UDAT_HOUR0_FIELD:
         cal.set(UCAL_HOUR, value);
         return pos.getIndex();

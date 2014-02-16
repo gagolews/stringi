@@ -2,7 +2,7 @@
 require('stringi')
 
 # we are in the root dir of stringi
-srcfiles <- dir('src', pattern='\\.cpp|\\.h$', recursive=TRUE, ignore.case=TRUE, full.names=TRUE)
+srcfiles <- dir('src', pattern='^stri_.*(\\.cpp|\\.h)$', recursive=TRUE, ignore.case=TRUE, full.names=TRUE)
 
 # sprintf("%x", unlist(stri_enc_toutf32(c(UTF8chars))))
 

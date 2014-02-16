@@ -82,7 +82,7 @@ UnhandledEngine::findBreaks( UText *text,
                                  int32_t breakType,
                                  UStack &/*foundBreaks*/ ) const {
     if (breakType >= 0 && breakType < (int32_t)(sizeof(fHandled)/sizeof(fHandled[0]))) {
-        UChar32 c = utext_current32(text); 
+        UChar32 c = utext_current32(text);
         if (reverse) {
             while((int32_t)utext_getNativeIndex(text) > startPos && fHandled[breakType]->contains(c)) {
                 c = utext_previous32(text);
@@ -161,11 +161,11 @@ ICULanguageBreakFactory::getEngineFor(UChar32 c, int32_t breakType) {
         }
     }
     umtx_unlock(NULL);
-    
+
     if (lbe != NULL) {
         return lbe;
     }
-    
+
     if (needsInit) {
         UStack  *engines = new UStack(_deleteEngine, NULL, status);
         if (U_SUCCESS(status) && engines == NULL) {
@@ -185,7 +185,7 @@ ICULanguageBreakFactory::getEngineFor(UChar32 c, int32_t breakType) {
             delete engines;
         }
     }
-    
+
     if (fEngines == NULL) {
         return NULL;
     }
@@ -193,7 +193,7 @@ ICULanguageBreakFactory::getEngineFor(UChar32 c, int32_t breakType) {
     // We didn't find an engine the first time through, or there was no
     // stack. Create an engine.
     const LanguageBreakEngine *newlbe = loadEngineFor(c, breakType);
-    
+
     // Now get the lock, and see if someone else has created it in the
     // meantime
     umtx_lock(NULL);
@@ -211,7 +211,7 @@ ICULanguageBreakFactory::getEngineFor(UChar32 c, int32_t breakType) {
         newlbe = NULL;
     }
     umtx_unlock(NULL);
-    
+
     delete newlbe;
 
     return lbe;
@@ -280,7 +280,7 @@ ICULanguageBreakFactory::loadEngineFor(UChar32 c, int32_t breakType) {
 }
 
 DictionaryMatcher *
-ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script, int32_t /* brkType */) { 
+ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script, int32_t /* brkType */) {
     UErrorCode status = U_ZERO_ERROR;
     // open root from brkitr tree.
     UResourceBundle *b = ures_open(U_ICUDATA_BRKITR, "", &status);
@@ -321,7 +321,7 @@ ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script, int32_t /*
             m = new UCharsDictionaryMatcher(characters, file);
         }
         if (m == NULL) {
-            // no matcher exists to take ownership - either we are an invalid 
+            // no matcher exists to take ownership - either we are an invalid
             // type or memory allocation failed
             udata_close(file);
         }

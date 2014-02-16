@@ -17,7 +17,7 @@
 #if U_PLATFORM_HAS_WIN32_API
 
 /**
- * \file 
+ * \file
  * \brief C API: Utilities for dealing w/ Windows time zones.
  */
 

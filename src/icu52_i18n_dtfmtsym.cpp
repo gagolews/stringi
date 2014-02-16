@@ -328,7 +328,7 @@ DateFormatSymbols::copyData(const DateFormatSymbols& other) {
         fShortYearNames = NULL;
         fShortYearNamesCount = 0;
     }
- 
+
     if (other.fZoneStrings != NULL) {
         fZoneStringsColCount = other.fZoneStringsColCount;
         fZoneStringsRowCount = other.fZoneStringsRowCount;
@@ -345,7 +345,7 @@ DateFormatSymbols::copyData(const DateFormatSymbols& other) {
 
     // fastCopyFrom() - see assignArray comments
     fLocalPatternChars.fastCopyFrom(other.fLocalPatternChars);
-    
+
     uprv_memcpy(fCapitalization, other.fCapitalization, sizeof(fCapitalization));
 }
 
@@ -832,7 +832,7 @@ DateFormatSymbols::setMonths(const UnicodeString* monthsArray, int32_t count, Dt
             fNarrowMonths = newUnicodeStringArray(count);
             uprv_arrayCopy( monthsArray,fNarrowMonths,count);
             fNarrowMonthsCount = count;
-            break; 
+            break;
         default :
             break;
         }
@@ -859,7 +859,7 @@ DateFormatSymbols::setMonths(const UnicodeString* monthsArray, int32_t count, Dt
             fStandaloneNarrowMonths = newUnicodeStringArray(count);
             uprv_arrayCopy( monthsArray,fStandaloneNarrowMonths,count);
             fStandaloneNarrowMonthsCount = count;
-            break; 
+            break;
         default :
             break;
         }
@@ -933,7 +933,7 @@ DateFormatSymbols::setWeekdays(const UnicodeString* weekdaysArray, int32_t count
             fNarrowWeekdays = newUnicodeStringArray(count);
             uprv_arrayCopy(weekdaysArray, fNarrowWeekdays, count);
             fNarrowWeekdaysCount = count;
-            break; 
+            break;
         case DT_WIDTH_COUNT :
             break;
         }
@@ -967,7 +967,7 @@ DateFormatSymbols::setWeekdays(const UnicodeString* weekdaysArray, int32_t count
             fStandaloneNarrowWeekdays = newUnicodeStringArray(count);
             uprv_arrayCopy(weekdaysArray, fStandaloneNarrowWeekdays, count);
             fStandaloneNarrowWeekdaysCount = count;
-            break; 
+            break;
         case DT_WIDTH_COUNT :
             break;
         }
@@ -1009,7 +1009,7 @@ DateFormatSymbols::setQuarters(const UnicodeString* quartersArray, int32_t count
             uprv_arrayCopy( quartersArray,fNarrowQuarters,count);
             fNarrowQuartersCount = count;
         */
-            break; 
+            break;
         default :
             break;
         }
@@ -1038,7 +1038,7 @@ DateFormatSymbols::setQuarters(const UnicodeString* quartersArray, int32_t count
             uprv_arrayCopy( quartersArray,fStandaloneNarrowQuarters,count);
             fStandaloneNarrowQuartersCount = count;
         */
-            break; 
+            break;
         default :
             break;
         }
@@ -1390,7 +1390,7 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
     // is region sensitive, thus, bundle locale bundle's locale
     // is not sufficient.
     fZSFLocale = locale;
-      
+
     if (U_FAILURE(status)) return;
 
     /**
@@ -1782,7 +1782,7 @@ cleanup:
     ures_close(narrowEras);
 }
 
-Locale 
+Locale
 DateFormatSymbols::getLocale(ULocDataLocaleType type, UErrorCode& status) const {
     U_LOCALE_BASED(locBased, *this);
     return locBased.getLocale(type, status);

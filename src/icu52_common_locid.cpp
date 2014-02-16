@@ -126,7 +126,7 @@ U_NAMESPACE_BEGIN
 Locale *locale_set_default_internal(const char *id, UErrorCode& status) {
     // Synchronize this entire function.
     Mutex lock(&gDefaultLocaleMutex);
-    
+
     UBool canonicalize = FALSE;
 
     // If given a NULL string for the locale id, grab the default
@@ -851,7 +851,7 @@ Locale::getLocaleCache(void)
         if (tLocaleCache == NULL) {
             return NULL;
         }
-	tLocaleCache[eROOT]          = Locale("");
+   tLocaleCache[eROOT]          = Locale("");
         tLocaleCache[eENGLISH]       = Locale("en");
         tLocaleCache[eFRENCH]        = Locale("fr");
         tLocaleCache[eGERMAN]        = Locale("de");

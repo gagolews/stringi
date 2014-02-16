@@ -24,7 +24,7 @@ U_NAMESPACE_BEGIN
  */
 #define HINT_KEY_POINTER   (1)
 #define HINT_KEY_INTEGER   (0)
- 
+
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(UVector)
 
 UVector::UVector(UErrorCode &status) :
@@ -327,10 +327,10 @@ int32_t UVector::indexOf(UElement key, int32_t startIndex, int8_t hint) const {
 }
 
 UBool UVector::ensureCapacity(int32_t minimumCapacity, UErrorCode &status) {
-	if (minimumCapacity < 0) {
+   if (minimumCapacity < 0) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return FALSE;
-	}
+   }
     if (capacity < minimumCapacity) {
         if (capacity > (INT32_MAX - 1) / 2) {        	// integer overflow check
         	status = U_ILLEGAL_ARGUMENT_ERROR;
@@ -490,7 +490,7 @@ void UVector::sortedInsert(UElement e, UElementComparator *compare, UErrorCode& 
   *
   *  The context pointer to this function is a pointer back
   *  (with some extra indirection) to the user supplied comparator.
-  *  
+  *
   */
 static int32_t U_CALLCONV
 sortComparator(const void *context, const void *left, const void *right) {
@@ -562,4 +562,3 @@ void UVector::sortWithUComparator(UComparator *compare, const void *context, UEr
 }
 
 U_NAMESPACE_END
-
