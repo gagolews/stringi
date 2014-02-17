@@ -1,7 +1,7 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
-* 0.1-20 (2014-02-13)
+* 0.1-20 (2014-02-17)
    ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
    loaded dynamically). Compilation via Makevars.
    stringi now does not depend on any external libraries.
