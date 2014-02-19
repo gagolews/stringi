@@ -191,7 +191,7 @@ public:
     * otherwise.
     * @deprecated ICU 2.6 use the overload with error code
     */
-    Collator::EComparisonResult compareTo(const CollationKey& target) const;
+    UCollationResult compareTo(const CollationKey& target) const;
 #endif  /* U_HIDE_DEPRECATED_API */
 
     /**
