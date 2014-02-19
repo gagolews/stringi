@@ -1942,8 +1942,8 @@ if test "$enable_gcc_debug" == "yes"; then
 fi
 
 if test "$enable_gcc_pedantic" == "yes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98"
 fi
 
 STRINGI_CFLAGS="${with_extra_cflags}"

@@ -27,6 +27,11 @@ clang and Solaris Studio compile/check:
 make clean
 CC="clang" CXX="clang++" ./configure --prefix=/opt/R-devel-clang
 make
+
+clang -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -c *.c
+clang++ -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c++98 -c *.cpp
+
+
 ###
 /opt/R-devel-clang/bin/R CMD check --as-cran /home/gagolews/Projekty/stringi_
 ###
@@ -41,7 +46,9 @@ MANPATH=/opt/oracle/solarisstudio12.3/man:$MANPATH
 export PATH
 export MANPATH
 
-CC -I. -Iunicode -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DU_TOOLUTIL_IMPLEMENTATI -DNDEBUG +w -c stri_*.cpp
-CC -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DU_TOOLUTIL_IMPLEMENTATI -DNDEBUG -w -erroff -c *.cpp
-cc -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DU_TOOLUTIL_IMPLEMENTATI -DNDEBUG -w -erroff -c *.c
+CC -I. -Iunicode -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG +w -c stri_*.cpp
+CC -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c *.cpp
+cc -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c *.c
+
+g++ -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c++98 -c icu*.cpp
 ```
