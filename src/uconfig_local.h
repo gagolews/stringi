@@ -39,7 +39,6 @@
 /* avoid feature_tests.h errors */
 #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
 #define _XPG6
-#endif
 #elif !defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
 #undef _XPG6
 #endif
