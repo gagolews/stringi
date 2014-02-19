@@ -40,7 +40,7 @@
 #  define _XOPEN_SOURCE 600
 #  endif
 
-#  ifndef _XPG6
+#  if defined(_STDC_C99) && !defined(_XPG6)
 #  define _XPG6
 #  endif
 #endif
