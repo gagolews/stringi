@@ -409,29 +409,29 @@ Collator::safeClone() const {
 }
 
 // implement deprecated, previously abstract method
-Collator::EComparisonResult Collator::compare(const UnicodeString& source,
+UCollationResult Collator::compare(const UnicodeString& source,
                                     const UnicodeString& target) const
 {
     UErrorCode ec = U_ZERO_ERROR;
-    return (EComparisonResult)compare(source, target, ec);
+    return (UCollationResult)compare(source, target, ec);
 }
 
 // implement deprecated, previously abstract method
-Collator::EComparisonResult Collator::compare(const UnicodeString& source,
+UCollationResult Collator::compare(const UnicodeString& source,
                                     const UnicodeString& target,
                                     int32_t length) const
 {
     UErrorCode ec = U_ZERO_ERROR;
-    return (EComparisonResult)compare(source, target, length, ec);
+    return (UCollationResult)compare(source, target, length, ec);
 }
 
 // implement deprecated, previously abstract method
-Collator::EComparisonResult Collator::compare(const UChar* source, int32_t sourceLength,
+UCollationResult Collator::compare(const UChar* source, int32_t sourceLength,
                                     const UChar* target, int32_t targetLength)
                                     const
 {
     UErrorCode ec = U_ZERO_ERROR;
-    return (EComparisonResult)compare(source, sourceLength, target, targetLength, ec);
+    return (UCollationResult)compare(source, sourceLength, target, targetLength, ec);
 }
 
 UCollationResult Collator::compare(UCharIterator &/*sIter*/,

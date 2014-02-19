@@ -213,22 +213,6 @@ public:
         IDENTICAL  = UCOL_IDENTICAL  // 15
     };
 
-    /**
-     * LESS is returned if source string is compared to be less than target
-     * string in the compare() method.
-     * EQUAL is returned if source string is compared to be equal to target
-     * string in the compare() method.
-     * GREATER is returned if source string is compared to be greater than
-     * target string in the compare() method.
-     * @see Collator#compare
-     * @deprecated ICU 2.6. Use C enum UCollationResult defined in ucol.h
-     */
-    enum EComparisonResult
-    {
-        LESS = UCOL_LESS,  // -1
-        EQUAL = UCOL_EQUAL,  // 0
-        GREATER = UCOL_GREATER  // 1
-    };
 
     // Collator public destructor -----------------------------------------
 
@@ -360,7 +344,7 @@ public:
      * than target
      * @deprecated ICU 2.6 use the overload with UErrorCode &
      */
-    virtual EComparisonResult compare(const UnicodeString& source,
+    virtual UCollationResult compare(const UnicodeString& source,
                                       const UnicodeString& target) const;
 
     /**
@@ -391,7 +375,7 @@ public:
      *         length) is less  than target.
      * @deprecated ICU 2.6 use the overload with UErrorCode &
      */
-    virtual EComparisonResult compare(const UnicodeString& source,
+    virtual UCollationResult compare(const UnicodeString& source,
                                       const UnicodeString& target,
                                       int32_t length) const;
 
@@ -446,7 +430,7 @@ public:
      *         target
      * @deprecated ICU 2.6 use the overload with UErrorCode &
      */
-    virtual EComparisonResult compare(const UChar* source, int32_t sourceLength,
+    virtual UCollationResult compare(const UChar* source, int32_t sourceLength,
                                       const UChar* target, int32_t targetLength)
                                       const;
 

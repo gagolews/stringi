@@ -168,11 +168,11 @@ CollationKey::operator=(const CollationKey& other)
 }
 
 // Bitwise comparison for the collation keys.
-Collator::EComparisonResult
+UCollationResult
 CollationKey::compareTo(const CollationKey& target) const
 {
     UErrorCode errorCode = U_ZERO_ERROR;
-    return static_cast<Collator::EComparisonResult>(compareTo(target, errorCode));
+    return compareTo(target, errorCode);
 }
 
 // Bitwise comparison for the collation keys.
