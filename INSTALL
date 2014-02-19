@@ -1,0 +1,29 @@
+The current version of stringi compiles the ICU4C 52.1 library
+even on systems that do have one installed, thus it does not have any
+special external dependencies. This is motivated by a few reasons:
+* convenient building on Windows and OS X;
+* some features of stringi depend on the functionality provided
+  by very recent versions of ICU, and many UNIX/Linux distributions
+  provide quite old ones;
+* the ICU Data Library provided with stringi (see below) guarantees that
+  each user of the package has access to the same string processing facilities.
+
+Important note to Solaris/SPARC and other "big-endian systems" users:
+we are not shipping the ICU Data Library for non-little-endian
+systems with stringi (the data set size is 10-20 MB).
+On such systems an appropriate icudt52xx.dat file should be manually
+copied into the libs/ subdirectory in the installed package file tree.
+In case of any problems with obtaining or installing such a file,
+please contact the package maintainer.
+
+The user is encouraged to check whether the data library
+has been successfully installed by calling:
+
+> library('stringi')
+> stri_enc_list() # this should return a list of length > 0
+> stri_locale_list() # this should return a vector of length > 0
+
+Also, to make sure that ICU has detected your locale and native
+encoding properly, call:
+
+> stri_info(short=TRUE)
