@@ -7,3 +7,10 @@ ICU 52.1 patches to apply
    * unicode/sortkey.h
    * i18n/sortkey.cpp
    * i18n/coll.cpp
+
+2. in platform.h
+#if U_PLATFORM == U_PF_SOLARIS
+    /* Solaris has inttypes.h but not stdint.h. */
+    /* MG EDIT - assume it does not in order to to avoid feature_tests.h errors */
+#   define U_HAVE_INTTYPES_H 0
+#endif
