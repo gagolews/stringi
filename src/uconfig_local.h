@@ -32,17 +32,18 @@
    it, but only for C (thanks to Kurt Hornik for pointing this out) */
 #if U_PLATFORM == U_PF_SOLARIS
 /*extern struct tm *localtime_r(const time_t *, struct tm *); */
-#  ifndef _REENTRANT
-#  define _REENTRANT 1
-#  endif
+#ifndef _REENTRANT
+#define _REENTRANT 1
+#endif
 
-#  ifndef _XOPEN_SOURCE
-#  define _XOPEN_SOURCE 600
-#  endif
+/* avoid feature_tests.h errors */
+#if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
+#define _XPG6
+#endif
+#elif !defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
+#undef _XPG6
+#endif
 
-#  if defined(_STDC_C99) && !defined(_XPG6)
-#  define _XPG6
-#  endif
 #endif
 
 
