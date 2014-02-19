@@ -30,22 +30,23 @@
 
 /* localtime_r is not a C++98 nor C99 function: it is POSIX.  Solaris has
    it, but only for C (thanks to Kurt Hornik for pointing this out) */
-#if U_PLATFORM == U_PF_SOLARIS
+#if U_PLATFORM == U_PF_SOLARIS || defined(__SUNPRO_CC)
 /*extern struct tm *localtime_r(const time_t *, struct tm *); */
 #ifndef _REENTRANT
 #define _REENTRANT 1
 #endif
 
-/* avoid feature_tests.h errors */
-#if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
-#define _XPG6
-#undef __XOPEN_OR_POSIX
-#define __XOPEN_OR_POSIX 600
-#elif !defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
-#undef _XPG6
-#undef __XOPEN_OR_POSIX
-#define __XOPEN_OR_POSIX 500
-#endif
+/* avoid feature_tests.h errors 
+   #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
+   #define _XPG6
+   #undef __XOPEN_OR_POSIX
+   #define __XOPEN_OR_POSIX 600
+   #elif !defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
+   #undef _XPG6
+   #undef __XOPEN_OR_POSIX
+   #define __XOPEN_OR_POSIX 500
+   #endif
+*/
 
 #endif
 
