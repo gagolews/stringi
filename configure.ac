@@ -114,8 +114,8 @@ if test "$enable_gcc_debug" == "yes"; then
 fi
 
 if test "$enable_gcc_pedantic" == "yes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99 -ansi"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -ansi"
 fi
 
 STRINGI_CFLAGS="${with_extra_cflags}"
@@ -145,6 +145,31 @@ AC_PROG_CXX
 #AC_SUBST(SHLIB_EXT)
 #
 #AC_CONFIG_FILES([src/Makefile])
+
+
+
+#AC_CANONICAL_HOST
+#
+#case "${host}" in
+#   *-*-solaris*) 	platform=U_SOLARIS ;;
+#	*-*-linux*|*-*-gnu|*-*-k*bsd*-gnu|*-*-kopensolaris*-gnu)        platform=U_LINUX ;;
+#	*-*-*bsd*|*-*-dragonfly*) 	platform=U_BSD ;;
+#	*-*-aix*) 	platform=U_AIX ;;
+#	*-*-hpux*) 	platform=U_HPUX ;;
+#	*-apple-darwin*|*-apple-rhapsody*)	platform=U_DARWIN ;;
+#	*-*-cygwin*)	platform=U_CYGWIN ;;
+#	*-*-mingw*)	platform=U_MINGW ;;
+#	*-*ibm-openedition*|*-*-os390*)	platform=OS390 ;;
+#	*-*-os400*)	platform=OS400 ;;
+#	*-*-nto*)	platform=U_QNX ;;
+#	*-dec-osf*) 	platform=U_OSF ;;
+#	*-*-beos)		platform=U_BEOS ;;
+#	*-*-irix*)		platform=U_IRIX ;;
+#	*-ncr-*)		platform=U_MPRAS ;;
+#	*) 		platform=U_UNKNOWN_PLATFORM ;;
+#esac
+
+AC_SUBST(platform)
 
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
