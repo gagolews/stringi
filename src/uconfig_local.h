@@ -26,6 +26,10 @@
 
 #define U_DISABLE_RENAMING 1
 
-
+// localtime_r is not a C++98 nor C99 function: it is POSIX.  Solaris has
+// it, but only for C (thanks to Kurt Hornik for pointing this out)
+#ifdef __SUNPRO_CC
+extern struct tm *localtime_r(const time_t *, struct tm *);
+#endif
 
 #endif
