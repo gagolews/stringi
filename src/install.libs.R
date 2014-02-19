@@ -12,6 +12,5 @@ if (.Platform$endian == 'little' && file.exists(icudtpath)) {
    file.copy(icudtpath, icudatadir, overwrite=TRUE)
 }
 
-# not used:
-# if(file.exists("symbols.rds"))
-#     file.copy("symbols.rds", dest, overwrite = TRUE)
+if(file.exists("symbols.rds"))
+   file.copy("symbols.rds", dest, overwrite = TRUE)
