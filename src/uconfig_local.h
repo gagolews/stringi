@@ -35,17 +35,6 @@
 #ifndef _REENTRANT
 #define _REENTRANT 1
 #endif
-
-/* avoid including Solaris's feature_tests.h
-   this conflicts with R's --std compile flags;
-   this is the same hack as in
-   http://www.opensource.apple.com/source/zfs/zfs-59/zfs_common/sys/feature_tests.h
-   or in
-   http://code.metager.de/source/xref/NetBSD/src/external/cddl/osnet/sys/sys/feature_tests.h
-*/
-#ifndef _SYS_FEATURE_TESTS_H
-#define _SYS_FEATURE_TESTS_H
-#endif
 #endif
 
 
