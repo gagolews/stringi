@@ -280,7 +280,6 @@
 #   endif
 #elif U_PLATFORM == U_PF_SOLARIS
     /* Solaris has inttypes.h but not stdint.h. */
-    /* MG EDIT - assume it does not in order to to avoid feature_tests.h errors */
 #   define U_HAVE_STDINT_H 0
 #elif U_PLATFORM == U_PF_AIX && !defined(_AIX51) && defined(_POWER)
     /* PPC AIX <= 4.3 has inttypes.h but not stdint.h. */
@@ -299,8 +298,7 @@
     /* Use the predefined value. */
 #elif U_PLATFORM == U_PF_SOLARIS
     /* Solaris has inttypes.h but not stdint.h. */
-    /* MG EDIT - assume it does not in order to to avoid feature_tests.h errors */
-#   define U_HAVE_INTTYPES_H 0
+#   define U_HAVE_INTTYPES_H 1
 #elif U_PLATFORM == U_PF_AIX && !defined(_AIX51) && defined(_POWER)
     /* PPC AIX <= 4.3 has inttypes.h but not stdint.h. */
 #   define U_HAVE_INTTYPES_H 1
