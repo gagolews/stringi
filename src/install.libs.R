@@ -5,8 +5,8 @@ dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
 # copy icudt on little-endian systems:
-icudtpath <- 'data/icudt52l.dat'
-copyicudt <- !as.logical(1) # see ./configure
+icudtpath <- 'icu52/data/icudt52l.dat'
+copyicudt <- !as.logical(0) # see ./configure
 if (copyicudt && .Platform$endian == 'little' && file.exists(icudtpath)) {
    # we're shipping stringi only with little-endian ASCII version of icudt
    icudatadir <- file.path(R_PACKAGE_DIR, paste0('libs'))
