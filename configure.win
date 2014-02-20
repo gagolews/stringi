@@ -1,0 +1,2 @@
+#! /bin/sh
+cp -f src/install.libs.R.win src/install.libs.R
