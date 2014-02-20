@@ -50,11 +50,11 @@ CC -I. -Iunicode -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION
 CC -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c *.cpp
 cc -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c *.c
 
-g++ -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c++98 -ansi -c icu*.cpp
-gcc -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -ansi -c *.c
+g++ -I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c++98 -ansi -c icu52/common/*.cpp icu52/i18n/*.cpp icu52/stubdata/*.cpp
+gcc -I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -ansi -c icu52/common/*.c icu52/i18n/*.c icu52/stubdata/*.c
 
-CC -compat=5 -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c icu*.cpp
-cc -Xc -xc99 -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c icu*.c
+CC -compat=5 -I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c icu52/common/*.cpp icu52/i18n/*.cpp icu52/stubdata/*.cpp
+cc-5.0 -Xc -xc99 -xlibmieee -I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -erroff -c icu52/common/*.c icu52/i18n/*.c icu52/stubdata/*.c
 
- gcc -I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -c *.c 
+gcc -I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -c icu52/common/*.c icu52/i18n/*.c icu52/stubdata/*.c
 ```
