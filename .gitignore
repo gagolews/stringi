@@ -14,6 +14,7 @@ config.status
 .Rproj.user
 .Rhistory
 .RData
+stringi.Rcheck
 
 # compiled/precompiled files
 *.o
