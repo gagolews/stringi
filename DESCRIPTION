@@ -4,7 +4,7 @@ Date: 2014-02-20
 Title: Character string processing facilities
 Description: stringi allows for very fast, correct, consistent,
     and convenient character string/text processing in each locale
-    and any native character encoding. The package provides R users with
+    and any native encoding. The package provides R users with
     a platform-independent functionality known to Java, Perl, Python,
     PHP and Ruby programmers.
 URL: http://stringi.rexamine.com/

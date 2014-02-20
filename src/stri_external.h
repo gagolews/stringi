@@ -36,7 +36,7 @@
 #endif
 
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
-#define 	UNISTR_FROM_STRING_EXPLICIT explicit
+#define  UNISTR_FROM_STRING_EXPLICIT explicit
 
 #include <cstdarg>
 #include <iostream>
@@ -48,26 +48,26 @@
 using namespace std;
 
 
-#include "unicode/ptypes.h"
-#include "unicode/uchar.h"
-#include "unicode/utypes.h"
-#include "unicode/ucnv.h"
-#include "unicode/ustring.h"
-#include "unicode/stringpiece.h"
-#include "unicode/utf8.h"
-#include "unicode/utf16.h"
-#include "unicode/normalizer2.h"
-#include "unicode/locid.h"
-#include "unicode/uloc.h"
-#include "unicode/regex.h"
-#include "unicode/brkiter.h"
-#include "unicode/coll.h"
-#include "unicode/ucol.h"
-#include "unicode/ucsdet.h"
-#include "unicode/stsearch.h"
-#include "unicode/ulocdata.h"
-#include "unicode/usearch.h"
-#include "unicode/uniset.h"
+#include <unicode/ptypes.h>
+#include <unicode/uchar.h>
+#include <unicode/utypes.h>
+#include <unicode/ucnv.h>
+#include <unicode/ustring.h>
+#include <unicode/stringpiece.h>
+#include <unicode/utf8.h>
+#include <unicode/utf16.h>
+#include <unicode/normalizer2.h>
+#include <unicode/locid.h>
+#include <unicode/uloc.h>
+#include <unicode/regex.h>
+#include <unicode/brkiter.h>
+#include <unicode/coll.h>
+#include <unicode/ucol.h>
+#include <unicode/ucsdet.h>
+#include <unicode/stsearch.h>
+#include <unicode/ulocdata.h>
+#include <unicode/usearch.h>
+#include <unicode/uniset.h>
 using namespace icu;
 
 #define USE_RINTERNALS
