@@ -15,10 +15,10 @@ config.status
 .RData
 
 # compiled/precompiled files
-src/*.o
-src/*.so
-src/*.dll
-src/*.a
+*.o
+*.so
+*.dll
+*.a
 src-i386/
 src-x64/
 

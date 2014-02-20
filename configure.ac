@@ -68,12 +68,22 @@ AC_SUBST(R_HOME)
 AC_MSG_CHECKING(for R)
 R_PATH="${R_HOME}/bin/R" # see "Writing R Extensions"
 if test ! -e "${R_PATH}"; then
-   # if it was determined by calling `R RHOME`, this is a bug
+   # if it was determined by calling `R RHOME`, then this is likely a bug
    AC_MSG_RESULT(no)
    echo "*** Could not find R at R_HOME/bin/R, i.e. ${R_HOME}/bin/R"
    exit 1
 fi
 AC_MSG_RESULT($R_PATH)
+
+##### CHECK FOR CAT ############################################################
+
+# Check for 'cat' and get full path.
+AC_ARG_VAR([CAT],[the 'cat' program used for printing test output files])
+AC_PATH_PROG([CAT],[cat],[])
+if test "x$CAT" = "x"; then
+   AC_MSG_NOTICE([==> cat command not found!])
+   AC_MSG_NOTICE([==> Set CAT variable if present in non-standard path])
+fi
 
 ##### SETUP COMPILER ###########################################################
 
@@ -147,12 +157,12 @@ AC_PROG_CXX
 #AC_CONFIG_FILES([src/Makefile])
 
 
-
+#############################################################################
 #AC_CANONICAL_HOST
 #
 #case "${host}" in
 #   *-*-solaris*) 	platform=U_SOLARIS ;;
-#	*-*-linux*|*-*-gnu|*-*-k*bsd*-gnu|*-*-kopensolaris*-gnu)        platform=U_LINUX ;;
+#	*-*-linux*|*-*-gnu|*-*-k*bsd*-gnu|*-*-kopensolaris*-gnu) platform=U_LINUX ;;
 #	*-*-*bsd*|*-*-dragonfly*) 	platform=U_BSD ;;
 #	*-*-aix*) 	platform=U_AIX ;;
 #	*-*-hpux*) 	platform=U_HPUX ;;
@@ -168,8 +178,34 @@ AC_PROG_CXX
 #	*-ncr-*)		platform=U_MPRAS ;;
 #	*) 		platform=U_UNKNOWN_PLATFORM ;;
 #esac
+#
+#AC_SUBST(platform)
+#############################################################################
 
-AC_SUBST(platform)
+
+STRINGI_SOURCES_CPP=`${CAT} src/stri_cpp.txt`
+AC_SUBST(STRINGI_SOURCES_CPP)
+
+STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu52_common_cpp.txt`
+AC_SUBST(STRINGI_ICU_COMMON_SOURCES_CPP)
+
+STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu52_common_c.txt`
+AC_SUBST(STRINGI_ICU_COMMON_SOURCES_C)
+
+STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu52_i18n_cpp.txt`
+AC_SUBST(STRINGI_ICU_I18N_SOURCES_CPP)
+
+STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu52_i18n_c.txt`
+AC_SUBST(STRINGI_ICU_I18N_SOURCES_C)
+
+STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu52_stubdata_cpp.txt`
+AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_CPP)
+
+STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu52_stubdata_c.txt`
+AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
+
+STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
+AC_SUBST(STRINGI_OBJECTS)
 
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)

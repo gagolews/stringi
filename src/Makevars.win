@@ -13,15 +13,15 @@ PKG_CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-ICU_COMMON_SOURCES_CPP=$(wildcard icu52_common_*.cpp)
-ICU_COMMON_SOURCES_C=$(wildcard icu52_common_*.c)
+ICU_COMMON_SOURCES_CPP=$(wildcard common/*.cpp)
+ICU_COMMON_SOURCES_C=$(wildcard common/*.c)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
 
-ICU_I18N_SOURCES_CPP=$(wildcard icu52_i18n_*.cpp)
-ICU_I18N_SOURCES_C=$(wildcard icu52_i18n_*.c)
+ICU_I18N_SOURCES_CPP=$(wildcard i18n/*.cpp)
+ICU_I18N_SOURCES_C=$(wildcard i18n/*.c)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
 
-ICU_STUBDATA_SOURCES_C=icu52_stubdata.c
+ICU_STUBDATA_SOURCES_C=stubdata/*.c
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 OBJECTS=$(STRI_OBJECTS)
