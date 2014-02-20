@@ -1,8 +1,9 @@
 ## `stringi` Makevars.win
 ## Copyright 2013-2014 M. Gagolewski
 
-PKG_CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
--DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
+PKG_CPPFLAGS=-I. -Iicu52/ -Iicu52/unicode -Iicu52/common -Iicu52/i18n \
+-DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
+-DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
 
 ## There is a Cygwin bug, which reports "mem alloc error" while linking
@@ -13,16 +14,16 @@ PKG_CPPFLAGS=-I. -Iunicode -Icommon -Ii18n -DU_STATIC_IMPLEMENTATION \
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-ICU_COMMON_SOURCES_CPP=$(wildcard common/*.cpp)
-ICU_COMMON_SOURCES_C=$(wildcard common/*.c)
+ICU_COMMON_SOURCES_CPP=$(wildcard icu52/common/*.cpp)
+ICU_COMMON_SOURCES_C=$(wildcard icu52/common/*.c)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
 
-ICU_I18N_SOURCES_CPP=$(wildcard i18n/*.cpp)
-ICU_I18N_SOURCES_C=$(wildcard i18n/*.c)
+ICU_I18N_SOURCES_CPP=$(wildcard icu52/i18n/*.cpp)
+ICU_I18N_SOURCES_C=$(wildcard icu52/i18n/*.c)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
 
-ICU_STUBDATA_SOURCES_CPP=$(wildcard stubdata/*.cpp)
-ICU_STUBDATA_SOURCES_C=$(wildcard stubdata/*.c)
+ICU_STUBDATA_SOURCES_CPP=$(wildcard icu52/stubdata/*.cpp)
+ICU_STUBDATA_SOURCES_C=$(wildcard icu52/stubdata/*.c)
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o) $(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 OBJECTS=$(STRI_OBJECTS)

@@ -8,7 +8,7 @@ dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
 # copy icudt on little-endian systems:
-icudtpath <- 'data/icudt52l.dat'
+icudtpath <- 'icu52/data/icudt52l.dat'
 if (file.exists(icudtpath)) {
    icudatadir <- file.path(R_PACKAGE_DIR, paste0('libs'))
    file.copy(icudtpath, icudatadir, overwrite=TRUE)
