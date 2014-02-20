@@ -13,6 +13,7 @@
 ^README.md$
 ^\.git
 ^src/Makevars$
+^src/icu52_found\.txt$
 ^autom4te\.cache$
 ^config\.log$
 ^config\.status$
