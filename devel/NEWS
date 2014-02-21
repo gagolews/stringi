@@ -2,10 +2,11 @@
 ========================================
 
 * 0.1-22 (2014-02-20)
-  System ICU is used on systems which do have one (version >= 50 needed).
-  ICU is autodetected with pkg-config in ./configure.
-  Pass '--disable-pkg-config' to ./configure to force building ICU from
-  sources.
+   System ICU is used on systems which do have one (version >= 50 needed).
+   ICU is autodetected with pkg-config in ./configure.
+   Pass '--disable-pkg-config' to ./configure to force building ICU from
+   sources.
+   icudt52b is shipped with stringi (for big-endian, ASCII systems)
 
 * 0.1-21 (2014-02-19)
    Fixed some Solaris-related issues while preparing stringi

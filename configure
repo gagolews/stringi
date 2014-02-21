@@ -1983,6 +1983,15 @@ CC=`"${R_PATH}" CMD config CC`
 CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
+CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -2778,6 +2787,12 @@ ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 if test -z "$CXX"; then
   if test -n "$CCC"; then
     CXX=$CCC
@@ -3024,11 +3039,11 @@ else
     CXXFLAGS=
   fi
 fi
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 ##### CHECK FOR CAT ############################################################
@@ -3193,7 +3208,7 @@ $as_echo "done" >&6; }
    # It has been indicated that icu-config may return 32bit libs
    # when 64bit libs are not available, even if we compile a 64bit version.
    # Thus, let us check if everything works
-   CPPFLAGS="${ICU_CPPFLAGS}"
+   CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
    LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
 
    ac_ext=cpp
@@ -3203,10 +3218,49 @@ ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ex
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile a simple ICU-dependent project" >&5
-$as_echo_n "checking whether we may compile a simple ICU-dependent project... " >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build a simple ICU-dependent project" >&5
+$as_echo_n "checking whether we may build a simple ICU-dependent project... " >&6; }
 
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      #include <unicode/unistr.h>
+      #include <unicode/uvernum.h>
+      #include <unicode/ptypes.h>
+      #include <unicode/uchar.h>
+      #include <unicode/utypes.h>
+      #include <stdio.h>
+      using namespace icu;
+
+      int main() {
+        // base tests
+        UnicodeString x("abc");
+        x = x+x;
+        printf(U_ICU_VERSION);
+
+        return 0;
+      }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; } # could not detect icu version
+      echo "*** We will build ICU4C from sources"
+      return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build a more complex ICU-dependent project" >&5
+$as_echo_n "checking whether we may build a more complex ICU-dependent project... " >&6; }
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
       #include <unicode/unistr.h>
@@ -3235,20 +3289,15 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
       using namespace icu;
 
       int main() {
-        // base tests
-        UnicodeString x("abc");
-        x = x+x;
-        printf(U_ICU_VERSION);
-
         // check if we have some converters installed (icudt)
         int c = ucnv_countAvailable();
         if (c == 0)
-          return 1;
+          return 11;
 
         // check if we have some locales defined (icudt)
         c = uloc_countAvailable();
         if (c == 0)
-          return 1;
+          return 12;
 
         return 0;
       }
@@ -3258,18 +3307,19 @@ if ac_fn_cxx_try_link "$LINENO"; then :
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-      ICU_FOUND=1 # DONE
 
 else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; } # could not detect icu version
       echo "*** We will build ICU4C from sources"
+      return 1
 
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 
+   ICU_FOUND=1 # DONE
    return 0
 }
 
