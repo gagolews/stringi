@@ -90,8 +90,13 @@ CC=`"${R_PATH}" CMD config CC`
 CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
+CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 
+AC_LANG(C)
 AC_PROG_CC
+AC_LANG(C++)
 AC_PROG_CXX
 
 ##### CHECK FOR CAT ############################################################
@@ -167,12 +172,39 @@ detect_icu_with_pkg_config() {
    # It has been indicated that icu-config may return 32bit libs
    # when 64bit libs are not available, even if we compile a 64bit version.
    # Thus, let us check if everything works
-   CPPFLAGS="${ICU_CPPFLAGS}"
+   CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
    LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
 
    AC_LANG(C++)
 
-   AC_MSG_CHECKING([whether we may compile a simple ICU-dependent project])
+   AC_MSG_CHECKING([whether we may build a simple ICU-dependent project])
+   AC_LINK_IFELSE([AC_LANG_SOURCE([
+      #include <unicode/unistr.h>
+      #include <unicode/uvernum.h>
+      #include <unicode/ptypes.h>
+      #include <unicode/uchar.h>
+      #include <unicode/utypes.h>
+      #include <stdio.h>
+      using namespace icu;
+
+      int main() {
+        // base tests
+        UnicodeString x("abc");
+        x = x+x;
+        printf(U_ICU_VERSION);
+
+        return 0;
+      }])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no]) # could not detect icu version
+      echo "*** We will build ICU4C from sources"
+      return 1
+   ])
+
+   AC_MSG_CHECKING([whether we may build a more complex ICU-dependent project])
    AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <unicode/unistr.h>
       #include <unicode/uvernum.h>
@@ -200,32 +232,28 @@ detect_icu_with_pkg_config() {
       using namespace icu;
 
       int main() {
-        // base tests
-        UnicodeString x("abc");
-        x = x+x;
-        printf(U_ICU_VERSION);
-
         // check if we have some converters installed (icudt)
         int c = ucnv_countAvailable();
         if (c == 0)
-          return 1;
+          return 11;
 
         // check if we have some locales defined (icudt)
         c = uloc_countAvailable();
         if (c == 0)
-          return 1;
+          return 12;
 
         return 0;
       }])
    ],
    [
       AC_MSG_RESULT([yes])
-      ICU_FOUND=1 # DONE
    ],[
       AC_MSG_RESULT([no]) # could not detect icu version
       echo "*** We will build ICU4C from sources"
+      return 1
    ])
 
+   ICU_FOUND=1 # DONE
    return 0
 }
 

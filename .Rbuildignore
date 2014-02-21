@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^src/icu52/data/icudt52b\.dat$
 ^devel
 ^src-i386
 ^src-x64
