@@ -6,7 +6,9 @@
    ICU is autodetected with pkg-config in ./configure.
    Pass '--disable-pkg-config' to ./configure to force building ICU from
    sources.
-   icudt52b is shipped with stringi (for big-endian, ASCII systems)
+   
+   icudt52b (custom subset) is now shipped with stringi
+   (for big-endian, ASCII systems)
 
 * 0.1-21 (2014-02-19)
    Fixed some Solaris-related issues while preparing stringi

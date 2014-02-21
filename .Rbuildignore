@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^configure\.ac$
 ^devel
 ^src-i386
 ^src-x64
