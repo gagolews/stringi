@@ -15,10 +15,10 @@ ICU4C, i18n, l10n, Unicode
 
 \bold{Homepage}: \url{http://stringi.rexamine.com}
 
-\bold{License}: The MIT license for the package code, the
-ICU license for accompanying ICU4C distribution, and the
-UCD license for the Unicode Character Database. See the
-COPYRIGHTS and LICENSE file for more details.
+\bold{License}: The BSD-3-clause license for the package
+code, the ICU license for accompanying ICU4C distribution,
+and the UCD license for the Unicode Character Database. See
+the COPYRIGHTS and LICENSE file for more details.
 }
 \details{
 Manual pages on general topics (must-read): \itemize{ \item
@@ -103,7 +103,8 @@ Marek Gagolewski \email{gagolews@rexamine.com},\cr Bartek
 Tartanus \email{bartektartanus@rexamine.com},\cr with some
 contributions from Marcin Bujarski at the early stage of
 package development. ICU4C was developed by IBM and others.
-The Unicode Character Database is due to Unicode, Inc.
+The Unicode Character Database is due to Unicode, Inc.; see
+the COPYRIGHTS file for more details.
 }
 \references{
 \emph{\pkg{stringi} Package homepage},
