@@ -116,8 +116,8 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       path <- file.path(find.package('stringi'), 'libs')
    stopifnot(is.character(path), length(path) == 1)
    
-   mirror1 <- "http://raw.github.com/Rexamine/stringi/master/src/icu52/data/"
-   mirror2 <- "http://static.rexamine.com/packages/"
+   mirror1 <- "http://static.rexamine.com/packages/"
+   mirror2 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
    
    if (.Platform$endian == 'little') {
       fname <- "icudt52l.zip"
