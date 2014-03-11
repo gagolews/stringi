@@ -8,14 +8,12 @@ then the library will be built together with stringi
 (a custom subset of ICU4C 52.1 is shipped with the package).
 
 
-The user is encouraged to check whether the ICU UCD data library (icu52dt)
+You are encouraged to check whether the ICU data library (icudt)
 has been successfully installed by calling:
 
 > library('stringi')
-> stri_enc_list() # this should return a list of length > 0
-> stri_locale_list() # this should return a vector of length > 0
+> stri_install_check()
 
-Also, to make sure that ICU has detected your locale and native
-encoding properly, call:
+This will also make you sure that ICU has detected your locale and native
+encoding properly.
 
-> stri_info(short=TRUE)

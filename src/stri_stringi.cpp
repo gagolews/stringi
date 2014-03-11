@@ -159,12 +159,19 @@ static const R_CallMethodDef cCallMethods[] = {
 
 void stri_set_icu_data_directory(const char* libpath)
 {
+   // libpath == "...../libs"      -> "...../libs"
+   // libpath == "...../libs/i386" -> "...../libs"
+   // libpath == "...../libs/x64"  -> "...../libs"
+   
    string dir(libpath);
    size_t idx = dir.rfind("libs");
-   if (idx ==  string::npos) return; // this shouldn't happen
+   if (idx == string::npos) return; // this shouldn't happen
 
-   dir = dir.substr(0, idx+5); // strlen("libs/") or strlen("libs\\")
+   dir = dir.substr(0, idx+5); // 5 == strlen("libs/") or strlen("libs\\")
    u_setDataDirectory(dir.c_str());
+   
+   // anyway, if .dat file will not be found,
+   // ICU will use system data (may be stub)
 }
 
 

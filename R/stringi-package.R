@@ -127,7 +127,8 @@
 #'
 #' Note that each man page has many links to other interesting facilities.
 #'
-#'
+#' The \pkg{stringi} user is encouraged to call \code{\link{stri_install_check}}
+#' after the package installation.
 #'
 #' @name stringi-package
 #' @rdname stringi-package

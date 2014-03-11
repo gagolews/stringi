@@ -1,0 +1,55 @@
+\name{stri_install_check}
+\alias{stri_install_check}
+\alias{stri_install_icudt}
+\title{Installation-Related Utilities}
+\usage{
+stri_install_check(silent = FALSE)
+
+stri_install_icudt(check = TRUE, path = NULL)
+}
+\arguments{
+  \item{silent}{suppress diagnostic messages}
+
+  \item{check}{enable \code{stri_install_check()} tests}
+
+  \item{path}{path to install icudt to. If \code{NULL},
+  then \code{file.path(find.package('stringi'), 'libs')}
+  will be used. Custom, non-default paths should not be
+  used normally by \pkg{stringi} users.}
+}
+\value{
+The functions return a logical value, invisibly.
+\code{TRUE} denotes that the requested operation has been
+completed successfully.
+}
+\description{
+These functions are responsible for checking and
+guaranteeing that the ICU data library (icudt) is available
+and that \pkg{stringi} is ready to use.
+}
+\details{
+ICU makes use of a wide variety of data tables to provide
+many of its services. Examples include converter mapping
+tables, collation rules, transliteration rules, break
+iterator rules and dictionaries, and other locale data.
+
+Without the ICU data library (icudt) many \pkg{stringi}
+features will not be available. icudt size is approx. 10-20
+MB.
+
+\code{stri_install_check()} tests whether some ICU services
+are available. If they are not, it is most likely due to
+unavailable ICU data library.
+
+\code{stri_install_icudt()} downloads and installs the ICU
+data library specific for your platform
+(little/big-endian). The downloaded file will be
+decompressed into the directory where the package has been
+installed, see \code{\link{find.package}}, so make sure you
+have sufficient write permissions.
+}
+\references{
+\emph{ICU Data} -- ICU User Guide,
+\url{http://userguide.icu-project.org/icudata}
+}
+

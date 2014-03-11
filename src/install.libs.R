@@ -12,24 +12,14 @@ if (file.exists('icu52_found.txt')) {
 }
 
 if (copyicudt) {
+   source('../R/install.R')
+   stri_install_icudt(FALSE, file.path(R_PACKAGE_DIR, paste0('libs')))
 # Note that if the data file may not be found, some features will
 # be unavailable (but the package itself will load properly,
 # and UCD-independent functions will work properly)
-   icudtpathL <- 'icu52/data/icudt52l.dat'
-   icudtpathB <- 'icu52/data/icudt52b.dat'
-   if (.Platform$endian == 'little') {
-      if (file.exists(icudtpathL)) {
-         icudatadir <- file.path(R_PACKAGE_DIR, paste0('libs'))
-         file.copy(icudtpathL, icudatadir, overwrite=TRUE)
-      }
-   }
-   else {
-      if (file.exists(icudtpathB)) {
-         icudatadir <- file.path(R_PACKAGE_DIR, paste0('libs'))
-         file.copy(icudtpathB, icudatadir, overwrite=TRUE)
-      }
-   }
 }
 
+
+# Copy symbols.rds
 if (file.exists('symbols.rds'))
    file.copy('symbols.rds', dest, overwrite=TRUE)
