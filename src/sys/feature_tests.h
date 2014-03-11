@@ -110,7 +110,7 @@ extern "C" {
  */
 
 #if (__STDC__ - 0 == 1 && !defined(__GNUC__)) || \
-	(defined(__GNUC__) && defined(__STRICT_ANSI__))
+   (defined(__GNUC__) && defined(__STRICT_ANSI__))
 #define	_STRICT_STDC
 #else
 #undef	_STRICT_STDC
@@ -154,8 +154,8 @@ extern "C" {
  *	kernel implementation and may change in future releases.)
  */
 #if	(!defined(_STRICT_STDC) && !defined(__XOPEN_OR_POSIX)) || \
-		defined(_KERNEL) || defined(_KMEMUSER) || \
-		defined(__EXTENSIONS__)
+   	defined(_KERNEL) || defined(_KMEMUSER) || \
+   	defined(__EXTENSIONS__)
 #undef	_LARGEFILE64_SOURCE
 #define	_LARGEFILE64_SOURCE	1
 #endif
@@ -245,7 +245,7 @@ extern "C" {
 
 /* X/Open Portability Guide, Issue 3 */
 #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0 < 500) && \
-	(_XOPEN_VERSION - 0 < 4) && !defined(_XOPEN_SOURCE_EXTENDED)
+   (_XOPEN_VERSION - 0 < 4) && !defined(_XOPEN_SOURCE_EXTENDED)
 #define	_XPG3
 /* X/Open CAE Specification, Issue 4 */
 #elif	(defined(_XOPEN_SOURCE) && _XOPEN_VERSION - 0 == 4)
@@ -333,11 +333,11 @@ extern "C" {
 
 #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
 #error "Compiler or options invalid for pre-UNIX 03 X/Open applications \
-	and pre-2001 POSIX applications"
+   and pre-2001 POSIX applications"
 #elif !defined(_STDC_C99) && \
-	(defined(__XOPEN_OR_POSIX) && defined(_XPG6))
+   (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
 #error "Compiler or options invalid; UNIX 03 and POSIX.1-2001 applications \
-	require the use of c99"
+   require the use of c99"
 #endif
  */
 

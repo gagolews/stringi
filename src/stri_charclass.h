@@ -47,7 +47,7 @@
 struct CharClass {
 
    private:
-   
+
       static const UProperty NA_binprop;
       static const uint32_t NA_gcmask;
 

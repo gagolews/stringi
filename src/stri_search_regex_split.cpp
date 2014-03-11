@@ -46,8 +46,9 @@
  * @param opts_regex
  * @return list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-21)
- * @version 0.2 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) added missing utext_close call to avoid memleaks
  */
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_regex)
 {
@@ -139,5 +140,10 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
 
    UNPROTECT(1);
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END({
+      if (str_text) {
+         utext_close(str_text);
+         str_text = NULL;
+      }
+   })
 }

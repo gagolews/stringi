@@ -74,8 +74,10 @@ SEXP stri_stats_general(SEXP str)
 
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
-         if (c == (UChar32)'\n' || c == (UChar32)'\r')
+         if (c == (UChar32)'\n' || c == (UChar32)'\r') {
+            UNPROTECT(1);
             throw StriException(MSG__NEWLINE_FOUND);
+         }
          ++stats[gsNumChars]; // another character [code point]
          // we test for UCHAR_WHITE_SPACE binary property
          if (!u_hasBinaryProperty(c, UCHAR_WHITE_SPACE)) {
@@ -151,9 +153,11 @@ SEXP stri_stats_latex(SEXP str)
       for (int j=0; j<cn; ) {
          U8_NEXT(cs, j, cn, c);
 
-         if (c == (UChar32)'\n')
+         if (c == (UChar32)'\n') {
+            UNPROTECT(1);
             throw StriException(MSG__NEWLINE_FOUND);
-
+         }
+         
          UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
          UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
 
