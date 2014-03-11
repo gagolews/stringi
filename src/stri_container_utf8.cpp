@@ -55,6 +55,9 @@ StriContainerUTF8::StriContainerUTF8()
 StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
    this->str = NULL;
+   last_ind_back_str = NULL;
+   last_ind_fwd_str = NULL;
+   
 #ifndef NDEBUG
    if (!isString(rstr))
       throw StriException("DEBUG: !isString in StriContainerUTF8::StriContainerUTF8(SEXP rstr)");
@@ -162,6 +165,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
    :    StriContainerBase((StriContainerBase&)container)
 {
+   last_ind_back_str = NULL;
+   last_ind_fwd_str = NULL;
+   
    if (container.str) {
       this->str = new String8*[this->n];
       for (int i=0; i<this->n; ++i) {
@@ -280,8 +286,13 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
 {
    R_len_t cur_n = get(i).length();
    const char* cur_s = get(i).c_str();
-
+   
    if (wh <= 0) return cur_n;
+   
+#ifndef NDEBUG
+   if (!cur_s)
+      throw StriException("StriContainerUTF8::UChar32_to_UTF8_index_back: NULL cur_s");
+#endif
 
    if (last_ind_back_str != cur_s) {
       // starting search in a different string
@@ -352,6 +363,12 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 
    R_len_t cur_n = get(i).length();
    const char* cur_s = get(i).c_str();
+   
+#ifndef NDEBUG
+   if (!cur_s)
+      throw StriException("StriContainerUTF8::UChar32_to_UTF8_index_fwd: NULL cur_s");
+#endif
+
 
    if (last_ind_fwd_str != cur_s) {
       // starting search in a different string
