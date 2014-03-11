@@ -41,15 +41,19 @@
  * Class for testing whether a character falls into a given character class
  * (i.e. has a given binary property or is in general unicode category).
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
  */
 struct CharClass {
 
    private:
+   
+      static const UProperty NA_binprop;
+      static const uint32_t NA_gcmask;
 
-      UProperty     binprop;    ///< Unicode Binary Property, UCHAR_INVALID_CODE if not used
-      UCharCategory gencat;     ///< Unicode General Category, U_CHAR_CATEGORY_COUNT if not used
-      bool complement;          ///< Are we interested in the complement of a char class?
+      UProperty binprop;    ///< Unicode Binary Property, NA_binprop if not used
+      uint32_t  gcmask;     ///< Unicode General Category mask, NA_gcmask if not used
+      bool complement;      ///< Are we interested in the complement of a char class?
 
 
       static const char* binprop_names[];             ///< textual identifiers binary properties
@@ -61,22 +65,22 @@ struct CharClass {
    public:
 
       CharClass() {
-         binprop = UCHAR_INVALID_CODE;
-         gencat = U_CHAR_CATEGORY_COUNT;
+         binprop = NA_binprop;
+         gcmask = NA_gcmask;
          complement = false;
       }
 
       CharClass(SEXP charclass);
 
       inline bool isNA() {
-         return (binprop == UCHAR_INVALID_CODE && gencat == U_CHAR_CATEGORY_COUNT );
+         return (binprop == NA_binprop && gcmask == NA_gcmask );
       }
 
       int test(UChar32 c);
 
 
 
-      static UCharCategory getGeneralCategoryFromName(const char* name, R_len_t n);
+      static uint32_t  getGeneralCategoryMaskFromName(const char* name, R_len_t n);
       static UProperty getBinaryPropertyFromName(const char* name, R_len_t n);
 };
 

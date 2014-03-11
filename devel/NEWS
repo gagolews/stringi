@@ -1,7 +1,10 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
-* 0.1-23 (2014-03-09)
+* 0.1-24 (2014-03-11)
+   Fixed bugs detected with ASAN and UBSAN
+
+* 0.1-23 (2014-03-11)
    License changed to BSD-3-clause, COPYRIGHTS updated
    icudt is not shipped with stringi; it is now downloaded in install.libs.R
    new functions: stri_install_check(), stri_install_icudt()
