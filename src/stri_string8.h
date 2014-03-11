@@ -42,15 +42,16 @@
  *
  * quite similar to std::string and/or  Vector<char>
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-13) added resize() method and m_size field
+ * @version 0.1-?? (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-13) added resize() method and m_size field
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) Fixed array over-runs detected with valgrind
  */
 class String8  {
 
    private:
 
       char* m_str;  ///< character data in UTF-8
-      R_len_t m_n;      ///< string length (in bytes), not including NUL
+      R_len_t m_n;      ///< string length (in bytes), not including NUL [[may be invalid]]
       R_len_t m_size;   ///< buffer size
       bool m_memalloc;  /// < should the memory be freed at the end
 
@@ -165,7 +166,7 @@ class String8  {
       /** string length in bytes */
       inline R_len_t length() const
       {
-         return this->m_n;
+         return this->m_n; // !!!!! May be invalid if we use String8 as a writebuf :(
       }
 
       /** buffer size in bytes */
@@ -173,20 +174,23 @@ class String8  {
       {
          return this->m_size;
       }
+      
 
-
-      /** increase buffer size
+      /** increase buffer size;
+       * existing buffer content will be retained
        * @param size new size-1
        */
       inline void resize(R_len_t size, bool copy=true)
       {
          if (this->m_size >= size)
-            return;
+            return; // do nothing (the requested buffer size is available)
+            
+         size_t oldsize = this->m_size;
          this->m_size = size+1;
          char* newstr = new char[this->m_size];
          if (this->m_str) {
             if (copy) {
-               memcpy(newstr, this->m_str, (size_t)this->m_size);
+               memcpy(newstr, this->m_str, (size_t)oldsize);
                //this->n = this->n;
             }
             else {
