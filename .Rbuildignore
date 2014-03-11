@@ -4,9 +4,10 @@
 ^src-i386
 ^src-x64
 ^src/.*\.o$
-^src/stubdata/.*\.o$
-^src/i18n/.*\.o$
-^src/common/.*\.o$
+^src/icu52/stubdata/.*\.o$
+^src/icu52/i18n/.*\.o$
+^src/icu52/common/.*\.o$
+^src/icu52/data
 ^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$

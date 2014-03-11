@@ -3,6 +3,8 @@
 
 * 0.1-23 (2014-03-09)
    License changed to BSD-3-clause, COPYRIGHTS updated
+   icudt is not shipped with stringi; it is now downloaded in install.libs.R
+   new functions: stri_install_check(), stri_install_icudt()
 
 * 0.1-22 (2014-02-20)
    System ICU is used on systems which do have one (version >= 50 needed).
