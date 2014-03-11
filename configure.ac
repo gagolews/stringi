@@ -293,7 +293,7 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 if test "$enable_gcc_debug" == "yes"; then
    with_extra_cflags="${with_extra_cflags} -UNDEBUG -fsanitize=address -fno-omit-frame-pointer"
    with_extra_cxxflags="${with_extra_cxxflags} -UNDEBUG -fsanitize=address -fno-omit-frame-pointer"
-   with_extra_ldflags="${with_extra_ldflags} -fsanitize=address"
+   with_extra_ldflags="${with_extra_ldflags} -fsanitize=address -lasan"
 fi
 
 if test "$enable_gcc_pedantic" == "yes"; then
