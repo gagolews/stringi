@@ -13,7 +13,11 @@ if (file.exists('icu52_found.txt')) {
 
 if (copyicudt) {
    source('../R/install.R')
-   stri_install_icudt(FALSE, file.path(R_PACKAGE_DIR, paste0('libs')))
+   outdir <- file.path(R_PACKAGE_DIR, paste0('libs'))
+   if (length(dir(outdir, glob2rx("*.dat"))) == 0) {
+      # avoids multiple download attempts while multiarch building
+      stri_install_icudt(FALSE, outdir)
+   }
 # Note that if the data file may not be found, some features will
 # be unavailable (but the package itself will load properly,
 # and UCD-independent functions will work properly)
