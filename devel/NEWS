@@ -5,6 +5,7 @@
    Fixed bugs detected with ASan and UBSan,
    e.g. fixed CharClass::gcmask type (enum -> uint32_t) (reported by UBSan by BR),
    fixed array over-runs detected with valgrind in string8.h
+   fixed unitialized class fields in StriContainerUTF8 (reported by valgrind)
 
 * 0.1-23 (2014-03-11)
    License changed to BSD-3-clause, COPYRIGHTS updated
