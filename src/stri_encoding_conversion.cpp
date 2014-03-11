@@ -500,14 +500,18 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
       err = U_ZERO_ERROR;
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
-      if (U_FAILURE(err))
+      if (U_FAILURE(err)) {
+         UNPROTECT(1);
          throw StriException(err);
-
+      }
+      
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.
-      if (!curs_tmp)
+      if (!curs_tmp) {
+         UNPROTECT(1);
          throw StriException(MSG__INTERNAL_ERROR);
-
+      }
+      
       R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
       // "The calculated size is guaranteed to be sufficient for this conversion."
       buf.resize(bufneed);
@@ -517,18 +521,24 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       ucnv_resetFromUnicode(uconv_to);
       bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
       if (bufneed <= buf.size()) {
-         if (U_FAILURE(err))
+         if (U_FAILURE(err)) {
+            UNPROTECT(1);
             throw StriException(err);
+         }
       }
       else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
          buf.resize(bufneed);
          err = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
-         if (U_FAILURE(err))
+         if (U_FAILURE(err)) {
+            UNPROTECT(1);
             throw StriException(err);
-         if (bufneed > buf.size())
+         }
+         if (bufneed > buf.size()) {
+            UNPROTECT(1);
             throw StriException(MSG__INTERNAL_ERROR);
+         }
       }
 
       if (to_raw_logical) {

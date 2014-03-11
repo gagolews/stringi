@@ -174,7 +174,7 @@ uint32_t CharClass::getGeneralCategoryMaskFromName(const char* name, R_len_t n)
                case '\0': retmask = (uint32_t)U_GC_L_MASK;  break;
             }
             break;
-            
+
          case 'Z':
             switch (name2) {
                case 'S':  retmask = (uint32_t)U_GC_ZS_MASK; break;
@@ -183,7 +183,7 @@ uint32_t CharClass::getGeneralCategoryMaskFromName(const char* name, R_len_t n)
                case '\0': retmask = (uint32_t)U_GC_Z_MASK;  break;
             }
             break;
-            
+
          case 'N':
             switch (name2) {
                case 'D':  retmask = (uint32_t)U_GC_ND_MASK; break;
@@ -192,7 +192,7 @@ uint32_t CharClass::getGeneralCategoryMaskFromName(const char* name, R_len_t n)
                case '\0': retmask = (uint32_t)U_GC_N_MASK;  break;
             }
             break;
-            
+
          case 'C':
             switch (name2) {
                case 'N':  retmask = (uint32_t)U_GC_CN_MASK; break;

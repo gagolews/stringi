@@ -31,46 +31,46 @@
 
 #' @title
 #' Installation-Related Utilities
-#' 
+#'
 #' @description
 #' These functions are responsible for checking and guaranteeing
 #' that the ICU data library (icudt) is available and that \pkg{stringi}
 #' is ready to use.
-#' 
+#'
 #' @details
-#' ICU makes use of a wide variety of data tables to provide many 
-#' of its services. Examples include converter mapping tables, 
-#' collation rules, transliteration rules, break iterator rules 
+#' ICU makes use of a wide variety of data tables to provide many
+#' of its services. Examples include converter mapping tables,
+#' collation rules, transliteration rules, break iterator rules
 #' and dictionaries, and other locale data.
-#' 
+#'
 #' Without the ICU data library (icudt) many \pkg{stringi} features
 #' will not be available. icudt size is approx. 10-20 MB.
-#' 
+#'
 #' \code{stri_install_check()} tests whether some ICU services
 #' are available. If they are not, it is most likely due to
 #' unavailable ICU data library.
-#' 
+#'
 #' \code{stri_install_icudt()} downloads and installs the ICU data library
 #' specific for your platform (little/big-endian). The downloaded
 #' file will be decompressed into the directory where the package has been
 #' installed, see \code{\link{find.package}}, so make sure
 #' you have sufficient write permissions.
-#' 
+#'
 #' @param silent suppress diagnostic messages
 #' @param check enable \code{stri_install_check()} tests
 #' @param path path to install icudt to. If \code{NULL}, then
 #' \code{file.path(find.package('stringi'), 'libs')} will be used.
 #' Custom, non-default paths should not be used normally by \pkg{stringi} users.
-#' 
+#'
 #' @return The functions return a logical value, invisibly.
 #' \code{TRUE} denotes that the requested operation has been completed
 #' successfully.
-#' 
+#'
 #' @references
 #' \emph{ICU Data} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/icudata}
-#' 
-#' 
+#'
+#'
 #' @rdname
 #' stri_install
 #' @export
@@ -80,7 +80,7 @@ stri_install_check <- function(silent=FALSE) {
    allok <- tryCatch({
       if (!silent)
          message(stri_info(TRUE)) # this may also throw an error
-   
+
       if (length(stri_enc_list()) <= 0) stop("encodings unsupported")
       if (length(stri_locale_list()) <= 0) stop("locales unsupported")
       if (stri_cmp("a", "b", opts_collator=stri_opts_collator(locale="en_US")) != -1)
@@ -89,7 +89,7 @@ stri_install_check <- function(silent=FALSE) {
          stop("regex engine failure")
       TRUE
    }, error=function(e) { FALSE })
-   
+
    if (!silent) {
       if (allok) message("All tests completed successfully.")
       else {
@@ -97,7 +97,7 @@ stri_install_check <- function(silent=FALSE) {
          message("Call stri_install_icudt() to fix this problem.")
       }
    }
-   
+
    invisible(allok)
 }
 
@@ -111,21 +111,21 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       message("icudt has been already installed.")
       return(invisible(TRUE))
    }
-   
+
    if (is.null(path))
       path <- file.path(find.package('stringi'), 'libs')
    stopifnot(is.character(path), length(path) == 1)
-   
+
    mirror1 <- "http://static.rexamine.com/packages/"
    mirror2 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
-   
+
    if (.Platform$endian == 'little') {
       fname <- "icudt52l.zip"
    }
    else {
       fname <- "icudt52b.zip"
    }
-   
+
    outfname <- tempfile(fileext=".zip")
    download_from_mirror <- function(mirror, outfname) {
       tryCatch({
@@ -134,24 +134,24 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
          TRUE
       }, error = function(e) FALSE)
    }
-   
+
    message("downloading ICU data library (icudt)")
    allok <- download_from_mirror(mirror1, outfname)
    allok <- allok || download_from_mirror(mirror2, outfname)
-   
+
    if (!allok) {
       message("download failed")
       return(invisible(FALSE))
    }
    message("download OK")
-   
+
    message("decompressing downloaded archive")
    res <- unzip(outfname, exdir=path)
    if (!is.character(res) || length(res) <= 0) {
       message("error decompressing archive")
       return(invisible(FALSE))
    }
-   
+
    message("icudt has been installed successfully")
    message("restart R to apply changes")
    return(invisible(TRUE))

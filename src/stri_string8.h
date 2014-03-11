@@ -174,7 +174,7 @@ class String8  {
       {
          return this->m_size;
       }
-      
+
 
       /** increase buffer size;
        * existing buffer content will be retained
@@ -184,7 +184,7 @@ class String8  {
       {
          if (this->m_size >= size)
             return; // do nothing (the requested buffer size is available)
-            
+
          size_t oldsize = this->m_size;
          this->m_size = size+1;
          char* newstr = new char[this->m_size];
