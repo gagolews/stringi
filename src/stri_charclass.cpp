@@ -33,6 +33,11 @@
 #include "stri_stringi.h"
 
 
+const UProperty CharClass::NA_binprop = UCHAR_INVALID_CODE;
+const uint32_t  CharClass::NA_gcmask  = 0xffffffff;
+
+
+
 // these static vars are automatically generated via an R script
 const R_len_t CharClass::binprop_maxchars = 32;
 
@@ -99,7 +104,8 @@ const UProperty CharClass::binprop_code[] = { // sorted by binprop_names_normali
  *
  * @param charclass CHARSXP, can be NA
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
  */
 CharClass::CharClass(SEXP charclass)
 {
@@ -108,12 +114,12 @@ CharClass::CharClass(SEXP charclass)
       throw StriException(MSG__INCORRECT_INTERNAL_ARG);
 #endif
 
-   binprop = UCHAR_INVALID_CODE;
-   gencat = U_CHAR_CATEGORY_COUNT;
+   binprop = NA_binprop;
+   gcmask  = NA_gcmask;
    complement = false;
 
    if (charclass == NA_STRING)
-      return; // leave (-1, -1) == NA
+      return; // leave (NA_binprop, NA_gcmask) == NA
 
    R_len_t n = LENGTH(charclass);
    const char* name = CHAR(charclass);
@@ -127,10 +133,10 @@ CharClass::CharClass(SEXP charclass)
    if (n == 0) {
       Rf_warning(MSG__CHARCLASS_INCORRECT);
    }
-   else if (n <= 2) { // it's possibly a general category
-      gencat = CharClass::getGeneralCategoryFromName(name, n);
+   else if (n <= 2) { // possibly it's a general category
+      gcmask = CharClass::getGeneralCategoryMaskFromName(name, n);
    }
-   else { // it's possibly a binary property
+   else { // possibly it's a binary property
       binprop = CharClass::getBinaryPropertyFromName(name, n);
    }
 }
@@ -143,11 +149,12 @@ CharClass::CharClass(SEXP charclass)
  * @param n name's length
  * @return general category mask
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
  */
-UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
+uint32_t CharClass::getGeneralCategoryMaskFromName(const char* name, R_len_t n)
 {
-   UCharCategory id = U_CHAR_CATEGORY_COUNT;
+   uint32_t retmask = NA_gcmask;
 
    if (n >= 1 && n <= 2) {
 
@@ -156,85 +163,85 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
       char name2 = (U8_IS_SINGLE(name[1]) && name[1]!=0)?(char)u_toupper((UChar32)name[1]):0;
 
       switch(name1) {
-         case 'C':
-            switch (name2) {
-               case 'N':  id = (UCharCategory)U_GC_CN_MASK; break;
-               case 'C':  id = (UCharCategory)U_GC_CC_MASK; break;
-               case 'F':  id = (UCharCategory)U_GC_CF_MASK; break;
-               case 'O':  id = (UCharCategory)U_GC_CO_MASK; break;
-               case 'S':  id = (UCharCategory)U_GC_CS_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_C_MASK;  break;
-            }
-            break;
-
          case 'L':
             switch (name2) {
-               case 'U':  id = (UCharCategory)U_GC_LU_MASK; break;
-               case 'L':  id = (UCharCategory)U_GC_LL_MASK; break;
-               case 'T':  id = (UCharCategory)U_GC_LT_MASK; break;
-               case 'M':  id = (UCharCategory)U_GC_LM_MASK; break;
-               case 'O':  id = (UCharCategory)U_GC_LO_MASK; break;
-               case 'C':  id = (UCharCategory)U_GC_LC_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_L_MASK;  break;
+               case 'U':  retmask = (uint32_t)U_GC_LU_MASK; break;
+               case 'L':  retmask = (uint32_t)U_GC_LL_MASK; break;
+               case 'T':  retmask = (uint32_t)U_GC_LT_MASK; break;
+               case 'M':  retmask = (uint32_t)U_GC_LM_MASK; break;
+               case 'O':  retmask = (uint32_t)U_GC_LO_MASK; break;
+               case 'C':  retmask = (uint32_t)U_GC_LC_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_L_MASK;  break;
+            }
+            break;
+            
+         case 'Z':
+            switch (name2) {
+               case 'S':  retmask = (uint32_t)U_GC_ZS_MASK; break;
+               case 'L':  retmask = (uint32_t)U_GC_ZL_MASK; break;
+               case 'P':  retmask = (uint32_t)U_GC_ZP_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_Z_MASK;  break;
+            }
+            break;
+            
+         case 'N':
+            switch (name2) {
+               case 'D':  retmask = (uint32_t)U_GC_ND_MASK; break;
+               case 'L':  retmask = (uint32_t)U_GC_NL_MASK; break;
+               case 'O':  retmask = (uint32_t)U_GC_NO_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_N_MASK;  break;
+            }
+            break;
+            
+         case 'C':
+            switch (name2) {
+               case 'N':  retmask = (uint32_t)U_GC_CN_MASK; break;
+               case 'C':  retmask = (uint32_t)U_GC_CC_MASK; break;
+               case 'F':  retmask = (uint32_t)U_GC_CF_MASK; break;
+               case 'O':  retmask = (uint32_t)U_GC_CO_MASK; break;
+               case 'S':  retmask = (uint32_t)U_GC_CS_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_C_MASK;  break;
             }
             break;
 
          case 'M':
             switch (name2) {
-               case 'N':  id = (UCharCategory)U_GC_MN_MASK; break;
-               case 'E':  id = (UCharCategory)U_GC_ME_MASK; break;
-               case 'C':  id = (UCharCategory)U_GC_MC_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_M_MASK;  break;
-            }
-            break;
-
-         case 'N':
-            switch (name2) {
-               case 'D':  id = (UCharCategory)U_GC_ND_MASK; break;
-               case 'L':  id = (UCharCategory)U_GC_NL_MASK; break;
-               case 'O':  id = (UCharCategory)U_GC_NO_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_N_MASK;  break;
+               case 'N':  retmask = (uint32_t)U_GC_MN_MASK; break;
+               case 'E':  retmask = (uint32_t)U_GC_ME_MASK; break;
+               case 'C':  retmask = (uint32_t)U_GC_MC_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_M_MASK;  break;
             }
             break;
 
          case 'P':
             switch (name2) {
-               case 'D':  id = (UCharCategory)U_GC_PD_MASK; break;
-               case 'S':  id = (UCharCategory)U_GC_PS_MASK; break;
-               case 'E':  id = (UCharCategory)U_GC_PE_MASK; break;
-               case 'C':  id = (UCharCategory)U_GC_PC_MASK; break;
-               case 'O':  id = (UCharCategory)U_GC_PO_MASK; break;
-               case 'I':  id = (UCharCategory)U_GC_PI_MASK; break;
-               case 'F':  id = (UCharCategory)U_GC_PF_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_P_MASK;  break;
+               case 'D':  retmask = (uint32_t)U_GC_PD_MASK; break;
+               case 'S':  retmask = (uint32_t)U_GC_PS_MASK; break;
+               case 'E':  retmask = (uint32_t)U_GC_PE_MASK; break;
+               case 'C':  retmask = (uint32_t)U_GC_PC_MASK; break;
+               case 'O':  retmask = (uint32_t)U_GC_PO_MASK; break;
+               case 'I':  retmask = (uint32_t)U_GC_PI_MASK; break;
+               case 'F':  retmask = (uint32_t)U_GC_PF_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_P_MASK;  break;
             }
             break;
 
          case 'S':
             switch (name2) {
-               case 'M':  id = (UCharCategory)U_GC_SM_MASK; break;
-               case 'C':  id = (UCharCategory)U_GC_SC_MASK; break;
-               case 'K':  id = (UCharCategory)U_GC_SK_MASK; break;
-               case 'O':  id = (UCharCategory)U_GC_SO_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_S_MASK;  break;
-            }
-            break;
-
-         case 'Z':
-            switch (name2) {
-               case 'S':  id = (UCharCategory)U_GC_ZS_MASK; break;
-               case 'L':  id = (UCharCategory)U_GC_ZL_MASK; break;
-               case 'P':  id = (UCharCategory)U_GC_ZP_MASK; break;
-               case '\0': id = (UCharCategory)U_GC_Z_MASK;  break;
+               case 'M':  retmask = (uint32_t)U_GC_SM_MASK; break;
+               case 'C':  retmask = (uint32_t)U_GC_SC_MASK; break;
+               case 'K':  retmask = (uint32_t)U_GC_SK_MASK; break;
+               case 'O':  retmask = (uint32_t)U_GC_SO_MASK; break;
+               case '\0': retmask = (uint32_t)U_GC_S_MASK;  break;
             }
             break;
       }
    }
 
-   if (id == U_CHAR_CATEGORY_COUNT)
+   if (retmask == NA_gcmask)
       Rf_warning(MSG__CHARCLASS_INCORRECT);
 
-   return id;
+   return retmask;
 }
 
 
@@ -245,7 +252,7 @@ UCharCategory CharClass::getGeneralCategoryFromName(const char* name, R_len_t n)
  * @param n name's length
  * @return general category mask
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
  */
 UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 {
@@ -309,7 +316,8 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
  * @param c UTF-32 char code
  * @return TRUE (1) or FALSE (0)
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
  */
 int CharClass::test(UChar32 c)
 {
@@ -318,8 +326,8 @@ int CharClass::test(UChar32 c)
       if (complement) return !(res);
       else            return  (res);
    }
-   else if (gencat != U_CHAR_CATEGORY_COUNT) {
-      int res = ((U_GET_GC_MASK(c) & gencat) != 0);
+   else if (gcmask != NA_gcmask) {
+      int res = ((U_GET_GC_MASK(c) & gcmask) != 0);
       if (complement) return !(res);
       else            return  (res);
    }
