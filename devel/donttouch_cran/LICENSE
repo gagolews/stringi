@@ -1,0 +1,25 @@
+** The R and C++ source code of the stringi package **
+** [including src/stri_* files]                     **
+
+Copyright (c) 2013-2014 Marek Gagolewski and Bartek Tartanus
+
+
+** The ICU4C library   **
+** [src/icu52/* files] **
+
+Copyright (c) 1991-2014 IBM; Unicode, Inc; Google, Inc; TaBE 
+Project; Pai-Hsiang Hsiao; Computer Systems and Communication Lab,
+Institute of Information Science, Academia Sinica; Chih-Hao Tsai;
+Nara Institute of Science and Technology; Brian Eugene Wilson; Robert 
+Martin Campbell
+
+See src/icu52/license.html,
+http://source.icu-project.org/repos/icu/icu/trunk/license.html and
+http://source.icu-project.org/repos/icu/icuhtml/trunk/legal/copyright.html
+
+
+** The Unicode Character Database **
+
+Copyright (c) 1991-2014 Unicode, Inc.
+Distributed under the Terms of Use
+in http://www.unicode.org/copyright.html.

@@ -1,0 +1,19 @@
+The stringi package depends on the ICU4C >= 50 library.
+If you build the package from sources and either:
+* these requirements are not met (check out http://site.icu-project.org/download
+   or e.g. the 'libicu-devel' rpm package on Fedora or 'libicu-dev' on Ubuntu),
+* pkg-config cannot find proper build settings for ICU-based projects, or
+* R CMD INSTALL is called with --configure-args='--disable-pkg-config',
+then the library will be built together with stringi
+(a custom subset of ICU4C 52.1 is shipped with the package).
+
+
+You are encouraged to check whether the ICU data library (icudt)
+has been successfully installed by calling:
+
+> library('stringi')
+> stri_install_check()
+
+This will also make you sure that ICU has detected your locale and native
+encoding properly.
+
