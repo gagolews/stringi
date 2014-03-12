@@ -1,9 +1,13 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
+* 0.1-25 (2014-03-12)
+   LICENCE tweaks
+   Initial CRAN release
+
 * 0.1-24 (2014-03-11)
    Fixed bugs detected with ASan and UBSan,
-   e.g. fixed CharClass::gcmask type (enum -> uint32_t) (reported by UBSan by BR),
+   e.g. fixed CharClass::gcmask type (enum -> uint32_t) (reported by UBSan),
    fixed array over-runs detected with valgrind in string8.h
    fixed unitialized class fields in StriContainerUTF8 (reported by valgrind)
 
@@ -45,5 +49,5 @@
    scheduled for milestone 0.1
 
 * 0.1-1 (2013-01-05)
-   The stringi project has been started on github.
+   The stringi project has been established on github.
 
