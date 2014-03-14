@@ -12,9 +12,9 @@ Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
 package.
 
 **Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
-[Bartlomiej Tartanus](http://tartanus.rexamine.com/);
+[Bartlomiej Tartanus](http://tartanus.rexamine.com/)
 
-This git repository contains full ICU 52.1 source code
+This git repository also contains a custom subset of ICU 52.1 source code
 which is copyrighted by IBM and others. A binary
 version of the Unicode Character Database is included.
 For more details on copyright holders see the `LICENSE` file.
