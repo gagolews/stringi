@@ -37,48 +37,48 @@
 const char* StriException::getICUerrorName(UErrorCode status)
 {
    switch(status) {
-      case U_USING_FALLBACK_WARNING:
-         return "A resource bundle lookup returned a fallback result (not an error)";
+//      case U_USING_FALLBACK_WARNING:
+//         return "A resource bundle lookup returned a fallback result (not an error)";
 //      case U_ERROR_WARNING_START:
 //         return "Start of information results (semantically successful)";
-      case U_USING_DEFAULT_WARNING:
-         return "A resource bundle lookup returned a result from the root locale (not an error)";
-      case U_SAFECLONE_ALLOCATED_WARNING:
-         return "A SafeClone operation required allocating memory (informational only)";
-      case U_STATE_OLD_WARNING:
-         return "ICU has to use compatibility layer to construct the service. Expect performance/memory usage degradation. Consider upgrading";
-      case U_STRING_NOT_TERMINATED_WARNING:
-         return "An output string could not be NUL-terminated because output length==destCapacity.";
-      case U_SORT_KEY_TOO_SHORT_WARNING:
-         return "Number of levels requested in getBound is higher than the number of levels in the sort key.";
-      case U_AMBIGUOUS_ALIAS_WARNING:
-         return "This converter alias can go to different converter implementations.";
-      case U_DIFFERENT_UCA_VERSION:
-         return "ucol_open encountered a mismatch between UCA version and collator image version, so the collator was constructed from rules. No impact to further function";
-      case U_PLUGIN_CHANGED_LEVEL_WARNING:
-         return "A plugin caused a level change. May not be an error, but later plugins may not load.";
-      case U_ERROR_WARNING_LIMIT:
-         return "This must always be the last warning value to indicate the limit for UErrorCode warnings (last warning code +1)";
-      case U_ZERO_ERROR:
-         return "No error, no warning.";
+//      case U_USING_DEFAULT_WARNING:
+//         return "A resource bundle lookup returned a result from the root locale (not an error)";
+//      case U_SAFECLONE_ALLOCATED_WARNING:
+//         return "A SafeClone operation required allocating memory (informational only)";
+//      case U_STATE_OLD_WARNING:
+//         return "ICU has to use compatibility layer to construct the service. Expect performance/memory usage degradation. Consider upgrading";
+//      case U_STRING_NOT_TERMINATED_WARNING:
+//         return "An output string could not be NUL-terminated because output length==destCapacity.";
+//      case U_SORT_KEY_TOO_SHORT_WARNING:
+//         return "Number of levels requested in getBound is higher than the number of levels in the sort key.";
+//      case U_AMBIGUOUS_ALIAS_WARNING:
+//         return "This converter alias can go to different converter implementations.";
+//      case U_DIFFERENT_UCA_VERSION:
+//         return "ucol_open encountered a mismatch between UCA version and collator image version, so the collator was constructed from rules. No impact to further function";
+//      case U_PLUGIN_CHANGED_LEVEL_WARNING:
+//         return "A plugin caused a level change. May not be an error, but later plugins may not load.";
+//      case U_ERROR_WARNING_LIMIT:
+//         return "This must always be the last warning value to indicate the limit for UErrorCode warnings (last warning code +1)";
+//      case U_ZERO_ERROR:
+//         return "No error, no warning.";
       case U_ILLEGAL_ARGUMENT_ERROR:
          return "Start of codes indicating failure.";
       case U_MISSING_RESOURCE_ERROR:
-         return "The requested resource cannot be found.";
+         return "The requested ICU resource cannot be found. Call `stri_install_check()` to fix this problem.";
       case U_INVALID_FORMAT_ERROR:
          return "Data format is not what is expected.";
       case U_FILE_ACCESS_ERROR:
          return "The requested file cannot be found.";
       case U_INTERNAL_PROGRAM_ERROR:
-         return "Indicates a bug in the library code.";
+         return "Internal ICU error, might be a bug in the library code.";
       case U_MESSAGE_PARSE_ERROR:
-         return "Unable to parse a message (message format)";
+         return "Unable to parse a message (message format).";
       case U_MEMORY_ALLOCATION_ERROR:
          return "Memory allocation error.";
       case U_INDEX_OUTOFBOUNDS_ERROR:
          return "Trying to access the index that is out of bounds.";
       case U_PARSE_ERROR:
-         return "Equivalent to Java ParseException.";
+         return "ICU Parse error.";
       case U_INVALID_CHAR_FOUND:
          return "Character conversion: Unmappable input sequence / Invalid character.";
       case U_TRUNCATED_CHAR_FOUND:
@@ -94,7 +94,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_UNSUPPORTED_ERROR:
          return "Requested operation not supported in current context.";
       case U_RESOURCE_TYPE_MISMATCH:
-         return "an operation is requested over a resource that does not support it";
+         return "An operation is requested over a resource that does not support it";
       case U_ILLEGAL_ESCAPE_SEQUENCE:
          return "ISO-2022 illlegal escape sequence.";
       case U_UNSUPPORTED_ESCAPE_SEQUENCE:
@@ -131,16 +131,16 @@ const char* StriException::getICUerrorName(UErrorCode status)
          return "Elements of a rule are misplaced.";
       case U_MALFORMED_SET:
          return "A UnicodeSet pattern is invalid.";
-      case U_MALFORMED_SYMBOL_REFERENCE:
-         return "UNUSED as of ICU 2.4.";
+//      case U_MALFORMED_SYMBOL_REFERENCE:
+//         return "UNUSED as of ICU 2.4.";
       case U_MALFORMED_UNICODE_ESCAPE:
          return "A Unicode escape pattern is invalid.";
       case U_MALFORMED_VARIABLE_DEFINITION:
          return "A variable definition is invalid.";
       case U_MALFORMED_VARIABLE_REFERENCE:
          return "A variable reference is invalid.";
-      case U_MISMATCHED_SEGMENT_DELIMITERS:
-         return "UNUSED as of ICU 2.4.";
+//      case U_MISMATCHED_SEGMENT_DELIMITERS:
+//         return "UNUSED as of ICU 2.4.";
       case U_MISPLACED_ANCHOR_START:
          return "A start anchor appears at an illegal position.";
       case U_MISPLACED_CURSOR_OFFSET:
@@ -149,8 +149,8 @@ const char* StriException::getICUerrorName(UErrorCode status)
          return "A quantifier appears after a segment close delimiter.";
       case U_MISSING_OPERATOR:
          return "A rule contains no operator.";
-      case U_MISSING_SEGMENT_CLOSE:
-         return "UNUSED as of ICU 2.4.";
+//      case U_MISSING_SEGMENT_CLOSE:
+//         return "UNUSED as of ICU 2.4.";
       case U_MULTIPLE_ANTE_CONTEXTS:
          return "More than one ante context.";
       case U_MULTIPLE_CURSORS:
@@ -175,14 +175,14 @@ const char* StriException::getICUerrorName(UErrorCode status)
          return "More than one compound filter.";
       case U_INVALID_RBT_SYNTAX:
          return "A '::id' rule was passed to the RuleBasedTransliterator parser.";
-      case U_INVALID_PROPERTY_PATTERN:
-         return "UNUSED as of ICU 2.4.";
+//      case U_INVALID_PROPERTY_PATTERN:
+//         return "UNUSED as of ICU 2.4.";
       case U_MALFORMED_PRAGMA:
          return "A 'use' pragma is invlalid.";
       case U_UNCLOSED_SEGMENT:
          return "A closing ')' is missing.";
-      case U_ILLEGAL_CHAR_IN_SEGMENT:
-         return "UNUSED as of ICU 2.4.";
+//      case U_ILLEGAL_CHAR_IN_SEGMENT:
+//         return "UNUSED as of ICU 2.4.";
       case U_VARIABLE_RANGE_EXHAUSTED:
          return "Too many stand-ins generated for the given variable range.";
       case U_VARIABLE_RANGE_OVERLAP:
@@ -220,10 +220,10 @@ const char* StriException::getICUerrorName(UErrorCode status)
          return "Pad symbol misplaced in number pattern.";
       case U_UNMATCHED_BRACES:
          return "Braces do not match in message pattern.";
-      case U_UNSUPPORTED_PROPERTY:
-         return "UNUSED as of ICU 2.4.";
-      case U_UNSUPPORTED_ATTRIBUTE:
-         return "UNUSED as of ICU 2.4.";
+//      case U_UNSUPPORTED_PROPERTY:
+//         return "UNUSED as of ICU 2.4.";
+//      case U_UNSUPPORTED_ATTRIBUTE:
+//         return "UNUSED as of ICU 2.4.";
       case U_ARGUMENT_TYPE_MISMATCH:
          return "Argument name and argument index mismatch in MessageFormat functions.";
       case U_DUPLICATE_KEYWORD:
@@ -239,7 +239,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_FMT_PARSE_ERROR_LIMIT:
          return "The limit for format library errors.";
       case U_BRK_INTERNAL_ERROR:
-         return "An internal error (bug) was detected.";
+         return "An internal error (bug) was detected in ICU.";
 //      case U_BRK_ERROR_START:
 //         return "Start of codes indicating Break Iterator failures.";
       case U_BRK_HEX_DIGITS_EXPECTED:
@@ -271,7 +271,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_BRK_ERROR_LIMIT:
          return "This must always be the last value to indicate the limit for Break Iterator failures.";
       case U_REGEX_INTERNAL_ERROR:
-         return "An internal error (bug) was detected.";
+         return "An internal error (bug) was detected in ICU.";
 //      case U_REGEX_ERROR_START:
 //         return "Start of codes indicating Regexp failures.";
       case U_REGEX_RULE_SYNTAX:
@@ -323,6 +323,6 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_PLUGIN_ERROR_LIMIT:
          return "This must always be the last value to indicate the limit for plugin errors. ";
       default:
-         return "Unknown error.";
+         return "Unknown ICU error.";
    }
 }
