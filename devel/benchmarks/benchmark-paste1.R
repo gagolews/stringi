@@ -1,11 +1,14 @@
-do_benchmark <- function() {
+benchmark_description <- "collapses a sequence of ASCII characters into a single string"
+
+benchmark_do <- function() {
    library('stringi')
    library('stringr')
-   
+
+   ltrs10kx <- rep(letters, 10000)
    gc(reset=TRUE)
    microbenchmark2(
-      paste(letters, collapse=''),
-      str_join(letters, collapse=''),
-      stri_join(letters, collapse='')
+      paste(ltrs10kx, collapse=''),
+      str_join(ltrs10kx, collapse=''),
+      stri_join(ltrs10kx, collapse='')
    )
 }
