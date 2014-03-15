@@ -31,6 +31,7 @@
 
 
 #include "stri_stringi.h"
+#include <unicode/ucol.h>
 
 
 /**

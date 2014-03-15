@@ -31,8 +31,9 @@
 
 
 #include "stri_stringi.h"
-
-
+#include "stri_container_utf16.h"
+#include <unicode/uloc.h>
+#include <unicode/locid.h>
 
 
 /**

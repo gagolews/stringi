@@ -33,7 +33,7 @@
 #ifndef __stri_container_utf8_h
 #define __stri_container_utf8_h
 
-
+#include "stri_container_base.h"
 
 /**
  * A class to handle conversion between R character vectors and UTF-8 string vectors

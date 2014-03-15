@@ -33,7 +33,7 @@
 #ifndef __stri_container_integer_h
 #define __stri_container_integer_h
 
-
+#include "stri_container_base.h"
 
 
 

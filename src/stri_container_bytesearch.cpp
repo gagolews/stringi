@@ -31,7 +31,8 @@
 
 
 #include "stri_stringi.h"
-
+#include "stri_container_bytesearch.h"
+#include <unicode/usearch.h>
 
 /**
  * Default constructor

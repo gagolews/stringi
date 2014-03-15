@@ -33,6 +33,8 @@
 #ifndef __stri_container_bytesearch_h
 #define __stri_container_bytesearch_h
 
+#include "stri_container_utf8.h"
+
 
 #define STRI__BYTESEARCH_DISABLE_KMP
 

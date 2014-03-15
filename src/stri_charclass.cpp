@@ -31,6 +31,7 @@
 
 
 #include "stri_stringi.h"
+#include "stri_charclass.h"
 
 
 const UProperty CharClass::NA_binprop = UCHAR_INVALID_CODE;

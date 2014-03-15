@@ -29,9 +29,9 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "stri_stringi.h"
-
+#include "stri_container_utf16.h"
+#include <unicode/normalizer2.h>
 
 
 /** Get Desired Normalizer2 instance
