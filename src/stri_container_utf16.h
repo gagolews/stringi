@@ -37,10 +37,21 @@
 
 /**
  * A class to handle conversion between R character vectors and UTF-16 string vectors
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - lastMatcher cache, supports auto-vectorization
- * @version 0.3 (Marek Gagolewski) - improved ASCII performance (seperate ucnv)
- * @version 0.4 (Marek Gagolewski) - now NAs are marked as NULLs in str
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          lastMatcher cache, supports auto-vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          improved ASCII performance (seperate ucnv)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          now NAs are marked as NULLs in str
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-15) 
+ *          If native encoding is UTF-8, then encode with
+ *          UnicodeString::fromUTF8 (for speedup)
  */
 class StriContainerUTF16 : public StriContainerBase {
 

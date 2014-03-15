@@ -86,6 +86,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 //      UConverter* ucnvUTF8 = NULL;
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
+      bool ucnvNative_isUTF8 = false;
 
       for (R_len_t i=0; i<nrstr; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
@@ -110,6 +111,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             }
             else if (IS_UTF8(curs)) {
                // the above ASCII-approach (but with ucnvUTF8) is slower for UTF-8
+               // the same is done for native encoding && ucnvNative_isUTF8
                this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
             }
             else if (IS_LATIN1(curs)) {
@@ -123,24 +125,37 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             else if (IS_BYTES(curs))
                throw StriException(MSG__BYTESENC);
             else {
-//             Any encoding - detection needed
-//             Assume it's Native; this assumes the user working in an 8-bit environment
-//             would convert strings to UTF-8 manually if needed - I think is's
-//             a more reasonable approach (Native --> input via keyboard)
-               if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
-               UErrorCode status = U_ZERO_ERROR;
-               this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
-                  ucnvNative, status);
-               if (U_FAILURE(status))
-                  throw StriException(status);
+//             Any ("unknown") encoding - detection needed.
+//             We assume unknown == Native; (Native --> input via keyboard)
+               if (!ucnvNative) {
+                  ucnvNative = stri__ucnv_open((char*)NULL);
+                  UErrorCode status = U_ZERO_ERROR;
+                  const char* ucnv_name = ucnv_getName(ucnvNative, &status);
+                  if (U_FAILURE(status))
+                     throw StriException(status);
+                  ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
+               }
+               
+               // an "unknown" (native) encoding may be set to UTF-8 (speedup)
+               if (ucnvNative_isUTF8) {
+                  // UTF-8
+                  this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
+               }
+               else {
+                  UErrorCode status = U_ZERO_ERROR;
+                  this->str[i] = new UnicodeString(CHAR(curs), LENGTH(curs),
+                     ucnvNative, status);
+                  if (U_FAILURE(status))
+                     throw StriException(status);
+               }
             }
          }
       }
 
-      if (ucnvASCII) ucnv_close(ucnvASCII);
+      if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
 //      if (ucnvUTF8)  ucnv_close(ucnvUTF8);
-      if (ucnvLatin1) ucnv_close(ucnvLatin1);
-      if (ucnvNative) ucnv_close(ucnvNative);
+      if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+      if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
 
       if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
