@@ -1,5 +1,4 @@
-benchmark_description <- "joins two identical vectors consisting of words of
-different lengths, with a separator (ascii + Polish letters, native encoding)"
+benchmark_description <- "joins two identical vectors consisting of words of different lengths, with a separator (ascii + Polish letters, native encoding)"
 
 
 benchmark_do <- function() {
