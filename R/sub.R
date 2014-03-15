@@ -134,3 +134,10 @@ stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
       .Call("stri_sub_replacement", str, from, NULL, length, value, PACKAGE="stringi")
    }
 }
+
+#' @export
+#'
+
+stri_subst_na <- function(str, replacement){
+	.Call("stri_subst_na", str, replacement, PACKAGE="stringi")
+}

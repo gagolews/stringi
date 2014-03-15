@@ -168,6 +168,7 @@ SEXP stri_reverse(SEXP s);
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to,
                           SEXP length, SEXP value);
+SEXP stri_subst_na(SEXP str, SEXP replacement);
 // SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.2]
 // SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
 
