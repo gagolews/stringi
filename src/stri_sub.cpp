@@ -314,7 +314,7 @@ SEXP stri_subst_na(SEXP str, SEXP replacement){
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, str_len));
    
-   StriContainerUTF16 str_cont(str, str_len, false); // writable
+   StriContainerUTF8 str_cont(str, str_len, false);
    
    for (R_len_t i=0; i<str_len; ++i) {
       if (str_cont.isNA(i)){
