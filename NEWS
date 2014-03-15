@@ -1,8 +1,10 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
-* 0.2-XX (XXXX-XX-XX)
-   t.b.d.
+* 0.2-1 (XXXX-XX-XX)
+   * U_MISSING_RESOURCE_ERROR translated message in StriException now suggests
+     calling stri_install_check()
+   * t.b.d.
 
 * 0.1-25 (2014-03-12)
    LICENCE tweaks
