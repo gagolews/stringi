@@ -72,6 +72,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
+      bool ucnvNative_isUTF8 = false;
+      
       int bufsize = -1;
       char* buf = NULL;
 
@@ -81,19 +83,19 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             continue; // keep NA
          }
          else {
-            if (IS_ASCII(curs)) { // ASCII - ultra fast
+            if (IS_ASCII(curs) || IS_UTF8(curs)) {
+               // ASCII or UTF-8 - ultra fast
                this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+               // the same is done for native encoding && ucnvNative_isUTF8
             }
-            else if (IS_UTF8(curs)) { // UTF-8 - ultra fast
-               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
-            }
-            else if (IS_BYTES(curs))
+            else if (IS_BYTES(curs)) {
+               // "bytes encoding" is not allowed except
+               // for some special functions which do encoding themselves
                throw StriException(MSG__BYTESENC);
+            }
             else {
-//             LATIN1 ------- OR ------ Any encoding - detection needed
-//             Assume it's Native; this assumes the user working in an 8-bit environment
-//             would convert strings to UTF-8 manually if needed - I think is's
-//             a more reasonable approach (Native --> input via keyboard)
+//             LATIN1 ------- OR ------ Any ("unknown") encoding - detection needed
+//             We assume unknown == Native; (Native --> input via keyboard)
 
 
 // version 0.1 - through UnicodeString & std::string
@@ -113,10 +115,27 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                   if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
                   ucnvCurrent = ucnvLatin1;
                }
-               else {
-                  if (!ucnvNative) ucnvNative = stri__ucnv_open((char*)NULL);
+               else { // "unknown" (native) encoding
+                  if (!ucnvNative) {
+                     ucnvNative = stri__ucnv_open((char*)NULL);
+                     UErrorCode status = U_ZERO_ERROR;
+                     const char* ucnv_name = ucnv_getName(ucnvNative, &status);
+                     if (U_FAILURE(status))
+                        throw StriException(status);
+                     ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
+                  }
+                  
+                  // an "unknown" (native) encoding may be set to UTF-8 (speedup)
+                  if (ucnvNative_isUTF8) {
+                     // UTF-8 - ultra fast
+                     this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+                     continue;
+                  }
+               
                   ucnvCurrent = ucnvNative;
                }
+               
+               // latin1/native -> UTF16
                UErrorCode status = U_ZERO_ERROR;
                UnicodeString tmp(CHAR(curs), LENGTH(curs), ucnvCurrent, status);
                if (U_FAILURE(status))
@@ -124,17 +143,21 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
                if (!buf) {
                   // calculate max string length
-                  R_len_t maxlen = 0;
-                  for (R_len_t z=i; z<nrstr; ++z) { // start from current string (this wasn't needed before)
+                  R_len_t maxlen = LENGTH(curs);
+                  for (R_len_t z=i+1; z<nrstr; ++z) { 
+                     // start from the current string (this no need to re-encode for < i)
                      SEXP tmps = STRING_ELT(rstr, z);
-                     if ((tmps != NA_STRING) && (maxlen < LENGTH(tmps)))
+                     if ((tmps != NA_STRING) 
+                           && !(IS_ASCII(tmps) || IS_UTF8(tmps) || IS_BYTES(tmps))
+                           && (maxlen < LENGTH(tmps)))
                         maxlen = LENGTH(tmps);
                   }
-                  bufsize = maxlen*3+1; // 1 UChar -> max 3 UTF8 bytes
+                  bufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1; // 1 UChar -> max 4 UTF8 bytes
                   buf = new char[bufsize];
                }
                int realsize = 0;
 
+               // UTF-16 -> UTF-8
                u_strToUTF8(buf, bufsize, &realsize,
                		tmp.getBuffer(), tmp.length(), &status);
                if (U_FAILURE(status))
@@ -145,9 +168,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
          }
       }
 
-      if (ucnvLatin1) ucnv_close(ucnvLatin1);
-      if (ucnvNative) ucnv_close(ucnvNative);
-      if (buf) delete [] buf;
+      if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+      if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+      if (buf) { delete [] buf; buf = NULL; }
 
 
       if (!_shallowrecycle) {
