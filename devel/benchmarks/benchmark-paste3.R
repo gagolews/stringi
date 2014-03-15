@@ -1,6 +1,4 @@
-benchmark_description <- "joins four vectors consisting of words of different
-lengths, with a separator and using the recycling rule
-(ascii + Polish letters, native encoding)"
+benchmark_description <- "joins four vectors consisting of words of different lengths, with a separator and using the recycling rule (ascii + Polish letters, native encoding)"
 
 benchmark_do <- function() {
    library('stringi')

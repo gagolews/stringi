@@ -1,0 +1,55 @@
+# stringi benchmark results #
+
+```{r,results='asis',echo=FALSE,message=FALSE}
+require('stringi')
+indir <- "." # "devel/benchmarks"
+resdirs <- dir(indir, glob2rx("results_*"), full.names=TRUE)
+for (d in resdirs) {
+   cat('## '%+%basename(d)%+%' ##\n')
+   bf <- dir(d, glob2rx("*.csv"), full.names=TRUE)
+   for (f in bf) {
+      cat('### '%+%basename(f)%+%' ###\n')
+
+      raw2 <- raw <- readLines(f)
+      raw <- raw[stri_detect_regex(raw, "^#")]
+      raw <- stri_replace_all_regex(raw, "^# *", "")
+      cat('data | value\n')
+      cat('---- | -----\n')
+      raw <- stri_match_first_regex(raw, '^([^=]+)=(.*)$')
+      cat(raw[,2]%+%' | '%+%raw[,3], sep='\n')
+      
+      data <- read.csv(f, comment='#')
+      
+      data$datetime <- strptime(data$datetime, "%Y-%m-%d %H:%M:%S")
+      ntests <- nlevels(data$expr)
+      nmeasurements <- nrow(data)/ntests
+      rngy <- c(min(data$q1.time), max(data$q3.time))
+      rngy <- rngy + c(-1,1)*diff(rngy)*0.1
+      plot(1:nmeasurements,
+         rep(NA, nmeasurements), ylim=rngy,
+         xlab='Measurement', ylab='Time [s]', main=basename(f))
+      
+      for (i in 1:nmeasurements) {
+         text(i, mean(rngy), sprintf("%s (%s)", data$git_sha[i], as.character(data$datetime[i])),
+               srt=90, col='gray')
+      }
+      
+      for (i in 1:ntests) {
+         subdata <- data[data$expr == levels(data$expr)[i],]
+
+         matlines(1:nmeasurements, as.matrix(subdata[,
+            match(
+               c("min.time", "q1.time", "median.time", "q3.time", "max.time"),
+               colnames(subdata)
+            )]),
+            col=i, lwd=c(1,1,3,1,1), type='l', lty=c(3,2,1,2,3))
+      }
+      legend('topleft', levels(data$expr), col=1:ntests, bg='white', lty=1, lwd=2)
+      
+      cat('\n')
+      dev.flush()
+      plot.new()
+      cat('\n')
+   }
+}
+```
