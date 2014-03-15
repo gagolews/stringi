@@ -38,3 +38,5 @@ src-x64/
 *.out
 cache-knitr/
 
+# benchmark results
+devel/benchmarks/results_*
