@@ -37,11 +37,23 @@
 
 /**
  * A class to handle conversion between R character vectors and UTF-8 string vectors
+ * 
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski) Improved performance for Native enc->UTF-8 (through u_strToUTF8)
- * @version 0.1-?? (Marek Gagolewski, 2013-06-01) Now NAs are marked as NULLs in str
- * @version 0.1-?? (Marek Gagolewski, 2013-06-01) UChar32_to_UTF8_index_back, UChar32_to_UTF8_index_fwd added
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) Fixed unitialized fields in constructors (thanks to valgrind detect)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          Improved performance for Native enc->UTF-8 (through u_strToUTF8)
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
+ *          Now NAs are marked as NULLs in str
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
+ *          UChar32_to_UTF8_index_back, UChar32_to_UTF8_index_fwd added
+ * 
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          Fixed unitialized fields in constructors (thanks to valgrind detect)
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-15) 
+ *          Do not try to re-encode a string if native encoding is UTF-8
  */
 class StriContainerUTF8 : public StriContainerBase {
 

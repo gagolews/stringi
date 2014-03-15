@@ -1,6 +1,6 @@
 # stringi benchmark results #
 
-```{r,results='asis',echo=FALSE,message=FALSE}
+```{r,results='asis',echo=FALSE,message=FALSE,fig.height=6,fig.width=12}
 require('stringi')
 indir <- "." # "devel/benchmarks"
 resdirs <- dir(indir, glob2rx("results_*"), full.names=TRUE)
