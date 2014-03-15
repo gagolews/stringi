@@ -31,7 +31,8 @@
 
 
 #include "stri_stringi.h"
-
+#include <deque>
+using namespace std;
 
 
 /**

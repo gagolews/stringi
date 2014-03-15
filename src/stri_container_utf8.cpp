@@ -66,9 +66,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
    this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
 
    if (this->n > 0) {
-      this->str = new String8*[this->n];
-      for (R_len_t i=0; i<this->n; ++i)
-         this->str[i] = NULL; // in case it fails during conversion (this is NA)
+      this->str = new String8[this->n];
 
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
@@ -85,7 +83,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
          else {
             if (IS_ASCII(curs) || IS_UTF8(curs)) {
                // ASCII or UTF-8 - ultra fast
-               this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+               this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                // the same is done for native encoding && ucnvNative_isUTF8
             }
             else if (IS_BYTES(curs)) {
@@ -128,7 +126,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                   // an "unknown" (native) encoding may be set to UTF-8 (speedup)
                   if (ucnvNative_isUTF8) {
                      // UTF-8 - ultra fast
-                     this->str[i] = new String8(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+                     this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                      continue;
                   }
                
@@ -163,7 +161,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                if (U_FAILURE(status))
                   throw StriException(status);
 
-               this->str[i] = new String8(buf, realsize, true);
+               this->str[i].initialize(buf, realsize, true);
             }
          }
       }
@@ -175,10 +173,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
       if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
-            if (this->str[i%nrstr] == NULL)
-               this->str[i] = NULL;
-            else
-               this->str[i] = new String8(*this->str[i%nrstr]);
+               this->str[i] = str[i%nrstr];
          }
       }
    }
@@ -192,12 +187,9 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
    last_ind_fwd_str = NULL;
 
    if (container.str) {
-      this->str = new String8*[this->n];
+      this->str = new String8[this->n];
       for (int i=0; i<this->n; ++i) {
-         if (container.str[i])
-            this->str[i] = new String8(*(container.str[i]));
-         else
-            this->str[i] = NULL;
+         this->str[i] = container.str[i];
       }
    }
    else {
@@ -214,12 +206,9 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
    (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
    if (container.str) {
-      this->str = new String8*[this->n];
+      this->str = new String8[this->n];
       for (int i=0; i<this->n; ++i) {
-         if (container.str[i])
-            this->str[i] = new String8(*(container.str[i]));
-         else
-            this->str[i] = NULL;
+         this->str[i] = container.str[i];
       }
    }
    else {
@@ -233,10 +222,10 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 StriContainerUTF8::~StriContainerUTF8()
 {
    if (str) {
-      for (int i=0; i<n; ++i) {
-         if (str[i])
-            delete str[i];
-      }
+//      for (int i=0; i<n; ++i) {
+//         if (str[i])
+//            delete str[i];
+//      }
       delete [] str;
       str = NULL;
    }
@@ -256,11 +245,11 @@ SEXP StriContainerUTF8::toR() const
    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
 
    for (R_len_t i=0; i<nrecycle; ++i) {
-      if (!str[i%n])
+      if (str[i%n].isNA())
          SET_STRING_ELT(ret, i, NA_STRING);
       else {
          SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8));
+            Rf_mkCharLenCE(str[i%n].c_str(), str[i%n].length(), CE_UTF8));
       }
    }
 
@@ -282,11 +271,11 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
       throw StriException("StriContainerUTF8::toR(): INDEX OUT OF BOUNDS");
 #endif
 
-   if (str[i%n] == NULL)
+   if (str[i%n].isNA())
       return NA_STRING;
    else
       // This is already in UTF-8
-      return Rf_mkCharLenCE(str[i%n]->c_str(), str[i%n]->length(), CE_UTF8);
+      return Rf_mkCharLenCE(str[i%n].c_str(), str[i%n].length(), CE_UTF8);
 }
 
 
@@ -301,9 +290,14 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
  * @return UTF-8 (byte) index
  *
  *
- * @version 0.1 (Bartek Tartanus)  stri_sub
- * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) moved to StriContainerUTF8
+ * @version 0.1-?? (Bartek Tartanus)  
+ *          stri_sub
+ * 
+ * @version 0.1-?? (Marek Gagolewski) 
+ *          stri__UChar32_to_UTF8_index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01) 
+ *          moved to StriContainerUTF8
  */
 R_len_t StriContainerUTF8::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
 {
@@ -376,9 +370,14 @@ R_len_t StriContainerUTF8::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
  * @return UTF-8 (byte) index
  *
  *
- * @version 0.1 (Bartek Tartanus)  stri_sub
- * @version 0.2 (Marek Gagolewski) stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) moved to StriContainerUTF8
+ * @version 0.1-?? (Bartek Tartanus)  
+ *          stri_sub
+ * 
+ * @version 0.1-?? (Marek Gagolewski) 
+ *          stri__UChar32_to_UTF8_index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01) 
+ *          moved to StriContainerUTF8
  */
 R_len_t StriContainerUTF8::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 {

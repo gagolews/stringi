@@ -53,13 +53,14 @@
  *          Fixed unitialized fields in constructors (thanks to valgrind detect)
  * 
  * @version 0.2-1  (Marek Gagolewski, 2014-03-15) 
- *          Do not try to re-encode a string if native encoding is UTF-8
+ *          Do not try to re-encode a string if native encoding is UTF-8;
+ *          str as String8* and not String8** (performance gain)
  */
 class StriContainerUTF8 : public StriContainerBase {
 
    private:
 
-      String8** str;  ///< data - \code{string}s
+      String8* str;  ///< data - \code{string}s
 
 
       // the following are used in UChar32_to_UTF8_index_back
@@ -93,7 +94,7 @@ class StriContainerUTF8 : public StriContainerBase {
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF8::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (str[i%n] == NULL);
+         return (str[i%n].isNA());
       }
 
 
@@ -105,10 +106,10 @@ class StriContainerUTF8 : public StriContainerBase {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF8::get(): INDEX OUT OF BOUNDS");
-         if (str[i%n] == NULL)
+         if (str[i%n].isNA())
             throw StriException("StriContainerUTF8::get(): isNA");
 #endif
-         return (*(str[i%n]));
+         return str[i%n];
       }
 
 

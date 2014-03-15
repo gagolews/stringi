@@ -32,6 +32,11 @@
 
 #include "stri_stringi.h"
 
+#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 
 /** Check if a string may be valid 8-bit (including UTF-8) encoded
  *

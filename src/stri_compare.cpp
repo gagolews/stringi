@@ -32,6 +32,9 @@
 
 #include "stri_stringi.h"
 
+#include <vector>
+#include <algorithm>
+using namespace std;
 
 
 /** compare 2 strings in UTF8, Unicode codepoint comparison-only [internal]

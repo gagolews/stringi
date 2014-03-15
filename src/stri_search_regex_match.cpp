@@ -31,7 +31,9 @@
 
 
 #include "stri_stringi.h"
-
+#include <vector>
+#include <deque>
+using namespace std;
 
 
 

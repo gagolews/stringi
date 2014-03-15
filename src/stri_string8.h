@@ -43,14 +43,22 @@
  * quite similar to std::string and/or  Vector<char>
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski, 2013-06-13) added resize() method and m_size field
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) Fixed array over-runs detected with valgrind
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-13)
+ *          added resize() method and m_size field
+ * 
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          Fixed array over-runs detected with valgrind
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-04-15)
+ *          m_str == NULL now denotes a missing value,
+ *          isNA(), initialize() methods added
  */
 class String8  {
 
    private:
 
-      char* m_str;  ///< character data in UTF-8
+      char* m_str;      ///< character data in UTF-8, NULL denotes NA
       R_len_t m_n;      ///< string length (in bytes), not including NUL [[may be invalid]]
       R_len_t m_size;   ///< buffer size
       bool m_memalloc;  /// < should the memory be freed at the end
@@ -63,7 +71,7 @@ class String8  {
        * does nothing
        */
       String8() {
-         this->m_str = NULL;
+         this->m_str = NULL; // a missing value
          this->m_n = 0;
          this->m_size = 0;
          this->m_memalloc = false;
@@ -82,13 +90,19 @@ class String8  {
       }
 
 
-      /** constructor
+      /** used to set data (construct already created,
+       * but NA-initialized object)
+       *
        * @param str character buffer
        * @param n buffer length (not including NUL)
        * @param memalloc should a deep copy of the buffer be done?
        */
-      String8(const char* str, R_len_t n, bool memalloc=false)
+      void initialize(const char* str, R_len_t n, bool memalloc=false)
       {
+#ifndef NDEBUG
+         if (!isNA())
+            throw StriException("string8::!isNA() in initialize()");
+#endif
          this->m_memalloc = memalloc;
          this->m_n = n;
          this->m_size = n+1;
@@ -101,6 +115,19 @@ class String8  {
             this->m_str = (char*)(str); // we know what we're doing
          }
       }
+      
+
+      /** constructor
+       * @param str character buffer
+       * @param n buffer length (not including NUL)
+       * @param memalloc should a deep copy of the buffer be done?
+       */
+      String8(const char* str, R_len_t n, bool memalloc=false)
+      {
+         this->m_str = NULL; // a missing value
+         initialize(str, n, memalloc);
+      }
+      
 
       /** destructor */
       ~String8()
@@ -147,10 +174,18 @@ class String8  {
 
          return *this;
       }
+      
+      inline bool isNA() const {
+         return !this->m_str;
+      }
 
       /** return the char buffer */
       inline const char* c_str() const
       {
+#ifndef NDEBUG
+         if (isNA())
+            throw StriException("string8::isNA() in c_str()");
+#endif
          return this->m_str;
       }
 
@@ -159,6 +194,8 @@ class String8  {
 #ifndef NDEBUG
          if (!this->m_memalloc)
             throw StriException("String8: data(): string is read only.");
+         if (isNA())
+            throw StriException("string8::isNA() in data()");
 #endif
          return this->m_str;
       }
@@ -166,12 +203,20 @@ class String8  {
       /** string length in bytes */
       inline R_len_t length() const
       {
+#ifndef NDEBUG
+         if (isNA())
+            throw StriException("string8::isNA() in length()");
+#endif
          return this->m_n; // !!!!! May be invalid if we use String8 as a writebuf :(
       }
 
       /** buffer size in bytes */
       inline R_len_t size() const
       {
+#ifndef NDEBUG
+         if (isNA())
+            throw StriException("string8::isNA() in size()");
+#endif
          return this->m_size;
       }
 

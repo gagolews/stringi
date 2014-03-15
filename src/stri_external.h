@@ -47,15 +47,6 @@
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
 #define  UNISTR_FROM_STRING_EXPLICIT explicit
 
-#include <cstdarg>
-#include <iostream>
-#include <deque>
-#include <queue>
-#include <algorithm>
-#include <vector>
-#include <map>
-using namespace std;
-
 
 #include <unicode/ptypes.h>
 #include <unicode/uchar.h>

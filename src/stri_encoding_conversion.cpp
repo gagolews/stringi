@@ -196,14 +196,17 @@ SEXP stri_enc_toutf32(SEXP str)
  * put for codes > 127
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-XX (Marek Gagolewski)
+ * 
+ * @version 0.1-XX (Marek Gagolewski, 2013-06-16)
+ *                  make StriException-friendly
  */
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
-   bool is_unknown_8bit_logical = stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
+   bool is_unknown_8bit_logical = 
+      stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
 
    STRI__ERROR_HANDLER_BEGIN
    if (is_unknown_8bit_logical) {
@@ -242,6 +245,8 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
    else {
       // Trivial - everything we need is in StriContainerUTF8 :)
       StriContainerUTF8 str_cont(str, n);
+      // BTW, performance gain could be achieved if leaving ASCII and UTF-8
+      // alone and only focussing on latin1 and unknown
       return str_cont.toR();
    }
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

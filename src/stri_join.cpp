@@ -32,7 +32,8 @@
 
 #include "stri_stringi.h"
 
-
+#include <vector>
+using namespace std;
 
 
 /** Duplicate given strings
