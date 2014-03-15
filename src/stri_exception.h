@@ -33,6 +33,9 @@
 #ifndef __stri_exception_h
 #define __stri_exception_h
 
+#include <cstdarg>
+using namespace std;
+
 
 #define STRI__ERROR_HANDLER_BEGIN try {
 

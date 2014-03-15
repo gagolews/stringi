@@ -31,7 +31,8 @@
 
 #include "stri_stringi.h"
 
-
+#include <deque>
+using namespace std;
 
 /**
  * Extract first or last occurences of a character class in each string
