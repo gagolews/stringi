@@ -31,10 +31,17 @@
 
 
 #include "stri_stringi.h"
-
+#include <unicode/ucsdet.h>
+#include <unicode/locid.h>
+#include <unicode/uloc.h>
+#include <unicode/locid.h>
+#include <unicode/ulocdata.h>
+#include <unicode/uniset.h>
 #include <map>
 #include <vector>
 #include <algorithm>
+#include "stri_container_listraw.h"
+#include "stri_container_logical.h"
 using namespace std;
 
 

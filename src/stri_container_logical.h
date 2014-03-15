@@ -34,7 +34,7 @@
 #define __stri_container_logical_h
 
 
-
+#include "stri_container_base.h"
 
 
 /**

@@ -33,6 +33,10 @@
 #ifndef __stri_container_usearch_h
 #define __stri_container_usearch_h
 
+#include "stri_container_utf16.h"
+#include <unicode/coll.h>
+#include <unicode/ucol.h>
+#include <unicode/stsearch.h>
 
 
 /**

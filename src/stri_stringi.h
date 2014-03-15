@@ -37,22 +37,12 @@
 #include "stri_messages.h"
 #include "stri_macros.h"
 #include "stri_exception.h"
-#include "stri_container_base.h"
 #include "stri_string8.h"
-#include "stri_container_utf8.h"
-#include "stri_container_utf16.h"
-#include "stri_container_regex.h"
-#include "stri_container_usearch.h"
-#include "stri_container_bytesearch.h"
-#include "stri_container_listutf8.h"
-#include "stri_container_listraw.h"
-#include "stri_container_integer.h"
-#include "stri_container_logical.h"
-#include "stri_charclass.h"
-#include "stri_container_charclass.h"
 
 // ------------------------------------------------------------------------
 
+
+class UCollator;
 
 /** Two \code{R_len_t}s as one :)
  *
@@ -225,7 +215,6 @@ SEXP stri_enc_isenc(SEXP str, SEXP type);
 
 
 // encoding_normalization.cpp:
-const Normalizer2* stri__normalizer_get(SEXP type);
 SEXP stri_enc_nf(SEXP s, SEXP type);
 SEXP stri_enc_isnf(SEXP s, SEXP type);
 

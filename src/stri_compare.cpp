@@ -31,7 +31,9 @@
 
 
 #include "stri_stringi.h"
-
+#include "stri_container_utf8.h"
+#include "stri_container_utf16.h"
+#include <unicode/ucol.h>
 #include <vector>
 #include <algorithm>
 using namespace std;

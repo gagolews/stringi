@@ -31,6 +31,10 @@
 
 
 #include "stri_stringi.h"
+#include "stri_container_utf8.h"
+#include "stri_container_integer.h"
+#include "stri_container_logical.h"
+#include "stri_container_regex.h"
 #include <deque>
 using namespace std;
 

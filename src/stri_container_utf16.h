@@ -33,7 +33,7 @@
 #ifndef __stri_container_utf16_h
 #define __stri_container_utf16_h
 
-
+#include "stri_container_base.h"
 
 /**
  * A class to handle conversion between R character vectors and UTF-16 string vectors
@@ -51,13 +51,15 @@
  * 
  * @version 0.2-1  (Marek Gagolewski, 2014-03-15) 
  *          If native encoding is UTF-8, then encode with
- *          UnicodeString::fromUTF8 (for speedup)
+ *          UnicodeString::fromUTF8 (for speedup);
+ *          str now is UnicodeString*, and not UnicodeString**;
+ *          using UnicodeString::isBogus to represent NA
  */
 class StriContainerUTF16 : public StriContainerBase {
 
    protected:
 
-      UnicodeString** str;       ///< data - \code{UnicodeString}s
+      UnicodeString* str;       ///< data - \code{UnicodeString}s
 
 
    public:
@@ -81,7 +83,7 @@ class StriContainerUTF16 : public StriContainerBase {
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (str[i%n] == NULL);
+         return str[i%n].isBogus();
       }
 
 
@@ -93,10 +95,10 @@ class StriContainerUTF16 : public StriContainerBase {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF16::get(): INDEX OUT OF BOUNDS");
-         if (str[i%n] == NULL)
+         if (str[i%n].isBogus())
             throw StriException("StriContainerUTF16::get(): isNA");
 #endif
-         return (*(str[i%n]));
+         return str[i%n];
       }
 
       /** get the vectorized ith element
@@ -111,10 +113,10 @@ class StriContainerUTF16 : public StriContainerBase {
             throw StriException("StriContainerUTF16::getWritable(): n!=nrecycle");
          if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
-         if (str[i%n] == NULL)
+         if (str[i%n].isBogus())
             throw StriException("StriContainerUTF16::getWritable(): isNA");
 #endif
-         return (*(str[i%n])); // in fact, "%n" is not necessary
+         return str[i%n]; // in fact, "%n" is not necessary
       }
 
 
@@ -130,10 +132,7 @@ class StriContainerUTF16 : public StriContainerBase {
          if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
 #endif
-         if (str[i%n] != NULL) { // if not already NULL
-            delete str[i%n]; // in fact, "%n" is not necessary
-            str[i%n] = NULL;
-         }
+         str[i%n].setToBogus();
       }
 
       /** set the vectorized ith element
@@ -148,10 +147,10 @@ class StriContainerUTF16 : public StriContainerBase {
             throw StriException("StriContainerUTF16::set(): n!=nrecycle");
          if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::set(): INDEX OUT OF BOUNDS");
-         if (str[i%n] == NULL)
+         if (str[i%n].isBogus())
             throw StriException("StriContainerUTF16::set(): isNA");
 #endif
-         *(str[i%n]) = s; // in fact, "%n" is not necessary
+         str[i%n] = s; // in fact, "%n" is not necessary
       }
 
       void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);

@@ -31,6 +31,9 @@
 
 
 #include "stri_stringi.h"
+#include "stri_container_utf8.h"
+#include "stri_container_utf16.h"
+#include "stri_container_listraw.h"
 
 
 /** Convert from UTF-32 [single string, internal]

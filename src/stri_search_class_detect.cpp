@@ -31,7 +31,8 @@
 
 
 #include "stri_stringi.h"
-
+#include "stri_container_utf8.h"
+#include "stri_container_charclass.h"
 
 
 /**

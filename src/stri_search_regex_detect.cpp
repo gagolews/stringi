@@ -31,7 +31,8 @@
 
 
 #include "stri_stringi.h"
-
+#include "stri_container_utf16.h"
+#include "stri_container_regex.h"
 
 /**
  * Detect if a pattern occurs in a string

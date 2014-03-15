@@ -34,7 +34,9 @@
 #define __stri_container_regex_h
 
 
+#include <unicode/regex.h>
 
+#include "stri_container_utf16.h"
 
 
 /**

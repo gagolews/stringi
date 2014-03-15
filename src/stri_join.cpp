@@ -31,7 +31,10 @@
 
 
 #include "stri_stringi.h"
-
+#include "stri_container_base.h"
+#include "stri_container_utf8.h"
+#include "stri_container_integer.h"
+#include "stri_container_listutf8.h"
 #include <vector>
 using namespace std;
 

@@ -31,7 +31,7 @@
 
 
 #include "stri_stringi.h"
-
+#include <unicode/uloc.h>
 
 
 

@@ -33,7 +33,7 @@
 #ifndef __stri_container_listutf8_h
 #define __stri_container_listutf8_h
 
-
+#include "stri_container_utf8.h"
 
 
 
