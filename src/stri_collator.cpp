@@ -46,7 +46,7 @@
  * after use
  *
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {

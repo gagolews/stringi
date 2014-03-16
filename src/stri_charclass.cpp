@@ -106,7 +106,9 @@ const UProperty CharClass::binprop_code[] = { // sorted by binprop_names_normali
  * @param charclass CHARSXP, can be NA
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
+ *
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          gcmask is now uint32_t, not UCharCategory
  */
 CharClass::CharClass(SEXP charclass)
 {
@@ -151,7 +153,9 @@ CharClass::CharClass(SEXP charclass)
  * @return general category mask
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
+ *
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          gcmask is now uint32_t, not UCharCategory
  */
 uint32_t CharClass::getGeneralCategoryMaskFromName(const char* name, R_len_t n)
 {
@@ -312,13 +316,15 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 
 
 
-/** Test if a character falls into a given charclass
+/** Test if a character is from a given charclass
  *
  * @param c UTF-32 char code
  * @return TRUE (1) or FALSE (0)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
+ *
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          gcmask is now uint32_t, not UCharCategory
  */
 int CharClass::test(UChar32 c)
 {

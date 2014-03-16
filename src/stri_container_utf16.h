@@ -80,6 +80,8 @@ class StriContainerUTF16 : public StriContainerBase {
        */
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
+         if (!str)
+            throw StriException("StriContainerUTF16::isNA(): !str");
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
 #endif
@@ -93,9 +95,7 @@ class StriContainerUTF16 : public StriContainerBase {
        */
       const UnicodeString& get(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
-            throw StriException("StriContainerUTF16::get(): INDEX OUT OF BOUNDS");
-         if (str[i%n].isBogus())
+         if (isNA(i))
             throw StriException("StriContainerUTF16::get(): isNA");
 #endif
          return str[i%n];
@@ -113,7 +113,7 @@ class StriContainerUTF16 : public StriContainerBase {
             throw StriException("StriContainerUTF16::getWritable(): n!=nrecycle");
          if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
-         if (str[i%n].isBogus())
+         if (isNA(i))
             throw StriException("StriContainerUTF16::getWritable(): isNA");
 #endif
          return str[i%n]; // in fact, "%n" is not necessary
@@ -150,7 +150,7 @@ class StriContainerUTF16 : public StriContainerBase {
          if (str[i%n].isBogus())
             throw StriException("StriContainerUTF16::set(): isNA");
 #endif
-         str[i%n] = s; // in fact, "%n" is not necessary
+         str[i%n].setTo(s); // in fact, "%n" is not necessary
       }
 
       void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);

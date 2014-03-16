@@ -36,15 +36,17 @@
 #include <unicode/ucol.h>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
 
-/** compare 2 strings in UTF8, Unicode codepoint comparison-only [internal]
+/** Compare 2 strings in UTF8, codepoint-wise [internal]
+ *
  * @param str1 string in UTF8
  * @param str2 string in UTF8
  * @param n1 length of str1
  * @param n2 length of str2
  * @return -1, 0, or 1, like in strcmp
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2)
 {
@@ -71,14 +73,16 @@ int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_l
 
 
 /**
- * Compare character vectors (by unicode codepoints)
+ * Compare character vectors, codepoint-wise
  *
  * @param e1 character vector
  * @param e2 character vector
  * @return integer vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException friendly
  */
 SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
 {
@@ -126,9 +130,13 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
  * @param collator_opts passed to stri__ucol_open()
  * @return integer vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
- * @version 0.3 (Marek Gagolewski, 2013-06-27) moved to UTF16, as ucol_strcollUTF8 is DRAFT
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException friendly
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
+ *          moved to UTF16, as ucol_strcollUTF8 is DRAFT
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
@@ -230,16 +238,20 @@ struct StriSortCodepoints {
 };
 
 
-/** Ordering Permutation (string comparison with collation)
+/** Generate the ordering permutation, with collation
  *
  * @param str character vector
  * @param decreasing single logical value
  * @param collator_opts passed to stri__ucol_open()
  * @return integer vector (permutation)
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
- * @version 0.3 (Marek Gagolewski, 2013-06-27) Use UTF16 as strcollutf8 is DRAFT
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *                 make StriException friendly
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
+ *                 Use UTF16 as ucol_strcollUTF8 is DRAFT
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
@@ -312,13 +324,13 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 
 
 
-/** Ordering Permutation (string comparison by unicode codepoints)
+/** Generate the ordering permutation, codepoint-wise
  *
  * @param str character vector
  * @param decreasing single logical value
  * @return integer vector (permutation)
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-27)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  */
 SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
 {
