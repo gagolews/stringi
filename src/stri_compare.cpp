@@ -149,13 +149,13 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
-   e1 = stri_prepare_arg_string(e1, "e1");
-   e2 = stri_prepare_arg_string(e2, "e2");
-
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
    if (!col)
       return stri__compare_codepoints(e1, e2);
+
+   e1 = stri_prepare_arg_string(e1, "e1");
+   e2 = stri_prepare_arg_string(e2, "e2");
 
    STRI__ERROR_HANDLER_BEGIN
 
