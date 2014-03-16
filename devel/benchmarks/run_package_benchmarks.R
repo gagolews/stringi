@@ -47,7 +47,7 @@ source('devel/benchmarks/microbenchmark2.R', local=TRUE)
 if (!file.exists(bm_outdir))
    dir.create(bm_outdir)
    
-bmarks <- dir(bm_indir, glob2rx('benchmark-*.R'))
+bmarks <- dir(bm_indir, glob2rx('benchmark-eq*.R'))
 for (b in bmarks) {
    cat('Filename:', b, '\n')
    local({
