@@ -1,4 +1,4 @@
-benchmark_description <- "checks whether two character vectors are equal (with recycling)"
+benchmark_description <- "checks whether one string is smaller (lexicographically) than the other"
 
 
 benchmark_do <- function() {
@@ -23,8 +23,8 @@ benchmark_do <- function() {
 
    gc(reset=TRUE)
    microbenchmark2(
-      x == y,
-      stri_cmp(x, y) == 0,
-      stri_cmp(x, y, NA) == 0
+      x < y,
+      stri_cmp(x, y) < 0,
+      stri_cmp(x, y, NA) < 0
    )
 }
