@@ -92,6 +92,11 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
+
+   // possible slowdown due to the fact that whole vectors are possibly
+   // re-encoded, and the result comparison may be determined by
+   // comparing e.g. the first codepoint
+   // TO DO: try with ucnv_getNextUChar 
    StriContainerUTF8 e1_cont(e1, vectorize_length);
    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
@@ -137,6 +142,10 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  *          moved to UTF16, as ucol_strcollUTF8 is DRAFT
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-16)
+ *          using ucol_strcollUTF8 again, as we now require ICU >= 50
+ *          [4x speedup utf8, 2x slowdown 8bit]
  */
 SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 {
@@ -152,8 +161,8 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
-   StriContainerUTF16 e1_cont(e1, vectorize_length);
-   StriContainerUTF16 e2_cont(e2, vectorize_length);
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
 
 
    SEXP ret;
@@ -174,9 +183,18 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
 //      StringPiece s2(e2_cont.get(i).c_str(), e2_cont.get(i).length());
 //      ret_int[i] = (int)collator.compareUTF8(s1, s2, status);
 
-      ret_int[i] = (int)ucol_strcoll(col,
-         e1_cont.get(i).getBuffer(), e1_cont.get(i).length(),
-         e2_cont.get(i).getBuffer(), e2_cont.get(i).length());
+      UErrorCode status = U_ZERO_ERROR;
+      ret_int[i] = (int)ucol_strcollUTF8(col,
+         e1_cont.get(i).c_str(), e1_cont.get(i).length(),
+         e2_cont.get(i).c_str(), e2_cont.get(i).length(),
+         &status
+      );
+      if (U_FAILURE(status))
+         throw StriException(status);
+
+//      ret_int[i] = (int)ucol_strcoll(col,
+//         e1_cont.get(i).getBuffer(), e1_cont.get(i).length(),
+//         e2_cont.get(i).getBuffer(), e2_cont.get(i).length());
    }
 
    if (col) {
