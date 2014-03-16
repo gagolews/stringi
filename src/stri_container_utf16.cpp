@@ -47,6 +47,9 @@ StriContainerUTF16::StriContainerUTF16()
 
 
 /** container for nrecycle fresh, brand new, writable UnicodeStrings
+ * 
+ * Each string is initially NA.
+ * 
  * @param nrecycle number of strings
  */
 StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
@@ -61,6 +64,7 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 
 /**
  * Construct String Container from R character vector
+ * 
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
@@ -96,8 +100,9 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             if (IS_ASCII(curs)) {
                if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");
                UErrorCode status = U_ZERO_ERROR;
-               this->str[i] = UnicodeString(CHAR(curs), LENGTH(curs),
-                  ucnvASCII, status);
+               this->str[i].setTo(
+                  UnicodeString(CHAR(curs), LENGTH(curs), ucnvASCII, status)
+               );
                if (U_FAILURE(status))
                   throw StriException(status);
 
@@ -112,13 +117,14 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             else if (IS_UTF8(curs)) {
                // the above ASCII-approach (but with ucnvUTF8) is slower for UTF-8
                // the same is done for native encoding && ucnvNative_isUTF8
-               this->str[i] = UnicodeString::fromUTF8(CHAR(curs));
+               this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
             }
             else if (IS_LATIN1(curs)) {
                if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
                UErrorCode status = U_ZERO_ERROR;
-               this->str[i] = UnicodeString(CHAR(curs), LENGTH(curs),
-                  ucnvLatin1, status);
+               this->str[i].setTo(
+                  UnicodeString(CHAR(curs), LENGTH(curs), ucnvLatin1, status)
+               );
                if (U_FAILURE(status))
                   throw StriException(status);
             }
@@ -139,12 +145,13 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                // an "unknown" (native) encoding may be set to UTF-8 (speedup)
                if (ucnvNative_isUTF8) {
                   // UTF-8
-                  this->str[i] = UnicodeString::fromUTF8(CHAR(curs));
+                  this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
                }
                else {
                   UErrorCode status = U_ZERO_ERROR;
-                  this->str[i] = UnicodeString(CHAR(curs), LENGTH(curs),
-                     ucnvNative, status);
+                  this->str[i].setTo(
+                     UnicodeString(CHAR(curs), LENGTH(curs), ucnvNative, status)
+                  );
                   if (U_FAILURE(status))
                      throw StriException(status);
                }
@@ -159,7 +166,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
       if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
-            this->str[i] = str[i%nrstr];
+            this->str[i].setTo(str[i%nrstr]);
          }
       }
    }
@@ -169,6 +176,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
 /** Copy constructor
  *
+ *  @param container source
  */
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    :    StriContainerBase((StriContainerBase&)container)
@@ -176,7 +184,7 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
    if (container.str) {
       this->str = new UnicodeString[this->n];
       for (int i=0; i<this->n; ++i) {
-         this->str[i] = container.str[i];
+         this->str[i].setTo(container.str[i]);
       }
    }
    else {
@@ -186,7 +194,10 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
 
 
 
-
+/** 
+ *  @param container source
+ *  @return self
+ */
 StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
    this->~StriContainerUTF16();
@@ -195,7 +206,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
    if (container.str) {
       this->str = new UnicodeString[this->n];
       for (int i=0; i<this->n; ++i) {
-         this->str[i] = container.str[i];
+         this->str[i].setTo(container.str[i]);
       }
    }
    else {
@@ -220,8 +231,11 @@ StriContainerUTF16::~StriContainerUTF16()
 
 
 /** Export character vector to R
+ * 
  *  THE OUTPUT IS ALWAYS IN UTF-8
+ * 
  *  Recycle rule is applied, so length == nrecycle
+ * 
  * @return STRSXP
  */
 SEXP StriContainerUTF16::toR() const
@@ -248,7 +262,9 @@ SEXP StriContainerUTF16::toR() const
 
 
 /** Export string to R
+ * 
  *  THE OUTPUT IS ALWAYS IN UTF-8
+ * 
  *  @param i index [with recycle]
  *  @return CHARSXP
  */

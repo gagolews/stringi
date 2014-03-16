@@ -37,19 +37,28 @@
 
 
 /**
- * Convert case (TitleCase, lowercase, UPPERCASE, etc.)
+ *  Convert case (TitleCase, lowercase, UPPERCASE, etc.)
  *
  *
  *  @param str character vector
  *  @param type internal code of case conversion type
- *  @param locale single string identifying the locale ("" or NULL for default locale)
+ *  @param locale single string identifying the locale
+ *                ("" or NULL for default locale)
  *  @return character vector
  *
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
- * @version 0.4 (Marek Gagolewski, 2013-11-19) use UCaseMap + StriContainerUTF8 **THIS DOES NOT WORK WITH ICU 4.8**
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-11-19)
+ *          use UCaseMap + StriContainerUTF8
+ *          **THIS DOES NOT WORK WITH ICU 4.8**
+ *          ** BTW, since stringi_0.1-25 we require ICU>=50 **
 */
 SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
@@ -169,6 +178,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
                break;
 //             case 6:
 //                str_cont.getWritable(i).toTitle(briter, loc); // how to get it working properly with English text???
+//                                                                 I guess ICU doesn't support language-sensitive title casing at all...
 //                break;
             default:
                throw StriException("stri_trans_case: incorrect case conversion type");

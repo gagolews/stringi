@@ -40,7 +40,7 @@
  * @param numnames number of names to set
  * @param ... variable number of C strings
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
 */
 void stri__set_names(SEXP object, R_len_t numnames, ...)
 {
@@ -66,7 +66,7 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
  * @param ... variable number of C strings
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-16)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
 */
 SEXP stri__make_character_vector(R_len_t numnames, ...)
 {
@@ -96,8 +96,10 @@ SEXP stri__make_character_vector(R_len_t numnames, ...)
  *  @param ... vector lengths
  *  @return max of the given lengths or 0 iff any ns* is <= 0
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - variable args length
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          variable args length
 */
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 {
@@ -131,12 +133,12 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 
 
 /**
- *  Creates a character vector filled with \code{NA_character_}
+ *  Creates a character vector filled with NA_character_
  *
- *  @param howmany length of the vector, \code{howmany >= 0}
- *  @return a character vector of length \code{howmany}
+ * @param howmany length of the vector, \code{howmany >= 0}
+ * @return a character vector of length \code{howmany}
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
 */
 SEXP stri__vector_NA_strings(R_len_t howmany)
 {
@@ -156,12 +158,12 @@ SEXP stri__vector_NA_strings(R_len_t howmany)
 
 
 /**
- *  Creates a character vector filled with \code{NA_integer_}
+ *  Creates a character vector filled with NA_integer_
  *
  *  @param howmany length of the vector, \code{howmany >= 0}
  *  @return a character vector of length \code{howmany}
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
 */
 SEXP stri__vector_NA_integers(R_len_t howmany)
 {
@@ -186,7 +188,7 @@ SEXP stri__vector_NA_integers(R_len_t howmany)
  *  @param howmany length of the vector, \code{howmany >= 0}
  *  @return a character vector of length \code{howmany}
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
 */
 SEXP stri__vector_empty_strings(R_len_t howmany)
 {
@@ -210,7 +212,7 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
  *
  * @return the same as a call to \code{list()} in R
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri__emptyList()
 {
@@ -219,12 +221,12 @@ SEXP stri__emptyList()
 }
 
 
-/** Creates an integer matrix filled with \code{NA_INTEGER}
+/** Creates an integer matrix filled with NA_INTEGER
  *
  * @param nrow number of rows
  * @param ncol number of columns
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
 {
@@ -238,12 +240,12 @@ SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
 }
 
 
-/** Creates a character matrix filled with \code{NA_STRING}
+/** Creates a character matrix filled with NA_STRING
  *
  * @param nrow number of rows
  * @param ncol number of columns
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-22)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
  */
 SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
 {
