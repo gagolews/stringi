@@ -130,7 +130,7 @@ stri_dup <- function(str, times) {
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
-   .Call("stri_join", list(...), sep, collapse, PACKAGE="stringi")
+   .Call("stri_join_withcollapse", list(...), sep, collapse, PACKAGE="stringi")
 }
 
 
