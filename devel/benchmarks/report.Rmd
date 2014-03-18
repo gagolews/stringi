@@ -74,11 +74,13 @@ for (test_i in seq_along(alltests)) {
    cat('## '%+%results_info[[1]]['benchmark']%+%' ##\n\n')
    cat(' > '%+%results_info[[1]]['description']%+%'\n\n')
    
-   rngy <- c(min(sapply(results_data, function(data) data$q1.time)),
-             max(sapply(results_data, function(data) data$q3.time)))
+   rngy <- c(min(unlist(sapply(results_data, function(data) data$q1.time))),
+             max(unlist(sapply(results_data, function(data) data$q3.time))))
    rngy <- rngy + c(-1,1)*diff(rngy)*0.1
    
    for (i in seq_along(results_data)) {
+      
+
       
       data <- results_data[[i]]
       info <- results_info[[i]]

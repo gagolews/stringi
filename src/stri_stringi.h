@@ -116,7 +116,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse);
 SEXP stri_flatten_nosep(SEXP str);
 SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse);
 SEXP stri_join2(SEXP e1, SEXP e2);
-
+SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse);
 
 
 // length.cpp

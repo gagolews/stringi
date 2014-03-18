@@ -34,6 +34,21 @@
 #include <unicode/normalizer2.h>
 
 
+
+
+/**
+ * ...
+ */
+enum StriNormalizationForm {
+   STRI_NFC = 10,
+   STRI_NFD = 20,
+   STRI_NFKC = 11,
+   STRI_NFKD = 21,
+   STRI_NFKC_CASEFOLD = 12
+};
+
+
+
 /** Get Desired Normalizer2 instance
  *
  * @param type R object, will be tested whether it's an integer vector of length 1
