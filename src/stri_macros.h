@@ -111,31 +111,6 @@
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
 
-/**
- * ...
- */
-enum StriEnc {
-   STRI_ENC_UNDEFINED=0,
-   STRI_ENC_ASCII,
-   STRI_ENC_LATIN1,
-   STRI_ENC_UTF8,
-   STRI_ENC_NATIVE,
-   STRI_ENC_BYTES,
-   STRI_NA
-};
-
-
-/**
- * ...
- */
-enum StriNormalizationForm {
-   STRI_NFC = 10,
-   STRI_NFD = 20,
-   STRI_NFKC = 11,
-   STRI_NFKD = 21,
-   STRI_NFKC_CASEFOLD = 12
-};
-
 
 
 /// Unicode replacement character

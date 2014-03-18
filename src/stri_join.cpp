@@ -147,6 +147,8 @@ SEXP stri_dup(SEXP str, SEXP times)
 /** Join two character vectors, element by element
  *
  * Vectorized over e1 and e2. Optimized for |e1| >= |e2|
+ * (but no harm otherwise)
+ * 
  * @param e1 character vector
  * @param e2 character vector
  * @return character vector, res_i=s1_i + s2_i for |e1|==|e2|
@@ -214,6 +216,7 @@ SEXP stri_join2(SEXP e1, SEXP e2)
          last_buf_idx = cur_string_1->length();
          memcpy(buf.data(), cur_string_1->c_str(), (size_t)last_buf_idx);
       }
+      // else reuse string #1
 
       const String8* cur_string_2 = &(e2_cont.get(i));
       R_len_t  cur_len_2 = cur_string_2->length();
@@ -230,12 +233,98 @@ SEXP stri_join2(SEXP e1, SEXP e2)
 
 
 
+/** Join and flatten two character vectors
+ * 
+ * This is faster than stri_flatten(stri_join2(...), ...)
+ *
+ * Vectorized over e1 and e2.
+ * 
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param collapse single string
+ * @return character vector
+ *
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
+ *          first version
+*/
+SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse)
+{
+   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
+   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+
+   collapse = stri_prepare_arg_string_1(collapse, "collapse");
+   if (STRING_ELT(collapse, 0) == NA_STRING)
+      return stri__vector_NA_strings(1);
+   
+   
+   R_len_t e1_length = LENGTH(e1);
+   R_len_t e2_length = LENGTH(e2);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, e1_length, e2_length);
+
+   if (e1_length <= 0) return e1;
+   if (e2_length <= 0) return e2;
+
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
+   StriContainerUTF8 collapse_cont(collapse, 1);
+   R_len_t collapse_nbytes = collapse_cont.get(0).length();
+   const char* collapse_s = collapse_cont.get(0).c_str();
+   
+   
+   // find maximal length of the buffer needed:
+   R_len_t nchar = 0;
+   for (int i=0; i<vectorize_length; ++i) {
+      if (e1_cont.isNA(i) || e2_cont.isNA(i))
+         return stri__vector_NA_strings(1); // at least 1 NA => return NA
+
+      nchar += e1_cont.get(i).length() + e2_cont.get(i).length()
+               + ((i>0)?collapse_nbytes:0);
+   }
+
+
+   String8 buf(nchar+1);
+   R_len_t last_buf_idx = 0;
+   for (R_len_t i = e1_cont.vectorize_init(); // this iterator allows for...
+         i != e1_cont.vectorize_end();        // ...smart buffer reusage
+         i = e1_cont.vectorize_next(i))
+   {
+      // not need to detect NAs - they already have been excluded
+
+      
+      if (i > 0) { // copy collapse (separator)
+         memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_nbytes);
+         last_buf_idx += collapse_nbytes;
+      }
+
+      const String8* cur_string_1 = &(e1_cont.get(i));
+      R_len_t  cur_len_1 = cur_string_1->length();
+      memcpy(buf.data()+last_buf_idx, cur_string_1->c_str(), (size_t)cur_len_1);
+      last_buf_idx += cur_len_1;
+
+      const String8* cur_string_2 = &(e2_cont.get(i));
+      R_len_t  cur_len_2 = cur_string_2->length();
+      memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), (size_t)cur_len_2);
+      last_buf_idx += cur_len_2;
+   }
+   
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(STRSXP, 1)); // output vector
+   SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), last_buf_idx, CE_UTF8));
+   
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
 
 /**
  * Concatenate Character Vectors
  * @param strlist list of character vectors
  * @param sep single string
- * @param collapse single string
+ * @param collapse single string or NULL
  * @return character vector
  *
  *
@@ -256,6 +345,14 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
    R_len_t strlist_length = LENGTH(strlist);
    if (strlist_length <= 0) return stri__vector_empty_strings(0);
 
+   // get length of the longest character vector on the list, i.e. vectorize_length
+   R_len_t vectorize_length = 0;
+   for (R_len_t i=0; i<strlist_length; ++i) {
+      R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
+      if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
+      if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
+   }
+   
    sep = stri_prepare_arg_string_1(sep, "sep");
    if (STRING_ELT(sep, 0) == NA_STRING)
       return stri__vector_NA_strings(vectorize_length);
@@ -268,15 +365,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
       if (isNull(collapse))
          return stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
       else
-         return stri_flatten(stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1)), collapse);
-   }
-   
-   // get length of the longest character vector on the list
-   R_len_t vectorize_length = 0;
-   for (R_len_t i=0; i<strlist_length; ++i) {
-      R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
-      if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
-      if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
+         return stri_join2collapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse);
    }
 
    SEXP ret;
@@ -444,7 +533,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
       if (str_cont.isNA(i)) {
          return stri__vector_NA_strings(1); // at least 1 NA => return NA
       }
-      nbytes += str_cont.get(i).length() + ((i<str_length-1)?collapse_nbytes:0);
+      nbytes += str_cont.get(i).length() + ((i>0)?collapse_nbytes:0);
    }
 
 
