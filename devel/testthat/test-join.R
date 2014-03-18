@@ -1,8 +1,16 @@
 require(testthat)
 
 test_that("stri_join", {
+   
+   # we have many specialized functions for join, e.g.
+   # flatten with sep
+   # flatten with no sep
+   # join2 with sep and no collapse
+   # join2 with sep and collapse
+   # join - general
 
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
+   expect_identical(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
    expect_identical(stri_join(LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(character(0), character(0)), character(0))
    expect_error(stri_join(LETTERS, LETTERS, sep=character(0)))
@@ -13,9 +21,9 @@ test_that("stri_join", {
    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(c('\u0105', '\u0104')), c('\u0105', '\u0104'))
    expect_identical(stri_join(c('\u0105', '\u0104'), collapse=''), c('\u0105\u0104'))
+   expect_identical(stri_join(c('\u0105', '\u0104'), collapse='!'), c('\u0105!\u0104'))
    expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), c('\u0105', '\u0104'))
    expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), enc2native(c('\u0105', '\u0104')))
-   expect_identical(stri_join(c('\u0105', '\u0104'), collapse=''), c('\u0105\u0104'))
    expect_identical(stri_join(LETTERS, letters, collapse=''), paste(LETTERS, letters, sep='', collapse=''))
    expect_identical(stri_join(LETTERS, letters, collapse='!'), paste(LETTERS, letters, sep='', collapse='!'))
    expect_identical(stri_join(LETTERS, letters, LETTERS), paste(LETTERS, letters, LETTERS, sep=''))

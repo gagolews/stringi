@@ -112,11 +112,11 @@ SEXP stri_unescape_unicode(SEXP str);
 
 // join.cpp:
 SEXP stri_dup(SEXP str, SEXP times);
-SEXP stri_flatten(SEXP str, SEXP collapse);
-SEXP stri_flatten_nosep(SEXP str);
+SEXP stri_flatten_withressep(SEXP str, SEXP collapse);
+SEXP stri_flatten_noressep(SEXP str);
 SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse);
-SEXP stri_join2(SEXP e1, SEXP e2);
-SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse);
+SEXP stri_join2_nocollapse(SEXP e1, SEXP e2);
+SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse);
 
 
 // length.cpp

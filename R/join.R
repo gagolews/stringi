@@ -89,7 +89,7 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
-   .Call("stri_join2", e1, e2, PACKAGE="stringi")
+   .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
 }
 
 
@@ -179,5 +179,5 @@ stri_paste <- stri_join
 #' @family join
 stri_flatten <- function(str, collapse="") {
    # prepare_arg done internally
-   .Call("stri_flatten", str, collapse, PACKAGE="stringi")
+   .Call("stri_flatten_withressep", str, collapse, PACKAGE="stringi")
 }

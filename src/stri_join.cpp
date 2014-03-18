@@ -144,10 +144,12 @@ SEXP stri_dup(SEXP str, SEXP times)
 
 
 
-/** Join two character vectors, element by element
+/** Join two character vectors, element by element, no separator, no collapse
  *
  * Vectorized over e1 and e2. Optimized for |e1| >= |e2|
  * (but no harm otherwise)
+ * 
+ * This is used by %+% operator in stringi R code.
  * 
  * @param e1 character vector
  * @param e2 character vector
@@ -164,7 +166,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
 */
-SEXP stri_join2(SEXP e1, SEXP e2)
+SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
@@ -233,25 +235,29 @@ SEXP stri_join2(SEXP e1, SEXP e2)
 
 
 
-/** Join and flatten two character vectors
+/** Join and flatten two character vectors, no separator between elements but possibly with collapse
  * 
- * This is faster than stri_flatten(stri_join2(...), ...)
- *
  * Vectorized over e1 and e2.
  * 
  * @param e1 character vector
  * @param e2 character vector
- * @param collapse single string
+ * @param collapse single string or NULL
  * @return character vector
  *
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
- *          first version
+ *          first version;
+ *          This is much faster than stri_flatten(stri_join2(...), ...)
 */
-SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse)
+SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   
+   if (isNull(collapse)) {
+      // no collapse - used e.g. by %+% operator
+      return stri_join2_nocollapse(e1, e2);
+   }
 
    collapse = stri_prepare_arg_string_1(collapse, "collapse");
    if (STRING_ELT(collapse, 0) == NA_STRING)
@@ -293,7 +299,7 @@ SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse)
       // not need to detect NAs - they already have been excluded
 
       
-      if (i > 0) { // copy collapse (separator)
+      if (collapse_nbytes > 0 && i > 0) { // copy collapse (separator)
          memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_nbytes);
          last_buf_idx += collapse_nbytes;
       }
@@ -322,6 +328,7 @@ SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse)
 
 /**
  * Concatenate Character Vectors
+ * 
  * @param strlist list of character vectors
  * @param sep single string
  * @param collapse single string or NULL
@@ -338,6 +345,12 @@ SEXP stri_join2collapse(SEXP e1, SEXP e2, SEXP collapse)
  * 
  * @version 0.1-12 (Marek Gagolewski, 2013-12-04)
  *          fixed bug #49
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
+ *          Now calling specialized functions
+ *          stri_join2_withcollapse and stri_flatten_withressep, if needed.
+ *          If collapse!=NULL and sep=NA, then the result will be single NA
+ *          (and not n*NA)
  */
 SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
 {
@@ -353,19 +366,35 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
       if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
    }
    
-   sep = stri_prepare_arg_string_1(sep, "sep");
-   if (STRING_ELT(sep, 0) == NA_STRING)
-      return stri__vector_NA_strings(vectorize_length);
-      
    // `collapse` arg will be checked in due time
-
-   // sep==empty string and 2 vectors
-   // an often occuring case - we have some specialized functions for this :-)
-   if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
+      
+   sep = stri_prepare_arg_string_1(sep, "sep");
+   if (STRING_ELT(sep, 0) == NA_STRING) {
       if (isNull(collapse))
-         return stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
-      else
-         return stri_join2collapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse);
+         return stri__vector_NA_strings(vectorize_length);
+      else {
+         collapse = stri_prepare_arg_string_1(collapse, "collapse");
+         // OK, it's a character vector now, we may return NA
+         return stri__vector_NA_strings(1);
+      }
+   }
+      
+
+
+   if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
+      // sep==empty string and 2 vectors --
+      // an often occuring case - we have some specialized functions for this :-)
+      // collapse may be NULL - it's OK, stri_join2_withcollapse will deal with it
+      return stri_join2_withcollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse);
+   }
+   else if (!isNull(collapse) && strlist_length == 1) {
+      // one vector + collapse string -- another frequently occuring case
+      return stri_flatten_withressep(VECTOR_ELT(strlist, 0), collapse);
+      
+      // note that if 1 vector is given and collapse == NULL
+      // we cannot return VECTOR_ELT(strlist, 0) directly
+      // -- it needs to be converted to UTF8
+      // so we proceed
    }
 
    SEXP ret;
@@ -430,13 +459,13 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
    if (isNull(collapse))
       return ret;
    else
-      return stri_flatten(ret, collapse);
+      return stri_flatten_withressep(ret, collapse);
 }
 
 
 
 
-/** String vector flatten, with no separator
+/** String vector flatten, with no separator (i.e. empty) between each string
  *
  *  if any of s is NA, the result will be NA_character_
  *
@@ -450,8 +479,13 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
  * 
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
+ *          This function hasn't been used at all before (strange, isn't it?);
+ *          From now on it's being called by stri_flatten_withressep
+ *          (a small performance gain)
  */
-SEXP stri_flatten_nosep(SEXP str)
+SEXP stri_flatten_noressep(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t str_length = LENGTH(str);
@@ -489,12 +523,12 @@ SEXP stri_flatten_nosep(SEXP str)
 }
 
 
-/** String vector flatten, with separator possible between each string
+/** String vector flatten, with separator between each string
  *
  *  if any of str is NA, the result will be NA_character_
  *
  *  @param str character vector
- *  @param collapse a single string [R name: collapse]
+ *  @param collapse a single string
  *  @return if s is not empty, then a character vector of length 1
  *
  * @version 0.1-?? (Marek Gagolewski)
@@ -507,17 +541,27 @@ SEXP stri_flatten_nosep(SEXP str)
  * 
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
+ *          Call stri_flatten_noressep if needed
+ *          
  */
-SEXP stri_flatten(SEXP str, SEXP collapse)
+SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 {
-   // Check if collapse is given
    collapse = stri_prepare_arg_string_1(collapse, "collapse");
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   R_len_t str_length = LENGTH(str);
-   if (str_length <= 0) return stri__vector_empty_strings(0);
 
    if (STRING_ELT(collapse, 0) == NA_STRING)
       return stri__vector_NA_strings(1);
+      
+   // if collapse is an empty string, we may use the following
+   // specialized function:
+   if (LENGTH(STRING_ELT(collapse, 0)) == 0)
+      return stri_flatten_noressep(str);
+
+   
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   R_len_t str_length = LENGTH(str);
+   if (str_length <= 0) return stri__vector_empty_strings(0);
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, str_length);
@@ -544,7 +588,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
       R_len_t ncur = str_cont.get(i).length();
       memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
       cur += ncur;
-      if (i < str_length-1 && collapse_nbytes > 0) {
+      if (collapse_nbytes > 0 && i < str_length-1) {
          memcpy(buf.data()+cur, collapse_s, (size_t)collapse_nbytes);
          cur += collapse_nbytes;
       }
