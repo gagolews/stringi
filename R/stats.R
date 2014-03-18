@@ -108,12 +108,11 @@ stri_stats_general <- function(str) {
 #' # see http://rksiazka.rexamine.com
 #' apply(
 #'    sapply(
-#'       lapply(
-#'          list.files(path="~/Publikacje/ProgramowanieR/rozdzialy/",
-#'             pattern="*.tex$", recursive=TRUE, full.names=TRUE),
-#'          readLines),
-#'       stri_stats_latex),
-#'    1, sum)
+#'       list.files(path="~/Publikacje/ProgramowanieR/rozdzialy/",
+#'          pattern=glob2rx("*.tex"), recursive=TRUE, full.names=TRUE),
+#'       function(x)
+#'       stri_stats_latex(readLines(x))
+#'    ), 1, sum)
 #'
 #' CharsWord CharsCmdEnvir    CharsWhite         Words          Cmds        Envirs
 #'    718755        458403        281989        120202         37055          6119
