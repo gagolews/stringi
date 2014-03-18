@@ -75,7 +75,7 @@ SEXP stri_dup(SEXP str, SEXP times)
       if (str_cont.isNA(i) || times_cont.isNA(i))
          continue;
 
-      R_len_t cursize = times_cont.get(i) * str_cont.get(i).size();
+      R_len_t cursize = times_cont.get(i) * str_cont.get(i).length();
       if (cursize > bufsize)
          bufsize = cursize;
    }

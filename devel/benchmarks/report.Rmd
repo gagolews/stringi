@@ -1,33 +1,80 @@
 # stringi benchmark results #
 
 ```{r,results='asis',echo=FALSE,message=FALSE,fig.height=6,fig.width=12}
+require('RColorBrewer')
 require('stringi')
 indir <- "." # "devel/benchmarks"
+
+alltests <- c()
 resdirs <- dir(indir, glob2rx("results_*"), full.names=TRUE)
 for (d in resdirs) {
-   cat('## '%+%basename(d)%+%' ##\n')
-   bf <- dir(d, glob2rx("*.csv"), full.names=TRUE)
-   for (f in bf) {
-      cat('### '%+%basename(f)%+%' ###\n')
+   alltests <- c(alltests, dir(d, glob2rx("*.csv"), full.names=TRUE))
+}
 
-      raw2 <- raw <- readLines(f)
+alltests <- unique(basename(alltests))
+
+
+for (test_i in seq_along(alltests)) {
+   
+   test <- alltests[test_i]
+   results_info <- lapply(resdirs, function(d) {
+      if (!file.exists(file.path(d, test))) return(NULL)
+      raw <- readLines(file.path(d, test))
       raw <- raw[stri_detect_regex(raw, "^#")]
       raw <- stri_replace_all_regex(raw, "^# *", "")
-      cat('data | value\n')
-      cat('---- | -----\n')
       raw <- stri_match_first_regex(raw, '^([^=]+)=(.*)$')
-      cat(raw[,2]%+%' | '%+%raw[,3], sep='\n')
-      
-      data <- read.csv(f, comment='#')
-      
+      res <- raw[,3]
+      names(res) <- raw[,2]
+      c(res, 'ident'=stri_extract_last_regex(d, '[^_]+'))
+   })
+   
+   results_data <- lapply(resdirs, function(d) {
+      if (!file.exists(file.path(d, test))) return(NULL)
+      data <- read.csv(file.path(d, test), comment='#')      
       data$datetime <- strptime(data$datetime, "%Y-%m-%d %H:%M:%S")
+      data
+   })
+   
+   if (test_i == 1) {
+      cat('## Machine info ##\n\n')
+      
+      for (info in results_info) {
+         cat('data | value\n')
+         cat('---- | -----\n')
+         cat(paste(names(info[-(1:2)]), ' | ', info[-(1:2)]), sep='\n')
+         cat('\n----------------------------\n\n')
+      }
+   }
+
+   cat('## '%+%results_info[[1]]['benchmark']%+%' ##\n\n')
+   cat(' > '%+%results_info[[1]]['description']%+%'\n\n')
+   
+   rngy <- c(min(sapply(results_data, function(data) data$q1.time)),
+             max(sapply(results_data, function(data) data$q3.time)))
+   rngy <- rngy + c(-1,1)*diff(rngy)*0.1
+   
+   for (i in seq_along(results_data)) {
+      
+      data <- results_data[[i]]
+      info <- results_info[[i]]
+      if (is.null(data)) next
+      
       ntests <- nlevels(data$expr)
       nmeasurements <- nrow(data)/ntests
-      rngy <- c(min(data$q1.time), max(data$q3.time))
-      rngy <- rngy + c(-1,1)*diff(rngy)*0.1
+      palette(brewer.pal(max(3,min(8,ntests)), "Dark2"))
+      par(xaxt='n')
       plot(1:nmeasurements,
          rep(NA, nmeasurements), ylim=rngy,
-         xlab='Measurement', ylab='Time [s]', main=basename(f))
+         xlab='Measurement', ylab='Time [s]',
+         main=info['benchmark']%+%' '%+%info['ident']%+%' '%+%info['LC_CTYPE'])
+      par(xaxt='s')
+      axis(side=1, at=1:nmeasurements)
+      abline(h=axTicks(2), col='gray', lty=3)
+      abline(v=1:nmeasurements, col='gray', lty=3)
+      
+      pch <- rep(18, ntests)
+      pch[stri_detect_fixed(levels(data$expr), "stri_")] <- 15
+      pch[stri_detect_fixed(levels(data$expr), "str_")] <- 17
       
       for (i in 1:nmeasurements) {
          text(i, mean(rngy), sprintf("%s (%s)", data$git_sha[i], as.character(data$datetime[i])),
@@ -43,13 +90,16 @@ for (d in resdirs) {
                colnames(subdata)
             )]),
             col=i, lwd=c(1,1,3,1,1), type='l', lty=c(3,2,1,2,3))
+         matpoints(1:nmeasurements,
+            as.matrix(subdata[,match('median.time', colnames(subdata))]),
+            pch=pch[i], col=i, cex=2)
       }
-      legend('topleft', levels(data$expr), col=1:ntests, bg='white', lty=1, lwd=2)
+      legend('topleft', levels(data$expr), col=1:ntests, bg='white',
+         lty=1, lwd=2, pch=pch)
       
       cat('\n')
       dev.flush()
-      plot.new()
-      cat('\n')
+      cat('\n')   
    }
 }
 ```
