@@ -12,6 +12,7 @@ test_that("stri_join", {
    expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(c('\u0105', '\u0104')), c('\u0105', '\u0104'))
+   expect_identical(stri_join(c('\u0105', '\u0104'), collapse=''), c('\u0105\u0104'))
    expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), c('\u0105', '\u0104'))
    expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), enc2native(c('\u0105', '\u0104')))
    expect_identical(stri_join(c('\u0105', '\u0104'), collapse=''), c('\u0105\u0104'))

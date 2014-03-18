@@ -1,5 +1,30 @@
 # stringi benchmark results #
 
+```{r,MainSettings,echo=FALSE,cache=FALSE,warning=FALSE,message=FALSE}
+options(encoding="utf-8")
+# options(width=60)
+require("knitr")
+# options(digits=7)
+
+require("tikzDevice")
+
+opts_knit$set(progress = TRUE, verbose = TRUE)
+
+opts_chunk$set(
+   keep.source=TRUE,
+#    fig.path='figures-knitr-ab-Rdataanal/',
+#    cache.path='cache-knitr-ab-Rdataanal/',
+   cache=FALSE,
+   tidy=TRUE,
+   prompt=TRUE,
+   dev='png',
+   external=TRUE
+#    fig.align='center',
+#    size='footnotesize'
+)
+```
+
+
 ```{r,results='asis',echo=FALSE,message=FALSE,fig.height=6,fig.width=12}
 require('RColorBrewer')
 require('stringi')
@@ -76,8 +101,10 @@ for (test_i in seq_along(alltests)) {
       pch[stri_detect_fixed(levels(data$expr), "stri_")] <- 15
       pch[stri_detect_fixed(levels(data$expr), "str_")] <- 17
       
+      git_sha <- unique(data$git_sha)
+      datetime <- unique(as.character(data$datetime))
       for (i in 1:nmeasurements) {
-         text(i, mean(rngy), sprintf("%s (%s)", data$git_sha[i], as.character(data$datetime[i])),
+         text(i, mean(rngy), sprintf("%s (%s)", git_sha[i], datetime[i]),
                srt=90, col='gray')
       }
       

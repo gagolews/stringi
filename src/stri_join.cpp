@@ -53,9 +53,15 @@ using namespace std;
  *  if str or times is an empty vector then the result is an empty vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski) - use StriContainerUTF8's vectorization
- * @version 0.1-?? (Marek Gagolewski, 2013-06-15) use StriContainerInteger
- * @version 0.1-?? (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *                  use StriContainerUTF8's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *                  use StriContainerInteger
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *                  make StriException friendly
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
@@ -149,8 +155,12 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski) - use StriContainerUTF8's vectorization
- * @version 0.1-?? (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF8's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException friendly
 */
 SEXP stri_join2(SEXP e1, SEXP e2)
 {
@@ -230,9 +240,15 @@ SEXP stri_join2(SEXP e1, SEXP e2)
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski) - use StriContainerUTF8's vectorization
- * @version 0.1-?? (Marek Gagolewski, 2013-06-16) make StriException-friendly, useStriContainerListUTF8
- * @version 0.1-12 (Marek Gagolewski, 2013-12-04) fixed bug #49
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF8's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly, useStriContainerListUTF8
+ * 
+ * @version 0.1-12 (Marek Gagolewski, 2013-12-04)
+ *          fixed bug #49
  */
 SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
 {
@@ -240,24 +256,27 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
    R_len_t strlist_length = LENGTH(strlist);
    if (strlist_length <= 0) return stri__vector_empty_strings(0);
 
-   // get length of the longest character vector
+   sep = stri_prepare_arg_string_1(sep, "sep");
+   if (STRING_ELT(sep, 0) == NA_STRING)
+      return stri__vector_NA_strings(vectorize_length);
+      
+   // `collapse` arg will be checked in due time
+
+   // sep==empty string and 2 vectors
+   // an often occuring case - we have some specialized functions for this :-)
+   if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
+      if (isNull(collapse))
+         return stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
+      else
+         return stri_flatten(stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1)), collapse);
+   }
+   
+   // get length of the longest character vector on the list
    R_len_t vectorize_length = 0;
    for (R_len_t i=0; i<strlist_length; ++i) {
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
       if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
       if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
-   }
-
-   sep = stri_prepare_arg_string_1(sep, "sep");
-   if (STRING_ELT(sep, 0) == NA_STRING)
-      return stri__vector_NA_strings(vectorize_length);
-
-   // an often occuring case - we have a specialized function for this :-)
-   if (LENGTH(STRING_ELT(sep,0)) == 0 && strlist_length == 2) {
-      if (isNull(collapse))
-         return stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
-      else
-         return stri_flatten(stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1)), collapse);
    }
 
    SEXP ret;
@@ -336,8 +355,12 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse)
  *  @return if s is not empty, then a character vector of length 1
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
- * @version 0.1-?? (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          StriContainerUTF8 - any R Encoding
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException friendly
  */
 SEXP stri_flatten_nosep(SEXP str)
 {
@@ -367,7 +390,7 @@ SEXP stri_flatten_nosep(SEXP str)
    }
 
 
-   // 3. Get ret val & solongfarewellaufwiedersehenadieu
+   // 3. Get ret val & good bye
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), nchar, CE_UTF8));
@@ -386,13 +409,19 @@ SEXP stri_flatten_nosep(SEXP str)
  *  @return if s is not empty, then a character vector of length 1
  *
  * @version 0.1-?? (Marek Gagolewski)
- * @version 0.1-?? (Bartek Tartanus) - collapse arg added (1 sep supported)
- * @version 0.1-?? (Marek Gagolewski) - StriContainerUTF8 - any R Encoding
- * @version 0.1-?? (Marek Gagolewski, 2013-06-16) make StriException friendly
+ * 
+ * @version 0.1-?? (Bartek Tartanus)
+ *          collapse arg added (1 sep supported)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          StriContainerUTF8 - any R Encoding
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException friendly
  */
 SEXP stri_flatten(SEXP str, SEXP collapse)
 {
-   // Check if collapse is given?
+   // Check if collapse is given
    collapse = stri_prepare_arg_string_1(collapse, "collapse");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t str_length = LENGTH(str);
@@ -433,7 +462,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse)
    }
 
 
-   // 3. Get ret val & solongfarewellaufwiedersehenadieu
+   // 3. Get ret val & return
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), nbytes, CE_UTF8));
