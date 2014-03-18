@@ -7,7 +7,7 @@ else
    RHOME="$1"
 fi
 
-$RHOME/bin/R CMD INSTALL --preclean .
+$RHOME/bin/R CMD INSTALL --preclean --no-data --no-demo --no-help .
 
 LC_ALL="pl_PL.UTF-8"      $RHOME/bin/Rscript \
    --vanilla devel/benchmarks/run_package_benchmarks.R
