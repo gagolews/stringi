@@ -507,31 +507,32 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
 
    SEXP ret;
    STRI__ERROR_HANDLER_BEGIN
-   StriContainerUTF8 ssep(sep, 1);
-   const char* sep_char = ssep.get(0).c_str();
-   R_len_t     sep_len  = ssep.get(0).length();
-
+   
+   StriContainerUTF8 sep_cont(sep, 1);
+   const char* sep_char = sep_cont.get(0).c_str();
+   R_len_t     sep_len  = sep_cont.get(0).length();
 
    StriContainerListUTF8 strlist_cont(strlist, vectorize_length);
 
 
-   // 4. Get buf size and check out NAs
+   // 4. Get buf size and determine where NAs will occur
    R_len_t buf_maxbytes = 0;
-   vector<bool> whichNA(vectorize_length, false);
+   vector<bool> whichNA(vectorize_length, false); // where are NAs in out?
    for (R_len_t i=0; i<vectorize_length; ++i) {
+      
+      R_len_t curchar = 0;
       for (R_len_t j=0; j<strlist_length; ++j) {
          if (strlist_cont.get(j).isNA(i)) {
             whichNA[i] = true;
             break;
          }
-      }
-      if (!whichNA[i]) {
-         R_len_t curchar = 0;
-         for (R_len_t j=0; j<strlist_length; ++j) {
-            curchar += strlist_cont.get(j).get(i).length() + ((j<strlist_length-1)?sep_len:0);
+         else {
+            curchar += strlist_cont.get(j).get(i).length()
+               + ((j>0)?sep_len:0);
          }
-         if (curchar > buf_maxbytes) buf_maxbytes = curchar;
       }
+      if (!whichNA[i] && curchar > buf_maxbytes)
+         buf_maxbytes = curchar;
    }
 
    // 5. Create ret val
@@ -547,24 +548,24 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
       R_len_t cursize = 0;
       for (R_len_t j=0; j<strlist_length; ++j) {
 
-         const String8* curstring = &(strlist_cont.get(j).get(i));
-         memcpy(buf.data()+cursize, curstring->c_str(), (size_t)curstring->length());
-         cursize += curstring->length();
-
-         if (j < strlist_length-1 && sep_len > 0) {
+         if (sep_len >= 0 && j > 0) {
             memcpy(buf.data()+cursize, sep_char, (size_t)sep_len);
             cursize += sep_len;
          }
+         
+         const String8* curstring = &(strlist_cont.get(j).get(i));
+         R_len_t curstring_n = curstring->length();
+         memcpy(buf.data()+cursize, curstring->c_str(), (size_t)curstring_n);
+         cursize += curstring_n;
       }
 
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), cursize, CE_UTF8));
    }
 
-
-   UNPROTECT(1);
-
    // nothing more to do:
+   UNPROTECT(1);
    return ret;
+   
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 

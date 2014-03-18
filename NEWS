@@ -2,12 +2,14 @@
 ========================================
 
 * 0.2-1 (XXXX-XX-XX)
-   * U_MISSING_RESOURCE_ERROR translated message in StriException now suggests
+   * U_MISSING_RESOURCE_ERROR message in StriException now suggests
      calling stri_install_check()
    * Performance improvements in StriContainerUTF8 (affect many other functions)
+   * Significant performance improvements in stri_join, stri_flatten,
+     stri_cmp, stri_trans_to*, ...t.b.d....
    * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8
-   * stri_substs_na - t.b.d.
+   * stri_subst_na - t.b.d.
    * t.b.d.
 
 * 0.1-25 (2014-03-12)

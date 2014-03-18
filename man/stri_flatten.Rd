@@ -17,10 +17,11 @@ Returns a single string, i.e. a character vector of length
 Joins the elements of a character vector into one string.
 }
 \details{
-\code{stri_flatten(str, collapse='XXX')} works like
-\code{\link{paste}(str, collapse='XXX', sep="")}.
+The \code{stri_flatten(str, collapse='XXX')} call is
+equivalent to \code{\link{paste}(str, collapse='XXX',
+sep="")}.
 
-If you wish to use some more fancy \code{collapse}
+If you wish to use some more fancy (e.g. differing)
 separators between flattened strings, call
 \code{\link{stri_join}(str, separators, collapse='')}.
 

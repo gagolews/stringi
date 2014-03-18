@@ -11,12 +11,12 @@ stri_dup(str, times)
   duplicate each string}
 }
 \value{
-Returns a character vector.
+Returns a character vector of the same length as
+\code{str}.
 }
 \description{
-Duplicates each string \code{times} times. This is done by
-copying the contents of \code{str} at the end of
-\code{str}.
+Duplicates each string \code{times} times and concatenates
+the results.
 }
 \details{
 Vectorized over \code{str} and \code{times}.

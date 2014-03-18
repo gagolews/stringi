@@ -11,24 +11,26 @@ stri_c(..., sep = "", collapse = NULL)
 stri_paste(..., sep = "", collapse = NULL)
 }
 \arguments{
-  \item{...}{character vectors which corresponding elements
-  should be concatenated}
+  \item{...}{character vectors (or objects coercible to
+  character vectors) which corresponding elements are to be
+  concatenated.}
 
-  \item{sep}{single string; separates terms}
+  \item{sep}{single string; separates terms.}
 
-  \item{collapse}{single string; separates the results}
+  \item{collapse}{single string or \code{NULL}; an optional
+  results separator.}
 }
 \value{
 Returns a character vector.
 }
 \description{
-This is the \pkg{stringi}'s equivalents of the built-in
-\code{\link{paste}} function.
+These are the \pkg{stringi}'s equivalents of the built-in
+\code{\link{paste}} function. \code{stri_c} and
+\code{stri_paste} are aliases for \code{stri_join}. Use
+whichever you want, they are exactly the same.
 }
 \details{
-\code{stri_c} and \code{stri_paste} are aliases for
-\code{stri_join}. Use whichever you want, they are
-equivalent.
+Vectorized over each vector in `\code{...}`.
 
 If \code{collapse} is not \code{NULL}, then the result will
 be a single string. Otherwise, you will get a character
@@ -43,11 +45,18 @@ result.
 If \code{collapse} or \code{sep} has length > 1, then only
 first string will be used.
 
-In case of any \code{NA}, \code{NA} is set to the
-corresponding element.
+In case of any \code{NA} in an input vector, \code{NA} is
+set to the corresponding element. Note that this behavior
+is different from \code{\link{paste}}, which treats missing
+values as ordinary strings \code{"NA"}. Moreover, as usual
+in \pkg{stringi}, the resulting strings are always in
+UTF-8.
 }
 \examples{
 stri_join(1:13, letters)
+stri_join(1:13, letters, sep='!')
+stri_join(1:13, letters, collapse='?')
+stri_join(1:13, letters, sep='!', collapse='?')
 stri_join(c('abc','123','\\u0105\\u0104'),'###', 1:5, sep='...')
 stri_join(c('abc','123','\\u0105\\u0104'),'###', 1:5, sep='...', collapse='?')
 }
