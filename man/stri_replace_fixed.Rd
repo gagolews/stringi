@@ -52,6 +52,7 @@ stri_replace_all_fixed(s,"o","0")
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
 \code{\link{stri_enc_detect2}};

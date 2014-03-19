@@ -25,6 +25,51 @@ test_that("stri_cmp", {
 })
 
 
+test_that("stri_cmp_eq", {
+
+   expect_equivalent(stri_cmp_eq(character(0), character(0)), logical(0))
+   expect_equivalent(stri_cmp_eq(LETTERS, character(0)), logical(0))
+   expect_equivalent(stri_cmp_eq(character(0), LETTERS), logical(0))
+
+   expect_equivalent(stri_cmp_eq(LETTERS, LETTERS),  rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_neq(LETTERS, LETTERS), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_eq(LETTERS, letters),  rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_neq(LETTERS, letters), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_eq(c(NA, 'a', 'b'), 'a'), c(NA, TRUE, FALSE))
+   expect_equivalent(stri_cmp_neq(c(NA, 'a', 'b'), 'a'), !c(NA, TRUE, FALSE))
+
+   expect_equivalent(stri_cmp_eq("dupa100", "dupa2"), FALSE)
+   expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned"), FALSE)
+   expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned",
+      stri_opts_collator(alternate_shifted=TRUE)), TRUE)
+
+   expect_equivalent(stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105'), TRUE)
+
+})
+
+
+
+test_that("stri_cmp_eq_bytewise", {
+
+   expect_equivalent(stri_cmp_eq(character(0), character(0), opts_collator=NA), logical(0))
+   expect_equivalent(stri_cmp_eq(LETTERS, character(0), opts_collator=NA), logical(0))
+   expect_equivalent(stri_cmp_eq(character(0), LETTERS, opts_collator=NA), logical(0))
+
+   expect_equivalent(stri_cmp_eq(LETTERS, LETTERS, opts_collator=NA),  rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_neq(LETTERS, LETTERS, opts_collator=NA), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_eq(LETTERS, letters, opts_collator=NA),  rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_neq(LETTERS, letters, opts_collator=NA), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_eq(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA, TRUE, FALSE))
+   expect_equivalent(stri_cmp_neq(c(NA, 'a', 'b'), 'a', opts_collator=NA), !c(NA, TRUE, FALSE))
+
+   expect_equivalent(stri_cmp_eq("dupa100", "dupa2", opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned", opts_collator=NA), FALSE)
+
+   expect_equivalent(stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), FALSE)
+
+})
+
+
 test_that("stri_cmp_codepoints", {
 
    expect_equivalent(stri_cmp(character(0), character(0), opts_collator=NA), integer(0))

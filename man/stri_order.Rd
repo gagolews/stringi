@@ -47,10 +47,10 @@ Missing values are always put at the end of a character
 vector.
 
 \code{stri_sort} is a `black sheep` in \pkg{stringi}: it
-does not always return UTF-8-encoded strings. Moreover, it
-preserves many input object's attributes. This is because
-it is defined as \code{str[stri_order(str, decreasing,
-opts_collator)]}.
+does not always return UTF-8-encoded strings. ** TO DO:
+REIMPLEMENT ** Moreover, it preserves many input object's
+attributes. This is because it is defined as
+\code{str[stri_order(str, decreasing, opts_collator)]}.
 }
 \examples{
 \dontrun{
@@ -60,6 +60,7 @@ stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
 \code{\link{stri_enc_detect2}};
