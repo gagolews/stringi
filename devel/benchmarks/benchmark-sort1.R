@@ -19,6 +19,7 @@ benchmark_do <- function() {
    gc(reset=TRUE)
    microbenchmark2(
       sort(xrand),
-      stri_sort(xrand)
+      stri_sort(xrand),
+      stri_sort(xrand, opts_collator=NA)
    )
 }

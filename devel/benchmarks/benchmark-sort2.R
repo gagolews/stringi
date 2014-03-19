@@ -20,6 +20,7 @@ benchmark_do <- function() {
    gc(reset=TRUE)
    microbenchmark2(
       sort(xsrt),
-      stri_sort(xsrt)
+      stri_sort(xsrt),
+      stri_sort(xsrt, opts_collator=NA)
    )
 }

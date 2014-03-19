@@ -1,4 +1,5 @@
-benchmark_description <- "sorts a set of words of various lengths (ascii + Polish letters, native encoding) [reverse order on input]"
+benchmark_description <- "checks whether two character vectors are not equal (with recycling)"
+
 
 benchmark_do <- function() {
    library('stringi')
@@ -11,16 +12,19 @@ benchmark_do <- function() {
    plletters <- enc2native(plletters)
 
    set.seed(123)
-   x <- replicate(10000, {
+   x <- replicate(25000, {
       paste(sample(plletters,
          floor(abs(rcauchy(1, 10))+1), replace=TRUE), collapse='')
    })
-   xrev <- rev(sort(x))
+
+   y <- x
+   x[1:(length(x)/4)] <- sample(x, (length(x)/4))
+   y[(length(x)-(length(x)/4)):length(x)] <- paste(x[(length(x)-(length(x)/4)):length(x)], ':-)', sep='')
 
    gc(reset=TRUE)
    microbenchmark2(
-      sort(xrev),
-      stri_sort(xrev),
-      stri_sort(xrev, opts_collator=NA)
+      x != y,
+      stri_cmp(x, y) != 0,
+      stri_cmp(x, y, NA) != 0
    )
 }
