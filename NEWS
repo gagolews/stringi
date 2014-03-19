@@ -10,6 +10,7 @@
    * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8
    * stri_subst_na - t.b.d.
+   * added 3rd mirror site for icudt
    * t.b.d.
 
 * 0.1-25 (2014-03-12)

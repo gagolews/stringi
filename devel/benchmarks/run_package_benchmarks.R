@@ -1,6 +1,9 @@
 # benchmark suite
 # (c) 2014, Marek Gagolewski
 
+
+benchmarks_wildcard <- '*'
+
 library('stringi')
 library('stringr')
 library('microbenchmark')
@@ -47,7 +50,7 @@ source('devel/benchmarks/microbenchmark2.R', local=TRUE)
 if (!file.exists(bm_outdir))
    dir.create(bm_outdir)
    
-bmarks <- dir(bm_indir, glob2rx('benchmark-*.R'))
+bmarks <- dir(bm_indir, glob2rx('benchmark-'%+%benchmarks_wildcard%+%'.R'))
 for (b in bmarks) {
    cat('Filename:', b, '\n')
    local({

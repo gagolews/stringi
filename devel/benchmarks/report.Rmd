@@ -1,6 +1,11 @@
 # stringi benchmark results #
 
 ```{r,MainSettings,echo=FALSE,cache=FALSE,warning=FALSE,message=FALSE}
+
+
+benchmarks_wildcard <- '*'
+
+
 options(encoding="utf-8")
 # options(width=60)
 require("knitr")
@@ -31,7 +36,7 @@ require('stringi')
 indir <- "." # "devel/benchmarks"
 
 alltests <- c()
-resdirs <- dir(indir, glob2rx("results_*"), full.names=TRUE)
+resdirs <- dir(indir, glob2rx("results_"%+%benchmarks_wildcard), full.names=TRUE)
 for (d in resdirs) {
    alltests <- c(alltests, dir(d, glob2rx("*.csv"), full.names=TRUE))
 }
@@ -87,7 +92,8 @@ for (test_i in seq_along(alltests)) {
       if (is.null(data)) next
       
       ntests <- nlevels(data$expr)
-      nmeasurements <- nrow(data)/ntests
+      nmeasurements <- max(table(data$expr))
+      idxrepresent <- which.max(table(data$expr))
       palette(brewer.pal(max(3,min(8,ntests)), "Dark2"))
       par(xaxt='n')
       plot(1:nmeasurements,
@@ -103,8 +109,8 @@ for (test_i in seq_along(alltests)) {
       pch[stri_detect_fixed(levels(data$expr), "stri_")] <- 15
       pch[stri_detect_fixed(levels(data$expr), "str_")] <- 17
       
-      git_sha <- unique(data$git_sha)
-      datetime <- unique(as.character(data$datetime))
+      git_sha <- data$git_sha[data$expr == data$expr[idxrepresent]]
+      datetime <- as.character(data$datetime)[data$expr == data$expr[idxrepresent]]
       for (i in 1:nmeasurements) {
          text(i, mean(rngy), sprintf("%s (%s)", git_sha[i], datetime[i]),
                srt=90, col='gray')
