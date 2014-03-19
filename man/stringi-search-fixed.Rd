@@ -67,7 +67,9 @@ L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},
-\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_neq}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
+\code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
+\code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
 \code{\link{stri_enc_detect2}};

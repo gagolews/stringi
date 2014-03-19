@@ -9,6 +9,8 @@
      stri_cmp, stri_trans_to*, ...t.b.d....
    * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8
+   * New functions for string comparison: stri_cmp_eq, stri_cmp_neq,
+       stri_cmp_lt, stri_cmp_le, stri_cmp_gt, stri_cmp_ge
    * stri_subst_na - t.b.d.
    * added 3rd mirror site for icudt
    * t.b.d.
