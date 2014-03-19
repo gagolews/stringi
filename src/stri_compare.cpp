@@ -39,6 +39,8 @@
 
 
 /** Compare 2 strings in UTF8, codepoint-wise [internal]
+ * 
+ * Used by stri_order_codepoints and stri_cmp_codepoints
  *
  * @param str1 string in UTF8
  * @param str2 string in UTF8
@@ -72,19 +74,178 @@ int stri__compare_codepoints(const char* str1, R_len_t n1, const char* str2, R_l
 }
 
 
+
+
+/* *************************************************************************
+                                  STRI_CMP_EQ
+   ************************************************************************* */
+
+/**
+ * Check for equality or inequality of elements in 2 character vectors, byte-wise
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * 
+ * @return logical vector
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
+ *
+ */
+SEXP stri_cmp_eq_codepoints(SEXP e1, SEXP e2, SEXP negate)
+{
+   // negate is an internal arg, check manually, error() allowed here
+   if (!Rf_isInteger(negate) || LENGTH(negate) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+   int _negate = INTEGER(negate)[0];
+   if (_negate != 0 && _negate != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+      
+   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
+   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+
+   // possible slowdown due to the fact that whole vectors are possibly
+   // re-encoded, and the result comparison may be determined by
+   // comparing e.g. the first codepoint
+   // if we have 2 native-encoded strings we could do bytewise compare...
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
+
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_int = INTEGER(ret);
+
+   for (R_len_t i = e1_cont.vectorize_init();
+         i != e1_cont.vectorize_end();
+         i = e1_cont.vectorize_next(i))
+   {
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         ret_int[i] = NA_INTEGER;
+         continue;
+      }
+
+      R_len_t     cur1_n = e1_cont.get(i).length();
+      R_len_t     cur2_n = e2_cont.get(i).length();
+      const char* cur1_s = e1_cont.get(i).c_str();
+      const char* cur2_s = e2_cont.get(i).c_str();
+      if (cur1_n != cur2_n) // different number of bytes => not equal
+         ret_int[i] = FALSE;
+      else {
+         ret_int[i] = TRUE;
+         for (R_len_t j=0; j<cur1_n; ++j) {
+            // dummy byte comparison
+            // all bytes equal => all codepoints equal => equal
+            if (cur1_s[j] != cur2_s[j]) {
+               ret_int[i] = FALSE;
+               break;
+            }
+         }
+      }
+      if (_negate)
+         ret_int[i] = !ret_int[i];
+   }
+
+   UNPROTECT(1);
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+/**
+ * Check for equality or inequality of elements in 2 character vectors,
+ * possibly with collation
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param collator_opts passed to stri__ucol_open()
+ * 
+ * @return logical vector
+ *
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-19)
+ */
+SEXP stri_cmp_eq(SEXP e1, SEXP e2, SEXP collator_opts, SEXP negate)
+{
+   UCollator* col = NULL;
+   col = stri__ucol_open(collator_opts);
+   if (!col) return stri_cmp_eq_codepoints(e1, e2, negate); // codepoint-wise le
+   
+   // we'll perform a collator-based cmp
+   // negate is an internal arg, check manually, error() allowed here
+   if (!Rf_isInteger(negate) || LENGTH(negate) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+   int _negate = INTEGER(negate)[0];
+   if (_negate != 0 && _negate != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+      
+      
+   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
+   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   
+   STRI__ERROR_HANDLER_BEGIN
+
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
+
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_int = INTEGER(ret);
+
+   for (R_len_t i = e1_cont.vectorize_init();
+         i != e1_cont.vectorize_end();
+         i = e1_cont.vectorize_next(i))
+   {
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         ret_int[i] = NA_LOGICAL;
+         continue;
+      }
+
+      UErrorCode status = U_ZERO_ERROR;
+      ret_int[i] = (0 == (int)ucol_strcollUTF8(col,
+         e1_cont.get(i).c_str(), e1_cont.get(i).length(),
+         e2_cont.get(i).c_str(), e2_cont.get(i).length(),
+         &status
+      ));
+      if (U_FAILURE(status))
+         throw StriException(status);
+         
+      if (_negate)
+         ret_int[i] = !ret_int[i];
+   }
+
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+   UNPROTECT(1);
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
+}
+/* *************************************************************************
+                                  STRI_CMP
+   ************************************************************************* */
+
+
 /**
  * Compare character vectors, codepoint-wise
  *
  * @param e1 character vector
  * @param e2 character vector
- * @return integer vector
+ * 
+ * @return integer vector, like strcmp() in C
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
  */
-SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
+SEXP stri_cmp_codepoints(SEXP e1, SEXP e2)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
@@ -133,7 +294,8 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
  * @param e1 character vector
  * @param e2 character vector
  * @param collator_opts passed to stri__ucol_open()
- * @return integer vector
+ * 
+ * @return integer vector, like strcmp in C
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
@@ -147,12 +309,12 @@ SEXP stri__compare_codepoints(SEXP e1, SEXP e2)
  *          using ucol_strcollUTF8 again, as we now require ICU >= 50
  *          [4x speedup utf8, 2x slowdown 8bit]
  */
-SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
+SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
 {
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
    if (!col)
-      return stri__compare_codepoints(e1, e2);
+      return stri_cmp_codepoints(e1, e2);
 
    e1 = stri_prepare_arg_string(e1, "e1");
    e2 = stri_prepare_arg_string(e2, "e2");
@@ -205,7 +367,7 @@ SEXP stri_compare(SEXP e1, SEXP e2, SEXP collator_opts)
    return ret;
 
    STRI__ERROR_HANDLER_END({
-      if (col) ucol_close(col);
+      if (col) { ucol_close(col); col = NULL; }
    })
 }
 
@@ -233,9 +395,9 @@ struct StriSortCollator {
 
 
 
-
-
-
+/* *************************************************************************
+                                  STRI_ORDER
+   ************************************************************************* */
 
 /** help struct for stri_order **/
 struct StriSortCodepoints {
@@ -279,7 +441,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
    if (!col)
-      return stri__order_codepoints(str, decreasing);
+      return stri_order_codepoints(str, decreasing);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = LENGTH(str);
@@ -294,6 +456,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
          ++countNA;
 
    // NAs must be put at end (note the stable sort behavior!)
+   // TO DO: let the user decide how to play with NAs [end, begin, remove]
    int* order = INTEGER(ret);
    R_len_t k1 = 0;
    R_len_t k2 = vectorize_length-countNA;
@@ -350,7 +513,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  */
-SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
+SEXP stri_order_codepoints(SEXP str, SEXP decreasing)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
@@ -368,6 +531,7 @@ SEXP stri__order_codepoints(SEXP str, SEXP decreasing)
          ++countNA;
 
    // NAs must be put at end (note the stable sort behavior!)
+   // TO DO: let the user decide how to play with NAs [end, begin, remove]
    int* order = INTEGER(ret);
    R_len_t k1 = 0;
    R_len_t k2 = vectorize_length-countNA;

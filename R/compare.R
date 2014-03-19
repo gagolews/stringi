@@ -40,27 +40,37 @@
 #'
 #'
 #' @details
-#' \link{stri_cmp} is an alias to \link{stri_compare}. They both
-#' do the same operation.
+#' \code{stri_compare} is an alias to \code{stri_cmp}. They both
+#' perform exactly the same operation.
 #'
+#' \code{stri_cmp_eq} implements the behavior of the \code{e1 == e2} operation,
+#' and \code{stri_cmp_neq} of \code{e1 != e2}.
+#' Of course, this is done in \pkg{stringi}'s own way.
 #'
-#' Vectorized over \code{e1} and \code{e2}.
+#' All the functions are vectorized over \code{e1} and \code{e2}.
 #'
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' Please note that different locale settings may lead to different results
-#' (see the examples below).
+#' (see the examples below). If \code{opts_collator}
+#' is not \code{NA} (the default), then the string comparison
+#' is locale-sensitive.
 #'
 #' @param e1 character vector
 #' @param e2 character vector
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
-#' @return Each function returns an integer vector
+#' @return The \code{stri_cmp} and \code{stri_compare} functions
+#' return an integer vector
 #' with comparison results of corresponding
-#' pairs of elements from \code{e1} and \code{e2}:
+#' pairs of elements in \code{e1} and \code{e2}:
 #' \code{-1} if \code{e1[...] < e2[...]},
 #' \code{0} if they are equal, and \code{1} if greater.
+#' 
+#' The other functions return a logical vector that indicates
+#' whether a given relation holds between two corresponding elements
+#' in \code{e1} and \code{e2}.
 #'
 #' @family locale_sensitive
 #' @export
@@ -77,13 +87,27 @@
 #' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
 #' }
 stri_compare <- function(e1, e2, opts_collator=list()) {
-   .Call("stri_compare", e1, e2, opts_collator, PACKAGE="stringi")
+   .Call("stri_cmp", e1, e2, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp <- stri_compare
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_eq <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_eq", e1, e2, opts_collator, 0L, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_neq <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_eq", e1, e2, opts_collator, 1L, PACKAGE="stringi")
+}
 
 
 
@@ -112,6 +136,7 @@ stri_cmp <- stri_compare
 #'
 #' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
 #' it does not always return UTF-8-encoded strings.
+#' ** TO DO: REIMPLEMENT **
 #' Moreover, it preserves many input object's attributes.
 #' This is because it is defined as
 #' \code{str[stri_order(str, decreasing, opts_collator)]}.
