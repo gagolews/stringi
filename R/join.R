@@ -75,8 +75,8 @@ stri_dup <- function(str, times) {
 #' @usage
 #' e1 \%+\% e2
 #'
-#' @param e1 character vector
-#' @param e2 character vector
+#' @param e1 character vector or an object coercible to a character vector
+#' @param e2 character vector or an object coercible to a character vector
 #'
 #' @return Returns a character vector.
 #'

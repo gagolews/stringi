@@ -64,7 +64,8 @@ see Value for details.
 vector are less than or equal to the corresponding elements
 in the second vector, \code{stri_cmp_ge} whether they are
 greater or equal, \code{stri_cmp_lt} if less, and
-\code{stri_cmp_gt} if greater.
+\code{stri_cmp_gt} if greater, see also
+\code{\link{\%<\%}}.
 
 All the functions are vectorized over \code{e1} and
 \code{e2}.

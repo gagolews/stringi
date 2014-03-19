@@ -53,7 +53,8 @@
 #' the corresponding elements in the second vector,
 #' \code{stri_cmp_ge} whether they are greater or equal,
 #' \code{stri_cmp_lt} if less,
-#' and \code{stri_cmp_gt} if greater.
+#' and \code{stri_cmp_gt} if greater,
+#' see also \code{\link{\%<\%}}.
 #'
 #' All the functions are vectorized over \code{e1} and \code{e2}.
 #'
@@ -141,6 +142,81 @@ stri_cmp_le <- function(e1, e2, opts_collator=list()) {
 #' @rdname stri_compare
 stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 1L), PACKAGE="stringi")
+}
+
+
+
+#' @title
+#' Compare Two Character Vectors with Collation
+#'
+#' @description
+#' Relational operators for comparing two character vectors,
+#' with a typical \R look-and-feel.
+#'
+#' @details
+#' These functions call \code{\link{stri_cmp_le}} or its
+#' friends, using default collator options.
+#'
+#' @usage
+#' e1 \%<\% e2
+#' 
+#' e1 \%>\% e2
+#' 
+#' e1 \%<=\% e2
+#' 
+#' e1 \%>=\% e2
+#' 
+#' e1 \%==\% e2
+#' 
+#' e1 \%!=\% e2
+#'
+#' @param e1 character vector or an object coercible to a character vector
+#' @param e2 character vector or an object coercible to a character vector
+#'
+#' @return Returns a logical vector
+#' indicating the result of the element-by-element comparison.
+#' As usual, the elements of shorter vectors are recycled as necessary.
+#'
+#'
+#' @examples
+#' \dontrun{
+#' "a" %<% "b"
+#' c("a", "b", "c") %>=% "b"
+#' }
+#' @rdname oper_comparison
+#' @export
+"%<%" <- function(e1, e2) {
+   stri_cmp_lt(e1, e2)
+}
+
+#' @rdname oper_comparison
+#' @export
+"%<=%" <- function(e1, e2) {
+   stri_cmp_le(e1, e2)
+}
+
+#' @rdname oper_comparison
+#' @export
+"%>%" <- function(e1, e2) {
+   stri_cmp_gt(e1, e2)
+}
+
+#' @rdname oper_comparison
+#' @export
+"%>=%" <- function(e1, e2) {
+   stri_cmp_ge(e1, e2)
+}
+
+#' @rdname oper_comparison
+#' @export
+"%==%" <- function(e1, e2) {
+   stri_cmp_eq(e1, e2)
+}
+
+#' @rdname oper_comparison
+#' @export
+"%!=%" <- function(e1, e2) {
+   stri_cmp_neq(e1, e2)
 }
 
 

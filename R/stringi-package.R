@@ -44,7 +44,7 @@
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
 #' \bold{License}: The BSD-3-clause license for the package code,
-#' the ICU license for accompanying ICU4C distribution,
+#' the ICU license for the accompanying ICU4C distribution,
 #' and the UCD license for the Unicode Character Database.
 #' See the COPYRIGHTS and LICENSE file for more details.
 #'
@@ -79,19 +79,19 @@
 #' \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions;
 #' \item \link{stringi-search-fixed} -- Locale-aware or byte-exact fixed
 #' pattern searching;
-#' \item \link{stringi-search-charclass} -- for finding character classes,
-#' like ``all whitespaces'' or ``all digits''.
+#' \item \link{stringi-search-charclass} -- for finding elements of
+#' particular character classes, like ``all whitespaces'' or ``all digits''.
 #' }
 #'
 #'
 #' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
-#' for gathering some statistics on a character vector's contents.
+#' for gathering some fancy statistics on a character vector's contents.
 #'
-#' \item \code{\link{stri_join}}, \code{\link{stri_dup}},
+#' \item \code{\link{stri_join}}, \code{\link{stri_dup}}, \code{\link{\%+\%}},
 #' and \code{\link{stri_flatten}} for concatenation-based operations.
 #'
 #' \item \code{\link{stri_sub}} for extracting and replacing substrings,
-#' and \code{\link{stri_reverse}} for a funny function
+#' and \code{\link{stri_reverse}} for a joyful function
 #' to reverse all characters in a string.
 #'
 #' \item \code{\link{stri_trim}} (among others) for
@@ -102,9 +102,9 @@
 #' of code points in a string.
 #'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
-#' i.e. conversion to lower, UPPER, or Title case.
+#' i.e. conversion to lower, UPPER, or Title Case.
 #'
-#' \item \code{\link{stri_compare}}, \code{\link{stri_order}},
+#' \item \code{\link{stri_cmp}}, \code{\link{\%<\%}}, \code{\link{stri_order}},
 #' and \code{\link{stri_sort}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
@@ -127,8 +127,8 @@
 #'
 #' Note that each man page has many links to other interesting facilities.
 #'
-#' The \pkg{stringi} user is encouraged to call \code{\link{stri_install_check}}
-#' after the package installation.
+#' You are encouraged to call \code{\link{stri_install_check}}
+#' after the package installation or update.
 #'
 #' @name stringi-package
 #' @rdname stringi-package
