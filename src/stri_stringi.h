@@ -94,11 +94,8 @@ SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
 UCollator*  stri__ucol_open(SEXP collator_opts);
 
 // compare.cpp:
-SEXP stri_cmp_codepoints(SEXP e1, SEXP e2);
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts);
-
-SEXP stri_cmp_eq_codepoints(SEXP e1, SEXP e2, SEXP negate);
-SEXP stri_cmp_eq(SEXP e1, SEXP e2, SEXP collator_opts, SEXP negate);
+SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type);
 
 SEXP stri_order_codepoints(SEXP e1, SEXP decreasing);
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);

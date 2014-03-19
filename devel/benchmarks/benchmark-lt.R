@@ -25,6 +25,8 @@ benchmark_do <- function() {
    microbenchmark2(
       x < y,
       stri_cmp(x, y) < 0,
-      stri_cmp(x, y, NA) < 0
+      stri_cmp(x, y, NA) < 0,
+      stri_cmp_le(x, y),
+      stri_cmp_le(x, y, NA)
    )
 }

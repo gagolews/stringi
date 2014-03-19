@@ -16,12 +16,49 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp(letters, LETTERS, stri_opts_collator(strength=2)), rep(0L, length(LETTERS)))
 
    expect_equivalent(stri_cmp("dupa100", "dupa2"), -1)
+   expect_equivalent(stri_cmp("dupa100", "dupa1000"), -1)
+   expect_equivalent(stri_cmp("dupa10000", "dupa1000"), 1)
    expect_equivalent(stri_cmp("dupa100", "dupa2", stri_opts_collator(numeric=TRUE)), 1)
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned"), -1)
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE)), 0)
 
    expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105'), 0L)
 
+})
+
+
+test_that("stri_cmp_lt/gt/le/ge", {
+
+   expect_equivalent(stri_cmp_lt(character(0), character(0)), logical(0))
+   expect_equivalent(stri_cmp_lt(LETTERS, character(0)), logical(0))
+   expect_equivalent(stri_cmp_lt(character(0), LETTERS), logical(0))
+
+   expect_equivalent(stri_cmp_lt(LETTERS, LETTERS), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_le(LETTERS, LETTERS), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_le(c(NA, 'a', 'b'), 'a'), c(NA, TRUE, FALSE))
+   expect_equivalent(stri_cmp_le("dupa", "pupa"), TRUE)
+   expect_equivalent(stri_cmp_lt("dupa", "pupa"), TRUE)
+   expect_equivalent(stri_cmp_ge("dupa", "pupa"), FALSE)
+   expect_equivalent(stri_cmp_gt("dupa", "pupa"), FALSE)
+
+})
+
+
+test_that("stri_cmp_lt/gt/le/ge_bytewise", {
+
+   expect_equivalent(stri_cmp_lt(character(0), character(0), opts_collator=NA), logical(0))
+   expect_equivalent(stri_cmp_lt(LETTERS, character(0), opts_collator=NA), logical(0))
+   expect_equivalent(stri_cmp_lt(character(0), LETTERS, opts_collator=NA), logical(0))
+
+   expect_equivalent(stri_cmp_lt(LETTERS, LETTERS, opts_collator=NA), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_le(LETTERS, LETTERS, opts_collator=NA), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_le(LETTERS, letters, opts_collator=NA), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_gt(LETTERS, letters, opts_collator=NA), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_le(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA, TRUE, FALSE))
+   expect_equivalent(stri_cmp_le("dupa", "pupa", opts_collator=NA), TRUE)
+   expect_equivalent(stri_cmp_lt("dupa", "pupa", opts_collator=NA), TRUE)
+   expect_equivalent(stri_cmp_ge("dupa", "pupa", opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_gt("dupa", "pupa", opts_collator=NA), FALSE)
 })
 
 
@@ -39,6 +76,8 @@ test_that("stri_cmp_eq", {
    expect_equivalent(stri_cmp_neq(c(NA, 'a', 'b'), 'a'), !c(NA, TRUE, FALSE))
 
    expect_equivalent(stri_cmp_eq("dupa100", "dupa2"), FALSE)
+   expect_equivalent(stri_cmp_eq("dupa100", "dupa1000"), FALSE)
+   expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000"), FALSE)
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned"), FALSE)
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned",
       stri_opts_collator(alternate_shifted=TRUE)), TRUE)
@@ -63,6 +102,8 @@ test_that("stri_cmp_eq_bytewise", {
    expect_equivalent(stri_cmp_neq(c(NA, 'a', 'b'), 'a', opts_collator=NA), !c(NA, TRUE, FALSE))
 
    expect_equivalent(stri_cmp_eq("dupa100", "dupa2", opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_eq("dupa100", "dupa1000", opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000", opts_collator=NA), FALSE)
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned", opts_collator=NA), FALSE)
 
    expect_equivalent(stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), FALSE)
@@ -82,6 +123,9 @@ test_that("stri_cmp_codepoints", {
    expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA_integer_, 0L, 1L))
 
    expect_equivalent(stri_cmp("dupa100", "dupa2", opts_collator=NA), -1)
+   expect_equivalent(stri_cmp("dupa100", "dupa1000", opts_collator=NA), -1)
+   expect_equivalent(stri_cmp("dupa10000", "dupa1000", opts_collator=NA), 1)
+   
 
    expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), -1L)
 

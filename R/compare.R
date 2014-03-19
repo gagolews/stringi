@@ -34,18 +34,26 @@
 #'
 #' @description
 #' These functions  may be used to determine if two strings
-#' are equal (this is performed more intelligently than you may
-#' expect at a first glance) or to check whether they appear in
+#' are equal (this is performed in a way more clever fashion
+#' than you may expect at a first glance) or to check whether they appear in
 #' a specific lexicographic order.
 #'
 #'
 #' @details
 #' \code{stri_compare} is an alias to \code{stri_cmp}. They both
 #' perform exactly the same operation.
+#' Both functions provide give the same output
+#' as the \code{strcmp()} function in the C programming language
+#' standard library, see Value for details.
 #'
-#' \code{stri_cmp_eq} implements the behavior of the \code{e1 == e2} operation,
-#' and \code{stri_cmp_neq} of \code{e1 != e2}.
-#' Of course, this is done in \pkg{stringi}'s own way.
+#' \code{stri_cmp_eq} tests for equality of elements,
+#' and \code{stri_cmp_neq} for inequality.
+#' What is more,  \code{stri_cmp_le} tests whether
+#' the elements in the first vector are less than or equal to
+#' the corresponding elements in the second vector,
+#' \code{stri_cmp_ge} whether they are greater or equal,
+#' \code{stri_cmp_lt} if less,
+#' and \code{stri_cmp_gt} if greater.
 #'
 #' All the functions are vectorized over \code{e1} and \code{e2}.
 #'
@@ -79,12 +87,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
-#' stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
-#' stri_cmp("hladny", "HLADNY") # < or > (depends on locale)
-#' stri_cmp("hladny", "HLADNY", stri_opts_collator(strength=2)) # ==
-#' stri_cmp("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK")) # ==
-#' stri_cmp(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
+#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
+#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
+#' stri_cmp("hladny", "chladny") # < or > (depends on locale)
+#' stri_cmp_eq("hladny", "HLADNY", stri_opts_collator(strength=2))
+#' stri_cmp_eq("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
 #' }
 stri_compare <- function(e1, e2, opts_collator=list()) {
    .Call("stri_cmp", e1, e2, opts_collator, PACKAGE="stringi")
@@ -99,14 +107,40 @@ stri_cmp <- stri_compare
 #' @export
 #' @rdname stri_compare
 stri_cmp_eq <- function(e1, e2, opts_collator=list()) {
-   .Call("stri_cmp_eq", e1, e2, opts_collator, 0L, PACKAGE="stringi")
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 0L), PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_neq <- function(e1, e2, opts_collator=list()) {
-   .Call("stri_cmp_eq", e1, e2, opts_collator, 1L, PACKAGE="stringi")
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 1L), PACKAGE="stringi")
+}
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_lt <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 0L), PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_gt <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 0L), PACKAGE="stringi")
+}
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_le <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 1L), PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
+   .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 1L), PACKAGE="stringi")
 }
 
 
@@ -126,13 +160,14 @@ stri_cmp_neq <- function(e1, e2, opts_collator=list()) {
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
-#' Uses a stable sort algorithm (\pkg{STL}'s stable_sort);
-#' performs up to \eqn{N*log^2(N)} element comparisons,
+#' These functions use a stable sort algorithm (\pkg{STL}'s stable_sort),
+#' which performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #'
-#' Interestingly, \code{stri_order} is most often faster that \R's \code{order}.
+#' Interestingly, our benchmarks indicate that \code{stri_order}
+#' is most often faster that \R's \code{order}.
 #'
-#' Missing values are always put at the end of a character vector.
+#' ** TO DO: CORRECT THIS ** Missing values are always put at the end of a character vector.
 #'
 #' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
 #' it does not always return UTF-8-encoded strings.

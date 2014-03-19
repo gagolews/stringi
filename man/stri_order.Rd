@@ -36,15 +36,16 @@ For more information on \pkg{ICU}'s Collator and how to
 tune it up in \pkg{stringi}, refer to
 \code{\link{stri_opts_collator}}.
 
-Uses a stable sort algorithm (\pkg{STL}'s stable_sort);
-performs up to \eqn{N*log^2(N)} element comparisons, where
-\eqn{N} is the length of \code{str}.
+These functions use a stable sort algorithm (\pkg{STL}'s
+stable_sort), which performs up to \eqn{N*log^2(N)} element
+comparisons, where \eqn{N} is the length of \code{str}.
 
-Interestingly, \code{stri_order} is most often faster that
-\R's \code{order}.
+Interestingly, our benchmarks indicate that
+\code{stri_order} is most often faster that \R's
+\code{order}.
 
-Missing values are always put at the end of a character
-vector.
+** TO DO: CORRECT THIS ** Missing values are always put at
+the end of a character vector.
 
 \code{stri_sort} is a `black sheep` in \pkg{stringi}: it
 does not always return UTF-8-encoded strings. ** TO DO:
@@ -60,7 +61,9 @@ stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},
-\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_neq}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
+\code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
+\code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
 \code{\link{stri_enc_detect2}};
