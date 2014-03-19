@@ -5,9 +5,11 @@
 e1 \%+\% e2
 }
 \arguments{
-  \item{e1}{character vector}
+  \item{e1}{character vector or an object coercible to a
+  character vector}
 
-  \item{e2}{character vector}
+  \item{e2}{character vector or an object coercible to a
+  character vector}
 }
 \value{
 Returns a character vector.
