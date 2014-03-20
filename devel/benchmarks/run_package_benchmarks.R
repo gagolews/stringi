@@ -2,7 +2,7 @@
 # (c) 2014, Marek Gagolewski
 
 
-benchmarks_wildcard <- 'tou*'
+benchmarks_wildcard <- '*'
 
 library('stringi')
 library('stringr')

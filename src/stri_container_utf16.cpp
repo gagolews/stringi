@@ -86,10 +86,24 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
       UConverter* ucnvASCII = NULL;
-//      UConverter* ucnvUTF8 = NULL;
       UConverter* ucnvLatin1 = NULL;
       UConverter* ucnvNative = NULL;
       bool ucnvNative_isUTF8 = false;
+      
+#define  CLEANUP_NORMAL_StriContainerUTF16 \
+   { \
+      if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; } \
+      if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; } \
+      if (ucnvNative) { ucnv_close(ucnvASCII);  ucnvASCII = NULL; } \
+   }
+      
+#define  CLEANUP_FAILURE_StriContainerUTF16 \
+   { \
+      if (this->str) delete [] this->str; \
+      this->str = NULL; \
+      CLEANUP_NORMAL_StriContainerUTF16 \
+   }
+   
 
       for (R_len_t i=0; i<nrstr; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
@@ -104,9 +118,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                   UnicodeString(CHAR(curs), LENGTH(curs), ucnvASCII, status)
                );
                if (U_FAILURE(status)) {
-                  if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-                  if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-                  if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+                  CLEANUP_FAILURE_StriContainerUTF16
                   throw StriException(status);
                }
 
@@ -129,30 +141,23 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                this->str[i].setTo(
                   UnicodeString(CHAR(curs), LENGTH(curs), ucnvLatin1, status)
                );
-                  if (U_FAILURE(status)) {
-                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
-                     throw StriException(status);
-                  }
+               if (U_FAILURE(status)) {
+                  CLEANUP_FAILURE_StriContainerUTF16
+                  throw StriException(status);
+               }
             }
             else if (IS_BYTES(curs)) {
-               if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-               if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-               if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+               CLEANUP_FAILURE_StriContainerUTF16
                throw StriException(MSG__BYTESENC);
             }
             else {
-//             Any ("unknown") encoding - detection needed.
 //             We assume unknown == Native; (Native --> input via keyboard)
                if (!ucnvNative) {
                   ucnvNative = stri__ucnv_open((char*)NULL);
                   UErrorCode status = U_ZERO_ERROR;
                   const char* ucnv_name = ucnv_getName(ucnvNative, &status);
                   if (U_FAILURE(status)) {
-                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+                     CLEANUP_FAILURE_StriContainerUTF16
                      throw StriException(status);
                   }
                   ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
@@ -169,9 +174,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                      UnicodeString(CHAR(curs), LENGTH(curs), ucnvNative, status)
                   );
                   if (U_FAILURE(status)) {
-                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+                     CLEANUP_FAILURE_StriContainerUTF16
                      throw StriException(status);
                   }
                }
@@ -179,10 +182,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          }
       }
 
-      if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
-//      if (ucnvUTF8)  ucnv_close(ucnvUTF8);
-      if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
-      if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+      CLEANUP_NORMAL_StriContainerUTF16
 
       if (!_shallowrecycle) {
          for (R_len_t i=nrstr; i<this->n; ++i) {
