@@ -97,7 +97,6 @@ UCollator*  stri__ucol_open(SEXP collator_opts);
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts);
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type);
 
-SEXP stri_order_codepoints(SEXP e1, SEXP decreasing);
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);
 
 

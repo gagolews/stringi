@@ -137,6 +137,7 @@ test_that("stri_order", {
 
    expect_equivalent(stri_order(character(0)), integer(0))
    expect_equivalent(stri_order(LETTERS), 1:length(LETTERS))
+   expect_equivalent(stri_order(c('c', 'a', 'b')), order(c('c', 'a', 'b')))
    expect_equivalent(stri_order(rev(LETTERS)), length(LETTERS):1)
    expect_equivalent(stri_order(rev(LETTERS)), rev(stri_order(LETTERS)))
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
@@ -153,6 +154,7 @@ test_that("stri_order [codepoints]", {
    expect_equivalent(stri_order(character(0), opts_collator=NA), integer(0))
    expect_equivalent(stri_order(LETTERS, opts_collator=NA), 1:length(LETTERS))
    expect_equivalent(stri_order(rev(LETTERS), opts_collator=NA), length(LETTERS):1)
+   expect_equivalent(stri_order(c('c', 'a', 'b'), opts_collator=NA), order(c('c', 'a', 'b')))
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE, opts_collator=NA), length(LETTERS):1)
 
 

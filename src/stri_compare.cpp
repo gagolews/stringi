@@ -197,10 +197,11 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
       if (col) { ucol_close(col); col = NULL; }
    })
 }
+
+
 /* *************************************************************************
                                   STRI_CMP
    ************************************************************************* */
-
 
 /**
  * Compare character vectors, possibly with collation
@@ -292,52 +293,48 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
 
 
 
-
-
-/** help struct for stri_order **/
-struct StriSortCollator {
-   StriContainerUTF16* ss;
-   bool decreasing;
-   UCollator* col;
-   StriSortCollator(StriContainerUTF16* _ss, UCollator* _col, bool _decreasing)
-   { this->ss = _ss; this->col = _col; this->decreasing = _decreasing; }
-
-   bool operator() (int a, int b) const
-   {
-      int ret = (int)ucol_strcoll(col,
-         ss->get(a-1).getBuffer(), ss->get(a-1).length(),
-         ss->get(b-1).getBuffer(), ss->get(b-1).length());
-      if (decreasing) return (ret > 0);
-      else return (ret < 0);
-   }
-};
-
-
-
 /* *************************************************************************
                                   STRI_ORDER
    ************************************************************************* */
 
+
 /** help struct for stri_order **/
-struct StriSortCodepoints {
-   StriContainerUTF8* ss;
+struct StriSortComparer {
+   StriContainerUTF8* cont;
    bool decreasing;
-   StriSortCodepoints(StriContainerUTF8* _ss, bool _decreasing)
-   { this->ss = _ss; this->decreasing = _decreasing; }
+   UCollator* col;
+   
+   StriSortComparer(StriContainerUTF8* _cont, UCollator* _col, bool _decreasing)
+   { this->cont = _cont; this->col = _col; this->decreasing = _decreasing; }
 
    bool operator() (int a, int b) const
    {
-      int ret = (int)stri__cmp_codepoints(
-         ss->get(a-1).c_str(), ss->get(a-1).length(),
-         ss->get(b-1).c_str(), ss->get(b-1).length()
-      );
-      if (decreasing) return (ret > 0);
-      else return (ret < 0);
+      // a and b are 1-based array indices (for R)
+      
+      if (col) {
+         UErrorCode status = U_ZERO_ERROR;
+         int ret = (int)ucol_strcollUTF8(col,
+            cont->get(a-1).c_str(), cont->get(a-1).length(),
+            cont->get(b-1).c_str(), cont->get(b-1).length(), &status);
+         if (U_FAILURE(status))
+            throw StriException(status);
+         if (decreasing) return (ret > 0);
+         else return (ret < 0);
+      }
+      else {
+         int ret = stri__cmp_codepoints(
+            cont->get(a-1).c_str(), cont->get(a-1).length(),
+            cont->get(b-1).c_str(), cont->get(b-1).length()
+         );
+         
+         if (decreasing) return (ret > 0);
+         else return (ret < 0);
+      }
    }
 };
 
 
-/** Generate the ordering permutation, with collation
+/** Generate the ordering permutation, possibly with collation
  *
  * @param str character vector
  * @param decreasing single logical value
@@ -351,6 +348,12 @@ struct StriSortCodepoints {
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  *                 Use UTF16 as ucol_strcollUTF8 is DRAFT
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
+ *          using ucol_strcollUTF8 again, as we now require ICU >= 50;
+ *          performance difference only observed for sorted vectors
+ *          (UTF-8: gain, 8bit: loss);
+ *          single function for cmp with and witout collation
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 {
@@ -359,83 +362,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
 
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
-   if (!col)
-      return stri_order_codepoints(str, decreasing);
 
-   STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = LENGTH(str);
-   StriContainerUTF16 str_cont(str, vectorize_length);
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
-
-   // count NA values
-   R_len_t countNA = 0;
-   for (R_len_t i=0; i<vectorize_length; ++i)
-      if (str_cont.isNA(i))
-         ++countNA;
-
-   // NAs must be put at end (note the stable sort behavior!)
-   // TO DO: let the user decide how to play with NAs [end, begin, remove]
-   int* order = INTEGER(ret);
-   R_len_t k1 = 0;
-   R_len_t k2 = vectorize_length-countNA;
-   for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (str_cont.isNA(i))
-         order[k2++] = i+1;
-      else
-         order[k1++] = i+1;
-   }
-
-
-   // TO DO: think of using sort keys...
-   // however, now it's quite fast...
-
-   // check if already sorted - if not - sort!
-   for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
-      int val = (int)ucol_strcoll(col,
-            str_cont.get(order[i]-1).getBuffer(),   str_cont.get(order[i]-1).length(),
-            str_cont.get(order[i+1]-1).getBuffer(), str_cont.get(order[i+1]-1).length());
-
-      if ((decr && val < 0) || (!decr && val > 0)) {
-         // sort!
-         std::vector<int> data;
-         data.assign(order, order+vectorize_length-countNA);
-            StriSortCollator comp(&str_cont, col, decr);
-            std::stable_sort(data.begin(), data.end(), comp);
-         R_len_t j = 0;
-         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++j)
-            order[j] = *it;
-         break; // sorted, finish
-      }
-   }
-
-
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
-   UNPROTECT(1);
-   return ret;
-
-   STRI__ERROR_HANDLER_END({
-      if (col) ucol_close(col);
-   })
-}
-
-
-
-/** Generate the ordering permutation, codepoint-wise
- *
- * @param str character vector
- * @param decreasing single logical value
- * @return integer vector (permutation)
- *
- * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
- */
-SEXP stri_order_codepoints(SEXP str, SEXP decreasing)
-{
-   bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = LENGTH(str);
@@ -462,32 +389,32 @@ SEXP stri_order_codepoints(SEXP str, SEXP decreasing)
    }
 
 
-   // TO DO: think of using sort keys...
-   // however, now it's quite fast...
+   // TO DO: collation-based cmp: think of using sort keys...
+   // however, now it's already very fast.
 
    // check if already sorted - if not - sort!
+   StriSortComparer comp(&str_cont, col, decr);
    for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
-      int val = stri__cmp_codepoints(
-            str_cont.get(order[i]-1).c_str(),   str_cont.get(order[i]-1).length(),
-            str_cont.get(order[i+1]-1).c_str(), str_cont.get(order[i+1]-1).length()
-         );
-
-      if ((decr && val < 0) || (!decr && val > 0)) {
-         // sort!
+      if (!comp(order[i], order[i+1])) {
+         // the vector is not ordered => sort!
          std::vector<int> data;
          data.assign(order, order+vectorize_length-countNA);
-         StriSortCodepoints comp(&str_cont, decr);
          std::stable_sort(data.begin(), data.end(), comp);
-         R_len_t j=0;
+         R_len_t j = 0;
          for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++j)
             order[j] = *it;
          break; // sorted, finish
       }
    }
 
-
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
    UNPROTECT(1);
    return ret;
 
-   STRI__ERROR_HANDLER_END( ; /*nothing special on error*/)
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
 }
