@@ -383,9 +383,9 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    R_len_t k2 = vectorize_length-countNA;
    for (R_len_t i=0; i<vectorize_length; ++i) {
       if (str_cont.isNA(i))
-         order[k2++] = i+1;
+         order[k2++] = i+1; // 1-based indices (for R)
       else
-         order[k1++] = i+1;
+         order[k1++] = i+1; // 1-based indices (for R)
    }
 
 

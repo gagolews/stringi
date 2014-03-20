@@ -103,8 +103,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                this->str[i].setTo(
                   UnicodeString(CHAR(curs), LENGTH(curs), ucnvASCII, status)
                );
-               if (U_FAILURE(status))
+               if (U_FAILURE(status)) {
+                  if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
+                  if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+                  if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
                   throw StriException(status);
+               }
 
                // Performance improvement attempt #1:
                // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
@@ -125,11 +129,19 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                this->str[i].setTo(
                   UnicodeString(CHAR(curs), LENGTH(curs), ucnvLatin1, status)
                );
-               if (U_FAILURE(status))
-                  throw StriException(status);
+                  if (U_FAILURE(status)) {
+                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
+                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
+                     throw StriException(status);
+                  }
             }
-            else if (IS_BYTES(curs))
+            else if (IS_BYTES(curs)) {
+               if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
+               if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+               if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
                throw StriException(MSG__BYTESENC);
+            }
             else {
 //             Any ("unknown") encoding - detection needed.
 //             We assume unknown == Native; (Native --> input via keyboard)
@@ -137,8 +149,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                   ucnvNative = stri__ucnv_open((char*)NULL);
                   UErrorCode status = U_ZERO_ERROR;
                   const char* ucnv_name = ucnv_getName(ucnvNative, &status);
-                  if (U_FAILURE(status))
+                  if (U_FAILURE(status)) {
+                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
+                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
                      throw StriException(status);
+                  }
                   ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
                }
                
@@ -152,8 +168,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
                   this->str[i].setTo(
                      UnicodeString(CHAR(curs), LENGTH(curs), ucnvNative, status)
                   );
-                  if (U_FAILURE(status))
+                  if (U_FAILURE(status)) {
+                     if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL; }
+                     if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; }
+                     if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; }
                      throw StriException(status);
+                  }
                }
             }
          }

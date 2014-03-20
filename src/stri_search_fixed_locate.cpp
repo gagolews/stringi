@@ -260,8 +260,13 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param first looking for first or last match?
  * @return integer matrix (2 columns)
  *
- * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-23) StriException friendly, use StriContainerByteSearch
+ * @version 0.1-?? (Bartlomiej Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          StriException friendly, use StriContainerByteSearch
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
+ *          Use StriContainerUTF8_indexable
  */
 SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
 {
@@ -270,7 +275,7 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
 
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
@@ -322,8 +327,13 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
  * @param pattern character vector
  * @return list of integer matrices (2 columns)
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-23) StriException friendly, use StriContainerByteSearch
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          StriException friendly, use StriContainerByteSearch
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
+ *          Use StriContainerUTF8_indexable
  */
 SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
 {
@@ -332,7 +342,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
 
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;

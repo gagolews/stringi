@@ -46,10 +46,20 @@
  * @param length integer vector or NULL
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)  stri_sub
- * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UChar32-to-UTF8 index
- * @version 0.4 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Bartek Tartanus)
+ *          stri_sub
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
+ *          use StriContainerUTF8's UChar32-to-UTF8 index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
+ *          Use StriContainerUTF8_indexable
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -101,7 +111,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       return Rf_allocVector(STRSXP,0);
 
    STRI__ERROR_HANDLER_BEGIN
-   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
 
    // args prepared, let's go
    SEXP ret;
@@ -180,9 +190,18 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * @return character vector
  *
  * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * @version 0.3 (Marek Gagolewski, 2013-06-01) use StriContainerUTF8's UChar32-to-UTF8 index
- * @version 0.4 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
+ *          use StriContainerUTF8's UChar32-to-UTF8 index
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
+ *          Use StriContainerUTF8_indexable
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 {
@@ -236,7 +255,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       return Rf_allocVector(STRSXP, 0);
 
    STRI__ERROR_HANDLER_BEGIN
-   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
    StriContainerUTF8 value_cont(value, vectorize_length);
 
    // args prepared, let's go
