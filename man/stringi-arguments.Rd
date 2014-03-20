@@ -63,12 +63,10 @@ cases) with its functions' arguments.
   Generally, all our functions drop input objects'
   attributes (e.g. \code{\link{names}}, \code{\link{dim}},
   etc.). This is generally because of advanced
-  vectorization and for efficiency reasons. Currently,
-  there is only one exception to this rule: the
-  \code{\link{stri_sort}} function. Thus, if this is
-  needed, please remember to copy important attributes
-  manually or use e.g. the subsetting operation like
-  \code{x[] <- stri_...(x, ...)}.
+  vectorization and for efficiency reasons. Thus, if
+  arguments' preserving is needed, please remember to copy
+  important attributes manually or use e.g. the subsetting
+  operation like \code{x[] <- stri_...(x, ...)}.
 }
 \seealso{
 Other prepare_arg: \code{\link{stri_prepare_arg_double_1}};

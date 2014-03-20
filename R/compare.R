@@ -243,13 +243,6 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' Interestingly, our benchmarks indicate that \code{stri_order}
 #' is most often faster that \R's \code{order}.
 #'
-#' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
-#' it does not always return UTF-8-encoded strings.
-#' ** TO DO: REIMPLEMENT **
-#' Moreover, it preserves many input object's attributes.
-#' This is because it is defined as
-#' \code{str[stri_order(str, decreasing, opts_collator)]}.
-#'
 #' @param str character vector
 #' @param decreasing single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
@@ -277,12 +270,12 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 #' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=list()) {
-   .Call("stri_order", str, decreasing, na_last, opts_collator, PACKAGE="stringi")
+   .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_order
 stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) {
-   str[stri_order(str, decreasing, na_last, opts_collator)]
+   .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 2L, PACKAGE="stringi")
 }
