@@ -23,10 +23,13 @@ test_that("stri_dup", {
    # UTF-8
    expect_identical(stri_dup('\u9999', 1:2), c('\u9999', '\u9999\u9999'))
    expect_identical(stri_dup('\u00109999', 2), '\u00109999\u00109999')
+   
+   expect_identical(stri_dup(enc2native('\u0105'), 1:2), c('\u0105', '\u0105\u0105'))
+   
 
    # Other 8-bit encodings
    oldenc <- stri_enc_set('latin2')
-   expect_identical(stri_dup('\xa1\xb1', 2), '\u0104\u0105\u0104\u0105')
+   expect_identical(stri_dup(enc2native('\xa1\xb1'), 2), '\u0104\u0105\u0104\u0105')
    stri_enc_set(oldenc)
 
    oldenc <- stri_enc_set('cp1250')
