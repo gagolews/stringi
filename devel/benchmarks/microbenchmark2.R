@@ -1,12 +1,21 @@
 ## Copyright (c) 2013-2014, Marek Gagolewski
 
-microbenchmark2 <- function(..., times=100L, control=list(order='inorder', warmup=10L)) {
+microbenchmark2 <- function(...) {
 
+   args <- as.list(match.call()[-1])
+   if (is.null(names(args)))
+      names(args) <- rep('', length(args))
+   if (is.na(match('times', names(args))))
+      args$times <- 100L
+   if (is.na(match('control', names(args))))
+      args$control <- list(order='inorder', warmup=10L)
+   
+   
    library('microbenchmark')
    library('stringi')
    
    x <- do.call(microbenchmark,
-                c(as.list(match.call()[-1]), times=times),
+                args,
                 envir=parent.frame())
    x$time <- microbenchmark:::convert_to_unit(x$time, 's')
 

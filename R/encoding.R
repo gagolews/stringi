@@ -36,14 +36,24 @@
 #' This manual page explains how to deal with different character encodings
 #' in \pkg{stringi}. In particular you should note that:
 #' \itemize{
+#'    \item R lets strings in ASCII, UTF-8, and your platform's
+#'    native encoding coexist peacefully. Character vector output
+#'    with \code{\link{print}}, \code{\link{cat}} etc.
+#'    silently reencodes each string so that it can be properly
+#'    shown e.g. in the console.
 #'    \item Functions in \pkg{stringi} process each string
 #'    internally in Unicode,
 #'    which is a superset of all character representation schemes.
 #'    Even if a string is given in the native encoding, i.e. your platform's
-#'    default one,
-#'    it will be converted to Unicode.
-#'    \item Most functions always return UTF-8 encoded strings,
+#'    default one, it will be converted to Unicode (precisely: UTF-8 or UTF-16).
+#'    \item Most \pkg{stringi} functions always return UTF-8 encoded strings,
 #'    regardless of the input encoding.
+#'    What is more, the functions have been optimized
+#'    for UTF-8/ASCII input (they have competetive, if not better performance,
+#'    especially when performing more complex operations
+#'    like string comparison, sorting, and even concatenation).
+#'    Thus, it is best to rely on cascading
+#'    calls to \pkg{stringi} operations solely.
 #' }
 #'
 #' @details
@@ -125,7 +135,7 @@
 #' in ISO-8859-2 (Central European), the value 177 represents
 #' Polish ``a with ogonek'',
 #' and in ISO-8859-1 (Western European), the same value
-#' meas the ``plus-minus'' sign.
+#' denotes the ``plus-minus'' sign.
 #' Thus, a character encoding is a translation scheme:
 #' we need to communicate
 #' with \R somehow, relying on how it represents strings.
@@ -133,7 +143,7 @@
 #' Basically, \R has a very simple encoding-marking mechanism,
 #' see \link{Encoding}. There is an implicit assumption
 #' that your platform's default (native) encoding is
-#' always an 8-bit one and it is a superset of ASCII --
+#' always a superset of ASCII --
 #' \pkg{stringi} checks that when your native encoding
 #' is being detected automatically on \pkg{ICU} initialization and each time
 #' when you change it manually by calling \code{\link{stri_enc_set}}.
@@ -151,21 +161,33 @@
 #' \item \code{"unknown"} (quite misleading name: no explicit
 #' encoding mark) -- strings are
 #' assumed to be in your platform's native (default) encoding.
+#' This can represent UTF-8 if you are an OS X user,
+#' or some 8-bit Windows codepage, for example.
+#' The native encoding used is characterized with
+#' the LC_CTYPE category, see \code{\link{Sys.getlocale}}.
 #' }
 #'
-#' Native strings often appear as result of inputing
+#' Native strings are results of inputing
 #' a string from keyboard or file. This makes sense: you operating
 #' system works in some encoding and provides \R with some data.
+#' 
 #' Each time when a \pkg{stringi} function encounters a native string,
 #' it assumes that data should be translated from the default
 #' encoding, i.e. the one returned by \code{\link{stri_enc_get}}
-#' (default encoding should only be changed if autodetect fails
+#' (unless you know what you are doing,
+#' the default encoding should only be changed if autodetect fails
 #' on \pkg{stringi} load).
 #'
 #' Functions which allow \code{"bytes"} encoding markings are very rare in \pkg{stringi},
 #' and were carefully selected. These are: \code{\link{stri_enc_toutf8}}
 #' (with argument \code{is_unknown_8bit=TRUE}), \code{\link{stri_enc_toascii}},
 #' and \code{\link{stri_encode}}.
+#' 
+#' Finally, note that R lets strings in ASCII, UTF-8, and your platform's
+#'    native encoding coexist peacefully. Character vector output
+#'    with \code{\link{print}}, \code{\link{cat}} etc.
+#'    silently reencodes each string so that it can be properly
+#'    shown e.g. in the console.
 #'
 #' @section Encoding Conversion:
 #'
@@ -204,7 +226,7 @@
 #' Encoding detection is always an imprecise operation and
 #' needs a considerable amount of data. However, in case of some
 #' encodings (like UTF-8, ASCII, or UTF-32) a ``false positive'' byte
-#' sequence is quite rare (statistically).
+#' sequence is quite rare (statistically speaking).
 #'
 #' Check out \code{\link{stri_enc_detect}} and
 #' \code{\link{stri_enc_detect2}} (among others) for useful
