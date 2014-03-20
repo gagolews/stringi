@@ -42,9 +42,15 @@
  * @param opts_regex list
  *
  * @version 0.1-?? (Marcin Bujarski)
- * @version 0.1-?? (Marek Gagolewski) - use StriContainerUTF16
- * @version 0.1-?? (Marek Gagolewski) - use StriContainerUTF16's vectorization
- * @version 0.1-?? (Marek Gagolewski, 2013-06-18) use StriContainerRegexPattern + opts_regex
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-18)
+ *          use StriContainerRegexPattern + opts_regex
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {

@@ -38,8 +38,9 @@ src-x64/
 *.out
 cache-knitr/
 
-# benchmark results
+# benchmark results and data
 devel/benchmarks/results_*
 devel/benchmarks/figure
 devel/benchmarks/report.md
 devel/benchmarks/report.html
+devel/benchmarks/test1.csv.gz
