@@ -50,15 +50,6 @@ comparisons, where \eqn{N} is the length of \code{str}.
 Interestingly, our benchmarks indicate that
 \code{stri_order} is most often faster that \R's
 \code{order}.
-
-** TO DO: CORRECT THIS ** Missing values are always put at
-the end of a character vector.
-
-\code{stri_sort} is a `black sheep` in \pkg{stringi}: it
-does not always return UTF-8-encoded strings. ** TO DO:
-REIMPLEMENT ** Moreover, it preserves many input object's
-attributes. This is because it is defined as
-\code{str[stri_order(str, decreasing, opts_collator)]}.
 }
 \examples{
 \dontrun{

@@ -94,9 +94,8 @@
 #' (e.g. \code{\link{names}}, \code{\link{dim}}, etc.).
 #' This is generally because
 #' of advanced vectorization and for efficiency reasons.
-#' Currently, there is only one exception to this rule:
-#' the \code{\link{stri_sort}} function.
-#' Thus, if this is needed, please remember to copy important attributes manually
+#' Thus, if arguments' preserving is needed,
+#' please remember to copy important attributes manually
 #' or use e.g. the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 #'
 #' @name stringi-arguments

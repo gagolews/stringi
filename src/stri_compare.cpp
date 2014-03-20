@@ -336,6 +336,7 @@ struct StriSortComparer {
  * @param decreasing single logical value
  * @param na_last single logical value
  * @param collator_opts passed to stri__ucol_open()
+ * @param type internal, 1 for order, 2 for sort
  * @return integer vector (permutation)
  *
  * @version 0.1-?? (Marek Gagolewski)
@@ -353,12 +354,20 @@ struct StriSortComparer {
  *          single function for cmp with and witout collation;
  *          new param: na_last
  */
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP collator_opts)
+SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
+   SEXP collator_opts, SEXP type)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    na_last   = stri_prepare_arg_logical_1(na_last, "na_last");
    str       = stri_prepare_arg_string(str, "str"); // prepare string argument
-
+   
+   // type is an internal arg -- check manually
+   if (!Rf_isInteger(type) || LENGTH(type) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+   int _type = INTEGER(type)[0];
+   if (_type < 1 || _type > 2)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+      
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
 
@@ -380,7 +389,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP collator_opts)
       else if (na_last_int != NA_LOGICAL)
          NA_pos.push_back(i);
    }
-   order.resize(k);
+   order.resize(k); // this should be faster than creating a separate deque (not tested)
 
 
    // TO DO: collation-based cmp: think of using sort keys...
@@ -391,29 +400,52 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP collator_opts)
 
    
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
-   int* ret_tab = INTEGER(ret);
-   
-   R_len_t j = 0;
-   if (na_last_int != NA_LOGICAL && !na_last_int) {
-      // put NAs first
-      for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+   if (_type == 1) {
+      // order
+      PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
+      int* ret_tab = INTEGER(ret);
+      
+      R_len_t j = 0;
+      if (na_last_int != NA_LOGICAL && !na_last_int) {
+         // put NAs first
+         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+            ret_tab[j] = (*it)+1; // 1-based indices
+      }
+      
+      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
          ret_tab[j] = (*it)+1; // 1-based indices
+      
+      if (na_last_int != NA_LOGICAL && na_last_int) {
+         // put NAs last
+         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+            ret_tab[j] = (*it)+1; // 1-based indices
+      }
    }
-   
-   for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
-      ret_tab[j] = (*it)+1; // 1-based indices
-   
-   if (na_last_int != NA_LOGICAL && na_last_int) {
-      // put NAs last
-      for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-         ret_tab[j] = (*it)+1; // 1-based indices
+   else {
+      // sort
+      PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
+      R_len_t j = 0;
+      if (na_last_int != NA_LOGICAL && !na_last_int) {
+         // put NAs first
+         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+            SET_STRING_ELT(ret, j, NA_STRING);
+      }
+      
+      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+         SET_STRING_ELT(ret, j, str_cont.toR(*it));
+      
+      if (na_last_int != NA_LOGICAL && na_last_int) {
+         // put NAs last
+         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+            SET_STRING_ELT(ret, j, NA_STRING);
+      }
    }
 
    if (col) {
       ucol_close(col);
       col = NULL;
    }
+
    UNPROTECT(1);
    return ret;
 
