@@ -153,6 +153,7 @@ class StriContainerUTF16 : public StriContainerBase {
          str[i%n].setTo(s); // in fact, "%n" is not necessary
       }
 
+      // @QUESTION: separate StriContainerUTF16_indexable?
       void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
 };
 

@@ -23,7 +23,7 @@
    * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8.
 
-   * BUGFIX: possible memory leaks in StriContainerUTF8.
+   * BUGFIX: possible memory leaks in StriContainerUTF8 and StriContainerUTF16.
 
    * BUGFIX: stri_order and stri_cmp could return incorrect results
        for opts_collator=NA.

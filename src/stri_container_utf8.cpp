@@ -85,7 +85,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
       
 #define  CLEANUP_FAILURE_StriContainerUTF8 \
    { \
-      delete [] this->str; \
+      if (this->str) delete [] this->str; \
       this->str = NULL; \
       CLEANUP_NORMAL_StriContainerUTF8 \
    }
@@ -100,6 +100,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                // ASCII or UTF-8 - ultra fast
                this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                // the same is done for native encoding && ucnvNative_isUTF8
+               
+               // @TODO: detect BOMs
+               // @TODO: use macro (here & ucnvNative_isUTF8 below)
             }
             else if (IS_BYTES(curs)) {
                // "bytes encoding" is not allowed except
@@ -120,6 +123,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                   if (!ucnvNative) {
                      ucnvNative = stri__ucnv_open((char*)NULL);
                      UErrorCode status = U_ZERO_ERROR;
+                     // @NOTE: ucnv_getType == UTF8 doesn't work here
                      const char* ucnv_name = ucnv_getName(ucnvNative, &status);
                      if (U_FAILURE(status)) {
                         CLEANUP_FAILURE_StriContainerUTF8
@@ -131,6 +135,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                   // an "unknown" (native) encoding may be set to UTF-8 (speedup)
                   if (ucnvNative_isUTF8) {
                      // UTF-8 - ultra fast
+                     
+                     // @TODO: use macro
                      this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                      continue;
                   }
@@ -305,7 +311,7 @@ SEXP StriContainerUTF8::toR() const
 /** Export string to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
  *  @param i index [with recycle]
- * @return CHARSXP
+ *  @return CHARSXP
  */
 SEXP StriContainerUTF8::toR(R_len_t i) const
 {
@@ -323,6 +329,10 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
 
 
 
+
+/* ***********************************************************************
+                  StriContainerUTF8_indexable
+   *********************************************************************** */
 
 
 /** Convert BACKWARD UChar32-based index to UTF-8 based

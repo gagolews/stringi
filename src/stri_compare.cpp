@@ -392,7 +392,6 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
    // TO DO: collation-based cmp: think of using sort keys...
    // however, now it's already very fast.
 
-   // check if already sorted - if not - sort!
    StriSortComparer comp(&str_cont, col, decr);
    for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
       if (!comp(order[i], order[i+1])) {
