@@ -134,6 +134,13 @@ test_that("stri_cmp_codepoints", {
 
 
 test_that("stri_order", {
+   
+   expect_equivalent(stri_order(rep(NA, 5)), 1:5)
+   expect_equivalent(stri_order(rep(NA, 5), na_last=FALSE), 1:5)
+   expect_equivalent(stri_order(rep(NA, 5), na_last=NA), integer(0))
+   expect_equivalent(stri_order(c(NA, "b", NA, "a")), c(4L, 2L, 1L, 3L))
+   expect_equivalent(stri_order(c(NA, "b", NA, "a"), na_last=FALSE), c(1L, 3L, 4L, 2L))
+   expect_equivalent(stri_order(c(NA, "b", NA, "a"), na_last=NA),    c(4L, 2L))
 
    expect_equivalent(stri_order(character(0)), integer(0))
    expect_equivalent(stri_order(LETTERS), 1:length(LETTERS))
@@ -142,8 +149,8 @@ test_that("stri_order", {
    expect_equivalent(stri_order(rev(LETTERS)), rev(stri_order(LETTERS)))
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
-   expect_equivalent(stri_order(c("hladny", "chladny"), F, stri_opts_collator(locale="pl_PL")),2:1)
-   expect_equivalent(stri_order(c("hladny", "chladny"), F, stri_opts_collator(locale="sk_SK")),1:2)
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts=stri_opts_collator(locale="pl_PL")),2:1)
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts=stri_opts_collator(locale="sk_SK")),1:2)
 
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6))
 })
@@ -164,7 +171,8 @@ test_that("stri_order [codepoints]", {
 test_that("stri_sort", {
 
    expect_equivalent(stri_sort(character(0)), character(0))
-   expect_equivalent(stri_sort(NA),NA)
+   #expect_equivalent(stri_sort(NA),character(0))
+   expect_equivalent(stri_sort(c("b", NA, "a", NA)), c("a", "b"))
    expect_equivalent(stri_sort(LETTERS[sample(length(LETTERS))]), LETTERS)
    expect_equivalent(stri_sort(rev(LETTERS)), LETTERS)
    expect_equivalent(stri_sort(rev(letters)), letters)

@@ -243,8 +243,6 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' Interestingly, our benchmarks indicate that \code{stri_order}
 #' is most often faster that \R's \code{order}.
 #'
-#' ** TO DO: CORRECT THIS ** Missing values are always put at the end of a character vector.
-#'
 #' \code{stri_sort} is a `black sheep` in \pkg{stringi}:
 #' it does not always return UTF-8-encoded strings.
 #' ** TO DO: REIMPLEMENT **
@@ -256,6 +254,10 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' @param decreasing single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
 #'    or nonincreasing (\code{TRUE})?
+#' @param na_last single logical value controlling the treatment of \code{NA}s
+#'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
+#'    at the end; if \code{FALSE}, they are put first;
+#'    if \code{NA}, then they are removed from the output.
 #' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
 #' with Collator's options, or \code{NA} for dummy Unicode code point comparison
 #'
@@ -274,13 +276,13 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 #' }
-stri_order <- function(str, decreasing=FALSE, opts_collator=list()) {
-   .Call("stri_order", str, decreasing, opts_collator, PACKAGE="stringi")
+stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=list()) {
+   .Call("stri_order", str, decreasing, na_last, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, opts_collator=list()) {
-   str[stri_order(str, decreasing, opts_collator)]
+stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) {
+   str[stri_order(str, decreasing, na_last, opts_collator)]
 }

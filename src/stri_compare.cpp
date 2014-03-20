@@ -35,6 +35,7 @@
 #include "stri_container_utf16.h"
 #include <unicode/ucol.h>
 #include <vector>
+#include <deque>
 #include <algorithm>
 
 
@@ -309,26 +310,21 @@ struct StriSortComparer {
 
    bool operator() (int a, int b) const
    {
-      // a and b are 1-based array indices (for R)
-      
       if (col) {
          UErrorCode status = U_ZERO_ERROR;
          int ret = (int)ucol_strcollUTF8(col,
-            cont->get(a-1).c_str(), cont->get(a-1).length(),
-            cont->get(b-1).c_str(), cont->get(b-1).length(), &status);
+            cont->get(a).c_str(), cont->get(a).length(),
+            cont->get(b).c_str(), cont->get(b).length(), &status);
          if (U_FAILURE(status))
             throw StriException(status);
-         if (decreasing) return (ret > 0);
-         else return (ret < 0);
+         return (decreasing)?(ret > 0):(ret < 0);
       }
       else {
          int ret = stri__cmp_codepoints(
-            cont->get(a-1).c_str(), cont->get(a-1).length(),
-            cont->get(b-1).c_str(), cont->get(b-1).length()
+            cont->get(a).c_str(), cont->get(a).length(),
+            cont->get(b).c_str(), cont->get(b).length()
          );
-         
-         if (decreasing) return (ret > 0);
-         else return (ret < 0);
+         return (decreasing)?(ret > 0):(ret < 0);
       }
    }
 };
@@ -338,6 +334,7 @@ struct StriSortComparer {
  *
  * @param str character vector
  * @param decreasing single logical value
+ * @param na_last single logical value
  * @param collator_opts passed to stri__ucol_open()
  * @return integer vector (permutation)
  *
@@ -353,57 +350,64 @@ struct StriSortComparer {
  *          using ucol_strcollUTF8 again, as we now require ICU >= 50;
  *          performance difference only observed for sorted vectors
  *          (UTF-8: gain, 8bit: loss);
- *          single function for cmp with and witout collation
+ *          single function for cmp with and witout collation;
+ *          new param: na_last
  */
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts)
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP collator_opts)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   na_last   = stri_prepare_arg_logical_1(na_last, "na_last");
+   str       = stri_prepare_arg_string(str, "str"); // prepare string argument
 
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
 
 
    STRI__ERROR_HANDLER_BEGIN
+   
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   
+   int na_last_int = INTEGER(na_last)[0];
+   
+   deque<int> NA_pos;
+   vector<int> order(vectorize_length);
 
-   // count NA values
-   R_len_t countNA = 0;
-   for (R_len_t i=0; i<vectorize_length; ++i)
-      if (str_cont.isNA(i))
-         ++countNA;
-
-   // NAs must be put at end (note the stable sort behavior!)
-   // TO DO: let the user decide how to play with NAs [end, begin, remove]
-   int* order = INTEGER(ret);
-   R_len_t k1 = 0;
-   R_len_t k2 = vectorize_length-countNA;
+   R_len_t k = 0;
    for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (str_cont.isNA(i))
-         order[k2++] = i+1; // 1-based indices (for R)
-      else
-         order[k1++] = i+1; // 1-based indices (for R)
+      if (!str_cont.isNA(i))
+         order[k++] = i;
+      else if (na_last_int != NA_LOGICAL)
+         NA_pos.push_back(i);
    }
+   order.resize(k);
 
 
    // TO DO: collation-based cmp: think of using sort keys...
    // however, now it's already very fast.
 
    StriSortComparer comp(&str_cont, col, decr);
-   for (R_len_t i = 0; i<vectorize_length-countNA-1; ++i) {
-      if (!comp(order[i], order[i+1])) {
-         // the vector is not ordered => sort!
-         std::vector<int> data;
-         data.assign(order, order+vectorize_length-countNA);
-         std::stable_sort(data.begin(), data.end(), comp);
-         R_len_t j = 0;
-         for (std::vector<int>::iterator it=data.begin(); it!=data.end(); ++it, ++j)
-            order[j] = *it;
-         break; // sorted, finish
-      }
+   std::stable_sort(order.begin(), order.end(), comp);
+
+   
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
+   int* ret_tab = INTEGER(ret);
+   
+   R_len_t j = 0;
+   if (na_last_int != NA_LOGICAL && !na_last_int) {
+      // put NAs first
+      for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         ret_tab[j] = (*it)+1; // 1-based indices
+   }
+   
+   for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+      ret_tab[j] = (*it)+1; // 1-based indices
+   
+   if (na_last_int != NA_LOGICAL && na_last_int) {
+      // put NAs last
+      for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         ret_tab[j] = (*it)+1; // 1-based indices
    }
 
    if (col) {

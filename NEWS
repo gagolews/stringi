@@ -15,6 +15,9 @@
    * Significant performance improvements in stri_join, stri_flatten,
         stri_cmp, stri_trans_to*, ...t.b.d....
 
+   * stri_order and stri_sort now have an additional argument
+        `na_last` (defaults to TRUE and NA, respectively)
+
    * Added 3rd mirror site for icudt.
 
    * U_MISSING_RESOURCE_ERROR message in StriException now suggests

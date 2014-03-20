@@ -97,7 +97,7 @@ UCollator*  stri__ucol_open(SEXP collator_opts);
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts);
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type);
 
-SEXP stri_order(SEXP str, SEXP decreasing, SEXP collator_opts);
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP collator_opts);
 
 
 // ICU_settings.cpp:
