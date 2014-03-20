@@ -3,9 +3,10 @@
 \alias{stri_sort}
 \title{Ordering Permutation and Sorting}
 \usage{
-stri_order(str, decreasing = FALSE, opts_collator = list())
+stri_order(str, decreasing = FALSE, na_last = TRUE,
+  opts_collator = list())
 
-stri_sort(str, decreasing = FALSE, opts_collator = list())
+stri_sort(str, decreasing = FALSE, na_last = NA, opts_collator = list())
 }
 \arguments{
   \item{str}{character vector}
@@ -13,6 +14,12 @@ stri_sort(str, decreasing = FALSE, opts_collator = list())
   \item{decreasing}{single logical value; should the sort
   order be nondecreasing (\code{FALSE}, default) or
   nonincreasing (\code{TRUE})?}
+
+  \item{na_last}{single logical value controlling the
+  treatment of \code{NA}s in \code{str}. If \code{TRUE},
+  then missing values in \code{str} are put at the end; if
+  \code{FALSE}, they are put first; if \code{NA}, then they
+  are removed from the output.}
 
   \item{opts_collator}{a named list as generated with
   \code{\link{stri_opts_collator}} with Collator's options,
