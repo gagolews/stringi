@@ -12,23 +12,16 @@ than one may think at the first glance.
   By default, all \code{stri_*_fixed} functions in
   \pkg{stringi} utilize \pkg{ICU}'s \code{StringSearch}
   engine -- which is a language-aware string search
-  algorithm. Note that a bitwise match will not give
-  correct results in cases of: \enumerate{ \item accented
-  letters; \item conjoined letters; \item ignorable
-  punctuation; \item ignorable case. } The matches are
-  defined using the notion of ``canonical equivalence''
-  between strings.
+  algorithm. The matches are defined by using the notion of
+  ``canonical equivalence'' between strings.
 
-  This string search engines uses a modified version of the
-  Boyer-Moore algorithm (cf. Werner, 1999), with time
-  complexity of O(n+p) (\code{n == length(str)}, \code{p ==
-  length(pattern)}). According to the ICU User Guide, the
-  Boyer-Moore searching algorithm is based on automata or
-  combinatorial properties of strings and pre-processes the
-  pattern and known to be much faster than the linear
-  search when search pattern length is longer. The
-  Boyer-Moore search is faster than the linear search when
-  the pattern text is longer than 3 or 4 characters.
+  The ICU documentation claims that this string search
+  engine uses a modified version of the Boyer-Moore
+  algorithm (cf. Werner, 1999), with time complexity of
+  O(n+p) (\code{n == length(str)}, \code{p ==
+  length(pattern)}). However, in ICU 52.1 source code we
+  have found the following: \code{#define BOYER_MOORE 0},
+  see src/icu52/i18n/usearch.cpp.
 
   Tuning the Collator's parameters allows you to perform
   correct matching that properly takes into account
@@ -47,7 +40,11 @@ than one may think at the first glance.
   length(str)}, \code{p == length(pattern)}) [Naive
   implementation - to be upgraded in some future version of
   \pkg{stringi}]. For a natural language, non-English text
-  this is, however, not what you probably want.
+  this is, however, not what you probably want. It is
+  because a bitwise match will not give correct results in
+  cases of: \enumerate{ \item accented letters; \item
+  conjoined letters; \item ignorable punctuation; \item
+  ignorable case. }
 
   You should note that, however, the conversion of input
   data to Unicode is done as usual.

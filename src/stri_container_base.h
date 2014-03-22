@@ -39,9 +39,17 @@
 
 /**
  * Base class for StriContainers
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - removed ucnvNative, ucnvLatin1 (not needed per-object)
- * @version 0.3 (Marek Gagolewski) - removed enc array
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          removed ucnvNative, ucnvLatin1 (not needed per-object)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          removed enc array
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
+ *          added sexp field
  */
 class StriContainerBase {
 
@@ -49,16 +57,17 @@ class StriContainerBase {
 
       R_len_t n;                 ///< number of strings (size of \code{str})
       R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
+      SEXP sexp;                 ///< 
 
 #ifndef NDEBUG
       bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
 #endif
 
       StriContainerBase();
-      //StriContainerBase(StriContainerBase& container); // use default (shallow)
-      //~StriContainerBase(); // use default (shallow)
+      // StriContainerBase(StriContainerBase& container); // use default (shallow copy)
+      //~StriContainerBase(); // use default
 
-      void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle);
+      void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle, SEXP sexp=NULL);
 
 
    public:
