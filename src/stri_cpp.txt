@@ -11,6 +11,7 @@ stri_container_regex.cpp \
 stri_container_usearch.cpp \
 stri_container_utf16.cpp \
 stri_container_utf8.cpp \
+stri_container_utf8_indexable.cpp \
 stri_encoding_conversion.cpp \
 stri_encoding_detection.cpp \
 stri_encoding_management.cpp \

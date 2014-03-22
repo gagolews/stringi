@@ -31,6 +31,8 @@
    * BUGFIX: stri_order and stri_cmp could return incorrect results
        for opts_collator=NA.
 
+   * BUGFIX: stri_sort did not guarantee to return strings in UTF-8
+
    * t.b.d.
 
 

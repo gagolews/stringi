@@ -179,6 +179,10 @@ class String8  {
          return !this->m_str;
       }
 
+      inline bool isReadOnly() const {
+         return !this->m_memalloc;
+      }
+
       /** return the char buffer */
       inline const char* c_str() const
       {

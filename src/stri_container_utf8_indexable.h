@@ -30,53 +30,45 @@
  */
 
 
-#include "stri_stringi.h"
-#include "stri_container_base.h"
+#ifndef __stri_container_utf8_indexable_h
+#define __stri_container_utf8_indexable_h
 
-
-/**
- * Default constructor
- *
- */
-StriContainerBase::StriContainerBase()
-{
-   this->n = 0;
-   this->nrecycle = 0;
-   this->sexp = (SEXP)NULL;
-#ifndef NDEBUG
-   this->isShallow = true;
-#endif
-}
+#include "stri_container_utf8.h"
 
 
 
 /**
- * Initialize object data
- *
+ * A class to handle conversion between R character vectors and UTF-8 string vectors,
+ * with UChar32 to UTF-8 indices translation
+ * 
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
+ *          separated from StriContainerUTF8
  */
-void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowrecycle, SEXP _sexp)
-{
-#ifndef NDEBUG
-   if (this->n != 0 || this->nrecycle != 0 || this->sexp != (SEXP)NULL)
-      throw StriException("StriContainerBase::init_Base(...): already initialized");
-   this->isShallow = _shallowrecycle;
-#endif
+class StriContainerUTF8_indexable : public StriContainerUTF8 {
+   
+   private:
+   
+      // the following are used in UChar32_to_UTF8_index_back
+      // and UChar32_to_UTF8_index_fwd to speed up computations
+      // on the same strings
+      R_len_t last_ind_fwd_codepoint;
+      R_len_t last_ind_fwd_utf8;
+      const char* last_ind_fwd_str;
+      R_len_t last_ind_back_codepoint;
+      R_len_t last_ind_back_utf8;
+      const char* last_ind_back_str;
+   
+   public:
+   
+      StriContainerUTF8_indexable();
+      StriContainerUTF8_indexable(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
+      StriContainerUTF8_indexable(StriContainerUTF8_indexable& container);
+      StriContainerUTF8_indexable& operator=(StriContainerUTF8_indexable& container);
+   
+      void UTF8_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
+      R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
+      R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);
+};
 
-   if (_n == 0 || _nrecycle == 0) {
-      this->nrecycle = 0;
-      this->n = 0;
-      this->sexp = _sexp;
-   }
-   else {
-      this->nrecycle = _nrecycle;
-      this->n = (_shallowrecycle)?_n:_nrecycle;
-      this->sexp = _sexp;
-
-#ifndef NDEBUG
-   if (this->n < _n)
-      throw StriException("StriContainerBase::init_Base(...): this->n < n");
-   if (this->n > this->nrecycle)
-      throw StriException("StriContainerBase::init_Base(...): this->n > this->nrecycle");
 #endif
-   }
-}
