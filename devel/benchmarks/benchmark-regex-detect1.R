@@ -1,4 +1,4 @@
-benchmark_description <- "regex lookup for words with at least 3 consecutive digits"
+benchmark_description <- "regex lookup for words with at least 3 consecutive digits [Latin&Polish letters, digits]"
 
 benchmark_do <- function() {
    library('stringi')

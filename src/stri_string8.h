@@ -50,7 +50,7 @@
  * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
  *          Fixed array over-runs detected with valgrind
  * 
- * @version 0.2-1  (Marek Gagolewski, 2014-04-15)
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-15)
  *          m_str == NULL now denotes a missing value,
  *          isNA(), initialize() methods added
  */
