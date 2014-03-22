@@ -3,6 +3,13 @@
 
 * 0.2-1 (XXXX-XX-XX)
 
+   * [IMPORTANT CHANGE] stri_sort by default now does not include NAs
+     in output vectors, for compatibility with sort(). Moreover, none
+     of an input vector's attributes are preserved.
+
+   * stri_order and stri_sort now have an additional argument
+        `na_last` (defaults to TRUE and NA, respectively)
+
    * New functions and binary operators for string comparison:
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
        stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
@@ -14,9 +21,6 @@
 
    * Significant performance improvements in stri_join, stri_flatten,
         stri_cmp, stri_trans_to*, ...t.b.d....
-
-   * stri_order and stri_sort now have an additional argument
-        `na_last` (defaults to TRUE and NA, respectively)
 
    * Added 3rd mirror site for icudt.
 

@@ -24,3 +24,18 @@ system.time({
    words <- words[stri_length(words) > 0]
    words <- sort(words)
 })
+
+
+
+x <- enc2native(str_join(str_dup("kawa", 100000), "lawa"))
+whatbegin <- enc2native("kawa")
+whatend   <- enc2native("lawa")
+microbenchmark(
+   stri_detect_fixed(x, whatend),
+   stri_detect_regex(x, whatend),
+   stri_detect_fixed(x, whatend, NA),
+   stri_detect_regex(x, whatend, list(literal=TRUE)),
+   grepl(whatend, x),
+   grepl(whatend, x, fixed=TRUE),
+   grepl(whatend, x, perl=TRUE)
+)

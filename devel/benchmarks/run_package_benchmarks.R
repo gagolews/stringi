@@ -2,7 +2,7 @@
 # (c) 2014, Marek Gagolewski
 
 
-benchmarks_wildcard <- '*'
+benchmarks_wildcard <- 'search*'
 
 library('stringi')
 library('stringr')
