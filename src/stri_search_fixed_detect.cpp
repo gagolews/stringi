@@ -35,6 +35,8 @@
 #include "stri_container_utf16.h"
 #include "stri_container_usearch.h"
 #include "stri_container_bytesearch.h"
+#include <unicode/uregex.h>
+
 
 /**
  * Detect if a pattern occurs in a string [fast but dummy bitewise compare]
@@ -43,16 +45,23 @@
  * @param pattern character vector
  * @return logical vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8, bugfix - loop could go to far
- * @version 0.3 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly, use StriContainerByteSearch
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *    use StriContainerUTF8, bugfix - loop could go to far
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *    corrected behavior on empty str/pattern
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *    make StriException-friendly, use StriContainerByteSearch
  */
 SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-
+   
+   
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -77,6 +86,70 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+   
+   
+//   Version 2 -- slower for long strings
+//   UText *uts = NULL;
+//   UText *utp = NULL;
+//   URegularExpression* matcher = NULL;
+//   
+//   STRI__ERROR_HANDLER_BEGIN
+//   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+//   StriContainerUTF8 str_cont(str, vectorize_length);
+//   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+//
+//   SEXP ret;
+//   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+//   int* ret_tab = LOGICAL(ret);
+//   
+//
+//   const String8* last_s = NULL;
+//   const String8* last_p = NULL;
+//   UErrorCode err = U_ZERO_ERROR;
+//
+//   for (R_len_t i = pattern_cont.vectorize_init();
+//         i != pattern_cont.vectorize_end();
+//         i = pattern_cont.vectorize_next(i))
+//   {
+//      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+//         ret_tab[i] = NA_LOGICAL,
+//         ret_tab[i] = FALSE)
+//
+//      const String8* cur_s = &(str_cont.get(i));
+//      const String8* cur_p = &(pattern_cont.get(i));
+//
+//      if (last_p != cur_p) {
+//         last_p = cur_p;
+//         if (matcher) uregex_close(matcher);
+//         utp = utext_openUTF8(utp, last_p->c_str(), last_p->length(), &err);
+//         matcher = uregex_openUText(utp, UREGEX_LITERAL, NULL, &err);
+//         if (U_FAILURE(err))
+//            throw StriException(MSG__REGEXP_FAILED);
+//      }
+//
+//      if (last_s != cur_s) {
+//         last_s = cur_s;
+//         uts = utext_openUTF8(uts, last_s->c_str(), last_s->length(), &err);
+//      }
+//
+//      uregex_setUText(matcher, uts, &err);
+//      uregex_reset(matcher, 0, &err);
+//      int found = (int)uregex_find(matcher, -1, &err);
+//      if (U_FAILURE(err))
+//         throw StriException(MSG__REGEXP_FAILED);
+//      LOGICAL(ret)[i] = found;
+//   }
+//
+//   if (matcher) { uregex_close(matcher); matcher=NULL; }
+//   if (uts) { utext_close(uts); uts=NULL; }
+//   if (utp) { utext_close(utp); utp=NULL; }
+//   UNPROTECT(1);
+//   return ret;
+//   STRI__ERROR_HANDLER_END({
+//      if (matcher) { uregex_close(matcher); matcher=NULL; }
+//      if (uts) { utext_close(uts); uts=NULL; }
+//      if (utp) { utext_close(utp); utp=NULL; }
+//   })
 }
 
 
@@ -90,9 +163,13 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return logical vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.3 (Marek Gagolewski, 2013-06-22) make StriException-friendly, use StriContainerUStringSearch
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *    corrected behavior on empty str/pattern
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
+ *    make StriException-friendly, use StriContainerUStringSearch
  */
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {

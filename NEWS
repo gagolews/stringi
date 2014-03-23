@@ -16,8 +16,8 @@
 
    * stri_subst_na - t.b.d.
 
-   * Performance improvements in StriContainerUTF8
-        (they affect many other functions).
+   * Performance improvements in StriContainerUTF8 and StriContainerUTF16
+        (they affect most other functions).
 
    * Significant performance improvements in stri_join, stri_flatten,
         stri_cmp, stri_trans_to*, ...t.b.d....

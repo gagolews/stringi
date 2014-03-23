@@ -166,6 +166,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                   }
 //                  tmpbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
 //                  tmpbuf = new UChar[tmpbufsize];
+                  // UCNV_GET_MAX_BYTES_FOR_STRING calculates the size 
+                  // of a buffer for conversion from Unicode to a charset. 
+                  // this may be overestimated
                   outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
                   outbuf = new char[outbufsize];
                }
@@ -193,6 +196,21 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                }
 
                // UTF-16 -> UTF-8
+// // this is not faster than u_strToUTF8
+//               const UChar* tmpbuf = tmp.getBuffer();
+//               int tmpbufsize = tmp.length();
+//               // tmpbuf is a well-formed UTF-16 string          
+//               int i1 = 0, outrealsize = 0;
+//               UChar32 c;
+//               while (i1 < tmpbufsize) {
+//                  U16_NEXT_UNSAFE(tmpbuf, i1, c);
+//                  U8_APPEND_UNSAFE(outbuf, outrealsize, c);
+//#ifndef NDEBUG
+//               if (outrealsize > outbufsize)
+//                  throw StriException(U_BUFFER_OVERFLOW_ERROR);
+//#endif
+//               }
+
                int outrealsize = 0;
                u_strToUTF8(outbuf, outbufsize, &outrealsize,
                		tmp.getBuffer(), tmp.length(), &status);

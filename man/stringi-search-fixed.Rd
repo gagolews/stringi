@@ -15,14 +15,6 @@ than one may think at the first glance.
   algorithm. The matches are defined by using the notion of
   ``canonical equivalence'' between strings.
 
-  The ICU documentation claims that this string search
-  engine uses a modified version of the Boyer-Moore
-  algorithm (cf. Werner, 1999), with time complexity of
-  O(n+p) (\code{n == length(str)}, \code{p ==
-  length(pattern)}). However, in ICU 52.1 source code we
-  have found the following: \code{#define BOYER_MOORE 0},
-  see src/icu52/i18n/usearch.cpp.
-
   Tuning the Collator's parameters allows you to perform
   correct matching that properly takes into account
   accented letters, conjoined letters, and ignorable
