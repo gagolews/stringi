@@ -73,7 +73,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
       char*  outbuf = NULL;
 //      int    tmpbufsize = -1;
 //      UChar* tmpbuf = NULL;
-      
+
 #define  CLEANUP_NORMAL_StriContainerUTF8 \
    { \
       if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; } \
@@ -82,14 +82,14 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
       if (outbuf) { delete [] outbuf; outbuf = NULL; }     \
       /*if (tmpbuf) { delete [] tmpbuf; tmpbuf = NULL; }*/ \
    }
-      
+
 #define  CLEANUP_FAILURE_StriContainerUTF8 \
    { \
       if (this->str) delete [] this->str; \
       this->str = NULL; \
       CLEANUP_NORMAL_StriContainerUTF8 \
    }
-      
+
       for (R_len_t i=0; i<nrstr; ++i) {
          SEXP curs = STRING_ELT(rstr, i);
          if (curs == NA_STRING) {
@@ -100,7 +100,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                // ASCII or UTF-8 - ultra fast
                this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                // the same is done for native encoding && ucnvNative_isUTF8
-               
+
                // @TODO: detect BOMs
                // @TODO: use macro (here & ucnvNative_isUTF8 below)
             }
@@ -131,49 +131,49 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                      }
                      ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
                   }
-                  
+
                   // an "unknown" (native) encoding may be set to UTF-8 (speedup)
                   if (ucnvNative_isUTF8) {
                      // UTF-8 - ultra fast
-                     
+
                      // @TODO: use macro
                      this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
                      continue;
                   }
-               
+
                   ucnvCurrent = ucnvNative;
                }
-               
+
 //               if (!ucnvUTF8) {
 //                  ucnvUTF8 = stri__ucnv_open("UTF-8");
 //               }
-               
+
 #ifndef NDEBUG
 //               if ((tmpbuf == 0) != (outbuf == 0))
 //                  throw StriException(MSG__INTERNAL_ERROR);
 #endif
-               
+
                if (!outbuf) {
                   // calculate max string length
                   R_len_t maxlen = LENGTH(curs);
-                  for (R_len_t z=i+1; z<nrstr; ++z) { 
+                  for (R_len_t z=i+1; z<nrstr; ++z) {
                      // start from the current string (this no need to re-encode for < i)
                      SEXP tmps = STRING_ELT(rstr, z);
-                     if ((tmps != NA_STRING) 
+                     if ((tmps != NA_STRING)
                            && !(IS_ASCII(tmps) || IS_UTF8(tmps) || IS_BYTES(tmps))
                            && (maxlen < LENGTH(tmps)))
                         maxlen = LENGTH(tmps);
                   }
 //                  tmpbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
 //                  tmpbuf = new UChar[tmpbufsize];
-                  // UCNV_GET_MAX_BYTES_FOR_STRING calculates the size 
-                  // of a buffer for conversion from Unicode to a charset. 
+                  // UCNV_GET_MAX_BYTES_FOR_STRING calculates the size
+                  // of a buffer for conversion from Unicode to a charset.
                   // this may be overestimated
                   outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
                   outbuf = new char[outbufsize];
                }
-               
-               
+
+
                // version 1: use ucnv's pivot buffer (slower than v2)
 //               UErrorCode status = U_ZERO_ERROR;
 //               int realsize = ucnv_toAlgorithmic(UCNV_UTF8, ucnvCurrent,
@@ -199,7 +199,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 // // this is not faster than u_strToUTF8
 //               const UChar* tmpbuf = tmp.getBuffer();
 //               int tmpbufsize = tmp.length();
-//               // tmpbuf is a well-formed UTF-16 string          
+//               // tmpbuf is a well-formed UTF-16 string
 //               int i1 = 0, outrealsize = 0;
 //               UChar32 c;
 //               while (i1 < tmpbufsize) {
@@ -305,14 +305,14 @@ StriContainerUTF8::~StriContainerUTF8()
 
 /** Export character vector to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
- * 
+ *
  *  Recycle rule is applied, so length == nrecycle
- * 
+ *
  * @return STRSXP
- * 
- * 
+ *
+ *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
  *    returns original CHARSXP if possible for increased performance
  */
@@ -328,7 +328,7 @@ SEXP StriContainerUTF8::toR() const
       }
       else if (curs->isReadOnly()) {
          // if ReadOnly, then surely in ASCII or UTF-8
-         SET_STRING_ELT(ret, i, STRING_ELT(sexp, i%n));
+         SET_STRING_ELT(ret, i, STRING_ELT(sexp, i%n)); // return original CHARSXP
       }
       else {
          SET_STRING_ELT(ret, i,
@@ -344,12 +344,12 @@ SEXP StriContainerUTF8::toR() const
 
 /** Export string to R
  *  THE OUTPUT IS ALWAYS IN UTF-8
- *  
+ *
  * @param i index [with recycle]
  * @return CHARSXP
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
  *    returns original CHARSXP if possible for increased performance
  */

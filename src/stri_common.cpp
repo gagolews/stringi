@@ -135,8 +135,8 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 /**
  *  Creates a character vector filled with NA_character_
  *
- * @param howmany length of the vector, \code{howmany >= 0}
- * @return a character vector of length \code{howmany}
+ * @param howmany length of the vector, howmany >= 0
+ * @return a character vector of length howmany
  *
  * @version 0.1-?? (Marek Gagolewski)
 */
@@ -160,8 +160,8 @@ SEXP stri__vector_NA_strings(R_len_t howmany)
 /**
  *  Creates a character vector filled with NA_integer_
  *
- *  @param howmany length of the vector, \code{howmany >= 0}
- *  @return a character vector of length \code{howmany}
+ *  @param howmany length of the vector, howmany >= 0
+ *  @return a character vector of length howmany
  *
  * @version 0.1-?? (Marek Gagolewski)
 */
@@ -185,8 +185,8 @@ SEXP stri__vector_NA_integers(R_len_t howmany)
 /**
  *  Creates a character vector filled with empty strings
  *
- *  @param howmany length of the vector, \code{howmany >= 0}
- *  @return a character vector of length \code{howmany}
+ *  @param howmany length of the vector, howmany >= 0
+ *  @return a character vector of length howmany
  *
  * @version 0.1-?? (Marek Gagolewski)
 */
@@ -210,14 +210,13 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
 
 /** Creates an empty R list
  *
- * @return the same as a call to \code{list()} in R
+ * @return the same as a call to list() in R
  *
  * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri__emptyList()
 {
-   SEXP ret = Rf_allocVector(VECSXP, 0);
-   return ret;
+   return Rf_allocVector(VECSXP, 0);
 }
 
 

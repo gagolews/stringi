@@ -48,7 +48,7 @@
  * @version 0.1-?? (Bartek Tartanus)
  * 
  * @version 0.1-?? (Marek Gagolewski)
- *    use StriContainerUTF8, bugfix - loop could go to far
+ *    use StriContainerUTF8, BUGFIX: the loop could go to far
  * 
  * @version 0.1-?? (Marek Gagolewski)
  *    corrected behavior on empty str/pattern

@@ -110,7 +110,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    R_len_t str_n = LENGTH(str);
    StriContainerUTF8 str_cont(str, str_n);
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_n));
 
 
    // STEP 1.
@@ -164,7 +164,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    }
 
    if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    
    STRI__ERROR_HANDLER_END(

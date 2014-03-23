@@ -53,13 +53,13 @@ using namespace std;
  *  if str or times is an empty vector then the result is an empty vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *                  use StriContainerUTF8's vectorization
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
  *                  use StriContainerInteger
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *                  make StriException friendly
 */
@@ -90,7 +90,7 @@ SEXP stri_dup(SEXP str, SEXP times)
    // Alloc buffer & result vector
    String8 buf(bufsize);
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    // STEP 3.
    // Duplicate
@@ -136,7 +136,7 @@ SEXP stri_dup(SEXP str, SEXP times)
    // STEP 4.
    // Clean up & finish
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -148,9 +148,9 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  * Vectorized over e1 and e2. Optimized for |e1| >= |e2|
  * (but no harm otherwise)
- * 
+ *
  * This is used by %+% operator in stringi R code.
- * 
+ *
  * @param e1 character vector
  * @param e2 character vector
  * @return character vector, res_i=s1_i + s2_i for |e1|==|e2|
@@ -159,10 +159,10 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8's vectorization
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
 */
@@ -197,7 +197,7 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
    // 2. Create buf & retval
    String8 buf(nchar);
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length)); // output vector
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length)); // output vector
 
    // 3. Set retval
    const String8* last_string_1 = NULL;
@@ -228,7 +228,7 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
    }
 
    // 4. Cleanup & finish
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -236,9 +236,9 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 
 
 /** Join and flatten two character vectors, no separator between elements but possibly with collapse
- * 
+ *
  * Vectorized over e1 and e2.
- * 
+ *
  * @param e1 character vector
  * @param e2 character vector
  * @param collapse single string or NULL
@@ -253,7 +253,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
-   
+
    if (isNull(collapse)) {
       // no collapse - used e.g. by %+% operator
       return stri_join2_nocollapse(e1, e2);
@@ -262,8 +262,8 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    collapse = stri_prepare_arg_string_1(collapse, "collapse");
    if (STRING_ELT(collapse, 0) == NA_STRING)
       return stri__vector_NA_strings(1);
-   
-   
+
+
    R_len_t e1_length = LENGTH(e1);
    R_len_t e2_length = LENGTH(e2);
    R_len_t vectorize_length = stri__recycling_rule(true, 2, e1_length, e2_length);
@@ -277,8 +277,8 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    StriContainerUTF8 collapse_cont(collapse, 1);
    R_len_t collapse_nbytes = collapse_cont.get(0).length();
    const char* collapse_s = collapse_cont.get(0).c_str();
-   
-   
+
+
    // find maximal length of the buffer needed:
    R_len_t nchar = 0;
    for (int i=0; i<vectorize_length; ++i) {
@@ -298,7 +298,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    {
       // not need to detect NAs - they already have been excluded
 
-      
+
       if (collapse_nbytes > 0 && i > 0) { // copy collapse (separator)
          memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_nbytes);
          last_buf_idx += collapse_nbytes;
@@ -314,11 +314,11 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
       memcpy(buf.data()+last_buf_idx, cur_string_2->c_str(), (size_t)cur_len_2);
       last_buf_idx += cur_len_2;
    }
-   
+
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, 1)); // output vector
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1)); // output vector
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), last_buf_idx, CE_UTF8));
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -327,7 +327,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 
 /**
  * Concatenate Character Vectors, possibly with collapse
- * 
+ *
  * @param strlist list of character vectors
  * @param sep single string
  * @param collapse single string or NULL
@@ -348,19 +348,19 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
    // no collapse-case is handled separately:
    if (isNull(collapse))
       return stri_join_nocollapse(strlist, sep);
-      
+
    // *result will surely be a single string*
 
    strlist = stri_prepare_arg_list_string(strlist, "...");
    R_len_t strlist_length = LENGTH(strlist);
    if (strlist_length <= 0) return stri__vector_empty_strings(0);
-   
+
    sep = stri_prepare_arg_string_1(sep, "sep");
    collapse = stri_prepare_arg_string_1(collapse, "collapse");
    if (STRING_ELT(sep, 0) == NA_STRING || STRING_ELT(collapse, 0) == NA_STRING) {
       return stri__vector_NA_strings(1);
    }
-   
+
    // * special cases: *
    if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
       // sep==empty string and 2 vectors --
@@ -380,16 +380,16 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
       if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
       if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
    }
-      
+
 
    STRI__ERROR_HANDLER_BEGIN
-   
+
    StriContainerListUTF8 strlist_cont(strlist, vectorize_length);
-   
+
    StriContainerUTF8 sep_cont(sep, 1); // definitely not NA
    const char* sep_s = sep_cont.get(0).c_str();
    R_len_t     sep_n = sep_cont.get(0).length();
-   
+
    StriContainerUTF8 collapse_cont(collapse, 1); // definitely not NA
    const char* collapse_s = collapse_cont.get(0).c_str();
    R_len_t     collapse_n = collapse_cont.get(0).length();
@@ -400,10 +400,10 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
       for (R_len_t j=0; j<strlist_length; ++j) {  // for each character vector  (horizontally)
          if (strlist_cont.get(j).isNA(i))
             return stri__vector_NA_strings(1);
-         
+
          buf_maxbytes += strlist_cont.get(j).get(i).length()+ ((j>0)?sep_n:0);
       }
-      
+
       if (i>0) buf_maxbytes += collapse_n;
    }
 
@@ -413,14 +413,14 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 
    for (R_len_t i=0; i<vectorize_length; ++i) {
       // there is no NA anywhere
-      
+
       if (collapse_n > 0 && i > 0) {
          memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_n);
          last_buf_idx += collapse_n;
       }
-         
+
       for (R_len_t j=0; j<strlist_length; ++j) {
-         
+
          if (sep_n > 0 && j > 0) {
             memcpy(buf.data()+last_buf_idx, sep_s, (size_t)sep_n);
             last_buf_idx += sep_n;
@@ -432,7 +432,7 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
          last_buf_idx += curstring_n;
       }
    }
-   
+
 #ifndef NDEBUG
    if (buf_maxbytes != last_buf_idx)
       throw StriException("stri_join_withcollapse: buffer overrun");
@@ -440,11 +440,11 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 
    // we are done
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), last_buf_idx, CE_UTF8));
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
-   
+
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
@@ -452,23 +452,23 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 
 /**
  * Concatenate Character Vectors, with no collapse
- * 
+ *
  * @param strlist list of character vectors
  * @param sep single string
  * @return character vector
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8's vectorization
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly, useStriContainerListUTF8
- * 
+ *
  * @version 0.1-12 (Marek Gagolewski, 2013-12-04)
  *          fixed bug #49
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          stri_join has been splitted to stri_join_nocollapse
  *          and stri_join_withcollapse (for efficiency reasons)
@@ -486,12 +486,12 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
       if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
       if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
    }
-   
+
    sep = stri_prepare_arg_string_1(sep, "sep");
    if (STRING_ELT(sep, 0) == NA_STRING) {
          return stri__vector_NA_strings(vectorize_length);
    }
-      
+
 
    // * special case *
    if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
@@ -500,14 +500,14 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
       return stri_join2_nocollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
    }
 
-   // note that if 1 vector is given 
+   // note that if 1 vector is given
    // we cannot return VECTOR_ELT(strlist, 0) directly
    // -- it needs to be converted to UTF8
    // so we proceed
 
    SEXP ret;
    STRI__ERROR_HANDLER_BEGIN
-   
+
    StriContainerUTF8 sep_cont(sep, 1);
    const char* sep_char = sep_cont.get(0).c_str();
    R_len_t     sep_len  = sep_cont.get(0).length();
@@ -519,7 +519,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
    R_len_t buf_maxbytes = 0;
    vector<bool> whichNA(vectorize_length, false); // where are NAs in out?
    for (R_len_t i=0; i<vectorize_length; ++i) {
-      
+
       R_len_t curchar = 0;
       for (R_len_t j=0; j<strlist_length; ++j) {
          if (strlist_cont.get(j).isNA(i)) {
@@ -537,7 +537,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
 
    // 5. Create ret val
    String8 buf(buf_maxbytes);
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i=0; i<vectorize_length; ++i) {
       if (whichNA[i]) {
@@ -552,7 +552,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
             memcpy(buf.data()+cursize, sep_char, (size_t)sep_len);
             cursize += sep_len;
          }
-         
+
          const String8* curstring = &(strlist_cont.get(j).get(i));
          R_len_t curstring_n = curstring->length();
          memcpy(buf.data()+cursize, curstring->c_str(), (size_t)curstring_n);
@@ -563,9 +563,9 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
    }
 
    // nothing more to do:
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
-   
+
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
@@ -580,13 +580,13 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
  *  @return if s is not empty, then a character vector of length 1
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          StriContainerUTF8 - any R Encoding
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          This function hasn't been used at all before (strange, isn't it?);
  *          From now on it's being called by stri_flatten_withressep
@@ -622,9 +622,9 @@ SEXP stri_flatten_noressep(SEXP str)
 
    // 3. Get ret val & good bye
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), cur, CE_UTF8));
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -639,19 +639,19 @@ SEXP stri_flatten_noressep(SEXP str)
  *  @return if s is not empty, then a character vector of length 1
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Bartek Tartanus)
  *          collapse arg added (1 sep supported)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          StriContainerUTF8 - any R Encoding
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          Call stri_flatten_noressep if needed
- *          
+ *
  */
 SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 {
@@ -659,13 +659,13 @@ SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 
    if (STRING_ELT(collapse, 0) == NA_STRING)
       return stri__vector_NA_strings(1);
-      
+
    // if collapse is an empty string, we may use the following
    // specialized function:
    if (LENGTH(STRING_ELT(collapse, 0)) == 0)
       return stri_flatten_noressep(str);
 
-   
+
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t str_length = LENGTH(str);
    if (str_length <= 0) return stri__vector_empty_strings(0);
@@ -704,9 +704,9 @@ SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 
    // 3. Get ret val & return
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, 1));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), cur, CE_UTF8));
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

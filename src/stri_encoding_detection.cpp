@@ -55,9 +55,13 @@ using namespace std;
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
- * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-06)
+ *          separate func
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
+ *          warnchars count added
  */
 double stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    R_len_t warnchars = 0;
@@ -91,9 +95,13 @@ double stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_c
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
- * @version 0.3 (Marek Gagolewski, 2013-08-13) warnchars count added
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-06)
+ *          separate func
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
+ *          warnchars count added
  */
 double stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    R_len_t warnchars = 0;
@@ -129,9 +137,13 @@ double stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-08-06) separate func
- * @version 0.3 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csrutf8.cpp
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-06)
+ *          separate func
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
+ *          confidence calculation basing on ICU's i18n/csrutf8.cpp
  */
 double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
@@ -232,8 +244,10 @@ double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_c
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
- * @version 0.2 (Marek Gagolewski, 2013-08-14) confidence calculation basing on ICU's i18n/csucode.cpp
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-14)
+ *          confidence calculation basing on ICU's i18n/csucode.cpp
  */
 double stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
    bool get_confidence, bool le)
@@ -287,7 +301,7 @@ double stri__enc_check_utf16(const char* str_cur_s, R_len_t str_cur_n,
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
  */
 double stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
@@ -303,7 +317,7 @@ double stri__enc_check_utf16be(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
  */
 double stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
@@ -320,8 +334,10 @@ double stri__enc_check_utf16le(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-09)
- * @version 0.2 (Marek Gagolewski, 2013-08-13) confidence calculation basing on ICU's i18n/csucode.cpp
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
+ *          confidence calculation basing on ICU's i18n/csucode.cpp
  */
 double stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
    bool get_confidence, bool le)
@@ -379,7 +395,7 @@ double stri__enc_check_utf32(const char* str_cur_s, R_len_t str_cur_n,
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-13)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
  */
 double stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
@@ -396,7 +412,7 @@ double stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *
  * @return confidence value in [0,1]
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-13)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-13)
  */
 double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence)
 {
@@ -413,9 +429,13 @@ double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *  @param type (single integer, internal)
  *  @return logical vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
- * @version 0.3 (Marek Gagolewski, 2013-08-09) one function for is_*, do dispatch
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
+ *          use StriContainerListRaw
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
+ *          one function for is_*, do dispatch
  */
 SEXP stri_enc_isenc(SEXP str, SEXP type)
 {
@@ -441,7 +461,7 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
    R_len_t str_length = str_cont.get_n();
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
    int* ret_tab = LOGICAL(ret); // may be faster than LOGICAL(ret)[i] all the time
 
    for (R_len_t i=0; i < str_length; ++i) {
@@ -454,7 +474,7 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
       ret_tab[i] = isenc(str_cont.get(i).c_str(), str_cont.get(i).length(), get_confidence) != 0.0;
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })
@@ -468,8 +488,10 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
  *
  * @return list
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-03)
- * @version 0.2 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw + BUGFIX
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-03)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
+ *          use StriContainerListRaw + BUGFIX
  */
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 {
@@ -492,14 +514,14 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
    str_cont.set_nrecycle(vectorize_length); // must be set after container creation
 
    SEXP ret, names, wrong;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   PROTECT(names = Rf_allocVector(STRSXP, 3));
+   STRI__PROTECT(names = Rf_allocVector(STRSXP, 3));
    SET_STRING_ELT(names, 0, Rf_mkChar("Encoding"));
    SET_STRING_ELT(names, 1, Rf_mkChar("Language"));
    SET_STRING_ELT(names, 2, Rf_mkChar("Confidence"));
 
-   PROTECT(wrong = Rf_allocVector(VECSXP, 3));
+   STRI__PROTECT(wrong = Rf_allocVector(VECSXP, 3));
    SET_VECTOR_ELT(wrong, 0, stri__vector_NA_strings(1));
    SET_VECTOR_ELT(wrong, 1, stri__vector_NA_strings(1));
    SET_VECTOR_ELT(wrong, 2, stri__vector_NA_integers(1));
@@ -530,9 +552,9 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 
 
       SEXP val_enc, val_lang, val_conf;
-      PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
+      STRI__PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
+      STRI__PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
+      STRI__PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
 
       for (R_len_t j=0; j<matchesFound; ++j) {
          status = U_ZERO_ERROR;
@@ -558,20 +580,20 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
       }
 
       SEXP val;
-      PROTECT(val = Rf_allocVector(VECSXP, 3));
+      STRI__PROTECT(val = Rf_allocVector(VECSXP, 3));
       SET_VECTOR_ELT(val, 0, val_enc);
       SET_VECTOR_ELT(val, 1, val_lang);
       SET_VECTOR_ELT(val, 2, val_conf);
       Rf_setAttrib(val, R_NamesSymbol, names);
       SET_VECTOR_ELT(ret, i, val);
-      UNPROTECT(4);
+      STRI__UNPROTECT(4);
    }
 
    if (ucsdet) {
       ucsdet_close(ucsdet);
       ucsdet = NULL;
    }
-   UNPROTECT(3);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END(
@@ -592,9 +614,13 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
  *
  * help struct for stri_enc_detect2
  *
- * @version 0.1
- * @version 0.2 (Marek Gagolewski, 2013-08-18) be locale-dependent, use ICU ulocdata
- * @version 0.3 (Marek Gagolewski, 2013-11-13) allow only ASCII-supersets
+ * @version 0.1-??
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-18)
+ *          be locale-dependent, use ICU ulocdata
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-11-13)
+ *          allow only ASCII-supersets
  */
 struct Converter8bit {
    bool isNA;
@@ -697,9 +723,13 @@ struct Converter8bit {
 
 /** Guesses text encoding; help struct for stri_enc_detect2
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-08-18) locale-dependent, use ulocdata
- * @version 0.3 (Marek Gagolewski, 2013-11-13) allow qloc==NULL in 8bit check
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-18)
+ *          locale-dependent, use ulocdata
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-11-13)
+ *          allow qloc==NULL in 8bit check
  */
 struct EncGuess {
    const char* name;
@@ -875,10 +905,14 @@ struct EncGuess {
  *
  * @return list
  *
- * @version 0.1 (2013-08-15, Marek Gagolewski)
- * @version 0.2 (2013-08-18, Marek Gagolewski) improved 8-bit confidence measurement,
- * some code moved to structs, use locale & ICU locdata
- * @version 0.3 (2013-11-13, Marek Gagolewski) added loc NA handling (no locale)
+ * @version 0.1-?? (2013-08-15, Marek Gagolewski)
+ *
+ * @version 0.1-?? (2013-08-18, Marek Gagolewski)
+ *          improved 8-bit confidence measurement,
+ *          some code moved to structs, use locale & ICU locdata
+ *
+ * @version 0.1-?? (2013-11-13, Marek Gagolewski)
+ *          added loc NA handling (no locale)
  */
 SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {

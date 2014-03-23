@@ -37,16 +37,32 @@
 using namespace std;
 
 
-#define STRI__ERROR_HANDLER_BEGIN try {
+#define STRI__ERROR_HANDLER_BEGIN        \
+   int __stri_protected_sexp_num = 0;    \
+   try {
 
 #define STRI__ERROR_HANDLER_END(cleanup) \
-   } \
-   catch (StriException e) { \
-      cleanup; \
-      e.throwRerror(); \
-      return R_NilValue; /* to avoid compiler warning */ \
+   }                                     \
+   catch (StriException e) {             \
+      cleanup;                           \
+      STRI__UNPROTECT_ALL                \
+      e.throwRerror();                   \
+      /* to avoid compiler warning: */   \
+      return R_NilValue;                 \
    }
 
+
+#define STRI__PROTECT(s)                 \
+   PROTECT(s);                           \
+   ++__stri_protected_sexp_num;
+   
+#define STRI__UNPROTECT(n)               \
+   UNPROTECT(n);                         \
+   __stri_protected_sexp_num -= n;
+
+#define STRI__UNPROTECT_ALL              \
+   UNPROTECT(__stri_protected_sexp_num); \
+   __stri_protected_sexp_num = 0;
 
 
 #define StriException_BUFSIZE 1024
