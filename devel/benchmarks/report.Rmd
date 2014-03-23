@@ -83,6 +83,9 @@ for (test_i in seq_along(alltests)) {
              max(unlist(sapply(results_data, function(data) data$q3.time))))
    rngy <- rngy + c(-1,1)*diff(rngy)*0.05
    
+   minmedtime <- min(unlist(sapply(results_data, function(data) data$median.time)))
+   maxmedtime <- max(unlist(sapply(results_data, function(data) data$median.time)))
+   
    for (i in seq_along(results_data)) {
       
       data <- results_data[[i]]
@@ -103,7 +106,6 @@ for (test_i in seq_along(alltests)) {
       axis(side=1, at=1:nmeasurements)
       abline(h=axTicks(2), col='gray', lty=3)
       abline(v=1:nmeasurements, col='gray', lty=3)
-      
       
       # setup pchs and col
       pch <- rep(16, ntests)
@@ -157,6 +159,10 @@ for (test_i in seq_along(alltests)) {
       }
       legend('topleft', levels(data$expr), col=col, bg='#ffffffc0',
          lty=1, lwd=2, pch=pch)
+      
+      perc <- unique(pmax(1,pretty(c(minmedtime, maxmedtime)/minmedtime)))
+      abline(h=perc*minmedtime, lty=3, col=3)
+      axis(4, at=perc*minmedtime, labels=sprintf("%gx", perc))
       
       cat('\n')
       dev.flush()

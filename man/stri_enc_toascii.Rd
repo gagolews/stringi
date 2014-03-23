@@ -16,7 +16,7 @@ codes <= 127.
 }
 \details{
 All charcodes > 127 are replaced with ASCII SUBSTITUTE
-CHARACTER (0x1A). \R encoding marking is always used, to
+CHARACTER (0x1A). \R encoding marking is always used to
 determine whether an 8-bit encoding or rather UTF-8 is used
 on input.
 

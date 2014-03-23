@@ -46,6 +46,7 @@ StriContainerUTF8::StriContainerUTF8()
 
 /**
  * Construct String Container from R character vector
+ * 
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
@@ -98,10 +99,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
          else {
             if (IS_ASCII(curs) || IS_UTF8(curs)) {
                // ASCII or UTF-8 - ultra fast
-               this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+               this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle, true);  /* kill UTF-8 BOM */
                // the same is done for native encoding && ucnvNative_isUTF8
-
-               // @TODO: detect BOMs
                // @TODO: use macro (here & ucnvNative_isUTF8 below)
             }
             else if (IS_BYTES(curs)) {
@@ -137,7 +136,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                      // UTF-8 - ultra fast
 
                      // @TODO: use macro
-                     this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle);
+                     this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle, true); /* kill UTF-8 BOM */
                      continue;
                   }
 

@@ -197,14 +197,17 @@ stri_enc_fromutf32 <- function(vec) {
 #' and a string is marked (internally) as being neither ASCII
 #' nor UTF-8-encoded, then all bytecodes > 127 are replaced with
 #' the Unicode REPLACEMENT CHARACTER (\\Ufffd).
+#' Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
+#' \code{NA} value for single characters.
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
 #' Otherwise, R encoding marks is assumed
 #' to be trustworthy (ASCII, UTF-8, Latin1, or Native).
-#' Bytes encoding fail here.
+#' Bytes encoding will fail here.
 #'
-#' Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
-#' \code{NA} value for single characters.
+#' 
+#' If a string is in UTF-8 and has a byte order mark (BOM),
+#' then BOM will be silently removed from the output string.
 #'
 #'
 #' @param str character vector to be converted
@@ -229,7 +232,7 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #' @details
 #' All charcodes > 127 are replaced with ASCII SUBSTITUTE
 #' CHARACTER (0x1A).
-#' \R encoding marking is always used, to determine whether
+#' \R encoding marking is always used to determine whether
 #' an 8-bit encoding or rather UTF-8 is used on input.
 #'
 #' Bytes-marked strings are treated as 8-bit strings.

@@ -36,6 +36,7 @@
 #include <unicode/locid.h>
 
 
+// used 2 times in stri_trans_case() below:
 #define STRI_CASEFOLD_DO                                                            \
       switch(_type) {                                                               \
          case 1:                                                                    \
@@ -85,14 +86,14 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          use UCaseMap + StriContainerUTF8
  *          (this is much faster for UTF-8 and slightly faster for 8bit enc)
- *          Estimate minimal buffer size.
+ *          Estimates minimal buffer size.
 */
 SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
 
-// version 0.2-1 - Does not work with ICU 4.8
+// version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
    UCaseMap* ucasemap = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
@@ -151,6 +152,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
       STRI_CASEFOLD_DO
       
       if (U_FAILURE(status)) {
+         buf.resize(buf_need);
          STRI_CASEFOLD_DO /* retry */
          
          if (U_FAILURE(status)) {
@@ -174,6 +176,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 
 
 // v0.1-?? - UTF-16 - WORKS WITH ICU 4.8
+// (this is much slower for UTF-8 and slightly slower for 8bit enc)
 // Slower than v0.2-1
 ////    BreakIterator* briter = NULL;
 //

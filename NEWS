@@ -27,6 +27,8 @@
    * U_MISSING_RESOURCE_ERROR message in StriException now suggests
         calling stri_install_check().
 
+   * BUGFIX: UTF-8 BOMs are now silently removed from input strings.
+
    * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8.
 
