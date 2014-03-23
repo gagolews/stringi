@@ -90,6 +90,8 @@ test_that("stri_enc_toutf8", {
    expect_identical(stri_enc_toutf8(s), "\u0141\u0105ka")
    stri_enc_set(enc)
    expect_identical(stri_enc_toutf8(s, is_unknown_8bit=TRUE), "\ufffd\ufffdka")
+   
+   expect_identical(stri_length(stri_enc_toutf8("\ufeff")), 0L) # removes BOMs
 })
 
 

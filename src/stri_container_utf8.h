@@ -60,6 +60,10 @@
  * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
  *          BUGFIX: possible mem leaks in the constructor;
  *          separated StriContainerUTF8_indexable
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
+ *          UTF8 BOMs are now silently removed by one of the constructors
+ *          (via String8)
  */
 class StriContainerUTF8 : public StriContainerBase {
 

@@ -70,17 +70,26 @@ all content, because this form avoids potential
 interoperability problems arising from the use of
 canonically equivalent, yet different, character sequences
 in document formats on the Web. Thus, you will rather not
-use these functions in typical stringi processing
+use these functions in typical string processing
 activities. Most often you may assume that a string is in
-NFC.
+NFC, see RFC\#5198.
 
 As usual in \pkg{stringi}, if the input character vector is
 in the native encoding, it will be converted to UTF-8
 automatically.
 }
+\examples{
+\dontrun{
+stri_enc_nfd("\\u0105") # Polish a with ogonek -> a, ogonek
+stri_enc_nfkc("\\ufdfa") # 1 codepoint -> 18 codepoints
+}
+}
 \references{
 \emph{Unicode Normalization Forms} -- Unicode Standard
 Annex #15, \url{http://unicode.org/reports/tr15}
+
+\emph{Unicode Format for Network Interchange} -- RFC\#5198,
+\url{http://tools.ietf.org/rfc/rfc5198.txt}
 
 \emph{Character Model for the World Wide Web 1.0:
 Normalization} -- W3C Working Draft,

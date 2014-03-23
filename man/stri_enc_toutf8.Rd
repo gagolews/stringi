@@ -20,15 +20,17 @@ marked encodings to UTF-8 strings.
 If \code{is_unknown_8bit} is set to \code{TRUE} and a
 string is marked (internally) as being neither ASCII nor
 UTF-8-encoded, then all bytecodes > 127 are replaced with
-the Unicode REPLACEMENT CHARACTER (\\Ufffd). Bytes-marked
-strings are treated as 8-bit strings.
+the Unicode REPLACEMENT CHARACTER (\\Ufffd). Note that the
+REPLACEMENT CHARACTER may be interpreted as Unicode
+\code{NA} value for single characters. Bytes-marked strings
+are treated as 8-bit strings.
 
 Otherwise, R encoding marks is assumed to be trustworthy
-(ASCII, UTF-8, Latin1, or Native). Bytes encoding fail
+(ASCII, UTF-8, Latin1, or Native). Bytes encoding will fail
 here.
 
-Note that the REPLACEMENT CHARACTER may be interpreted as
-Unicode \code{NA} value for single characters.
+If a string is in UTF-8 and has a byte order mark (BOM),
+then BOM will be silently removed from the output string.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},

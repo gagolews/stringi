@@ -162,9 +162,9 @@ double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_c
    else {
       // Based on ICU's i18n/csrutf8.cpp [with own mods]
       bool hasBOM = (str_cur_n >= 3 &&
-            (uint8_t)(str_cur_s[0]) == (uint8_t)0xEF &&
-            (uint8_t)(str_cur_s[1]) == (uint8_t)0xBB &&
-            (uint8_t)(str_cur_s[2]) == (uint8_t)0xBF);
+            (uint8_t)(str_cur_s[0]) == UTF8_BOM_BYTE1 &&
+            (uint8_t)(str_cur_s[1]) == UTF8_BOM_BYTE2 &&
+            (uint8_t)(str_cur_s[2]) == UTF8_BOM_BYTE3);
       R_len_t numValid = 0;   // counts only valid UTF-8 multibyte seqs
       R_len_t numInvalid = 0;
 

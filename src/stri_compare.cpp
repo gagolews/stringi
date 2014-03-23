@@ -345,7 +345,7 @@ struct StriSortComparer {
  *                 make StriException friendly
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
- *                 Use UTF16 as ucol_strcollUTF8 is DRAFT
+ *                 Use UTF16 as ucol_strcollUTF8 is DRAFT as of ICU 4.8
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
  *          using ucol_strcollUTF8 again, as we now require ICU >= 50;

@@ -64,6 +64,10 @@
 #' (see the examples below). If \code{opts_collator}
 #' is not \code{NA} (the default), then the string comparison
 #' is locale-sensitive.
+#' 
+#' Note that \pkg{stringi} silently removes UTF-8 BOMs from input strings,
+#' so \code{opts_collator=NA} does not take BOMs into account while
+#' comparing strings.
 #'
 #' @param e1 character vector
 #' @param e2 character vector

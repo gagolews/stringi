@@ -53,7 +53,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    if (Rf_isVectorList(opts_collator)) {
       R_len_t narg = LENGTH(opts_collator);
 
-      if (narg <= 0) { // no custom settings - Collator'll be default-as-hell
+      if (narg <= 0) { // no custom settings - use default Collator
          UErrorCode err = U_ZERO_ERROR;
          UCollator* col = ucol_open(NULL, &err);
          if (U_FAILURE(err)) {

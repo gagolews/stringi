@@ -53,6 +53,9 @@
  * @version 0.2-1  (Marek Gagolewski, 2014-03-15)
  *          m_str == NULL now denotes a missing value,
  *          isNA(), initialize() methods added
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
+ *          initialize() now can kill UTF8 BOMs.
  */
 class String8  {
 
@@ -96,23 +99,37 @@ class String8  {
        * @param str character buffer
        * @param n buffer length (not including NUL)
        * @param memalloc should a deep copy of the buffer be done?
+       * @param killbom whether to detect and delete UTF-8 BOMs
        */
-      void initialize(const char* str, R_len_t n, bool memalloc=false)
+      void initialize(const char* str, R_len_t n, bool memalloc=false, bool killbom=false)
       {
 #ifndef NDEBUG
          if (!isNA())
             throw StriException("string8::!isNA() in initialize()");
 #endif
-         this->m_memalloc = memalloc;
-         this->m_n = n;
-         this->m_size = n+1;
-         if (memalloc) {
-//            cerr << "DEBUG: String8: memalloc!" << endl;
+         if (killbom && n >= 3 &&
+            (uint8_t)(str[0]) == UTF8_BOM_BYTE1 &&
+            (uint8_t)(str[1]) == UTF8_BOM_BYTE2 &&
+            (uint8_t)(str[2]) == UTF8_BOM_BYTE3) {
+            // has BOM - get rid of it
+            this->m_memalloc = true; // ignore memalloc val
+            this->m_n = n-3;
+            this->m_size = this->m_n+1;
             this->m_str = new char[this->m_size];
-            memcpy(this->m_str, str, (size_t)this->m_size);
+            memcpy(this->m_str, str+3, (size_t)this->m_size);
          }
          else {
-            this->m_str = (char*)(str); // we know what we're doing
+            this->m_memalloc = memalloc;
+            this->m_n = n;
+            this->m_size = n+1;
+            if (memalloc) {
+   //            cerr << "DEBUG: String8: memalloc!" << endl;
+               this->m_str = new char[this->m_size];
+               memcpy(this->m_str, str, (size_t)this->m_size);
+            }
+            else {
+               this->m_str = (char*)(str); // we know what we're doing
+            }
          }
       }
       
