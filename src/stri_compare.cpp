@@ -40,7 +40,7 @@
 
 
 /** Compare 2 strings in UTF8, codepoint-wise [internal]
- * 
+ *
  * Used by stri_order_codepoints and stri_cmp_codepoints
  *
  * @param str1 string in UTF8
@@ -50,7 +50,7 @@
  * @return -1, 0, or 1, like in strcmp
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          BUGFIX: possibly incorrect results for strings of inequal number
  *                  of codepoints
@@ -68,7 +68,7 @@ int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t
       U8_NEXT(str1, i1, n1, c1);
       U8_NEXT(str2, i2, n2, c2);
    }
-   
+
    if (c1 < c2)
       return -1;
    else if (c1 > c2)
@@ -86,7 +86,7 @@ int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t
  *
  * @param e1 character vector
  * @param e2 character vector
- * 
+ *
  * @return logical vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
@@ -96,7 +96,7 @@ int stri__cmp_eq_codepoints(const char* cur1_s, R_len_t cur1_n, const char* cur2
 {
    if (cur1_n != cur2_n) // different number of bytes => not equal
       return FALSE;
-   
+
    // some memcmp implementations are very fast:
    return (memcmp(cur1_s, cur2_s, cur1_n) == 0);
 }
@@ -121,7 +121,7 @@ int stri__cmp_eq_codepoints(const char* cur1_s, R_len_t cur1_n, const char* cur2
  * @param type [internal] vector of length 2,
  * type[0]: 0 for ==, -1 for < and 1 for >,
  * type[1]: 0 or 1 (whether to negate the results)
- * 
+ *
  * @return logical vector
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-19)
@@ -130,7 +130,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
 {
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
-   
+
    // we'll perform a collator-based cmp
    // type is an internal arg, check manually, error() allowed here
    if (!Rf_isInteger(type) || LENGTH(type) != 2)
@@ -139,10 +139,10 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
    int _negate = INTEGER(type)[1];
    if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-      
+
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
-   
+
    STRI__ERROR_HANDLER_BEGIN
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
@@ -151,7 +151,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
    int* ret_int = INTEGER(ret);
 
    for (R_len_t i = 0; i < vectorize_length; ++i)
@@ -182,7 +182,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
          else
             ret_int[i] = (_type == stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n));
       }
-         
+
       if (_negate)
          ret_int[i] = !ret_int[i];
    }
@@ -191,7 +191,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
       ucol_close(col);
       col = NULL;
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({
@@ -210,7 +210,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
  * @param e1 character vector
  * @param e2 character vector
  * @param collator_opts passed to stri__ucol_open()
- * 
+ *
  * @return integer vector, like strcmp in C
  *
  * @version 0.1-?? (Marek Gagolewski)
@@ -220,11 +220,11 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  *          moved to UTF16, as ucol_strcollUTF8 is DRAFT
- * 
+ *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-16)
  *          using ucol_strcollUTF8 again, as we now require ICU >= 50
  *          [4x speedup utf8, 2x slowdown 8bit]
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          one function for cmp with and without collation
  */
@@ -245,7 +245,7 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
 
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_int = INTEGER(ret);
 
    for (R_len_t i = 0; i < vectorize_length; ++i)
@@ -254,7 +254,7 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
          ret_int[i] = NA_INTEGER;
          continue;
       }
-      
+
       R_len_t     cur1_n = e1_cont.get(i).length();
       const char* cur1_s = e1_cont.get(i).c_str();
       R_len_t     cur2_n = e2_cont.get(i).length();
@@ -272,7 +272,7 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
       else {
          // codepoint-wise cmp
          ret_int[i] = stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n);
-         
+
          // possible slowdown due to the fact that whole vectors are possibly
          // re-encoded, and the comparison result may be determined by
          // comparing e.g. the first codepoint
@@ -284,7 +284,7 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
       ucol_close(col);
       col = NULL;
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({
@@ -304,7 +304,7 @@ struct StriSortComparer {
    StriContainerUTF8* cont;
    bool decreasing;
    UCollator* col;
-   
+
    StriSortComparer(StriContainerUTF8* _cont, UCollator* _col, bool _decreasing)
    { this->cont = _cont; this->col = _col; this->decreasing = _decreasing; }
 
@@ -346,7 +346,7 @@ struct StriSortComparer {
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-27)
  *                 Use UTF16 as ucol_strcollUTF8 is DRAFT
- * 
+ *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
  *          using ucol_strcollUTF8 again, as we now require ICU >= 50;
  *          performance difference only observed for sorted vectors
@@ -360,25 +360,25 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    na_last   = stri_prepare_arg_logical_1(na_last, "na_last");
    str       = stri_prepare_arg_string(str, "str"); // prepare string argument
-   
+
    // type is an internal arg -- check manually
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
    int _type = INTEGER(type)[0];
    if (_type < 1 || _type > 2)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-      
+
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
 
 
    STRI__ERROR_HANDLER_BEGIN
-   
+
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
-   
+
    int na_last_int = INTEGER(na_last)[0];
-   
+
    deque<int> NA_pos;
    vector<int> order(vectorize_length);
 
@@ -398,23 +398,23 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    StriSortComparer comp(&str_cont, col, decr);
    std::stable_sort(order.begin(), order.end(), comp);
 
-   
+
    SEXP ret;
    if (_type == 1) {
       // order
-      PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
+      STRI__PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
       int* ret_tab = INTEGER(ret);
-      
+
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
          for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
       }
-      
+
       for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
          ret_tab[j] = (*it)+1; // 1-based indices
-      
+
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
          for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
@@ -423,17 +423,17 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    }
    else {
       // sort
-      PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
+      STRI__PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
          for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
             SET_STRING_ELT(ret, j, NA_STRING);
       }
-      
+
       for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
          SET_STRING_ELT(ret, j, str_cont.toR(*it));
-      
+
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
          for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
@@ -446,7 +446,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       col = NULL;
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({
