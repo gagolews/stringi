@@ -36,6 +36,28 @@
 #include <unicode/locid.h>
 
 
+#define STRI_CASEFOLD_DO                                                            \
+      switch(_type) {                                                               \
+         case 1:                                                                    \
+            buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),       \
+               (const char*)str_cur_s, str_cur_n, &status);                         \
+            break;                                                                  \
+                                                                                    \
+         case 2:                                                                    \
+            buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),       \
+               (const char*)str_cur_s, str_cur_n, &status);                         \
+            break;                                                                  \
+                                                                                    \
+         case 3:                                                                    \
+            buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),       \
+               (const char*)str_cur_s, str_cur_n, &status);                         \
+            break;                                                                  \
+                                                                                    \
+         default:                                                                   \
+            throw StriException("stri_trans_case: incorrect case conversion type"); \
+      }
+
+
 /**
  *  Convert case (TitleCase, lowercase, UPPERCASE, etc.)
  *
@@ -57,7 +79,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-19)
  *          use UCaseMap + StriContainerUTF8
- *          **THIS DOES NOT WORK WITH ICU 4.8**, have to revert
+ *          **THIS DOES NOT WORK WITH ICU 4.8**, we have to revert the changes
  *          ** BTW, since stringi_0.1-25 we require ICU>=50 **
  * 
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
@@ -70,7 +92,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
 
-// version 0.2-1 - Does not work with ICU 4.8 :(
+// version 0.2-1 - Does not work with ICU 4.8
    UCaseMap* ucasemap = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
@@ -93,7 +115,8 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 
    // STEP 1.
    // Estimate the required buffer length
-   // Notice: The result may be longer or shorter than the original.
+   // Notice: The resulting number of codepoints may be larger or smaller than
+   // the number before casefolding
    R_len_t bufsize = 0;
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -106,6 +129,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
       if (cursize > bufsize)
          bufsize = cursize;
    }
+   bufsize += 10; // a small margin
    String8 buf(bufsize);
    
    // STEP 2.
@@ -124,61 +148,16 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
       
       status = U_ZERO_ERROR;
       int buf_need;
-      switch(_type) {
-         case 1:
-            buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),
-               (const char*)str_cur_s, str_cur_n, &status);
-            break;
-            
-         case 2:
-            buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),
-               (const char*)str_cur_s, str_cur_n, &status);
-            break;
-      
-         case 3:
-            buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
-               (const char*)str_cur_s, str_cur_n, &status);
-            break;
-            
-//         case 4:
-//            ucasemap_utf8FoldCase
-
-         default:
-            throw StriException("stri_trans_case: incorrect case conversion type");
-      }
+      STRI_CASEFOLD_DO
       
       if (U_FAILURE(status)) {
+         STRI_CASEFOLD_DO /* retry */
          
-         // fail possibly due to buffer overflow (this can be checked, BTW)
-         buf.resize(buf_need+1); // need more space
-         status = U_ZERO_ERROR;
-         switch(_type) {
-            case 1:
-               buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),
-                  (const char*)str_cur_s, str_cur_n, &status);
-               break;
-               
-            case 2:
-               buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),
-                  (const char*)str_cur_s, str_cur_n, &status);
-               break;
-         
-            case 3:
-               buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
-                  (const char*)str_cur_s, str_cur_n, &status);
-               break;
-               
-   //         case 4:
-   //            ucasemap_utf8FoldCase
-   
-            default:
-               throw StriException("stri_trans_case: incorrect case conversion type");
-         }
-         
-         // this shouldn't happen
-         // we do have required buffer size
-         if (U_FAILURE(status))
+         if (U_FAILURE(status)) {
+            // this shouldn't happen
+            // we do have the buffer size required to complete this op
             throw StriException(status);
+         }
       }
 
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
@@ -191,6 +170,8 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    STRI__ERROR_HANDLER_END(
       if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    )
+}
+
 
 // v0.1-?? - UTF-16 - WORKS WITH ICU 4.8
 // Slower than v0.2-1
@@ -251,4 +232,3 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 //   STRI__ERROR_HANDLER_END(/*noop*/;
 ////       if (briter) delete briter;
 //   )
-}

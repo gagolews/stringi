@@ -102,8 +102,8 @@ invisible(NULL)
 #'
 #'
 #' Regular expression patterns in \pkg{ICU} are quite similar in form and behavior
-#' to Perl's regexes.  Their implementation loosely bases
-#' on JDK 1.4 package \code{java.util.regex}.
+#' to Perl's regexes.  Their implementation is loosely inspired
+#' by JDK 1.4 \code{java.util.regex}.
 #' \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 #' (see References section) and its features are summarized in
 #' the ICU User Guide (see below). A good general introduction
@@ -158,16 +158,7 @@ invisible(NULL)
 #' which is a language-aware string search algorithm.
 #' The matches are defined by using the notion of ``canonical equivalence''
 #' between strings.
-#'
-#' The ICU documentation claims that this string search engine uses
-#' a modified version of the Boyer-Moore algorithm (cf. Werner, 1999),
-#' with time complexity of
-#' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)}).
-#' However, in ICU 52.1 source code we have found the following:
-#' \code{#define BOYER_MOORE 0}, see src/icu52/i18n/usearch.cpp.
 #' 
-#' 
-#'
 #' Tuning the Collator's parameters allows you to perform correct matching
 #' that properly takes into account accented letters, conjoined letters,
 #' and ignorable punctuation and letter case.

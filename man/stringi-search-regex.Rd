@@ -16,7 +16,7 @@ example to perform case-insensitive search) with the
 
 Regular expression patterns in \pkg{ICU} are quite similar
 in form and behavior to Perl's regexes.  Their
-implementation loosely bases on JDK 1.4 package
+implementation is loosely inspired by JDK 1.4
 \code{java.util.regex}. \pkg{ICU} Regular Expressions
 conform to the Unicode Technical Standard #18 (see
 References section) and its features are summarized in the

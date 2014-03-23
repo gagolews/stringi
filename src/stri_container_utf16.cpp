@@ -256,22 +256,44 @@ StriContainerUTF16::~StriContainerUTF16()
  * 
  *  Recycle rule is applied, so length == nrecycle
  * 
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
+ *          using 1 tmpbuf + u_strToUTF8 for slightly better performance
+ * 
  * @return STRSXP
  */
 SEXP StriContainerUTF16::toR() const
 {
+   R_len_t outbufsize = 0;
+   for (R_len_t i=0; i<nrecycle; ++i) {
+      if (!str[i%n].isBogus()) {
+         R_len_t thissize = str[i%n].length();
+         if (thissize > outbufsize)
+            outbufsize = thissize;
+      }
+   }
+   // One UChar -- <= U+FFFF  -> 1-3 bytes UTF8
+   // Two UChars -- >=U+10000 ->   4 bytes UTF8
+   outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(outbufsize, 3);
+   String8 outbuf(outbufsize);
+   
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
-   std::string buf;
-
+   
+   UErrorCode status = U_ZERO_ERROR;
    for (R_len_t i=0; i<nrecycle; ++i) {
       if (str[i%n].isBogus())
          SET_STRING_ELT(ret, i, NA_STRING);
       else {
-         buf.clear();
-         str[i%n].toUTF8String(buf);
+         int outrealsize = 0;
+         u_strToUTF8(outbuf.data(), outbufsize, &outrealsize,
+            str[i%n].getBuffer(), str[i%n].length(), &status);
+         if (U_FAILURE(status)) {
+            throw StriException(status);
+         }
          SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(buf.c_str(), (int)buf.length(), (cetype_t)CE_UTF8));
+            Rf_mkCharLenCE(outbuf.c_str(), outrealsize, (cetype_t)CE_UTF8));
       }
    }
 
