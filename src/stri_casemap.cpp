@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
+#include "stri_string8buf.h"
 #include <unicode/uloc.h>
 #include <unicode/locid.h>
 
@@ -82,7 +83,7 @@
  *          use UCaseMap + StriContainerUTF8
  *          **THIS DOES NOT WORK WITH ICU 4.8**, we have to revert the changes
  *          ** BTW, since stringi_0.1-25 we require ICU>=50 **
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          use UCaseMap + StriContainerUTF8
  *          (this is much faster for UTF-8 and slightly faster for 8bit enc)
@@ -131,8 +132,8 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
          bufsize = cursize;
    }
    bufsize += 10; // a small margin
-   String8 buf(bufsize);
-   
+   String8buf buf(bufsize);
+
    // STEP 2.
    // Do case folding
    for (R_len_t i = str_cont.vectorize_init();
@@ -146,15 +147,15 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
 
       R_len_t str_cur_n     = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      
+
       status = U_ZERO_ERROR;
       int buf_need;
       STRI_CASEFOLD_DO
-      
+
       if (U_FAILURE(status)) {
-         buf.resize(buf_need);
+         buf.resize(buf_need, false/*destroy contents*/);
          STRI_CASEFOLD_DO /* retry */
-         
+
          if (U_FAILURE(status)) {
             // this shouldn't happen
             // we do have the buffer size required to complete this op
@@ -168,7 +169,7 @@ SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
    if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   
+
    STRI__ERROR_HANDLER_END(
       if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    )

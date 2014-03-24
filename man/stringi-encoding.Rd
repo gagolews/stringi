@@ -88,10 +88,15 @@ supported by any given codepage.
   representation. For example, ``a with ogonek'' (one
   character) and ``a''+``ogonek'' (two graphemes) are
   semantically the same. \pkg{stringi} provides functions
-  to normalize character sequences,
+  to normalize character sequences, see
   \code{\link{stri_enc_nfc}} for discussion. However,
   denormalized strings do appear very rarely in typical
   string processing activities.
+
+  Additionally, do note that \pkg{stringi} silently removes
+  byte order marks (BOMs - they may incidentally appear in
+  a string read from a text file) from UTF8-encoded
+  strings, see \code{\link{stri_enc_toutf8}}.
 }
 
 \section{Character Encodings in \R}{
@@ -220,6 +225,7 @@ Other encoding_conversion: \code{\link{stri_conv}},
 \code{\link{stri_encode}};
 \code{\link{stri_enc_fromutf32}};
 \code{\link{stri_enc_toascii}};
+\code{\link{stri_enc_tonative}};
 \code{\link{stri_enc_toutf32}};
 \code{\link{stri_enc_toutf8}}
 

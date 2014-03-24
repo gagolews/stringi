@@ -34,6 +34,7 @@
 #include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
 #include "stri_container_listraw.h"
+#include "stri_string8buf.h"
 
 
 /** Convert from UTF-32 [single string, internal]
@@ -45,7 +46,7 @@
  * @param bufsize buffer size
  * @return number of bytes written
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize)
 {
@@ -69,10 +70,11 @@ R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize
  * @param vec integer vector or list with integer vectors
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
+   // @TODO: use STRI__ERROR_HANDLER_BEGIN
    if (Rf_isVectorList(vec)) {
       R_len_t n = LENGTH(vec);
       R_len_t bufsize = 0;
@@ -86,7 +88,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
       }
 
       bufsize = U8_MAX_LENGTH*bufsize+1;
-      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK
+      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK // @TODO: Use String8
       SEXP ret;
       PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
@@ -113,7 +115,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
       int* data = INTEGER(vec);
       R_len_t ndata = LENGTH(vec);
       R_len_t bufsize = U8_MAX_LENGTH*ndata+1;
-      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK
+      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK // @TODO: Use String8
       R_len_t chars = stri__enc_fromutf32(data, ndata, buf, bufsize);
       if (chars < 0)
          SET_STRING_ELT(ret, 0, NA_STRING);
@@ -131,8 +133,10 @@ SEXP stri_enc_fromutf32(SEXP vec)
  * @param str character vector
  * @return list with integer vectors
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
@@ -149,11 +153,11 @@ SEXP stri_enc_toutf32(SEXP str)
        if (ni > bufsize) bufsize = ni;
    }
 
-   bufsize = bufsize + 1; // at most 4 times too large... well, have to be
-   int* buf = (int*)R_alloc(bufsize, (int)sizeof(int));
+   bufsize = bufsize + 1; // at most 4 times too large... well, has to be
+   int* buf = (int*)R_alloc(bufsize, (int)sizeof(int)); // @TODO: Use String8
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, n));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, n));
 
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -169,21 +173,22 @@ SEXP stri_enc_toutf32(SEXP str)
       R_len_t j = 0;
       R_len_t k = 0;
       while (j < sn) {
-         U8_NEXT_UNSAFE(s, j, c);
+         U8_NEXT(s, j, sn, c);
+//         if (c < 0) .............................................. @TODO
          buf[k++] = (int)c;
 //         chars.push_back(c);
       }
 
       SEXP conv;
-      PROTECT(conv = Rf_allocVector(INTSXP, k /*chars.size()*/));
+      STRI__PROTECT(conv = Rf_allocVector(INTSXP, k /*chars.size()*/));
       memcpy(INTEGER(conv), buf, (size_t)sizeof(int)*k);
 //      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
 //         *(conv_tab++) = (int)*it;
       SET_VECTOR_ELT(ret, i, conv);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -200,7 +205,7 @@ SEXP stri_enc_toutf32(SEXP str)
  * @return character vector
  *
  * @version 0.1-XX (Marek Gagolewski)
- * 
+ *
  * @version 0.1-XX (Marek Gagolewski, 2013-06-16)
  *                  make StriException-friendly
  */
@@ -208,7 +213,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
-   bool is_unknown_8bit_logical = 
+   bool is_unknown_8bit_logical =
       stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
 
    STRI__ERROR_HANDLER_BEGIN
@@ -228,7 +233,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
             R_len_t curn = LENGTH(curs);
             const char* curs_tab = CHAR(curs);
             // TODO: buffer reuse....
-            String8 buf(curn*3+1); // one byte -> either one byte or FFFD, which is 3 bytes in UTF-8
+            String8buf buf(curn*3+1); // one byte -> either one byte or FFFD, which is 3 bytes in UTF-8
             R_len_t k = 0;
             for (R_len_t j=0; j<curn; ++j) {
                if (U8_IS_SINGLE(curs_tab[j]))
@@ -264,8 +269,10 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
  * @param str character vector
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_enc_toascii(SEXP str)
 {
@@ -288,7 +295,7 @@ SEXP stri_enc_toascii(SEXP str)
          R_len_t curn = LENGTH(curs);
          const char* curs_tab = CHAR(curs);
          // TODO: buffer reuse....
-         String8 buf(curn+1); // this may be 4 times too much
+         String8buf buf(curn+1); // this may be 4 times too much
          R_len_t k = 0;
          UChar32 c;
          for (int j=0; j<curn; ) {
@@ -304,7 +311,7 @@ SEXP stri_enc_toascii(SEXP str)
          R_len_t curn = LENGTH(curs);
          const char* curs_tab = CHAR(curs);
          // TODO: buffer reuse....
-         String8 buf(curn+1);
+         String8buf buf(curn+1);
          R_len_t k = 0;
          for (R_len_t j=0; j<curn; ++j) {
             if (U8_IS_SINGLE(curs_tab[j]))
@@ -334,7 +341,7 @@ SEXP stri_enc_toascii(SEXP str)
  * @param to_raw single logical, should list of raw vectors be returned?
  * @return a converted character vector or list of raw vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-11-12)
+ * @version 0.1-?? (Marek Gagolewski, 2013-11-12)
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
@@ -374,7 +381,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    SEXP ret;
    PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8 buf(0); // will be extended in a moment
+   String8buf buf(0); // will be extended in a moment
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -390,7 +397,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 
       R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
       // "The calculated size is guaranteed to be sufficient for this conversion."
-      buf.resize(bufneed);
+      buf.resize(bufneed, false/*destroy contents*/);
 
       err = U_ZERO_ERROR;
       ucnv_resetFromUnicode(uconv_to);
@@ -401,7 +408,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
       }
       else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
-         buf.resize(bufneed);
+         buf.resize(bufneed, false/*destroy contents*/);
          err = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
          if (U_FAILURE(err))
@@ -443,11 +450,19 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
  * @param to_raw single logical, should list of raw vectors be returned?
  * @return a converted character vector or list of raw vectors
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) arg to_raw_added, encoding marking
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
- * @version 0.4 (Marek Gagolewski, 2013-08-08) use StriContainerListRaw
- * @version 0.5 (Marek Gagolewski, 2013-11-20) BUGFIX call stri_encode_from_marked if necessary
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          arg to_raw_added, encoding marking
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
+ *          use StriContainerListRaw
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-11-20)
+ *          BUGFIX call stri_encode_from_marked if necessary
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
@@ -494,7 +509,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    SEXP ret;
    PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8 buf(0); // will be extended in a moment
+   String8buf buf(0); // will be extended in a moment
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -512,17 +527,17 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          UNPROTECT(1);
          throw StriException(err);
       }
-      
+
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.
       if (!curs_tmp) {
          UNPROTECT(1);
          throw StriException(MSG__INTERNAL_ERROR);
       }
-      
+
       R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
       // "The calculated size is guaranteed to be sufficient for this conversion."
-      buf.resize(bufneed);
+      buf.resize(bufneed, false/*destroy contents*/);
 
       err = U_ZERO_ERROR;
 //      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, err); // UTF-16 -> TO
@@ -536,7 +551,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       }
       else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
-         buf.resize(bufneed);
+         buf.resize(bufneed, false/*destroy contents*/);
          err = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
          if (U_FAILURE(err)) {

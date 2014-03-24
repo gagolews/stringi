@@ -37,6 +37,7 @@ and a string is set to \code{NA}.
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},
 \code{\link{stri_encode}}; \code{\link{stri_enc_toascii}};
+\code{\link{stri_enc_tonative}};
 \code{\link{stri_enc_toutf32}};
 \code{\link{stri_enc_toutf8}};
 \code{\link{stringi-encoding}}

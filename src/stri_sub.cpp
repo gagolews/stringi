@@ -32,7 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8_indexable.h"
-
+#include "stri_string8buf.h"
 
 
 
@@ -48,16 +48,16 @@
  *
  * @version 0.1-?? (Bartek Tartanus)
  *          stri_sub
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
  *          use StriContainerUTF8's UChar32-to-UTF8 index
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
  */
@@ -190,16 +190,16 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * @return character vector
  *
  * @version 0.1 (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
  *          use StriContainerUTF8's UChar32-to-UTF8 index
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
  */
@@ -261,7 +261,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    // args prepared, let's go
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
-   String8 buf(0); // @TODO consider calculating bufsize a priori
+   String8buf buf(0); // @TODO consider calculating bufsize a priori
 
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -313,7 +313,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       R_len_t value_cur_n = value_cont.get(i).length();
 
       R_len_t buflen = str_cur_n-(cur_to2-cur_from2)+value_cur_n;
-      buf.resize(buflen);
+      buf.resize(buflen, false/*destroy contents*/);
       memcpy(buf.data(), str_cur_s, (size_t)cur_from2);
       memcpy(buf.data()+cur_from2, value_cur_s, (size_t)value_cur_n);
       memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, (size_t)str_cur_n-cur_to2);
@@ -329,12 +329,12 @@ SEXP stri_subst_na(SEXP str, SEXP replacement){
 	str = stri_prepare_arg_string(str, "str");
    replacement = stri_prepare_arg_string_1(replacement, "replacement");
    R_len_t str_len = LENGTH(str);
-   
+
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, str_len));
-   
+
    StriContainerUTF8 str_cont(str, str_len, false);
-   
+
    for (R_len_t i=0; i<str_len; ++i) {
       if (str_cont.isNA(i)){
       	SET_STRING_ELT(ret, i, VECTOR_ELT(replacement, 0));
@@ -342,7 +342,7 @@ SEXP stri_subst_na(SEXP str, SEXP replacement){
       	SET_STRING_ELT(ret, i, str_cont.toR(i));
       }
    }
-   
+
    UNPROTECT(1);
    return ret;
 }

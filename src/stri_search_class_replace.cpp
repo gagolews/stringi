@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_charclass.h"
+#include "stri_string8buf.h"
 #include <deque>
 using namespace std;
 
@@ -65,7 +66,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8 buf(0); // @TODO: calculate buf len a priori?
+   String8buf buf(0); // @TODO: calculate buf len a priori?
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -101,7 +102,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need = str_cur_n+(R_len_t)occurences.size()*replacement_cur_n-sumbytes;
-      buf.resize(buf_need);
+      buf.resize(buf_need, false/*destroy contents*/);
 
       jlast = 0;
       char* curbuf = buf.data();
@@ -154,7 +155,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8 buf(0); // @TODO: consider calculating buflen a priori
+   String8buf buf(0); // @TODO: consider calculating buflen a priori
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -200,7 +201,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need = str_cur_n+replacement_cur_n-(j-jlast);
-      buf.resize(buf_need);
+      buf.resize(buf_need, false/*destroy contents*/);
       memcpy(buf.data(), str_cur_s, (size_t)jlast);
       memcpy(buf.data()+jlast, replacement_cur_s, (size_t)replacement_cur_n);
       memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, (size_t)str_cur_n-j);

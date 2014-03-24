@@ -35,6 +35,7 @@
 #include "stri_container_utf8.h"
 #include "stri_container_integer.h"
 #include "stri_container_listutf8.h"
+#include "stri_string8buf.h"
 #include <vector>
 using namespace std;
 
@@ -88,7 +89,7 @@ SEXP stri_dup(SEXP str, SEXP times)
 
    // STEP 2.
    // Alloc buffer & result vector
-   String8 buf(bufsize);
+   String8buf buf(bufsize);
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
@@ -195,7 +196,7 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
    }
 
    // 2. Create buf & retval
-   String8 buf(nchar);
+   String8buf buf(nchar);
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length)); // output vector
 
@@ -290,7 +291,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    }
 
 
-   String8 buf(nchar);
+   String8buf buf(nchar);
    R_len_t last_buf_idx = 0;
    for (R_len_t i = e1_cont.vectorize_init(); // this iterator allows for...
          i != e1_cont.vectorize_end();        // ...smart buffer reusage
@@ -408,7 +409,7 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
    }
 
    // 5. Create ret val
-   String8 buf(buf_maxbytes);
+   String8buf buf(buf_maxbytes);
    R_len_t last_buf_idx = 0;
 
    for (R_len_t i=0; i<vectorize_length; ++i) {
@@ -536,7 +537,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
    }
 
    // 5. Create ret val
-   String8 buf(buf_maxbytes);
+   String8buf buf(buf_maxbytes);
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i=0; i<vectorize_length; ++i) {
@@ -611,7 +612,7 @@ SEXP stri_flatten_noressep(SEXP str)
    }
 
    // 2. Fill the buf!
-   String8 buf(nchar);
+   String8buf buf(nchar);
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();
@@ -689,7 +690,7 @@ SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 
 
    // 2. Fill the buf!
-   String8 buf(nbytes);
+   String8buf buf(nbytes);
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
       R_len_t ncur = str_cont.get(i).length();

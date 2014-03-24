@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf16.h"
+#include "stri_string8buf.h"
 
 
 /**
@@ -276,7 +277,7 @@ SEXP StriContainerUTF16::toR() const
    // One UChar -- <= U+FFFF  -> 1-3 bytes UTF8
    // Two UChars -- >=U+10000 ->   4 bytes UTF8
    outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(outbufsize, 3);
-   String8 outbuf(outbufsize);
+   String8buf outbuf(outbufsize);
 
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
@@ -294,7 +295,7 @@ SEXP StriContainerUTF16::toR() const
             throw StriException(status);
          }
          SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(outbuf.c_str(), outrealsize, (cetype_t)CE_UTF8));
+            Rf_mkCharLenCE(outbuf.data(), outrealsize, (cetype_t)CE_UTF8));
       }
    }
 
