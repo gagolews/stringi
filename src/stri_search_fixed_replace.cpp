@@ -35,6 +35,7 @@
 #include "stri_container_utf16.h"
 #include "stri_container_usearch.h"
 #include "stri_container_bytesearch.h"
+#include "stri_string8buf.h"
 #include <deque>
 using namespace std;
 
@@ -68,7 +69,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8 buf(0); // @TODO: calculate buf len a priori?
+   String8buf buf(0); // @TODO: calculate buf len a priori?
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -115,7 +116,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need =
          str_cur_n+replacement_cur_n*(R_len_t)occurences.size()-sumbytes;
-      buf.resize(buf_need);
+      buf.resize(buf_need, false/*destroy contents*/);
 
       R_len_t jlast = 0;
       char* curbuf = buf.data();

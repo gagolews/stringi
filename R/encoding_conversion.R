@@ -189,7 +189,7 @@ stri_enc_fromutf32 <- function(vec) {
 #' Convert To UTF-8
 #'
 #' @description
-#' Converts character strings with (possibly) internally marked encodings
+#' Converts character strings with declared marked encodings
 #' to UTF-8 strings.
 #'
 #' @details
@@ -202,7 +202,8 @@ stri_enc_fromutf32 <- function(vec) {
 #' Bytes-marked strings are treated as 8-bit strings.
 #'
 #' Otherwise, R encoding marks is assumed
-#' to be trustworthy (ASCII, UTF-8, Latin1, or Native).
+#' to be trustworthy (ASCII, UTF-8, Latin1, or Native,
+#' see \code{\link{Encoding}}).
 #' Bytes encoding will fail here.
 #'
 #' 
@@ -218,6 +219,30 @@ stri_enc_fromutf32 <- function(vec) {
 #' @export
 stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
    .Call("stri_enc_toutf8", str, is_unknown_8bit, PACKAGE="stringi")
+}
+
+
+#' @title
+#' Convert To Native Encoding
+#'
+#' @description
+#' Converts character strings with declared encodings
+#' to Native encoding.
+#'
+#' @details
+#' Current native encoding can be read with \code{\link{stri_enc_get}}.
+#' Character strings declared to be in \code{bytes} encoding will fail here.
+#' 
+#' 
+#'
+#' @param str character vector to be converted
+#' @return Returns a character vector.
+#'
+#' @family encoding_conversion
+#' @export
+stri_enc_tonative <- function(str) {
+   stop("to do")
+#    .Call("stri_enc_tonative", str, PACKAGE="stringi")
 }
 
 

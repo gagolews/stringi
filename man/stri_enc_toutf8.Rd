@@ -13,8 +13,8 @@ stri_enc_toutf8(str, is_unknown_8bit = FALSE)
 Returns a character vector.
 }
 \description{
-Converts character strings with (possibly) internally
-marked encodings to UTF-8 strings.
+Converts character strings with declared marked encodings
+to UTF-8 strings.
 }
 \details{
 If \code{is_unknown_8bit} is set to \code{TRUE} and a
@@ -26,8 +26,8 @@ REPLACEMENT CHARACTER may be interpreted as Unicode
 are treated as 8-bit strings.
 
 Otherwise, R encoding marks is assumed to be trustworthy
-(ASCII, UTF-8, Latin1, or Native). Bytes encoding will fail
-here.
+(ASCII, UTF-8, Latin1, or Native, see
+\code{\link{Encoding}}). Bytes encoding will fail here.
 
 If a string is in UTF-8 and has a byte order mark (BOM),
 then BOM will be silently removed from the output string.
@@ -37,6 +37,7 @@ Other encoding_conversion: \code{\link{stri_conv}},
 \code{\link{stri_encode}};
 \code{\link{stri_enc_fromutf32}};
 \code{\link{stri_enc_toascii}};
+\code{\link{stri_enc_tonative}};
 \code{\link{stri_enc_toutf32}};
 \code{\link{stringi-encoding}}
 }

@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
+#include "stri_string8buf.h"
 
 
 /**
@@ -59,14 +60,14 @@ SEXP stri_reverse(SEXP str)
       if (str_cont.isNA(i))
          continue;
 
-      R_len_t cursize = str_cont.get(i).size();
+      R_len_t cursize = str_cont.get(i).length();
       if (cursize > bufsize)
          bufsize = cursize;
    }
 
    // STEP 2.
    // Alloc buffer & result vector
-   String8 buf(bufsize);
+   String8buf buf(bufsize);
    SEXP ret;
    PROTECT(ret = Rf_allocVector(STRSXP, str_len));
 
