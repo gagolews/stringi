@@ -2,6 +2,15 @@ require(testthat)
 
 
 test_that("stri_enc_list, stri_enc_info", {
+   x <- c("a", rep("\u0105", 4))
+   Encoding(x) <- c("", "bytes", "UTF-8", "unknown", "latin1")
+   expect_equivalent(stri_enc_mark(x), c("ASCII", "bytes", "UTF-8", "native", "latin1"))
+   
+   expect_equivalent(stri_enc_mark(1:4), rep("ASCII", 4))
+})
+
+
+test_that("stri_enc_list, stri_enc_info", {
 
    # basic tests (ASCII, border-line):
 

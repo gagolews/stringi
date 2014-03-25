@@ -27,54 +27,56 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 \value{
 If \code{to_raw} is \code{FALSE}, then a character vector
 with encoded strings (and sensible encoding marks) is
-returned. Otherwise, you get a list of raw vectors.
+returned. Otherwise, a list of raw vectors is produced.
 }
 \description{
 These functions convert a character vector between
 encodings.
 }
 \details{
-These two functions aim to replace \R's \link{iconv} --
-note only it is slightly faster, and works in the same
-manner on all platforms. \code{stri_conv} is an alias for
-\code{stri_encode}.
+\code{stri_conv} is an alias for \code{stri_encode}.
 
-Please, refer to \code{\link{stri_enc_list}} for the list
-of supported encodings and \link{stringi-encoding} for
+These two functions aim to replace \R's
+\code{\link{iconv}}. It is not only faster, but also works
+in the same manner on all platforms.
+
+Please refer to \code{\link{stri_enc_list}} for the list of
+supported encodings and \link{stringi-encoding} for a
 general discussion.
 
-If \code{from} is either missing, \code{""}, or \code{NULL}
-and \code{str} is an atomic vector, then the input strings'
-encoding marks are used (just like in almost all
-\pkg{stringi} functions: bytes marks are disallowed). In
-other words, the input string will be converted from ASCII,
-UTF-8, or current default encoding, see
-\code{\link{stri_enc_get}}. Otherwise, the internal
-encoding marks are overridden by the given encoding. On the
-other hand, for \code{str} being a list of raw vectors, we
-assume that the input encoding is the current default
-encoding.
+If \code{str} is a character vector and \code{from} is
+either missing, \code{""}, or \code{NULL}, then the
+declared encodings are used (see
+\code{\link{stri_enc_mark}}) -- in such a case
+\code{bytes}-declared strings are disallowed. Otherwise,
+the internal encoding declarations are ignored and a
+converter selected with \code{from} is used.
 
-For \code{to_raw=FALSE}, the output strings always have
+On the other hand, for \code{str} being a raw vector or a
+list of raw vectors, we assume that the input encoding is
+the current default encoding as given by
+\code{\link{stri_enc_get}}.
+
+For \code{to_raw=FALSE}, the output strings have always
 marked encodings according to the target converter used (as
 specified by \code{to}) and the current default Encoding
 (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
 or \code{bytes} in all other cases).
 
-Note that possible problems may occur when \code{to} is set
-to e.g. UTF-16 and UTF-32, as the output strings may have
-embedded NULs. In such cases use \code{to_raw=TRUE} and
-consider specifying a byte order marker (BOM) for
-portability reasons (e.g. set \code{UTF-16} or
-\code{UTF-32} which automatically adds BOMs).
+Note that problems may occur if \code{to} indicates e.g
+UTF-16 or UTF-32, as the output strings may have embedded
+NULs. In such cases use \code{to_raw=TRUE} and consider
+specifying a byte order marker (BOM) for portability
+reasons (e.g. set \code{UTF-16} or \code{UTF-32} which
+automatically adds BOMs).
 
-Note that \code{stri_encode(as.raw(data),
-"8bitencodingname")} is a wise substitute for
-\code{\link{rawToChar}}.
+Note that \code{stri_encode(as.raw(data), "encodingname")}
+is a wise substitute for \code{\link{rawToChar}}.
 
-Currently, if an incorrect code point is found on input, it
-is replaced by the default (for that target encoding)
-substitute character and a warning is generated.
+In the current version of \pkg{stringi}, if an incorrect
+code point is found on input, it is replaced by the default
+(for that target encoding) substitute character and a
+warning is generated.
 }
 \references{
 \emph{Conversion} -- ICU User Guide,

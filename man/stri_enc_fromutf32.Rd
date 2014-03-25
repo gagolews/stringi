@@ -5,8 +5,9 @@
 stri_enc_fromutf32(vec)
 }
 \arguments{
-  \item{vec}{list of integer vectors or, for convenience, a
-  single integer vector}
+  \item{vec}{list of integer vectors (or objects coercible
+  to such vectors) or, for convenience, a single integer
+  vector}
 }
 \value{
 Returns a character vector (in UTF-8).

@@ -3,20 +3,23 @@
 
 * 0.2-1 (XXXX-XX-XX)
 
-   * [IMPORTANT CHANGE] stri_sort by default now does not include NAs
-     in output vectors, for compatibility with sort(). Moreover, none
+   * [IMPORTANT CHANGE] stri_sort now does not include NAs
+     in output vectors by default, for compatibility with sort(). Moreover, none
      of an input vector's attributes are preserved.
 
-   * stri_order and stri_sort now have an additional argument
+   * [NEW FEATURE] stri_order and stri_sort now have an additional argument
         `na_last` (defaults to TRUE and NA, respectively)
 
-   * New functions and binary operators for string comparison:
+   * [NEW FEATURE] New functions and binary operators for string comparison:
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
        stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
 
    * stri_enc_tonative - t.b.d.
 
    * stri_subst_na - t.b.d.
+
+   * [NEW FEATURE] stri_enc_mark - reads declared encodings of character strings
+        as seen by stringi.
 
    * Performance improvements in StriContainerUTF8 and StriContainerUTF16
         (they affect most other functions).

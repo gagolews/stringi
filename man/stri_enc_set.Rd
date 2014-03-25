@@ -20,9 +20,10 @@ character encoding, invisibly.
 character encoding.
 }
 \description{
-\code{stri_enc_set} sets the encoding used to decode
-strings internally (i.e. by \R) marked as Native, see
-\link{stringi-encoding}. \code{stri_enc_get} returns
+\code{stri_enc_set} sets the encoding used to re-encode
+strings internally (i.e. by \R) declared to be in native
+encoding, see \link{stringi-encoding} and
+\code{\link{stri_enc_mark}}. \code{stri_enc_get} returns
 currently used default encoding.
 }
 \details{
@@ -30,7 +31,18 @@ currently used default encoding.
 \code{\link{stri_enc_info}(NULL)$Name.friendly}.
 
 Note that changing the default encoding may have undesired
-consequences.
+consequences. Unless you are an expert user and you know
+what you are doing, \code{stri_enc_set} should only be used
+if \pkg{ICU} fails to detect your system's encoding
+correctly (while testing \pkg{stringi} we only encountered
+such a situation on a very old Solaris machine, though).
+Note that \pkg{ICU} tries to match the encoding part of the
+\code{LC_CTYPE} category as given by
+\code{\link{Sys.getlocale}}.
+
+If you set a default encoding that is not a superset of
+ASCII or it is not an 8-bit encoding, a warning will be
+generated, see \link{stringi-encoding} for discussion.
 }
 \seealso{
 Other encoding_management: \code{\link{stri_enc_info}};

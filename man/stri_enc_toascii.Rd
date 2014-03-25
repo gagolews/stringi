@@ -11,19 +11,21 @@ stri_enc_toascii(str)
 Returns a character vector.
 }
 \description{
-Converts input strings to ASCII, i.e. to strings with all
-codes <= 127.
+This function converts input strings to ASCII, i.e. to
+character strings consisting of bytes not greater than 127.
 }
 \details{
 All charcodes > 127 are replaced with ASCII SUBSTITUTE
-CHARACTER (0x1A). \R encoding marking is always used to
-determine whether an 8-bit encoding or rather UTF-8 is used
-on input.
+CHARACTER (0x1A). \R encoding declarations are always used
+to determine which encoding is assumed for each input, see
+\code{\link{stri_enc_mark}}.
 
-Bytes-marked strings are treated as 8-bit strings.
+A \code{bytes}-marked string is assumed to be encoded by an
+8-bit encoding such that it has ASCII as its subset.
 
-The SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be
-interpreted as ASCII missing value for single characters.
+Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032})
+may be interpreted as ASCII missing value for single
+characters.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},

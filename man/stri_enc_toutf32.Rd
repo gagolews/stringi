@@ -5,7 +5,8 @@
 stri_enc_toutf32(str)
 }
 \arguments{
-  \item{str}{character vector to be converted}
+  \item{str}{character vector (or an object coercible to
+  such a vector) to be converted}
 }
 \value{
 Returns a list of integer vectors.
@@ -13,11 +14,12 @@ Returns a list of integer vectors.
 \description{
 UTF-32 is a 32bit encoding in which each Unicode code point
 corresponds to exactly one integer value. This function
-converts a character vector to a list of integer vectors.
-The individual code points then may easily be manipulated.
+converts a character vector to a list of integer vectors so
+that e.g. individual code points may easily be accessed,
+changed, etc.
 }
 \details{
-\code{NA_character_}s are converted to \code{NULL}.
+Missing values are converted to \code{NULL}s.
 
 This function is roughly equivalent to a vectorized call to
 \code{utf8ToInt(enc2utf8(str))}. If you want a list of raw

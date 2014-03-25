@@ -1,6 +1,6 @@
 \name{stri_enc_tonative}
 \alias{stri_enc_tonative}
-\title{Convert To Native Encoding}
+\title{Convert Strings To Native Encoding}
 \usage{
 stri_enc_tonative(str)
 }
