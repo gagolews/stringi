@@ -40,7 +40,7 @@
 /**
  * A class to represent a temporary string buffer
  *
- * quite similar to std::string and/or  Vector<char>
+ * Quite similar to std::string and/or  Vector<char>
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-24)
  *          Separated from String8

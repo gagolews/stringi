@@ -16,17 +16,20 @@ attribute gives the \pkg{ICU} Canonical Name of an encoding
 family. The elements (character vectors) are its aliases.
 
 If \code{simplified} is \code{TRUE}, then the resulting
-list is coerced to a character vector, sorted, and its
-duplicates are removed.
+list is coerced to a character vector and sorted, and
+returned with removed duplicated entries.
 }
 \description{
-Gives encodings that are supported by \pkg{ICU}.
+Gives the list of encodings that are supported by
+\pkg{ICU}.
 }
 \details{
-Please note that apart from given encodings, \pkg{ICU}
-tries to normalize encoding specifiers. E.g. \code{"UTF8"}
-is also valid, see \link{stringi-encoding} for more
-information.
+Please note that apart from given encoding identifiers and
+their aliases, some other specifiers will be available in
+your conversion tasks. This is due to the fact that
+\pkg{ICU} tries to normalize converter names. E.g.
+\code{"UTF8"} is also valid, see \link{stringi-encoding}
+for more information.
 }
 \seealso{
 Other encoding_management: \code{\link{stri_enc_get}},

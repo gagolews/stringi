@@ -176,7 +176,7 @@ const char* stri__ucnv_getFriendlyName(const char* canname);
 SEXP stri_enc_list();
 SEXP stri_enc_info(SEXP enc);
 SEXP stri_enc_set(SEXP loc);
-
+SEXP stri_enc_mark(SEXP str);
 
 // encoding_conversion.cpp:
 SEXP    stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);

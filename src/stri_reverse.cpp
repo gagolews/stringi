@@ -41,9 +41,13 @@
  * @return character vector with every string reversed
  *
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly + StriContainerUTF8 (bug fix, do reversing manually)
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly + StriContainerUTF8 (bug fix, do reversing manually)
  */
 SEXP stri_reverse(SEXP str)
 {

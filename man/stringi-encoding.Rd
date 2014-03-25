@@ -2,26 +2,28 @@
 \alias{stringi-encoding}
 \title{Character Encodings and \pkg{stringi}}
 \description{
-This manual page explains how to deal with different
-character encodings in \pkg{stringi}. In particular you
-should note that: \itemize{ \item R lets strings in ASCII,
-UTF-8, and your platform's native encoding coexist
-peacefully. Character vector output with
+This manual page aims to explain (or at least to cast light
+on) how \pkg{stringi} deals with character strings in
+various encodings.
+
+In particular you should note that: \itemize{ \item R lets
+strings in ASCII, UTF-8, and your platform's native
+encoding coexist peacefully. Character vector output with
 \code{\link{print}}, \code{\link{cat}} etc.  silently
 reencodes each string so that it can be properly shown e.g.
-in the console.  \item Functions in \pkg{stringi} process
-each string internally in Unicode, which is a superset of
-all character representation schemes.  Even if a string is
-given in the native encoding, i.e. your platform's default
-one, it will be converted to Unicode (precisely: UTF-8 or
-UTF-16).  \item Most \pkg{stringi} functions always return
-UTF-8 encoded strings, regardless of the input encoding.
-What is more, the functions have been optimized for
-UTF-8/ASCII input (they have competetive, if not better
-performance, especially when performing more complex
-operations like string comparison, sorting, and even
-concatenation).  Thus, it is best to rely on cascading
-calls to \pkg{stringi} operations solely. }
+in the \R's console.  \item Functions in \pkg{stringi}
+process each string internally in Unicode, which is a
+superset of all character representation schemes.  Even if
+a string is given in the native encoding, i.e. your
+platform's default one, it will be converted to Unicode
+(precisely: UTF-8 or UTF-16).  \item Most \pkg{stringi}
+functions always return UTF-8 encoded strings, regardless
+of the input encoding.  What is more, the functions have
+been optimized for UTF-8/ASCII input (they have
+competetive, if not better performance, especially when
+doing more complex operations like string comparison,
+sorting, and even concatenation).  Thus, it is best to rely
+on cascading calls to \pkg{stringi} operations solely. }
 }
 \details{
 "Hundreds of encodings have been developed over the years,
@@ -56,19 +58,19 @@ In most cases, Unicode is a superset of the characters
 supported by any given codepage.
 }
 \section{UTF-8 and UTF-16}{
-  The UTF-8 encoding is the most natural choice for
-  representing Unicode characters in \R. UTF-8 has ASCII as
-  its subset (code points 1--127 are the same in both of
-  them). Code points larger than 127 are represented by
-  multi-byte sequences (from 2 to 4 bytes: not all
-  sequences of bytes are valid UTF-8, cf.
+  For portability reasons, the UTF-8 encoding is the most
+  natural choice for representing Unicode characters in \R.
+  UTF-8 has ASCII as its subset (code points 1--127 are the
+  same in both of them). Code points larger than 127 are
+  represented by multi-byte sequences (from 2 to 4 bytes:
+  not all sequences of bytes are valid UTF-8, cf.
   \code{\link{stri_enc_isutf8}}).
 
   Most of the computations in \pkg{stringi} are performed
   internally using either UTF-8 or UTF-16 encodings (this
   depends on type of service you request: some \pkg{ICU}
-  services are designed to work only with UTF-16). Thanks
-  to that choice, with \pkg{stringi} you get the same
+  services are designed only to work with UTF-16). Thanks
+  to such a choice, with \pkg{stringi} you get the same
   result on each platform, which is -- unfortunately -- not
   the case of base \R's functions (it is for example known
   that performing a regular expression search under Linux
@@ -77,7 +79,7 @@ supported by any given codepage.
   minds while developing our package!
 
   We have observed that \R correctly handles UTF-8 strings
-  regardless of your platform's Native encoding (see
+  regardless of your platform's native encoding (see
   below). Therefore, we decided that most functions in
   \pkg{stringi} will output its results in UTF-8 -- this
   speeds ups computations on cascading calls to our
@@ -112,36 +114,39 @@ supported by any given codepage.
   somehow, relying on how it represents strings.
 
   Basically, \R has a very simple encoding-marking
-  mechanism, see \link{Encoding}. There is an implicit
-  assumption that your platform's default (native) encoding
-  is always a superset of ASCII -- \pkg{stringi} checks
-  that when your native encoding is being detected
-  automatically on \pkg{ICU} initialization and each time
+  mechanism, see \code{\link{stri_enc_mark}}. There is an
+  implicit assumption that your platform's default (native)
+  encoding is always a superset of ASCII -- \pkg{stringi}
+  checks that when your native encoding is being detected
+  automatically on \pkg{ICU}'s initialization and each time
   when you change it manually by calling
   \code{\link{stri_enc_set}}.
 
   Character strings in \R (internally) can be declared to
-  be in: \itemize{ \item ASCII (here, strings consist only
-  of bytes codes not greater than 127); \item
-  \code{"UTF-8"}; \item \code{"latin1"}, i.e. ISO-8859-1
-  (Western European). } Moreover, there are two other
-  cases: \itemize{ \item \code{"bytes"} -- strings should
-  be manipulated as bytes; encoding is not set; \item
-  \code{"unknown"} (quite misleading name: no explicit
-  encoding mark) -- strings are assumed to be in your
-  platform's native (default) encoding. This can represent
-  UTF-8 if you are an OS X user, or some 8-bit Windows
-  codepage, for example. The native encoding used is
-  characterized with the LC_CTYPE category, see
+  be in: \itemize{ \item \code{UTF-8}; \item \code{latin1},
+  i.e. ISO-8859-1 (Western European); \item \code{bytes} --
+  for strings thet should be manipulated as sequences of
+  bytes. } Moreover, there are two other cases: \itemize{
+  \item ASCII -- for strings consisting only of byte codes
+  not greater than 127;- \item \code{native} (a.k.a.
+  \code{unknown} in \code{\link{Encoding}}; quite a
+  misleading name: no explicit encoding mark) -- for
+  strings that are assumed to be in your platform's native
+  (default) encoding. This can represent UTF-8 if you are
+  an OS X user, or some 8-bit Windows codepage, for
+  example. The native encoding used by \R may be determined
+  by examining the LC_CTYPE category, see
   \code{\link{Sys.getlocale}}. }
 
-  Native strings are results of inputing a string from
-  keyboard or file. This makes sense: you operating system
-  works in some encoding and provides \R with some data.
+  Intuitively, ``native'' strings result by inputing a
+  string from keyboard or file. This makes sense: you
+  operating system works in some encoding and provides \R
+  with some data.
 
   Each time when a \pkg{stringi} function encounters a
-  native string, it assumes that data should be translated
-  from the default encoding, i.e. the one returned by
+  string declared in native encoding, it assumes that the
+  input data should be translated from the default
+  encoding, i.e. the one returned by
   \code{\link{stri_enc_get}} (unless you know what you are
   doing, the default encoding should only be changed if
   autodetect fails on \pkg{stringi} load).
@@ -156,7 +161,7 @@ supported by any given codepage.
   Finally, note that R lets strings in ASCII, UTF-8, and
   your platform's native encoding coexist peacefully.
   Character vector output with \code{\link{print}},
-  \code{\link{cat}} etc.  silently reencodes each string so
+  \code{\link{cat}} etc. silently reencodes each string so
   that it can be properly shown e.g. in the console.
 }
 
@@ -174,9 +179,9 @@ supported by any given codepage.
 
   The \code{\link{stri_encode}} function allows you to
   convert between any given encodings (in some cases you
-  will obtain \code{"bytes"}-marked strings, or even lists
-  of raw vectors (i.e. for UTF-16). There are also some
-  useful more specialized functions, like
+  will obtain \code{bytes}-marked strings, or even lists of
+  raw vectors (i.e. for UTF-16). There are also some useful
+  more specialized functions, like
   \code{\link{stri_enc_toutf32}} (converts a character
   vector to a list of integers, where one code point is
   exactly one numeric value) or
