@@ -34,35 +34,8 @@
 #include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
 #include "stri_container_listraw.h"
+#include "stri_container_listint.h"
 #include "stri_string8buf.h"
-
-
-/** Convert from UTF-32 [single string, internal]
- *
- * On invalid codepoint, warning is generated and -1 is returned
- * @param data  UTF-32 codes
- * @param ndata number of codes
- * @param buf [out] output buffer
- * @param bufsize buffer size
- * @return number of bytes written
- *
- * @version 0.1-?? (Marek Gagolewski)
- */
-R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize)
-{
-   R_len_t i = 0;
-   R_len_t k = 0;
-   UBool err = FALSE;
-   while (k < ndata) {
-      UChar32 c = data[k++];
-      U8_APPEND((uint8_t*)buf, i, bufsize, c, err);
-      if (err) {
-         Rf_warning(MSG__INVALID_CODE_POINT, (int)c);
-         return -1;
-      }
-   }
-   return i;
-}
 
 
 /** Convert from UTF-32
@@ -71,60 +44,59 @@ R_len_t stri__enc_fromutf32(int* data, R_len_t ndata, char* buf, R_len_t bufsize
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
+ *          StriException friently; use StriContainerListInt
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
-   // @TODO: use STRI__ERROR_HANDLER_BEGIN
-   if (Rf_isVectorList(vec)) {
-      R_len_t n = LENGTH(vec);
-      R_len_t bufsize = 0;
-      for (R_len_t i=0; i<n; ++i) {
-         SEXP cur = VECTOR_ELT(vec, i);
-         if (isNull(cur))
-            continue;
-         if (!Rf_isInteger(cur)) // this cannot be treated with stri_prepare_arg*, as vec may be a mem-shared object
-            Rf_error(MSG__ARG_EXPECTED_INTEGER_NO_COERCION, "vec[[i]]"); // error() allowed here
-         if (LENGTH(cur) > bufsize) bufsize = LENGTH(cur);
-      }
+   vec = stri_prepare_arg_list_integer(vec, "vec");
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerListInt vec_cont(vec);
+   R_len_t vec_n = vec_cont.get_n();
 
-      bufsize = U8_MAX_LENGTH*bufsize+1;
-      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK // @TODO: Use String8
-      SEXP ret;
-      PROTECT(ret = Rf_allocVector(STRSXP, n));
-      for (R_len_t i=0; i<n; ++i) {
-         SEXP cur = VECTOR_ELT(vec, i);
-         if (isNull(cur)) {
-            SET_STRING_ELT(ret, i, NA_STRING);
-            continue;
-         }
-         R_len_t chars = stri__enc_fromutf32(INTEGER(cur), LENGTH(cur), buf, bufsize);
-         if (chars < 0)
-            SET_STRING_ELT(ret, i, NA_STRING);
-         else
-            SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf, chars, CE_UTF8));
-      }
-      delete [] buf;
-      UNPROTECT(1);
-      return ret;
+   // get required buf size
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<vec_n; ++i) {
+      if (!vec_cont.isNA(i) && vec_cont.get(i).size() > bufsize)
+         bufsize = vec_cont.get(i).size();
    }
-   else {
-      vec = stri_prepare_arg_integer(vec, "vec");  // integer vector
-      SEXP ret;
-      PROTECT(ret = Rf_allocVector(STRSXP, 1));
-
-      int* data = INTEGER(vec);
-      R_len_t ndata = LENGTH(vec);
-      R_len_t bufsize = U8_MAX_LENGTH*ndata+1;
-      char* buf = new char[bufsize]; // no call to error() between new and delete -> OK // @TODO: Use String8
-      R_len_t chars = stri__enc_fromutf32(data, ndata, buf, bufsize);
-      if (chars < 0)
-         SET_STRING_ELT(ret, 0, NA_STRING);
+   bufsize = U8_MAX_LENGTH*bufsize+1; // this will be sufficient
+   String8buf buf(bufsize);
+   char* bufdata = buf.data();
+   
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vec_n));
+   
+   for (R_len_t i=0; i<vec_n; ++i) {
+      if (vec_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      const int* cur_data = vec_cont.get(i).data();
+      R_len_t    cur_n    = vec_cont.get(i).size();
+      UChar32 c = (UChar32)0;
+      R_len_t j = 0;
+      R_len_t k = 0;
+      UBool err = FALSE;
+      while (!err && k < cur_n) {
+         c = cur_data[k++];
+         U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);
+      }
+      
+      if (err) {
+         Rf_warning(MSG__INVALID_CODE_POINT, (int)c);
+         SET_STRING_ELT(ret, i, NA_STRING);
+      }
       else
-         SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf, chars, CE_UTF8));
-      delete [] buf;
-      UNPROTECT(1);
-      return ret;
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, j, CE_UTF8));
    }
+   
+   STRI__UNPROTECT_ALL;
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -140,6 +112,8 @@ SEXP stri_enc_fromutf32(SEXP vec)
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
+   // @TODO: rewrite
+   
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
 
@@ -444,7 +418,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 /**
  * Convert character vector between given encodings
  *
- * @param str     input character vector or list of raw vectors
+ * @param str     input character/raw vector or list of raw vectors
  * @param from  source encoding, \code{NULL} or \code{""} for default enc
  * @param to    target encoding, \code{NULL} or \code{""} for default enc
  * @param to_raw single logical, should list of raw vectors be returned?
@@ -470,6 +444,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    if (!selected_from && Rf_isVectorAtomic(str))
       return stri_encode_from_marked(str, to, to_raw);
 
+   // raw vector, character vector, or list of raw vectors:
    str = stri_prepare_arg_list_raw(str, "str");
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");

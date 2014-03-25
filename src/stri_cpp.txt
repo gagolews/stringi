@@ -5,6 +5,7 @@ stri_common.cpp \
 stri_compare.cpp \
 stri_container_base.cpp \
 stri_container_bytesearch.cpp \
+stri_container_listint.cpp \
 stri_container_listraw.cpp \
 stri_container_listutf8.cpp \
 stri_container_regex.cpp \

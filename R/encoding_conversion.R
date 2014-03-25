@@ -154,31 +154,33 @@ stri_enc_toutf32 <- function(str) {
 #' Convert From UTF-32
 #'
 #' @description
-#' This function converts a list of integer vectors,
-#' representing UTF-32 code points, to a character vector.
+#' This function converts integer vectors,
+#' representing sequences of UTF-32 code points, to UTF-8 strings.
 #'
 #' @details
 #' UTF-32 is a 32bit encoding in which each Unicode code point
 #' corresponds to exactly one integer value.
 #'
-#' This functions roughly acts like a vectorized version of
-#' \code{\link{intToUtf8}},
-#' as usual in \pkg{stringi}, it returns character strings
-#' in UTF-8.
-#' If you have a list of raw vectors on input,
-#' use \code{\link{stri_encode}}.
-#'
+#' This function roughly acts like a vectorized version of
+#' \code{\link{intToUtf8}}. As usual in \pkg{stringi},
+#' it returns character strings in UTF-8.
+#' 
 #'
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
-#' to internally mark the end of a string (in the C API).
+#' internally to mark the end of a string (in the C API).
 #'
 #' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
 #'
 #' \code{NULL}s in the input list are converted to \code{NA_character_}.
+#' 
+#' See also \code{\link{stri_encode}} for decoding arbitrary byte sequences
+#' from any given encoding.
+#'
 #'
 #' @param vec list of integer vectors (or objects coercible to such vectors)
-#'    or, for convenience, a single integer vector
+#'    or \code{NULL}s. For convenience, a single integer vector can also
+#'    be given.
 #' @return Returns a character vector (in UTF-8).
 #'
 #' @family encoding_conversion

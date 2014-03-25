@@ -40,14 +40,14 @@
  * or character vector argument
  *
  * Useful when dealing with raw data, like in string encoding
- * conversion or detection.
+ * conversion or detection. For use e.g. with StriContainerListRaw.
  *
  * If the object cannot be coerced, then an error will be generated
  *
  * WARNING: this fuction is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
- * @param x a list
+ * @param x a list /  raw vector / character vector
  * @param argname argument name (message formatting)
  * @return coercion is only done on character vector input. otherwise
  * check only is performed
@@ -68,13 +68,66 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
          SEXP cur = VECTOR_ELT(x, i);
          if (isNull(cur))
             continue; // NA
-         if (!isRaw(cur))  // this cannot be treated with stri_prepare_arg*, as str may be a mem-shared object
-            Rf_error(MSG__ARG_EXPECTED_RAW_NO_COERCION, argname);  // error() allowed here
+         if (!isRaw(cur))
+            Rf_error(MSG__ARG_EXPECTED_RAW_IN_LIST_NO_COERCION, argname);  // error() allowed here
       }
       return x;
    }
    else
       return stri_prepare_arg_string(x, argname);
+}
+
+
+/**
+ * Prepare list of integer vectors or an integer vector argument
+ *
+ *
+ * If the object cannot be coerced, then an error will be generated
+ *
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ * @param x a list of integer vectors / integer vector
+ * @param argname argument name (message formatting)
+ * @return a list vector
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
+ */
+SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
+{
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+      
+   if (isNull(x)) {
+       return x;
+   }
+   else if (Rf_isVectorList(x)) {
+      R_len_t narg = LENGTH(x);
+      if (narg <= 0) return x;
+   
+      if (NAMED(x) > 0) {
+         // the object should be copied
+         SEXP xold = x;
+         PROTECT(x = Rf_allocVector(VECSXP, narg));
+         for (R_len_t i=0; i<narg; ++i) {
+            if (isNull(VECTOR_ELT(xold, i)))
+               SET_VECTOR_ELT(x, i, R_NilValue);
+            // @TODO: stri_prepare_arg_integer may call Rf_error, no UNPROTECT
+            else
+               SET_VECTOR_ELT(x, i, stri_prepare_arg_integer(VECTOR_ELT(xold, i), argname));
+         }
+         UNPROTECT(1);
+      }
+      else {
+         // the object may be modified in place
+         for (R_len_t i=0; i<narg; ++i)
+            if (!isNull(VECTOR_ELT(x, i)))
+               SET_VECTOR_ELT(x, i, stri_prepare_arg_integer(VECTOR_ELT(x, i), argname));
+      }
+      return x;
+   }
+   else
+      return stri_prepare_arg_integer(x, argname);
 }
 
 
@@ -89,7 +142,7 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
  * WARNING: this fuction is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
- * @param x a list
+ * @param x a list of strings
  * @param argname argument name (message formatting)
  * @return a list vector
  *
@@ -110,8 +163,10 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
       // the object should be copied
       SEXP xold = x;
       PROTECT(x = Rf_allocVector(VECSXP, narg));
-      for (R_len_t i=0; i<narg; ++i)
+      for (R_len_t i=0; i<narg; ++i) {
+         // @TODO: stri_prepare_arg_string may call Rf_error, no UNPROTECT
          SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(xold, i), argname));
+      }
       UNPROTECT(1);
    }
    else {

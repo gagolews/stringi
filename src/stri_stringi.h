@@ -130,6 +130,7 @@ SEXP    stri_isempty(SEXP str);
 
 // prepare_arg.cpp:
 SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
+SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
 SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);
 SEXP        stri_prepare_arg_string(SEXP x,           const char* argname);
 SEXP        stri_prepare_arg_double(SEXP x,           const char* argname);
@@ -181,8 +182,6 @@ SEXP stri_enc_mark(SEXP str);
 // encoding_conversion.cpp:
 SEXP    stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
 SEXP    stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
-R_len_t stri__enc_fromutf32(int* data, R_len_t ndata,
-                            char* buf, R_len_t bufsize);
 SEXP    stri_enc_fromutf32(SEXP str);
 SEXP    stri_enc_toutf32(SEXP str);
 SEXP    stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);

@@ -68,12 +68,17 @@ test_that("stri_enc_fromutf32", {
 
    expect_identical(stri_enc_fromutf32(integer(0)), "")
    expect_identical(stri_enc_fromutf32(c(65L, 66L, 67L)), "ABC")
+   expect_identical(stri_enc_fromutf32(c("65", "66", "67")), "ABC")
    expect_identical(stri_enc_fromutf32(c(43,234,649,63,23532,23632)), intToUtf8(c(43,234,649,63,23532,23632)))
-   expect_warning(stri_enc_fromutf32(c(43,234,649,63,23532,233643642)))
+   expect_warning(stri_enc_fromutf32(list(c(43,234,649,63,23532,233643642), 65)))
+   suppressWarnings(expect_identical(stri_enc_fromutf32(list(c(43,234,649,63,23532,233643642), 65)),
+      c(NA, "A")))
 
    expect_identical(stri_enc_fromutf32(list()), character(0))
    expect_identical(stri_enc_fromutf32(list(NULL)), NA_character_)
-   expect_identical(stri_enc_fromutf32(list(65:67, NULL)), c("ABC", NA_character_))
+   expect_identical(stri_enc_fromutf32(NULL), NA_character_)
+   expect_identical(stri_enc_fromutf32(list(65, 66, 67)), LETTERS[1:3])
+   expect_identical(stri_enc_fromutf32(list(65:67, NULL, 65:67, NULL)), rep(c("ABC", NA_character_), 2))
 })
 
 

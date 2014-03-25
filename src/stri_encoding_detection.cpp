@@ -900,7 +900,7 @@ struct EncGuess {
 
 /** Detect encoding with initial guess
  *
- * @param str character vector
+ * @param str character or raw vector or a list of raw vectors
  * @param loc locale id
  *
  * @return list
@@ -916,6 +916,7 @@ struct EncGuess {
  */
 SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {
+   // raw vector, character vector, or list of raw vectors:
    str = stri_prepare_arg_list_raw(str, "str");
    const char* qloc = stri__prepare_arg_locale(loc, "locale", true, true); // allowdefault, allowna
 

@@ -30,67 +30,82 @@
  */
 
 
-#ifndef __stri_container_listraw_h
-#define __stri_container_listraw_h
+#ifndef __stri_intvec_h
+#define __stri_intvec_h
 
-#include "stri_container_base.h"
 
 
 
 
 /**
- * Contains R lists of raw vectors, single raw vectors,
- * or character string vectors treated as "byte"-encoded.
- * Useful for encoding conversion or detection.
- * Each string is represented by the String8 class,
- * with shallow copy of byte data.
+ * A class to represent an integer vector or NULL/NA
  *
- * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
+ * Currently each int vector is read-only.
+ * It may be used as a simple wrapper for R integer vectors.
  * 
- * @version 0.2-1  (Marek Gagolewski, 2014-03-25)
- *          data as String8* and not String8** (performance gain)
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
  */
-class StriContainerListRaw : public StriContainerBase {
+class IntVec  {
 
    private:
-
-      String8* data;
-
+   
+      const int* m_data;
+      R_len_t m_n;
 
    public:
 
-      StriContainerListRaw();
-      StriContainerListRaw(SEXP rlist);
-      StriContainerListRaw(StriContainerListRaw& container);
-      ~StriContainerListRaw();
-      StriContainerListRaw& operator=(StriContainerListRaw& container);
-
-
-      /** check if the vectorized ith element is NA
-       * @param i index
-       * @return true if is NA
+      /** default constructor
+       *
        */
-      inline bool isNA(R_len_t i) const {
-#ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
-            throw StriException("StriContainerListRaw::isNA(): INDEX OUT OF BOUNDS");
-#endif
-         return (data[i%n].isNA());
+      IntVec() {
+         this->m_data = NULL;
+         this->m_n = 0;
       }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string, read only
+      /** used to set data
+       *
+       * @param data
+       * @param n
        */
-      const String8& get(R_len_t i) const {
+      void initialize(const int* data, R_len_t n)
+      {
+         this->m_data = data;
+         this->m_n = n;
+      }
+      
+
+      /** constructor
+       * @param str character buffer
+       * @param n buffer length (not including NUL)
+       * @param memalloc should a deep copy of the buffer be done?
+       */
+      IntVec(const int* data, R_len_t n)
+      {
+         initialize(data, n);
+      }
+      
+      inline bool isNA() const
+      {
+         return m_data == NULL;
+      }
+      
+      inline const int* data() const
+      {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
-            throw StriException("StriContainerListRaw::get(): INDEX OUT OF BOUNDS");
-         if (data[i%n].isNA())
-            throw StriException("StriContainerListRaw::get(): isNA");
+         if (isNA())
+            throw StriException("IntVec::isNA() in data()");
 #endif
-         return data[i%n];
+         return this->m_data;
+      }
+
+      inline R_len_t size() const
+      {
+#ifndef NDEBUG
+         if (isNA())
+            throw StriException("IntVec::isNA() in size()");
+#endif
+         return this->m_n; 
       }
 };
 
