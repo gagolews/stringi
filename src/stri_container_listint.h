@@ -30,50 +30,46 @@
  */
 
 
-#ifndef __stri_container_listraw_h
-#define __stri_container_listraw_h
+#ifndef __stri_container_listint_h
+#define __stri_container_listint_h
 
 #include "stri_container_base.h"
-
+#include "stri_intvec.h"
 
 
 
 /**
- * Contains R lists of raw vectors, single raw vectors,
- * or character string vectors treated as "byte"-encoded.
+ * Contains R lists of integer vectors or single integer vectors.
  * Useful for encoding conversion or detection.
- * Each string is represented by the String8 class,
+ * Each string is represented by the IntVec class,
  * with shallow copy of byte data.
- *
- * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
- * 
+
  * @version 0.2-1  (Marek Gagolewski, 2014-03-25)
- *          data as String8* and not String8** (performance gain)
  */
-class StriContainerListRaw : public StriContainerBase {
+class StriContainerListInt : public StriContainerBase {
 
    private:
 
-      String8* data;
+      IntVec* data;
 
 
    public:
 
-      StriContainerListRaw();
-      StriContainerListRaw(SEXP rlist);
-      StriContainerListRaw(StriContainerListRaw& container);
-      ~StriContainerListRaw();
-      StriContainerListRaw& operator=(StriContainerListRaw& container);
-
-
-      /** check if the vectorized ith element is NA
+      StriContainerListInt();
+      StriContainerListInt(SEXP rlist);
+      StriContainerListInt(StriContainerListInt& container);
+      ~StriContainerListInt();
+      StriContainerListInt& operator=(StriContainerListInt& container);
+      
+      
+      /** check if the vectorized ith element is NULL/NA
        * @param i index
        * @return true if is NA
        */
       inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            throw StriException("StriContainerListRaw::isNA(): INDEX OUT OF BOUNDS");
+            throw StriException("StriContainerListInt::isNA(): INDEX OUT OF BOUNDS");
 #endif
          return (data[i%n].isNA());
       }
@@ -83,12 +79,12 @@ class StriContainerListRaw : public StriContainerBase {
        * @param i index
        * @return string, read only
        */
-      const String8& get(R_len_t i) const {
+      const IntVec& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
-            throw StriException("StriContainerListRaw::get(): INDEX OUT OF BOUNDS");
+            throw StriException("StriContainerListInt::get(): INDEX OUT OF BOUNDS");
          if (data[i%n].isNA())
-            throw StriException("StriContainerListRaw::get(): isNA");
+            throw StriException("StriContainerListInt::get(): isNA");
 #endif
          return data[i%n];
       }

@@ -188,7 +188,7 @@ class String8  {
       {
 #ifndef NDEBUG
          if (isNA())
-            throw StriException("string8::isNA() in c_str()");
+            throw StriException("String8::isNA() in c_str()");
 #endif
          return this->m_str;
       }
@@ -198,7 +198,7 @@ class String8  {
       {
 #ifndef NDEBUG
          if (isNA())
-            throw StriException("string8::isNA() in length()");
+            throw StriException("String8::isNA() in length()");
 #endif
          return this->m_n; 
       }

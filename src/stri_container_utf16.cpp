@@ -49,7 +49,7 @@ StriContainerUTF16::StriContainerUTF16()
 
 /** container for nrecycle fresh, brand new, writable UnicodeStrings
  *
- * Each string is initially NA.
+ * Each string is initially empty.
  *
  * @param nrecycle number of strings
  */
@@ -64,7 +64,7 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 
 
 /**
- * Construct String Container from R character vector
+ * Construct String Container from an R character vector
  *
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
@@ -136,6 +136,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          // This wasn't faster than the ucnvASCII approach.
          
          // Performance improvement attempt #3:
+         // slightly slower than ucnvASCII
          // R_len_t curs_n = LENGTH(curs);
          // const char* curs_s = CHAR(curs);
          // this->str[i].remove(); // unset bogus (NA)

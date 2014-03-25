@@ -31,14 +31,14 @@
 
 
 #include "stri_stringi.h"
-#include "stri_container_listraw.h"
+#include "stri_container_listint.h"
 
 
 /**
  * Default constructor
  *
  */
-StriContainerListRaw::StriContainerListRaw()
+StriContainerListInt::StriContainerListInt()
    : StriContainerBase()
 {
    data = NULL;
@@ -46,54 +46,44 @@ StriContainerListRaw::StriContainerListRaw()
 
 
 /**
- * Construct String Container from R object
+ * Construct Container from R cobject
  * @param rstr R object
  *
  * if you want nrecycle > n, call set_nrecycle
  */
-StriContainerListRaw::StriContainerListRaw(SEXP rstr)
+StriContainerListInt::StriContainerListInt(SEXP rstr)
 {
    this->data = NULL;
 
    if (isNull(rstr)) {
       this->init_Base(1, 1, true);
-      this->data = new String8[this->n]; // 1 string, NA
+      this->data = new IntVec[this->n]; // 1 vector, NA/NULL
    }
-   else if (isRaw(rstr)) {
+   else if (Rf_isInteger(rstr)) {
       this->init_Base(1, 1, true);
-      this->data = new String8[this->n];
-      this->data[0].initialize((const char*)RAW(rstr), LENGTH(rstr), false); // shallow copy
+      this->data = new IntVec[this->n];
+      this->data[0].initialize((const int*)INTEGER(rstr), LENGTH(rstr)); // shallow copy
    }
-   else if (Rf_isVectorList(rstr)) {
+   else // if (Rf_isVectorList(rstr)) -- args already checked
+   {
       R_len_t nv = LENGTH(rstr);
       this->init_Base(nv, nv, true);
-      this->data = new String8[this->n];
+      this->data = new IntVec[this->n];
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP cur = VECTOR_ELT(rstr, i);
          if (!isNull(cur)) 
-            this->data[i].initialize((const char*)RAW(cur), LENGTH(cur), false); // shallow copy
-         // else leave as-is, i.e. NA
-      }
-   }
-   else { // it's surely a character vector (args have been checked)
-      R_len_t nv = LENGTH(rstr);
-      this->init_Base(nv, nv, true);
-      this->data = new String8[this->n];
-      for (R_len_t i=0; i<this->n; ++i) {
-         SEXP cur = STRING_ELT(rstr, i);
-         if (cur != NA_STRING)
-            this->data[i].initialize(CHAR(cur), LENGTH(cur), false); // shallow copy
-         // else leave as-is, i.e. NA
+            this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy
+         // else leave as-is, i.e. NULL/NA
       }
    }
 }
 
 
-StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
+StriContainerListInt::StriContainerListInt(StriContainerListInt& container)
    :    StriContainerBase((StriContainerBase&)container)
 {
    if (container.data) {
-      this->data = new String8[this->n];
+      this->data = new IntVec[this->n];
       for (int i=0; i<this->n; ++i) {
          this->data[i] = container.data[i];
       }
@@ -106,13 +96,13 @@ StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
 
 
 
-StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& container)
+StriContainerListInt& StriContainerListInt::operator=(StriContainerListInt& container)
 {
-   this->~StriContainerListRaw();
+   this->~StriContainerListInt();
    (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
    if (container.data) {
-      this->data = new String8[this->n];
+      this->data = new IntVec[this->n];
       for (int i=0; i<this->n; ++i) {
          this->data[i] = container.data[i];
       }
@@ -125,7 +115,7 @@ StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& cont
 
 
 
-StriContainerListRaw::~StriContainerListRaw()
+StriContainerListInt::~StriContainerListInt()
 {
    if (data) {
       delete [] data;
