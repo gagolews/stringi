@@ -29,47 +29,45 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)
+
+# Check R encoding marking [internal, DEBUG only]
+#
+# This is an internal function (no-export & no-manual) - test how R marks
+# ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
+#
+# Results are printed on STDERR
+#
+# @param str character vector
+# @return who cares
+.stri_test_Rmark <- function(str) {
+   invisible(.Call("stri_test_Rmark", str, PACKAGE="stringi"))
+}
 
 
-# # Check R encoding marking [internal, DEBUG only]
-# #
-# # This is an internal function (no-export & no-manual) - test how R marks
-# # ASCII/LATIN1/UTF8/BYTES encodings (see also \code{?Encoding}).
-# #
-# # Results are printed on STDERR
-# #
-# # @param str character vector
-# # @return who cares
-# stri_test_Rmark <- function(str) {
-#    invisible(.Call("stri_test_Rmark", str, PACKAGE="stringi"))
-# }
+
+# For testing StriContainerUTF16's performance [internal, DEBUG only]
 #
+# @param str character vector
+# @return who cares
+.stri_test_StriContainerUTF16 <- function(str) {
+   .Call("stri_test_UnicodeContainer16", str, PACKAGE="stringi")
+}
+
+
+# For testing StriContainerUTF8's performance [internal, DEBUG only]
 #
+# @param str character vector
+# @return who cares
+.stri_test_StriContainerUTF8 <- function(str) {
+   .Call("stri_test_UnicodeContainer8", str, PACKAGE="stringi")
+}
+
+
+
+# For testing .Call performance [internal, DEBUG only]
 #
-# # For testing StriContainerUTF16's performance [internal, DEBUG only]
-# #
-# # @param str character vector
-# # @return who cares
-# stri_test_UnicodeContainer16 <- function(str) {
-#    .Call("stri_test_UnicodeContainer16", str, PACKAGE="stringi")
-# }
-#
-#
-# # For testing StriContainerUTF8's performance [internal, DEBUG only]
-# #
-# # @param str character vector
-# # @return who cares
-# stri_test_UnicodeContainer8 <- function(str) {
-#    .Call("stri_test_UnicodeContainer8", str, PACKAGE="stringi")
-# }
-#
-#
-#
-# # For testing .Call performance [internal, DEBUG only]
-# #
-# # @param str some object
-# # @return \code{str}
-# stri_test_returnasis <- function(x) {
-#    .Call("stri_test_returnasis", x, PACKAGE="stringi")
-# }
+# @param str some object
+# @return \code{str}
+.stri_test_returnasis <- function(x) {
+   .Call("stri_test_returnasis", x, PACKAGE="stringi")
+}
