@@ -34,17 +34,14 @@
 #include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
 
+
 /** dummy fun to measure the performance of .Call
  *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_test_returnasis(SEXP x)
 {
-#ifndef NDEBUG
    return x;
-#else
-   Rf_error("This function is enabled only if NDEBUG is undef.");
-   return x;  // x here avoids compiler warning
-#endif
 }
 
 
@@ -55,7 +52,7 @@ SEXP stri_test_returnasis(SEXP x)
  *
  *  Results are printed on STDERR
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_test_Rmark(SEXP s)
 {
@@ -84,39 +81,35 @@ SEXP stri_test_Rmark(SEXP s)
 }
 
 
+
 /** for testing efficiency of StriContainerUTF16 [internal]
+ * 
  * @param str character vector
  * @return R_NilValue
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
-#ifndef NDEBUG
    str = stri_prepare_arg_string(str, "str");
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 ss(str, LENGTH(str));
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
-#else
-   Rf_error("This function is enabled only if NDEBUG is undef.");
-   return str; // str here avoids compiler warning
-#endif
 }
 
 
 /** for testing efficiency of StriContainerUTF8  [internal]
  * @param str character vector
  * @return R_NilValue
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
-#ifndef NDEBUG
    str = stri_prepare_arg_string(str, "str");
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 ss(str, LENGTH(str));
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
-#else
-   Rf_error("This function is enabled only if NDEBUG is undef.");
-   return str;  // str here avoids compiler warning
-#endif
 }
