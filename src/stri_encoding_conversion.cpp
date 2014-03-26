@@ -37,6 +37,7 @@
 #include "stri_container_listint.h"
 #include "stri_string8buf.h"
 
+#include <vector>
 
 /** Convert from UTF-32
  *
@@ -109,11 +110,13 @@ SEXP stri_enc_fromutf32(SEXP vec)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-26)
+ *          use vector<int> buf instaed of R_alloc;
+ *          warn and set NULL on improper UTF-8 byte sequences
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
-   // @TODO: rewrite
-   
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
 
@@ -126,40 +129,40 @@ SEXP stri_enc_toutf32(SEXP str)
        R_len_t ni = str_cont.get(i).length();
        if (ni > bufsize) bufsize = ni;
    }
-
-   bufsize = bufsize + 1; // at most 4 times too large... well, has to be
-   int* buf = (int*)R_alloc(bufsize, (int)sizeof(int)); // @TODO: Use String8
+   std::vector<int> buf(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
+   // deque<UChar32> was slower than using a common, over-sized buf
 
    SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(VECSXP, n));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, n)); // all
 
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i)) {
+   for (R_len_t i=0; i<n; ++i) {
 
-      if (str_cont.isNA(i)) continue; // leave NULL
+      if (str_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, R_NilValue);
+         continue;
+      }
 
-//      deque<UChar32> chars; // this is slower than using a common, over-sized buf
-
-      UChar32 c;
+      UChar32 c = 0;
       const char* s = str_cont.get(i).c_str();
       R_len_t sn = str_cont.get(i).length();
       R_len_t j = 0;
       R_len_t k = 0;
-      while (j < sn) {
+      while (c >= 0 && j < sn) {
          U8_NEXT(s, j, sn, c);
-//         if (c < 0) .............................................. @TODO
          buf[k++] = (int)c;
-//         chars.push_back(c);
       }
-
-      SEXP conv;
-      STRI__PROTECT(conv = Rf_allocVector(INTSXP, k /*chars.size()*/));
-      memcpy(INTEGER(conv), buf, (size_t)sizeof(int)*k);
-//      for (deque<UChar32>::iterator it = chars.begin(); it != chars.end(); ++it)
-//         *(conv_tab++) = (int)*it;
-      SET_VECTOR_ELT(ret, i, conv);
-      STRI__UNPROTECT(1);
+      
+      if (c < 0) {
+         Rf_warning(MSG__INVALID_UTF8);
+         SET_VECTOR_ELT(ret, i, R_NilValue);
+      }
+      else {
+         SEXP conv;
+         STRI__PROTECT(conv = Rf_allocVector(INTSXP, k));
+         memcpy(INTEGER(conv), buf.data(), (size_t)sizeof(int)*k);
+         SET_VECTOR_ELT(ret, i, conv);
+         STRI__UNPROTECT(1);
+      }
    }
 
    STRI__UNPROTECT_ALL

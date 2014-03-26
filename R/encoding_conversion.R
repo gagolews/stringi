@@ -131,16 +131,20 @@ stri_conv <- stri_encode
 #' individual code points may easily be accessed, changed, etc.
 #'
 #' @details
-#' Missing values are converted to \code{NULL}s.
-#'
+#' See \code{\link{stri_enc_fromutf32}} for a dual operation.
+#' 
 #' This function is roughly equivalent to a vectorized call
-#' to \code{utf8ToInt(enc2utf8(str))}.
+#' to \code{\link{utf8ToInt}(enc2utf8(str))}.
 #' If you want a list of raw vector on output,
 #' use \code{\link{stri_encode}}.
+#' 
+#' Unlike \code{utf8ToInt}, if improper UTF-8 byte sequences are detected,
+#' a corresponding element is set to NULL and a warning is given.
 #'
 #' @param str character vector (or an object coercible to such a vector)
 #'        to be converted
 #' @return Returns a list of integer vectors.
+#' Missing values are converted to \code{NULL}s.
 #'
 #' @family encoding_conversion
 #' @export
@@ -164,7 +168,7 @@ stri_enc_toutf32 <- function(str) {
 #' This function roughly acts like a vectorized version of
 #' \code{\link{intToUtf8}}. As usual in \pkg{stringi},
 #' it returns character strings in UTF-8.
-#' 
+#' See \code{\link{stri_enc_toutf32}} for a dual operation.
 #'
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
 #' internally to mark the end of a string (in the C API).
@@ -172,7 +176,6 @@ stri_enc_toutf32 <- function(str) {
 #' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
 #'
-#' \code{NULL}s in the input list are converted to \code{NA_character_}.
 #' 
 #' See also \code{\link{stri_encode}} for decoding arbitrary byte sequences
 #' from any given encoding.
@@ -182,6 +185,7 @@ stri_enc_toutf32 <- function(str) {
 #'    or \code{NULL}s. For convenience, a single integer vector can also
 #'    be given.
 #' @return Returns a character vector (in UTF-8).
+#' \code{NULL}s in the input list are converted to \code{NA_character_}.
 #'
 #' @family encoding_conversion
 #' @export
