@@ -26,12 +26,10 @@ This function roughly acts like a vectorized version of
 returns character strings in UTF-8. See
 \code{\link{stri_enc_toutf32}} for a dual operation.
 
-Note that \code{0}s are not allowed in \code{vec}, as they
-are used internally to mark the end of a string (in the C
-API).
-
 If an incorrect code point is given, a warning is generated
-and a string is set to \code{NA}.
+and a string is set to \code{NA}. Note that \code{0}s are
+not allowed in \code{vec}, as they are used internally to
+mark the end of a string (in the C API).
 
 See also \code{\link{stri_encode}} for decoding arbitrary
 byte sequences from any given encoding.

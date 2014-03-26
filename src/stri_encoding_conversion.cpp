@@ -85,6 +85,9 @@ SEXP stri_enc_fromutf32(SEXP vec)
       while (!err && k < cur_n) {
          c = cur_data[k++];
          U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);
+         
+         // Rf_mkCharLenCE detects embedded nuls, but stops execution completely
+         if (c == 0) err = TRUE;
       }
       
       if (err) {
@@ -125,9 +128,9 @@ SEXP stri_enc_toutf32(SEXP str)
 
    R_len_t bufsize = 0;
    for (R_len_t i=0; i<n; ++i) {
-       if (str_cont.isNA(i)) continue;
-       R_len_t ni = str_cont.get(i).length();
-       if (ni > bufsize) bufsize = ni;
+      if (str_cont.isNA(i)) continue;
+      R_len_t ni = str_cont.get(i).length();
+      if (ni > bufsize) bufsize = ni;
    }
    std::vector<int> buf(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
    // deque<UChar32> was slower than using a common, over-sized buf
@@ -185,54 +188,83 @@ SEXP stri_enc_toutf32(SEXP str)
  *
  * @version 0.1-XX (Marek Gagolewski, 2013-06-16)
  *                  make StriException-friendly
+ * 
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-26)
+ *                 Use one String8buf;
+ *                 is_unknown_8bit_logical and UTF-8 tries now to remove BOMs
  */
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
 {
+   //@TODO: add `validate` arg?
+   // TRUE: substitute with U+FFFD
+   // FALSE: do not validate
+   // NA: substitute string with NA?
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
    bool is_unknown_8bit_logical =
       stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
 
    STRI__ERROR_HANDLER_BEGIN
-   if (is_unknown_8bit_logical) {
+   if (!is_unknown_8bit_logical) {
+      // Trivial - everything we need is in StriContainerUTF8 :)
+      // which removes BOMs silently
+      StriContainerUTF8 str_cont(str, n);
+      return str_cont.toR();
+   }
+   else {
+      R_len_t bufsize = 0;
+      for (R_len_t i=0; i<n; ++i) {
+         SEXP curs = STRING_ELT(str, i);
+         if (curs == NA_STRING || IS_ASCII(curs) || IS_UTF8(curs))
+            continue;
+            
+         R_len_t ni = LENGTH(curs);
+         if (ni > bufsize) bufsize = ni;
+      }
+      String8buf buf(bufsize*3); // either 1 byte < 127 or U+FFFD == 3 bytes UTF-8
+   
       SEXP ret;
-      PROTECT(ret = Rf_allocVector(STRSXP, n));
+      STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
          if (curs == NA_STRING) {
             SET_STRING_ELT(ret, i, NA_STRING);
             continue;
          }
-         else if (IS_ASCII(curs) || IS_UTF8(curs)) {
-            SET_STRING_ELT(ret, i, curs);
-         }
-         else { // some 8-bit encoding
-            R_len_t curn = LENGTH(curs);
-            const char* curs_tab = CHAR(curs);
-            // TODO: buffer reuse....
-            String8buf buf(curn*3+1); // one byte -> either one byte or FFFD, which is 3 bytes in UTF-8
-            R_len_t k = 0;
-            for (R_len_t j=0; j<curn; ++j) {
-               if (U8_IS_SINGLE(curs_tab[j]))
-                  buf.data()[k++] = curs_tab[j];
-               else { // 0xEF 0xBF 0xBD
-                  buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
-                  buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
-                  buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
-               }
+         
+         if (IS_ASCII(curs) || IS_UTF8(curs)) {
+            R_len_t n = LENGTH(curs);
+            const char* str = CHAR(curs);
+            if (n >= 3 &&
+               (uint8_t)(str[0]) == UTF8_BOM_BYTE1 &&
+               (uint8_t)(str[1]) == UTF8_BOM_BYTE2 &&
+               (uint8_t)(str[2]) == UTF8_BOM_BYTE3) {
+               // has BOM - get rid of it
+               SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str+3, n-3, CE_UTF8));
             }
-            SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8));
+            else
+               SET_STRING_ELT(ret, i, curs);
+            
+            continue;
          }
+         
+         // otherwise, we have an 8-bit encoding
+         R_len_t curn = LENGTH(curs);
+         const char* curs_tab = CHAR(curs);
+         R_len_t k = 0;
+         for (R_len_t j=0; j<curn; ++j) {
+            if (U8_IS_SINGLE(curs_tab[j]))
+               buf.data()[k++] = curs_tab[j];
+            else { // 0xEF 0xBF 0xBD
+               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
+               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
+               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
+            }
+         }
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8));
       }
-      UNPROTECT(1);
+      STRI__UNPROTECT_ALL
       return ret;
-   }
-   else {
-      // Trivial - everything we need is in StriContainerUTF8 :)
-      StriContainerUTF8 str_cont(str, n);
-      // BTW, performance gain could be achieved if leaving ASCII and UTF-8
-      // alone and only focussing on latin1 and unknown
-      return str_cont.toR();
    }
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -258,7 +290,7 @@ SEXP stri_enc_toascii(SEXP str)
 
    STRI__ERROR_HANDLER_BEGIN
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, n));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       if (curs == NA_STRING) {
@@ -300,7 +332,7 @@ SEXP stri_enc_toascii(SEXP str)
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
       }
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

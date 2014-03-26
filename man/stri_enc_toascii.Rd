@@ -15,13 +15,13 @@ This function converts input strings to ASCII, i.e. to
 character strings consisting of bytes not greater than 127.
 }
 \details{
-All charcodes > 127 are replaced with ASCII SUBSTITUTE
-CHARACTER (0x1A). \R encoding declarations are always used
-to determine which encoding is assumed for each input, see
-\code{\link{stri_enc_mark}}.
+All code points greater than 127 are replaced with ASCII
+SUBSTITUTE CHARACTER (0x1A). \R encoding declarations are
+always used to determine which encoding is assumed for each
+input, see \code{\link{stri_enc_mark}}.
 
-A \code{bytes}-marked string is assumed to be encoded by an
-8-bit encoding such that it has ASCII as its subset.
+A \code{bytes}-marked string is assumed to be represented
+by a 8-bit encoding such that it has ASCII as its subset.
 
 Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032})
 may be interpreted as ASCII missing value for single
