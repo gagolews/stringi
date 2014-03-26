@@ -81,6 +81,7 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
 /**
  * Prepare list of integer vectors or an integer vector argument
  *
+ *  For use e.g. with StriContainerListInt.
  *
  * If the object cannot be coerced, then an error will be generated
  *
