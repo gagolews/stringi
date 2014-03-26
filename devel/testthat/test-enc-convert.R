@@ -78,6 +78,9 @@ test_that("stri_enc_fromutf32", {
    expect_warning(stri_enc_fromutf32(list(c(43,234,649,63,23532,233643642), 65)))
    suppressWarnings(expect_identical(stri_enc_fromutf32(list(c(43,234,649,63,23532,233643642), 65)),
       c(NA, "A")))
+   expect_warning(stri_enc_fromutf32(c(0,1,2)))
+   suppressWarnings(expect_identical(stri_enc_fromutf32(c(0,1,2)),
+      NA_character_))
 
    expect_identical(stri_enc_fromutf32(list()), character(0))
    expect_identical(stri_enc_fromutf32(list(NULL)), NA_character_)
@@ -95,13 +98,13 @@ test_that("stri_enc_toutf8", {
    s <- c('sgajhgaoi', NA, '\u0105fds\u5432\u0104')
    expect_identical(stri_enc_toutf8(s), s)
 
-   s <- c('\xa3\xb1ka')
-   enc <- stri_enc_set('latin-2')
-   expect_identical(stri_enc_toutf8(s), "\u0141\u0105ka")
-   stri_enc_set(enc)
-   expect_identical(stri_enc_toutf8(s, is_unknown_8bit=TRUE), "\ufffd\ufffdka")
+   s <- c('stra\xdfe')
+   Encoding(s) <- 'latin1'
+   expect_identical(stri_enc_toutf8(s), "stra\u00dfe")
+   expect_identical(stri_enc_toutf8(s, is_unknown_8bit=TRUE), "stra\ufffde")
    
-   expect_identical(stri_length(stri_enc_toutf8("\ufeff")), 0L) # removes BOMs
+   expect_identical(stri_enc_toutf8("\ufeffabc"), "abc") # removes BOMs
+   expect_identical(stri_enc_toutf8("\ufeffabc", is_unknown_8bit=TRUE), "abc") # removes BOMs
 })
 
 

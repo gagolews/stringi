@@ -170,11 +170,10 @@ stri_enc_toutf32 <- function(str) {
 #' it returns character strings in UTF-8.
 #' See \code{\link{stri_enc_toutf32}} for a dual operation.
 #'
-#' Note that \code{0}s are not allowed in \code{vec}, as they are used
-#' internally to mark the end of a string (in the C API).
-#'
 #' If an incorrect code point is given, a warning is generated
 #' and a string is set to \code{NA}.
+#' Note that \code{0}s are not allowed in \code{vec}, as they are used
+#' internally to mark the end of a string (in the C API).
 #'
 #' 
 #' See also \code{\link{stri_encode}} for decoding arbitrary byte sequences
@@ -268,13 +267,13 @@ stri_enc_tonative <- function(str) {
 #' i.e. to character strings consisting of bytes not greater than 127.
 #'
 #' @details
-#' All charcodes > 127 are replaced with ASCII SUBSTITUTE
+#' All code points greater than 127 are replaced with ASCII SUBSTITUTE
 #' CHARACTER (0x1A).
 #' \R encoding declarations are always used to determine
 #' which encoding is assumed for each input, see \code{\link{stri_enc_mark}}.
 #'
-#' A \code{bytes}-marked string is assumed to be encoded
-#' by an 8-bit encoding such that it has ASCII as its subset.
+#' A \code{bytes}-marked string is assumed to be represented
+#' by a 8-bit encoding such that it has ASCII as its subset.
 #'
 #' Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
 #' as ASCII missing value for single characters.
