@@ -57,7 +57,7 @@ class String8buf  {
 
 
       /** allocate string buffer
-       * 
+       *
        * @param size buffer length-1
        */
       String8buf(R_len_t size=0) {
@@ -95,8 +95,8 @@ class String8buf  {
 
          return *this;
       }
-      
-      
+
+
       /* return data */
       inline char* data()
       {
@@ -112,7 +112,7 @@ class String8buf  {
 
 
       /** increase buffer size;
-       * 
+       *
        * @param size new size-1
        * @param copy should the existing buffer content be retained?
        */

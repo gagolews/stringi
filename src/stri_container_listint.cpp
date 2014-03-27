@@ -71,7 +71,7 @@ StriContainerListInt::StriContainerListInt(SEXP rstr)
       this->data = new IntVec[this->n];
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP cur = VECTOR_ELT(rstr, i);
-         if (!isNull(cur)) 
+         if (!isNull(cur))
             this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy
          // else leave as-is, i.e. NULL/NA
       }

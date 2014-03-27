@@ -131,7 +131,7 @@ stri_enc_info <- function(enc=NULL) {
 #' we only encountered such a situation on a very old Solaris machine, though).
 #' Note that \pkg{ICU} tries to match the encoding part of the \code{LC_CTYPE}
 #' category as given by \code{\link{Sys.getlocale}}.
-#' 
+#'
 #' If you set a default encoding that is not a superset of ASCII
 #' or it is not an 8-bit encoding, a warning will be generated,
 #' see \link{stringi-encoding} for discussion.
@@ -170,25 +170,25 @@ stri_enc_get <- function() {
 
 #' @title
 #' Get Declared Encodings of Each String
-#' 
+#'
 #' @description
 #' Gets declared encodings for each string in a character vector
 #' as seen by \pkg{stringi}.
-#' 
+#'
 #' @details
 #' According to \code{\link{Encoding}},
 #' \R has a simple encoding marking mechanism:
 #' strings can be declared to be in \code{latin1},
 #' \code{UTF-8} or \code{bytes}.
-#' 
+#'
 #' Moreover, via the C API we may check whether
 #' a string is in ASCII (\R assumes that this holds iff
 #' all bytes in a string are not greater than 127,
-#' so there is an implicit assumtion that your platform uses
+#' so there is an implicit assumption that your platform uses
 #' an encoding which is an ASCII superset)
 #' or in the system's default (a.k.a. \code{unknown} in \code{\link{Encoding}})
 #' encoding.
-#' 
+#'
 #' Intuitively, the default encoding should be equivalent to
 #' the one you use when inputting data via keyboard.
 #' In \code{stringi} we assume that such an encoding
@@ -196,22 +196,21 @@ stri_enc_get <- function() {
 #' It is automatically detected by \pkg{ICU}
 #' to match -- by default -- the encoding part of the \code{LC_CTYPE} category
 #' as given by \code{\link{Sys.getlocale}}.
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @param str character vector
 #' or an object coercible to a character vector
-#' 
-#' @return Returns a chacter vector of the same length as \code{str}.
+#'
+#' @return Returns a character vector of the same length as \code{str}.
 #' Unlike in \code{\link{Encoding}}, possible encodings are:
 #' \code{ASCII}, \code{latin1}, \code{bytes}, \code{native},
 #' and \code{UTF-8}. Additionally, missing values are handled properly.
-#' 
+#'
 #' This is exactly the same information which is used by
 #' all the functions in \pkg{stringi} to re-encode their inputs.
-#' 
+#'
 #' @export
 stri_enc_mark <- function(str) {
    .Call("stri_enc_mark", str, PACKAGE="stringi")
 }
-

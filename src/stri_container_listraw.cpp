@@ -70,7 +70,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
       this->data = new String8[this->n];
       for (R_len_t i=0; i<this->n; ++i) {
          SEXP cur = VECTOR_ELT(rstr, i);
-         if (!isNull(cur)) 
+         if (!isNull(cur))
             this->data[i].initialize((const char*)RAW(cur), LENGTH(cur), false); // shallow copy
          // else leave as-is, i.e. NA
       }

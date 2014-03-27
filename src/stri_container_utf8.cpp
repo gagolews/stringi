@@ -46,7 +46,7 @@ StriContainerUTF8::StriContainerUTF8()
 
 /**
  * Construct String Container from R character vector
- * 
+ *
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
@@ -64,8 +64,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
    if (this->n == 0)
       return; /* nothing more to do */
-      
-      
+
+
    this->str = new String8[this->n];
 
    // for conversion from non-utf8/ascii native charsets:
@@ -99,7 +99,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
       if (curs == NA_STRING) {
          continue; // keep NA
       }
-      
+
       if (IS_ASCII(curs) || IS_UTF8(curs)) {
          // ASCII or UTF-8 - ultra fast
          this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle, true);  /* kill UTF-8 BOM */

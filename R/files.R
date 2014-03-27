@@ -33,7 +33,7 @@
 #' [DRAFT API] Read Whole Text File as Raw
 #'
 #' @description
-#' Reads a text file as-is, with no conversion or text line spliting.
+#' Reads a text file as-is, with no conversion or text line splitting.
 #'
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'

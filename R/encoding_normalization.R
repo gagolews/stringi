@@ -78,7 +78,7 @@
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,
 #'    \url{http://unicode.org/reports/tr15}
-#'    
+#'
 #' \emph{Unicode Format for Network Interchange}
 #' -- RFC\#5198, \url{http://tools.ietf.org/rfc/rfc5198.txt}
 #'
@@ -91,7 +91,7 @@
 #'
 #' \emph{Unicode Equivalence} -- Wikipedia,
 #' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' stri_enc_nfd("\u0105") # Polish a with ogonek -> a, ogonek

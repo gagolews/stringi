@@ -125,7 +125,7 @@ test_that("stri_cmp_codepoints", {
    expect_equivalent(stri_cmp("dupa100", "dupa2", opts_collator=NA), -1)
    expect_equivalent(stri_cmp("dupa100", "dupa1000", opts_collator=NA), -1)
    expect_equivalent(stri_cmp("dupa10000", "dupa1000", opts_collator=NA), 1)
-   
+
 
    expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), -1L)
 
@@ -134,7 +134,7 @@ test_that("stri_cmp_codepoints", {
 
 
 test_that("stri_order", {
-   
+
    expect_equivalent(stri_order(rep(NA, 5)), 1:5)
    expect_equivalent(stri_order(rep(NA, 5), na_last=FALSE), 1:5)
    expect_equivalent(stri_order(rep(NA, 5), na_last=NA), integer(0))

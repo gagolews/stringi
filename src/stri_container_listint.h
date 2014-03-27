@@ -60,8 +60,8 @@ class StriContainerListInt : public StriContainerBase {
       StriContainerListInt(StriContainerListInt& container);
       ~StriContainerListInt();
       StriContainerListInt& operator=(StriContainerListInt& container);
-      
-      
+
+
       /** check if the vectorized ith element is NULL/NA
        * @param i index
        * @return true if is NA

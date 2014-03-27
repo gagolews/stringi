@@ -9,11 +9,11 @@ microbenchmark2 <- function(...) {
       args$times <- 100L
    if (is.na(match('control', names(args))))
       args$control <- list(order='inorder', warmup=10L)
-   
-   
+
+
    library('microbenchmark')
    library('stringi')
-   
+
    x <- do.call(microbenchmark,
                 args,
                 envir=parent.frame())
@@ -30,8 +30,8 @@ microbenchmark2 <- function(...) {
       max.time    = sapply(split(x$time, x$expr), max),
       n           = rep(n, nlev)
    )
-   
+
    row.names(res) <- NULL
-   
+
    res
 }

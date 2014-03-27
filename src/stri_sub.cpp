@@ -326,7 +326,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 }
 
 SEXP stri_subst_na(SEXP str, SEXP replacement){
-	str = stri_prepare_arg_string(str, "str");
+   str = stri_prepare_arg_string(str, "str");
    replacement = stri_prepare_arg_string_1(replacement, "replacement");
    R_len_t str_len = LENGTH(str);
 

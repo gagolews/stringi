@@ -39,15 +39,15 @@
 
 /**
  * Base class for StriContainers
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          removed ucnvNative, ucnvLatin1 (not needed per-object)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          removed enc array
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
  *          added sexp field
  */
@@ -57,7 +57,7 @@ class StriContainerBase {
 
       R_len_t n;                 ///< number of strings (size of \code{str})
       R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
-      SEXP sexp;                 ///< 
+      SEXP sexp;                 ///<
 
 #ifndef NDEBUG
       bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)

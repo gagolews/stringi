@@ -54,7 +54,7 @@ StriContainerUTF8_indexable::StriContainerUTF8_indexable()
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
- * 
+ *
  *  @version 0.2-1 (2014-03-20)
  *           separated StriContainerUTF8_indexable class
  */
@@ -67,7 +67,7 @@ StriContainerUTF8_indexable::StriContainerUTF8_indexable(SEXP rstr, R_len_t _nre
 
 
 /** Copy constructor
- * 
+ *
  *  @version 0.2-1 (2014-03-20)
  *           separated StriContainerUTF8_indexable class
  */
@@ -91,7 +91,7 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
 
    last_ind_back_str = NULL;
    last_ind_fwd_str = NULL;
-   
+
    return *this;
 }
 
@@ -105,15 +105,15 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
  * @return UTF-8 (byte) index
  *
  *
- * @version 0.1-?? (Bartek Tartanus)  
+ * @version 0.1-?? (Bartek Tartanus)
  *          stri_sub
- * 
- * @version 0.1-?? (Marek Gagolewski) 
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  *          stri__UChar32_to_UTF8_index
- * 
- * @version 0.1-?? (Marek Gagolewski, 2013-06-01) 
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
  *          moved to StriContainerUTF8
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
  */
@@ -186,15 +186,15 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len
  * @return UTF-8 (byte) index
  *
  *
- * @version 0.1-?? (Bartek Tartanus)  
+ * @version 0.1-?? (Bartek Tartanus)
  *          stri_sub
- * 
- * @version 0.1-?? (Marek Gagolewski) 
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  *          stri__UChar32_to_UTF8_index
- * 
- * @version 0.1-?? (Marek Gagolewski, 2013-06-01) 
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-01)
  *          moved to StriContainerUTF8
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
  */
@@ -272,9 +272,9 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
  * @param adj1 adjust for \code{i1}
  * @param adj2 adjust for \code{i2}
  *
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
  */

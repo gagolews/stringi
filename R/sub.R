@@ -139,5 +139,5 @@ stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
 #'
 
 stri_subst_na <- function(str, replacement = "NA"){
-	.Call("stri_subst_na", str, replacement, PACKAGE="stringi")
+   .Call("stri_subst_na", str, replacement, PACKAGE="stringi")
 }

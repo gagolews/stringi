@@ -43,7 +43,8 @@
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return maximal number of bytes
- * @version 0.1 (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 R_len_t stri__numbytes_max(SEXP str)
 {
@@ -63,34 +64,6 @@ R_len_t stri__numbytes_max(SEXP str)
 
 
 
-/**
- * Get number of bytes in each string
- *
- * Note that ICU permits only strings of length < 2^31.
- * @param s R object coercible to a character vector
- * @return integer vector
- * @version 0.1 (Marcin Bujarski)
- */
-SEXP stri_numbytes(SEXP str)
-{
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   R_len_t n = LENGTH(str);
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, n));
-   int* retint = INTEGER(ret);
-   for (R_len_t i=0; i<n; ++i) {
-      SEXP curs = STRING_ELT(str, i);
-      /* INPUT ENCODING CHECK: this function does not need this. */
-      if (curs == NA_STRING)
-         retint[i] = NA_INTEGER;
-      else
-         retint[i] = LENGTH(curs); // O(1) - stored by R
-   }
-   UNPROTECT(1);
-   return ret;
-}
-
-
 
 /**
  * Count the number of characters in a string
@@ -98,15 +71,22 @@ SEXP stri_numbytes(SEXP str)
  * Note that ICU permits only strings of length < 2^31.
  * @param s R character vector
  * @return integer vector
- * @version 0.1 (Marcin Bujarski)
- * @version 0.2 (Marek Gagolewski) Multiple input encoding support
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ *
+ * @version 0.1-?? (Marcin Bujarski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          Multiple input encoding support
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-27)
+ *          BUGFIX: not using stri__ucnv_open anymore, as it could call Rf_error;
+ *          warn on invalid utf-8 sequences
  */
 SEXP stri_length(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-   R_len_t ns = LENGTH(str);
-   SEXP ret;
 
    UConverter* uconv = NULL;
    bool uconv_8bit = false;
@@ -114,126 +94,148 @@ SEXP stri_length(SEXP str)
 
    STRI__ERROR_HANDLER_BEGIN
 
-/* Note: ICU50 permits only int-size strings in U8_NEXT and U8_FWD_1 */
-#define STRI_LENGTH_CALCULATE_UTF8  \
-   const char* qc = CHAR(q);        \
-   R_len_t j = 0;                   \
-   for (R_len_t i = 0; i < nq; j++) \
-      U8_FWD_1(qc, i, nq);          \
-   retint[k] = j;
-
-   PROTECT(ret = Rf_allocVector(INTSXP, ns));
+   R_len_t str_n = LENGTH(str);
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
    int* retint = INTEGER(ret);
-   for (R_len_t k = 0; k < ns; k++) {
-      SEXP q = STRING_ELT(str, k);
-      if (q == NA_STRING)
+
+   for (R_len_t k = 0; k < str_n; k++) {
+      SEXP curs = STRING_ELT(str, k);
+      if (curs == NA_STRING) {
          retint[k] = NA_INTEGER;
-      else {
-         R_len_t nq = LENGTH(q);  // O(1) - stored by R
+         continue;
+      }
 
-         // We trust (is that a wise assumption?)
-         // R encoding marks; However, it there is no mark,
-         // the string may have any encoding (ascii, latin1, utf8, native)
-         if (IS_ASCII(q) || IS_LATIN1(q))
-            retint[k] = nq;
-         else if (IS_BYTES(q))
-            throw StriException(MSG__BYTESENC);
-         else if (IS_UTF8(q)) {
-            STRI_LENGTH_CALCULATE_UTF8
+      R_len_t curs_n = LENGTH(curs);  // O(1) - stored by R
+      if (IS_ASCII(curs) || IS_LATIN1(curs)) {
+         retint[k] = curs_n;
+      }
+      else if (IS_BYTES(curs)) {
+         throw StriException(MSG__BYTESENC);
+      }
+      else if (IS_UTF8(curs) || uconv_utf8) { // utf8 or native-utf8
+         UChar32 c = 0;
+         const char* curs_s = CHAR(curs);
+         R_len_t j = 0;
+         R_len_t i = 0;
+         while (c >= 0 && j < curs_n) {
+            U8_NEXT(curs_s, j, curs_n, c); // faster that U8_FWD_1 & gives bad UChar32s
+            i++;
          }
-         else { // Any encoding - detection needed
-//            UTF-8 strings can be fairly reliably recognized as such by a
-//            simple algorithm, i.e., the probability that a string of
-//            characters in any other encoding appears as valid UTF-8 is low,
-//            diminishing with increasing string length.
-//            We have two possibilities here:
-//            1. Auto detect encoding: Is this ASCII or UTF-8? If not => use Native
-//                This won't work correctly in some cases.
-//                e.g. (c4,85) represents ("Polish a with ogonek") in UTF-8
-//                and ("A umlaut", "Ellipsis") in WINDOWS-1250
-//            2. Assume it's Native; this assumes the user working in an 8-bit environment
-//                would convert strings to UTF-8 manually if needed - I think is's
-//                a more reasonable approach (Native --> input via keyboard)
 
-            if (!uconv) { // open ucnv on demand
-               uconv = stri__ucnv_open((const char*)NULL); // native decoder
-               if (!uconv) {
-                  retint[k] = NA_INTEGER;
-                  continue;
-               }
-               uconv_8bit = ((int)ucnv_getMaxCharSize(uconv) == 1);
-               if (!uconv_8bit) {
-                  UErrorCode err = U_ZERO_ERROR;
-                  const char* name = ucnv_getName(uconv, &err);
-                  if (U_FAILURE(err))
-                     throw StriException("could not query default converter");
-                  uconv_utf8 = !strncmp("UTF-8", name, 5);
-               }
-            }
-
-            if (uconv_8bit) {
-               retint[k] = nq; // it's an 8-bit encoding :-)
-            }
-            else if (uconv_utf8) { // it's UTF-8
-               STRI_LENGTH_CALCULATE_UTF8
-            }
-            else {  // native encoding which is neither 8-bit, nor UTF-8 (e.g. 'Big5')
-               UErrorCode err = U_ZERO_ERROR;
-               const char* source = CHAR(q);
-               const char* sourceLimit = source + nq;
-               R_len_t j;
-               for (j = 0; source != sourceLimit; j++) {
-                  if (U_FAILURE(err)) break; // error from previous iteration
-                  // iterate through each native-encoded character:
-                  ucnv_getNextUChar(uconv, &source, sourceLimit, &err);
-               }
-               if (U_FAILURE(err)) {  // error from last iteration
-                  Rf_warning("error determining length for native, neither 8-bit- nor UTF-8-encoded string.");
-                  retint[k] = NA_INTEGER;
-               }
-               else
-                  retint[k] = j; // all right, we got it!
-            }
+         if (c < 0) { // invalid utf-8 sequence
+            Rf_warning(MSG__INVALID_UTF8);
+            retint[k] = NA_INTEGER;
          }
+         else
+            retint[k] = i;
+      }
+      else if (uconv_8bit) { // native-8bit
+         retint[k] = curs_n;
+      }
+      else { // native encoding (can be UTF-8!)
+
+         if (!uconv) { // open ucnv on demand
+            UErrorCode err = U_ZERO_ERROR;
+            uconv = ucnv_open((const char*)NULL, &err);
+            if (U_FAILURE(err))
+               throw StriException(MSG__ENC_ERROR_SET);
+
+            if (((int)ucnv_getMaxCharSize(uconv) == 1))
+               uconv_8bit = true;
+            else {
+               err = U_ZERO_ERROR;
+               const char* name = ucnv_getName(uconv, &err);
+               if (U_FAILURE(err))
+                  throw StriException(MSG__ENC_ERROR_GETNAME);
+               uconv_utf8 = !strncmp("UTF-8", name, 5);
+            }
+
+            // try again
+            k--;
+            continue;
+         }
+
+         // native encoding which is neither 8-bit, nor UTF-8 (e.g. 'Big5')
+         // this is weird, but we'll face it
+         UErrorCode err = U_ZERO_ERROR;
+         const char* source = CHAR(curs);
+         const char* sourceLimit = source + curs_n;
+         R_len_t j;
+         for (j = 0; source != sourceLimit; j++) {
+            /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &err);
+            if (U_FAILURE(err))
+               throw StriException(MSG__ENC_ERROR_CONVERT);
+         }
+         retint[k] = j; // all right, we got it!
       }
    }
-   UNPROTECT(1);
 
    if (uconv) {
       ucnv_close(uconv);
       uconv = NULL;
    }
 
+   STRI__UNPROTECT_ALL
    return ret;
+
    STRI__ERROR_HANDLER_END({
-      if (uconv)
-        ucnv_close(uconv);
+      if (uconv) { ucnv_close(uconv); uconv = NULL; }
    })
 }
 
 
+
+
 /**
- * Check whether a string is empty
+ * Get number of bytes in each string
  *
  * Note that ICU permits only strings of length < 2^31.
- * @param s R character vector
+ *
+ * @param s R object coercible to a character vector
  * @return integer vector
- * @version 0.1 (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marcin Bujarski)
+ */
+SEXP stri_numbytes(SEXP str)
+{
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   R_len_t str_n = LENGTH(str);
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+   int* retint = LOGICAL(ret);
+   for (R_len_t i=0; i<str_n; ++i) {
+      SEXP curs = STRING_ELT(str, i);
+      /* INPUT ENCODING CHECK: this function does not need this. */
+      retint[i] = (curs == NA_STRING)?NA_INTEGER:LENGTH(curs); // O(1) - stored by R
+   }
+   UNPROTECT(1);
+   return ret;
+}
+
+
+
+/**
+ * Determine which strings are of length 0
+ *
+ * Note that ICU permits only strings of length < 2^31.
+ *
+ * @param s R character vector
+ * @return logical vector
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_isempty(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   R_len_t n = LENGTH(str);
+   R_len_t str_n = LENGTH(str);
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, n));
+   PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
    int* retlog = LOGICAL(ret);
-   for (R_len_t i=0; i<n; ++i) {
+   for (R_len_t i=0; i<str_n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
-      if (curs == NA_STRING)
-         retlog[i] = NA_LOGICAL;
-      else
-         retlog[i] = (CHAR(curs)[0] == '\0'); // (LENGTH(curs) == 0); // slower?
+      retlog[i] = (curs == NA_STRING)?NA_LOGICAL:(LENGTH(curs) <= 0);
    }
    UNPROTECT(1);
    return ret;
@@ -247,6 +249,7 @@ SEXP stri_isempty(SEXP str)
 // * Note that ICU permits only strings of length < 2^31.
 // * @param s R character vector
 // * @return integer vector
+// *
 // * @version 0.1 (WHO?) TO BE DONE
 // * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
 // */

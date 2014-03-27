@@ -46,7 +46,7 @@
  * with shallow copy of byte data.
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
- * 
+ *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-25)
  *          data as String8* and not String8** (performance gain)
  */

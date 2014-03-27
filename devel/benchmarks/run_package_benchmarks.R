@@ -24,7 +24,7 @@ bm_digest      <- stri_sub(digest(bm_unamen%+%bm_Rversion%+%bm_platform%+%
       bm_locale%+%bm_cxx%+%bm_cxxflags, "sha256"), 1, 8)
 bm_indir       <- 'devel/benchmarks'
 bm_outdir      <- file.path(bm_indir, 'results_'%+%bm_digest)
-   
+
 cat("# platform="%+%bm_platform%+%"\n")
 cat("# Rversion="%+%bm_Rversion%+%"\n")
 cat("# Rexec="%+%bm_Rexec%+%"\n")
@@ -35,7 +35,7 @@ cat("# nodename="%+%bm_unamen%+%"\n")
 cat("# platform_digest="%+%bm_digest%+%"\n")
 cat("# git_sha="%+%bm_git_sha%+%"\n")
 cat("# curdate="%+%bm_curdate%+%"\n")
-   
+
 # each benchmark item should return a data.frame with the following components:
 # * expr [code run, character]
 # * min.time [sec]
@@ -46,10 +46,10 @@ cat("# curdate="%+%bm_curdate%+%"\n")
 # * n [number of replications tested]
 
 source('devel/benchmarks/microbenchmark2.R', local=TRUE)
-   
+
 if (!file.exists(bm_outdir))
    dir.create(bm_outdir)
-   
+
 bmarks <- dir(bm_indir, glob2rx('benchmark-'%+%benchmarks_wildcard%+%'.R'))
 for (b in bmarks) {
    cat('Filename:', b, '\n')
@@ -58,13 +58,13 @@ for (b in bmarks) {
       source(infile, local=TRUE)
       res <- benchmark_do()
       print(res)
-      
+
       benchmark <- stri_replace_last_regex(b, "\\.R$", "")
       res$benchmark <- benchmark
       res$git_sha <- bm_git_sha
       res$sys_sha <- bm_digest
       res$datetime <- bm_curdate
-      
+
       outfile <- file.path(bm_outdir, benchmark%+%".csv")
       if (!file.exists(outfile)) {
          f <- file(outfile, open="w")

@@ -46,13 +46,13 @@
  * @return logical vector
  *
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *    use StriContainerUTF8, BUGFIX: the loop could go to far
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *    corrected behavior on empty str/pattern
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *    make StriException-friendly, use StriContainerByteSearch
  */
@@ -60,8 +60,8 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   
-   
+
+
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -86,13 +86,13 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
-   
-   
+
+
 //   Version 2 -- slower for long strings
 //   UText *uts = NULL;
 //   UText *utp = NULL;
 //   URegularExpression* matcher = NULL;
-//   
+//
 //   STRI__ERROR_HANDLER_BEGIN
 //   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 //   StriContainerUTF8 str_cont(str, vectorize_length);
@@ -101,7 +101,7 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
 //   SEXP ret;
 //   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
 //   int* ret_tab = LOGICAL(ret);
-//   
+//
 //
 //   const String8* last_s = NULL;
 //   const String8* last_p = NULL;
@@ -164,10 +164,10 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
  * @return logical vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *    corrected behavior on empty str/pattern
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
  *    make StriException-friendly, use StriContainerUStringSearch
  */

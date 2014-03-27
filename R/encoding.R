@@ -35,7 +35,7 @@
 #' @description
 #' This manual page aims to explain (or at least to cast light on)
 #' how \pkg{stringi} deals with character strings in various encodings.
-#' 
+#'
 #' In particular you should note that:
 #' \itemize{
 #'    \item R lets strings in ASCII, UTF-8, and your platform's
@@ -51,7 +51,7 @@
 #'    \item Most \pkg{stringi} functions always return UTF-8 encoded strings,
 #'    regardless of the input encoding.
 #'    What is more, the functions have been optimized
-#'    for UTF-8/ASCII input (they have competetive, if not better performance,
+#'    for UTF-8/ASCII input (they have competitive, if not better performance,
 #'    especially when doing more complex operations
 #'    like string comparison, sorting, and even concatenation).
 #'    Thus, it is best to rely on cascading
@@ -127,7 +127,7 @@
 #' character sequences, see \code{\link{stri_enc_nfc}}
 #' for discussion. However, denormalized strings
 #' do appear very rarely in typical string processing activities.
-#' 
+#'
 #' Additionally, do note that \pkg{stringi} silently removes
 #' byte order marks (BOMs - they may incidentally appear
 #' in a string read from a text file) from UTF8-encoded strings,
@@ -179,7 +179,7 @@
 #' Intuitively, ``native'' strings result by inputing
 #' a string from keyboard or file. This makes sense: you operating
 #' system works in some encoding and provides \R with some data.
-#' 
+#'
 #' Each time when a \pkg{stringi} function encounters a string
 #' declared in native encoding,
 #' it assumes that the input data should be translated from the default
@@ -192,7 +192,7 @@
 #' and were carefully selected. These are: \code{\link{stri_enc_toutf8}}
 #' (with argument \code{is_unknown_8bit=TRUE}), \code{\link{stri_enc_toascii}},
 #' and \code{\link{stri_encode}}.
-#' 
+#'
 #' Finally, note that R lets strings in ASCII, UTF-8, and your platform's
 #' native encoding coexist peacefully. Character vector output
 #' with \code{\link{print}}, \code{\link{cat}} etc.

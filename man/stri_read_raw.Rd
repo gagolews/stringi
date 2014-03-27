@@ -12,7 +12,7 @@ Returns a raw vector.
 }
 \description{
 Reads a text file as-is, with no conversion or text line
-spliting.
+splitting.
 
 \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 }

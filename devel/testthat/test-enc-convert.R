@@ -61,7 +61,7 @@ test_that("stri_enc_toutf32", {
    expect_identical(stri_enc_toutf32(LETTERS), as.list(65:90))
    expect_identical(stri_enc_toutf32(c("A", NA, "A")), list(65L, NULL, 65L))
    expect_identical(stri_enc_toutf32("a\u0105\u3423b")[[1]], utf8ToInt("a\u0105\u3423b"))
-   
+
    x <- "\x99\x85"
    Encoding(x) <- "UTF-8"
    expect_warning(stri_enc_toutf32(x))
@@ -102,7 +102,7 @@ test_that("stri_enc_toutf8", {
    Encoding(s) <- 'latin1'
    expect_identical(stri_enc_toutf8(s), "stra\u00dfe")
    expect_identical(stri_enc_toutf8(s, is_unknown_8bit=TRUE), "stra\ufffde")
-   
+
    expect_identical(stri_enc_toutf8("\ufeffabc"), "abc") # removes BOMs
    expect_identical(stri_enc_toutf8("\ufeffabc", is_unknown_8bit=TRUE), "abc") # removes BOMs
 })
