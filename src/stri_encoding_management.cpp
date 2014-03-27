@@ -127,8 +127,10 @@ void STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
  *       use \code{stri__prepare_arg_enc()})
  *  @return opened UConverter* (must be closed manually after use)
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski, 2013-08-10) Use own error callbacks
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-10)
+ *          Use own error callbacks
  */
 UConverter* stri__ucnv_open(const char* enc)
 {
@@ -563,35 +565,35 @@ SEXP stri_enc_info(SEXP enc)
 
 
 /** Get Declared Encodings of Each String
- * 
+ *
  * @param str a character vector or an object coercible to
  * @return a character vector
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
  */
 SEXP stri_enc_mark(SEXP str) {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
-   
+
    STRI__ERROR_HANDLER_BEGIN
    R_len_t str_len = LENGTH(str);
-   
+
    SEXP mark_ascii, mark_latin1, mark_utf8, mark_native, mark_bytes;
    STRI__PROTECT(mark_ascii  = Rf_mkChar("ASCII"));
    STRI__PROTECT(mark_latin1 = Rf_mkChar("latin1"));
    STRI__PROTECT(mark_utf8   = Rf_mkChar("UTF-8"));
    STRI__PROTECT(mark_native = Rf_mkChar("native"));
    STRI__PROTECT(mark_bytes  = Rf_mkChar("bytes"));
-   
+
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, str_len));
-   
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_len));
+
    for (R_len_t i=0; i<str_len; ++i) {
       SEXP curs = STRING_ELT(str, i);
       if (curs == NA_STRING) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       if (IS_ASCII(curs))
          SET_STRING_ELT(ret, i, mark_ascii);
       else if (IS_UTF8(curs))
@@ -603,7 +605,7 @@ SEXP stri_enc_mark(SEXP str) {
       else
          SET_STRING_ELT(ret, i, mark_native);
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

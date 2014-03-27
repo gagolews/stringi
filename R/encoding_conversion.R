@@ -37,11 +37,11 @@
 #'
 #' @details
 #' \code{stri_conv} is an alias for \code{stri_encode}.
-#' 
+#'
 #' These two functions aim to replace \R's \code{\link{iconv}}.
 #' It is not only faster, but also
 #' works in the same manner on all platforms.
-#' 
+#'
 #'
 #' Please refer to \code{\link{stri_enc_list}} for the list
 #' of supported encodings and \link{stringi-encoding}
@@ -54,7 +54,7 @@
 #' strings are disallowed.
 #' Otherwise, the internal encoding declarations are ignored and
 #' a converter selected with \code{from} is used.
-#' 
+#'
 #' On the other hand, for \code{str} being a raw vector
 #' or a list of raw vectors,
 #' we assume that the input encoding is the current default encoding
@@ -132,12 +132,12 @@ stri_conv <- stri_encode
 #'
 #' @details
 #' See \code{\link{stri_enc_fromutf32}} for a dual operation.
-#' 
+#'
 #' This function is roughly equivalent to a vectorized call
 #' to \code{\link{utf8ToInt}(enc2utf8(str))}.
 #' If you want a list of raw vector on output,
 #' use \code{\link{stri_encode}}.
-#' 
+#'
 #' Unlike \code{utf8ToInt}, if improper UTF-8 byte sequences are detected,
 #' a corresponding element is set to NULL and a warning is given.
 #'
@@ -175,7 +175,7 @@ stri_enc_toutf32 <- function(str) {
 #' Note that \code{0}s are not allowed in \code{vec}, as they are used
 #' internally to mark the end of a string (in the C API).
 #'
-#' 
+#'
 #' See also \code{\link{stri_encode}} for decoding arbitrary byte sequences
 #' from any given encoding.
 #'
@@ -205,15 +205,15 @@ stri_enc_fromutf32 <- function(vec) {
 #' If \code{is_unknown_8bit} is set to \code{FALSE} (the default),
 #' then R encoding marks are used, see \code{\link{stri_enc_mark}}.
 #' Bytes-marked strings will cause the function to fail.
-#' 
+#'
 #' If a string is in UTF-8 and has a byte order mark (BOM),
 #' then BOM will be silently removed from the output string.
-#' 
+#'
 #' If default encoding is UTF-8, see \code{\link{stri_enc_get}},
 #' then strings marked with \code{native} are -- for efficiency reasons --
 #' returned as-is, i.e. with unchanged markings.
 #' A similar behavior is observed when calling \code{\link{enc2utf8}}.
-#' 
+#'
 #' For \code{is_unknown_8bit == TRUE}, if a string is declared to be neither in ASCII
 #' nor in UTF-8, then all bytecodes > 127 are replaced with
 #' the Unicode REPLACEMENT CHARACTER (\\Ufffd).
@@ -244,8 +244,8 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE) {
 #' @details
 #' Current native encoding can be read with \code{\link{stri_enc_get}}.
 #' Character strings declared to be in \code{bytes} encoding will fail here.
-#' 
-#' 
+#'
+#'
 #'
 #' @param str character vector to be converted
 #' @return Returns a character vector.

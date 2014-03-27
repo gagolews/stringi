@@ -83,8 +83,8 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
    if (this->n == 0)
       return; /* nothing more to do */
-      
-      
+
+
    this->str = new UnicodeString[this->n];
    for (R_len_t i=0; i<this->n; ++i)
       this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
@@ -114,7 +114,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
       if (curs == NA_STRING) {
          continue; // keep NA
       }
-      
+
       if (IS_ASCII(curs)) {
          // Version 1:
          if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");
@@ -134,7 +134,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          // Performance improvement attempt #2:
          // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
          // This wasn't faster than the ucnvASCII approach.
-         
+
          // Performance improvement attempt #3:
          // slightly slower than ucnvASCII
          // R_len_t curs_n = LENGTH(curs);

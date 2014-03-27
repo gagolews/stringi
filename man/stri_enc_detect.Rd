@@ -53,7 +53,7 @@ letter groups for each language that can be written using
 that encoding.
 
 The detection process can be configured to optionally
-ignore HTML or XML style markup (using ICU's internal
+ignore HTML or XML style markup (using \pkg{ICU}'s internal
 facilities), which can interfere with the detection process
 by changing the statistics.
 

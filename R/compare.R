@@ -64,7 +64,7 @@
 #' (see the examples below). If \code{opts_collator}
 #' is not \code{NA} (the default), then the string comparison
 #' is locale-sensitive.
-#' 
+#'
 #' Note that \pkg{stringi} silently removes UTF-8 BOMs from input strings,
 #' so \code{opts_collator=NA} does not take BOMs into account while
 #' comparing strings.
@@ -80,7 +80,7 @@
 #' pairs of elements in \code{e1} and \code{e2}:
 #' \code{-1} if \code{e1[...] < e2[...]},
 #' \code{0} if they are equal, and \code{1} if greater.
-#' 
+#'
 #' The other functions return a logical vector that indicates
 #' whether a given relation holds between two corresponding elements
 #' in \code{e1} and \code{e2}.
@@ -163,15 +163,15 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #'
 #' @usage
 #' e1 \%<\% e2
-#' 
+#'
 #' e1 \%>\% e2
-#' 
+#'
 #' e1 \%<=\% e2
-#' 
+#'
 #' e1 \%>=\% e2
-#' 
+#'
 #' e1 \%==\% e2
-#' 
+#'
 #' e1 \%!=\% e2
 #'
 #' @param e1 character vector or an object coercible to a character vector

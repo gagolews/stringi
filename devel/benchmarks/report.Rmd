@@ -13,7 +13,7 @@ require("knitr")
 
 require("tikzDevice")
 
-opts_knit$set(progress = TRUE, verbose = TRUE)
+opts_knit$set(progress = FALSE, verbose = FALSE)
 
 opts_chunk$set(
    keep.source=TRUE,

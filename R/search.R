@@ -158,7 +158,7 @@ invisible(NULL)
 #' which is a language-aware string search algorithm.
 #' The matches are defined by using the notion of ``canonical equivalence''
 #' between strings.
-#' 
+#'
 #' Tuning the Collator's parameters allows you to perform correct matching
 #' that properly takes into account accented letters, conjoined letters,
 #' and ignorable punctuation and letter case.
@@ -188,7 +188,7 @@ invisible(NULL)
 #'
 #' You should note that, however, the conversion of input data
 #' to Unicode is done as usual.
-#' 
+#'
 #'
 #' @section General Notes:
 #'

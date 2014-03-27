@@ -45,14 +45,14 @@
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
  *          StriException friently; use StriContainerListInt
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
    vec = stri_prepare_arg_list_integer(vec, "vec");
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerListInt vec_cont(vec);
    R_len_t vec_n = vec_cont.get_n();
@@ -66,16 +66,16 @@ SEXP stri_enc_fromutf32(SEXP vec)
    bufsize = U8_MAX_LENGTH*bufsize+1; // this will be sufficient
    String8buf buf(bufsize);
    char* bufdata = buf.data();
-   
+
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vec_n));
-   
+
    for (R_len_t i=0; i<vec_n; ++i) {
       if (vec_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       const int* cur_data = vec_cont.get(i).data();
       R_len_t    cur_n    = vec_cont.get(i).size();
       UChar32 c = (UChar32)0;
@@ -85,11 +85,11 @@ SEXP stri_enc_fromutf32(SEXP vec)
       while (!err && k < cur_n) {
          c = cur_data[k++];
          U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);
-         
+
          // Rf_mkCharLenCE detects embedded nuls, but stops execution completely
          if (c == 0) err = TRUE;
       }
-      
+
       if (err) {
          Rf_warning(MSG__INVALID_CODE_POINT, (int)c);
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -97,7 +97,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
       else
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, j, CE_UTF8));
    }
-   
+
    STRI__UNPROTECT_ALL;
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -113,7 +113,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-26)
  *          use vector<int> buf instaed of R_alloc;
  *          warn and set NULL on improper UTF-8 byte sequences
@@ -154,7 +154,7 @@ SEXP stri_enc_toutf32(SEXP str)
          U8_NEXT(s, j, sn, c);
          buf[k++] = (int)c;
       }
-      
+
       if (c < 0) {
          Rf_warning(MSG__INVALID_UTF8);
          SET_VECTOR_ELT(ret, i, R_NilValue);
@@ -188,7 +188,7 @@ SEXP stri_enc_toutf32(SEXP str)
  *
  * @version 0.1-XX (Marek Gagolewski, 2013-06-16)
  *                  make StriException-friendly
- * 
+ *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-26)
  *                 Use one String8buf;
  *                 is_unknown_8bit_logical and UTF-8 tries now to remove BOMs
@@ -217,12 +217,12 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
          SEXP curs = STRING_ELT(str, i);
          if (curs == NA_STRING || IS_ASCII(curs) || IS_UTF8(curs))
             continue;
-            
+
          R_len_t ni = LENGTH(curs);
          if (ni > bufsize) bufsize = ni;
       }
       String8buf buf(bufsize*3); // either 1 byte < 127 or U+FFFD == 3 bytes UTF-8
-   
+
       SEXP ret;
       STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
@@ -231,7 +231,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
             SET_STRING_ELT(ret, i, NA_STRING);
             continue;
          }
-         
+
          if (IS_ASCII(curs) || IS_UTF8(curs)) {
             R_len_t n = LENGTH(curs);
             const char* str = CHAR(curs);
@@ -244,10 +244,10 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
             }
             else
                SET_STRING_ELT(ret, i, curs);
-            
+
             continue;
          }
-         
+
          // otherwise, we have an 8-bit encoding
          R_len_t curn = LENGTH(curs);
          const char* curs_tab = CHAR(curs);

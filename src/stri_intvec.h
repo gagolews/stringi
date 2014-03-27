@@ -42,13 +42,13 @@
  *
  * Currently each int vector is read-only.
  * It may be used as a simple wrapper for R integer vectors.
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
  */
 class IntVec  {
 
    private:
-   
+
       const int* m_data;
       R_len_t m_n;
 
@@ -73,7 +73,7 @@ class IntVec  {
          this->m_data = data;
          this->m_n = n;
       }
-      
+
 
       /** constructor
        * @param str character buffer
@@ -84,12 +84,12 @@ class IntVec  {
       {
          initialize(data, n);
       }
-      
+
       inline bool isNA() const
       {
          return m_data == NULL;
       }
-      
+
       inline const int* data() const
       {
 #ifndef NDEBUG
@@ -105,7 +105,7 @@ class IntVec  {
          if (isNA())
             throw StriException("IntVec::isNA() in size()");
 #endif
-         return this->m_n; 
+         return this->m_n;
       }
 };
 

@@ -184,7 +184,7 @@ stri_enc_isutf8 <- function(str) {
 #' for each language that can be written using that encoding.
 #'
 #' The detection process can be configured to optionally ignore
-#' HTML or XML style markup (using ICU's internal facilities),
+#' HTML or XML style markup (using \pkg{ICU}'s internal facilities),
 #' which can interfere with the detection
 #' process by changing the statistics.
 #'
@@ -284,13 +284,13 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' First, the text is checked whether it is valid
 #' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8
 #' (as in \code{\link{stri_enc_detect}},
-#' this slightly bases on ICU's \code{i18n/csrucode.cpp},
+#' this slightly bases on \pkg{ICU}'s \code{i18n/csrucode.cpp},
 #' but we do it in our own way, however) or ASCII.
 #'
 #'
 #' If \code{locale} is not \code{NA} and the above fails,
 #' the text is checked for the number of occurrences
-#' of language-specific code points (data provided by the ICU library)
+#' of language-specific code points (data provided by the \pkg{ICU} library)
 #' converted to all possible 8-bit encodings
 #' that fully cover the indicated language.
 #' The encoding is selected basing on the greatest number of total
@@ -304,9 +304,9 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #'
 #' If you have no initial guess on language and encoding, try with
-#' \code{\link{stri_enc_detect}} (uses ICU facilities).
+#' \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 #' However, it turns out that (empirically) \code{stri_enc_detect2}
-#' works better than the ICU-based one if UTF-* text
+#' works better than the \pkg{ICU}-based one if UTF-* text
 #' is provided. Test yourself.
 #'
 #' @param str character vector, a raw vector, or

@@ -40,19 +40,19 @@
 /**
  * A class to represent an UTF-8 string
  *
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-13)
  *          added resize() method and m_size field
- * 
+ *
  * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
  *          Fixed array over-runs detected with valgrind
- * 
+ *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-15)
  *          m_str == NULL now denotes a missing value,
  *          isNA(), initialize() methods added
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
  *          initialize() now can kill UTF8 BOMs.
  *          separated String8buf
@@ -115,7 +115,7 @@ class String8  {
             }
          }
       }
-      
+
 
       /** constructor
        * @param str character buffer
@@ -127,7 +127,7 @@ class String8  {
          this->m_str = NULL; // a missing value
          initialize(str, n, memalloc);
       }
-      
+
 
       /** destructor */
       ~String8()
@@ -170,7 +170,7 @@ class String8  {
 
          return *this;
       }
-      
+
       /** does this String8 represent a missing value? */
       inline bool isNA() const {
          return !this->m_str;
@@ -200,7 +200,7 @@ class String8  {
          if (isNA())
             throw StriException("String8::isNA() in length()");
 #endif
-         return this->m_n; 
+         return this->m_n;
       }
 };
 

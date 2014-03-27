@@ -1,7 +1,7 @@
 require(testthat)
 
 test_that("stri_join", {
-   
+
    # we have many specialized functions for join, e.g.
    # flatten with sep
    # flatten with no sep

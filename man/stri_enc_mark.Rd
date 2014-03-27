@@ -9,11 +9,11 @@ stri_enc_mark(str)
   character vector}
 }
 \value{
-Returns a chacter vector of the same length as \code{str}.
-Unlike in \code{\link{Encoding}}, possible encodings are:
-\code{ASCII}, \code{latin1}, \code{bytes}, \code{native},
-and \code{UTF-8}. Additionally, missing values are handled
-properly.
+Returns a character vector of the same length as
+\code{str}. Unlike in \code{\link{Encoding}}, possible
+encodings are: \code{ASCII}, \code{latin1}, \code{bytes},
+\code{native}, and \code{UTF-8}. Additionally, missing
+values are handled properly.
 
 This is exactly the same information which is used by all
 the functions in \pkg{stringi} to re-encode their inputs.
@@ -29,10 +29,10 @@ in \code{latin1}, \code{UTF-8} or \code{bytes}.
 
 Moreover, via the C API we may check whether a string is in
 ASCII (\R assumes that this holds iff all bytes in a string
-are not greater than 127, so there is an implicit assumtion
-that your platform uses an encoding which is an ASCII
-superset) or in the system's default (a.k.a. \code{unknown}
-in \code{\link{Encoding}}) encoding.
+are not greater than 127, so there is an implicit
+assumption that your platform uses an encoding which is an
+ASCII superset) or in the system's default (a.k.a.
+\code{unknown} in \code{\link{Encoding}}) encoding.
 
 Intuitively, the default encoding should be equivalent to
 the one you use when inputting data via keyboard. In

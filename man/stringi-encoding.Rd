@@ -20,7 +20,7 @@ platform's default one, it will be converted to Unicode
 functions always return UTF-8 encoded strings, regardless
 of the input encoding.  What is more, the functions have
 been optimized for UTF-8/ASCII input (they have
-competetive, if not better performance, especially when
+competitive, if not better performance, especially when
 doing more complex operations like string comparison,
 sorting, and even concatenation).  Thus, it is best to rely
 on cascading calls to \pkg{stringi} operations solely. }

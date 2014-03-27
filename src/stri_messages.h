@@ -45,7 +45,7 @@
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
-   
+
 #define MSG__INVALID_UTF8 \
    "invalid UTF-8 byte sequence detected"
 
@@ -190,10 +190,10 @@
 
 #define MSG__ARG_EXPECTED_LIST_STRING \
    "argument `%s` should be a list of character vectors (or an object coercible to)"
-  
+
 #define MSG__ARG_EXPECTED_LIST_INTEGER \
-   "argument `%s` should be a list of integer vectors or an integer vector (or an object coercible to)" 
-   
+   "argument `%s` should be a list of integer vectors or an integer vector (or an object coercible to)"
+
 
 #define MSG__ARG_EXPECTED_RAW \
    "argument `%s` should be a raw vector (or an object coercible to)"
@@ -209,10 +209,10 @@
 
 #define MSG__ARG_EXPECTED_STRING_NO_COERCION \
    "argument `%s` should be a character vector"
-   
+
 #define MSG__ARG_EXPECTED_RAW_IN_LIST_NO_COERCION \
    "all elements in `%s` should be a raw vectors"
-   
+
 #define MSG__ARG_EXPECTED_RAW_NO_COERCION \
    "argument `%s` should be a raw vector"
 

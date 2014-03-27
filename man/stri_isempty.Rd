@@ -1,18 +1,18 @@
 \name{stri_isempty}
 \alias{stri_isempty}
-\title{Determine if a String is Empty}
+\title{Determine if a String is of Length Zero}
 \usage{
 stri_isempty(str)
 }
 \arguments{
-  \item{str}{character vector}
+  \item{str}{character vector or an object coercible to}
 }
 \value{
 Returns a logical vector of the same length as \code{str}.
 }
 \description{
 This is the fastest way to find out whether the elements of
-a character vector are empty strings or not.
+a character vector are empty strings.
 }
 \details{
 Missing values are handled properly, as opposed to the

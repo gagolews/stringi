@@ -158,7 +158,7 @@ SEXP stri_stats_latex(SEXP str)
             UNPROTECT(1);
             throw StriException(MSG__NEWLINE_FOUND);
          }
-         
+
          UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
          UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
 

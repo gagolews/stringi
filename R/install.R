@@ -119,7 +119,7 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
    mirror1 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
    mirror2 <- "http://www.mini.pw.edu.pl/~gagolews/stringi/"
    mirror3 <- "http://static.rexamine.com/packages/"
-   
+
 
    if (.Platform$endian == 'little') {
       fname <- "icudt52l.zip"

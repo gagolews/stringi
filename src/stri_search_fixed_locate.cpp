@@ -261,10 +261,10 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @return integer matrix (2 columns)
  *
  * @version 0.1-?? (Bartlomiej Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          StriException friendly, use StriContainerByteSearch
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
  */
@@ -328,10 +328,10 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          StriException friendly, use StriContainerByteSearch
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
  */

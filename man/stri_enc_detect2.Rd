@@ -35,16 +35,17 @@ Vectorized over \code{str}.
 
 First, the text is checked whether it is valid UTF-32BE,
 UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 (as in
-\code{\link{stri_enc_detect}}, this slightly bases on ICU's
-\code{i18n/csrucode.cpp}, but we do it in our own way,
-however) or ASCII.
+\code{\link{stri_enc_detect}}, this slightly bases on
+\pkg{ICU}'s \code{i18n/csrucode.cpp}, but we do it in our
+own way, however) or ASCII.
 
 If \code{locale} is not \code{NA} and the above fails, the
 text is checked for the number of occurrences of
-language-specific code points (data provided by the ICU
-library) converted to all possible 8-bit encodings that
-fully cover the indicated language. The encoding is
-selected basing on the greatest number of total byte hits.
+language-specific code points (data provided by the
+\pkg{ICU} library) converted to all possible 8-bit
+encodings that fully cover the indicated language. The
+encoding is selected basing on the greatest number of total
+byte hits.
 
 The guess is of course imprecise [\bold{This is DRAFT API -
 still does not work as expected}], as it is obtained using
@@ -53,10 +54,11 @@ supply at least a few hundred bytes of character data
 that's in a single language.
 
 If you have no initial guess on language and encoding, try
-with \code{\link{stri_enc_detect}} (uses ICU facilities).
-However, it turns out that (empirically)
-\code{stri_enc_detect2} works better than the ICU-based one
-if UTF-* text is provided. Test yourself.
+with \code{\link{stri_enc_detect}} (uses \pkg{ICU}
+facilities). However, it turns out that (empirically)
+\code{stri_enc_detect2} works better than the
+\pkg{ICU}-based one if UTF-* text is provided. Test
+yourself.
 }
 \seealso{
 Other encoding_detection: \code{\link{stri_enc_detect}};

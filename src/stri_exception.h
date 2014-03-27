@@ -52,17 +52,17 @@ using namespace std;
    }
 
 
-#define STRI__PROTECT(s)                 \
+#define STRI__PROTECT(s) {               \
    PROTECT(s);                           \
-   ++__stri_protected_sexp_num;
-   
-#define STRI__UNPROTECT(n)               \
-   UNPROTECT(n);                         \
-   __stri_protected_sexp_num -= n;
+   ++__stri_protected_sexp_num; }
 
-#define STRI__UNPROTECT_ALL              \
+#define STRI__UNPROTECT(n) {             \
+   UNPROTECT(n);                         \
+   __stri_protected_sexp_num -= n; }
+
+#define STRI__UNPROTECT_ALL {            \
    UNPROTECT(__stri_protected_sexp_num); \
-   __stri_protected_sexp_num = 0;
+   __stri_protected_sexp_num = 0; }
 
 
 #define StriException_BUFSIZE 1024

@@ -67,6 +67,7 @@ int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t
       // we could use U8_NEXT_OR_FFFD here - but it's ICU51 DRAFT API
       U8_NEXT(str1, i1, n1, c1);
       U8_NEXT(str2, i2, n2, c2);
+      //@TODO: check if c1,c1 < 0, warn, return NA....
    }
 
    if (c1 < c2)
@@ -152,7 +153,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_int = INTEGER(ret);
+   int* ret_int = LOGICAL(ret);
 
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {

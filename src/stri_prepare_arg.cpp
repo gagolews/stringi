@@ -98,14 +98,14 @@ SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
-      
+
    if (isNull(x)) {
        return x;
    }
    else if (Rf_isVectorList(x)) {
       R_len_t narg = LENGTH(x);
       if (narg <= 0) return x;
-   
+
       if (NAMED(x) > 0) {
          // the object should be copied
          SEXP xold = x;

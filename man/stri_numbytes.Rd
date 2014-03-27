@@ -5,14 +5,14 @@
 stri_numbytes(str)
 }
 \arguments{
-  \item{str}{character vector}
+  \item{str}{character vector or an object coercible to}
 }
 \value{
 Returns an integer vector of the same length as \code{str}.
 }
 \description{
-Counts the number of bytes needed to store all the
-characters of each string in computer's memory.
+Counts the number of bytes needed to store each string in
+computer's memory.
 }
 \details{
 This is often not the function you would normally use in
@@ -23,8 +23,8 @@ For 8-bit encoded strings, this is the same as
 \code{\link{stri_length}}. For UTF-8 strings, the returned
 values may be greater than the number of code points, as
 UTF-8 is not a fixed-byte encoding: one code point may be
-represented with 1-4 bytes (according to the current
-Unicode standard).
+encoded by 1-4 bytes (according to the current Unicode
+standard).
 
 Missing values are handled properly, as opposed to the
 built-in \code{\link{nchar}(str, "bytes")} function call.
@@ -40,7 +40,7 @@ string data (in C).
 stri_numbytes(letters)
 stri_numbytes(c('abc','123','\\u0105\\u0104'))
 \dontrun{
-# this may fail on Windows, as there is no native support for 4-bytes
+# this used to fail on Windows, as there was no native support for 4-bytes
 # Unicode characters; see, however, stri_escape_unicode():
 stri_numbytes('\\U7fffffff') # compare stri_length('\\U7fffffff')
 }
