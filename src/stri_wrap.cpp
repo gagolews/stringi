@@ -69,7 +69,7 @@
 //   // maybe a call to stri_prepare_arg_integer?
 //
 //	int n = LENGTH(count);
-//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double));
+//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double)); // don't use R_alloc!!
 //	double ct = 0;
 //	double sum = 0;
 //   int* icount = INTEGER(count);

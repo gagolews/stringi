@@ -299,7 +299,6 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    {
       // not need to detect NAs - they already have been excluded
 
-
       if (collapse_nbytes > 0 && i > 0) { // copy collapse (separator)
          memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_nbytes);
          last_buf_idx += collapse_nbytes;

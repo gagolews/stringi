@@ -36,8 +36,9 @@
 #include "stri_container_listraw.h"
 #include "stri_container_listint.h"
 #include "stri_string8buf.h"
-
+#include "stri_ucnv.h"
 #include <vector>
+
 
 /** Convert from UTF-32
  *
@@ -351,14 +352,15 @@ SEXP stri_enc_toascii(SEXP str)
  * @return a converted character vector or list of raw vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-12)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
+ *          use StriUcnv
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
    str = stri_prepare_arg_string(str, "str");
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
-
-   UConverter* uconv_to = NULL;
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t str_n = LENGTH(str);
@@ -368,7 +370,8 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    if (str_n <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
 
    // Open converters
-   uconv_to = stri__ucnv_open(selected_to);
+   StriUcnv ucnv(selected_to);
+   UConverter* uconv_to = ucnv.getConverter();
 
    // Get target encoding mark
    UErrorCode err = U_ZERO_ERROR;
@@ -436,18 +439,10 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
       }
    }
 
-   if (uconv_to) {
-      ucnv_close(uconv_to);
-      uconv_to = NULL;
-   }
-
    UNPROTECT(1);
    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (uconv_to)
-         ucnv_close(uconv_to);
-   })
+   STRI__ERROR_HANDLER_END({/* nothing special on error */})
 }
 
 /**
@@ -472,6 +467,9 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-20)
  *          BUGFIX call stri_encode_from_marked if necessary
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
+ *          use StriUcnv
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
@@ -484,9 +482,6 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
-   UConverter* uconv_from = NULL;
-   UConverter* uconv_to = NULL;
-
    STRI__ERROR_HANDLER_BEGIN
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();
@@ -495,8 +490,10 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    if (str_n <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
 
    // Open converters
-   uconv_from = stri__ucnv_open(selected_from);
-   uconv_to = stri__ucnv_open(selected_to);
+   StriUcnv ucnv1(selected_from);
+   StriUcnv ucnv2(selected_to);
+   UConverter* uconv_from = ucnv1.getConverter();
+   UConverter* uconv_to   = ucnv2.getConverter();
 
 
    // Get target encoding mark
@@ -534,14 +531,12 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       err = U_ZERO_ERROR;
       UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
       if (U_FAILURE(err)) {
-         UNPROTECT(1);
          throw StriException(err);
       }
 
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.
       if (!curs_tmp) {
-         UNPROTECT(1);
          throw StriException(MSG__INTERNAL_ERROR);
       }
 
@@ -555,7 +550,6 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
       if (bufneed <= buf.size()) {
          if (U_FAILURE(err)) {
-            UNPROTECT(1);
             throw StriException(err);
          }
       }
@@ -565,11 +559,9 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          err = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
          if (U_FAILURE(err)) {
-            UNPROTECT(1);
             throw StriException(err);
          }
          if (bufneed > buf.size()) {
-            UNPROTECT(1);
             throw StriException(MSG__INTERNAL_ERROR);
          }
       }
@@ -584,22 +576,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       }
    }
 
-   if (uconv_from) {
-      ucnv_close(uconv_from);
-      uconv_from = NULL;
-   }
-   if (uconv_to) {
-      ucnv_close(uconv_to);
-      uconv_to = NULL;
-   }
-
    UNPROTECT(1);
    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (uconv_from)
-         ucnv_close(uconv_from);
-      if (uconv_to)
-         ucnv_close(uconv_to);
-   })
+   STRI__ERROR_HANDLER_END({/* no special action on error */})
 }

@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf16.h"
 #include "stri_string8buf.h"
+#include "stri_ucnv.h"
 
 
 /**
@@ -80,34 +81,16 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
    R_len_t nrstr = LENGTH(rstr);
    this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
 
-
    if (this->n == 0)
       return; /* nothing more to do */
-
 
    this->str = new UnicodeString[this->n];
    for (R_len_t i=0; i<this->n; ++i)
       this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
-   UConverter* ucnvASCII = NULL;
-   UConverter* ucnvLatin1 = NULL;
-   UConverter* ucnvNative = NULL;
-   bool ucnvNative_isUTF8 = false;
-
-#define  CLEANUP_NORMAL_StriContainerUTF16 \
-   { \
-      if (ucnvLatin1) { ucnv_close(ucnvLatin1); ucnvLatin1 = NULL; } \
-      if (ucnvNative) { ucnv_close(ucnvNative); ucnvNative = NULL; } \
-      if (ucnvASCII)  { ucnv_close(ucnvASCII);  ucnvASCII = NULL;  } \
-   }
-
-#define  CLEANUP_FAILURE_StriContainerUTF16 \
-   { \
-      if (this->str) delete [] this->str; \
-      this->str = NULL; \
-      CLEANUP_NORMAL_StriContainerUTF16 \
-   }
-
+   StriUcnv ucnvASCII("US-ASCII");
+   StriUcnv ucnvLatin1("ISO-8859-1");
+   StriUcnv ucnvNative(NULL);
 
    for (R_len_t i=0; i<nrstr; ++i) {
       SEXP curs = STRING_ELT(rstr, i);
@@ -117,13 +100,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
       if (IS_ASCII(curs)) {
          // Version 1:
-         if (!ucnvASCII) ucnvASCII = stri__ucnv_open("ASCII");
+         UConverter* ucnv = ucnvASCII.getConverter();
          UErrorCode status = U_ZERO_ERROR;
          this->str[i].setTo(
-            UnicodeString(CHAR(curs), LENGTH(curs), ucnvASCII, status)
+            UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
          );
          if (U_FAILURE(status)) {
-            CLEANUP_FAILURE_StriContainerUTF16
             throw StriException(status);
          }
 
@@ -151,52 +133,36 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
       }
       else if (IS_LATIN1(curs)) {
-         if (!ucnvLatin1) ucnvLatin1 = stri__ucnv_open("ISO-8859-1");
+         UConverter* ucnv = ucnvLatin1.getConverter();
          UErrorCode status = U_ZERO_ERROR;
          this->str[i].setTo(
-            UnicodeString(CHAR(curs), LENGTH(curs), ucnvLatin1, status)
+            UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
          );
          if (U_FAILURE(status)) {
-            CLEANUP_FAILURE_StriContainerUTF16
             throw StriException(status);
          }
       }
       else if (IS_BYTES(curs)) {
-         CLEANUP_FAILURE_StriContainerUTF16
          throw StriException(MSG__BYTESENC);
       }
       else {
-//             We assume unknown == Native; (Native --> input via keyboard)
-         if (!ucnvNative) {
-            ucnvNative = stri__ucnv_open((char*)NULL);
-            UErrorCode status = U_ZERO_ERROR;
-            const char* ucnv_name = ucnv_getName(ucnvNative, &status);
-            if (U_FAILURE(status)) {
-               CLEANUP_FAILURE_StriContainerUTF16
-               throw StriException(status);
-            }
-            ucnvNative_isUTF8 = !strcmp(ucnv_name, "UTF-8");
-         }
-
          // an "unknown" (native) encoding may be set to UTF-8 (speedup)
-         if (ucnvNative_isUTF8) {
+         if (ucnvNative.isUTF8()) {
             // UTF-8
             this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
          }
          else {
+            UConverter* ucnv = ucnvNative.getConverter();
             UErrorCode status = U_ZERO_ERROR;
             this->str[i].setTo(
-               UnicodeString(CHAR(curs), LENGTH(curs), ucnvNative, status)
+               UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
             );
             if (U_FAILURE(status)) {
-               CLEANUP_FAILURE_StriContainerUTF16
                throw StriException(status);
             }
          }
       }
    }
-
-   CLEANUP_NORMAL_StriContainerUTF16
 
    if (!_shallowrecycle) {
       for (R_len_t i=nrstr; i<this->n; ++i) {
