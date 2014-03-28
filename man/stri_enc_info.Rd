@@ -26,8 +26,11 @@ scheme reversible?; \item \code{CharSize.8bit} -- is this
 an 8-bit encoding, i.e. do we have \code{CharSize.min ==
 CharSize.max} and \code{CharSize.min == 1}?; \item
 \code{CharSize.min} -- minimal number of bytes used to
-represent a code point; \item \code{CharSize.max} --
-maximal number of bytes used to represent a code point. }
+represent an UChar (in UTF-16, this is not the same as
+UChar32) \item \code{CharSize.max} -- maximal number of
+bytes used to represent an UChar (in UTF-16, this is not
+the same as UChar32, i.e. does not reflect the maximal
+codepoint representation size) }
 }
 \description{
 Gets basic information on a given character encoding.

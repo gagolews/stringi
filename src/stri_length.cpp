@@ -30,7 +30,7 @@
  */
 
 #include "stri_stringi.h"
-
+#include "stri_ucnv.h"
 
 
 /**
@@ -81,16 +81,12 @@ R_len_t stri__numbytes_max(SEXP str)
  *          make StriException-friendly
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-27)
- *          BUGFIX: not using stri__ucnv_open anymore, as it could call Rf_error;
+ *          using StriUcnv;
  *          warn on invalid utf-8 sequences
  */
 SEXP stri_length(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
-
-   UConverter* uconv = NULL;
-   bool uconv_8bit = false;
-   bool uconv_utf8 = false;
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -98,6 +94,8 @@ SEXP stri_length(SEXP str)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
    int* retint = INTEGER(ret);
+
+   StriUcnv ucnvNative(NULL);
 
    for (R_len_t k = 0; k < str_n; k++) {
       SEXP curs = STRING_ELT(str, k);
@@ -113,7 +111,7 @@ SEXP stri_length(SEXP str)
       else if (IS_BYTES(curs)) {
          throw StriException(MSG__BYTESENC);
       }
-      else if (IS_UTF8(curs) || uconv_utf8) { // utf8 or native-utf8
+      else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // utf8 or native-utf8
          UChar32 c = 0;
          const char* curs_s = CHAR(curs);
          R_len_t j = 0;
@@ -130,58 +128,32 @@ SEXP stri_length(SEXP str)
          else
             retint[k] = i;
       }
-      else if (uconv_8bit) { // native-8bit
+      else if (ucnvNative.is8bit()) { // native-8bit
          retint[k] = curs_n;
       }
-      else { // native encoding (can be UTF-8!)
+      else { // native encoding, not 8 bit
 
-         if (!uconv) { // open ucnv on demand
-            UErrorCode err = U_ZERO_ERROR;
-            uconv = ucnv_open((const char*)NULL, &err);
-            if (U_FAILURE(err))
-               throw StriException(MSG__ENC_ERROR_SET);
-
-            if (((int)ucnv_getMaxCharSize(uconv) == 1))
-               uconv_8bit = true;
-            else {
-               err = U_ZERO_ERROR;
-               const char* name = ucnv_getName(uconv, &err);
-               if (U_FAILURE(err))
-                  throw StriException(MSG__ENC_ERROR_GETNAME);
-               uconv_utf8 = !strncmp("UTF-8", name, 5);
-            }
-
-            // try again
-            k--;
-            continue;
-         }
+         UConverter* uconv = ucnvNative.getConverter();
 
          // native encoding which is neither 8-bit, nor UTF-8 (e.g. 'Big5')
          // this is weird, but we'll face it
-         UErrorCode err = U_ZERO_ERROR;
+         UErrorCode status = U_ZERO_ERROR;
          const char* source = CHAR(curs);
          const char* sourceLimit = source + curs_n;
          R_len_t j;
          for (j = 0; source != sourceLimit; j++) {
-            /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &err);
-            if (U_FAILURE(err))
+            /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &status);
+            if (U_FAILURE(status))
                throw StriException(MSG__ENC_ERROR_CONVERT);
          }
          retint[k] = j; // all right, we got it!
       }
    }
 
-   if (uconv) {
-      ucnv_close(uconv);
-      uconv = NULL;
-   }
-
    STRI__UNPROTECT_ALL
    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (uconv) { ucnv_close(uconv); uconv = NULL; }
-   })
+   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 

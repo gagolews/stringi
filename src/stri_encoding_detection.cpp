@@ -42,6 +42,7 @@
 #include <algorithm>
 #include "stri_container_listraw.h"
 #include "stri_container_logical.h"
+#include "stri_ucnv.h"
 using namespace std;
 
 
@@ -621,6 +622,9 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-13)
  *          allow only ASCII-supersets
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
+ *          use StriUcnv
  */
 struct Converter8bit {
    bool isNA;
@@ -631,19 +635,13 @@ struct Converter8bit {
    Converter8bit(const char* _name, const UnicodeSet* exset) {
       isNA = true;
       name = NULL;
-      UConverter* ucnv = NULL;
+      StriUcnv ucnv_obj(_name);
+      if (!ucnv_obj.is8bit())
+         return; // not an 8-bit converter
 
-      UErrorCode err = U_ZERO_ERROR;
-      ucnv = ucnv_open(_name, &err);
-      if (U_FAILURE(err)) {
-         throw StriException(MSG__INTERNAL_ERROR);
-      }
+      ucnv_obj.setCallBackSubstitute(); // restore default (no warn) callbacks
+      UConverter* ucnv = ucnv_obj.getConverter();
 
-      if (ucnv_getMaxCharSize(ucnv) != 1 || ucnv_getMinCharSize(ucnv) != 1) {
-         // not an 8-bit converter
-         ucnv_close(ucnv);
-         return;
-      }
 
       // Check which characters in given encoding
       // are not mapped to Unicode [badChars]
@@ -664,16 +662,13 @@ struct Converter8bit {
       const char* text_end   = allChars+256;
       ucnv_reset(ucnv);
       for (R_len_t i=1; i<256; ++i) {
-         err = U_ZERO_ERROR;
-         UChar32 c = ucnv_getNextUChar(ucnv, &text_start, text_end, &err);
-         if (U_FAILURE(err)) {
-//            throw StriException(err);
-            ucnv_close(ucnv);
+         UErrorCode status = U_ZERO_ERROR;
+         UChar32 c = ucnv_getNextUChar(ucnv, &text_start, text_end, &status);
+         if (U_FAILURE(status)) {
             return;
          }
          if (i >= 32 && i <= 127 && c != (UChar32)i) {
             // allow only ASCII supersets
-            ucnv_close(ucnv);
             return;
          }
 
@@ -691,7 +686,6 @@ struct Converter8bit {
 
       if (!curset.containsAll(*exset)) {
          // not all characters are representable in given encoding
-         ucnv_close(ucnv);
          return;
       }
 
@@ -708,7 +702,6 @@ struct Converter8bit {
 
       isNA = false;
       this->name = _name;
-      ucnv_close(ucnv);
    }
 };
 
@@ -838,7 +831,7 @@ struct EncGuess {
 
       R_len_t ucnv_count = (R_len_t)ucnv_countAvailable();
       for (R_len_t i=0; i<ucnv_count; ++i) { // for each converter
-         Converter8bit conv(stri__ucnv_getFriendlyName(ucnv_getAvailableName(i)), exset);
+         Converter8bit conv(StriUcnv::getFriendlyName(ucnv_getAvailableName(i)), exset);
          if (!conv.isNA) converters.push_back(conv);
       }
 

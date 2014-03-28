@@ -163,17 +163,7 @@ SEXP stri_subst_na(SEXP str, SEXP replacement);
 // SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.2]
 // SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
 
-
-
-
-
 // encoding_management.cpp:
-UConverter* stri__ucnv_open(const char* enc);
-bool        stri__ucnv_hasASCIIsubset(UConverter* conv);
-bool        stri__ucnv_is1to1Unicode(UConverter* conv);
-void        stri__ucnv_getStandards(const char**& standards, R_len_t& cs);
-const char* stri__ucnv_getFriendlyName(const char* canname);
-
 SEXP stri_enc_list();
 SEXP stri_enc_info(SEXP enc);
 SEXP stri_enc_set(SEXP loc);

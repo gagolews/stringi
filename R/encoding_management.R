@@ -62,7 +62,7 @@ stri_enc_list <- function(simplified=FALSE) {
 
    ret <- .Call("stri_enc_list", PACKAGE="stringi")
    if (simplified)
-      return(stri_sort(unique(unlist(ret))))
+      return(stri_sort(unique(unlist(ret)))) # @TODO: use stri_unique
    else
       return(ret)
 }
@@ -72,10 +72,10 @@ stri_enc_list <- function(simplified=FALSE) {
 #' Query a Character Encoding
 #'
 #' @description
-#' Gets basic information on a given character encoding.
+#' Gets basic information on a character encoding.
 #'
 #' @details
-#' An error rises if the encoding provided is unknown to \pkg{ICU}
+#' An error is raised if the encoding provided is unknown to \pkg{ICU}
 #' (see \code{\link{stri_enc_list}} for more details)
 #'
 #'
@@ -100,9 +100,10 @@ stri_enc_list <- function(simplified=FALSE) {
 #' \item \code{CharSize.8bit} -- is this an 8-bit encoding, i.e. do we have
 #'    \code{CharSize.min == CharSize.max} and \code{CharSize.min == 1}?;
 #' \item \code{CharSize.min} -- minimal number of bytes used
-#'    to represent a code point;
+#'    to represent an UChar (in UTF-16, this is not the same as UChar32)
 #' \item \code{CharSize.max} -- maximal number of bytes used
-#'    to represent a code point.
+#'    to represent an UChar (in UTF-16, this is not the same as UChar32,
+#'    i.e. does not reflect the maximal codepoint representation size)
 #' }
 #' @family encoding_management
 #' @export
