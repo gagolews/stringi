@@ -8,7 +8,7 @@
      of an input vector's attributes are preserved.
 
    * [NEW FEATURE] stri_order and stri_sort now have an additional argument
-        `na_last` (defaults to TRUE and NA, respectively)
+        `na_last` (defaults to TRUE and NA, respectively).
 
    * [NEW FEATURE] New functions and binary operators for string comparison:
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
@@ -17,6 +17,8 @@
    * stri_enc_tonative - t.b.d.
 
    * stri_subst_na - t.b.d.
+
+   * t.b.d.
 
    * [NEW FEATURE] stri_enc_mark - reads declared encodings of character strings
         as seen by stringi.
@@ -32,19 +34,17 @@
    * U_MISSING_RESOURCE_ERROR message in StriException now suggests
         calling stri_install_check().
 
-   * BUGFIX: UTF-8 BOMs are now silently removed from input strings.
+   * [BUGFIX] UTF-8 BOMs are now silently removed from input strings.
 
-   * BUGFIX: no more attempts to re-encode UTF-8 encoded strings
+   * [BUGFIX] no more attempts to re-encode UTF-8 encoded strings
      if native encoding=UTF-8 in StriContainerUTF8.
 
-   * BUGFIX: possible memory leaks in StriContainerUTF8 and StriContainerUTF16.
+   * [BUGFIX] possible memory leaks when throwing errors via Rf_error.
 
-   * BUGFIX: stri_order and stri_cmp could return incorrect results
+   * [BUGFIX] stri_order and stri_cmp could return incorrect results
        for opts_collator=NA.
 
-   * BUGFIX: stri_sort did not guarantee to return strings in UTF-8
-
-   * t.b.d.
+   * [BUGFIX] stri_sort did not guarantee to return strings in UTF-8.
 
 
 * 0.1-25 (2014-03-12)

@@ -34,6 +34,7 @@
 #include "stri_container_utf8.h"
 #include "stri_container_regex.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -47,7 +48,7 @@ using namespace std;
  * @param first logical - search for the first or the last occurence?
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
  */
 SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
@@ -119,7 +120,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
  */
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -136,7 +137,7 @@ SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
  */
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -154,7 +155,7 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param opts_regex list
  * @return list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-20)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
  */
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -187,9 +188,11 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
       matcher->reset(str_text);
 
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       while ((int)matcher->find()) {
-         occurences.push_back(R_len_t_x2((R_len_t)matcher->start(status), (R_len_t)matcher->end(status)));
+         occurences.push_back(pair<R_len_t, R_len_t>(
+            (R_len_t)matcher->start(status), (R_len_t)matcher->end(status)
+         ));
          if (U_FAILURE(status)) throw StriException(status);
       }
 
@@ -202,10 +205,11 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
       PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         R_len_t_x2 curo = *iter;
-         SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+         pair<R_len_t, R_len_t> curo = *iter;
+         SET_STRING_ELT(cur_res, j,
+            Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, cur_res);
       UNPROTECT(1);

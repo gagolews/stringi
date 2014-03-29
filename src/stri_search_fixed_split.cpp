@@ -38,6 +38,7 @@
 #include "stri_container_integer.h"
 #include "stri_container_logical.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -53,9 +54,13 @@ using namespace std;
  * @param omit_empty logical vector
  *
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF8
- * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-25)
+ *          StriException friendly, use StriContainerUTF8
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
  */
 SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -101,32 +106,33 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 
       pattern_cont.setupMatcher(i, str_cur_s, str_cur_n);
       R_len_t k;
-      deque<R_len_t_x2> fields; // byte based-indices
-      fields.push_back(R_len_t_x2(0,0));
+      deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
+      fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
       for (k=1; k < n_max_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
          R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
          R_len_t s2 = (R_len_t)pattern_cont.getMatchedLength() + s1;
 
-         if (omit_empty_cur && fields.back().v1 == s1)
-            fields.back().v1 = s2; // don't start new field
+         if (omit_empty_cur && fields.back().first == s1)
+            fields.back().first = s2; // don't start new field
          else {
-            fields.back().v2 = s1;
-            fields.push_back(R_len_t_x2(s2, s2)); // start new field here
+            fields.back().second = s1;
+            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start new field here
             ++k; // another field
          }
       }
-      fields.back().v2 = str_cur_n;
-      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+      fields.back().second = str_cur_n;
+      if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
       SEXP ans;
       PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      deque<R_len_t_x2>::iterator iter = fields.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
-         R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         SET_STRING_ELT(ans, k,
+            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
@@ -156,9 +162,13 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
  * @return list of character vectors
  *
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-25) StriException friendly, use StriContainerUTF16
- * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-25)
+ *          StriException friendly, use StriContainerUTF16
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP collator_opts)
 {
@@ -212,34 +222,34 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       }
 
       R_len_t k;
-      deque<R_len_t_x2> fields; // byte based-indices
-      fields.push_back(R_len_t_x2(0,0));
+      deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
+      fields.push_back(pair<R_len_t, R_len_t>(0,0));
       UErrorCode status = U_ZERO_ERROR;
 
       for (k=1; k < n_max_cur && USEARCH_DONE != usearch_next(matcher, &status) && !U_FAILURE(status); ) {
          R_len_t s1 = (R_len_t)usearch_getMatchedStart(matcher);
          R_len_t s2 = (R_len_t)usearch_getMatchedLength(matcher) + s1;
 
-         if (omit_empty_cur && fields.back().v1 == s1)
-            fields.back().v1 = s2; // don't start new field
+         if (omit_empty_cur && fields.back().first == s1)
+            fields.back().first = s2; // don't start new field
          else {
-            fields.back().v2 = s1;
-            fields.push_back(R_len_t_x2(s2, s2)); // start new field here
+            fields.back().second = s1;
+            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start new field here
             ++k; // another field
          }
       }
       if (U_FAILURE(status)) throw StriException(status);
-      fields.back().v2 = str_cont.get(i).length();
-      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+      fields.back().second = str_cont.get(i).length();
+      if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
       R_len_t noccurences = (R_len_t)fields.size();
       StriContainerUTF16 out_cont(noccurences);
-      deque<R_len_t_x2>::iterator iter = fields.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
-         R_len_t_x2 curoccur = *iter;
+         pair<R_len_t, R_len_t> curoccur = *iter;
          // this is a little bit slow, but anyway faster than the string USearch!
-         out_cont.getWritable(k).setTo(str_cont.get(i), curoccur.v1, curoccur.v2-curoccur.v1);
+         out_cont.getWritable(k).setTo(str_cont.get(i), curoccur.first, curoccur.second-curoccur.first);
       }
       SET_VECTOR_ELT(ret, i, out_cont.toR());
    }

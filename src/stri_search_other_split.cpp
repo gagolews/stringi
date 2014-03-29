@@ -38,6 +38,7 @@
 #include "stri_container_integer.h"
 #include "stri_container_logical.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -48,7 +49,7 @@ using namespace std;
  *
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-04)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
  */
 SEXP stri_split_lines1(SEXP str)
 {
@@ -66,8 +67,8 @@ SEXP stri_split_lines1(SEXP str)
 
    UChar32 c;
    R_len_t jlast;
-   deque<R_len_t_x2> occurences;
-   occurences.push_back(R_len_t_x2(0, 0));
+   deque< pair<R_len_t, R_len_t> > occurences;
+   occurences.push_back(pair<R_len_t, R_len_t>(0, 0));
    for (R_len_t j=0; j < str_cur_n; /* null */) {
       jlast = j;
       U8_NEXT(str_cur_s, j, str_cur_n, c);
@@ -100,27 +101,29 @@ SEXP stri_split_lines1(SEXP str)
 
          default:
             /* not a newline character */
-            occurences.back().v2 = j;
+            occurences.back().second = j;
             continue;
       }
 
-      occurences.back().v2 = jlast;
+      occurences.back().second = jlast;
       if (j < str_cur_n)
-         occurences.push_back(R_len_t_x2(j, j));
+         occurences.push_back(pair<R_len_t, R_len_t>(j, j));
    }
 
    SEXP ans;
    PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
-   deque<R_len_t_x2>::iterator iter = occurences.begin();
+   deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
    for (R_len_t k = 0; iter != occurences.end(); ++iter, ++k) {
-      R_len_t_x2 curoccur = *iter;
-      SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+      pair<R_len_t, R_len_t> curoccur = *iter;
+      SET_STRING_ELT(ans, k,
+         Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
    }
    UNPROTECT(1);
    return ans;
 
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
 
 /**
  * Split a string into text lines
@@ -131,7 +134,7 @@ SEXP stri_split_lines1(SEXP str)
  *
  * @return list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-04)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
  */
 SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
 {
@@ -185,8 +188,8 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
 
       UChar32 c;
       R_len_t jlast, k=1;
-      deque<R_len_t_x2> occurences;
-      occurences.push_back(R_len_t_x2(0, 0));
+      deque< pair<R_len_t, R_len_t> > occurences;
+      occurences.push_back(pair<R_len_t, R_len_t>(0, 0));
       for (R_len_t j=0; j < str_cur_n && k < n_max_cur; /* null */) {
          jlast = j;
          U8_NEXT(str_cur_s, j, str_cur_n, c);
@@ -228,32 +231,33 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
 
             default:
                /* not a newline character */
-               occurences.back().v2 = j;
+               occurences.back().second = j;
                continue;
          }
 
          // if here, then at newline
-         if (omit_empty_cur && occurences.back().v2 == occurences.back().v1)
-            occurences.back().v1 = occurences.back().v2 = j; // don't start new field
+         if (omit_empty_cur && occurences.back().second == occurences.back().first)
+            occurences.back().first = occurences.back().second = j; // don't start new field
          else {
-            occurences.back().v2 = jlast;
-            occurences.push_back(R_len_t_x2(j, j));
+            occurences.back().second = jlast;
+            occurences.push_back(pair<R_len_t, R_len_t>(j, j));
             ++k; // another field
          }
       }
 
       if (k == n_max_cur)
-         occurences.back().v2 = str_cur_n;
-      if (omit_empty_cur && occurences.back().v1 == occurences.back().v2)
+         occurences.back().second = str_cur_n;
+      if (omit_empty_cur && occurences.back().first == occurences.back().second)
          occurences.pop_back();
 
       SEXP ans;
       PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
 
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t l = 0; iter != occurences.end(); ++iter, ++l) {
-         R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, l, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         SET_STRING_ELT(ans, l,
+            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);

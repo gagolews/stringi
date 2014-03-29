@@ -39,30 +39,6 @@
 #include "stri_exception.h"
 #include "stri_string8.h"
 
-// ------------------------------------------------------------------------
-
-
-class UCollator;
-
-/** Two \code{R_len_t}s as one :)
- *
- */
-struct R_len_t_x2 {
-   R_len_t_x2(R_len_t _v1, R_len_t _v2) { this->v1 = _v1; this->v2 = _v2; }
-   R_len_t v1;
-   R_len_t v2;
-};
-
-
-/** Two \code{char*}s as one :)
- *
- */
-struct charptr_x2 {
-   charptr_x2() { this->v1 = NULL; this->v2 = NULL; }
-   charptr_x2(const char* _v1, const char* _v2) { this->v1 = _v1; this->v2 = _v2; }
-   const char* v1;
-   const char* v2;
-};
 
 // ------------------------------------------------------------------------
 
@@ -91,6 +67,7 @@ SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);
 SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
 
 // collator.cpp:
+class UCollator;
 UCollator*  stri__ucol_open(SEXP collator_opts);
 
 // compare.cpp:
@@ -179,25 +156,6 @@ SEXP    stri_enc_toascii(SEXP str);
 
 
 // encoding_detection.cpp:
-double stri__enc_check_8bit(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_ascii(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_utf8(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_utf16(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence, bool le);
-double stri__enc_check_utf16le(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_utf16be(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_utf32(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence, bool le);
-double stri__enc_check_utf32le(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-double stri__enc_check_utf32be(const char* str_cur_s,
-                              R_len_t str_cur_n, bool get_confidence);
-
 SEXP stri_enc_detect2(SEXP str, SEXP loc);
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);
 SEXP stri_enc_isenc(SEXP str, SEXP type);

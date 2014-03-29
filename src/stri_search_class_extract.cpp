@@ -34,7 +34,9 @@
 #include "stri_container_charclass.h"
 #include "stri_container_logical.h"
 #include <deque>
+#include <utility>
 using namespace std;
+
 
 /**
  * Extract first or last occurences of a character class in each string
@@ -43,9 +45,13 @@ using namespace std;
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-08)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -111,7 +117,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-08)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
  */
 SEXP stri_extract_first_charclass(SEXP str, SEXP pattern)
 {
@@ -126,7 +132,7 @@ SEXP stri_extract_first_charclass(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-08)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
  */
 SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
 {
@@ -143,9 +149,13 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-08)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -181,12 +191,12 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, jlast;
       UChar32 chr;
-      deque<R_len_t_x2> occurences; // codepoint based-indices
+      deque< pair<R_len_t, R_len_t> > occurences; // codepoint based-indices
 
       for (jlast=j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (pattern_cur.test(chr)) {
-            occurences.push_back(R_len_t_x2(jlast, j));
+            occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
          }
          jlast = j;
       }
@@ -196,13 +206,13 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, notfound);
       else if (merge_cur && noccurences > 1) {
          // do merge
-         deque<R_len_t_x2> occurences2;
-         deque<R_len_t_x2>::iterator iter = occurences.begin();
+         deque< pair<R_len_t, R_len_t> > occurences2;
+         deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
          occurences2.push_back(*iter);
          for (++iter; iter != occurences.end(); ++iter) {
-            R_len_t_x2 curoccur = *iter;
-            if (occurences2.back().v2 == curoccur.v1) { // continue seq
-               occurences2.back().v2 = curoccur.v2;  // change `end`
+            pair<R_len_t, R_len_t> curoccur = *iter;
+            if (occurences2.back().second == curoccur.first) { // continue seq
+               occurences2.back().second = curoccur.second;  // change `end`
             }
             else { // new seq
                occurences2.push_back(curoccur);
@@ -215,8 +225,9 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences2));
          iter = occurences2.begin();
          for (R_len_t f = 0; iter != occurences2.end(); ++iter, ++f) {
-            R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, f, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            pair<R_len_t, R_len_t> curo = *iter;
+            SET_STRING_ELT(cur_res, f,
+               Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
@@ -225,10 +236,11 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          // do not merge
          SEXP cur_res;
          PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
-         deque<R_len_t_x2>::iterator iter = occurences.begin();
+         deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
          for (R_len_t f = 0; iter != occurences.end(); ++iter, ++f) {
-            R_len_t_x2 curo = *iter;
-            SET_STRING_ELT(cur_res, f, Rf_mkCharLenCE(str_cur_s+curo.v1, curo.v2-curo.v1, CE_UTF8));
+            pair<R_len_t, R_len_t> curo = *iter;
+            SET_STRING_ELT(cur_res, f,
+               Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);

@@ -34,6 +34,7 @@
 #include "stri_container_utf16.h"
 #include "stri_container_regex.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -45,9 +46,13 @@ using namespace std;
  * @param opts_regex list
  * @return list of integer matrices (2 columns)
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - StriContainerUTF16+deque usage
- * @version 0.3 (Marek Gagolewski, 2013-06-19) use StriContainerRegexPattern + opts_regex
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          StriContainerUTF16+deque usage
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
+ *          use StriContainerRegexPattern + opts_regex
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -80,14 +85,14 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          continue;
       }
 
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       do {
          UErrorCode status = U_ZERO_ERROR;
          int start = (int)matcher->start(status);
          int end  =  (int)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(status);
 
-         occurences.push_back(R_len_t_x2(start, end));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, end));
          found = (int)matcher->find();
       } while (found);
 
@@ -95,11 +100,11 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         R_len_t_x2 match = *iter;
-         ans_tab[j]             = match.v1;
-         ans_tab[j+noccurences] = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         ans_tab[j]             = match.first;
+         ans_tab[j+noccurences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
@@ -128,9 +133,13 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param firs logical - search for the first or the last occurence?
  * @return list of integer matrices (2 columns)
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - StriContainerUTF16
- * @version 0.3 (Marek Gagolewski, 2013-06-19) use StriContainerRegexPattern + opts_regex
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          Use StriContainerUTF16
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
+ *          Use StriContainerRegexPattern + opts_regex
  */
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
@@ -201,9 +210,13 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
  * @param opts_regex list
  * @return list of integer matrices (2 columns)
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - StriContainerUTF16
- * @version 0.3 (Marek Gagolewski, 2013-06-19) use StriContainerRegexPattern + opts_regex
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *          Use StriContainerUTF16
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
+ *          Use StriContainerRegexPattern + opts_regex
  */
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -218,8 +231,12 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param pattern character vector
  * @param opts_regex list
  * @return list of integer matrices (2 columns)
- * @version 0.1 (Bartlomiej Tartanus, 2013-06-10) - StriContainerUTF16
- * @version 0.2 (Marek Gagolewski, 2013-06-19) use StriContainerRegexPattern + opts_regex
+ *
+ * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-10)
+ *          Use StriContainerUTF16
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
+ *          Use StriContainerRegexPattern + opts_regex
  */
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {

@@ -49,9 +49,13 @@ using namespace std;
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
- * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
+ *          StriException friendly & Use StriContainers
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacement, int type)
 {
@@ -100,13 +104,13 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
 
       R_len_t len = pattern_cont.getMatchedLength();
       R_len_t sumbytes = len;
-      deque<R_len_t_x2> occurences;
-      occurences.push_back(R_len_t_x2(start, start+len));
+      deque< pair<R_len_t, R_len_t> > occurences;
+      occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
       while (type == 0 && USEARCH_DONE != pattern_cont.findNext()) { // all
          start = pattern_cont.getMatchedStart();
          len = pattern_cont.getMatchedLength();
-         occurences.push_back(R_len_t_x2(start, start+len));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
          sumbytes += len;
       }
 
@@ -120,12 +124,12 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
 
       R_len_t jlast = 0;
       char* curbuf = buf.data();
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (; iter != occurences.end(); ++iter) {
-         R_len_t_x2 match = *iter;
-         memcpy(curbuf, str_cur_s+jlast, (size_t)match.v1-jlast);
-         curbuf += match.v1-jlast;
-         jlast = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         memcpy(curbuf, str_cur_s+jlast, (size_t)match.first-jlast);
+         curbuf += match.first-jlast;
+         jlast = match.second;
          memcpy(curbuf, replacement_cur_s, (size_t)replacement_cur_n);
          curbuf += replacement_cur_n;
       }
@@ -138,6 +142,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
+
 /**
  * Replace all/first/last occurences of a fixed pattern [with collation]
  *
@@ -147,9 +152,13 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-26) StriException friendly & Use StriContainers
- * @version 0.3 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
+ *          StriException friendly & Use StriContainers
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts, int type)
 {
@@ -187,7 +196,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 
       UErrorCode status = U_ZERO_ERROR;
       R_len_t remUChars = 0;
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
 
       if (type >= 0) { // first or all
          int start = (int)usearch_first(matcher, &status);
@@ -199,7 +208,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
          while (start != USEARCH_DONE) {
             R_len_t mlen = usearch_getMatchedLength(matcher);
             remUChars += mlen;
-            occurences.push_back(R_len_t_x2(start, start+mlen));
+            occurences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
             if (type > 0) break; // break if first and not all
             start = usearch_next(matcher, &status);
             if (U_FAILURE(status)) throw StriException(status);
@@ -212,7 +221,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
             continue; // no change in str_cont[i] at all
          R_len_t mlen = usearch_getMatchedLength(matcher);
          remUChars += mlen;
-         occurences.push_back(R_len_t_x2(start, start+mlen));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
       }
 
       R_len_t replacement_cur_n = replacement_cont.get(i).length();
@@ -220,12 +229,12 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
       UnicodeString ans(str_cont.get(i).length()-remUChars+noccurences*replacement_cur_n, (UChar)0xfffd, 0);
       R_len_t jlast = 0;
       R_len_t anslast = 0;
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (; iter != occurences.end(); ++iter) {
-         R_len_t_x2 match = *iter;
-         ans.replace(anslast, match.v1-jlast, str_cont.get(i), jlast, match.v1-jlast);
-         anslast += match.v1-jlast;
-         jlast = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         ans.replace(anslast, match.first-jlast, str_cont.get(i), jlast, match.first-jlast);
+         anslast += match.first-jlast;
+         jlast = match.second;
          ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
          anslast += replacement_cur_n;
       }
@@ -251,8 +260,10 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
+ *          use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
@@ -269,8 +280,10 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP colla
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
+ *          use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {
@@ -287,8 +300,10 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP coll
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-26) use stri__replace_allfirstlast_fixed
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
+ *          use stri__replace_allfirstlast_fixed
  */
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP collator_opts)
 {

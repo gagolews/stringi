@@ -36,6 +36,7 @@
 #include "stri_container_usearch.h"
 #include "stri_container_bytesearch.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -49,7 +50,7 @@ using namespace std;
  * @param firs logical - search for the first or the last occurence?
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first)
 {
@@ -117,7 +118,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, b
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -134,7 +135,7 @@ SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param collator_opts list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -152,7 +153,7 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param collator_opts list
  * @return list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -193,19 +194,19 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          continue;
       }
 
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       while (start != USEARCH_DONE) {
-         occurences.push_back(R_len_t_x2(start, usearch_getMatchedLength(matcher)));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, usearch_getMatchedLength(matcher)));
          start = usearch_next(matcher, &status);
          if (U_FAILURE(status)) throw StriException(status);
       }
 
       R_len_t noccurences = (R_len_t)occurences.size();
       StriContainerUTF16 out_cont(noccurences);
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         R_len_t_x2 match = *iter;
-         out_cont.getWritable(j).setTo(str_cont.get(i), match.v1, match.v2);
+         pair<R_len_t, R_len_t> match = *iter;
+         out_cont.getWritable(j).setTo(str_cont.get(i), match.first, match.second);
       }
 
       SET_VECTOR_ELT(ret, i, out_cont.toR());
@@ -231,7 +232,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param first looking for first or last match? [WHATEVER]
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
 {
@@ -278,7 +279,7 @@ SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
  * @param first looking for first or last match? [WHATEVER]
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-24)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  */
 SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
 {

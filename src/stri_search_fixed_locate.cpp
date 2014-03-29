@@ -36,6 +36,7 @@
 #include "stri_container_usearch.h"
 #include "stri_container_bytesearch.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -48,9 +49,13 @@ using namespace std;
  * if \code{NA}, then \code{stri__locate_all_fixed_byte} is called
  * @return list of integer matrices (2 columns)
  *
- * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
- * @version 0.3 (Marek Gagolewski, 2013-06-23) StriException friendly, use StriContainerUStringSearch
+ * @version 0.1-?? (Bartlomiej Tartanus)
+ *
+ * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-09)
+ *          StriContainerUTF16 & collator
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          StriException friendly, use StriContainerUStringSearch
  */
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -91,9 +96,9 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          continue;
       }
 
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       while (start != USEARCH_DONE) {
-         occurences.push_back(R_len_t_x2(start, start+usearch_getMatchedLength(matcher)));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, start+usearch_getMatchedLength(matcher)));
          start = usearch_next(matcher, &status);
          if (U_FAILURE(status)) throw StriException(status);
       }
@@ -102,11 +107,11 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         R_len_t_x2 match = *iter;
-         ans_tab[j]             = match.v1;
-         ans_tab[j+noccurences] = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         ans_tab[j]             = match.first;
+         ans_tab[j+noccurences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
@@ -141,9 +146,13 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param first looking for first or last match?
  * @return integer matrix (2 columns)
  *
- * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
- * @version 0.3 (Marek Gagolewski, 2013-06-23) StriException friendly, use StriContainerUStringSearch
+ * @version 0.1-?? (Bartlomiej Tartanus)
+ *
+ * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-09)
+ *          StriContainerUTF16 & collator
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          StriException friendly, use StriContainerUStringSearch
  */
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bool first)
 {
@@ -218,9 +227,13 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bo
  * @param collator_opts list
  * @return integer matrix (2 columns)
  *
- * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
- * @version 0.3 (Marek Gagolewski, 2013-06-23) use stri_locate_firstlast_fixed
+ * @version 0.1-?? (Bartlomiej Tartanus)
+ *
+ * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-09)
+ *          StriContainerUTF16 & collator
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          use stri_locate_firstlast_fixed
  */
 SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -238,9 +251,13 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
  * @param collator_opts list
  * @return integer matrix (2 columns)
  *
- * @version 0.1 (Bartlomiej Tartanus)
- * @version 0.2 (Bartlomiej Tartanus, 2013-06-09) StriContainerUTF16 & collator
- * @version 0.3 (Marek Gagolewski, 2013-06-23) use stri_locate_firstlast_fixed
+ * @version 0.1-?? (Bartlomiej Tartanus)
+ *
+ * @version 0.1-?? (Bartlomiej Tartanus, 2013-06-09)
+ *          StriContainerUTF16 & collator
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          use stri_locate_firstlast_fixed
  */
 SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -364,9 +381,9 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
          continue;
       }
 
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       while (start != USEARCH_DONE) {
-         occurences.push_back(R_len_t_x2(start, start+pattern_cont.getMatchedLength()));
+         occurences.push_back(pair<R_len_t, R_len_t>(start, start+pattern_cont.getMatchedLength()));
          start = pattern_cont.findNext();
       }
 
@@ -374,11 +391,11 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
       SEXP ans;
       PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         R_len_t_x2 match = *iter;
-         ans_tab[j]             = match.v1;
-         ans_tab[j+noccurences] = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         ans_tab[j]             = match.first;
+         ans_tab[j+noccurences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)

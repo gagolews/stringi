@@ -56,9 +56,17 @@ using namespace std;
    PROTECT(s);                           \
    ++__stri_protected_sexp_num; }
 
+#ifndef NDEBUG
+#define STRI__UNPROTECT(n) {             \
+   UNPROTECT(n);                         \
+   if (n > __stri_protected_sexp_num)    \
+      Rf_warning("STRI__UNPROTECT: stack imbalance!"); \
+   __stri_protected_sexp_num -= n; }
+#else
 #define STRI__UNPROTECT(n) {             \
    UNPROTECT(n);                         \
    __stri_protected_sexp_num -= n; }
+#endif
 
 #define STRI__UNPROTECT_ALL {            \
    UNPROTECT(__stri_protected_sexp_num); \
@@ -71,7 +79,7 @@ using namespace std;
 /**
  * Class representing exceptions
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-16)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  */
 class StriException {
 
@@ -82,6 +90,9 @@ private:
 public:
 
    StriException(const char* format, ...) {
+      // R will reclaim the memory at the end of the call to .Call
+      // This is important as the call to Rf_error could otherwise
+      // lead to memleaks
       msg = R_alloc(StriException_BUFSIZE, (int)sizeof(char));
       va_list args;
       va_start(args, format);

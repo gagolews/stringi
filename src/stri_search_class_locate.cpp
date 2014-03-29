@@ -35,6 +35,7 @@
 #include "stri_container_charclass.h"
 #include "stri_container_logical.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -45,9 +46,13 @@ using namespace std;
  * @param pattern character vector
  * @return matrix with 2 columns
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-04)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -107,7 +112,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
  * @param pattern character vector
  * @return matrix with 2 columns
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
  */
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
 {
@@ -122,7 +127,7 @@ SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return matrix with 2 columns
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-04)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
  */
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
 {
@@ -139,10 +144,17 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return list of matrices with 2 columns
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-04)
- * @version 0.2 (Marek Gagolewski, 2013-06-09) use R_len_t_x2 for merge=TRUE
- * @version 0.3 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.4 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-09)
+ *          use R_len_t_x2 for merge=TRUE
+ *          [R_len_t_x2 changed to pair<R_len_t, R_len_t> thereafter]
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -178,7 +190,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       R_len_t j;
       R_len_t k = 0;
       UChar32 chr;
-      deque<R_len_t> occurences; // codepoint based-indices
+      deque< R_len_t > occurences; // codepoint based-indices
 
       for (j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
@@ -193,16 +205,16 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, notfound);
       else if (merge_cur && noccurences > 1) {
          // do merge
-         deque<R_len_t_x2> occurences2;
+         deque< pair<R_len_t, R_len_t> > occurences2;
          deque<R_len_t>::iterator iter = occurences.begin();
-         occurences2.push_back(R_len_t_x2(*iter, *iter));
+         occurences2.push_back(pair<R_len_t, R_len_t>(*iter, *iter));
          for (++iter; iter != occurences.end(); ++iter) {
             R_len_t curoccur = *iter;
-            if (occurences2.back().v2 == curoccur - 1) { // continue seq
-               occurences2.back().v2 = curoccur;  // change `end`
+            if (occurences2.back().second == curoccur - 1) { // continue seq
+               occurences2.back().second = curoccur;  // change `end`
             }
             else { // new seq
-               occurences2.push_back(R_len_t_x2(curoccur, curoccur));
+               occurences2.push_back(pair<R_len_t, R_len_t>(curoccur, curoccur));
             }
          }
 
@@ -211,11 +223,11 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SEXP cur_res;
          PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences2, 2));
          int* cur_res_int = INTEGER(cur_res);
-         deque<R_len_t_x2>::iterator iter2 = occurences2.begin();
+         deque< pair<R_len_t, R_len_t> >::iterator iter2 = occurences2.begin();
          for (R_len_t f = 0; iter2 != occurences2.end(); ++iter2, ++f) {
-            R_len_t_x2 curoccur = *iter2;
-            cur_res_int[f] = curoccur.v1;
-            cur_res_int[f+noccurences2] = curoccur.v2;
+            pair<R_len_t, R_len_t> curoccur = *iter2;
+            cur_res_int[f] = curoccur.first;
+            cur_res_int[f+noccurences2] = curoccur.second;
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          UNPROTECT(1);
