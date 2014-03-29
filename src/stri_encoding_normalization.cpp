@@ -34,22 +34,6 @@
 #include <unicode/normalizer2.h>
 
 
-
-
-/**
- * ...
- * The values should be synchronized with R code!
- */
-enum StriNormalizationForm {
-   STRI_NFC = 10,
-   STRI_NFD = 20,
-   STRI_NFKC = 11,
-   STRI_NFKD = 21,
-   STRI_NFKC_CASEFOLD = 12
-};
-
-
-
 /** Get Desired Normalizer2 instance
  *
  * @param type R object, will be tested whether it's an integer vector of length 1
@@ -74,27 +58,27 @@ const Normalizer2* stri__normalizer_get(SEXP type)
    const Normalizer2* normalizer = NULL;
 
    switch (_type) {
-      case STRI_NFC:
+      case 10:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFCInstance(status);
          break;
 
-      case STRI_NFD:
+      case 20:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_DECOMPOSE, status);
          normalizer = Normalizer2::getNFDInstance(status);
          break;
 
-      case STRI_NFKC:
+      case 11:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFKCInstance(status);
          break;
 
-      case STRI_NFKD:
+      case 21:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_DECOMPOSE, status);
          normalizer = Normalizer2::getNFKDInstance(status);
          break;
 
-      case STRI_NFKC_CASEFOLD:
+      case 12:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc_cf", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFKCCasefoldInstance(status);
          break;

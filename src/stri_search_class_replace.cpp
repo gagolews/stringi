@@ -35,6 +35,7 @@
 #include "stri_container_charclass.h"
 #include "stri_string8buf.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -47,9 +48,13 @@ using namespace std;
  *
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-07)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-07)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
@@ -84,11 +89,11 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
       UChar32 chr;
 
       R_len_t sumbytes = 0;
-      deque<R_len_t_x2> occurences;
+      deque< pair<R_len_t, R_len_t> > occurences;
       for (jlast=j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (pattern_cur.test(chr)) {
-            occurences.push_back(R_len_t_x2(jlast, j));
+            occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
             sumbytes += j-jlast;
          }
          jlast = j;
@@ -106,12 +111,12 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 
       jlast = 0;
       char* curbuf = buf.data();
-      deque<R_len_t_x2>::iterator iter = occurences.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (; iter != occurences.end(); ++iter) {
-         R_len_t_x2 match = *iter;
-         memcpy(curbuf, str_cur_s+jlast, (size_t)match.v1-jlast);
-         curbuf += match.v1-jlast;
-         jlast = match.v2;
+         pair<R_len_t, R_len_t> match = *iter;
+         memcpy(curbuf, str_cur_s+jlast, (size_t)match.first-jlast);
+         curbuf += match.first-jlast;
+         jlast = match.second;
          memcpy(curbuf, replacement_cur_s, (size_t)replacement_cur_n);
          curbuf += replacement_cur_n;
       }
@@ -135,9 +140,13 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
  * @param first replace first (TRUE) or last (FALSE)?
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-06)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) Use StrContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-06)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *                Use StrContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *                make StriException-friendly
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
@@ -224,7 +233,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
  *
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-06)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-06)
  */
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
@@ -242,7 +251,7 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
  *
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-06)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-06)
  */
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {

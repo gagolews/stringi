@@ -36,6 +36,7 @@
 #include "stri_container_integer.h"
 #include "stri_container_logical.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -50,9 +51,14 @@ using namespace std;
  *
  * @return a list of character vectors
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-14)
- * @version 0.2 (Marek Gagolewski, 2013-06-15) omit_empty, use StriContainerInteger, StriContainerLogical, StriContainerCharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-14)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-15)
+ *          omit_empty, use StriContainerInteger, StriContainerLogical,
+ *          and StriContainerCharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -95,35 +101,36 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, k;
       UChar32 chr;
-      deque<R_len_t_x2> fields; // byte based-indices
-      fields.push_back(R_len_t_x2(0,0));
+      deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
+      fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
       for (j=0, k=1; j<str_cur_n && k < n_max_cur; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (pattern_cur.test(chr)) {
-            if (omit_empty_cur && fields.back().v2 == fields.back().v1)
-               fields.back().v1 = fields.back().v2 = j; // don't start new field
+            if (omit_empty_cur && fields.back().second == fields.back().first)
+               fields.back().first = fields.back().second = j; // don't start new field
             else {
-               fields.push_back(R_len_t_x2(j, j)); // start new field here
+               fields.push_back(pair<R_len_t, R_len_t>(j, j)); // start new field here
                ++k; // another field
             }
          }
          else {
-            fields.back().v2 = j;
+            fields.back().second = j;
          }
       }
       if (k == n_max_cur)
-         fields.back().v2 = str_cur_n;
-      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+         fields.back().second = str_cur_n;
+      if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
       SEXP ans;
       PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      deque<R_len_t_x2>::iterator iter = fields.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
-         R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         SET_STRING_ELT(ans, k,
+            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);

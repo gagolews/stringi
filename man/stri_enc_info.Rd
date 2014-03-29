@@ -33,10 +33,10 @@ the same as UChar32, i.e. does not reflect the maximal
 codepoint representation size) }
 }
 \description{
-Gets basic information on a given character encoding.
+Gets basic information on a character encoding.
 }
 \details{
-An error rises if the encoding provided is unknown to
+An error is raised if the encoding provided is unknown to
 \pkg{ICU} (see \code{\link{stri_enc_list}} for more
 details)
 }

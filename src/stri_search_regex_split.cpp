@@ -36,6 +36,7 @@
 #include "stri_container_logical.h"
 #include "stri_container_regex.h"
 #include <deque>
+#include <utility>
 using namespace std;
 
 
@@ -52,8 +53,12 @@ using namespace std;
  * @return list of character vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
- * @version 0.1-?? (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) added missing utext_close call to avoid memleaks
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
+ *
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *          Added missing utext_close call to avoid memleaks
  */
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_regex)
 {
@@ -110,33 +115,34 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
 
 
       R_len_t k;
-      deque<R_len_t_x2> fields; // byte based-indices
-      fields.push_back(R_len_t_x2(0,0));
+      deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
+      fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
       for (k=1; k < n_max_cur && (int)matcher->find(); ) {
          R_len_t s1 = (R_len_t)matcher->start(status);
          R_len_t s2 = (R_len_t)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(status);
 
-         if (omit_empty_cur && fields.back().v1 == s1)
-            fields.back().v1 = s2; // don't start new field
+         if (omit_empty_cur && fields.back().first == s1)
+            fields.back().first = s2; // don't start new field
          else {
-            fields.back().v2 = s1;
-            fields.push_back(R_len_t_x2(s2, s2)); // start new field here
+            fields.back().second = s1;
+            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start new field here
             ++k; // another field
          }
       }
-      fields.back().v2 = str_cur_n;
-      if (omit_empty_cur && fields.back().v1 == fields.back().v2)
+      fields.back().second = str_cur_n;
+      if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
       SEXP ans;
       PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      deque<R_len_t_x2>::iterator iter = fields.begin();
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
-         R_len_t_x2 curoccur = *iter;
-         SET_STRING_ELT(ans, k, Rf_mkCharLenCE(str_cur_s+curoccur.v1, curoccur.v2-curoccur.v1, CE_UTF8));
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         SET_STRING_ELT(ans, k,
+            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
