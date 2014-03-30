@@ -14,6 +14,10 @@
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
        stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
 
+   * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
+     to FALSE for backward-compatibility). It may be used in a (rare) case
+     in which a user wants to fix an invalid utf-8 byte sequence.
+
    * stri_enc_tonative - t.b.d.
 
    * stri_subst_na - t.b.d.

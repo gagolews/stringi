@@ -2,12 +2,15 @@
 \alias{stri_enc_toutf8}
 \title{Convert Strings To UTF-8}
 \usage{
-stri_enc_toutf8(str, is_unknown_8bit = FALSE)
+stri_enc_toutf8(str, is_unknown_8bit = FALSE, validate = FALSE)
 }
 \arguments{
   \item{str}{character vector to be converted}
 
   \item{is_unknown_8bit}{single logical value, see Details}
+
+  \item{validate}{single logical value (can be \code{NA}),
+  see Details}
 }
 \value{
 Returns a character vector.
@@ -38,6 +41,15 @@ to be neither in ASCII nor in UTF-8, then all bytecodes >
 interpreted as Unicode missing value for single characters.
 Here, a \code{bytes}-marked string is assumed to be encoded
 by an 8-bit encoding such that it has ASCII as its subset.
+
+What is more, in both cases setting \code{validate} to
+\code{TRUE} or \code{NA} validates the resulting UTF-8 byte
+stream. If \code{validate == TRUE}, then in case of any
+incorrect byte sequences, they will be replaced with
+REPLACEMENT CHARACTER. This option may be used in a (very
+rare in practise) case in which you want to fix an invalid
+UTF-8 byte sequence. For \code{NA}, a bogus string will be
+replaced with a missing value.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},

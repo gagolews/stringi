@@ -151,7 +151,7 @@ SEXP    stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
 SEXP    stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
 SEXP    stri_enc_fromutf32(SEXP str);
 SEXP    stri_enc_toutf32(SEXP str);
-SEXP    stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit);
+SEXP    stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate);
 SEXP    stri_enc_toascii(SEXP str);
 
 

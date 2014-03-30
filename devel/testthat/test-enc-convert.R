@@ -105,6 +105,14 @@ test_that("stri_enc_toutf8", {
 
    expect_identical(stri_enc_toutf8("\ufeffabc"), "abc") # removes BOMs
    expect_identical(stri_enc_toutf8("\ufeffabc", is_unknown_8bit=TRUE), "abc") # removes BOMs
+   
+   x <- "abc\x99\x85"
+   Encoding(x) <- "UTF-8"
+   expect_warning(stri_enc_toutf8(x, validate=TRUE))
+   suppressWarnings(expect_identical(stri_enc_toutf8(x, validate=TRUE), "abc\ufffd\ufffd"))
+   expect_identical(stri_enc_toutf8(x), x)
+   expect_warning(stri_enc_toutf8(x, validate=NA))
+   suppressWarnings(expect_identical(stri_enc_toutf8(x, validate=NA), NA_character_))
 })
 
 
