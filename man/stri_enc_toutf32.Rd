@@ -28,7 +28,8 @@ of raw vector on output, use \code{\link{stri_encode}}.
 
 Unlike \code{utf8ToInt}, if improper UTF-8 byte sequences
 are detected, a corresponding element is set to NULL and a
-warning is given.
+warning is given, see also \code{\link{stri_enc_toutf8}}
+for a method to deal with such cases.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},

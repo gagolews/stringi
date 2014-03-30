@@ -90,7 +90,8 @@ stri_numbytes <- function(str) {
 #' (e.g. by \code{\link{stri_enc_nfc}}), the returned counts may sometimes be
 #' misleading. Moreover, if an incorrect UTF-8 byte sequence is detected,
 #' then a warning is generated and the corresponding output element
-#' is set to \code{NA}.
+#' is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
+#' to deal with such cases.
 #'
 #' Missing values are handled properly,
 #' as opposed to the built-in \code{\link{nchar}} function.

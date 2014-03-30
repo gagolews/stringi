@@ -45,6 +45,12 @@
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
+   
+#define MSG__INVALID_CODE_POINT_FIXING \
+   "invalid UTF-8 codepoint definition. fixing"
+   
+#define MSG__INVALID_CODE_POINT_REPLNA \
+   "invalid UTF-8 codepoint definition. setting string to NA"
 
 #define MSG__INVALID_UTF8 \
    "invalid UTF-8 byte sequence detected"

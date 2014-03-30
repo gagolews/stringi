@@ -48,7 +48,8 @@
  * @version 0.1-?? (Marek Gagolewski)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
- *          StriException friently; use StriContainerListInt
+ *          StriException friently;
+ *          use StriContainerListInt
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
@@ -64,7 +65,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
       if (!vec_cont.isNA(i) && vec_cont.get(i).size() > bufsize)
          bufsize = vec_cont.get(i).size();
    }
-   bufsize = U8_MAX_LENGTH*bufsize+1; // this will be sufficient
+   bufsize = U8_MAX_LENGTH*bufsize+1; // this will surely be sufficient
    String8buf buf(bufsize);
    char* bufdata = buf.data();
 
@@ -116,7 +117,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
  *          make StriException-friendly
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-26)
- *          use vector<int> buf instaed of R_alloc;
+ *          use vector<int> buf instead of R_alloc;
  *          warn and set NULL on improper UTF-8 byte sequences
  */
 SEXP stri_enc_toutf32(SEXP str)
@@ -183,6 +184,8 @@ SEXP stri_enc_toutf32(SEXP str)
  * if TRUE, then in case of ENC_NATIVE or ENC_LATIN1, UTF-8
  * REPLACEMENT CHARACTERs (U+FFFD) are
  * put for codes > 127
+ * @param validate single logical value (or NA)
+ * 
  * @return character vector
  *
  * @version 0.1-XX (Marek Gagolewski)
@@ -193,26 +196,28 @@ SEXP stri_enc_toutf32(SEXP str)
  * @version 0.2-1  (Marek Gagolewski, 2014-03-26)
  *                 Use one String8buf;
  *                 is_unknown_8bit_logical and UTF-8 tries now to remove BOMs
+ * 
+ * @version 0.2-1  (Marek Gagolewksi, 2014-03-30)
+ *                 added validate arg
  */
-SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 {
-   //@TODO: add `validate` arg?
-   // TRUE: substitute with U+FFFD
-   // FALSE: do not validate
-   // NA: substitute string with NA?
-   str = stri_prepare_arg_string(str, "str");
-   R_len_t n = LENGTH(str);
+   validate = stri_prepare_arg_logical_1(validate, "validate");
    bool is_unknown_8bit_logical =
       stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
+   str = stri_prepare_arg_string(str, "str");
+   R_len_t n = LENGTH(str);
 
    STRI__ERROR_HANDLER_BEGIN
+   SEXP ret;
    if (!is_unknown_8bit_logical) {
       // Trivial - everything we need is in StriContainerUTF8 :)
       // which removes BOMs silently
       StriContainerUTF8 str_cont(str, n);
-      return str_cont.toR();
+      STRI__PROTECT(ret = str_cont.toR());
    }
    else {
+      // get buf size
       R_len_t bufsize = 0;
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
@@ -223,8 +228,8 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
          if (ni > bufsize) bufsize = ni;
       }
       String8buf buf(bufsize*3); // either 1 byte < 127 or U+FFFD == 3 bytes UTF-8
-
-      SEXP ret;
+      char* bufdata = buf.data();
+      
       STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
@@ -255,18 +260,67 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit)
          R_len_t k = 0;
          for (R_len_t j=0; j<curn; ++j) {
             if (U8_IS_SINGLE(curs_tab[j]))
-               buf.data()[k++] = curs_tab[j];
+               bufdata[k++] = curs_tab[j];
             else { // 0xEF 0xBF 0xBD
-               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
-               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
-               buf.data()[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
+               bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
+               bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
+               bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
             }
          }
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8));
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
       }
-      STRI__UNPROTECT_ALL
-      return ret;
+      
    }
+   
+   // validate utf8 byte stream
+   if (LOGICAL(validate)[0] != FALSE) { // NA or TRUE
+      R_len_t ret_n = LENGTH(ret);
+      for (R_len_t i=0; i<ret_n; ++i) {
+         SEXP curs = STRING_ELT(ret, i);
+         if (curs == NA_STRING) continue;
+         
+         const char* s = CHAR(curs);
+         R_len_t sn = LENGTH(curs);
+         R_len_t j = 0;
+         UChar32 c = 0;
+         while (c >= 0 && j < sn) {
+            U8_NEXT(s, j, sn, c);
+         }
+         
+         if (c >= 0) continue; // valid, nothing to do
+         
+         if (LOGICAL(validate)[0] == NA_LOGICAL) {
+            Rf_warning(MSG__INVALID_CODE_POINT_REPLNA);
+            SET_STRING_ELT(ret, i, NA_STRING);
+         }
+         else {
+            int bufsize = sn*3; // maximum: 1 byte -> U+FFFD (3 bytes)
+            String8buf buf(bufsize); // maximum: 1 byte -> U+FFFD (3 bytes)
+            char* bufdata = buf.data();
+            
+            j = 0;
+            R_len_t k = 0;
+            UBool err = FALSE;
+            while (!err && j < sn) {
+               U8_NEXT(s, j, sn, c);
+               if (c >= 0) {
+                  U8_APPEND((uint8_t*)bufdata, k, bufsize, c, err);
+               } else {
+                  Rf_warning(MSG__INVALID_CODE_POINT_FIXING);
+                  bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
+                  bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
+                  bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3; 
+               }
+            }
+            
+            if (err) throw StriException(MSG__INTERNAL_ERROR);
+            SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
+         }
+      }
+   }
+   
+   STRI__UNPROTECT_ALL
+   return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
