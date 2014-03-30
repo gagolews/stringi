@@ -337,6 +337,10 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-03-30)
+ *          use single common buf;
+ *          warn on invalid utf8 byte stream
  */
 SEXP stri_enc_toascii(SEXP str)
 {
@@ -344,49 +348,64 @@ SEXP stri_enc_toascii(SEXP str)
    R_len_t n = LENGTH(str);
 
    STRI__ERROR_HANDLER_BEGIN
+   
+   // get buf size
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<n; ++i) {
+      SEXP curs = STRING_ELT(str, i);
+      if (curs == NA_STRING)
+         continue;
+
+      R_len_t ni = LENGTH(curs);
+      if (ni > bufsize) bufsize = ni;
+   }
+   String8buf buf(bufsize); // no more bytes than this needed
+   char* bufdata = buf.data();
+   
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);
-      if (curs == NA_STRING) {
-         SET_STRING_ELT(ret, i, NA_STRING);
+      if (curs == NA_STRING || IS_ASCII(curs)) {
+         // nothing to do
+         SET_STRING_ELT(ret, i, curs);
          continue;
       }
-      else if (IS_ASCII(curs)) {
-         SET_STRING_ELT(ret, i, curs);
-      }
-      else if (IS_UTF8(curs)) {
-         R_len_t curn = LENGTH(curs);
-         const char* curs_tab = CHAR(curs);
-         // TODO: buffer reuse....
-         String8buf buf(curn+1); // this may be 4 times too much
-         R_len_t k = 0;
+      
+      R_len_t curn = LENGTH(curs);
+      const char* curs_tab = CHAR(curs);
+      
+      if (IS_UTF8(curs)) {
+         R_len_t k = 0, j = 0;
          UChar32 c;
-         for (int j=0; j<curn; ) {
+         while (j<curn) {
             U8_NEXT(curs_tab, j, curn, c);
-            if (c > ASCII_MAXCHARCODE)
-               buf.data()[k++] = ASCII_SUBSTITUTE;
+            if (c < 0) {
+               Rf_warning(MSG__INVALID_CODE_POINT_FIXING);
+               bufdata[k++] = ASCII_SUBSTITUTE;
+            }
+            else if (c > ASCII_MAXCHARCODE)
+               bufdata[k++] = ASCII_SUBSTITUTE;
             else
-               buf.data()[k++] = (char)c;
+               bufdata[k++] = (char)c;
          }
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
+         // the string will be marked as ASCII anyway by mkCharLenCE
       }
       else { // some 8-bit encoding
-         R_len_t curn = LENGTH(curs);
-         const char* curs_tab = CHAR(curs);
-         // TODO: buffer reuse....
-         String8buf buf(curn+1);
          R_len_t k = 0;
          for (R_len_t j=0; j<curn; ++j) {
             if (U8_IS_SINGLE(curs_tab[j]))
-               buf.data()[k++] = curs_tab[j];
+               bufdata[k++] = curs_tab[j];
             else {
-               buf.data()[k++] = (char)ASCII_SUBSTITUTE; // subst char in ascii
+               bufdata[k++] = (char)ASCII_SUBSTITUTE; // subst char in ascii
             }
          }
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), k, CE_UTF8)); // will be marked as ASCII anyway by mkCharLenCE
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
+         // the string will be marked as ASCII anyway by mkCharLenCE
       }
    }
+   
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)

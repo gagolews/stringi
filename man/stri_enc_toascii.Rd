@@ -18,10 +18,13 @@ character strings consisting of bytes not greater than 127.
 All code points greater than 127 are replaced with ASCII
 SUBSTITUTE CHARACTER (0x1A). \R encoding declarations are
 always used to determine which encoding is assumed for each
-input, see \code{\link{stri_enc_mark}}.
+input, see \code{\link{stri_enc_mark}}. In incorrect byte
+sequences are found in UTF-8 byte streams, a warning is
+generated.
 
 A \code{bytes}-marked string is assumed to be represented
-by a 8-bit encoding such that it has ASCII as its subset.
+by a 8-bit encoding such that it has ASCII as its subset (a
+common assumption in R itself).
 
 Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032})
 may be interpreted as ASCII missing value for single
