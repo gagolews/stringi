@@ -245,7 +245,7 @@ Other encoding_detection: \code{\link{stri_enc_detect2}};
 
 Other encoding_management: \code{\link{stri_enc_get}},
 \code{\link{stri_enc_set}}; \code{\link{stri_enc_info}};
-\code{\link{stri_enc_list}}
+\code{\link{stri_enc_list}}; \code{\link{stri_enc_mark}}
 
 Other encoding_normalization: \code{\link{stri_enc_isnfc}},
 \code{\link{stri_enc_isnfd}},

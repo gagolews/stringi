@@ -43,4 +43,9 @@ equivalent to the one returned by
 the \code{LC_CTYPE} category as given by
 \code{\link{Sys.getlocale}}.
 }
+\seealso{
+Other encoding_management: \code{\link{stri_enc_get}},
+\code{\link{stri_enc_set}}; \code{\link{stri_enc_info}};
+\code{\link{stri_enc_list}}; \code{\link{stringi-encoding}}
+}
 
