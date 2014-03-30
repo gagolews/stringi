@@ -105,6 +105,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #'    to represent an UChar (in UTF-16, this is not the same as UChar32,
 #'    i.e. does not reflect the maximal codepoint representation size)
 #' }
+#' 
 #' @family encoding_management
 #' @export
 stri_enc_info <- function(enc=NULL) {
@@ -211,6 +212,7 @@ stri_enc_get <- function() {
 #' This is exactly the same information which is used by
 #' all the functions in \pkg{stringi} to re-encode their inputs.
 #'
+#' @family encoding_management
 #' @export
 stri_enc_mark <- function(str) {
    .Call("stri_enc_mark", str, PACKAGE="stringi")

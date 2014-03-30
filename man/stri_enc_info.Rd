@@ -43,6 +43,6 @@ details)
 \seealso{
 Other encoding_management: \code{\link{stri_enc_get}},
 \code{\link{stri_enc_set}}; \code{\link{stri_enc_list}};
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_mark}}; \code{\link{stringi-encoding}}
 }
 

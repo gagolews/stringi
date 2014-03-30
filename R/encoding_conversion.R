@@ -252,10 +252,13 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE, validate=FALSE) {
 #' to Native encoding.
 #'
 #' @details
+#' This function just calls \code{\link{stri_encode}(str, NULL, NULL)}.
 #' Current native encoding can be read with \code{\link{stri_enc_get}}.
 #' Character strings declared to be in \code{bytes} encoding will fail here.
 #'
-#'
+#' Note that if working in a UTF-8 environment,
+#' resulting strings will be marked with \code{UTF-8}
+#' and not \code{native}, see \code{\link{stri_enc_mark}}.
 #'
 #' @param str character vector to be converted
 #' @return Returns a character vector.
@@ -263,8 +266,7 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE, validate=FALSE) {
 #' @family encoding_conversion
 #' @export
 stri_enc_tonative <- function(str) {
-   stop("to do")
-#    .Call("stri_enc_tonative", str, PACKAGE="stringi")
+   stri_encode(str, NULL, NULL)
 }
 
 

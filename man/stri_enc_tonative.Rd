@@ -15,9 +15,14 @@ Converts character strings with declared encodings to
 Native encoding.
 }
 \details{
-Current native encoding can be read with
+This function just calls \code{\link{stri_encode}(str,
+NULL, NULL)}. Current native encoding can be read with
 \code{\link{stri_enc_get}}. Character strings declared to
 be in \code{bytes} encoding will fail here.
+
+Note that if working in a UTF-8 environment, resulting
+strings will be marked with \code{UTF-8} and not
+\code{native}, see \code{\link{stri_enc_mark}}.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_conv}},

@@ -499,6 +499,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    STRI__ERROR_HANDLER_END({/* nothing special on error */})
 }
 
+
 /**
  * Convert character vector between given encodings
  *
