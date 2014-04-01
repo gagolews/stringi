@@ -60,6 +60,7 @@ R_len_t stri__numbytes_max(SEXP str)
       }
    }
    return maxlen;
+   // @TODO: overload this function for StriContainers.....
 }
 
 
@@ -168,21 +169,27 @@ SEXP stri_length(SEXP str)
  * @return integer vector
  *
  * @version 0.1-?? (Marcin Bujarski)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          StriException-friendly
  */
 SEXP stri_numbytes(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t str_n = LENGTH(str);
+
+   STRI__ERROR_HANDLER_BEGIN
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
    int* retint = LOGICAL(ret);
    for (R_len_t i=0; i<str_n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       retint[i] = (curs == NA_STRING)?NA_INTEGER:LENGTH(curs); // O(1) - stored by R
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 
@@ -196,11 +203,16 @@ SEXP stri_numbytes(SEXP str)
  * @return logical vector
  *
  * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          StriException-friendly
  */
 SEXP stri_isempty(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    R_len_t str_n = LENGTH(str);
+
+   STRI__ERROR_HANDLER_BEGIN
    SEXP ret;
    PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
    int* retlog = LOGICAL(ret);
@@ -211,6 +223,7 @@ SEXP stri_isempty(SEXP str)
    }
    UNPROTECT(1);
    return ret;
+   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 

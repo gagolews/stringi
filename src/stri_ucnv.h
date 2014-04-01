@@ -154,6 +154,37 @@ class StriUcnv  {
          if (U_FAILURE(status))
             throw StriException(MSG__ENC_ERROR_SET); // error() allowed here
       }
+
+      /**
+       * get R's cetype_t corresponding to this converter
+       */
+      cetype_t getCE() {
+         openConverter();
+         UErrorCode status = U_ZERO_ERROR;
+         const char* ucnv_name = ucnv_getName(m_ucnv, &status);
+         if (U_FAILURE(status))
+            throw StriException(status);
+
+         if (!strcmp(ucnv_name, "US-ASCII")) {
+            m_is8bit = true;
+            m_isutf8 = true;
+            return CE_UTF8;
+         }
+         else if (!strcmp(ucnv_name, "UTF-8")) {
+            m_isutf8 = true;
+            m_is8bit = false;
+            return CE_UTF8;
+         }
+         else if (!strcmp(ucnv_name, "ISO-8859-1")) {
+            m_is8bit = true;
+            m_isutf8 = false;
+            return CE_LATIN1;
+         }
+         else if (!strcmp(ucnv_name, ucnv_getDefaultName()))
+            return CE_NATIVE;
+
+         return CE_BYTES;
+      }
 };
 
 #endif

@@ -21,7 +21,7 @@ benchmark_do <- function() {
    xalmsrt <- c(x, x[1:10])
 
    gc(reset=TRUE)
-   
+
    benchmark2(
       stri_sort(xalmsrt),
       stri_sort(xalmsrt, opts_collator=NA),

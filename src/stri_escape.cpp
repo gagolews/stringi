@@ -42,7 +42,10 @@
  *  @param str character vector
  *  @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-17)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-17)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          fail on incorrect utf8 byte seqs;
 */
 SEXP stri_escape_unicode(SEXP str)
 {
@@ -53,7 +56,9 @@ SEXP stri_escape_unicode(SEXP str)
    StriContainerUTF8 str_cont(str, str_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, str_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_length));
+
+   std::string out; // @TODO: estimate len a priori?
 
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -66,7 +71,6 @@ SEXP stri_escape_unicode(SEXP str)
 
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
-      std::string out;
 
       // estimate buf size
       R_len_t bufsize = 0;
@@ -75,21 +79,27 @@ SEXP stri_escape_unicode(SEXP str)
 
       while (j < str_cur_n) {
          U8_NEXT(str_cur_s, j, str_cur_n, c);
-         if ((char)c >= 32 || (char)c <= 126)
+         if (c < 0)
+            throw StriException(MSG__INVALID_UTF8);
+         else if ((char)c >= 32 || (char)c <= 126)
             bufsize += 1;
          else if (c <= 0xff)
             bufsize += 6; // for \a, \n this will be overestimated
          else
             bufsize += 10;
       }
-      out.reserve(bufsize);
+      out.clear();
+      if ((size_t)bufsize > (size_t)out.size())
+         out.reserve(bufsize);
 
       // do escape
       j = 0;
       char buf[11];
       while (j < str_cur_n) {
          U8_NEXT(str_cur_s, j, str_cur_n, c);
-         if (c <= ASCII_MAXCHARCODE) {
+         /* if (c < 0)
+            throw StriException(MSG__INVALID_UTF8); // this has already been checked :)
+         else */ if (c <= ASCII_MAXCHARCODE) {
             switch ((char)c) {
                case 0x07: out.append("\\a"); break;
                case 0x08: out.append("\\b"); break;
@@ -126,7 +136,7 @@ SEXP stri_escape_unicode(SEXP str)
       );
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -139,7 +149,7 @@ SEXP stri_escape_unicode(SEXP str)
  *  @param str character vector
  *  @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-08-17)
+ * @version 0.1-?? (Marek Gagolewski, 2013-08-17)
 */
 SEXP stri_unescape_unicode(SEXP str)
 {

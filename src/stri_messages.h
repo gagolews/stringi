@@ -45,15 +45,15 @@
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
-   
+
 #define MSG__INVALID_CODE_POINT_FIXING \
    "invalid UTF-8 codepoint definition. fixing"
-   
+
 #define MSG__INVALID_CODE_POINT_REPLNA \
-   "invalid UTF-8 codepoint definition. setting string to NA"
+   "invalid UTF-8 codepoint definition. setting string to NA. see also stri_enc_toutf8()"
 
 #define MSG__INVALID_UTF8 \
-   "invalid UTF-8 byte sequence detected"
+   "invalid UTF-8 byte sequence detected. perhaps you should try calling stri_enc_toutf8()"
 
 #define MSG__INVALID_ESCAPE \
    "invalid escape sequence detected. Setting NA"
@@ -141,6 +141,9 @@
 #define MSG__REGEXP_FAILED \
    "regexp search failed"
 
+#define MSG__REGEXP_CONFIG_FAILED \
+   "regexp engine config failed"
+
 #define MSG__REGEXP_FAILED_DETAILS \
    "regexp search failed: %s"
 
@@ -148,7 +151,7 @@
    "string search failed"
 
 #define MSG__RESOURCE_ERROR_GET \
-   "required resource unavailable; do you have ICU data installed (icudtXX.dat)?"
+   "required resource unavailable; try calling stri_install_check()"
 
 #define MSG__RESOURCE_ERROR_APPLY \
    "error while applying operation"
