@@ -1,4 +1,4 @@
-# benchmark suite
+# (r) benchmark suite
 # (c) 2014, Marek Gagolewski
 
 
@@ -23,7 +23,7 @@ bm_unamen      <- system2('uname', '-n', stdout=TRUE)
 bm_digest      <- stri_sub(digest(bm_unamen%+%bm_Rversion%+%bm_platform%+%
       bm_locale%+%bm_cxx%+%bm_cxxflags, "sha256"), 1, 8)
 bm_indir       <- 'devel/benchmarks'
-bm_outdir      <- file.path(bm_indir, 'results_'%+%bm_digest)
+bm_outdir      <- file.path(bm_indir, 'results-rbmark_'%+%bm_digest)
 
 cat("# platform="%+%bm_platform%+%"\n")
 cat("# Rversion="%+%bm_Rversion%+%"\n")
@@ -37,20 +37,19 @@ cat("# git_sha="%+%bm_git_sha%+%"\n")
 cat("# curdate="%+%bm_curdate%+%"\n")
 
 # each benchmark item should return a data.frame with the following components:
-# * expr [code run, character]
-# * min.time [sec]
-# * q1.time [sec]
-# * median.time [sec]
-# * q2.time [sec]
-# * max.time [sec]
-# * n [number of replications tested]
+# * user.self [code run, character]
+# * sys.self [sec]
+# * elapsed [sec]
+# * user.child [sec]
+# * sys.child [sec]
+# * n [number of replications]
 
-source('devel/benchmarks/microbenchmark2.R', local=TRUE)
+source('devel/benchmarks/rbenchmark.R', local=TRUE)
 
 if (!file.exists(bm_outdir))
    dir.create(bm_outdir)
 
-bmarks <- dir(bm_indir, glob2rx('benchmark-'%+%benchmarks_wildcard%+%'.R'))
+bmarks <- dir(bm_indir, glob2rx('rbmark-'%+%benchmarks_wildcard%+%'.R'))
 for (b in bmarks) {
    cat('Filename:', b, '\n')
    local({

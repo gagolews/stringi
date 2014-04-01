@@ -16,10 +16,13 @@ LC_ALL="pl_PL.iso-8859-2"      $RHOME/bin/Rscript \
    --vanilla devel/testthat/run_package_tests.R \
 && \
 LC_ALL="pl_PL.UTF-8"      $RHOME/bin/Rscript \
-   --vanilla devel/benchmarks/run_package_benchmarks.R \
+   --vanilla devel/benchmarks/run-rbmark.R \
 && \
 LC_ALL="pl_PL.iso-8859-2" $RHOME/bin/Rscript \
-   --vanilla devel/benchmarks/run_package_benchmarks.R
-
-
-# ... Rscript -e "knitr::knit2pdf('$1')" ....
+   --vanilla devel/benchmarks/run-rbmark.R
+&& \
+LC_ALL="pl_PL.UTF-8"      $RHOME/bin/Rscript \
+   --vanilla devel/benchmarks/run-mbmark.R \
+&& \
+LC_ALL="pl_PL.iso-8859-2" $RHOME/bin/Rscript \
+   --vanilla devel/benchmarks/run-mbmark.R
