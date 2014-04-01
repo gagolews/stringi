@@ -48,6 +48,9 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly + StriContainerUTF8 (bug fix, do reversing manually)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          detect incorrect utf8 byte stream
  */
 SEXP stri_reverse(SEXP str)
 {
@@ -73,7 +76,7 @@ SEXP stri_reverse(SEXP str)
    // Alloc buffer & result vector
    String8buf buf(bufsize);
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, str_len));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_len));
 
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -91,8 +94,11 @@ SEXP stri_reverse(SEXP str)
       UChar32 chr;
       UBool isError = FALSE;
 
-      for (j=str_cur_n, k=0; j>0; ) {
+      for (j=str_cur_n, k=0; !isError && j>0; ) {
          U8_PREV(str_cur_s, 0, j, chr); // go backwards
+         if (chr < 0) {
+            throw StriException(MSG__INVALID_UTF8);
+         }
          U8_APPEND((uint8_t*)buf.data(), k, str_cur_n, chr, isError);
       }
 
@@ -102,7 +108,7 @@ SEXP stri_reverse(SEXP str)
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), str_cur_n, CE_UTF8));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -147,11 +147,11 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 
       SEXP names = Rf_getAttrib(opts_regex, R_NamesSymbol);
       if (names == R_NilValue || LENGTH(names) != narg)
-         Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
+         Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
 
       for (R_len_t i=0; i<narg; ++i) {
          if (STRING_ELT(names, i) == NA_STRING)
-            Rf_error(MSG__RESOURCE_ERROR_GET); // error() call allowed here
+            Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
 
          const char* curname = CHAR(STRING_ELT(names, i));
 

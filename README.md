@@ -7,7 +7,7 @@
 and convenient string/text processing in each locale and any native
 character encoding. The use of the *ICU* library gives R users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
-*PHP*m and *Ruby* programmers. The package's API was inspired by
+*PHP* and *Ruby* programmers. The package's API was inspired by
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
 package.
 

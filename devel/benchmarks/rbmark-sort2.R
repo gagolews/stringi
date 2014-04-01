@@ -20,7 +20,7 @@ benchmark_do <- function() {
    xsort <- sort(xrand)
 
    gc(reset=TRUE)
-   
+
    benchmark2(
       stri_sort(xsort),
       stri_sort(xsort, opts_collator=NA),

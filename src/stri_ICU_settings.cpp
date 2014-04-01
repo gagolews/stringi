@@ -44,9 +44,13 @@
  *  \code{Charset.internal} == \code{"UTF-8", "UTF-16"},
  *  \code{Charset.native} == \code{stri_enc_info()})
  *
- *  @version 0.1 (Marek Gagolewski)
- *  @version 0.2 (Marek Gagolewski, 2013-06-16) make StriException friendly
- *  @version 0.3 (Marek Gagolewski, 2013-11-17) added U_ICU_VERSION
+ *  @version 0.1-?? (Marek Gagolewski)
+ *
+ *  @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *                   make StriException friendly
+ *
+ *  @version 0.1-?? (Marek Gagolewski, 2013-11-17)
+ *                   added U_ICU_VERSION
 */
 SEXP stri_info()
 {
@@ -54,19 +58,19 @@ SEXP stri_info()
    const R_len_t infosize = 5;
    SEXP vals;
 
-   PROTECT(vals = Rf_allocVector(VECSXP, infosize));
+   STRI__PROTECT(vals = Rf_allocVector(VECSXP, infosize));
    SET_VECTOR_ELT(vals, 0, Rf_mkString(U_UNICODE_VERSION));
    SET_VECTOR_ELT(vals, 1, Rf_mkString(U_ICU_VERSION ));
    SET_VECTOR_ELT(vals, 2, stri_locale_info(R_NilValue));
    SET_VECTOR_ELT(vals, 3,
-      stri__make_character_vector(2, "UTF-8", "UTF-16")); // this is fixed
+      stri__make_character_vector(2, "UTF-8", "UTF-16")); // fixed strings
    SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));
 
    stri__set_names(vals, infosize,
       "Unicode.version", "ICU.version", "Locale",
       "Charset.internal", "Charset.native");
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return vals;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

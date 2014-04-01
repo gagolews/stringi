@@ -42,7 +42,9 @@
  * (i.e. has a given binary property or is in general unicode category).
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-02)
- * @version 0.1-24 (Marek Gagolewski, 2014-03-11) gcmask is now uint32_t, not UCharCategory
+ *
+ * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
+ *                   gcmask is now uint32_t, not UCharCategory
  */
 struct CharClass {
 

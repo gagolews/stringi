@@ -185,7 +185,7 @@ SEXP stri_enc_toutf32(SEXP str)
  * REPLACEMENT CHARACTERs (U+FFFD) are
  * put for codes > 127
  * @param validate single logical value (or NA)
- * 
+ *
  * @return character vector
  *
  * @version 0.1-XX (Marek Gagolewski)
@@ -196,7 +196,7 @@ SEXP stri_enc_toutf32(SEXP str)
  * @version 0.2-1  (Marek Gagolewski, 2014-03-26)
  *                 Use one String8buf;
  *                 is_unknown_8bit_logical and UTF-8 tries now to remove BOMs
- * 
+ *
  * @version 0.2-1  (Marek Gagolewksi, 2014-03-30)
  *                 added validate arg
  */
@@ -229,7 +229,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
       }
       String8buf buf(bufsize*3); // either 1 byte < 127 or U+FFFD == 3 bytes UTF-8
       char* bufdata = buf.data();
-      
+
       STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
@@ -269,16 +269,16 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
          }
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
       }
-      
+
    }
-   
+
    // validate utf8 byte stream
    if (LOGICAL(validate)[0] != FALSE) { // NA or TRUE
       R_len_t ret_n = LENGTH(ret);
       for (R_len_t i=0; i<ret_n; ++i) {
          SEXP curs = STRING_ELT(ret, i);
          if (curs == NA_STRING) continue;
-         
+
          const char* s = CHAR(curs);
          R_len_t sn = LENGTH(curs);
          R_len_t j = 0;
@@ -286,9 +286,9 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
          while (c >= 0 && j < sn) {
             U8_NEXT(s, j, sn, c);
          }
-         
+
          if (c >= 0) continue; // valid, nothing to do
-         
+
          if (LOGICAL(validate)[0] == NA_LOGICAL) {
             Rf_warning(MSG__INVALID_CODE_POINT_REPLNA);
             SET_STRING_ELT(ret, i, NA_STRING);
@@ -297,7 +297,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
             int bufsize = sn*3; // maximum: 1 byte -> U+FFFD (3 bytes)
             String8buf buf(bufsize); // maximum: 1 byte -> U+FFFD (3 bytes)
             char* bufdata = buf.data();
-            
+
             j = 0;
             R_len_t k = 0;
             UBool err = FALSE;
@@ -309,16 +309,16 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
                   Rf_warning(MSG__INVALID_CODE_POINT_FIXING);
                   bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE1;
                   bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE2;
-                  bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3; 
+                  bufdata[k++] = (char)UCHAR_REPLACEMENT_UTF8_BYTE3;
                }
             }
-            
+
             if (err) throw StriException(MSG__INTERNAL_ERROR);
             SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, k, CE_UTF8));
          }
       }
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -337,7 +337,7 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-30)
  *          use single common buf;
  *          warn on invalid utf8 byte stream
@@ -348,7 +348,7 @@ SEXP stri_enc_toascii(SEXP str)
    R_len_t n = LENGTH(str);
 
    STRI__ERROR_HANDLER_BEGIN
-   
+
    // get buf size
    R_len_t bufsize = 0;
    for (R_len_t i=0; i<n; ++i) {
@@ -361,7 +361,7 @@ SEXP stri_enc_toascii(SEXP str)
    }
    String8buf buf(bufsize); // no more bytes than this needed
    char* bufdata = buf.data();
-   
+
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
    for (R_len_t i=0; i<n; ++i) {
@@ -371,10 +371,10 @@ SEXP stri_enc_toascii(SEXP str)
          SET_STRING_ELT(ret, i, curs);
          continue;
       }
-      
+
       R_len_t curn = LENGTH(curs);
       const char* curs_tab = CHAR(curs);
-      
+
       if (IS_UTF8(curs)) {
          R_len_t k = 0, j = 0;
          UChar32 c;
@@ -405,7 +405,7 @@ SEXP stri_enc_toascii(SEXP str)
          // the string will be marked as ASCII anyway by mkCharLenCE
       }
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -417,7 +417,7 @@ SEXP stri_enc_toascii(SEXP str)
 // ------------------------------------------------------------------------
 
 /**
- * Convert character vector between a marked encodings and the encoding provided
+ * Convert character vector between marked encodings and the encoding provided
  *
  * @param str     input character vector or list of raw vectors
  * @param to    target encoding, \code{NULL} or \code{""} for default enc
@@ -428,6 +428,9 @@ SEXP stri_enc_toascii(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
  *          use StriUcnv
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          calc required buf size a priori
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
@@ -447,26 +450,21 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    UConverter* uconv_to = ucnv.getConverter();
 
    // Get target encoding mark
-   UErrorCode err = U_ZERO_ERROR;
-   const char* uconv_to_name = ucnv_getName(uconv_to, &err);
-   if (U_FAILURE(err))
-      throw StriException(err);
-   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones
-      // - bytes enc (this is reasonable, isn't it?)
-   if (!to_raw_logical) { // otherwise not needed
-      if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
-         encmark_to = CE_UTF8; // no CE for ASCII, will be auto-detected by mkCharLenCE
-      else if (!strcmp(uconv_to_name, "ISO-8859-1"))
-         encmark_to = CE_LATIN1;
-      else if (!strcmp(uconv_to_name, ucnv_getDefaultName()))
-         encmark_to = CE_NATIVE;
-   }
+   cetype_t encmark_to = to_raw_logical?CE_BYTES:ucnv.getCE();
 
    // Prepare out val
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8buf buf(0); // will be extended in a moment
+   // calculate required buf size
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<str_n; ++i) {
+      if (!str_cont.isNA(i) && str_cont.get(i).length() > bufsize)
+         bufsize = str_cont.get(i).length();
+   }
+   bufsize = UCNV_GET_MAX_BYTES_FOR_STRING(bufsize, ucnv_getMaxCharSize(uconv_to));
+   // "The calculated size is guaranteed to be sufficient for this conversion."
+   String8buf buf(bufsize);
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -480,39 +478,37 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
       if (!curs_tmp)
          throw StriException(MSG__INTERNAL_ERROR);
 
-      R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
-      // "The calculated size is guaranteed to be sufficient for this conversion."
-      buf.resize(bufneed, false/*destroy contents*/);
-
-      err = U_ZERO_ERROR;
+      UErrorCode status = U_ZERO_ERROR;
       ucnv_resetFromUnicode(uconv_to);
-      bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
+      R_len_t bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
+            curs_tmp, curn_tmp, &status);
       if (bufneed <= buf.size()) {
-         if (U_FAILURE(err))
-            throw StriException(err);
+         if (U_FAILURE(status))
+            throw StriException(status);
       }
       else {// larger buffer needed [this shouldn't happen?]
-//         warning("buf extending");
          buf.resize(bufneed, false/*destroy contents*/);
-         err = U_ZERO_ERROR;
-         bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
-         if (U_FAILURE(err))
-            throw StriException(err);
-         if (bufneed > buf.size())
-            throw StriException(MSG__INTERNAL_ERROR);
+         status = U_ZERO_ERROR;
+         bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
+               curs_tmp, curn_tmp, &status);
+         if (U_FAILURE(status))
+            throw StriException(status);
       }
 
       if (to_raw_logical) {
-         SEXP outobj = Rf_allocVector(RAWSXP, bufneed);
+         SEXP outobj;
+         STRI__PROTECT(outobj = Rf_allocVector(RAWSXP, bufneed));
          memcpy(RAW(outobj), buf.data(), (size_t)bufneed);
          SET_VECTOR_ELT(ret, i, outobj);
+         STRI__UNPROTECT(1);
       }
       else {
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), bufneed, encmark_to));
+         SET_STRING_ELT(ret, i,
+            Rf_mkCharLenCE(buf.data(), bufneed, encmark_to));
       }
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({/* nothing special on error */})
@@ -544,6 +540,9 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
  *          use StriUcnv
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
+ *          estimate required buf size a priori
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
@@ -569,28 +568,21 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    UConverter* uconv_from = ucnv1.getConverter();
    UConverter* uconv_to   = ucnv2.getConverter();
 
-
    // Get target encoding mark
-   UErrorCode err = U_ZERO_ERROR;
-   const char* uconv_to_name = ucnv_getName(uconv_to, &err);
-   if (U_FAILURE(err))
-      throw StriException(err);
-   cetype_t encmark_to = CE_BYTES; // all other cases than the below ones
-      // - bytes enc (this is reasonable, isn't it?)
-   if (!to_raw_logical) { // otherwise not needed
-      if (!strcmp(uconv_to_name, "US-ASCII") || !strcmp(uconv_to_name, "UTF-8"))
-         encmark_to = CE_UTF8; // no CE for ASCII, will be auto-detected by mkCharLenCE
-      else if (!strcmp(uconv_to_name, "ISO-8859-1"))
-         encmark_to = CE_LATIN1;
-      else if (!strcmp(uconv_to_name, ucnv_getDefaultName()))
-         encmark_to = CE_NATIVE;
-   }
+   cetype_t encmark_to = to_raw_logical?CE_BYTES:ucnv2.getCE();
 
-   // Prepare out val
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
-   String8buf buf(0); // will be extended in a moment
+
+   // estimate required buf size
+   R_len_t bufsize = 0;
+   for (R_len_t i=0; i<str_n; ++i) {
+      if (!str_cont.isNA(i) && str_cont.get(i).length() > bufsize)
+         bufsize = str_cont.get(i).length();
+   }
+   bufsize = bufsize*4; // this is just an estimate (for 8bit->utf8 conversions)
+   String8buf buf(bufsize);
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -599,14 +591,13 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          continue;
       }
 
-      const char* curd = str_cont.get(i).c_str();
+      const char* curs = str_cont.get(i).c_str();
       R_len_t curn     = str_cont.get(i).length();
 
-      err = U_ZERO_ERROR;
-      UnicodeString encs(curd, curn, uconv_from, err); // FROM -> UTF-16 [this is the slow part]
-      if (U_FAILURE(err)) {
-         throw StriException(err);
-      }
+      UErrorCode status = U_ZERO_ERROR;
+      UnicodeString encs(curs, curn, uconv_from, status); // FROM -> UTF-16 [this is the slow part]
+      if (U_FAILURE(status))
+         throw StriException(status);
 
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.
@@ -616,41 +607,42 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
       R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
       // "The calculated size is guaranteed to be sufficient for this conversion."
-      buf.resize(bufneed, false/*destroy contents*/);
+      buf.resize(bufneed, false/*destroy contents*/); // grows or stays as it was
 
-      err = U_ZERO_ERROR;
-//      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, err); // UTF-16 -> TO
+      status = U_ZERO_ERROR;
+//      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, status); // UTF-16 -> TO
       ucnv_resetFromUnicode(uconv_to);
-      bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
+      bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
+         curn_tmp, &status);
       if (bufneed <= buf.size()) {
-         if (U_FAILURE(err)) {
-            throw StriException(err);
+         if (U_FAILURE(status)) {
+            throw StriException(status);
          }
       }
       else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
          buf.resize(bufneed, false/*destroy contents*/);
-         err = U_ZERO_ERROR;
-         bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp, curn_tmp, &err);
-         if (U_FAILURE(err)) {
-            throw StriException(err);
-         }
-         if (bufneed > buf.size()) {
-            throw StriException(MSG__INTERNAL_ERROR);
+         status = U_ZERO_ERROR;
+         bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
+            curn_tmp, &status);
+         if (U_FAILURE(status)) {
+            throw StriException(status);
          }
       }
 
       if (to_raw_logical) {
-         SEXP outobj = Rf_allocVector(RAWSXP, bufneed);
+         SEXP outobj;
+         STRI__PROTECT(outobj = Rf_allocVector(RAWSXP, bufneed));
          memcpy(RAW(outobj), buf.data(), (size_t)bufneed);
          SET_VECTOR_ELT(ret, i, outobj);
+         STRI__UNPROTECT(1);
       }
       else {
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), bufneed, encmark_to));
       }
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({/* no special action on error */})

@@ -42,7 +42,7 @@
  * @param loc new locale (a single character string)
  * @return nothing (\code{R_NilValue})
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_locale_set(SEXP loc)
 {
@@ -59,7 +59,7 @@ SEXP stri_locale_set(SEXP loc)
  *
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_locale_list()
 {
@@ -85,7 +85,7 @@ SEXP stri_locale_list()
  *  \code{Country}, \code{Variant}, \code{Name}) consists of
  *  a single string
  *
- * @version 0.1 (Marek Gagolewski)
+ * @version 0.1-?? (Marek Gagolewski)
  */
 SEXP stri_locale_info(SEXP loc)
 {
