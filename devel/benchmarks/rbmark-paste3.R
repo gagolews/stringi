@@ -1,4 +1,6 @@
-benchmark_description <- "sorts a set of words of various lengths (ascii + Polish letters, native encoding) [reverse order on input]"
+benchmark_description <- "joins four vectors consisting of words of different "%+%
+                         "lengths, with a separator and using the recycling "%+%
+                         "rule (ASCII + Polish letters, native encoding)"
 
 benchmark_do <- function() {
    library('stringi')
@@ -15,12 +17,16 @@ benchmark_do <- function() {
       paste(sample(plletters,
          floor(abs(rcauchy(1, 10))+1), replace=TRUE), collapse='')
    })
-   xrev <- rev(sort(x))
+
+   y <- sample(x, length(x)/4)
+   z <- sample(x, length(x)/2)
+   w <- sample(x)
 
    gc(reset=TRUE)
-   microbenchmark2(
-      sort(xrev),
-      stri_sort(xrev),
-      stri_sort(xrev, opts_collator=NA)
+   benchmark2(
+      paste(x, y, z, w, sep='!'),
+      str_join(x, y, z, w, sep='!'),
+      stri_join(x, y, z, w, sep='!'),
+      replications=100L
    )
 }

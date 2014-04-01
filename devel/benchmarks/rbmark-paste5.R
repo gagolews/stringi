@@ -1,4 +1,6 @@
-benchmark_description <- "joins into one string four vectors consisting of words of different lengths (ascii + Polish letters, native encoding)"
+benchmark_description <- "joins into one string four vectors "%+%
+                         "consisting of words of different lengths "%+%
+                         "(ASCII + Polish letters, native encoding)"
 
 benchmark_do <- function() {
    library('stringi')
@@ -21,9 +23,10 @@ benchmark_do <- function() {
    w <- sample(x)
 
    gc(reset=TRUE)
-   microbenchmark2(
+   benchmark2(
       paste(x, y, z, w, sep='!', collapse="*"),
       str_join(x, y, z, w, sep='!', collapse="*"),
-      stri_join(x, y, z, w, sep='!', collapse="*")
+      stri_join(x, y, z, w, sep='!', collapse="*"),
+      replications=100L
    )
 }

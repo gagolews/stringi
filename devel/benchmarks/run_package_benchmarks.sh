@@ -19,7 +19,7 @@ LC_ALL="pl_PL.UTF-8"      $RHOME/bin/Rscript \
    --vanilla devel/benchmarks/run-rbmark.R \
 && \
 LC_ALL="pl_PL.iso-8859-2" $RHOME/bin/Rscript \
-   --vanilla devel/benchmarks/run-rbmark.R
+   --vanilla devel/benchmarks/run-rbmark.R \
 && \
 LC_ALL="pl_PL.UTF-8"      $RHOME/bin/Rscript \
    --vanilla devel/benchmarks/run-mbmark.R \
