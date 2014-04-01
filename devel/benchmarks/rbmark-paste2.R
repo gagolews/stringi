@@ -1,4 +1,7 @@
-benchmark_description <- "sorts a set of words of various lengths (ascii + Polish letters, native encoding) [almost sorted vector on input]"
+benchmark_description <- "joins two identical vectors consisting of words "%+%
+                         "of different lengths, with a separator "%+%
+                         "(ASCII + Polish letters, native encoding)"
+
 
 benchmark_do <- function() {
    library('stringi')
@@ -12,16 +15,14 @@ benchmark_do <- function() {
 
    set.seed(123)
    x <- replicate(10000, {
-      paste(sample(plletters,
-         floor(abs(rcauchy(1, 10))+1), replace=TRUE), collapse='')
+      paste(sample(plletters, floor(abs(rcauchy(1, 10, 25)))+1, replace=TRUE), collapse='')
    })
-   x <- sort(x)
-   xalmsrt <- c(x, x[1:10])
 
    gc(reset=TRUE)
-   microbenchmark2(
-      sort(xalmsrt),
-      stri_sort(xalmsrt),
-      stri_sort(xalmsrt, opts_collator=NA)
+   benchmark2(
+      paste(x, x, sep='!'),
+      str_join(x, x, sep='!'),
+      stri_join(x, x, sep='!'),
+      replications=100L
    )
 }

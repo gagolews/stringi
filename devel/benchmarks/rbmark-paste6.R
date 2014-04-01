@@ -1,4 +1,6 @@
-benchmark_description <- "joins two vectors consisting of words of different lengths, with no separator (ascii + Polish letters, native encoding)"
+benchmark_description <- "joins two vectors consisting of words of different "%+%
+                         "lengths into one string "%+%
+                         "(ASCII + Polish letters, native encoding)"
 
 
 benchmark_do <- function() {
@@ -21,10 +23,11 @@ benchmark_do <- function() {
    })
 
    gc(reset=TRUE)
-   microbenchmark2(
-      paste(x, y, sep=''),
-      str_join(x, y),
-      stri_join(x, y),
-      x %+% y
+   benchmark2(
+      paste(x, y, sep='', collapse=''),
+      str_join(x, y, collapse=''),
+      stri_join(x, y, collapse=''),
+      stri_flatten(x %+% y),
+      replications=100L
    )
 }
