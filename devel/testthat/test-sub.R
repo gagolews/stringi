@@ -49,12 +49,3 @@ test_that("stri_sub<-", {
 
 })
 
-
-test_that("stri_subst_na", {
-   s <- c("ala",NA,"kota")
-   expect_identical(stri_subst_na(s,"brak"),c("ala","brak","kota"))
-   expect_identical(stri_subst_na(s,""),c("ala","","kota"))
-   expect_identical(stri_subst_na(s,NA),c("ala",NA,"kota"))
-   expect_warning(stri_subst_na(s,character(3)))
-   expect_error(stri_subst_na(s,character(0)))
-})

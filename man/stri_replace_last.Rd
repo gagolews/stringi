@@ -21,7 +21,7 @@ stri_replace_last(str, replacement, ..., regex, fixed, charclass)
   with}
 }
 \value{
-character vector
+Returns a character vector.
 }
 \description{
 A convenience function. Calls either
@@ -52,6 +52,7 @@ Other search_replace:
 \code{\link{stri_replace_last_regex}};
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
-\code{\link{stri_replace}}; \code{\link{stringi-search}}
+\code{\link{stri_replace_na}}; \code{\link{stri_replace}};
+\code{\link{stringi-search}}
 }
 

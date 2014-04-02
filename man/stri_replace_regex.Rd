@@ -22,7 +22,7 @@ stri_replace_last_regex(str, pattern, replacement, opts_regex = list())
   \code{\link{stri_opts_regex}}}
 }
 \value{
-character vector
+Each function returns a character vector.
 }
 \description{
 Replaces with the given replacement string every/first/last
@@ -95,6 +95,7 @@ Other search_replace:
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
 \code{\link{stri_replace_last}};
-\code{\link{stri_replace}}; \code{\link{stringi-search}}
+\code{\link{stri_replace_na}}; \code{\link{stri_replace}};
+\code{\link{stringi-search}}
 }
 

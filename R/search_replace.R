@@ -47,7 +47,8 @@
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
 #' @param replacement character vector of strings to replace with
-#' @return character vector
+#' 
+#' @return Each function returns a character vector.
 #'
 #' @export
 #' @rdname stri_replace_charclass
@@ -102,7 +103,8 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param opts_collator a named list as generated with
 #' \code{\link{stri_opts_collator}} with Collator options,
 #' or \code{NA} for fast but locale-unaware byte comparison
-#' @return character vector
+#' 
+#' @return Each function returns a character vector.
 #'
 #' @examples
 #' \dontrun{
@@ -161,7 +163,8 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @param replacement character vector of strings to replace with,
 #' possibly including references to capture groups
 #' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
-#' @return character vector
+#' 
+#' @return Each function returns a character vector.
 #'
 #' @examples
 #' \dontrun{
@@ -217,7 +220,7 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #'
 #' @export
@@ -250,7 +253,7 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, charclass) {
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #'
 #' @export
@@ -284,7 +287,7 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #'
 #' @export
@@ -323,7 +326,7 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
 #'             occurrence of the pattern
 #' @param replacement character vector of strings to replace with
 #'
-#' @return character vector
+#' @return Returns a character vector.
 #'
 #'
 #' @export
@@ -338,4 +341,39 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
           last =stri_replace_last(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass),
           all  =stri_replace_all(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass)
    )
+}
+
+
+
+
+#' @title
+#' Replace Missing Values in a Character Vector
+#' 
+#' @description
+#' This function offers a convenient way to replace each \code{NA}
+#' in a character vector with a given string.
+#' 
+#' @details
+#' This function is roughly equivalent to
+#' \code{str2 <- stri_enc_toutf8(str);
+#' str2[is.na(str2)] <- stri_enc_toutf8(replacement);
+#' str2}.
+#' It may be used e.g. wherever ``plain \R'' \code{NA} handling is
+#' desired, see Examples.
+#' 
+#' @param str character vector or an object coercible to
+#' @param replacement single string
+#' 
+#' @return Returns a character vector.
+#' 
+#' @examples
+#' x <- c('test', NA)
+#' stri_paste(x, 1:2)                           # "test1" NA
+#' paste(x, 1:2)                                # "test 1" "NA 2"
+#' stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
+#' 
+#' @export
+#' @family search_replace
+stri_replace_na <- function(str, replacement="NA"){
+   .Call("stri_replace_na", str, replacement, PACKAGE="stringi")
 }
