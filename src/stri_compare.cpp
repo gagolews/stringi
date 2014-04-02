@@ -54,20 +54,23 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          BUGFIX: possibly incorrect results for strings of inequal number
  *                  of codepoints
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-02)
+ *          detect invalid UTF-8 byte stream
  */
 int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2)
 {
    // @NOTE: strangely, this is being outperformed by ucol_strcollUTF8
-   //        in some benchmarks...
+   //        in some UTF-8 benchmarks...
    int i1 = 0;
    int i2 = 0;
    UChar32 c1 = 0;
    UChar32 c2 = 0;
    while (c1 == c2 && i1 < n1 && i2 < n2) {
-      // we could use U8_NEXT_OR_FFFD here - but it's ICU51 DRAFT API
       U8_NEXT(str1, i1, n1, c1);
       U8_NEXT(str2, i2, n2, c2);
-      //@TODO: check if c1,c1 < 0, warn, return NA....
+      if (c1 < 0 || c2 < 0)
+         throw StriException(MSG__INVALID_UTF8);
    }
 
    if (c1 < c2)

@@ -16,7 +16,8 @@
 
    * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
      to FALSE for backward-compatibility). It may be used in a (rare) case
-     in which a user wants to fix an invalid utf-8 byte sequence.
+     in which a user wants to fix an invalid UTF-8 byte sequence.
+     stri_length (among others) now detect invalid UTF-8 byte sequences.
 
    * [NEW FEATURE] stri_enc_tonative(str) is an alias to
      stri_encode(str, NULL, NULL).
