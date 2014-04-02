@@ -16,7 +16,7 @@ benchmark_do  <- function() {
    native <- rep(plletters, 100)
 
    gc(reset=TRUE)
-   microbenchmark2(
+   microbenchmark2( # very fast - don't use benchmark2
       stringi:::.stri_test_StriContainerUTF16(ascii),
       stringi:::.stri_test_StriContainerUTF16(native),
       stringi:::.stri_test_StriContainerUTF16(utf8)

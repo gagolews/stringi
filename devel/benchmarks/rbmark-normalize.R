@@ -1,4 +1,4 @@
-benchmark_description <- "NFC, NFD, NFKC, NFKD, NKFC_Casefold"
+benchmark_description <- "NFC, NFD, NFKC, NFKD, NKFC_Casefold (UTF-8 strings)"
 
 
 benchmark_do <- function() {
@@ -13,11 +13,12 @@ benchmark_do <- function() {
    nf_c_f_kc_kf_kccf <- c(nfd, nfd, nfkc, nfkd, nfkc_cf)
 
    gc(reset=TRUE)
-   microbenchmark2(
+   benchmark2(
       stri_enc_nfc(nf_c_f_kc_kf_kccf),
       stri_enc_nfd(nf_c_f_kc_kf_kccf),
       stri_enc_nfkc(nf_c_f_kc_kf_kccf),
       stri_enc_nfkd(nf_c_f_kc_kf_kccf),
-      stri_enc_nfkc_casefold(nf_c_f_kc_kf_kccf)
+      stri_enc_nfkc_casefold(nf_c_f_kc_kf_kccf),
+      replications=25L
    )
 }
