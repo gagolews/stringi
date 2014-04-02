@@ -1,4 +1,6 @@
-benchmark_description <- "checks whether one string is smaller (lexicographically) than the other"
+benchmark_description <- "checks whether one string is smaller "%+%
+                         "(lexicographically) than the other "%+%
+                         "(ASCII+Polish letters, native encoding)"
 
 
 benchmark_do <- function() {
@@ -22,11 +24,12 @@ benchmark_do <- function() {
    y[(length(x)-(length(x)/4)):length(x)] <- paste(x[(length(x)-(length(x)/4)):length(x)], ':-)', sep='')
 
    gc(reset=TRUE)
-   microbenchmark2(
+   benchmark2(
       x < y,
       stri_cmp(x, y) < 0,
       stri_cmp(x, y, NA) < 0,
-      stri_cmp_le(x, y),
-      stri_cmp_le(x, y, NA)
+      stri_cmp_lt(x, y),
+      stri_cmp_lt(x, y, NA),
+      replications=100L
    )
 }

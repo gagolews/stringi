@@ -1,4 +1,5 @@
-benchmark_description <- "converts a character vector (ASCII, UTF8, Native, NA) to UTF8"
+benchmark_description <- "converts a character vector "%+%
+                         "(ASCII, UTF-8, Native, NA) to UTF-8"
 
 benchmark_do  <- function() {
    library('stringi')
@@ -17,7 +18,7 @@ benchmark_do  <- function() {
    )
 
    gc(reset=TRUE)
-   microbenchmark2(
+   microbenchmark2( # very fast - don't use benchmark2
       enc2utf8(x),
       stri_enc_toutf8(x)
    )

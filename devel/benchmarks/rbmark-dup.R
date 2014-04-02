@@ -1,4 +1,5 @@
-benchmark_description <- "duplicates a string (ASCII+Polish letters, native enc)"
+benchmark_description <- "duplicates a string "%+%
+                         "(ASCII+Polish letters, native encoding)"
 
 
 benchmark_do <- function() {
@@ -17,8 +18,9 @@ benchmark_do <- function() {
    })
 
    gc(reset=TRUE)
-   microbenchmark2(
+   benchmark2(
       str_dup(x, 10),
-      stri_dup(x, 10)
+      stri_dup(x, 10),
+      replications=25L
    )
 }
