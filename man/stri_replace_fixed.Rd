@@ -24,7 +24,7 @@ stri_replace_last_fixed(str, pattern, replacement, opts_collator = list())
   or \code{NA} for fast but locale-unaware byte comparison}
 }
 \value{
-character vector
+Each function returns a character vector.
 }
 \description{
 Replaces with the given replacement string every/first/last
@@ -109,6 +109,7 @@ Other search_replace:
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
 \code{\link{stri_replace_last}};
-\code{\link{stri_replace}}; \code{\link{stringi-search}}
+\code{\link{stri_replace_na}}; \code{\link{stri_replace}};
+\code{\link{stringi-search}}
 }
 

@@ -189,7 +189,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * @param value character vector replacement
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
+ * @version 0.1-?? (Bartek Tartanus)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8 and stri__UChar32_to_UTF8_index
@@ -323,26 +323,4 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    UNPROTECT(1);
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
-}
-
-SEXP stri_subst_na(SEXP str, SEXP replacement){
-   str = stri_prepare_arg_string(str, "str");
-   replacement = stri_prepare_arg_string_1(replacement, "replacement");
-   R_len_t str_len = LENGTH(str);
-
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, str_len));
-
-   StriContainerUTF8 str_cont(str, str_len, false);
-
-   for (R_len_t i=0; i<str_len; ++i) {
-      if (str_cont.isNA(i)){
-      	SET_STRING_ELT(ret, i, VECTOR_ELT(replacement, 0));
-      }else{
-      	SET_STRING_ELT(ret, i, str_cont.toR(i));
-      }
-   }
-
-   UNPROTECT(1);
-   return ret;
 }

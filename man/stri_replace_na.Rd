@@ -1,41 +1,33 @@
-\name{stri_replace}
-\alias{stri_replace}
-\title{Replace Occurrences of a Pattern}
+\name{stri_replace_na}
+\alias{stri_replace_na}
+\title{Replace Missing Values in a Character Vector}
 \usage{
-stri_replace(str, replacement, ..., regex, fixed, charclass, mode = c("first",
-  "all", "last"))
+stri_replace_na(str, replacement = "NA")
 }
 \arguments{
-  \item{str}{character vector of strings to search in}
+  \item{str}{character vector or an object coercible to}
 
-  \item{...}{additional arguments passed to the underlying
-  functions}
-
-  \item{regex}{character vector; regular expressions}
-
-  \item{fixed}{character vector; fixed patterns}
-
-  \item{charclass}{character vector; identifiers of
-  character classes}
-
-  \item{mode}{string; whether to look for all, or only the
-  first/last occurrence of the pattern}
-
-  \item{replacement}{character vector of strings to replace
-  with}
+  \item{replacement}{single string}
 }
 \value{
 Returns a character vector.
 }
 \description{
-A convenience function. Calls either
-\code{\link{stri_replace_all}},
-\code{\link{stri_replace_first}}, or
-\code{\link{stri_replace_last}}, depending on the argument
-used.
+This function offers a convenient way to replace each
+\code{NA} in a character vector with a given string.
 }
 \details{
-Note that this is slower than the direct call.
+This function is roughly equivalent to \code{str2 <-
+stri_enc_toutf8(str); str2[is.na(str2)] <-
+stri_enc_toutf8(replacement); str2}. It may be used e.g.
+wherever ``plain \R'' \code{NA} handling is desired, see
+Examples.
+}
+\examples{
+x <- c('test', NA)
+stri_paste(x, 1:2)                           # "test1" NA
+paste(x, 1:2)                                # "test 1" "NA 2"
+stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
 }
 \seealso{
 Other search_replace:
@@ -60,6 +52,6 @@ Other search_replace:
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
 \code{\link{stri_replace_last}};
-\code{\link{stri_replace_na}}; \code{\link{stringi-search}}
+\code{\link{stri_replace}}; \code{\link{stringi-search}}
 }
 

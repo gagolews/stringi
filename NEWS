@@ -22,7 +22,8 @@
    * [NEW FEATURE] stri_enc_tonative(str) is an alias to
      stri_encode(str, NULL, NULL).
 
-   * stri_subst_na - t.b.d.
+   * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
+      with a given string, useful for emulating R's paste() behavior.
 
    * t.b.d.
 

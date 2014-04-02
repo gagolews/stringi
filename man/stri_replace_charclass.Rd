@@ -20,7 +20,7 @@ stri_replace_last_charclass(str, pattern, replacement)
   with}
 }
 \value{
-character vector
+Each function returns a character vector.
 }
 \description{
 Replaces with the given replacement string every/first/last
@@ -76,6 +76,7 @@ Other search_replace: \code{\link{stri_replace_all_fixed}},
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
 \code{\link{stri_replace_last}};
-\code{\link{stri_replace}}; \code{\link{stringi-search}}
+\code{\link{stri_replace_na}}; \code{\link{stri_replace}};
+\code{\link{stringi-search}}
 }
 

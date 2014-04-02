@@ -207,7 +207,8 @@ Other search_replace:
 \code{\link{stri_replace_last_regex}};
 \code{\link{stri_replace_all}};
 \code{\link{stri_replace_first}};
-\code{\link{stri_replace_last}}; \code{\link{stri_replace}}
+\code{\link{stri_replace_last}};
+\code{\link{stri_replace_na}}; \code{\link{stri_replace}}
 
 Other search_split: \code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
