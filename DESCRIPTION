@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.2-1
-Date: 2014-04-01
+Date: 2014-04-02
 Title: Character string processing facilities
 Description: stringi allows for very fast, correct, consistent,
     and convenient character string/text processing in each locale
