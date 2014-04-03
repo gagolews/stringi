@@ -4,7 +4,7 @@
 \alias{stri_replace_last_charclass}
 \title{Replace Occurrences of a Character Class}
 \usage{
-stri_replace_all_charclass(str, pattern, replacement)
+stri_replace_all_charclass(str, pattern, replacement, merge = FALSE)
 
 stri_replace_first_charclass(str, pattern, replacement)
 
@@ -18,6 +18,10 @@ stri_replace_last_charclass(str, pattern, replacement)
 
   \item{replacement}{character vector of strings to replace
   with}
+
+  \item{merge}{logical [\code{stri_replace_all_charclass}
+  only]; should consecutive matches be merged into a single
+  one?}
 }
 \value{
 Each function returns a character vector.

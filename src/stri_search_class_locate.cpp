@@ -167,9 +167,9 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
-   str = stri_prepare_arg_string(str, "str");
+   str     = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   merge = stri_prepare_arg_logical(merge, "merge");
+   merge   = stri_prepare_arg_logical(merge, "merge");
    R_len_t vectorize_length = stri__recycling_rule(true, 3,
          LENGTH(str), LENGTH(pattern), LENGTH(merge));
 
@@ -193,7 +193,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          continue;
       }
 
-      bool merge_cur = merge_cont.get(i);
+      bool merge_cur        = merge_cont.get(i);
       CharClass pattern_cur = pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();

@@ -14,18 +14,22 @@
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
        stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
 
-   * [NEW FEATURE] All binary operators %???% now also have aliases %stri???%.
+   * [NEW FEATURE] stri_replace_all_charclass now has `merge` arg
+     (defaults to FALSE for backward-compatibility). It may be used
+     to e.g. replace sequences of white spaces with a single space.
 
    * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
      to FALSE for backward-compatibility). It may be used in a (rare) case
      in which a user wants to fix an invalid UTF-8 byte sequence.
      stri_length (among others) now detect invalid UTF-8 byte sequences.
 
+   * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
+      with a given string, useful for emulating e.g. R's paste() behavior.
+
    * [NEW FEATURE] stri_enc_tonative(str) is an alias to
      stri_encode(str, NULL, NULL).
 
-   * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
-      with a given string, useful for emulating e.g. R's paste() behavior.
+   * [NEW FEATURE] All binary operators %???% now also have aliases %stri???%.
 
    * t.b.d.
 

@@ -125,7 +125,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_replace_all_regex,          4),
    STRI__MAKE_CALL_METHOD(stri_replace_first_regex,        4),
    STRI__MAKE_CALL_METHOD(stri_replace_last_regex,         4),
-   STRI__MAKE_CALL_METHOD(stri_replace_all_charclass,      3),
+   STRI__MAKE_CALL_METHOD(stri_replace_all_charclass,      4),
    STRI__MAKE_CALL_METHOD(stri_replace_first_charclass,    3),
    STRI__MAKE_CALL_METHOD(stri_replace_last_charclass,     3),
    STRI__MAKE_CALL_METHOD(stri_reverse,                    1),
