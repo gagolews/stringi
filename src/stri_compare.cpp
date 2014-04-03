@@ -54,7 +54,7 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          BUGFIX: possibly incorrect results for strings of inequal number
  *                  of codepoints
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-02)
  *          detect invalid UTF-8 byte stream
  */

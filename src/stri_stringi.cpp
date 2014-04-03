@@ -159,6 +159,10 @@ static const R_CallMethodDef cCallMethods[] = {
 };
 
 
+/** Sets ICU data dir
+ *
+ * @param libpath
+ */
 void stri_set_icu_data_directory(const char* libpath)
 {
    // libpath == "...../libs"      -> "...../libs"

@@ -7,7 +7,7 @@ benchmark_do <- function() {
    library('stringr')
 
    text <- enc2native(readLines('devel/benchmarks/pan_tadeusz_15.txt', encoding='UTF-8'))
-   
+
    gc(reset=TRUE)
    benchmark2(
       substr(text, 10L, 20L),

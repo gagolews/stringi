@@ -34,7 +34,7 @@
 #'
 #' @description
 #' The first function extracts substrings under code point-based
-#' index ranges provided. The second one allows you to substitute parts of
+#' index ranges provided. The second one allows to substitute parts of
 #' a string with given strings.
 #'
 #' @details
@@ -50,7 +50,8 @@
 #' Of course, the indices are code point-based,
 #' and not byte-based.
 #' Note that for some Unicode strings, the extracted substrings may not
-#' be well-formed, especially if the input is not NFC-normalized,
+#' be well-formed, especially if the input is not NFC-normalized
+#' (see \code{\link{stri_enc_nfc}}),
 #' includes byte order marks, Bidirectional text marks, and so on.
 #' Handle with care.
 #'
@@ -99,7 +100,7 @@
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
+stri_sub <- function(str, from = 1L, to = -1L, length) {
    # Whoaaa! One of the longest R functions in stringi :)
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
@@ -119,7 +120,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length=.Machine$integer.max) {
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from = 1L, to = -1L, length) <- value
-"stri_sub<-" <- function(str, from = 1L, to = -1L, length=.Machine$integer.max, value) {
+"stri_sub<-" <- function(str, from = 1L, to = -1L, length, value) {
    # Whoaaa! One of the longest R functions in stringi :)
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
