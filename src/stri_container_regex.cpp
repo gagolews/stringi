@@ -60,7 +60,6 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
 }
 
 
-
 /** Copy constructor
  *
  */
@@ -70,8 +69,6 @@ StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& 
    this->lastMatcher = NULL;
    this->flags = container.flags;
 }
-
-
 
 
 StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerRegexPattern& container)
@@ -94,8 +91,6 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
       lastMatcher = NULL;
    }
 }
-
-
 
 
 /** the returned matcher shall not be deleted by the user
@@ -132,7 +127,6 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 
    return lastMatcher;
 }
-
 
 
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)

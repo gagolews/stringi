@@ -176,7 +176,6 @@ SEXP stri_enc_toutf32(SEXP str)
 }
 
 
-
 /** Convert character vector to UTF-8
  *
  * @param str character vector
@@ -325,7 +324,6 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 }
 
 
-
 /** Convert character vector to ASCII
  *
  * All charcodes > 127 are replaced with subst chars (0x1A)
@@ -410,8 +408,6 @@ SEXP stri_enc_toascii(SEXP str)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
-
 
 
 // ------------------------------------------------------------------------

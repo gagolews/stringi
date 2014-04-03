@@ -104,7 +104,6 @@ SEXP    stri_isempty(SEXP str);
 // SEXP stri_width(SEXP str);                               // ...TODO... [version >= 0.2]
 
 
-
 // prepare_arg.cpp:
 SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
 SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
@@ -125,11 +124,8 @@ const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
                                      bool allowdefault);
 
 
-
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
-
-
 
 
 // sub.cpp
@@ -165,15 +161,10 @@ SEXP stri_enc_nf(SEXP s, SEXP type);
 SEXP stri_enc_isnf(SEXP s, SEXP type);
 
 
-
 // uloc.cpp:
 SEXP stri_locale_info(SEXP loc);
 SEXP stri_locale_list();
 SEXP stri_locale_set(SEXP loc);
-
-
-
-
 
 
 // wrap.cpp
@@ -184,7 +175,6 @@ SEXP stri_locale_set(SEXP loc);
 
 // justify.cpp
 // SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.2]
-
 
 
 // ----------- SEARCH --------------------------------------------
@@ -257,9 +247,6 @@ SEXP stri_replace_na(SEXP str, SEXP replacement);
 // SEXP stri_chartype(SEXP str);      // ...TO DO... [version >= 0.2]
 
 
-
-
-
 // trim.cpp:
 SEXP stri_trim_both(SEXP str, SEXP pattern);
 SEXP stri_trim_left(SEXP str, SEXP pattern);
@@ -270,11 +257,9 @@ SEXP stri_trim_right(SEXP str, SEXP pattern);
 //SEXP stri_pad(SEXP str, SEXP length, SEXP pad);   // ...TO DO...  [version >= 0.2]
 
 
-
 // stats.cpp
 SEXP stri_stats_general(SEXP str);
 SEXP stri_stats_latex(SEXP str);
-
 
 
 // test.cpp /* internal, but in namespace: for testing */
@@ -284,7 +269,6 @@ SEXP stri_test_UnicodeContainer8(SEXP str);
 SEXP stri_test_returnasis(SEXP x);
 
 // ------------------------------------------------------------------------
-
 
 
 #endif

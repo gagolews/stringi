@@ -34,9 +34,6 @@
 #define __stri_string8_h
 
 
-
-
-
 /**
  * A class to represent an UTF-8 string
  *

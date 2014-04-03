@@ -34,9 +34,6 @@
 #define __stri_container_base_h
 
 
-
-
-
 /**
  * Base class for all StriContainers
  *

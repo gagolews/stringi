@@ -153,7 +153,6 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
 }
 
 
-
 /**
  * Detect if a pattern occurs in a string [with collation]
  *

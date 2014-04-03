@@ -29,7 +29,6 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 # Check R encoding marking [internal, DEBUG only]
 #
 # This is an internal function (no-export & no-manual) - test how R marks
@@ -42,7 +41,6 @@
 .stri_test_Rmark <- function(str) {
    invisible(.Call("stri_test_Rmark", str, PACKAGE="stringi"))
 }
-
 
 
 # For testing StriContainerUTF16's performance [internal, DEBUG only]
@@ -61,7 +59,6 @@
 .stri_test_StriContainerUTF8 <- function(str) {
    .Call("stri_test_UnicodeContainer8", str, PACKAGE="stringi")
 }
-
 
 
 # For testing .Call performance [internal, DEBUG only]

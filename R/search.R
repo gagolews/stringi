@@ -81,7 +81,6 @@
 invisible(NULL)
 
 
-
 #' @title
 #' Regular Expressions in \pkg{stringi}
 #'
@@ -137,7 +136,6 @@ invisible(NULL)
 #' @family search_regex
 #' @family stringi_general_topics
 invisible(NULL)
-
 
 
 #' @title
@@ -210,7 +208,6 @@ invisible(NULL)
 #' @family locale_sensitive
 #' @family stringi_general_topics
 invisible(NULL)
-
 
 
 #' @title Character Classes in \pkg{stringi}

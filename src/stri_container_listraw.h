@@ -36,8 +36,6 @@
 #include "stri_container_base.h"
 
 
-
-
 /**
  * Contains R lists of raw vectors, single raw vectors,
  * or character string vectors treated as "byte"-encoded.

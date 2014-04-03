@@ -34,7 +34,6 @@
 #define __stri_macros_h
 
 
-
 // undef R's length macro (conflicts with std::string.length())
 // use LENGTH instead
 #undef length
@@ -110,7 +109,6 @@
 #define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
-
 
 
 /// Unicode replacement character

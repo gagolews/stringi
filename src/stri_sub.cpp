@@ -35,7 +35,6 @@
 #include "stri_string8buf.h"
 
 
-
 /** Prepare args for stri_sub* [internal]
  *
  * @param from
@@ -207,8 +206,6 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
-
 
 
 /**

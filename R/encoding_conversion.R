@@ -154,7 +154,6 @@ stri_enc_toutf32 <- function(str) {
 }
 
 
-
 #' @title
 #' Convert From UTF-32
 #'
@@ -192,7 +191,6 @@ stri_enc_toutf32 <- function(str) {
 stri_enc_fromutf32 <- function(vec) {
    .Call("stri_enc_fromutf32", vec, PACKAGE="stringi")
 }
-
 
 
 #' @title
@@ -268,7 +266,6 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE, validate=FALSE) {
 stri_enc_tonative <- function(str) {
    stri_encode(str, NULL, NULL)
 }
-
 
 
 #' @title

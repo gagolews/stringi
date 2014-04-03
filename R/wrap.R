@@ -29,7 +29,6 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 invisible(NULL) # TO BE DONE, version >= 0.2
 
 

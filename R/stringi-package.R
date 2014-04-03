@@ -157,8 +157,6 @@
 invisible(NULL)
 
 
-
-
 # .onLoad <- function(lib, pkg)
 # {
    # This code was valid when we didn't link ICU4C statically on Windows:

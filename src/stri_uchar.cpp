@@ -33,11 +33,6 @@
 #include "stri_stringi.h"
 
 
-
-
-
-
-
 ///** Get character types
 // * @param s character vector
 // * @return list of integer vectors

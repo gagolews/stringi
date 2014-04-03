@@ -37,7 +37,6 @@
 #include "stri_intvec.h"
 
 
-
 /**
  * Contains R lists of integer vectors or single integer vectors.
  * Useful for encoding conversion or detection.

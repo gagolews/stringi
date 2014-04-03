@@ -40,9 +40,6 @@
 using namespace std;
 
 
-
-
-
 /**
  * Extract first or last occurences of pattern in a string [with collation] - THIS IS DUMB! :)
  *
@@ -87,7 +84,6 @@ SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
-
 
 
 /**
@@ -143,7 +139,6 @@ SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
-
 
 
 /**
@@ -231,7 +226,6 @@ SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 }
 
 
-
 /**
  * Extract last occurence of a fixed pattern in each string
  *
@@ -246,8 +240,6 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
    return stri__extract_firstlast_fixed(str, pattern, collator_opts, false);
 }
-
-
 
 
 /**

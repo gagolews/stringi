@@ -112,7 +112,6 @@ class StriContainerUTF8 : public StriContainerBase {
       }
 
 
-
 };
 
 #endif

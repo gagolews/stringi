@@ -37,7 +37,6 @@
 #include "stri_charclass.h"
 
 
-
 /**
  * A container handling charclass searches
  *

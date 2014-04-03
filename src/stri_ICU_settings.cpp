@@ -33,8 +33,6 @@
 #include "stri_stringi.h"
 
 
-
-
 /** Get curent-default ICU locale and charset information
  *
  *  @return an R named list with 4 components:

@@ -173,7 +173,6 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 }
 
 
-
 #' @title
 #' Split a String Into Fields
 #'
@@ -208,7 +207,6 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-
 
 
 #' @title
@@ -279,7 +277,6 @@ stri_split_lines <- function(str, n_max=-1L, omit_empty=FALSE) {
 stri_split_lines1 <- function(str) {
    .Call("stri_split_lines1", str, PACKAGE="stringi")
 }
-
 
 
 # @TODO: ADD stri_split_chars - split into chars

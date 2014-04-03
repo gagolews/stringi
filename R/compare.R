@@ -149,7 +149,6 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 }
 
 
-
 #' @title
 #' Compare Two Character Vectors with Collation
 #'
@@ -284,7 +283,6 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 "%stri!=%" <- function(e1, e2) {
    stri_cmp_neq(e1, e2)
 }
-
 
 
 #' @title

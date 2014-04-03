@@ -36,7 +36,6 @@
 #include "stri_container_base.h"
 
 
-
 /**
  * A wrapper-class for R integer vectors
  *

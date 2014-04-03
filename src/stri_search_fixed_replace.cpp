@@ -250,7 +250,6 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 }
 
 
-
 /**
  * Replace all occurences of a fixed pattern [with collation]
  *

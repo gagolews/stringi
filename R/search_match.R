@@ -71,13 +71,11 @@ stri_match_first_regex <- function(str, pattern, opts_regex=list()) {
 }
 
 
-
 #' @export
 #' @rdname stri_match_regex
 stri_match_last_regex <- function(str, pattern, opts_regex=list()) {
    .Call("stri_match_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
-
 
 
 #' @title
@@ -104,7 +102,6 @@ stri_match_all <- function(str, ..., regex) {
 }
 
 
-
 #' @title
 #' Extract First Regex Pattern Matches, Together with Capture Groups
 #'
@@ -127,7 +124,6 @@ stri_match_first <- function(str, ..., regex) {
    else
       stop("you have to specify `regex`")
 }
-
 
 
 #' @title
@@ -153,7 +149,6 @@ stri_match_last <- function(str, ..., regex) {
    else
       stop("you have to specify `regex`")
 }
-
 
 
 #' @title

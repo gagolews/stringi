@@ -125,7 +125,6 @@ double stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_
 }
 
 
-
 /** Check if a string is valid UTF-8
  *
  * checks if a string is probably UTF-8-encoded;
@@ -233,7 +232,6 @@ double stri__enc_check_utf8(const char* str_cur_s, R_len_t str_cur_n, bool get_c
          return 0.0;
    }
 }
-
 
 
 /** Check if a string is valid UTF-16LE or UTF-16BE
@@ -404,7 +402,6 @@ double stri__enc_check_utf32be(const char* str_cur_s, R_len_t str_cur_n, bool ge
 }
 
 
-
 /** Check if a string is valid UTF-32LE
  *
  * @param str_cur_s character vector
@@ -419,8 +416,6 @@ double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool ge
 {
    return stri__enc_check_utf32(str_cur_s, str_cur_n, get_confidence, true);
 }
-
-
 
 
 /** Which string is in given encoding
@@ -605,7 +600,6 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 }
 
 
-
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
@@ -706,12 +700,9 @@ struct Converter8bit {
 };
 
 
-
-
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
-
 
 
 /** Guesses text encoding; help struct for stri_enc_detect2

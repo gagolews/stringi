@@ -34,9 +34,6 @@
 #define __stri_charclass_h
 
 
-
-
-
 /**
  * Class for testing whether a character falls into a given character class
  * (i.e. has a given binary property or is in general unicode category).
@@ -79,7 +76,6 @@ struct CharClass {
       }
 
       int test(UChar32 c);
-
 
 
       static uint32_t  getGeneralCategoryMaskFromName(const char* name, R_len_t n);

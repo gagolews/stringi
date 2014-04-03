@@ -169,7 +169,6 @@ stri_enc_get <- function() {
 }
 
 
-
 #' @title
 #' Get Declared Encodings of Each String
 #'

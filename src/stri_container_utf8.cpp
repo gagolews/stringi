@@ -78,7 +78,6 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 //      UChar* tmpbuf = NULL;
 
 
-
    for (R_len_t i=0; i<nrstr; ++i) {
       SEXP curs = STRING_ELT(rstr, i);
       if (curs == NA_STRING) {
@@ -223,8 +222,6 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
 }
 
 
-
-
 StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 {
    this->~StriContainerUTF8();
@@ -243,7 +240,6 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 }
 
 
-
 StriContainerUTF8::~StriContainerUTF8()
 {
    if (str) {
@@ -255,8 +251,6 @@ StriContainerUTF8::~StriContainerUTF8()
       str = NULL;
    }
 }
-
-
 
 
 /** Export character vector to R
@@ -295,7 +289,6 @@ SEXP StriContainerUTF8::toR() const
    UNPROTECT(1);
    return ret;
 }
-
 
 
 /** Export string to R

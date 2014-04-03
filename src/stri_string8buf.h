@@ -34,9 +34,6 @@
 #define __stri_string8buf_h
 
 
-
-
-
 /**
  * A class to represent a temporary string buffer
  *

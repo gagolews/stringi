@@ -239,13 +239,11 @@ stri_locate_first_regex <- function(str, pattern, opts_regex=list()) {
 }
 
 
-
 #' @export
 #' @rdname stri_locate_regex
 stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
    .Call("stri_locate_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
-
 
 
 #' @title
@@ -301,7 +299,6 @@ stri_locate_all <- function(str, ..., regex, fixed, charclass) {
 }
 
 
-
 #' @title
 #' Locate First Occurrence of a Pattern
 #'
@@ -354,7 +351,6 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 }
 
 
-
 #' @title
 #' Locate Last Occurrence of a Pattern
 #'
@@ -405,7 +401,6 @@ stri_locate_last <- function(str, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-
 
 
 #' @title
