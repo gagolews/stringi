@@ -3,7 +3,7 @@
 \alias{stri_sub<-}
 \title{Extract a Substring From or Replace a Substring In a Character Vector}
 \usage{
-stri_sub(str, from = 1L, to = -1L, length = .Machine$integer.max)
+stri_sub(str, from = 1L, to = -1L, length)
 
 stri_sub(str, from = 1L, to = -1L, length) <- value
 }
@@ -32,8 +32,8 @@ modified.
 }
 \description{
 The first function extracts substrings under code
-point-based index ranges provided. The second one allows
-you to substitute parts of a string with given strings.
+point-based index ranges provided. The second one allows to
+substitute parts of a string with given strings.
 }
 \details{
 Vectorized over \code{str}, [\code{value}], \code{from} and
@@ -48,7 +48,8 @@ arguments \code{to} and \code{length} are ignored.
 Of course, the indices are code point-based, and not
 byte-based. Note that for some Unicode strings, the
 extracted substrings may not be well-formed, especially if
-the input is not NFC-normalized, includes byte order marks,
+the input is not NFC-normalized (see
+\code{\link{stri_enc_nfc}}), includes byte order marks,
 Bidirectional text marks, and so on. Handle with care.
 
 Indices are 1-based, i.e. an index equal to 1 denotes the

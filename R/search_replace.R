@@ -47,7 +47,7 @@
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
 #' @param replacement character vector of strings to replace with
-#' 
+#'
 #' @return Each function returns a character vector.
 #'
 #' @export
@@ -103,7 +103,7 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param opts_collator a named list as generated with
 #' \code{\link{stri_opts_collator}} with Collator options,
 #' or \code{NA} for fast but locale-unaware byte comparison
-#' 
+#'
 #' @return Each function returns a character vector.
 #'
 #' @examples
@@ -163,7 +163,7 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @param replacement character vector of strings to replace with,
 #' possibly including references to capture groups
 #' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
-#' 
+#'
 #' @return Each function returns a character vector.
 #'
 #' @examples
@@ -348,11 +348,11 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
 
 #' @title
 #' Replace Missing Values in a Character Vector
-#' 
+#'
 #' @description
 #' This function offers a convenient way to replace each \code{NA}
 #' in a character vector with a given string.
-#' 
+#'
 #' @details
 #' This function is roughly equivalent to
 #' \code{str2 <- stri_enc_toutf8(str);
@@ -360,18 +360,18 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
 #' str2}.
 #' It may be used e.g. wherever ``plain \R'' \code{NA} handling is
 #' desired, see Examples.
-#' 
+#'
 #' @param str character vector or an object coercible to
 #' @param replacement single string
-#' 
+#'
 #' @return Returns a character vector.
-#' 
+#'
 #' @examples
 #' x <- c('test', NA)
 #' stri_paste(x, 1:2)                           # "test1" NA
 #' paste(x, 1:2)                                # "test 1" "NA 2"
 #' stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
-#' 
+#'
 #' @export
 #' @family search_replace
 stri_replace_na <- function(str, replacement="NA"){

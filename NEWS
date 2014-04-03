@@ -4,8 +4,8 @@
 * 0.2-1 (XXXX-XX-XX)
 
    * [IMPORTANT CHANGE] stri_sort now does not include NAs
-     in output vectors by default, for compatibility with sort(). Moreover, none
-     of an input vector's attributes are preserved.
+     in output vectors by default, for compatibility with sort().
+     Moreover, currently none of the input vector's attributes are preserved.
 
    * [NEW FEATURE] stri_order and stri_sort now have an additional argument
         `na_last` (defaults to TRUE and NA, respectively).
@@ -23,7 +23,7 @@
      stri_encode(str, NULL, NULL).
 
    * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
-      with a given string, useful for emulating R's paste() behavior.
+      with a given string, useful for emulating e.g. R's paste() behavior.
 
    * t.b.d.
 

@@ -43,7 +43,7 @@
  * @return character vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-03-15)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-02)
  *          Use StriContainerUTF8 for replacement
  */
@@ -51,7 +51,7 @@ SEXP stri_replace_na(SEXP str, SEXP replacement) {
    str = stri_prepare_arg_string(str, "str");
    replacement = stri_prepare_arg_string_1(replacement, "replacement");
    R_len_t str_len = LENGTH(str);
-   
+
    // @TODO: stri_replace_na(str, character(0)) returns a char vect with no NAs
 
    STRI__ERROR_HANDLER_BEGIN
@@ -63,7 +63,7 @@ SEXP stri_replace_na(SEXP str, SEXP replacement) {
 
    SEXP na;
    STRI__PROTECT(na = replacement_cont.toR(0));
-   
+
    for (R_len_t i=0; i<str_len; ++i) {
       if (STRING_ELT(ret, i) == NA_STRING)
          SET_STRING_ELT(ret, i, na);

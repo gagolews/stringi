@@ -14,7 +14,7 @@ benchmark_do <- function() {
 
    set.seed(123)
    x <- paste(sample(plletters, 2500L, replace=TRUE), collapse='')
-   
+
    gc(reset=TRUE)
    benchmark2(
       str_sub(x, 1L:250L, 1L:250L),
