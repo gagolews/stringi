@@ -5,20 +5,16 @@
 \alias{\%==\%}
 \alias{\%>=\%}
 \alias{\%>\%}
+\alias{\%stri!=\%}
+\alias{\%stri<=\%}
+\alias{\%stri<\%}
+\alias{\%stri==\%}
+\alias{\%stri>=\%}
+\alias{\%stri>\%}
 \title{Compare Two Character Vectors with Collation}
 \usage{
 e1 \%<\% e2
 
-e1 \%>\% e2
-
-e1 \%<=\% e2
-
-e1 \%>=\% e2
-
-e1 \%==\% e2
-
-e1 \%!=\% e2
-
 e1 \%<=\% e2
 
 e1 \%>\% e2
@@ -28,6 +24,18 @@ e1 \%>=\% e2
 e1 \%==\% e2
 
 e1 \%!=\% e2
+
+e1 \%stri<\% e2
+
+e1 \%stri<=\% e2
+
+e1 \%stri>\% e2
+
+e1 \%stri>=\% e2
+
+e1 \%stri==\% e2
+
+e1 \%stri!=\% e2
 }
 \arguments{
   \item{e1}{character vector or an object coercible to a
@@ -37,9 +45,9 @@ e1 \%!=\% e2
   character vector}
 }
 \value{
-Returns a logical vector indicating the result of the
-element-by-element comparison. As usual, the elements of
-shorter vectors are recycled as necessary.
+All the functions return a logical vector indicating the
+result of the element-by-element comparison. As usual, the
+elements of shorter vectors are recycled as necessary.
 }
 \description{
 Relational operators for comparing two character vectors,
@@ -54,5 +62,35 @@ friends, using default collator options.
 "a" \%<\% "b"
 c("a", "b", "c") \%>=\% "b"
 }
+}
+\seealso{
+Other locale_sensitive: \code{\link{stri_cmp}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
+\code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
+\code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+\code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
+\code{\link{stri_detect_fixed}};
+\code{\link{stri_enc_detect2}};
+\code{\link{stri_locate_all_fixed}},
+\code{\link{stri_locate_all_fixed,}},
+\code{\link{stri_locate_first_fixed}},
+\code{\link{stri_locate_first_fixed,}},
+\code{\link{stri_locate_last_fixed}},
+\code{\link{stri_locate_last_fixed}};
+\code{\link{stri_opts_collator}}; \code{\link{stri_order}},
+\code{\link{stri_sort}};
+\code{\link{stri_replace_all_fixed}},
+\code{\link{stri_replace_all_fixed}},
+\code{\link{stri_replace_first_fixed}},
+\code{\link{stri_replace_first_fixed}},
+\code{\link{stri_replace_last_fixed}},
+\code{\link{stri_replace_last_fixed}};
+\code{\link{stri_split_fixed}},
+\code{\link{stri_split_fixed}};
+\code{\link{stri_trans_tolower}},
+\code{\link{stri_trans_totitle}},
+\code{\link{stri_trans_toupper}};
+\code{\link{stringi-locale}};
+\code{\link{stringi-search-fixed}}
 }
 

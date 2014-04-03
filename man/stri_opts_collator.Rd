@@ -91,7 +91,13 @@ Documentation,
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 }
 \seealso{
-Other locale_sensitive: \code{\link{stri_cmp}},
+Other locale_sensitive: \code{\link{\%!=\%}},
+\code{\link{\%<=\%}}, \code{\link{\%<\%}},
+\code{\link{\%==\%}}, \code{\link{\%>=\%}},
+\code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
+\code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+\code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
+\code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
 \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
 \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
 \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},

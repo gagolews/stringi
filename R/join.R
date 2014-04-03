@@ -60,13 +60,13 @@ stri_dup <- function(str, times) {
 #' Concatenate Two Character Vectors
 #'
 #' @description
-#' A binary operator for joining (concatenating) two character vectors,
+#' Binary operators for joining (concatenating) two character vectors,
 #' with a typical \R look-and-feel.
 #'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
-#' This operator acts like a call to \code{\link{stri_join}(e1, e2, sep="")}.
+#' These operators act like a call to \code{\link{stri_join}(e1, e2, sep="")}.
 #' However, note that joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
 #' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
 #' because it creates a new (temporary) result vector each time
@@ -87,6 +87,14 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
+   .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
+}
+
+#' @usage
+#' e1 \%stri+\% e2
+#' @rdname oper_plus
+#' @export
+"%stri+%" <- function(e1, e2) {
    .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
 }
 
