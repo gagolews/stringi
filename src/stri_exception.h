@@ -77,7 +77,7 @@ using namespace std;
 
 
 /**
- * Class representing exceptions
+ * A class representing exceptions
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  */

@@ -55,13 +55,17 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
  */
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+   R_len_t vectorize_length = stri__recycling_rule(true, 3,
+            LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -69,7 +73,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    String8buf buf(0); // @TODO: calculate buf len a priori?
 
@@ -92,6 +96,8 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
       deque< pair<R_len_t, R_len_t> > occurences;
       for (jlast=j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur.test(chr)) {
             occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
             sumbytes += j-jlast;
@@ -124,7 +130,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -147,13 +153,17 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *                make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+   R_len_t vectorize_length = stri__recycling_rule(true, 3,
+         LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -162,7 +172,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
 
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    String8buf buf(0); // @TODO: consider calculating buflen a priori
 
@@ -184,6 +194,8 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       if (first) { // search for first
          for (jlast=j=0; j<str_cur_n; ) {
             U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
@@ -193,6 +205,8 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       else { // search for last
         for (jlast=j=str_cur_n; jlast>0; ) {
             U8_PREV(str_cur_s, 0, jlast, chr); // "look behind"
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
@@ -217,7 +231,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

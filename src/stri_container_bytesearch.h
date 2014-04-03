@@ -41,13 +41,15 @@
 
 /**
  * A class to handle StriByteSearch patterns
- * @version 0.1 (Marek Gagolewski, 2013-06-23)
- * @version 0.1 (Bartek Tartanus, 2013-08-15) added table T for KMP algorithm
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          added table T for KMP algorithm
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
    private:
-
 
       R_len_t patternLen;
       const char* patternStr;

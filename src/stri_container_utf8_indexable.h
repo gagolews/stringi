@@ -38,7 +38,8 @@
 
 
 /**
- * A class to handle conversion between R character vectors and UTF-8 string vectors,
+ * A class to handle conversion between R character
+ * vectors and UTF-8 string vectors,
  * with UChar32 to UTF-8 indices translation
  *
  *

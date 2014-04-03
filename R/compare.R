@@ -175,10 +175,10 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' "a" %<% "b"
 #' c("a", "b", "c") %>=% "b"
 #' }
-#' 
+#'
 #' @usage
 #' e1 \%<\% e2
-#' 
+#'
 #' @family locale_sensitive
 #' @rdname oper_comparison
 #' @export

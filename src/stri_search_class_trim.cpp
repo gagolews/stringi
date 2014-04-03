@@ -45,22 +45,30 @@
  * @param right from left?
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use StriContainerUTF8 and CharClass
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly & Use StrContainerCharClass
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *          Use StriContainerUTF8 and CharClass
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly & Use StrContainerCharClass
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
 */
 SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+   R_len_t vectorize_length =
+      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -74,14 +82,15 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       CharClass pattern_cur = pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t j;
       R_len_t jlast1 = 0;
       R_len_t jlast2 = str_cur_n;
-      UChar32 chr;
 
       if (left) {
-         for (j=0; j<str_cur_n; ) {
+         UChar32 chr;
+         for (R_len_t j=0; j<str_cur_n; ) {
             U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
@@ -90,8 +99,11 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       }
 
       if (right && jlast1 < str_cur_n) {
-         for (j=str_cur_n; j>0; ) {
+         UChar32 chr;
+         for (R_len_t j=str_cur_n; j>0; ) {
             U8_PREV(str_cur_s, 0, j, chr); // "look behind"
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
                break; // break at first occurence
             }
@@ -100,10 +112,11 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
       }
 
       // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
+      SET_STRING_ELT(ret, i,
+         Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -116,9 +129,13 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *          Use stri__trim_leftright
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
 */
 SEXP stri_trim_both(SEXP str, SEXP pattern)
 {
@@ -135,8 +152,10 @@ SEXP stri_trim_both(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *          Use stri__trim_leftright
 */
 SEXP stri_trim_left(SEXP str, SEXP pattern)
 {
@@ -151,8 +170,10 @@ SEXP stri_trim_left(SEXP str, SEXP pattern)
  * @param pattern character vector
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski, 2013-06-04) Use stri__trim_leftright
+ * @version 0.1-?? (Bartek Tartanus)
+ *
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-04)
+ *          Use stri__trim_leftright
 */
 SEXP stri_trim_right(SEXP str, SEXP pattern)
 {
@@ -170,9 +191,9 @@ SEXP stri_trim_right(SEXP str, SEXP pattern)
 // * @param leave_first logical vector
 // * @return character vector
 // *
-// * @version 0.1 (Bartek Tartanus)
+// * @version 0.1-?? (Bartek Tartanus)
 //*/
-//SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP leave_first)
+//SEXP stri_trim_double(SEXP s, SEXP pattern, SEXP replace)  # @TODO replace - string or NA (==leave_first)
 //{
 //   s = stri_prepare_arg_string(s, "str"); // prepare string argument
 //   R_len_t ns = LENGTH(s);
