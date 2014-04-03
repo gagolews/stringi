@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_charclass.h"
+#include "stri_container_logical.h"
 #include "stri_string8buf.h"
 #include <deque>
 #include <utility>
@@ -45,6 +46,7 @@ using namespace std;
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for
  * @param replacement character vector; strings to replace with
+ * @param merge merge consecutive matches into a single one?
  *
  * @return character vector
  *
@@ -57,20 +59,23 @@ using namespace std;
  *          make StriException-friendly
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
- *          detects invalid UTF-8 byte stream
+ *          detects invalid UTF-8 byte stream;
+ *          merge arg added (replacement of old stri_trim_both/double by BT)
  */
-SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
    str          = stri_prepare_arg_string(str, "str");
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3,
-            LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+   merge        = stri_prepare_arg_logical(merge, "merge");
+   R_len_t vectorize_length = stri__recycling_rule(true, 4,
+            LENGTH(str), LENGTH(pattern), LENGTH(replacement), LENGTH(merge));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
+   StriContainerLogical merge_cont(merge, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -81,11 +86,13 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)) {
+      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)
+            || merge_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
+      bool merge_cur        = merge_cont.get(i);
       CharClass pattern_cur = pattern_cont.get(i);
       R_len_t str_cur_n     = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
@@ -99,7 +106,11 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement)
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur.test(chr)) {
-            occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
+            if (merge_cur && occurences.size() > 0 &&
+                  occurences.back().second == jlast)
+               occurences.back().second = j;
+            else
+               occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
             sumbytes += j-jlast;
          }
          jlast = j;

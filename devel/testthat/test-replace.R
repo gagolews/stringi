@@ -18,6 +18,8 @@ test_that("stri_replace_all_charclass", {
    expect_identical(stri_replace_all_charclass(c(stri_dup(" ", 0:1500)), "WHITE_SPACE", "X"), stri_dup("X", 0:1500))
    expect_identical(stri_replace_all_charclass(c(stri_dup(" Y", 0:1500)), "WHITE_SPACE", "X"), stri_dup("XY", 0:1500))
    expect_identical(stri_replace_all_charclass(c(stri_dup("Y ", 0:1500)), "WHITE_SPACE", "X"), stri_dup("YX", 0:1500))
+   expect_identical(stri_replace_all_charclass("ala   ma \t    \n kota      ", "WHITESPACE", " ", merge=TRUE),
+         "ala ma kota ")
 })
 
 

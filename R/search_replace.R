@@ -47,6 +47,8 @@
 #' @param pattern character vector; identifiers of character classes,
 #' see \link{stringi-search-charclass}
 #' @param replacement character vector of strings to replace with
+#' @param merge logical [\code{stri_replace_all_charclass} only];
+#' should consecutive matches be merged into a single one?
 #'
 #' @return Each function returns a character vector.
 #'
@@ -58,22 +60,25 @@
 #'
 #' @examples
 #' stri_replace_all_charclass("a\nb\tc d", "WHITE_SPACE", " ")
-stri_replace_all_charclass <- function(str, pattern, replacement) {
-   .Call("stri_replace_all_charclass", str, pattern, replacement, PACKAGE="stringi")
+stri_replace_all_charclass <- function(str, pattern, replacement, merge=FALSE) {
+   .Call("stri_replace_all_charclass", str, pattern, replacement, merge,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_first_charclass <- function(str, pattern, replacement) {
-   .Call("stri_replace_first_charclass", str, pattern, replacement, PACKAGE="stringi")
+   .Call("stri_replace_first_charclass", str, pattern, replacement,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_charclass
 stri_replace_last_charclass <- function(str, pattern, replacement) {
-   .Call("stri_replace_last_charclass", str, pattern, replacement, PACKAGE="stringi")
+   .Call("stri_replace_last_charclass", str, pattern, replacement,
+         PACKAGE="stringi")
 }
 
 
@@ -120,21 +125,24 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @family search_replace
 #' @family locale_sensitive
 stri_replace_all_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_all_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
+   .Call("stri_replace_all_fixed", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
 stri_replace_first_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_first_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
+   .Call("stri_replace_first_fixed", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
 stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_last_fixed", str, pattern, replacement, opts_collator, PACKAGE="stringi")
+   .Call("stri_replace_last_fixed", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
 }
 
 
@@ -182,21 +190,24 @@ stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=lis
 #' @family search_regex
 #' @family search_replace
 stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=list()) {
-   .Call("stri_replace_all_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
+   .Call("stri_replace_all_regex", str, pattern, replacement, opts_regex,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_regex
 stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=list()) {
-   .Call("stri_replace_first_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
+   .Call("stri_replace_first_regex", str, pattern, replacement, opts_regex,
+         PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_regex
 stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()) {
-   .Call("stri_replace_last_regex", str, pattern, replacement, opts_regex, PACKAGE="stringi")
+   .Call("stri_replace_last_regex", str, pattern, replacement, opts_regex,
+         PACKAGE="stringi")
 }
 
 
@@ -337,9 +348,12 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
    mode <- match.arg(mode) # this is slow
 
    switch(mode,
-          first=stri_replace_first(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass),
-          last =stri_replace_last(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass),
-          all  =stri_replace_all(str, replacement, ..., regex=regex, fixed=fixed, charclass=charclass)
+          first=stri_replace_first(str, replacement, ..., regex=regex,
+               fixed=fixed, charclass=charclass),
+          last =stri_replace_last(str, replacement, ..., regex=regex,
+               fixed=fixed, charclass=charclass),
+          all  =stri_replace_all(str, replacement, ..., regex=regex,
+               fixed=fixed, charclass=charclass)
    )
 }
 
