@@ -93,7 +93,13 @@ stri_cmp_eq(stri_enc_nfkd('\\u0105'), '\\u105') # but cf. stri_enc_nfkd('\\u0105
 }
 }
 \seealso{
-Other locale_sensitive: \code{\link{stri_count_fixed}};
+Other locale_sensitive: \code{\link{\%!=\%}},
+\code{\link{\%<=\%}}, \code{\link{\%<\%}},
+\code{\link{\%==\%}}, \code{\link{\%>=\%}},
+\code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
+\code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+\code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
+\code{\link{\%stri>\%}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
 \code{\link{stri_enc_detect2}};
 \code{\link{stri_locate_all_fixed}},
