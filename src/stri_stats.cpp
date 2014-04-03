@@ -107,8 +107,6 @@ SEXP stri_stats_general(SEXP str)
 }
 
 
-
-
 /**
  * LaTeX, Kile-like statistics for a character vector
  *

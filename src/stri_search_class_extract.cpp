@@ -118,7 +118,6 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 }
 
 
-
 /**
  * Extract first occurence of a character class in each string
  *
@@ -147,8 +146,6 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
 {
    return stri__extract_firstlast_charclass(str, pattern, false);
 }
-
-
 
 
 /**

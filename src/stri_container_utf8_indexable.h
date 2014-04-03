@@ -36,7 +36,6 @@
 #include "stri_container_utf8.h"
 
 
-
 /**
  * A class to handle conversion between R character
  * vectors and UTF-8 string vectors,

@@ -33,7 +33,6 @@
 #include "stri_stringi.h"
 
 
-
 const char* StriException::getICUerrorName(UErrorCode status)
 {
    switch(status) {

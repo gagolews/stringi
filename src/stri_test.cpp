@@ -81,7 +81,6 @@ SEXP stri_test_Rmark(SEXP s)
 }
 
 
-
 /** for testing efficiency of StriContainerUTF16 [internal]
  *
  * @param str character vector

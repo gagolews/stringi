@@ -218,8 +218,6 @@ extern "C" void R_init_stringi(DllInfo *dll)
 }
 
 
-
-
 ///**
 // * ... not needed ...
 // */

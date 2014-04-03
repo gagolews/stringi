@@ -143,8 +143,6 @@ SEXP stri_dup(SEXP str, SEXP times)
 }
 
 
-
-
 /** Join two character vectors, element by element, no separator, no collapse
  *
  * Vectorized over e1 and e2. Optimized for |e1| >= |e2|
@@ -235,7 +233,6 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 }
 
 
-
 /** Join and flatten two character vectors, no separator between elements but possibly with collapse
  *
  * Vectorized over e1 and e2.
@@ -322,7 +319,6 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
 
 
 /**
@@ -449,7 +445,6 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 }
 
 
-
 /**
  * Concatenate Character Vectors, with no collapse
  *
@@ -570,8 +565,6 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
 }
 
 
-
-
 /** String vector flatten, with no separator (i.e. empty) between each string
  *
  *  if any of s is NA, the result will be NA_character_
@@ -675,7 +668,6 @@ SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
    StriContainerUTF8 collapse_cont(collapse, 1);
    R_len_t collapse_nbytes = collapse_cont.get(0).length();
    const char* collapse_s = collapse_cont.get(0).c_str();
-
 
 
    // 1. Get required buffer size

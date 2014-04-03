@@ -34,7 +34,6 @@
 #include "stri_ucnv.h"
 
 
-
 /**
  * Sets current (default) ICU charset
  *
@@ -71,9 +70,6 @@ SEXP stri_enc_set(SEXP enc)
 
    STRI__ERROR_HANDLER_END({/* no special action on error */})
 }
-
-
-
 
 
 /**
@@ -132,8 +128,6 @@ SEXP stri_enc_list()
 
    STRI__ERROR_HANDLER_END({/* no special action on error */})
 }
-
-
 
 
 /** Fetch information on an encoding

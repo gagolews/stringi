@@ -82,7 +82,6 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 }
 
 
-
 #' @title
 #' Replace Occurrences of a Fixed Pattern
 #'
@@ -211,7 +210,6 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 }
 
 
-
 #' @title
 #' Replace All Occurrences of a Pattern
 #'
@@ -281,7 +279,6 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
 }
 
 
-
 #' @title
 #' Replace Last Occurrence of a Pattern
 #'
@@ -313,7 +310,6 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-
 
 
 #' @title
@@ -356,8 +352,6 @@ stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
                fixed=fixed, charclass=charclass)
    )
 }
-
-
 
 
 #' @title

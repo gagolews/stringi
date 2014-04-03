@@ -38,7 +38,6 @@ const UProperty CharClass::NA_binprop = UCHAR_INVALID_CODE;
 const uint32_t  CharClass::NA_gcmask  = 0xffffffff;
 
 
-
 // these static vars are automatically generated via an R script
 const R_len_t CharClass::binprop_maxchars = 32;
 
@@ -98,7 +97,6 @@ const UProperty CharClass::binprop_code[] = { // sorted by binprop_names_normali
    UCHAR_TERMINAL_PUNCTUATION, UCHAR_UNIFIED_IDEOGRAPH, UCHAR_UPPERCASE,
    UCHAR_VARIATION_SELECTOR, UCHAR_WHITE_SPACE, UCHAR_XID_CONTINUE, UCHAR_XID_START
 };
-
 
 
 /** Get desired character class code from given name
@@ -313,7 +311,6 @@ UProperty CharClass::getBinaryPropertyFromName(const char* name, R_len_t n)
 
    return id;
 }
-
 
 
 /** Test if a character is from a given charclass

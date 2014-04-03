@@ -147,7 +147,6 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
 }
 
 
-
 /**
  * Replace first or last occurence of a character class [internal]
  *
@@ -248,7 +247,6 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
 }
 
 
-
 /**
  * Replace first occurence of a character class
  *
@@ -264,7 +262,6 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
    return stri__replace_firstlast_charclass(str, pattern, replacement, true);
 }
-
 
 
 /**

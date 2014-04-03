@@ -34,7 +34,6 @@
 #include <unicode/uloc.h>
 
 
-
 /**
  * Prepare list of raw vectors argument, single raw vector,
  * or character vector argument
@@ -222,7 +221,6 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 }
 
 
-
 /**
  * Prepare numeric vector argument
  *
@@ -346,8 +344,6 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 }
 
 
-
-
 /**
  * Prepare raw vector argument
  *
@@ -384,9 +380,6 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    Rf_error(MSG__ARG_EXPECTED_RAW, argname); // allowed here
    return x; // avoid compiler warning
 }
-
-
-
 
 
 /** Prepare string argument - one string
@@ -539,7 +532,6 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 
    return x;
 }
-
 
 
 /** Prepare logical argument - one value, not NA

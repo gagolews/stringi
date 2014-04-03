@@ -58,7 +58,6 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 }
 
 
-
 /**
  * Create a character vector with given C strings
  *
@@ -82,7 +81,6 @@ SEXP stri__make_character_vector(R_len_t numnames, ...)
    UNPROTECT(1);
    return names;
 }
-
 
 
 /**
@@ -205,7 +203,6 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
 
    return ret;
 }
-
 
 
 /** Creates an empty R list

@@ -59,7 +59,6 @@ stri_read_raw <- function(fname) {
 }
 
 
-
 #' @title
 #' [DRAFT API] Read Text Lines from a Text File
 #'

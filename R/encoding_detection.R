@@ -67,7 +67,6 @@ stri_enc_isutf16le <- function(str) {
 }
 
 
-
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf32be <- function(str) {
@@ -80,10 +79,6 @@ stri_enc_isutf32be <- function(str) {
 stri_enc_isutf32le <- function(str) {
    .Call("stri_enc_isenc", str, 6L, PACKAGE="stringi")
 }
-
-
-
-
 
 
 #' @title

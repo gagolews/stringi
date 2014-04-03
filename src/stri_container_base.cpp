@@ -49,7 +49,6 @@ StriContainerBase::StriContainerBase()
 }
 
 
-
 /**
  * Initialize object data
  *

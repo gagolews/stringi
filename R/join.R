@@ -55,7 +55,6 @@ stri_dup <- function(str, times) {
 }
 
 
-
 #' @title
 #' Concatenate Two Character Vectors
 #'
@@ -150,7 +149,6 @@ stri_dup <- function(str, times) {
 stri_join <- function(..., sep="", collapse=NULL) {
    .Call("stri_join_withcollapse", list(...), sep, collapse, PACKAGE="stringi")
 }
-
 
 
 #' @rdname stri_join

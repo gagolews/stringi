@@ -40,8 +40,6 @@
 using namespace std;
 
 
-
-
 /**
  * Locate first or last occurences of pattern in a string [with collation]
  *
@@ -108,7 +106,6 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
-
 
 
 /** Locate all occurences of fixed-byte pattern
@@ -186,7 +183,6 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
-
 
 
 /**
@@ -270,9 +266,6 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bo
       if (collator) ucol_close(collator);
    )
 }
-
-
-
 
 
 /**
@@ -388,8 +381,6 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
    return stri__locate_firstlast_fixed(str, pattern, collator_opts, true);
 }
-
-
 
 
 /**

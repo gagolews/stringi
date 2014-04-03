@@ -34,7 +34,6 @@
 #include "stri_container_utf8_indexable.h"
 
 
-
 /**
  *  Default constructor
  *
@@ -94,7 +93,6 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
 
    return *this;
 }
-
 
 
 /** Convert BACKWARD UChar32-based index to UTF-8 based
@@ -256,9 +254,6 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
    last_ind_fwd_utf8 = jres;
    return jres;
 }
-
-
-
 
 
  /** Convert UTF8-byte indices to Unicode32 (code points)

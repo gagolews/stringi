@@ -47,7 +47,6 @@ StriContainerUTF16::StriContainerUTF16()
 }
 
 
-
 /** container for nrecycle fresh, brand new, writable UnicodeStrings
  *
  * Each string is initially empty.
@@ -172,7 +171,6 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 }
 
 
-
 /** Copy constructor
  *
  *  @param container source
@@ -190,7 +188,6 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
       this->str = NULL;
    }
 }
-
 
 
 /**
@@ -225,8 +222,6 @@ StriContainerUTF16::~StriContainerUTF16()
       str = NULL;
    }
 }
-
-
 
 
 /** Export character vector to R
@@ -282,7 +277,6 @@ SEXP StriContainerUTF16::toR() const
 }
 
 
-
 /** Export string to R
  *
  *  THE OUTPUT IS ALWAYS IN UTF-8
@@ -305,9 +299,6 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
       return Rf_mkCharLenCE(s.c_str(), (int)s.length(), (cetype_t)CE_UTF8);
    }
 }
-
-
-
 
 
 /** Convert Unicode16-Char indices to Unicode32 (code points)

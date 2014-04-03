@@ -38,7 +38,6 @@
 using namespace std;
 
 
-
 /** Locate all occurences of a regex pattern
  *
  * @param str character vector
@@ -122,7 +121,6 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
 
 
 /** Locate first occurence of a regex pattern
@@ -222,8 +220,6 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    return stri__locate_firstlast_regex(str, pattern, opts_regex, true);
 }
-
-
 
 
 /** Locate first occurence of a regex pattern

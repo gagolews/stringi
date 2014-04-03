@@ -84,8 +84,6 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
 }
 
 
-
-
 /**
  * Count pattern occurcess in a string [with collation]
  *

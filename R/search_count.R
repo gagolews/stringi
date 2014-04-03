@@ -60,8 +60,6 @@ stri_count_charclass <- function(str, pattern) {
 }
 
 
-
-
 #' @title
 #' Count the Number of Fixed Pattern Matches
 #'
@@ -109,7 +107,6 @@ stri_count_fixed <- function(str, pattern, opts_collator=list()) {
 }
 
 
-
 #' @title
 #' Count the Number of Regex Pattern Matches
 #'
@@ -145,7 +142,6 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
    # prepare_arg done internally
    .Call("stri_count_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
-
 
 
 #' @title

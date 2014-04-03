@@ -35,7 +35,6 @@
 #include "stri_container_charclass.h"
 
 
-
 /**
  * Trim characters from a charclass from left AND/OR right side of the string
  *
@@ -141,8 +140,6 @@ SEXP stri_trim_both(SEXP str, SEXP pattern)
 {
    return stri__trim_leftright(str, pattern, true, true);
 }
-
-
 
 
 /**

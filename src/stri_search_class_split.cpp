@@ -40,7 +40,6 @@
 using namespace std;
 
 
-
 /**
  * Split a string by occurences of a character class
  *

@@ -112,9 +112,6 @@ stri_trim <- function(str, side=c("both", "left", "right"), pattern="^WHITE_SPAC
 }
 
 
-
-
-
 invisible(NULL) # TO BE DONE, version >= 0.2
 # #' @title
 # #' Trim All Unnecessary Consecutive Characters

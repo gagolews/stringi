@@ -77,7 +77,6 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
 }
 
 
-
 /** Copy constructor
  *
  */
@@ -96,7 +95,6 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->T = new int[0];
 #endif
 }
-
 
 
 /** Copy operator
@@ -132,8 +130,6 @@ StriContainerByteSearch::~StriContainerByteSearch()
    delete T;
 #endif
 }
-
-
 
 
 /** the returned matcher shall not be deleted by the user

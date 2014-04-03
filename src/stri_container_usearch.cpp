@@ -60,7 +60,6 @@ StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecy
 }
 
 
-
 /** Copy constructor
  *
  */
@@ -70,8 +69,6 @@ StriContainerUStringSearch::StriContainerUStringSearch(StriContainerUStringSearc
    this->lastMatcher = NULL;
    this->col = container.col;
 }
-
-
 
 
 StriContainerUStringSearch& StriContainerUStringSearch::operator=(StriContainerUStringSearch& container)
@@ -96,8 +93,6 @@ StriContainerUStringSearch::~StriContainerUStringSearch()
    col = NULL;
    // col is owned by the caller
 }
-
-
 
 
 /** the returned matcher shall not be deleted by the user

@@ -110,7 +110,6 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 }
 
 
-
 /**
  * Locate first occurence of a character class in each string
  *
@@ -139,8 +138,6 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
 {
    return stri__locate_firstlast_charclass(str, pattern, false);
 }
-
-
 
 
 /**

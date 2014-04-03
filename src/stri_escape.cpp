@@ -35,7 +35,6 @@
 #include "stri_container_utf16.h"
 
 
-
 /**
  *  Escape Unicode code points
  *
@@ -140,7 +139,6 @@ SEXP stri_escape_unicode(SEXP str)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
 
 
 /**

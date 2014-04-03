@@ -90,8 +90,6 @@ StriContainerListUTF8::StriContainerListUTF8(StriContainerListUTF8& container)
 }
 
 
-
-
 StriContainerListUTF8& StriContainerListUTF8::operator=(StriContainerListUTF8& container)
 {
    this->~StriContainerListUTF8();
@@ -112,7 +110,6 @@ StriContainerListUTF8& StriContainerListUTF8::operator=(StriContainerListUTF8& c
 
    return *this;
 }
-
 
 
 StriContainerListUTF8::~StriContainerListUTF8()

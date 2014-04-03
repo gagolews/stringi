@@ -64,8 +64,6 @@ R_len_t stri__numbytes_max(SEXP str)
 }
 
 
-
-
 /**
  * Count the number of characters in a string
  *
@@ -158,8 +156,6 @@ SEXP stri_length(SEXP str)
 }
 
 
-
-
 /**
  * Get number of bytes in each string
  *
@@ -191,7 +187,6 @@ SEXP stri_numbytes(SEXP str)
    return ret;
    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
-
 
 
 /**

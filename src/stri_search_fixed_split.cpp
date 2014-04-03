@@ -145,8 +145,6 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 }
 
 
-
-
 /**
  * Split a string into parts [search with collation]
  *
@@ -211,7 +209,6 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
-
 
 
       if (n_max_cur < 0)

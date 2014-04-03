@@ -35,7 +35,6 @@
 #include "stri_container_regex.h"
 
 
-
 /**
  * Replace occurences of a regex pattern
  *

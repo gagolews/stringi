@@ -106,14 +106,11 @@ stri_enc_nfc <- function(str) {
 }
 
 
-
 #' @rdname stri_enc_nf
 #' @export
 stri_enc_nfd <- function(str) {
    .Call("stri_enc_nf", str, 20L, PACKAGE="stringi")
 }
-
-
 
 
 #' @rdname stri_enc_nf
@@ -123,8 +120,6 @@ stri_enc_nfkd <- function(str) {
 }
 
 
-
-
 #' @rdname stri_enc_nf
 #' @export
 stri_enc_nfkc <- function(str) {
@@ -132,15 +127,11 @@ stri_enc_nfkc <- function(str) {
 }
 
 
-
-
 #' @rdname stri_enc_nf
 #' @export
 stri_enc_nfkc_casefold <- function(str) {
    .Call("stri_enc_nf", str, 12L, PACKAGE="stringi")
 }
-
-
 
 
 #' @rdname stri_enc_nf
@@ -157,8 +148,6 @@ stri_enc_isnfd <- function(str) {
 }
 
 
-
-
 #' @rdname stri_enc_nf
 #' @export
 stri_enc_isnfkd <- function(str) {
@@ -166,15 +155,11 @@ stri_enc_isnfkd <- function(str) {
 }
 
 
-
-
 #' @rdname stri_enc_nf
 #' @export
 stri_enc_isnfkc <- function(str) {
    .Call("stri_enc_isnf", str, 11L, PACKAGE="stringi")
 }
-
-
 
 
 #' @rdname stri_enc_nf

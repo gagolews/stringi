@@ -104,8 +104,6 @@ StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
 }
 
 
-
-
 StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& container)
 {
    this->~StriContainerListRaw();
@@ -122,7 +120,6 @@ StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& cont
    }
    return *this;
 }
-
 
 
 StriContainerListRaw::~StriContainerListRaw()

@@ -192,13 +192,11 @@ stri_extract_first_regex <- function(str, pattern, opts_regex=list()) {
 }
 
 
-
 #' @export
 #' @rdname stri_extract_regex
 stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
    .Call("stri_extract_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
-
 
 
 #' @title
@@ -241,7 +239,6 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-
 
 
 #' @title
@@ -287,7 +284,6 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 }
 
 
-
 #' @title
 #' Extract Last Pattern Match
 #'
@@ -329,7 +325,6 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
    else
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
 }
-
 
 
 #' @title

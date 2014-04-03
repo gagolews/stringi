@@ -34,9 +34,6 @@
 #define __stri_intvec_h
 
 
-
-
-
 /**
  * A class to represent an integer vector or NULL/NA
  *

@@ -39,7 +39,6 @@
 using namespace std;
 
 
-
 /**
  * Extract all capture groups of the first/last occurence
  * of a regex pattern in each string
@@ -149,7 +148,6 @@ SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 }
 
 
-
 /**
  * Extract all capture groups of the  last occurence of a regex pattern in each string
  *
@@ -164,7 +162,6 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    return stri__match_firstlast_regex(str, pattern, opts_regex, false);
 }
-
 
 
 /**

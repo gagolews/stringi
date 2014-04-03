@@ -94,8 +94,6 @@ StriContainerListInt::StriContainerListInt(StriContainerListInt& container)
 }
 
 
-
-
 StriContainerListInt& StriContainerListInt::operator=(StriContainerListInt& container)
 {
    this->~StriContainerListInt();
@@ -112,7 +110,6 @@ StriContainerListInt& StriContainerListInt::operator=(StriContainerListInt& cont
    }
    return *this;
 }
-
 
 
 StriContainerListInt::~StriContainerListInt()

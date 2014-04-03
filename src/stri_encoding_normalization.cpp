@@ -94,8 +94,6 @@ const Normalizer2* stri__normalizer_get(SEXP type)
 }
 
 
-
-
 /**
  * Perform Unicode Normalization
  *

@@ -92,7 +92,6 @@ UConverter* StriUcnv::getConverter()
 }
 
 
-
 /** Own fallback function for ucnv conversion: substitute & warn
  *
  *
@@ -182,7 +181,6 @@ void StriUcnv::STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
 }
 
 
-
 /**
  * Get ICU ucnv standard names and their count
  *
@@ -218,7 +216,6 @@ vector<const char*> StriUcnv::getStandards()
 }
 
 
-
 /**
  * Get friendly encoding name
  *
@@ -249,7 +246,6 @@ const char* StriUcnv::getFriendlyName(const char* canname)
 
    return canname;
 }
-
 
 
 /**

@@ -34,8 +34,6 @@
 #include <unicode/uloc.h>
 
 
-
-
 /**
  * Sets current (default) ICU locale
  *

@@ -123,7 +123,6 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 }
 
 
-
 #' @title
 #' Generate a List with Regex Matcher Options
 #'
