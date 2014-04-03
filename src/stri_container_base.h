@@ -38,7 +38,7 @@
 
 
 /**
- * Base class for StriContainers
+ * Base class for all StriContainers
  *
  * @version 0.1-?? (Marek Gagolewski)
  *

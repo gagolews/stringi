@@ -42,7 +42,7 @@ using namespace std;
 
 
 /**
- * Split a string on by occurences of a character class
+ * Split a string by occurences of a character class
  *
  * @param str character vector
  * @param pattern character vector
@@ -59,6 +59,9 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -66,7 +69,8 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   R_len_t vectorize_length = stri__recycling_rule(true, 4,
+      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8      str_cont(str, vectorize_length);
@@ -75,13 +79,14 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i) || n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)
+            || n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
@@ -92,7 +97,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
-      else if (n_max_cur == 0) {
+      else if (n_max_cur <= 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
@@ -106,6 +111,8 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 
       for (j=0, k=1; j<str_cur_n && k < n_max_cur; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur.test(chr)) {
             if (omit_empty_cur && fields.back().second == fields.back().first)
                fields.back().first = fields.back().second = j; // don't start new field
@@ -124,20 +131,21 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          fields.pop_back();
 
       SEXP ans;
-      PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
          pair<R_len_t, R_len_t> curoccur = *iter;
          SET_STRING_ELT(ans, k,
-            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
+            Rf_mkCharLenCE(str_cur_s+curoccur.first,
+                           curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1)
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

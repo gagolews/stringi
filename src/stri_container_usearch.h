@@ -40,7 +40,8 @@
 
 
 /**
- * A class to handle UStringSearch patterns
+ * A class to handle UStringSearch searches
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-23)
  */
 class StriContainerUStringSearch : public StriContainerUTF16 {

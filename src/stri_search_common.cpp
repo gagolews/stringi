@@ -36,7 +36,8 @@
 /**
  * Set colnames for matrix returned by stri_locate_first_* or stri_locate_last_*
  * @param matrix R matrix with two columns
- * @version 0.1 (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 void stri__locate_set_dimnames_matrix(SEXP matrix) {
    SEXP dimnames;
@@ -55,7 +56,8 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
 /**
  * Set colnames for matrices stored in a list returned by stri_locate_all_* or stri_locate_all_*
  * @param matrix R matrix with two columns
- * @version 0.1 (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Marek Gagolewski)
  */
 void stri__locate_set_dimnames_list(SEXP list) {
    SEXP dimnames;

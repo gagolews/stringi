@@ -40,7 +40,8 @@
 
 
 /**
- * A class to handle regex patterns
+ * A class to handle regex searches
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-17)
  */
 class StriContainerRegexPattern : public StriContainerUTF16 {

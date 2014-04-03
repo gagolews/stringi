@@ -52,6 +52,9 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -64,7 +67,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -84,8 +87,11 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       if (first) {
          for (jlast=j=0; j<str_cur_n; ) {
             U8_NEXT(str_cur_s, j, str_cur_n, chr);
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
-               SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+jlast, j-jlast, CE_UTF8));
+               SET_STRING_ELT(ret, i,
+                  Rf_mkCharLenCE(str_cur_s+jlast, j-jlast, CE_UTF8));
                break; // that's enough for first
             }
             jlast = j;
@@ -94,8 +100,11 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       else {
          for (jlast=j=str_cur_n; j>0; ) {
             U8_PREV(str_cur_s, 0, j, chr); // go backwards
+            if (chr < 0) // invalid utf-8 sequence
+               throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur.test(chr)) {
-               SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+j, jlast-j, CE_UTF8));
+               SET_STRING_ELT(ret, i,
+                  Rf_mkCharLenCE(str_cur_s+j, jlast-j, CE_UTF8));
                break; // that's enough for last
             }
             jlast = j;
@@ -103,7 +112,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       }
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -156,6 +165,9 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
+ *          detects invalid UTF-8 byte stream
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -170,10 +182,10 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
    StriContainerLogical merge_cont(merge, vectorize_length);
 
    SEXP notfound; // this vector will be set iff not found or NA
-   PROTECT(notfound = stri__vector_NA_strings(1));
+   STRI__PROTECT(notfound = stri__vector_NA_strings(1));
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -183,7 +195,6 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
-
 
       bool merge_cur = merge_cont.get(i);
       CharClass pattern_cur = pattern_cont.get(i);
@@ -195,6 +206,8 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 
       for (jlast=j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur.test(chr)) {
             occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
          }
@@ -222,7 +235,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          // create resulting matrix from occurences2
          R_len_t noccurences2 = (R_len_t)occurences2.size();
          SEXP cur_res;
-         PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences2));
+         STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences2));
          iter = occurences2.begin();
          for (R_len_t f = 0; iter != occurences2.end(); ++iter, ++f) {
             pair<R_len_t, R_len_t> curo = *iter;
@@ -230,12 +243,12 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
                Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
-         UNPROTECT(1);
+         STRI__UNPROTECT(1)
       }
       else {
          // do not merge
          SEXP cur_res;
-         PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
+         STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
          deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
          for (R_len_t f = 0; iter != occurences.end(); ++iter, ++f) {
             pair<R_len_t, R_len_t> curo = *iter;
@@ -243,11 +256,11 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
                Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
          }
          SET_VECTOR_ELT(ret, i, cur_res);
-         UNPROTECT(1);
+         STRI__UNPROTECT(1)
       }
    }
 
-   UNPROTECT(2);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -39,6 +39,7 @@
 
 /**
  * A wrapper-class for R logical vectors
+ *
  * @version 0.1 (Marek Gagolewski, 2013-06-15)
  */
 class StriContainerLogical : public StriContainerBase {
