@@ -130,12 +130,12 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 
 
 /** Read regex flags from a list
- * 
+ *
  * may call Rf_error
- * 
+ *
  * @param opts_regex list
  * @return flags
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  */
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)

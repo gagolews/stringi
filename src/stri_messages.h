@@ -80,6 +80,9 @@
 #define MSG__WARN_RECYCLING_RULE \
    "longer object length is not a multiple of shorter object length"
 
+#define MSG__WARN_RECYCLING_RULE2 \
+   "vector length not consistent with other arguments"
+
 #define MSG__INCORRECT_INTERNAL_ARG \
    "incorrect argument"
 

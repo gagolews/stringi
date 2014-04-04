@@ -116,6 +116,7 @@ SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
 SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
 SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname);
 SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
+int         stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname);
 SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
 bool        stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname);
 const char* stri__prepare_arg_locale(SEXP loc,        const char* argname,

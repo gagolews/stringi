@@ -59,7 +59,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t vectorize_length =
       stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   
+
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    STRI__ERROR_HANDLER_BEGIN
