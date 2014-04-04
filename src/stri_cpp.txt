@@ -25,6 +25,7 @@ stri_justify.cpp \
 stri_length.cpp \
 stri_pad.cpp \
 stri_prepare_arg.cpp \
+stri_random.cpp \
 stri_reverse.cpp \
 stri_search_class_count.cpp \
 stri_search_class_detect.cpp \

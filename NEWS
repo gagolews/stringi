@@ -26,6 +26,11 @@
    * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
       with a given string, useful for emulating e.g. R's paste() behavior.
 
+   * [NEW FEATURE] stri_rand_shuffle generates a random permutation
+      of code points in a string
+
+   * [NEW FEATURE] stri_rand_strings....
+
    * [NEW FEATURE] stri_enc_tonative(str) is an alias to
      stri_encode(str, NULL, NULL).
 

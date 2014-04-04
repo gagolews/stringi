@@ -38,6 +38,7 @@
 #define STRI__MAKE_CALL_METHOD(name, args) \
    {#name, (DL_FUNC)&name, args}
 
+
 /**
  * List of functions available in R via .Call()
  *
@@ -118,6 +119,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_double_1,       2),
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_integer_1,      2),
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_logical_1,      2),
+   STRI__MAKE_CALL_METHOD(stri_rand_shuffle,               1),
+   STRI__MAKE_CALL_METHOD(stri_rand_strings,               3),
    STRI__MAKE_CALL_METHOD(stri_replace_na,                 2),
    STRI__MAKE_CALL_METHOD(stri_replace_all_fixed,          4),
    STRI__MAKE_CALL_METHOD(stri_replace_first_fixed,        4),

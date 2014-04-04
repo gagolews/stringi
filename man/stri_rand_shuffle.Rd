@@ -1,0 +1,32 @@
+\name{stri_rand_shuffle}
+\alias{stri_rand_shuffle}
+\title{Randomly Shuffle Code Points in Each String}
+\usage{
+stri_rand_shuffle(str)
+}
+\arguments{
+  \item{str}{character vector}
+}
+\value{
+Returns a character vector.
+}
+\description{
+Generates a (pseudo)random permutation of code points in
+each string.
+}
+\details{
+This operation may result in non-Unicode-normalized strings
+and may give strange output for bidirectional strings.
+
+See also \code{\link{stri_reverse}} for a reverse
+permutation of code points.
+}
+\examples{
+stri_shuffle(c("abcdefghi", "0123456789"))
+# you can do better that this with stri_rand_strings:
+stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
+}
+\seealso{
+Other random: \code{\link{stri_rand_strings}}
+}
+
