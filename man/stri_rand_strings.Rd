@@ -45,10 +45,24 @@ Unicode property, such as \code{[:Letter:]}. Perl-style
 properties are also recognized, e.g. \code{\\p{L}}. Note
 that any character may be preceded by a backslash in order
 to remove any special meaning.
+
+Sampling of code points from the set specified by
+\code{pattern} is always with replacement and each code
+point appears with equal probability.
 }
 \examples{
 stri_rand_strings(5, 10) # 5 strings of length 10
 stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
+
+# generate n random passwords of length in [8, 14]
+# consisting of at least one digit, small and big ASCII letter:
+n <- 10
+stri_rand_shuffle(stri_paste(
+   stri_rand_strings(n, 1, '[0-9]'),
+   stri_rand_strings(n, 1, '[a-z]'),
+   stri_rand_strings(n, 1, '[A-Z]'),
+   stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
+))
 }
 \references{
 \emph{UnicodeSet} -- ICU User Guide,

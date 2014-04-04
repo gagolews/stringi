@@ -66,7 +66,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool f
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    // we don't know how many capture groups are there:
-   vector< vector< pair<const char*, const char*> > > occurences(vectorize_length); 
+   vector< vector< pair<const char*, const char*> > > occurences(vectorize_length);
    R_len_t occurences_max = 1;
 
    for (R_len_t i = pattern_cont.vectorize_init();

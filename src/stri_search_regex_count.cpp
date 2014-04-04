@@ -44,13 +44,13 @@
  *
  * @return integer vector
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF16's vectorization
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-17)
  *          use StriContainerRegexPattern + opts_regex
  */

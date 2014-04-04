@@ -39,7 +39,7 @@
 #' @details
 #' This operation may result in non-Unicode-normalized
 #' strings and may give strange output for bidirectional strings.
-#' 
+#'
 #' See also \code{\link{stri_reverse}} for a reverse permutation
 #' of code points.
 #'
@@ -91,6 +91,10 @@ stri_rand_shuffle <- function(str) {
 #' e.g. \code{\\p{L}}. Note that any character may be preceded by
 #' a backslash in order to remove any special meaning.
 #'
+#' Sampling of code points from the set specified by \code{pattern}
+#' is always with replacement and each code point appears with equal
+#' probability.
+#'
 #' @param n single integer, number of observations
 #' @param length integer vector, desired string lengths
 #' @param pattern single string with regex-like character class specifier,
@@ -102,6 +106,16 @@ stri_rand_shuffle <- function(str) {
 #' stri_rand_strings(5, 10) # 5 strings of length 10
 #' stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
 #'
+#' # generate n random passwords of length in [8, 14]
+#' # consisting of at least one digit, small and big ASCII letter:
+#' n <- 10
+#' stri_rand_shuffle(stri_paste(
+#'    stri_rand_strings(n, 1, '[0-9]'),
+#'    stri_rand_strings(n, 1, '[a-z]'),
+#'    stri_rand_strings(n, 1, '[A-Z]'),
+#'    stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
+#' ))
+#'
 #' @references
 #' \emph{UnicodeSet} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/unicodeset}
@@ -109,5 +123,5 @@ stri_rand_shuffle <- function(str) {
 #' @family random
 #' @export
 stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
-   .Call("stri_rand_shuffle", n, length, patttern, PACKAGE="stringi")
+   .Call("stri_rand_strings", n, length, pattern, PACKAGE="stringi")
 }

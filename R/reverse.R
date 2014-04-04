@@ -38,7 +38,7 @@
 #' @details
 #' Note that this operation may result in non-Unicode-normalized
 #' strings and may give strange output for bidirectional strings.
-#' 
+#'
 #' See also \code{\link{stri_rand_shuffle}} for a random permutation
 #' of code points.
 #'

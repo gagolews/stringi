@@ -45,13 +45,13 @@
  * @return character vector
  *
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF16's vectorization
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
  *          use StriContainerRegexPattern + more general
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
  */

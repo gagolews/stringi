@@ -27,9 +27,9 @@
       with a given string, useful for emulating e.g. R's paste() behavior.
 
    * [NEW FEATURE] stri_rand_shuffle generates a random permutation
-      of code points in a string
+      of code points in a string.
 
-   * [NEW FEATURE] stri_rand_strings....
+   * [NEW FEATURE] stri_rand_strings generates random strings.
 
    * [NEW FEATURE] stri_enc_tonative(str) is an alias to
      stri_encode(str, NULL, NULL).
@@ -47,7 +47,7 @@
    * Significant performance improvements in stri_join, stri_flatten,
         stri_cmp, stri_trans_to*, ...t.b.d....
 
-   * Added 3rd mirror site for icudt.
+   * Added 3rd mirror site for our icudt binary distribution.
 
    * U_MISSING_RESOURCE_ERROR message in StriException now suggests
         calling stri_install_check().
