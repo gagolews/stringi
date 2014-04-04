@@ -1,0 +1,113 @@
+## This file is part of the 'stringi' package for R.
+## Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+## All rights reserved.
+##
+## Redistribution and use in source and binary forms, with or without
+## modification, are permitted provided that the following conditions are met:
+##
+## 1. Redistributions of source code must retain the above copyright notice,
+## this list of conditions and the following disclaimer.
+##
+## 2. Redistributions in binary form must reproduce the above copyright notice,
+## this list of conditions and the following disclaimer in the documentation
+## and/or other materials provided with the distribution.
+##
+## 3. Neither the name of the copyright holder nor the names of its
+## contributors may be used to endorse or promote products derived from
+## this software without specific prior written permission.
+##
+## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+## SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+## PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+## OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+## WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+#' @title
+#' Randomly Shuffle Code Points in Each String
+#'
+#' @description
+#' Generates a (pseudo)random permutation of code points
+#' in each string.
+#'
+#' @details
+#' This operation may result in non-Unicode-normalized
+#' strings and may give strange output for bidirectional strings.
+#' 
+#' See also \code{\link{stri_reverse}} for a reverse permutation
+#' of code points.
+#'
+#' @param str character vector
+#'
+#' @return Returns a character vector.
+#'
+#' @examples
+#' stri_shuffle(c("abcdefghi", "0123456789"))
+#' # you can do better that this with stri_rand_strings:
+#' stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
+#'
+#' @family random
+#' @export
+stri_rand_shuffle <- function(str) {
+   .Call("stri_rand_shuffle", str, PACKAGE="stringi")
+}
+
+
+#' @title
+#' Generate Random Strings
+#'
+#' @description
+#' Generates (pseudo)random strings of desired lengths.
+#'
+#' @details
+#' This operation may result in non-Unicode-normalized
+#' strings and may give strange output for bidirectional strings.
+#'
+#' If length of \code{length} is greater than \code{n},
+#' then redundant elements are ignored. Otherwise,
+#' \code{length} is recycled if necessary.
+#'
+#' Patterns are a series of characters bounded by square brackets
+#' that contain lists of characters and Unicode property sets.
+#' These patterns follow a syntax similar to that employed
+#' by version 8 regular expression character classes, see References
+#' for more details.
+#'
+#' Lists are a sequence of characters that may have ranges
+#' indicated by a ``-'' between two characters, as in "a-z".
+#' The sequence specifies the range of all characters from the left
+#' to the right, in Unicode order. For example, \code{[a c d-f m]} is equivalent
+#' to \code{[a c d e f m]}. Whitespace can be freely used for clarity as
+#' [a c d-f m] means the same as \code{[acd-fm]}.
+#'
+#' On the other hand, Unicode property sets are specified by a Unicode
+#' property, such as \code{[:Letter:]}. Perl-style properties are also recognized,
+#' e.g. \code{\\p{L}}. Note that any character may be preceded by
+#' a backslash in order to remove any special meaning.
+#'
+#' @param n single integer, number of observations
+#' @param length integer vector, desired string lengths
+#' @param pattern single string with regex-like character class specifier,
+#'        see below
+#'
+#' @return Returns a character vector.
+#'
+#' @examples
+#' stri_rand_strings(5, 10) # 5 strings of length 10
+#' stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
+#'
+#' @references
+#' \emph{UnicodeSet} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/strings/unicodeset}
+#'
+#' @family random
+#' @export
+stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
+   .Call("stri_rand_shuffle", n, length, patttern, PACKAGE="stringi")
+}

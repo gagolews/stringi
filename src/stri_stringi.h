@@ -257,6 +257,11 @@ SEXP stri_trim_right(SEXP str, SEXP pattern);
 //SEXP stri_pad(SEXP str, SEXP length, SEXP pad);   // ...TO DO...  [version >= 0.2]
 
 
+// random.cpp
+SEXP stri_rand_shuffle(SEXP str);
+SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern);
+
+
 // stats.cpp
 SEXP stri_stats_general(SEXP str);
 SEXP stri_stats_latex(SEXP str);

@@ -86,6 +86,10 @@ with its functions' arguments. }
   \item \code{\link{stri_escape_unicode}} (among others)
   for escaping certain code points.
 
+  \item \code{\link{stri_rand_strings}} and
+  \code{\link{stri_rand_shuffle}} for generating
+  (pseudo)random strings.
+
   \item DRAFT API: \code{\link{stri_read_raw}},
   \code{\link{stri_read_lines}}, and
   \code{\link{stri_write_lines}} for reading and writing
@@ -93,9 +97,8 @@ with its functions' arguments. }
 
   \item TO DO [these will appear in future versions of
   \pkg{stringi}]: pad, wrap, justify, HTML entities,
-  character translation, MIME Base 64 encode/decode, random
-  string generation, number and data/time formatting, and
-  many more. }
+  character translation, MIME Base 64 encode/decode, number
+  and data/time formatting, and many more. }
 
   Note that each man page has many links to other
   interesting facilities.

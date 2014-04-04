@@ -11,13 +11,15 @@ stri_reverse(str)
 Returns a character vector.
 }
 \description{
-Reverses characters in every string.
+Reverses code points in every string.
 }
 \details{
-Note that this operation is not very intelligent -- it just
-reverses the order of all Unicode code points. It may
-result in non-Unicode-normalized strings and may give
-strange output for bidirectional strings.
+Note that this operation may result in
+non-Unicode-normalized strings and may give strange output
+for bidirectional strings.
+
+See also \code{\link{stri_rand_shuffle}} for a random
+permutation of code points.
 }
 \examples{
 stri_reverse(c("123", "abc d e f"))

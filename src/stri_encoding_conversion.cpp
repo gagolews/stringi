@@ -134,7 +134,7 @@ SEXP stri_enc_toutf32(SEXP str)
       R_len_t ni = str_cont.get(i).length();
       if (ni > bufsize) bufsize = ni;
    }
-   std::vector<int> buf(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
+   std::vector<UChar32> buf(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
    // deque<UChar32> was slower than using a common, over-sized buf
 
    SEXP ret;
@@ -147,7 +147,7 @@ SEXP stri_enc_toutf32(SEXP str)
          continue;
       }
 
-      UChar32 c = 0;
+      UChar32 c = (UChar32)0;
       const char* s = str_cont.get(i).c_str();
       R_len_t sn = str_cont.get(i).length();
       R_len_t j = 0;
@@ -160,6 +160,7 @@ SEXP stri_enc_toutf32(SEXP str)
       if (c < 0) {
          Rf_warning(MSG__INVALID_UTF8);
          SET_VECTOR_ELT(ret, i, R_NilValue);
+         continue;
       }
       else {
          SEXP conv;
