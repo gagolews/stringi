@@ -55,6 +55,8 @@ using namespace std;
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
+   // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
+   // ??? OR introduce stri_matchpos_*_regex ???
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));

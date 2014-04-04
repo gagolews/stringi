@@ -53,6 +53,7 @@ using namespace std;
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
+   // @TODO: capture_groups arg (integer vector/set - which capture groups to extract)
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -64,7 +65,8 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool f
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   vector< vector< pair<const char*, const char*> > > occurences(vectorize_length); // we don't know how many capture groups are there
+   // we don't know how many capture groups are there:
+   vector< vector< pair<const char*, const char*> > > occurences(vectorize_length); 
    R_len_t occurences_max = 1;
 
    for (R_len_t i = pattern_cont.vectorize_init();
