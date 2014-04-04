@@ -43,35 +43,39 @@
  * @param opts_regex list
  *
  * @return integer vector
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF16's vectorization
- * @version 0.3 (Marek Gagolewski, 2013-06-16) make StriException-friendly
- * @version 0.4 (Marek Gagolewski, 2013-06-17) use StriContainerRegexPattern + opts_regex
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ *          make StriException-friendly
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-17)
+ *          use StriContainerRegexPattern + opts_regex
  */
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   // this will work for vectorize_length == 0:
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    STRI__ERROR_HANDLER_BEGIN
-
    StriContainerUTF16 str_cont(str, vectorize_length);
-   // MG: tried StriContainerUTF8 + utext_openUTF8 - this was slower
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
@@ -81,7 +85,7 @@ SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       ret_tab[i] = count;
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

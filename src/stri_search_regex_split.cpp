@@ -66,7 +66,8 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str),
+         LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 

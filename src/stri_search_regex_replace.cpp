@@ -44,10 +44,16 @@
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski)  - use StriContainerUTF16's vectorization
- * @version 0.3 (Marek Gagolewski, 2013-06-21) - use StriContainerRegexPattern + more general
- * @version 0.4 (Marek Gagolewski, 2013-07-10) - BUGFIX: wrong behavior on empty str
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF16's vectorization
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
+ *          use StriContainerRegexPattern + more general
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
+ *          BUGFIX: wrong behavior on empty str
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
@@ -129,7 +135,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-21)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
  */
 SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
@@ -146,7 +152,7 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-21)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
  */
 SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
@@ -163,7 +169,7 @@ SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opt
  * @param opts_regex list
  * @return character vector
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-21)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
  */
 SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
