@@ -7,14 +7,14 @@ stri_count_charclass(str, pattern)
 \arguments{
   \item{str}{character vector to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 }
 \value{
 Returns an integer vector.
 }
 \description{
-This function counts the number of characters that falls
+This function counts the number of characters that fall
 into a given character class (e.g. letters, digits, or
 white spaces).
 }
@@ -22,9 +22,9 @@ white spaces).
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
-stri_count_charclass(" \\t\\n", "WHITE_SPACE") # white space - binary property
-stri_count_charclass(" \\t\\n", "Z") # whitespace - general category (note the difference)
+stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
+stri_count_charclass(" \\t\\n", "\\\\p{WHITE_SPACE}") # white space - binary property
+stri_count_charclass(" \\t\\n", "\\\\p{Z}") # whitespace - general category (note the difference)
 }
 \seealso{
 Other search_charclass:

@@ -7,8 +7,8 @@ stri_split_charclass(str, pattern, n_max = -1L, omit_empty = FALSE)
 \arguments{
   \item{str}{character vector with strings to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 
   \item{n_max}{integer vector, maximal number of pieces to
   return}
@@ -37,8 +37,8 @@ it is set to \code{TRUE}, then empty strings will never
 appear in the resulting vector.
 }
 \examples{
-stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
-stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3,
+stri_split_charclass("Lorem ipsum dolor sit amet", "\\\\p{WHITE_SPACE}")
+stri_split_charclass(" Lorem  ipsum dolor", "\\\\p{WHITE_SPACE}", n=3,
    omit_empty=c(FALSE, TRUE))
 }
 \seealso{

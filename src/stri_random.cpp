@@ -32,10 +32,10 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
-#include "stri_container_utf16.h"
+#include "stri_container_integer.h"
 #include "stri_string8buf.h"
 #include <vector>
-#include <unicode/uniset.h>
+#include "stri_container_charclass.h"
 
 
 /** Generate random permutations of code points in each string
@@ -129,16 +129,20 @@ SEXP stri_rand_shuffle(SEXP str)
  *
  * @param n single integer
  * @param length integer vector
- * @param pattern single string, not NA
+ * @param pattern character vector
  * @return character vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-04)
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          Use StriContainerCharClass which now contains UnicodeSets;
+ *          vectorized also over pattern
  */
 SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 {
    int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
    length    = stri_prepare_arg_integer(length, "length");
-   pattern   = stri_prepare_arg_string_1(pattern, "pattern");
+   pattern   = stri_prepare_arg_string(pattern, "pattern");
 
    if (n_val < 0) n_val = 0; /* that's not NA for sure now */
 
@@ -148,18 +152,17 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
    else if (length_len > n_val || n_val % length_len != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
+   R_len_t pattern_len = LENGTH(pattern);
+   if (pattern_len <= 0)
+      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "pattern");
+   else if (pattern_len > n_val || n_val % pattern_len != 0)
+      Rf_warning(MSG__WARN_RECYCLING_RULE2);
+
    GetRNGstate();
    STRI__ERROR_HANDLER_BEGIN
 
-   StriContainerUTF16 pattern_cont(pattern, 1);
-   if (pattern_cont.isNA(0))
-      return stri__vector_NA_strings(n_val); // n_val NAs
-
-   UErrorCode status = U_ZERO_ERROR;
-   UnicodeSet uset(pattern_cont.get(0) /* that's not NA */, status);
-   if (U_FAILURE(status))
-      throw StriException(status);
-   int32_t uset_size = uset.size();
+   StriContainerCharClass pattern_cont(pattern, max(n_val, pattern_len));
+   StriContainerInteger   length_cont(length, max(n_val, length_len));
 
    // get max required bufsize
    int*    length_tab = INTEGER(length);
@@ -176,21 +179,23 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n_val));
 
    for (R_len_t i=0; i<n_val; ++i) {
-      int length_cur = length_tab[i%length_len];
-      if (length_cur == NA_INTEGER) {
+      if (length_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      else if (length_cur < 0)
-         length_cur = 0;
 
+      int length_cur = length_cont.get(i);
+      if (length_cur < 0) length_cur = 0;
+
+      const UnicodeSet* uset = &(pattern_cont.get(i));
+      int32_t uset_size = uset->size();
 
       // generate string:
       R_len_t j = 0;
       UBool err = FALSE;
       for (R_len_t k=0; k<length_cur; ++k) {
          int32_t idx = (int32_t)floor(unif_rand()*(double)uset_size); /* 0..uset_size-1 */
-         UChar32 c = uset.charAt(idx);
+         UChar32 c = uset->charAt(idx);
          if (c < 0) throw StriException(MSG__INTERNAL_ERROR);
 
          U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);

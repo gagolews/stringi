@@ -224,6 +224,25 @@ invisible(NULL)
 #'
 #' TO DO: THIS IS NO LONGER VALID!!!!
 #'
+#'
+#' Patterns are a series of characters bounded by square brackets
+#' that contain lists of characters and Unicode property sets.
+#' These patterns follow a syntax similar to that employed
+#' by version 8 regular expression character classes, see References
+#' for more details.
+#'
+#' Lists are a sequence of characters that may have ranges
+#' indicated by a ``-'' between two characters, as in "a-z".
+#' The sequence specifies the range of all characters from the left
+#' to the right, in Unicode order. For example, \code{[a c d-f m]} is equivalent
+#' to \code{[a c d e f m]}. Whitespace can be freely used for clarity as
+#' [a c d-f m] means the same as \code{[acd-fm]}.
+#'
+#' On the other hand, Unicode property sets are specified by a Unicode
+#' property, such as \code{[:Letter:]}. Perl-style properties are also recognized,
+#' e.g. \code{\\p{L}}. Note that any character may be preceded by
+#' a backslash in order to remove any special meaning.
+#'
 #' There are two separate ways to specify character classes in \pkg{stringi}:
 #' \itemize{
 #' \item by claiming a Unicode General Category, e.g. \code{Lu} for uppercase letters

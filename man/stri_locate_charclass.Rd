@@ -13,8 +13,8 @@ stri_locate_last_charclass(str, pattern)
 \arguments{
   \item{str}{character vector to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 
   \item{merge}{logical [\code{stri_locate_all_charclass}
   only]; indicates whether consecutive sequences of indices
@@ -23,9 +23,9 @@ stri_locate_last_charclass(str, pattern)
 \value{
 For \code{stri_locate_all_charclass}, a list of
 \code{max(length(str), length(pattern))} integer matrices
-is returned . The first column gives the start positions of
+is returned. The first column gives the start positions of
 matches, and the second column gives the end position.
-Moreover, you may gen two \code{NA}s in one row for no
+Moreover, you may get two \code{NA}s in one row for no
 match or \code{NA} arguments.
 
 For \code{stri_locate_first_charclass} and
@@ -47,11 +47,11 @@ Vectorized over \code{str}, \code{pattern}, and
 \code{merge}.
 }
 \examples{
-stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll')
-stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
-stri_locate_first_charclass('AaBbCc', 'Ll')
-stri_locate_last_charclass('AaBbCc', 'Ll')
-stri_locate_all_charclass(c('REXAMINE'), 'Lu', merge=c(TRUE, FALSE))
+stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
+stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
+stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
+stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
+stri_locate_all_charclass(c('REXAMINE'), '\\\\p{Lu}', merge=c(TRUE, FALSE))
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_fixed}},
