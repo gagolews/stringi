@@ -13,8 +13,8 @@ stri_extract_last_charclass(str, pattern)
 \arguments{
   \item{str}{character vector to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 
   \item{merge}{logical [\code{stri_extract_all_charclass}
   only]; should consecutive matches be merged into one
@@ -27,8 +27,9 @@ character vectors is returned. Otherwise, you get a
 character vector. \code{NA} if not found.
 }
 \description{
-These functions extract substrings of \code{str} that match
-a given \code{pattern}.
+These functions extract substrings of \code{str} that
+consists of characters from character classes specified by
+\code{pattern}.
 
 Generally, this is the way to extract single characters,
 only. Longer substrings, however, may be extracted, with
@@ -40,10 +41,10 @@ Vectorized over \code{str}, \code{pattern}, and
 \code{merge}.
 }
 \examples{
-stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll')
-stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
-stri_extract_first_charclass('AaBbCc', 'Ll')
-stri_extract_last_charclass('AaBbCc', 'Ll')
+stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
+stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
+stri_extract_first_charclass('AaBbCc', '\\\\p{Ll}')
+stri_extract_last_charclass('AaBbCc', '\\\\p{Ll}')
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

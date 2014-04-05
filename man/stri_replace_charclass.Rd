@@ -13,8 +13,8 @@ stri_replace_last_charclass(str, pattern, replacement)
 \arguments{
   \item{str}{character vector with strings to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 
   \item{replacement}{character vector of strings to replace
   with}
@@ -28,7 +28,8 @@ Each function returns a character vector.
 }
 \description{
 Replaces with the given replacement string every/first/last
-character class occurrence in the input string.
+the characters that fall into a class specified by
+\code{pattern}.
 }
 \details{
 Vectorized over \code{str}, \code{pattern}, and
@@ -40,7 +41,8 @@ left unchanged; each match is replaced in the result by the
 same (fixed) replacement string.
 }
 \examples{
-stri_replace_all_charclass("a\\nb\\tc d", "WHITE_SPACE", " ")
+stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ")
+stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ", TRUE)
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

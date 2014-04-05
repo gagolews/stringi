@@ -11,6 +11,8 @@ All \code{stri_*_charclass} functions in \pkg{stringi}
 perform a single character (i.e. Unicode codepoint)
 search-based operations.
 
+TO DO: THIS IS NO LONGER VALID!!!!
+
 There are two separate ways to specify character classes in
 \pkg{stringi}: \itemize{ \item by claiming a Unicode
 General Category, e.g. \code{Lu} for uppercase letters (a
@@ -29,12 +31,14 @@ Please note that some classes may seem to overlap. However,
 e.g. General Category \code{Z} (some space) and Binary
 Property \code{WHITE_SPACE} matches different character
 sets.
+
+TO DO: THIS IS NO LONGER VALID!!!!
 }
 \section{Unicode General Categories}{
-  The Unicode General Category property of a code point
-  provides the most general classification of that code
-  point. Each code point falls into one and only on
-  Category.
+  TO DO: THIS IS NO LONGER VALID!!!! The Unicode General
+  Category property of a code point provides the most
+  general classification of that code point. Each code
+  point falls into one and only on Category.
 
   \itemize{ \item \code{Cc} -- a C0 or C1 control code;
   \item \code{Cf} -- a format control character; \item
@@ -72,9 +76,13 @@ sets.
   \code{P} -- the union of Pc, Pd, Ps, Pe, Pi, Pf, Po;
   \item \code{S} -- the union of Sm, Sc, Sk, So; \item
   \code{Z} -- the union of Zs, Zl, Zp. }
+
+  TO DO: THIS IS NO LONGER VALID!!!!
 }
 
 \section{Unicode Binary Properties}{
+  TO DO: THIS IS NO LONGER VALID!!!!
+
   Binary properties identifiers are matched
   case-insensitively, and are slightly normalized. Each
   character may follow many Binary Properties at a time.
@@ -143,6 +151,8 @@ sets.
   \code{CHANGES_WHEN_CASEFOLDED} ; \item
   \code{CHANGES_WHEN_CASEMAPPED} ; \item
   \code{CHANGES_WHEN_NFKC_CASEFOLDED}. }
+
+  TO DO: THIS IS NO LONGER VALID!!!!
 }
 \references{
 \emph{The Unicode Character Database} -- Unicode Standard

@@ -7,22 +7,21 @@ stri_detect_charclass(str, pattern)
 \arguments{
   \item{str}{character vector to search in}
 
-  \item{pattern}{character vector; identifiers of character
-  classes, see \link{stringi-search-charclass}}
+  \item{pattern}{character vector specifying character
+  classes to match, see \link{stringi-search-charclass}}
 }
 \value{
 Returns a logical vector.
 }
 \description{
-This function checks if any character matches a falls into
-a given character class (e.g. letters, digits, or white
-spaces).
+This function checks if any character falls into a given
+character class (e.g. letters, digits, or white spaces).
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
+stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};
