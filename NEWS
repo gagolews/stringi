@@ -3,6 +3,12 @@
 
 * 0.2-1 (XXXX-XX-XX)
 
+   * [IMPORTANT CHANGE] stri_*_charclass search functions now
+     rely solely on ICU's UnicodeSet patterns. All previously accepted
+     charclass identifiers became invalid. However, new patterns
+     should now be more familiar to the users (they are regex-like).
+     Moreover, we observe a very nice performance gain.
+
    * [IMPORTANT CHANGE] stri_sort now does not include NAs
      in output vectors by default, for compatibility with sort().
      Moreover, currently none of the input vector's attributes are preserved.

@@ -105,6 +105,7 @@ stri_rand_shuffle <- function(str) {
 #' @examples
 #' stri_rand_strings(5, 10) # 5 strings of length 10
 #' stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
+#' stri_rand_strings(10, 5, "[\\p{script=latin}&\\p{Ll}]") # small letters from the Latin script
 #'
 #' # generate n random passwords of length in [8, 14]
 #' # consisting of at least one digit, small and big ASCII letter:

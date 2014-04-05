@@ -55,6 +55,9 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri_detect_charclass(SEXP str, SEXP pattern)
 {
@@ -80,17 +83,17 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern)
          continue;
       }
 
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
 
+      UChar32 chr = 0;
       ret_tab[i] = FALSE;
       for (R_len_t j=0; j<str_cur_n; ) {
-         UChar32 chr;
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur.test(chr)) {
+         if (pattern_cur->contains(chr)) {
             ret_tab[i] = TRUE;
             break;
          }

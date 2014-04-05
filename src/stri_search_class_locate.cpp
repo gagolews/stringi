@@ -56,6 +56,9 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -83,7 +86,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       if (str_cont.isNA(i) || pattern_cont.isNA(i))
          continue;
 
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j;
@@ -95,7 +98,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          k++; // 1-based index
-         if (pattern_cur.test(chr)) {
+         if (pattern_cur->contains(chr)) {
             ret_tab[i]      = k;
             if (first) break; // that's enough for first
             // note that for last, we can't go backwards from the end, as we need a proper index!
@@ -161,6 +164,9 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -191,7 +197,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       }
 
       bool merge_cur        = merge_cont.get(i);
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j;
@@ -204,7 +210,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          k++; // 1-based index
-         if (pattern_cur.test(chr)) {
+         if (pattern_cur->contains(chr)) {
             occurences.push_back(k);
          }
       }

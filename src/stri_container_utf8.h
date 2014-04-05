@@ -110,8 +110,6 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return str[i%n];
       }
-
-
 };
 
 #endif

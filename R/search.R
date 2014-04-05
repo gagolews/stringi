@@ -222,6 +222,7 @@ invisible(NULL)
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
 #' a single character (i.e. Unicode codepoint) search-based operations.
 #'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' There are two separate ways to specify character classes in \pkg{stringi}:
 #' \itemize{
@@ -241,9 +242,11 @@ invisible(NULL)
 #' However, e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} matches different character sets.
 #'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' @section Unicode General Categories:
 #'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #' The Unicode General Category property of a code point provides the most
 #' general classification of that code point.
 #' Each code point falls into one and only on Category.
@@ -289,9 +292,11 @@ invisible(NULL)
 #' \item \code{Z}  -- the union of Zs, Zl, Zp.
 #' }
 #'
-#'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' @section Unicode Binary Properties:
+#'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' Binary properties identifiers are matched case-insensitively,
 #' and are slightly normalized.
@@ -374,6 +379,7 @@ invisible(NULL)
 #' \item \code{CHANGES_WHEN_NFKC_CASEFOLDED}.
 #' }
 #'
+#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,

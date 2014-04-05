@@ -49,7 +49,7 @@
 #' then empty strings will never appear in the resulting vector.
 #'
 #' @param str character vector with strings to search in
-#' @param pattern character vector; identifiers of character classes,
+#' @param pattern character vector specifying character classes to match,
 #' see \link{stringi-search-charclass}
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; determines whether empty
@@ -59,8 +59,8 @@
 #'
 #'
 #' @examples
-#' stri_split_charclass("Lorem ipsum dolor sit amet", "WHITE_SPACE")
-#' stri_split_charclass(" Lorem  ipsum dolor", "WHITE_SPACE", n=3,
+#' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
+#' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n=3,
 #'    omit_empty=c(FALSE, TRUE))
 #'
 #' @export
