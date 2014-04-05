@@ -34,7 +34,7 @@
 #'
 #' @description
 #' Replaces with the given replacement string every/first/last
-#' character class occurrence in the input string.
+#' the characters that fall into a class specified by \code{pattern}.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
@@ -44,7 +44,7 @@
 #' each match is replaced in the result by the same (fixed) replacement string.
 #'
 #' @param str character vector with strings to search in
-#' @param pattern character vector; identifiers of character classes,
+#' @param pattern character vector specifying character classes to match,
 #' see \link{stringi-search-charclass}
 #' @param replacement character vector of strings to replace with
 #' @param merge logical [\code{stri_replace_all_charclass} only];
@@ -59,7 +59,8 @@
 #' @family search_replace
 #'
 #' @examples
-#' stri_replace_all_charclass("a\nb\tc d", "WHITE_SPACE", " ")
+#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ")
+#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", TRUE)
 stri_replace_all_charclass <- function(str, pattern, replacement, merge=FALSE) {
    .Call("stri_replace_all_charclass", str, pattern, replacement, merge,
          PACKAGE="stringi")

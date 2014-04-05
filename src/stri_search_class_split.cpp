@@ -61,6 +61,9 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
 {
@@ -90,7 +93,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          continue;
       }
 
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       int  n_max_cur        = n_max_cont.get(i);
       int  omit_empty_cur   = omit_empty_cont.get(i);
 
@@ -112,7 +115,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur.test(chr)) {
+         if (pattern_cur->contains(chr)) {
             if (omit_empty_cur && fields.back().second == fields.back().first)
                fields.back().first = fields.back().second = j; // don't start new field
             else {

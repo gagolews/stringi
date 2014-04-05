@@ -33,7 +33,7 @@
 #' Detect a Character Class Match
 #'
 #' @description
-#' This function checks if any character matches a falls into a given character
+#' This function checks if any character falls into a given character
 #' class (e.g. letters, digits, or white spaces).
 #'
 #' @details
@@ -41,12 +41,12 @@
 #'
 #'
 #' @param str character vector to search in
-#' @param pattern character vector; identifiers of character classes,
+#' @param pattern character vector specifying character classes to match,
 #' see \link{stringi-search-charclass}
 #' @return Returns a logical vector.
 #'
 #' @examples
-#' stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("Ll", "Lu", "Zs"))
+#' stri_detect_charclass(c("stRRRingi","REXAMINE","123"), c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #'
 #' @export
 #' @family search_detect

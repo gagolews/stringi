@@ -173,7 +173,7 @@
    "unknown charclass `%s`. assuming NA"
 
 #define MSG__CHARCLASS_INCORRECT \
-   "unknown charclass. assuming NA"
+   "unknown charclass"
 
 #define MSG__ARG_EXPECTED_NOT_NA \
    "missing value in argument `%s` is not supported"

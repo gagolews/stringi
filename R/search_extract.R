@@ -34,7 +34,7 @@
 #'
 #' @description
 #' These functions extract substrings of \code{str} that
-#' match a given \code{pattern}.
+#' consists of characters from character classes specified by \code{pattern}.
 #'
 #' Generally, this is the way to extract single characters, only.
 #' Longer substrings, however, may be extracted,
@@ -45,7 +45,7 @@
 #' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
 #'
 #' @param str character vector to search in
-#' @param pattern character vector; identifiers of character classes,
+#' @param pattern character vector specifying character classes to match,
 #' see \link{stringi-search-charclass}
 #' @param merge logical [\code{stri_extract_all_charclass} only];
 #' should consecutive matches be merged into one string?
@@ -59,10 +59,10 @@
 #'
 #'
 #' @examples
-#' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll')
-#' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), 'Ll', merge=FALSE)
-#' stri_extract_first_charclass('AaBbCc', 'Ll')
-#' stri_extract_last_charclass('AaBbCc', 'Ll')
+#' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
+#' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
+#' stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
+#' stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 #'
 #' @export
 #' @rdname stri_extract_charclass

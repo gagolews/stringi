@@ -54,6 +54,9 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
 */
 SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
@@ -78,7 +81,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
          continue;
       }
 
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t jlast1 = 0;
@@ -90,7 +93,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur.test(chr)) {
+            if (pattern_cur->contains(chr)) {
                break; // break at first occurence
             }
             jlast1 = j;
@@ -103,7 +106,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             U8_PREV(str_cur_s, 0, j, chr); // "look behind"
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur.test(chr)) {
+            if (pattern_cur->contains(chr)) {
                break; // break at first occurence
             }
             jlast2 = j;

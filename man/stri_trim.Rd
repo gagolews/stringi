@@ -5,13 +5,13 @@
 \alias{stri_trim_right}
 \title{Trim Characters from the Left and/or Right Side of a String}
 \usage{
-stri_trim_both(str, pattern = "^WHITE_SPACE")
+stri_trim_both(str, pattern = "\\\\P{Wspace}")
 
-stri_trim_left(str, pattern = "^WHITE_SPACE")
+stri_trim_left(str, pattern = "\\\\P{Wspace}")
 
-stri_trim_right(str, pattern = "^WHITE_SPACE")
+stri_trim_right(str, pattern = "\\\\P{Wspace}")
 
-stri_trim(str, side = c("both", "left", "right"), pattern = "^WHITE_SPACE")
+stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 }
 \arguments{
   \item{str}{character vector}
@@ -19,7 +19,7 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "^WHITE_SPACE")
   \item{pattern}{character vector with character class
   identifiers that should be preserved, see
   \link{stringi-search-charclass}, defaults
-  `\code{^WHITE_SPACE}`}
+  `\code{\\P\{Wspace\}}`}
 
   \item{side}{character [\code{stri_trim} only]; defaults
   to \code{"both"}}
@@ -42,24 +42,23 @@ very lazy, do not use it: it is slower.
 Contrary to many other string processing libraries, our
 trimming functions are quite general. A character class,
 given by \code{pattern}, may be adjusted to suit your needs
-(most often you will use the default value or a negation of
-some character class, i.e. with \code{^} at the beginning).
+(most often you will use the default value).
 
-With these functions you may very quickly extract data,
-which in some cases require using regular expressions. E.g.
-you may get \code{"23.5"} out of \code{"total of 23.5
-bitcoins"}.
+Interestingly, with these functions you may sometimes
+extract data, which in some cases require using regular
+expressions. E.g. you may get \code{"23.5"} out of
+\code{"total of 23.5 bitcoins"}.
 
 For trimming whitespaces, please note the difference
-between Unicode binary property `\code{WHITE_SPACE}` (more
-general) and general character category `\code{Z}`, see
-\link{stringi-search-charclass}
+between Unicode binary property `\code{\\p\{Wspace\}}`
+(more general) and general character category
+`\code{\\p\{Z\}}`, see \link{stringi-search-charclass}
 }
 \examples{
 stri_trim_left("               aaa")
-stri_trim_right("rexamine.com/", "^P")
-stri_trim_both(" Total of 23.5 bitcoins. ", "N")
-stri_trim_both(" Total of 23.5 bitcoins. ", "L")
+stri_trim_right("rexamine.com/", "\\\\p{P}")
+stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{N}")
+stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

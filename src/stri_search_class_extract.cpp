@@ -55,6 +55,9 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 {
@@ -78,7 +81,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
       if (str_cont.isNA(i) || pattern_cont.isNA(i))
          continue;
 
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, jlast;
@@ -89,7 +92,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
             U8_NEXT(str_cur_s, j, str_cur_n, chr);
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur.test(chr)) {
+            if (pattern_cur->contains(chr)) {
                SET_STRING_ELT(ret, i,
                   Rf_mkCharLenCE(str_cur_s+jlast, j-jlast, CE_UTF8));
                break; // that's enough for first
@@ -102,7 +105,7 @@ SEXP stri__extract_firstlast_charclass(SEXP str, SEXP pattern, bool first)
             U8_PREV(str_cur_s, 0, j, chr); // go backwards
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur.test(chr)) {
+            if (pattern_cur->contains(chr)) {
                SET_STRING_ELT(ret, i,
                   Rf_mkCharLenCE(str_cur_s+j, jlast-j, CE_UTF8));
                break; // that's enough for last
@@ -165,6 +168,9 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          detects invalid UTF-8 byte stream
+ *
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
+ *          StriContainerCharClass now relies on UnicodeSet
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
@@ -194,7 +200,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       }
 
       bool merge_cur = merge_cont.get(i);
-      CharClass pattern_cur = pattern_cont.get(i);
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t j, jlast;
@@ -205,7 +211,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur.test(chr)) {
+         if (pattern_cur->contains(chr)) {
             occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
          }
          jlast = j;

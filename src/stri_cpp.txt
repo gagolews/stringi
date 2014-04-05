@@ -1,5 +1,4 @@
 stri_casemap.cpp \
-stri_charclass.cpp \
 stri_collator.cpp \
 stri_common.cpp \
 stri_compare.cpp \
