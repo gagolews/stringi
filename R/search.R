@@ -215,60 +215,98 @@ invisible(NULL)
 #' @description
 #' In this man page we describe how character classes are
 #' declared in the \pkg{stringi} package
-#' so that you may search for their occurrences in your search activities.
+#' so that you may e.g. find their occurrences in your search activities
+#' or generate random codepoints with \code{\link{stri_rand_strings}}.
 #'
 #'
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
-#' a single character (i.e. Unicode codepoint) search-based operations.
+#' a single character (Unicode codepoint) search-based operations.
+#' Since stringi_0.2-1 you may obtain
+#' roughly the same results using \link{stringi-search-regex}.
+#' However, these very functions aim to be much faster.
 #'
-#' TO DO: THIS IS NO LONGER VALID!!!!
+#' Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
+#' patterns. Below we briefly summarize their syntax.
+#' For more details refer to the documents listed in References.
 #'
 #'
-#' Patterns are a series of characters bounded by square brackets
-#' that contain lists of characters and Unicode property sets.
-#' These patterns follow a syntax similar to that employed
-#' by version 8 regular expression character classes, see References
-#' for more details.
+#' @section \code{UnicodeSet} patterns:
 #'
-#' Lists are a sequence of characters that may have ranges
-#' indicated by a ``-'' between two characters, as in "a-z".
-#' The sequence specifies the range of all characters from the left
-#' to the right, in Unicode order. For example, \code{[a c d-f m]} is equivalent
-#' to \code{[a c d e f m]}. Whitespace can be freely used for clarity as
-#' [a c d-f m] means the same as \code{[acd-fm]}.
+#' A \code{UnicodeSet} represents a subset of Unicode code points
+#' (recall that \pkg{stringi} converts strings in your native encoding
+#' to Unicode automatically). Legal code points are U+0000 to U+10FFFF,
+#' inclusive.
 #'
-#' On the other hand, Unicode property sets are specified by a Unicode
-#' property, such as \code{[:Letter:]}. Perl-style properties are also recognized,
-#' e.g. \code{\\p{L}}. Note that any character may be preceded by
+#' Patterns either consist of series of characters either bounded by square brackets
+#' (such patterns follow a syntax similar to that employed
+#' by version 8 regular expression character classes)
+#' or of Perl-like Unicode property set specifiers.
+#'
+#' \code{[]} denotes an empty set, \code{[a]} --
+#' a set consisting of character ``a'',
+#' \code{[\\u0105]} -- a set with character U+0105,
+#' and \code{[abc]} -- a set with ``a'', ``b'', and ``c''.
+#'
+#' \code{[a-z]} denotes a set consisting of characters
+#' ``a'' through ``z'' inclusively, in Unicode code point order.
+#'
+#' Some set-theoretic operations are available.
+#' \code{^} denotes the complement, e.g. \code{[^a-z]} contains
+#' all characters but ``a'' through ``z''.
+#' On the other hand, \code{[[pat1][pat2]]},
+#' \code{[[pat1]\&[pat2]]}, and \code{[[pat1]-[pat2]]}
+#' denote union, intersection, and asymmetric diference of sets
+#' specified by \code{pat1} and \code{pat2}, respectively.
+#'
+#' Note that all white spaces are ignored unless they are quoted or backslashed
+#' (white spaces can be freely used for clarity, as \code{[a c d-f m]}
+#' means the same as \code{[acd-fm]}).
+#' \pkg{stringi} does not allow for including so-called multicharacter strings
+#' (see \code{UnicodeSet} API documentation).
+#' Also, empty string patterns are disallowed.
+#'
+#' Any character may be preceded by
 #' a backslash in order to remove any special meaning.
 #'
-#' There are two separate ways to specify character classes in \pkg{stringi}:
-#' \itemize{
-#' \item by claiming a Unicode General Category, e.g. \code{Lu} for uppercase letters
-#' (a 1-2 letter identifier, the same may be used in regexes by specifying
-#' e.g. \code{p{Lu}})
-#' \item by requesting a Unicode Binary Property, e.g. \code{WHITE_SPACE}
-#' }
-#' Both of them provide access to the \pkg{ICU}'s Unicode Character Database
-#' and are described in detail in the sections below.
+#' A malformed pattern always results in an error.
 #'
-#' Additionally, each class identifier may be preceded with '^',
-#' which is a way to request for a complement of a given character class,
-#' i.e. it is used to match characters not in a class.
+#'
+#' @section Unicode properties:
+#'
+#' Unicode property sets are specified with a POSIX-like syntax,
+#' e.g. \code{[:Letter:]}, or with a (extended) Perl-style syntax,
+#' e.g. \code{\\p{L}}.
+#' The complements of the above sets are
+#' \code{[:^Letter:]} and \code{\\P{L}}, respectively.
+#'
+#' The properties' names are normalized before matching
+#' (for example, the match is case-insensitive).
+#' Moreover, many names have short aliases.
+#'
+#' Among predefined Unicode properties we find e.g.
+#' \itemize{
+#' \item Unicode General Categories, e.g. \code{Lu} for uppercase letters,
+#' \item Unicode Binary Properties, e.g. \code{WHITE_SPACE},
+#' }
+#' and many more (including Unicode scripts).
+#'
+#' Each property provides access to the large and comprehensive
+#' Unicode Character Database.
+#' Generally, the list of properties available in \pkg{ICU}
+#' is not perfectly documented. Please refer to the References section
+#' for some links.
 #'
 #' Please note that some classes may seem to overlap.
 #' However, e.g. General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} matches different character sets.
 #'
-#' TO DO: THIS IS NO LONGER VALID!!!!
 #'
 #' @section Unicode General Categories:
 #'
-#' TO DO: THIS IS NO LONGER VALID!!!!
 #' The Unicode General Category property of a code point provides the most
 #' general classification of that code point.
-#' Each code point falls into one and only on Category.
+#' Each code point falls into one and only one Category.
 #'
 #' \itemize{
 #' \item \code{Cc} -- a C0 or C1 control code;
@@ -311,20 +349,14 @@ invisible(NULL)
 #' \item \code{Z}  -- the union of Zs, Zl, Zp.
 #' }
 #'
-#' TO DO: THIS IS NO LONGER VALID!!!!
-#'
 #' @section Unicode Binary Properties:
 #'
-#' TO DO: THIS IS NO LONGER VALID!!!!
-#'
-#' Binary properties identifiers are matched case-insensitively,
-#' and are slightly normalized.
 #' Each character may follow many Binary Properties at a time.
 #'
 #' Here is the complete list of supported Binary Properties:
 #' \itemize{
 #' \item \code{ALPHABETIC}      -- alphabetic character;
-#' \item \code{ASCII_HEX_DIGIT} -- a character matching the \code{[0-9A-Fa-f]} regex;
+#' \item \code{ASCII_HEX_DIGIT} -- a character matching the \code{[0-9A-Fa-f]} charclass;
 #' \item \code{BIDI_CONTROL}    -- a format control which have specific functions
 #'                              in the Bidi (bidirectional text) Algorithm;
 #' \item \code{BIDI_MIRRORED}   -- a character that may change display in right-to-left text;
@@ -340,10 +372,6 @@ invisible(NULL)
 #' \item \code{EXTENDER}        -- a character that extends the value
 #'                              or shape of a preceding alphabetic character,
 #'                              e.g. a length and iteration mark.
-#' \item \code{FULL_COMPOSITION_EXCLUSION} ;
-#' \item \code{GRAPHEME_BASE}  ;
-#' \item \code{GRAPHEME_EXTEND}  ;
-#' \item \code{GRAPHEME_LINK}  ;
 #' \item \code{HEX_DIGIT}       -- a character commonly
 #'                             used for hexadecimal numbers,
 #'                             cf. also \code{ASCII_HEX_DIGIT};
@@ -355,34 +383,17 @@ invisible(NULL)
 #'                  \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl};
 #' \item \code{IDEOGRAPHIC} -- a CJKV (Chinese-Japanese-Korean-Vietnamese)
 #' ideograph;
-#' \item \code{IDS_BINARY_OPERATOR} ;
-#' \item \code{IDS_TRINARY_OPERATOR} ;
-#' \item \code{JOIN_CONTROL} ;
-#' \item \code{LOGICAL_ORDER_EXCEPTION} ;
 #' \item \code{LOWERCASE} ;
 #' \item \code{MATH} ;
 #' \item \code{NONCHARACTER_CODE_POINT} ;
 #' \item \code{QUOTATION_MARK} ;
-#' \item \code{RADICAL} ;
 #' \item \code{SOFT_DOTTED} -- a character with a ``soft dot'', like i or j,
 #' such that an accent placed on this character causes the dot to disappear;
 #' \item \code{TERMINAL_PUNCTUATION} -- a punctuation character that generally
 #' marks the end of textual units;
-#' \item \code{UNIFIED_IDEOGRAPH} ;
 #' \item \code{UPPERCASE} ;
 #' \item \code{WHITE_SPACE} -- a space character or TAB or CR or LF or ZWSP or ZWNBSP;
-#' \item \code{XID_CONTINUE} ;
-#' \item \code{XID_START} ;
 #' \item \code{CASE_SENSITIVE} ;
-#' \item \code{S_TERM} ;
-#' \item \code{VARIATION_SELECTOR} ;
-#' \item \code{NFD_INERT} ;
-#' \item \code{NFKD_INERT} ;
-#' \item \code{NFC_INERT} ;
-#' \item \code{NFKC_INERT} ;
-#' \item \code{SEGMENT_STARTER} ;
-#' \item \code{PATTERN_SYNTAX} ;
-#' \item \code{PATTERN_WHITE_SPACE} ;
 #' \item \code{POSIX_ALNUM} ;
 #' \item \code{POSIX_BLANK} ;
 #' \item \code{POSIX_GRAPH} ;
@@ -397,12 +408,22 @@ invisible(NULL)
 #' \item \code{CHANGES_WHEN_CASEMAPPED} ;
 #' \item \code{CHANGES_WHEN_NFKC_CASEFOLDED}.
 #' }
-#'
-#' TO DO: THIS IS NO LONGER VALID!!!!
+#' and many more.
 #'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
 #' \url{http://www.unicode.org/reports/tr44/}
+#'
+#' \emph{UnicodeSet} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/strings/unicodeset}
+#'
+#' \emph{Properties} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/strings/properties}
+#'
+#' \emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
+#'
+#' \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
+#' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
 #'
 #' @name stringi-search-charclass
 #' @rdname stringi-search-charclass
