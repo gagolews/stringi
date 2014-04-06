@@ -100,10 +100,6 @@ stri_rand_shuffle <- function(str) {
 #'    stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
 #' ))
 #'
-#' @references
-#' \emph{UnicodeSet} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/strings/unicodeset}
-#'
 #' @family random
 #' @export
 stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
