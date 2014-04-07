@@ -68,7 +68,7 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
    int* ret_tab = LOGICAL(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -83,7 +83,7 @@ SEXP stri__detect_fixed_byte(SEXP str, SEXP pattern)
       ret_tab[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 
@@ -187,7 +187,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
    int* ret_tab = LOGICAL(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -206,7 +206,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);

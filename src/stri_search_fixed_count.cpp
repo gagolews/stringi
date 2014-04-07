@@ -45,11 +45,17 @@
  * @param pattern patterns to search for
  * @return integer vector
  *
- * @version 0.1 (Bartek Tartanus)
- * @version 0.2 (Marek Gagolewski) - use StriContainerUTF8
- * @version 0.3 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.4 (Marek Gagolewski, 2013-06-23) make StriException-friendly,
- *    use StriContainerByteSearch
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          use StriContainerUTF8
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          corrected behavior on empty str/pattern
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          make StriException-friendly,
+ *          use StriContainerByteSearch
  */
 SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
 {
@@ -62,7 +68,7 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -73,12 +79,13 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
       ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
       pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = 0;
+      R_len_t found = 0;
       while (USEARCH_DONE != pattern_cont.findNext())
-         ++ret_tab[i];
+         ++found;
+      ret_tab[i] = found;
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
@@ -93,10 +100,14 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return integer vector
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Marek Gagolewski) - corrected behavior on empty str/pattern
- * @version 0.3 (Marek Gagolewski, 2013-06-23) make StriException-friendly,
- *    use StriContainerUStringSearch
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ *          corrected behavior on empty str/pattern
+ * 
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ *          make StriException-friendly,
+ *          use StriContainerUStringSearch
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 {
@@ -115,7 +126,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -129,14 +140,15 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
-      ret_tab[i] = 0;
+      R_len_t found = 0;
       while (((int)usearch_next(matcher, &status) != USEARCH_DONE) && !U_FAILURE(status))
-         ++ret_tab[i];
+         ++found;
+      ret_tab[i] = found;
       if (U_FAILURE(status)) throw StriException(status);
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);
