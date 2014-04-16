@@ -37,6 +37,7 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
+#include <set>
 
 
 /** Compare 2 strings in UTF8, codepoint-wise [internal]
@@ -452,3 +453,74 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       if (col) { ucol_close(col); col = NULL; }
    })
 }
+
+
+
+/** Generate the unique set of character vector
+ *
+ * @param str character vector
+ * @param collator_opts passed to stri__ucol_open()
+ * @return character vector
+ *
+ * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
+ *          using ucol_strcollUTF8 again, as we now require ICU >= 50;
+ *          performance difference only observed for sorted vectors
+ *          (UTF-8: gain, 8bit: loss);
+ *          single function for cmp with and witout collation;
+ *          new param: na_last
+ */
+SEXP stri_unique(SEXP str, SEXP collator_opts)
+{
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+
+   UCollator* col = NULL;
+   col = stri__ucol_open(collator_opts);
+
+   STRI__ERROR_HANDLER_BEGIN
+
+   R_len_t vectorize_length = LENGTH(str);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   
+	StriSortComparer comp(&str_cont, col, true);
+	
+   int first_na_index = -1;
+
+   set<int,StriSortComparer> uniqueset(comp);
+   pair<set<int,StriSortComparer>::iterator,bool> result;
+
+	SEXP temp;
+	STRI__PROTECT(temp = Rf_allocVector(STRSXP, vectorize_length));
+   R_len_t k = 0;
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      if(str_cont.isNA(i)){
+      	if(first_na_index == -1){
+      		first_na_index = i;	
+      		SET_STRING_ELT(temp, k++, NA_STRING);
+      	}
+      }else{
+      	result = uniqueset.insert(i);
+      	if(result.second){
+      		SET_STRING_ELT(temp, k++, str_cont.toR(i));
+      	}
+      }
+   }
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, k));
+   for (int i = 0; i < k; i++){
+      SET_STRING_ELT(ret, i, VECTOR_ELT(temp,i));
+   }
+
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
+}
+

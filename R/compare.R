@@ -343,3 +343,9 @@ stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=list()
 stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 2L, PACKAGE="stringi")
 }
+
+#' @export
+#' @rdname stri_order
+stri_unique <-  function(str, opts_collator=list()) {
+	.Call("stri_unique", str, opts_collator, PACKAGE="stringi")
+}
