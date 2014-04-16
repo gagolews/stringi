@@ -462,12 +462,8 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  * @param collator_opts passed to stri__ucol_open()
  * @return character vector
  *
- * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
- *          using ucol_strcollUTF8 again, as we now require ICU >= 50;
- *          performance difference only observed for sorted vectors
- *          (UTF-8: gain, 8bit: loss);
- *          single function for cmp with and witout collation;
- *          new param: na_last
+ * @version 0.2-1  (Bartek Tartanus, 2014-04-17)
+ * 			first version of this function
  */
 SEXP stri_unique(SEXP str, SEXP collator_opts)
 {
