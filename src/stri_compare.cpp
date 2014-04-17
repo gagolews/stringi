@@ -455,15 +455,17 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
 }
 
 
-
-/** Generate the unique set of character vector
+/** Get unique elements from a character vector
  *
  * @param str character vector
  * @param collator_opts passed to stri__ucol_open()
  * @return character vector
  *
- * @version 0.2-1  (Bartek Tartanus, 2014-04-17)
+ * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  * 			first version of this function
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
+ *          using std::deque
  */
 SEXP stri_unique(SEXP str, SEXP collator_opts)
 {
@@ -476,35 +478,32 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
 
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
-   
-	StriSortComparer comp(&str_cont, col, true);
-	
-   int first_na_index = -1;
 
+   StriSortComparer comp(&str_cont, col, true);
    set<int,StriSortComparer> uniqueset(comp);
-   pair<set<int,StriSortComparer>::iterator,bool> result;
 
-	SEXP temp;
-	STRI__PROTECT(temp = Rf_allocVector(STRSXP, vectorize_length));
-   R_len_t k = 0;
+   bool was_na = false;
+   deque<SEXP> temp;
    for (R_len_t i=0; i<vectorize_length; ++i) {
-      if(str_cont.isNA(i)){
-      	if(first_na_index == -1){
-      		first_na_index = i;	
-      		SET_STRING_ELT(temp, k++, NA_STRING);
-      	}
-      }else{
-      	result = uniqueset.insert(i);
-      	if(result.second){
-      		SET_STRING_ELT(temp, k++, str_cont.toR(i));
-      	}
+      if (str_cont.isNA(i)) {
+         if (!was_na) {
+            was_na = true;
+            temp.push_back(NA_STRING);
+         }
+      }
+      else {
+         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+         if (result.second) {
+            temp.push_back(str_cont.toR(i));
+         }
       }
    }
 
    SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, k));
-   for (int i = 0; i < k; i++){
-      SET_STRING_ELT(ret, i, VECTOR_ELT(temp,i));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
+   R_len_t i = 0;
+   for (deque<SEXP>::iterator it = temp.begin(); it != temp.end(); it++) {
+      SET_STRING_ELT(ret, i++, *it);
    }
 
    if (col) {
@@ -519,4 +518,3 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
       if (col) { ucol_close(col); col = NULL; }
    })
 }
-

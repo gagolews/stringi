@@ -16,6 +16,9 @@
    * [NEW FEATURE] stri_order and stri_sort now have an additional argument
         `na_last` (defaults to TRUE and NA, respectively).
 
+   * [NEW FEATURE] stri_unique extracts unique elements from
+        a character vector.
+
    * [NEW FEATURE] New functions and binary operators for string comparison:
        stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
        stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.

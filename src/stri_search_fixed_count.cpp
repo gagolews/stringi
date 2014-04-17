@@ -46,13 +46,13 @@
  * @return integer vector
  *
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          use StriContainerUTF8
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          corrected behavior on empty str/pattern
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          make StriException-friendly,
  *          use StriContainerByteSearch
@@ -101,10 +101,10 @@ SEXP stri__count_fixed_byte(SEXP str, SEXP pattern)
  * @return integer vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski)
  *          corrected behavior on empty str/pattern
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          make StriException-friendly,
  *          use StriContainerUStringSearch

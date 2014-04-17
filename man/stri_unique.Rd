@@ -1,70 +1,42 @@
-\name{\%<\%}
-\alias{\%!=\%}
-\alias{\%<=\%}
-\alias{\%<\%}
-\alias{\%==\%}
-\alias{\%>=\%}
-\alias{\%>\%}
-\alias{\%stri!=\%}
-\alias{\%stri<=\%}
-\alias{\%stri<\%}
-\alias{\%stri==\%}
-\alias{\%stri>=\%}
-\alias{\%stri>\%}
-\title{Compare Two Character Vectors with Collation}
+\name{stri_unique}
+\alias{stri_unique}
+\title{Extract Unique Elements}
 \usage{
-e1 \%<\% e2
-
-e1 \%<=\% e2
-
-e1 \%>\% e2
-
-e1 \%>=\% e2
-
-e1 \%==\% e2
-
-e1 \%!=\% e2
-
-e1 \%stri<\% e2
-
-e1 \%stri<=\% e2
-
-e1 \%stri>\% e2
-
-e1 \%stri>=\% e2
-
-e1 \%stri==\% e2
-
-e1 \%stri!=\% e2
+stri_unique(str, opts_collator = list())
 }
 \arguments{
-  \item{e1}{character vector or an object coercible to a
-  character vector}
+  \item{str}{character vector}
 
-  \item{e2}{character vector or an object coercible to a
-  character vector}
+  \item{opts_collator}{a named list as generated with
+  \code{\link{stri_opts_collator}} with Collator's options,
+  or \code{NA} for dummy Unicode code point comparison}
 }
 \value{
-All the functions return a logical vector indicating the
-result of the element-by-element comparison. As usual, the
-elements of shorter vectors are recycled as necessary.
+Returns a character vector.
 }
 \description{
-Relational operators for comparing two character vectors,
-with a typical \R look-and-feel.
+This function returns a character vector like \code{str},
+but with duplicate elements removed.
 }
 \details{
-These functions call \code{\link{stri_cmp_le}} or its
-friends, using default collator options.
+As usual in \pkg{stringi}, no attributes are copied. Unlike
+\code{\link{unique}}, this function may (if
+\code{opts_collator} is not \code{NA}) detect a correct
+locale-dependent string equivalence.
 }
 \examples{
 \dontrun{
-"a" \%<\% "b"
-c("a", "b", "c") \%>=\% "b"
+stri_unique(c("\\u0105", stri_enc_nfkd("\\u0105")))
 }
 }
 \seealso{
-Other locale_sensitive: \code{\link{stri_cmp}},
+Other locale_sensitive: \code{\link{\%!=\%}},
+\code{\link{\%<=\%}}, \code{\link{\%<\%}},
+\code{\link{\%==\%}}, \code{\link{\%>=\%}},
+\code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
+\code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+\code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
+\code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
 \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
 \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
 \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
@@ -90,7 +62,7 @@ Other locale_sensitive: \code{\link{stri_cmp}},
 \code{\link{stri_trans_tolower}},
 \code{\link{stri_trans_totitle}},
 \code{\link{stri_trans_toupper}};
-\code{\link{stri_unique}}; \code{\link{stringi-locale}};
+\code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
 }
 
