@@ -71,7 +71,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_trans_tolower}},
 \code{\link{stri_trans_totitle}},
 \code{\link{stri_trans_toupper}};
-\code{\link{stringi-locale}};
+\code{\link{stri_unique}}; \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
 
 Other search_detect: \code{\link{stri_detect_charclass}};

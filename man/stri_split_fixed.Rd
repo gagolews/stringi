@@ -81,7 +81,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_trans_tolower}},
 \code{\link{stri_trans_totitle}},
 \code{\link{stri_trans_toupper}};
-\code{\link{stringi-locale}};
+\code{\link{stri_unique}}; \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
 
 Other search_fixed: \code{\link{stri_count_fixed}};

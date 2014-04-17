@@ -78,7 +78,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_replace_last_fixed}},
 \code{\link{stri_replace_last_fixed}};
 \code{\link{stri_split_fixed}},
-\code{\link{stri_split_fixed}};
+\code{\link{stri_split_fixed}}; \code{\link{stri_unique}};
 \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
 }

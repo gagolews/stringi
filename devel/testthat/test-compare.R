@@ -184,15 +184,16 @@ test_that("stri_sort", {
 
 
 test_that("stri_unique", {
-	
-	expect_equivalent(stri_unique(character(0)), character(0))
-	expect_equivalent(stri_unique(NA),NA_character_)
-	expect_equivalent(stri_unique(c("b", NA, "a", NA)), c("b",NA,"a"))
-	expect_equivalent(stri_unique(rep(letters,10)), letters)
-	expect_equivalent(stri_unique(rep(letters,each=10)), letters)
-	expect_equivalent(stri_unique(rev(LETTERS)), rev(LETTERS))
-	expect_equivalent(stri_unique(c("abc","ab","abc","ab","aba")),c("abc","ab","aba"))
-	expect_equivalent(stri_unique(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
-										 opts_collator=list(locale="pl_PL")),
-							c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107"))
+
+   expect_equivalent(stri_unique(character(0)), character(0))
+   expect_equivalent(stri_unique(NA),NA_character_)
+   expect_equivalent(stri_unique(c("b", NA, "a", NA)), c("b",NA,"a"))
+   expect_equivalent(stri_unique(rep(letters,10)), letters)
+   expect_equivalent(stri_unique(rep(letters,each=10)), letters)
+   expect_equivalent(stri_unique(rev(LETTERS)), rev(LETTERS))
+   expect_equivalent(stri_unique(c("\u0105", stri_enc_nfd("\u0105"))), "\u0105")
+   expect_equivalent(stri_unique(c("abc","ab","abc","ab","aba")),c("abc","ab","aba"))
+   expect_equivalent(stri_unique(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
+            opts_collator=list(locale="pl_PL")),
+            c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107"))
 })

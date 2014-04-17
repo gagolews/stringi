@@ -344,8 +344,32 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) 
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 2L, PACKAGE="stringi")
 }
 
+
+#' @title Extract Unique Elements
+#'
+#' @description
+#' This function returns a character vector like \code{str},
+#' but with duplicate elements removed.
+#'
+#' @details
+#' As usual in \pkg{stringi}, no attributes are copied.
+#' Unlike \code{\link{unique}}, this function may (if \code{opts_collator}
+#' is not \code{NA}) detect
+#' a correct locale-dependent string equivalence.
+#'
+#' @param str character vector
+#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
+#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
+#'
+#' @return Returns a character vector.
+#'
+#' @examples
+#' \dontrun{
+#' stri_unique(c("\u0105", stri_enc_nfkd("\u0105")))
+#' }
+#'
+#' @family locale_sensitive
 #' @export
-#' @rdname stri_order
 stri_unique <-  function(str, opts_collator=list()) {
-	.Call("stri_unique", str, opts_collator, PACKAGE="stringi")
+   .Call("stri_unique", str, opts_collator, PACKAGE="stringi")
 }
