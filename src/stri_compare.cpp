@@ -518,3 +518,77 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
       if (col) { ucol_close(col); col = NULL; }
    })
 }
+
+
+/** Determine duplicate elements
+ *
+ * @param str character vector
+ * @param fromLast logical value
+ * @param collator_opts passed to stri__ucol_open()
+ * @return character vector
+ *
+ * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
+ * 			first version of this function
+ * 
+ */
+SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
+{
+   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+	bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
+
+   UCollator* col = NULL;
+   col = stri__ucol_open(collator_opts);
+
+   STRI__ERROR_HANDLER_BEGIN
+
+   R_len_t vectorize_length = LENGTH(str);
+   StriContainerUTF8 str_cont(str, vectorize_length);
+
+   StriSortComparer comp(&str_cont, col, true);
+   set<int,StriSortComparer> uniqueset(comp);
+
+   bool was_na = false;
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   
+   if(fromLastBool){
+		for (R_len_t i=vectorize_length-1; i>=0; --i) {
+			if (str_cont.isNA(i)) {
+				LOGICAL(ret)[i] = was_na;
+	         if (!was_na) {
+	            was_na = true;
+	         }
+	      }
+	      else {
+	         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+	         LOGICAL(ret)[i] = !result.second;
+	      }
+	   }
+   }else{
+   	for (R_len_t i=0; i<vectorize_length; ++i) {
+      if (str_cont.isNA(i)) {
+      	LOGICAL(ret)[i] = was_na;
+         if (!was_na) {
+            was_na = true;
+         }
+      }
+      else {
+         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+         LOGICAL(ret)[i] = !result.second;
+      }
+   }
+   }
+   
+
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
+}

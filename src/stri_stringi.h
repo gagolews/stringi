@@ -78,6 +78,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    SEXP collator_opts, SEXP type);
 
 SEXP stri_unique(SEXP str, SEXP collator_opts);
+SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts);
 
 // ICU_settings.cpp:
 SEXP stri_info();

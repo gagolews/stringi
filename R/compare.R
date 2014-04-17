@@ -373,3 +373,9 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) 
 stri_unique <-  function(str, opts_collator=list()) {
    .Call("stri_unique", str, opts_collator, PACKAGE="stringi")
 }
+
+#' @family locale_sensitive
+#' @export
+stri_duplicated <-  function(str, fromLast = FALSE, opts_collator=list()) {
+	.Call("stri_duplicated", str, fromLast, opts_collator, PACKAGE="stringi")
+}
