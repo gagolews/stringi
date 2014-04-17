@@ -71,8 +71,10 @@
 #'
 #' @param e1 character vector
 #' @param e2 character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options, or \code{NA} for locale-independent
+#' Unicode code point comparison
 #'
 #' @return The \code{stri_cmp} and \code{stri_compare} functions
 #' return an integer vector
@@ -99,7 +101,7 @@
 #' stri_cmp_eq("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
 #' stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
 #' }
-stri_compare <- function(e1, e2, opts_collator=list()) {
+stri_compare <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp", e1, e2, opts_collator, PACKAGE="stringi")
 }
 
@@ -111,40 +113,40 @@ stri_cmp <- stri_compare
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_eq <- function(e1, e2, opts_collator=list()) {
+stri_cmp_eq <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 0L), PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_neq <- function(e1, e2, opts_collator=list()) {
+stri_cmp_neq <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 1L), PACKAGE="stringi")
 }
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_lt <- function(e1, e2, opts_collator=list()) {
+stri_cmp_lt <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 0L), PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_gt <- function(e1, e2, opts_collator=list()) {
+stri_cmp_gt <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 0L), PACKAGE="stringi")
 }
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_le <- function(e1, e2, opts_collator=list()) {
+stri_cmp_le <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 1L), PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
+stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 1L), PACKAGE="stringi")
 }
 
@@ -315,8 +317,10 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 #'    at the end; if \code{FALSE}, they are put first;
 #'    if \code{NA}, then they are removed from the output.
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options, or \code{NA} for locale-independent
+#' Unicode code point comparison
 #'
 #' @return For \code{stri_order}, an integer vector that gives the sort order
 #' is returned.
@@ -333,14 +337,14 @@ stri_cmp_ge <- function(e1, e2, opts_collator=list()) {
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 #' }
-stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=list()) {
+stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) {
+stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 2L, PACKAGE="stringi")
 }
 
@@ -358,8 +362,10 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) 
 #' a correct locale-dependent string equivalence.
 #'
 #' @param str character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator's options, or \code{NA} for dummy Unicode code point comparison
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options, or \code{NA} for locale-independent
+#' Unicode code point comparison
 #'
 #' @return Returns a character vector.
 #'
@@ -370,18 +376,53 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=list()) 
 #'
 #' @family locale_sensitive
 #' @export
-stri_unique <-  function(str, opts_collator=list()) {
+stri_unique <-  function(str, opts_collator=NULL) {
    .Call("stri_unique", str, opts_collator, PACKAGE="stringi")
 }
 
+
+#' @title
+#' Determine Duplicated Elements
+#' 
+#' @description
+#' \code{stri_duplicated()} determines which strings in a character vector
+#' are duplicates of other elements.
+#' 
+#' \code{stri_duplicated_any()} determines if there are any duplicated
+#' strings in a character vector.
+#' 
+#' @details
+#' Missing values are regarded as equal.
+#' 
+#' @param str character vector
+#' @param fromLast single logical value;
+#'    indicating whether duplication should be considered from the
+#'    reverse side
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options, or \code{NA} for locale-independent
+#' Unicode code point comparison
+#'
+#' @return
+#' \code{stri_duplicated()} returns a logical vector of the same length
+#' as \code{str}. Each of its elements indicates if an equivalent string
+#' already appeared in \code{str}.
+#' 
+#' \code{stri_duplicated_any()} returns a single non-negative integer.
+#' Value of 0 indicates that all the elements in \code{str} are unique.
+#' Otherwise, it gives the index of the first non-unique element.
+#' 
+#' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated <-  function(str, fromLast = FALSE, opts_collator=list()) {
+stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
 	.Call("stri_duplicated", str, fromLast, opts_collator, PACKAGE="stringi")
 }
 
+
+#' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated_any <-  function(str, fromLast = FALSE, opts_collator=list()) {
+stri_duplicated_any <-  function(str, fromLast=FALSE, opts_collator=NULL) {
 	.Call("stri_duplicated_any", str, fromLast, opts_collator, PACKAGE="stringi")
 }

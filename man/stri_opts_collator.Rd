@@ -52,17 +52,19 @@ Returns a named list object; missing options are left with
 default values.
 }
 \description{
-A convenience function to tune the Collator's behavior,
-e.g. in \code{\link{stri_compare}},
-\code{\link{stri_order}}, \code{\link{stri_detect_fixed}},
-and other \link{stringi-search-fixed} functions.
+A convenience function to tune the \pkg{ICU} Collator's
+behavior, e.g. in \code{\link{stri_compare}},
+\code{\link{stri_order}}, \code{\link{stri_unique}},
+\code{\link{stri_duplicated}}, as well as
+\code{\link{stri_detect_fixed}} and other
+\link{stringi-search-fixed} functions.
 }
 \details{
 \pkg{ICU}'s \emph{collator} performs a locale-aware,
 natural-language alike string comparison. This is a more
 reliable way of establishing relationships between string
 than that provided by base \R, and definitely one that is
-more complex than ordinary byte-comparison.
+more complex and appropriate than ordinary byte-comparison.
 
 A note on collation \code{strength}: generally,
 \code{strength} set to 4 is the least permissive. Set to 2
@@ -103,6 +105,8 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
+\code{\link{stri_duplicated}},
+\code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
@@ -124,30 +128,5 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_trans_toupper}};
 \code{\link{stri_unique}}; \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
-
-Other search_fixed: \code{\link{stri_count_fixed}};
-\code{\link{stri_detect_fixed}};
-\code{\link{stri_extract_all_fixed}},
-\code{\link{stri_extract_all_fixed,}},
-\code{\link{stri_extract_first_fixed}},
-\code{\link{stri_extract_first_fixed,}},
-\code{\link{stri_extract_last_fixed}},
-\code{\link{stri_extract_last_fixed}};
-\code{\link{stri_locate_all_fixed}},
-\code{\link{stri_locate_all_fixed,}},
-\code{\link{stri_locate_first_fixed}},
-\code{\link{stri_locate_first_fixed,}},
-\code{\link{stri_locate_last_fixed}},
-\code{\link{stri_locate_last_fixed}};
-\code{\link{stri_replace_all_fixed}},
-\code{\link{stri_replace_all_fixed}},
-\code{\link{stri_replace_first_fixed}},
-\code{\link{stri_replace_first_fixed}},
-\code{\link{stri_replace_last_fixed}},
-\code{\link{stri_replace_last_fixed}};
-\code{\link{stri_split_fixed}},
-\code{\link{stri_split_fixed}};
-\code{\link{stringi-search-fixed}};
-\code{\link{stringi-search}}
 }
 

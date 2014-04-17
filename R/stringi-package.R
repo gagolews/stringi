@@ -105,7 +105,8 @@
 #' i.e. conversion to lower, UPPER, or Title Case.
 #'
 #' \item \code{\link{stri_cmp}}, \code{\link{\%<\%}}, \code{\link{stri_order}},
-#' and \code{\link{stri_sort}} for comparison-based,
+#' \code{\link{stri_sort}}, \code{\link{stri_unique}} and
+#' \code{\link{stri_duplicated}} for comparison-based,
 #' locale-aware operations, see also \link{stringi-locale}.
 #'
 #' \item \code{\link{stri_split_lines}} (among others)

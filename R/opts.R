@@ -33,9 +33,10 @@
 #' Generate a List with Collator Options
 #'
 #' @description
-#' A convenience function to tune the Collator's behavior,
+#' A convenience function to tune the \pkg{ICU} Collator's behavior,
 #' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
-#' \code{\link{stri_detect_fixed}},
+#' \code{\link{stri_unique}}, \code{\link{stri_duplicated}},
+#' as well as \code{\link{stri_detect_fixed}}
 #' and other \link{stringi-search-fixed} functions.
 #'
 #'
@@ -44,7 +45,7 @@
 #' alike string comparison.
 #' This is a more reliable way of establishing relationships between
 #' string than that provided by base \R, and definitely
-#' one that is more complex than ordinary byte-comparison.
+#' one that is more complex and appropriate than ordinary byte-comparison.
 #'
 #' A note on collation \code{strength}:
 #' generally, \code{strength} set to 4 is
@@ -87,7 +88,6 @@
 #'
 #' @export
 #' @family locale_sensitive
-#' @family search_fixed
 #'
 #' @references
 #' \emph{Collation} -- ICU User Guide,
