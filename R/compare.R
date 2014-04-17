@@ -383,17 +383,17 @@ stri_unique <-  function(str, opts_collator=NULL) {
 
 #' @title
 #' Determine Duplicated Elements
-#' 
+#'
 #' @description
 #' \code{stri_duplicated()} determines which strings in a character vector
 #' are duplicates of other elements.
-#' 
+#'
 #' \code{stri_duplicated_any()} determines if there are any duplicated
 #' strings in a character vector.
-#' 
+#'
 #' @details
 #' Missing values are regarded as equal.
-#' 
+#'
 #' @param str character vector
 #' @param fromLast single logical value;
 #'    indicating whether duplication should be considered from the
@@ -407,16 +407,16 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' \code{stri_duplicated()} returns a logical vector of the same length
 #' as \code{str}. Each of its elements indicates if an equivalent string
 #' already appeared in \code{str}.
-#' 
+#'
 #' \code{stri_duplicated_any()} returns a single non-negative integer.
 #' Value of 0 indicates that all the elements in \code{str} are unique.
 #' Otherwise, it gives the index of the first non-unique element.
-#' 
+#'
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
 stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
-	.Call("stri_duplicated", str, fromLast, opts_collator, PACKAGE="stringi")
+   .Call("stri_duplicated", str, fromLast, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -424,5 +424,5 @@ stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
 #' @family locale_sensitive
 #' @export
 stri_duplicated_any <-  function(str, fromLast=FALSE, opts_collator=NULL) {
-	.Call("stri_duplicated_any", str, fromLast, opts_collator, PACKAGE="stringi")
+   .Call("stri_duplicated_any", str, fromLast, opts_collator, PACKAGE="stringi")
 }

@@ -47,7 +47,7 @@
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          allow for NULL opts_collator (identical to list())
  */

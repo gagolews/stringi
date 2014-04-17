@@ -153,12 +153,12 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_int = LOGICAL(ret);
+   int* ret_tab = LOGICAL(ret);
 
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {
       if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
-         ret_int[i] = NA_LOGICAL;
+         ret_tab[i] = NA_LOGICAL;
          continue;
       }
 
@@ -170,7 +170,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
       if (col) {
          // with collation
          UErrorCode status = U_ZERO_ERROR;
-         ret_int[i] = (_type == (int)ucol_strcollUTF8(col,
+         ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
             cur1_s, cur1_n, cur2_s, cur2_n, &status
          ));
          if (U_FAILURE(status))
@@ -179,13 +179,13 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
       else {
          // codepoint-based cmp
          if (_type == 0) // eq/neq: very fast
-            ret_int[i] = stri__cmp_eq_codepoints(cur1_s, cur1_n, cur2_s, cur2_n);
+            ret_tab[i] = stri__cmp_eq_codepoints(cur1_s, cur1_n, cur2_s, cur2_n);
          else
-            ret_int[i] = (_type == stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n));
+            ret_tab[i] = (_type == stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n));
       }
 
       if (_negate)
-         ret_int[i] = !ret_int[i];
+         ret_tab[i] = !ret_tab[i];
    }
 
    if (col) {
@@ -463,7 +463,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  * 			first version of this function
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          using std::deque
  */
@@ -529,12 +529,12 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  * 			first version of this function
- * 
+ *
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-	bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
+   bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
@@ -550,33 +550,35 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
    bool was_na = false;
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   
-   if(fromLastBool){
-		for (R_len_t i=vectorize_length-1; i>=0; --i) {
-			if (str_cont.isNA(i)) {
-				LOGICAL(ret)[i] = was_na;
-	         if (!was_na) {
-	            was_na = true;
-	         }
-	      }else{
-	         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-	         LOGICAL(ret)[i] = !result.second;
-	      }
-	   }
-   }else{
-   	for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (str_cont.isNA(i)) {
-			LOGICAL(ret)[i] = was_na;
-         if (!was_na) {
-            was_na = true;
+   int* ret_tab = LOGICAL(ret);
+
+   if (fromLastBool) {
+      for (R_len_t i=vectorize_length-1; i>=0; --i) {
+         if (str_cont.isNA(i)) {
+            ret_tab[i] = was_na;
+            if (!was_na)
+               was_na = true;
          }
-      }else{
-         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-         LOGICAL(ret)[i] = !result.second;
+         else {
+            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            ret_tab[i] = !result.second;
+         }
       }
    }
+   else {
+      for (R_len_t i=0; i<vectorize_length; ++i) {
+         if (str_cont.isNA(i)) {
+            ret_tab[i] = was_na;
+            if (!was_na)
+               was_na = true;
+         }
+         else {
+            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            ret_tab[i] = !result.second;
+         }
+      }
    }
-   
+
 
    if (col) {
       ucol_close(col);
@@ -600,12 +602,12 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  * 			first version of this function
- * 
+ *
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-	bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
+   bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    UCollator* col = NULL;
    col = stri__ucol_open(collator_opts);
@@ -621,44 +623,48 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
    bool was_na = false;
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, 1));
-   INTEGER(ret)[0] = 0;
-   
-   if(fromLastBool){
-		for (R_len_t i=vectorize_length-1; i>=0; --i) {
-			if (str_cont.isNA(i)) {
-		      if (!was_na) {
-		         was_na = true;
-		      }else{
-		      	INTEGER(ret)[0] = i+1;
-		      	break;
-		      }
-		   }else {
-		      pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-		      if(!result.second){
-		      	INTEGER(ret)[0] = i+1;
-		      	break;
-		      }
-		   }
-	   }
-   }else{
-   	for (R_len_t i=0; i<vectorize_length; ++i) {
-      	if (str_cont.isNA(i)) {
-		      if (!was_na) {
-		         was_na = true;
-		      }else{
-		      	INTEGER(ret)[0] = i+1;
-		      	break;
-		      }
-		   }else {
-		      pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-		      if(!result.second){
-		      	INTEGER(ret)[0] = i+1;
-		      	break;
-		      }
-		   }
+   int* ret_tab = INTEGER(ret);
+   ret_tab[0] = 0;
+
+   if (fromLastBool) {
+      for (R_len_t i=vectorize_length-1; i>=0; --i) {
+         if (str_cont.isNA(i)) {
+            if (!was_na)
+               was_na = true;
+            else {
+               ret_tab[0] = i+1;
+               break;
+            }
+         }
+         else {
+            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            if (!result.second) {
+               ret_tab[0] = i+1;
+               break;
+            }
+         }
       }
    }
-   
+   else {
+      for (R_len_t i=0; i<vectorize_length; ++i) {
+         if (str_cont.isNA(i)) {
+            if (!was_na)
+               was_na = true;
+            else {
+               ret_tab[0] = i+1;
+               break;
+            }
+         }
+         else {
+            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            if (!result.second) {
+               ret_tab[0] = i+1;
+               break;
+            }
+         }
+      }
+   }
+
 
    if (col) {
       ucol_close(col);
