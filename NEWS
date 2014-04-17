@@ -13,48 +13,49 @@
      in output vectors by default, for compatibility with sort().
      Moreover, currently none of the input vector's attributes are preserved.
 
-   * [NEW FEATURE] stri_order and stri_sort now have an additional argument
-        `na_last` (defaults to TRUE and NA, respectively).
-
-   * [NEW FEATURE] stri_unique extracts unique elements from
+   * [NEW FUNCTION] stri_unique extracts unique elements from
         a character vector.
 
-   * [NEW FEATURE] New functions and binary operators for string comparison:
-       stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
-       stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
+   * [NEW FUNCTIONS] stri_duplicated any stri_duplicated_any
+        determine duplicate elements in a character vector.
 
-   * [NEW FEATURE] stri_replace_all_charclass now has `merge` arg
-     (defaults to FALSE for backward-compatibility). It may be used
-     to e.g. replace sequences of white spaces with a single space.
-
-   * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
-     to FALSE for backward-compatibility). It may be used in a (rare) case
-     in which a user wants to fix an invalid UTF-8 byte sequence.
-     stri_length (among others) now detect invalid UTF-8 byte sequences.
-
-   * [NEW FEATURE] stri_replace_na replaces NAs in a character vector
+   * [NEW FUNCTION] stri_replace_na replaces NAs in a character vector
       with a given string, useful for emulating e.g. R's paste() behavior.
 
-   * [NEW FEATURE] stri_rand_shuffle generates a random permutation
+   * [NEW FUNCTION] stri_rand_shuffle generates a random permutation
       of code points in a string.
 
-   * [NEW FEATURE] stri_rand_strings generates random strings.
+   * [NEW FUNCTION] stri_rand_strings generates random strings.
 
-   * [NEW FEATURE] stri_enc_tonative(str) is an alias to
-     stri_encode(str, NULL, NULL).
+   * [NEW FUNCTIONS] New functions and binary operators for string comparison:
+      stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
+      stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
+
+   * [NEW FUNCTION] stri_enc_mark reads declared encodings of character strings
+      as seen by stringi.
+
+   * [NEW FUNCTION] stri_enc_tonative(str) is an alias to
+      stri_encode(str, NULL, NULL).
+
+   * [NEW FEATURE] stri_order and stri_sort now have an additional argument
+      `na_last` (defaults to TRUE and NA, respectively).
+
+   * [NEW FEATURE] stri_replace_all_charclass now has `merge` arg
+      (defaults to FALSE for backward-compatibility). It may be used
+      to e.g. replace sequences of white spaces with a single space.
+
+   * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
+      to FALSE for backward-compatibility). It may be used in a (rare) case
+      in which a user wants to fix an invalid UTF-8 byte sequence.
+      stri_length (among others) now detect invalid UTF-8 byte sequences.
 
    * [NEW FEATURE] All binary operators %???% now also have aliases %stri???%.
 
-   * t.b.d.
-
-   * [NEW FEATURE] stri_enc_mark - reads declared encodings of character strings
-        as seen by stringi.
-
    * Performance improvements in StriContainerUTF8 and StriContainerUTF16
-        (they affect most other functions).
+      (they affect most other functions).
 
    * Significant performance improvements in stri_join, stri_flatten,
-        stri_cmp, stri_trans_to*, ...t.b.d....
+      stri_cmp, stri_trans_to*, and others.
 
    * Added 3rd mirror site for our icudt binary distribution.
 

@@ -3,10 +3,9 @@
 \alias{stri_sort}
 \title{Ordering Permutation and Sorting}
 \usage{
-stri_order(str, decreasing = FALSE, na_last = TRUE,
-  opts_collator = list())
+stri_order(str, decreasing = FALSE, na_last = TRUE, opts_collator = NULL)
 
-stri_sort(str, decreasing = FALSE, na_last = NA, opts_collator = list())
+stri_sort(str, decreasing = FALSE, na_last = NA, opts_collator = NULL)
 }
 \arguments{
   \item{str}{character vector}
@@ -21,9 +20,11 @@ stri_sort(str, decreasing = FALSE, na_last = NA, opts_collator = list())
   \code{FALSE}, they are put first; if \code{NA}, then they
   are removed from the output.}
 
-  \item{opts_collator}{a named list as generated with
-  \code{\link{stri_opts_collator}} with Collator's options,
-  or \code{NA} for dummy Unicode code point comparison}
+  \item{opts_collator}{a named list with \pkg{ICU}
+  Collator's options as generated with
+  \code{\link{stri_opts_collator}}, \code{NULL} for default
+  collation options, or \code{NA} for locale-independent
+  Unicode code point comparison}
 }
 \value{
 For \code{stri_order}, an integer vector that gives the
@@ -70,6 +71,8 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
 \code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
+\code{\link{stri_duplicated}},
+\code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},

@@ -47,11 +47,14 @@
  *
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
+ *          allow for NULL opts_collator (identical to list())
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
-   if (Rf_isVectorList(opts_collator)) {
-      R_len_t narg = LENGTH(opts_collator);
+   if (isNull(opts_collator) || Rf_isVectorList(opts_collator)) {
+      R_len_t narg = isNull(opts_collator)?0:LENGTH(opts_collator);
 
       if (narg <= 0) { // no custom settings - use default Collator
          UErrorCode err = U_ZERO_ERROR;

@@ -9,30 +9,32 @@
 \alias{stri_compare}
 \title{Compare Strings with or without Collation}
 \usage{
-stri_compare(e1, e2, opts_collator = list())
+stri_compare(e1, e2, opts_collator = NULL)
 
-stri_cmp(e1, e2, opts_collator = list())
+stri_cmp(e1, e2, opts_collator = NULL)
 
-stri_cmp_eq(e1, e2, opts_collator = list())
+stri_cmp_eq(e1, e2, opts_collator = NULL)
 
-stri_cmp_neq(e1, e2, opts_collator = list())
+stri_cmp_neq(e1, e2, opts_collator = NULL)
 
-stri_cmp_lt(e1, e2, opts_collator = list())
+stri_cmp_lt(e1, e2, opts_collator = NULL)
 
-stri_cmp_gt(e1, e2, opts_collator = list())
+stri_cmp_gt(e1, e2, opts_collator = NULL)
 
-stri_cmp_le(e1, e2, opts_collator = list())
+stri_cmp_le(e1, e2, opts_collator = NULL)
 
-stri_cmp_ge(e1, e2, opts_collator = list())
+stri_cmp_ge(e1, e2, opts_collator = NULL)
 }
 \arguments{
   \item{e1}{character vector}
 
   \item{e2}{character vector}
 
-  \item{opts_collator}{a named list as generated with
-  \code{\link{stri_opts_collator}} with Collator's options,
-  or \code{NA} for dummy Unicode code point comparison}
+  \item{opts_collator}{a named list with \pkg{ICU}
+  Collator's options as generated with
+  \code{\link{stri_opts_collator}}, \code{NULL} for default
+  collation options, or \code{NA} for locale-independent
+  Unicode code point comparison}
 }
 \value{
 The \code{stri_cmp} and \code{stri_compare} functions
@@ -101,6 +103,8 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
 \code{\link{\%stri>\%}}; \code{\link{stri_count_fixed}};
 \code{\link{stri_detect_fixed}};
+\code{\link{stri_duplicated}},
+\code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
