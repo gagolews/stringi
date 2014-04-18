@@ -1,6 +1,7 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
+
 * 0.2-1 (2014-04-18) **devel**
 
    * [IMPORTANT CHANGE] stri_*_charclass search functions now

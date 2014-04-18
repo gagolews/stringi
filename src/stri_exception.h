@@ -37,52 +37,58 @@
 using namespace std;
 
 
-#define STRI__ERROR_HANDLER_BEGIN        \
-   int __stri_protected_sexp_num = 0;    \
+#define StriException_BUFSIZE 1024
+
+
+#define STRI__ERROR_HANDLER_BEGIN                           \
+   int __stri_protected_sexp_num = 0;                       \
+   char* __stri_error_msg;                                  \
    try {
 
-#define STRI__ERROR_HANDLER_END(cleanup) \
-   }                                     \
-   catch (StriException e) {             \
-      cleanup;                           \
-      STRI__UNPROTECT_ALL                \
-      e.throwRerror();                   \
-      /* to avoid compiler warning: */   \
-      return R_NilValue;                 \
-   }
+#define STRI__ERROR_HANDLER_END(cleanup)                    \
+   }                                                        \
+   catch (StriException e) {                                \
+      cleanup;                                              \
+      STRI__UNPROTECT_ALL                                   \
+      /*don't do this, memleaks!: e.throwRerror();*/        \
+      __stri_error_msg = R_alloc(StriException_BUFSIZE, 1); \
+      strcpy(__stri_error_msg, e.getMessage());             \
+      /*return R_NilValue;*/                                \
+   }                                                        \
+   /* call Rf_error here, when e is deleted, no memleaks */ \
+   Rf_error(__stri_error_msg);                              \
+   /* to avoid compiler warning: */                         \
+   return R_NilValue;
 
 
-#define STRI__PROTECT(s) {               \
-   PROTECT(s);                           \
+#define STRI__PROTECT(s) {                                  \
+   PROTECT(s);                                              \
    ++__stri_protected_sexp_num; }
 
 #ifndef NDEBUG
-#define STRI__UNPROTECT(n) {             \
-   UNPROTECT(n);                         \
-   if (n > __stri_protected_sexp_num)    \
-      Rf_warning("STRI__UNPROTECT: stack imbalance!"); \
+#define STRI__UNPROTECT(n) {                                \
+   UNPROTECT(n);                                            \
+   if (n > __stri_protected_sexp_num)                       \
+      Rf_warning("STRI__UNPROTECT: stack imbalance!");      \
    __stri_protected_sexp_num -= n; }
 #else
-#define STRI__UNPROTECT(n) {             \
-   UNPROTECT(n);                         \
+#define STRI__UNPROTECT(n) {                                \
+   UNPROTECT(n);                                            \
    __stri_protected_sexp_num -= n; }
 #endif
 
-#define STRI__UNPROTECT_ALL {            \
-   UNPROTECT(__stri_protected_sexp_num); \
+#define STRI__UNPROTECT_ALL {                               \
+   UNPROTECT(__stri_protected_sexp_num);                    \
    __stri_protected_sexp_num = 0; }
-
-
-#define StriException_BUFSIZE 1024
 
 
 /**
  * A class representing exceptions
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
- * 
+ *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
- *          do not use Rf_alloc for msg
+ *          do not use R_alloc for msg
  */
 class StriException {
 
@@ -106,6 +112,10 @@ public:
 
    void throwRerror() {
       Rf_error(msg);
+   }
+
+   const char* getMessage() const {
+      return msg;
    }
 
    static const char* getICUerrorName(UErrorCode status);
