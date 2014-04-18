@@ -77,7 +77,7 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -126,7 +126,7 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          fields.pop_back();
 
       SEXP ans;
-      PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
@@ -136,10 +136,10 @@ SEXP stri__split_fixed_byte(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
       }
 
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(; /* nothing interesting on error */)
 }
@@ -189,7 +189,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -252,7 +252,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);

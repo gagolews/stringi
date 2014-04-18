@@ -68,7 +68,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -99,7 +99,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
       R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
-      PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
@@ -115,11 +115,11 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
             0  // end returns position of next character after match
       );
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
    stri__locate_set_dimnames_list(ret);
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -154,7 +154,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
+   STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    int* ret_tab = INTEGER(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
@@ -197,7 +197,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
    }
 
    stri__locate_set_dimnames_matrix(ret);
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -41,7 +41,7 @@ using namespace std;
 
 
 /**
- * Replace all/first/last occurences of a fixed pattern [with collation]
+ * Replace all/first/last occurences of a fixed pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -71,7 +71,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
 
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    String8buf buf(0); // @TODO: calculate buf len a priori?
 
@@ -137,7 +137,7 @@ SEXP stri__replace_allfirstlast_fixed_byte(SEXP str, SEXP pattern, SEXP replacem
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

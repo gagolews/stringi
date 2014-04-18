@@ -1,7 +1,7 @@
 ** stringi package NEWS and CHANGELOG **
 ========================================
 
-* 0.2-1 (XXXX-XX-XX)
+* 0.2-1 (2014-04-18) **devel**
 
    * [IMPORTANT CHANGE] stri_*_charclass search functions now
      rely solely on ICU's UnicodeSet patterns. All previously accepted
@@ -75,14 +75,14 @@
    * [BUGFIX] stri_sort did not guarantee to return strings in UTF-8.
 
 
-* 0.1-25 (2014-03-12)
+* 0.1-25 (2014-03-12) **CRAN**
 
     * LICENCE tweaks.
 
     * Initial CRAN release.
 
 
-* 0.1-24 (2014-03-11)
+* 0.1-24 (2014-03-11) **devel**
 
     * Fixed bugs detected with ASan and UBSan,
       e.g. fixed CharClass::gcmask type (enum -> uint32_t) (reported by UBSan).
@@ -93,7 +93,7 @@
       (reported by valgrind).
 
 
-* 0.1-23 (2014-03-11)
+* 0.1-23 (2014-03-11) **devel**
 
     * License changed to BSD-3-clause, COPYRIGHTS updated.
 
@@ -103,7 +103,7 @@
     * New functions: stri_install_check(), stri_install_icudt().
 
 
-* 0.1-22 (2014-02-20)
+* 0.1-22 (2014-02-20) **devel**
 
    * System ICU is used on systems which do have one (version >= 50 needed).
      ICU is autodetected with pkg-config in ./configure.
@@ -114,13 +114,13 @@
      (for big-endian, ASCII systems).
 
 
-* 0.1-21 (2014-02-19)
+* 0.1-21 (2014-02-19) **devel**
 
    * Fixed some Solaris-related issues while preparing stringi
      for CRAN submission.
 
 
-* 0.1-20 (2014-02-17)
+* 0.1-20 (2014-02-17) **devel**
 
    * ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
      loaded dynamically). Compilation via Makevars.
@@ -128,7 +128,7 @@
    * stringi now does not depend on any external libraries.
 
 
-* 0.1-11 (2013-11-16)
+* 0.1-11 (2013-11-16) **devel**
 
    * ICU4C is now statically linked on Windows.
 
@@ -137,12 +137,12 @@
    * The package is being intensively tested by our students @ FMIS WUT.
 
 
-* 0.1-10 (2013-11-13)
+* 0.1-10 (2013-11-13) **devel**
    
    * Using pkg-config via ./configure to look for ICU4C libs.
 
 
-* 0.1-6 (2013-07-05)
+* 0.1-6 (2013-07-05) **devel**
 
    * First Windows binary build.
    
@@ -152,5 +152,6 @@
      scheduled for milestone 0.1.
 
 
-* 0.1-1 (2013-01-05)
+* 0.1-1 (2013-01-05) **devel**
+
    *  The stringi project has been established on GitHub.

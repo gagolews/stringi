@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_ucnv.h"
+#include "stri_string8buf.h"
 
 /**
  * Default constructor
@@ -72,8 +73,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
    // for conversion from non-utf8/ascii native charsets:
    StriUcnv ucnvLatin1("ISO-8859-1");
    StriUcnv ucnvNative(NULL);
-   int    outbufsize = -1;
-   char*  outbuf = NULL;
+   R_len_t outbufsize = -1;
+   String8buf outbuf(0);
 //      int    tmpbufsize = -1;
 //      UChar* tmpbuf = NULL;
 
@@ -114,7 +115,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             ucnvCurrent = ucnvNative.getConverter();
          }
 
-         if (!outbuf) {
+         if (outbufsize < 0) {
             // calculate max string length
             R_len_t maxlen = LENGTH(curs);
             for (R_len_t z=i+1; z<nrstr; ++z) {
@@ -131,7 +132,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             // of a buffer for conversion from Unicode to a charset.
             // this may be overestimated
             outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
-            outbuf = new char[outbufsize];
+            outbuf.resize(outbufsize, false);
          }
 
 
@@ -172,13 +173,13 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 //               }
 
          int outrealsize = 0;
-         u_strToUTF8(outbuf, outbufsize, &outrealsize,
+         u_strToUTF8(outbuf.data(), outbuf.size(), &outrealsize,
                tmp.getBuffer(), tmp.length(), &status);
          if (U_FAILURE(status)) {
             throw StriException(status);
          }
 
-         this->str[i].initialize(outbuf, outrealsize, true);
+         this->str[i].initialize(outbuf.data(), outrealsize, true);
 
          // version 3: use tmpbuf (slower than v2)
 //               UErrorCode status = U_ZERO_ERROR;

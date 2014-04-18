@@ -80,8 +80,11 @@ class StriContainerCharClass : public StriContainerBase {
                   UErrorCode status = U_ZERO_ERROR;
                   this->data[i].applyPattern(
                      UnicodeString::fromUTF8(rvec_cont.get(i).c_str()), status);
-                  if (U_FAILURE(status))
+                  if (U_FAILURE(status)) {
+                     delete [] data;
+                     data = NULL;
                      throw StriException(status);
+                  }
                   this->data[i].freeze();
                }
             }

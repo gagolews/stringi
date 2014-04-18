@@ -141,8 +141,11 @@ StriContainerByteSearch::~StriContainerByteSearch()
  * @param i index
  * @param searchStr string to search in
  * @param searchLen string length in bytes
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
  */
 void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
@@ -206,8 +209,10 @@ void StriContainerByteSearch::resetMatcher()
  *
  * @return USEARCH_DONE on no match, otherwise start index
  *
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
  */
 R_len_t StriContainerByteSearch::findFirst()
 {
@@ -253,8 +258,11 @@ R_len_t StriContainerByteSearch::findFirst()
  * continues previous search
  *
  * @return USEARCH_DONE on no match, otherwise start index
- * @version 0.1 (Marek Gagolewski)
- * @version 0.2 (Bartek Tartanus, 2013-08-15) uses KMP
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
  */
 R_len_t StriContainerByteSearch::findNext()
 {

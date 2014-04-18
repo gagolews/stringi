@@ -41,7 +41,7 @@ using namespace std;
 
 
 /**
- * Locate first or last occurences of pattern in a string [with collation]
+ * Locate first or last occurences of pattern in a string
  *
  * @param str character vector
  * @param pattern character vector
@@ -67,7 +67,7 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
+   STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
 
@@ -102,7 +102,7 @@ SEXP stri__locate_firstlast_fixed_byte(SEXP str, SEXP pattern, bool first)
       }
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
@@ -133,7 +133,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -159,7 +159,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
 
       R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
-      PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
@@ -175,11 +175,11 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
             0  // end returns position of next character after match
       );
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
    stri__locate_set_dimnames_list(ret);
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
@@ -220,7 +220,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bo
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
+   STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
 
@@ -260,7 +260,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, bo
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);
@@ -302,7 +302,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -333,7 +333,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
 
       R_len_t noccurences = (R_len_t)occurences.size();
       SEXP ans;
-      PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
@@ -349,12 +349,12 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
             0  // end returns position of next character after match
       );
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
    stri__locate_set_dimnames_list(ret);
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);

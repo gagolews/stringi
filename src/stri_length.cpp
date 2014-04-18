@@ -183,7 +183,7 @@ SEXP stri_numbytes(SEXP str)
       /* INPUT ENCODING CHECK: this function does not need this. */
       retint[i] = (curs == NA_STRING)?NA_INTEGER:LENGTH(curs); // O(1) - stored by R
    }
-   STRI__UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
@@ -209,14 +209,14 @@ SEXP stri_isempty(SEXP str)
 
    STRI__ERROR_HANDLER_BEGIN
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
    int* retlog = LOGICAL(ret);
    for (R_len_t i=0; i<str_n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
       retlog[i] = (curs == NA_STRING)?NA_LOGICAL:(LENGTH(curs) <= 0);
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
@@ -244,11 +244,11 @@ SEXP stri_isempty(SEXP str)
 //
 //   //UChar32 c;
 //   SEXP ret;
-//   PROTECT(ret = allocVector(INTSXP, ns));
+//   STRI__PROTECT(ret = allocVector(INTSXP, ns));
 //   //int* retint = INTEGER(ret);
 //
 //
 //
-//   UNPROTECT(1);
+//   STRI__UNPROTECT_ALL
 //   return ret;
 //}

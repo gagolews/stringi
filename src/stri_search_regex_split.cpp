@@ -79,7 +79,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -137,7 +137,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
          fields.pop_back();
 
       SEXP ans;
-      PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
@@ -147,10 +147,15 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       }
 
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
-   UNPROTECT(1);
+   if (str_text) {
+      utext_close(str_text);
+      str_text = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
       if (str_text) {

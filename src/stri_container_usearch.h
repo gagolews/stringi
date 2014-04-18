@@ -42,7 +42,10 @@
 /**
  * A class to handle UStringSearch searches
  *
- * @version 0.1 (Marek Gagolewski, 2013-06-23)
+ * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
+ *          BUGFIX: memleaks on StriException
  */
 class StriContainerUStringSearch : public StriContainerUTF16 {
 
