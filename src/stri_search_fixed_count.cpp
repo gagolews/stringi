@@ -39,7 +39,7 @@
 
 
 /**
- * Count the number of recurrences of \code{pattern} in \code{str} 
+ * Count the number of recurrences of \code{pattern} in \code{str}
  * [fast but dummy bitewise compare]
  *
  * @param str strings to search in
