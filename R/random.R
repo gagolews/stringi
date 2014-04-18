@@ -48,8 +48,8 @@
 #' @return Returns a character vector.
 #'
 #' @examples
-#' stri_shuffle(c("abcdefghi", "0123456789"))
-#' # you can do better that this with stri_rand_strings:
+#' stri_rand_shuffle(c("abcdefghi", "0123456789"))
+#' # you can do better than this with stri_rand_strings:
 #' stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
 #'
 #' @family random
