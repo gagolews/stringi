@@ -41,7 +41,6 @@
 StriContainerRegexPattern::StriContainerRegexPattern()
    : StriContainerUTF16()
 {
-   this->str = NULL;
    this->lastMatcher = NULL;
 }
 
@@ -119,8 +118,11 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
-   if (U_FAILURE(status))
+   if (U_FAILURE(status)) {
+      delete lastMatcher;
+      lastMatcher = NULL;
       throw StriException(status);
+   }
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
 #endif

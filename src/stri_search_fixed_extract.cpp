@@ -41,11 +41,12 @@ using namespace std;
 
 
 /**
- * Extract first or last occurences of pattern in a string [with collation] - THIS IS DUMB! :)
+ * Extract first or last occurences of pattern in a string [exact byte search]
+ * - THIS IS DUMB! :)
  *
  * @param str character vector
  * @param pattern character vector
- * @param first looking for first or last match? [WHATEVER]
+ * @param first looking for first or last match?
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
@@ -61,7 +62,7 @@ SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -80,18 +81,18 @@ SEXP stri__extract_firstlast_fixed_byte(SEXP str, SEXP pattern, bool)
          SET_STRING_ELT(ret, i, pattern_cont.toR(i));
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
 
 
 /**
- * Extract all occurences of pattern in a string [with collation] - THIS IS DUMB! :)
+ * Extract all occurences of pattern in a string [exact byte search]
  *
  * @param str character vector
  * @param pattern character vector
- * @param first looking for first or last match? [WHATEVER]
+ * @param first looking for first or last match?
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
@@ -107,7 +108,7 @@ SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
       i != pattern_cont.vectorize_end();
@@ -126,16 +127,16 @@ SEXP stri__extract_all_fixed_byte(SEXP str, SEXP pattern)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
       else {
          SEXP ans, match;
-         PROTECT(ans = Rf_allocVector(STRSXP, count));
-         PROTECT(match = pattern_cont.toR(i));
+         STRI__PROTECT(ans = Rf_allocVector(STRSXP, count));
+         STRI__PROTECT(match = pattern_cont.toR(i));
          for (R_len_t j=0; j<count; ++j)
             SET_STRING_ELT(ans, j, match);
-         UNPROTECT(2);
          SET_VECTOR_ELT(ret, i, ans);
+         STRI__UNPROTECT(2);
       }
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
@@ -169,7 +170,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, b
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -202,7 +203,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP collator_opts, b
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);
@@ -269,7 +270,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -279,7 +280,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
 
-     UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
 
       UErrorCode status = U_ZERO_ERROR;
@@ -310,7 +311,7 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts)
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);

@@ -63,7 +63,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -105,7 +105,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       utext_close(str_text);
       str_text = NULL;
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
 }
@@ -167,7 +167,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
@@ -200,7 +200,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
-      PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
+      STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> curo = *iter;
@@ -208,14 +208,14 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
             Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, cur_res);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
    if (str_text) {
       utext_close(str_text);
       str_text = NULL;
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)
 }

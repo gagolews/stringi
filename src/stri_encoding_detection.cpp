@@ -910,14 +910,14 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
    R_len_t str_n = str_cont.get_n();
 
    SEXP ret, names, wrong;
-   PROTECT(ret = Rf_allocVector(VECSXP, str_n));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_n));
 
-   PROTECT(names = Rf_allocVector(STRSXP, 3));
+   STRI__PROTECT(names = Rf_allocVector(STRSXP, 3));
    SET_STRING_ELT(names, 0, Rf_mkChar("Encoding"));
    SET_STRING_ELT(names, 1, Rf_mkChar("Language"));
    SET_STRING_ELT(names, 2, Rf_mkChar("Confidence"));
 
-   PROTECT(wrong = Rf_allocVector(VECSXP, 3));
+   STRI__PROTECT(wrong = Rf_allocVector(VECSXP, 3));
    SET_VECTOR_ELT(wrong, 0, stri__vector_NA_strings(1));
    SET_VECTOR_ELT(wrong, 1, stri__vector_NA_strings(1));
    SET_VECTOR_ELT(wrong, 2, stri__vector_NA_integers(1));
@@ -952,9 +952,9 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
       std::stable_sort(guesses.begin(), guesses.end());
 
       SEXP val_enc, val_lang, val_conf;
-      PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
-      PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
+      STRI__PROTECT(val_enc  = Rf_allocVector(STRSXP, matchesFound));
+      STRI__PROTECT(val_lang = Rf_allocVector(STRSXP, matchesFound));
+      STRI__PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
 
       for (R_len_t j=0; j<matchesFound; ++j) {
          SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].name));
@@ -963,16 +963,16 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
       }
 
       SEXP val;
-      PROTECT(val = Rf_allocVector(VECSXP, 3));
+      STRI__PROTECT(val = Rf_allocVector(VECSXP, 3));
       SET_VECTOR_ELT(val, 0, val_enc);
       SET_VECTOR_ELT(val, 1, val_lang);
       SET_VECTOR_ELT(val, 2, val_conf);
       Rf_setAttrib(val, R_NamesSymbol, names);
       SET_VECTOR_ELT(ret, i, val);
-      UNPROTECT(4);
+      STRI__UNPROTECT(4);
    }
 
-   UNPROTECT(3);
+   STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })

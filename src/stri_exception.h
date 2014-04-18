@@ -80,20 +80,19 @@ using namespace std;
  * A class representing exceptions
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ * 
+ * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
+ *          do not use Rf_alloc for msg
  */
 class StriException {
 
 private:
 
-   char* msg; ///< message to be passed to error(); allocated by R_alloc -> freed automatically
+   char msg[StriException_BUFSIZE]; ///< message to be passed to error()
 
 public:
 
    StriException(const char* format, ...) {
-      // R will reclaim the memory at the end of the call to .Call
-      // This is important as the call to Rf_error could otherwise
-      // lead to memleaks
-      msg = R_alloc(StriException_BUFSIZE, (int)sizeof(char));
       va_list args;
       va_start(args, format);
       vsprintf(msg, format, args);
@@ -101,7 +100,6 @@ public:
    }
 
    StriException(UErrorCode status) {
-      msg = R_alloc(StriException_BUFSIZE, (int)sizeof(char));
       sprintf(msg, MSG__ICU_ERROR, getICUerrorName(status), u_errorName(status));
    }
 

@@ -33,6 +33,13 @@
 #include "stri_stringi.h"
 
 
+/** Get ICU error name
+ * 
+ * @param status error code
+ * @return string
+ * 
+ * @version 0.1-?? (Marek Gagolewski)
+ */
 const char* StriException::getICUerrorName(UErrorCode status)
 {
    switch(status) {

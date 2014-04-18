@@ -111,14 +111,14 @@ SEXP stri_split_lines1(SEXP str)
    }
 
    SEXP ans;
-   PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
+   STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
    deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
    for (R_len_t k = 0; iter != occurences.end(); ++iter, ++k) {
       pair<R_len_t, R_len_t> curoccur = *iter;
       SET_STRING_ELT(ans, k,
          Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
    }
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ans;
 
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
@@ -149,7 +149,7 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
 
    SEXP ret;
-   PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
    for (R_len_t i = str_cont.vectorize_init();
          i != str_cont.vectorize_end();
@@ -251,7 +251,7 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
          occurences.pop_back();
 
       SEXP ans;
-      PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
 
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t l = 0; iter != occurences.end(); ++iter, ++l) {
@@ -261,10 +261,10 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
       }
 
       SET_VECTOR_ELT(ret, i, ans);
-      UNPROTECT(1);
+      STRI__UNPROTECT(1);
    }
 
-   UNPROTECT(1);
+   STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
