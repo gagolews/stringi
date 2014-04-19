@@ -2,7 +2,7 @@
 \alias{stri_trans_tolower}
 \alias{stri_trans_totitle}
 \alias{stri_trans_toupper}
-\title{Translate String with Case Mapping}
+\title{Transform String with Case Mapping}
 \usage{
 stri_trans_tolower(str, locale = NULL)
 
@@ -22,7 +22,7 @@ stri_trans_totitle(str, locale = NULL)
 Each function returns a character vector.
 }
 \description{
-These functions translate strings either to lower case,
+These functions transform strings either to lower case,
 UPPER CASE, or to Title Case.
 }
 \details{
@@ -83,5 +83,8 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_split_fixed}}; \code{\link{stri_unique}};
 \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
+
+Other transform: \code{\link{stri_trans_general}};
+\code{\link{stri_trans_list}}
 }
 

@@ -54,6 +54,7 @@ stri_stats.cpp \
 stri_stringi.cpp \
 stri_sub.cpp \
 stri_test.cpp \
+stri_transliterate.cpp \
 stri_uchar.cpp \
 stri_ucnv.cpp \
 stri_uloc.cpp \

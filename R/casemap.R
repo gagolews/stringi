@@ -30,10 +30,10 @@
 
 
 #' @title
-#' Translate String with Case Mapping
+#' Transform String with Case Mapping
 #'
 #' @description
-#' These functions translate strings either to lower case,
+#' These functions transform strings either to lower case,
 #' UPPER CASE, or to Title Case.
 #'
 #' @details
@@ -58,6 +58,7 @@
 #' \url{http://userguide.icu-project.org/transforms/casemappings}
 #'
 #' @family locale_sensitive
+#' @family transform
 #' @export
 #' @rdname stri_trans_case
 #'

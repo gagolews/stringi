@@ -48,7 +48,6 @@
  */
 static const R_CallMethodDef cCallMethods[] = {
 
-   STRI__MAKE_CALL_METHOD(stri_trans_case,                 3),
 //   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>=0.2
 //   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>=0.2
    STRI__MAKE_CALL_METHOD(stri_cmp,                        3),
@@ -148,6 +147,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_test_returnasis,            1),
    STRI__MAKE_CALL_METHOD(stri_test_UnicodeContainer16,    1),
    STRI__MAKE_CALL_METHOD(stri_test_UnicodeContainer8,     1),
+   STRI__MAKE_CALL_METHOD(stri_trans_case,                 3),
+   STRI__MAKE_CALL_METHOD(stri_trans_general,              2),
+   STRI__MAKE_CALL_METHOD(stri_trans_list,                 0),
    STRI__MAKE_CALL_METHOD(stri_trim_both,                  2),
    STRI__MAKE_CALL_METHOD(stri_trim_left,                  2),
    STRI__MAKE_CALL_METHOD(stri_trim_right,                 2),
