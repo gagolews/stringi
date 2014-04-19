@@ -28,7 +28,7 @@ locale-dependent string equivalence.
 }
 \examples{
 \dontrun{
-stri_unique(c("\\u0105", stri_enc_nfkd("\\u0105")))
+stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
 }
 }
 \seealso{

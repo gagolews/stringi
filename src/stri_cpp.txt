@@ -1,4 +1,3 @@
-stri_casemap.cpp \
 stri_collator.cpp \
 stri_common.cpp \
 stri_compare.cpp \
@@ -15,7 +14,6 @@ stri_container_utf8_indexable.cpp \
 stri_encoding_conversion.cpp \
 stri_encoding_detection.cpp \
 stri_encoding_management.cpp \
-stri_encoding_normalization.cpp \
 stri_escape.cpp \
 stri_exception.cpp \
 stri_ICU_settings.cpp \
@@ -54,7 +52,9 @@ stri_stats.cpp \
 stri_stringi.cpp \
 stri_sub.cpp \
 stri_test.cpp \
-stri_transliterate.cpp \
+stri_trans_casemap.cpp \
+stri_trans_normalization.cpp \
+stri_trans_transliterate.cpp \
 stri_uchar.cpp \
 stri_ucnv.cpp \
 stri_uloc.cpp \

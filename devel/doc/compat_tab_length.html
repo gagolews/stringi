@@ -12,9 +12,10 @@ stri_enc_toascii
 
 
 
-   
+
 <head>
-<style type="text/css">.knitr.inline {
+<style type="text/css">
+.knitr.inline {
   background-color: #f7f7f7;
   border:solid 1px #B0B0B0;
 }
@@ -73,18 +74,19 @@ stri_enc_toascii
 .hl.kwd {
   color: #BC5A65;
   font-weight: bold;
-}</style>
+}
+</style>
 <title>stringi &ndash; Compatibility Tables</title>
 
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!--    <meta charset='UTF-8' /> -->
    <meta name="Author" content="Marek Gągolewski" />
    <meta http-equiv="Content-Language" content="en-US" />
-   
+
    <meta name="Keywords" content="Rexamine, stringi, ICU, R" />
    <meta name="Description" content="stringi Compatibility Tables" />
    <meta name="Robots" content="index, follow" />
-   
+
 <style>
 body {
    font-family: "Segoe UI";
@@ -185,7 +187,7 @@ div.footer {
 <body>
 
 <h1>
-<a href="http://stringi.rexamine.com">stringi</a> 0.1-10  (2013-10-26 ) Compatibility Tables:  Computing "length" of a string
+<a href="http://stringi.rexamine.com">stringi</a> 0.2-2  (2014-04-19 ) Compatibility Tables:  Computing "length" of a string
 
 </h1>
 
@@ -255,9 +257,9 @@ especially for UTF-8-encoded strings:</p>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: nanoseconds
 ##                    expr   min      lq  median      uq    max neval
-##           nzchar(test1)   812   961.5  1086.0  1230.5   6353   100
-##  str_length(test1) == 0 54266 56532.5 57738.0 59300.5 111372   100
-##     stri_isempty(test1)  1991  2667.0  3627.5  4159.5  17073   100
+##           nzchar(test1)   817   951.5  1103.5  1214.5   3492   100
+##  str_length(test1) == 0 54940 56892.5 58188.5 61168.5 174070   100
+##     stri_isempty(test1)  2284  2882.5  3547.0  4477.5  21730   100
 </pre></div>
 </div></div>
 
@@ -272,7 +274,7 @@ especially for UTF-8-encoded strings:</p>
 
 <div class='columns'>
 <div class='column1'><div class='columntitle'>base</div>
-<code><code class="knitr inline">nchar()</code></code> 
+<code><code class="knitr inline">nchar()</code></code>
 &ndash; does not handle NAs properly
 
 <div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">nchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
@@ -285,7 +287,7 @@ especially for UTF-8-encoded strings:</p>
 </div>
 <div class='column2'><div class='columntitle'>stringr</div>
 
-<code><code class="knitr inline">str_length()</code></code> 
+<code><code class="knitr inline">str_length()</code></code>
 &ndash; handles NAs properly
 
 <div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">str_length</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
@@ -297,7 +299,7 @@ especially for UTF-8-encoded strings:</p>
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-<code><code class="knitr inline">stri_length()</code></code> 
+<code><code class="knitr inline">stri_length()</code></code>
 &ndash; handles NAs properly
 
 <div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_length</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
@@ -313,8 +315,8 @@ especially for UTF-8-encoded strings:</p>
 
 <h3>General Remark</h3>
 
-If a given string is in UTF-8 and not has been properly 
-Unicode normalized (e.g. by stri_enc_nfc), 
+If a given string is in UTF-8 and not has been properly
+Unicode normalized (e.g. by stri_trans_nfc),
 the returned number may sometimes be misleading.
 
 <p>Determining the length of an 8-bit-encoded string is O(1)
@@ -330,9 +332,9 @@ and in UTF-8 has linear time complexity.</p>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
 ##                expr    min      lq  median      uq     max neval
-##        nchar(test1) 36.585 37.6235 37.8960 38.1500  52.016   100
-##   str_length(test1) 65.619 68.5270 69.6670 71.0245 131.478   100
-##  stri_length(test1)  6.771  7.3205  8.6315  9.2270  82.120   100
+##        nchar(test1) 36.749 37.7550 38.0050 38.2800  77.063   100
+##   str_length(test1) 66.064 67.9150 69.3035 70.2555 125.020   100
+##  stri_length(test1)  6.322  6.9685  7.4345  8.5595  31.301   100
 </pre></div>
 </div></div>
 
@@ -363,7 +365,7 @@ and in UTF-8 has linear time complexity.</p>
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-   <code><code class="knitr inline">stri_numbytes()</code></code>  
+   <code><code class="knitr inline">stri_numbytes()</code></code>
    handles missing values properly.
 
 <div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_numbytes</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
@@ -386,13 +388,13 @@ in your string processing activities &ndash; see rather <code class="knitr inlin
 
 <h3>Performance comparison</h3>
 
-<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl num">100</span><span class="hl std">)</span>        <span class="hl com"># first string is in UTF-8 </span>
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;ąśćźół&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;abc&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl num">100</span><span class="hl std">)</span>        <span class="hl com"># first string is in UTF-8</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">nchar</span><span class="hl std">(test1,</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'bytes'</span><span class="hl std">),</span> <span class="hl kwd">stri_numbytes</span><span class="hl std">(test1))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
 ##                          expr   min     lq median     uq    max neval
-##  nchar(test1, type = "bytes") 9.439 9.6200 9.7155 9.9255 21.714   100
-##          stri_numbytes(test1) 2.278 2.4195 2.5295 2.6610 76.426   100
+##  nchar(test1, type = "bytes") 9.564 9.7995  9.999 10.286 33.683   100
+##          stri_numbytes(test1) 2.531 2.7240  2.894  3.117 24.026   100
 </pre></div>
 </div></div>
 
@@ -412,9 +414,9 @@ in your string processing activities &ndash; see rather <code class="knitr inlin
    the <code class="knitr inline">cat()</code> function
    will use to print the string in a monospaced font.
    The same as chars if this cannot be calculated.
-   
+
    <p>The R manual does not state how the numbers are determined.</p>
-   
+
 <div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">nchar</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;gryzeldą&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl num">NA</span><span class="hl std">,</span>
    <span class="hl str">&quot;持続可能な統計環境&quot;</span><span class="hl std">),</span> <span class="hl kwc">type</span><span class="hl std">=</span><span class="hl str">'width'</span><span class="hl std">)</span>
 </pre></div>
@@ -448,9 +450,9 @@ in your string processing activities &ndash; see rather <code class="knitr inlin
 
 <div class="footer"><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0; float: left; margin: 8px" src="http://i.creativecommons.org/l/by/3.0/88x31.png"></a><a href="http://www.rexamine.com/">
 <img style="float: right; margin: 8px"
-src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexamine" alt="Rexamine" /></a><div style="text-align: center">Licensed under the 
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative 
-Commons Attribution 3.0 Unported License</a>.<br />Copyleft 2013, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />Last updated:  2013-10-30 12:51:19 </div></div>
+src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexamine" alt="Rexamine" /></a><div style="text-align: center">Licensed under the
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative
+Commons Attribution 3.0 Unported License</a>.<br />Copyleft 2013-2014, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />Last updated:  2014-04-19 12:08:07 </div></div>
 
 
 </body>

@@ -77,6 +77,8 @@ you will often use (sometimes without even knowing that explicitly) the followin
 workflow scheme: READ FILE -> CONVERT TO UTF-8 -> PROCESS -> CONVERT BACK TO
 DESIRED ENCODING -> WRITE FILE.</p>
 
+TODO: add stri_enc_toutf8
+
 <!-- -------------------------------------------------------------- -->
 
 <h2>Conversion to Raw Vectors</h2>
@@ -108,8 +110,6 @@ with argument <code><!--rinline "to_raw=TRUE" --></code>
 stri_encode("aA1", "", "", to_raw=TRUE)[[1]]
 stri_encode(c("aA1", " "), "", "", to_raw=TRUE)
 end.rcode-->
-
-<strong>TODO:</strong> add <code><!--rinline "stri_enc_toraw()" --></code> (?)
 </div>
 </div>
 
@@ -155,9 +155,6 @@ stri_encode(as.raw(c(97, 65, 49)), "")
 stri_encode(list(as.raw(c(97, 65, 49)),
    as.raw(32)), "")
 end.rcode-->
-
-
-<strong>TODO:</strong> add <code><!--rinline "stri_enc_fromraw()" --></code> (?)
 </div>
 </div>
 
@@ -389,6 +386,8 @@ end.rcode-->
 
 <h2>Unicode Normalization</h2>
 
+TODO: this is text transform
+
 <h3>Basic Functionality</h3>
 
 <div class='columns'>
@@ -403,10 +402,10 @@ end.rcode-->
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-   <code><!--rinline "stri_enc_isnfc(), stri_enc_isnfkc(), stri_enc_isnfd(), stri_enc_isnfkd(), stri_enc_isnfkc_casefold()" --></code>
+   <code><!--rinline "stri_trans_isnfc(), stri_trans_isnfkc(), stri_trans_isnfd(), stri_trans_isnfkd(), stri_trans_isnfkc_casefold()" --></code>
    check whether given UTF-8-encoded strings are properly normalized.
    
-   <p>Moreover, <code><!--rinline "stri_enc_tonfc(), stri_enc_tonfkc(), stri_enc_tonfd(), stri_enc_tonfkd(), stri_enc_tonfkc_casefold()" --></code>
+   <p>Moreover, <code><!--rinline "stri_trans_nfc(), stri_trans_nfkc(), stri_trans_nfd(), stri_trans_nfkd(), stri_trans_nfkc_casefold()" --></code>
    perform the desired normalization.</p>
 </div>
 </div>

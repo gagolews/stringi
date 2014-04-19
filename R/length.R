@@ -87,7 +87,7 @@ stri_numbytes <- function(str) {
 #' printed on the screen.
 #'
 #' If a given string is in UTF-8 and  has not been properly normalized
-#' (e.g. by \code{\link{stri_enc_nfc}}), the returned counts may sometimes be
+#' (e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
 #' misleading. Moreover, if an incorrect UTF-8 byte sequence is detected,
 #' then a warning is generated and the corresponding output element
 #' is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
@@ -106,7 +106,7 @@ stri_numbytes <- function(str) {
 #' stri_length('\u0105') # length is one, but...
 #' stri_numbytes('\u0105') # 2 bytes are used
 #' \dontrun{
-#' stri_length(stri_enc_nfkd('\u0105')) # ...two code points (!)
+#' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 #' }
 #'
 #' @export

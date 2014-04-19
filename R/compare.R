@@ -99,7 +99,7 @@
 #' stri_cmp("hladny", "chladny") # < or > (depends on locale)
 #' stri_cmp_eq("hladny", "HLADNY", stri_opts_collator(strength=2))
 #' stri_cmp_eq("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-#' stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105') # but cf. stri_enc_nfkd('\u0105') != '\u105'
+#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105') # but cf. stri_trans_nfkd('\u0105') != '\u105'
 #' }
 stri_compare <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp", e1, e2, opts_collator, PACKAGE="stringi")
@@ -371,7 +371,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' stri_unique(c("\u0105", stri_enc_nfkd("\u0105")))
+#' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' }
 #'
 #' @family locale_sensitive

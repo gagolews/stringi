@@ -8,6 +8,6 @@ src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexam
 cat('<div style="text-align: center">Licensed under the
 <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative
 Commons Attribution 3.0 Unported License</a>.<br />')
-cat('Copyleft 2013, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />')
+cat('Copyleft 2013-2014, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />')
 cat('Last updated: ', as.character(Sys.time()), '</div>')
 cat('</div>')

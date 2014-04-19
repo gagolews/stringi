@@ -14,7 +14,8 @@ stri_enc_toascii
 
    
 <head>
-<style type="text/css">.knitr.inline {
+<style type="text/css">
+.knitr.inline {
   background-color: #f7f7f7;
   border:solid 1px #B0B0B0;
 }
@@ -73,7 +74,8 @@ stri_enc_toascii
 .hl.kwd {
   color: #BC5A65;
   font-weight: bold;
-}</style>
+}
+</style>
 <title>stringi &ndash; Compatibility Tables</title>
 
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -185,7 +187,7 @@ div.footer {
 <body>
 
 <h1>
-<a href="http://stringi.rexamine.com">stringi</a> 0.1-10  (2013-10-26 ) Compatibility Tables:  Character Encodings
+<a href="http://stringi.rexamine.com">stringi</a> 0.2-2  (2014-04-19 ) Compatibility Tables:  Character Encodings
 
 </h1>
 
@@ -216,6 +218,8 @@ This is why while working with <a href="http://stringi.rexamine.com">stringi</a>
 you will often use (sometimes without even knowing that explicitly) the following
 workflow scheme: READ FILE -> CONVERT TO UTF-8 -> PROCESS -> CONVERT BACK TO
 DESIRED ENCODING -> WRITE FILE.</p>
+
+TODO: add stri_enc_toutf8
 
 <!-- -------------------------------------------------------------- -->
 
@@ -261,8 +265,6 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 </pre></div>
 </div></div>
 
-
-<strong>TODO:</strong> add <code><code class="knitr inline">stri_enc_toraw()</code></code> (?)
 </div>
 </div>
 
@@ -271,18 +273,18 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">test1</span> <span class="hl kwb">&lt;-</span> <span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">charToRaw</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)[[</span><span class="hl num">1</span><span class="hl std">]])</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## Unit: nanoseconds
-##                                            expr  min      lq  median      uq   max neval
-##                                charToRaw(test1)  472   754.0  1009.5  1157.0  3188   100
-##  stri_encode(test1, "", "", to_raw = TRUE)[[1]] 9909 10544.5 10781.0 11123.5 75458   100
+<div class="output"><pre class="knitr r">## Unit: microseconds
+##                                            expr    min     lq  median      uq    max neval
+##                                charToRaw(test1)  1.018  1.575  2.2325  2.5135 12.558   100
+##  stri_encode(test1, "", "", to_raw = TRUE)[[1]] 11.782 12.847 13.4095 13.9705 65.901   100
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;0123456789&quot;</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">)</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, charToRaw),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test2,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">,</span> <span class="hl kwc">to_raw</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                                       expr    min      lq  median      uq    max neval
-##                   lapply(test2, charToRaw) 26.496 29.6650 32.7675 34.8955 55.276   100
-##  stri_encode(test2, "", "", to_raw = TRUE) 33.345 34.8065 35.6140 37.0500 82.848   100
+##                                       expr    min      lq  median      uq     max neval
+##                   lapply(test2, charToRaw) 27.857 32.1365 35.0335 36.5075  89.783   100
+##  stri_encode(test2, "", "", to_raw = TRUE) 20.489 21.7905 22.7170 23.9065 100.140   100
 </pre></div>
 </div></div>
 
@@ -319,7 +321,7 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 
 <div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl num">49</span><span class="hl std">)),</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "aA1"
+<div class="output"><pre class="knitr r">## [1] "61" "41" "31"
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">stri_encode</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl std">,</span> <span class="hl num">49</span><span class="hl std">)),</span>
    <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">32</span><span class="hl std">)),</span> <span class="hl str">&quot;&quot;</span><span class="hl std">)</span>
@@ -328,9 +330,6 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 </pre></div>
 </div></div>
 
-
-
-<strong>TODO:</strong> add <code><code class="knitr inline">stri_enc_fromraw()</code></code> (?)
 </div>
 </div>
 
@@ -340,17 +339,17 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">rawToChar</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: nanoseconds
-##                    expr  min     lq median   uq   max neval
-##        rawToChar(test1)  801  937.5 1321.5 1448 11822   100
-##  stri_encode(test1, "") 4681 4935.0 5075.5 5306 45063   100
+##                    expr   min      lq  median      uq    max neval
+##        rawToChar(test1)   892  1332.5  1534.0  1815.5   9120   100
+##  stri_encode(test1, "") 18978 19507.5 19920.5 20382.0 138394   100
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span><span class="hl std">),</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">65</span><span class="hl opt">:</span><span class="hl num">90</span><span class="hl std">),</span> <span class="hl kwd">as.raw</span><span class="hl std">(</span><span class="hl num">48</span><span class="hl opt">:</span><span class="hl num">57</span><span class="hl std">)),</span> <span class="hl num">10</span><span class="hl std">)</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, rawToChar),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test2,</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                      expr    min      lq  median      uq    max neval
-##  lapply(test2, rawToChar) 34.327 36.7035 39.3145 41.4785 94.749   100
-##    stri_encode(test2, "") 22.761 23.4150 23.9650 24.7755 64.217   100
+##                      expr    min     lq median     uq    max neval
+##  lapply(test2, rawToChar) 39.063 43.325 45.785 47.876 93.074   100
+##    stri_encode(test2, "") 19.470 20.394 20.841 21.780 56.470   100
 </pre></div>
 </div></div>
 
@@ -410,17 +409,17 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">utf8ToInt</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(test1)[[</span><span class="hl num">1</span><span class="hl std">]])</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: nanoseconds
-##                          expr  min   lq median   uq   max neval
-##              utf8ToInt(test1)  600  823  912.5 1088  4595   100
-##  stri_enc_toutf32(test1)[[1]] 2509 2713 2921.0 3108 60612   100
+##                          expr  min     lq median     uq   max neval
+##              utf8ToInt(test1)  667  727.0  906.5 1043.0  3818   100
+##  stri_enc_toutf32(test1)[[1]] 2839 2995.5 3123.5 3247.5 42244   100
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">enc2utf8</span><span class="hl std">(</span><span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;0123456789&quot;</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">))</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, utf8ToInt),</span> <span class="hl kwd">stri_enc_toutf32</span><span class="hl std">(test2))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                      expr    min      lq  median     uq    max neval
-##  lapply(test2, utf8ToInt) 30.544 32.8065 35.6225 37.465 51.189   100
-##   stri_enc_toutf32(test2)  9.551 10.9150 11.2745 11.863 42.947   100
+##                      expr    min      lq  median      uq    max neval
+##  lapply(test2, utf8ToInt) 32.316 35.0260 36.7355 37.9725 62.752   100
+##   stri_enc_toutf32(test2)  7.575  8.5445  9.0055  9.6810 63.978   100
 </pre></div>
 </div></div>
 
@@ -476,17 +475,17 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">intToUtf8</span><span class="hl std">(test1),</span> <span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(test1))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                       expr   min    lq median     uq    max neval
-##           intToUtf8(test1) 1.281 1.481 1.5475 1.7265  6.225   100
-##  stri_enc_fromutf32(test1) 1.924 2.025 2.1525 2.3030 26.277   100
+##                       expr   min     lq median     uq    max neval
+##           intToUtf8(test1) 1.320 1.4495 1.5295 1.6165  6.733   100
+##  stri_enc_fromutf32(test1) 2.331 2.3695 2.4615 2.5525 31.403   100
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">test2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rep</span><span class="hl std">(</span><span class="hl kwd">list</span><span class="hl std">(</span><span class="hl num">97</span><span class="hl opt">:</span><span class="hl num">122</span><span class="hl std">,</span> <span class="hl num">65</span><span class="hl opt">:</span><span class="hl num">90</span><span class="hl std">,</span> <span class="hl num">48</span><span class="hl opt">:</span><span class="hl num">57</span><span class="hl std">),</span> <span class="hl num">10</span><span class="hl std">)</span>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">lapply</span><span class="hl std">(test2, intToUtf8),</span> <span class="hl kwd">stri_enc_fromutf32</span><span class="hl std">(test2))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                       expr    min      lq  median      uq    max neval
-##   lapply(test2, intToUtf8) 45.362 48.5875 50.3765 51.6785 69.595   100
-##  stri_enc_fromutf32(test2)  6.472  6.9440  7.1800  7.5560 34.594   100
+##                       expr    min      lq  median     uq    max neval
+##   lapply(test2, intToUtf8) 50.286 52.9190 56.1345 57.717 84.865   100
+##  stri_enc_fromutf32(test2)  8.274  8.8315  9.2000  9.448 30.225   100
 </pre></div>
 </div></div>
 
@@ -509,7 +508,7 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 
 <div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">iconvlist</span><span class="hl std">(),</span> <span class="hl num">4</span><span class="hl std">)</span> <span class="hl com"># a sample of supported encodings</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "EBCDIC-CP-DK"  "CP916"         "CSISO25FRENCH" "CSISO49INIS"
+<div class="output"><pre class="knitr r">## [1] "CSIBM9448"        "IBM1143"          "ISO-IR-8-1"       "ISO_8859-14:1998"
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">iconvlist</span><span class="hl std">())</span> <span class="hl com"># count; Fedora Linux 19 x64_86</span>
 </pre></div>
@@ -546,7 +545,7 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 
 <div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">stri_enc_list</span><span class="hl std">(</span><span class="hl num">TRUE</span><span class="hl std">),</span> <span class="hl num">4</span><span class="hl std">)</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "TIS-620"         "windows-852"     "ISO_8859-3:1988" "IBM01143"
+<div class="output"><pre class="knitr r">## [1] "windows-1256"             "windows-1250"             "ibm-1235"                 "ibm-949_VASCII_VSUB_VPUA"
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">stri_enc_list</span><span class="hl std">(</span><span class="hl num">TRUE</span><span class="hl std">))</span> <span class="hl com"># includes aliases</span>
 </pre></div>
@@ -648,9 +647,9 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <span class="hl kwd">microbenchmark</span><span class="hl std">(</span><span class="hl kwd">iconv</span><span class="hl std">(test1,</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf8&quot;</span><span class="hl std">),</span> <span class="hl kwd">stri_encode</span><span class="hl std">(test1,</span> <span class="hl str">&quot;latin2&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;utf8&quot;</span><span class="hl std">))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## Unit: microseconds
-##                                  expr    min      lq median     uq     max neval
-##        iconv(test1, "latin2", "utf8") 54.547 55.6715 57.980 58.519 107.766   100
-##  stri_encode(test1, "latin2", "utf8")  7.730  8.7440 10.573 11.057  55.091   100
+##                                  expr    min      lq  median      uq     max neval
+##        iconv(test1, "latin2", "utf8") 53.614 54.9265 55.8775 57.6275 113.434   100
+##  stri_encode(test1, "latin2", "utf8")  7.470  8.1910  9.3175 10.4570  81.452   100
 </pre></div>
 </div></div>
 
@@ -659,6 +658,8 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 <!-- -------------------------------------------------------------- -->
 
 <h2>Unicode Normalization</h2>
+
+TODO: this is text transform
 
 <h3>Basic Functionality</h3>
 
@@ -674,10 +675,10 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-   <code><code class="knitr inline">stri_enc_isnfc(), stri_enc_isnfkc(), stri_enc_isnfd(), stri_enc_isnfkd(), stri_enc_isnfkc_casefold()</code></code>
+   <code><code class="knitr inline">stri_trans_isnfc(), stri_trans_isnfkc(), stri_trans_isnfd(), stri_trans_isnfkd(), stri_trans_isnfkc_casefold()</code></code>
    check whether given UTF-8-encoded strings are properly normalized.
    
-   <p>Moreover, <code><code class="knitr inline">stri_enc_tonfc(), stri_enc_tonfkc(), stri_enc_tonfd(), stri_enc_tonfkd(), stri_enc_tonfkc_casefold()</code></code>
+   <p>Moreover, <code><code class="knitr inline">stri_trans_nfc(), stri_trans_nfkc(), stri_trans_nfd(), stri_trans_nfkd(), stri_trans_nfkc_casefold()</code></code>
    perform the desired normalization.</p>
 </div>
 </div>
@@ -721,9 +722,9 @@ with argument <code><code class="knitr inline">to_raw=TRUE</code></code>
 
 <div class="footer"><a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0; float: left; margin: 8px" src="http://i.creativecommons.org/l/by/3.0/88x31.png"></a><a href="http://www.rexamine.com/">
 <img style="float: right; margin: 8px"
-src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexamine" alt="Rexamine" /></a><div style="text-align: center">Licensed under the 
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative 
-Commons Attribution 3.0 Unported License</a>.<br />Copyleft 2013, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />Last updated:  2013-10-30 12:25:41 </div></div>
+src="http://static.rexamine.com/img/Rexamine_logo_transparent3.png" title="Rexamine" alt="Rexamine" /></a><div style="text-align: center">Licensed under the
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative
+Commons Attribution 3.0 Unported License</a>.<br />Copyleft 2013-2014, <a href="http://gagolewski.rexamine.com">Marek Gagolewski</a>.<br />Last updated:  2014-04-19 12:08:02 </div></div>
 
 
 </body>

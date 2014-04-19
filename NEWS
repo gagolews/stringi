@@ -4,7 +4,10 @@
 
 * 0.2-2 (2014-??-??) **???**
 
-   * t.b.d.
+   * [IMPORTANT CHANGE] stri_enc_nf* and stri_enc_isnf* function families
+      have been renamed to stri_trans_nf* and stri_trans_isnf*, respectively.
+      This is because they deal with text transforming, and not with character
+      encoding.
 
    * [NEW FUNCTION] stri_trans_general, stri_trans_list gives access
       to ICU Transliterator: may be used to perform very general

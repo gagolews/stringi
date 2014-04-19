@@ -33,6 +33,9 @@ language-sensitive (results may differ depending on
 locale), and \item is context-sensitive (a character in the
 input string may map differently depending on surrounding
 characters). }
+
+For more general (but not locale dependent) text transforms
+refer to \code{\link{stri_trans_general}}.
 }
 \examples{
 \dontrun{
@@ -85,6 +88,15 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stringi-search-fixed}}
 
 Other transform: \code{\link{stri_trans_general}};
+\code{\link{stri_trans_isnfc}},
+\code{\link{stri_trans_isnfd}},
+\code{\link{stri_trans_isnfkc}},
+\code{\link{stri_trans_isnfkc_casefold}},
+\code{\link{stri_trans_isnfkd}},
+\code{\link{stri_trans_nfc}}, \code{\link{stri_trans_nfd}},
+\code{\link{stri_trans_nfkc}},
+\code{\link{stri_trans_nfkc_casefold}},
+\code{\link{stri_trans_nfkd}};
 \code{\link{stri_trans_list}}
 }
 

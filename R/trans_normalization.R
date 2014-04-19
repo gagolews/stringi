@@ -67,13 +67,15 @@
 #' if the input character vector is in the native encoding,
 #' it will be converted to UTF-8 automatically.
 #'
+#' For more general text transforms refer to \code{\link{stri_trans_general}}.
+#'
 #'
 #' @param str character vector to be encoded
 #'
-#' @return The \code{stri_enc_nf*} functions return a character vector
+#' @return The \code{stri_trans_nf*} functions return a character vector
 #' of the same length as input (the output is always in UTF-8).
 #'
-#' On the other hand, \code{stri_enc_isnf*} return a logical vector.
+#' On the other hand, \code{stri_trans_isnf*} return a logical vector.
 #'
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,
@@ -94,76 +96,76 @@
 #'
 #' @examples
 #' \dontrun{
-#' stri_enc_nfd("\u0105") # Polish a with ogonek -> a, ogonek
-#' stri_enc_nfkc("\ufdfa") # 1 codepoint -> 18 codepoints
+#' stri_trans_nfd("\u0105") # Polish a with ogonek -> a, ogonek
+#' stri_trans_nfkc("\ufdfa") # 1 codepoint -> 18 codepoints
 #' }
 #'
 #' @export
-#' @rdname stri_enc_nf
-#' @family encoding_normalization
-stri_enc_nfc <- function(str) {
-   .Call("stri_enc_nf", str, 10L, PACKAGE="stringi")
+#' @rdname stri_trans_nf
+#' @family transform
+stri_trans_nfc <- function(str) {
+   .Call("stri_trans_nf", str, 10L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_nfd <- function(str) {
-   .Call("stri_enc_nf", str, 20L, PACKAGE="stringi")
+stri_trans_nfd <- function(str) {
+   .Call("stri_trans_nf", str, 20L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_nfkd <- function(str) {
-   .Call("stri_enc_nf", str, 21L, PACKAGE="stringi")
+stri_trans_nfkd <- function(str) {
+   .Call("stri_trans_nf", str, 21L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_nfkc <- function(str) {
-   .Call("stri_enc_nf", str, 11L, PACKAGE="stringi")
+stri_trans_nfkc <- function(str) {
+   .Call("stri_trans_nf", str, 11L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_nfkc_casefold <- function(str) {
-   .Call("stri_enc_nf", str, 12L, PACKAGE="stringi")
+stri_trans_nfkc_casefold <- function(str) {
+   .Call("stri_trans_nf", str, 12L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_isnfc <- function(str) {
-   .Call("stri_enc_isnf", str, 10L, PACKAGE="stringi")
+stri_trans_isnfc <- function(str) {
+   .Call("stri_trans_isnf", str, 10L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_isnfd <- function(str) {
-   .Call("stri_enc_isnf", str, 20L, PACKAGE="stringi")
+stri_trans_isnfd <- function(str) {
+   .Call("stri_trans_isnf", str, 20L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_isnfkd <- function(str) {
-   .Call("stri_enc_isnf", str, 21L, PACKAGE="stringi")
+stri_trans_isnfkd <- function(str) {
+   .Call("stri_trans_isnf", str, 21L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_isnfkc <- function(str) {
-   .Call("stri_enc_isnf", str, 11L, PACKAGE="stringi")
+stri_trans_isnfkc <- function(str) {
+   .Call("stri_trans_isnf", str, 11L, PACKAGE="stringi")
 }
 
 
-#' @rdname stri_enc_nf
+#' @rdname stri_trans_nf
 #' @export
-stri_enc_isnfkc_casefold <- function(str) {
-   .Call("stri_enc_isnf", str, 12L, PACKAGE="stringi")
+stri_trans_isnfkc_casefold <- function(str) {
+   .Call("stri_trans_isnf", str, 12L, PACKAGE="stringi")
 }

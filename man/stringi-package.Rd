@@ -10,8 +10,9 @@ effort to create software that works as you expect on any
 platform, in each locale, and any ``native'' system
 encoding.
 
-\bold{Keywords}: internationalization, localization, ICU,
-ICU4C, i18n, l10n, Unicode
+\bold{Keywords}: R, text processing, strings,
+internationalization, localization, ICU, ICU4C, i18n, l10n,
+Unicode.
 
 \bold{Homepage}: \url{http://stringi.rexamine.com}
 
@@ -25,8 +26,8 @@ details.
 Manual pages on general topics (must-read): \itemize{ \item
 \link{stringi-encoding} -- character encoding issues,
 including information on encoding management in
-\pkg{stringi}, as well as on encoding detection,
-conversion, and Unicode normalization.
+\pkg{stringi}, as well as on encoding detection and
+conversion.
 
 \item \link{stringi-locale} -- locale issues, including
 i.a. locale management and specification in \pkg{stringi},
@@ -73,9 +74,10 @@ with its functions' arguments. }
 
   \item \code{\link{stri_trans_tolower}} (among others) for
   case mapping, i.e. conversion to lower, UPPER, or Title
-  Case, and \code{\link{stri_trans_general}} for other very
-  general yet powerful text transforms, including
-  transliteration.
+  Case, \item \code{\link{stri_trans_nfc}} (i.a.) for
+  Unicode normalization, and
+  \code{\link{stri_trans_general}} for other very general
+  yet powerful text transforms, including transliteration.
 
   \item \code{\link{stri_cmp}}, \code{\link{\%<\%}},
   \code{\link{stri_order}}, \code{\link{stri_sort}},

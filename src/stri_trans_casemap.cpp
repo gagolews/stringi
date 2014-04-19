@@ -89,7 +89,7 @@
  *          (this is much faster for UTF-8 and slightly faster for 8bit enc)
  *          Estimates minimal buffer size.
 */
-SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale)
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);

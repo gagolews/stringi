@@ -14,7 +14,7 @@ stri_enc_toascii
 source('compat_tab_init.R')
 title <- 'Computing "length" of a string'
 end.rcode-->
-   
+
 <head>
 <title>stringi &ndash; Compatibility Tables</title>
 
@@ -22,11 +22,11 @@ end.rcode-->
 <!--    <meta charset='UTF-8' /> -->
    <meta name="Author" content="Marek Gągolewski" />
    <meta http-equiv="Content-Language" content="en-US" />
-   
+
    <meta name="Keywords" content="Rexamine, stringi, ICU, R" />
    <meta name="Description" content="stringi Compatibility Tables" />
    <meta name="Robots" content="index, follow" />
-   
+
 <style>
 <!--begin.rcode results='asis',echo=FALSE,cache=FALSE
 cat(readLines('compat_tab_style.css'),sep='\n') # embed CSS
@@ -116,7 +116,7 @@ end.rcode-->
 
 <div class='columns'>
 <div class='column1'><div class='columntitle'>base</div>
-<code><!--rinline "nchar()" --></code> 
+<code><!--rinline "nchar()" --></code>
 &ndash; does not handle NAs properly
 
 <!--begin.rcode
@@ -126,7 +126,7 @@ end.rcode-->
 </div>
 <div class='column2'><div class='columntitle'>stringr</div>
 
-<code><!--rinline "str_length()" --></code> 
+<code><!--rinline "str_length()" --></code>
 &ndash; handles NAs properly
 
 <!--begin.rcode
@@ -135,7 +135,7 @@ end.rcode-->
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-<code><!--rinline "stri_length()" --></code> 
+<code><!--rinline "stri_length()" --></code>
 &ndash; handles NAs properly
 
 <!--begin.rcode
@@ -148,8 +148,8 @@ end.rcode-->
 
 <h3>General Remark</h3>
 
-If a given string is in UTF-8 and not has been properly 
-Unicode normalized (e.g. by stri_enc_nfc), 
+If a given string is in UTF-8 and not has been properly
+Unicode normalized (e.g. by stri_trans_nfc),
 the returned number may sometimes be misleading.
 
 <p>Determining the length of an 8-bit-encoded string is O(1)
@@ -178,7 +178,7 @@ end.rcode-->
    &ndash; does not handle NAs properly
 
 <!--begin.rcode
-nchar(c("ąśćźół", "abc", NA, ""), type='bytes')   
+nchar(c("ąśćźół", "abc", NA, ""), type='bytes')
 end.rcode-->
 
 </div>
@@ -188,7 +188,7 @@ end.rcode-->
 
 </div>
 <div class='column3'><div class='columntitle'>stringi</div>
-   <code><!--rinline "stri_numbytes()" --></code>  
+   <code><!--rinline "stri_numbytes()" --></code>
    handles missing values properly.
 
 <!--begin.rcode
@@ -209,7 +209,7 @@ in your string processing activities &ndash; see rather <!--rinline "stri_length
 <h3>Performance comparison</h3>
 
 <!--begin.rcode
-test1 <- rep(c("ąśćźół", "abc", NA, ""), 100)              # first string is in UTF-8 
+test1 <- rep(c("ąśćźół", "abc", NA, ""), 100)              # first string is in UTF-8
 microbenchmark(nchar(test1, type='bytes'), stri_numbytes(test1))
 end.rcode-->
 
@@ -228,9 +228,9 @@ end.rcode-->
    the <!--rinline "cat()"--> function
    will use to print the string in a monospaced font.
    The same as chars if this cannot be calculated.
-   
+
    <p>The R manual does not state how the numbers are determined.</p>
-   
+
 <!--begin.rcode
 nchar(c("gryzeldą", "", NA,
    "持続可能な統計環境"), type='width')

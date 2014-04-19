@@ -22,7 +22,7 @@ toupper("R là một ngôn ngữ lập trình và môi trường phần mềm d�
 tolower("R là một ngôn ngữ lập trình và môi trường phần mềm dành cho tính toán và đồ họa thống kê.")
 toupper("R言語(アールげんご)は、オープンソースでフリーソフトウェアの統計解析向けプログラミング言語、及びその開発実行環境である。")
 tolower("R言語(アールげんご)は、オープンソースでフリーソフトウェアの統計解析向けプログラミング言語、及びその開発実行環境である。")
-   stri_enc_nfkc_casefold("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ")
+   stri_trans_nfkc_casefold("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ")
  š ť ž ľ č ě ď ň ř ů ĺ cz,sk
  Š Ť Ž Ľ Č Ě Ď Ň Ř Ů Ĺ
  ł ą ż ę ć ń ś ź pl
