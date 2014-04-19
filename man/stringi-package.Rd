@@ -73,7 +73,9 @@ with its functions' arguments. }
 
   \item \code{\link{stri_trans_tolower}} (among others) for
   case mapping, i.e. conversion to lower, UPPER, or Title
-  Case.
+  Case, and \code{\link{stri_trans_general}} for other very
+  general yet powerful text transforms, including
+  transliteration.
 
   \item \code{\link{stri_cmp}}, \code{\link{\%<\%}},
   \code{\link{stri_order}}, \code{\link{stri_sort}},
@@ -97,9 +99,9 @@ with its functions' arguments. }
   text files.
 
   \item TO DO [these will appear in future versions of
-  \pkg{stringi}]: pad, wrap, justify, HTML entities,
-  character translation, MIME Base 64 encode/decode, number
-  and data/time formatting, and many more. }
+  \pkg{stringi}]: pad, wrap, justify, HTML entities, MIME
+  Base 64 encode/decode, number and data/time formatting,
+  and many more. }
 
   Note that each man page has many links to other
   interesting facilities.

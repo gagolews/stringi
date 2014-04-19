@@ -129,16 +129,12 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
 
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      if (!str_cont.isNA(i)) {
-         UErrorCode status = U_ZERO_ERROR;
-         str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
-         if (U_FAILURE(status))
-            throw StriException(status);
-      }
+   for (R_len_t i=0; i<str_length; ++i) {
+      if (str_cont.isNA(i)) continue;
+      UErrorCode status = U_ZERO_ERROR;
+      str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
+      if (U_FAILURE(status))
+         throw StriException(status);
    }
 
    // normalizer shall not be deleted at all
