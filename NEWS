@@ -6,6 +6,10 @@
 
    * t.b.d.
 
+   * [NEW FUNCTION] stri_trans_general, stri_trans_list gives access
+      to ICU Transliterator: may be used to perform very general
+      text transforms.
+
 
 * 0.2-1 (2014-04-18) **devel**
 

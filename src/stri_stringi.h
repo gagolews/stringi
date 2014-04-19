@@ -55,6 +55,11 @@
 SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale);
 
 
+// transliterate.cpp:
+SEXP stri_trans_list();
+SEXP stri_trans_general(SEXP str, SEXP id);
+
+
 // common.cpp
 void    stri__set_names(SEXP object, R_len_t numnames, ...);
 SEXP    stri__make_character_vector(R_len_t numnames, ...);
