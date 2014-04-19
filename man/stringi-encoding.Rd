@@ -91,7 +91,7 @@ supported by any given codepage.
   character) and ``a''+``ogonek'' (two graphemes) are
   semantically the same. \pkg{stringi} provides functions
   to normalize character sequences, see
-  \code{\link{stri_enc_nfc}} for discussion. However,
+  \code{\link{stri_trans_nfc}} for discussion. However,
   denormalized strings do appear very rarely in typical
   string processing activities.
 
@@ -246,15 +246,6 @@ Other encoding_detection: \code{\link{stri_enc_detect2}};
 Other encoding_management: \code{\link{stri_enc_get}},
 \code{\link{stri_enc_set}}; \code{\link{stri_enc_info}};
 \code{\link{stri_enc_list}}; \code{\link{stri_enc_mark}}
-
-Other encoding_normalization: \code{\link{stri_enc_isnfc}},
-\code{\link{stri_enc_isnfd}},
-\code{\link{stri_enc_isnfkc}},
-\code{\link{stri_enc_isnfkc_casefold}},
-\code{\link{stri_enc_isnfkd}}, \code{\link{stri_enc_nfc}},
-\code{\link{stri_enc_nfd}}, \code{\link{stri_enc_nfkc}},
-\code{\link{stri_enc_nfkc_casefold}},
-\code{\link{stri_enc_nfkd}}
 
 Other stringi_general_topics:
 \code{\link{stringi-arguments}};

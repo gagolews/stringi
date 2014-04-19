@@ -37,9 +37,9 @@
 
 
 /** List available transliterators
- * 
+ *
  * @return character vector
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
  */
 SEXP stri_trans_list()
@@ -49,8 +49,8 @@ SEXP stri_trans_list()
    SEXP ret/*, names*/;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
 //   STRI__PROTECT(names = Rf_allocVector(STRSXP, n));
-   
-   
+
+
    // MG: I reckon than IDs are more readable than DisplayNames
    for (R_len_t i=0; i<n; ++i) {
       UnicodeString id = Transliterator::getAvailableID(i);
@@ -62,7 +62,7 @@ SEXP stri_trans_list()
 //      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(nameutf8.c_str(), nameutf8.length(), CE_UTF8));
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(idutf8.c_str(), idutf8.length(), CE_UTF8));
    }
-   
+
 //   Rf_setAttrib(ret, R_NamesSymbol, names);
    STRI__UNPROTECT_ALL
    return ret;
@@ -71,11 +71,11 @@ SEXP stri_trans_list()
 
 
 /** General text transform with ICU Transliterator
- * 
+ *
  * @param str character vector
  * @param id single string
  * @return character vector
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
  */
 SEXP stri_trans_general(SEXP str, SEXP id)
@@ -83,25 +83,25 @@ SEXP stri_trans_general(SEXP str, SEXP id)
    str = stri_prepare_arg_string(str, "str");
    id  = stri_prepare_arg_string_1(id, "id");
    R_len_t str_length = LENGTH(str);
-   
+
    Transliterator* trans = NULL;
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16  id_cont(id, 1);
    if (id_cont.isNA(0))
       return stri__vector_NA_strings(str_length);
-   
+
    UErrorCode status = U_ZERO_ERROR;
    trans = Transliterator::createInstance(id_cont.get(0), UTRANS_FORWARD, status);
    if (U_FAILURE(status))
       throw StriException(status);
-   
+
    StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
-   
+
    for (R_len_t i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) continue;
       trans->transliterate(str_cont.getWritable(i));
    }
-   
+
    if (trans) { delete trans; trans = NULL; }
    return str_cont.toR();
    STRI__ERROR_HANDLER_END(

@@ -38,8 +38,8 @@
 #' works as you expect on any platform, in each locale, and any
 #' ``native'' system encoding.
 #'
-#' \bold{Keywords}: internationalization, localization,
-#'     ICU, ICU4C, i18n, l10n, Unicode
+#' \bold{Keywords}: R, text processing, strings, internationalization,
+#'     localization, ICU, ICU4C, i18n, l10n, Unicode.
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
@@ -54,7 +54,7 @@
 #' \itemize{
 #' \item \link{stringi-encoding} -- character encoding issues,
 #'      including information on encoding management in \pkg{stringi}, as well as
-#'      on encoding detection, conversion, and Unicode normalization.
+#'      on encoding detection and conversion.
 #'
 #' \item \link{stringi-locale} -- locale issues, including i.a. locale
 #'      management and specification in \pkg{stringi}, and the list of
@@ -103,6 +103,7 @@
 #'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
 #' i.e. conversion to lower, UPPER, or Title Case,
+#' \item \code{\link{stri_trans_nfc}} (i.a.) for Unicode normalization,
 #' and \code{\link{stri_trans_general}} for other very general yet powerful
 #' text transforms, including transliteration.
 #'

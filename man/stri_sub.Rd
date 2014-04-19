@@ -49,7 +49,7 @@ Of course, the indices are code point-based, and not
 byte-based. Note that for some Unicode strings, the
 extracted substrings may not be well-formed, especially if
 the input is not NFC-normalized (see
-\code{\link{stri_enc_nfc}}), includes byte order marks,
+\code{\link{stri_trans_nfc}}), includes byte order marks,
 Bidirectional text marks, and so on. Handle with care.
 
 Indices are 1-based, i.e. an index equal to 1 denotes the

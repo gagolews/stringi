@@ -124,7 +124,7 @@
 #' ambiguous representation. For example, ``a with ogonek'' (one character)
 #' and ``a''+``ogonek'' (two graphemes) are semantically the same.
 #' \pkg{stringi} provides functions to normalize
-#' character sequences, see \code{\link{stri_enc_nfc}}
+#' character sequences, see \code{\link{stri_trans_nfc}}
 #' for discussion. However, denormalized strings
 #' do appear very rarely in typical string processing activities.
 #'
@@ -248,7 +248,6 @@
 #' @rdname stringi-encoding
 #' @family stringi_general_topics
 #' @family encoding_management
-#' @family encoding_normalization
 #' @family encoding_detection
 #' @family encoding_conversion
 #'

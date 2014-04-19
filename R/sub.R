@@ -51,7 +51,7 @@
 #' and not byte-based.
 #' Note that for some Unicode strings, the extracted substrings may not
 #' be well-formed, especially if the input is not NFC-normalized
-#' (see \code{\link{stri_enc_nfc}}),
+#' (see \code{\link{stri_trans_nfc}}),
 #' includes byte order marks, Bidirectional text marks, and so on.
 #' Handle with care.
 #'

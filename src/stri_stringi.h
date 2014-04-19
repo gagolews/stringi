@@ -51,15 +51,6 @@
 // ------------------------------------------------------------------------
 
 
-// casemap.cpp:
-SEXP stri_trans_case(SEXP str, SEXP type, SEXP locale);
-
-
-// transliterate.cpp:
-SEXP stri_trans_list();
-SEXP stri_trans_general(SEXP str, SEXP id);
-
-
 // common.cpp
 void    stri__set_names(SEXP object, R_len_t numnames, ...);
 SEXP    stri__make_character_vector(R_len_t numnames, ...);
@@ -163,11 +154,6 @@ SEXP    stri_enc_toascii(SEXP str);
 SEXP stri_enc_detect2(SEXP str, SEXP loc);
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);
 SEXP stri_enc_isenc(SEXP str, SEXP type);
-
-
-// encoding_normalization.cpp:
-SEXP stri_enc_nf(SEXP s, SEXP type);
-SEXP stri_enc_isnf(SEXP s, SEXP type);
 
 
 // uloc.cpp:
@@ -274,6 +260,20 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern);
 // stats.cpp
 SEXP stri_stats_general(SEXP str);
 SEXP stri_stats_latex(SEXP str);
+
+
+// trans_casemap.cpp:
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale);
+
+
+// trans_normalization.cpp:
+SEXP stri_trans_nf(SEXP s, SEXP type);
+SEXP stri_trans_isnf(SEXP s, SEXP type);
+
+
+// trans_transliterate.cpp:
+SEXP stri_trans_list();
+SEXP stri_trans_general(SEXP str, SEXP id);
 
 
 // test.cpp /* internal, but in namespace: for testing */

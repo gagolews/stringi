@@ -1,45 +1,45 @@
-\name{stri_enc_nfc}
-\alias{stri_enc_isnfc}
-\alias{stri_enc_isnfd}
-\alias{stri_enc_isnfkc}
-\alias{stri_enc_isnfkc_casefold}
-\alias{stri_enc_isnfkd}
-\alias{stri_enc_nfc}
-\alias{stri_enc_nfd}
-\alias{stri_enc_nfkc}
-\alias{stri_enc_nfkc_casefold}
-\alias{stri_enc_nfkd}
+\name{stri_trans_nfc}
+\alias{stri_trans_isnfc}
+\alias{stri_trans_isnfd}
+\alias{stri_trans_isnfkc}
+\alias{stri_trans_isnfkc_casefold}
+\alias{stri_trans_isnfkd}
+\alias{stri_trans_nfc}
+\alias{stri_trans_nfd}
+\alias{stri_trans_nfkc}
+\alias{stri_trans_nfkc_casefold}
+\alias{stri_trans_nfkd}
 \title{Perform or Check For Unicode Normalization}
 \usage{
-stri_enc_nfc(str)
+stri_trans_nfc(str)
 
-stri_enc_nfd(str)
+stri_trans_nfd(str)
 
-stri_enc_nfkd(str)
+stri_trans_nfkd(str)
 
-stri_enc_nfkc(str)
+stri_trans_nfkc(str)
 
-stri_enc_nfkc_casefold(str)
+stri_trans_nfkc_casefold(str)
 
-stri_enc_isnfc(str)
+stri_trans_isnfc(str)
 
-stri_enc_isnfd(str)
+stri_trans_isnfd(str)
 
-stri_enc_isnfkd(str)
+stri_trans_isnfkd(str)
 
-stri_enc_isnfkc(str)
+stri_trans_isnfkc(str)
 
-stri_enc_isnfkc_casefold(str)
+stri_trans_isnfkc_casefold(str)
 }
 \arguments{
   \item{str}{character vector to be encoded}
 }
 \value{
-The \code{stri_enc_nf*} functions return a character vector
-of the same length as input (the output is always in
+The \code{stri_trans_nf*} functions return a character
+vector of the same length as input (the output is always in
 UTF-8).
 
-On the other hand, \code{stri_enc_isnf*} return a logical
+On the other hand, \code{stri_trans_isnf*} return a logical
 vector.
 }
 \description{
@@ -77,11 +77,14 @@ NFC, see RFC\#5198.
 As usual in \pkg{stringi}, if the input character vector is
 in the native encoding, it will be converted to UTF-8
 automatically.
+
+For more general text transforms refer to
+\code{\link{stri_trans_general}}.
 }
 \examples{
 \dontrun{
-stri_enc_nfd("\\u0105") # Polish a with ogonek -> a, ogonek
-stri_enc_nfkc("\\ufdfa") # 1 codepoint -> 18 codepoints
+stri_trans_nfd("\\u0105") # Polish a with ogonek -> a, ogonek
+stri_trans_nfkc("\\ufdfa") # 1 codepoint -> 18 codepoints
 }
 }
 \references{
@@ -103,7 +106,10 @@ Normalization} -- W3C Working Draft,
 \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 }
 \seealso{
-Other encoding_normalization:
-\code{\link{stringi-encoding}}
+Other transform: \code{\link{stri_trans_general}};
+\code{\link{stri_trans_list}};
+\code{\link{stri_trans_tolower}},
+\code{\link{stri_trans_totitle}},
+\code{\link{stri_trans_toupper}}
 }
 

@@ -16,7 +16,7 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1,2))))
 
    expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a"), list(matrix(c(1,2))))
-   expect_equivalent(stri_locate_all_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,3))))
+   expect_equivalent(stri_locate_all_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), list(matrix(c(1,3))))
    expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a"), list(matrix(c(2,2))))
 
    suppressWarnings(expect_equivalent(stri_locate_all_fixed("",  ""), list(matrix(c(NA,NA_integer_)))))
@@ -42,7 +42,7 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed("abbabbab", "ab", NA), list(matrix(c(1,4,7,2,5,8),ncol=2)))
 
    expect_equivalent(stri_locate_all_fixed("\u0105a", "\u0105a", NA), list(matrix(c(1,2))))
-   expect_equivalent(stri_locate_all_fixed(stri_enc_nfkd("\u0105a"), "\u0105a", NA), list(matrix(c(NA_integer_,NA_integer_))))
+   expect_equivalent(stri_locate_all_fixed(stri_trans_nfkd("\u0105a"), "\u0105a", NA), list(matrix(c(NA_integer_,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed("\U0001F0A0a", "a", NA), list(matrix(c(2,2))))
 
    suppressWarnings(expect_equivalent(stri_locate_all_fixed("",  "", NA), list(matrix(c(NA,NA_integer_)))))
@@ -70,7 +70,7 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32"), matrix(c(NA_integer_,NA_integer_)))
 
    expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
-   expect_equivalent(stri_locate_first_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
    expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))
 
    expect_warning(expect_equivalent(stri_locate_first_fixed("",  ""), matrix(c(NA,NA_integer_))))
@@ -96,7 +96,7 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32", NA), matrix(c(NA_integer_,NA_integer_)))
 
    expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a", NA), matrix(c(1,2)))
-   expect_equivalent(stri_locate_first_fixed(stri_enc_nfkd("\u0105a"), "\u0105a", NA), matrix(c(NA_integer_,NA)))
+   expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a", NA), matrix(c(NA_integer_,NA)))
    expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a", NA), matrix(c(2,2)))
 
    expect_warning(expect_equivalent(stri_locate_first_fixed("",  "", NA), matrix(c(NA,NA_integer_))))
@@ -127,10 +127,10 @@ test_that("stri_locate_last_fixed", {
    expect_equivalent(stri_locate_last_fixed("1-1-2-33--2", "-32"), matrix(c(NA_integer_,NA_integer_)))
 
    expect_equivalent(stri_locate_last_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
-   expect_equivalent(stri_locate_last_fixed(stri_enc_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
+   expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
    expect_equivalent(stri_locate_last_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))
    #additional test for overlapping pattern
-   expect_equivalent(stri_locate_last_fixed(stri_enc_nfkd("\u0105a\u0105a\u0105a"), "\u0105a\u0105a"), matrix(c(4,9)))
+   expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("\u0105a\u0105a\u0105a"), "\u0105a\u0105a"), matrix(c(4,9)))
 
    expect_warning(expect_equivalent(stri_locate_last_fixed("",  ""), matrix(c(NA,NA_integer_))))
    expect_warning(expect_equivalent(stri_locate_last_fixed("a", ""), matrix(c(NA,NA_integer_))))
@@ -156,7 +156,7 @@ test_that("stri_locate_last_fixed", {
    expect_equivalent(stri_locate_last_fixed("1-1-2-33--2", "-32", NA), matrix(c(NA_integer_,NA_integer_)))
 
    expect_equivalent(stri_locate_last_fixed("\u0105a", "\u0105a", NA), matrix(c(1,2)))
-   expect_equivalent(stri_locate_last_fixed(stri_enc_nfkd("\u0105a"), "\u0105a", NA), matrix(c(NA_integer_,NA)))
+   expect_equivalent(stri_locate_last_fixed(stri_trans_nfkd("\u0105a"), "\u0105a", NA), matrix(c(NA_integer_,NA)))
    expect_equivalent(stri_locate_last_fixed("\U0001F0A0a", "a", NA), matrix(c(2,2)))
 
    expect_warning(expect_equivalent(stri_locate_last_fixed("",  "", NA), matrix(c(NA,NA_integer_))))

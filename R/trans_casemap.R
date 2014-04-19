@@ -46,6 +46,9 @@
 #'    differently depending on surrounding characters).
 #' }
 #'
+#' For more general (but not locale dependent)
+#' text transforms refer to \code{\link{stri_trans_general}}.
+#'
 #' @param str character vector
 #' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with
@@ -73,19 +76,19 @@
 #' stri_trans_totitle('taming of the shrew', locale='en_US') # TODO: we are working on this
 #' }
 stri_trans_tolower <- function(str, locale=NULL) {
-   .Call("stri_trans_case", str, 1L, locale, PACKAGE="stringi")
+   .Call("stri_trans_casemap", str, 1L, locale, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_trans_case
 stri_trans_toupper <- function(str, locale=NULL) {
-   .Call("stri_trans_case", str, 2L, locale, PACKAGE="stringi")
+   .Call("stri_trans_casemap", str, 2L, locale, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_trans_case
 stri_trans_totitle <- function(str, locale=NULL) {
-   .Call("stri_trans_case", str, 3L, locale, PACKAGE="stringi")
+   .Call("stri_trans_casemap", str, 3L, locale, PACKAGE="stringi")
 }

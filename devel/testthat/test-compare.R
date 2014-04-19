@@ -22,7 +22,7 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned"), -1)
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE)), 0)
 
-   expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105'), 0L)
+   expect_equivalent(stri_cmp(stri_trans_nfkd('\u0105'), '\u105'), 0L)
 
 })
 
@@ -82,7 +82,7 @@ test_that("stri_cmp_eq", {
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned",
       stri_opts_collator(alternate_shifted=TRUE)), TRUE)
 
-   expect_equivalent(stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105'), TRUE)
+   expect_equivalent(stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105'), TRUE)
 
 })
 
@@ -106,7 +106,7 @@ test_that("stri_cmp_eq_bytewise", {
    expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000", opts_collator=NA), FALSE)
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned", opts_collator=NA), FALSE)
 
-   expect_equivalent(stri_cmp_eq(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105', opts_collator=NA), FALSE)
 
 })
 
@@ -127,7 +127,7 @@ test_that("stri_cmp_codepoints", {
    expect_equivalent(stri_cmp("dupa10000", "dupa1000", opts_collator=NA), 1)
 
 
-   expect_equivalent(stri_cmp(stri_enc_nfkd('\u0105'), '\u105', opts_collator=NA), -1L)
+   expect_equivalent(stri_cmp(stri_trans_nfkd('\u0105'), '\u105', opts_collator=NA), -1L)
 
 })
 
@@ -191,7 +191,7 @@ test_that("stri_unique", {
    expect_equivalent(stri_unique(rep(letters,10)), letters)
    expect_equivalent(stri_unique(rep(letters,each=10)), letters)
    expect_equivalent(stri_unique(rev(LETTERS)), rev(LETTERS))
-   expect_equivalent(stri_unique(c("\u0105", stri_enc_nfd("\u0105"))), "\u0105")
+   expect_equivalent(stri_unique(c("\u0105", stri_trans_nfd("\u0105"))), "\u0105")
    expect_equivalent(stri_unique(c("abc","ab","abc","ab","aba")),c("abc","ab","aba"))
    expect_equivalent(stri_unique(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
             opts_collator=list(locale="pl_PL")),
@@ -207,7 +207,7 @@ test_that("stri_duplicated", {
    expect_equivalent(stri_duplicated(rep(letters,10)), c(rep(FALSE,length(letters)),rep(TRUE,length(letters)*9)))
    expect_equivalent(stri_duplicated(rep(letters,each=10)), rep(c(F,rep(T,9)),length(letters)))
    expect_equivalent(stri_duplicated(rev(LETTERS)), rep(FALSE,length(letters)))
-   expect_equivalent(stri_duplicated(c("\u0105", stri_enc_nfd("\u0105"))), c(F,T))
+   expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105"))), c(F,T))
    expect_equivalent(stri_duplicated(c("abc","ab","abc","ab","aba")),c(F,F,T,T,F))
    expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
    										opts_collator=list(locale="pl_PL")),
@@ -219,7 +219,7 @@ test_that("stri_duplicated", {
    expect_equivalent(stri_duplicated(rep(letters,10),TRUE), c(rep(TRUE,length(letters)*9),rep(FALSE,length(letters))))
    expect_equivalent(stri_duplicated(rep(letters,each=10),TRUE), rep(c(rep(T,9),F),length(letters)))
    expect_equivalent(stri_duplicated(rev(LETTERS),TRUE), rep(FALSE,length(letters)))
-   expect_equivalent(stri_duplicated(c("\u0105", stri_enc_nfd("\u0105")),TRUE), c(T,F))
+   expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105")),TRUE), c(T,F))
    expect_equivalent(stri_duplicated(c("abc","ab","abc","ab","aba"),TRUE),c(T,T,F,F,F))
    expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),TRUE,
    											 opts_collator=list(locale="pl_PL")), c(F,F,T,F,F,F))
@@ -234,7 +234,7 @@ test_that("stri_duplicated_any", {
    expect_equivalent(stri_duplicated_any(rep(letters,10)), length(letters)+1)
    expect_equivalent(stri_duplicated_any(rep(letters,each=10)), 2)
    expect_equivalent(stri_duplicated_any(rev(LETTERS)), 0)
-   expect_equivalent(stri_duplicated_any(c("\u0105", stri_enc_nfd("\u0105"))), 2)
+   expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105"))), 2)
    expect_equivalent(stri_duplicated_any(c("abc","ab","abc","ab","aba")),3)
    expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
    												  opts_collator=list(locale="pl_PL")), 6)
@@ -245,7 +245,7 @@ test_that("stri_duplicated_any", {
    expect_equivalent(stri_duplicated_any(rep(letters,10),TRUE), length(letters)*9)
    expect_equivalent(stri_duplicated_any(rep(letters,each=10),TRUE), length(letters)*10-1)
    expect_equivalent(stri_duplicated_any(rev(LETTERS),TRUE), 0)
-   expect_equivalent(stri_duplicated_any(c("\u0105", stri_enc_nfd("\u0105")),TRUE), 1)
+   expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105")),TRUE), 1)
    expect_equivalent(stri_duplicated_any(c("abc","ab","abc","ab","aba"),TRUE),2)
    expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),TRUE,
    												  opts_collator=list(locale="pl_PL")), 3)

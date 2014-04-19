@@ -91,7 +91,7 @@ stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak
 stri_cmp("hladny", "chladny") # < or > (depends on locale)
 stri_cmp_eq("hladny", "HLADNY", stri_opts_collator(strength=2))
 stri_cmp_eq("hladn\\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-stri_cmp_eq(stri_enc_nfkd('\\u0105'), '\\u105') # but cf. stri_enc_nfkd('\\u0105') != '\\u105'
+stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105') # but cf. stri_trans_nfkd('\\u0105') != '\\u105'
 }
 }
 \seealso{

@@ -108,8 +108,11 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
+ *          renamed: stri_enc_nf -> stri_trans_nf
  */
-SEXP stri_enc_nf(SEXP str, SEXP type)
+SEXP stri_trans_nf(SEXP str, SEXP type)
 {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
    R_len_t str_length = LENGTH(str);
@@ -155,8 +158,11 @@ SEXP stri_enc_nf(SEXP str, SEXP type)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException-friendly
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
+ *          renamed: stri_enc_nf -> stri_trans_nf
  */
-SEXP stri_enc_isnf(SEXP str, SEXP type)
+SEXP stri_trans_isnf(SEXP str, SEXP type)
 {
    str = stri_prepare_arg_string(str, "str");    // prepare string argument
    R_len_t str_length = LENGTH(str);
