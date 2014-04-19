@@ -102,7 +102,9 @@
 #' of code points in a string.
 #'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
-#' i.e. conversion to lower, UPPER, or Title Case.
+#' i.e. conversion to lower, UPPER, or Title Case,
+#' and \code{\link{stri_trans_general}} for other very general yet powerful
+#' text transforms, including transliteration.
 #'
 #' \item \code{\link{stri_cmp}}, \code{\link{\%<\%}}, \code{\link{stri_order}},
 #' \code{\link{stri_sort}}, \code{\link{stri_unique}} and
@@ -124,7 +126,7 @@
 #'
 #' \item TO DO [these will appear in future versions
 #' of \pkg{stringi}]: pad, wrap, justify, HTML entities,
-#' character translation, MIME Base 64 encode/decode,
+#' MIME Base 64 encode/decode,
 #' number and data/time formatting,
 #' and many more.
 #' }

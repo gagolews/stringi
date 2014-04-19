@@ -46,7 +46,7 @@ SEXP stri_trans_list()
 {
    STRI__ERROR_HANDLER_BEGIN
    int32_t n = Transliterator:: countAvailableIDs();
-   SEXP ret, names;
+   SEXP ret/*, names*/;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
 //   STRI__PROTECT(names = Rf_allocVector(STRSXP, n));
    
@@ -80,6 +80,31 @@ SEXP stri_trans_list()
  */
 SEXP stri_trans_general(SEXP str, SEXP id)
 {
-   Rf_error("t.b.d.");
-   return R_NilValue;
+   str = stri_prepare_arg_string(str, "str");
+   id  = stri_prepare_arg_string_1(id, "id");
+   R_len_t str_length = LENGTH(str);
+   
+   Transliterator* trans = NULL;
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16  id_cont(id, 1);
+   if (id_cont.isNA(0))
+      return stri__vector_NA_strings(str_length);
+   
+   UErrorCode status = U_ZERO_ERROR;
+   trans = Transliterator::createInstance(id_cont.get(0), UTRANS_FORWARD, status);
+   if (U_FAILURE(status))
+      throw StriException(status);
+   
+   StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
+   
+   for (R_len_t i=0; i<str_length; ++i) {
+      if (str_cont.isNA(i)) continue;
+      trans->transliterate(str_cont.getWritable(i));
+   }
+   
+   if (trans) { delete trans; trans = NULL; }
+   return str_cont.toR();
+   STRI__ERROR_HANDLER_END(
+      if (trans) { delete trans; trans = NULL; }
+   )
 }
