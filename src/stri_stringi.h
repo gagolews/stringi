@@ -249,7 +249,7 @@ SEXP stri_trim_right(SEXP str, SEXP pattern);
 
 
 // pad.cpp
-//SEXP stri_pad(SEXP str, SEXP length, SEXP pad);   // ...TO DO...  [version >= 0.2]
+SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad);
 
 
 // random.cpp

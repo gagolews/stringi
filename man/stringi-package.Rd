@@ -67,7 +67,9 @@ with its functions' arguments. }
 
   \item \code{\link{stri_trim}} (among others) for trimming
   characters from the beginning or/and end of a string, see
-  also \link{stringi-search-charclass}.
+  also \link{stringi-search-charclass}, and
+  \code{\link{stri_pad}} for padding strings so that they
+  have the same minimal number of code points.
 
   \item \code{\link{stri_length}} (among others) for
   determining the number of code points in a string.
@@ -101,9 +103,9 @@ with its functions' arguments. }
   text files.
 
   \item TO DO [these will appear in future versions of
-  \pkg{stringi}]: pad, wrap, justify, HTML entities, MIME
-  Base 64 encode/decode, number and data/time formatting,
-  and many more. }
+  \pkg{stringi}]: wrap, justify, HTML entities, MIME Base
+  64 encode/decode, number and data/time formatting, and
+  many more. }
 
   Note that each man page has many links to other
   interesting facilities.
