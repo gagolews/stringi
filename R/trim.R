@@ -57,7 +57,7 @@
 #' For trimming whitespaces, please note the difference
 #' between Unicode binary property `\code{\\p\{Wspace\}}` (more general)
 #' and general character category `\code{\\p\{Z\}}`,
-#' see \link{stringi-search-charclass}
+#' see \link{stringi-search-charclass}.
 #'
 #' @param str character vector
 #' @param pattern character vector specifying character classes that
@@ -76,6 +76,7 @@
 #' @aliases stri_trim
 #' @family search_trim
 #' @family search_charclass
+#' @family whitespaces
 #' @rdname stri_trim
 #' @export
 stri_trim_both <- function(str, pattern="\\P{Wspace}") {

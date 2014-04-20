@@ -108,7 +108,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_match_all_regex,            3),
    STRI__MAKE_CALL_METHOD(stri_numbytes,                   1),
    STRI__MAKE_CALL_METHOD(stri_order_or_sort,              5),
-//   STRI__MAKE_CALL_METHOD(stri_pad,                        3), // TODO: version >= 0.2
+   STRI__MAKE_CALL_METHOD(stri_pad,                        4),
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_string,         2),
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_double,         2),
    STRI__MAKE_CALL_METHOD(stri_prepare_arg_integer,        2),

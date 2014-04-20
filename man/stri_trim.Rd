@@ -52,7 +52,7 @@ expressions. E.g. you may get \code{"23.5"} out of
 For trimming whitespaces, please note the difference
 between Unicode binary property `\code{\\p\{Wspace\}}`
 (more general) and general character category
-`\code{\\p\{Z\}}`, see \link{stringi-search-charclass}
+`\code{\\p\{Z\}}`, see \link{stringi-search-charclass}.
 }
 \examples{
 stri_trim_left("               aaa")
@@ -85,5 +85,7 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 \code{\link{stri_split_charclass}};
 \code{\link{stringi-search-charclass}};
 \code{\link{stringi-search}}
+
+Other whitespaces: \code{\link{stri_pad}}
 }
 

@@ -46,7 +46,7 @@ invisible(NULL) # TO BE DONE, version >= 0.2
 # #' @details Greedy algorithm is simple way of word wrapping and it always puts as many words on each line as possible. This method minimize the number of space left at the end of every line and always uses the minimum number of lines. Disadvantage of this method could be fact that the number of empty space at the end of lines may be various. Dynamic algorithm is more complex, but it returns text wrapped more aesthetic. This method minimize the squared number of space, so the text is arranged evenly.
 # #'
 # #' @return character vector of reformatted strings
-# #'
+# #'@family whitespaces
 # #' @examples
 # #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 # #'       nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
