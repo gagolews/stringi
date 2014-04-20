@@ -4,7 +4,7 @@ benchmark_description <- "NFC, NFD, NFKC, NFKD, NKFC_Casefold (UTF-8 strings)"
 benchmark_do <- function() {
    library('stringi')
 
-   text    <- stri_trans_toutf8(readLines('devel/benchmarks/pan_tadeusz_15.txt', encoding='UTF-8'))
+   text    <- stri_enc_toutf8(readLines('devel/benchmarks/pan_tadeusz_15.txt', encoding='UTF-8'))
    nfc     <- stri_trans_nfc(text)
    nfd     <- stri_trans_nfd(text)
    nfkc    <- stri_trans_nfkc(text)

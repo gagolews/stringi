@@ -63,7 +63,7 @@
 #' @family locale_sensitive
 #' @family transform
 #' @export
-#' @rdname stri_trans_case
+#' @rdname stri_trans_casemap
 #'
 #' @examples
 #' \dontrun{
@@ -73,7 +73,6 @@
 #' stri_trans_tolower(c('AbC','123','\u0105\u0104'))
 #' stri_trans_totitle(c('AbC','123','\u0105\u0104'))
 #' stri_trans_totitle("aLA mA kOTA")
-#' stri_trans_totitle('taming of the shrew', locale='en_US') # TODO: we are working on this
 #' }
 stri_trans_tolower <- function(str, locale=NULL) {
    .Call("stri_trans_casemap", str, 1L, locale, PACKAGE="stringi")
@@ -81,14 +80,14 @@ stri_trans_tolower <- function(str, locale=NULL) {
 
 
 #' @export
-#' @rdname stri_trans_case
+#' @rdname stri_trans_casemap
 stri_trans_toupper <- function(str, locale=NULL) {
    .Call("stri_trans_casemap", str, 2L, locale, PACKAGE="stringi")
 }
 
 
 #' @export
-#' @rdname stri_trans_case
+#' @rdname stri_trans_casemap
 stri_trans_totitle <- function(str, locale=NULL) {
    .Call("stri_trans_casemap", str, 3L, locale, PACKAGE="stringi")
 }
