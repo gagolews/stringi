@@ -31,34 +31,72 @@
 
 
 #' @title
-#' Pad a String
+#' Pad (Left/Right/Center Align) a String
 #'
 #' @description
-#' Adds \code{pad} characters at the given \code{side} of each string
+#' Adds multiple \code{pad} characters at the given \code{side}(s) of each string
 #' so that each output string consists of at least \code{min_length} code points.
+#' This function may be used to center or left/right-align each string.
 #' 
 #' @details
-#' Vectorized over \code{str}, \code{min_length}, \code{side}, and \code{pad}.
+#' Vectorized over \code{str}, \code{min_length}, and \code{pad}.
 #' Each string in \code{pad} should consist of exactly one code point.
+#' 
+#' \code{stri_pad} is a convenience function, which dispatches
+#' control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
+#' it is a little bit slower.
 #' 
 #' Note that Unicode code points may have different widths when
 #' printed on screen. This function acts like each code point
 #' is of width 1.
+#' 
+#' See \code{\link{stri_trim_left}} (among others) for reverse operation.
 #'
 #' @param str character vector
 #' @param min_length integer vector giving minimal output string lengths
-#' @param side character vector; sides on which padding character is added
+#' @param side [\code{stri_pad} only] single character string;
+#'    sides on which padding character is added
 #'    (\code{left}, \code{right}, or \code{both})
 #' @param pad character vector giving padding code points
 #' 
 #' @return Returns a character vector.
 #'
+#' @rdname stri_pad
 #' @family whitespaces
 #' @examples
 #' stri_pad("stringi", 10, pad="#")
 #' stri_pad("stringi", 5:9, "right", pad="$")
 #' stri_pad(1, 3, pad=LETTERS)
 #' @export
-stri_pad <- function(str, min_length=max(stri_length(str)), side="left", pad=" ") {
-   .Call("stri_pad", str, min_length, side, pad, PACKAGE="stringi")
+stri_pad_both <- function(str, min_length=max(stri_length(str)), pad=" ") {
+   .Call("stri_pad", str, min_length, 2L, pad, PACKAGE="stringi")
 }
+
+
+#' @rdname stri_pad
+#' @export
+stri_pad_left <- function(str, min_length=max(stri_length(str)), pad=" ") {
+   .Call("stri_pad", str, min_length, 0L, pad, PACKAGE="stringi")
+}
+
+
+#' @rdname stri_pad
+#' @export
+stri_pad_right <- function(str, min_length=max(stri_length(str)), pad=" ") {
+   .Call("stri_pad", str, min_length, 1L, pad, PACKAGE="stringi")
+}
+
+
+#' @rdname stri_pad
+#' @export
+stri_pad <- function(str, min_length=max(stri_length(str)), side=c("left", "right", "both"), pad=" ") {
+   # `left` is default for compatibility with stringr
+   side <- match.arg(side) # this is slow
+
+   switch(side,
+          both  =stri_pad_both(str, min_length, pad),
+          left  =stri_pad_left(str, min_length, pad),
+          right =stri_pad_right(str, min_length, pad)
+   )
+}
+

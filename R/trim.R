@@ -42,7 +42,7 @@
 #'
 #' \code{stri_trim} is a convenience function, which dispatches
 #' control to \code{stri_trim_*}. Unless you are very lazy, do not use it:
-#' it is slower.
+#' it is a little bit slower.
 #'
 #' Contrary to many other string processing libraries,
 #' our trimming functions are quite general. A character class,

@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_integer.h"
+#include "stri_string8buf.h"
 #include <cstring>
 #include <vector>
 
@@ -77,7 +78,7 @@ int stri__match_arg(const char* option, const char** set) {
  *
  * @param str character vector
  * @param min_length integer vector
- * @param side character vector (left/right/both)
+ * @param side [internal int]
  * @param pad character vector
  * @return character vector
  *
@@ -90,30 +91,39 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
 {
    str        = stri_prepare_arg_string(str, "str");
    min_length = stri_prepare_arg_integer(min_length, "min_length");
-   side       = stri_prepare_arg_string(side, "side");
    pad        = stri_prepare_arg_string(pad, "pad");
-   const char* side_opts[] = {"left", "right", "both", NULL};
+   
+//   side       = stri_prepare_arg_string(side, "side");
+//   const char* side_opts[] = {"left", "right", "both", NULL};
+
+   // this is an internal arg, check manually, error() allowed here
+   if (!Rf_isInteger(side) || LENGTH(side) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+   int _side = INTEGER(side)[0];
+   if (_side < 0 || _side > 2)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
    R_len_t str_length     = LENGTH(str);
    R_len_t length_length  = LENGTH(min_length);
-   R_len_t side_length    = LENGTH(side);
+//   R_len_t side_length    = LENGTH(side);
    R_len_t pad_length     = LENGTH(pad);
    
-   R_len_t vectorize_length = stri__recycling_rule(true, 4,
-      str_length, length_length, side_length, pad_length);
+   R_len_t vectorize_length = stri__recycling_rule(true, 3,
+      str_length, length_length, /*side_length, */ pad_length);
       
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8       str_cont(str, vectorize_length);
    StriContainerInteger length_cont(min_length, vectorize_length);
-   StriContainerUTF8      side_cont(side, vectorize_length);
+//   StriContainerUTF8      side_cont(side, vectorize_length);
    StriContainerUTF8       pad_cont(pad, vectorize_length);
    
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
    
+   String8buf buf(0); // TODO: prealloc
    for (R_len_t i=0; i<vectorize_length; ++i) {
       if (str_cont.isNA(i) || pad_cont.isNA(i)
-          || side_cont.isNA(i) || length_cont.isNA(i)) {
+          || /*side_cont.isNA(i) ||*/ length_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
@@ -121,9 +131,7 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
       // get the current string
       R_len_t str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t str_cur_len = 0; // TODO: calculate length of str
-      
-      throw StriException("TO DO");
+      R_len_t str_cur_len = str_cont.get(i).countCodePoints();
       
       // get the padding code point
       UChar32 pad_cur = 0;
@@ -137,69 +145,52 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
       // get the minimal length
       R_len_t length_cur = length_cont.get(i);
       
-      // get the desired pad side
-      const char* side_cur_s = side_cont.get(i).c_str();
-      int side_cur = stri__match_arg(side_cur_s, side_opts);
-      if (side_cur < 0)
-         throw StriException(MSG__INCORRECT_MATCH_OPTION, "side");
-
-//
-//   int needed=0;
-//
-//   int* iwidth = INTEGER(width);
-//   int* iside  = INTEGER(side);
-//   int* islen  = INTEGER(stri_length(s));
-//   int* isnum  = INTEGER(stri_numbytes(s));
-//   int* ipnum  = INTEGER(stri_numbytes(pad));
-//
-//   for (R_len_t i=0; i<nmax; ++i) {
-//      curs = STRING_ELT(s, i % ns);
-//      const char* p = CHAR(STRING_ELT(pad, i % np));
-//      if(curs == NA_STRING || iwidth[i % nwidth] == NA_INTEGER){
-//         SET_STRING_ELT(ret, i, NA_STRING);
-//         continue;
-//      }
-//      //if current string is long enough - return with no change
-//      needed = max(0, iwidth[i % nwidth] - islen[i % ns]);
-//      if(needed == 0){
-//         SET_STRING_ELT(ret, i, curs);
-//         continue;
-//      }
-//      char* buf = R_alloc(isnum[i%ns]+ipnum[i%np]*needed, (int)sizeof(char));
-//      char* buf2 = buf;
-//      switch(iside[i % nside]){
-//         //pad from left
-//         case 1:
-//         for(int j=0; j<needed; ++j){
-//            memcpy(buf2, p, (size_t)ipnum[i%np]);
-//            buf2 += ipnum[i%np];
-//         }
-//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
-//         break;
-//         //right
-//         case 2:
-//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
-//         buf2 += isnum[i % ns];
-//         for(int j=0; j<needed; ++j){
-//            memcpy(buf2, p, (size_t)ipnum[i%np]);
-//            buf2 += ipnum[i%np];
-//         }
-//         break;
-//         //both
-//         case 3:
-//         for(int j=0; j<floor(needed/2); ++j){
-//            memcpy(buf2, p, (size_t)ipnum[i%np]);
-//            buf2 += ipnum[i%np];
-//         }
-//         memcpy(buf2, CHAR(curs), (size_t)isnum[i % ns]);
-//         buf2 += isnum[i % ns];
-//         for(int j=0; j<ceil(double(needed)/2); ++j){
-//            memcpy(buf2, p, (size_t)ipnum[i%np]);
-//            buf2 += ipnum[i%np];
-//         }
-//         break;
-//      }
-//      SET_STRING_ELT(ret, i, mkCharLen(buf, isnum[i%ns]+ipnum[i%np]*needed));
+      
+      if (str_cur_len >= length_cur)  {
+         // no padding at all
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+         continue;
+      }
+         
+      R_len_t padnum = length_cur-str_cur_len;
+      buf.resize(str_cur_n+padnum*pad_cur_n, false);
+      
+      char* buftmp = buf.data();
+      switch(_side) {
+         
+         case 0: // left
+            for (k=0; k<padnum; ++k) {
+               memcpy(buftmp, pad_cur_s, pad_cur_n);
+               buftmp += pad_cur_n;
+            }
+            memcpy(buftmp, str_cur_s, str_cur_n);
+            buftmp += str_cur_n;
+            break;
+            
+         case 1: // right
+            memcpy(buftmp, str_cur_s, str_cur_n);
+            buftmp += str_cur_n;
+            for (k=0; k<padnum; ++k) {
+               memcpy(buftmp, pad_cur_s, pad_cur_n);
+               buftmp += pad_cur_n;
+            }
+            break;
+         
+         case 2: // both
+            for (k=0; k<padnum/2; ++k) {
+               memcpy(buftmp, pad_cur_s, pad_cur_n);
+               buftmp += pad_cur_n;
+            }
+            memcpy(buftmp, str_cur_s, str_cur_n);
+            buftmp += str_cur_n;
+            for (; k<padnum; ++k) {
+               memcpy(buftmp, pad_cur_s, pad_cur_n);
+               buftmp += pad_cur_n;
+            }
+            break;
+      }
+      
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), (int)(buftmp-buf.data()), CE_UTF8));
    }
 
    STRI__UNPROTECT_ALL

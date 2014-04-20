@@ -37,7 +37,7 @@ Vectorized over \code{str} and \code{pattern}.
 
 \code{stri_trim} is a convenience function, which
 dispatches control to \code{stri_trim_*}. Unless you are
-very lazy, do not use it: it is slower.
+very lazy, do not use it: it is a little bit slower.
 
 Contrary to many other string processing libraries, our
 trimming functions are quite general. A character class,
@@ -86,6 +86,8 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 \code{\link{stringi-search-charclass}};
 \code{\link{stringi-search}}
 
-Other whitespaces: \code{\link{stri_pad}}
+Other whitespaces: \code{\link{stri_pad}},
+\code{\link{stri_pad_both}}, \code{\link{stri_pad_left}},
+\code{\link{stri_pad_right}}
 }
 
