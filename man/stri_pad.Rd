@@ -1,9 +1,18 @@
-\name{stri_pad}
+\name{stri_pad_both}
 \alias{stri_pad}
-\title{Pad a String}
+\alias{stri_pad_both}
+\alias{stri_pad_left}
+\alias{stri_pad_right}
+\title{Pad (Left/Right/Center Align) a String}
 \usage{
-stri_pad(str, min_length = max(stri_length(str)), side = "left",
-  pad = " ")
+stri_pad_both(str, min_length = max(stri_length(str)), pad = " ")
+
+stri_pad_left(str, min_length = max(stri_length(str)), pad = " ")
+
+stri_pad_right(str, min_length = max(stri_length(str)), pad = " ")
+
+stri_pad(str, min_length = max(stri_length(str)), side = c("left", "right",
+  "both"), pad = " ")
 }
 \arguments{
   \item{str}{character vector}
@@ -11,9 +20,9 @@ stri_pad(str, min_length = max(stri_length(str)), side = "left",
   \item{min_length}{integer vector giving minimal output
   string lengths}
 
-  \item{side}{character vector; sides on which padding
-  character is added (\code{left}, \code{right}, or
-  \code{both})}
+  \item{side}{[\code{stri_pad} only] single character
+  string; sides on which padding character is added
+  (\code{left}, \code{right}, or \code{both})}
 
   \item{pad}{character vector giving padding code points}
 }
@@ -21,18 +30,27 @@ stri_pad(str, min_length = max(stri_length(str)), side = "left",
 Returns a character vector.
 }
 \description{
-Adds \code{pad} characters at the given \code{side} of each
-string so that each output string consists of at least
-\code{min_length} code points.
+Adds multiple \code{pad} characters at the given
+\code{side}(s) of each string so that each output string
+consists of at least \code{min_length} code points. This
+function may be used to center or left/right-align each
+string.
 }
 \details{
-Vectorized over \code{str}, \code{min_length}, \code{side},
-and \code{pad}. Each string in \code{pad} should consist of
+Vectorized over \code{str}, \code{min_length}, and
+\code{pad}. Each string in \code{pad} should consist of
 exactly one code point.
+
+\code{stri_pad} is a convenience function, which dispatches
+control to \code{stri_pad_*}. Unless you are very lazy, do
+not use it: it is a little bit slower.
 
 Note that Unicode code points may have different widths
 when printed on screen. This function acts like each code
 point is of width 1.
+
+See \code{\link{stri_trim_left}} (among others) for reverse
+operation.
 }
 \examples{
 stri_pad("stringi", 10, pad="#")

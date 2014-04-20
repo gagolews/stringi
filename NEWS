@@ -13,6 +13,13 @@
       to ICU Transliterator: may be used to perform very general
       text transforms.
 
+   * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
+      pads a string with a specific code point.
+
+   * [NEW FUNCTION] stri_wrap..... t.b.d.
+
+   * [NEW FUNCTION] stri_justify..... t.b.d.
+
 
 * 0.2-1 (2014-04-18) **devel**
 

@@ -53,13 +53,16 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
  *          initialize() now can kill UTF8 BOMs.
  *          separated String8buf
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
+ *          new method: countCodePoints()
  */
 class String8  {
 
    private:
 
       char* m_str;      ///< character data in UTF-8, NULL denotes NA
-      R_len_t m_n;      ///< string length (in bytes), not including NUL [[may be invalid]]
+      R_len_t m_n;      ///< string length (in bytes), not including NUL
       bool m_memalloc;  /// < should the memory be freed at the end
 
 
@@ -198,6 +201,28 @@ class String8  {
             throw StriException("String8::isNA() in length()");
 #endif
          return this->m_n;
+      }
+      
+      
+      /** number of utf-8 code points */
+      inline R_len_t countCodePoints() const
+      {
+#ifndef NDEBUG
+         if (isNA())
+            throw StriException("String8::isNA() in countCodePoints()");
+#endif
+         UChar32 c = 0;
+         R_len_t j = 0;
+         R_len_t i = 0;
+         while (j < m_n) {
+            U8_NEXT(m_str, j, m_n, c); // faster that U8_FWD_1 & gives bad UChar32s
+            i++;
+            
+            if (c < 0)
+               Rf_warning(MSG__INVALID_UTF8);
+         }
+
+         return i;
       }
 };
 
