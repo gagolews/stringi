@@ -32,24 +32,24 @@ invisible(NULL) # t.b.d.
 
 # #' @title
 # #' Word Wrap Text to Format Paragraphs
-# #' 
+# #'
 # #' @description
 # #' ...
-# #' 
+# #'
 # #' @details
 # #' Vectorized over \code{str}.
-# #' 
+# #'
 # #' @param str character vector of strings to reformat
 # #' @param width single positive integer giving target maximal number
 # #'        of code points per line
 # #' @param pattern single string specifying a character class that
 # #'        denotes a space, i.e. a word delimiter,
 # #'        see \link{stringi-search-charclass}
-# #' 
+# #'
 # #' @return
 # #' If \code{simplify} is \code{TRUE}, then a character vector is returned.
 # #' Otherwise, you will get a list of \code{length(str)} character vectors.
-# #' 
+# #'
 # #' @rdname stri_wrap
 # #' @family whitespaces
 # #' @examples

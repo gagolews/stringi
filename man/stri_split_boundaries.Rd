@@ -57,6 +57,11 @@ sentence boundaries.
 For more details on different classes of text boundaries
 refer to the \pkg{ICU} User Guide, see below.
 }
+\examples{
+\dontrun{
+stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
+}
+}
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,
 \url{http://userguide.icu-project.org/boundaryanalysis}

@@ -281,18 +281,18 @@ stri_split_lines1 <- function(str) {
 
 #' @title
 #' Split Strings at Specific Text Boundaries
-#' 
+#'
 #' @description
 #' This function locates specific text boundaries
 #' (like character, word, line, or sentence boundaries)
 #' and splits strings at the indicated positions.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str} and \code{boundary}.
-#' 
+#'
 #' Text boundary analysis is the process of locating linguistic boundaries
 #' while formatting and handling text. Examples of this process include:
-#' 
+#'
 #' \itemize{
 #' \item Locating appropriate points to word-wrap text to fit
 #' within specific margins while displaying or printing.
@@ -316,22 +316,26 @@ stri_split_lines1 <- function(str) {
 #'  (see \code{\link{stri_trans_totitle}} for practical usage).
 #' On the other hand, a \code{sentence}-break iterator
 #' locates sentence boundaries.
-#' 
+#'
 #' For more details on
 #' different classes of text boundaries refer to the \pkg{ICU} User
 #' Guide, see below.
-#' 
+#'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
-#' \code{line-break}, \code{sentence}, \code{title}, or \code{word} 
+#' \code{line-break}, \code{sentence}, \code{title}, or \code{word}
 #' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
-#' 
+#'
 #' @return
 #' Returns a list of character vectors.
-#' 
-#' 
+#'
+#' @examples
+#' \dontrun{
+#' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
+#' }
+#'
 #' @export
 #' @family search_split
 #' @family locale_sensitive
@@ -341,7 +345,6 @@ stri_split_lines1 <- function(str) {
 stri_split_boundaries <- function(str, boundary='word', locale=NULL) {
    .Call("stri_split_boundaries", str, boundary, locale, PACKAGE="stringi")
 }
-
 
 
 # @TODO: ADD stri_split_chars - split into chars

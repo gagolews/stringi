@@ -65,7 +65,7 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
  *          UTF8 BOMs are now silently removed by one of the constructors
  *          (via String8)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          New methods: getMaxNumBytes, getMaxLength
  */
@@ -113,8 +113,8 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return str[i%n];
       }
-      
-      
+
+
       /** get the number of bytes used to represent the longest string */
       R_len_t getMaxNumBytes() const {
          R_len_t bufsize = 0;
@@ -126,8 +126,8 @@ class StriContainerUTF8 : public StriContainerBase {
          }
          return bufsize;
       }
-      
-      
+
+
       /** get the length of the longest string */
       R_len_t getMaxLength() const {
          R_len_t bufsize = 0;
@@ -136,18 +136,18 @@ class StriContainerUTF8 : public StriContainerBase {
             UChar32 c = 0;
             R_len_t curs_n = get(i).length();
             const char* curs_s = get(i).c_str();
-            
+
             R_len_t j = 0;
             R_len_t k = 0;
             while (j < curs_n) {
                U8_NEXT(curs_s, j, curs_n, c);
                k++;
-               
+
                if (c < 0) { // invalid utf-8 sequence
                   Rf_warning(MSG__INVALID_UTF8);
                }
             }
-   
+
             if (k > bufsize)
                bufsize = k;
          }
