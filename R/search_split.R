@@ -288,6 +288,8 @@ stri_split_lines1 <- function(str) {
 #' and splits strings at the indicated positions.
 #' 
 #' @details
+#' Vectorized over \code{str} and \code{boundary}.
+#' 
 #' Text boundary analysis is the process of locating linguistic boundaries
 #' while formatting and handling text. Examples of this process include:
 #' 
@@ -297,7 +299,8 @@ stri_split_lines1 <- function(str) {
 #' \item Counting characters, words, sentences, or paragraphs.
 #' \item Making a list of the unique words in a document.
 #' \item Capitalizing the first letter of each word.
-#' \item Locating a particular unit of the text (For example, finding the third word in the document).
+#' \item Locating a particular unit of the text (For example,
+#' finding the third word in the document).
 #' }
 #'
 #' This function uses \pkg{ICU}'s \code{BreakIterator} to split given
@@ -309,6 +312,8 @@ stri_split_lines1 <- function(str) {
 #' such as ``Find whole words'' operations.
 #' The \code{line-break} iterator locates positions that would
 #' be appropriate points to wrap lines when displaying the text.
+#' The \code{title}-boundary iterator if for title breaks
+#'  (see \code{\link{stri_trans_totitle}} for practical usage).
 #' On the other hand, a \code{sentence}-break iterator
 #' locates sentence boundaries.
 #' 
@@ -317,8 +322,11 @@ stri_split_lines1 <- function(str) {
 #' Guide, see below.
 #' 
 #' @param str character vector or an object coercible to
-#' @param boundary single string, one of \code{character},
-#' \code{line-break}, \code{sentence}, or \code{word}, 
+#' @param boundary character vector, each string is one of \code{character},
+#' \code{line-break}, \code{sentence}, \code{title}, or \code{word} 
+#' @param locale \code{NULL} or \code{""} for case mapping following
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}.
 #' 
 #' @return
 #' Returns a list of character vectors.
@@ -326,11 +334,12 @@ stri_split_lines1 <- function(str) {
 #' 
 #' @export
 #' @family search_split
+#' @family locale_sensitive
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
-#' http://userguide.icu-project.org/boundaryanalysis}
-stri_split_boundaries <- function(str, boundary='word') {
-   .Call("stri_split_boundaries", str, boundary, PACKAGE="stringi")
+#' \url{http://userguide.icu-project.org/boundaryanalysis}
+stri_split_boundaries <- function(str, boundary='word', locale=NULL) {
+   .Call("stri_split_boundaries", str, boundary, locale, PACKAGE="stringi")
 }
 
 

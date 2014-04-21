@@ -137,3 +137,12 @@ test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed("123;456", ";", n=2), list(c("123", "456")))
    expect_identical(stri_split_fixed("123;456;789", ";", n=2), list(c("123", "456;789")))
 })
+
+
+
+test_that("stri_split_boundaries", {
+   expect_error(stri_split_boundaries("aaa", "???"))
+   expect_identical(stri_split_boundaries(c(NA, NA), "word"), list(NA_character_, NA_character_))
+   expect_identical(stri_split_boundaries("aa", c(NA, NA)), list(NA_character_, NA_character_))
+})
+

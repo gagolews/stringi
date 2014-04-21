@@ -2,13 +2,19 @@
 \alias{stri_split_boundaries}
 \title{Split Strings at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, boundary = "word")
+stri_split_boundaries(str, boundary = "word", locale = NULL)
 }
 \arguments{
   \item{str}{character vector or an object coercible to}
 
-  \item{boundary}{single string, one of \code{character},
-  \code{line-break}, \code{sentence}, or \code{word},}
+  \item{boundary}{character vector, each string is one of
+  \code{character}, \code{line-break}, \code{sentence},
+  \code{title}, or \code{word}}
+
+  \item{locale}{\code{NULL} or \code{""} for case mapping
+  following the conventions of the default locale, or a
+  single string with locale identifier, see
+  \link{stringi-locale}.}
 }
 \value{
 Returns a list of character vectors.
@@ -19,6 +25,8 @@ character, word, line, or sentence boundaries) and splits
 strings at the indicated positions.
 }
 \details{
+Vectorized over \code{str} and \code{boundary}.
+
 Text boundary analysis is the process of locating
 linguistic boundaries while formatting and handling text.
 Examples of this process include:
@@ -40,18 +48,57 @@ just a single Unicode code point. The \code{word} boundary
 iterator locates the boundaries of words, for purposes such
 as ``Find whole words'' operations. The \code{line-break}
 iterator locates positions that would be appropriate points
-to wrap lines when displaying the text. On the other hand,
-a \code{sentence}-break iterator locates sentence
-boundaries.
+to wrap lines when displaying the text. The
+\code{title}-boundary iterator if for title breaks (see
+\code{\link{stri_trans_totitle}} for practical usage). On
+the other hand, a \code{sentence}-break iterator locates
+sentence boundaries.
 
 For more details on different classes of text boundaries
 refer to the \pkg{ICU} User Guide, see below.
 }
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,
-http://userguide.icu-project.org/boundaryanalysis}
+\url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
+Other locale_sensitive: \code{\link{\%!=\%}},
+\code{\link{\%<=\%}}, \code{\link{\%<\%}},
+\code{\link{\%==\%}}, \code{\link{\%>=\%}},
+\code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
+\code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+\code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
+\code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
+\code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
+\code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
+\code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+\code{\link{stri_compare}}; \code{\link{stri_count_fixed}};
+\code{\link{stri_detect_fixed}};
+\code{\link{stri_duplicated}},
+\code{\link{stri_duplicated_any}};
+\code{\link{stri_enc_detect2}};
+\code{\link{stri_locate_all_fixed}},
+\code{\link{stri_locate_all_fixed,}},
+\code{\link{stri_locate_first_fixed}},
+\code{\link{stri_locate_first_fixed,}},
+\code{\link{stri_locate_last_fixed}},
+\code{\link{stri_locate_last_fixed}};
+\code{\link{stri_opts_collator}}; \code{\link{stri_order}},
+\code{\link{stri_sort}};
+\code{\link{stri_replace_all_fixed}},
+\code{\link{stri_replace_all_fixed}},
+\code{\link{stri_replace_first_fixed}},
+\code{\link{stri_replace_first_fixed}},
+\code{\link{stri_replace_last_fixed}},
+\code{\link{stri_replace_last_fixed}};
+\code{\link{stri_split_fixed}},
+\code{\link{stri_split_fixed}};
+\code{\link{stri_trans_tolower}},
+\code{\link{stri_trans_totitle}},
+\code{\link{stri_trans_toupper}};
+\code{\link{stri_unique}}; \code{\link{stringi-locale}};
+\code{\link{stringi-search-fixed}}
+
 Other search_split: \code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
 \code{\link{stri_split_fixed}},

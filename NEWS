@@ -13,6 +13,9 @@
       to ICU Transliterator: may be used to perform very general
       text transforms.
 
+   * [NEW FUNCTION stri_split_boundaries utilizes ICU's BreakIterator
+      to split text at specific text boundaries.
+
    * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
       pads a string with a specific code point.
 
