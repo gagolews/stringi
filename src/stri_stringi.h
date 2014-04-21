@@ -61,6 +61,7 @@ SEXP    stri__vector_empty_strings(R_len_t howmany);
 SEXP    stri__emptyList();
 SEXP    stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol);
 SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
+int     stri__match_arg(const char* option, const char** set);
 
 // collator.cpp:
 class UCollator;
@@ -234,7 +235,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty);
 SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);
 
-SEXP stri_split_boundaries(SEXP str, SEXP boundary);
+SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale);
 
 SEXP stri_replace_na(SEXP str, SEXP replacement);
 

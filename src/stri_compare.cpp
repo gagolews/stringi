@@ -528,7 +528,7 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
  * @return logical vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- * 			first version of this function
+ *          first version of this function
  *
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
@@ -593,6 +593,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
    })
 }
 
+
 /** Determine first duplicated elements
  *
  * @param str character vector
@@ -601,8 +602,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
  * @return integer vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- * 			first version of this function
- *
+ *          first version of this function
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
 {

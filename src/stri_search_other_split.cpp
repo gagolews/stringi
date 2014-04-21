@@ -39,6 +39,7 @@
 #include "stri_container_logical.h"
 #include <deque>
 #include <utility>
+#include <unicode/brkiter.h>
 using namespace std;
 
 
@@ -275,12 +276,90 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
  * 
  * @param str character vector
  * @param boundary single string, one of \code{character},
- * \code{line-break}, \code{sentence}, or \code{word}
+ * \code{line-break}, \code{sentence}, \code{title}, or \code{word}
+ * @param locale identifier
  * @return character vector
  * 
  * @version 0.2-2 (Marek Gagolewski, 2014-04-21)
  */
-SEXP stri_split_boundaries(SEXP str, SEXP boundary)
+SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
 {
-   return R_NilValue;
+   str = stri_prepare_arg_string(str, "str");
+   boundary = stri_prepare_arg_string(boundary, "boundary");
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   Locale loc = Locale::createFromName(qloc);
+   
+   R_len_t str_length = LENGTH(str);
+   R_len_t boundary_length = LENGTH(boundary);
+   R_len_t vectorize_length = stri__recycling_rule(true, 2,
+      str_length, boundary_length);
+   
+   const char* boundary_opts[] = {"character", "line-break",
+      "sentence", "title", "word", NULL};
+
+   BreakIterator* briter = NULL;
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8 boundary_cont(boundary, vectorize_length);
+   
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+   
+   int last_boundary = -1;
+   for (R_len_t i = boundary_cont.vectorize_init();
+         i != boundary_cont.vectorize_end();
+         i = boundary_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i) || boundary_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+      
+      // get the boundary type and open BreakIterator (if needed)
+      int boundary_cur = stri__match_arg(boundary_cont.get(i).c_str(), boundary_opts);
+      if (boundary_cur < 0)
+         throw StriException(MSG__INCORRECT_MATCH_OPTION, "boundary");
+         
+      if (last_boundary != boundary_cur) { // otherwise reuse BreakIterator
+         if (briter) { delete briter; briter = NULL; }
+         last_boundary = boundary_cur;
+         UErrorCode status = U_ZERO_ERROR;
+         switch (boundary_cur) {
+            case 0: // character
+               briter = BreakIterator::createCharacterInstance(loc, status);
+               break;
+               
+            case 1: // line-break
+               briter = BreakIterator::createLineInstance(loc, status);
+               break;
+               
+            case 2: // sentence
+               briter = BreakIterator::createSentenceInstance(loc, status);
+               break;
+   
+            case 3: // title
+               briter = BreakIterator::createTitleInstance(loc, status);
+               break;
+   
+            case 4: // word
+               briter = BreakIterator::createWordInstance(loc, status);
+               break;
+         }
+         if (U_FAILURE(status))
+            throw StriException(status); // briter will be deleted automagically
+      }
+      
+      // get the current string
+      R_len_t str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+         
+      // ....
+   }
+   
+   if (briter) { delete briter; briter = NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (briter) { delete briter; briter = NULL; }
+   })
 }
