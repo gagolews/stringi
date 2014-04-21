@@ -210,51 +210,51 @@ stri_split <- function(str, ..., regex, fixed, charclass) {
 
 
 #' @title
-#' Split a String into Text Lines
+#' Split Strings into Text Lines
 #'
 #' @description
 #' These functions split each character string
 #' into text lines.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
+#' Vectorized over \code{str}, \code{n_max}, and \code{omit_empty}.
 #'
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #'
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
-#'
 #' Newlines are represented on different platforms e.g. by carriage return
 #' (CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85).
 #' Moreover, the Unicode Standard defines two unambiguous separator characters,
 #' Paragraph Separator (PS, 0x2029) and Line Separator (LS, 0x2028).
 #' Sometimes also vertical tab (VT, 0x0B) and form feed (FF, 0x0C)
-#' are used.
-#'
-#' This function follows UTR#18 rules, where a newline sequence
+#' are used. These functions follow UTR#18 rules, where a newline sequence
 #' corresponds to the following regular expression:
 #' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
 #' Each match is used to split a text line.
-#' Of course, the search is not performed via regexes here, for efficiency
-#' reasons.
+#' For efficiency reasons, the search is not performed via regexes here,
+#' however.
 #'
 #'
-#' @param str character vector
+#' @param str character vector (\code{stri_split_lines})
+#'        or a single string (\code{stri_split_lines1})
 #' @param n_max integer vector, maximal number of pieces to return
+#'    [\code{stri_split_lines}  only]
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
+#'    [\code{stri_split_lines}  only]
 #'
 #' @return \code{stri_split_lines} returns a list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element
-#' is a \code{NA} string.
+#' is a single \code{NA} string.
 #'
-#' \code{stri_split_lines1(str)} is like \code{stri_split_lines(str[1])[[1]]}
-#' (with default parameters),
+#' \code{stri_split_lines1(str)} is equivalent to
+#' \code{stri_split_lines(str[1])[[1]]} (with default parameters),
 #' thus it returns a character vector. Moreover, if the input string ends at
 #' a newline sequence, the last empty string is omitted from the result.
 #' Therefore, this function is convenient for splitting a loaded text file
-#' into lines.
+#' into text lines.
 #'
 #' @references
 #' \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
@@ -277,6 +277,62 @@ stri_split_lines <- function(str, n_max=-1L, omit_empty=FALSE) {
 stri_split_lines1 <- function(str) {
    .Call("stri_split_lines1", str, PACKAGE="stringi")
 }
+
+
+#' @title
+#' Split Strings at Specific Text Boundaries
+#' 
+#' @description
+#' This function locates specific text boundaries
+#' (like character, word, line, or sentence boundaries)
+#' and splits strings at the indicated positions.
+#' 
+#' @details
+#' Text boundary analysis is the process of locating linguistic boundaries
+#' while formatting and handling text. Examples of this process include:
+#' 
+#' \itemize{
+#' \item Locating appropriate points to word-wrap text to fit
+#' within specific margins while displaying or printing.
+#' \item Counting characters, words, sentences, or paragraphs.
+#' \item Making a list of the unique words in a document.
+#' \item Capitalizing the first letter of each word.
+#' \item Locating a particular unit of the text (For example, finding the third word in the document).
+#' }
+#'
+#' This function uses \pkg{ICU}'s \code{BreakIterator} to split given
+#' strings at specific boundaries.
+#' The \code{character} boundary iterator tries to match what a user would think
+#' of as a ``character''  -- a basic unit of a writing system for a
+#' language -- which may be more than just a single Unicode code point.
+#' The \code{word} boundary iterator locates the boundaries of words, for purposes
+#' such as ``Find whole words'' operations.
+#' The \code{line-break} iterator locates positions that would
+#' be appropriate points to wrap lines when displaying the text.
+#' On the other hand, a \code{sentence}-break iterator
+#' locates sentence boundaries.
+#' 
+#' For more details on
+#' different classes of text boundaries refer to the \pkg{ICU} User
+#' Guide, see below.
+#' 
+#' @param str character vector or an object coercible to
+#' @param boundary single string, one of \code{character},
+#' \code{line-break}, \code{sentence}, or \code{word}, 
+#' 
+#' @return
+#' Returns a list of character vectors.
+#' 
+#' 
+#' @export
+#' @family search_split
+#' @references
+#' \emph{Boundary Analysis} -- ICU User Guide,
+#' http://userguide.icu-project.org/boundaryanalysis}
+stri_split_boundaries <- function(str, boundary='word') {
+   .Call("stri_split_boundaries", str, boundary, PACKAGE="stringi")
+}
+
 
 
 # @TODO: ADD stri_split_chars - split into chars

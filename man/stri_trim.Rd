@@ -18,7 +18,7 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 
   \item{pattern}{character vector specifying character
   classes that should be preserved, see
-  \link{stringi-search-charclass}, defaults
+  \link{stringi-search-charclass}, defaults to
   `\code{\\P\{Wspace\}}`}
 
   \item{side}{character [\code{stri_trim} only]; defaults

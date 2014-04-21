@@ -28,8 +28,38 @@
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+invisible(NULL) # t.b.d.
 
-invisible(NULL) # TO BE DONE, version >= 0.2
+# #' @title
+# #' Word Wrap Text to Format Paragraphs
+# #' 
+# #' @description
+# #' ...
+# #' 
+# #' @details
+# #' Vectorized over \code{str}.
+# #' 
+# #' @param str character vector of strings to reformat
+# #' @param width single positive integer giving target maximal number
+# #'        of code points per line
+# #' @param pattern single string specifying a character class that
+# #'        denotes a space, i.e. a word delimiter,
+# #'        see \link{stringi-search-charclass}
+# #' 
+# #' @return
+# #' If \code{simplify} is \code{TRUE}, then a character vector is returned.
+# #' Otherwise, you will get a list of \code{length(str)} character vectors.
+# #' 
+# #' @rdname stri_wrap
+# #' @family whitespaces
+# #' @examples
+# #' invisible(NULL) # t.b.d.
+# #' @export
+# stri_wrap <- function(str, width=floor(0.9*getOption("width")),
+#    pattern="\\p{Wspace}", simplify=TRUE)
+# {
+#    .Call("stri_wrap", str, width, pattern, spacecost, PACKAGE="stringi")
+# }
 
 
 # #' Wrap strings to paragraphs

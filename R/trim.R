@@ -62,7 +62,7 @@
 #' @param str character vector
 #' @param pattern character vector specifying character classes that
 #' should be preserved, see \link{stringi-search-charclass},
-#' defaults `\code{\\P\{Wspace\}}`
+#' defaults to `\code{\\P\{Wspace\}}`
 #' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
 #'
 #' @return All these functions return a character vector.

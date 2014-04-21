@@ -31,7 +31,8 @@ Unless you are a very lazy person, please call the
 underlying functions directly for better performance.
 }
 \seealso{
-Other search_split: \code{\link{stri_split_charclass}},
+Other search_split: \code{\link{stri_split_boundaries}};
+\code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
 \code{\link{stri_split_fixed}},
 \code{\link{stri_split_fixed}};

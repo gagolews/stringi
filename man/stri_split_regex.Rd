@@ -80,7 +80,8 @@ Other search_regex: \code{\link{stri_count_regex}};
 \code{\link{stringi-search-regex}};
 \code{\link{stringi-search}}
 
-Other search_split: \code{\link{stri_split_charclass}},
+Other search_split: \code{\link{stri_split_boundaries}};
+\code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
 \code{\link{stri_split_fixed}},
 \code{\link{stri_split_fixed}};

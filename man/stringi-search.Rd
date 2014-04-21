@@ -209,7 +209,8 @@ Other search_replace:
 \code{\link{stri_replace_last}};
 \code{\link{stri_replace_na}}; \code{\link{stri_replace}}
 
-Other search_split: \code{\link{stri_split_charclass}},
+Other search_split: \code{\link{stri_split_boundaries}};
+\code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
 \code{\link{stri_split_fixed}},
 \code{\link{stri_split_fixed}};

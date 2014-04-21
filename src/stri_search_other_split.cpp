@@ -268,3 +268,19 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
+
+
+/** Split a string at BreakIterator boundaries
+ * 
+ * @param str character vector
+ * @param boundary single string, one of \code{character},
+ * \code{line-break}, \code{sentence}, or \code{word}
+ * @return character vector
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-21)
+ */
+SEXP stri_split_boundaries(SEXP str, SEXP boundary)
+{
+   return R_NilValue;
+}
