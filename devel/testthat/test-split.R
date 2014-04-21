@@ -144,5 +144,5 @@ test_that("stri_split_boundaries", {
    expect_error(stri_split_boundaries("aaa", "???"))
    expect_identical(stri_split_boundaries(c(NA, NA), "word"), list(NA_character_, NA_character_))
    expect_identical(stri_split_boundaries("aa", c(NA, NA)), list(NA_character_, NA_character_))
+   expect_identical(stri_split_boundaries(stri_trans_nfkd("a\u0105"), 'chara')[[1]], stri_trans_nfkd(c("a", "\u0105")))
 })
-

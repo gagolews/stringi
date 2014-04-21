@@ -36,7 +36,7 @@
 /// inccorect uchar class id, see stri_char_getpropertyid and stri_char_getcategoryid
 #define MSG__INCORRECT_UCHAR_CLASS_ID \
    "incorrect class identifier"
-   
+
 #define MSG__INCORRECT_MATCH_OPTION \
    "incorrect option for `%s`"
 
@@ -170,7 +170,7 @@
 
 #define MSG__NEWLINE_FOUND \
    "newline character found in a string"
-   
+
 #define MSG__NOT_EQ_N_CODEPOINTS \
    "each string in `%s` should consist of exactly %d code points"
 

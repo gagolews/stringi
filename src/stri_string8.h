@@ -53,7 +53,7 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-23)
  *          initialize() now can kill UTF8 BOMs.
  *          separated String8buf
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          new method: countCodePoints()
  */
@@ -202,8 +202,8 @@ class String8  {
 #endif
          return this->m_n;
       }
-      
-      
+
+
       /** number of utf-8 code points */
       inline R_len_t countCodePoints() const
       {
@@ -217,7 +217,7 @@ class String8  {
          while (j < m_n) {
             U8_NEXT(m_str, j, m_n, c); // faster that U8_FWD_1 & gives bad UChar32s
             i++;
-            
+
             if (c < 0)
                Rf_warning(MSG__INVALID_UTF8);
          }
