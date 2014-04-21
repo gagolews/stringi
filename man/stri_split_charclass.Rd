@@ -68,7 +68,8 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 \code{\link{stringi-search-charclass}};
 \code{\link{stringi-search}}
 
-Other search_split: \code{\link{stri_split_fixed}},
+Other search_split: \code{\link{stri_split_boundaries}};
+\code{\link{stri_split_fixed}},
 \code{\link{stri_split_fixed}};
 \code{\link{stri_split_lines}},
 \code{\link{stri_split_lines}},

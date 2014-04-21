@@ -109,7 +109,8 @@ Other search_fixed: \code{\link{stri_count_fixed}};
 \code{\link{stringi-search-fixed}};
 \code{\link{stringi-search}}
 
-Other search_split: \code{\link{stri_split_charclass}},
+Other search_split: \code{\link{stri_split_boundaries}};
+\code{\link{stri_split_charclass}},
 \code{\link{stri_split_charclass}};
 \code{\link{stri_split_lines}},
 \code{\link{stri_split_lines}},

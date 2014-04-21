@@ -64,9 +64,11 @@
 #' @rdname stri_pad
 #' @family whitespaces
 #' @examples
-#' stri_pad("stringi", 10, pad="#")
-#' stri_pad("stringi", 5:9, "right", pad="$")
-#' stri_pad(1, 3, pad=LETTERS)
+#' stri_pad_left("stringi", 10, pad="#")
+#' stri_pad_both("stringi", 8:12, pad="*")
+#' # center on screen:
+#' cat(stri_pad_both(c("the", "string", "processing", "package"),
+#'    getOption("width")*0.9), sep='\n')
 #' @export
 stri_pad_both <- function(str, min_length=max(stri_length(str)), pad=" ") {
    .Call("stri_pad", str, min_length, 2L, pad, PACKAGE="stringi")
