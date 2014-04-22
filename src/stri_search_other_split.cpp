@@ -370,7 +370,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
       if (noccurences <= 1) {
          SEXP ans;
          STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
-         SET_STRING_ELT(ans, 1, str_cont.toR(i));
+         SET_STRING_ELT(ans, 0, str_cont.toR(i));
          SET_VECTOR_ELT(ret, i, ans);
          STRI__UNPROTECT(1);
          continue;

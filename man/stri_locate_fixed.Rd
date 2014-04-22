@@ -88,6 +88,7 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
@@ -107,6 +108,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_duplicated}},
 \code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_opts_collator}}; \code{\link{stri_order}},
 \code{\link{stri_sort}};
 \code{\link{stri_replace_all_fixed}},
@@ -162,6 +164,7 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stringi-search}}

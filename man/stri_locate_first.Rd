@@ -66,6 +66,7 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
 
@@ -94,6 +95,7 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stringi-search}}
 }

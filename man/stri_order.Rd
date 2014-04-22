@@ -80,6 +80,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_locate_first_fixed,}},
 \code{\link{stri_locate_last_fixed}},
 \code{\link{stri_locate_last_fixed}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_opts_collator}};
 \code{\link{stri_replace_all_fixed}},
 \code{\link{stri_replace_all_fixed}},

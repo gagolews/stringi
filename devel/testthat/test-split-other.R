@@ -1,0 +1,33 @@
+require(testthat)
+
+test_that("stri_split_lines", {
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota"), list(c("ala", "ma", "kota")))
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota\r\n"), list(c("ala", "ma", "kota", "")))
+   expect_identical(stri_split_lines1("ala\r\nma\r\nkota"), c("ala", "ma", "kota"))
+   expect_identical(stri_split_lines1("ala\r\nma\r\nkota\r\n"), c("ala", "ma", "kota"))
+   expect_warning(stri_split_lines1(c("a", "b")))
+   suppressWarnings(expect_identical(stri_split_lines1(c("a", "b")), "a"))
+   expect_identical(stri_split_lines("ala\r\nma\r\nkota\r\n", omit_empty=TRUE), list(c("ala", "ma", "kota")))
+   expect_identical(stri_split_lines(NA_character_), list(NA_character_))
+   expect_identical(stri_split_lines(character(0)), list())
+   expect_identical(stri_split_lines(""), list(""))
+   expect_identical(stri_split_lines(c("", "a", NA)), list("", "a", NA_character_))
+   expect_identical(stri_split_lines("", omit_empty=TRUE), list(character(0)))
+   expect_identical(stri_split_lines("\n"), list(c("", "")))
+   expect_identical(stri_split_lines("\n", omit_empty=TRUE), list(character(0)))
+   expect_identical(stri_split_lines("\n\n"), list(c("", "", "")))
+   expect_identical(stri_split_lines("a\n\n\na"), list(c("a", "", "", "a")))
+   expect_identical(stri_split_lines("a\n\n\na", omit_empty=TRUE), list(c("a", "a")))
+   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3), list(c("a", "", "\na\n\na")))
+   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3, omit_empty=TRUE), list(c("a", "a", "\na")))
+})
+
+
+test_that("stri_split_boundaries", {
+   expect_error(stri_split_boundaries("aaa", "???"))
+   expect_identical(stri_split_boundaries(c(NA, NA), "word"), list(NA_character_, NA_character_))
+   expect_identical(stri_split_boundaries("aa", c(NA, NA)), list(NA_character_, NA_character_))
+   expect_identical(stri_split_boundaries("", "word"), list(""))
+   expect_identical(stri_split_boundaries("aaa", "word"), list("aaa"))
+   expect_identical(stri_split_boundaries(stri_trans_nfkd("a\u0105"), 'chara')[[1]], stri_trans_nfkd(c("a", "\u0105")))
+})

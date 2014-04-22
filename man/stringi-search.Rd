@@ -141,6 +141,7 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}}
 

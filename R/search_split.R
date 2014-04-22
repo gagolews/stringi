@@ -317,9 +317,8 @@ stri_split_lines1 <- function(str) {
 #' On the other hand, a \code{sentence}-break iterator
 #' locates sentence boundaries.
 #'
-#' For more details on
-#' different classes of text boundaries refer to the \pkg{ICU} User
-#' Guide, see below.
+#' For technical details on different classes of text boundaries refer
+#' to the \pkg{ICU} User Guide, see below.
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
@@ -339,6 +338,7 @@ stri_split_lines1 <- function(str) {
 #' @export
 #' @family search_split
 #' @family locale_sensitive
+#' @family text_boundaries
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}

@@ -377,7 +377,7 @@ stri_locate_first <- function(str, ..., regex, fixed, charclass) {
 #' only the first one will be used.
 #'
 #' @return Returns an integer matrix with two columns, with
-#' double \code{NA}s in a row if a pattern  not found.
+#' double \code{NA}s in a row if a pattern has not been found.
 #'
 #' @examples
 #' \dontrun{
@@ -444,4 +444,52 @@ stri_locate <- function(str, ..., regex, fixed, charclass,
       last =stri_locate_last(str, ..., regex=regex, fixed=fixed, charclass=charclass),
       all  =stri_locate_all(str, ..., regex=regex, fixed=fixed, charclass=charclass)
    )
+}
+
+
+#' @title
+#' Locate Specific Text Boundaries
+#'
+#' @description
+#' This function locates specific text boundaries
+#' (like character, word, line, or sentence boundaries)
+#' and splits strings at the indicated positions.
+#'
+#' @details
+#' Vectorized over \code{str} and \code{boundary}.
+#'
+#' For more information on the text boundary analysis
+#' performed by \pkg{ICU}'s \code{BreakIterator}, see
+#' \code{\link{stri_locate_boundaries}}.
+#'
+#'
+#' @param str character vector or an object coercible to
+#' @param boundary character vector, each string is one of \code{character},
+#' \code{line-break}, \code{sentence}, \code{title}, or \code{word}
+#' @param locale \code{NULL} or \code{""} for case mapping following
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}.
+#'
+#' @return
+#' A list of \code{max(length(str), length(boundary))} integer matrices
+#' is returned. The first column gives the start positions
+#' of substrings between located boundaries, and the second column gives
+#' the end position. The indices are code point-based, thus
+#' they may be passed e.g. to the \code{\link{stri_sub}} function.
+#'
+#' Moreover, you may get two \code{NA}s in one row
+#' for no match or \code{NA} arguments.
+#'
+#' @examples
+#' \dontrun{
+#' stri_locate_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
+#' }
+#'
+#' @export
+#' @family search_locate
+#' @family indexing
+#' @family locale_sensitive
+#' @family text_boundaries
+stri_locate_boundaries <- function(str, boundary='word', locale=NULL) {
+   .Call("stri_locate_boundaries", str, boundary, locale, PACKAGE="stringi")
 }

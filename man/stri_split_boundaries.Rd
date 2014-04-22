@@ -54,8 +54,8 @@ to wrap lines when displaying the text. The
 the other hand, a \code{sentence}-break iterator locates
 sentence boundaries.
 
-For more details on different classes of text boundaries
-refer to the \pkg{ICU} User Guide, see below.
+For technical details on different classes of text
+boundaries refer to the \pkg{ICU} User Guide, see below.
 }
 \examples{
 \dontrun{
@@ -88,6 +88,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_locate_first_fixed,}},
 \code{\link{stri_locate_last_fixed}},
 \code{\link{stri_locate_last_fixed}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_opts_collator}}; \code{\link{stri_order}},
 \code{\link{stri_sort}};
 \code{\link{stri_replace_all_fixed}},
@@ -115,5 +116,7 @@ Other search_split: \code{\link{stri_split_charclass}},
 \code{\link{stri_split_regex}},
 \code{\link{stri_split_regex}}; \code{\link{stri_split}};
 \code{\link{stringi-search}}
+
+Other text_boundaries: \code{\link{stri_locate_boundaries}}
 }
 
