@@ -94,6 +94,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_locale_info,                1),
    STRI__MAKE_CALL_METHOD(stri_locale_list,                0),
    STRI__MAKE_CALL_METHOD(stri_locale_set,                 1),
+   STRI__MAKE_CALL_METHOD(stri_locate_boundaries,          3),
    STRI__MAKE_CALL_METHOD(stri_locate_first_charclass,     2),
    STRI__MAKE_CALL_METHOD(stri_locate_last_charclass,      2),
    STRI__MAKE_CALL_METHOD(stri_locate_all_charclass,       3),

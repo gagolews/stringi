@@ -51,7 +51,10 @@ with its functions' arguments. }
   Locale-aware or byte-exact fixed pattern searching; \item
   \link{stringi-search-charclass} -- for finding elements
   of particular character classes, like ``all whitespaces''
-  or ``all digits''. }
+  or ``all digits''. \item Moreover,
+  \code{\link{stri_split_boundaries}} and
+  \code{\link{stri_locate_boundaries}} apply text boundary
+  analysis to split or just locate specific substrings. }
 
   \item \code{\link{stri_stats_general}} and
   \code{\link{stri_stats_latex}} for gathering some fancy
