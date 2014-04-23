@@ -17,13 +17,14 @@ A list of character vectors is returned. Each string
 consists of a separate word.
 }
 \description{
-This function extracts all words from each strings.
+This function extracts all words from each string.
 }
 \details{
 Vectorized over \code{str}.
 
-\pkg{ICU}'s word \code{BreakIterator} iterator is used to
-locate word boundaries, and all non-word characters
+Just like in \code{\link{stri_locate_words}}, \pkg{ICU}'s
+word \code{BreakIterator} iterator is used to locate word
+boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
@@ -58,6 +59,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_locate_last_fixed}},
 \code{\link{stri_locate_last_fixed}};
 \code{\link{stri_locate_boundaries}};
+\code{\link{stri_locate_words}};
 \code{\link{stri_opts_collator}}; \code{\link{stri_order}},
 \code{\link{stri_sort}};
 \code{\link{stri_replace_all_fixed}},
@@ -101,6 +103,7 @@ Other search_extract:
 
 Other text_boundaries:
 \code{\link{stri_locate_boundaries}};
+\code{\link{stri_locate_words}};
 \code{\link{stri_split_boundaries}}
 }
 

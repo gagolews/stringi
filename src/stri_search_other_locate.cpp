@@ -35,6 +35,7 @@
 #include <deque>
 #include <utility>
 #include <unicode/brkiter.h>
+#include <unicode/rbbi.h>
 
 
 /** Locate all BreakIterator boundaries
@@ -167,3 +168,102 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
       if (str_text) { utext_close(str_text); str_text = NULL; }
    })
 }
+
+
+
+/** Locate words using a BreakIterator
+ *
+ * @param str character vector
+ * @param locale identifier
+ * @return character vector
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ * 
+ */
+SEXP stri_locate_words(SEXP str, SEXP locale)
+{
+   str = stri_prepare_arg_string(str, "str");
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   Locale loc = Locale::createFromName(qloc);
+
+   R_len_t str_length = LENGTH(str);
+   R_len_t vectorize_length = str_length;
+
+   RuleBasedBreakIterator* briter = NULL;
+   UText* str_text = NULL;
+   STRI__ERROR_HANDLER_BEGIN
+   
+   UErrorCode status = U_ZERO_ERROR;
+   briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
+   if (U_FAILURE(status))
+      throw StriException(status);
+   
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+
+   int last_boundary = -1;
+   for (R_len_t i = 0; i < vectorize_length; ++i)
+   {
+      if (str_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         continue;
+      }
+
+      // get the current string
+      UErrorCode status = U_ZERO_ERROR;
+      const char* str_cur_s = str_cont.get(i).c_str();
+      str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+      briter->setText(str_text, status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+
+      deque< pair<R_len_t,R_len_t> > occurences;
+      R_len_t match, last_match = briter->first();
+      while ((match = briter->next()) != BreakIterator::DONE) {
+         int breakType = briter->getRuleStatus();
+         if (breakType != UBRK_WORD_NONE)
+            occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+         last_match = match;
+      }
+
+      R_len_t noccurences = (R_len_t)occurences.size();
+      if (noccurences <= 0) { // no matches at all
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         continue;
+      }
+      
+      SEXP ans;
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      int* ans_tab = INTEGER(ans);
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
+      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         pair<R_len_t, R_len_t> match = *iter;
+         ans_tab[j]             = match.first;
+         ans_tab[j+noccurences] = match.second;
+      }
+
+      // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+      str_cont.UTF8_to_UChar32_index(i, ans_tab,
+            ans_tab+noccurences, noccurences,
+            1, // 0-based index -> 1-based
+            0  // end returns position of next character after match
+      );
+      SET_VECTOR_ELT(ret, i, ans);
+      STRI__UNPROTECT(1);
+   }
+
+   if (briter) { delete briter; briter = NULL; }
+   if (str_text) { utext_close(str_text); str_text = NULL; }
+   stri__locate_set_dimnames_list(ret);
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (briter) { delete briter; briter = NULL; }
+      if (str_text) { utext_close(str_text); str_text = NULL; }
+   })
+}
+

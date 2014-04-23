@@ -146,7 +146,7 @@ SEXP stri__locate_all_fixed_byte(SEXP str, SEXP pattern)
       pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
 
       int start = pattern_cont.findFirst();
-      if (start == USEARCH_DONE) {
+      if (start == USEARCH_DONE) { // no matches at all
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
          continue;
       }

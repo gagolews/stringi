@@ -90,6 +90,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_locate_last_fixed}},
 \code{\link{stri_locate_last_fixed}};
 \code{\link{stri_locate_boundaries}};
+\code{\link{stri_locate_words}};
 \code{\link{stri_opts_collator}}; \code{\link{stri_order}},
 \code{\link{stri_sort}};
 \code{\link{stri_replace_all_fixed}},
@@ -119,6 +120,7 @@ Other search_split: \code{\link{stri_split_charclass}},
 \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
-\code{\link{stri_locate_boundaries}}
+\code{\link{stri_locate_boundaries}};
+\code{\link{stri_locate_words}}
 }
 

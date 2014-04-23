@@ -124,7 +124,6 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @rdname stri_extract_fixed
 #' @aliases stri_extract_all_fixed, stri_extract_first_fixed, stri_extract_last_fixed
 #' @family search_fixed
-#' @family search_locate
 #' @family search_extract
 stri_extract_all_fixed <- function(str, pattern, opts_collator=list()) {
    .Call("stri_extract_all_fixed", str, pattern, opts_collator, PACKAGE="stringi")
@@ -374,11 +373,12 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
 #'
 #' @description
 #' This function extracts all words from
-#' each strings.
+#' each string.
 #'
 #' @details
 #' Vectorized over \code{str}.
 #' 
+#' Just like in \code{\link{stri_locate_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
