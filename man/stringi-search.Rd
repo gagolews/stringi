@@ -118,12 +118,7 @@ Other search_fixed: \code{\link{stri_count_fixed}};
 \code{\link{stri_split_fixed}};
 \code{\link{stringi-search-fixed}}
 
-Other search_locate: \code{\link{stri_extract_all_fixed}},
-\code{\link{stri_extract_all_fixed,}},
-\code{\link{stri_extract_first_fixed}},
-\code{\link{stri_extract_first_fixed,}},
-\code{\link{stri_extract_last_fixed}},
-\code{\link{stri_extract_last_fixed}};
+Other search_locate:
 \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_first_charclass}},
@@ -145,7 +140,8 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_all}};
 \code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}}; \code{\link{stri_locate}}
+\code{\link{stri_locate_last}};
+\code{\link{stri_locate_words}}; \code{\link{stri_locate}}
 
 Other search_match: \code{\link{stri_match_all_regex}},
 \code{\link{stri_match_all_regex}},

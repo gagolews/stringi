@@ -102,6 +102,7 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_all}};
 \code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}}; \code{\link{stri_locate}}
+\code{\link{stri_locate_last}};
+\code{\link{stri_locate_words}}; \code{\link{stri_locate}}
 }
 

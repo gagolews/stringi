@@ -20,7 +20,7 @@ stri_locate_all(str, ..., regex, fixed, charclass)
 \value{
 Returns a list of integer matrices. The first column gives
 the start positions of the matches, and the second one
-gives the end position. Double \code{NA}s iff not found or
+gives the end positions. Double \code{NA}s iff not found or
 \code{NA} argument is given.
 }
 \description{
@@ -68,15 +68,11 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}}; \code{\link{stri_locate}};
+\code{\link{stri_locate_last}};
+\code{\link{stri_locate_words}}; \code{\link{stri_locate}};
 \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
 
-Other search_locate: \code{\link{stri_extract_all_fixed}},
-\code{\link{stri_extract_all_fixed,}},
-\code{\link{stri_extract_first_fixed}},
-\code{\link{stri_extract_first_fixed,}},
-\code{\link{stri_extract_last_fixed}},
-\code{\link{stri_extract_last_fixed}};
+Other search_locate:
 \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_first_charclass}},
@@ -97,7 +93,8 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}}; \code{\link{stri_locate}};
+\code{\link{stri_locate_last}};
+\code{\link{stri_locate_words}}; \code{\link{stri_locate}};
 \code{\link{stringi-search}}
 }
 

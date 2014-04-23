@@ -18,7 +18,8 @@
       stri_locate_boundaries indicates positions of these boundaries.
 
    * [NEW FUNCTION] stri_extract_words uses ICU's BreakIterator to
-      extract all words from a text.
+      extract all words from a text. Additionally, stri_locate_words
+      locates start and end positions of words in a text.
 
    * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
       pads a string with a specific code point.

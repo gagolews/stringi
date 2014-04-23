@@ -1,15 +1,11 @@
-\name{stri_locate_boundaries}
-\alias{stri_locate_boundaries}
-\title{Locate Specific Text Boundaries}
+\name{stri_locate_words}
+\alias{stri_locate_words}
+\title{Locate Words in a Text}
 \usage{
-stri_locate_boundaries(str, boundary = "word", locale = NULL)
+stri_locate_words(str, locale = NULL)
 }
 \arguments{
   \item{str}{character vector or an object coercible to}
-
-  \item{boundary}{character vector, each string is one of
-  \code{character}, \code{line-break}, \code{sentence}, or
-  \code{word}}
 
   \item{locale}{\code{NULL} or \code{""} for text boundary
   analysis following the conventions of the default locale,
@@ -17,10 +13,9 @@ stri_locate_boundaries(str, boundary = "word", locale = NULL)
   \link{stringi-locale}.}
 }
 \value{
-A list of \code{max(length(str), length(boundary))} integer
-matrices is returned. The first column gives the start
-positions of substrings between located boundaries, and the
-second column gives the end positions. The indices are code
+A list of integer matrices is returned. The first column
+gives the start positions of the words, and the second
+column gives the end positions. The indices are code
 point-based, thus they may be passed e.g. to the
 \code{\link{stri_sub}} function.
 
@@ -28,24 +23,24 @@ Moreover, you may get two \code{NA}s in one row for no
 match or \code{NA} arguments.
 }
 \description{
-This function locates specific text boundaries (like
-character, word, line, or sentence boundaries) and splits
-strings at the indicated positions.
+This function locates all words in each string.
 }
 \details{
-Vectorized over \code{str} and \code{boundary}.
+Vectorized over \code{str}.
 
-For more information on the text boundary analysis
-performed by \pkg{ICU}'s \code{BreakIterator}, see
-\code{\link{stri_locate_boundaries}}.
-
-For locating words in a text using \pkg{ICU}'s word
-iterator, see \code{\link{stri_locate_words}}.
+Just like in \code{\link{stri_extract_words}}, \pkg{ICU}'s
+word \code{BreakIterator} iterator is used to locate word
+boundaries, and all non-word characters
+(\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
 \dontrun{
-stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
+stri_locate_words("  stringi: THE string processing package 123.48...  ")
 }
+}
+\references{
+\emph{Boundary Analysis} -- ICU User Guide,
+\url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},
@@ -67,9 +62,9 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}};
-\code{\link{stri_locate_words}}; \code{\link{stri_locate}};
+\code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
 
 Other locale_sensitive: \code{\link{\%!=\%}},
@@ -94,7 +89,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_locate_first_fixed,}},
 \code{\link{stri_locate_last_fixed}},
 \code{\link{stri_locate_last_fixed}};
-\code{\link{stri_locate_words}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_opts_collator}}; \code{\link{stri_order}},
 \code{\link{stri_sort}};
 \code{\link{stri_replace_all_fixed}},
@@ -132,13 +127,13 @@ Other search_locate:
 \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_regex}};
 \code{\link{stri_locate_all}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_first}};
-\code{\link{stri_locate_last}};
-\code{\link{stri_locate_words}}; \code{\link{stri_locate}};
+\code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
-\code{\link{stri_locate_words}};
+\code{\link{stri_locate_boundaries}};
 \code{\link{stri_split_boundaries}}
 }
 
