@@ -312,8 +312,6 @@ stri_split_lines1 <- function(str) {
 #' such as ``Find whole words'' operations.
 #' The \code{line-break} iterator locates positions that would
 #' be appropriate points to wrap lines when displaying the text.
-#' The \code{title}-boundary iterator if for title breaks
-#'  (see \code{\link{stri_trans_totitle}} for practical usage).
 #' On the other hand, a \code{sentence}-break iterator
 #' locates sentence boundaries.
 #'
@@ -322,7 +320,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
-#' \code{line-break}, \code{sentence}, \code{title}, or \code{word}
+#' \code{line-break}, \code{sentence}, or \code{word}
 #' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
