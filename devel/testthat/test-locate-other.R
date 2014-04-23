@@ -19,4 +19,3 @@ test_that("stri_locate_words", {
            matrix(c(1, 7), ncol=2),
            matrix(c(NA, NA), ncol=2)))
 })
-

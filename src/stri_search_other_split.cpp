@@ -281,13 +281,15 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-21)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
  *          removed "title": For Unicode 4.0 and above title boundary
  *          iteration, please use Word Boundary iterator.
  */
 SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
 {
+   // @TODO: code cloning detected: almost the same as stri_locate_boundaries...
+   
    str = stri_prepare_arg_string(str, "str");
    boundary = stri_prepare_arg_string(boundary, "boundary");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
@@ -301,7 +303,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
    const char* boundary_opts[] = {"character", "line_break",
       "sentence", "word", NULL};
 
-   RuleBasedBreakIterator* briter = NULL;
+   BreakIterator* briter = NULL;
    UText* str_text = NULL;
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -331,19 +333,19 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
          UErrorCode status = U_ZERO_ERROR;
          switch (boundary_cur) {
             case 0: // character
-               briter = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
+               briter = BreakIterator::createCharacterInstance(loc, status);
                break;
 
             case 1: // line_break
-               briter = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
+               briter = BreakIterator::createLineInstance(loc, status);
                break;
 
             case 2: // sentence
-               briter = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
+               briter = BreakIterator::createSentenceInstance(loc, status);
                break;
 
             case 3: // word
-               briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
+               briter = BreakIterator::createWordInstance(loc, status);
                break;
 
 //            case 4: // title

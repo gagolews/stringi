@@ -461,7 +461,7 @@ stri_locate <- function(str, ..., regex, fixed, charclass,
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \code{\link{stri_locate_boundaries}}.
-#' 
+#'
 #' For locating words in a text using \pkg{ICU}'s word iterator,
 #' see \code{\link{stri_locate_words}}.
 #'
@@ -506,7 +506,7 @@ stri_locate_boundaries <- function(str, boundary='word', locale=NULL) {
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' Just like in \code{\link{stri_extract_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
@@ -532,7 +532,7 @@ stri_locate_boundaries <- function(str, boundary='word', locale=NULL) {
 #' \dontrun{
 #' stri_locate_words("  stringi: THE string processing package 123.48...  ")
 #' }
-#' 
+#'
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}

@@ -367,7 +367,6 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
 }
 
 
-
 #' @title
 #' Extract Words from a Text
 #'
@@ -377,7 +376,7 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' Just like in \code{\link{stri_locate_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
@@ -397,7 +396,7 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
 #' \dontrun{
 #' stri_extract_words("stringi: THE string processing package 123.48...")
 #' }
-#' 
+#'
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}

@@ -10,11 +10,13 @@ for (f in srcfiles) {
    cf <- readLines(f)
    if (!all(stri_enc_isascii(cf))) next;
    cf <- stri_trim_right(cf)
-   cf <- stri_replace_first_regex(cf, "^\\t",             "   ")
-   cf <- stri_replace_first_regex(cf, "^\\t\\t",          "      ")
-   cf <- stri_replace_first_regex(cf, "^\\t\\t\\t",       "         ")
-   cf <- stri_replace_first_regex(cf, "^\\t\\t\\t\\t",    "            ")
+
    cf <- stri_replace_first_regex(cf, "^\\t\\t\\t\\t\\t", "               ")
+   cf <- stri_replace_first_regex(cf, "^\\t\\t\\t\\t",    "            ")
+   cf <- stri_replace_first_regex(cf, "^\\t\\t\\t",       "         ")
+   cf <- stri_replace_first_regex(cf, "^\\t\\t",          "      ")
+   cf <- stri_replace_first_regex(cf, "^\\t",             "   ")
+
 
    # newlines at end:
    while (stri_numbytes(cf[length(cf)]) == 0)
