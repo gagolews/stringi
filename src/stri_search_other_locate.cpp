@@ -41,11 +41,15 @@
  *
  * @param str character vector
  * @param boundary single string, one of \code{character},
- * \code{line-break}, \code{sentence}, \code{title}, or \code{word}
+ * \code{line-break}, \code{sentence}, or \code{word}
  * @param locale identifier
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-22)
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ *          removed "title": For Unicode 4.0 and above title boundary
+ *          iteration, please use Word Boundary iterator.
  */
 SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
 {
@@ -60,7 +64,7 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
       str_length, boundary_length);
 
    const char* boundary_opts[] = {"character", "line-break",
-      "sentence", "title", "word", NULL};
+      "sentence", "word", NULL};
 
    BreakIterator* briter = NULL;
    UText* str_text = NULL;
@@ -103,11 +107,11 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
                briter = BreakIterator::createSentenceInstance(loc, status);
                break;
 
-            case 3: // title
-               briter = BreakIterator::createTitleInstance(loc, status);
-               break;
+//            case 3: // title
+//               briter = BreakIterator::createTitleInstance(loc, status);
+//               break;
 
-            case 4: // word
+            case 3: // word
                briter = BreakIterator::createWordInstance(loc, status);
                break;
          }

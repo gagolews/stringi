@@ -8,8 +8,8 @@ stri_locate_boundaries(str, boundary = "word", locale = NULL)
   \item{str}{character vector or an object coercible to}
 
   \item{boundary}{character vector, each string is one of
-  \code{character}, \code{line-break}, \code{sentence},
-  \code{title}, or \code{word}}
+  \code{character}, \code{line-break}, \code{sentence}, or
+  \code{word}}
 
   \item{locale}{\code{NULL} or \code{""} for case mapping
   following the conventions of the default locale, or a

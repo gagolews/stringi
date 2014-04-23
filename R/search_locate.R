@@ -465,7 +465,7 @@ stri_locate <- function(str, ..., regex, fixed, charclass,
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
-#' \code{line-break}, \code{sentence}, \code{title}, or \code{word}
+#' \code{line-break}, \code{sentence}, or \code{word}
 #' @param locale \code{NULL} or \code{""} for case mapping following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
