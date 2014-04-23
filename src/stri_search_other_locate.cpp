@@ -47,13 +47,15 @@
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-22)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
  *          removed "title": For Unicode 4.0 and above title boundary
  *          iteration, please use Word Boundary iterator.
  */
 SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
 {
+   // @TODO: code cloning detected: almost the same as stri_split_boundaries...
+   
    str = stri_prepare_arg_string(str, "str");
    boundary = stri_prepare_arg_string(boundary, "boundary");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
@@ -170,7 +172,6 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
 }
 
 
-
 /** Locate words using a BreakIterator
  *
  * @param str character vector
@@ -178,10 +179,12 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
- * 
+ *
  */
 SEXP stri_locate_words(SEXP str, SEXP locale)
 {
+   // @TODO: code cloning detected: almost the same as stri_extract_words...
+   
    str = stri_prepare_arg_string(str, "str");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
    Locale loc = Locale::createFromName(qloc);
@@ -192,18 +195,17 @@ SEXP stri_locate_words(SEXP str, SEXP locale)
    RuleBasedBreakIterator* briter = NULL;
    UText* str_text = NULL;
    STRI__ERROR_HANDLER_BEGIN
-   
+
    UErrorCode status = U_ZERO_ERROR;
    briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
    if (U_FAILURE(status))
       throw StriException(status);
-   
+
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   int last_boundary = -1;
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {
       if (str_cont.isNA(i)) {
@@ -235,7 +237,7 @@ SEXP stri_locate_words(SEXP str, SEXP locale)
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
          continue;
       }
-      
+
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
       int* ans_tab = INTEGER(ans);
@@ -266,4 +268,3 @@ SEXP stri_locate_words(SEXP str, SEXP locale)
       if (str_text) { utext_close(str_text); str_text = NULL; }
    })
 }
-

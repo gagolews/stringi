@@ -44,7 +44,6 @@
 using namespace std;
 
 
-
 /** Extract words using a BreakIterator
  *
  * @param str character vector
@@ -52,10 +51,12 @@ using namespace std;
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
- * 
+ *
  */
 SEXP stri_extract_words(SEXP str, SEXP locale)
 {
+   // @TODO: code cloning detected: almost the same as stri_locate_words...
+   
    str = stri_prepare_arg_string(str, "str");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
    Locale loc = Locale::createFromName(qloc);
@@ -66,18 +67,17 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
    RuleBasedBreakIterator* briter = NULL;
    UText* str_text = NULL;
    STRI__ERROR_HANDLER_BEGIN
-   
+
    UErrorCode status = U_ZERO_ERROR;
    briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
    if (U_FAILURE(status))
       throw StriException(status);
-   
+
    StriContainerUTF8 str_cont(str, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   int last_boundary = -1;
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {
       if (str_cont.isNA(i)) {
