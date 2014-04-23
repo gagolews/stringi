@@ -260,6 +260,11 @@ SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
  * @param option
  * @param set
  * @return index in set, negative value for no match
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
+ *          proper handling of "word" in {"word", "word-second"}
  */
 int stri__match_arg(const char* option, const char** set) {
    int set_length = 0;
@@ -273,6 +278,8 @@ int stri__match_arg(const char* option, const char** set) {
          if (excluded[i]) continue;
          if (set[i][k] == '\0' || set[i][k] != option[k])
             excluded[i] = true;
+         else if (set[i][k+1] == '\0' && option[k+1] == '\0')
+            return i; // exact match
       }
    }
 

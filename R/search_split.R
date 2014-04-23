@@ -310,18 +310,20 @@ stri_split_lines1 <- function(str) {
 #' language -- which may be more than just a single Unicode code point.
 #' The \code{word} boundary iterator locates the boundaries of words, for purposes
 #' such as ``Find whole words'' operations.
-#' The \code{line-break} iterator locates positions that would
+#' The \code{line_break} iterator locates positions that would
 #' be appropriate points to wrap lines when displaying the text.
 #' On the other hand, a \code{sentence}-break iterator
 #' locates sentence boundaries.
 #'
 #' For technical details on different classes of text boundaries refer
 #' to the \pkg{ICU} User Guide, see below.
+#' For extracting individual words from the text
+#' using a \code{BreakIterator}, see \code{\link{stri_extract_words}}.
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
 #' \code{line-break}, \code{sentence}, or \code{word}
-#' @param locale \code{NULL} or \code{""} for case mapping following
+#' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
 #'
@@ -340,7 +342,7 @@ stri_split_lines1 <- function(str) {
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
-stri_split_boundaries <- function(str, boundary='word', locale=NULL) {
+stri_split_boundaries <- function(str, boundary='line-break', locale=NULL) {
    .Call("stri_split_boundaries", str, boundary, locale, PACKAGE="stringi")
 }
 

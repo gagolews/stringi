@@ -2,7 +2,7 @@
 \alias{stri_split_boundaries}
 \title{Split Strings at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, boundary = "word", locale = NULL)
+stri_split_boundaries(str, boundary = "line-break", locale = NULL)
 }
 \arguments{
   \item{str}{character vector or an object coercible to}
@@ -11,9 +11,9 @@ stri_split_boundaries(str, boundary = "word", locale = NULL)
   \code{character}, \code{line-break}, \code{sentence}, or
   \code{word}}
 
-  \item{locale}{\code{NULL} or \code{""} for case mapping
-  following the conventions of the default locale, or a
-  single string with locale identifier, see
+  \item{locale}{\code{NULL} or \code{""} for text boundary
+  analysis following the conventions of the default locale,
+  or a single string with locale identifier, see
   \link{stringi-locale}.}
 }
 \value{
@@ -46,7 +46,7 @@ user would think of as a ``character'' -- a basic unit of a
 writing system for a language -- which may be more than
 just a single Unicode code point. The \code{word} boundary
 iterator locates the boundaries of words, for purposes such
-as ``Find whole words'' operations. The \code{line-break}
+as ``Find whole words'' operations. The \code{line_break}
 iterator locates positions that would be appropriate points
 to wrap lines when displaying the text. On the other hand,
 a \code{sentence}-break iterator locates sentence
@@ -54,6 +54,8 @@ boundaries.
 
 For technical details on different classes of text
 boundaries refer to the \pkg{ICU} User Guide, see below.
+For extracting individual words from the text using a
+\code{BreakIterator}, see \code{\link{stri_extract_words}}.
 }
 \examples{
 \dontrun{
@@ -80,6 +82,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_duplicated}},
 \code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
+\code{\link{stri_extract_words}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
 \code{\link{stri_locate_first_fixed}},
@@ -115,6 +118,7 @@ Other search_split: \code{\link{stri_split_charclass}},
 \code{\link{stri_split_regex}}; \code{\link{stri_split}};
 \code{\link{stringi-search}}
 
-Other text_boundaries: \code{\link{stri_locate_boundaries}}
+Other text_boundaries: \code{\link{stri_extract_words}};
+\code{\link{stri_locate_boundaries}}
 }
 
