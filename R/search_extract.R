@@ -366,3 +366,46 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
           all  =stri_extract_all(str, ..., regex=regex, fixed=fixed, charclass=charclass)
    )
 }
+
+
+
+#' @title
+#' Extract Words from a Text
+#'
+#' @description
+#' This function extracts all words from
+#' each strings.
+#'
+#' @details
+#' Vectorized over \code{str}.
+#' 
+#' \pkg{ICU}'s word \code{BreakIterator} iterator is used
+#' to locate word boundaries, and all non-word characters
+#' (\code{UBRK_WORD_NONE} rule status) are ignored.
+#'
+#'
+#' @param str character vector or an object coercible to
+#' @param locale \code{NULL} or \code{""} for text boundary analysis following
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}.
+#'
+#' @return
+#' A list of character vectors is returned. Each string consists of
+#' a separate word.
+#'
+#' @examples
+#' \dontrun{
+#' stri_extract_words("stringi: THE string processing package 123.48...")
+#' }
+#' 
+#' @references
+#' \emph{Boundary Analysis} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/boundaryanalysis}
+#'
+#' @export
+#' @family search_extract
+#' @family locale_sensitive
+#' @family text_boundaries
+stri_extract_words <- function(str, locale=NULL) {
+   .Call("stri_extract_words", str, locale, PACKAGE="stringi")
+}

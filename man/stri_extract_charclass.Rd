@@ -84,6 +84,7 @@ Other search_extract: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_extract_all}};
 \code{\link{stri_extract_first}};
 \code{\link{stri_extract_last}};
+\code{\link{stri_extract_words}};
 \code{\link{stri_extract}}; \code{\link{stringi-search}}
 }
 

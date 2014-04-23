@@ -11,9 +11,9 @@ stri_locate_boundaries(str, boundary = "word", locale = NULL)
   \code{character}, \code{line-break}, \code{sentence}, or
   \code{word}}
 
-  \item{locale}{\code{NULL} or \code{""} for case mapping
-  following the conventions of the default locale, or a
-  single string with locale identifier, see
+  \item{locale}{\code{NULL} or \code{""} for text boundary
+  analysis following the conventions of the default locale,
+  or a single string with locale identifier, see
   \link{stringi-locale}.}
 }
 \value{
@@ -83,6 +83,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_duplicated}},
 \code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
+\code{\link{stri_extract_words}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
 \code{\link{stri_locate_first_fixed}},
@@ -135,6 +136,7 @@ Other search_locate: \code{\link{stri_extract_all_fixed}},
 \code{\link{stri_locate_last}}; \code{\link{stri_locate}};
 \code{\link{stringi-search}}
 
-Other text_boundaries: \code{\link{stri_split_boundaries}}
+Other text_boundaries: \code{\link{stri_extract_words}};
+\code{\link{stri_split_boundaries}}
 }
 

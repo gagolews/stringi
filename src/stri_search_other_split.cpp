@@ -276,7 +276,7 @@ SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty)
  *
  * @param str character vector
  * @param boundary single string, one of \code{character},
- * \code{line-break}, \code{sentence}, or \code{word}
+ * \code{line_break}, \code{sentence}, \code{word}
  * @param locale identifier
  * @return character vector
  *
@@ -298,7 +298,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
    R_len_t vectorize_length = stri__recycling_rule(true, 2,
       str_length, boundary_length);
 
-   const char* boundary_opts[] = {"character", "line-break",
+   const char* boundary_opts[] = {"character", "line_break",
       "sentence", "word", NULL};
 
    RuleBasedBreakIterator* briter = NULL;
@@ -334,7 +334,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
                briter = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
                break;
 
-            case 1: // line-break
+            case 1: // line_break
                briter = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
                break;
 
@@ -342,13 +342,13 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
                briter = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
                break;
 
-//            case 3: // title
-//               briter = (RuleBasedBreakIterator*)BreakIterator::createTitleInstance(loc, status);
-//               break;
-
             case 3: // word
                briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
+
+//            case 4: // title
+//               briter = (RuleBasedBreakIterator*)BreakIterator::createTitleInstance(loc, status);
+//               break;
          }
          if (U_FAILURE(status))
             throw StriException(status); // briter will be deleted automagically
@@ -364,30 +364,29 @@ SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
       if (U_FAILURE(status))
          throw StriException(status);
 
-      deque<R_len_t> occurences;
-      int match = briter->first();
-      occurences.push_back(match);
+      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
+      R_len_t match, last_match = briter->first();
       while ((match = briter->next()) != BreakIterator::DONE) {
-         occurences.push_back(match);
+         occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+         last_match = match;
       }
 
       R_len_t noccurences = (R_len_t)occurences.size();
-      if (noccurences <= 1) {
+      if (noccurences <= 0) {
          SEXP ans;
          STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
-         SET_STRING_ELT(ans, 0, str_cont.toR(i));
+         SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
          SET_VECTOR_ELT(ret, i, ans);
          STRI__UNPROTECT(1);
          continue;
       }
 
       SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences-1));
-      deque<R_len_t>::iterator iter = occurences.begin();
-      R_len_t last = *(iter++);
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
+      deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
       for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+last, (*iter)-last, CE_UTF8));
-         last = *iter;
+         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
+            (*iter).second-(*iter).first, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);

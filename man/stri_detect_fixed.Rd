@@ -54,6 +54,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_duplicated}},
 \code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
+\code{\link{stri_extract_words}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
 \code{\link{stri_locate_first_fixed}},
