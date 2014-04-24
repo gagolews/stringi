@@ -38,7 +38,7 @@ stri_search_fixed_extract.cpp \
 stri_search_fixed_locate.cpp \
 stri_search_fixed_replace.cpp \
 stri_search_fixed_split.cpp \
-stri_search_other_extract.cpp \
+stri_search_words.cpp \
 stri_search_other_locate.cpp \
 stri_search_other_replace.cpp \
 stri_search_other_split.cpp \
