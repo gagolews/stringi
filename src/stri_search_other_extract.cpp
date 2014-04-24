@@ -31,12 +31,7 @@
 
 
 #include "stri_stringi.h"
-#include "stri_container_utf8.h"
-#include "stri_container_utf16.h"
-#include "stri_container_usearch.h"
-#include "stri_container_bytesearch.h"
-#include "stri_container_integer.h"
-#include "stri_container_logical.h"
+#include "stri_container_utf8_indexable.h"
 #include <deque>
 #include <utility>
 #include <unicode/brkiter.h>
@@ -44,19 +39,19 @@
 using namespace std;
 
 
+
 /** Extract words using a BreakIterator
  *
  * @param str character vector
  * @param locale identifier
+ * @param extract internal
  * @return character vector
  *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
  *
  */
-SEXP stri_extract_words(SEXP str, SEXP locale)
+SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
 {
-   // @TODO: code cloning detected: almost the same as stri_locate_words...
-   
    str = stri_prepare_arg_string(str, "str");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
    Locale loc = Locale::createFromName(qloc);
@@ -73,7 +68,7 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
    if (U_FAILURE(status))
       throw StriException(status);
 
-   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
@@ -81,7 +76,12 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {
       if (str_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         if (extract) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         }
+         else {
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         }
          continue;
       }
 
@@ -107,22 +107,49 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
       R_len_t noccurences = (R_len_t)occurences.size();
       if (noccurences <= 0) {
          SEXP ans;
-         STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
-         SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
-         SET_VECTOR_ELT(ret, i, ans);
+         if (extract) {
+            STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
+            SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
+            SET_VECTOR_ELT(ret, i, ans);
+         }
+         else {
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         }
          STRI__UNPROTECT(1);
          continue;
       }
 
-      SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
-      deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
-            (*iter).second-(*iter).first, CE_UTF8));
+      if (extract) {
+         SEXP ans;
+         STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
+         deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
+         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+            SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
+               (*iter).second-(*iter).first, CE_UTF8));
+         }
+         SET_VECTOR_ELT(ret, i, ans);
+         STRI__UNPROTECT(1);
       }
-      SET_VECTOR_ELT(ret, i, ans);
-      STRI__UNPROTECT(1);
+      else { // locate
+         SEXP ans;
+         STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+         int* ans_tab = INTEGER(ans);
+         deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
+         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+            pair<R_len_t, R_len_t> match = *iter;
+            ans_tab[j]             = match.first;
+            ans_tab[j+noccurences] = match.second;
+         }
+   
+         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+         str_cont.UTF8_to_UChar32_index(i, ans_tab,
+               ans_tab+noccurences, noccurences,
+               1, // 0-based index -> 1-based
+               0  // end returns position of next character after match
+         );
+         SET_VECTOR_ELT(ret, i, ans);
+         STRI__UNPROTECT(1);
+      }
    }
 
    if (briter) { delete briter; briter = NULL; }
@@ -134,3 +161,41 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
       if (str_text) { utext_close(str_text); str_text = NULL; }
    })
 }
+
+
+/** Extract words using a BreakIterator
+ *
+ * @param str character vector
+ * @param locale identifier
+ * @return character vector
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
+ *          use stri__extract_or_locate_words
+ *
+ */
+SEXP stri_extract_words(SEXP str, SEXP locale)
+{
+   return stri__extract_or_locate_words(str, locale, true);
+}
+
+
+
+/** Locate words using a BreakIterator
+ *
+ * @param str character vector
+ * @param locale identifier
+ * @return character vector
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
+ *          use stri__extract_or_locate_words
+ * 
+ */
+SEXP stri_locate_words(SEXP str, SEXP locale)
+{
+   return stri__extract_or_locate_words(str, locale, false);
+}
+
