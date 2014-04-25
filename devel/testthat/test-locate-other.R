@@ -1,6 +1,7 @@
 require(testthat)
 
 test_that("stri_locate_boundaries", {
+   expect_identical(colnames(stri_locate_boundaries("stringi")[[1]]), c("start", "end"))
    expect_error(stri_locate_boundaries("aaa", "???"))
    expect_equivalent(stri_locate_boundaries(c(NA, NA), "word"),
       list(matrix(NA_integer_, ncol=2, nrow=1), matrix(NA_integer_, ncol=2, nrow=1)))
@@ -13,6 +14,8 @@ test_that("stri_locate_boundaries", {
 
 
 test_that("stri_locate_words", {
+
+   expect_identical(colnames(stri_locate_words("stringi")[[1]]), c("start", "end"))
 
    expect_equivalent(stri_locate_words(c("", "stringi", NA)),
       list(matrix(c(NA, NA), ncol=2),
