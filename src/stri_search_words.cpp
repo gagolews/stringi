@@ -39,7 +39,6 @@
 using namespace std;
 
 
-
 /** Extract words using a BreakIterator
  *
  * @param str character vector
@@ -140,7 +139,7 @@ SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
             ans_tab[j]             = match.first;
             ans_tab[j+noccurences] = match.second;
          }
-   
+
          // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
          str_cont.UTF8_to_UChar32_index(i, ans_tab,
                ans_tab+noccurences, noccurences,
@@ -154,6 +153,8 @@ SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
 
    if (briter) { delete briter; briter = NULL; }
    if (str_text) { utext_close(str_text); str_text = NULL; }
+   if (!extract)
+      stri__locate_set_dimnames_list(ret);
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
@@ -170,7 +171,7 @@ SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
  *          use stri__extract_or_locate_words
  *
@@ -179,7 +180,6 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
 {
    return stri__extract_or_locate_words(str, locale, true);
 }
-
 
 
 /** Locate words using a BreakIterator
@@ -192,10 +192,9 @@ SEXP stri_extract_words(SEXP str, SEXP locale)
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-24)
  *          use stri__extract_or_locate_words
- * 
+ *
  */
 SEXP stri_locate_words(SEXP str, SEXP locale)
 {
    return stri__extract_or_locate_words(str, locale, false);
 }
-
