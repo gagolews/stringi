@@ -45,9 +45,9 @@ exactly one code point.
 control to \code{stri_pad_*}. Unless you are very lazy, do
 not use it: it is a little bit slower.
 
-Note that Unicode code points may have different widths
-when printed on screen. This function acts like each code
-point is of width 1.
+Note that Unicode code points may have various widths when
+printed on screen. This function acts like each code point
+is of width 1.
 
 See \code{\link{stri_trim_left}} (among others) for reverse
 operation.
@@ -58,10 +58,5 @@ stri_pad_both("stringi", 8:12, pad="*")
 # center on screen:
 cat(stri_pad_both(c("the", "string", "processing", "package"),
    getOption("width")*0.9), sep='\\n')
-}
-\seealso{
-Other whitespaces: \code{\link{stri_trim}},
-\code{\link{stri_trim}}, \code{\link{stri_trim_both}},
-\code{\link{stri_trim_left}}, \code{\link{stri_trim_right}}
 }
 

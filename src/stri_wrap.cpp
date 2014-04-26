@@ -31,6 +31,107 @@
 
 
 #include "stri_stringi.h"
+#include "stri_container_utf8_indexable.h"
+#include <deque>
+#include <utility>
+#include <unicode/brkiter.h>
+
+
+/** Word wrap text
+ * 
+ * @param str character vector
+ * @param width single integer
+ * @param cost_exponent single double
+ * @param locale locale identifier or NULL for default locale
+ * 
+ * @return list
+ * 
+ * @version 0.1-?? (Bartek Tartanus)
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
+ *          single function for wrap_greedy and wrap_dynamic
+ *          use BreakIterator
+ */
+SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
+{
+   str = stri_prepare_arg_string(str, "str");
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   Locale loc = Locale::createFromName(qloc);
+   double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "width");
+   int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
+   // @TODO: check if width_val > 0
+   
+   
+   Rf_error("TO DO");
+   
+   R_len_t str_length = LENGTH(str);
+   BreakIterator* briter = NULL;
+   UText* str_text = NULL;
+   
+   STRI__ERROR_HANDLER_BEGIN
+   UErrorCode status = U_ZERO_ERROR;
+   briter = BreakIterator::createLineInstance(loc, status);
+   if (U_FAILURE(status)) throw StriException(status);
+   
+   StriContainerUTF8_indexable str_cont(str, str_length);
+   
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_length));
+   for (R_len_t i = 0; i < str_length; ++i)
+   {
+      if (str_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+      
+      status = U_ZERO_ERROR;
+      const char* str_cur_s = str_cont.get(i).c_str();
+      str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
+      if (U_FAILURE(status)) throw StriException(status);
+      briter->setText(str_text, status);
+      if (U_FAILURE(status)) throw StriException(status);
+      
+//      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
+//      R_len_t match, last_match = briter->first();
+//      while ((match = briter->next()) != BreakIterator::DONE) {
+//         occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+//         last_match = match;
+//      }
+//
+//      R_len_t noccurences = (R_len_t)occurences.size();
+//      if (noccurences <= 0) {
+//         SEXP ans;
+//         STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
+//         SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
+//         SET_VECTOR_ELT(ret, i, ans);
+//         STRI__UNPROTECT(1);
+//         continue;
+//      }
+//
+//      SEXP ans;
+//      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
+//      deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
+//      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+//         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
+//            (*iter).second-(*iter).first, CE_UTF8));
+//      }
+//      SET_VECTOR_ELT(ret, i, ans);
+//      STRI__UNPROTECT(1);
+      
+   }
+   
+   if (briter) { delete briter; briter = NULL; }
+   if (str_text) { utext_close(str_text); str_text = NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (briter) { delete briter; briter = NULL; }
+      if (str_text) { utext_close(str_text); str_text = NULL; }
+   })
+}
+
+
+
 //#include <limits>
 
 ///**

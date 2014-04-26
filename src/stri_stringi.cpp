@@ -159,11 +159,9 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_trim_right,                 2),
    STRI__MAKE_CALL_METHOD(stri_unescape_unicode,           1),
    STRI__MAKE_CALL_METHOD(stri_unique,				           2),
+   STRI__MAKE_CALL_METHOD(stri_wrap,                       4),
 //   STRI__MAKE_CALL_METHOD(stri_trim_double,                3), // TODO: version >= 0.2
 //   STRI__MAKE_CALL_METHOD(stri_width,                      1), // TODO: version >= 0.2
-//   STRI__MAKE_CALL_METHOD(stri_wrap,                       4), // TODO: version >= 0.2
-//   STRI__MAKE_CALL_METHOD(stri_wrap_greedy,                3), // TODO: version >= 0.2
-//   STRI__MAKE_CALL_METHOD(stri_wrap_dynamic,               3), // TODO: version >= 0.2
 
    // the list must be NULL-terminated:
    {NULL,                           NULL,                  0}

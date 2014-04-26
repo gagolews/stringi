@@ -28,38 +28,66 @@
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-invisible(NULL) # t.b.d.
 
-# #' @title
-# #' Word Wrap Text to Format Paragraphs
-# #'
-# #' @description
-# #' ...
-# #'
-# #' @details
-# #' Vectorized over \code{str}.
-# #'
-# #' @param str character vector of strings to reformat
-# #' @param width single positive integer giving target maximal number
-# #'        of code points per line
-# #' @param pattern single string specifying a character class that
-# #'        denotes a space, i.e. a word delimiter,
-# #'        see \link{stringi-search-charclass}
-# #'
-# #' @return
-# #' If \code{simplify} is \code{TRUE}, then a character vector is returned.
-# #' Otherwise, you will get a list of \code{length(str)} character vectors.
-# #'
-# #' @rdname stri_wrap
-# #' @family whitespaces
-# #' @examples
-# #' invisible(NULL) # t.b.d.
-# #' @export
-# stri_wrap <- function(str, width=floor(0.9*getOption("width")),
-#    pattern="\\p{Wspace}", simplify=TRUE)
-# {
-#    .Call("stri_wrap", str, width, pattern, spacecost, PACKAGE="stringi")
-# }
+#' @title
+#' Word Wrap Text to Format Paragraphs
+#'
+#' @description
+#' ...
+#'
+#' @details
+#' Vectorized over \code{str}.
+#' 
+#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
+#' otherwise you will get at error.
+#' 
+#' Note that Unicode code points may have various widths when
+#' printed on screen. This function acts like each code point
+#' is of width 1.
+#' 
+#' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
+#' text boundaries at which a line break is possible.
+#'
+#' @param str character vector of strings to reformat
+#' @param width single positive integer giving the desired 
+#'        maximal number of code points per line
+#' @param cost_exponent single numeric value, values not greater than zero
+#'        will select a greedy word-wrapping algorithm; otherwise
+#'        this value denotes the exponent in the cost function
+#'        of a (more esthetic) dynamic programming-based algorithm
+#' @param simplify single logical value, see Value
+#' @param locale \code{NULL} or \code{""} for text boundary analysis following
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}
+#' @param simplify single logical value....
+#'
+#' @return
+#' If \code{simplify} is \code{TRUE}, then a character vector is returned.
+#' Otherwise, you will get a list of \code{length(str)} character vectors.
+#'
+#' @rdname stri_wrap
+#' @family locale_sensitive
+#' @family text_boundaries
+#' @examples
+#' invisible(NULL) # t.b.d.
+#' @export
+stri_wrap <- function(str, width=floor(0.9*getOption("width")),
+   cost_exponent=2.0, simplify=TRUE, locale=NULL)
+{
+   simplify <- as.logical(simplify)
+   
+   ret <- .Call("stri_wrap", str, width, cost_exponent, locale, PACKAGE="stringi")
+   
+   if (simplify) # will give an informative warning or error if sth is wrong
+      as.character(unlist(ret))
+   else
+      ret
+}
+
+
+# unlist(stri_split_lines("aaaa\nnnn"))
+# stri_trim(stri_replace_all_charclass(c("   ", "     above-mentioned    "), "\\p{WHITE_SPACE}", " ", TRUE))
+# stri_paste(str, collapse=' ')
 
 
 # #' Wrap strings to paragraphs

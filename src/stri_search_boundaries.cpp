@@ -35,7 +35,6 @@
 #include <deque>
 #include <utility>
 #include <unicode/brkiter.h>
-#include <unicode/rbbi.h>
 
 
 /** Locate or Split string by all BreakIterator boundaries

@@ -1,40 +1,54 @@
-\name{stri_extract_words}
-\alias{stri_extract_words}
-\title{Extract Words from a Text}
+\name{stri_wrap}
+\alias{stri_wrap}
+\title{Word Wrap Text to Format Paragraphs}
 \usage{
-stri_extract_words(str, locale = NULL)
+stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
+  simplify = TRUE, locale = NULL)
 }
 \arguments{
-  \item{str}{character vector or an object coercible to}
+  \item{str}{character vector of strings to reformat}
+
+  \item{width}{single positive integer giving the desired
+  maximal number of code points per line}
+
+  \item{cost_exponent}{single numeric value, values not
+  greater than zero will select a greedy word-wrapping
+  algorithm; otherwise this value denotes the exponent in
+  the cost function of a (more esthetic) dynamic
+  programming-based algorithm}
+
+  \item{simplify}{single logical value, see Value}
 
   \item{locale}{\code{NULL} or \code{""} for text boundary
   analysis following the conventions of the default locale,
   or a single string with locale identifier, see
-  \link{stringi-locale}.}
+  \link{stringi-locale}}
+
+  \item{simplify}{single logical value....}
 }
 \value{
-A list of character vectors is returned. Each string
-consists of a separate word.
+If \code{simplify} is \code{TRUE}, then a character vector
+is returned. Otherwise, you will get a list of
+\code{length(str)} character vectors.
 }
 \description{
-This function extracts all words from each string.
+...
 }
 \details{
 Vectorized over \code{str}.
 
-Just like in \code{\link{stri_locate_words}}, \pkg{ICU}'s
-word \code{BreakIterator} iterator is used to locate word
-boundaries, and all non-word characters
-(\code{UBRK_WORD_NONE} rule status) are ignored.
+Any of the strings must not contain \code{\\r} or
+\code{\\n} characters, otherwise you will get at error.
+
+Note that Unicode code points may have various widths when
+printed on screen. This function acts like each code point
+is of width 1.
+
+\pkg{ICU}'s line-\code{BreakIterator} is used to determine
+text boundaries at which a line break is possible.
 }
 \examples{
-\dontrun{
-stri_extract_words("stringi: THE string processing package 123.48...")
-}
-}
-\references{
-\emph{Boundary Analysis} -- ICU User Guide,
-\url{http://userguide.icu-project.org/boundaryanalysis}
+invisible(NULL) # t.b.d.
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!=\%}},
@@ -52,6 +66,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_duplicated}},
 \code{\link{stri_duplicated_any}};
 \code{\link{stri_enc_detect2}};
+\code{\link{stri_extract_words}};
 \code{\link{stri_locate_all_fixed}},
 \code{\link{stri_locate_all_fixed,}},
 \code{\link{stri_locate_first_fixed}},
@@ -74,38 +89,12 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_trans_tolower}},
 \code{\link{stri_trans_totitle}},
 \code{\link{stri_trans_toupper}};
-\code{\link{stri_unique}}; \code{\link{stri_wrap}};
-\code{\link{stringi-locale}};
+\code{\link{stri_unique}}; \code{\link{stringi-locale}};
 \code{\link{stringi-search-fixed}}
 
-Other search_extract:
-\code{\link{stri_extract_all_charclass}},
-\code{\link{stri_extract_all_charclass}},
-\code{\link{stri_extract_first_charclass}},
-\code{\link{stri_extract_first_charclass}},
-\code{\link{stri_extract_last_charclass}},
-\code{\link{stri_extract_last_charclass}};
-\code{\link{stri_extract_all_fixed}},
-\code{\link{stri_extract_all_fixed,}},
-\code{\link{stri_extract_first_fixed}},
-\code{\link{stri_extract_first_fixed,}},
-\code{\link{stri_extract_last_fixed}},
-\code{\link{stri_extract_last_fixed}};
-\code{\link{stri_extract_all_regex}},
-\code{\link{stri_extract_all_regex}},
-\code{\link{stri_extract_first_regex}},
-\code{\link{stri_extract_first_regex}},
-\code{\link{stri_extract_last_regex}},
-\code{\link{stri_extract_last_regex}};
-\code{\link{stri_extract_all}};
-\code{\link{stri_extract_first}};
-\code{\link{stri_extract_last}};
-\code{\link{stri_extract}}; \code{\link{stringi-search}}
-
-Other text_boundaries:
+Other text_boundaries: \code{\link{stri_extract_words}};
 \code{\link{stri_locate_boundaries}};
 \code{\link{stri_locate_words}};
-\code{\link{stri_split_boundaries}};
-\code{\link{stri_wrap}}
+\code{\link{stri_split_boundaries}}
 }
 

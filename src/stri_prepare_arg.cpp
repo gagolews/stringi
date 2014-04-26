@@ -584,6 +584,31 @@ int stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname)
 }
 
 
+/** Prepare double argument - one value, not NA
+ *
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ *
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return a double value
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-26)
+ */
+double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
+{
+   x = stri_prepare_arg_double_1(x, argname);
+   double xval = REAL(x)[0];
+   if (ISNA(xval))
+      Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
+   return (double)xval;
+}
+
+
 /**
  * Prepare character vector argument that will be used to choose a locale
  *

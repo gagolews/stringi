@@ -133,7 +133,7 @@ Other locale_sensitive: \code{\link{\%!=\%}},
 \code{\link{stri_trans_tolower}},
 \code{\link{stri_trans_totitle}},
 \code{\link{stri_trans_toupper}};
-\code{\link{stri_unique}};
+\code{\link{stri_unique}}; \code{\link{stri_wrap}};
 \code{\link{stringi-search-fixed}}
 
 Other stringi_general_topics:
