@@ -85,9 +85,5 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 \code{\link{stri_split_charclass}};
 \code{\link{stringi-search-charclass}};
 \code{\link{stringi-search}}
-
-Other whitespaces: \code{\link{stri_pad}},
-\code{\link{stri_pad_both}}, \code{\link{stri_pad_left}},
-\code{\link{stri_pad_right}}
 }
 

@@ -115,6 +115,7 @@ SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
 SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
 SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname);
+double      stri__prepare_arg_double_1_notNA(SEXP x, const char* argname);
 SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
 int         stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname);
 SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
@@ -164,10 +165,7 @@ SEXP stri_locale_set(SEXP loc);
 
 
 // wrap.cpp
-// SEXP stri_wrap_greedy(SEXP count, int width, int spacecost);                // TODO [version >= 0.2]
-// SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost);               // TODO [version >= 0.2]
-// SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost);    // TODO [version >= 0.2]
-
+SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale);
 
 // justify.cpp
 // SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.2]

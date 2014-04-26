@@ -45,7 +45,7 @@
 #' control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
 #' it is a little bit slower.
 #'
-#' Note that Unicode code points may have different widths when
+#' Note that Unicode code points may have various widths when
 #' printed on screen. This function acts like each code point
 #' is of width 1.
 #'
@@ -61,7 +61,6 @@
 #' @return Returns a character vector.
 #'
 #' @rdname stri_pad
-#' @family whitespaces
 #' @examples
 #' stri_pad_left("stringi", 10, pad="#")
 #' stri_pad_both("stringi", 8:12, pad="*")

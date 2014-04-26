@@ -76,7 +76,6 @@
 #' @aliases stri_trim
 #' @family search_trim
 #' @family search_charclass
-#' @family whitespaces
 #' @rdname stri_trim
 #' @export
 stri_trim_both <- function(str, pattern="\\P{Wspace}") {
