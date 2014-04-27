@@ -1,15 +1,22 @@
 require(testthat)
+require(stringr)
 
 test_that("stri_wrap", { 
    expect_error(stri_wrap("whatever", 0))
-   expect_identical(stri_wrap(c("", "singleword", NA)), c("", "singleword", NA))
+   expect_error(stri_wrap("what\never"))
+   expect_identical(stri_wrap(c("", "singleword", NA), cost=0.0), c("", "singleword", NA))
    
+   s <- c("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
+   for (i in 10:40)
+      expect_true(all(stri_length(stri_wrap(s, i, cost_exponent=0.0)) <= i))
+
+   s <- stri_rand_strings(1000, runif(1000, 2, 12), "[\\p{script=latin}&\\p{Ll}]")
+   s <- stri_c(s, stri_dup(" ", runif(1000, 1, 5)), sep="", collapse="")
+   for (i in 20:40)
+      expect_true(all(stri_length(stri_wrap(s, i, cost_exponent=0.0)) <= i))
 })
 
-# 	s <- c("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
-# 	h <- 20
-# 	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h))
-# 	expect_identical(stri_wrap(s, h,"g"), str_wrap(s,h))
+
 # 	#expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
 # 	#expect_identical(stri_wrap(s, h,"d"), stri_wrap(s,h,"d"))
 #    #vectorized over string, method, width and spacecost

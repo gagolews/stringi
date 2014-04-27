@@ -85,6 +85,7 @@ SEXP stri_stats_general(SEXP str)
          U8_NEXT(cs, j, cn, c);
          if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
+         // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
          else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
             throw StriException(MSG__NEWLINE_FOUND);
          }
@@ -171,7 +172,8 @@ SEXP stri_stats_latex(SEXP str)
 
          if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
-         else if (c == (UChar32)'\n') {
+         // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
+         else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
             throw StriException(MSG__NEWLINE_FOUND);
          }
 
