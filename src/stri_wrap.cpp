@@ -60,11 +60,10 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
    Locale loc = Locale::createFromName(qloc);
    double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "width");
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
+   if (width_val <= 0)
+      Rf_error(MSG__EXPECTED_POSITIVE, "width");
    // @TODO: check if width_val > 0
-   
-   
-   Rf_error("TO DO");
-   
+
    R_len_t str_length = LENGTH(str);
    BreakIterator* briter = NULL;
    UText* str_text = NULL;
@@ -87,22 +86,60 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       
       status = U_ZERO_ERROR;
       const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t str_cur_n = str_cont.get(i).length();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
       if (U_FAILURE(status)) throw StriException(status);
       briter->setText(str_text, status);
       if (U_FAILURE(status)) throw StriException(status);
       
       // all right, first let's generate a list of places at which we may do line breaks
-      deque< pair<R_len_t,R_len_t> > occurences_list; // this could be an R_len_t queue
-      R_len_t match, last_match = briter->first();
-      while ((match = briter->next()) != BreakIterator::DONE) {
-         occurences_list.push_back(pair<R_len_t, R_len_t>(last_match, match));
-         last_match = match;
+      deque< R_len_t > occurences_list; // this could be an R_len_t queue
+      R_len_t match = briter->first();
+      while (match != BreakIterator::DONE) {
+         occurences_list.push_back(match);
+         match = briter->next();
       }
       
       R_len_t noccurences = (R_len_t)occurences_list.size();
-      std::vector<R_len_t> occurences_from(noccurences);
-      std::vector<R_len_t> occurences_to(noccurences);
+      if (noccurences <= 2) { // no match or match whole text
+         SET_VECTOR_ELT(ret, i, str_cont.toR(i));
+         continue;
+      }
+      
+      // convert to a vector:
+      std::vector<R_len_t> pos(noccurences);
+      deque<R_len_t>::iterator iter = occurences_list.begin();
+      for (R_len_t j = 0; iter != occurences_list.end(); ++iter, ++j) {
+         pos[j] = (*iter); // this is a UTF-8 index
+      }
+      
+
+      // now:
+      // get the number of code points in each chunk
+      std::vector<R_len_t> counts_orig(noccurences-1);
+      // get the number of code points without trailing whitespaces
+      std::vector<R_len_t> counts_trim(noccurences-1);
+      // detect line endings (fail on a match)
+      
+   
+   
+   Rf_error("TO DO");
+   
+      
+      UChar32 c = 0;
+      R_len_t j = 0;
+      while (j < str_cur_n) {
+         U8_NEXT(str_cur_s, j, str_cur_n, c);
+         if (c < 0) { // invalid utf-8 sequence
+            SET_VECTOR_ELT(ret, i, str_cont.toR(i));
+            continue;
+         }
+         
+         
+      }
+
+      
+      
 //
 //      R_len_t noccurences = (R_len_t)occurences.size();
 //      if (noccurences <= 0) {
