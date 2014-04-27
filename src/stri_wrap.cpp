@@ -36,6 +36,7 @@
 #include <vector>
 #include <utility>
 #include <unicode/brkiter.h>
+#include <unicode/uniset.h>
 
 
 /** Word wrap text
@@ -75,6 +76,17 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
    
    StriContainerUTF8_indexable str_cont(str, str_length);
    
+   status = U_ZERO_ERROR;
+   //Unicode Newline Guidelines - Unicode Technical Report #13
+   UnicodeSet uset_linebreaks(UnicodeString::fromUTF8("[\\u000A-\\u000D\\u0085\\u2028\\u2029]"), status);
+   if (U_FAILURE(status)) throw StriException(status);
+   uset_linebreaks.freeze();
+   
+   status = U_ZERO_ERROR;
+   UnicodeSet uset_whitespaces(UnicodeString::fromUTF8("\\p{White_space}"), status);
+   if (U_FAILURE(status)) throw StriException(status);
+   uset_whitespaces.freeze();
+   
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_length));
    for (R_len_t i = 0; i < str_length; ++i)
@@ -101,7 +113,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       }
       
       R_len_t noccurences = (R_len_t)occurences_list.size();
-      if (noccurences <= 2) { // no match or match whole text
+      if (noccurences <= 1) { // no match
          SET_VECTOR_ELT(ret, i, str_cont.toR(i));
          continue;
       }
@@ -113,21 +125,21 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
          pos[j] = (*iter); // this is a UTF-8 index
       }
       
-
       // now:
       // get the number of code points in each chunk
       std::vector<R_len_t> counts_orig(noccurences-1);
       // get the number of code points without trailing whitespaces
       std::vector<R_len_t> counts_trim(noccurences-1);
+      // get the end positions without trailing whitespaces
+      std::vector<R_len_t> end_pos_trim(noccurences-1);
       // detect line endings (fail on a match)
-      
-   
-   
-   Rf_error("TO DO");
-   
       
       UChar32 c = 0;
       R_len_t j = 0;
+      R_len_t cur_block = 0;
+      R_len_t cur_count_orig = 0;
+      R_len_t cur_count_trim = 0;
+      R_len_t cur_end_pos_trim = 0;
       while (j < str_cur_n) {
          U8_NEXT(str_cur_s, j, str_cur_n, c);
          if (c < 0) { // invalid utf-8 sequence
@@ -135,32 +147,68 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             continue;
          }
          
-         
+         if (uset_linebreaks.contains(c))
+            throw StriException(MSG__NEWLINE_FOUND);
+          
+         ++cur_count_orig;
+         if (uset_whitespaces.contains(c)) {
+            ++cur_count_trim;
+         }
+         else {
+            cur_count_trim = 0;
+            cur_end_pos_trim = j;
+         }
+            
+         if (j >= str_cur_n || pos[cur_block+1] <= j) {
+            // we'll start a new block in a moment
+            counts_orig[cur_block] = cur_count_orig;
+            counts_trim[cur_block] = cur_count_orig-cur_count_trim;
+            end_pos_trim[cur_block] = cur_end_pos_trim;
+//            printf("%d, %d, end=%d, %d\n", counts_orig[cur_block],
+//               counts_trim[cur_block], pos[cur_block+1], end_pos_trim[cur_block]);
+            cur_block++;
+            cur_count_orig = 0;
+            cur_count_trim = 0;
+            cur_end_pos_trim = j;
+         }
+      }
+      
+      // do wrap
+      std::deque<R_len_t> wrap; // wrap line after which word?
+      if (exponent_val <= 0.0) {
+         // greedy algorithm
+         R_len_t cur_len = counts_orig[0];
+         for (R_len_t j = 1; j < noccurences-1; ++j) {
+            if (cur_len + counts_trim[j] > width_val) {
+               // don't take counts_orig into account here
+               cur_len = counts_orig[j];
+//               printf("%d WRAP\n", j-1);
+               wrap.push_back(j-1);
+            }
+            else {
+               cur_len += counts_orig[j];
+            }
+         }
+      }
+      else {
+         // dynamic algorithm
+         Rf_error("TO DO");
       }
 
-      
-      
-//
-//      R_len_t noccurences = (R_len_t)occurences.size();
-//      if (noccurences <= 0) {
-//         SEXP ans;
-//         STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
-//         SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
-//         SET_VECTOR_ELT(ret, i, ans);
-//         STRI__UNPROTECT(1);
-//         continue;
-//      }
-//
-//      SEXP ans;
-//      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
-//      deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
-//      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-//         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
-//            (*iter).second-(*iter).first, CE_UTF8));
-//      }
-//      SET_VECTOR_ELT(ret, i, ans);
-//      STRI__UNPROTECT(1);
-      
+      R_len_t nlines = wrap.size()+1;
+      wrap.push_back(noccurences-2);
+      R_len_t last_pos = 0;
+      SEXP ans;
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, nlines));
+      deque<R_len_t>::iterator iter_wrap = wrap.begin();
+      for (R_len_t j = 0; iter_wrap != wrap.end(); ++iter_wrap, ++j) {
+         R_len_t cur_pos = end_pos_trim[*iter_wrap];
+//         printf("%d: %d-%d == %d\n", *iter_wrap, cur_pos, last_pos, cur_pos-last_pos);
+         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
+         last_pos = pos[*iter_wrap+1];
+      }
+      SET_VECTOR_ELT(ret, i, ans);
+      STRI__UNPROTECT(1);
    }
    
    if (briter) { delete briter; briter = NULL; }
@@ -175,39 +223,6 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
 
 
 
-//#include <limits>
-
-///**
-// * ....
-// * @param count ...
-// * @param width ...
-// * @param spacecost ...
-// * @return ...
-// */
-//
-//SEXP stri_wrap_greedy(SEXP count, int width, int spacecost)
-//{
-//   int n = LENGTH(count);
-//   int* icount = INTEGER(count);
-//   int cost = icount[0];
-//
-//	SEXP space;
-//	PROTECT(space = allocVector(LGLSXP, n));
-//
-//	for(int i=1;i<n;i++){
-//		if(cost+spacecost+icount[i]>width){
-//			LOGICAL(space)[i-1] = true;
-//			cost = icount[i];
-//		}else{
-//			LOGICAL(space)[i-1] = false;
-//			cost = cost + spacecost + icount[i];
-//		}
-//	}
-//	UNPROTECT(1);
-//	return(space);
-//}
-//
-//
 //SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
 //{
 //   // maybe a call to stri_prepare_arg_integer?
