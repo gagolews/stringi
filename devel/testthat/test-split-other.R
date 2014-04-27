@@ -28,7 +28,7 @@ test_that("stri_split_boundaries", {
    expect_error(stri_split_boundaries("aaa", "word2"))
    expect_identical(stri_split_boundaries(c(NA, NA), "word"), list(NA_character_, NA_character_))
    expect_identical(stri_split_boundaries("aa", c(NA, NA)), list(NA_character_, NA_character_))
-   expect_identical(stri_split_boundaries("", "word"), list(""))
+   expect_identical(stri_split_boundaries("", "word"), list(NA_character_))
    expect_identical(stri_split_boundaries("aaa", "word"), list("aaa"))
    expect_identical(stri_split_boundaries("aaa", "line"), list("aaa"))
    expect_identical(stri_split_boundaries("aaa", "sentence"), list("aaa"))

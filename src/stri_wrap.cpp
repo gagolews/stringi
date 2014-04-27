@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8_indexable.h"
 #include <deque>
+#include <vector>
 #include <utility>
 #include <unicode/brkiter.h>
 
@@ -91,12 +92,17 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       briter->setText(str_text, status);
       if (U_FAILURE(status)) throw StriException(status);
       
-//      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
-//      R_len_t match, last_match = briter->first();
-//      while ((match = briter->next()) != BreakIterator::DONE) {
-//         occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
-//         last_match = match;
-//      }
+      // all right, first let's generate a list of places at which we may do line breaks
+      deque< pair<R_len_t,R_len_t> > occurences_list; // this could be an R_len_t queue
+      R_len_t match, last_match = briter->first();
+      while ((match = briter->next()) != BreakIterator::DONE) {
+         occurences_list.push_back(pair<R_len_t, R_len_t>(last_match, match));
+         last_match = match;
+      }
+      
+      R_len_t noccurences = (R_len_t)occurences_list.size();
+      std::vector<R_len_t> occurences_from(noccurences);
+      std::vector<R_len_t> occurences_to(noccurences);
 //
 //      R_len_t noccurences = (R_len_t)occurences.size();
 //      if (noccurences <= 0) {
