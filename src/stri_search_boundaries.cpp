@@ -47,6 +47,9 @@
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
+ *          return NA if no matches found
  */
 SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool split)
 {
@@ -140,16 +143,12 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
 
       R_len_t noccurences = (R_len_t)occurences.size();
       if (noccurences <= 0) {
-         SEXP ans;
          if (split) {
-            STRI__PROTECT(ans = Rf_allocVector(STRSXP, 1));
-            SET_STRING_ELT(ans, 0, Rf_mkCharLen("", 0));
-            SET_VECTOR_ELT(ret, i, ans);
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          }
          else {
             SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
          }
-         STRI__UNPROTECT(1);
          continue;
       }
 

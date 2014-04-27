@@ -47,7 +47,8 @@
 #'
 #' Note that Unicode code points may have various widths when
 #' printed on screen. This function acts like each code point
-#' is of width 1.
+#' is of width 1. This function should rather be used with
+#' text in Latin script.
 #'
 #' See \code{\link{stri_trim_left}} (among others) for reverse operation.
 #'

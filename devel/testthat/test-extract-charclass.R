@@ -1,4 +1,5 @@
 require(testthat)
+require(stringr)
 
 test_that("stri_extract_all_charclass", {
 
@@ -22,6 +23,9 @@ test_that("stri_extract_all_charclass", {
    expect_equivalent(stri_extract_all_charclass(c("abc", "a\u0105b", "a1B2c3", "1\u01052b3C", "123"),
          "\\p{L}", merge=FALSE), list(c("a", "b", "c"), c("a", "\u0105", "b"),
                                  c("a", "B", "c"), c("\u0105", "b", "C"), NA_character_))
+   
+#    expect_identical(stri_extract_all_charclass(c("a1b2c3", NA, "12", "ba"), "\\p{N}", merge=FALSE),
+#       str_extract_all(c("a1b2c3", NA, "12", "ba"), "[0-9]"))
 })
 
 
@@ -39,6 +43,9 @@ test_that("stri_extract_first_charclass", {
 
    expect_equivalent(stri_extract_first_charclass("    zxx\n\t \v   \n", c("\\p{WHITE_SPACE}", "\\P{WHITE_SPACE}")), c(" ", "z"))
 
+   expect_identical(stri_extract_first_charclass(c("a1b2c3", NA, "12", "ba"), "\\p{N}"),
+      str_extract(c("a1b2c3", NA, "12", "ba"), "[0-9]"))
+   
 })
 
 

@@ -39,11 +39,14 @@
 #' Vectorized over \code{str}.
 #' 
 #' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
-#' otherwise you will get at error.
+#' otherwise you will get at error. You should split the input text into lines
+#' or e.g. substitute line breaks with spaces
+#' before applying this function.
 #' 
 #' Note that Unicode code points may have various widths when
 #' printed on screen. This function acts like each code point
-#' is of width 1.
+#' is of width 1. This function should rather be used with
+#' text in Latin script.
 #' 
 #' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
 #' text boundaries at which a line break is possible.

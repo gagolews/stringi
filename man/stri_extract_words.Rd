@@ -14,7 +14,9 @@ stri_extract_words(str, locale = NULL)
 }
 \value{
 A list of character vectors is returned. Each string
-consists of a separate word.
+consists of a separate word. If there are no words or if a
+string is missing, a single \code{NA} is provided on
+output.
 }
 \description{
 This function extracts all words from each string.

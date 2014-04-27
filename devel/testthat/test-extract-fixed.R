@@ -1,4 +1,6 @@
 require(testthat)
+require(stringr)
+
 
 test_that("stri_extract_all_fixed", {
 
@@ -14,6 +16,8 @@ test_that("stri_extract_all_fixed", {
    suppressWarnings(expect_identical(stri_extract_all_fixed("test", " ", NA), list(NA_character_)))
    expect_identical(stri_extract_all_fixed(c("alaALA", "ala ala al"), "ala", NA), list(c("ala"), c("ala", "ala")))
 
+#    expect_identical(stri_extract_all_fixed(c("ababab", NA, "ab", "ba"), "ab"),
+#       str_extract_all(c("ababab", NA, "ab", "ba"), "ab"))
 })
 
 
@@ -32,6 +36,8 @@ test_that("stri_extract_first_fixed", {
    suppressWarnings(expect_identical(stri_extract_first_fixed("test", " ", NA), NA_character_))
    expect_identical(stri_extract_first_fixed("alaALA", "ala", NA), c("ala"))
 
+   expect_identical(stri_extract_first_fixed(c("ababab", NA, "ab", "ba"), "ab"),
+      str_extract(c("ababab", NA, "ab", "ba"), "ab"))
 })
 
 

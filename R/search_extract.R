@@ -391,6 +391,8 @@ stri_extract <- function(str, ..., regex, fixed, charclass,
 #' @return
 #' A list of character vectors is returned. Each string consists of
 #' a separate word.
+#' If there are no words or if a string is missing, a single \code{NA}
+#' is provided on output.
 #'
 #' @examples
 #' \dontrun{
