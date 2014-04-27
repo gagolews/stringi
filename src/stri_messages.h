@@ -96,22 +96,10 @@
    "%s (%s)"
 
 #define MSG__EXPECTED_NONNEGATIVE \
-   "incorrect argument: expected a nonnegative numeric value"
+   "argument `%s`: expected a nonnegative numeric value"
 
 #define MSG__EXPECTED_POSITIVE \
-   "incorrect argument: expected a positive numeric value"
-
-#define MSG__EXPECTED_CHARACTER \
-   "incorrect argument: expected a character vector"
-
-#define MSG__EXPECTED_DOUBLE \
-   "incorrect argument: expected a numeric vector"
-
-#define MSG__EXPECTED_INTEGER \
-   "incorrect argument: expected an integer vector"
-
-#define MSG__EXPECTED_LOGICAL \
-   "incorrect argument: expected a logical vector"
+   "argument `%s`: expected a positive numeric value"
 
 
 #define MSG__EXPECTED_ASCII \
