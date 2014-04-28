@@ -23,8 +23,6 @@ stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
   analysis following the conventions of the default locale,
   or a single string with locale identifier, see
   \link{stringi-locale}}
-
-  \item{simplify}{single logical value....}
 }
 \value{
 If \code{simplify} is \code{TRUE}, then a character vector
@@ -42,6 +40,17 @@ Any of the strings must not contain \code{\\r} or
 should split the input text into lines or e.g. substitute
 line breaks with spaces before applying this function.
 
+The greedy algorithm (for \code{cost_exponent} being
+non-positive) provides a very simple way for word wrapping.
+It always puts as many words in each line as possible. This
+method -- contrary to the dynamic algorithm -- does not
+minimize the number of space left at the end of every line.
+The ynamic algorithm is more complex, but it returns text
+wrapped in a more aesthetic way. This method minimizes the
+squared (by default, see \code{cost_exponent}) number of
+spaces at the end of each line, so the text is mode
+arranged evenly.
+
 Note that Unicode code points may have various widths when
 printed on screen. This function acts like each code point
 is of width 1. This function should rather be used with
@@ -51,7 +60,10 @@ text in Latin script.
 text boundaries at which a line break is possible.
 }
 \examples{
-invisible(NULL) # t.b.d.
+s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin "\%+\%
+      "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel "\%+\%
+      "lorem. Etiam pellentesque aliquet tellus."
+cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!=\%}},

@@ -39,6 +39,130 @@
 #include <unicode/uniset.h>
 
 
+
+/** Greedy word wrap algorithm
+ * 
+ * @param wrap [out]
+ * @param noccurences number of boundaries; noccurences-1 == number of words
+ * @param width_val maximal desired out line width
+ * @param counts_orig ith word width original
+ * @param counts_trim ith word width trimmed
+ * 
+ * @version 0.1-?? (Bartek Tartanus)
+ *          original implementation
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
+ *          BreakIterator usage mods
+ */
+void stri__wrap_greedy(std::deque<R_len_t>& wrap,
+   R_len_t noccurences, int width_val,
+   const std::vector<R_len_t>& counts_orig,
+   const std::vector<R_len_t>& counts_trim)
+{
+   R_len_t cur_len = counts_orig[0];
+   for (R_len_t j = 1; j < noccurences-1; ++j) {
+      if (cur_len + counts_trim[j] > width_val) {
+         cur_len = counts_orig[j];
+//               printf("%d WRAP\n", j-1);
+         wrap.push_back(j-1);
+      }
+      else {
+         cur_len += counts_orig[j];
+      }
+   } 
+}
+
+
+/** Dynamic word wrap algorithm
+ * 
+ * @param wrap [out]
+ * @param noccurences number of boundaries; noccurences-1 == number of words
+ * @param width_val maximal desired out line width
+ * @param exponent_val cost function exponent
+ * @param counts_orig ith word width original
+ * @param counts_trim ith word width trimmed
+ * 
+ * @version 0.1-?? (Bartek Tartanus)
+ *          original implementation
+ * 
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
+ *          BreakIterator usage mods
+ */
+void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
+   R_len_t noccurences, int width_val, double exponent_val,
+   const std::vector<R_len_t>& counts_orig,
+   const std::vector<R_len_t>& counts_trim)
+{
+   Rf_error("TO DO");
+//   // maybe a call to stri_prepare_arg_integer?
+//
+//   int n = LENGTH(count);
+//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double)); // don't use R_alloc!!
+//	double ct = 0;
+//	double sum = 0;
+//   int* icount = INTEGER(count);
+//
+//	for(int i=0;i<n;i++){
+//		for(int j=i;j<n;j++){
+//			sum=0;
+//			for(int k=i;k<=j;k++) //sum of costs words from i to j
+//				sum = sum + icount[k];
+//			ct = width-(j-i)*spacecost-sum;
+//			if(ct<0){ //if the cost is bigger than width, put infinity
+//				costm[i*n+j]=std::numeric_limits<double>::infinity();
+//			}else //put squared cost into matrix
+//				costm[i*n+j]=ct*ct;
+//		}
+//	}
+//	//i-th element of f - cost of
+//	double* f = (double*)R_alloc(n, (int)sizeof(double));
+//	int j=0;
+//	//where to put space (false) and where break line (true)
+//	SEXP space;
+//	PROTECT(space = allocVector(LGLSXP, n*n));
+//	for(int i=0;i<n*n;i++) // put false everywhere
+//		LOGICAL(space)[i]=false;
+//	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
+//		f[j] = costm[j];
+//		LOGICAL(space)[j*n+j] = true;
+//		j=j+1;
+//	}
+//	double min=0;
+//	int w=0;
+//	double* temp = (double*)R_alloc(n, (int)sizeof(double));
+//	if(j<n){
+//	    for(int i=j;i<n;i++){
+//			//to find min we use array "temp"
+//			//temp = new double[i-1]; <- we can use this, because in every
+//         //loop step we need i-1 elements array, but to avoid multiple
+//         //reallocation we alloc one big array outside the loop and
+//         // overwrite each element
+//			temp[0]=f[0]+costm[1*n+i];
+//			min=temp[0];
+//			w=0;
+//			for(int k=1;k<i-1;k++){
+//				temp[k]=f[k]+costm[(k+1)*n+i];
+//				if(temp[k]<min){
+//					min=temp[k];
+//					w=k;
+//				}
+//			}
+//			f[i] = temp[w];
+//			for(int k=0;k<n;k++)
+//				LOGICAL(space)[i*n+k] = LOGICAL(space)[w*n+k];
+//			LOGICAL(space)[i*n+i] = true;
+//		}
+//	}
+//	//return the last row of the matrix
+//	SEXP out;
+//	PROTECT(out = allocVector(LGLSXP, n));
+//	for(int i=0;i<n;i++)
+//		LOGICAL(out)[i]=LOGICAL(space)[(n-1)*n+i];
+//	UNPROTECT(2);
+//	return(out);
+}
+
+
 /** Word wrap text
  * 
  * @param str character vector
@@ -52,6 +176,7 @@
  * 
  * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
  *          single function for wrap_greedy and wrap_dynamic
+ *          (dispatch inside);
  *          use BreakIterator
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
@@ -176,27 +301,16 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       // do wrap
       std::deque<R_len_t> wrap; // wrap line after which word?
       if (exponent_val <= 0.0) {
-         // greedy algorithm
-         R_len_t cur_len = counts_orig[0];
-         for (R_len_t j = 1; j < noccurences-1; ++j) {
-            if (cur_len + counts_trim[j] > width_val) {
-               // don't take counts_orig into account here
-               cur_len = counts_orig[j];
-//               printf("%d WRAP\n", j-1);
-               wrap.push_back(j-1);
-            }
-            else {
-               cur_len += counts_orig[j];
-            }
-         }
+         stri__wrap_greedy(wrap, noccurences, width_val,
+            counts_orig, counts_trim);
       }
       else {
-         // dynamic algorithm
-         Rf_error("TO DO");
+         stri__wrap_dynamic(wrap, noccurences, width_val, exponent_val,
+            counts_orig, counts_trim);
       }
 
       R_len_t nlines = wrap.size()+1;
-      wrap.push_back(noccurences-2);
+      wrap.push_back(noccurences-2); // I'm no more sure why it works @TODO: make sure
       R_len_t last_pos = 0;
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, nlines));
@@ -220,127 +334,3 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       if (str_text) { utext_close(str_text); str_text = NULL; }
    })
 }
-
-
-
-//SEXP stri_wrap_dynamic(SEXP count, int width, int spacecost)
-//{
-//   // maybe a call to stri_prepare_arg_integer?
-//
-//	int n = LENGTH(count);
-//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double)); // don't use R_alloc!!
-//	double ct = 0;
-//	double sum = 0;
-//   int* icount = INTEGER(count);
-//
-//	for(int i=0;i<n;i++){
-//		for(int j=i;j<n;j++){
-//			sum=0;
-//			for(int k=i;k<=j;k++) //sum of costs words from i to j
-//				sum = sum + icount[k];
-//			ct = width-(j-i)*spacecost-sum;
-//			if(ct<0){ //if the cost is bigger than width, put infinity
-//				costm[i*n+j]=std::numeric_limits<double>::infinity();
-//			}else //put squared cost into matrix
-//				costm[i*n+j]=ct*ct;
-//		}
-//	}
-//	//i-th element of f - cost of
-//	double* f = (double*)R_alloc(n, (int)sizeof(double));
-//	int j=0;
-//	//where to put space (false) and where break line (true)
-//	SEXP space;
-//	PROTECT(space = allocVector(LGLSXP, n*n));
-//	for(int i=0;i<n*n;i++) // put false everywhere
-//		LOGICAL(space)[i]=false;
-//	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
-//		f[j] = costm[j];
-//		LOGICAL(space)[j*n+j] = true;
-//		j=j+1;
-//	}
-//	double min=0;
-//	int w=0;
-//	double* temp = (double*)R_alloc(n, (int)sizeof(double));
-//	if(j<n){
-//	    for(int i=j;i<n;i++){
-//			//to find min we use array "temp"
-//			//temp = new double[i-1]; <- we can use this, because in every
-//         //loop step we need i-1 elements array, but to avoid multiple
-//         //reallocation we alloc one big array outside the loop and
-//         // overwrite each element
-//			temp[0]=f[0]+costm[1*n+i];
-//			min=temp[0];
-//			w=0;
-//			for(int k=1;k<i-1;k++){
-//				temp[k]=f[k]+costm[(k+1)*n+i];
-//				if(temp[k]<min){
-//					min=temp[k];
-//					w=k;
-//				}
-//			}
-//			f[i] = temp[w];
-//			for(int k=0;k<n;k++)
-//				LOGICAL(space)[i*n+k] = LOGICAL(space)[w*n+k];
-//			LOGICAL(space)[i*n+i] = true;
-//		}
-//	}
-//	//return the last row of the matrix
-//	SEXP out;
-//	PROTECT(out = allocVector(LGLSXP, n));
-//	for(int i=0;i<n;i++)
-//		LOGICAL(out)[i]=LOGICAL(space)[(n-1)*n+i];
-//	UNPROTECT(2);
-//	return(out);
-//}
-//
-///**
-// * ....
-// * @param wordslist list of words
-// * @param method integer vector of wraping methods (2==dynamic, else greedy)
-// * @param width
-// * @param spacecost ...
-// * @return character vector
-// */
-//
-// SEXP stri_wrap(SEXP wordslist, SEXP method, SEXP width, SEXP spacecost)
-// {
-//   R_len_t nwordslist = LENGTH(wordslist);
-//   R_len_t nmethod = LENGTH(method);
-//   R_len_t nwidth = LENGTH(width);
-//   R_len_t nspacecost = LENGTH(spacecost);
-//   R_len_t nmax = stri__recycling_rule(true, 4, nwordslist, nmethod, nwidth, nspacecost);
-//
-//   SEXP ret, sep;
-//   PROTECT(ret = allocVector(STRSXP,nmax));
-//   //sep for stri_flatten
-//   PROTECT(sep = allocVector(STRSXP,1));
-//   SET_STRING_ELT(sep,0,mkCharLen("",0));
-//   SEXP words,count,temp,space,where;
-//
-//   int* iwidth     = INTEGER(width);
-//   int* ispacecost = INTEGER(spacecost);
-//
-//   for(int i=0;i<nmax;i++)
-//   {
-//      words = VECTOR_ELT(wordslist,i % nwordslist);
-//      count = stri_length(words);
-//      if(INTEGER(method)[i % nmethod]==2)
-//         where = stri_wrap_dynamic(count,iwidth[i%nwidth],ispacecost[i%nspacecost]);
-//      else
-//         where = stri_wrap_greedy(count,iwidth[i%nwidth],ispacecost[i%nspacecost]);
-//      int nwhere = LENGTH(where);
-//      PROTECT(space = allocVector(STRSXP,nwhere));
-//      for(int k = 0; k < nwhere-1; k++){
-//         if(INTEGER(where)[k])
-//            SET_STRING_ELT(space,k,mkCharLen("\n", 1));
-//         else
-//            SET_STRING_ELT(space,k,mkCharLen(" ", 1));
-//      }
-//      SET_STRING_ELT(space, nwhere-1, mkCharLen("", 0));
-//      temp = STRING_ELT(stri_flatten(stri_join2(words,space),sep),0);
-//      SET_STRING_ELT(ret,i,temp);
-//      UNPROTECT(1);
-//   }
-//   UNPROTECT(2);
-//   return ret;
-// }
