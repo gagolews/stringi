@@ -94,8 +94,9 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
    const std::vector<R_len_t>& counts_trim)
 {
    R_len_t n = (noccurences-1);
+#define IDX(i,j) (i)*n+(j)
    vector<double> cost(n*n);
-   // where cost[n*i+j] == cost of printing words i..j in a single line
+   // where cost[IDX(i,j)] == cost of printing words i..j in a single line, i<=j
 
    // calculate costs:
    // there is some "punishment" for leaving blanks at the end of each line
@@ -103,9 +104,9 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
    for (int i=0; i<n; i++) {
       int sum = 0;
       for (int j=i; j<n; j++) {
-         if (j > 0) {
-            if (cost[i*n+j-1] < 0.0) {
-               cost[i*n+j] = -1.0;
+         if (j > i) {
+            if (cost[IDX(i,j-1)] < 0.0) {
+               cost[IDX(i,j)] = -1.0;
                continue;
             }
             else {
@@ -116,42 +117,49 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
          sum += counts_trim[j];
          int ct = width_val - sum;
 
-         cost[i*n+j] = (ct < 0) ? -1.0/*"inifinity"*/ : pow((double)ct, exponent_val);
+         if (j==i)
+            // some words don't fit line at all -> cost 0.0
+            cost[IDX(i,j)] = (ct < 0) ? 0.0 : pow((double)ct, exponent_val);
+         else
+            cost[IDX(i,j)] = (ct < 0) ? -1.0/*"inifinity"*/ : pow((double)ct, exponent_val);
       }
    }
    
-   vector<double> f(n); // f[i] == total cost of  (optimally) printing words 0..i
-   vector<bool> where(n*n, false); // where[n*i+j] == FALSE iff when
-                            // (optimally) printing words 0..i
-                            // we don't wrap after j-th word
+   vector<double> f(n); // f[j] == total cost of  (optimally) printing words 0..j
+   vector<bool> where(n*n, false); // where[IDX(i,j)] == false iff when
+                            // (optimally) printing words 0..j
+                            // we don't wrap after i-th word, i<=j
 
-   // @TODO: what if word length > width_val???????
    for (int j=0; j<n; ++j) {
-      if (cost[n*0+j] >= 0.0) {
+      if (cost[IDX(0,j)] >= 0.0) {
          // no breaking needed: words 0..j fit in one line
-         f[j] = cost[n*0+j];
+         f[j] = cost[IDX(0,j)];
       }
       else {
          // let i = optimal printing of words 0..i + printing i+1..j
          int i = 0;
-         double best_i = f[0] + cost[n*(i+1)+j];
-         for (int k=1; k<j; ++k) {
-            double best_cur = f[k] + cost[n*(k+1)+j];
+         while (i <= j)
+            if (cost[IDX(i+1,j)] >= 0.0) break;
+            else ++i;
+         double best_i = f[0] + cost[IDX(i+1,j)];
+         for (int k=i+1; k<j; ++k) {
+            if (cost[IDX(k+1,j)] < 0.0) continue;
+            double best_cur = f[k] + cost[IDX(k+1,j)];
             if (best_cur < best_i) {
                best_i = best_cur;
                i = k;
             }
          }
-         for (int k=0; k<n; ++k)
-            where[n*j+k] = where[n*i+k];
-         where[n*j+i] = true;
-         f[j] = f[i] + cost[n*(i+1)+j];
+         for (int k=0; k<i; ++k)
+            where[IDX(k,j)] = where[IDX(k,i)];
+         where[IDX(i,j)] = true;
+         f[j] = best_i;
       }
    }
    
    //result is in the last row of where...
    for (int k=0; k<n; ++k)
-      if (where[n*(n-1)+k])
+      if (where[IDX(k,n-1)])
          wrap.push_back(k);
 }
 
