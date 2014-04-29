@@ -8,9 +8,9 @@ test_that("stri_extract_all_regex", {
    expect_identical(stri_extract_all_regex(NA, "test"), list(NA_character_))
    expect_identical(stri_extract_all_regex("test", NA), list(NA_character_))
    suppressWarnings(expect_identical(stri_extract_all_regex("test", ""), list(NA_character_)))
-   expect_identical(stri_extract_all_regex(c("bacab", "bacaba\u0105a", "aa"), "a.a"), 
+   expect_identical(stri_extract_all_regex(c("bacab", "bacaba\u0105a", "aa"), "a.a"),
       list("aca", c("aca", "a\u0105a"), NA_character_))
-   
+
 #    expect_identical(stri_extract_all_regex(c("ababab", NA, "ab", "ba"), "ab"),
 #       str_extract_all(c("ababab", NA, "ab", "ba"), "ab"))
 })

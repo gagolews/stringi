@@ -37,32 +37,33 @@
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
 #' otherwise you will get at error. You should split the input text into lines
 #' or e.g. substitute line breaks with spaces
 #' before applying this function.
-#' 
+#'
 #' The greedy algorithm (for \code{cost_exponent} being non-positive)
 #' provides a very simple way for word wrapping.
 #' It always puts as many words in each line as possible.
 #' This method -- contrary to the dynamic algorithm -- does not minimize
 #' the number of space left at the end of every line.
-#' The ynamic algorithm is more complex, but it returns text wrapped
+#' The dynamic algorithm (a.k.a. Knuth's word wrapping algorithm)
+#' is more complex, but it returns text wrapped
 #' in a more aesthetic way. This method minimizes the squared
-#' (by default, see \code{cost_exponent}) number of spaces at the end of
-#' each line, so the text is mode arranged evenly.
-#' 
+#' (by default, see \code{cost_exponent}) number of spaces  (raggedness)
+#' at the end of each line, so the text is mode arranged evenly.
+#'
 #' Note that Unicode code points may have various widths when
 #' printed on screen. This function acts like each code point
 #' is of width 1. This function should rather be used with
 #' text in Latin script.
-#' 
+#'
 #' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
 #' text boundaries at which a line break is possible.
 #'
 #' @param str character vector of strings to reformat
-#' @param width single positive integer giving the desired 
+#' @param width single positive integer giving the desired
 #'        maximal number of code points per line
 #' @param cost_exponent single numeric value, values not greater than zero
 #'        will select a greedy word-wrapping algorithm; otherwise
@@ -86,18 +87,23 @@
 #'       "lorem. Etiam pellentesque aliquet tellus."
 #' cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
 #' @export
+#'
+#' @references
+#' D.E. Knuth, M.F. Plass,
+#' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
+#' 1981, pp. 1119--1184
 stri_wrap <- function(str, width=floor(0.9*getOption("width")),
    cost_exponent=2.0, simplify=TRUE, locale=NULL)
 {
    simplify <- as.logical(simplify)
-   
+
 # @TODO: add param normalize?
 # unlist(stri_split_lines("aaaa\nnnn"))
 # stri_trim(stri_replace_all_charclass(c("   ", "     above-mentioned    "), "\\p{WHITE_SPACE}", " ", TRUE))
 # stri_paste(str, collapse=' ')
-   
+
    ret <- .Call("stri_wrap", str, width, cost_exponent, locale, PACKAGE="stringi")
-   
+
    if (simplify) # this will give an informative warning or error if sth is wrong
       as.character(unlist(ret))
    else

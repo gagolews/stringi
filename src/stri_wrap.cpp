@@ -39,18 +39,17 @@
 #include <unicode/uniset.h>
 
 
-
 /** Greedy word wrap algorithm
- * 
+ *
  * @param wrap [out]
  * @param noccurences number of boundaries; noccurences-1 == number of words
  * @param width_val maximal desired out line width
  * @param counts_orig ith word width original
  * @param counts_trim ith word width trimmed
- * 
+ *
  * @version 0.1-?? (Bartek Tartanus)
  *          original implementation
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
  */
@@ -69,22 +68,23 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap,
       else {
          cur_len += counts_orig[j];
       }
-   } 
+   }
 }
 
 
 /** Dynamic word wrap algorithm
- * 
+ * (Knuth's word wrapping algorithm that minimizes raggedness of formatted text)
+ *
  * @param wrap [out]
  * @param noccurences number of boundaries; noccurences-1 == number of words
  * @param width_val maximal desired out line width
  * @param exponent_val cost function exponent
  * @param counts_orig ith word width original
  * @param counts_trim ith word width trimmed
- * 
+ *
  * @version 0.1-?? (Bartek Tartanus)
  *          original implementation
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
  */
@@ -93,87 +93,80 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
    const std::vector<R_len_t>& counts_orig,
    const std::vector<R_len_t>& counts_trim)
 {
-   Rf_error("TO DO");
-//   // maybe a call to stri_prepare_arg_integer?
-//
-//   int n = LENGTH(count);
-//	double* costm = (double*)R_alloc(n*n, (int)sizeof(double)); // don't use R_alloc!!
-//	double ct = 0;
-//	double sum = 0;
-//   int* icount = INTEGER(count);
-//
-//	for(int i=0;i<n;i++){
-//		for(int j=i;j<n;j++){
-//			sum=0;
-//			for(int k=i;k<=j;k++) //sum of costs words from i to j
-//				sum = sum + icount[k];
-//			ct = width-(j-i)*spacecost-sum;
-//			if(ct<0){ //if the cost is bigger than width, put infinity
-//				costm[i*n+j]=std::numeric_limits<double>::infinity();
-//			}else //put squared cost into matrix
-//				costm[i*n+j]=ct*ct;
-//		}
-//	}
-//	//i-th element of f - cost of
-//	double* f = (double*)R_alloc(n, (int)sizeof(double));
-//	int j=0;
-//	//where to put space (false) and where break line (true)
-//	SEXP space;
-//	PROTECT(space = allocVector(LGLSXP, n*n));
-//	for(int i=0;i<n*n;i++) // put false everywhere
-//		LOGICAL(space)[i]=false;
-//	while(j<n && costm[j]<std::numeric_limits<double>::infinity()){
-//		f[j] = costm[j];
-//		LOGICAL(space)[j*n+j] = true;
-//		j=j+1;
-//	}
-//	double min=0;
-//	int w=0;
-//	double* temp = (double*)R_alloc(n, (int)sizeof(double));
-//	if(j<n){
-//	    for(int i=j;i<n;i++){
-//			//to find min we use array "temp"
-//			//temp = new double[i-1]; <- we can use this, because in every
-//         //loop step we need i-1 elements array, but to avoid multiple
-//         //reallocation we alloc one big array outside the loop and
-//         // overwrite each element
-//			temp[0]=f[0]+costm[1*n+i];
-//			min=temp[0];
-//			w=0;
-//			for(int k=1;k<i-1;k++){
-//				temp[k]=f[k]+costm[(k+1)*n+i];
-//				if(temp[k]<min){
-//					min=temp[k];
-//					w=k;
-//				}
-//			}
-//			f[i] = temp[w];
-//			for(int k=0;k<n;k++)
-//				LOGICAL(space)[i*n+k] = LOGICAL(space)[w*n+k];
-//			LOGICAL(space)[i*n+i] = true;
-//		}
-//	}
-//	//return the last row of the matrix
-//	SEXP out;
-//	PROTECT(out = allocVector(LGLSXP, n));
-//	for(int i=0;i<n;i++)
-//		LOGICAL(out)[i]=LOGICAL(space)[(n-1)*n+i];
-//	UNPROTECT(2);
-//	return(out);
+   R_len_t n = (noccurences-1);
+   vector<double> cost(n*n);
+   // where cost[n*i+j] == cost of printing words i..j in a single line
+
+   // calculate costs:
+   // there is some "punishment" for leaving blanks at the end of each line
+   // (number of "blank" codepoints ^ exponent_val)
+   for (int i=0; i<n; i++) {
+      int sum = 0;
+      for (int j=i; j<n; j++) {
+         if (j > 0) {
+            if (cost[i*n+j-1] < 0.0) {
+               cost[i*n+j] = -1.0;
+               continue;
+            }
+            else {
+               sum -= counts_trim[j-1];
+               sum += counts_orig[j-1];
+            }
+         }
+         sum += counts_trim[j];
+         int ct = width_val - sum;
+
+         cost[i*n+j] = (ct < 0) ? -1.0/*"inifinity"*/ : pow((double)ct, exponent_val);
+      }
+   }
+   
+   vector<double> f(n); // f[i] == total cost of  (optimally) printing words 0..i
+   vector<bool> where(n*n, false); // where[n*i+j] == FALSE iff when
+                            // (optimally) printing words 0..i
+                            // we don't wrap after j-th word
+
+   // @TODO: what if word length > width_val???????
+   for (int j=0; j<n; ++j) {
+      if (cost[n*0+j] >= 0.0) {
+         // no breaking needed: words 0..j fit in one line
+         f[j] = cost[n*0+j];
+      }
+      else {
+         // let i = optimal printing of words 0..i + printing i+1..j
+         int i = 0;
+         double best_i = f[0] + cost[n*(i+1)+j];
+         for (int k=1; k<j; ++k) {
+            double best_cur = f[k] + cost[n*(k+1)+j];
+            if (best_cur < best_i) {
+               best_i = best_cur;
+               i = k;
+            }
+         }
+         for (int k=0; k<n; ++k)
+            where[n*j+k] = where[n*i+k];
+         where[n*j+i] = true;
+         f[j] = f[i] + cost[n*(i+1)+j];
+      }
+   }
+   
+   //result is in the last row of where...
+   for (int k=0; k<n; ++k)
+      if (where[n*(n-1)+k])
+         wrap.push_back(k);
 }
 
 
 /** Word wrap text
- * 
+ *
  * @param str character vector
  * @param width single integer
  * @param cost_exponent single double
  * @param locale locale identifier or NULL for default locale
- * 
+ *
  * @return list
- * 
+ *
  * @version 0.1-?? (Bartek Tartanus)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
  *          single function for wrap_greedy and wrap_dynamic
  *          (dispatch inside);
@@ -193,25 +186,25 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
    R_len_t str_length = LENGTH(str);
    BreakIterator* briter = NULL;
    UText* str_text = NULL;
-   
+
    STRI__ERROR_HANDLER_BEGIN
    UErrorCode status = U_ZERO_ERROR;
    briter = BreakIterator::createLineInstance(loc, status);
    if (U_FAILURE(status)) throw StriException(status);
-   
+
    StriContainerUTF8_indexable str_cont(str, str_length);
-   
+
    status = U_ZERO_ERROR;
    //Unicode Newline Guidelines - Unicode Technical Report #13
    UnicodeSet uset_linebreaks(UnicodeString::fromUTF8("[\\u000A-\\u000D\\u0085\\u2028\\u2029]"), status);
    if (U_FAILURE(status)) throw StriException(status);
    uset_linebreaks.freeze();
-   
+
    status = U_ZERO_ERROR;
    UnicodeSet uset_whitespaces(UnicodeString::fromUTF8("\\p{White_space}"), status);
    if (U_FAILURE(status)) throw StriException(status);
    uset_whitespaces.freeze();
-   
+
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_length));
    for (R_len_t i = 0; i < str_length; ++i)
@@ -220,7 +213,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
-      
+
       status = U_ZERO_ERROR;
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t str_cur_n = str_cont.get(i).length();
@@ -228,7 +221,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       if (U_FAILURE(status)) throw StriException(status);
       briter->setText(str_text, status);
       if (U_FAILURE(status)) throw StriException(status);
-      
+
       // all right, first let's generate a list of places at which we may do line breaks
       deque< R_len_t > occurences_list; // this could be an R_len_t queue
       R_len_t match = briter->first();
@@ -236,20 +229,20 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
          occurences_list.push_back(match);
          match = briter->next();
       }
-      
+
       R_len_t noccurences = (R_len_t)occurences_list.size();
       if (noccurences <= 1) { // no match
          SET_VECTOR_ELT(ret, i, str_cont.toR(i));
          continue;
       }
-      
+
       // convert to a vector:
       std::vector<R_len_t> pos(noccurences);
       deque<R_len_t>::iterator iter = occurences_list.begin();
       for (R_len_t j = 0; iter != occurences_list.end(); ++iter, ++j) {
          pos[j] = (*iter); // this is a UTF-8 index
       }
-      
+
       // now:
       // get the number of code points in each chunk
       std::vector<R_len_t> counts_orig(noccurences-1);
@@ -258,7 +251,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       // get the end positions without trailing whitespaces
       std::vector<R_len_t> end_pos_trim(noccurences-1);
       // detect line endings (fail on a match)
-      
+
       UChar32 c = 0;
       R_len_t j = 0;
       R_len_t cur_block = 0;
@@ -271,10 +264,10 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             SET_VECTOR_ELT(ret, i, str_cont.toR(i));
             continue;
          }
-         
+
          if (uset_linebreaks.contains(c))
             throw StriException(MSG__NEWLINE_FOUND);
-          
+
          ++cur_count_orig;
          if (uset_whitespaces.contains(c)) {
             ++cur_count_trim;
@@ -283,7 +276,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             cur_count_trim = 0;
             cur_end_pos_trim = j;
          }
-            
+
          if (j >= str_cur_n || pos[cur_block+1] <= j) {
             // we'll start a new block in a moment
             counts_orig[cur_block] = cur_count_orig;
@@ -297,7 +290,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             cur_end_pos_trim = j;
          }
       }
-      
+
       // do wrap
       std::deque<R_len_t> wrap; // wrap line after which word?
       if (exponent_val <= 0.0) {
@@ -324,7 +317,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
    }
-   
+
    if (briter) { delete briter; briter = NULL; }
    if (str_text) { utext_close(str_text); str_text = NULL; }
    STRI__UNPROTECT_ALL

@@ -47,7 +47,7 @@
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
- * 
+ *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
  *          return NA if no matches found
  */

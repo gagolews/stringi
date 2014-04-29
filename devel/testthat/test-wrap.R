@@ -1,11 +1,11 @@
 require(testthat)
 require(stringr)
 
-test_that("stri_wrap", { 
+test_that("stri_wrap", {
    expect_error(stri_wrap("whatever", 0))
    expect_error(stri_wrap("what\never"))
    expect_identical(stri_wrap(c("", "singleword", NA), cost=0.0), c("", "singleword", NA))
-   
+
    s <- c("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
    for (i in 10:40)
       expect_true(all(stri_length(stri_wrap(s, i, cost_exponent=0.0)) <= i))
