@@ -45,10 +45,11 @@ non-positive) provides a very simple way for word wrapping.
 It always puts as many words in each line as possible. This
 method -- contrary to the dynamic algorithm -- does not
 minimize the number of space left at the end of every line.
-The ynamic algorithm is more complex, but it returns text
-wrapped in a more aesthetic way. This method minimizes the
-squared (by default, see \code{cost_exponent}) number of
-spaces at the end of each line, so the text is mode
+The dynamic algorithm (a.k.a. Knuth's word wrapping
+algorithm) is more complex, but it returns text wrapped in
+a more aesthetic way. This method minimizes the squared (by
+default, see \code{cost_exponent}) number of spaces
+(raggedness) at the end of each line, so the text is mode
 arranged evenly.
 
 Note that Unicode code points may have various widths when
@@ -64,6 +65,11 @@ s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin "\%+\%
       "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel "\%+\%
       "lorem. Etiam pellentesque aliquet tellus."
 cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
+}
+\references{
+D.E. Knuth, M.F. Plass, Breaking paragraphs into lines,
+\emph{Software: Practice and Experience} 11(11), 1981, pp.
+1119--1184
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!=\%}},
