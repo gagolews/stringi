@@ -39,10 +39,17 @@
 #' @details
 #' Vectorized over \code{str}.
 #'
-#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
-#' otherwise you will get at error. You should split the input text into lines
+#' Any of the strings must not contain \code{\\r}, \code{\\n},
+#' or other new line characters, otherwise you will get at error.
+#' You should split the input text into lines
 #' or e.g. substitute line breaks with spaces
 #' before applying this function.
+#'
+#' Multiple white spaces between the word boundaries are
+#' preserved withing each wrapped line. If you wish to substitute
+#' all such sequences with single spaces, call e.g.
+#' \code{stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))}
+#' prior to string wrapping.
 #'
 #' The greedy algorithm (for \code{cost_exponent} being non-positive)
 #' provides a very simple way for word wrapping.
@@ -70,6 +77,7 @@
 #'        will select a greedy word-wrapping algorithm; otherwise
 #'        this value denotes the exponent in the cost function
 #'        of a (more esthetic) dynamic programming-based algorithm
+#'        (values in [2, 3] are recommended)
 #' @param simplify single logical value, see Value
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
@@ -87,6 +95,8 @@
 #'       "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel "%+%
 #'       "lorem. Etiam pellentesque aliquet tellus."
 #' cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
+#' cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
+#' cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
 #' @export
 #'
 #' @references
@@ -98,10 +108,13 @@ stri_wrap <- function(str, width=floor(0.9*getOption("width")),
 {
    simplify <- as.logical(simplify)
 
-# @TODO: add param normalize?
-# unlist(stri_split_lines("aaaa\nnnn"))
-# stri_trim(stri_replace_all_charclass(c("   ", "     above-mentioned    "), "\\p{WHITE_SPACE}", " ", TRUE))
-# stri_paste(str, collapse=' ')
+#   # @TODO: add param normalize?
+#   normalize <- as.logical(normalize)
+#   if (normalize) {
+#      str <- unlist(stri_split_lines(str))
+#      str <- stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))
+#      str <- stri_paste(str, collapse=' ')
+#   }
 
    ret <- .Call("stri_wrap", str, width, cost_exponent, locale, PACKAGE="stringi")
 

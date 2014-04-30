@@ -9,7 +9,7 @@ test_that("stri_wrap", {
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 1.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 2.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 3.0), c("a12345", "b123456", "c1234567"))
-   
+
    expect_identical(stri_wrap("aaa bb cc ddddd", 6, cost=2), c("aaa", "bb cc", "ddddd")) # wikipedia
    expect_identical(stri_wrap("aaa bb cc ddddd", 6, cost=0), c("aaa bb", "cc", "ddddd")) # wikipedia
 
