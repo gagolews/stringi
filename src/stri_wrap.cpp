@@ -84,7 +84,7 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  * @version 0.1-?? (Bartek Tartanus)
  *          original implementation
  *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-30)
  *          BreakIterator usage mods
  */
 void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
@@ -96,6 +96,8 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
    vector<double> cost(nwords*nwords);
    // where cost[IDX(i,j)] == cost of printing words i..j in a single line, i<=j
 
+   // @TODO: we may wish not to include the cost of the last line...
+
    // calculate costs:
    // there is some "punishment" for leaving blanks at the end of each line
    // (number of "blank" codepoints ^ exponent_val)
@@ -103,8 +105,8 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
       int sum = 0;
       for (int j=i; j<nwords; j++) {
          if (j > i) {
-            if (cost[IDX(i,j-1)] < 0.0) {
-               cost[IDX(i,j)] = -1.0;
+            if (cost[IDX(i,j-1)] < 0.0) { // already Inf
+               cost[IDX(i,j)] = -1.0; // Inf
                continue;
             }
             else {
@@ -116,43 +118,45 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
          int ct = width_val - sum;
 
          if (j==i)
-            // some words don't fit line at all -> cost 0.0
+            // some words don't fit in a line at all -> cost 0.0
             cost[IDX(i,j)] = (ct < 0) ? 0.0 : pow((double)ct, exponent_val);
          else
-            cost[IDX(i,j)] = (ct < 0) ? -1.0/*"inifinity"*/ : pow((double)ct, exponent_val);
+            cost[IDX(i,j)] = (ct < 0) ? -1.0/*"Inf"*/ : pow((double)ct, exponent_val);
       }
    }
 
    vector<double> f(nwords); // f[j] == total cost of  (optimally) printing words 0..j
-   vector<bool> where(nwords*nwords, false); // where[IDX(i,j)] == false iff when
-                                             // (optimally) printing words 0..j
+   vector<bool> where(nwords*nwords, false); // where[IDX(i,j)] == false iff
                                              // we don't wrap after i-th word, i<=j
+                                             // when (optimally) printing words 0..j
 
    for (int j=0; j<nwords; ++j) {
       if (cost[IDX(0,j)] >= 0.0) {
          // no breaking needed: words 0..j fit in one line
          f[j] = cost[IDX(0,j)];
+         continue;
       }
-      else {
-         // let i = optimal printing of words 0..i + printing i+1..j
-         int i = 0;
-         while (i <= j)
-            if (cost[IDX(i+1,j)] >= 0.0) break;
-            else ++i;
-         double best_i = f[0] + cost[IDX(i+1,j)];
-         for (int k=i+1; k<j; ++k) {
-            if (cost[IDX(k+1,j)] < 0.0) continue;
-            double best_cur = f[k] + cost[IDX(k+1,j)];
-            if (best_cur < best_i) {
-               best_i = best_cur;
-               i = k;
-            }
+
+      // let i = optimal way of printing of words 0..i + printing i+1..j
+      int i = 0;
+      while (i <= j) {
+         if (cost[IDX(i+1,j)] >= 0.0) break;
+         ++i;
+      }
+
+      double best_i = f[i] + cost[IDX(i+1,j)];
+      for (int k=i+1; k<j; ++k) {
+         if (cost[IDX(k+1,j)] < 0.0) continue;
+         double best_cur = f[k] + cost[IDX(k+1,j)];
+         if (best_cur < best_i) {
+            best_i = best_cur;
+            i = k;
          }
-         for (int k=0; k<i; ++k)
-            where[IDX(k,j)] = where[IDX(k,i)];
-         where[IDX(i,j)] = true;
-         f[j] = best_i;
       }
+      for (int k=0; k<i; ++k)
+         where[IDX(k,j)] = where[IDX(k,i)];
+      where[IDX(i,j)] = true;
+      f[j] = best_i;
    }
 
    //result is in the last row of where...
@@ -252,7 +256,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       if (occurences_list.at(0) != 0)
          throw StriException("NDEBUG: stri_wrap: (occurences_list.at(0) != 0)");
 #endif
-      
+
       std::vector<R_len_t> end_pos_orig(nwords);
       deque<R_len_t>::iterator iter = ++(occurences_list.begin());
       for (R_len_t j = 0; iter != occurences_list.end(); ++iter, ++j) {
@@ -260,7 +264,6 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       }
 
 
-      
       // now:
       // we'll get the number of code points in each "word"
       std::vector<R_len_t> counts_orig(nwords);
@@ -329,11 +332,11 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
          last_pos = end_pos_orig[wrap_after_cur];
       }
-      
+
       // last line goes here:
       SET_STRING_ELT(ans, nlines-1,
          Rf_mkCharLenCE(str_cur_s+last_pos, end_pos_trim[nwords-1]-last_pos, CE_UTF8));
-      
+
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
    }

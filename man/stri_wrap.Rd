@@ -15,7 +15,8 @@ stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
   greater than zero will select a greedy word-wrapping
   algorithm; otherwise this value denotes the exponent in
   the cost function of a (more esthetic) dynamic
-  programming-based algorithm}
+  programming-based algorithm (values in [2, 3] are
+  recommended)}
 
   \item{simplify}{single logical value, see Value}
 
@@ -36,10 +37,17 @@ consisting of at most \code{width} code points.
 \details{
 Vectorized over \code{str}.
 
-Any of the strings must not contain \code{\\r} or
-\code{\\n} characters, otherwise you will get at error. You
-should split the input text into lines or e.g. substitute
-line breaks with spaces before applying this function.
+Any of the strings must not contain \code{\\r}, \code{\\n},
+or other new line characters, otherwise you will get at
+error. You should split the input text into lines or e.g.
+substitute line breaks with spaces before applying this
+function.
+
+Multiple white spaces between the word boundaries are
+preserved withing each wrapped line. If you wish to
+substitute all such sequences with single spaces, call e.g.
+\code{stri_trim(stri_replace_all_charclass(str,
+"\\p{WHITE_SPACE}", " ", TRUE))} prior to string wrapping.
 
 The greedy algorithm (for \code{cost_exponent} being
 non-positive) provides a very simple way for word wrapping.
@@ -66,6 +74,8 @@ s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin "\%+\%
       "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel "\%+\%
       "lorem. Etiam pellentesque aliquet tellus."
 cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
+cat(stri_wrap(s, 20, 2.0), sep="\\n") # dynamic
+cat(stri_pad(stri_wrap(s), side='both'), sep="\\n")
 }
 \references{
 D.E. Knuth, M.F. Plass, Breaking paragraphs into lines,

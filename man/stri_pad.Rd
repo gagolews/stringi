@@ -5,14 +5,14 @@
 \alias{stri_pad_right}
 \title{Pad (Left/Right/Center Align) a String}
 \usage{
-stri_pad_both(str, min_length = max(stri_length(str)), pad = " ")
+stri_pad_both(str, min_length = floor(0.9 * getOption("width")), pad = " ")
 
-stri_pad_left(str, min_length = max(stri_length(str)), pad = " ")
+stri_pad_left(str, min_length = floor(0.9 * getOption("width")), pad = " ")
 
-stri_pad_right(str, min_length = max(stri_length(str)), pad = " ")
+stri_pad_right(str, min_length = floor(0.9 * getOption("width")), pad = " ")
 
-stri_pad(str, min_length = max(stri_length(str)), side = c("left", "right",
-  "both"), pad = " ")
+stri_pad(str, min_length = floor(0.9 * getOption("width")), side = c("left",
+  "right", "both"), pad = " ")
 }
 \arguments{
   \item{str}{character vector}
@@ -51,7 +51,8 @@ is of width 1. This function should rather be used with
 text in Latin script.
 
 See \code{\link{stri_trim_left}} (among others) for reverse
-operation.
+operation. Also check out \code{\link{stri_wrap}} for line
+wrapping.
 }
 \examples{
 stri_pad_left("stringi", 10, pad="#")
