@@ -24,7 +24,8 @@
    * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
       pads a string with a specific code point.
 
-   * [NEW FUNCTION] stri_wrap..... t.b.d.
+   * [NEW FUNCTION] stri_wrap breaks paragraphs of text into lines.
+     Two algorihms (greedy and minimal-raggedness) are available.
 
    * [NEW FUNCTION] stri_justify..... t.b.d.
 

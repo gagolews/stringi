@@ -41,8 +41,8 @@
 
 /** Greedy word wrap algorithm
  *
- * @param wrap [out]
- * @param noccurences number of boundaries; noccurences-1 == number of words
+ * @param wrap_after [out]
+ * @param nwords number of "words"
  * @param width_val maximal desired out line width
  * @param counts_orig ith word width original
  * @param counts_trim ith word width trimmed
@@ -53,17 +53,16 @@
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
  */
-void stri__wrap_greedy(std::deque<R_len_t>& wrap,
-   R_len_t noccurences, int width_val,
+void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
+   R_len_t nwords, int width_val,
    const std::vector<R_len_t>& counts_orig,
    const std::vector<R_len_t>& counts_trim)
 {
    R_len_t cur_len = counts_orig[0];
-   for (R_len_t j = 1; j < noccurences-1; ++j) {
+   for (R_len_t j = 1; j < nwords; ++j) {
       if (cur_len + counts_trim[j] > width_val) {
          cur_len = counts_orig[j];
-//               printf("%d WRAP\n", j-1);
-         wrap.push_back(j-1);
+         wrap_after.push_back(j-1);
       }
       else {
          cur_len += counts_orig[j];
@@ -75,8 +74,8 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap,
 /** Dynamic word wrap algorithm
  * (Knuth's word wrapping algorithm that minimizes raggedness of formatted text)
  *
- * @param wrap [out]
- * @param noccurences number of boundaries; noccurences-1 == number of words
+ * @param wrap_after [out]
+ * @param nwords number of "words"
  * @param width_val maximal desired out line width
  * @param exponent_val cost function exponent
  * @param counts_orig ith word width original
@@ -88,22 +87,21 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap,
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
  */
-void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
-   R_len_t noccurences, int width_val, double exponent_val,
+void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
+   R_len_t nwords, int width_val, double exponent_val,
    const std::vector<R_len_t>& counts_orig,
    const std::vector<R_len_t>& counts_trim)
 {
-   R_len_t n = (noccurences-1);
-#define IDX(i,j) (i)*n+(j)
-   vector<double> cost(n*n);
+#define IDX(i,j) (i)*nwords+(j)
+   vector<double> cost(nwords*nwords);
    // where cost[IDX(i,j)] == cost of printing words i..j in a single line, i<=j
 
    // calculate costs:
    // there is some "punishment" for leaving blanks at the end of each line
    // (number of "blank" codepoints ^ exponent_val)
-   for (int i=0; i<n; i++) {
+   for (int i=0; i<nwords; i++) {
       int sum = 0;
-      for (int j=i; j<n; j++) {
+      for (int j=i; j<nwords; j++) {
          if (j > i) {
             if (cost[IDX(i,j-1)] < 0.0) {
                cost[IDX(i,j)] = -1.0;
@@ -125,12 +123,12 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
       }
    }
 
-   vector<double> f(n); // f[j] == total cost of  (optimally) printing words 0..j
-   vector<bool> where(n*n, false); // where[IDX(i,j)] == false iff when
-                            // (optimally) printing words 0..j
-                            // we don't wrap after i-th word, i<=j
+   vector<double> f(nwords); // f[j] == total cost of  (optimally) printing words 0..j
+   vector<bool> where(nwords*nwords, false); // where[IDX(i,j)] == false iff when
+                                             // (optimally) printing words 0..j
+                                             // we don't wrap after i-th word, i<=j
 
-   for (int j=0; j<n; ++j) {
+   for (int j=0; j<nwords; ++j) {
       if (cost[IDX(0,j)] >= 0.0) {
          // no breaking needed: words 0..j fit in one line
          f[j] = cost[IDX(0,j)];
@@ -158,9 +156,9 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
    }
 
    //result is in the last row of where...
-   for (int k=0; k<n; ++k)
-      if (where[IDX(k,n-1)])
-         wrap.push_back(k);
+   for (int k=0; k<nwords; ++k)
+      if (where[IDX(k, nwords-1)])
+         wrap_after.push_back(k);
 }
 
 
@@ -238,26 +236,38 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
          match = briter->next();
       }
 
-      R_len_t noccurences = (R_len_t)occurences_list.size();
-      if (noccurences <= 1) { // no match
+      R_len_t noccurences = (R_len_t)occurences_list.size(); // number of boundaries
+      if (noccurences <= 1) { // no match (1 boundary == 0)
          SET_VECTOR_ELT(ret, i, str_cont.toR(i));
          continue;
       }
 
-      // convert to a vector:
-      std::vector<R_len_t> pos(noccurences);
-      deque<R_len_t>::iterator iter = occurences_list.begin();
+      // the number of "words" is:
+      R_len_t nwords = noccurences - 1;
+
+      // convert occurences_list to a vector
+      // in order to obtain end positions (in a string) of each "words",
+      // noting that occurences_list.at(0) == 0
+#ifndef NDEBUG
+      if (occurences_list.at(0) != 0)
+         throw StriException("NDEBUG: stri_wrap: (occurences_list.at(0) != 0)");
+#endif
+      
+      std::vector<R_len_t> end_pos_orig(nwords);
+      deque<R_len_t>::iterator iter = ++(occurences_list.begin());
       for (R_len_t j = 0; iter != occurences_list.end(); ++iter, ++j) {
-         pos[j] = (*iter); // this is a UTF-8 index
+         end_pos_orig[j] = (*iter); // this is a UTF-8 index
       }
 
+
+      
       // now:
-      // get the number of code points in each chunk
-      std::vector<R_len_t> counts_orig(noccurences-1);
-      // get the number of code points without trailing whitespaces
-      std::vector<R_len_t> counts_trim(noccurences-1);
-      // get the end positions without trailing whitespaces
-      std::vector<R_len_t> end_pos_trim(noccurences-1);
+      // we'll get the number of code points in each "word"
+      std::vector<R_len_t> counts_orig(nwords);
+      // we'll get the number of code points without trailing whitespaces
+      std::vector<R_len_t> counts_trim(nwords);
+      // we'll get the end positions without trailing whitespaces
+      std::vector<R_len_t> end_pos_trim(nwords);
       // detect line endings (fail on a match)
 
       UChar32 c = 0;
@@ -268,10 +278,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       R_len_t cur_end_pos_trim = 0;
       while (j < str_cur_n) {
          U8_NEXT(str_cur_s, j, str_cur_n, c);
-         if (c < 0) { // invalid utf-8 sequence
-            SET_VECTOR_ELT(ret, i, str_cont.toR(i));
-            continue;
-         }
+         if (c < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
 
          if (uset_linebreaks.contains(c))
             throw StriException(MSG__NEWLINE_FOUND);
@@ -285,13 +293,11 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
             cur_end_pos_trim = j;
          }
 
-         if (j >= str_cur_n || pos[cur_block+1] <= j) {
+         if (j >= str_cur_n || end_pos_orig[cur_block] <= j) {
             // we'll start a new block in a moment
             counts_orig[cur_block] = cur_count_orig;
             counts_trim[cur_block] = cur_count_orig-cur_count_trim;
             end_pos_trim[cur_block] = cur_end_pos_trim;
-//            printf("%d, %d, end=%d, %d\n", counts_orig[cur_block],
-//               counts_trim[cur_block], pos[cur_block+1], end_pos_trim[cur_block]);
             cur_block++;
             cur_count_orig = 0;
             cur_count_trim = 0;
@@ -300,28 +306,34 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       }
 
       // do wrap
-      std::deque<R_len_t> wrap; // wrap line after which word?
+      std::deque<R_len_t> wrap_after; // wrap line after which word in {0..nwords-1}?
       if (exponent_val <= 0.0) {
-         stri__wrap_greedy(wrap, noccurences, width_val,
+         stri__wrap_greedy(wrap_after, nwords, width_val,
             counts_orig, counts_trim);
       }
       else {
-         stri__wrap_dynamic(wrap, noccurences, width_val, exponent_val,
+         stri__wrap_dynamic(wrap_after, nwords, width_val, exponent_val,
             counts_orig, counts_trim);
       }
 
-      R_len_t nlines = wrap.size()+1;
-      wrap.push_back(noccurences-2); // I'm no more sure why it works @TODO: make sure
+      // wrap_after.size() line breaks => wrap_after.size()+1 lines
+      R_len_t nlines = wrap_after.size()+1;
       R_len_t last_pos = 0;
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, nlines));
-      deque<R_len_t>::iterator iter_wrap = wrap.begin();
-      for (R_len_t j = 0; iter_wrap != wrap.end(); ++iter_wrap, ++j) {
-         R_len_t cur_pos = end_pos_trim[*iter_wrap];
-//         printf("%d: %d-%d == %d\n", *iter_wrap, cur_pos, last_pos, cur_pos-last_pos);
-         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
-         last_pos = pos[*iter_wrap+1];
+      deque<R_len_t>::iterator iter_wrap = wrap_after.begin();
+      for (R_len_t j = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++j) {
+         R_len_t wrap_after_cur = *iter_wrap;
+         R_len_t cur_pos = end_pos_trim[wrap_after_cur];
+         SET_STRING_ELT(ans, j,
+            Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
+         last_pos = end_pos_orig[wrap_after_cur];
       }
+      
+      // last line goes here:
+      SET_STRING_ELT(ans, nlines-1,
+         Rf_mkCharLenCE(str_cur_s+last_pos, end_pos_trim[nwords-1]-last_pos, CE_UTF8));
+      
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
    }
