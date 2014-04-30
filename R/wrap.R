@@ -33,7 +33,8 @@
 #' Word Wrap Text to Format Paragraphs
 #'
 #' @description
-#' ...
+#' This function breaks text pararagraphs into lines,
+#' each consisting of at most \code{width} code points.
 #'
 #' @details
 #' Vectorized over \code{str}.
