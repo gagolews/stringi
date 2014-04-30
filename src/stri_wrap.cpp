@@ -124,7 +124,7 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
             cost[IDX(i,j)] = (ct < 0) ? -1.0/*"inifinity"*/ : pow((double)ct, exponent_val);
       }
    }
-   
+
    vector<double> f(n); // f[j] == total cost of  (optimally) printing words 0..j
    vector<bool> where(n*n, false); // where[IDX(i,j)] == false iff when
                             // (optimally) printing words 0..j
@@ -156,7 +156,7 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap,
          f[j] = best_i;
       }
    }
-   
+
    //result is in the last row of where...
    for (int k=0; k<n; ++k)
       if (where[IDX(k,n-1)])

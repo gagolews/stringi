@@ -30,7 +30,8 @@ is returned. Otherwise, you will get a list of
 \code{length(str)} character vectors.
 }
 \description{
-...
+This function breaks text pararagraphs into lines, each
+consisting of at most \code{width} code points.
 }
 \details{
 Vectorized over \code{str}.
