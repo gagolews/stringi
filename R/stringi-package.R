@@ -95,13 +95,14 @@
 #'
 #' \item \code{\link{stri_sub}} for extracting and replacing substrings,
 #' and \code{\link{stri_reverse}} for a joyful function
-#' to reverse all characters in a string.
+#' to reverse all code points in a string.
 #'
 #' \item \code{\link{stri_trim}} (among others) for
 #' trimming characters from the beginning or/and end of a string,
 #' see also \link{stringi-search-charclass},
 #' and \code{\link{stri_pad}} for padding strings so that
 #' they have the same minimal number of code points.
+#' Additionally, \code{\link{stri_wrap}} wraps text into lines.
 #'
 #' \item \code{\link{stri_length}} (among others) for determining the number
 #' of code points in a string.
@@ -131,7 +132,7 @@
 #' for reading and writing text files.
 #'
 #' \item TO DO [these will appear in future versions
-#' of \pkg{stringi}]: wrap, justify, HTML entities,
+#' of \pkg{stringi}]: HTML entities,
 #' MIME Base 64 encode/decode,
 #' number and data/time formatting,
 #' and many more.

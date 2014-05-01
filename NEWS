@@ -2,7 +2,12 @@
 ========================================
 
 
-* 0.2-2 (2014-??-??) **???**
+* 0.2-3 (2014-??-??) **???**
+
+   * t.b.d.
+
+
+* 0.2-2 (2014-05-01) **devel**
 
    * [IMPORTANT CHANGE] stri_enc_nf* and stri_enc_isnf* function families
       have been renamed to stri_trans_nf* and stri_trans_isnf*, respectively.
@@ -26,8 +31,6 @@
 
    * [NEW FUNCTION] stri_wrap breaks paragraphs of text into lines.
      Two algorihms (greedy and minimal-raggedness) are available.
-
-   * [NEW FUNCTION] stri_justify..... t.b.d.
 
 
 * 0.2-1 (2014-04-18) **devel**

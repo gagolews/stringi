@@ -3,7 +3,7 @@
 \alias{stri_pad_both}
 \alias{stri_pad_left}
 \alias{stri_pad_right}
-\title{Pad (Left/Right/Center Align) a String}
+\title{Pad (Center/Left/Right Align) a String}
 \usage{
 stri_pad_both(str, min_length = floor(0.9 * getOption("width")), pad = " ")
 
@@ -55,10 +55,12 @@ operation. Also check out \code{\link{stri_wrap}} for line
 wrapping.
 }
 \examples{
+\dontrun{
 stri_pad_left("stringi", 10, pad="#")
 stri_pad_both("stringi", 8:12, pad="*")
 # center on screen:
 cat(stri_pad_both(c("the", "string", "processing", "package"),
    getOption("width")*0.9), sep='\\n')
+}
 }
 
