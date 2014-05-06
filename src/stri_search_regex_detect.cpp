@@ -52,6 +52,9 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-18)
  *          use StriContainerRegexPattern + opts_regex
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-06)
+ *          use UText+UTF8, faster for short strings
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -63,8 +66,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    STRI__ERROR_HANDLER_BEGIN
-   StriContainerUTF16 str_cont(str, vectorize_length);
-//   StriContainerUTF8 str_cont(str, vectorize_length); // utext_openUTF8, see below
+//   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUTF8 str_cont(str, vectorize_length); // utext_openUTF8, see below
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
@@ -78,19 +81,19 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont,
          pattern_cont, ret_tab[i] = NA_LOGICAL, ret_tab[i] = FALSE)
 
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      matcher->reset(str_cont.get(i));
-      ret_tab[i] = (int)matcher->find(); // returns UBool
-
-//      // mbmark-regex-detect1.R: UTF16 0.07171792 s; UText 0.10531605 s
-//      UText* str_text = NULL;
-//      UErrorCode status = U_ZERO_ERROR;
 //      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-//      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-//      if (U_FAILURE(status)) throw StriException(status);
-//      matcher->reset(str_text);
+//      matcher->reset(str_cont.get(i));
 //      ret_tab[i] = (int)matcher->find(); // returns UBool
-//      utext_close(str_text);
+
+      // mbmark-regex-detect1.R: UTF16 0.07171792 s; UText 0.10531605 s
+      UText* str_text = NULL;
+      UErrorCode status = U_ZERO_ERROR;
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
+      if (U_FAILURE(status)) throw StriException(status);
+      matcher->reset(str_text);
+      ret_tab[i] = (int)matcher->find(); // returns UBool
+      utext_close(str_text);
    }
 
    STRI__UNPROTECT_ALL
