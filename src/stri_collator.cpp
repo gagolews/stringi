@@ -50,8 +50,11 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          allow for NULL opts_collator (identical to list())
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          allow_na arg added
  */
-UCollator* stri__ucol_open(SEXP opts_collator)
+UCollator* stri__ucol_open(SEXP opts_collator, bool allow_na)
 {
    if (isNull(opts_collator) || Rf_isVectorList(opts_collator)) {
       R_len_t narg = isNull(opts_collator)?0:LENGTH(opts_collator);
@@ -132,11 +135,13 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 
       return col;
    }
-   else {
+   else if (allow_na) {
       // arg is not a list - is it a single NA then?
       opts_collator = stri_prepare_arg_logical_1(opts_collator, "opts_collator_not_list");
       if (LOGICAL(opts_collator)[0] != NA_LOGICAL)
-         Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
+         Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
       return NULL;
    }
+   else
+      Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
 }

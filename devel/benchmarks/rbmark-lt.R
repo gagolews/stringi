@@ -27,9 +27,7 @@ benchmark_do <- function() {
    benchmark2(
       x < y,
       stri_cmp(x, y) < 0,
-      stri_cmp(x, y, NA) < 0,
       stri_cmp_lt(x, y),
-      stri_cmp_lt(x, y, NA),
       replications=100L
    )
 }

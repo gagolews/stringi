@@ -4,7 +4,7 @@
 \title{Locales and \pkg{stringi}}
 \description{
 In this section we explain how we deal with locales in \pkg{stringi}.
-Locale is a fundamental concept in ICU.
+Locale is a fundamental concept in \pkg{ICU}.
 It identifies a specific user community, i.e. a group of users
 who have similar culture and language expectations
 for human-computer interaction.
@@ -59,7 +59,7 @@ your locale properly.
 
 Sometimes it is suggested that your program should avoid changing the default locale:
 it is not a good way to request an international object, especially
-only for a single function call..
+only for a single function call.
 All locale-sensitive functions may request
 any desired locale per-call (by specifying the \code{locale} argument),
 i.e. without referencing to the default locale.
@@ -96,16 +96,20 @@ Other locale_management: \code{\link{stri_locale_get}},
   \code{\link{stri_locale_info}};
   \code{\link{stri_locale_list}}
 
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};

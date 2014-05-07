@@ -1,5 +1,24 @@
 require(testthat)
 
+
+test_that("stri_cmp_operators", {
+   
+   expect_identical("a" %stri==% c("a", "b"), c(TRUE, FALSE))
+   expect_identical("a" %stri===% c("a", "b"), c(TRUE, FALSE))
+   expect_identical("a" %stri!=% c("b", "a"), c(TRUE, FALSE))
+   expect_identical("a" %stri!==% c("b", "a"), c(TRUE, FALSE))
+   
+   expect_identical("\u0105" %stri==% stri_trans_nfkd("\u0105"), TRUE)
+   expect_identical("\u0105" %stri===% stri_trans_nfkd("\u0105"), FALSE)
+   expect_identical("\u0105" %stri!=% stri_trans_nfkd("\u0105"), FALSE)
+   expect_identical("\u0105" %stri!==% stri_trans_nfkd("\u0105"), TRUE)
+   
+   expect_identical("b" %stri<%  c("a", "b", "c"), c(FALSE, FALSE, TRUE))
+   expect_identical("b" %stri<=% c("a", "b", "c"), c(FALSE, TRUE, TRUE))
+   expect_identical("b" %stri>%  c("a", "b", "c"), c(TRUE, FALSE, FALSE))
+   expect_identical("b" %stri>=% c("a", "b", "c"), c(TRUE, TRUE, FALSE))
+})
+
 test_that("stri_cmp", {
 
    expect_equivalent(stri_cmp(character(0), character(0)), integer(0))
@@ -43,23 +62,30 @@ test_that("stri_cmp_lt/gt/le/ge", {
 
 })
 
+test_that("stri_cmp_equiv", {
 
-test_that("stri_cmp_lt/gt/le/ge_bytewise", {
+   expect_equivalent(stri_cmp_equiv(character(0), character(0)), logical(0))
+   expect_equivalent(stri_cmp_equiv(LETTERS, character(0)), logical(0))
+   expect_equivalent(stri_cmp_equiv(character(0), LETTERS), logical(0))
 
-   expect_equivalent(stri_cmp_lt(character(0), character(0), opts_collator=NA), logical(0))
-   expect_equivalent(stri_cmp_lt(LETTERS, character(0), opts_collator=NA), logical(0))
-   expect_equivalent(stri_cmp_lt(character(0), LETTERS, opts_collator=NA), logical(0))
+   expect_equivalent(stri_cmp_equiv(LETTERS, LETTERS),  rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_nequiv(LETTERS, LETTERS), rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_equiv(LETTERS, letters),  rep(FALSE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_nequiv(LETTERS, letters), rep(TRUE,  length(LETTERS)))
+   expect_equivalent(stri_cmp_equiv(c(NA, 'a', 'b'), 'a'), c(NA, TRUE, FALSE))
+   expect_equivalent(stri_cmp_nequiv(c(NA, 'a', 'b'), 'a'), !c(NA, TRUE, FALSE))
 
-   expect_equivalent(stri_cmp_lt(LETTERS, LETTERS, opts_collator=NA), rep(FALSE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_le(LETTERS, LETTERS, opts_collator=NA), rep(TRUE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_le(LETTERS, letters, opts_collator=NA), rep(TRUE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_gt(LETTERS, letters, opts_collator=NA), rep(FALSE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_le(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA, TRUE, FALSE))
-   expect_equivalent(stri_cmp_le("dupa", "pupa", opts_collator=NA), TRUE)
-   expect_equivalent(stri_cmp_lt("dupa", "pupa", opts_collator=NA), TRUE)
-   expect_equivalent(stri_cmp_ge("dupa", "pupa", opts_collator=NA), FALSE)
-   expect_equivalent(stri_cmp_gt("dupa", "pupa", opts_collator=NA), FALSE)
+   expect_equivalent(stri_cmp_equiv("dupa100", "dupa2"), FALSE)
+   expect_equivalent(stri_cmp_equiv("dupa100", "dupa1000"), FALSE)
+   expect_equivalent(stri_cmp_equiv("dupa10000", "dupa1000"), FALSE)
+   expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned"), FALSE)
+   expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned",
+      stri_opts_collator(alternate_shifted=TRUE)), TRUE)
+
+   expect_equivalent(stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105'), TRUE)
+
 })
+
 
 
 test_that("stri_cmp_eq", {
@@ -79,57 +105,11 @@ test_that("stri_cmp_eq", {
    expect_equivalent(stri_cmp_eq("dupa100", "dupa1000"), FALSE)
    expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000"), FALSE)
    expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned"), FALSE)
-   expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned",
-      stri_opts_collator(alternate_shifted=TRUE)), TRUE)
 
-   expect_equivalent(stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105'), TRUE)
+   expect_equivalent(stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105'), FALSE)
 
 })
 
-
-
-test_that("stri_cmp_eq_bytewise", {
-
-   expect_equivalent(stri_cmp_eq(character(0), character(0), opts_collator=NA), logical(0))
-   expect_equivalent(stri_cmp_eq(LETTERS, character(0), opts_collator=NA), logical(0))
-   expect_equivalent(stri_cmp_eq(character(0), LETTERS, opts_collator=NA), logical(0))
-
-   expect_equivalent(stri_cmp_eq(LETTERS, LETTERS, opts_collator=NA),  rep(TRUE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_neq(LETTERS, LETTERS, opts_collator=NA), rep(FALSE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_eq(LETTERS, letters, opts_collator=NA),  rep(FALSE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_neq(LETTERS, letters, opts_collator=NA), rep(TRUE,  length(LETTERS)))
-   expect_equivalent(stri_cmp_eq(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA, TRUE, FALSE))
-   expect_equivalent(stri_cmp_neq(c(NA, 'a', 'b'), 'a', opts_collator=NA), !c(NA, TRUE, FALSE))
-
-   expect_equivalent(stri_cmp_eq("dupa100", "dupa2", opts_collator=NA), FALSE)
-   expect_equivalent(stri_cmp_eq("dupa100", "dupa1000", opts_collator=NA), FALSE)
-   expect_equivalent(stri_cmp_eq("dupa10000", "dupa1000", opts_collator=NA), FALSE)
-   expect_equivalent(stri_cmp_eq("above mentioned", "above-mentioned", opts_collator=NA), FALSE)
-
-   expect_equivalent(stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105', opts_collator=NA), FALSE)
-
-})
-
-
-test_that("stri_cmp_codepoints", {
-
-   expect_equivalent(stri_cmp(character(0), character(0), opts_collator=NA), integer(0))
-   expect_equivalent(stri_cmp(LETTERS, character(0), opts_collator=NA), integer(0))
-   expect_equivalent(stri_cmp(character(0), LETTERS, opts_collator=NA), integer(0))
-
-   expect_equivalent(stri_cmp(LETTERS, LETTERS, opts_collator=NA), rep(0L,  length(LETTERS)))
-   expect_equivalent(stri_cmp(letters, LETTERS, opts_collator=NA), rep(+1L, length(LETTERS)))
-   expect_equivalent(stri_cmp(LETTERS, letters, opts_collator=NA), rep(-1L, length(LETTERS)))
-   expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a', opts_collator=NA), c(NA_integer_, 0L, 1L))
-
-   expect_equivalent(stri_cmp("dupa100", "dupa2", opts_collator=NA), -1)
-   expect_equivalent(stri_cmp("dupa100", "dupa1000", opts_collator=NA), -1)
-   expect_equivalent(stri_cmp("dupa10000", "dupa1000", opts_collator=NA), 1)
-
-
-   expect_equivalent(stri_cmp(stri_trans_nfkd('\u0105'), '\u105', opts_collator=NA), -1L)
-
-})
 
 
 
@@ -156,17 +136,17 @@ test_that("stri_order", {
 })
 
 
-test_that("stri_order [codepoints]", {
-
-   expect_equivalent(stri_order(character(0), opts_collator=NA), integer(0))
-   expect_equivalent(stri_order(LETTERS, opts_collator=NA), 1:length(LETTERS))
-   expect_equivalent(stri_order(rev(LETTERS), opts_collator=NA), length(LETTERS):1)
-   expect_equivalent(stri_order(c('c', 'a', 'b'), opts_collator=NA), order(c('c', 'a', 'b')))
-   expect_equivalent(stri_order(LETTERS, decreasing=TRUE, opts_collator=NA), length(LETTERS):1)
-
-
-   expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA), opts_collator=NA), c(3, 5, 1, 2, 4, 6))
-})
+# test_that("stri_order [codepoints]", {
+# 
+#    expect_equivalent(stri_order(character(0), opts_collator=NA), integer(0))
+#    expect_equivalent(stri_order(LETTERS, opts_collator=NA), 1:length(LETTERS))
+#    expect_equivalent(stri_order(rev(LETTERS), opts_collator=NA), length(LETTERS):1)
+#    expect_equivalent(stri_order(c('c', 'a', 'b'), opts_collator=NA), order(c('c', 'a', 'b')))
+#    expect_equivalent(stri_order(LETTERS, decreasing=TRUE, opts_collator=NA), length(LETTERS):1)
+# 
+# 
+#    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA), opts_collator=NA), c(3, 5, 1, 2, 4, 6))
+# })
 
 test_that("stri_sort", {
 
@@ -210,8 +190,7 @@ test_that("stri_duplicated", {
    expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105"))), c(F,T))
    expect_equivalent(stri_duplicated(c("abc","ab","abc","ab","aba")),c(F,F,T,T,F))
    expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
-   										opts_collator=list(locale="pl_PL")),
-   						c(F,F,F,F,F,T))
+      opts_collator=list(locale="pl_PL")), c(F,F,F,F,F,T))
 
    expect_equivalent(stri_duplicated(character(0),TRUE), logical(0))
    expect_equivalent(stri_duplicated(NA,TRUE),FALSE)
@@ -222,7 +201,7 @@ test_that("stri_duplicated", {
    expect_equivalent(stri_duplicated(c("\u0105", stri_trans_nfd("\u0105")),TRUE), c(T,F))
    expect_equivalent(stri_duplicated(c("abc","ab","abc","ab","aba"),TRUE),c(T,T,F,F,F))
    expect_equivalent(stri_duplicated(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),TRUE,
-   											 opts_collator=list(locale="pl_PL")), c(F,F,T,F,F,F))
+      opts_collator=list(locale="pl_PL")), c(F,F,T,F,F,F))
 })
 
 
@@ -237,7 +216,7 @@ test_that("stri_duplicated_any", {
    expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105"))), 2)
    expect_equivalent(stri_duplicated_any(c("abc","ab","abc","ab","aba")),3)
    expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),
-   												  opts_collator=list(locale="pl_PL")), 6)
+      opts_collator=list(locale="pl_PL")), 6)
 
    expect_equivalent(stri_duplicated_any(character(0),TRUE), 0)
    expect_equivalent(stri_duplicated_any(NA,TRUE),0)
@@ -248,5 +227,5 @@ test_that("stri_duplicated_any", {
    expect_equivalent(stri_duplicated_any(c("\u0105", stri_trans_nfd("\u0105")),TRUE), 1)
    expect_equivalent(stri_duplicated_any(c("abc","ab","abc","ab","aba"),TRUE),2)
    expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),TRUE,
-   												  opts_collator=list(locale="pl_PL")), 3)
+      opts_collator=list(locale="pl_PL")), 3)
 })

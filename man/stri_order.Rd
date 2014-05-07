@@ -22,8 +22,7 @@ if \code{NA}, then they are removed from the output.}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options, or \code{NA} for locale-independent
-Unicode code point comparison}
+for default collation options}
 }
 \value{
 For \code{stri_order}, an integer vector that gives the sort order
@@ -34,9 +33,8 @@ i.e. a character vector.
 }
 \description{
 \link{stri_order} determines a permutation which rearranges
-strings into ascending
-or descending order. \link{stri_sort} sorts the vector
-according to a lexicographic order.
+strings into ascending or descending order.
+\link{stri_sort} sorts the vector according to a lexicographic order.
 }
 \details{
 For more information on \pkg{ICU}'s Collator and how to tune it up
@@ -56,16 +54,20 @@ stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK
 }
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
