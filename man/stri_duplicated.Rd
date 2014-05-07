@@ -17,8 +17,7 @@ reverse side}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options, or \code{NA} for locale-independent
-Unicode code point comparison}
+for default collation options}
 }
 \value{
 \code{stri_duplicated()} returns a logical vector of the same length
@@ -38,18 +37,25 @@ strings in a character vector.
 }
 \details{
 Missing values are regarded as equal.
+
+These functions test for canonical equivalence of strings.
+Such an operation is locale-dependent.
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
@@ -79,16 +85,20 @@ Other locale_sensitive: \code{\link{\%!=\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-fixed}}
 
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};

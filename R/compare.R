@@ -34,54 +34,65 @@
 #'
 #' @description
 #' These functions  may be used to determine if two strings
-#' are equal (this is performed in a way more clever fashion
-#' than you may expect at a first glance) or to check whether they appear in
+#' are equal, canonically equivalent (this is performed in a way more clever
+#' fashion than when testing for equality),
+#' or to check whether they appear in
 #' a specific lexicographic order.
 #'
 #'
 #' @details
-#' \code{stri_compare} is an alias to \code{stri_cmp}. They both
-#' perform exactly the same operation.
-#' Both functions provide give the same output
-#' as the \code{strcmp()} function in the C programming language
-#' standard library, see Value for details.
-#'
-#' \code{stri_cmp_eq} tests for equality of elements,
-#' and \code{stri_cmp_neq} for inequality.
+#' All the functions are vectorized over \code{e1} and \code{e2}.
+#' 
+#' \code{stri_cmp_eq} tests whether two corresponding strings
+#' consist of exactly the same code points, while \code{stri_cmp_neq} allow
+#' to check whether there is any difference between them.
+#' These are locale-independent operations: for
+#' natural language text processing, in which the notion of canonical equivalence
+#' is more valid, this may not be exactly what
+#' you are looking for, see Examples.
+#' Also note that \pkg{stringi} always silently removes UTF-8
+#' BOMs from input strings,
+#' so e.g. \code{stri_cmp_eq} does not take BOMs into account while
+#' comparing strings.
+#' 
+#' On the other hand, \code{stri_cmp_equiv} test for
+#' canonical equivalence of two strings and is locale-dependent.
+#' Additionally, the \pkg{ICU}'s Collator may be tuned up so that
+#' e.g. the comparison is case-insensitive.
+#' To test whether two strings are not canonically equivalent,
+#' call \code{stri_cmp_nequiv}.
+#' 
 #' What is more,  \code{stri_cmp_le} tests whether
 #' the elements in the first vector are less than or equal to
 #' the corresponding elements in the second vector,
 #' \code{stri_cmp_ge} whether they are greater or equal,
 #' \code{stri_cmp_lt} if less,
 #' and \code{stri_cmp_gt} if greater,
-#' see also \code{\link{\%<\%}}.
+#' see also e.g. \code{\link{\%<\%}}.
+#' 
+#' Finally, \code{stri_compare} is an alias to \code{stri_cmp}. They both
+#' perform exactly the same locale-dependent operation.
+#' Both functions provide a C library's \code{strcmp()} look-and-feel,
+#' see Value for details.
 #'
-#' All the functions are vectorized over \code{e1} and \code{e2}.
 #'
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #' Please note that different locale settings may lead to different results
-#' (see the examples below). If \code{opts_collator}
-#' is not \code{NA} (the default), then the string comparison
-#' is locale-sensitive.
+#' (see the examples below).
 #'
-#' Note that \pkg{stringi} silently removes UTF-8 BOMs from input strings,
-#' so \code{opts_collator=NA} does not take BOMs into account while
-#' comparing strings.
 #'
-#' @param e1 character vector
-#' @param e2 character vector
+#' @param e1,e2 character vectors or objects coercible to character vectors
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options, or \code{NA} for locale-independent
-#' Unicode code point comparison
+#' for default collation options.
 #'
 #' @return The \code{stri_cmp} and \code{stri_compare} functions
 #' return an integer vector
 #' with comparison results of corresponding
 #' pairs of elements in \code{e1} and \code{e2}:
 #' \code{-1} if \code{e1[...] < e2[...]},
-#' \code{0} if they are equal, and \code{1} if greater.
+#' \code{0} if they are canonically equivalent, and \code{1} if greater.
 #'
 #' The other functions return a logical vector that indicates
 #' whether a given relation holds between two corresponding elements
@@ -97,12 +108,14 @@
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 #' stri_cmp("hladny", "chladny") # < or > (depends on locale)
-#' stri_cmp_eq("hladny", "HLADNY", stri_opts_collator(strength=2))
-#' stri_cmp_eq("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105') # but cf. stri_trans_nfkd('\u0105') != '\u105'
+#' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
+#' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
+#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105') # note the difference
+#' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
 #' }
 stri_compare <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp", e1, e2, opts_collator, PACKAGE="stringi")
+   .Call("stri_cmp_integer", e1, e2, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -113,14 +126,28 @@ stri_cmp <- stri_compare
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_eq <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_eq <- function(e1, e2) {
+   .Call("stri_cmp_codepoints", e1, e2, 0L, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_neq <- function(e1, e2) {
+   .Call("stri_cmp_codepoints", e1, e2, 1L, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_equiv <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 0L), PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_neq <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_nequiv <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 1L), PACKAGE="stringi")
 }
 
@@ -152,19 +179,24 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 
 
 #' @title
-#' Compare Two Character Vectors with Collation
+#' Compare Strings with or without Collation
 #'
 #' @description
-#' Relational operators for comparing two character vectors,
-#' with a typical \R look-and-feel.
+#' Relational operators for comparing corresponding strings in
+#' two character vectors, with a typical \R look-and-feel.
 #'
 #' @details
 #' These functions call \code{\link{stri_cmp_le}} or its
 #' friends, using default collator options.
+#' Thus, they are vectorized over \code{e1} and \code{e2}.
+#' 
+#' \code{\%stri==\%} tests for canonical equivalence of strings
+#' (see \code{\link{stri_cmp_equiv}}) and is a locale-dependent operation.
+#' On the other hand, \code{\%stri===\%} performs a locale-independent,
+#' code point-based comparison.
 #'
 #'
-#' @param e1 character vector or an object coercible to a character vector
-#' @param e2 character vector or an object coercible to a character vector
+#' @param e1,e2 character vectors or objects coercible to character vectors
 #'
 #' @return All the functions return a logical vector
 #' indicating the result of the element-by-element comparison.
@@ -220,7 +252,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%==%" <- function(e1, e2) {
-   stri_cmp_eq(e1, e2)
+   stri_cmp_equiv(e1, e2)
 }
 
 
@@ -229,6 +261,24 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%!=%" <- function(e1, e2) {
+   stri_cmp_nequiv(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%===\% e2
+#' @rdname oper_comparison
+#' @export
+"%===%" <- function(e1, e2) {
+   stri_cmp_eq(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%!==\% e2
+#' @rdname oper_comparison
+#' @export
+"%!==%" <- function(e1, e2) {
    stri_cmp_neq(e1, e2)
 }
 
@@ -274,7 +324,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri==%" <- function(e1, e2) {
-   stri_cmp_eq(e1, e2)
+   stri_cmp_equiv(e1, e2)
 }
 
 
@@ -283,6 +333,24 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri!=%" <- function(e1, e2) {
+   stri_cmp_nequiv(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%stri===\% e2
+#' @rdname oper_comparison
+#' @export
+"%stri===%" <- function(e1, e2) {
+   stri_cmp_eq(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%stri!==\% e2
+#' @rdname oper_comparison
+#' @export
+"%stri!==%" <- function(e1, e2) {
    stri_cmp_neq(e1, e2)
 }
 
@@ -293,9 +361,8 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'
 #' @description
 #' \link{stri_order} determines a permutation which rearranges
-#' strings into ascending
-#' or descending order. \link{stri_sort} sorts the vector
-#' according to a lexicographic order.
+#' strings into ascending or descending order.
+#' \link{stri_sort} sorts the vector according to a lexicographic order.
 #'
 #'
 #' @details
@@ -319,8 +386,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'    if \code{NA}, then they are removed from the output.
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options, or \code{NA} for locale-independent
-#' Unicode code point comparison
+#' for default collation options
 #'
 #' @return For \code{stri_order}, an integer vector that gives the sort order
 #' is returned.
@@ -357,15 +423,14 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #'
 #' @details
 #' As usual in \pkg{stringi}, no attributes are copied.
-#' Unlike \code{\link{unique}}, this function may (if \code{opts_collator}
-#' is not \code{NA}) detect
-#' a correct locale-dependent string equivalence.
+#' Unlike \code{\link{unique}}, this function
+#' tests for canonical equivalence of strings. Such an operation
+#' is locale-dependent.
 #'
 #' @param str character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options, or \code{NA} for locale-independent
-#' Unicode code point comparison
+#' for default collation options
 #'
 #' @return Returns a character vector.
 #'
@@ -393,6 +458,9 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #'
 #' @details
 #' Missing values are regarded as equal.
+#' 
+#' These functions test for canonical equivalence of strings.
+#' Such an operation is locale-dependent.
 #'
 #' @param str character vector
 #' @param fromLast single logical value;
@@ -400,8 +468,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #'    reverse side
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options, or \code{NA} for locale-independent
-#' Unicode code point comparison
+#' for default collation options
 #'
 #' @return
 #' \code{stri_duplicated()} returns a logical vector of the same length

@@ -34,7 +34,7 @@
 #'
 #' @description
 #' In this section we explain how we deal with locales in \pkg{stringi}.
-#' Locale is a fundamental concept in ICU.
+#' Locale is a fundamental concept in \pkg{ICU}.
 #' It identifies a specific user community, i.e. a group of users
 #' who have similar culture and language expectations
 #' for human-computer interaction.
@@ -87,7 +87,7 @@
 #'
 #' Sometimes it is suggested that your program should avoid changing the default locale:
 #' it is not a good way to request an international object, especially
-#' only for a single function call..
+#' only for a single function call.
 #' All locale-sensitive functions may request
 #' any desired locale per-call (by specifying the \code{locale} argument),
 #' i.e. without referencing to the default locale.

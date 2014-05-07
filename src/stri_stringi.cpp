@@ -50,7 +50,8 @@ static const R_CallMethodDef cCallMethods[] = {
 
 //   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>=0.2
 //   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>=0.2
-   STRI__MAKE_CALL_METHOD(stri_cmp,                        3),
+   STRI__MAKE_CALL_METHOD(stri_cmp_codepoints,             3),
+   STRI__MAKE_CALL_METHOD(stri_cmp_integer,                3),
    STRI__MAKE_CALL_METHOD(stri_cmp_logical,                4),
    STRI__MAKE_CALL_METHOD(stri_count_charclass,            2),
    STRI__MAKE_CALL_METHOD(stri_count_fixed,                3),

@@ -10,8 +10,7 @@ stri_unique(str, opts_collator = NULL)
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options, or \code{NA} for locale-independent
-Unicode code point comparison}
+for default collation options}
 }
 \value{
 Returns a character vector.
@@ -22,9 +21,9 @@ but with duplicate elements removed.
 }
 \details{
 As usual in \pkg{stringi}, no attributes are copied.
-Unlike \code{\link{unique}}, this function may (if \code{opts_collator}
-is not \code{NA}) detect
-a correct locale-dependent string equivalence.
+Unlike \code{\link{unique}}, this function
+tests for canonical equivalence of strings. Such an operation
+is locale-dependent.
 }
 \examples{
 \dontrun{
@@ -32,16 +31,20 @@ stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
 }
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};

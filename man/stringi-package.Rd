@@ -4,10 +4,10 @@
 \alias{stringi-package}
 \title{THE String Processing Package}
 \description{
-\pkg{stringi} is THE \R package for very fast, correct, consistent,
+\pkg{stringi} is THE \R package for fast, correct, consistent,
 and convenient string/text manipulation in each locale and any
 character encoding. We are putting great effort to create software that
-works as you expect on any platform, in each locale, and any
+gives predictable results on any platform, in each locale, and any
 ``native'' system encoding.
 
 \bold{Keywords}: R, text processing, strings, internationalization,
@@ -86,7 +86,7 @@ text transforms, including transliteration.
 
 \item \code{\link{stri_cmp}}, \code{\link{\%<\%}}, \code{\link{stri_order}},
 \code{\link{stri_sort}}, \code{\link{stri_unique}} and
-\code{\link{stri_duplicated}} for comparison-based,
+\code{\link{stri_duplicated}} for collation-based,
 locale-aware operations, see also \link{stringi-locale}.
 
 \item \code{\link{stri_split_lines}} (among others)

@@ -4,6 +4,14 @@
 
 * 0.2-3 (2014-??-??) **???**
 
+   * [IMPORTANT CHANGE] stri_cmp* now do not allow for passing opts_collator=NA.
+     From now on, stri_cmp_eq, stri_cmp_neq, and the new operators
+     %===%, %!==%, %stri===%, and %stri!==% are locale-independent operations,
+     which base on code point comparisons. New functions stri_cmp_equiv
+     and stri_cmp_nequiv (and from now on also %==%, %!=%, %stri==%,
+     and %stri!=%) test for canonical equivalence.
+     
+
    * t.b.d.
 
 

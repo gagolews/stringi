@@ -44,16 +44,20 @@ stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
 }
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!=\%}},
-  \code{\link{\%<=\%}}, \code{\link{\%<\%}},
+Other locale_sensitive: \code{\link{\%!==\%}},
+  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
+  \code{\link{\%<\%}}, \code{\link{\%===\%}},
   \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!=\%}},
-  \code{\link{\%stri<=\%}}, \code{\link{\%stri<\%}},
+  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+  \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
+  \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
   \code{\link{\%stri>\%}}; \code{\link{stri_cmp}},
-  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_ge}},
-  \code{\link{stri_cmp_gt}}, \code{\link{stri_cmp_le}},
-  \code{\link{stri_cmp_lt}}, \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_eq}}, \code{\link{stri_cmp_equiv}},
+  \code{\link{stri_cmp_ge}}, \code{\link{stri_cmp_gt}},
+  \code{\link{stri_cmp_le}}, \code{\link{stri_cmp_lt}},
+  \code{\link{stri_cmp_neq}},
+  \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_duplicated}},

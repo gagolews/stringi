@@ -40,70 +40,118 @@
 #include <set>
 
 
-/** Compare 2 strings in UTF8, codepoint-wise [internal]
- *
- * Used by stri_order_codepoints and stri_cmp_codepoints
- *
- * @param str1 string in UTF8
- * @param str2 string in UTF8
- * @param n1 length of str1
- * @param n2 length of str2
- * @return -1, 0, or 1, like in strcmp
- *
- * @version 0.1-?? (Marek Gagolewski)
- *
- * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
- *          BUGFIX: possibly incorrect results for strings of inequal number
- *                  of codepoints
- *
- * @version 0.2-1 (Marek Gagolewski, 2014-04-02)
- *          detect invalid UTF-8 byte stream
- */
-int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2)
-{
-   // @NOTE: strangely, this is being outperformed by ucol_strcollUTF8
-   //        in some UTF-8 benchmarks...
-   int i1 = 0;
-   int i2 = 0;
-   UChar32 c1 = 0;
-   UChar32 c2 = 0;
-   while (c1 == c2 && i1 < n1 && i2 < n2) {
-      U8_NEXT(str1, i1, n1, c1);
-      U8_NEXT(str2, i2, n2, c2);
-      if (c1 < 0 || c2 < 0)
-         throw StriException(MSG__INVALID_UTF8);
-   }
+// !!!! no longer used since stringi_0.2-3 !!!!
+///** Compare 2 strings in UTF8, codepoint-wise [internal]
+// *
+// * Used by stri_order_codepoints and stri_cmp_codepoints
+// *
+// * @param str1 string in UTF8
+// * @param str2 string in UTF8
+// * @param n1 length of str1
+// * @param n2 length of str2
+// * @return -1, 0, or 1, like in strcmp
+// *
+// * @version 0.1-?? (Marek Gagolewski)
+// *
+// * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
+// *          BUGFIX: possibly incorrect results for strings of inequal number
+// *                  of codepoints
+// *
+// * @version 0.2-1 (Marek Gagolewski, 2014-04-02)
+// *          detect invalid UTF-8 byte stream
+// */
+//int stri__cmp_codepoints(const char* str1, R_len_t n1, const char* str2, R_len_t n2)
+//{
+//   // @NOTE: strangely, this is being outperformed by ucol_strcollUTF8
+//   //        in some UTF-8 benchmarks...
+//   int i1 = 0;
+//   int i2 = 0;
+//   UChar32 c1 = 0;
+//   UChar32 c2 = 0;
+//   while (c1 == c2 && i1 < n1 && i2 < n2) {
+//      U8_NEXT(str1, i1, n1, c1);
+//      U8_NEXT(str2, i2, n2, c2);
+//      if (c1 < 0 || c2 < 0)
+//         throw StriException(MSG__INVALID_UTF8);
+//   }
+//
+//   if (c1 < c2)
+//      return -1;
+//   else if (c1 > c2)
+//      return 1;
+//
+//   // reached here => first i1==i2 codepoints are the same
+//   if (i1 < n1)      return  1;
+//   else if (i2 < n2) return -1;
+//   else              return  0;
+//}
 
-   if (c1 < c2)
-      return -1;
-   else if (c1 > c2)
-      return 1;
 
-   // reached here => first i1==i2 codepoints are the same
-   if (i1 < n1)      return  1;
-   else if (i2 < n2) return -1;
-   else              return  0;
-}
+
+/* *************************************************************************
+                                  STRI_CMP_CODEPOINTS
+   ************************************************************************* */
 
 
 /**
- * Check for equality of 2 character strings, byte-wise [internal]
+ * Compare elements in 2 character vectors, without collation
  *
  * @param e1 character vector
  * @param e2 character vector
+ * @param type [internal] integer; 0 or 1 (whether to negate the results)
  *
  * @return logical vector
  *
- * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
- *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  */
-int stri__cmp_eq_codepoints(const char* cur1_s, R_len_t cur1_n, const char* cur2_s, R_len_t cur2_n)
+SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
 {
-   if (cur1_n != cur2_n) // different number of bytes => not equal
-      return FALSE;
+   // type is an internal arg, check manually, error() allowed here
+   if (!Rf_isInteger(type) || LENGTH(type) != 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+   int _negate = INTEGER(type)[0];
+   if (_negate < 0 || _negate > 1)
+      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   // some memcmp implementations are very fast:
-   return (memcmp(cur1_s, cur2_s, cur1_n) == 0);
+   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
+   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+
+   STRI__ERROR_HANDLER_BEGIN
+
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+
+   StriContainerUTF8 e1_cont(e1, vectorize_length);
+   StriContainerUTF8 e2_cont(e2, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
+
+   for (R_len_t i = 0; i < vectorize_length; ++i)
+   {
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
+      }
+
+      R_len_t     cur1_n = e1_cont.get(i).length();
+      const char* cur1_s = e1_cont.get(i).c_str();
+      R_len_t     cur2_n = e2_cont.get(i).length();
+      const char* cur2_s = e2_cont.get(i).c_str();
+      
+      if (cur1_n != cur2_n) // different number of bytes => not equal
+         ret_tab[i] = FALSE;
+      else
+         ret_tab[i] = (memcmp(cur1_s, cur2_s, cur1_n) == 0);
+
+      if (_negate)
+         ret_tab[i] = !ret_tab[i];
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({/* no-op on err */})
 }
 
 
@@ -113,8 +161,7 @@ int stri__cmp_eq_codepoints(const char* cur1_s, R_len_t cur1_n, const char* cur2
 
 
 /**
- * Compare elements in 2 character vectors,
- * possibly with collation
+ * Compare elements in 2 character vectors, with collation
  *
  * @param e1 character vector
  * @param e2 character vector
@@ -126,11 +173,14 @@ int stri__cmp_eq_codepoints(const char* cur1_s, R_len_t cur1_n, const char* cur2
  * @return logical vector
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-19)
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
 {
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
    // we'll perform a collator-based cmp
    // type is an internal arg, check manually, error() allowed here
@@ -167,22 +217,13 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
       R_len_t     cur2_n = e2_cont.get(i).length();
       const char* cur2_s = e2_cont.get(i).c_str();
 
-      if (col) {
-         // with collation
-         UErrorCode status = U_ZERO_ERROR;
-         ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
-            cur1_s, cur1_n, cur2_s, cur2_n, &status
-         ));
-         if (U_FAILURE(status))
-            throw StriException(status);
-      }
-      else {
-         // codepoint-based cmp
-         if (_type == 0) // eq/neq: very fast
-            ret_tab[i] = stri__cmp_eq_codepoints(cur1_s, cur1_n, cur2_s, cur2_n);
-         else
-            ret_tab[i] = (_type == stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n));
-      }
+      // with collation
+      UErrorCode status = U_ZERO_ERROR;
+      ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
+         cur1_s, cur1_n, cur2_s, cur2_n, &status
+      ));
+      if (U_FAILURE(status))
+         throw StriException(status);
 
       if (_negate)
          ret_tab[i] = !ret_tab[i];
@@ -228,11 +269,14 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          one function for cmp with and without collation
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
-SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
+SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP collator_opts)
 {
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
    e1 = stri_prepare_arg_string(e1, "e1");
    e2 = stri_prepare_arg_string(e2, "e2");
@@ -261,24 +305,13 @@ SEXP stri_cmp(SEXP e1, SEXP e2, SEXP collator_opts)
       R_len_t     cur2_n = e2_cont.get(i).length();
       const char* cur2_s = e2_cont.get(i).c_str();
 
-      if (col) {
-         // cmp with collation
-         UErrorCode status = U_ZERO_ERROR;
-         ret_int[i] = (int)ucol_strcollUTF8(col,
-            cur1_s, cur1_n, cur2_s, cur2_n, &status
-         );
-         if (U_FAILURE(status))
-            throw StriException(status);
-      }
-      else {
-         // codepoint-wise cmp
-         ret_int[i] = stri__cmp_codepoints(cur1_s, cur1_n, cur2_s, cur2_n);
-
-         // possible slowdown due to the fact that whole vectors are possibly
-         // re-encoded, and the comparison result may be determined by
-         // comparing e.g. the first codepoint
-         // ?? TO DO: try with ucnv_getNextUChar ??
-      }
+      // cmp with collation
+      UErrorCode status = U_ZERO_ERROR;
+      ret_int[i] = (int)ucol_strcollUTF8(col,
+         cur1_s, cur1_n, cur2_s, cur2_n, &status
+      );
+      if (U_FAILURE(status))
+         throw StriException(status);
    }
 
    if (col) {
@@ -310,7 +343,7 @@ struct StriSortComparer {
 
    bool operator() (int a, int b) const
    {
-      if (col) {
+//      if (col) {
          UErrorCode status = U_ZERO_ERROR;
          int ret = (int)ucol_strcollUTF8(col,
             cont->get(a).c_str(), cont->get(a).length(),
@@ -318,14 +351,14 @@ struct StriSortComparer {
          if (U_FAILURE(status))
             throw StriException(status);
          return (decreasing)?(ret > 0):(ret < 0);
-      }
-      else {
-         int ret = stri__cmp_codepoints(
-            cont->get(a).c_str(), cont->get(a).length(),
-            cont->get(b).c_str(), cont->get(b).length()
-         );
-         return (decreasing)?(ret > 0):(ret < 0);
-      }
+//      }
+//      else {
+//         int ret = stri__cmp_codepoints(
+//            cont->get(a).c_str(), cont->get(a).length(),
+//            cont->get(b).c_str(), cont->get(b).length()
+//         );
+//         return (decreasing)?(ret > 0):(ret < 0);
+//      }
    }
 };
 
@@ -353,6 +386,9 @@ struct StriSortComparer {
  *          (UTF-8: gain, 8bit: loss);
  *          single function for cmp with and witout collation;
  *          new param: na_last
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
 SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    SEXP collator_opts, SEXP type)
@@ -369,7 +405,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
 
    STRI__ERROR_HANDLER_BEGIN
@@ -462,17 +498,19 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  * @return character vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- * 			first version of this function
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          using std::deque
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
 SEXP stri_unique(SEXP str, SEXP collator_opts)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
 
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -528,8 +566,9 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
  * @return logical vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- *          first version of this function
  *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
 {
@@ -537,7 +576,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -602,7 +641,9 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
  * @return integer vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- *          first version of this function
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ *          collator_opts == NA no longer allowed
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
 {
@@ -610,7 +651,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts);
+   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
