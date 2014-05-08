@@ -23,7 +23,6 @@ benchmark_do <- function() {
 
    benchmark2(
       stri_sort(xsort),
-      stri_sort(xsort, opts_collator=NA),
       sort(xsort),
       replications=100L
    )

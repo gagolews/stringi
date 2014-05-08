@@ -24,7 +24,6 @@ benchmark_do <- function() {
 
    benchmark2(
       stri_sort(xalmsrt),
-      stri_sort(xalmsrt, opts_collator=NA),
       sort(xalmsrt),
       replications=25L
    )

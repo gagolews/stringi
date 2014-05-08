@@ -19,7 +19,6 @@ benchmark_do <- function() {
 
    benchmark2(
       stri_unique(xrand),
-      stri_unique(xrand, opts_collator=NA),
       unique(xrand),
       replications=100L
    )
