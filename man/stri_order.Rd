@@ -90,7 +90,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_split_fixed}};
+  \code{\link{stri_split_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
   \code{\link{stri_trans_toupper}};

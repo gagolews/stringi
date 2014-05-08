@@ -12,7 +12,7 @@ benchmark_do <- function() {
       stri_detect_regex(str, olap),
       stri_detect_regex(str, olap, list(literal=TRUE)),
       stri_detect_fixed(str, olap),
-      stri_detect_fixed(str, olap, NA),
+      stri_detect_coll(str, olap),
       grepl(olap, str),
       grepl(olap, str, perl=TRUE),
       grepl(olap, str, fixed=TRUE)

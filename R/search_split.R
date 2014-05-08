@@ -94,7 +94,7 @@ stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #'
 #' Note that if you want to split a string by characters from a
 #' specific class (e.g. whitespaces), \code{\link{stri_split_charclass}}
-#' will be much faster.
+#' will be a little bit faster.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern pattern character; regular expressions
@@ -127,7 +127,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' Split up a String By Fixed Pattern Matches
 #'
 #' @description
-#' Splits each element of \code{str} into substring.
+#' Splits each element of \code{str} into substrings.
 #' \code{pattern} indicates delimiters that separate
 #' the input into fields. The input data between the matches become
 #' the fields themselves.
@@ -140,18 +140,14 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
-#'
-#' Pass \code{opts_collator} that is equal to \code{NA} for a much faster, but
-#' locale unaware, (exact) bitwise string comparisons. For natural language text,
-#' however, this may not be  what you really want.
+#' For natural language processing this function may be not give
+#' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern character vector with fixed patterns
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return Returns a list of character vectors.
 #'
@@ -162,14 +158,53 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_reg
 #' }
 #'
 #' @export
-#' @rdname stri_split_fixed
-#' @aliases stri_split_fixed
 #' @family search_fixed
 #' @family search_split
-#' @family locale_sensitive
-stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=list()) {
+stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_fixed", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
+   .Call("stri_split_fixed", str, pattern, n_max, omit_empty, PACKAGE="stringi")
+}
+
+
+#' @title
+#' Split up a String By Canonically Equivalent Pattern Matches
+#'
+#' @description
+#' Splits each element of \code{str} into substrings.
+#' \code{pattern} indicates delimiters that separate
+#' the input into fields. The input data between the matches become
+#' the fields themselves. 
+#'
+#' @details
+#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
+#'
+#' If \code{n_max} is negative (default), then all pieces are extracted.
+#'
+#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' then empty strings will never appear in the resulting vector.
+#' 
+#' This is a locale-sensitive text operation.
+#' See \link{stringi-search-coll} for more details on
+#' locale-sensitive text searching in \pkg{stringi}.
+#'
+#' @param str character vector with strings to search in
+#' @param pattern character vector with fixed patterns
+#' @param n_max integer vector, maximal number of pieces to return
+#' @param omit_empty logical vector; determines whether empty
+#' strings should be removed from the result
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options.
+#'
+#' @return Returns a list of character vectors.
+#'
+#' @export
+#' @family search_coll
+#' @family search_split
+#' @family locale_sensitive
+stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=NULL) {
+   # omit_empty defaults to FALSE for compatibility with the stringr package
+   .Call("stri_split_coll", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -179,7 +214,8 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_split_regex}},
-#' \code{\link{stri_split_fixed}}, or \code{\link{stri_split_charclass}},
+#' \code{\link{stri_split_fixed}}, \code{\link{stri_split_coll}},
+#' or \code{\link{stri_split_charclass}},
 #' depending on the argument used.
 #'
 #' Unless you are a very lazy person, please call the underlying functions
@@ -190,6 +226,7 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns a list of character vectors.
@@ -197,15 +234,17 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_col
 #'
 #' @export
 #' @family search_split
-stri_split <- function(str, ..., regex, fixed, charclass) {
+stri_split <- function(str, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_split_regex(str, regex, ...)
    else if (!missing(fixed))
       stri_split_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_split_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_split_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }
 
 

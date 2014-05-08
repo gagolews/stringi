@@ -65,6 +65,7 @@ however.
 \seealso{
 Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_charclass}};
+  \code{\link{stri_split_coll}};
   \code{\link{stri_split_fixed}};
   \code{\link{stri_split_regex}}; \code{\link{stri_split}};
   \code{\link{stringi-search}}

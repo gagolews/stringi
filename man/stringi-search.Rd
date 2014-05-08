@@ -66,6 +66,7 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 
 Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_detect_coll}};
+  \code{\link{stri_split_coll}};
   \code{\link{stringi-search-coll}}
 
 Other search_count: \code{\link{stri_count_charclass}};
@@ -203,6 +204,7 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
 
 Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_charclass}};
+  \code{\link{stri_split_coll}};
   \code{\link{stri_split_fixed}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

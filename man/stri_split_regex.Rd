@@ -38,7 +38,7 @@ then empty strings will never appear in the resulting vector.
 
 Note that if you want to split a string by characters from a
 specific class (e.g. whitespaces), \code{\link{stri_split_charclass}}
-will be much faster.
+will be a little bit faster.
 }
 \examples{
 \dontrun{
@@ -75,6 +75,7 @@ Other search_regex: \code{\link{stri_count_regex}};
 
 Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_charclass}};
+  \code{\link{stri_split_coll}};
   \code{\link{stri_split_fixed}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

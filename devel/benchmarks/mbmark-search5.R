@@ -12,7 +12,7 @@ benchmark_do <- function() {
       stri_detect_regex(str, lastword),
       stri_detect_regex(str, lastword, list(literal=TRUE)),
       stri_detect_fixed(str, lastword),
-      stri_detect_fixed(str, lastword, NA),
+      stri_detect_coll(str, lastword),
       grepl(lastword, str),
       grepl(lastword, str, perl=TRUE),
       grepl(lastword, str, fixed=TRUE)

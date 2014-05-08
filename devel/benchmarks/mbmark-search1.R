@@ -17,8 +17,8 @@ benchmark_do <- function() {
    gc(reset=TRUE)
    microbenchmark2(
       stri_detect_regex(data, ',\\"stringi\\",'),
+      stri_detect_coll(data, ',\\"stringi\\",'),
       stri_detect_fixed(data, ',\\"stringi\\",'),
-      stri_detect_fixed(data, ',\\"stringi\\",', opts=NA),
       str_detect(data, ',\\"stringi\\",'),
       str_detect(data, perl(',\\"stringi\\",')),
       str_detect(data, fixed(',\\"stringi\\",')),
