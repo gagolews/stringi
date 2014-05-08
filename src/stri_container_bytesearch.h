@@ -38,6 +38,9 @@
 
 #define STRI__BYTESEARCH_DISABLE_KMP
 
+#ifndef USEARCH_DONE
+#define  USEARCH_DONE   -1
+#endif
 
 /**
  * A class to handle StriByteSearch patterns

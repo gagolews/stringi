@@ -5,12 +5,18 @@
 * 0.2-3 (2014-??-??) **???**
 
    * [IMPORTANT CHANGE] stri_cmp* now do not allow for passing opts_collator=NA.
-     From now on, stri_cmp_eq, stri_cmp_neq, and the new operators
-     %===%, %!==%, %stri===%, and %stri!==% are locale-independent operations,
-     which base on code point comparisons. New functions stri_cmp_equiv
-     and stri_cmp_nequiv (and from now on also %==%, %!=%, %stri==%,
-     and %stri!=%) test for canonical equivalence.
-     
+      From now on, stri_cmp_eq, stri_cmp_neq, and the new operators
+      %===%, %!==%, %stri===%, and %stri!==% are locale-independent operations,
+      which base on code point comparisons. New functions stri_cmp_equiv
+      and stri_cmp_nequiv (and from now on also %==%, %!=%, %stri==%,
+      and %stri!=%) test for canonical equivalence.
+
+   * [IMPORTANT CHANGE] stri_*_fixed search functions now perform
+      a locale-independent exact (bytewise, of course after conversion to UTF-8)
+      pattern search. All the Collator-based, locale-dependent search routines
+      are now available via stri_*_coll. The reason for this is that
+      ICU USearch has currently very poor performance and in many search tasks
+      in fact it is sufficient to do exact pattern matching.
 
    * t.b.d.
 
@@ -20,10 +26,11 @@
    * [IMPORTANT CHANGE] stri_enc_nf* and stri_enc_isnf* function families
       have been renamed to stri_trans_nf* and stri_trans_isnf*, respectively.
       This is because they deal with text transforming, and not with character
-      encoding.
+      encoding. Moreover, all such operation may be performed by
+      ICU's Transliterator (see below).
 
    * [NEW FUNCTION] stri_trans_general, stri_trans_list gives access
-      to ICU Transliterator: may be used to perform very general
+      to ICU's Transliterator: may be used to perform very general
       text transforms.
 
    * [NEW FUNCTION stri_split_boundaries utilizes ICU's BreakIterator

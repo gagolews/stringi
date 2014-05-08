@@ -32,62 +32,71 @@
 
 #include "stri_stringi.h"
 #include "stri_container_base.h"
-#include "stri_container_utf8.h"
-#include "stri_container_bytesearch.h"
+#include "stri_container_utf16.h"
+#include "stri_container_usearch.h"
 
 
 /**
- * Count the number of recurrences of \code{pattern} in \code{str}
- * [fast but dummy bitewise compare]
+ * Count pattern occurcess in a string [with collation]
  *
- * @param str strings to search in
- * @param pattern patterns to search for
+ * @param str character vector
+ * @param pattern character vector
+ * @param opts_collator passed to stri__ucol_open()
  * @return integer vector
  *
- * @version 0.1-?? (Bartek Tartanus)
- *
  * @version 0.1-?? (Marek Gagolewski)
- *          use StriContainerUTF8
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          corrected behavior on empty str/pattern
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          make StriException-friendly,
- *          use StriContainerByteSearch
+ *          use StriContainerUStringSearch
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
- *          stri_count_fixed now uses byte search only
+ *          new fun: stri_count_coll (opts_collator == NA not allowed)
  */
-SEXP stri_count_fixed(SEXP str, SEXP pattern)
+SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* collator = NULL;
+   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
    int* ret_tab = INTEGER(ret);
 
    for (R_len_t i = pattern_cont.vectorize_init();
-      i != pattern_cont.vectorize_end();
-      i = pattern_cont.vectorize_next(i))
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-      ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
+         ret_tab[i] = NA_INTEGER,
+         ret_tab[i] = 0)
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      usearch_reset(matcher);
+      UErrorCode status = U_ZERO_ERROR;
       R_len_t found = 0;
-      while (USEARCH_DONE != pattern_cont.findNext())
+      while (!U_FAILURE(status) && ((int)usearch_next(matcher, &status) != USEARCH_DONE))
          ++found;
+      if (U_FAILURE(status)) throw StriException(status);
       ret_tab[i] = found;
    }
 
+   if (collator) { ucol_close(collator); collator=NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
 }

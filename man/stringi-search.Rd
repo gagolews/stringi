@@ -7,18 +7,21 @@ This man page explains how to perform string search-based
 operations in \pkg{stringi}.
 }
 \details{
-There are three independent string searching ``engines'' in \pkg{stringi}.
+There are four independent string searching ``engines'' in \pkg{stringi}.
 \itemize{
    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
         see \link{stringi-search-regex},
-   \item \code{stri_*_fixed} -- \pkg{ICU}'s \code{StringSearch},
-       locale-sensitive ``fixed'' patterns search , see \link{stringi-search-fixed},
-   \item \code{stri_*_charclass} -- character classes search:
-   more exactly, location of either Unicode General Categories or Binary Properties,
+   \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
+   \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
+       locale-sensitive, Collator-based ``fixed'' patterns search,
+       useful for natural language processing tasks,
+       see \link{stringi-search-fixed},
+   \item \code{stri_*_charclass} -- character classes search,
+      e.g. Unicode General Categories or Binary Properties,
        see \link{stringi-search-charclass},
 }
 
-Each ``engine'' is able to perform many search-based operations:
+Each ``engine'' is able to perform many search-based operations, including:
 \itemize{
    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
    see e.g. \code{\link{stri_detect}},
@@ -61,7 +64,10 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_trim_right}};
   \code{\link{stringi-search-charclass}}
 
+Other search_coll: \code{\link{stringi-search-coll}}
+
 Other search_count: \code{\link{stri_count_charclass}};
+  \code{\link{stri_count_coll}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_count_regex}}; \code{\link{stri_count}}
 
@@ -92,7 +98,8 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_words}};
   \code{\link{stri_extract}}
 
-Other search_fixed: \code{\link{stri_count_fixed}};
+Other search_fixed: \code{\link{stri_count_coll}};
+  \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_extract_all_fixed}},
   \code{\link{stri_extract_all_fixed,}},
@@ -205,6 +212,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
   \code{\link{stringi-search-charclass}};
+  \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}}
 }

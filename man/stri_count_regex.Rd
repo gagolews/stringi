@@ -37,6 +37,7 @@ stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};
+  \code{\link{stri_count_coll}};
   \code{\link{stri_count_fixed}}; \code{\link{stri_count}};
   \code{\link{stringi-search}}
 

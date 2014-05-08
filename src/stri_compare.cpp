@@ -165,7 +165,7 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
  *
  * @param e1 character vector
  * @param e2 character vector
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  * @param type [internal] vector of length 2,
  * type[0]: 0 for ==, -1 for < and 1 for >,
  * type[1]: 0 or 1 (whether to negate the results)
@@ -175,13 +175,10 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
  * @version 0.2-1  (Marek Gagolewski, 2014-03-19)
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
-SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
+SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
 {
-   UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
-
    // we'll perform a collator-based cmp
    // type is an internal arg, check manually, error() allowed here
    if (!Rf_isInteger(type) || LENGTH(type) != 2)
@@ -194,6 +191,11 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
    e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* col = NULL;
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   
    STRI__ERROR_HANDLER_BEGIN
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
@@ -251,7 +253,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
  *
  * @param e1 character vector
  * @param e2 character vector
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  *
  * @return integer vector, like strcmp in C
  *
@@ -271,15 +273,17 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type)
  *          one function for cmp with and without collation
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
-SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP collator_opts)
+SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
 {
-   UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
-
    e1 = stri_prepare_arg_string(e1, "e1");
    e2 = stri_prepare_arg_string(e2, "e2");
+   
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* col = NULL;
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -368,7 +372,7 @@ struct StriSortComparer {
  * @param str character vector
  * @param decreasing single logical value
  * @param na_last single logical value
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  * @param type internal, 1 for order, 2 for sort
  * @return integer vector (permutation)
  *
@@ -388,10 +392,10 @@ struct StriSortComparer {
  *          new param: na_last
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
 SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
-   SEXP collator_opts, SEXP type)
+   SEXP opts_collator, SEXP type)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
    na_last   = stri_prepare_arg_logical_1(na_last, "na_last");
@@ -404,8 +408,10 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    if (_type < 1 || _type > 2)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
 
 
    STRI__ERROR_HANDLER_BEGIN
@@ -494,7 +500,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
 /** Get unique elements from a character vector
  *
  * @param str character vector
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  * @return character vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
@@ -503,14 +509,16 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  *          using std::deque
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
-SEXP stri_unique(SEXP str, SEXP collator_opts)
+SEXP stri_unique(SEXP str, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -562,21 +570,23 @@ SEXP stri_unique(SEXP str, SEXP collator_opts)
  *
  * @param str character vector
  * @param fromLast logical value
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  * @return logical vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
-SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
+SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -637,21 +647,23 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts)
  *
  * @param str character vector
  * @param fromLast logical value
- * @param collator_opts passed to stri__ucol_open()
+ * @param opts_collator passed to stri__ucol_open()
  * @return integer vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- *          collator_opts == NA no longer allowed
+ *          opts_collator == NA no longer allowed
  */
-SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts)
+SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(collator_opts, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
 
    STRI__ERROR_HANDLER_BEGIN
 

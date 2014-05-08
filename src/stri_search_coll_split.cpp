@@ -31,8 +31,8 @@
 
 
 #include "stri_stringi.h"
-#include "stri_container_utf8.h"
-#include "stri_container_bytesearch.h"
+#include "stri_container_utf16.h"
+#include "stri_container_usearch.h"
 #include "stri_container_integer.h"
 #include "stri_container_logical.h"
 #include <deque>
@@ -41,7 +41,7 @@ using namespace std;
 
 
 /**
- * Split a string into parts [byte compare]
+ * Split a string into parts [with collation]
  *
  * The pattern matches identify delimiters that separate the input into fields.
  * The input data between the matches becomes the fields themselves.
@@ -50,30 +50,36 @@ using namespace std;
  * @param pattern character vector
  * @param n_max integer vector
  * @param omit_empty logical vector
+ * @param opts_collator passed to stri__ucol_open(),
+ * if \code{NA}, then \code{stri_detect_fixed_byte} is called
+ * @return list of character vectors
  *
  *
  * @version 0.1-?? (Bartek Tartanus)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-25)
- *          StriException friendly, use StriContainerUTF8
+ *          StriException friendly, use StriContainerUTF16
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
  * 
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
- *          stri_split_fixed now uses byte search only
+ *          new fun: stri_split_coll (opts_collator == NA not allowed)
  */
-SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
+SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
 
+   UCollator* collator = NULL;
+   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    StriContainerInteger   n_max_cont(n_max, vectorize_length);
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
 
@@ -88,6 +94,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
+
       int  n_max_cur        = n_max_cont.get(i);
       int  omit_empty_cur   = omit_empty_cont.get(i);
 
@@ -95,8 +102,9 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
          SET_VECTOR_ELT(ret, i, stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      usearch_reset(matcher);
+
 
       if (n_max_cur < 0)
          n_max_cur = INT_MAX;
@@ -105,14 +113,14 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          continue;
       }
 
-      pattern_cont.setupMatcher(i, str_cur_s, str_cur_n);
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
+      UErrorCode status = U_ZERO_ERROR;
 
-      for (k=1; k < n_max_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
-         R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
-         R_len_t s2 = (R_len_t)pattern_cont.getMatchedLength() + s1;
+      for (k=1; k < n_max_cur && USEARCH_DONE != usearch_next(matcher, &status) && !U_FAILURE(status); ) {
+         R_len_t s1 = (R_len_t)usearch_getMatchedStart(matcher);
+         R_len_t s2 = (R_len_t)usearch_getMatchedLength(matcher) + s1;
 
          if (omit_empty_cur && fields.back().first == s1)
             fields.back().first = s2; // don't start new field
@@ -122,25 +130,25 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
             ++k; // another field
          }
       }
-      fields.back().second = str_cur_n;
+      if (U_FAILURE(status)) throw StriException(status);
+      fields.back().second = str_cont.get(i).length();
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
-      SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
-
+      R_len_t noccurences = (R_len_t)fields.size();
+      StriContainerUTF16 out_cont(noccurences);
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
          pair<R_len_t, R_len_t> curoccur = *iter;
-         SET_STRING_ELT(ans, k,
-            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
+         out_cont.getWritable(k).setTo(str_cont.get(i), curoccur.first, curoccur.second-curoccur.first);
       }
-
-      SET_VECTOR_ELT(ret, i, ans);
-      STRI__UNPROTECT(1);
+      SET_VECTOR_ELT(ret, i, out_cont.toR());
    }
 
+   if (collator) { ucol_close(collator); collator=NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END(; /* nothing interesting on error */)
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
 }

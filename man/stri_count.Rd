@@ -3,7 +3,7 @@
 \alias{stri_count}
 \title{Count the Number of Pattern Matches in a String}
 \usage{
-stri_count(str, ..., regex, fixed, charclass)
+stri_count(str, ..., regex, fixed, coll, charclass)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -14,6 +14,8 @@ stri_count(str, ..., regex, fixed, charclass)
 
 \item{fixed}{character vector; fixed patterns}
 
+\item{coll}{character vector; canonically equivalent patterns}
+
 \item{charclass}{character vector; identifiers of character classes}
 }
 \value{
@@ -22,7 +24,8 @@ Returns an integer vector.
 \description{
 A convenience function.
 Calls either \code{\link{stri_count_regex}},
-\code{\link{stri_count_fixed}}, or \code{\link{stri_count_charclass}},
+\code{\link{stri_count_fixed}}, \code{\link{stri_count_coll}},
+or \code{\link{stri_count_charclass}},
 depending on the argument used.
 }
 \details{
@@ -38,6 +41,7 @@ stri_count(s, regex="[[:alpha:]]")
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};
+  \code{\link{stri_count_coll}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_count_regex}};
   \code{\link{stringi-search}}

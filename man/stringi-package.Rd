@@ -48,8 +48,10 @@ these include pattern searching, matching, string splitting, and so on.
 The following independent search engines are provided:
 \itemize{
 \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions;
-\item \link{stringi-search-fixed} -- Locale-aware or byte-exact fixed
-pattern searching;
+\item \link{stringi-search-fixed} -- fase, locale-independent, bytewise pattern
+   matching,
+\item \link{stringi-search-coll} -- locale-aware pattern matching
+   for natural languge processing tasks;
 \item \link{stringi-search-charclass} -- for finding elements of
 particular character classes, like ``all whitespaces'' or ``all digits''.
 \item Moreover, \code{\link{stri_split_boundaries}} and
@@ -140,6 +142,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-charclass}};
+  \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
