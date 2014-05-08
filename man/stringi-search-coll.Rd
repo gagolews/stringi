@@ -57,11 +57,15 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_words}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_boundaries}};
@@ -83,6 +87,11 @@ Other locale_sensitive: \code{\link{\%!==\%}},
 
 Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_detect_coll}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_split_coll}};
   \code{\link{stringi-search}}
 

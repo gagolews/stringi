@@ -89,7 +89,7 @@ stri_extract_last_charclass <- function(str, pattern) {
 
 
 #' @title
-#' Extract Fixed Pattern Matches
+#' Extract Canonically Equivalent Pattern Matches
 #'
 #' @description
 #' These functions extract substrings of \code{str} that
@@ -98,49 +98,53 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' If \code{collator_opts} is not \code{NA} (default,
-#' i.e. locale-aware search), then the operation
-#' is not as dummy as it seems (for non-ASCII text).
+#' There are locale-sensitive operations.
+#' See \link{stringi-search-coll} for more details on
+#' locale-sensitive text searching in \pkg{stringi}.
 #'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options.
 #'
 #' @return
-#' For \code{stri_extract_all_fixed},
-#' a list of \code{max(length(str), length(pattern))} character vectors is returned.
+#' For \code{stri_extract_all_coll}, a list of
+#' \code{max(length(str), length(pattern))} character vectors is returned.
 #' Otherwise, you get a character vector.
 #' \code{NA} if not found.
 #'
 #' @examples
 #' \dontrun{
-#' stri_extract_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
-#' stri_extract_first_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=2, locale="sk_SK"))
-#' stri_extract_last_fixed(c('Yy\u00FD', 'AAA'), 'y', stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
+#' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y',
+#'    stri_opts_collator(strength=2, locale="sk_SK"))
+#' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',
+#'    stri_opts_collator(strength=1, locale="sk_SK"))
 #' }
 #'
 #' @export
-#' @rdname stri_extract_fixed
-#' @aliases stri_extract_all_fixed, stri_extract_first_fixed, stri_extract_last_fixed
-#' @family search_fixed
+#' @rdname stri_extract_coll
+#' @aliases stri_extract_all_coll stri_extract_first_coll stri_extract_last_coll
+#' @family search_coll
 #' @family search_extract
-stri_extract_all_fixed <- function(str, pattern, opts_collator=list()) {
-   .Call("stri_extract_all_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+#' @family locale_sensitive
+stri_extract_all_coll <- function(str, pattern, opts_collator=NULL) {
+   .Call("stri_extract_all_coll", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
-#' @rdname stri_extract_fixed
-stri_extract_first_fixed <- function(str, pattern, opts_collator=list()) {
-   .Call("stri_extract_first_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+#' @rdname stri_extract_coll
+stri_extract_first_coll <- function(str, pattern, opts_collator=NULL) {
+   .Call("stri_extract_first_coll", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
 #' @export
-#' @rdname stri_extract_fixed
-stri_extract_last_fixed <- function(str, pattern, opts_collator=list()) {
-   .Call("stri_extract_last_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+#' @rdname stri_extract_coll
+stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
+   .Call("stri_extract_last_coll", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -204,7 +208,7 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_extract_all_regex}},
-#' \code{\link{stri_extract_all_fixed}}, or \code{\link{stri_extract_all_charclass}},
+#' \code{\link{stri_extract_all_coll}}, or \code{\link{stri_extract_all_charclass}},
 #' depending on the argument used.
 #'
 #' @details
@@ -214,7 +218,7 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
-#' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns a list of character vectors.
@@ -222,21 +226,21 @@ stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
 #' @examples
 #' \dontrun{
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_extract_all('Bartolini', fixed='i')
+#' stri_extract_all('Bartolini', coll='i')
 #' stri_extract_all('stringi are so good!', charclass='Zs') # all whitespaces
 #' }
 #'
 #' @export
 #' @family search_extract
-stri_extract_all <- function(str, ..., regex, fixed, charclass) {
+stri_extract_all <- function(str, ..., regex, coll, charclass) {
    if (!missing(regex))
       stri_extract_all_regex(str, regex, ...)
-   else if (!missing(fixed))
-      stri_extract_all_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_extract_all_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_extract_all_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `coll`, or `charclass`")
 }
 
 
@@ -246,7 +250,8 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_extract_first_regex}},
-#' \code{\link{stri_extract_first_fixed}}, or \code{\link{stri_extract_first_charclass}},
+#' \code{\link{stri_extract_first_coll}},
+#' or \code{\link{stri_extract_first_charclass}},
 #' depending on the argument used.
 #'
 #' @details
@@ -256,7 +261,7 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
-#' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns a character vector.
@@ -265,21 +270,21 @@ stri_extract_all <- function(str, ..., regex, fixed, charclass) {
 #' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_extract_first('Bartolini', fixed=letters[1:3])
+#' stri_extract_first('Bartolini', coll=letters[1:3])
 #' stri_extract_first(s, charclass='Zs')
 #' }
 #'
 #' @export
 #' @family search_extract
-stri_extract_first <- function(str, ..., regex, fixed, charclass) {
+stri_extract_first <- function(str, ..., regex, coll, charclass) {
    if (!missing(regex))
       stri_extract_first_regex(str, regex, ...)
-   else if (!missing(fixed))
-      stri_extract_first_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_extract_first_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_extract_first_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `coll`, or `charclass`")
 }
 
 
@@ -289,7 +294,8 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_extract_last_regex}},
-#' \code{\link{stri_extract_last_fixed}}, or \code{\link{stri_extract_last_charclass}},
+#' \code{\link{stri_extract_last_coll}},
+#' or \code{\link{stri_extract_last_charclass}},
 #' depending on the argument used.
 #'
 #' @details
@@ -299,7 +305,7 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
-#' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns a character vector.
@@ -308,21 +314,21 @@ stri_extract_first <- function(str, ..., regex, fixed, charclass) {
 #' \dontrun{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' stri_extract_last('Bartolini', fixed=letters[1:3])
+#' stri_extract_last('Bartolini', coll=letters[1:3])
 #' stri_extract_last(s, charclass='Zs')
 #' }
 #'
 #' @export
 #' @family search_extract
-stri_extract_last <- function(str, ..., regex, fixed, charclass) {
+stri_extract_last <- function(str, ..., regex, coll, charclass) {
    if (!missing(regex))
       stri_extract_last_regex(str, regex, ...)
-   else if (!missing(fixed))
-      stri_extract_last_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_extract_last_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_extract_last_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `coll`, or `charclass`")
 }
 
 
@@ -343,7 +349,7 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
-#' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #' @param mode single string; whether to look for all, or only the first/last
 #'             occurrence of the pattern
@@ -354,15 +360,15 @@ stri_extract_last <- function(str, ..., regex, fixed, charclass) {
 #'
 #' @export
 #' @family search_extract
-stri_extract <- function(str, ..., regex, fixed, charclass,
+stri_extract <- function(str, ..., regex, coll, charclass,
                         mode=c("first", "all", "last")) {
    # `first` is default for compatibility with stringr
    mode <- match.arg(mode) # this is slow
 
    switch(mode,
-          first=stri_extract_first(str, ..., regex=regex, fixed=fixed, charclass=charclass),
-          last =stri_extract_last(str, ..., regex=regex, fixed=fixed, charclass=charclass),
-          all  =stri_extract_all(str, ..., regex=regex, fixed=fixed, charclass=charclass)
+          first=stri_extract_first(str, ..., regex=regex, coll=coll, charclass=charclass),
+          last =stri_extract_last(str, ..., regex=regex, coll=coll, charclass=charclass),
+          all  =stri_extract_all(str, ..., regex=regex, coll=coll, charclass=charclass)
    )
 }
 
