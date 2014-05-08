@@ -53,9 +53,8 @@ stri_locate_all_charclass(c('REXAMINE'), '\\\\p{Lu}', merge=c(TRUE, FALSE))
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},
@@ -92,9 +91,8 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stringi-search}}
 
 Other search_locate: \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},

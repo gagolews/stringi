@@ -158,7 +158,7 @@ stri_locate_last_charclass <- function(str, pattern) {
 #'
 #' @export
 #' @rdname stri_locate_fixed
-#' @aliases stri_locate_all_fixed, stri_locate_first_fixed, stri_locate_last_fixed
+#' @aliases stri_locate_all_fixed stri_locate_first_fixed stri_locate_last_fixed
 #' @family search_fixed
 #' @family search_locate
 #' @family indexing

@@ -84,9 +84,8 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},

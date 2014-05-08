@@ -3,7 +3,7 @@
 \alias{stri_extract}
 \title{Extract Pattern Matches}
 \usage{
-stri_extract(str, ..., regex, fixed, charclass, mode = c("first", "all",
+stri_extract(str, ..., regex, coll, charclass, mode = c("first", "all",
   "last"))
 }
 \arguments{
@@ -13,7 +13,7 @@ stri_extract(str, ..., regex, fixed, charclass, mode = c("first", "all",
 
 \item{regex}{character vector; regular expressions}
 
-\item{fixed}{character vector; fixed patterns}
+\item{coll}{character vector; canonically equivalent patterns}
 
 \item{charclass}{character vector; identifiers of character classes}
 
@@ -41,12 +41,11 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},

@@ -47,12 +47,11 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_all}};
   \code{\link{stri_extract_first}};
   \code{\link{stri_extract_last}};

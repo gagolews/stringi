@@ -43,16 +43,9 @@ Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stringi-search}}
 
 Other search_fixed: \code{\link{stri_detect_fixed}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_replace_all_fixed}},

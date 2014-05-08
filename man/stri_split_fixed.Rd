@@ -43,16 +43,9 @@ stri_split_fixed("Lorem ipsum dolor sit amet", " ")
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_replace_all_fixed}},

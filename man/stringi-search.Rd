@@ -66,6 +66,11 @@ Other search_charclass: \code{\link{stri_count_charclass}};
 
 Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_detect_coll}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_split_coll}};
   \code{\link{stringi-search-coll}}
 
@@ -85,12 +90,11 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
@@ -104,16 +108,9 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
 
 Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_replace_all_fixed}},
@@ -130,9 +127,8 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
   \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},
