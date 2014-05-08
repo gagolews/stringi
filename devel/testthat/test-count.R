@@ -18,19 +18,19 @@ test_that("stri_count_charclass", {
 })
 
 
-test_that("stri_count_fixed [byte compare]", {
-   expect_identical(stri_count_fixed(character(0)," ", opts_collator=NA),integer(0))
-   expect_identical(stri_count_fixed(NA,"a", opts_collator=NA),NA_integer_)
-   expect_identical(stri_count_fixed("NA",NA, opts_collator=NA),NA_integer_)
-   expect_identical(stri_count_fixed("   "," ", opts_collator=NA),3L)
-   expect_identical(stri_count_fixed("###",c("#","##","###"), opts_collator=NA),c(3L,1L,1L))
-   expect_identical(stri_count_fixed("a a","a", opts_collator=NA),2L)
-   expect_identical(stri_count_fixed("aba","abcdef", opts_collator=NA),0L)
-   suppressWarnings(expect_identical(stri_count_fixed("","", opts_collator=NA), NA_integer_))
-   suppressWarnings(expect_identical(stri_count_fixed("a","", opts_collator=NA), NA_integer_))
-   expect_identical(stri_count_fixed("","a", opts_collator=NA), 0L)
-   expect_equivalent(stri_count_fixed("aaaab", "ab", NA), 1L)
-   expect_equivalent(stri_count_fixed("bababababaab", "aab", NA), 1L)
+test_that("stri_count_fixed", {
+   expect_identical(stri_count_fixed(character(0)," "),integer(0))
+   expect_identical(stri_count_fixed(NA,"a"),NA_integer_)
+   expect_identical(stri_count_fixed("NA",NA),NA_integer_)
+   expect_identical(stri_count_fixed("   "," "),3L)
+   expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
+   expect_identical(stri_count_fixed("a a","a"),2L)
+   expect_identical(stri_count_fixed("aba","abcdef"),0L)
+   suppressWarnings(expect_identical(stri_count_fixed("",""), NA_integer_))
+   suppressWarnings(expect_identical(stri_count_fixed("a",""), NA_integer_))
+   expect_identical(stri_count_fixed("","a"), 0L)
+   expect_equivalent(stri_count_fixed("aaaab", "ab"), 1L)
+   expect_equivalent(stri_count_fixed("bababababaab", "aab"), 1L)
 
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel
@@ -45,39 +45,41 @@ mollis pede metus eget nisi. Praesent sodales velit quis augue. Cras
 suscipit, urna at aliquam rhoncus, urna quam viverra nisi, in interdum
 massa nibh nec erat."
    s <- stri_dup(s,1:3)
-   expect_warning(stri_count_fixed(s,c("o","a"), opts_collator=NA))
-   expect_identical(stri_count_fixed(s,"\n", opts_collator=NA), 1:3*11L)
-   expect_identical(stri_count_fixed(s,' ', opts_collator=NA), 1:3*105L)
-   expect_identical(stri_count_fixed(s,'a', opts_collator=NA), 1:3*50L)
-   expect_identical(stri_count_fixed(s,"co", opts_collator=NA), 1:3*6L)
-   expect_identical(stri_count_fixed(s,"rem", opts_collator=NA), 1:3*2L)
+   expect_warning(stri_count_fixed(s,c("o","a")))
+   expect_identical(stri_count_fixed(s,"\n"), 1:3*11L)
+   expect_identical(stri_count_fixed(s,' '), 1:3*105L)
+   expect_identical(stri_count_fixed(s,'a'), 1:3*50L)
+   expect_identical(stri_count_fixed(s,"co"), 1:3*6L)
+   expect_identical(stri_count_fixed(s,"rem"), 1:3*2L)
    s <- c("abababab babab abab bbaba","a")
-   expect_identical(stri_count_fixed(s,"bab", opts_collator=NA),c(5L,0L))
-   expect_identical(stri_count_fixed(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l", opts_collator=NA),3:1)
+   expect_identical(stri_count_fixed(s,"bab"),c(5L,0L))
+   expect_identical(stri_count_fixed(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l"),3:1)
 
 })
 
 
 
-test_that("stri_count_fixed [collation]", {
-   expect_identical(stri_count_fixed(character(0)," "),integer(0))
-   expect_identical(stri_count_fixed(NA,"a"),NA_integer_)
-   expect_identical(stri_count_fixed("NA",NA),NA_integer_)
-   expect_identical(stri_count_fixed("   "," "),3L)
-   expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
-   expect_identical(stri_count_fixed("a a","a"),2L)
-   expect_identical(stri_count_fixed("aba","abcdef"),0L)
-   suppressWarnings(expect_identical(stri_count_fixed("",""), NA_integer_))
-   suppressWarnings(expect_identical(stri_count_fixed("a",""), NA_integer_))
-   expect_identical(stri_count_fixed("","a"), 0L)
+test_that("stri_count_coll", {
+   expect_identical(stri_count_coll(character(0)," "),integer(0))
+   expect_identical(stri_count_coll(NA,"a"),NA_integer_)
+   expect_identical(stri_count_coll("NA",NA),NA_integer_)
+   expect_identical(stri_count_coll("   "," "),3L)
+   expect_identical(stri_count_coll("###",c("#","##","###")),c(3L,1L,1L))
+   expect_identical(stri_count_coll("a a","a"),2L)
+   expect_identical(stri_count_coll("aba","abcdef"),0L)
+   suppressWarnings(expect_identical(stri_count_coll("",""), NA_integer_))
+   suppressWarnings(expect_identical(stri_count_coll("a",""), NA_integer_))
+   expect_identical(stri_count_coll("","a"), 0L)
 
-   expect_identical(stri_count_fixed("aaaaa", "aa"), 2L)
-   expect_identical(stri_count_fixed("aaAAa-a", "aa"), 1L)
-   expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=list(strength=1)), 2L)
-   expect_identical(stri_count_fixed("aaAAa-a", "aa", opts_collator=stri_opts_collator(strength=1, alternate_shifted=TRUE)), 3L)
+   expect_identical(stri_count_coll("aaaaa", "aa"), 2L)
+   expect_identical(stri_count_coll("aaAAa-a", "aa"), 1L)
+   expect_identical(stri_count_coll("aaAAa-a", "aa",
+      opts_collator=list(strength=1)), 2L)
+   expect_identical(stri_count_coll("aaAAa-a", "aa",
+      opts_collator=stri_opts_collator(strength=1, alternate_shifted=TRUE)), 3L)
 
-   expect_equivalent(stri_count_fixed("aaaab", "ab"), 1L)
-   expect_equivalent(stri_count_fixed("bababababaab", "aab"), 1L)
+   expect_equivalent(stri_count_coll("aaaab", "ab"), 1L)
+   expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)
 })
 
 

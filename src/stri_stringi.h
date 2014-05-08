@@ -68,16 +68,16 @@ class UCollator;
 UCollator* stri__ucol_open(SEXP opts_collator, bool allow_na=true);
 
 // compare.cpp:
-SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP collator_opts);
-SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP collator_opts, SEXP type);
+SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator);
+SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type);
 SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type);
 
 SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
-   SEXP collator_opts, SEXP type);
+   SEXP opts_collator, SEXP type);
 
-SEXP stri_unique(SEXP str, SEXP collator_opts);
-SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP collator_opts);
-SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP collator_opts);
+SEXP stri_unique(SEXP str, SEXP opts_collator);
+SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator);
+SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator);
 
 // ICU_settings.cpp:
 SEXP stri_info();
@@ -145,12 +145,12 @@ SEXP stri_enc_set(SEXP loc);
 SEXP stri_enc_mark(SEXP str);
 
 // encoding_conversion.cpp:
-SEXP    stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
-SEXP    stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
-SEXP    stri_enc_fromutf32(SEXP str);
-SEXP    stri_enc_toutf32(SEXP str);
-SEXP    stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate);
-SEXP    stri_enc_toascii(SEXP str);
+SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
+SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
+SEXP stri_enc_fromutf32(SEXP str);
+SEXP stri_enc_toutf32(SEXP str);
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate);
+SEXP stri_enc_toascii(SEXP str);
 
 
 // encoding_detection.cpp:
@@ -179,22 +179,33 @@ void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
 
 
-SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP collator_opts);
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement,
-                            SEXP collator_opts);
-SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement,
-                              SEXP collator_opts);
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement,
-                             SEXP collator_opts);
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
-                      SEXP collator_opts);
+SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_locate_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement,
+                            SEXP opts_collator);
+SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement,
+                              SEXP opts_collator);
+SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
+                             SEXP opts_collator);
+SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
+                      SEXP opts_collator);
+
+
+SEXP stri_detect_fixed(SEXP str, SEXP pattern);
+SEXP stri_count_fixed(SEXP str, SEXP pattern);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern);
+SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty);
 
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);

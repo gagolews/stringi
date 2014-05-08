@@ -77,8 +77,10 @@
 #' The following independent search engines are provided:
 #' \itemize{
 #' \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions;
-#' \item \link{stringi-search-fixed} -- Locale-aware or byte-exact fixed
-#' pattern searching;
+#' \item \link{stringi-search-fixed} -- fase, locale-independent, bytewise pattern
+#'    matching,
+#' \item \link{stringi-search-coll} -- locale-aware pattern matching
+#'    for natural languge processing tasks;
 #' \item \link{stringi-search-charclass} -- for finding elements of
 #' particular character classes, like ``all whitespaces'' or ``all digits''.
 #' \item Moreover, \code{\link{stri_split_boundaries}} and

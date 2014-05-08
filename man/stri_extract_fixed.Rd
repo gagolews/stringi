@@ -62,7 +62,8 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_words}};
   \code{\link{stri_extract}}; \code{\link{stringi-search}}
 
-Other search_fixed: \code{\link{stri_count_fixed}};
+Other search_fixed: \code{\link{stri_count_coll}};
+  \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_all_fixed,}},

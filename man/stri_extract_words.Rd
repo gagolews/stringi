@@ -55,7 +55,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_cmp_neq}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
-  \code{\link{stri_count_fixed}};
+  \code{\link{stri_count_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
@@ -82,7 +82,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_trans_toupper}};
   \code{\link{stri_unique}}; \code{\link{stri_wrap}};
   \code{\link{stringi-locale}};
-  \code{\link{stringi-search-fixed}}
+  \code{\link{stringi-search-coll}}
 
 Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},

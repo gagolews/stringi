@@ -36,18 +36,21 @@
 #' operations in \pkg{stringi}.
 #'
 #' @details
-#' There are three independent string searching ``engines'' in \pkg{stringi}.
+#' There are four independent string searching ``engines'' in \pkg{stringi}.
 #' \itemize{
 #'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
 #'         see \link{stringi-search-regex},
-#'    \item \code{stri_*_fixed} -- \pkg{ICU}'s \code{StringSearch},
-#'        locale-sensitive ``fixed'' patterns search , see \link{stringi-search-fixed},
-#'    \item \code{stri_*_charclass} -- character classes search:
-#'    more exactly, location of either Unicode General Categories or Binary Properties,
+#'    \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
+#'    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
+#'        locale-sensitive, Collator-based ``fixed'' patterns search,
+#'        useful for natural language processing tasks,
+#'        see \link{stringi-search-fixed},
+#'    \item \code{stri_*_charclass} -- character classes search,
+#'       e.g. Unicode General Categories or Binary Properties,
 #'        see \link{stringi-search-charclass},
 #' }
 #'
-#' Each ``engine'' is able to perform many search-based operations:
+#' Each ``engine'' is able to perform many search-based operations, including:
 #' \itemize{
 #'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
 #'    see e.g. \code{\link{stri_detect}},
@@ -69,6 +72,7 @@
 #' @rdname stringi-search
 #' @family search_regex
 #' @family search_fixed
+#' @family search_coll
 #' @family search_charclass
 #' @family search_detect
 #' @family search_count
@@ -139,60 +143,74 @@ invisible(NULL)
 
 
 #' @title
-#' Locale-Sensitive Text Searching in \pkg{stringi}
+#' Locale-Insensitive Fixed Pattern Matching in \pkg{stringi}
 #'
 #' @description
 #' String searching facilities described in this very man page
-#' provide a way to detect and extract a specific piece of
-#' text. Note that locale-sensitive searching , especially on a non-English language
-#' text, is a much more complex process than one may think at the first glance.
-#'
-#'
-#'
-#' @section Locale-Aware String Search Engine:
-#'
-#' By default, all \code{stri_*_fixed} functions in \pkg{stringi} utilize
-#' \pkg{ICU}'s \code{StringSearch} engine --
-#' which is a language-aware string search algorithm.
-#' The matches are defined by using the notion of ``canonical equivalence''
-#' between strings.
-#'
-#' Tuning the Collator's parameters allows you to perform correct matching
-#' that properly takes into account accented letters, conjoined letters,
-#' and ignorable punctuation and letter case.
-#'
-#' For more information on \pkg{ICU}'s Collator and SearchEngine
-#' and how to tune it up
-#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
-#'
+#' provide a way to locate a specific piece of
+#' text. Note that locale-sensitive searching, especially
+#' on a non-English language text, is a much more complex process
+#' than it seems at the first glance.
 #'
 #'
 #' @section Byte Compare:
 #'
-#' If \code{opts_collator} is \code{NA}, then a very fast (for small p)
-#' bitwise (locale independent) search is performed, with time complexity of
+#' A very fast (for small p) bytewise (locale independent) search
+#' is performed, with time complexity of
 #' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)})
 #' [Naive implementation
 #' - to be upgraded in some future version of \pkg{stringi}].
-#' For a natural language, non-English text this is, however, not what
+#' For natural language processing, however, this is not what
 #' you probably want. It is because a bitwise match will
 #' not give correct results in cases of:
 #' \enumerate{
 #' \item accented letters;
 #' \item conjoined letters;
 #' \item ignorable punctuation;
-#' \item ignorable case.
+#' \item ignorable case,
 #' }
+#' see also \link{stringi-search-coll}.
 #'
-#' You should note that, however, the conversion of input data
+#' Note that, the conversion of input data
 #' to Unicode is done as usual.
 #'
+#' @name stringi-search-fixed
+#' @rdname stringi-search-fixed
+#' @family search_fixed
+#' @family stringi_general_topics
+invisible(NULL)
+
+
+#' @title
+#' Locale-Sensitive Text Searching in \pkg{stringi}
 #'
-#' @section General Notes:
+#' @description
+#' String searching facilities described in this very man page
+#' provide a way to locate a specific piece of
+#' text. Note that locale-sensitive searching, especially
+#' on a non-English text, is a much more complex process
+#' than it seems at the first glance.
 #'
-#' In all the functions, if a given fixed search \code{pattern}
-#' is empty, then the result is \code{NA}
-#' and a warning is generated.
+#'
+#'
+#' @section Locale-Aware String Search Engine:
+#'
+#' All \code{stri_*_coll} functions in \pkg{stringi} utilize
+#' \pkg{ICU}'s \code{StringSearch} engine --
+#' which implements a locale-sensitive string search algorithm.
+#' The matches are defined by using the notion of ``canonical equivalence''
+#' between strings.
+#'
+#' Tuning the Collator's parameters allows you to perform correct matching
+#' that properly takes into account accented letters, conjoined letters,
+#' ignorable punctuation and letter case.
+#'
+#' For more information on \pkg{ICU}'s Collator and the search engine
+#' and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#'
+#' Please note that \pkg{ICU}'s \code{StringSearch}-based functions
+#' often exhibit poor performance.
 #'
 #'
 #' @references
@@ -202,9 +220,9 @@ invisible(NULL)
 #' L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 #' \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 #'
-#' @name stringi-search-fixed
-#' @rdname stringi-search-fixed
-#' @family search_fixed
+#' @name stringi-search-coll
+#' @rdname stringi-search-coll
+#' @family search_coll
 #' @family locale_sensitive
 #' @family stringi_general_topics
 invisible(NULL)
@@ -224,11 +242,11 @@ invisible(NULL)
 #' a single character (Unicode codepoint) search-based operations.
 #' Since stringi_0.2-1 you may obtain
 #' roughly the same results using \link{stringi-search-regex}.
-#' However, these very functions aim to be much faster.
+#' However, these very functions aim to be quite faster.
 #'
 #' Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
 #' patterns. Below we briefly summarize their syntax.
-#' For more details refer to the documents listed in References.
+#' For more details refer to the bibliographic References below.
 #'
 #'
 #' @section \code{UnicodeSet} patterns:

@@ -58,6 +58,40 @@ stri_count_charclass <- function(str, pattern) {
 
 
 #' @title
+#' Count the Number of Canonically Equivalent Pattern Matches
+#'
+#' @description
+#' This function counts the number of occurrences of a pattern in a string.
+#' This is a locale-sensitive text operation.
+#'
+#' @details
+#' Vectorized over \code{str} and \code{pattern}.
+#'
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
+#'
+#' See \link{stringi-search-coll} for more details on
+#' Locale-Sensitive Text Searching in \pkg{stringi}.
+#'
+#' @param str character vector
+#' @param pattern character vector
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options.
+#'
+#' @return Returns an integer vector with the number of matches.
+#'
+#' @export
+#' @family search_count
+#' @family search_fixed
+#' @family locale_sensitive
+stri_count_coll <- function(str, pattern, opts_collator=NULL) {
+   # prepare_arg done internally
+   .Call("stri_count_coll", str, pattern, opts_collator, PACKAGE="stringi")
+}
+
+
+#' @title
 #' Count the Number of Fixed Pattern Matches
 #'
 #' @description
@@ -69,17 +103,11 @@ stri_count_charclass <- function(str, pattern) {
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
 #'
-#' See \link{stringi-search-fixed} for more details on
-#' Locale-Sensitive Text Searching in \pkg{stringi}.
-#'
-#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
-#' locale unaware, (exact) byte comparisons. For natural language text
-#' this may be not what you really want.
+#' For natural language processing this function may be not give
+#' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return Returns an integer vector with the number of matches.
 #'
@@ -97,10 +125,9 @@ stri_count_charclass <- function(str, pattern) {
 #' @export
 #' @family search_count
 #' @family search_fixed
-#' @family locale_sensitive
-stri_count_fixed <- function(str, pattern, opts_collator=list()) {
+stri_count_fixed <- function(str, pattern) {
    # prepare_arg done internally
-   .Call("stri_count_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
 }
 
 
@@ -147,7 +174,8 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_count_regex}},
-#' \code{\link{stri_count_fixed}}, or \code{\link{stri_count_charclass}},
+#' \code{\link{stri_count_fixed}}, \code{\link{stri_count_coll}},
+#' or \code{\link{stri_count_charclass}},
 #' depending on the argument used.
 #'
 #' @details
@@ -158,6 +186,7 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns an integer vector.
@@ -171,13 +200,15 @@ stri_count_regex <- function(str, pattern, opts_regex=list()) {
 #'
 #' @export
 #' @family search_count
-stri_count <- function(str, ..., regex, fixed, charclass) {
+stri_count <- function(str, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_count_regex(str, regex, ...)
    else if (!missing(fixed))
       stri_count_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_count_coll(str, fixed, ...)
    else if (!missing(charclass))
       stri_count_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }

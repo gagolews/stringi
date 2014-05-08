@@ -32,6 +32,12 @@ stri_search_class_replace.cpp \
 stri_search_class_split.cpp \
 stri_search_class_trim.cpp \
 stri_search_common.cpp \
+stri_search_coll_count.cpp \
+stri_search_coll_detect.cpp \
+stri_search_coll_extract.cpp \
+stri_search_coll_locate.cpp \
+stri_search_coll_replace.cpp \
+stri_search_coll_split.cpp \
 stri_search_fixed_count.cpp \
 stri_search_fixed_detect.cpp \
 stri_search_fixed_extract.cpp \
