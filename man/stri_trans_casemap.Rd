@@ -90,9 +90,8 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_split_fixed}};
-  \code{\link{stri_unique}}; \code{\link{stri_wrap}};
-  \code{\link{stringi-locale}};
+  \code{\link{stri_split_coll}}; \code{\link{stri_unique}};
+  \code{\link{stri_wrap}}; \code{\link{stringi-locale}};
   \code{\link{stringi-search-coll}}
 
 Other transform: \code{\link{stri_trans_general}};

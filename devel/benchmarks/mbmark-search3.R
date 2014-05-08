@@ -12,7 +12,7 @@ benchmark_do <- function() {
       stri_count_regex(pan_tadeusz, sie),
       stri_count_regex(pan_tadeusz, sie, list(literal=TRUE)),
       stri_count_fixed(pan_tadeusz, sie),
-      stri_count_fixed(pan_tadeusz, sie, NA),
+      stri_count_coll(pan_tadeusz, sie),
       str_count(pan_tadeusz, sie),
       str_count(pan_tadeusz, fixed(sie)),
       str_count(pan_tadeusz, perl(sie))

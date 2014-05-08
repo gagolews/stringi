@@ -11,8 +11,8 @@ benchmark_do <- function() {
    microbenchmark2(
       stri_detect_regex(pan_tadeusz, sie),
       stri_detect_regex(pan_tadeusz, sie, list(literal=TRUE)),
+      stri_detect_coll(pan_tadeusz, sie),
       stri_detect_fixed(pan_tadeusz, sie),
-      stri_detect_fixed(pan_tadeusz, sie, NA),
       grepl(sie, pan_tadeusz),
       grepl(sie, pan_tadeusz, perl=TRUE),
       grepl(sie, pan_tadeusz, fixed=TRUE)
