@@ -52,7 +52,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-18)
  *          use StriContainerRegexPattern + opts_regex
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-06)
  *          use UText+UTF8, faster for short strings
  */

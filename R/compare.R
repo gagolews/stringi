@@ -42,7 +42,7 @@
 #'
 #' @details
 #' All the functions are vectorized over \code{e1} and \code{e2}.
-#' 
+#'
 #' \code{stri_cmp_eq} tests whether two corresponding strings
 #' consist of exactly the same code points, while \code{stri_cmp_neq} allow
 #' to check whether there is any difference between them.
@@ -54,14 +54,14 @@
 #' BOMs from input strings,
 #' so e.g. \code{stri_cmp_eq} does not take BOMs into account while
 #' comparing strings.
-#' 
+#'
 #' On the other hand, \code{stri_cmp_equiv} test for
 #' canonical equivalence of two strings and is locale-dependent.
 #' Additionally, the \pkg{ICU}'s Collator may be tuned up so that
 #' e.g. the comparison is case-insensitive.
 #' To test whether two strings are not canonically equivalent,
 #' call \code{stri_cmp_nequiv}.
-#' 
+#'
 #' What is more,  \code{stri_cmp_le} tests whether
 #' the elements in the first vector are less than or equal to
 #' the corresponding elements in the second vector,
@@ -69,7 +69,7 @@
 #' \code{stri_cmp_lt} if less,
 #' and \code{stri_cmp_gt} if greater,
 #' see also e.g. \code{\link{\%<\%}}.
-#' 
+#'
 #' Finally, \code{stri_compare} is an alias to \code{stri_cmp}. They both
 #' perform exactly the same locale-dependent operation.
 #' Both functions provide a C library's \code{strcmp()} look-and-feel,
@@ -189,7 +189,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' These functions call \code{\link{stri_cmp_le}} or its
 #' friends, using default collator options.
 #' Thus, they are vectorized over \code{e1} and \code{e2}.
-#' 
+#'
 #' \code{\%stri==\%} tests for canonical equivalence of strings
 #' (see \code{\link{stri_cmp_equiv}}) and is a locale-dependent operation.
 #' On the other hand, \code{\%stri===\%} performs a locale-independent,
@@ -458,7 +458,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #'
 #' @details
 #' Missing values are regarded as equal.
-#' 
+#'
 #' These functions test for canonical equivalence of strings.
 #' Such an operation is locale-dependent.
 #'

@@ -58,7 +58,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_coll}};
-  \code{\link{stri_detect_fixed}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
   \code{\link{stri_locate_all_fixed}},
@@ -101,7 +101,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
   \code{\link{stri_count_coll}};
-  \code{\link{stri_detect_fixed}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
   \code{\link{stri_locate_all_fixed}},

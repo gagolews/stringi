@@ -55,7 +55,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          StriException friendly, use StriContainerUStringSearch
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_locate_firstlast_coll (opts_collator == NA not allowed)
  */
@@ -136,7 +136,7 @@ SEXP stri__locate_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, boo
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          use stri_locate_firstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_locate_first_coll (opts_collator == NA not allowed)
  */
@@ -161,7 +161,7 @@ SEXP stri_locate_first_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          use stri_locate_firstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_locate_last_coll (opts_collator == NA not allowed)
  */
@@ -187,8 +187,8 @@ SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          StriException friendly, use StriContainerUStringSearch
- * 
- * 
+ *
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_locate_all_coll (opts_collator == NA not allowed)
  */

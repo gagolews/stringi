@@ -17,29 +17,7 @@ test_that("stri_detect_charclass", {
 })
 
 
-test_that("stri_detect_fixed [byte]", {
-   expect_identical(stri_detect_fixed("a", NA, opts_collator=NA), NA)
-   expect_identical(stri_detect_fixed(NA, "a", opts_collator=NA), NA)
-   expect_identical(stri_detect_fixed(NA, NA, opts_collator=NA), NA)
-   expect_identical(stri_detect_fixed("kot lorem1", character(0), opts_collator=NA), logical(0))
-   expect_identical(stri_detect_fixed(character(0), "ipsum 1234", opts_collator=NA), logical(0))
-   expect_identical(stri_detect_fixed(character(0), character(0), opts_collator=NA), logical(0))
-   expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab", opts_collator=NA), c(T, T, T, T))
-   expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105"), opts_collator=NA), c(F, F, F, T))
-   expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2), opts_collator=NA))
-   expect_identical(stri_detect_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105"), opts_collator=NA), FALSE)
-   expect_equivalent(stri_detect_fixed("aaaab", "ab", NA), TRUE)
-   expect_equivalent(stri_detect_fixed("bababababaab", "aab", NA), TRUE)
-
-
-   suppressWarnings(expect_identical(stri_detect_fixed("","", opts_collator=NA), NA))
-   suppressWarnings(expect_identical(stri_detect_fixed("a","", opts_collator=NA), NA))
-   suppressWarnings(expect_identical(stri_detect_fixed("","a", opts_collator=NA), FALSE))
-})
-
-
-
-test_that("stri_detect_fixed [collator]", {
+test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed("a", NA), NA)
    expect_identical(stri_detect_fixed(NA, "a"), NA)
    expect_identical(stri_detect_fixed(NA, NA), NA)
@@ -49,13 +27,35 @@ test_that("stri_detect_fixed [collator]", {
    expect_identical(stri_detect_fixed(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"), c(T, T, T, T))
    expect_identical(stri_detect_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105")), c(F, F, F, T))
    expect_warning(stri_detect_fixed(rep("asd", 5), rep("a", 2)))
-   expect_identical(stri_detect_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)
+   expect_identical(stri_detect_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
    expect_equivalent(stri_detect_fixed("aaaab", "ab"), TRUE)
    expect_equivalent(stri_detect_fixed("bababababaab", "aab"), TRUE)
+
 
    suppressWarnings(expect_identical(stri_detect_fixed("",""), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("a",""), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("","a"), FALSE))
+})
+
+
+
+test_that("stri_detect_coll", {
+   expect_identical(stri_detect_coll("a", NA), NA)
+   expect_identical(stri_detect_coll(NA, "a"), NA)
+   expect_identical(stri_detect_coll(NA, NA), NA)
+   expect_identical(stri_detect_coll("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_detect_coll(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_detect_coll(character(0), character(0)), logical(0))
+   expect_identical(stri_detect_coll(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"), c(T, T, T, T))
+   expect_identical(stri_detect_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105")), c(F, F, F, T))
+   expect_warning(stri_detect_coll(rep("asd", 5), rep("a", 2)))
+   expect_identical(stri_detect_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)
+   expect_equivalent(stri_detect_coll("aaaab", "ab"), TRUE)
+   expect_equivalent(stri_detect_coll("bababababaab", "aab"), TRUE)
+
+   suppressWarnings(expect_identical(stri_detect_coll("",""), NA))
+   suppressWarnings(expect_identical(stri_detect_coll("a",""), NA))
+   suppressWarnings(expect_identical(stri_detect_coll("","a"), FALSE))
 })
 
 

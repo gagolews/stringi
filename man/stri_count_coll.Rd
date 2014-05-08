@@ -46,7 +46,7 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_cmp_neq}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
-  \code{\link{stri_detect_fixed}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
@@ -75,32 +75,13 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-coll}}
 
+Other search_coll: \code{\link{stri_detect_coll}};
+  \code{\link{stringi-search-coll}};
+  \code{\link{stringi-search}}
+
 Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stri_count_fixed}};
   \code{\link{stri_count_regex}}; \code{\link{stri_count}};
-  \code{\link{stringi-search}}
-
-Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_detect_fixed}};
-  \code{\link{stri_extract_all_fixed}},
-  \code{\link{stri_extract_all_fixed,}},
-  \code{\link{stri_extract_first_fixed}},
-  \code{\link{stri_extract_first_fixed,}},
-  \code{\link{stri_extract_last_fixed}},
-  \code{\link{stri_extract_last_fixed}};
-  \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_all_fixed,}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed,}},
-  \code{\link{stri_locate_last_fixed}},
-  \code{\link{stri_locate_last_fixed}};
-  \code{\link{stri_replace_all_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_last_fixed}},
-  \code{\link{stri_replace_last_fixed}};
-  \code{\link{stri_split_fixed}};
-  \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search}}
 }
 

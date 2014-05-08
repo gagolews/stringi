@@ -52,7 +52,7 @@
 //  * @return character vector
 //  *
 //  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
-//  * 
+//  *
 //  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
 //  *          stri_extract_fixed now uses byte search only
 //  */
@@ -60,38 +60,38 @@
 // {
 //    str = stri_prepare_arg_string(str, "str");
 //    pattern = stri_prepare_arg_string(pattern, "pattern");
-// 
+//
 //    STRI__ERROR_HANDLER_BEGIN
 //    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 //    StriContainerUTF8 str_cont(str, vectorize_length);
 //    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
-// 
+//
 //    SEXP ret;
 //    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
-// 
+//
 //    for (R_len_t i = pattern_cont.vectorize_init();
 //       i != pattern_cont.vectorize_end();
 //       i = pattern_cont.vectorize_next(i))
 //    {
 //       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
 //          SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
-// 
+//
 //       pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-// 
+//
 //       int start = pattern_cont.findFirst(); // whatever
-// 
+//
 //       if (start == USEARCH_DONE)
 //          SET_STRING_ELT(ret, i, NA_STRING);
 //       else
 //          SET_STRING_ELT(ret, i, pattern_cont.toR(i));
 //    }
-// 
+//
 //    STRI__UNPROTECT_ALL
 //    return ret;
 //    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 // }
-// 
-// 
+//
+//
 // /**
 //  * Extract first occurence of a fixed pattern in each string
 //  *
@@ -100,7 +100,7 @@
 //  * @return character vector
 //  *
 //  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
-//  * 
+//  *
 //  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
 //  *          stri_extract_fixed now uses byte search only
 //  */
@@ -108,8 +108,8 @@
 // {
 //    return stri__extract_firstlast_fixed(str, pattern, true);
 // }
-// 
-// 
+//
+//
 // /**
 //  * Extract last occurence of a fixed pattern in each string
 //  *
@@ -118,7 +118,7 @@
 //  * @return character vector
 //  *
 //  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
-//  * 
+//  *
 //  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
 //  *          stri_extract_fixed now uses byte search only
 //  */
@@ -126,8 +126,8 @@
 // {
 //    return stri__extract_firstlast_fixed(str, pattern, false);
 // }
-// 
-// 
+//
+//
 // /**
 //  * Extract all occurences of pattern in a string [exact byte search]
 //  *
@@ -136,7 +136,7 @@
 //  * @return character vector
 //  *
 //  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
-//  * 
+//  *
 //  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
 //  *          stri_extract_fixed now uses byte search only
 //  */
@@ -144,28 +144,28 @@
 // {
 //    str = stri_prepare_arg_string(str, "str");
 //    pattern = stri_prepare_arg_string(pattern, "pattern");
-// 
+//
 //    STRI__ERROR_HANDLER_BEGIN
 //    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 //    StriContainerUTF8 str_cont(str, vectorize_length);
 //    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
-// 
+//
 //    SEXP ret;
 //    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
-// 
+//
 //    for (R_len_t i = pattern_cont.vectorize_init();
 //       i != pattern_cont.vectorize_end();
 //       i = pattern_cont.vectorize_next(i))
 //    {
 //       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
 //          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));, SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
-// 
+//
 //       pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-// 
+//
 //       int count = 0;
 //       while (pattern_cont.findNext() != USEARCH_DONE)
 //          ++count;
-// 
+//
 //       if (count == 0)
 //          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
 //       else {
@@ -178,7 +178,7 @@
 //          STRI__UNPROTECT(2);
 //       }
 //    }
-// 
+//
 //    STRI__UNPROTECT_ALL
 //    return ret;
 //    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )

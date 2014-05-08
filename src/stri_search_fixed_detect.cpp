@@ -53,7 +53,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *    make StriException-friendly, use StriContainerByteSearch
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_detect_fixed now uses byte search only
  */

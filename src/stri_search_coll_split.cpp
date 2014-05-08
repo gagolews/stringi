@@ -62,7 +62,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_split_coll (opts_collator == NA not allowed)
  */
@@ -75,7 +75,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP o
 
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
-   
+
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF16 str_cont(str, vectorize_length);

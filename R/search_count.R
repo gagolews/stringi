@@ -83,7 +83,7 @@ stri_count_charclass <- function(str, pattern) {
 #'
 #' @export
 #' @family search_count
-#' @family search_fixed
+#' @family search_coll
 #' @family locale_sensitive
 stri_count_coll <- function(str, pattern, opts_collator=NULL) {
    # prepare_arg done internally
@@ -206,7 +206,7 @@ stri_count <- function(str, ..., regex, fixed, coll, charclass) {
    else if (!missing(fixed))
       stri_count_fixed(str, fixed, ...)
    else if (!missing(coll))
-      stri_count_coll(str, fixed, ...)
+      stri_count_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_count_charclass(str, charclass, ...)
    else

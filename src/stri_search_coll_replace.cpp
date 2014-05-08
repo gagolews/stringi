@@ -54,7 +54,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri__replace_allfirstlast_coll (opts_collator == NA not allowed)
  */
@@ -158,7 +158,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_replace_all_coll (opts_collator == NA not allowed)
  */
@@ -181,7 +181,7 @@ SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_c
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_replace_last_coll (opts_collator == NA not allowed)
  */
@@ -204,7 +204,7 @@ SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_replace_first_coll (opts_collator == NA not allowed)
  */

@@ -87,7 +87,6 @@
 //}
 
 
-
 /* *************************************************************************
                                   STRI_CMP_CODEPOINTS
    ************************************************************************* */
@@ -138,7 +137,7 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
       const char* cur1_s = e1_cont.get(i).c_str();
       R_len_t     cur2_n = e2_cont.get(i).length();
       const char* cur2_s = e2_cont.get(i).c_str();
-      
+
       if (cur1_n != cur2_n) // different number of bytes => not equal
          ret_tab[i] = FALSE;
       else
@@ -173,7 +172,7 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
  * @return logical vector
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-19)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
  */
@@ -195,7 +194,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
-   
+
    STRI__ERROR_HANDLER_BEGIN
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
@@ -271,7 +270,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-19)
  *          one function for cmp with and without collation
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
  */
@@ -279,7 +278,7 @@ SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
 {
    e1 = stri_prepare_arg_string(e1, "e1");
    e2 = stri_prepare_arg_string(e2, "e2");
-   
+
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
@@ -390,7 +389,7 @@ struct StriSortComparer {
  *          (UTF-8: gain, 8bit: loss);
  *          single function for cmp with and witout collation;
  *          new param: na_last
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
  */
@@ -507,7 +506,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          using std::deque
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
  */
@@ -651,7 +650,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
  * @return integer vector
  *
  * @version 0.2-1 (Bartek Tartanus, 2014-04-17)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
  */

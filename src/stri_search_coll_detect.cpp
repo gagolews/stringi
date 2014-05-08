@@ -52,7 +52,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
  *    make StriException-friendly, use StriContainerUStringSearch
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_detect_coll (opts_collator == NA not allowed)
  */
