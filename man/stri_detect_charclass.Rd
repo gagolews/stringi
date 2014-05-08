@@ -49,7 +49,8 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search}}
 
-Other search_detect: \code{\link{stri_detect_fixed}};
+Other search_detect: \code{\link{stri_detect_coll}};
+  \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
   \code{\link{stri_detect}}; \code{\link{stringi-search}}
 }

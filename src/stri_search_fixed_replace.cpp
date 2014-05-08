@@ -54,7 +54,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
  */
@@ -156,7 +156,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
  */
@@ -178,7 +178,7 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
  */
@@ -200,7 +200,7 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-26)
  *          use stri__replace_allfirstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
  */

@@ -2,17 +2,17 @@ require(testthat)
 
 
 test_that("stri_cmp_operators", {
-   
+
    expect_identical("a" %stri==% c("a", "b"), c(TRUE, FALSE))
    expect_identical("a" %stri===% c("a", "b"), c(TRUE, FALSE))
    expect_identical("a" %stri!=% c("b", "a"), c(TRUE, FALSE))
    expect_identical("a" %stri!==% c("b", "a"), c(TRUE, FALSE))
-   
+
    expect_identical("\u0105" %stri==% stri_trans_nfkd("\u0105"), TRUE)
    expect_identical("\u0105" %stri===% stri_trans_nfkd("\u0105"), FALSE)
    expect_identical("\u0105" %stri!=% stri_trans_nfkd("\u0105"), FALSE)
    expect_identical("\u0105" %stri!==% stri_trans_nfkd("\u0105"), TRUE)
-   
+
    expect_identical("b" %stri<%  c("a", "b", "c"), c(FALSE, FALSE, TRUE))
    expect_identical("b" %stri<=% c("a", "b", "c"), c(FALSE, TRUE, TRUE))
    expect_identical("b" %stri>%  c("a", "b", "c"), c(TRUE, FALSE, FALSE))
@@ -137,14 +137,14 @@ test_that("stri_order", {
 
 
 # test_that("stri_order [codepoints]", {
-# 
+#
 #    expect_equivalent(stri_order(character(0), opts_collator=NA), integer(0))
 #    expect_equivalent(stri_order(LETTERS, opts_collator=NA), 1:length(LETTERS))
 #    expect_equivalent(stri_order(rev(LETTERS), opts_collator=NA), length(LETTERS):1)
 #    expect_equivalent(stri_order(c('c', 'a', 'b'), opts_collator=NA), order(c('c', 'a', 'b')))
 #    expect_equivalent(stri_order(LETTERS, decreasing=TRUE, opts_collator=NA), length(LETTERS):1)
-# 
-# 
+#
+#
 #    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA), opts_collator=NA), c(3, 5, 1, 2, 4, 6))
 # })
 

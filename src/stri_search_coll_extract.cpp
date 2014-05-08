@@ -48,7 +48,7 @@ using namespace std;
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri__extract_firstlast_coll (opts_collator == NA not allowed)
  */
@@ -119,7 +119,7 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_extract_first_coll (opts_collator == NA not allowed)
  */
@@ -138,7 +138,7 @@ SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_extract_last_coll (opts_collator == NA not allowed)
  */
@@ -157,7 +157,7 @@ SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  * @return list of character vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_extract_all_coll (opts_collator == NA not allowed)
  */

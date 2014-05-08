@@ -39,6 +39,7 @@ stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensit
 }
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect}}; \code{\link{stringi-search}}
 

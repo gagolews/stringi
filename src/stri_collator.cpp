@@ -50,7 +50,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-17)
  *          allow for NULL opts_collator (identical to list())
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          allow_na arg added
  */

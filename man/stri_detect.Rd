@@ -3,7 +3,7 @@
 \alias{stri_detect}
 \title{Detect a Pattern Match}
 \usage{
-stri_detect(str, ..., regex, fixed, charclass)
+stri_detect(str, ..., regex, fixed, coll, charclass)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -13,6 +13,8 @@ stri_detect(str, ..., regex, fixed, charclass)
 \item{regex}{character vector; regular expressions}
 
 \item{fixed}{character vector; fixed patterns}
+
+\item{coll}{character vector; canonically equivalent patterns}
 
 \item{charclass}{character vector; identifiers of character classes}
 }
@@ -25,11 +27,13 @@ Detect a Pattern Match
 \details{
 A convenience function.
 Calls either \code{\link{stri_detect_regex}},
-\code{\link{stri_detect_fixed}}, or \code{\link{stri_detect_charclass}},
+\code{\link{stri_detect_fixed}}, \code{\link{stri_detect_coll}},
+or \code{\link{stri_detect_charclass}},
 depending on the argument used.
 }
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
   \code{\link{stringi-search}}

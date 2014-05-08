@@ -66,35 +66,61 @@ stri_detect_charclass <- function(str, pattern) {
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' See \link{stringi-search-fixed} for more details on
-#' locale-sensitive text searching in \pkg{stringi}.
+#' For natural language processing this function may be not give
+#' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
 #'
-#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
-#' locale unaware, (exact) byte comparisons. For natural language text
-#' this may be not what you really want.
-#'
 #' @param str character vector
 #' @param pattern character vector
-#' @param opts_collator a named list as generated with \code{\link{stri_opts_collator}}
-#' with Collator options, or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return Returns a logical vector.
 #'
 #' @examples
 #' \dontrun{
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'), opts_collator=NA)
-#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R', opts_collator=NA)
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'))
+#' stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R')
 #' }
 #'
 #' @export
 #' @family search_detect
 #' @family search_fixed
+stri_detect_fixed <- function(str, pattern) {
+   .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
+}
+
+
+#' @title
+#' Detect a Canonically Equivalent Pattern Match
+#'
+#' @description
+#' This function checks if there is at least one occurrence of a pattern
+#' in a string.  This is a locale-sensitive text operation.
+#'
+#' @details
+#' Vectorized over \code{str} and \code{pattern}.
+#'
+#' See \link{stringi-search-coll} for more details on
+#' locale-sensitive text searching in \pkg{stringi}.
+#'
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
+#'
+#' @param str character vector
+#' @param pattern character vector
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options.
+#'
+#' @return Returns a logical vector.
+#'
+#' @export
+#' @family search_detect
+#' @family search_coll
 #' @family locale_sensitive
-stri_detect_fixed <- function(str, pattern, opts_collator=list()) {
-   .Call("stri_detect_fixed", str, pattern, opts_collator, PACKAGE="stringi")
+stri_detect_coll <- function(str, pattern, opts_collator=NULL) {
+   .Call("stri_detect_coll", str, pattern, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -143,7 +169,8 @@ stri_detect_regex <- function(str, pattern, opts_regex=list()) {
 #' @details
 #' A convenience function.
 #' Calls either \code{\link{stri_detect_regex}},
-#' \code{\link{stri_detect_fixed}}, or \code{\link{stri_detect_charclass}},
+#' \code{\link{stri_detect_fixed}}, \code{\link{stri_detect_coll}},
+#' or \code{\link{stri_detect_charclass}},
 #' depending on the argument used.
 #'
 #' @details
@@ -154,19 +181,22 @@ stri_detect_regex <- function(str, pattern, opts_regex=list()) {
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #'
 #' @return Returns a logical vector.
 #'
 #' @export
 #' @family search_detect
-stri_detect <- function(str, ..., regex, fixed, charclass) {
+stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_detect_regex(str, regex, ...)
    else if (!missing(fixed))
       stri_detect_fixed(str, fixed, ...)
+   else if (!missing(coll))
+      stri_detect_coll(str, coll, ...)
    else if (!missing(charclass))
       stri_detect_charclass(str, charclass, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }

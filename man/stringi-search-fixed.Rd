@@ -32,8 +32,7 @@ Note that, the conversion of input data
 to Unicode is done as usual.
 }
 \seealso{
-Other search_fixed: \code{\link{stri_count_coll}};
-  \code{\link{stri_count_fixed}};
+Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_extract_all_fixed}},
   \code{\link{stri_extract_all_fixed,}},

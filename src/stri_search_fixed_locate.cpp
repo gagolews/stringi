@@ -53,7 +53,7 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
  */
@@ -123,7 +123,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, bool first)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          use stri_locate_firstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
  */
@@ -147,7 +147,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-23)
  *          use stri_locate_firstlast_fixed
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
  */
@@ -170,7 +170,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          Use StriContainerUTF8_indexable
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
  */

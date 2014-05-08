@@ -64,7 +64,9 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_trim_right}};
   \code{\link{stringi-search-charclass}}
 
-Other search_coll: \code{\link{stringi-search-coll}}
+Other search_coll: \code{\link{stri_count_coll}};
+  \code{\link{stri_detect_coll}};
+  \code{\link{stringi-search-coll}}
 
 Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stri_count_coll}};
@@ -72,6 +74,7 @@ Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stri_count_regex}}; \code{\link{stri_count}}
 
 Other search_detect: \code{\link{stri_detect_charclass}};
+  \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
   \code{\link{stri_detect}}
@@ -98,8 +101,7 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_words}};
   \code{\link{stri_extract}}
 
-Other search_fixed: \code{\link{stri_count_coll}};
-  \code{\link{stri_count_fixed}};
+Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_extract_all_fixed}},
   \code{\link{stri_extract_all_fixed,}},
