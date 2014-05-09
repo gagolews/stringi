@@ -65,7 +65,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));

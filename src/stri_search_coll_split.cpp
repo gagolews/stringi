@@ -74,7 +74,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP o
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
 
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));

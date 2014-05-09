@@ -65,7 +65,7 @@ SEXP stri__locate_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, boo
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -198,7 +198,7 @@ SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
