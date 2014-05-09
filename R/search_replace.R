@@ -84,6 +84,68 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 
 
 #' @title
+#' Replace Occurrences of a Canonically Equivalent Pattern
+#'
+#' @description
+#' Replaces with the given replacement string every/first/last
+#' substring of the input that matches the pattern.
+#'
+#' @details
+#' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
+#'
+#' These are locale-sensitive operations.
+#' See \link{stringi-search-coll} for more details on
+#' locale-sensitive text searching in \pkg{stringi}.
+#'
+#' These functions scan the input string for matches of the pattern.
+#' Input that is not part of any match is left unchanged;
+#' each match is replaced in the result by the replacement string.
+#'
+#' @param str character vector of strings to search in
+#' @param pattern character vector of patterns to search for
+#' @param replacement character vector of strings to replace with
+#' @param opts_collator a named list with \pkg{ICU} Collator's options
+#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options.
+#'
+#' @return Each function discussed returns a character vector.
+#'
+#' @examples
+#' \dontrun{
+#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' stri_replace_all_coll(s, " ", "#")
+#' stri_replace_all_coll(s, "o", "0")
+#' }
+#'
+#' @export
+#' @rdname stri_replace_coll
+#' @aliases stri_replace_all_coll stri_replace_first_coll stri_replace_last_coll
+#' @family search_coll
+#' @family search_replace
+#' @family locale_sensitive
+stri_replace_all_coll <- function(str, pattern, replacement, opts_collator=NULL) {
+   .Call("stri_replace_all_coll", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_replace_coll
+stri_replace_first_coll <- function(str, pattern, replacement, opts_collator=NULL) {
+   .Call("stri_replace_first_coll", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_replace_coll
+stri_replace_last_coll <- function(str, pattern, replacement, opts_collator=NULL) {
+   .Call("stri_replace_last_coll", str, pattern, replacement, opts_collator,
+         PACKAGE="stringi")
+}
+
+
+#' @title
 #' Replace Occurrences of a Fixed Pattern
 #'
 #' @description
@@ -93,29 +155,24 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #'
+#' For natural language processing this function may be not give
+#' you desired results. Refer to \link{stringi-search-fixed} for more details.
+#'
 #' These functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
 #'
-#'
-#' Pass \code{opts_collator} equal to \code{NA} for much faster, but
-#' locale unaware, (exact) byte comparisons. For natural language text
-#' this may be not what you really want.
-#'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
-#' @param opts_collator a named list as generated with
-#' \code{\link{stri_opts_collator}} with Collator options,
-#' or \code{NA} for fast but locale-unaware byte comparison
 #'
 #' @return Each function returns a character vector.
 #'
 #' @examples
 #' \dontrun{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#' stri_replace_all_fixed(s," ","#")
-#' stri_replace_all_fixed(s,"o","0")
+#' stri_replace_all_fixed(s, " ", "#")
+#' stri_replace_all_fixed(s, "o", "0")
 #' }
 #'
 #' @export
@@ -123,25 +180,24 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @aliases stri_replace_all_fixed stri_replace_first_fixed stri_replace_last_fixed
 #' @family search_fixed
 #' @family search_replace
-#' @family locale_sensitive
-stri_replace_all_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_all_fixed", str, pattern, replacement, opts_collator,
+stri_replace_all_fixed <- function(str, pattern, replacement) {
+   .Call("stri_replace_all_fixed", str, pattern, replacement,
          PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_first_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_first_fixed", str, pattern, replacement, opts_collator,
+stri_replace_first_fixed <- function(str, pattern, replacement) {
+   .Call("stri_replace_first_fixed", str, pattern, replacement,
          PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_replace_fixed
-stri_replace_last_fixed <- function(str, pattern, replacement, opts_collator=list()) {
-   .Call("stri_replace_last_fixed", str, pattern, replacement, opts_collator,
+stri_replace_last_fixed <- function(str, pattern, replacement) {
+   .Call("stri_replace_last_fixed", str, pattern, replacement,
          PACKAGE="stringi")
 }
 
@@ -217,7 +273,8 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_all_regex}},
-#' \code{\link{stri_replace_all_fixed}}, or \code{\link{stri_replace_all_charclass}},
+#' \code{\link{stri_replace_all_fixed}}, \code{\link{stri_replace_all_coll}},
+#' or \code{\link{stri_replace_all_charclass}},
 #' depending on the argument used.
 #'
 #' Unless you are very lazy, please call the underlying functions
@@ -227,6 +284,7 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
@@ -235,15 +293,17 @@ stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()
 #'
 #' @export
 #' @family search_replace
-stri_replace_all <- function(str, replacement, ..., regex, fixed, charclass) {
+stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_replace_all_regex(str, regex, replacement, ...)
    else if (!missing(fixed))
       stri_replace_all_fixed(str, fixed, replacement, ...)
+   else if (!missing(coll))
+      stri_replace_all_coll(str, coll, replacement, ...)
    else if (!missing(charclass))
       stri_replace_all_charclass(str, charclass, replacement, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }
 
 
@@ -253,13 +313,15 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_first_regex}},
-#' \code{\link{stri_replace_first_fixed}}, or \code{\link{stri_replace_first_charclass}},
+#' \code{\link{stri_replace_first_fixed}}, \code{\link{stri_replace_first_coll}},
+#' or \code{\link{stri_replace_first_charclass}},
 #' depending on the argument used.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
@@ -268,15 +330,17 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, charclass) {
 #'
 #' @export
 #' @family search_replace
-stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
+stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_replace_first_regex(str, regex, replacement, ...)
    else if (!missing(fixed))
       stri_replace_first_fixed(str, fixed, replacement, ...)
+   else if (!missing(coll))
+      stri_replace_first_coll(str, coll, replacement, ...)
    else if (!missing(charclass))
       stri_replace_first_charclass(str, charclass, replacement, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }
 
 
@@ -286,13 +350,15 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_replace_last_regex}},
-#' \code{\link{stri_replace_last_fixed}}, or \code{\link{stri_replace_last_charclass}},
+#' \code{\link{stri_replace_last_fixed}}, \code{\link{stri_replace_last_coll}},
+#' or \code{\link{stri_replace_last_charclass}},
 #' depending on the argument used.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #' @param replacement character vector of strings to replace with
 #'
@@ -301,15 +367,17 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, charclass) {
 #'
 #' @export
 #' @family search_replace
-stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
+stri_replace_last <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    if (!missing(regex))
       stri_replace_last_regex(str, regex, replacement, ...)
    else if (!missing(fixed))
       stri_replace_last_fixed(str, fixed, replacement, ...)
+   else if (!missing(coll))
+      stri_replace_last_coll(str, coll, replacement, ...)
    else if (!missing(charclass))
       stri_replace_last_charclass(str, charclass, replacement, ...)
    else
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 }
 
 
@@ -329,6 +397,7 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
 #' @param ... additional arguments passed to the underlying functions
 #' @param regex character vector; regular expressions
 #' @param fixed character vector; fixed patterns
+#' @param coll character vector; canonically equivalent patterns
 #' @param charclass character vector; identifiers of character classes
 #' @param mode string; whether to look for all, or only the first/last
 #'             occurrence of the pattern
@@ -339,18 +408,18 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, charclass) {
 #'
 #' @export
 #' @family search_replace
-stri_replace <- function(str, replacement, ..., regex, fixed, charclass,
+stri_replace <- function(str, replacement, ..., regex, fixed, coll, charclass,
                         mode=c("first", "all", "last")) {
    # `first` is default for compatibility with stringr
    mode <- match.arg(mode) # this is slow
 
    switch(mode,
           first=stri_replace_first(str, replacement, ..., regex=regex,
-               fixed=fixed, charclass=charclass),
+               fixed=fixed, coll=coll, charclass=charclass),
           last =stri_replace_last(str, replacement, ..., regex=regex,
-               fixed=fixed, charclass=charclass),
+               fixed=fixed, coll=coll, charclass=charclass),
           all  =stri_replace_all(str, replacement, ..., regex=regex,
-               fixed=fixed, charclass=charclass)
+               fixed=fixed, coll=coll, charclass=charclass)
    )
 }
 

@@ -79,20 +79,20 @@ Other locale_sensitive: \code{\link{\%!==\%}},
   \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_last_fixed}},
-  \code{\link{stri_locate_last_fixed}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
-  \code{\link{stri_replace_all_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_last_fixed}},
-  \code{\link{stri_replace_last_fixed}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_coll}}; \code{\link{stri_unique}};
   \code{\link{stri_wrap}}; \code{\link{stringi-locale}};

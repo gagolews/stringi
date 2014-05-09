@@ -61,7 +61,12 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search}}
 
-Other search_replace: \code{\link{stri_replace_all_fixed}},
+Other search_replace: \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
+  \code{\link{stri_replace_all_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_last_fixed}},

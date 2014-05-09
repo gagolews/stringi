@@ -3,7 +3,7 @@
 \alias{stri_locate_last}
 \title{Locate Last Occurrence of a Pattern}
 \usage{
-stri_locate_last(str, ..., regex, fixed, charclass)
+stri_locate_last(str, ..., regex, fixed, coll, charclass)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -13,6 +13,8 @@ stri_locate_last(str, ..., regex, fixed, charclass)
 \item{regex}{character vector; regular expressions}
 
 \item{fixed}{character vector; fixed patterns}
+
+\item{coll}{character vector; canonically equivalent patterns}
 
 \item{charclass}{character vector; identifiers of character classes}
 }
@@ -24,6 +26,7 @@ double \code{NA}s in a row if a pattern has not been found.
 A convenience function.
 Calls either \code{\link{stri_locate_last_regex}},
 \code{\link{stri_locate_last_fixed}},
+\code{\link{stri_locate_last_coll}},
 or \code{\link{stri_locate_last_charclass}},
 depending on the argument used.
 }
@@ -32,8 +35,8 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 
 Please note that the parameters are considered in the following order:
-\code{regex}, \code{fixed}
-and \code{class}. Thus, if you specify \code{regex} and \code{class},
+\code{regex}, \code{fixed}, \code{coll}, and \code{class}.
+Thus, if you specify \code{regex} and \code{class},
 only the first one will be used.
 }
 \examples{
@@ -51,6 +54,11 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},
@@ -73,6 +81,11 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},

@@ -55,6 +55,11 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},
@@ -73,6 +78,11 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},

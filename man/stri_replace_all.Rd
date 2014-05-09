@@ -3,7 +3,7 @@
 \alias{stri_replace_all}
 \title{Replace All Occurrences of a Pattern}
 \usage{
-stri_replace_all(str, replacement, ..., regex, fixed, charclass)
+stri_replace_all(str, replacement, ..., regex, fixed, coll, charclass)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -13,6 +13,8 @@ stri_replace_all(str, replacement, ..., regex, fixed, charclass)
 \item{regex}{character vector; regular expressions}
 
 \item{fixed}{character vector; fixed patterns}
+
+\item{coll}{character vector; canonically equivalent patterns}
 
 \item{charclass}{character vector; identifiers of character classes}
 
@@ -24,7 +26,8 @@ Returns a character vector.
 \description{
 A convenience function.
 Calls either \code{\link{stri_replace_all_regex}},
-\code{\link{stri_replace_all_fixed}}, or \code{\link{stri_replace_all_charclass}},
+\code{\link{stri_replace_all_fixed}}, \code{\link{stri_replace_all_coll}},
+or \code{\link{stri_replace_all_charclass}},
 depending on the argument used.
 
 Unless you are very lazy, please call the underlying functions
@@ -36,6 +39,11 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_replace_all_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_fixed}},
