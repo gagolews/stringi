@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Generate a List with Collator Options
+#' Generate a List with Collator Settings
 #'
 #' @description
 #' A convenience function to tune the \pkg{ICU} Collator's behavior,
@@ -84,7 +84,7 @@
 #'  This is a way to get '100' to sort AFTER '2'.
 #'
 #' @return
-#' Returns a named list object; missing options are left with default values.
+#' Returns a named list object; missing settings are left with default values.
 #'
 #' @export
 #' @family locale_sensitive
@@ -124,10 +124,10 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 
 
 #' @title
-#' Generate a List with Regex Matcher Options
+#' Generate a List with Regex Matcher Settings
 #'
 #' @description
-#' A convenience function to tune regular expressions matcher behavior,
+#' A convenience function to tune the \pkg{ICU} regular expressions matcher's behavior,
 #' e.g. in \code{\link{stri_count_regex}}
 #' and other \link{stringi-search-regex} functions.
 #'
@@ -157,13 +157,14 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' letters without a known special meaning;
 #' otherwise, these escaped letters represent themselves.
 #'
-#' Note that some regex options may be changed using ICU regex flag
-#' settings inside regexes. For example, \code{"(?i)pattern"} does
+#' Note that some regex settings may be changed using ICU regex flags
+#' inside regexes. For example, \code{"(?i)pattern"} does
 #' a case-insensitive match of a given pattern,
-#' see the ICU User Guide entry on Regular Expressions in the References section.
+#' see the \pkg{ICU} User Guide entry on Regular Expressions
+#' in the References section.
 #'
 #' @return
-#' Returns a named list object; missing options are left with default values.
+#' Returns a named list object; missing settings are left with default values.
 #'
 #' @export
 #' @family search_regex

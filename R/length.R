@@ -60,7 +60,7 @@
 #'
 #' @examples
 #' stri_numbytes(letters)
-#' stri_numbytes(c('abc','123','\u0105\u0104'))
+#' stri_numbytes(c('abc', '123', '\u0105\u0104'))
 #' \dontrun{
 #' # this used to fail on Windows, as there was no native support for 4-bytes
 #' # Unicode characters; see, however, stri_escape_unicode():
@@ -102,12 +102,10 @@ stri_numbytes <- function(str) {
 #'
 #' @examples
 #' stri_length(LETTERS)
-#' stri_length(c('abc','123','\u0105\u0104'))
+#' stri_length(c('abc', '123', '\u0105\u0104'))
 #' stri_length('\u0105') # length is one, but...
 #' stri_numbytes('\u0105') # 2 bytes are used
-#' \dontrun{
 #' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
-#' }
 #'
 #' @export
 #' @family length
@@ -132,7 +130,7 @@ stri_length <- function(str) {
 #'
 #' @examples
 #' stri_isempty(letters[1:3])
-#' stri_isempty(c(',','','abc','123','\u0105\u0104'))
+#' stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 #' stri_isempty(character(1))
 #'
 #' @export

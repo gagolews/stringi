@@ -73,10 +73,8 @@ On the other hand, \code{\%stri===\%} performs a locale-independent,
 code point-based comparison.
 }
 \examples{
-\dontrun{
-"a" \%<\% "b"
-c("a", "b", "c") \%>=\% "b"
-}
+"a" \%stri<\% "b"
+c("a", "b", "c") \%stri>=\% "b"
 }
 \seealso{
 Other locale_sensitive: \code{\link{stri_cmp}},

@@ -73,6 +73,8 @@ stri_dup <- function(str, times) {
 #'
 #' @usage
 #' e1 \%+\% e2
+#' 
+#' e1 \%stri+\% e2
 #'
 #' @param e1 character vector or an object coercible to a character vector
 #' @param e2 character vector or an object coercible to a character vector
@@ -81,8 +83,8 @@ stri_dup <- function(str, times) {
 #'
 #'
 #' @examples
-#' c('abc','123','\u0105\u0104')%+%letters[1:6]
-#' 'ID_'%+%1:5
+#' c('abc', '123', '\u0105\u0104') %stri+% letters[1:6]
+#' 'ID_' %stri+% 1:5
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
@@ -142,8 +144,9 @@ stri_dup <- function(str, times) {
 #' stri_join(1:13, letters, sep='!')
 #' stri_join(1:13, letters, collapse='?')
 #' stri_join(1:13, letters, sep='!', collapse='?')
-#' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...')
-#' stri_join(c('abc','123','\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
+#' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...')
+#' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
+#' 
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
@@ -188,7 +191,7 @@ stri_paste <- stri_join
 #' @examples
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
-#' stri_flatten(c('abc','123','\u0105\u0104'))
+#' stri_flatten(c('abc', '123', '\u0105\u0104'))
 #' stri_flatten(stri_dup(letters[1:6],1:3))
 #'
 #' @export

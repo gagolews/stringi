@@ -26,9 +26,7 @@ tests for canonical equivalence of strings. Such an operation
 is locale-dependent.
 }
 \examples{
-\dontrun{
 stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!==\%}},
