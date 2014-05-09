@@ -10,9 +10,9 @@ stri_detect_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 Returns a logical vector.
@@ -31,13 +31,11 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 }
 \examples{
-\dontrun{
-stri_detect_regex(c("stringi w R","REXAMINE","123"), 'R.')
-stri_detect_regex(c("stringi w R","REXAMINE","123"), '[[:alpha:]]*?')
-stri_detect_regex(c("stringi w R","REXAMINE","123"), '[a-zC1]')
-stri_detect_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
+stri_detect_regex(c("stringi R", "REXAMINE","123"), 'R.')
+stri_detect_regex(c("stringi R", "REXAMINE","123"), '[[:alpha:]]*?')
+stri_detect_regex(c("stringi R", "REXAMINE","123"), '[a-zC1]')
+stri_detect_regex(c("stringi R", "REXAMINE","123"), '( R|RE)')
 stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
-}
 }
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};

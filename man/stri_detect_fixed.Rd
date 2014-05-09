@@ -28,8 +28,8 @@ and a warning is generated.
 }
 \examples{
 \dontrun{
-stri_detect_fixed(c("stringi w R","REXAMINE","123"), c('i','R','0'))
-stri_detect_fixed(c("stringi w R","REXAMINE","123"), 'R')
+stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
+stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 }
 }
 \seealso{
