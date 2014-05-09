@@ -10,9 +10,9 @@ stri_detect_coll(str, pattern, opts_collator = NULL)
 
 \item{pattern}{character vector}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
+\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 Returns a logical vector.

@@ -2,7 +2,7 @@
 \name{stri_split_lines}
 \alias{stri_split_lines}
 \alias{stri_split_lines1}
-\title{Split Strings into Text Lines}
+\title{Split a String into Text Lines}
 \usage{
 stri_split_lines(str, n_max = -1L, omit_empty = FALSE)
 

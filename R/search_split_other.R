@@ -30,187 +30,6 @@
 
 
 #' @title
-#' Split up a String by a Character Class
-#'
-#' @description
-#' Splits each element of \code{str} into substrings.
-#' \code{pattern} indicates delimiters that separate
-#' the input into fields. The input data between the matches become
-#' the fields themselves.
-#'
-#' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max},
-#' and \code{omit_empty}.
-#'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
-#'
-#' \code{omit_empty} is applied during the split process: if it is
-#' set to \code{TRUE},
-#' then empty strings will never appear in the resulting vector.
-#'
-#' @param str character vector with strings to search in
-#' @param pattern character vector specifying character classes to match,
-#' see \link{stringi-search-charclass}
-#' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; determines whether empty
-#' strings should be removed from the result
-#'
-#' @return Returns a list of character vectors.
-#'
-#'
-#' @examples
-#' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
-#' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n=3,
-#'    omit_empty=c(FALSE, TRUE))
-#'
-#' @export
-#' @rdname stri_split_charclass
-#' @aliases stri_split_charclass
-#' @family search_charclass
-#' @family search_split
-stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_charclass", str, pattern, n_max, omit_empty, PACKAGE="stringi")
-}
-
-
-#' @title
-#' Split up a String By Regex Pattern Matches
-#'
-#' @description
-#' Splits each element of \code{str} into substrings.
-#' A \code{pattern} indicates delimiters that separate
-#' the input into fields. The input data between the matches become
-#' the fields themselves.
-#'
-#' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max},
-#' and \code{omit_empty}.
-#'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
-#'
-#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
-#' then empty strings will never appear in the resulting vector.
-#'
-#' Note that if you want to split a string by characters from a
-#' specific class (e.g. whitespaces), \code{\link{stri_split_charclass}}
-#' will be a little bit faster.
-#'
-#' @param str character vector with strings to search in
-#' @param pattern pattern character; regular expressions
-#' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; determines whether empty
-#' strings should be removed from the result
-#' @param opts_regex a named list with \pkg{ICU} Regex options
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-#' for default options
-#'
-#' @return Returns a list of character vectors.
-#'
-#'
-#' @examples
-#' \dontrun{
-#' stri_split_regex("Lorem ipsum dolor sit amet",
-#'    "\\p{Z}+") # see also stri_split_charclass
-#' }
-#'
-#' @export
-#' @rdname stri_split_regex
-#' @aliases stri_split_regex
-#' @family search_regex
-#' @family search_split
-stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_regex=NULL)  {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_regex", str, pattern, n_max, omit_empty, opts_regex, PACKAGE="stringi")
-}
-
-
-#' @title
-#' Split up a String By Fixed Pattern Matches
-#'
-#' @description
-#' Splits each element of \code{str} into substrings.
-#' \code{pattern} indicates delimiters that separate
-#' the input into fields. The input data between the matches become
-#' the fields themselves.
-#'
-#' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
-#'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
-#'
-#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
-#' then empty strings will never appear in the resulting vector.
-#'
-#' For natural language processing this function may be not give
-#' you desired results. Refer to \link{stringi-search-fixed} for more details.
-#'
-#' @param str character vector with strings to search in
-#' @param pattern character vector with fixed patterns
-#' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; determines whether empty
-#' strings should be removed from the result
-#'
-#' @return Returns a list of character vectors.
-#'
-#'
-#' @examples
-#' \dontrun{
-#' stri_split_fixed("Lorem ipsum dolor sit amet", " ")
-#' }
-#'
-#' @export
-#' @family search_fixed
-#' @family search_split
-stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_fixed", str, pattern, n_max, omit_empty, PACKAGE="stringi")
-}
-
-
-#' @title
-#' Split up a String By Canonically Equivalent Pattern Matches
-#'
-#' @description
-#' Splits each element of \code{str} into substrings.
-#' \code{pattern} indicates delimiters that separate
-#' the input into fields. The input data between the matches become
-#' the fields themselves.
-#'
-#' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
-#'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
-#'
-#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
-#' then empty strings will never appear in the resulting vector.
-#'
-#' This is a locale-sensitive text operation.
-#' See \link{stringi-search-coll} for more details on
-#' locale-sensitive text searching in \pkg{stringi}.
-#'
-#' @param str character vector with strings to search in
-#' @param pattern character vector with fixed patterns
-#' @param n_max integer vector, maximal number of pieces to return
-#' @param omit_empty logical vector; determines whether empty
-#' strings should be removed from the result
-#' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default options
-#'
-#' @return Returns a list of character vectors.
-#'
-#' @export
-#' @family search_coll
-#' @family search_split
-#' @family locale_sensitive
-stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=NULL) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_coll", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
-}
-
-
-#' @title
 #' Split a String Into Fields
 #'
 #' @description
@@ -237,21 +56,25 @@ stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_coll
 #' @export
 #' @family search_split
 stri_split <- function(str, ..., regex, fixed, coll, charclass) {
-   if (!missing(regex))
-      stri_split_regex(str, regex, ...)
-   else if (!missing(fixed))
-      stri_split_fixed(str, fixed, ...)
-   else if (!missing(coll))
-      stri_split_coll(str, coll, ...)
-   else if (!missing(charclass))
-      stri_split_charclass(str, charclass, ...)
-   else
+   providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
+                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
+   
+   if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+   
+   if (providedarg["regex"])
+      stri_split_regex(str, regex, ...)
+   else if (providedarg["fixed"])
+      stri_split_fixed(str, fixed, ...)
+   else if (providedarg["coll"])
+      stri_split_coll(str, coll, ...)
+   else if (providedarg["charclass"])
+      stri_split_charclass(str, charclass, ...)
 }
 
 
 #' @title
-#' Split Strings into Text Lines
+#' Split a String into Text Lines
 #'
 #' @description
 #' These functions split each character string
@@ -321,7 +144,7 @@ stri_split_lines1 <- function(str) {
 
 
 #' @title
-#' Split Strings at Specific Text Boundaries
+#' Split a String at Specific Text Boundaries
 #'
 #' @description
 #' This function locates specific text boundaries
@@ -372,9 +195,7 @@ stri_split_lines1 <- function(str) {
 #' Returns a list of character vectors.
 #'
 #' @examples
-#' \dontrun{
 #' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
-#' }
 #'
 #' @export
 #' @family search_split
