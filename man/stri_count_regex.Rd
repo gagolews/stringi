@@ -10,9 +10,9 @@ stri_count_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 Returns an integer vector.
@@ -27,15 +27,12 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-stri_count_regex(s,"(s|el)it")
-stri_count_regex(s,"i.i")
-stri_count_regex(s,".it")
-stri_count_regex("bab baab baaab",c("b.*?b","b.b"))
-stri_count_regex(c("stringi w R","REXAMINE","123"), '( R|RE)')
-stri_count_regex(c("stringi w R","REXAMINE","123"), '(i|I|1)')
-}
+stri_count_regex(s, "(s|el)it")
+stri_count_regex(s, "i.i")
+stri_count_regex(s, ".it")
+stri_count_regex("bab baab baaab", c("b.*?b", "b.b"))
+stri_count_regex(c("stringi", "123"), "^(s|1)")
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};
