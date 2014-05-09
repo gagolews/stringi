@@ -42,7 +42,9 @@
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions to search for
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #'
 #' @return
 #' For \code{stri_match_all_regex},
@@ -59,21 +61,21 @@
 #' @aliases stri_match_all_regex stri_match_first_regex stri_match_last_regex
 #' @family search_regex
 #' @family search_match
-stri_match_all_regex <- function(str, pattern, opts_regex=list()) {
+stri_match_all_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_match_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_match_regex
-stri_match_first_regex <- function(str, pattern, opts_regex=list()) {
+stri_match_first_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_match_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_match_regex
-stri_match_last_regex <- function(str, pattern, opts_regex=list()) {
+stri_match_last_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_match_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 

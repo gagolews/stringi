@@ -5,11 +5,11 @@
 \alias{stri_replace_last_regex}
 \title{Replace Occurrences of a Regex Pattern}
 \usage{
-stri_replace_all_regex(str, pattern, replacement, opts_regex = list())
+stri_replace_all_regex(str, pattern, replacement, opts_regex = NULL)
 
-stri_replace_first_regex(str, pattern, replacement, opts_regex = list())
+stri_replace_first_regex(str, pattern, replacement, opts_regex = NULL)
 
-stri_replace_last_regex(str, pattern, replacement, opts_regex = list())
+stri_replace_last_regex(str, pattern, replacement, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -19,7 +19,9 @@ stri_replace_last_regex(str, pattern, replacement, opts_regex = list())
 \item{replacement}{character vector of strings to replace with,
 possibly including references to capture groups}
 
-\item{opts_regex}{a named list as generated with \code{\link{stri_opts_regex}}}
+\item{opts_regex}{a named list with \pkg{ICU} Regex options
+as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+for default options}
 }
 \value{
 Each function returns a character vector.

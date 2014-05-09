@@ -17,8 +17,8 @@ stri_extract_last_coll(str, pattern, opts_collator = NULL)
 \item{pattern}{character vector}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options.}
+as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+for default options}
 }
 \value{
 For \code{stri_extract_all_coll}, a list of

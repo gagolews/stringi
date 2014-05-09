@@ -5,18 +5,20 @@
 \alias{stri_extract_last_regex}
 \title{Extract Regex Pattern Matches}
 \usage{
-stri_extract_all_regex(str, pattern, opts_regex = list())
+stri_extract_all_regex(str, pattern, opts_regex = NULL)
 
-stri_extract_first_regex(str, pattern, opts_regex = list())
+stri_extract_first_regex(str, pattern, opts_regex = NULL)
 
-stri_extract_last_regex(str, pattern, opts_regex = list())
+stri_extract_last_regex(str, pattern, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list as generated with \code{\link{stri_opts_regex}}}
+\item{opts_regex}{a named list with \pkg{ICU} Regex options
+as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+for default options}
 }
 \value{
 For \code{stri_extract_all_regex},

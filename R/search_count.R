@@ -76,8 +76,8 @@ stri_count_charclass <- function(str, pattern) {
 #' @param str character vector
 #' @param pattern character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default options
 #'
 #' @return Returns an integer vector with the number of matches.
 #'
@@ -145,7 +145,9 @@ stri_count_fixed <- function(str, pattern) {
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #' @return Returns an integer vector.
 #'
 #' @examples
@@ -162,7 +164,7 @@ stri_count_fixed <- function(str, pattern) {
 #' @export
 #' @family search_count
 #' @family search_regex
-stri_count_regex <- function(str, pattern, opts_regex=list()) {
+stri_count_regex <- function(str, pattern, opts_regex=NULL) {
    # prepare_arg done internally
    .Call("stri_count_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }

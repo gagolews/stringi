@@ -105,8 +105,8 @@ stri_extract_last_charclass <- function(str, pattern) {
 #' @param str character vector
 #' @param pattern character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default options
 #'
 #' @return
 #' For \code{stri_extract_all_coll}, a list of
@@ -163,7 +163,9 @@ stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #'
 #' @return
 #' For \code{stri_extract_all_regex},
@@ -183,21 +185,21 @@ stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
 #' @aliases stri_extract_all_regex stri_extract_first_regex stri_extract_last_regex
 #' @family search_regex
 #' @family search_extract
-stri_extract_all_regex <- function(str, pattern, opts_regex=list()) {
+stri_extract_all_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_extract_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_extract_regex
-stri_extract_first_regex <- function(str, pattern, opts_regex=list()) {
+stri_extract_first_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_extract_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_extract_regex
-stri_extract_last_regex <- function(str, pattern, opts_regex=list()) {
+stri_extract_last_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_extract_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 

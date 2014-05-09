@@ -17,8 +17,8 @@ stri_split_coll(str, pattern, n_max = -1L, omit_empty = FALSE,
 strings should be removed from the result}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options.}
+as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+for default options}
 }
 \value{
 Returns a list of character vectors.

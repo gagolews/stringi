@@ -3,14 +3,16 @@
 \alias{stri_detect_regex}
 \title{Detect a Regex Pattern Match}
 \usage{
-stri_detect_regex(str, pattern, opts_regex = list())
+stri_detect_regex(str, pattern, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list as generated with \code{\link{stri_opts_regex}}}
+\item{opts_regex}{a named list with \pkg{ICU} Regex options
+as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+for default options}
 }
 \value{
 Returns a logical vector.
