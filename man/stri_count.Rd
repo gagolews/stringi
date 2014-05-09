@@ -33,11 +33,9 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_count(s, fixed=letters)
 stri_count(s, regex="[[:alpha:]]")
-}
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};

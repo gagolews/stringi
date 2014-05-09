@@ -22,7 +22,8 @@ character class (e.g. letters, digits, or white spaces).
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-stri_count_charclass(c("stRRRingi","REXAMINE","123"), c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
+stri_count_charclass(c("stRRRingi", "STrrrINGI", "123"),
+   c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
 stri_count_charclass(" \\t\\n", "\\\\p{WHITE_SPACE}") # white space - binary property
 stri_count_charclass(" \\t\\n", "\\\\p{Z}") # whitespace - general category (note the difference)
 }

@@ -14,7 +14,8 @@ stri_count_fixed(str, pattern)
 Returns an integer vector with the number of matches.
 }
 \description{
-This function counts the number of occurrences of a fixed pattern in a string.
+This function counts the number of occurrences
+of a fixed pattern in a string.
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
@@ -26,15 +27,13 @@ For natural language processing this function may be not give
 you desired results. Refer to \link{stringi-search-fixed} for more details.
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_count_fixed(s, " ")
 stri_count_fixed(s, "o")
 stri_count_fixed(s, "it")
 stri_count_fixed(s, letters)
 stri_count_fixed("babab", "b")
-stri_count_fixed(c("stringi w R","REXAMINE","123"), 'R')
-}
+stri_count_fixed(c("stringi", "123"), "string")
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};
