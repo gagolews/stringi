@@ -19,8 +19,8 @@ stri_replace_last_coll(str, pattern, replacement, opts_collator = NULL)
 \item{replacement}{character vector of strings to replace with}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options.}
+as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+for default options}
 }
 \value{
 Each function discussed returns a character vector.

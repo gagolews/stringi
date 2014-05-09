@@ -3,14 +3,16 @@
 \alias{stri_count_regex}
 \title{Count the Number of Regex Pattern Matches}
 \usage{
-stri_count_regex(str, pattern, opts_regex = list())
+stri_count_regex(str, pattern, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list as generated with \code{\link{stri_opts_regex}}}
+\item{opts_regex}{a named list with \pkg{ICU} Regex options
+as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+for default options}
 }
 \value{
 Returns an integer vector.

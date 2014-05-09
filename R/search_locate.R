@@ -117,8 +117,8 @@ stri_locate_last_charclass <- function(str, pattern) {
 #' @param str character vector
 #' @param pattern character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default options
 #'
 #' @return
 #' For \code{stri_locate_all_coll},
@@ -270,7 +270,9 @@ stri_locate_last_fixed <- function(str, pattern) {
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #'
 #' @return
 #' For \code{stri_locate_all_charclass},
@@ -302,21 +304,21 @@ stri_locate_last_fixed <- function(str, pattern) {
 #' @family search_regex
 #' @family search_locate
 #' @family indexing
-stri_locate_all_regex <- function(str, pattern, opts_regex=list()) {
+stri_locate_all_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_locate_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_regex
-stri_locate_first_regex <- function(str, pattern, opts_regex=list()) {
+stri_locate_first_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_locate_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_locate_regex
-stri_locate_last_regex <- function(str, pattern, opts_regex=list()) {
+stri_locate_last_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_locate_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 

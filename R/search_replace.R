@@ -105,8 +105,8 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 #' @param pattern character vector of patterns to search for
 #' @param replacement character vector of strings to replace with
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default options
 #'
 #' @return Each function discussed returns a character vector.
 #'
@@ -226,7 +226,9 @@ stri_replace_last_fixed <- function(str, pattern, replacement) {
 #' @param pattern character vector of regular expressions
 #' @param replacement character vector of strings to replace with,
 #' possibly including references to capture groups
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #'
 #' @return Each function returns a character vector.
 #'
@@ -245,7 +247,7 @@ stri_replace_last_fixed <- function(str, pattern, replacement) {
 #' @aliases stri_replace_all_regex stri_replace_first_regex stri_replace_last_regex
 #' @family search_regex
 #' @family search_replace
-stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=list()) {
+stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=NULL) {
    .Call("stri_replace_all_regex", str, pattern, replacement, opts_regex,
          PACKAGE="stringi")
 }
@@ -253,7 +255,7 @@ stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=list())
 
 #' @export
 #' @rdname stri_replace_regex
-stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=list()) {
+stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=NULL) {
    .Call("stri_replace_first_regex", str, pattern, replacement, opts_regex,
          PACKAGE="stringi")
 }
@@ -261,7 +263,7 @@ stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=list(
 
 #' @export
 #' @rdname stri_replace_regex
-stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=list()) {
+stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=NULL) {
    .Call("stri_replace_last_regex", str, pattern, replacement, opts_regex,
          PACKAGE="stringi")
 }

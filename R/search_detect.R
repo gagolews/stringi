@@ -110,8 +110,8 @@ stri_detect_fixed <- function(str, pattern) {
 #' @param str character vector
 #' @param pattern character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default options
 #'
 #' @return Returns a logical vector.
 #'
@@ -142,7 +142,9 @@ stri_detect_coll <- function(str, pattern, opts_collator=NULL) {
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions
-#' @param opts_regex a named list as generated with \code{\link{stri_opts_regex}}
+#' @param opts_regex a named list with \pkg{ICU} Regex options
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default options
 #'
 #' @return Returns a logical vector.
 #'
@@ -158,7 +160,7 @@ stri_detect_coll <- function(str, pattern, opts_collator=NULL) {
 #' @export
 #' @family search_detect
 #' @family search_regex
-stri_detect_regex <- function(str, pattern, opts_regex=list()) {
+stri_detect_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_detect_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
 

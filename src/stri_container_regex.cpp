@@ -139,14 +139,17 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  * @return flags
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-09)
+ *          allow NULL for opts_regex
  */
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
    uint32_t flags = 0;
-   if (!Rf_isVectorList(opts_regex))
+   if (!isNull(opts_regex) && !Rf_isVectorList(opts_regex))
       Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
 
-   R_len_t narg = LENGTH(opts_regex);
+   R_len_t narg = isNull(opts_regex)?0:LENGTH(opts_regex);
 
    if (narg > 0) {
 

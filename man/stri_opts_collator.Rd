@@ -48,8 +48,8 @@ Returns a named list object; missing options are left with default values.
 A convenience function to tune the \pkg{ICU} Collator's behavior,
 e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
 \code{\link{stri_unique}}, \code{\link{stri_duplicated}},
-as well as \code{\link{stri_detect_fixed}}
-and other \link{stringi-search-fixed} functions.
+as well as \code{\link{stri_detect_coll}}
+and other \link{stringi-search-coll} functions.
 }
 \details{
 \pkg{ICU}'s \emph{collator} performs a locale-aware, natural-language
