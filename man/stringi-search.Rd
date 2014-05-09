@@ -71,6 +71,16 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_coll}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_coll}};
   \code{\link{stringi-search-coll}}
 
@@ -126,6 +136,11 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},
@@ -183,6 +198,11 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_replace_all_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_fixed}},

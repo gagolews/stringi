@@ -37,6 +37,11 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_replace_all_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_fixed}},

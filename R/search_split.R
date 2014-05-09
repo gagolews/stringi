@@ -173,7 +173,7 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #' Splits each element of \code{str} into substrings.
 #' \code{pattern} indicates delimiters that separate
 #' the input into fields. The input data between the matches become
-#' the fields themselves. 
+#' the fields themselves.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
@@ -182,7 +182,7 @@ stri_split_fixed <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
 #'
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
-#' 
+#'
 #' This is a locale-sensitive text operation.
 #' See \link{stringi-search-coll} for more details on
 #' locale-sensitive text searching in \pkg{stringi}.

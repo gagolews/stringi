@@ -3,8 +3,8 @@
 \alias{stri_replace}
 \title{Replace Occurrences of a Pattern}
 \usage{
-stri_replace(str, replacement, ..., regex, fixed, charclass, mode = c("first",
-  "all", "last"))
+stri_replace(str, replacement, ..., regex, fixed, coll, charclass,
+  mode = c("first", "all", "last"))
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -14,6 +14,8 @@ stri_replace(str, replacement, ..., regex, fixed, charclass, mode = c("first",
 \item{regex}{character vector; regular expressions}
 
 \item{fixed}{character vector; fixed patterns}
+
+\item{coll}{character vector; canonically equivalent patterns}
 
 \item{charclass}{character vector; identifiers of character classes}
 
@@ -40,6 +42,11 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_replace_all_fixed}},
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_fixed}},

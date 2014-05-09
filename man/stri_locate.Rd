@@ -3,7 +3,7 @@
 \alias{stri_locate}
 \title{Locate Occurrences of a Pattern}
 \usage{
-stri_locate(str, ..., regex, fixed, charclass, mode = c("first", "all",
+stri_locate(str, ..., regex, fixed, coll, charclass, mode = c("first", "all",
   "last"))
 }
 \arguments{
@@ -15,6 +15,8 @@ stri_locate(str, ..., regex, fixed, charclass, mode = c("first", "all",
 
 \item{fixed}{character vector; fixed patterns}
 
+\item{coll}{character vector; canonically equivalent patterns}
+
 \item{charclass}{character vector; identifiers of character classes}
 
 \item{mode}{single string; whether to look for all, or only the first/last
@@ -22,8 +24,7 @@ stri_locate(str, ..., regex, fixed, charclass, mode = c("first", "all",
 }
 \value{
 The return value is the same as that of the underlying
-functions called, i.e.
-a two-column matrix or a list of matrices.
+functions called, i.e. a two-column matrix or a list of matrices.
 }
 \description{
 A convenience function.
@@ -42,6 +43,11 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},
@@ -64,6 +70,11 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_last_charclass}},
   \code{\link{stri_locate_last_charclass}};
+  \code{\link{stri_locate_all_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},
