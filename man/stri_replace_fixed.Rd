@@ -3,7 +3,7 @@
 \alias{stri_replace_all_fixed}
 \alias{stri_replace_first_fixed}
 \alias{stri_replace_last_fixed}
-\title{Replace Occurrences of a Fixed Pattern}
+\title{Replace Occurrences of a Fixed Pattern Matches}
 \usage{
 stri_replace_all_fixed(str, pattern, replacement)
 
@@ -36,11 +36,9 @@ Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_fixed(s, " ", "#")
 stri_replace_all_fixed(s, "o", "0")
-}
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};

@@ -16,9 +16,9 @@ stri_locate_last_coll(str, pattern, opts_collator = NULL)
 
 \item{pattern}{character vector}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
+\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 For \code{stri_locate_all_coll},
@@ -50,7 +50,6 @@ and \code{\link{stri_locate_last_regex}} for overlapping pattern matches.
 In \code{stri_locate_last_coll}, search is done from-the-end.
 }
 \examples{
-\dontrun{
 stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_first_coll(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 stri_locate_last_coll(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
@@ -65,7 +64,6 @@ stri_locate_last_coll('bbbbb', 'bb')
 locate <- stri_locate_first_coll('stringi - REXAMINE', letters)
 rownames(locate) <- letters
 locate
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

@@ -33,20 +33,13 @@ depending on the argument used.
 \details{
 Unless you are very lazy, please call the underlying functions
 directly for better performance.
-
-Please note that the parameters are considered in the following order:
-\code{regex}, \code{fixed}, \code{coll}, and \code{class}.
-Thus, if you specify \code{regex} and \code{class},
-only the first one will be used.
 }
 \examples{
-\dontrun{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 stri_locate_first('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_first('Bartolini', fixed=letters[1:3])
 stri_locate_first('a b c', charclass='Zs')
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

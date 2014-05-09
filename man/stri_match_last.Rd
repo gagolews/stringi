@@ -17,8 +17,7 @@ character matrix
 }
 \description{
 A dummy function for compatibility with other search routines
-in \pkg{stringi}.
-Calls \code{\link{stri_match_last_regex}}.
+in \pkg{stringi}. Calls \code{\link{stri_match_last_regex}}.
 }
 \seealso{
 Other search_match: \code{\link{stri_match_all_regex}},

@@ -16,9 +16,9 @@ stri_extract_last_coll(str, pattern, opts_collator = NULL)
 
 \item{pattern}{character vector}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
+\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 For \code{stri_extract_all_coll}, a list of
@@ -38,13 +38,11 @@ See \link{stringi-search-coll} for more details on
 locale-sensitive text searching in \pkg{stringi}.
 }
 \examples{
-\dontrun{
 stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 stri_extract_first_coll(c('Yy\\u00FD', 'AAA'), 'y',
    stri_opts_collator(strength=2, locale="sk_SK"))
 stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',
    stri_opts_collator(strength=1, locale="sk_SK"))
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!==\%}},

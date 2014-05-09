@@ -47,7 +47,6 @@ and \code{\link{stri_locate_last_regex}} for overlapping pattern matches.
 In \code{stri_locate_last_fixed}, search is done from-the-end.
 }
 \examples{
-\dontrun{
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
@@ -62,7 +61,6 @@ stri_locate_last_fixed('bbbbb', 'bb')
 locate <- stri_locate_first_fixed('stringi - REXAMINE', letters)
 rownames(locate) <- letters
 locate
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

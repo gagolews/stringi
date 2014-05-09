@@ -30,63 +30,11 @@
 
 
 #' @title
-#' Extract Regex Pattern Matches, Together with Capture Groups
-#'
-#' @description
-#' These functions extract substrings of \code{str} that
-#' match a given \code{pattern}, and also give matches for capture
-#' groups, i.e. subpatterns given in round parentheses.
-#'
-#' @details
-#' Vectorized over \code{str} and \code{pattern}.
-#'
-#' @param str character vector of strings to search in
-#' @param pattern character vector of regular expressions to search for
-#' @param opts_regex a named list with \pkg{ICU} Regex options
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-#' for default options
-#'
-#' @return
-#' For \code{stri_match_all_regex},
-#' a list of character matrices is returned.
-#' Otherwise, a character matrix is given.
-#' \code{NA} if not found or if given capture group is unavailable.
-#'
-#' The first column gives the whole match. The second one corresponds to
-#' the first capture group, the third -- the second capture group, and so on.
-#'
-#'
-#' @export
-#' @rdname stri_match_regex
-#' @aliases stri_match_all_regex stri_match_first_regex stri_match_last_regex
-#' @family search_regex
-#' @family search_match
-stri_match_all_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_match_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
-}
-
-
-#' @export
-#' @rdname stri_match_regex
-stri_match_first_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_match_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
-}
-
-
-#' @export
-#' @rdname stri_match_regex
-stri_match_last_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_match_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
-}
-
-
-#' @title
 #' Extract All Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
-#' in \pkg{stringi}.
-#' Calls \code{\link{stri_match_all_regex}}.
+#' in \pkg{stringi}. Calls \code{\link{stri_match_all_regex}}.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying function
@@ -109,8 +57,7 @@ stri_match_all <- function(str, ..., regex) {
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
-#' in \pkg{stringi}.
-#' Calls \code{\link{stri_match_first_regex}}.
+#' in \pkg{stringi}. Calls \code{\link{stri_match_first_regex}}.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying function
@@ -133,8 +80,7 @@ stri_match_first <- function(str, ..., regex) {
 #'
 #' @description
 #' A dummy function for compatibility with other search routines
-#' in \pkg{stringi}.
-#' Calls \code{\link{stri_match_last_regex}}.
+#' in \pkg{stringi}. Calls \code{\link{stri_match_last_regex}}.
 #'
 #' @param str character vector of strings to search in
 #' @param ... additional arguments passed to the underlying function

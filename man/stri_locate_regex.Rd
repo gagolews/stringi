@@ -16,12 +16,12 @@ stri_locate_last_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
-For \code{stri_locate_all_charclass},
+For \code{stri_locate_all_regex},
 a list of \code{max(length(str), length(pattern))} integer matrices
 is returned .
 The first column gives the start positions
@@ -29,7 +29,7 @@ of matches, and the second column gives the end positions.
 Moreover, you may gen two \code{NA}s in one row
 for no match or \code{NA} arguments.
 
-For \code{stri_locate_first_fixed} and \code{stri_locate_last_fixed},
+For \code{stri_locate_first_regex} and \code{stri_locate_last_regex},
 you get an integer matrix with \code{max(length(str), length(pattern))} rows,
 and two columns, giving the start and end positions of the first
 or the last matches, respectively, and \code{NA}s iff not found.
@@ -42,14 +42,12 @@ a regex pattern matches a substring of the input string.
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-\dontrun{
 stri_locate_all_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_first_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_last_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

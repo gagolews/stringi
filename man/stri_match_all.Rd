@@ -17,8 +17,7 @@ list of character matrices
 }
 \description{
 A dummy function for compatibility with other search routines
-in \pkg{stringi}.
-Calls \code{\link{stri_match_all_regex}}.
+in \pkg{stringi}. Calls \code{\link{stri_match_all_regex}}.
 }
 \seealso{
 Other search_match: \code{\link{stri_match_all_regex}},
