@@ -102,9 +102,7 @@
 #' @export
 #' @rdname stri_compare
 #'
-#'
 #' @examples
-#' \dontrun{
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 #' stri_cmp("hladny", "chladny") # < or > (depends on locale)
@@ -113,7 +111,6 @@
 #' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
 #' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105') # note the difference
 #' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
-#' }
 stri_compare <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_integer", e1, e2, opts_collator, PACKAGE="stringi")
 }
@@ -204,10 +201,8 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'
 #'
 #' @examples
-#' \dontrun{
-#' "a" %<% "b"
-#' c("a", "b", "c") %>=% "b"
-#' }
+#' "a" %stri<% "b"
+#' c("a", "b", "c") %stri>=% "b"
 #'
 #' @usage
 #' e1 \%<\% e2
@@ -399,10 +394,8 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname stri_order
 #'
 #' @examples
-#' \dontrun{
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
-#' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
 }
@@ -435,9 +428,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @return Returns a character vector.
 #'
 #' @examples
-#' \dontrun{
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
-#' }
 #'
 #' @family locale_sensitive
 #' @export

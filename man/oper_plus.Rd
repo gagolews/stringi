@@ -7,6 +7,8 @@
 e1 \%+\% e2
 
 e1 \%stri+\% e2
+
+e1 \%stri+\% e2
 }
 \arguments{
 \item{e1}{character vector or an object coercible to a character vector}
@@ -30,7 +32,7 @@ because it creates a new (temporary) result vector each time
 the operator is applied.
 }
 \examples{
-c('abc','123','\\u0105\\u0104')\%+\%letters[1:6]
-'ID_'\%+\%1:5
+c('abc', '123', '\\u0105\\u0104') \%stri+\% letters[1:6]
+'ID_' \%stri+\% 1:5
 }
 

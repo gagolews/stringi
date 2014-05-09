@@ -21,7 +21,7 @@ as opposed to the built-in \code{\link{nzchar}} function.
 }
 \examples{
 stri_isempty(letters[1:3])
-stri_isempty(c(',','','abc','123','\\u0105\\u0104'))
+stri_isempty(c(',', '', 'abc', '123', '\\u0105\\u0104'))
 stri_isempty(character(1))
 }
 \seealso{

@@ -32,7 +32,7 @@ will be used.
 \examples{
 stri_flatten(LETTERS)
 stri_flatten(LETTERS, collapse=",")
-stri_flatten(c('abc','123','\\u0105\\u0104'))
+stri_flatten(c('abc', '123', '\\u0105\\u0104'))
 stri_flatten(stri_dup(letters[1:6],1:3))
 }
 \seealso{

@@ -37,8 +37,8 @@ you are doing. However, thanks to this property you may
 e.g. search for one pattern in each given string,
 or search for each pattern in one given string.
 
-We of course took great care of performance issues: e.g. in regular expression
-searching, regex matchers are reused
+We of course took great care of performance issues:
+e.g. in regular expression searching, regex matchers are reused
 from iteration to iteration, as long it is possible.
 
 Functions with some non-vectorized arguments are rare:

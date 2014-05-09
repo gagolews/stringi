@@ -100,7 +100,6 @@ Please note that different locale settings may lead to different results
 (see the examples below).
 }
 \examples{
-\dontrun{
 stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
 stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
 stri_cmp("hladny", "chladny") # < or > (depends on locale)
@@ -109,7 +108,6 @@ stri_cmp_equiv("hladn\\u00FD", "hladny", stri_opts_collator(strength=1, locale="
 stri_cmp_equiv(stri_trans_nfkd('\\u0105'), '\\u105')
 stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105') # note the difference
 stri_cmp_equiv("\\ufb00", "ff", stri_opts_collator(strength=2))
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!==\%}},
