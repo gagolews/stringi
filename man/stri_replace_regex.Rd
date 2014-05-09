@@ -3,7 +3,7 @@
 \alias{stri_replace_all_regex}
 \alias{stri_replace_first_regex}
 \alias{stri_replace_last_regex}
-\title{Replace Occurrences of a Regex Pattern}
+\title{Replace Occurrences of a Regex Pattern Matches}
 \usage{
 stri_replace_all_regex(str, pattern, replacement, opts_regex = NULL)
 
@@ -19,9 +19,9 @@ stri_replace_last_regex(str, pattern, replacement, opts_regex = NULL)
 \item{replacement}{character vector of strings to replace with,
 possibly including references to capture groups}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 Each function returns a character vector.
@@ -43,14 +43,12 @@ References are of the form \code{$n}, where \code{n} is the number
 of the capture group (their numbering starts from 1).
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_regex(s, " .*? ", "#")
 stri_replace_all_regex(s, "(el|s)it", "1234")
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
 stri_replace_all_regex('123|456|789', '(\\\\p{N}).(\\\\p{N})', '$2-$1')
-stri_replace_all_regex(c("stringi w R","REXAMINE","123"), '( R|R.)', ' r ')
-}
+stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};

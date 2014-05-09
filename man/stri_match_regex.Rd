@@ -16,9 +16,9 @@ stri_match_last_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern}{character vector of regular expressions to search for}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 For \code{stri_match_all_regex},
@@ -36,6 +36,10 @@ groups, i.e. subpatterns given in round parentheses.
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
+}
+\examples{
+stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
+   "(\\\\w+)=(\\\\w+)")
 }
 \seealso{
 Other search_match: \code{\link{stri_match_all}};

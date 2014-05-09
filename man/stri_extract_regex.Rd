@@ -16,9 +16,9 @@ stri_extract_last_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern}{character vector of regular expressions}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex options
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 For \code{stri_extract_all_regex},
@@ -37,11 +37,9 @@ matches together with regex capture groups.
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-\dontrun{
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_all_charclass}},

@@ -34,11 +34,6 @@ depending on the argument used.
 \details{
 Unless you are very lazy, please call the underlying functions
 directly for better performance.
-
-Please note that the parameters are considered in the following order:
-\code{regex}, \code{fixed}, \code{coll},
-and \code{class}. Thus, if you specify \code{regex} and \code{class},
-only the first one will be used.
 }
 \examples{
 \dontrun{

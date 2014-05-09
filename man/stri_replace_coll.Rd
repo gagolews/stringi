@@ -3,7 +3,7 @@
 \alias{stri_replace_all_coll}
 \alias{stri_replace_first_coll}
 \alias{stri_replace_last_coll}
-\title{Replace Occurrences of a Canonically Equivalent Pattern}
+\title{Replace Occurrences of a Canonically Equivalent Pattern Matches}
 \usage{
 stri_replace_all_coll(str, pattern, replacement, opts_collator = NULL)
 
@@ -18,9 +18,9 @@ stri_replace_last_coll(str, pattern, replacement, opts_collator = NULL)
 
 \item{replacement}{character vector of strings to replace with}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
+\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default options}
+for default settings}
 }
 \value{
 Each function discussed returns a character vector.
@@ -41,11 +41,9 @@ Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
 }
 \examples{
-\dontrun{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_coll(s, " ", "#")
 stri_replace_all_coll(s, "o", "0")
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%!==\%}},

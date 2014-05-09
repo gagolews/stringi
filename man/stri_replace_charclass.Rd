@@ -26,7 +26,7 @@ should consecutive matches be merged into a single one?}
 Each function returns a character vector.
 }
 \description{
-Replaces with the given replacement string every/first/last
+Replaces with a replacement string every/first/last
 the characters that fall into a class specified by \code{pattern}.
 }
 \details{
