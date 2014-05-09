@@ -65,7 +65,7 @@ int     stri__match_arg(const char* option, const char** set);
 
 // collator.cpp:
 class UCollator;
-UCollator* stri__ucol_open(SEXP opts_collator, bool allow_na=true);
+UCollator* stri__ucol_open(SEXP opts_collator);
 
 // compare.cpp:
 SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator);

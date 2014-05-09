@@ -60,7 +60,7 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -169,7 +169,7 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));

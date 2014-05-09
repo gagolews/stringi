@@ -193,7 +193,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -282,7 +282,7 @@ SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -410,7 +410,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
 
    STRI__ERROR_HANDLER_BEGIN
@@ -517,7 +517,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -585,7 +585,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
 
@@ -662,7 +662,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator, false/*NA not allowed*/);
+   col = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
 
