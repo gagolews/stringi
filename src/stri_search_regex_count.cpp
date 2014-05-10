@@ -77,6 +77,7 @@ SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
+      // see search_regex_detect for UText implementation (often slower)
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       int count = 0;
