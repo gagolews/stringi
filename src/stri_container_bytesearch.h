@@ -36,7 +36,7 @@
 #include "stri_container_utf8.h"
 
 
-#define STRI__BYTESEARCH_DISABLE_KMP
+// #define STRI__BYTESEARCH_DISABLE_KMP
 
 #ifndef USEARCH_DONE
 #define  USEARCH_DONE   -1
@@ -65,7 +65,9 @@ class StriContainerByteSearch : public StriContainerUTF8 {
 #endif
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int* T;
+      int* kmpNext;
+      int patternPos;
+      R_len_t kmpMaxSize;
 #endif
 
    public:

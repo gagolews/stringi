@@ -50,7 +50,9 @@ StriContainerByteSearch::StriContainerByteSearch()
    this->debugMatcherIndex = -1;
 #endif
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   this->T = new int[0];
+   this->kmpMaxSize = 0;
+   this->patternPos = -1;
+   this->kmpNext = NULL;
 #endif
 }
 
@@ -72,12 +74,14 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
    this->debugMatcherIndex = -1;
 #endif
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   this->T = new int[0];
+   this->patternPos = -1;
+   this->kmpMaxSize = getMaxNumBytes()+1;
+   this->kmpNext = new int[kmpMaxSize];
 #endif
 }
 
 
-/** Copy constructor
+/** Copying constructor
  *
  */
 StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& container)
@@ -92,7 +96,9 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->debugMatcherIndex = -1;
 #endif
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   this->T = new int[0];
+   this->patternPos = -1;
+   this->kmpMaxSize = container.kmpMaxSize;
+   this->kmpNext = new int[kmpMaxSize];
 #endif
 }
 
@@ -114,7 +120,9 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->debugMatcherIndex = -1;
 #endif
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   this->T = new int[0];
+   this->patternPos = -1;
+   this->kmpMaxSize = container.kmpMaxSize;
+   this->kmpNext = new int[kmpMaxSize];
 #endif
    return *this;
 }
@@ -127,7 +135,8 @@ StriContainerByteSearch::~StriContainerByteSearch()
 {
    // nothing to clean
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   delete T;
+   if (kmpNext)
+      delete [] kmpNext;
 #endif
 }
 
@@ -175,14 +184,17 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
    debugMatcherIndex = (i % n);
 #endif
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   this->T = new int[patternLen+1];
-   int j = -1;
-   T[0] = -1;
-   for(int i=0; i < patternLen; i++){
-      while (j>=0 && patternStr[i]!=patternStr[j])
-         j = T[j];
+   int k = 0, j = -1;
+   kmpNext[0] = -1;
+   while (k < patternLen) {
+      while (j > -1 && patternStr[k] != patternStr[j])
+         j = kmpNext[j];
+      k++;
       j++;
-      T[i+1] = j;
+      if (patternStr[k] == patternStr[j])
+         kmpNext[k] = kmpNext[j];
+      else
+         kmpNext[k] = j;
    }
 #endif
 }
@@ -200,6 +212,9 @@ void StriContainerByteSearch::resetMatcher()
 #endif
 
    this->searchPos = -1;
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->patternPos = -1;
+#endif
 }
 
 
@@ -216,23 +231,28 @@ void StriContainerByteSearch::resetMatcher()
  */
 R_len_t StriContainerByteSearch::findFirst()
 {
+   // "Any byte oriented string searching algorithm can be used with
+   // UTF-8 data, since the sequence of bytes for a character cannot
+   // occur anywhere else."
 #ifndef NDEBUG
    if (!this->searchStr || !this->patternStr)
       throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
 #endif
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int j=0;
-   for(int i=0; i < searchLen; i++){
-      while (j>=0 && searchStr[i]!=patternStr[j])
-         j = T[j];
+   int j = 0;
+   patternPos = 0;
+   while (j < searchLen) {
+      while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
+         patternPos = kmpNext[patternPos];
+      patternPos++;
       j++;
-      if (j==patternLen)
-      {
-         searchPos = i-j+1;
+      if (patternPos >= patternLen) {
+         searchPos = j-patternPos;
          return searchPos;
       }
    }
+   // else not found
    searchPos = searchLen;
    return USEARCH_DONE;
 #else
@@ -274,17 +294,19 @@ R_len_t StriContainerByteSearch::findNext()
    if (searchPos < 0) return findFirst();
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int j=0;
-   for(int i = searchPos + patternLen; i < searchLen; i++){
-      while (j>=0 && searchStr[i]!=patternStr[j])
-         j = T[j];
+   patternPos = 0;
+   int j = searchPos+patternLen;
+   while (j < searchLen) {
+      while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
+         patternPos = kmpNext[patternPos];
+      patternPos++;
       j++;
-      if (j==patternLen)
-      {
-         searchPos = i-j+1;
+      if (patternPos >= patternLen) {
+         searchPos = j-patternPos;
          return searchPos;
       }
    }
+   // else not found
    searchPos = searchLen;
    return USEARCH_DONE;
 #else
@@ -319,9 +341,9 @@ R_len_t StriContainerByteSearch::findLast()
       throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
 #endif
 
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   throw StriException("KMP: TO DO");
-#else
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
+//   throw StriException("KMP: TO DO");
+//#else
    // Naive search algorithm
    for (searchPos = searchLen - patternLen; searchPos>=0; --searchPos) {
       R_len_t k=0;
@@ -336,7 +358,7 @@ R_len_t StriContainerByteSearch::findLast()
    // not found
    searchPos = searchLen;
    return USEARCH_DONE;
-#endif
+//#endif
 }
 
 

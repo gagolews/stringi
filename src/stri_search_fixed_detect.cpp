@@ -62,7 +62,6 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern)
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
 
-
    STRI__ERROR_HANDLER_BEGIN
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
