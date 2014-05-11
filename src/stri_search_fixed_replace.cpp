@@ -89,12 +89,12 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
          continue;
       }
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-
       R_len_t start;
       if (type >= 0) { // first or all
+         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
          start = pattern_cont.findFirst();
       } else {
+         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
          start = pattern_cont.findLast();
       }
 
@@ -108,11 +108,13 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
       deque< pair<R_len_t, R_len_t> > occurences;
       occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
-      while (type == 0 && USEARCH_DONE != pattern_cont.findNext()) { // all
-         start = pattern_cont.getMatchedStart();
-         len = pattern_cont.getMatchedLength();
-         occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
-         sumbytes += len;
+      if (type == 0) {
+         while (USEARCH_DONE != pattern_cont.findNext()) { // all
+            start = pattern_cont.getMatchedStart();
+            len = pattern_cont.getMatchedLength();
+            occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+            sumbytes += len;
+         }
       }
 
       R_len_t str_cur_n     = str_cont.get(i).length();

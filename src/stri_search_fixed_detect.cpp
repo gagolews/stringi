@@ -79,7 +79,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern)
          ret_tab[i] = NA_LOGICAL,
          ret_tab[i] = FALSE)
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
       ret_tab[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
    }
 

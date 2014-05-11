@@ -80,7 +80,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
       ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t found = 0;
       while (USEARCH_DONE != pattern_cont.findNext())
          ++found;

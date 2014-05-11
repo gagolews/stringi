@@ -34,7 +34,11 @@ test_that("stri_replace_first_fixed", {
 
    expect_identical(stri_replace_first_fixed("ALA MA  KOTA",c(" ", "A", NA) ,""), c("ALAMA  KOTA", "LA MA  KOTA", NA))
    expect_identical(stri_replace_first_fixed("ALA","BF","HA"),"ALA")
-   expect_identical(stri_replace_first_fixed("ALA","ALA", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_first_fixed("A","A", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_first_fixed("AB","AB", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_first_fixed("ABC","ABC", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_first_fixed("ABCD","ABCD", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_first_fixed("ABCDE","ABCDE", c("","RYBA")), c("", "RYBA"))
 })
 
 
@@ -55,4 +59,10 @@ test_that("stri_replace_last_fixed", {
    expect_identical(stri_replace_last_fixed("ALA MA  KOTA",c(" ", "A", NA) ,""), c("ALA MA KOTA", "ALA MA  KOT", NA))
    expect_identical(stri_replace_last_fixed("ALA","BF","HA"),"ALA")
    expect_identical(stri_replace_last_fixed("ALA","ALA", c("","RYBA")), c("", "RYBA"))
+   
+   expect_identical(stri_replace_last_fixed("A","A", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_last_fixed("AB","AB", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_last_fixed("ABC","ABC", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_last_fixed("ABCD","ABCD", c("","RYBA")), c("", "RYBA"))
+   expect_identical(stri_replace_last_fixed("ABCDE","ABCDE", c("","RYBA")), c("", "RYBA"))
 })
