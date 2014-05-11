@@ -18,6 +18,9 @@
       ICU USearch has currently very poor performance and in many search tasks
       in fact it is sufficient to do exact pattern matching.
 
+   * stri_*_fixed now use a tweaked Knuth-Morris-Pratt search algorithm,
+      which improves the search performance drastically in many cases.
+
    * t.b.d.
 
 

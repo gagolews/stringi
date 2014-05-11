@@ -58,10 +58,10 @@
 stri_split <- function(str, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_split_regex(str, regex, ...)
    else if (providedarg["fixed"])
