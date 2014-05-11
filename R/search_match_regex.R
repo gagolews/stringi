@@ -54,7 +54,7 @@
 #'
 #' The first column gives the whole match. The second one corresponds to
 #' the first capture group, the third -- the second capture group, and so on.
-#' 
+#'
 #' @examples
 #' stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
 #'    "(\\w+)=(\\w+)")

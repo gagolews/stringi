@@ -35,7 +35,7 @@
 #' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_extract_all_regex}},
-#' \code{\link{stri_extract_all_coll}}, 
+#' \code{\link{stri_extract_all_coll}},
 #' or \code{\link{stri_extract_all_charclass}},
 #' depending on the argument used.
 #'
@@ -61,10 +61,10 @@
 stri_extract_all <- function(str, ..., regex, coll, charclass) {
    providedarg <- c("regex"=!missing(regex),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_extract_all_regex(str, regex, ...)
    else if (providedarg["coll"])
@@ -107,10 +107,10 @@ stri_extract_all <- function(str, ..., regex, coll, charclass) {
 stri_extract_first <- function(str, ..., regex, coll, charclass) {
    providedarg <- c("regex"=!missing(regex),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_extract_first_regex(str, regex, ...)
    else if (providedarg["coll"])
@@ -153,10 +153,10 @@ stri_extract_first <- function(str, ..., regex, coll, charclass) {
 stri_extract_last <- function(str, ..., regex, coll, charclass) {
    providedarg <- c("regex"=!missing(regex),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_extract_last_regex(str, regex, ...)
    else if (providedarg["coll"])

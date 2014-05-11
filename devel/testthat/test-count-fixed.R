@@ -6,6 +6,7 @@ test_that("stri_count_fixed", {
    expect_identical(stri_count_fixed("NA",NA),NA_integer_)
    expect_identical(stri_count_fixed("   "," "),3L)
    expect_identical(stri_count_fixed("###",c("#","##","###")),c(3L,1L,1L))
+   expect_identical(stri_count_fixed("##########",c("#","##","###", "####","#####","######")),c(10L,5L,3L,2L,2L,1L))
    expect_identical(stri_count_fixed("a a","a"),2L)
    expect_identical(stri_count_fixed("aba","abcdef"),0L)
    suppressWarnings(expect_identical(stri_count_fixed("",""), NA_integer_))

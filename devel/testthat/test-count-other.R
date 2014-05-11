@@ -8,5 +8,5 @@ test_that("stri_count", {
    expect_identical(stri_count("aaa", fixed="a"), 3L)
    expect_identical(stri_count("aaa", coll="a"), 3L)
    expect_identical(stri_count("aaa", charclass="[a]"), 3L)
-   
+
 })

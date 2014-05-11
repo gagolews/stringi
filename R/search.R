@@ -155,11 +155,9 @@ invisible(NULL)
 #'
 #' @section Byte Compare:
 #'
-#' A very fast (for small p) bytewise (locale independent) search
-#' is performed, with time complexity of
-#' O(n*p) (\code{n == length(str)}, \code{p == length(pattern)})
-#' [Naive implementation
-#' - to be upgraded in some future version of \pkg{stringi}].
+#' The Knuth-Morris-Pratt search algorithm, with worst time complexity of
+#' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)})
+#' is utilized (with some tweaks for very short search patterns).
 #' For natural language processing, however, this is not what
 #' you probably want. It is because a bitwise match will
 #' not give correct results in cases of:

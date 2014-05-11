@@ -69,10 +69,10 @@
 stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_locate_all_regex(str, regex, ...)
    else if (providedarg["fixed"])
@@ -105,7 +105,7 @@ stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
 #' @details
 #' Unless you are very lazy, please call the underlying functions
 #' directly for better performance.
-#' 
+#'
 #' @return Returns an integer matrix with two columns, with
 #' double \code{NA}s in a row if a pattern not found.
 #'
@@ -122,10 +122,10 @@ stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
 stri_locate_first <- function(str, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_locate_first_regex(str, regex, ...)
    else if (providedarg["fixed"])
@@ -175,10 +175,10 @@ stri_locate_first <- function(str, ..., regex, fixed, coll, charclass) {
 stri_locate_last <- function(str, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_locate_last_regex(str, regex, ...)
    else if (providedarg["fixed"])

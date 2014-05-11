@@ -58,10 +58,10 @@
 stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_replace_all_regex(str, regex, ...)
    else if (providedarg["fixed"])
@@ -99,10 +99,10 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclas
 stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_replace_first_regex(str, regex, ...)
    else if (providedarg["fixed"])
@@ -140,10 +140,10 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charcl
 stri_replace_last <- function(str, replacement, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
-   
+
    if (sum(providedarg) != 1)
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-   
+
    if (providedarg["regex"])
       stri_replace_last_regex(str, regex, ...)
    else if (providedarg["fixed"])

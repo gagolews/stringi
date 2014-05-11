@@ -141,6 +141,30 @@ StriContainerByteSearch::~StriContainerByteSearch()
 }
 
 
+/**
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgrade; special procedure for patternLen <= 4
+*/
+void StriContainerByteSearch::createKMPtable()
+{
+   int k = 0, j = -1;
+   kmpNext[0] = -1;
+   while (k < patternLen) {
+      while (j > -1 && patternStr[k] != patternStr[j])
+         j = kmpNext[j];
+      k++;
+      j++;
+      if (patternStr[k] == patternStr[j])
+         kmpNext[k] = kmpNext[j];
+      else
+         kmpNext[k] = j;
+   }
+}
+
+
 /** the returned matcher shall not be deleted by the user
  *
  * it is assumed that \code{vectorize_next()} is used:
@@ -155,13 +179,17 @@ StriContainerByteSearch::~StriContainerByteSearch()
  *
  * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
  *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgrade;
+ *          special procedure for patternLen <= 4
  */
 void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
-   if (!this->searchStr || !this->patternStr) {
-      // first call ever
-      // setup [now nothing]
-   }
+//   if (!this->searchStr || !this->patternStr) {
+//      // first call ever
+//      // setup [now nothing]
+//   }
 
    if (i >= n) {
 #ifndef NDEBUG
@@ -174,6 +202,17 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
    else {
       this->patternStr = get(i).c_str();
       this->patternLen = get(i).length();
+
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+      if (this->patternLen > 4) { // a short pattern => don't use KMP
+#endif
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+         // @TODO: a different table shall be created for reverse search
+         createKMPtable();
+#endif
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+      }
+#endif
    }
 
    this->searchStr = _searchStr;
@@ -182,20 +221,6 @@ void StriContainerByteSearch::setupMatcher(R_len_t i, const char* _searchStr, R_
 
 #ifndef NDEBUG
    debugMatcherIndex = (i % n);
-#endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int k = 0, j = -1;
-   kmpNext[0] = -1;
-   while (k < patternLen) {
-      while (j > -1 && patternStr[k] != patternStr[j])
-         j = kmpNext[j];
-      k++;
-      j++;
-      if (patternStr[k] == patternStr[j])
-         kmpNext[k] = kmpNext[j];
-      else
-         kmpNext[k] = j;
-   }
 #endif
 }
 
@@ -218,29 +243,98 @@ void StriContainerByteSearch::resetMatcher()
 }
 
 
-/** find first match
+/** find first match - case of short pattern
  *
- * resets the matcher
+ * @param startPos where to start
+ * @return USEARCH_DONE on no match, otherwise start index
  *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          special procedure for patternLen <= 4
+ */
+R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
+{
+   if (patternLen == 1) {
+      uint8_t pat = (uint8_t)patternStr[0];
+      for (searchPos = startPos; searchPos<searchLen-1+1; ++searchPos) {
+         if (pat == (uint8_t)searchStr[searchPos]) {
+            return searchPos;
+         }
+      }
+   }
+   else if (patternLen == 2) {
+      uint16_t pat = *((uint16_t*)patternStr);
+      for (searchPos = startPos; searchPos<searchLen-2+1; ++searchPos) {
+         if (pat == *((uint16_t*)(searchStr+searchPos))) {
+            return searchPos;
+         }
+      }
+   }
+   else if (patternLen == 3) {
+      uint8_t  pat1 = (uint8_t)patternStr[0];
+      uint16_t pat2 = *((uint16_t*)(patternStr+1));
+      for (searchPos = startPos; searchPos<searchLen-3+1; ++searchPos) {
+         if (pat1 == (uint8_t)searchStr[searchPos]
+             && pat2 == *((uint16_t*)(searchStr+searchPos+1))) {
+            return searchPos;
+         }
+      }
+   }
+   else if (patternLen == 4) {
+      uint32_t pat = *((uint32_t*)patternStr);
+      for (searchPos = startPos; searchPos<searchLen-4+1; ++searchPos) {
+         if (pat == *((uint32_t*)(searchStr+searchPos))) {
+            return searchPos;
+         }
+      }
+   }
+   // else not found
+   searchPos = searchLen;
+   return USEARCH_DONE;
+}
+
+
+/** find first match - case of short pattern
+ *
+ * @param startPos where to start
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.1-?? (Marek Gagolewski)
  *
- * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
- *          uses KMP
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          separate method
  */
-R_len_t StriContainerByteSearch::findFirst()
+R_len_t StriContainerByteSearch::findFromPosFwd_naive(R_len_t startPos)
 {
-   // "Any byte oriented string searching algorithm can be used with
-   // UTF-8 data, since the sequence of bytes for a character cannot
-   // occur anywhere else."
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
+   // Naive search algorithm
+   for (searchPos = startPos; searchPos<searchLen-patternLen+1; ++searchPos) {
+      R_len_t k=0;
+      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
+         k++;
+      if (k == patternLen) {
+         // found!
+         return searchPos;
+      }
+   }
+   // not found
+   searchPos = searchLen;
+   return USEARCH_DONE;
+}
 
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   int j = 0;
+
+/** find first match - case of short pattern
+ *
+ * @param startPos where to start
+ * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          KMP - first approach
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgraded; separate method
+ */
+R_len_t StriContainerByteSearch::findFromPosFwd_KMP(R_len_t startPos)
+{
+   int j = startPos;
    patternPos = 0;
    while (j < searchLen) {
       while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
@@ -255,20 +349,43 @@ R_len_t StriContainerByteSearch::findFirst()
    // else not found
    searchPos = searchLen;
    return USEARCH_DONE;
+}
+
+
+/** find first match
+ *
+ * resets the matcher
+ *
+ * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgraded and now used by default;
+ *          special procedure for patternLen <= 4
+ */
+R_len_t StriContainerByteSearch::findFirst()
+{
+   // "Any byte oriented string searching algorithm can be used with
+   // UTF-8 data, since the sequence of bytes for a character cannot
+   // occur anywhere else."
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+   if (patternLen <= 4)
+      return findFromPosFwd_short(0);
+#endif
+
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   return findFromPosFwd_KMP(0);
 #else
-   // Naive search algorithm
-   for (searchPos = 0; searchPos<searchLen-patternLen+1; ++searchPos) {
-      R_len_t k=0;
-      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
-         k++;
-      if (k == patternLen) {
-         // found!
-         return searchPos;
-   	}
-   }
-   // not found
-   searchPos = searchLen;
-   return USEARCH_DONE;
+   return findFromPosFwd_naive(0);
 #endif
 }
 
@@ -283,6 +400,10 @@ R_len_t StriContainerByteSearch::findFirst()
  *
  * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
  *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgraded and now used by default;
+ *          use findFromPosFwd
  */
 R_len_t StriContainerByteSearch::findNext()
 {
@@ -293,37 +414,15 @@ R_len_t StriContainerByteSearch::findNext()
 
    if (searchPos < 0) return findFirst();
 
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   patternPos = 0;
-   int j = searchPos+patternLen;
-   while (j < searchLen) {
-      while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
-         patternPos = kmpNext[patternPos];
-      patternPos++;
-      j++;
-      if (patternPos >= patternLen) {
-         searchPos = j-patternPos;
-         return searchPos;
-      }
-   }
-   // else not found
-   searchPos = searchLen;
-   return USEARCH_DONE;
-#else
-   // Naive search algorithm
-   for (searchPos = searchPos + patternLen; searchPos<searchLen-patternLen+1; ++searchPos) {
-      R_len_t k=0;
-      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
-         k++;
-      if (k == patternLen) {
-         // found!
-         return searchPos;
-   	}
-   }
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+   if (patternLen <= 4)
+      return findFromPosFwd_short(searchPos+patternLen);
+#endif
 
-   // not found
-   searchPos = searchLen;
-   return USEARCH_DONE;
+#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   return findFromPosFwd_KMP(searchPos+patternLen);
+#else
+   return findFromPosFwd_naive(searchPos+patternLen);
 #endif
 }
 
@@ -333,6 +432,9 @@ R_len_t StriContainerByteSearch::findNext()
  * resets the matcher
  *
  * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          Not using KMP at the moment
  */
 R_len_t StriContainerByteSearch::findLast()
 {
@@ -343,6 +445,7 @@ R_len_t StriContainerByteSearch::findLast()
 
 //#ifndef STRI__BYTESEARCH_DISABLE_KMP
 //   throw StriException("KMP: TO DO");
+// // we should rebuild the kmp table...
 //#else
    // Naive search algorithm
    for (searchPos = searchLen - patternLen; searchPos>=0; --searchPos) {

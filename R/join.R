@@ -73,7 +73,7 @@ stri_dup <- function(str, times) {
 #'
 #' @usage
 #' e1 \%+\% e2
-#' 
+#'
 #' e1 \%stri+\% e2
 #'
 #' @param e1 character vector or an object coercible to a character vector
@@ -146,7 +146,7 @@ stri_dup <- function(str, times) {
 #' stri_join(1:13, letters, sep='!', collapse='?')
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...')
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
-#' 
+#'
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {

@@ -56,7 +56,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 {
    if (!isNull(opts_collator) && !Rf_isVectorList(opts_collator))
       Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
-      
+
    R_len_t narg = isNull(opts_collator)?0:LENGTH(opts_collator);
 
    if (narg <= 0) { // no custom settings - use default Collator
