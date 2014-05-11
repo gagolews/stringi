@@ -105,7 +105,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
          continue;
       }
 
-      pattern_cont.setupMatcher(i, str_cur_s, str_cur_n);
+      pattern_cont.setupMatcherFwd(i, str_cur_s, str_cur_n);
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));

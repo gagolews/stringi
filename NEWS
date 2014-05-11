@@ -19,7 +19,7 @@
       in fact it is sufficient to do exact pattern matching.
 
    * stri_*_fixed now use a tweaked Knuth-Morris-Pratt search algorithm,
-      which improves the search performance drastically in many cases.
+      which improves the search performance drastically.
 
    * t.b.d.
 

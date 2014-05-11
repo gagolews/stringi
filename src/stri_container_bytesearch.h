@@ -54,6 +54,7 @@
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          KMP used by default;
+ *          KMP_from back implemented;
  *          tweeks for short patterns
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
@@ -76,10 +77,15 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t kmpMaxSize;
 #endif
 
-      void createKMPtable();
+      void createKMPtableFwd();
       R_len_t findFromPosFwd_short(R_len_t startPos);
       R_len_t findFromPosFwd_naive(R_len_t startPos);
       R_len_t findFromPosFwd_KMP(R_len_t startPos);
+      
+      void createKMPtableBack();
+      R_len_t findFromPosBack_short(R_len_t startPos);
+      R_len_t findFromPosBack_naive(R_len_t startPos);
+      R_len_t findFromPosBack_KMP(R_len_t startPos);
 
    public:
 
@@ -89,7 +95,8 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       ~StriContainerByteSearch();
       StriContainerByteSearch& operator=(StriContainerByteSearch& container);
 
-      void setupMatcher(R_len_t i, const char* searchStr, R_len_t searchLen);
+      void setupMatcherFwd(R_len_t i, const char* searchStr, R_len_t searchLen);
+      void setupMatcherBack(R_len_t i, const char* searchStr, R_len_t searchLen);
       void resetMatcher();
       R_len_t findFirst();
       R_len_t findNext();

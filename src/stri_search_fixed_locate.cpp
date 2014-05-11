@@ -81,12 +81,12 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, bool first)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ;/*nothing*/, ;/*nothing*/)
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-
       int start;
       if (first) {
+         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
          start = pattern_cont.findFirst();
       } else {
+         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
          start = pattern_cont.findLast();
       }
 
@@ -195,7 +195,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern)
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
 
-      pattern_cont.setupMatcher(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
 
       int start = pattern_cont.findFirst();
       if (start == USEARCH_DONE) { // no matches at all
