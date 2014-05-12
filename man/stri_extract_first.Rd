@@ -34,7 +34,7 @@ directly for better performance.
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 stri_extract_first('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first('Bartolini', coll=letters[1:3])
-stri_extract_first(s, charclass='Zs')
+stri_extract_first(s, charclass='\\\\p{Zs}')
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_all_charclass}},

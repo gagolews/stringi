@@ -39,7 +39,7 @@ s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 stri_locate_first('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_first('Bartolini', fixed=letters[1:3])
-stri_locate_first('a b c', charclass='Zs')
+stri_locate_first('a b c', charclass='\\\\p{Zs}')
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

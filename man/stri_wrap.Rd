@@ -15,7 +15,7 @@ maximal number of code points per line}
 \item{cost_exponent}{single numeric value, values not greater than zero
 will select a greedy word-wrapping algorithm; otherwise
 this value denotes the exponent in the cost function
-of a (more esthetic) dynamic programming-based algorithm
+of a (more aesthetic) dynamic programming-based algorithm
 (values in [2, 3] are recommended)}
 
 \item{simplify}{single logical value, see Value}
@@ -29,7 +29,7 @@ If \code{simplify} is \code{TRUE}, then a character vector is returned.
 Otherwise, you will get a list of \code{length(str)} character vectors.
 }
 \description{
-This function breaks text pararagraphs into lines,
+This function breaks text paragraphs into lines,
 each consisting of at most \code{width} code points.
 }
 \details{

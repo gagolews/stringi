@@ -54,7 +54,7 @@
 #' @examples
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', coll='i')
-#' stri_extract_all('stringi is so good!', charclass='Zs') # all whitespaces
+#' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all whitespaces
 #'
 #' @export
 #' @family search_extract
@@ -100,7 +100,7 @@ stri_extract_all <- function(str, ..., regex, coll, charclass) {
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first('Bartolini', coll=letters[1:3])
-#' stri_extract_first(s, charclass='Zs')
+#' stri_extract_first(s, charclass='\\p{Zs}')
 #'
 #' @export
 #' @family search_extract
@@ -146,7 +146,7 @@ stri_extract_first <- function(str, ..., regex, coll, charclass) {
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_extract_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_last('Bartolini', coll=letters[1:3])
-#' stri_extract_last(s, charclass='Zs')
+#' stri_extract_last(s, charclass='\\p{Zs}')
 #'
 #' @export
 #' @family search_extract

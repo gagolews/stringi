@@ -6,7 +6,7 @@
 \description{
 \pkg{stringi} is THE \R package for fast, correct, consistent,
 and convenient string/text manipulation in each locale and any
-character encoding. We are putting great effort to create software that
+character encoding. We put great effort to create software that
 gives predictable results on any platform, in each locale, and any
 ``native'' system encoding.
 
@@ -24,18 +24,18 @@ See the COPYRIGHTS and LICENSE file for more details.
 Manual pages on general topics (must-read):
 \itemize{
 \item \link{stringi-encoding} -- character encoding issues,
-     including information on encoding management in \pkg{stringi}, as well as
-     on encoding detection and conversion.
+   including information on encoding management in \pkg{stringi}, as well as
+   on encoding detection and conversion.
 
 \item \link{stringi-locale} -- locale issues, including i.a. locale
-     management and specification in \pkg{stringi}, and the list of
-     locale-sensitive operations.
-     In particular, see \code{\link{stri_opts_collator}} for a description
-     of the string collation algorithm, which is used for
-     string comparing, ordering, sorting, casefolding, and searching.
+   management and specification in \pkg{stringi}, and the list of
+   locale-sensitive operations.
+   In particular, see \code{\link{stri_opts_collator}} for a description
+   of the string collation algorithm, which is used for
+   string comparing, ordering, sorting, case-folding, and searching.
 
 \item \link{stringi-arguments} -- how \pkg{stringi}
-     deals with its functions' arguments.
+   deals with its functions' arguments.
 }
 }
 \section{Facilities available}{
@@ -48,10 +48,10 @@ these include pattern searching, matching, string splitting, and so on.
 The following independent search engines are provided:
 \itemize{
 \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions;
-\item \link{stringi-search-fixed} -- fase, locale-independent, bytewise pattern
+\item \link{stringi-search-fixed} -- fast, locale-independent, bytewise pattern
    matching,
 \item \link{stringi-search-coll} -- locale-aware pattern matching
-   for natural languge processing tasks;
+   for natural language processing tasks;
 \item \link{stringi-search-charclass} -- for finding elements of
 particular character classes, like ``all whitespaces'' or ``all digits''.
 \item Moreover, \code{\link{stri_split_boundaries}} and
