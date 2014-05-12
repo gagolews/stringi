@@ -31,6 +31,7 @@ src-x64/
 
 # KDevelop project files:
 *.kdev4
+.kdev4
 
 # LaTeX/knitr dust:
 *.aux

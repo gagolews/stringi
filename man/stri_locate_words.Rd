@@ -34,9 +34,7 @@ to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
-\dontrun{
 stri_locate_words("  stringi: THE string processing package 123.48...  ")
-}
 }
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,

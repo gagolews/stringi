@@ -41,9 +41,7 @@ For locating words in a text using \pkg{ICU}'s word iterator,
 see \code{\link{stri_locate_words}}.
 }
 \examples{
-\dontrun{
 stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

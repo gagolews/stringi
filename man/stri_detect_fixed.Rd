@@ -27,10 +27,8 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 }
 \examples{
-\dontrun{
 stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
-}
 }
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};
