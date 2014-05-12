@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf16.h"
 #include <unicode/translit.h>
+#include <unicode/strenum.h>
 #include <string>
 
 
@@ -41,32 +42,44 @@
  * @return character vector
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2015-05-12)
+ *          uses Transliterator::getAvailableIDs
+ *          as getAvailableID is obsolete as of ICU 3.x
  */
 SEXP stri_trans_list()
 {
-   STRI__ERROR_HANDLER_BEGIN
-   int32_t n = Transliterator:: countAvailableIDs();
-   SEXP ret/*, names*/;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
-//   STRI__PROTECT(names = Rf_allocVector(STRSXP, n));
+   StringEnumeration* trans_enum = NULL;
 
+   STRI__ERROR_HANDLER_BEGIN
+
+   UErrorCode status = U_ZERO_ERROR;
+   trans_enum = Transliterator::getAvailableIDs(status);
+   if (U_FAILURE(status)) throw StriException(status);
+
+   trans_enum->reset(status);
+   if (U_FAILURE(status)) throw StriException(status);
+
+   R_len_t n = (R_len_t)trans_enum->count(status);
+   if (U_FAILURE(status)) throw StriException(status);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
 
    // MG: I reckon than IDs are more readable than DisplayNames
    for (R_len_t i=0; i<n; ++i) {
-      UnicodeString id = Transliterator::getAvailableID(i);
-//      UnicodeString name;
-//      Transliterator::getDisplayName(id, name);
-      std::string /*nameutf8, */idutf8;
-//      name.toUTF8String(nameutf8);
-      id.toUTF8String(idutf8);
-//      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(nameutf8.c_str(), nameutf8.length(), CE_UTF8));
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(idutf8.c_str(), idutf8.length(), CE_UTF8));
+      int len;
+      const char* cur = trans_enum->next(&len, status);
+      if (U_FAILURE(status)) throw StriException(status);
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(cur, len, CE_UTF8));
    }
 
-//   Rf_setAttrib(ret, R_NamesSymbol, names);
+   if (trans_enum) { delete trans_enum; trans_enum = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END({/* no op on err */})
+   STRI__ERROR_HANDLER_END(
+      if (trans_enum) { delete trans_enum; trans_enum = NULL; }
+   )
 }
 
 

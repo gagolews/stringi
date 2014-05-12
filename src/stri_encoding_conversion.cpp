@@ -117,14 +117,18 @@ SEXP stri_enc_fromutf32(SEXP vec)
  *          make StriException-friendly
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-26)
- *          use vector<int> buf instead of R_alloc;
+ *          use vector<UChar32> buf instead of R_alloc;
  *          warn and set NULL on improper UTF-8 byte sequences
+ * 
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-12)
+ *          Use UChar32* instead of vector<UChar32> as ::data is C++11
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
    str = stri_prepare_arg_string(str, "str");
    R_len_t n = LENGTH(str);
 
+   UChar32* buf = NULL;
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, n);
 
@@ -134,7 +138,8 @@ SEXP stri_enc_toutf32(SEXP str)
       R_len_t ni = str_cont.get(i).length();
       if (ni > bufsize) bufsize = ni;
    }
-   std::vector<UChar32> buf(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
+   
+   buf = new UChar32[bufsize]; // at most bufsize UChars32 (bufsize/4 min.)
    // deque<UChar32> was slower than using a common, over-sized buf
 
    SEXP ret;
@@ -165,15 +170,18 @@ SEXP stri_enc_toutf32(SEXP str)
       else {
          SEXP conv;
          STRI__PROTECT(conv = Rf_allocVector(INTSXP, k));
-         memcpy(INTEGER(conv), buf.data(), (size_t)sizeof(int)*k);
+         memcpy(INTEGER(conv), buf, (size_t)sizeof(int)*k);
          SET_VECTOR_ELT(ret, i, conv);
          STRI__UNPROTECT(1);
       }
    }
 
+   if (buf) { delete [] buf; buf = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END(
+      if (buf) { delete [] buf; buf = NULL; }
+   )
 }
 
 
@@ -239,14 +247,14 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
          }
 
          if (IS_ASCII(curs) || IS_UTF8(curs)) {
-            R_len_t n = LENGTH(curs);
-            const char* str = CHAR(curs);
-            if (n >= 3 &&
-               (uint8_t)(str[0]) == UTF8_BOM_BYTE1 &&
-               (uint8_t)(str[1]) == UTF8_BOM_BYTE2 &&
-               (uint8_t)(str[2]) == UTF8_BOM_BYTE3) {
+            R_len_t curs_n = LENGTH(curs);
+            const char* curs_s = CHAR(curs);
+            if (curs_n >= 3 &&
+               (uint8_t)(curs_s[0]) == UTF8_BOM_BYTE1 &&
+               (uint8_t)(curs_s[1]) == UTF8_BOM_BYTE2 &&
+               (uint8_t)(curs_s[2]) == UTF8_BOM_BYTE3) {
                // has BOM - get rid of it
-               SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str+3, n-3, CE_UTF8));
+               SET_STRING_ELT(ret, i, Rf_mkCharLenCE(curs_s+3, curs_n-3, CE_UTF8));
             }
             else
                SET_STRING_ELT(ret, i, curs);

@@ -78,14 +78,14 @@ StriContainerUTF8_indexable::StriContainerUTF8_indexable(StriContainerUTF8_index
 }
 
 
-/*  Copy/assignment operator
-
+/**  Copy/assignment operator
+ *
  *  @version 0.2-1 (2014-03-20)
  *           separated StriContainerUTF8_indexable class
  */
 StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContainerUTF8_indexable& container)
 {
-   this->~StriContainerUTF8();
+   ((StriContainerUTF8*)this)->~StriContainerUTF8();
    (StriContainerUTF8&) (*this) = (StriContainerUTF8&)container;
 
    last_ind_back_str = NULL;
