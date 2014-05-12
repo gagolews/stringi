@@ -64,7 +64,7 @@ SEXP    stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol);
 int     stri__match_arg(const char* option, const char** set);
 
 // collator.cpp:
-class UCollator;
+struct UCollator;
 UCollator* stri__ucol_open(SEXP opts_collator);
 
 // compare.cpp:

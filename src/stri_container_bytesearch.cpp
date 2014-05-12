@@ -142,7 +142,7 @@ StriContainerByteSearch::~StriContainerByteSearch()
 
 
 /** Create KMP table for rev iteration
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
 */
 void StriContainerByteSearch::createKMPtableBack()
@@ -163,7 +163,7 @@ void StriContainerByteSearch::createKMPtableBack()
 
 
 /** Create KMP table for fwd iteration
- * 
+ *
  * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
@@ -488,7 +488,7 @@ R_len_t StriContainerByteSearch::findNext()
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          Using KNP
  */
@@ -601,7 +601,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
  *
  * @param startPos where to start
  * @return USEARCH_DONE on no match, otherwise start index
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  */
 R_len_t StriContainerByteSearch::findFromPosBack_naive(R_len_t startPos)

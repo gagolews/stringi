@@ -2,7 +2,7 @@
 ========================================
 
 
-* 0.2-3 (2014-??-??) **???**
+* 0.2-3 (2014-05-12) **CRAN**
 
    * [IMPORTANT CHANGE] stri_cmp* now do not allow for passing opts_collator=NA.
       From now on, stri_cmp_eq, stri_cmp_neq, and the new operators
@@ -20,8 +20,6 @@
 
    * stri_*_fixed now use a tweaked Knuth-Morris-Pratt search algorithm,
       which improves the search performance drastically.
-
-   * t.b.d.
 
 
 * 0.2-2 (2014-05-01) **devel**

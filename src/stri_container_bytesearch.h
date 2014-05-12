@@ -81,7 +81,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t findFromPosFwd_short(R_len_t startPos);
       R_len_t findFromPosFwd_naive(R_len_t startPos);
       R_len_t findFromPosFwd_KMP(R_len_t startPos);
-      
+
       void createKMPtableBack();
       R_len_t findFromPosBack_short(R_len_t startPos);
       R_len_t findFromPosBack_naive(R_len_t startPos);

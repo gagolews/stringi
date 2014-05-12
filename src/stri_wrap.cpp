@@ -320,15 +320,15 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       }
 
       // wrap_after.size() line breaks => wrap_after.size()+1 lines
-      R_len_t nlines = wrap_after.size()+1;
+      R_len_t nlines = (R_len_t)wrap_after.size()+1;
       R_len_t last_pos = 0;
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, nlines));
       deque<R_len_t>::iterator iter_wrap = wrap_after.begin();
-      for (R_len_t j = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++j) {
+      for (R_len_t u = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++u) {
          R_len_t wrap_after_cur = *iter_wrap;
          R_len_t cur_pos = end_pos_trim[wrap_after_cur];
-         SET_STRING_ELT(ans, j,
+         SET_STRING_ELT(ans, u,
             Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
          last_pos = end_pos_orig[wrap_after_cur];
       }

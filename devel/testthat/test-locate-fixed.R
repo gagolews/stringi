@@ -39,7 +39,7 @@ test_that("stri_locate_first_fixed", {
    expect_warning(expect_equivalent(stri_locate_first_fixed(NA, ""), matrix(c(NA_integer_,NA_integer_))))
    expect_equivalent(stri_locate_first_fixed("", NA), matrix(c(NA_integer_,NA_integer_)))
    expect_equivalent(stri_locate_first_fixed(NA, NA), matrix(c(NA_integer_,NA_integer_)))
-   
+
    expect_equivalent(stri_locate_first_fixed("b", "ab"),         matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_first_fixed("bc", "abc"),       matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_first_fixed("bcd", "abcd"),     matrix(rep(NA_integer_, 2)))
@@ -51,7 +51,7 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed("abcd", "abcd"),     matrix(c(1,4)))
    expect_equivalent(stri_locate_first_fixed("abcde", "abcde"),   matrix(c(1,5)))
    expect_equivalent(stri_locate_first_fixed("abcdef", "abcdef"), matrix(c(1,6)))
-   
+
    expect_equivalent(stri_locate_first_fixed("1a\u0105a", "\u0105"), matrix(c(3,3)))
    expect_equivalent(stri_locate_first_fixed("aaaaaa", "a"),     matrix(c(1,1)))
    expect_equivalent(stri_locate_first_fixed("aaaaaa", "aa"),    matrix(c(1,2)))
@@ -91,13 +91,13 @@ test_that("stri_locate_last_fixed", {
    expect_warning(expect_equivalent(stri_locate_last_fixed(NA, ""), matrix(c(NA_integer_,NA_integer_))))
    expect_equivalent(stri_locate_last_fixed("", NA), matrix(c(NA,NA_integer_)))
    expect_equivalent(stri_locate_last_fixed(NA, NA), matrix(c(NA,NA_integer_)))
-   
+
    expect_equivalent(stri_locate_last_fixed("b", "ab"),         matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_last_fixed("bc", "abc"),       matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_last_fixed("bcd", "abcd"),     matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_last_fixed("bcde", "abcde"),   matrix(rep(NA_integer_, 2)))
    expect_equivalent(stri_locate_last_fixed("bcdef", "abcdef"), matrix(rep(NA_integer_, 2)))
-   
+
    expect_equivalent(stri_locate_last_fixed("a", "a"),           matrix(c(1,1)))
    expect_equivalent(stri_locate_last_fixed("ab", "ab"),         matrix(c(1,2)))
    expect_equivalent(stri_locate_last_fixed("abc", "abc"),       matrix(c(1,3)))
@@ -109,7 +109,7 @@ test_that("stri_locate_last_fixed", {
    expect_equivalent(stri_locate_last_fixed("abcdabc", "abcd"),     matrix(c(1,4)))
    expect_equivalent(stri_locate_last_fixed("abcdeabcd", "abcde"),   matrix(c(1,5)))
    expect_equivalent(stri_locate_last_fixed("abcdefabcde", "abcdef"), matrix(c(1,6)))
-   
+
    expect_equivalent(stri_locate_last_fixed("aaaaaa", "a"),       matrix(c(6,6)))
    expect_equivalent(stri_locate_last_fixed("aaaaaa", "aa"),      matrix(c(5,6)))
    expect_equivalent(stri_locate_last_fixed("aaaaaa", "aaa"),     matrix(c(4,6)))

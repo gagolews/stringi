@@ -153,7 +153,7 @@ SEXP stri_enc_info(SEXP enc)
 
    // get the list of available standards
    vector<const char*> standards = StriUcnv::getStandards();
-   R_len_t standards_n = standards.size();
+   R_len_t standards_n = (R_len_t)standards.size();
 
    // alloc output list
    SEXP vals;

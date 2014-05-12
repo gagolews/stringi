@@ -18,5 +18,6 @@ test_that("stri_trans_list", {
 
    expect_true(is.character(stri_trans_list()))
    expect_true(length(stri_trans_list()) > 0)
+   expect_true("ASCII-Latin" %in% stri_trans_list())
 
 })
