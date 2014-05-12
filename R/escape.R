@@ -62,10 +62,10 @@ stri_escape_unicode <- function(str) {
 
 
 #' @title
-#' Unscape All Escape Sequences
+#' Unescape All Escape Sequences
 #'
 #' @description
-#' Unscapes all known escape sequences
+#' Unescapes all known escape sequences
 #'
 #' @details
 #' Uses \pkg{ICU} facilities to unescape Unicode character sequences.

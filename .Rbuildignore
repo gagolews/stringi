@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\\.kdev4$
 ^devel
 ^src-i386
 ^src-x64

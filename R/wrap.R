@@ -33,7 +33,7 @@
 #' Word Wrap Text to Format Paragraphs
 #'
 #' @description
-#' This function breaks text pararagraphs into lines,
+#' This function breaks text paragraphs into lines,
 #' each consisting of at most \code{width} code points.
 #'
 #' @details
@@ -76,7 +76,7 @@
 #' @param cost_exponent single numeric value, values not greater than zero
 #'        will select a greedy word-wrapping algorithm; otherwise
 #'        this value denotes the exponent in the cost function
-#'        of a (more esthetic) dynamic programming-based algorithm
+#'        of a (more aesthetic) dynamic programming-based algorithm
 #'        (values in [2, 3] are recommended)
 #' @param simplify single logical value, see Value
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
@@ -97,7 +97,7 @@
 #' cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
 #' cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
 #' cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
-
+#'
 #' @export
 #' @references
 #' D.E. Knuth, M.F. Plass,

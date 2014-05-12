@@ -45,7 +45,7 @@ or \code{NA} validates the resulting UTF-8 byte stream.
 If \code{validate == TRUE}, then
 in case of any incorrect byte sequences, they will be
 replaced with REPLACEMENT CHARACTER.
-This option may be used in a (very rare in practise) case
+This option may be used in a (very rare in practice) case
 in which you want to fix an invalid UTF-8 byte sequence.
 For \code{NA}, a bogus string will be replaced with a missing value.
 }

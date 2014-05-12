@@ -40,7 +40,7 @@ directly for better performance.
 stri_locate_all('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_all('Bartolini', fixed='i')
-stri_locate_all('a b c', charclass='Zs') # all white spaces
+stri_locate_all('a b c', charclass='\\\\p{Zs}') # all white spaces
 }
 }
 \seealso{
