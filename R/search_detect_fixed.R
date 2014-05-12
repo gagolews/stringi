@@ -51,10 +51,8 @@
 #' @return Returns a logical vector.
 #'
 #' @examples
-#' \dontrun{
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
-#' }
 #'
 #' @export
 #' @family search_detect

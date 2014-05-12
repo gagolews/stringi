@@ -56,12 +56,10 @@
 #' Double \code{NA}s iff not found or \code{NA} argument is given.
 #'
 #' @examples
-#' \dontrun{
 #' stri_locate_all('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
 #' stri_locate_all('a b c', charclass='\\p{Zs}') # all white spaces
-#' }
 #'
 #' @export
 #' @family search_locate
@@ -271,9 +269,7 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
 #' for no match or \code{NA} arguments.
 #'
 #' @examples
-#' \dontrun{
 #' stri_locate_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
-#' }
 #'
 #' @export
 #' @family search_locate
@@ -316,9 +312,7 @@ stri_locate_boundaries <- function(str, boundary='word', locale=NULL) {
 #' for no match or \code{NA} arguments.
 #'
 #' @examples
-#' \dontrun{
 #' stri_locate_words("  stringi: THE string processing package 123.48...  ")
-#' }
 #'
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,

@@ -20,4 +20,3 @@ Author: Marek Gagolewski and Bartek Tartanus (stringi source code);
     IBM and other contributors (ICU4C 52.1 source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <gagolews@rexamine.com>
-Roxygen: list(wrap = FALSE)

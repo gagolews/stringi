@@ -54,11 +54,9 @@ e.g. in \code{\link{stri_count_regex}}
 and other \link{stringi-search-regex} functions.
 }
 \examples{
-\dontrun{
 stri_detect_regex("ala", "ALA") # case-sensitive by default
 stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
 stri_detect_regex("ala", "(?i:)ALA") # equivalent
-}
 }
 \references{
 \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}
