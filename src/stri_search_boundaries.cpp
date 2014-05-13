@@ -164,15 +164,14 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
          STRI__UNPROTECT(1);
       }
       else {
-         R_len_t noccurences = (R_len_t)occurences.size();
          SEXP ans;
          STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
          int* ans_tab = INTEGER(ans);
          deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
          for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-            pair<R_len_t, R_len_t> match = *iter;
-            ans_tab[j]             = match.first;
-            ans_tab[j+noccurences] = match.second;
+            pair<R_len_t, R_len_t> cur_match = *iter;
+            ans_tab[j]             = cur_match.first;
+            ans_tab[j+noccurences] = cur_match.second;
          }
 
          // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)

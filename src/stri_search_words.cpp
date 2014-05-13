@@ -88,7 +88,7 @@ SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
       }
 
       // get the current string
-      UErrorCode status = U_ZERO_ERROR;
+      status = U_ZERO_ERROR;
       const char* str_cur_s = str_cont.get(i).c_str();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
       if (U_FAILURE(status))
@@ -134,9 +134,9 @@ SEXP stri__extract_or_locate_words(SEXP str, SEXP locale, bool extract)
          int* ans_tab = INTEGER(ans);
          deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
          for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
-            pair<R_len_t, R_len_t> match = *iter;
-            ans_tab[j]             = match.first;
-            ans_tab[j+noccurences] = match.second;
+            pair<R_len_t, R_len_t> cur_match = *iter;
+            ans_tab[j]             = cur_match.first;
+            ans_tab[j+noccurences] = cur_match.second;
          }
 
          // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
