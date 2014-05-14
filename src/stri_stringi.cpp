@@ -206,7 +206,7 @@ void stri_set_icu_data_directory(const char* libpath)
  *
  * R calls this automatically on lib load/attach.
  */
-extern "C" void R_init_stringi(DllInfo *dll)
+extern "C" void R_init_stringi(DllInfo* dll)
 {
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
    R_useDynamicSymbols(dll, Rboolean(FALSE));
@@ -238,13 +238,20 @@ extern "C" void R_init_stringi(DllInfo *dll)
 }
 
 
-///**
-// * ... not needed ...
-// */
-//extern "C" void  R_unload_stringi(DllInfo *info)
-//{
-//#ifndef NDEBUG
-//   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
-////   u_cleanup(); // this is just for DEBUG- memtrace
-//#endif
-//}
+
+#ifndef NDEBUG
+
+#include <unicode/uclean.h>
+
+/**
+ * Library cleanup
+ */
+extern "C" void  R_unload_stringi(DllInfo*)
+{
+   fprintf(stdout, "!NDEBUG: ************************************************\n");
+   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
+   fprintf(stdout, "!NDEBUG: ************************************************\n");
+   u_cleanup();
+}
+
+#endif
