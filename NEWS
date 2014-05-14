@@ -2,6 +2,11 @@
 ========================================
 
 
+* 0.3-1 (2014-05-14) **devel**
+
+   * t.b.d.
+
+
 * 0.2-3 (2014-05-14) **CRAN**
 
    * [IMPORTANT CHANGE] stri_cmp* now do not allow for passing opts_collator=NA.
