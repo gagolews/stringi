@@ -38,6 +38,7 @@ src-x64/
 *.log
 *.out
 cache-knitr/
+cache/
 
 # benchmark results and data
 devel/benchmarks/results*
