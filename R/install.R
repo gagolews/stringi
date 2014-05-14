@@ -116,9 +116,9 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       path <- file.path(find.package('stringi'), 'libs')
    stopifnot(is.character(path), length(path) == 1)
 
-   mirror1 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
+   mirror1 <- "http://static.rexamine.com/packages/"
    mirror2 <- "http://www.mini.pw.edu.pl/~gagolews/stringi/"
-   mirror3 <- "http://static.rexamine.com/packages/"
+   mirror3 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
 
 
    if (.Platform$endian == 'little') {
