@@ -119,7 +119,7 @@ SEXP stri_enc_fromutf32(SEXP vec)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-26)
  *          use vector<UChar32> buf instead of R_alloc;
  *          warn and set NULL on improper UTF-8 byte sequences
- * 
+ *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-12)
  *          Use UChar32* instead of vector<UChar32> as ::data is C++11
  */
@@ -138,7 +138,7 @@ SEXP stri_enc_toutf32(SEXP str)
       R_len_t ni = str_cont.get(i).length();
       if (ni > bufsize) bufsize = ni;
    }
-   
+
    buf = new UChar32[bufsize]; // at most bufsize UChars32 (bufsize/4 min.)
    // deque<UChar32> was slower than using a common, over-sized buf
 

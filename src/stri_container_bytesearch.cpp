@@ -34,6 +34,7 @@
 #include "stri_container_bytesearch.h"
 #include <unicode/usearch.h>
 
+
 /**
  * Default constructor
  *
@@ -304,39 +305,116 @@ void StriContainerByteSearch::resetMatcher()
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          special procedure for patternLen <= 4
+ *
+ * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
+ *          BUGFIX: load of misaligned adresses
  */
 R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 {
    if (patternLen == 1) {
-      uint8_t pat = (uint8_t)patternStr[0];
+      unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos; searchPos<searchLen-1+1; ++searchPos) {
-         if (pat == (uint8_t)searchStr[searchPos]) {
+         if (pat == (unsigned char)searchStr[searchPos]) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 2) {
-      uint16_t pat = *((uint16_t*)patternStr);
+// /* v1: 17.67ms; BUG: loads misaligned addresses... */
+//      uint16_t pat = *((uint16_t*)patternStr);
+//      for (searchPos = startPos; searchPos<searchLen-2+1; ++searchPos) {
+//         if (pat == *((uint16_t*)(searchStr+searchPos))) {
+//            return searchPos;
+//         }
+//      }
+
+/* v2: 21.62 ms */
+      // be careful: little vs big endian!
+      uint16_t pat  = ((uint16_t)((unsigned char)patternStr[0]));
+               pat <<= 8;
+               pat |= ((uint16_t)((unsigned char)patternStr[1]));
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint16_t cur  = ((uint16_t)(*curstr));
+      ++curstr;
       for (searchPos = startPos; searchPos<searchLen-2+1; ++searchPos) {
-         if (pat == *((uint16_t*)(searchStr+searchPos))) {
+         cur <<= 8;
+         cur |= (uint16_t)(*curstr);
+         ++curstr;
+         if (pat == cur) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 3) {
-      uint8_t  pat1 = (uint8_t)patternStr[0];
-      uint16_t pat2 = *((uint16_t*)(patternStr+1));
+// /* v1: 25.52ms; BUG: loads misaligned addresses... */
+//      uint8_t  pat1 = (uint8_t)patternStr[0];
+//      uint16_t pat2 = *((uint16_t*)(patternStr+1));
+//      for (searchPos = startPos; searchPos<searchLen-3+1; ++searchPos) {
+//         if (pat1 == (uint8_t)searchStr[searchPos]
+//             && pat2 == *((uint16_t*)(searchStr+searchPos+1))) {
+//            return searchPos;
+//         }
+//      }
+
+/* v2: 25.95 ms */
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[1]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[2]));
+
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint32_t cur  = ((uint32_t)(*curstr));
+      ++curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      ++curstr;
+
+      uint32_t mask = ~(((unsigned char)0xff)<<24);
+
       for (searchPos = startPos; searchPos<searchLen-3+1; ++searchPos) {
-         if (pat1 == (uint8_t)searchStr[searchPos]
-             && pat2 == *((uint16_t*)(searchStr+searchPos+1))) {
+         cur <<= 8;
+         cur |= (uint32_t)(*curstr);
+         ++curstr;
+         if ((pat&mask) == (cur&mask)) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 4) {
-      uint32_t pat = *((uint32_t*)patternStr);
+// /* v1: 17.71ms; BUG: loads misaligned addresses... */
+//      uint32_t pat = *((uint32_t*)patternStr);
+//      for (searchPos = startPos; searchPos<searchLen-4+1; ++searchPos) {
+//         if (pat == *((uint32_t*)(searchStr+searchPos))) {
+//            return searchPos;
+//         }
+//      }
+
+/* v2: 21.68 ms */
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[1]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[2]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[3]));
+
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint32_t cur  = ((uint32_t)(*curstr));
+      ++curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      ++curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      ++curstr;
+
+
       for (searchPos = startPos; searchPos<searchLen-4+1; ++searchPos) {
-         if (pat == *((uint32_t*)(searchStr+searchPos))) {
+         cur <<= 8;
+         cur |= (uint32_t)(*curstr);
+         ++curstr;
+         if (pat == cur) {
             return searchPos;
          }
       }
@@ -554,39 +632,88 @@ R_len_t StriContainerByteSearch::getMatchedLength()
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *
+ * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
+ *          BUGFIX: load of misaligned adresses
  */
 R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
 {
    if (patternLen == 1) {
-      uint8_t pat = (uint8_t)patternStr[0];
+      unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos-0; searchPos>=0; --searchPos) {
-         if (pat == (uint8_t)searchStr[searchPos]) {
+         if (pat == (unsigned char)searchStr[searchPos]) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 2) {
-      uint16_t pat = *((uint16_t*)patternStr);
+      // be careful: little vs big endian!
+      uint16_t pat  = ((uint16_t)((unsigned char)patternStr[1]));
+               pat <<= 8;
+               pat |= ((uint16_t)((unsigned char)patternStr[0]));
+
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint16_t cur  = ((uint16_t)(*curstr));
+      --curstr;
       for (searchPos = startPos-1; searchPos>=0; --searchPos) {
-         if (pat == *((uint16_t*)(searchStr+searchPos))) {
+         cur <<= 8;
+         cur |= (uint16_t)(*curstr);
+         --curstr;
+         if (pat == cur) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 3) {
-      uint8_t  pat1 = (uint8_t)patternStr[0];
-      uint16_t pat2 = *((uint16_t*)(patternStr+1));
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[2]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[1]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[0]));
+
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint32_t cur  = ((uint32_t)(*curstr));
+      --curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      --curstr;
+
+      uint32_t mask = ~(((unsigned char)0xff)<<24);
+
       for (searchPos = startPos-2; searchPos>=0; --searchPos) {
-         if (pat1 == (uint8_t)searchStr[searchPos]
-             && pat2 == *((uint16_t*)(searchStr+searchPos+1))) {
+         cur <<= 8;
+         cur |= (uint32_t)(*curstr);
+         --curstr;
+         if ((pat&mask) == (cur&mask)) {
             return searchPos;
          }
       }
    }
    else if (patternLen == 4) {
-      uint32_t pat = *((uint32_t*)patternStr);
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[3]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[2]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[1]));
+               pat <<= 8;
+               pat |= ((uint32_t)((unsigned char)patternStr[0]));
+
+      unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
+      uint32_t cur  = ((uint32_t)(*curstr));
+      --curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      --curstr;
+      cur <<= 8;
+      cur |= (uint32_t)(*curstr);
+      --curstr;
+
+
       for (searchPos = startPos-3; searchPos>=0; --searchPos) {
-         if (pat == *((uint32_t*)(searchStr+searchPos))) {
+         cur <<= 8;
+         cur |= (uint32_t)(*curstr);
+         --curstr;
+         if (pat == cur) {
             return searchPos;
          }
       }
