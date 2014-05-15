@@ -2,9 +2,9 @@
 ========================================
 
 
-* 0.3-1 (2014-05-14) **devel**
+* 0.2-4 (2014-05-15) **CRAN**
 
-   * t.b.d.
+   * [BUGFIX] Issues with loading of misaligned addresses in stri_*_fixed.
 
 
 * 0.2-3 (2014-05-14) **CRAN**
@@ -35,7 +35,7 @@
       encoding. Moreover, all such operation may be performed by
       ICU's Transliterator (see below).
 
-   * [NEW FUNCTION] stri_trans_general, stri_trans_list gives access
+   * [NEW FUNCTION] stri_trans_general, stri_trans_list give access
       to ICU's Transliterator: may be used to perform very general
       text transforms.
 
@@ -48,7 +48,7 @@
       locates start and end positions of words in a text.
 
    * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
-      pads a string with a specific code point.
+      pad a string with a specific code point.
 
    * [NEW FUNCTION] stri_wrap breaks paragraphs of text into lines.
      Two algorihms (greedy and minimal-raggedness) are available.
@@ -69,7 +69,7 @@
    * [NEW FUNCTION] stri_unique extracts unique elements from
         a character vector.
 
-   * [NEW FUNCTIONS] stri_duplicated any stri_duplicated_any
+   * [NEW FUNCTIONS] stri_duplicated and stri_duplicated_any
         determine duplicate elements in a character vector.
 
    * [NEW FUNCTION] stri_replace_na replaces NAs in a character vector

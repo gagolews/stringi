@@ -238,7 +238,6 @@ extern "C" void R_init_stringi(DllInfo* dll)
 }
 
 
-
 #ifndef NDEBUG
 
 #include <unicode/uclean.h>

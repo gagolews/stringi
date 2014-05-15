@@ -1,4 +1,4 @@
-# Last update: 2014-05-11, MG
+# Last update: 2014-05-15, MG
 set.seed(1L)
 x <- "v" %stri+% 1:1000
 y <- stri_c(stri_dup("x", 10000), stri_dup("y", 100))
@@ -56,6 +56,7 @@ microbenchmark( stri_detect_fixed(y, pat2), grepl(pat2, y), grepl(pat2, y, fixed
 #    stri_detect_regex(y, pat2) 495.357 498.8975 502.1335 505.1120 739.877   100
 #    stri_detect_fixed(y, pat2)  54.233  55.6425  56.9900  57.8660  79.242   100  ** KMP **
 #    stri_detect_fixed(y, pat2)  14.742  15.9030  17.6715  18.2820  26.083   100  ** shortPat upgrade **
+#    stri_detect_fixed(y, pat2)  18.462  19.4195  21.5890  22.5505  58.197   100 ** shortPat alignment fix **
 
 # a very long search string, pattern of length 3
 microbenchmark( stri_detect_fixed(y, pat3), grepl(pat3, y), grepl(pat3, y, fixed=TRUE), grepl(pat3, y, perl=TRUE) , stri_detect_regex(y, pat3))
@@ -68,6 +69,7 @@ microbenchmark( stri_detect_fixed(y, pat3), grepl(pat3, y), grepl(pat3, y, fixed
 #    stri_detect_regex(y, pat3) 505.392 510.6205 513.5305 517.6755 1841.009   100
 #    stri_detect_fixed(y, pat3)  53.166  55.4555  57.0975  57.9300   86.073   100  ** KMP **
 #    stri_detect_fixed(y, pat3)  22.661  24.0475  25.5230  26.1990   46.480   100  ** shortPat upgrade **
+#    stri_detect_fixed(y, pat3)  22.963  24.1295  25.8670  26.7190  53.987   100 ** shortPat alignment fix **
 
 # a very long search string, pattern of length 4
 microbenchmark( stri_detect_fixed(y, pat4), grepl(pat4, y), grepl(pat4, y, fixed=TRUE), grepl(pat4, y, perl=TRUE) , stri_detect_regex(y, pat4))
@@ -80,6 +82,7 @@ microbenchmark( stri_detect_fixed(y, pat4), grepl(pat4, y), grepl(pat4, y, fixed
 #    stri_detect_regex(y, pat4) 550.657 555.6510 559.501 563.7855  690.755   100
 #    stri_detect_fixed(y, pat4)  53.850  55.7635  57.374  57.9660   62.653   100  ** KMP **
 #    stri_detect_fixed(y, pat4)  14.687  15.5405  17.603  18.6250   31.989   100  ** shortPat upgrade **
+#    stri_detect_fixed(y, pat4)  18.498  19.9475  21.6830  22.9215   56.019   100 ** shortPat alignment fix **
 
 # a very long search string, a very long pattern
 microbenchmark( stri_detect_fixed(y, pat), grepl(pat, y), grepl(pat, y, fixed=TRUE), grepl(pat, y, perl=TRUE), stri_detect_regex(y, pat), unit="ms")
