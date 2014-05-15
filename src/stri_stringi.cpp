@@ -191,8 +191,13 @@ void stri_set_icu_data_directory(const char* libpath)
 
    string dir(libpath);
    size_t idx = dir.rfind("libs");
-   if (idx == string::npos) return; // this shouldn't happen
+   if (idx == string::npos) {
+      // this shouldn't happen
+      u_setDataDirectory(libpath); // just use the libpath
+      return;
+   }
 
+   // idx+5 -> if the string is shorter, as many characters as possible are used
    dir = dir.substr(0, idx+5); // 5 == strlen("libs/") or strlen("libs\\")
    u_setDataDirectory(dir.c_str());
 
@@ -230,6 +235,8 @@ extern "C" void R_init_stringi(DllInfo* dll)
    fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
    fprintf(stdout, "!NDEBUG: ************************************************\n");
 
+// /* u_init: It is OK to simply use ICU services and functions without
+// first having initialized ICU by calling u_init(). */
 //    UErrorCode status;
 //    u_init(&status);
 //    if (U_FAILURE(status))
@@ -238,19 +245,19 @@ extern "C" void R_init_stringi(DllInfo* dll)
 }
 
 
-#ifndef NDEBUG
-
-#include <unicode/uclean.h>
-
-/**
- * Library cleanup
- */
-extern "C" void  R_unload_stringi(DllInfo*)
-{
-   fprintf(stdout, "!NDEBUG: ************************************************\n");
-   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
-   fprintf(stdout, "!NDEBUG: ************************************************\n");
-   u_cleanup();
-}
-
-#endif
+//#ifndef NDEBUG
+//
+//#include <unicode/uclean.h>
+//
+///**
+// * Library cleanup
+// */
+//extern "C" void  R_unload_stringi(DllInfo*)
+//{
+//   fprintf(stdout, "!NDEBUG: ************************************************\n");
+//   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
+//   fprintf(stdout, "!NDEBUG: ************************************************\n");
+//   u_cleanup();
+//}
+//
+//#endif

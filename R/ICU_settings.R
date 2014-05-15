@@ -68,7 +68,7 @@ stri_info <- function(short=FALSE) {
          warning("Your native charset is not a superset of US-ASCII. " %+%
            "This may cause serious problems. Consider switching to UTF-8.")
       else if (!identical(info$Charset.native$Unicode.1to1, TRUE))
-         warning("Your native charset does not convert to Unicode well. " %+%
+         warning("Your native charset does not map to Unicode well. " %+%
             "This may cause serious problems. Consider switching to UTF-8.")
    }
 

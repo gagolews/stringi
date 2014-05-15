@@ -50,20 +50,27 @@ and \code{\link{stri_locate_last_regex}} for overlapping pattern matches.
 In \code{stri_locate_last_coll}, search is done from-the-end.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_first_coll(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last_coll(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 #first row is 1-2 like in locate_first
 stri_locate_all_coll('bbbbb', 'bb')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_first_coll('bbbbb', 'bb')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 # but last row is 3-4, unlike in locate_last,
 # keep this in mind [overlapping pattern match OK]!
 stri_locate_last_coll('bbbbb', 'bb')
-
-locate <- stri_locate_first_coll('stringi - REXAMINE', letters)
-rownames(locate) <- letters
-locate
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

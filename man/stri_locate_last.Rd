@@ -36,9 +36,15 @@ directly for better performance.
 }
 \examples{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last('Bartolini', fixed=letters[1:3])
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last('a b c', charclass='\\\\p{Zs}')
 }
 \seealso{

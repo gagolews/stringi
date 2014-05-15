@@ -195,6 +195,7 @@ stri_split_lines1 <- function(str) {
 #' Returns a list of character vectors.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
 #'
 #' @export

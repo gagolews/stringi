@@ -22,7 +22,10 @@ This function is independent of the way \R marks encodings in
 character strings (see \link{Encoding} and \link{stringi-encoding}).
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_enc_isascii(letters[1:3])
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_enc_isascii("\\u0105\\u0104")
 }
 \seealso{

@@ -37,7 +37,10 @@ Input that is not part of any match is left unchanged;
 each match is replaced in the result by the same (fixed) replacement string.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ", TRUE)
 }
 \seealso{

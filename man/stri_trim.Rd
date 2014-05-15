@@ -54,9 +54,16 @@ and general character category `\code{\\p\{Z\}}`,
 see \link{stringi-search-charclass}.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trim_left("               aaa")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trim_right("rexamine.com/", "\\\\p{P}")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{N}")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 }
 \seealso{

@@ -45,10 +45,19 @@ letters, digits, or white spaces occur in a given string.
 Vectorized over \code{str}, \code{pattern}, and \code{merge}.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all_charclass(c('REXAMINE'), '\\\\p{Lu}', merge=c(TRUE, FALSE))
 }
 \seealso{

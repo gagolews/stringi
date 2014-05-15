@@ -73,7 +73,10 @@ On the other hand, \code{\%stri===\%} performs a locale-independent,
 code point-based comparison.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 "a" \%stri<\% "b"
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 c("a", "b", "c") \%stri>=\% "b"
 }
 \seealso{

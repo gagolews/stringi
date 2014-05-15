@@ -32,10 +32,19 @@ as opposed to the built-in \code{\link{nchar}} function.
 For `byte` encodings we get, as usual, an error.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_length(LETTERS)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_length(c('abc', '123', '\\u0105\\u0104'))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_length('\\u0105') # length is one, but...
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_numbytes('\\u0105') # 2 bytes are used
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_length(stri_trans_nfkd('\\u0105')) # ...two code points (!)
 }
 \seealso{

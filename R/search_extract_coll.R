@@ -56,9 +56,15 @@
 #' \code{NA} if not found.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=2, locale="sk_SK"))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=1, locale="sk_SK"))
 #'

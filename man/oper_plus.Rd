@@ -32,7 +32,10 @@ because it creates a new (temporary) result vector each time
 the operator is applied.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 c('abc', '123', '\\u0105\\u0104') \%stri+\% letters[1:6]
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 'ID_' \%stri+\% 1:5
 }
 

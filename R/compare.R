@@ -98,19 +98,43 @@
 #' whether a given relation holds between two corresponding elements
 #' in \code{e1} and \code{e2}.
 #'
+#' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # in Polish ch < h:
+#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
+#'     
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # in Slovak ch > h:
+#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # < or > (depends on locale):
+#' stri_cmp("hladny", "chladny")
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # ignore case differences:
+#' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # alse ignore diacritical differences:
+#' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # non-normalized vs normalized string:
+#' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # note the difference:
+#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
+#'    
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # ligatures:
+#' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
+#'
+#'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_compare
-#'
-#' @examples
-#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
-#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
-#' stri_cmp("hladny", "chladny") # < or > (depends on locale)
-#' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
-#' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-#' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
-#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105') # note the difference
-#' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
 stri_compare <- function(e1, e2, opts_collator=NULL) {
    .Call("stri_cmp_integer", e1, e2, opts_collator, PACKAGE="stringi")
 }
@@ -201,7 +225,10 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' "a" %stri<% "b"
+#' 
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' c("a", "b", "c") %stri>=% "b"
 #'
 #' @usage
@@ -394,7 +421,10 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname stri_order
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
+#' 
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
@@ -428,6 +458,8 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @return Returns a character vector.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' # normalized and non-unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
 #' @family locale_sensitive

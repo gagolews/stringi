@@ -68,13 +68,29 @@ string concatenation at the front, back, or middle.
 }
 \examples{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_sub(s, from=1:3*6, to=21)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_sub(s, from=c(1,7,13), length=5)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_sub(s, from=1, length=1:3)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_sub(s, -17, -7)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_sub(s, -5, length=4)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 (stri_sub(s, 1, 5) <- "stringi")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 (stri_sub(s, -6, length=5) <- ".")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 (stri_sub(s, 1, 1:3) <- 1:2)
 }
 \seealso{

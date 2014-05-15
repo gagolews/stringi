@@ -54,8 +54,13 @@ e.g. in \code{\link{stri_count_regex}}
 and other \link{stringi-search-regex} functions.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex("ala", "ALA") # case-sensitive by default
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex("ala", "(?i:)ALA") # equivalent
 }
 \references{

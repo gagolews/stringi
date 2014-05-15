@@ -36,6 +36,7 @@ For natural language processing this function may be not give
 you desired results. Refer to \link{stringi-search-fixed} for more details.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_split_fixed("Lorem ipsum dolor sit amet", " ")
 }
 \seealso{

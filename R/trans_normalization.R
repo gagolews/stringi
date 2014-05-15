@@ -95,7 +95,11 @@
 #' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_trans_nfd("\u0105") # Polish a with ogonek -> a, ogonek
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_trans_nfkc("\ufdfa") # 1 codepoint -> 18 codepoints
 #'
 #' @export

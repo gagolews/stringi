@@ -20,8 +20,13 @@ Missing values are handled properly,
 as opposed to the built-in \code{\link{nzchar}} function.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_isempty(letters[1:3])
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_isempty(c(',', '', 'abc', '123', '\\u0105\\u0104'))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_isempty(character(1))
 }
 \seealso{

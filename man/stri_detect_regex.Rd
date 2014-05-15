@@ -31,10 +31,19 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex(c("stringi R", "REXAMINE","123"), 'R.')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex(c("stringi R", "REXAMINE","123"), '[[:alpha:]]*?')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex(c("stringi R", "REXAMINE","123"), '[a-zC1]')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex(c("stringi R", "REXAMINE","123"), '( R|RE)')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
 }
 \seealso{

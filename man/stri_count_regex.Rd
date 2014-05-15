@@ -28,10 +28,20 @@ and a warning is generated.
 }
 \examples{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, "(s|el)it")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, "i.i")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, ".it")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex("bab baab baaab", c("b.*?b", "b.b"))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(c("stringi", "123"), "^(s|1)")
 }
 \seealso{

@@ -34,6 +34,7 @@ to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_words("  stringi: THE string processing package 123.48...  ")
 }
 \references{

@@ -70,7 +70,9 @@
 #' \emph{ICU Data} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/icudata}
 #'
-#'
+#' @examples
+#' \dontrun{stri_install_check()}
+#' 
 #' @rdname
 #' stri_install
 #' @export
@@ -83,6 +85,7 @@ stri_install_check <- function(silent=FALSE) {
 
       if (length(stri_enc_list()) <= 0) stop("encodings unsupported")
       if (length(stri_locale_list()) <= 0) stop("locales unsupported")
+      if (length(stri_trans_list()) <= 0) stop("transliterators unsupported")
       if (stri_cmp("a", "b", opts_collator=stri_opts_collator(locale="en_US")) != -1)
          stop("no collator rules installed")
       if (stri_detect_regex("123abc!@#", "\\p{L}") != TRUE)
@@ -133,11 +136,13 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       tryCatch({
          ret <- download.file(paste0(mirror, fname), outfname, mode="wb")
          if (ret != 0) stop("download error")
+         if (!file.exists(outfname)) stop("download error")
          TRUE
       }, error = function(e) FALSE)
    }
 
    message("downloading ICU data library (icudt)")
+   message("the files will be extracted to: ", path)
    allok <- download_from_mirror(mirror1, outfname)
    allok <- allok || download_from_mirror(mirror2, outfname)
    allok <- allok || download_from_mirror(mirror3, outfname)
@@ -157,5 +162,5 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
 
    message("icudt has been installed successfully")
    message("restart R to apply changes")
-   return(invisible(TRUE))
+   invisible(TRUE)
 }
