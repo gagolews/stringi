@@ -54,7 +54,11 @@
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count(s, fixed=letters)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count(s, regex="[[:alpha:]]")
 #'
 #' @export

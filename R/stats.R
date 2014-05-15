@@ -62,6 +62,8 @@
 #'        "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
 #'        "Cras vel lorem. Etiam pellentesque aliquet tellus.",
 #'        "")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_stats_general(s)
 #'
 #' @family stats
@@ -101,7 +103,10 @@ stri_stats_general <- function(str) {
 #' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",
 #'        "\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
 #'        "")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_stats_latex(s)
+#'
 #' \dontrun{
 #' # Stats for the preprint version of M. Gagolewski's book
 #' # "Programowanie w jezyku R", Wydawnictwo Naukowe PWN, 2014.

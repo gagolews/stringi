@@ -47,8 +47,13 @@
 #' @export
 #' @family join
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_dup("a", 1:5)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_dup(c("a", NA, "ba"), 4)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_dup(c("abc", "pqrst"), c(4, 2))
 stri_dup <- function(str, times) {
    .Call("stri_dup", str, times, PACKAGE="stringi")
@@ -83,8 +88,12 @@ stri_dup <- function(str, times) {
 #'
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' c('abc', '123', '\u0105\u0104') %stri+% letters[1:6]
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' 'ID_' %stri+% 1:5
+#'
 #' @rdname oper_plus
 #' @export
 "%+%" <- function(e1, e2) {
@@ -140,11 +149,22 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(1:13, letters)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(1:13, letters, sep='!')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(1:13, letters, collapse='?')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(1:13, letters, sep='!', collapse='?')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
 #'
 #' @family join
@@ -189,9 +209,16 @@ stri_paste <- stri_join
 #' vector of length 1.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_flatten(LETTERS)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_flatten(LETTERS, collapse=",")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_flatten(c('abc', '123', '\u0105\u0104'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_flatten(stri_dup(letters[1:6],1:3))
 #'
 #' @export

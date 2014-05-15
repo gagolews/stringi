@@ -64,6 +64,7 @@
 #'
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_split_regex("Lorem ipsum dolor sit amet",
 #'    "\\p{Z}+") # see also stri_split_charclass
 #'

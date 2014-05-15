@@ -56,6 +56,7 @@
 #' the first capture group, the third -- the second capture group, and so on.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
 #'    "(\\w+)=(\\w+)")
 #'

@@ -45,9 +45,14 @@
 #' @return Returns an integer vector.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_charclass(c("stRRRingi", "STrrrINGI", "123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_charclass(" \t\n", "\\p{WHITE_SPACE}") # white space - binary property
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_charclass(" \t\n", "\\p{Z}") # whitespace - general category (note the difference)
 #'
 #' @export

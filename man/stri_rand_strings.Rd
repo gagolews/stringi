@@ -33,10 +33,16 @@ is always done with replacement and each code point appears with equal
 probability.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_rand_strings(5, 10) # 5 strings of length 10
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_rand_strings(10, 5, "[\\\\p{script=latin}&\\\\p{Ll}]") # small letters from the Latin script
 
+\dontrun{
 # generate n random passwords of length in [8, 14]
 # consisting of at least one digit, small and big ASCII letter:
 n <- 10
@@ -46,6 +52,7 @@ stri_rand_shuffle(stri_paste(
    stri_rand_strings(n, 1, '[A-Z]'),
    stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
 ))
+}
 }
 \seealso{
 Other random: \code{\link{stri_rand_shuffle}}

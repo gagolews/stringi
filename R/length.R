@@ -59,7 +59,11 @@
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_numbytes(letters)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_numbytes(c('abc', '123', '\u0105\u0104'))
 #' \dontrun{
 #' # this used to fail on Windows, as there was no native support for 4-bytes
@@ -101,10 +105,20 @@ stri_numbytes <- function(str) {
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_length(LETTERS)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_length(c('abc', '123', '\u0105\u0104'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_length('\u0105') # length is one, but...
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_numbytes('\u0105') # 2 bytes are used
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 #'
 #' @export
@@ -129,8 +143,14 @@ stri_length <- function(str) {
 #' @return Returns a logical vector of the same length as \code{str}.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_isempty(letters[1:3])
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_isempty(character(1))
 #'
 #' @export

@@ -39,6 +39,8 @@ s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
        "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
        "Cras vel lorem. Etiam pellentesque aliquet tellus.",
        "")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_stats_general(s)
 }
 \seealso{

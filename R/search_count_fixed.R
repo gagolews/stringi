@@ -52,11 +52,23 @@
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed(s, " ")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed(s, "o")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed(s, "it")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed(s, letters)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed("babab", "b")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_count_fixed(c("stringi", "123"), "string")
 #'
 #' @export

@@ -2,6 +2,11 @@
 ========================================
 
 
+* 0.2-5 (2014-05-16) **CRAN**
+
+   * icudt-dependent examples are no longer run if icudt is not available.
+
+
 * 0.2-4 (2014-05-15) **CRAN**
 
    * [BUGFIX] Issues with loading of misaligned addresses in stri_*_fixed.

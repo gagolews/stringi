@@ -59,6 +59,7 @@
 #'
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_split_fixed("Lorem ipsum dolor sit amet", " ")
 #'
 #' @export

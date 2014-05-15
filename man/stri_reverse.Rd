@@ -22,8 +22,13 @@ See also \code{\link{stri_rand_shuffle}} for a random permutation
 of code points.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_reverse(c("123", "abc d e f"))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_reverse("ZXY (\\u0105\\u0104123$^).")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_reverse(stri_trans_nfd('\\u0105')) == stri_trans_nfd('\\u0105') # A, ogonek -> agonek, A
 }
 

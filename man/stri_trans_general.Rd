@@ -52,11 +52,22 @@ To achieve this, a compound transform can be specified as follows:
 \code{NFKD; Lower; Latin-Katakana;}
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("gro\\u00df", "latin-ascii")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("stringi", "latin-greek")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("stringi", "latin-cyrillic")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("stringi", "upper") # see stri_trans_toupper
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("\\u0104", "nfd; lower") # compound id; see stri_trans_nfd
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_trans_general("tato nie wraca ranki wieczory", "pl-pl_FONIPA")
 }
 \references{

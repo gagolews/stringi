@@ -46,6 +46,7 @@
 #' @return Returns a logical vector.
 #'
 #' @examples
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_detect_charclass(c("stRRRingi","REXAMINE","123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #'

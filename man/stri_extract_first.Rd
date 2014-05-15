@@ -32,8 +32,14 @@ directly for better performance.
 }
 \examples{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_first('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_first('Bartolini', coll=letters[1:3])
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_first(s, charclass='\\\\p{Zs}')
 }
 \seealso{

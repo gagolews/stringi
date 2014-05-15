@@ -220,8 +220,13 @@ stri_replace <- function(str, replacement, ..., regex, fixed, coll, charclass,
 #'
 #' @examples
 #' x <- c('test', NA)
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_paste(x, 1:2)                           # "test1" NA
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' paste(x, 1:2)                                # "test 1" "NA 2"
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
 #'
 #' @export

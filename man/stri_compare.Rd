@@ -100,13 +100,36 @@ Please note that different locale settings may lead to different results
 (see the examples below).
 }
 \examples{
-stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL")) # in Polish ch < h
-stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK")) # in Slovak ch > h
-stri_cmp("hladny", "chladny") # < or > (depends on locale)
+\dontshow{if (stri_install_check(silent=TRUE))}
+# in Polish ch < h:
+stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# in Slovak ch > h:
+stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# < or > (depends on locale):
+stri_cmp("hladny", "chladny")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# ignore case differences:
 stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# alse ignore diacritical differences:
 stri_cmp_equiv("hladn\\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# non-normalized vs normalized string:
 stri_cmp_equiv(stri_trans_nfkd('\\u0105'), '\\u105')
-stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105') # note the difference
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# note the difference:
+stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
+# ligatures:
 stri_cmp_equiv("\\ufb00", "ff", stri_opts_collator(strength=2))
 }
 \seealso{

@@ -100,8 +100,14 @@
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_cmp("above mentioned", "above-mentioned")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
 stri_opts_collator <- function(locale=NULL, strength=3L,
    alternate_shifted=FALSE, french=FALSE,
@@ -176,8 +182,14 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' \url{http://userguide.icu-project.org/strings/regexp}
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_detect_regex("ala", "ALA") # case-sensitive by default
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_detect_regex("ala", "(?i:)ALA") # equivalent
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
                             multiline, unix_lines, uword, error_on_unknown_escapes)

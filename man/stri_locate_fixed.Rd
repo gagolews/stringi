@@ -47,20 +47,26 @@ and \code{\link{stri_locate_last_regex}} for overlapping pattern matches.
 In \code{stri_locate_last_fixed}, search is done from-the-end.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 
+\dontshow{if (stri_install_check(silent=TRUE))}
 #first row is 1-2 like in locate_first
 stri_locate_all_fixed('bbbbb', 'bb')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_first_fixed('bbbbb', 'bb')
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 # but last row is 3-4, unlike in locate_last,
 # keep this in mind [overlapping pattern match OK]!
 stri_locate_last_fixed('bbbbb', 'bb')
-
-locate <- stri_locate_first_fixed('stringi - REXAMINE', letters)
-rownames(locate) <- letters
-locate
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

@@ -57,6 +57,7 @@ For extracting individual words from the text
 using a \code{BreakIterator}, see \code{\link{stri_extract_words}}.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
 }
 \references{

@@ -30,9 +30,16 @@ If \code{collapse} has length > 1, then only first string
 will be used.
 }
 \examples{
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_flatten(LETTERS)
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_flatten(LETTERS, collapse=",")
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_flatten(c('abc', '123', '\\u0105\\u0104'))
+
+\dontshow{if (stri_install_check(silent=TRUE))}
 stri_flatten(stri_dup(letters[1:6],1:3))
 }
 \seealso{

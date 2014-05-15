@@ -64,8 +64,14 @@
 #'
 #' @rdname stri_pad
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_pad_left("stringi", 10, pad="#")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_pad_both("stringi", 8:12, pad="*")
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' # center on screen:
 #' cat(stri_pad_both(c("the", "string", "processing", "package"),
 #'    getOption("width")*0.9), sep='\n')

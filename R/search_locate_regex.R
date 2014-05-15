@@ -61,10 +61,16 @@
 #' or the last matches, respectively, and \code{NA}s iff not found.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_all_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_first_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_last_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #'

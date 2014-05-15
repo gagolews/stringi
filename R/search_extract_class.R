@@ -59,9 +59,17 @@
 #'
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 #'
 #' @export

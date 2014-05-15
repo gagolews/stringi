@@ -52,8 +52,14 @@
 #' @return Returns a list of character vectors.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all('Bartolini', coll='i')
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all whitespaces
 #'
 #' @export
@@ -98,8 +104,14 @@ stri_extract_all <- function(str, ..., regex, coll, charclass) {
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_first('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_first('Bartolini', coll=letters[1:3])
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_first(s, charclass='\\p{Zs}')
 #'
 #' @export
@@ -144,8 +156,14 @@ stri_extract_first <- function(str, ..., regex, coll, charclass) {
 #'
 #' @examples
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_last('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_last('Bartolini', coll=letters[1:3])
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_last(s, charclass='\\p{Zs}')
 #'
 #' @export
@@ -235,6 +253,8 @@ stri_extract <- function(str, ..., regex, coll, charclass,
 #' is provided on output.
 #'
 #' @examples
+#'
+#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_extract_words("stringi: THE string processing package 123.48...")
 #'
 #' @references

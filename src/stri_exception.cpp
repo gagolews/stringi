@@ -70,11 +70,11 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_ILLEGAL_ARGUMENT_ERROR:
          return "Start of codes indicating failure.";
       case U_MISSING_RESOURCE_ERROR:
-         return "The requested ICU resource cannot be found. Call `stri_install_check()` to fix this problem.";
+         return "The requested ICU resource cannot be found. Possible problem: ICU data has not been downloaded yet. Call `stri_install_check()`.";
       case U_INVALID_FORMAT_ERROR:
          return "Data format is not what is expected.";
-      case U_FILE_ACCESS_ERROR:
-         return "The requested file cannot be found.";
+      case U_FILE_ACCESS_ERROR: // udata.cpp only
+         return "The requested ICU resource file cannot be found. Possible problem: ICU data has not been downloaded yet. Call `stri_install_check()`.";
       case U_INTERNAL_PROGRAM_ERROR:
          return "Internal ICU error, might be a bug in the library code.";
       case U_MESSAGE_PARSE_ERROR:
