@@ -3,13 +3,13 @@
 \alias{stri_locate_boundaries}
 \title{Locate Specific Text Boundaries}
 \usage{
-stri_locate_boundaries(str, boundary = "word", locale = NULL)
+stri_locate_boundaries(str, boundary = "line_break", locale = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
 \item{boundary}{character vector, each string is one of \code{character},
-\code{line-break}, \code{sentence}, or \code{word}}
+\code{line_break}, \code{sentence}, or \code{word}}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
@@ -35,7 +35,7 @@ Vectorized over \code{str} and \code{boundary}.
 
 For more information on the text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
-\code{\link{stri_locate_boundaries}}.
+\code{\link{stri_split_boundaries}}.
 
 For locating words in a text using \pkg{ICU}'s word iterator,
 see \code{\link{stri_locate_words}}.

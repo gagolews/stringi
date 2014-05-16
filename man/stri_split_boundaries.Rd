@@ -3,13 +3,13 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, boundary = "line-break", locale = NULL)
+stri_split_boundaries(str, boundary = "line_break", locale = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
 \item{boundary}{character vector, each string is one of \code{character},
-\code{line-break}, \code{sentence}, or \code{word}}
+\code{line_break}, \code{sentence}, or \code{word}}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with

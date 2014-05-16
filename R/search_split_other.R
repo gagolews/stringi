@@ -186,7 +186,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
-#' \code{line-break}, \code{sentence}, or \code{word}
+#' \code{line_break}, \code{sentence}, or \code{word}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
@@ -205,7 +205,7 @@ stri_split_lines1 <- function(str) {
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
-stri_split_boundaries <- function(str, boundary='line-break', locale=NULL) {
+stri_split_boundaries <- function(str, boundary='line_break', locale=NULL) {
    .Call("stri_split_boundaries", str, boundary, locale, PACKAGE="stringi")
 }
 

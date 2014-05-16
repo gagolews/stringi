@@ -262,7 +262,7 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
 #'
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
-#' \code{\link{stri_locate_boundaries}}.
+#' \code{\link{stri_split_boundaries}}.
 #'
 #' For locating words in a text using \pkg{ICU}'s word iterator,
 #' see \code{\link{stri_locate_words}}.
@@ -270,7 +270,7 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
 #'
 #' @param str character vector or an object coercible to
 #' @param boundary character vector, each string is one of \code{character},
-#' \code{line-break}, \code{sentence}, or \code{word}
+#' \code{line_break}, \code{sentence}, or \code{word}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
@@ -294,7 +294,7 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
 #' @family indexing
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_locate_boundaries <- function(str, boundary='word', locale=NULL) {
+stri_locate_boundaries <- function(str, boundary='line_break', locale=NULL) {
    .Call("stri_locate_boundaries", str, boundary, locale, PACKAGE="stringi")
 }
 
