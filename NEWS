@@ -2,135 +2,141 @@
 ========================================
 
 
+* 0.3-1 (2014-??-??) **devel**
+
+   * t.b.d.
+
+
 * 0.2-5 (2014-05-16) **CRAN**
 
-   * icudt-dependent examples are no longer run if icudt is not available.
+   * icudt-dependent examples are no longer run if `icudt` is not available.
 
 
 * 0.2-4 (2014-05-15) **CRAN**
 
-   * [BUGFIX] Issues with loading of misaligned addresses in stri_*_fixed.
+   * [BUGFIX] Issues with loading of misaligned addresses in `stri_*_fixed`.
 
 
 * 0.2-3 (2014-05-14) **CRAN**
 
-   * [IMPORTANT CHANGE] stri_cmp* now do not allow for passing opts_collator=NA.
-      From now on, stri_cmp_eq, stri_cmp_neq, and the new operators
-      %===%, %!==%, %stri===%, and %stri!==% are locale-independent operations,
-      which base on code point comparisons. New functions stri_cmp_equiv
-      and stri_cmp_nequiv (and from now on also %==%, %!=%, %stri==%,
-      and %stri!=%) test for canonical equivalence.
+   * [IMPORTANT CHANGE] `stri_cmp*` now do not allow for passing
+      `opts_collator=NA`. From now on, `stri_cmp_eq`, `stri_cmp_neq`,
+      and the new operators `%===%`, `%!==%`, `%stri===%`, and `%stri!==%`
+      are locale-independent operations, which base on code point comparisons.
+      New functions `stri_cmp_equiv` and `stri_cmp_nequiv`
+      (and from now on also `%==%`, `%!=%`, `%stri==%`, and `%stri!=%`)
+      test for canonical equivalence.
 
-   * [IMPORTANT CHANGE] stri_*_fixed search functions now perform
+   * [IMPORTANT CHANGE] `stri_*_fixed` search functions now perform
       a locale-independent exact (bytewise, of course after conversion to UTF-8)
       pattern search. All the Collator-based, locale-dependent search routines
-      are now available via stri_*_coll. The reason for this is that
+      are now available via `stri_*_coll`. The reason for this is that
       ICU USearch has currently very poor performance and in many search tasks
       in fact it is sufficient to do exact pattern matching.
 
-   * stri_*_fixed now use a tweaked Knuth-Morris-Pratt search algorithm,
+   * `stri_*_fixed` now use a tweaked Knuth-Morris-Pratt search algorithm,
       which improves the search performance drastically.
 
 
 * 0.2-2 (2014-05-01) **devel**
 
-   * [IMPORTANT CHANGE] stri_enc_nf* and stri_enc_isnf* function families
-      have been renamed to stri_trans_nf* and stri_trans_isnf*, respectively.
-      This is because they deal with text transforming, and not with character
-      encoding. Moreover, all such operation may be performed by
-      ICU's Transliterator (see below).
+   * [IMPORTANT CHANGE] `stri_enc_nf*` and `stri_enc_isnf*` function families
+      have been renamed to `stri_trans_nf*` and `stri_trans_isnf*`,
+      respectively. This is because they deal with text transforming,
+      and not with character encoding. Moreover, all such operations may
+      also be performed by ICU's Transliterator (see below).
 
-   * [NEW FUNCTION] stri_trans_general, stri_trans_list give access
+   * [NEW FUNCTION] `stri_trans_general` and `stri_trans_list` give access
       to ICU's Transliterator: may be used to perform very general
       text transforms.
 
-   * [NEW FUNCTION stri_split_boundaries utilizes ICU's BreakIterator
+   * [NEW FUNCTION `stri_split_boundaries` utilizes ICU's BreakIterator
       to split strings at specific text boundaries. Moreover,
       stri_locate_boundaries indicates positions of these boundaries.
 
-   * [NEW FUNCTION] stri_extract_words uses ICU's BreakIterator to
-      extract all words from a text. Additionally, stri_locate_words
+   * [NEW FUNCTION] `stri_extract_words` uses ICU's BreakIterator to
+      extract all words from a text. Additionally, `stri_locate_words`
       locates start and end positions of words in a text.
 
-   * [NEW FUNCTION] stri_pad, stri_pad_left, stri_pad_right, stri_pad_both
-      pad a string with a specific code point.
+   * [NEW FUNCTION] `stri_pad`, `stri_pad_left`, `stri_pad_right`,
+      and `stri_pad_both` pad a string with a specific code point.
 
-   * [NEW FUNCTION] stri_wrap breaks paragraphs of text into lines.
-     Two algorihms (greedy and minimal-raggedness) are available.
+   * [NEW FUNCTION] `stri_wrap breaks` paragraphs of text into lines.
+     Two algorithms (greedy and minimal-raggedness) are available.
 
 
 * 0.2-1 (2014-04-18) **devel**
 
-   * [IMPORTANT CHANGE] stri_*_charclass search functions now
+   * [IMPORTANT CHANGE] `stri_*_charclass` search functions now
      rely solely on ICU's UnicodeSet patterns. All previously accepted
      charclass identifiers became invalid. However, new patterns
      should now be more familiar to the users (they are regex-like).
      Moreover, we observe a very nice performance gain.
 
-   * [IMPORTANT CHANGE] stri_sort now does not include NAs
-     in output vectors by default, for compatibility with sort().
+   * [IMPORTANT CHANGE] `stri_sort` now does not include `NA`s
+     in output vectors by default, for compatibility with `sort()`.
      Moreover, currently none of the input vector's attributes are preserved.
 
-   * [NEW FUNCTION] stri_unique extracts unique elements from
-        a character vector.
+   * [NEW FUNCTION] `stri_unique extracts` unique elements from
+     a character vector.
 
-   * [NEW FUNCTIONS] stri_duplicated and stri_duplicated_any
-        determine duplicate elements in a character vector.
+   * [NEW FUNCTIONS] `stri_duplicated` and `stri_duplicated_any`
+     determine duplicate elements in a character vector.
 
-   * [NEW FUNCTION] stri_replace_na replaces NAs in a character vector
-      with a given string, useful for emulating e.g. R's paste() behavior.
+   * [NEW FUNCTION] `stri_replace_na` replaces `NA`s in a character vector
+      with a given string, useful for emulating e.g. R's `paste()` behavior.
 
-   * [NEW FUNCTION] stri_rand_shuffle generates a random permutation
-      of code points in a string.
+   * [NEW FUNCTION] `stri_rand_shuffle` generates a random permutation
+     of code points in a string.
 
-   * [NEW FUNCTION] stri_rand_strings generates random strings.
+   * [NEW FUNCTION] `stri_rand_strings` generates random strings.
 
    * [NEW FUNCTIONS] New functions and binary operators for string comparison:
-      stri_cmp_eq, stri_cmp_neq, stri_cmp_lt, stri_cmp_le, stri_cmp_gt,
-      stri_cmp_ge, %==%, %!=%, %<%, %<=%, %>%, %>=%.
+     `stri_cmp_eq`, `stri_cmp_neq`, `stri_cmp_lt`, `stri_cmp_le`,
+     `stri_cmp_gt`, `stri_cmp_ge`, `%==%`, `%!=%`, `%<%`, `%<=%`, `%>%`, `%>=%`.
 
-   * [NEW FUNCTION] stri_enc_mark reads declared encodings of character strings
-      as seen by stringi.
+   * [NEW FUNCTION] `stri_enc_mark` reads declared encodings of character
+     strings as seen by stringi.
 
-   * [NEW FUNCTION] stri_enc_tonative(str) is an alias to
-      stri_encode(str, NULL, NULL).
+   * [NEW FUNCTION] `stri_enc_tonative(str)` is an alias to
+     `stri_encode(str, NULL, NULL)`.
 
-   * [NEW FEATURE] stri_order and stri_sort now have an additional argument
-      `na_last` (defaults to TRUE and NA, respectively).
+   * [NEW FEATURE] `stri_order` and `stri_sort` now have an additional argument
+     `na_last` (defaults to `TRUE` and `NA`, respectively).
 
-   * [NEW FEATURE] stri_replace_all_charclass now has `merge` arg
-      (defaults to FALSE for backward-compatibility). It may be used
-      to e.g. replace sequences of white spaces with a single space.
+   * [NEW FEATURE] `stri_replace_all_charclass` now has `merge` arg
+     (defaults to `FALSE` for backward-compatibility). It may be used
+     to e.g. replace sequences of white spaces with a single space.
 
-   * [NEW FEATURE] stri_enc_toutf8 now has a new `validate` arg (defaults
-      to FALSE for backward-compatibility). It may be used in a (rare) case
-      in which a user wants to fix an invalid UTF-8 byte sequence.
-      stri_length (among others) now detect invalid UTF-8 byte sequences.
+   * [NEW FEATURE] `stri_enc_toutf8` now has a new `validate` arg (defaults
+     to FALSE for backward-compatibility). It may be used in a (rare) case
+     in which a user wants to fix an invalid UTF-8 byte sequence.
+     stri_length (among others) now detect invalid UTF-8 byte sequences.
 
-   * [NEW FEATURE] All binary operators %???% now also have aliases %stri???%.
+   * [NEW FEATURE] All binary operators `%???%` now also have aliases `%stri???%`.
 
-   * Performance improvements in StriContainerUTF8 and StriContainerUTF16
-      (they affect most other functions).
+   * Performance improvements in `StriContainerUTF8` and `StriContainerUTF16`
+     (they affect most other functions).
 
-   * Significant performance improvements in stri_join, stri_flatten,
-      stri_cmp, stri_trans_to*, and others.
+   * Significant performance improvements in `stri_join`, `stri_flatten`,
+     `stri_cmp`, `stri_trans_to*`, and others.
 
    * Added 3rd mirror site for our icudt binary distribution.
 
-   * U_MISSING_RESOURCE_ERROR message in StriException now suggests
-        calling stri_install_check().
+   * `U_MISSING_RESOURCE_ERROR` message in `StriException` now suggests
+     calling `stri_install_check()`.
 
    * [BUGFIX] UTF-8 BOMs are now silently removed from input strings.
 
    * [BUGFIX] no more attempts to re-encode UTF-8 encoded strings
-     if native encoding=UTF-8 in StriContainerUTF8.
+     if native encoding=UTF-8 in `StriContainerUTF8`.
 
-   * [BUGFIX] possible memory leaks when throwing errors via Rf_error.
+   * [BUGFIX] possible memory leaks when throwing errors via `Rf_error()`.
 
-   * [BUGFIX] stri_order and stri_cmp could return incorrect results
-       for opts_collator=NA.
+   * [BUGFIX] `stri_order` and `stri_cmp` could return incorrect results
+     for `opts_collator=NA`.
 
-   * [BUGFIX] stri_sort did not guarantee to return strings in UTF-8.
+   * [BUGFIX] `stri_sort` did not guarantee to return strings in UTF-8.
 
 
 * 0.1-25 (2014-03-12) **CRAN**
@@ -142,13 +148,14 @@
 
 * 0.1-24 (2014-03-11) **devel**
 
-    * Fixed bugs detected with ASan and UBSan,
-      e.g. fixed CharClass::gcmask type (enum -> uint32_t) (reported by UBSan).
+    * Fixed bugs detected with `ASan` and `UBSan`,
+      e.g. fixed `CharClass::gcmask` type (`enum` -> `uint32_t`)
+      (reported by `UBSan`).
 
-    * Fixed array over-runs detected with valgrind in string8.h.
+    * Fixed array over-runs detected with `valgrind` in `string8.h`.
 
-    * Fixed unitialized class fields in StriContainerUTF8
-      (reported by valgrind).
+    * Fixed unitialized class fields in `StriContainerUTF8`
+      (reported by `valgrind`).
 
 
 * 0.1-23 (2014-03-11) **devel**
@@ -158,15 +165,15 @@
     * icudt is not shipped with stringi anymore;
       it is now downloaded in install.libs.R from one of our servers.
 
-    * New functions: stri_install_check(), stri_install_icudt().
+    * New functions: `stri_install_check()`, `stri_install_icudt()`.
 
 
 * 0.1-22 (2014-02-20) **devel**
 
    * System ICU is used on systems which do have one (version >= 50 needed).
-     ICU is autodetected with pkg-config in ./configure.
-     Pass '--disable-pkg-config' to ./configure to force building ICU from
-     sources.
+     ICU is autodetected with `pkg-config` in `./configure`.
+     Pass `'--disable-pkg-config'` to `./configure` to force building
+     ICU from sources.
    
    * icudt52b (custom subset) is now shipped with stringi
      (for big-endian, ASCII systems).

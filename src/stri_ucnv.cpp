@@ -268,18 +268,18 @@ bool StriUcnv::hasASCIIsubset()
    // minCharSize, not maxCharSize, as we want to include UTF-8
    if (ucnv_getMinCharSize(m_ucnv) != 1) return false;
 
-   const int ascii_from = 0x0001;
-   const int ascii_to   = 0x007f;
-   char ascii[ascii_to-ascii_from+2]; // + \0
+   const int ascii_from = 1;
+   const int ascii_to   = 127;
+   unsigned char ascii[ascii_to-ascii_from+2]; // + \0
    for (int i=ascii_from; i<=ascii_to; ++i)
-      ascii[i-ascii_from] = (char)i;
+      ascii[i-ascii_from] = (unsigned char)i;
    ascii[ascii_to-ascii_from+1] = '\0';
 
    UChar32 c;
 
-   const char* ascii_last = ascii;
-   const char* ascii1 = ascii;
-   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   const char* ascii_last = (const char*)ascii;
+   const char* ascii1 = (const char*)ascii;
+   const char* ascii2 = (const char*)(ascii+(ascii_to-ascii_from)+1);
 
    ucnv_reset(m_ucnv);
 
@@ -289,7 +289,7 @@ bool StriUcnv::hasASCIIsubset()
       if (U_FAILURE(status)) {
 #ifndef NDEBUG
          Rf_warning("Cannot convert ASCII character 0x%2x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
+            (int)ascii_last[0],
             ucnv_getName(m_ucnv, &status));
 #endif
          return false;
@@ -302,7 +302,7 @@ bool StriUcnv::hasASCIIsubset()
       // Is that the same ASCII char?
       if (ascii_last != ascii1-1
          || U8_LENGTH(c) != 1
-         || c != (int)ascii_last[0]) {
+         || c != (int)(unsigned char)ascii_last[0]) {
          return false;
       }
       ascii_last = ascii1;
@@ -331,19 +331,19 @@ bool StriUcnv::is1to1Unicode()
    if (ucnv_getMinCharSize(m_ucnv) != 1) return false;
 
    const int ascii_from = 32;
-   const int ascii_to = 0x00ff;
-   char ascii[ascii_to-ascii_from+2]; // + \0
+   const int ascii_to = 255;
+   unsigned char ascii[ascii_to-ascii_from+2]; // + \0
    for (int i=ascii_from; i<=ascii_to; ++i)
-      ascii[i-ascii_from] = (char)i;
+      ascii[i-ascii_from] = (unsigned char)i;
    ascii[ascii_to-ascii_from+1] = '\0';
 
    UChar32 c;
    const int buflen =  UCNV_GET_MAX_BYTES_FOR_STRING(1, 1); /* const size */
    char buf[buflen];
 
-   const char* ascii_last = ascii;
-   const char* ascii1 = ascii;
-   const char* ascii2 = ascii+(ascii_to-ascii_from)+1;
+   const char* ascii_last = (const char*)(ascii);
+   const char* ascii1 = (const char*)(ascii);
+   const char* ascii2 = (const char*)(ascii+(ascii_to-ascii_from)+1);
 
    UErrorCode status = U_ZERO_ERROR;
    ucnv_reset(m_ucnv);
@@ -368,7 +368,7 @@ bool StriUcnv::is1to1Unicode()
       if (!U16_IS_SINGLE(lead)) {
 #ifndef NDEBUG
          Rf_warning("Problematic character 0x%2x -> \\u%8x (encoding=%s)",
-            (int)(unsigned char)ascii_last[0],
+            (int)ascii_last[0],
             c,
             ucnv_getName(m_ucnv, &status));
 #endif
