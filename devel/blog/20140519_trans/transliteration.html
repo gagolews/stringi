@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Transforms/Transliteration</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Transforms/Transliteration</h1>
+
+<p>Transforms provide a general-purpose package for processing Unicode text. They are a powerful and flexible mechanism for handling a variety of different tasks, including:</p>
+
+<pre><code>Uppercase, Lowercase, Titlecase, Full/Halfwidth conversions
+(Full (Language-Specific) Case Mapping)
+</code></pre>
+
+<p>case mapping can change the number of code points and/or code units of a string,
+is language-sensitive (results may differ depending on language), and
+is context-sensitive (a character in the input string may map differently depending on surrounding characters).</p>
+
+<pre><code>Normalization
+</code></pre>
+
+<p>Normalization is used to convert text to a unique, equivalent form
+Normalization allows for easier sorting and searching of text</p>
+
+<pre><code class="r">library(stringi)
+stri_trans_nfd(stri_unescape_unicode(&quot;\\u0105&quot;))  # Polish a with ogonek -&gt; a, ogonek
+</code></pre>
+
+<pre><code>## [1] &quot;ą&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_nfkc(stri_unescape_unicode(&quot;\\ufdfa&quot;))  # 1 codepoint -&gt; 18 codepoints
+</code></pre>
+
+<pre><code>## [1] &quot;صلى الله عليه وسلم&quot;
+</code></pre>
+
+<pre><code class="r">&quot;ﷺ&quot;
+</code></pre>
+
+<pre><code>## [1] &quot;ﷺ&quot;
+</code></pre>
+
+<pre><code>Hex and Character Name conversions
+
+Script to Script conversion
+</code></pre>
+
+<p><a href="http://userguide.icu-project.org/transforms/general">http://userguide.icu-project.org/transforms/general</a></p>
+
+<pre><code class="r">library(stringi)
+stri_trans_list()
+</code></pre>
+
+<pre><code>##   [1] &quot;ASCII-Latin&quot;             &quot;Accents-Any&quot;            
+##   [3] &quot;Amharic-Latin/BGN&quot;       &quot;Any-Accents&quot;            
+##   [5] &quot;Any-Publishing&quot;          &quot;Arabic-Latin&quot;           
+##   [7] &quot;Arabic-Latin/BGN&quot;        &quot;Armenian-Latin&quot;         
+##   [9] &quot;Armenian-Latin/BGN&quot;      &quot;Azerbaijani-Latin/BGN&quot;  
+##  [11] &quot;Belarusian-Latin/BGN&quot;    &quot;Bengali-Devanagari&quot;     
+##  [13] &quot;Bengali-Gujarati&quot;        &quot;Bengali-Gurmukhi&quot;       
+##  [15] &quot;Bengali-Kannada&quot;         &quot;Bengali-Latin&quot;          
+##  [17] &quot;Bengali-Malayalam&quot;       &quot;Bengali-Oriya&quot;          
+##  [19] &quot;Bengali-Tamil&quot;           &quot;Bengali-Telugu&quot;         
+##  [21] &quot;Bopomofo-Latin&quot;          &quot;Bulgarian-Latin/BGN&quot;    
+##  [23] &quot;Cyrillic-Latin&quot;          &quot;Devanagari-Bengali&quot;     
+##  [25] &quot;Devanagari-Gujarati&quot;     &quot;Devanagari-Gurmukhi&quot;    
+##  [27] &quot;Devanagari-Kannada&quot;      &quot;Devanagari-Latin&quot;       
+##  [29] &quot;Devanagari-Malayalam&quot;    &quot;Devanagari-Oriya&quot;       
+##  [31] &quot;Devanagari-Tamil&quot;        &quot;Devanagari-Telugu&quot;      
+##  [33] &quot;Digit-Tone&quot;              &quot;Fullwidth-Halfwidth&quot;    
+##  [35] &quot;Georgian-Latin&quot;          &quot;Georgian-Latin/BGN&quot;     
+##  [37] &quot;Greek-Latin&quot;             &quot;Greek-Latin/BGN&quot;        
+##  [39] &quot;Greek-Latin/UNGEGN&quot;      &quot;Gujarati-Bengali&quot;       
+##  [41] &quot;Gujarati-Devanagari&quot;     &quot;Gujarati-Gurmukhi&quot;      
+##  [43] &quot;Gujarati-Kannada&quot;        &quot;Gujarati-Latin&quot;         
+##  [45] &quot;Gujarati-Malayalam&quot;      &quot;Gujarati-Oriya&quot;         
+##  [47] &quot;Gujarati-Tamil&quot;          &quot;Gujarati-Telugu&quot;        
+##  [49] &quot;Gurmukhi-Bengali&quot;        &quot;Gurmukhi-Devanagari&quot;    
+##  [51] &quot;Gurmukhi-Gujarati&quot;       &quot;Gurmukhi-Kannada&quot;       
+##  [53] &quot;Gurmukhi-Latin&quot;          &quot;Gurmukhi-Malayalam&quot;     
+##  [55] &quot;Gurmukhi-Oriya&quot;          &quot;Gurmukhi-Tamil&quot;         
+##  [57] &quot;Gurmukhi-Telugu&quot;         &quot;Halfwidth-Fullwidth&quot;    
+##  [59] &quot;Han-Latin&quot;               &quot;Han-Latin/Names&quot;        
+##  [61] &quot;Hangul-Latin&quot;            &quot;Hans-Hant&quot;              
+##  [63] &quot;Hant-Hans&quot;               &quot;Hebrew-Latin&quot;           
+##  [65] &quot;Hebrew-Latin/BGN&quot;        &quot;Hiragana-Katakana&quot;      
+##  [67] &quot;Hiragana-Latin&quot;          &quot;IPA-XSampa&quot;             
+##  [69] &quot;Jamo-Latin&quot;              &quot;JapaneseKana-Latin/BGN&quot; 
+##  [71] &quot;Kannada-Bengali&quot;         &quot;Kannada-Devanagari&quot;     
+##  [73] &quot;Kannada-Gujarati&quot;        &quot;Kannada-Gurmukhi&quot;       
+##  [75] &quot;Kannada-Latin&quot;           &quot;Kannada-Malayalam&quot;      
+##  [77] &quot;Kannada-Oriya&quot;           &quot;Kannada-Tamil&quot;          
+##  [79] &quot;Kannada-Telugu&quot;          &quot;Katakana-Hiragana&quot;      
+##  [81] &quot;Katakana-Latin&quot;          &quot;Kazakh-Latin/BGN&quot;       
+##  [83] &quot;Kirghiz-Latin/BGN&quot;       &quot;Korean-Latin/BGN&quot;       
+##  [85] &quot;Latin-ASCII&quot;             &quot;Latin-Arabic&quot;           
+##  [87] &quot;Latin-Armenian&quot;          &quot;Latin-Bengali&quot;          
+##  [89] &quot;Latin-Bopomofo&quot;          &quot;Latin-Cyrillic&quot;         
+##  [91] &quot;Latin-Devanagari&quot;        &quot;Latin-Georgian&quot;         
+##  [93] &quot;Latin-Greek&quot;             &quot;Latin-Greek/UNGEGN&quot;     
+##  [95] &quot;Latin-Gujarati&quot;          &quot;Latin-Gurmukhi&quot;         
+##  [97] &quot;Latin-Han&quot;               &quot;Latin-Hangul&quot;           
+##  [99] &quot;Latin-Hebrew&quot;            &quot;Latin-Hiragana&quot;         
+## [101] &quot;Latin-Jamo&quot;              &quot;Latin-Kannada&quot;          
+## [103] &quot;Latin-Katakana&quot;          &quot;Latin-Malayalam&quot;        
+## [105] &quot;Latin-NumericPinyin&quot;     &quot;Latin-Oriya&quot;            
+## [107] &quot;Latin-Syriac&quot;            &quot;Latin-Tamil&quot;            
+## [109] &quot;Latin-Telugu&quot;            &quot;Latin-Thaana&quot;           
+## [111] &quot;Latin-Thai&quot;              &quot;Macedonian-Latin/BGN&quot;   
+## [113] &quot;Malayalam-Bengali&quot;       &quot;Malayalam-Devanagari&quot;   
+## [115] &quot;Malayalam-Gujarati&quot;      &quot;Malayalam-Gurmukhi&quot;     
+## [117] &quot;Malayalam-Kannada&quot;       &quot;Malayalam-Latin&quot;        
+## [119] &quot;Malayalam-Oriya&quot;         &quot;Malayalam-Tamil&quot;        
+## [121] &quot;Malayalam-Telugu&quot;        &quot;Maldivian-Latin/BGN&quot;    
+## [123] &quot;Mongolian-Latin/BGN&quot;     &quot;NumericPinyin-Latin&quot;    
+## [125] &quot;NumericPinyin-Pinyin&quot;    &quot;Oriya-Bengali&quot;          
+## [127] &quot;Oriya-Devanagari&quot;        &quot;Oriya-Gujarati&quot;         
+## [129] &quot;Oriya-Gurmukhi&quot;          &quot;Oriya-Kannada&quot;          
+## [131] &quot;Oriya-Latin&quot;             &quot;Oriya-Malayalam&quot;        
+## [133] &quot;Oriya-Tamil&quot;             &quot;Oriya-Telugu&quot;           
+## [135] &quot;Pashto-Latin/BGN&quot;        &quot;Persian-Latin/BGN&quot;      
+## [137] &quot;Pinyin-NumericPinyin&quot;    &quot;Publishing-Any&quot;         
+## [139] &quot;Russian-Latin/BGN&quot;       &quot;Serbian-Latin/BGN&quot;      
+## [141] &quot;Simplified-Traditional&quot;  &quot;Syriac-Latin&quot;           
+## [143] &quot;Tamil-Bengali&quot;           &quot;Tamil-Devanagari&quot;       
+## [145] &quot;Tamil-Gujarati&quot;          &quot;Tamil-Gurmukhi&quot;         
+## [147] &quot;Tamil-Kannada&quot;           &quot;Tamil-Latin&quot;            
+## [149] &quot;Tamil-Malayalam&quot;         &quot;Tamil-Oriya&quot;            
+## [151] &quot;Tamil-Telugu&quot;            &quot;Telugu-Bengali&quot;         
+## [153] &quot;Telugu-Devanagari&quot;       &quot;Telugu-Gujarati&quot;        
+## [155] &quot;Telugu-Gurmukhi&quot;         &quot;Telugu-Kannada&quot;         
+## [157] &quot;Telugu-Latin&quot;            &quot;Telugu-Malayalam&quot;       
+## [159] &quot;Telugu-Oriya&quot;            &quot;Telugu-Tamil&quot;           
+## [161] &quot;Thaana-Latin&quot;            &quot;Thai-Latin&quot;             
+## [163] &quot;Tone-Digit&quot;              &quot;Traditional-Simplified&quot; 
+## [165] &quot;Turkmen-Latin/BGN&quot;       &quot;Ukrainian-Latin/BGN&quot;    
+## [167] &quot;Uzbek-Latin/BGN&quot;         &quot;XSampa-IPA&quot;             
+## [169] &quot;cs-cs_FONIPA&quot;            &quot;cs-ja&quot;                  
+## [171] &quot;cs-ko&quot;                   &quot;cs_FONIPA-ja&quot;           
+## [173] &quot;cs_FONIPA-ko&quot;            &quot;es-am&quot;                  
+## [175] &quot;es-es_FONIPA&quot;            &quot;es-ja&quot;                  
+## [177] &quot;es-zh&quot;                   &quot;es_419-ja&quot;              
+## [179] &quot;es_419-zh&quot;               &quot;es_FONIPA-am&quot;           
+## [181] &quot;es_FONIPA-es_419_FONIPA&quot; &quot;es_FONIPA-ja&quot;           
+## [183] &quot;es_FONIPA-zh&quot;            &quot;it-am&quot;                  
+## [185] &quot;it-ja&quot;                   &quot;ja_Latn-ko&quot;             
+## [187] &quot;ja_Latn-ru&quot;              &quot;pl-ja&quot;                  
+## [189] &quot;pl-pl_FONIPA&quot;            &quot;pl_FONIPA-ja&quot;           
+## [191] &quot;ro-ja&quot;                   &quot;ro-ro_FONIPA&quot;           
+## [193] &quot;ro_FONIPA-ja&quot;            &quot;ru-ja&quot;                  
+## [195] &quot;ru-zh&quot;                   &quot;sk-ja&quot;                  
+## [197] &quot;sk-sk_FONIPA&quot;            &quot;sk_FONIPA-ja&quot;           
+## [199] &quot;zh_Latn_PINYIN-ru&quot;       &quot;Any-Null&quot;               
+## [201] &quot;Any-Lower&quot;               &quot;Any-Upper&quot;              
+## [203] &quot;Any-Title&quot;               &quot;Any-Name&quot;               
+## [205] &quot;Name-Any&quot;                &quot;Any-Remove&quot;             
+## [207] &quot;Any-Hex/Unicode&quot;         &quot;Any-Hex/Java&quot;           
+## [209] &quot;Any-Hex/C&quot;               &quot;Any-Hex/XML&quot;            
+## [211] &quot;Any-Hex/XML10&quot;           &quot;Any-Hex/Perl&quot;           
+## [213] &quot;Any-Hex&quot;                 &quot;Hex-Any/Unicode&quot;        
+## [215] &quot;Hex-Any/Java&quot;            &quot;Hex-Any/C&quot;              
+## [217] &quot;Hex-Any/XML&quot;             &quot;Hex-Any/XML10&quot;          
+## [219] &quot;Hex-Any/Perl&quot;            &quot;Hex-Any&quot;                
+## [221] &quot;Any-NFC&quot;                 &quot;Any-NFKC&quot;               
+## [223] &quot;Any-NFD&quot;                 &quot;Any-NFKD&quot;               
+## [225] &quot;Any-FCD&quot;                 &quot;Any-FCC&quot;                
+## [227] &quot;Any-Latin&quot;               &quot;Any-Telugu&quot;             
+## [229] &quot;Any-Gurmukhi&quot;            &quot;Any-Gujarati&quot;           
+## [231] &quot;Any-Malayalam&quot;           &quot;Any-Oriya&quot;              
+## [233] &quot;Any-Devanagari&quot;          &quot;Any-Kannada&quot;            
+## [235] &quot;Any-Tamil&quot;               &quot;Any-cs_FONIPA&quot;          
+## [237] &quot;Any-ru&quot;                  &quot;Any-Bengali&quot;            
+## [239] &quot;Any-Katakana&quot;            &quot;Any-ro_FONIPA&quot;          
+## [241] &quot;Any-zh&quot;                  &quot;Any-am&quot;                 
+## [243] &quot;Any-es_419_FONIPA&quot;       &quot;Any-es_FONIPA&quot;          
+## [245] &quot;Any-sk_FONIPA&quot;           &quot;Any-Hant&quot;               
+## [247] &quot;Any-Hans&quot;                &quot;Any-Hiragana&quot;           
+## [249] &quot;Any-Syriac&quot;              &quot;Any-Greek&quot;              
+## [251] &quot;Any-Greek/UNGEGN&quot;        &quot;Any-Cyrillic&quot;           
+## [253] &quot;Any-Hangul&quot;              &quot;Any-Bopomofo&quot;           
+## [255] &quot;Any-Arabic&quot;              &quot;Any-Thai&quot;               
+## [257] &quot;Any-Armenian&quot;            &quot;Any-Thaana&quot;             
+## [259] &quot;Any-Han&quot;                 &quot;Any-Georgian&quot;           
+## [261] &quot;Any-Hebrew&quot;              &quot;Any-pl_FONIPA&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &quot;pl-pl_fonipa&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;v ʂt͡ʂɛbʐɛʂɨɲɛ xʂɔ̃ʂt͡ʂ bʐmi v tʂt͡ɕiɲɛ&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &quot;pl-pl_fonipa; ipa-xsampa&quot;) # XSampa ASCII-range representation of IPA characters.
+</code></pre>
+
+<pre><code>## [1] &quot;v s`t_s`Ebz`Es`1JE xs`O~s`t_s` bz`mi v ts`t_s\\iJE&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[^\\u0000-\\u007f] any-hex&quot;)red
+</code></pre>
+
+<pre><code>## [1] &quot;za\\u017C\\u00F3\\u0142\\u0107 g\\u0119\\u015Bl\\u0105 ja\\u017A\\u0144&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[^\\u0000-\\u007f] any-hex/xml&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;za&amp;#x17C;&amp;#xF3;&amp;#x142;&amp;#x107; g&amp;#x119;&amp;#x15B;l&amp;#x105; ja&amp;#x17A;&amp;#x144;&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;latin-ascii&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;zazolc gesla jazn&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;ą1©,&quot;, &quot;any-name&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;\\N{LATIN SMALL LETTER A WITH OGONEK}\\N{DIGIT ONE}\\N{COPYRIGHT SIGN}\\N{COMMA}&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;\\N{LATIN SMALL LETTER SHARP S}&quot;, &quot;name-any&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;ß&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;Let&#39;s go -- she said&quot;, &quot;any-publishing&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Let’s go — she said&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[\\p{Z}] remove&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;zażółćgęśląjaźń&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[\\p{Z}] remove&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;zażółćgęśląjaźń&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;stringi&quot;, &quot;latin-greek&quot;)  # script transliteration
+</code></pre>
+
+<pre><code>## [1] &quot;στριγγι&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin&quot;)eration
+</code></pre>
+
+<pre><code>## [1] &quot;Pëtr Ilʹič Čajkovskij&quot;
+</code></pre>
+
+</body>
+
+</html>
+
