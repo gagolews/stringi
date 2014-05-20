@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=9" >
 
-<title>Transforms/Transliteration</title>
+<title>ICU Unicode text transforms in the R package stringi</title>
 
 <style type="text/css">
 body, td {
@@ -179,186 +179,200 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Transforms/Transliteration</h1>
+<h1>ICU Unicode text transforms in the R package stringi</h1>
 
-<p>Transforms provide a general-purpose package for processing Unicode text. They are a powerful and flexible mechanism for handling a variety of different tasks, including:</p>
+<p>The <a href="http://site.icu-project.org/">ICU</a> (International Components for Unicode) library provides very powerful and flexible ways to apply various Unicode text transforms. These include:</p>
 
-<pre><code>Uppercase, Lowercase, Titlecase, Full/Halfwidth conversions
-(Full (Language-Specific) Case Mapping)
+<ul>
+<li>Full (language-specific) case mappings,</li>
+<li>Unicode normalization,</li>
+<li>Text transliteration (e.g. script-to-script conversion).</li>
+</ul>
+
+<p>All of these are available to R programmers via our still maturing <a href="http://stringi.rexamine.com"><code>stringi</code></a> package.</p>
+
+<h3>Case Mappings</h3>
+
+<p>Mapping of upper-, lower-, and title-case characters may seem to be a straightforward task, but just a quick glimpse at the latest <a href="http://www.unicode.org/versions/latest/">Unicode standard</a> (Secs. 3.13, 4.2, and 5.18) will suffice to convince us that case mapping rules are very complex. In one of my <a href="http://www.rexamine.com/2014/05/stringi-0-2-3-released/">previous posts</a> I&#39;ve already mentioned that &ldquo;base R&rdquo; performs (at least on my machine) only a single-character case conversion:</p>
+
+<pre><code class="r">toupper(&quot;groß&quot;) # German: -&gt; GROSS
 </code></pre>
 
-<p>case mapping can change the number of code points and/or code units of a string,
-is language-sensitive (results may differ depending on language), and
-is context-sensitive (a character in the input string may map differently depending on surrounding characters).</p>
-
-<pre><code>Normalization
+<pre><code>## [1] &quot;GROß&quot;
 </code></pre>
 
-<p>Normalization is used to convert text to a unique, equivalent form
-Normalization allows for easier sorting and searching of text</p>
+<p>Notably, the case conversion in R is language-dependent:</p>
+
+<pre><code class="r">toupper(&quot;ıi&quot;) # Polish locale is default here
+</code></pre>
+
+<pre><code>## [1] &quot;II&quot;
+</code></pre>
+
+<pre><code class="r">oldloc &lt;- Sys.getlocale(&quot;LC_CTYPE&quot;)
+Sys.setlocale(&quot;LC_CTYPE&quot;, &quot;tr_TR.UTF-8&quot;)  # Turkish
+</code></pre>
+
+<pre><code>## [1] &quot;tr_TR.UTF-8&quot;
+</code></pre>
+
+<pre><code class="r">toupper(&quot;ıi&quot;) # dotless i and latin i -&gt; latin I and I with dot above (OK)
+</code></pre>
+
+<pre><code>## [1] &quot;Iİ&quot;
+</code></pre>
+
+<pre><code class="r">Sys.setlocale(&quot;LC_CTYPE&quot;, oldloc)
+</code></pre>
+
+<pre><code>## [1] &quot;pl_PL.UTF-8&quot;
+</code></pre>
+
+<p>This language-sensitivity is of course desirable when it comes to natural language processing. Unfortunately, a few more examples might be found for which <code>toupper()</code> and <code>tolower()</code> does not meet the Unicode guidelines. Generally, a proper case map can change the number of code points/units of a string, is language-sensitive and context-sensitive (character mapping may depend on its surrounding characters). Luckily, we have the <a href="http://userguide.icu-project.org/transforms/casemappings">case mapping facilities</a> implemented in the ICU library, which provides us with all we need:</p>
 
 <pre><code class="r">library(stringi)
-stri_trans_nfd(stri_unescape_unicode(&quot;\\u0105&quot;))  # Polish a with ogonek -&gt; a, ogonek
+stri_trans_toupper(&quot;groß&quot;, locale = &quot;de_DE&quot;) # German
 </code></pre>
 
-<pre><code>## [1] &quot;ą&quot;
+<pre><code>## [1] &quot;GROSS&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_nfkc(stri_unescape_unicode(&quot;\\ufdfa&quot;))  # 1 codepoint -&gt; 18 codepoints
+<pre><code class="r">stri_trans_totitle(&quot;ijsvrij yoghurt&quot;, locale = &quot;nl_NL&quot;)  # Dutch
+</code></pre>
+
+<pre><code>## [1] &quot;IJsvrij Yoghurt&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_toupper(&quot;ıi&quot;, locale = &quot;tr_TR&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Iİ&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_tolower(&quot;İI&quot;, locale = &quot;tr_TR&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;iı&quot;
+</code></pre>
+
+<p>By the way, ICU <a href="http://stackoverflow.com/questions/23174547/">doesn&#39;t have</a> any list of non-capitalized words for language-dependent title casing (e.g. <em>pining for the fjords</em> in English is most often mapped to <em>Pining for the Fjords</em>), so such tasks must be performed manually.</p>
+
+<h3>Unicode Normalization</h3>
+
+<p>The following string:</p>
+
+<pre><code class="r">&#39;\u01f1DZ&#39;
+</code></pre>
+
+<pre><code>## [1] &quot;ǱDZ&quot;
+</code></pre>
+
+<p>consists of 3 Unicode code points: a Unicode character <em>LATIN CAPITAL LETTER DZ (U+01F1)</em> and then Latin letters D and Z. Even though both DZs may look different in your Web browser, the appear as identical (well, almost) in RStudio (at least on my computer). Take a try yourself, that&#39;s really interesting.</p>
+
+<p>A tricky question: how many \code{DZ}s are in the above string? 2 or 1? Considering raw code points (in a byte-wise manner) we&#39;d answer 1. But for natural language processing a better answer is probably 2. This is one of a few cases in which the Unicode normalization (see <a href="http://en.wikipedia.org/wiki/Unicode_equivalence">here</a> and <a href="http://www.unicode.org/reports/tr15/">here</a> for more information) is of interest.</p>
+
+<p>Without going into much detail let&#39;s just say that there are few normalization forms (NFC, NFD, NFKC, NFKD, NFKC_casefold); each one serves for different purposes. Unless you&#39;re an author of some string processing package, these won&#39;t interest you too much (it&#39;s the developer&#39;s responsibility to provide an on-the-fly normalization). Anyway, the Unicode normalization may be <a href="http://userguide.icu-project.org/transforms/normalization">performed with ICU</a>:</p>
+
+<pre><code class="r">stri_trans_nfkc(&#39;\u01f1DZ&#39;)
+</code></pre>
+
+<pre><code>## [1] &quot;DZDZ&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_nfc(&#39;a\u0328&#39;) # a and ogonek =&gt; a with ogonek
+</code></pre>
+
+<pre><code>## [1] &quot;ą&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_nfkc(&quot;\ufdfa&quot;) # 1 codepoint -&gt; 18 codepoints
 </code></pre>
 
 <pre><code>## [1] &quot;صلى الله عليه وسلم&quot;
 </code></pre>
 
-<pre><code class="r">&quot;ﷺ&quot;
+<p>Fortunately, an ordinary user may keep calm: many string processing tasks in <code>stringi</code> just take care of a proper transformation automatically. This includes string searching, sorting, and comparing functions:</p>
+
+<pre><code class="r">stri_count_coll(&#39;\u01f1DZ&#39;, &#39;DZ&#39;, stri_opts_collator(strength=2)) # how many DZs are there?
 </code></pre>
 
-<pre><code>## [1] &quot;ﷺ&quot;
+<pre><code>## [1] 2
 </code></pre>
 
-<pre><code>Hex and Character Name conversions
-
-Script to Script conversion
+<pre><code class="r">&#39;ą&#39; %==% &#39;a\u0328&#39; # are they canonically equivalent?
 </code></pre>
 
-<p><a href="http://userguide.icu-project.org/transforms/general">http://userguide.icu-project.org/transforms/general</a></p>
-
-<pre><code class="r">library(stringi)
-stri_trans_list()
+<pre><code>## [1] TRUE
 </code></pre>
 
-<pre><code>##   [1] &quot;ASCII-Latin&quot;             &quot;Accents-Any&quot;            
-##   [3] &quot;Amharic-Latin/BGN&quot;       &quot;Any-Accents&quot;            
-##   [5] &quot;Any-Publishing&quot;          &quot;Arabic-Latin&quot;           
-##   [7] &quot;Arabic-Latin/BGN&quot;        &quot;Armenian-Latin&quot;         
-##   [9] &quot;Armenian-Latin/BGN&quot;      &quot;Azerbaijani-Latin/BGN&quot;  
-##  [11] &quot;Belarusian-Latin/BGN&quot;    &quot;Bengali-Devanagari&quot;     
-##  [13] &quot;Bengali-Gujarati&quot;        &quot;Bengali-Gurmukhi&quot;       
-##  [15] &quot;Bengali-Kannada&quot;         &quot;Bengali-Latin&quot;          
-##  [17] &quot;Bengali-Malayalam&quot;       &quot;Bengali-Oriya&quot;          
-##  [19] &quot;Bengali-Tamil&quot;           &quot;Bengali-Telugu&quot;         
-##  [21] &quot;Bopomofo-Latin&quot;          &quot;Bulgarian-Latin/BGN&quot;    
-##  [23] &quot;Cyrillic-Latin&quot;          &quot;Devanagari-Bengali&quot;     
-##  [25] &quot;Devanagari-Gujarati&quot;     &quot;Devanagari-Gurmukhi&quot;    
-##  [27] &quot;Devanagari-Kannada&quot;      &quot;Devanagari-Latin&quot;       
-##  [29] &quot;Devanagari-Malayalam&quot;    &quot;Devanagari-Oriya&quot;       
-##  [31] &quot;Devanagari-Tamil&quot;        &quot;Devanagari-Telugu&quot;      
-##  [33] &quot;Digit-Tone&quot;              &quot;Fullwidth-Halfwidth&quot;    
-##  [35] &quot;Georgian-Latin&quot;          &quot;Georgian-Latin/BGN&quot;     
-##  [37] &quot;Greek-Latin&quot;             &quot;Greek-Latin/BGN&quot;        
-##  [39] &quot;Greek-Latin/UNGEGN&quot;      &quot;Gujarati-Bengali&quot;       
-##  [41] &quot;Gujarati-Devanagari&quot;     &quot;Gujarati-Gurmukhi&quot;      
-##  [43] &quot;Gujarati-Kannada&quot;        &quot;Gujarati-Latin&quot;         
-##  [45] &quot;Gujarati-Malayalam&quot;      &quot;Gujarati-Oriya&quot;         
-##  [47] &quot;Gujarati-Tamil&quot;          &quot;Gujarati-Telugu&quot;        
-##  [49] &quot;Gurmukhi-Bengali&quot;        &quot;Gurmukhi-Devanagari&quot;    
-##  [51] &quot;Gurmukhi-Gujarati&quot;       &quot;Gurmukhi-Kannada&quot;       
-##  [53] &quot;Gurmukhi-Latin&quot;          &quot;Gurmukhi-Malayalam&quot;     
-##  [55] &quot;Gurmukhi-Oriya&quot;          &quot;Gurmukhi-Tamil&quot;         
-##  [57] &quot;Gurmukhi-Telugu&quot;         &quot;Halfwidth-Fullwidth&quot;    
-##  [59] &quot;Han-Latin&quot;               &quot;Han-Latin/Names&quot;        
-##  [61] &quot;Hangul-Latin&quot;            &quot;Hans-Hant&quot;              
-##  [63] &quot;Hant-Hans&quot;               &quot;Hebrew-Latin&quot;           
-##  [65] &quot;Hebrew-Latin/BGN&quot;        &quot;Hiragana-Katakana&quot;      
-##  [67] &quot;Hiragana-Latin&quot;          &quot;IPA-XSampa&quot;             
-##  [69] &quot;Jamo-Latin&quot;              &quot;JapaneseKana-Latin/BGN&quot; 
-##  [71] &quot;Kannada-Bengali&quot;         &quot;Kannada-Devanagari&quot;     
-##  [73] &quot;Kannada-Gujarati&quot;        &quot;Kannada-Gurmukhi&quot;       
-##  [75] &quot;Kannada-Latin&quot;           &quot;Kannada-Malayalam&quot;      
-##  [77] &quot;Kannada-Oriya&quot;           &quot;Kannada-Tamil&quot;          
-##  [79] &quot;Kannada-Telugu&quot;          &quot;Katakana-Hiragana&quot;      
-##  [81] &quot;Katakana-Latin&quot;          &quot;Kazakh-Latin/BGN&quot;       
-##  [83] &quot;Kirghiz-Latin/BGN&quot;       &quot;Korean-Latin/BGN&quot;       
-##  [85] &quot;Latin-ASCII&quot;             &quot;Latin-Arabic&quot;           
-##  [87] &quot;Latin-Armenian&quot;          &quot;Latin-Bengali&quot;          
-##  [89] &quot;Latin-Bopomofo&quot;          &quot;Latin-Cyrillic&quot;         
-##  [91] &quot;Latin-Devanagari&quot;        &quot;Latin-Georgian&quot;         
-##  [93] &quot;Latin-Greek&quot;             &quot;Latin-Greek/UNGEGN&quot;     
-##  [95] &quot;Latin-Gujarati&quot;          &quot;Latin-Gurmukhi&quot;         
-##  [97] &quot;Latin-Han&quot;               &quot;Latin-Hangul&quot;           
-##  [99] &quot;Latin-Hebrew&quot;            &quot;Latin-Hiragana&quot;         
-## [101] &quot;Latin-Jamo&quot;              &quot;Latin-Kannada&quot;          
-## [103] &quot;Latin-Katakana&quot;          &quot;Latin-Malayalam&quot;        
-## [105] &quot;Latin-NumericPinyin&quot;     &quot;Latin-Oriya&quot;            
-## [107] &quot;Latin-Syriac&quot;            &quot;Latin-Tamil&quot;            
-## [109] &quot;Latin-Telugu&quot;            &quot;Latin-Thaana&quot;           
-## [111] &quot;Latin-Thai&quot;              &quot;Macedonian-Latin/BGN&quot;   
-## [113] &quot;Malayalam-Bengali&quot;       &quot;Malayalam-Devanagari&quot;   
-## [115] &quot;Malayalam-Gujarati&quot;      &quot;Malayalam-Gurmukhi&quot;     
-## [117] &quot;Malayalam-Kannada&quot;       &quot;Malayalam-Latin&quot;        
-## [119] &quot;Malayalam-Oriya&quot;         &quot;Malayalam-Tamil&quot;        
-## [121] &quot;Malayalam-Telugu&quot;        &quot;Maldivian-Latin/BGN&quot;    
-## [123] &quot;Mongolian-Latin/BGN&quot;     &quot;NumericPinyin-Latin&quot;    
-## [125] &quot;NumericPinyin-Pinyin&quot;    &quot;Oriya-Bengali&quot;          
-## [127] &quot;Oriya-Devanagari&quot;        &quot;Oriya-Gujarati&quot;         
-## [129] &quot;Oriya-Gurmukhi&quot;          &quot;Oriya-Kannada&quot;          
-## [131] &quot;Oriya-Latin&quot;             &quot;Oriya-Malayalam&quot;        
-## [133] &quot;Oriya-Tamil&quot;             &quot;Oriya-Telugu&quot;           
-## [135] &quot;Pashto-Latin/BGN&quot;        &quot;Persian-Latin/BGN&quot;      
-## [137] &quot;Pinyin-NumericPinyin&quot;    &quot;Publishing-Any&quot;         
-## [139] &quot;Russian-Latin/BGN&quot;       &quot;Serbian-Latin/BGN&quot;      
-## [141] &quot;Simplified-Traditional&quot;  &quot;Syriac-Latin&quot;           
-## [143] &quot;Tamil-Bengali&quot;           &quot;Tamil-Devanagari&quot;       
-## [145] &quot;Tamil-Gujarati&quot;          &quot;Tamil-Gurmukhi&quot;         
-## [147] &quot;Tamil-Kannada&quot;           &quot;Tamil-Latin&quot;            
-## [149] &quot;Tamil-Malayalam&quot;         &quot;Tamil-Oriya&quot;            
-## [151] &quot;Tamil-Telugu&quot;            &quot;Telugu-Bengali&quot;         
-## [153] &quot;Telugu-Devanagari&quot;       &quot;Telugu-Gujarati&quot;        
-## [155] &quot;Telugu-Gurmukhi&quot;         &quot;Telugu-Kannada&quot;         
-## [157] &quot;Telugu-Latin&quot;            &quot;Telugu-Malayalam&quot;       
-## [159] &quot;Telugu-Oriya&quot;            &quot;Telugu-Tamil&quot;           
-## [161] &quot;Thaana-Latin&quot;            &quot;Thai-Latin&quot;             
-## [163] &quot;Tone-Digit&quot;              &quot;Traditional-Simplified&quot; 
-## [165] &quot;Turkmen-Latin/BGN&quot;       &quot;Ukrainian-Latin/BGN&quot;    
-## [167] &quot;Uzbek-Latin/BGN&quot;         &quot;XSampa-IPA&quot;             
-## [169] &quot;cs-cs_FONIPA&quot;            &quot;cs-ja&quot;                  
-## [171] &quot;cs-ko&quot;                   &quot;cs_FONIPA-ja&quot;           
-## [173] &quot;cs_FONIPA-ko&quot;            &quot;es-am&quot;                  
-## [175] &quot;es-es_FONIPA&quot;            &quot;es-ja&quot;                  
-## [177] &quot;es-zh&quot;                   &quot;es_419-ja&quot;              
-## [179] &quot;es_419-zh&quot;               &quot;es_FONIPA-am&quot;           
-## [181] &quot;es_FONIPA-es_419_FONIPA&quot; &quot;es_FONIPA-ja&quot;           
-## [183] &quot;es_FONIPA-zh&quot;            &quot;it-am&quot;                  
-## [185] &quot;it-ja&quot;                   &quot;ja_Latn-ko&quot;             
-## [187] &quot;ja_Latn-ru&quot;              &quot;pl-ja&quot;                  
-## [189] &quot;pl-pl_FONIPA&quot;            &quot;pl_FONIPA-ja&quot;           
-## [191] &quot;ro-ja&quot;                   &quot;ro-ro_FONIPA&quot;           
-## [193] &quot;ro_FONIPA-ja&quot;            &quot;ru-ja&quot;                  
-## [195] &quot;ru-zh&quot;                   &quot;sk-ja&quot;                  
-## [197] &quot;sk-sk_FONIPA&quot;            &quot;sk_FONIPA-ja&quot;           
-## [199] &quot;zh_Latn_PINYIN-ru&quot;       &quot;Any-Null&quot;               
-## [201] &quot;Any-Lower&quot;               &quot;Any-Upper&quot;              
-## [203] &quot;Any-Title&quot;               &quot;Any-Name&quot;               
-## [205] &quot;Name-Any&quot;                &quot;Any-Remove&quot;             
-## [207] &quot;Any-Hex/Unicode&quot;         &quot;Any-Hex/Java&quot;           
-## [209] &quot;Any-Hex/C&quot;               &quot;Any-Hex/XML&quot;            
-## [211] &quot;Any-Hex/XML10&quot;           &quot;Any-Hex/Perl&quot;           
-## [213] &quot;Any-Hex&quot;                 &quot;Hex-Any/Unicode&quot;        
-## [215] &quot;Hex-Any/Java&quot;            &quot;Hex-Any/C&quot;              
-## [217] &quot;Hex-Any/XML&quot;             &quot;Hex-Any/XML10&quot;          
-## [219] &quot;Hex-Any/Perl&quot;            &quot;Hex-Any&quot;                
-## [221] &quot;Any-NFC&quot;                 &quot;Any-NFKC&quot;               
-## [223] &quot;Any-NFD&quot;                 &quot;Any-NFKD&quot;               
-## [225] &quot;Any-FCD&quot;                 &quot;Any-FCC&quot;                
-## [227] &quot;Any-Latin&quot;               &quot;Any-Telugu&quot;             
-## [229] &quot;Any-Gurmukhi&quot;            &quot;Any-Gujarati&quot;           
-## [231] &quot;Any-Malayalam&quot;           &quot;Any-Oriya&quot;              
-## [233] &quot;Any-Devanagari&quot;          &quot;Any-Kannada&quot;            
-## [235] &quot;Any-Tamil&quot;               &quot;Any-cs_FONIPA&quot;          
-## [237] &quot;Any-ru&quot;                  &quot;Any-Bengali&quot;            
-## [239] &quot;Any-Katakana&quot;            &quot;Any-ro_FONIPA&quot;          
-## [241] &quot;Any-zh&quot;                  &quot;Any-am&quot;                 
-## [243] &quot;Any-es_419_FONIPA&quot;       &quot;Any-es_FONIPA&quot;          
-## [245] &quot;Any-sk_FONIPA&quot;           &quot;Any-Hant&quot;               
-## [247] &quot;Any-Hans&quot;                &quot;Any-Hiragana&quot;           
-## [249] &quot;Any-Syriac&quot;              &quot;Any-Greek&quot;              
-## [251] &quot;Any-Greek/UNGEGN&quot;        &quot;Any-Cyrillic&quot;           
-## [253] &quot;Any-Hangul&quot;              &quot;Any-Bopomofo&quot;           
-## [255] &quot;Any-Arabic&quot;              &quot;Any-Thai&quot;               
-## [257] &quot;Any-Armenian&quot;            &quot;Any-Thaana&quot;             
-## [259] &quot;Any-Han&quot;                 &quot;Any-Georgian&quot;           
-## [261] &quot;Any-Hebrew&quot;              &quot;Any-pl_FONIPA&quot;
+<h3>General Text Transforms</h3>
+
+<p>If you were patient and persistent enough with reading this post and arrived at this very section, here&#39;s the frosting on the cake: ICU <a href="http://userguide.icu-project.org/transforms/general">general text transforms</a>.</p>
+
+<p>First of all, general transforms allow us to perform all the above-mentioned operations (however, they are not locale-dependent). For example:</p>
+
+<pre><code class="r">stri_trans_general(&quot;ǱDZ&quot;, &quot;nfkc&quot;)
 </code></pre>
+
+<pre><code>## [1] &quot;DZDZ&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;groß&quot;, &quot;upper&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;GROSS&quot;
+</code></pre>
+
+<p>Here, the 2nd argument of <code>stri_trans_general</code> denotes the transformation to apply. The list of available transforms is returned by a call to:</p>
+
+<pre><code class="r">head(stri_trans_list())
+</code></pre>
+
+<pre><code>## [1] &quot;ASCII-Latin&quot;       &quot;Accents-Any&quot;       &quot;Amharic-Latin/BGN&quot;
+## [4] &quot;Any-Accents&quot;       &quot;Any-Publishing&quot;    &quot;Arabic-Latin&quot;
+</code></pre>
+
+<p>General text transforms can perform:</p>
+
+<ul>
+<li>Hex and Character Name conversions (e.g. for escaping Unicode code points),</li>
+<li>Script to Script conversion (a.k.a. text transliteration),</li>
+<li>etc.</li>
+</ul>
+
+<p>For more information on text transforms, refer to the <a href="http://userguide.icu-project.org/transforms/general">ICU documentation</a>. I admit that the user&#39;s guide is not easy to follow, but it may allow you to do some magic tricks with your text, so it&#39;s worth reading.</p>
+
+<p>Notably, text transformations may be composed (so that many operations may be performed one by one in a single call) and we are able to tell ICU to restrict processing only to a fixed set of Unicode code points.</p>
+
+<p>A bunch of examples: firstly, some script-to-script conversions (not to be confused with text translation):</p>
+
+<pre><code class="r">stri_trans_general(&quot;stringi&quot;, &quot;latin-greek&quot;)  # script transliteration
+</code></pre>
+
+<pre><code>## [1] &quot;στριγγι&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin&quot;)eration
+</code></pre>
+
+<pre><code>## [1] &quot;Pëtr Ilʹič Čajkovskij&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc&quot;)nts
+</code></pre>
+
+<pre><code>## [1] &quot;Petr Ilʹic Cajkovskij&quot;
+</code></pre>
+
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;latin-ascii&quot;)e diacritic marks
+</code></pre>
+
+<pre><code>## [1] &quot;zazolc gesla jazn&quot;
+</code></pre>
+
+<p>What I really love in the first example above is that from <em>ng</em> we obtain &gamma;&gamma; (gamma,gamma) and not &nu;&gamma; (nu, gamma). Cute, isn&#39;t it?</p>
+
+<p>It&#39;s getting hotter with these:</p>
 
 <pre><code class="r">stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &quot;pl-pl_fonipa&quot;)
 </code></pre>
@@ -366,11 +380,16 @@ stri_trans_list()
 <pre><code>## [1] &quot;v ʂt͡ʂɛbʐɛʂɨɲɛ xʂɔ̃ʂt͡ʂ bʐmi v tʂt͡ɕiɲɛ&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &quot;pl-pl_fonipa; ipa-xsampa&quot;) # XSampa ASCII-range representation of IPA characters.
+<pre><code class="r"># and now the same in the XSampa ASCII-range representation:
+stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &quot;pl-pl_fonipa; ipa-xsampa&quot;)
 </code></pre>
 
 <pre><code>## [1] &quot;v s`t_s`Ebz`Es`1JE xs`O~s`t_s` bz`mi v ts`t_s\\iJE&quot;
 </code></pre>
+
+<p>We&#39;ve obtained the phonetic representation of a Polish text (in <a href="http://en.wikipedia.org/wiki/International_Phonetic_Alphabet">IPA</a>) &ndash; try reading that tongue twister aloud (in case of any problems consult <a href="http://en.wikipedia.org/wiki/Chrz%C4%85szcz">this Wikipedia article</a>).</p>
+
+<p>We may also escape a selected set of code points (to hex representation as  well as e.g. to XML entities) or even completely remove them:</p>
 
 <pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[^\\u0000-\\u007f] any-hex&quot;)red
 </code></pre>
@@ -384,11 +403,13 @@ stri_trans_list()
 <pre><code>## [1] &quot;za&amp;#x17C;&amp;#xF3;&amp;#x142;&amp;#x107; g&amp;#x119;&amp;#x15B;l&amp;#x105; ja&amp;#x17A;&amp;#x144;&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;latin-ascii&quot;)
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[\\p{Z}] remove&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;zazolc gesla jazn&quot;
+<pre><code>## [1] &quot;zażółćgęśląjaźń&quot;
 </code></pre>
+
+<p>&hellip;and play with code point names:</p>
 
 <pre><code class="r">stri_trans_general(&quot;ą1©,&quot;, &quot;any-name&quot;)
 </code></pre>
@@ -402,35 +423,33 @@ stri_trans_list()
 <pre><code>## [1] &quot;ß&quot;
 </code></pre>
 
+<p>Last but not least:</p>
+
 <pre><code class="r">stri_trans_general(&quot;Let&#39;s go -- she said&quot;, &quot;any-publishing&quot;)
 </code></pre>
 
 <pre><code>## [1] &quot;Let’s go — she said&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[\\p{Z}] remove&quot;)
+<p>Did you note the differences?</p>
+
+<h3>A Note on BiDi Text (Help Needed)</h3>
+
+<p>ICU also provides support for processing Bidirectional text (e.g. a text that consists of a mixture of Arabic/Hebrew and English). We would be very glad to implement such facilities, but, as we (developers of <code>stringi</code>) come from a &ldquo;Latin&rdquo; environment, we don&#39;t have good guidelines on how the BiDi/RTL (right-to-left) text processing functions should behave. We don&#39;t even know whether such a text displays properly in RStudio or R GUI on Windows. Therefore, we&#39;ll warmly welcome any volunteers that would like to help us with the mentioned issues (developers or just testers).</p>
+
+<p>For <strong>bug reports and feature requests</strong> concerning the <code>stringi</code> package visit our <a href="https://github.com/Rexamine/stringi/">GitHub profile</a> or contact me via email.</p>
+
+<p>So&hellip;</p>
+
+<pre><code class="r">stri_trans_general(&quot;¡muy bueno mi amigo, hasta la vista! :-)&quot;, &quot;es-es_FONIPA&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;zażółćgęśląjaźń&quot;
+<pre><code>## [1] &quot;¡muiβwenomiamiɣo,.astalaβista!:)&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[\\p{Z}] remove&quot;)
-</code></pre>
+<h2></h2>
 
-<pre><code>## [1] &quot;zażółćgęśląjaźń&quot;
-</code></pre>
-
-<pre><code class="r">stri_trans_general(&quot;stringi&quot;, &quot;latin-greek&quot;)  # script transliteration
-</code></pre>
-
-<pre><code>## [1] &quot;στριγγι&quot;
-</code></pre>
-
-<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin&quot;)eration
-</code></pre>
-
-<pre><code>## [1] &quot;Pëtr Ilʹič Čajkovskij&quot;
-</code></pre>
+<p><a href="http://gagolewski.rexamine.com">Marek Gagolewski</a></p>
 
 </body>
 
