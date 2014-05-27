@@ -189,7 +189,7 @@ hljs.initHighlightingOnLoad();
 <li>Text transliteration (e.g. script-to-script conversion).</li>
 </ul>
 
-<p>All of these are available to R programmers via our still maturing <a href="http://stringi.rexamine.com"><code>stringi</code></a> package.</p>
+<p>All of these are available to R programmers/users via our still maturing <a href="http://stringi.rexamine.com"><code>stringi</code></a> package.</p>
 
 <h3>Case Mappings</h3>
 
@@ -346,25 +346,25 @@ stri_trans_toupper(&quot;groß&quot;, locale = &quot;de_DE&quot;) # German
 
 <p>A bunch of examples: firstly, some script-to-script conversions (not to be confused with text translation):</p>
 
-<pre><code class="r">stri_trans_general(&quot;stringi&quot;, &quot;latin-greek&quot;)  # script transliteration
+<pre><code class="r">stri_trans_general(&quot;stringi&quot;, &quot;latin-greek&quot;) # script transliteration
 </code></pre>
 
 <pre><code>## [1] &quot;στριγγι&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin&quot;)eration
+<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin&quot;) # script transliteration
 </code></pre>
 
 <pre><code>## [1] &quot;Pëtr Ilʹič Čajkovskij&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc&quot;)nts
+<pre><code class="r">stri_trans_general(&quot;Пётр Ильич Чайковский&quot;, &quot;cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc&quot;)  # and remove accents
 </code></pre>
 
 <pre><code>## [1] &quot;Petr Ilʹic Cajkovskij&quot;
 </code></pre>
 
-<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;latin-ascii&quot;)e diacritic marks
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;latin-ascii&quot;)   # remove diacritic marks
 </code></pre>
 
 <pre><code>## [1] &quot;zazolc gesla jazn&quot;
@@ -391,7 +391,7 @@ stri_trans_general(&quot;w szczebrzeszynie chrząszcz brzmi w trzcinie&quot;, &q
 
 <p>We may also escape a selected set of code points (to hex representation as  well as e.g. to XML entities) or even completely remove them:</p>
 
-<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[^\\u0000-\\u007f] any-hex&quot;)red
+<pre><code class="r">stri_trans_general(&quot;zażółć gęślą jaźń&quot;, &quot;[^\\u0000-\\u007f] any-hex&quot;) # filtered
 </code></pre>
 
 <pre><code>## [1] &quot;za\\u017C\\u00F3\\u0142\\u0107 g\\u0119\\u015Bl\\u0105 ja\\u017A\\u0144&quot;

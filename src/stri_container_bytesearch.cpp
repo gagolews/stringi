@@ -197,7 +197,7 @@ void StriContainerByteSearch::createKMPtableFwd()
  */
 void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
-   if (i >= n) {
+   if (i >= n && this->patternStr == get(i).c_str()) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
          throw StriException("DEBUG: vectorize_getMatcher - matcher reuse failed!");
@@ -247,7 +247,7 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
  */
 void StriContainerByteSearch::setupMatcherFwd(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
-   if (i >= n) {
+   if (i >= n && this->patternStr == get(i).c_str()) {
 #ifndef NDEBUG
       if ((debugMatcherIndex % n) != (i % n)) {
          throw StriException("DEBUG: vectorize_getMatcher - matcher reuse failed!");

@@ -46,6 +46,9 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
  *          BUGFIX: memleaks on StriException
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-05-27)
+ *          BUGFIX: invalid matcher reuse on empty search string
  */
 class StriContainerRegexPattern : public StriContainerUTF16 {
 
@@ -53,9 +56,7 @@ class StriContainerRegexPattern : public StriContainerUTF16 {
 
       uint32_t flags; ///< RegexMatcher flags
       RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
-#ifndef NDEBUG
-      R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
-#endif
+      R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
 
 
    public:

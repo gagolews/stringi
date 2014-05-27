@@ -41,6 +41,7 @@
 StriContainerUStringSearch::StriContainerUStringSearch()
    : StriContainerUTF16()
 {
+   this->lastMatcherIndex = -1;
    this->str = NULL;
    this->col = NULL;
 }
@@ -55,6 +56,7 @@ StriContainerUStringSearch::StriContainerUStringSearch()
 StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecycle, UCollator* _col)
    : StriContainerUTF16(rstr, _nrecycle, true)
 {
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->col = _col;
 }
@@ -66,6 +68,7 @@ StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecy
 StriContainerUStringSearch::StriContainerUStringSearch(StriContainerUStringSearch& container)
    :    StriContainerUTF16((StriContainerUTF16&)container)
 {
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->col = container.col;
 }
@@ -75,6 +78,7 @@ StriContainerUStringSearch& StriContainerUStringSearch::operator=(StriContainerU
 {
    this->~StriContainerUStringSearch();
    (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->col = container.col;
    return *this;
@@ -107,9 +111,7 @@ StriContainerUStringSearch::~StriContainerUStringSearch()
 UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeString& searchStr)
 {
    if (!lastMatcher) {
-#ifndef NDEBUG
-      debugMatcherIndex = (i % n);
-#endif
+      this->lastMatcherIndex = (i % n);
       UErrorCode status = U_ZERO_ERROR;
       lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
             searchStr.getBuffer(), searchStr.length(), col, NULL, &status);
@@ -121,14 +123,11 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
       return lastMatcher;
    }
 
-   if (i >= n) {
-#ifndef NDEBUG
-      if ((debugMatcherIndex % n) != (i % n)) {
-         throw StriException("DEBUG: vectorize_getMatcher - matcher reuse failed!");
-      }
-#endif
+   if (this->lastMatcherIndex == (i % n)) {
+      // do nothing => matcher reuse
    }
    else {
+      this->lastMatcherIndex = (i % n);
       UErrorCode status = U_ZERO_ERROR;
       usearch_setPattern(lastMatcher, this->get(i).getBuffer(), this->get(i).length(), &status);
       if (U_FAILURE(status)) {
@@ -145,10 +144,6 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
       lastMatcher = NULL;
       throw StriException(status);
    }
-
-#ifndef NDEBUG
-   debugMatcherIndex = (i % n);
-#endif
 
    return lastMatcher;
 }

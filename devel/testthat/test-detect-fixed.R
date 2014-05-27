@@ -4,6 +4,8 @@ test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed("a", NA), NA)
    expect_identical(stri_detect_fixed(NA, "a"), NA)
    expect_identical(stri_detect_fixed(NA, NA), NA)
+   expect_identical(stri_detect_fixed(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_detect_fixed(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
    expect_identical(stri_detect_fixed("kot lorem1", character(0)), logical(0))
    expect_identical(stri_detect_fixed(character(0), "ipsum 1234"), logical(0))
    expect_identical(stri_detect_fixed(character(0), character(0)), logical(0))

@@ -6,6 +6,9 @@
 
    * t.b.d.
 
+   * [BUGFIX] `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
+     give incorrect results if one of search strings was of length 0.
+
 
 * 0.2-5 (2014-05-16) **CRAN**
 

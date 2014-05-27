@@ -7,7 +7,7 @@ The [ICU](http://site.icu-project.org/) (International Components for Unicode) l
 * Unicode normalization,
 * Text transliteration (e.g. script-to-script conversion).
 
-All of these are available to R programmers via our still maturing [`stringi`](http://stringi.rexamine.com) package.
+All of these are available to R programmers/users via our still maturing [`stringi`](http://stringi.rexamine.com) package.
 
 
 ### Case Mappings ###
@@ -222,7 +222,7 @@ A bunch of examples: firstly, some script-to-script conversions (not to be confu
 
 
 ```r
-stri_trans_general("stringi", "latin-greek")  # script transliteration
+stri_trans_general("stringi", "latin-greek") # script transliteration
 ```
 
 ```
@@ -230,7 +230,7 @@ stri_trans_general("stringi", "latin-greek")  # script transliteration
 ```
 
 ```r
-stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin")eration
+stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin") # script transliteration
 ```
 
 ```
@@ -238,7 +238,7 @@ stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin")
 ```
 
 ```r
-stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc")nts
+stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc")  # and remove accents
 ```
 
 ```
@@ -246,7 +246,7 @@ stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin; 
 ```
 
 ```r
-stri_trans_general("zażółć gęślą jaźń", "latin-ascii")e diacritic marks
+stri_trans_general("zażółć gęślą jaźń", "latin-ascii")   # remove diacritic marks
 ```
 
 ```
@@ -283,7 +283,7 @@ We may also escape a selected set of code points (to hex representation as  well
 
 
 ```r
-stri_trans_general("zażółć gęślą jaźń", "[^\\u0000-\\u007f] any-hex")red
+stri_trans_general("zażółć gęślą jaźń", "[^\\u0000-\\u007f] any-hex") # filtered
 ```
 
 ```

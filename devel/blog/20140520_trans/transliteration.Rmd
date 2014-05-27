@@ -101,11 +101,11 @@ Notably, text transformations may be composed (so that many operations may be pe
 
 A bunch of examples: firstly, some script-to-script conversions (not to be confused with text translation):
 
-```{r}
+```{r,tidy=FALSE}
 stri_trans_general("stringi", "latin-greek") # script transliteration
-stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin") # script transliteration
-stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc") # and remove accents
-stri_trans_general("zażółć gęślą jaźń", "latin-ascii") # remove diacritic marks
+stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin")                    # script transliteration
+stri_trans_general("Пётр Ильич Чайковский", "cyrillic-latin; nfd; [:nonspacing mark:] remove; nfc")                     # and remove accents
+stri_trans_general("zażółć gęślą jaźń", "latin-ascii")            # remove diacritic marks
 ```
 
 What I really love in the first example above is that from *ng* we obtain &gamma;&gamma; (gamma,gamma) and not &nu;&gamma; (nu, gamma). Cute, isn't it?
@@ -122,8 +122,8 @@ We've obtained the phonetic representation of a Polish text (in [IPA](http://en.
 
 We may also escape a selected set of code points (to hex representation as  well as e.g. to XML entities) or even completely remove them:
 
-```{r}
-stri_trans_general("zażółć gęślą jaźń", "[^\\u0000-\\u007f] any-hex") # filtered
+```{r tidy=FALSE}
+stri_trans_general("zażółć gęślą jaźń", "[^\\u0000-\\u007f] any-hex")          # filtered
 stri_trans_general("zażółć gęślą jaźń", "[^\\u0000-\\u007f] any-hex/xml")
 stri_trans_general("zażółć gęślą jaźń", "[\\p{Z}] remove")
 ```
