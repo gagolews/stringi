@@ -41,6 +41,7 @@
 StriContainerRegexPattern::StriContainerRegexPattern()
    : StriContainerUTF16()
 {
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
 }
 
@@ -54,6 +55,7 @@ StriContainerRegexPattern::StriContainerRegexPattern()
 StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycle, uint32_t _flags)
    : StriContainerUTF16(rstr, _nrecycle, true)
 {
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->flags = _flags;
 }
@@ -65,6 +67,7 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
 StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& container)
    :    StriContainerUTF16((StriContainerUTF16&)container)
 {
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->flags = container.flags;
 }
@@ -74,6 +77,7 @@ StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerReg
 {
    this->~StriContainerRegexPattern();
    (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
+   this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->flags = container.flags;
    return *this;
@@ -102,16 +106,11 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
 RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 {
    if (lastMatcher) {
-      if (i >= n) {
-#ifndef NDEBUG
-      if ((debugMatcherIndex % n) != (i % n)) {
-         throw StriException("DEBUG: vectorize_getMatcher - matcher reuse failed!");
-      }
-#endif
+      if (this->lastMatcherIndex == (i % n)) {
          return lastMatcher; // reuse
       }
       else {
-         delete lastMatcher;
+         delete lastMatcher; // invalidate
          lastMatcher = NULL;
       }
    }
@@ -123,9 +122,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
       lastMatcher = NULL;
       throw StriException(status);
    }
-#ifndef NDEBUG
-   debugMatcherIndex = (i % n);
-#endif
+   this->lastMatcherIndex = (i % n);
 
    return lastMatcher;
 }
