@@ -33,7 +33,6 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_bytesearch.h"
-#include <unicode/uregex.h>
 
 
 /**

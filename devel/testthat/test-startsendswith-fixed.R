@@ -1,0 +1,46 @@
+require("testthat")
+
+test_that("stri_startswith_fixed", {
+   expect_identical(stri_startswith_fixed("a", NA), NA)
+   expect_identical(stri_startswith_fixed(NA, "a"), NA)
+   expect_identical(stri_startswith_fixed(NA, NA), NA)
+   expect_identical(stri_startswith_fixed(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_startswith_fixed(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
+   expect_identical(stri_startswith_fixed("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_startswith_fixed(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_startswith_fixed(character(0), character(0)), logical(0))
+   expect_identical(stri_startswith_fixed(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"), c(T, F, F, T))
+   expect_identical(stri_startswith_fixed(c("Lorem\n123", " ", "kota", "\t\u01054"), c(" ", "\t\u0105")), c(F, F, F, T))
+   expect_warning(stri_startswith_fixed(rep("asd", 5), rep("a", 2)))
+   expect_identical(stri_startswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
+   expect_equivalent(stri_startswith_fixed("aaaab", "ab"), FALSE)
+   expect_equivalent(stri_startswith_fixed("bababababaab", "bab"), TRUE)
+
+
+   suppressWarnings(expect_identical(stri_startswith_fixed("",""), NA))
+   suppressWarnings(expect_identical(stri_startswith_fixed("a",""), NA))
+   suppressWarnings(expect_identical(stri_startswith_fixed("","a"), FALSE))
+})
+
+
+test_that("stri_endswith_fixed", {
+   expect_identical(stri_endswith_fixed("a", NA), NA)
+   expect_identical(stri_endswith_fixed(NA, "a"), NA)
+   expect_identical(stri_endswith_fixed(NA, NA), NA)
+   expect_identical(stri_endswith_fixed(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_endswith_fixed(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
+   expect_identical(stri_endswith_fixed("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_endswith_fixed(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_endswith_fixed(character(0), character(0)), logical(0))
+   expect_identical(stri_endswith_fixed(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"), c(T, T, T, F))
+   expect_identical(stri_endswith_fixed(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105")), c(F, F, F, T))
+   expect_warning(stri_endswith_fixed(rep("asd", 5), rep("a", 2)))
+   expect_identical(stri_endswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
+   expect_equivalent(stri_endswith_fixed("aaaab", "ab"), TRUE)
+   expect_equivalent(stri_endswith_fixed("bababababaab", "bab"), FALSE)
+
+
+   suppressWarnings(expect_identical(stri_endswith_fixed("",""), NA))
+   suppressWarnings(expect_identical(stri_endswith_fixed("a",""), NA))
+   suppressWarnings(expect_identical(stri_endswith_fixed("","a"), FALSE))
+})

@@ -39,7 +39,7 @@
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{replacement}.
 #'
-#' For natural language processing this function may be not give
+#' For natural language processing these functions might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' These functions scan the input string for matches of the pattern.

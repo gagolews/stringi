@@ -46,7 +46,7 @@
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
-#' For natural language processing this function may be not give
+#' For natural language processing this function might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' @param str character vector with strings to search in

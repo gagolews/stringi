@@ -30,50 +30,40 @@
 
 
 #' @title
-#' Count the Number of Fixed Pattern Matches
+#' Determines if the Start or End of a String Matches a Fixed Pattern
 #'
 #' @description
-#' This function counts the number of occurrences
-#' of a fixed pattern in a string.
+#' These functions check if a string starts or ends with a fixed
+#' pattern occurence.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' If \code{pattern} is empty, then the result is \code{NA}
-#' and a warning is generated.
-#'
 #' For natural language processing this function might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
+#'
+#' If \code{pattern} is empty, then the result is \code{NA}
+#' and a warning is generated.
 #'
 #' @param str character vector
 #' @param pattern character vector
 #'
-#' @return Returns an integer vector with the number of matches.
-#'
-#' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed(s, " ")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed(s, "o")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed(s, "it")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed(s, letters)
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed("babab", "b")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count_fixed(c("stringi", "123"), "string")
+#' @return Returns a logical vector.
 #'
 #' @export
-#' @family search_count
+#' @rdname stri_startswith_fixed
+#' @family search_startsendswith
 #' @family search_fixed
-stri_count_fixed <- function(str, pattern) {
-   .Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
+stri_startswith_fixed <- function(str, pattern) {
+   # TODO: add param from (like in Python)?
+   # default from=1L (start from beginning of a string)
+   .Call("stri_startswith_fixed", str, pattern, PACKAGE="stringi")
+}
+
+#' @export
+#' @rdname stri_startswith_fixed
+stri_endswith_fixed <- function(str, pattern) {
+   # TODO: add param to (like in Python)?
+   # default to=-1L
+   .Call("stri_endswith_fixed", str, pattern, PACKAGE="stringi")
 }
