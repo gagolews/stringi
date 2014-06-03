@@ -39,7 +39,7 @@
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' For natural language processing this function may be not give
+#' For natural language processing this function might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
