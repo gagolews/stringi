@@ -15,7 +15,10 @@ test_that("stri_startswith_fixed", {
    expect_identical(stri_startswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
    expect_equivalent(stri_startswith_fixed("aaaab", "ab"), FALSE)
    expect_equivalent(stri_startswith_fixed("bababababaab", "bab"), TRUE)
-
+   expect_equivalent(stri_startswith_fixed("bababababaab", "bab", from=c(1,2,3)), c(T,F,T))
+   expect_equivalent(stri_startswith_fixed("\u0105\u0104\u0105\u0104\u0105", "\u0105\u0104\u0105",
+      from=c(1,2,3,100,-3)), c(T,F,T,F,T))
+   expect_equivalent(stri_startswith_fixed("a", "agsdgsjgidjso", c(-1,1,-2,2,0)), c(F,F,F,F,F))
 
    suppressWarnings(expect_identical(stri_startswith_fixed("",""), NA))
    suppressWarnings(expect_identical(stri_startswith_fixed("a",""), NA))
@@ -37,9 +40,12 @@ test_that("stri_endswith_fixed", {
    expect_warning(stri_endswith_fixed(rep("asd", 5), rep("a", 2)))
    expect_identical(stri_endswith_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
    expect_equivalent(stri_endswith_fixed("aaaab", "ab"), TRUE)
-   expect_equivalent(stri_endswith_fixed("bababababaab", "bab"), FALSE)
-
-
+   expect_equivalent(stri_endswith_fixed("bababababaab", "bab", to=c(-1,-2,-3,-4,4,3)), c(F,F,F,T,F,T))
+   expect_equivalent(stri_endswith_fixed("\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0104\u0105", 
+      "\u0105\u0104\u0105", to=c(-1,-2,-3,-4,4,3)), c(F,F,F,T,F,T))
+   
+   expect_equivalent(stri_endswith_fixed("aba", "a", c(-1,-100000000, 0, 10000000)), c(T,F,F,T))
+   expect_equivalent(stri_endswith_fixed("a", "agsdgsjgidjso", c(-1,1,-2,2,0)), c(F,F,F,F,F))
    suppressWarnings(expect_identical(stri_endswith_fixed("",""), NA))
    suppressWarnings(expect_identical(stri_endswith_fixed("a",""), NA))
    suppressWarnings(expect_identical(stri_endswith_fixed("","a"), FALSE))
