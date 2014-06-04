@@ -37,16 +37,31 @@
 #' pattern occurence.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
+#' Vectorized over \code{str}, \code{pattern},
+#' and \code{from} or \code{to}.
 #'
 #' For natural language processing this function might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
+#' 
+#' Argument \code{start} controls the start position in \code{str}
+#' at which \code{pattern} is mathed.
+#' On the other hand, \code{to} gives the end position.
+#' 
+#' Indices given by \code{from} or \code{to} are 1-based,
+#' i.e. an index equal to 1 denotes the first character
+#' in a string, which gives a typical R look-and-feel.
+#'
+#' For negative indices in \code{from} or \code{to}, counting starts
+#' at the end of the string. E.g. index -1 denotes the last code point
+#' in the string.
 #'
 #' @param str character vector
 #' @param pattern character vector
+#' @param from integer vector
+#' @param to integer vector
 #'
 #' @return Returns a logical vector.
 #'
@@ -54,16 +69,13 @@
 #' @rdname stri_startswith_fixed
 #' @family search_startsendswith
 #' @family search_fixed
-stri_startswith_fixed <- function(str, pattern) {
-   # TODO: add param from (like in Python)?
-   # default from=1L (start from beginning of a string)
-   .Call("stri_startswith_fixed", str, pattern, PACKAGE="stringi")
+stri_startswith_fixed <- function(str, pattern, from=1L) {
+   .Call("stri_startswith_fixed", str, pattern, from, PACKAGE="stringi")
 }
+
 
 #' @export
 #' @rdname stri_startswith_fixed
-stri_endswith_fixed <- function(str, pattern) {
-   # TODO: add param to (like in Python)?
-   # default to=-1L
-   .Call("stri_endswith_fixed", str, pattern, PACKAGE="stringi")
+stri_endswith_fixed <- function(str, pattern, to=-1L) {
+   .Call("stri_endswith_fixed", str, pattern, to, PACKAGE="stringi")
 }
