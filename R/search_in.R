@@ -29,25 +29,27 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Value Matching
-#'
-#' @description
-#' This function returns a vector of the positions of (first) matches
-#' of its first argument in its second.
-#'
-#' @details
-#' Vectorized over \code{str}.
-#'
-#' @param str character vector of strings to search in
-#' @param table character vector of values to be matched against
-#' @param nomatch integer value to be returned in the case when no match is found
-#'
-#' @return Returns an integer vector.
-#'
-#' @export
-#' @family search_detect
-#' @family search_regex
-stri_in_fixed <- function(str, table, nomatch=NA_integer_) {
-   .Call("stri_in_fixed", str, table, nomatch, PACKAGE="stringi")
-}
+invisible(NULL)
+
+# #' @title
+# #' Value Matching
+# #'
+# #' @description
+# #' This function returns a vector of the positions of (first) matches
+# #' of its first argument in its second.
+# #'
+# #' @details
+# #' Vectorized over \code{str}.
+# #'
+# #' @param str character vector of strings to search in
+# #' @param table character vector of values to be matched against
+# #' @param nomatch integer value to be returned in the case when no match is found
+# #'
+# #' @return Returns an integer vector.
+# #'
+# #' @export
+# #' @family search_detect
+# #' @family search_regex
+# stri_in_fixed <- function(str, table, nomatch=NA_integer_) {
+#    .Call("stri_in_fixed", str, table, nomatch, PACKAGE="stringi")
+# }

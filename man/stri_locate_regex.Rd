@@ -107,7 +107,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_in_fixed}};
   \code{\link{stri_match_all_regex}},
   \code{\link{stri_match_first_regex}},
   \code{\link{stri_match_first_regex}},

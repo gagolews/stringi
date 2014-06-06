@@ -90,7 +90,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_extract_all_regex,          3),
    STRI__MAKE_CALL_METHOD(stri_extract_words,              2),
    STRI__MAKE_CALL_METHOD(stri_flatten_withressep,         2),
-   STRI__MAKE_CALL_METHOD(stri_in_fixed,                   3),
+//   STRI__MAKE_CALL_METHOD(stri_in_fixed,                   3),
    STRI__MAKE_CALL_METHOD(stri_info,                       0),
    STRI__MAKE_CALL_METHOD(stri_isempty,                    1),
    STRI__MAKE_CALL_METHOD(stri_join_withcollapse,          3),
