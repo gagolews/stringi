@@ -29,27 +29,32 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)
-
-# #' @title
-# #' Value Matching
-# #'
-# #' @description
-# #' This function returns a vector of the positions of (first) matches
-# #' of its first argument in its second.
-# #'
-# #' @details
-# #' Vectorized over \code{str}.
-# #'
-# #' @param str character vector of strings to search in
-# #' @param table character vector of values to be matched against
-# #' @param nomatch integer value to be returned in the case when no match is found
-# #'
-# #' @return Returns an integer vector.
-# #'
-# #' @export
-# #' @family search_detect
-# #' @family search_regex
-# stri_in_fixed <- function(str, table, nomatch=NA_integer_) {
-#    .Call("stri_in_fixed", str, table, nomatch, PACKAGE="stringi")
-# }
+#' @title
+#' Value Matching
+#'
+#' @description
+#' This function returns a vector of the positions of (first) matches
+#' of its first argument in its second.
+#'
+#' @details
+#' Vectorized over \code{str}.
+#' 
+#' This is a dummy wrapper for R's \code{\link{match}} function.
+#' The only difference is that it ensures that the comparison
+#' is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}.
+#' 
+#' It would be difficult to propose a faster algorithm:
+#' R uses a clever, hash table-based, string caching system.
+#'
+#' @param str character vector of strings to search in
+#' @param table character vector of values to be matched against
+#' @param ... other arguments passed to \code{\link{match}}
+#'
+#' @return Returns an integer vector.
+#'
+#' @export
+#' @family search_detect
+#' @family search_regex
+stri_in_fixed <- function(str, table, ...) {
+   match(stri_enc_toutf8(str), stri_enc_toutf8(table), ...)
+}

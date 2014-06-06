@@ -9,6 +9,8 @@
    * [NEW FUNCTIONS] `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
 
+   * [NEW FUNCTION] `stri_in_fixed` (like R's `match`)
+
    * [BUGFIX] `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings was of length 0.
 
