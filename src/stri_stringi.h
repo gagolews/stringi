@@ -179,6 +179,8 @@ void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
 
 
+SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch);
+
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator);
