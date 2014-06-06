@@ -93,7 +93,7 @@ Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}}; \code{\link{stri_in_fixed}}
+  \code{\link{stri_detect}}
 
 Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
@@ -176,7 +176,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_in_fixed}};
   \code{\link{stri_locate_all_regex}},
   \code{\link{stri_locate_first_regex}},
   \code{\link{stri_locate_first_regex}},
