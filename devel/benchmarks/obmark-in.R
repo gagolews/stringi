@@ -18,3 +18,6 @@ microbenchmark(match("gsded", x100), match("gsded", x1000), match("gsded", x1000
 
 microbenchmark(match(x100, x100), match(x1000, x1000), match(x10000, x10000), match(x100000, x100000),
    stri_in_fixed(x100, x100), stri_in_fixed(x1000, x1000), stri_in_fixed(x10000, x10000), stri_in_fixed(x100000, x100000))
+
+# microbenchmark(match(x100, x100), match(x1000, x1000), match(x10000, x10000),
+#    pmatch(x100, x100), pmatch(x1000, x1000), pmatch(x10000, x10000), times=10)
