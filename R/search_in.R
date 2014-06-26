@@ -41,14 +41,15 @@
 #' 
 #' This is a dummy wrapper for R's \code{\link{match}} function.
 #' The only difference is that it ensures that the comparison
-#' is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}.
+#' is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}).
 #' 
-#' It would be difficult to propose a faster algorithm:
-#' R uses a clever, hash table-based, string caching system.
+#' It is (most likely) impossible to implement a faster algorithm:
+#' \code{\link{match}} uses R's clever, hash table-based, string caching
+#' system directly.
 #'
 #' @param str character vector of strings to search in
 #' @param table character vector of values to be matched against
-#' @param ... other arguments passed to \code{\link{match}}
+#' @param ... further arguments passed to \code{\link{match}}
 #'
 #' @return Returns an integer vector.
 #'

@@ -10,7 +10,7 @@ stri_in_fixed(str, table, ...)
 
 \item{table}{character vector of values to be matched against}
 
-\item{...}{other arguments passed to \code{\link{match}}}
+\item{...}{further arguments passed to \code{\link{match}}}
 }
 \value{
 Returns an integer vector.
@@ -24,7 +24,11 @@ Vectorized over \code{str}.
 
 This is a dummy wrapper for R's \code{\link{match}} function.
 The only difference is that it ensures that the comparison
-is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}.
+is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}).
+
+It is (most likely) impossible to implement a faster algorithm:
+\code{\link{match}} uses R's clever, hash table-based, string caching
+system directly.
 }
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};
