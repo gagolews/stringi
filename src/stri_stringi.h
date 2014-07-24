@@ -208,6 +208,7 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty);
+SEXP stri_subset_fixed(SEXP str, SEXP pattern);
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to);
 SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from);
 
