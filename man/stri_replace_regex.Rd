@@ -81,6 +81,7 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_match_last_regex}};
   \code{\link{stri_opts_regex}};
   \code{\link{stri_split_regex}};
+  \code{\link{stri_subset_regex}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
 
