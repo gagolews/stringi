@@ -52,6 +52,7 @@ Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect}}; \code{\link{stri_in_fixed}};
   \code{\link{stri_subset_fixed}};
+  \code{\link{stri_subset_regex}};
   \code{\link{stringi-search}}
 
 Other search_regex: \code{\link{stri_count_regex}};
@@ -78,6 +79,7 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_replace_last_regex}},
   \code{\link{stri_replace_last_regex}};
   \code{\link{stri_split_regex}};
+  \code{\link{stri_subset_regex}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
 }
