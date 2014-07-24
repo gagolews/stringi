@@ -60,10 +60,8 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 //   StriContainerUTF8 str_cont(str, vectorize_length); // utext_openUTF8, see below
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-	deque< int > result;
 	//this cannot be done with deque, because pattern is reused so the i does not 
 	//go 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-	
 	int* ret_tab = new int[vectorize_length];
 	int result_counter = 0;
 	
