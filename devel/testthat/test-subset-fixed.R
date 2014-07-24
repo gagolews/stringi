@@ -15,6 +15,7 @@ test_that("stri_subset_fixed", {
    expect_identical(stri_subset_fixed("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), character(0))
    expect_equivalent(stri_subset_fixed("aaaab", "ab"), "aaaab")
    expect_equivalent(stri_subset_fixed("bababababaab", "aab"), "bababababaab")
+   expect_equivalent(stri_subset_fixed(c("a","b","aa","bb"), c("a","b")), c("a","b","aa","bb"))
 
    expect_warning(expect_identical(stri_subset_fixed("",""), NA_character_))
    expect_warning(expect_identical(stri_subset_fixed("a",""), NA_character_))
