@@ -225,6 +225,7 @@ SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_regex);
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
                       SEXP opts_regex);
+SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);

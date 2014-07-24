@@ -58,6 +58,7 @@ stri_search_regex_locate.cpp \
 stri_search_regex_match.cpp \
 stri_search_regex_replace.cpp \
 stri_search_regex_split.cpp \
+stri_search_regex_subset.cpp \
 stri_splitpos.cpp \
 stri_stats.cpp \
 stri_stringi.cpp \
