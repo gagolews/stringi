@@ -32,7 +32,8 @@ or \code{\link{stri_subset_charclass}},
 depending on the argument used.
 }
 \seealso{
-Other search_subset: \code{\link{stri_subset_fixed}};
+Other search_subset: \code{\link{stri_subset_coll}};
+  \code{\link{stri_subset_fixed}};
   \code{\link{stri_subset_regex}}
 }
 

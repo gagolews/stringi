@@ -83,6 +83,7 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_coll}};
+  \code{\link{stri_subset_coll}};
   \code{\link{stringi-search-coll}}
 
 Other search_count: \code{\link{stri_count_charclass}};
