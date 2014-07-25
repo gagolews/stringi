@@ -197,6 +197,7 @@ SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_collator);
 SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
                       SEXP opts_collator);
+SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 
 
 SEXP stri_detect_fixed(SEXP str, SEXP pattern);

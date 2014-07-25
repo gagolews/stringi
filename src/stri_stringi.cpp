@@ -159,6 +159,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_sub,                        4),
    STRI__MAKE_CALL_METHOD(stri_sub_replacement,            5),
    STRI__MAKE_CALL_METHOD(stri_subset_charclass,           2),
+   STRI__MAKE_CALL_METHOD(stri_subset_coll,                3),
    STRI__MAKE_CALL_METHOD(stri_subset_fixed,               2),
    STRI__MAKE_CALL_METHOD(stri_subset_regex,               3),
    STRI__MAKE_CALL_METHOD(stri_test_Rmark,                 1),
