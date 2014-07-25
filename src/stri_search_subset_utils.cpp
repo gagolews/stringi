@@ -32,58 +32,57 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
-#include "stri_container_utf16.h"
 #include "stri_container_usearch.h"
-#include "stri_container_bytesearch.h"
 #include <unicode/uregex.h>
 
 
 /**
- * Returns vector elements if a pattern occurs in a string
+ * Subset str_cont to SEXP by logical table ret_tab
  *
- * @param str character vector
- * @param pattern character vector
- * @return character vector
- *
- * @version 0.3-1 (Bartek Tartanus)
- *		first version
- * 
+ * @version 0.3-1 (Bartlomiej Tartanus, 2014-07-25)
+ *          first version
  */
- 
- 
-SEXP stri_subset_fixed(SEXP str, SEXP pattern)
+SEXP stri__subset_by_logical(StriContainerUTF8 str_cont, int* ret_tab, int result_counter)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-
-
-   STRI__ERROR_HANDLER_BEGIN
-   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
-
-	//this cannot be done with deque, because pattern is reused so the i does not 
-	//go 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-	int* ret_tab = new int[vectorize_length];
-	int result_counter = 0;
-
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         ret_tab[i] = NA_LOGICAL; result_counter++, ret_tab[i] = FALSE)
-
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
-      if(ret_tab[i]){
-      	result_counter++;
+	STRI__ERROR_HANDLER_BEGIN
+	SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, result_counter));
+   for (R_len_t j = 0, i=0; i < result_counter; ++j) {
+      if(ret_tab[j] == NA_LOGICAL){
+      	SET_STRING_ELT(ret, i, NA_STRING);
+      	i++;
+      }else if(ret_tab[j]){
+      	SET_STRING_ELT(ret, i, str_cont.toR(j));
+      	i++;
       }
    }
-   
-   SEXP ret = stri__subset_by_logical(str_cont, ret_tab, result_counter);
+	STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+}
 
-   STRI__UNPROTECT_ALL
+
+/**
+ * Subset str_cont to SEXP by logical table ret_tab
+ *
+ * @version 0.3-1 (Bartlomiej Tartanus, 2014-07-25)
+ *          first version
+ */
+SEXP stri__subset_by_logical(StriContainerUTF16 str_cont, int* ret_tab, int result_counter)
+{
+	STRI__ERROR_HANDLER_BEGIN
+	SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, result_counter));
+   for (R_len_t j = 0, i=0; i < result_counter; ++j) {
+      if(ret_tab[j] == NA_LOGICAL){
+      	SET_STRING_ELT(ret, i, NA_STRING);
+      	i++;
+      }else if(ret_tab[j]){
+      	SET_STRING_ELT(ret, i, str_cont.toR(j));
+      	i++;
+      }
+   }
+	STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
