@@ -80,17 +80,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       }
    }
    
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, result_counter));
-   for (R_len_t j = 0, i=0; j < vectorize_length; ++j) {
-      if(ret_tab[j] == NA_LOGICAL){
-      	SET_STRING_ELT(ret, i, NA_STRING);
-      	i++;
-      }else if(ret_tab[j]){
-      	SET_STRING_ELT(ret, i, str_cont.toR(j));
-      	i++;
-      }
-   }
+   SEXP ret = stri__subset_by_logical(str_cont, ret_tab, result_counter);
 
    STRI__UNPROTECT_ALL
    return ret;

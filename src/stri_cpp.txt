@@ -39,6 +39,7 @@ stri_search_coll_extract.cpp \
 stri_search_coll_locate.cpp \
 stri_search_coll_replace.cpp \
 stri_search_coll_split.cpp \
+stri_search_coll_subset.cpp \
 stri_search_fixed_count.cpp \
 stri_search_fixed_detect.cpp \
 stri_search_fixed_extract.cpp \
@@ -60,6 +61,7 @@ stri_search_regex_match.cpp \
 stri_search_regex_replace.cpp \
 stri_search_regex_split.cpp \
 stri_search_regex_subset.cpp \
+stri_search_subset_utils.cpp \
 stri_splitpos.cpp \
 stri_stats.cpp \
 stri_stringi.cpp \
