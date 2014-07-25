@@ -66,7 +66,8 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
 
-Other search_subset: \code{\link{stri_subset_fixed}};
+Other search_subset: \code{\link{stri_subset_coll}};
+  \code{\link{stri_subset_fixed}};
   \code{\link{stri_subset}}
 }
 

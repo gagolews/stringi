@@ -52,7 +52,8 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search}}
 
-Other search_subset: \code{\link{stri_subset_regex}};
+Other search_subset: \code{\link{stri_subset_coll}};
+  \code{\link{stri_subset_regex}};
   \code{\link{stri_subset}}
 }
 
