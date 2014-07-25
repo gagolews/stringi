@@ -246,6 +246,7 @@ SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge);
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty);
+SEXP stri_subset_charclass(SEXP str, SEXP pattern);
 
 SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);

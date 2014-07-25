@@ -30,6 +30,7 @@ stri_search_class_extract.cpp \
 stri_search_class_locate.cpp \
 stri_search_class_replace.cpp \
 stri_search_class_split.cpp \
+stri_search_class_subset.cpp \
 stri_search_class_trim.cpp \
 stri_search_common.cpp \
 stri_search_coll_count.cpp \
