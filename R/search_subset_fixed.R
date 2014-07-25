@@ -59,7 +59,7 @@
 #' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 #'
 #' @export
-#' @family search_detect
+#' @family search_subset
 #' @family search_fixed
 stri_subset_fixed <- function(str, pattern) {
    .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")

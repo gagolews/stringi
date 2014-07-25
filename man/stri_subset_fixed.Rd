@@ -34,14 +34,6 @@ stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 }
 \seealso{
-Other search_detect: \code{\link{stri_detect_charclass}};
-  \code{\link{stri_detect_coll}};
-  \code{\link{stri_detect_fixed}};
-  \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}}; \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_regex}};
-  \code{\link{stringi-search}}
-
 Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_endswith_fixed}},
@@ -59,5 +51,8 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_split_fixed}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search}}
+
+Other search_subset: \code{\link{stri_subset_regex}};
+  \code{\link{stri_subset}}
 }
 

@@ -37,8 +37,7 @@ Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
   \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_fixed}};
-  \code{\link{stri_subset_regex}};
+  \code{\link{stri_subset_charclass}};
   \code{\link{stringi-search}}
 }
 

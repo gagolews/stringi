@@ -3,7 +3,7 @@
 \alias{stri_subset_regex}
 \title{Subset Character Vector Using a Regex Pattern Match}
 \usage{
-stri_subset_regex(str, pattern)
+stri_subset_regex(str, pattern, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to search in}
@@ -38,14 +38,6 @@ stri_subset_regex(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]')
 }
 \seealso{
-Other search_detect: \code{\link{stri_detect_charclass}};
-  \code{\link{stri_detect_coll}};
-  \code{\link{stri_detect_fixed}};
-  \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}}; \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_fixed}};
-  \code{\link{stringi-search}}
-
 Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_detect_regex}};
   \code{\link{stri_extract_all_regex}},
@@ -73,5 +65,8 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_split_regex}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
+
+Other search_subset: \code{\link{stri_subset_fixed}};
+  \code{\link{stri_subset}}
 }
 

@@ -62,7 +62,7 @@
 #' stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]')
 #'
 #' @export
-#' @family search_detect
+#' @family search_subset
 #' @family search_regex
 stri_subset_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_subset_regex", str, pattern, opts_regex, PACKAGE="stringi")
