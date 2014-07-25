@@ -50,6 +50,7 @@ Other search_charclass: \code{\link{stri_detect_charclass}};
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
   \code{\link{stri_split_charclass}};
+  \code{\link{stri_subset_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},
   \code{\link{stri_trim_left}},
