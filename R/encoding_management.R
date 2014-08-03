@@ -157,7 +157,7 @@ stri_enc_set <- function(enc) {
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
    .Call("stri_enc_set", enc, PACKAGE="stringi")
-   message('You are now working with ' %+% stri_info(short=TRUE))
+   message(stri_paste('You are now working with ', stri_info(short=TRUE)))
    invisible(previous)
 }
 

@@ -65,19 +65,19 @@ stri_info <- function(short=FALSE) {
 #             "This may cause serious problems. Consider switching to UTF-8.")
 #       else
       if (!identical(info$Charset.native$ASCII.subset, TRUE))
-         warning("Your native charset is not a superset of US-ASCII. " %+%
-           "This may cause serious problems. Consider switching to UTF-8.")
+         warning(stri_paste("Your native charset is not a superset of US-ASCII. ",
+           "This may cause serious problems. Consider switching to UTF-8."))
       else if (!identical(info$Charset.native$Unicode.1to1, TRUE))
-         warning("Your native charset does not map to Unicode well. " %+%
-            "This may cause serious problems. Consider switching to UTF-8.")
+         warning(stri_paste("Your native charset does not map to Unicode well. ",
+            "This may cause serious problems. Consider switching to UTF-8."))
    }
 
    loclist <- stri_locale_list()
    if (!(info$Locale$Name %in% loclist))
-      warning("Your current locale is not in the list of available " %+%
-         "locales. Some functions may not work properly. " %+%
-         "Refer to stri_locale_list() for more details " %+%
-         "on known locale specifiers.")
+      warning(stri_paste("Your current locale is not in the list of available ",
+         "locales. Some functions may not work properly. ",
+         "Refer to stri_locale_list() for more details ",
+         "on known locale specifiers."))
 
    if (!short)
       return(info)

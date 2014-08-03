@@ -76,10 +76,6 @@ stri_dup <- function(str, times) {
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
 #'
-#' @usage
-#' e1 \%+\% e2
-#'
-#' e1 \%stri+\% e2
 #'
 #' @param e1 character vector or an object coercible to a character vector
 #' @param e2 character vector or an object coercible to a character vector
@@ -95,8 +91,12 @@ stri_dup <- function(str, times) {
 #' 'ID_' %stri+% 1:5
 #'
 #' @rdname oper_plus
+#' 
+#' @usage
+#' e1 \%s+\% e2
+#' 
 #' @export
-"%+%" <- function(e1, e2) {
+"%s+%" <- function(e1, e2) {
    .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
 }
 

@@ -4,7 +4,8 @@
 
 * 0.3-1 (2014-??-??) **devel**
 
-   * t.b.d.
+   * [IMPORTANT CHANGE] Issue #87: %>% overlapped with pipe operator
+     from magrittr; now each operator like %>% has been renamed %s>%.
 
    * [NEW FUNCTIONS] `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.

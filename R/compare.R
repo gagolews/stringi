@@ -68,7 +68,7 @@
 #' \code{stri_cmp_ge} whether they are greater or equal,
 #' \code{stri_cmp_lt} if less,
 #' and \code{stri_cmp_gt} if greater,
-#' see also e.g. \code{\link{\%<\%}}.
+#' see also e.g. \code{\link{\%s<\%}}.
 #'
 #' Finally, \code{stri_compare} is an alias to \code{stri_cmp}. They both
 #' perform exactly the same locale-dependent operation.
@@ -232,75 +232,75 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' c("a", "b", "c") %stri>=% "b"
 #'
 #' @usage
-#' e1 \%<\% e2
+#' e1 \%s<\% e2
 #'
 #' @family locale_sensitive
 #' @rdname oper_comparison
 #' @export
-"%<%" <- function(e1, e2) {
+"%s<%" <- function(e1, e2) {
    stri_cmp_lt(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%<=\% e2
+#' e1 \%s<=\% e2
 #' @rdname oper_comparison
 #' @export
-"%<=%" <- function(e1, e2) {
+"%s<=%" <- function(e1, e2) {
    stri_cmp_le(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%>\% e2
+#' e1 \%s>\% e2
 #' @rdname oper_comparison
 #' @export
-"%>%" <- function(e1, e2) {
+"%s>%" <- function(e1, e2) {
    stri_cmp_gt(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%>=\% e2
+#' e1 \%s>=\% e2
 #' @rdname oper_comparison
 #' @export
-"%>=%" <- function(e1, e2) {
+"%s>=%" <- function(e1, e2) {
    stri_cmp_ge(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%==\% e2
+#' e1 \%s==\% e2
 #' @rdname oper_comparison
 #' @export
-"%==%" <- function(e1, e2) {
+"%s==%" <- function(e1, e2) {
    stri_cmp_equiv(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%!=\% e2
+#' e1 \%s!=\% e2
 #' @rdname oper_comparison
 #' @export
-"%!=%" <- function(e1, e2) {
+"%s!=%" <- function(e1, e2) {
    stri_cmp_nequiv(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%===\% e2
+#' e1 \%s===\% e2
 #' @rdname oper_comparison
 #' @export
-"%===%" <- function(e1, e2) {
+"%s===%" <- function(e1, e2) {
    stri_cmp_eq(e1, e2)
 }
 
 
 #' @usage
-#' e1 \%!==\% e2
+#' e1 \%s!==\% e2
 #' @rdname oper_comparison
 #' @export
-"%!==%" <- function(e1, e2) {
+"%s!==%" <- function(e1, e2) {
    stri_cmp_neq(e1, e2)
 }
 

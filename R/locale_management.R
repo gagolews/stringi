@@ -98,7 +98,7 @@ stri_locale_set <- function(locale) {
 
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
-   message('You are now working with ' %+% stri_info(short=TRUE))
+   message(stri_paste('You are now working with ', stri_info(short=TRUE)))
    invisible(previous)
 }
 
