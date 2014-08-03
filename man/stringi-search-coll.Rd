@@ -37,11 +37,11 @@ L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},

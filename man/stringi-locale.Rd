@@ -96,11 +96,11 @@ Other locale_management: \code{\link{stri_locale_get}},
   \code{\link{stri_locale_info}};
   \code{\link{stri_locale_list}}
 
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},

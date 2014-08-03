@@ -92,7 +92,7 @@
 #' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
 #' for gathering some fancy statistics on a character vector's contents.
 #'
-#' \item \code{\link{stri_join}}, \code{\link{stri_dup}}, \code{\link{\%+\%}},
+#' \item \code{\link{stri_join}}, \code{\link{stri_dup}}, \code{\link{\%s+\%}},
 #' and \code{\link{stri_flatten}} for concatenation-based operations.
 #'
 #' \item \code{\link{stri_sub}} for extracting and replacing substrings,
@@ -115,7 +115,7 @@
 #' and \code{\link{stri_trans_general}} for other very general yet powerful
 #' text transforms, including transliteration.
 #'
-#' \item \code{\link{stri_cmp}}, \code{\link{\%<\%}}, \code{\link{stri_order}},
+#' \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
 #' \code{\link{stri_sort}}, \code{\link{stri_unique}} and
 #' \code{\link{stri_duplicated}} for collation-based,
 #' locale-aware operations, see also \link{stringi-locale}.

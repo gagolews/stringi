@@ -50,11 +50,11 @@ stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',
    stri_opts_collator(strength=1, locale="sk_SK"))
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},

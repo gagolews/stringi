@@ -86,7 +86,7 @@ the corresponding elements in the second vector,
 \code{stri_cmp_ge} whether they are greater or equal,
 \code{stri_cmp_lt} if less,
 and \code{stri_cmp_gt} if greater,
-see also e.g. \code{\link{\%<\%}}.
+see also e.g. \code{\link{\%s<\%}}.
 
 Finally, \code{stri_compare} is an alias to \code{stri_cmp}. They both
 perform exactly the same locale-dependent operation.
@@ -133,11 +133,11 @@ stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105')
 stri_cmp_equiv("\\ufb00", "ff", stri_opts_collator(strength=2))
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},

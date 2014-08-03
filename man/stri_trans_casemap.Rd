@@ -62,11 +62,11 @@ stri_trans_totitle("aLA mA kOTA")
 \url{http://userguide.icu-project.org/transforms/casemappings}
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},

@@ -67,9 +67,10 @@ text in Latin script.
 text boundaries at which a line break is possible.
 }
 \examples{
-s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin "\%+\%
-      "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel "\%+\%
-      "lorem. Etiam pellentesque aliquet tellus."
+s <- stri_paste(
+   "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
+   "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
+   "lorem. Etiam pellentesque aliquet tellus.")
 
 \dontshow{if (stri_install_check(silent=TRUE))}
 cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
@@ -86,11 +87,11 @@ Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 1981, pp. 1119--1184
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%!==\%}},
-  \code{\link{\%!=\%}}, \code{\link{\%<=\%}},
-  \code{\link{\%<\%}}, \code{\link{\%===\%}},
-  \code{\link{\%==\%}}, \code{\link{\%>=\%}},
-  \code{\link{\%>\%}}, \code{\link{\%stri!==\%}},
+Other locale_sensitive: \code{\link{\%s!==\%}},
+  \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
+  \code{\link{\%s<\%}}, \code{\link{\%s===\%}},
+  \code{\link{\%s==\%}}, \code{\link{\%s>=\%}},
+  \code{\link{\%s>\%}}, \code{\link{\%stri!==\%}},
   \code{\link{\%stri!=\%}}, \code{\link{\%stri<=\%}},
   \code{\link{\%stri<\%}}, \code{\link{\%stri===\%}},
   \code{\link{\%stri==\%}}, \code{\link{\%stri>=\%}},
