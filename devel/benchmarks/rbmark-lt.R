@@ -1,6 +1,6 @@
-benchmark_description <- "checks whether one string is smaller "%+%
-                         "(lexicographically) than the other "%+%
-                         "(ASCII+Polish letters, native encoding)"
+benchmark_description <- stri_c("checks whether one string is smaller ",
+                         "(lexicographically) than the other ",
+                         "(ASCII+Polish letters, native encoding)")
 
 
 benchmark_do <- function() {

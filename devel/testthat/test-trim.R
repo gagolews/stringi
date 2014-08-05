@@ -79,6 +79,6 @@ test_that("stri_trim_right", {
 #    expect_equivalent(stri_trim_double(LETTERS), LETTERS)
 #
 #    expect_equivalent(stri_trim_double(stri_dup(" ", 1:100)), rep("", 100))
-#    s <- stri_flatten(LETTERS%+%stri_dup(" ",1:26))
+#    s <- stri_flatten(LETTERS%s+%stri_dup(" ",1:26))
 #    expect_equivalent(stri_trim_double(s),stri_flatten(LETTERS," "))
 # })

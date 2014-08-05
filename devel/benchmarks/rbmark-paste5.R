@@ -1,6 +1,6 @@
-benchmark_description <- "joins into one string four vectors "%+%
-                         "consisting of words of different lengths "%+%
-                         "(ASCII + Polish letters, native encoding)"
+benchmark_description <- stri_c("joins into one string four vectors ",
+                         "consisting of words of different lengths ",
+                         "(ASCII + Polish letters, native encoding)")
 
 benchmark_do <- function() {
    library('stringi')

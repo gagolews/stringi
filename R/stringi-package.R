@@ -201,7 +201,7 @@ invisible(NULL)
 #   # whether ICU has guessed the locale used correctly. Leave it as is :)
 #   # BTW, We know about Good Practices in Writing R Extensions.
 #   # This information, however, is very important to the user.
-#   packageStartupMessage("stringi.rexamine.com (" %+% stri_info(short=TRUE) %+% ")")
+#   packageStartupMessage("stringi.rexamine.com (" %s+% stri_info(short=TRUE) %s+% ")")
 #}
 
 # no longer needed as ICU4C is statically linked since 2013-11-15 :)

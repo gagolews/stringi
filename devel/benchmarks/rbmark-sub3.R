@@ -1,5 +1,5 @@
-benchmark_description <- "Extract first code points in "%+%
-                         "verses of Pan Tadeusz"
+benchmark_description <- stri_c("Extract first code points in ",
+                         "verses of Pan Tadeusz")
 
 
 benchmark_do <- function() {

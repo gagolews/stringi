@@ -1,5 +1,5 @@
-benchmark_description <- "converts a character vector "%+%
-                         "(ASCII, UTF-8, Native, NA) to UTF-8"
+benchmark_description <- stri_c("converts a character vector ",
+                         "(ASCII, UTF-8, Native, NA) to UTF-8")
 
 benchmark_do  <- function() {
    library('stringi')

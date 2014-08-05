@@ -1,5 +1,5 @@
-benchmark_description <- "duplicates a string "%+%
-                         "(ASCII+Polish letters, native encoding)"
+benchmark_description <- stri_c("duplicates a string ",
+                         "(ASCII+Polish letters, native encoding)")
 
 
 benchmark_do <- function() {

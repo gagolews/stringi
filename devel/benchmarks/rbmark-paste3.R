@@ -1,6 +1,6 @@
-benchmark_description <- "joins four vectors consisting of words of different "%+%
-                         "lengths, with a separator and using the recycling "%+%
-                         "rule (ASCII + Polish letters, native encoding)"
+benchmark_description <- stri_c("joins four vectors consisting of words of different ",
+                         "lengths, with a separator and using the recycling ",
+                         "rule (ASCII + Polish letters, native encoding)")
 
 benchmark_do <- function() {
    library('stringi')

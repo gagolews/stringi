@@ -1,6 +1,6 @@
-benchmark_description <- "sorts a set of words of various lengths "%+%
-                         "(ASCII + Polish letters, native encoding) "%+%
-                         "[random order on input]"
+benchmark_description <- stri_c("sorts a set of words of various lengths ",
+                         "(ASCII + Polish letters, native encoding) ",
+                         "[random order on input]")
 
 benchmark_do <- function() {
    library('stringi')

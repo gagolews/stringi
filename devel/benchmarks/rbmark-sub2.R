@@ -1,5 +1,5 @@
-benchmark_description <- "Extract substrings at positions from 20 in "%+%
-                         "verses of Pan Tadeusz"
+benchmark_description <- stri_c("Extract substrings at positions from 20 in ",
+                         "verses of Pan Tadeusz")
 
 
 benchmark_do <- function() {

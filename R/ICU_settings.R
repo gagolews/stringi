@@ -61,7 +61,7 @@ stri_info <- function(short=FALSE) {
    info <- .Call("stri_info", PACKAGE="stringi")
    if (info$Charset.native$Name.friendly != "UTF-8") {
 #       if (!info$Charset.native$CharSize.8bit)    # this should not cause problems, e.g. in the Big5 encoding
-#          warning("You use a non-8bit native charset. " %+%
+#          warning("You use a non-8bit native charset. " %s+%
 #             "This may cause serious problems. Consider switching to UTF-8.")
 #       else
       if (!identical(info$Charset.native$ASCII.subset, TRUE))

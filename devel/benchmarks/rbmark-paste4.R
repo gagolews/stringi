@@ -1,6 +1,6 @@
-benchmark_description <- "joins two vectors consisting of words of different "%+%
-                         "lengths, with no separator "%+%
-                         "(ASCII + Polish letters, native encoding)"
+benchmark_description <- stri_c("joins two vectors consisting of words of different ",
+                         "lengths, with no separator ",
+                         "(ASCII + Polish letters, native encoding)")
 
 
 benchmark_do <- function() {
@@ -27,7 +27,7 @@ benchmark_do <- function() {
       paste(x, y, sep=''),
       str_join(x, y),
       stri_join(x, y),
-      x %+% y,
+      x %s+% y,
       replications=100L
    )
 }
