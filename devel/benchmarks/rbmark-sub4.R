@@ -1,5 +1,5 @@
-benchmark_description <- "Extract signle code points from a string "%+%
-                         "[ASCII+Polish letters, native encoding]"
+benchmark_description <- stri_c("Extract signle code points from a string ",
+                         "[ASCII+Polish letters, native encoding]")
 
 
 benchmark_do <- function() {

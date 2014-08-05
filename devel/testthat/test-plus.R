@@ -1,6 +1,6 @@
 require(testthat)
 
-test_that("%+%", {
+test_that("%s+%", {
 
    # basic tests (ASCII, border-line):
    expect_equivalent("" %s+% "", "")

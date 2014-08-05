@@ -1,6 +1,6 @@
-benchmark_description <- "joins two identical vectors consisting of words "%+%
-                         "of different lengths, with a separator "%+%
-                         "(ASCII + Polish letters, native encoding)"
+benchmark_description <- stri_c("joins two identical vectors consisting of words ",
+                         "of different lengths, with a separator ",
+                         "(ASCII + Polish letters, native encoding)")
 
 
 benchmark_do <- function() {

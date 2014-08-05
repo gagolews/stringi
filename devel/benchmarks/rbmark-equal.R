@@ -1,5 +1,5 @@
-benchmark_description <- "checks whether two character vectors are equal "%+%
-                        "(with recycling, ASCII+Polish letters, native encoding)"
+benchmark_description <- stri_c("checks whether two character vectors are equal ",
+                        "(with recycling, ASCII+Polish letters, native encoding)")
 
 
 benchmark_do <- function() {

@@ -1,5 +1,5 @@
-benchmark_description <- "calculates various 'lengths' of strings "%+%
-                         "(ASCII, UTF-8, Native, NA)"
+benchmark_description <- stri_c("calculates various 'lengths' of strings ",
+                         "(ASCII, UTF-8, Native, NA)")
 
 benchmark_do  <- function() {
    library('stringi')

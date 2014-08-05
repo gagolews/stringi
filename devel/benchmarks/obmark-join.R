@@ -61,14 +61,14 @@ y <- stri_dup("B", 1:1000)
 
 print(microbenchmark(
    z1 <- paste(x, y, sep=""),
-   z2 <- x %+% y
+   z2 <- x %s+% y
 ))
 
 expect_that(z2, is_identical_to(z1))
 
 print(benchmark(
    z1 <- paste(x, y, y, sep=""),
-   z2 <- x %+% y %+% y
+   z2 <- x %s+% y %s+% y
 ))
 
 expect_that(z2, is_identical_to(z1))
@@ -76,7 +76,7 @@ expect_that(z2, is_identical_to(z1))
 
 print(microbenchmark(
    z1 <- paste(x[1], y, sep=""),
-   z2 <- x[1] %+% y
+   z2 <- x[1] %s+% y
 ))
 
 expect_that(z2, is_identical_to(z1))
@@ -84,7 +84,7 @@ expect_that(z2, is_identical_to(z1))
 
 print(microbenchmark(
    z1 <- paste(x[length(x)], y, sep=""),
-   z2 <- x[length(x)] %+% y
+   z2 <- x[length(x)] %s+% y
 ))
 
 expect_that(z2, is_identical_to(z1))
@@ -92,7 +92,7 @@ expect_that(z2, is_identical_to(z1))
 
 print(microbenchmark(
    z1 <- paste(x, y[length(y)], sep=""),
-   z2 <- x %+% y[length(y)]
+   z2 <- x %s+% y[length(y)]
 ))
 
 expect_that(z2, is_identical_to(z1))

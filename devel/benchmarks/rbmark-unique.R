@@ -1,6 +1,6 @@
-benchmark_description <- "extracts unique elements from a character vector "%+%
-                         "(ASCII + Polish letters, native encoding) "%+%
-                         "[random order on input]"
+benchmark_description <- stri_c("extracts unique elements from a character vector ",
+                         "(ASCII + Polish letters, native encoding) ",
+                         "[random order on input]")
 
 benchmark_do <- function() {
    library('stringi')
@@ -12,7 +12,7 @@ benchmark_do <- function() {
       243L, 347L,  378L, 380L))
    set.seed(123)
    xrand <- stri_rand_strings(10000, floor(abs(rcauchy(10000, 10))+1),
-      "["%+%stri_escape_unicode(stri_c(plletters, collapse=""))%+%"]")
+      "["%s+%stri_escape_unicode(stri_c(plletters, collapse=""))%s+%"]")
    xrand <- enc2native(xrand)
 
    gc(reset=TRUE)
