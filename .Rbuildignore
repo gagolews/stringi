@@ -22,3 +22,4 @@
 ^config\.log$
 ^config\.status$
 ^\.gitignore$
+^\.travis.yml$
