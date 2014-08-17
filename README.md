@@ -2,6 +2,7 @@
 
 ### THE string processing package for *R*
 
+[![Build Status](https://travis-ci.org/Rexamine/stringi.svg?branch=master)](https://travis-ci.org/Rexamine/stringi)
 
 **stringi** is THE *R* package for for very fast, correct, consistent,
 and convenient string/text processing in each locale and any native
