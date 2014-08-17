@@ -19,7 +19,9 @@ test_that("stri_dup", {
    expect_warning(stri_dup("A", ":-("))
    expect_identical(stri_dup(c("ABC", "", "A"), c(0, 100, 0)), c("", "", ""))
    expect_identical(stri_dup("A", c(-1, 0, 1, NA)), c(NA, "", "A", NA))
-
+   expect_identical(stri_dup(LETTERS[1:4], 1:2), c("A","BB","C","DD"))
+   expect_warning(stri_dup(LETTERS[1:3], 1:2))
+   
    # UTF-8
    expect_identical(stri_dup('\u9999', 1:2), c('\u9999', '\u9999\u9999'))
    expect_identical(stri_dup('\u00109999', 2), '\u00109999\u00109999')
