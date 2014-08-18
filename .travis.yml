@@ -19,5 +19,4 @@ after_failure:
 
 notifications:
   email:
-    on_success: stringi@rexamine.com
     on_failure: stringi@rexamine.com
