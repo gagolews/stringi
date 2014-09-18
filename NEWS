@@ -12,8 +12,10 @@
 
    * [NEW FUNCTION] `stri_in_fixed` (like R's `match`)
 
-   * [BUGFIX] `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
-     give incorrect results if one of search strings was of length 0.
+   * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
+     give incorrect results if one of search strings were of length 0.
+
+   * [BUGFIX] Issue #99: `stri_replace_all' did not use `replacement` arg.
 
 
 * 0.2-5 (2014-05-16) **CRAN**

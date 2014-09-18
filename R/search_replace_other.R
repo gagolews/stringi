@@ -63,13 +63,13 @@ stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclas
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
-      stri_replace_all_regex(str, regex, ...)
+      stri_replace_all_regex(str, regex, replacement, ...)
    else if (providedarg["fixed"])
-      stri_replace_all_fixed(str, fixed, ...)
+      stri_replace_all_fixed(str, fixed, replacement, ...)
    else if (providedarg["coll"])
-      stri_replace_all_coll(str, coll, ...)
+      stri_replace_all_coll(str, coll, replacement, ...)
    else if (providedarg["charclass"])
-      stri_replace_all_charclass(str, charclass, ...)
+      stri_replace_all_charclass(str, charclass, replacement, ...)
 }
 
 
@@ -104,13 +104,13 @@ stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charcl
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
-      stri_replace_first_regex(str, regex, ...)
+      stri_replace_first_regex(str, regex, replacement, ...)
    else if (providedarg["fixed"])
-      stri_replace_first_fixed(str, fixed, ...)
+      stri_replace_first_fixed(str, fixed, replacement, ...)
    else if (providedarg["coll"])
-      stri_replace_first_coll(str, coll, ...)
+      stri_replace_first_coll(str, coll, replacement, ...)
    else if (providedarg["charclass"])
-      stri_replace_first_charclass(str, charclass, ...)
+      stri_replace_first_charclass(str, charclass, replacement, ...)
 }
 
 
@@ -145,13 +145,13 @@ stri_replace_last <- function(str, replacement, ..., regex, fixed, coll, charcla
       stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
-      stri_replace_last_regex(str, regex, ...)
+      stri_replace_last_regex(str, regex, replacement, ...)
    else if (providedarg["fixed"])
-      stri_replace_last_fixed(str, fixed, ...)
+      stri_replace_last_fixed(str, fixed, replacement, ...)
    else if (providedarg["coll"])
-      stri_replace_last_coll(str, coll, ...)
+      stri_replace_last_coll(str, coll, replacement, ...)
    else if (providedarg["charclass"])
-      stri_replace_last_charclass(str, charclass, ...)
+      stri_replace_last_charclass(str, charclass, replacement, ...)
 }
 
 

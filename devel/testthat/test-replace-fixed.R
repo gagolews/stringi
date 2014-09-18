@@ -1,6 +1,9 @@
 require(testthat)
 
+
 test_that("stri_replace_all_fixed", {
+   expect_identical(stri_replace_all("abcde", fixed="bcd", replacement=""), "ae")
+   expect_identical(stri_replace("abcde", mode="all", fixed="bcd", replacement=""), "ae")
    expect_identical(stri_replace_all_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_all_fixed("abab123 a","a",1),"1b1b123 1")
    expect_identical(stri_replace_all_fixed("","\\p{Wspace}","?"),"")
@@ -20,6 +23,7 @@ test_that("stri_replace_all_fixed", {
 
 
 test_that("stri_replace_first_fixed", {
+   expect_identical(stri_replace_first("abcde", fixed="bcd", replacement=""), "ae")
    expect_identical(stri_replace_first_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_first_fixed("abab123 a","a",1),"1bab123 a")
    expect_identical(stri_replace_first_fixed("","\\p{Wspace}","?"),"")
@@ -43,6 +47,7 @@ test_that("stri_replace_first_fixed", {
 
 
 test_that("stri_replace_last_fixed", {
+   expect_identical(stri_replace_last("abcde", fixed="bcd", replacement=""), "ae")
    expect_identical(stri_replace_last_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_last_fixed("abab123 a","a",1),"abab123 1")
    expect_identical(stri_replace_last_fixed("","\\p{Wspace}","?"),"")
