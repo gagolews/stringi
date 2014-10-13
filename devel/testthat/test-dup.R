@@ -31,7 +31,7 @@ test_that("stri_dup", {
 
    # Other 8-bit encodings
    oldenc <- stri_enc_set('latin2')
-   expect_identical(stri_dup(enc2native('\xa1\xb1'), 2), '\u0104\u0105\u0104\u0105')
+   expect_identical(stri_dup('\xa1\xb1', 2), '\u0104\u0105\u0104\u0105')
    stri_enc_set(oldenc)
 
    oldenc <- stri_enc_set('cp1250')
