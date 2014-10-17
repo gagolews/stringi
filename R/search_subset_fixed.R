@@ -30,20 +30,19 @@
 
 
 #' @title
-#' Subset Character Vector Using a Fixed Pattern Match
+#' Select Elements with a Fixed Pattern Match
 #'
 #' @description
-#' This function checks if there is at least one occurrence of a fixed pattern
-#' in a string and if so it returns this vector element.
+#' This function is roughly equivalent to a call to
+#' \code{str[\link{stri_detect_fixed}(str, ...)]}.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
 #' For natural language processing this function might not give
 #' you desired results. Refer to \link{stringi-search-fixed} for more details.
-#'
-#' If \code{pattern} is empty, then the result is \code{NA}
-#' and a warning is generated.
+#' 
+#' The resulting vector is of course always in UTF-8.
 #'
 #' @param str character vector
 #' @param pattern character vector

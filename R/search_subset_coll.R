@@ -30,20 +30,19 @@
 
 
 #' @title
-#' Subset Vector by a Canonically Equivalent Pattern Match
+#' Select Elements with a Canonically Equivalent Pattern Match
 #'
 #' @description
-#' This function subsets vector if there is at least one occurrence of a pattern
-#' in a string.  This is a locale-sensitive text operation.
+#' This function is roughly equivalent to a call to
+#' \code{str[\link{stri_detect_coll}(str, ...)]}.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
 #' See \link{stringi-search-coll} for more details on
 #' locale-sensitive text searching in \pkg{stringi}.
-#'
-#' If \code{pattern} is empty, then the result is \code{NA}
-#' and a warning is generated.
+#' 
+#' The resulting vector is of course always in UTF-8.
 #'
 #' @param str character vector
 #' @param pattern character vector

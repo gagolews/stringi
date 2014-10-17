@@ -16,8 +16,8 @@ stri_in_fixed(str, table, ...)
 Returns an integer vector.
 }
 \description{
-This function returns a vector of the positions of (first) matches
-of its first argument in its second.
+For each element in \code{str}, this function returns
+a position of the first matching element in \code{table}.
 }
 \details{
 Vectorized over \code{str}.
@@ -26,45 +26,12 @@ This is a dummy wrapper for R's \code{\link{match}} function.
 The only difference is that it ensures that the comparison
 is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}).
 
-It is (most likely) impossible to implement a faster algorithm:
-\code{\link{match}} uses R's clever, hash table-based, string caching
+It is (most likely) impossible to implement an algorithm
+faster than the built-in \code{\link{match}}:
+this function uses R's clever, hash table-based, string caching
 system directly.
 }
 \seealso{
-Other search_detect: \code{\link{stri_detect_charclass}};
-  \code{\link{stri_detect_coll}};
-  \code{\link{stri_detect_fixed}};
-  \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}};
-  \code{\link{stri_subset_charclass}};
-  \code{\link{stringi-search}}
-
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_detect_regex}};
-  \code{\link{stri_extract_all_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_last_regex}},
-  \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_locate_all_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_last_regex}},
-  \code{\link{stri_locate_last_regex}};
-  \code{\link{stri_match_all_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_last_regex}},
-  \code{\link{stri_match_last_regex}};
-  \code{\link{stri_opts_regex}};
-  \code{\link{stri_replace_all_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_last_regex}},
-  \code{\link{stri_replace_last_regex}};
-  \code{\link{stri_split_regex}};
-  \code{\link{stri_subset_regex}};
-  \code{\link{stringi-search-regex}};
-  \code{\link{stringi-search}}
+Other search_in: \code{\link{stringi-search}}
 }
 

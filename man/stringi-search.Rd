@@ -36,7 +36,9 @@ Each ``engine'' is able to perform many search-based operations, including:
    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern,
    see e.g. \code{\link{stri_replace}},
    \item \code{stri_split_*} - splits a string into chunks indicated by occurrences of a pattern,
-   see e.g. \code{\link{stri_split}}.
+   see e.g. \code{\link{stri_split}},
+   \item \code{stri_subset_*} - returns a subset of a character vector
+   with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
 }
 }
 \seealso{
@@ -95,8 +97,7 @@ Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}}; \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_charclass}}
+  \code{\link{stri_detect}}
 
 Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
@@ -136,6 +137,8 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_split_fixed}};
   \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search-fixed}}
+
+Other search_in: \code{\link{stri_in_fixed}}
 
 Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
@@ -180,7 +183,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_in_fixed}};
   \code{\link{stri_locate_all_regex}},
   \code{\link{stri_locate_first_regex}},
   \code{\link{stri_locate_first_regex}},
@@ -234,6 +236,12 @@ Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines1}},
   \code{\link{stri_split_lines1}};
   \code{\link{stri_split_regex}}; \code{\link{stri_split}}
+
+Other search_subset: \code{\link{stri_subset_charclass}};
+  \code{\link{stri_subset_coll}};
+  \code{\link{stri_subset_fixed}};
+  \code{\link{stri_subset_regex}};
+  \code{\link{stri_subset}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};

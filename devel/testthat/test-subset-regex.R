@@ -10,6 +10,7 @@ test_that("stri_subset_regex", {
    expect_identical(stri_subset_regex(c("","ala"),"ala"), "ala")
    expect_identical(stri_subset_regex(c("","ala", "ala", "bbb"),c("ala", "bbb")), c("ala", "bbb"))
    expect_identical(stri_subset_regex(c("ala","", "", "bbb"),c("ala", "bbb")), c("ala", "bbb"))
+   expect_identical(stri_subset_regex(c("a","b", NA, "aaa", ""),c("a")), c("a", NA, "aaa"))
 
    expect_identical(stri_subset_regex('a', c('a', 'b', 'c')), "a")
    expect_identical(stri_subset_regex(c('a', 'b', 'c'), 'a'), "a")

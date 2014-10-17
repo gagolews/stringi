@@ -29,8 +29,11 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "stri_stringi.h"
+#include "stri_stringi.h"
+#include "stri_container_utf8.h"
+#include "stri_container_usearch.h"
+#include <unicode/uregex.h>
 
 
 /**
@@ -73,3 +76,59 @@ void stri__locate_set_dimnames_list(SEXP list) {
       Rf_setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
    UNPROTECT(2);
 }
+
+
+
+// I really love macros /MG/ :)
+#define stri__subset_by_logical__MACRO \
+   SEXP ret; \
+   PROTECT(ret = Rf_allocVector(STRSXP, result_counter)); \
+   for (R_len_t j=0, i=0; i<result_counter; ++j) { \
+      if (which[j] == NA_LOGICAL) \
+         SET_STRING_ELT(ret, i++, NA_STRING); \
+      else if (which[j]) \
+         SET_STRING_ELT(ret, i++, str_cont.toR(j)); \
+   } \
+   UNPROTECT(1); \
+   return ret;
+   
+
+/**
+ * Subset str_cont to SEXP by logical table ret_tab
+ * 
+ * @param str_cont
+ * @param which logical
+ * @param result_counter
+ * @return character vector
+ *
+ * @version 0.3-1 (Bartlomiej Tartanus, 2014-07-25)
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
+ *                using std::vector<int> to avoid mem-leaks, and
+ *                const StriContainer& for increased performance
+ */
+SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
+   const std::vector<int>& which, int result_counter)
+{
+   stri__subset_by_logical__MACRO
+}
+
+
+/**
+ * Subset str_cont to SEXP by logical table ret_tab
+ * 
+ * @param str_cont
+ * @param which logical
+ * @param result_counter
+ * @return character vector
+ *
+ * @version 0.3-1 (Bartlomiej Tartanus, 2014-07-25)
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
+ *                using std::vector<int> to avoid mem-leaks, and
+ *                const StriContainer& for increased performance
+ */
+SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
+   const std::vector<int>& which, int result_counter)
+{
+   stri__subset_by_logical__MACRO
+}
+

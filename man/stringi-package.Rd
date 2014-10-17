@@ -57,6 +57,7 @@ particular character classes, like ``all whitespaces'' or ``all digits''.
 \item Moreover, \code{\link{stri_split_boundaries}} and
 \code{\link{stri_locate_boundaries}} apply
 text boundary analysis to split or just locate specific substrings.
+\item \code{\link{stri_in_fixed}} -- value matching.
 }
 
 

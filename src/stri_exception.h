@@ -42,7 +42,7 @@ using namespace std;
 
 #define STRI__ERROR_HANDLER_BEGIN                           \
    int __stri_protected_sexp_num = 0;                       \
-   char* __stri_error_msg;                                  \
+   char* __stri_error_msg = (char*)NULL;                    \
    try {
 
 #define STRI__ERROR_HANDLER_END(cleanup)                    \
