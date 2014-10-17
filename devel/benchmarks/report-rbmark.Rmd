@@ -36,7 +36,7 @@ require('stringi')
 indir <- "." # "devel/benchmarks"
 
 alltests <- c()
-resdirs <- dir(indir, glob2rx("results-rbmark_"%+%benchmarks_wildcard), full.names=TRUE)
+resdirs <- dir(indir, glob2rx("results-rbmark_"%s+%benchmarks_wildcard), full.names=TRUE)
 for (d in resdirs) {
    alltests <- c(alltests, dir(d, glob2rx("*.csv"), full.names=TRUE))
 }
@@ -77,8 +77,8 @@ for (test_i in seq_along(alltests)) {
       }
    }
 
-   cat('## '%+%results_info[[1]]['benchmark']%+%' ##\n\n')
-   cat(' > '%+%results_info[[1]]['description']%+%'\n\n')
+   cat('## '%s+%results_info[[1]]['benchmark']%s+%' ##\n\n')
+   cat(' > '%s+%results_info[[1]]['description']%s+%'\n\n')
    
    min.time <- min(sapply(results_data, function(data) min(data$time)))
    max.time <- max(sapply(results_data, function(data) max(data$time)))
@@ -101,7 +101,7 @@ for (test_i in seq_along(alltests)) {
       plot(1:nmeasurements,
          rep(NA, nmeasurements), ylim=rngy,
          xlab='Measurement', ylab='Time [s]',
-         main=info['benchmark']%+%' '%+%info['ident']%+%' '%+%info['LC_CTYPE'])
+         main=info['benchmark']%s+%' '%s+%info['ident']%s+%' '%s+%info['LC_CTYPE'])
       par(xaxt='s')
       axis(side=1, at=1:nmeasurements)
       abline(h=axTicks(2), col='gray', lty=3)
