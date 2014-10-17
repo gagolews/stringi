@@ -148,7 +148,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  * Vectorized over e1 and e2. Optimized for |e1| >= |e2|
  * (but no harm otherwise)
  *
- * This is used by %+% operator in stringi R code.
+ * This is used by %s+% operator in stringi R code.
  *
  * @param e1 character vector
  * @param e2 character vector
@@ -253,7 +253,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
 
    if (isNull(collapse)) {
-      // no collapse - used e.g. by %+% operator
+      // no collapse - used e.g. by %s+% operator
       return stri_join2_nocollapse(e1, e2);
    }
 
