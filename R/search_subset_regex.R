@@ -30,20 +30,16 @@
 
 
 #' @title
-#' Subset Character Vector Using a Regex Pattern Match
+#' Select Elements with a Regex Pattern Match
 #'
 #' @description
-#' This function checks if there is at least one occurrence of a regex pattern
-#' in a string and if so it returns this vector element.
+#' This function is roughly equivalent to a call to
+#' \code{str[\link{stri_detect_regex}(str, ...)]}.
 #'
 #' @details
-#' Unless you are very lazy, please call the underlying functions
-#' directly for better performance.
-#'
 #' Vectorized over \code{str} and \code{pattern}.
-#'
-#' If \code{pattern} is empty, then the result is \code{NA}
-#' and a warning is generated.
+#' 
+#' The resulting vector is of course always in UTF-8.
 #'
 #' @param str character vector of strings to search in
 #' @param pattern character vector of regular expressions

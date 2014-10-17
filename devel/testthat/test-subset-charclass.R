@@ -7,6 +7,7 @@ test_that("stri_subset_charclass", {
    expect_error(stri_subset_charclass("a", "WTF????"))
    expect_identical(stri_subset_charclass(c("","ala"),"\\p{L}"), "ala")
    expect_identical(stri_subset_charclass(c("ala","", "", "111"),c("\\p{L}", "\\p{N}")), c("ala",111))
+   expect_identical(stri_subset_regex(c("a","b", NA, "aaa", ""),"[a]"), c("a", NA, "aaa"))
 
    expect_identical(stri_subset_charclass(c("a", "ab", "abc", "1234"), "\\p{L}"), c("a", "ab", "abc"))
    expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")), rep("a\u0105bc",2))

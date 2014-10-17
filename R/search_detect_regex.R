@@ -37,9 +37,6 @@
 #' in a string.
 #'
 #' @details
-#' Unless you are very lazy, please call the underlying functions
-#' directly for better performance.
-#'
 #' Vectorized over \code{str} and \code{pattern}.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}

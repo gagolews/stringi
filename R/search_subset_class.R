@@ -30,15 +30,16 @@
 
 
 #' @title
-#' Subsets Vector by a Character Class Match
+#' Select Elements with a Character Class Match
 #'
 #' @description
-#' This function checks if any character falls into a given character
-#' class (e.g. letters, digits, or white spaces).
+#' This function is roughly equivalent to a call to
+#' \code{str[\link{stri_detect_charclass}(str, ...)]}.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#'
+#' 
+#' The resulting vector is of course always in UTF-8.
 #'
 #' @param str character vector to search in
 #' @param pattern character vector specifying character classes to match,
@@ -51,7 +52,7 @@
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #'
 #' @export
-#' @family search_detect
+#' @family search_subset
 #' @family search_charclass
 stri_subset_charclass <- function(str, pattern) {
    .Call("stri_subset_charclass", str, pattern, PACKAGE="stringi")

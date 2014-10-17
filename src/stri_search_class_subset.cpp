@@ -29,7 +29,6 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_charclass.h"
@@ -42,7 +41,9 @@
  * @param pattern character vector
  * @return logical vector
  *
- * @version 0.3-1 (Bartlomiej Tartanus)
+ * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
+ *                using std::vector<int> to avoid mem-leaks
  *
  */
 SEXP stri_subset_charclass(SEXP str, SEXP pattern)
@@ -56,17 +57,18 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   //this cannot be done with deque, because pattern is reused so the i does not 
-	//go 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-	int* ret_tab = new int[vectorize_length];
-	int result_counter = 0;
+   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
+   // MG: agreed
+   std::vector<int> which(vectorize_length);
+   int result_counter = 0;
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
       if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
+         which[i] = NA_LOGICAL;
          result_counter++;
          continue;
       }
@@ -76,22 +78,19 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern)
       const char* str_cur_s = str_cont.get(i).c_str();
 
       UChar32 chr = 0;
-      ret_tab[i] = FALSE;
+      which[i] = FALSE;
       for (R_len_t j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur->contains(chr)) {
-            ret_tab[i] = TRUE;
+            which[i] = TRUE;
             result_counter++;
             break;
          }
       }
    }
 
-	SEXP ret = stri__subset_by_logical(str_cont, ret_tab, result_counter);
-
-   STRI__UNPROTECT_ALL
-   return ret;
+   return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

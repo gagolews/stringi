@@ -30,9 +30,9 @@
 
 
 #' @title
-#' Subsets Vector by a Pattern Match
+#' Select Elements That Match a Given Pattern
 #'
-#' @details
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_subset_regex}},
 #' \code{\link{stri_subset_fixed}}, \code{\link{stri_subset_coll}},

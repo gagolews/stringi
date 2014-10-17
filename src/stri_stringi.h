@@ -176,10 +176,12 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale);
 
 // ----------- SEARCH --------------------------------------------
 
-
 void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
-
+SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
+   const std::vector<int>& which, int result_counter);
+SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
+   const std::vector<int>& which, int result_counter);
 
 // SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch);
 
@@ -262,9 +264,6 @@ SEXP stri_extract_words(SEXP str, SEXP locale);
 
 SEXP stri_replace_na(SEXP str, SEXP replacement);
 
-// search_subset_utils.cpp
-SEXP stri__subset_by_logical(StriContainerUTF8 str_cont, int* ret_tab, int result_counter);
-SEXP stri__subset_by_logical(StriContainerUTF16 str_cont, int* ret_tab, int result_counter);
 
 // uchar.cpp:
 // SEXP stri_charcategories();        // ...TO DO... [version >= 0.2]

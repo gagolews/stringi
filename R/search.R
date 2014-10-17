@@ -65,7 +65,9 @@
 #'    \item \code{stri_replace_*} - replaces all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_replace}},
 #'    \item \code{stri_split_*} - splits a string into chunks indicated by occurrences of a pattern,
-#'    see e.g. \code{\link{stri_split}}.
+#'    see e.g. \code{\link{stri_split}},
+#'    \item \code{stri_subset_*} - returns a subset of a character vector
+#'    with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
 #' }
 #'
 #' @name stringi-search
@@ -80,7 +82,9 @@
 #' @family search_locate
 #' @family search_replace
 #' @family search_split
+#' @family search_subset
 #' @family search_extract
+#' @family search_in
 #' @family stringi_general_topics
 invisible(NULL)
 

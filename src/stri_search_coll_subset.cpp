@@ -29,7 +29,6 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #include "stri_stringi.h"
 #include "stri_container_utf16.h"
 #include "stri_container_usearch.h"
@@ -45,8 +44,9 @@
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return character vector
  *
- * @version 0.3-1 (Bartlomiej Tartanus, 2014-07-25)
- *          first version
+ * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
+ *                using std::vector<int> to avoid mem-leaks
  */
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 {
@@ -63,34 +63,29 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
-   //this cannot be done with deque, because pattern is reused so the i does not 
-	//go 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-	int* ret_tab = new int[vectorize_length];
-	int result_counter = 0;
+   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
+   // MG: agreed
+   std::vector<int> which(vectorize_length);
+   int result_counter = 0;
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         ret_tab[i] = NA_LOGICAL; result_counter++,
-         ret_tab[i] = FALSE)
+         {which[i] = NA_LOGICAL; result_counter++; },
+         {which[i] = FALSE; })
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
-      ret_tab[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
-      if(ret_tab[i]){
-      	result_counter++;
-      }
+      which[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
+      if (which[i]) result_counter++;
       if (U_FAILURE(status)) throw StriException(status);
    }
 
-	SEXP ret = stri__subset_by_logical(str_cont, ret_tab, result_counter);
-
-   if (collator) { ucol_close(collator); collator=NULL; }
-   STRI__UNPROTECT_ALL
-   return ret;
+   return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END(
       if (collator) ucol_close(collator);
    )

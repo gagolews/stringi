@@ -37,9 +37,7 @@ stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_regex}};
-  \code{\link{stri_detect}}; \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_charclass}};
-  \code{\link{stringi-search}}
+  \code{\link{stri_detect}}; \code{\link{stringi-search}}
 
 Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_endswith_fixed}},

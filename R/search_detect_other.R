@@ -32,7 +32,7 @@
 #' @title
 #' Detect a Pattern Match
 #'
-#' @details
+#' @description
 #' A convenience function.
 #' Calls either \code{\link{stri_detect_regex}},
 #' \code{\link{stri_detect_fixed}}, \code{\link{stri_detect_coll}},

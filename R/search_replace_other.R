@@ -39,6 +39,7 @@
 #' or \code{\link{stri_replace_all_charclass}},
 #' depending on the argument used.
 #'
+#' @details
 #' Unless you are very lazy, please call the underlying functions
 #' directly for better performance.
 #'

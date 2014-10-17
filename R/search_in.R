@@ -33,8 +33,8 @@
 #' Value Matching
 #'
 #' @description
-#' This function returns a vector of the positions of (first) matches
-#' of its first argument in its second.
+#' For each element in \code{str}, this function returns 
+#' a position of the first matching element in \code{table}.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -43,8 +43,9 @@
 #' The only difference is that it ensures that the comparison
 #' is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}).
 #' 
-#' It is (most likely) impossible to implement a faster algorithm:
-#' \code{\link{match}} uses R's clever, hash table-based, string caching
+#' It is (most likely) impossible to implement an algorithm
+#' faster than the built-in \code{\link{match}}:
+#' this function uses R's clever, hash table-based, string caching
 #' system directly.
 #'
 #' @param str character vector of strings to search in
@@ -54,8 +55,7 @@
 #' @return Returns an integer vector.
 #'
 #' @export
-#' @family search_detect
-#' @family search_regex
+#' @family search_in
 stri_in_fixed <- function(str, table, ...) {
    match(stri_enc_toutf8(str), stri_enc_toutf8(table), ...)
 }

@@ -22,22 +22,21 @@ stri_detect(str, ..., regex, fixed, coll, charclass)
 Returns a logical vector.
 }
 \description{
-Detect a Pattern Match
-}
-\details{
 A convenience function.
 Calls either \code{\link{stri_detect_regex}},
 \code{\link{stri_detect_fixed}}, \code{\link{stri_detect_coll}},
 or \code{\link{stri_detect_charclass}},
 depending on the argument used.
 }
+\details{
+Unless you are very lazy, please call the underlying functions
+directly for better performance.
+}
 \seealso{
 Other search_detect: \code{\link{stri_detect_charclass}};
   \code{\link{stri_detect_coll}};
   \code{\link{stri_detect_fixed}};
   \code{\link{stri_detect_regex}};
-  \code{\link{stri_in_fixed}};
-  \code{\link{stri_subset_charclass}};
   \code{\link{stringi-search}}
 }
 

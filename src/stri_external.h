@@ -66,4 +66,6 @@ using namespace icu;
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 
+#include <vector>
+
 #endif
