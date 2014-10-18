@@ -57,8 +57,9 @@ For extracting individual words from the text
 using a \code{BreakIterator}, see \code{\link{stri_extract_words}}.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
+}
 }
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,
@@ -125,6 +126,9 @@ Other search_split: \code{\link{stri_split_charclass}};
 
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}};
-  \code{\link{stri_locate_words}}; \code{\link{stri_wrap}}
+  \code{\link{stri_locate_words}};
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_split_lines1}},
+  \code{\link{stri_split_lines1}}; \code{\link{stri_wrap}}
 }
 

@@ -2,7 +2,7 @@
 \name{stri_startswith_fixed}
 \alias{stri_endswith_fixed}
 \alias{stri_startswith_fixed}
-\title{Determines if the Start or End of a String Matches a Fixed Pattern}
+\title{Determine if the Start or End of a String Matches a Fixed Pattern}
 \usage{
 stri_startswith_fixed(str, pattern, from = 1L)
 

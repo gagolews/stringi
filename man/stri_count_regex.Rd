@@ -27,22 +27,14 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 }
 \examples{
+\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, "(s|el)it")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, "i.i")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(s, ".it")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex("bab baab baaab", c("b.*?b", "b.b"))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_regex(c("stringi", "123"), "^(s|1)")
+}
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};

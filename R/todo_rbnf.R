@@ -29,35 +29,60 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Select Elements with a Fixed Pattern Match
-#'
-#' @description
-#' This function is roughly equivalent to a call to
-#' \code{str[\link{stri_detect_fixed}(str, ...)]}.
-#'
-#' @details
-#' Vectorized over \code{str} and \code{pattern}.
-#'
-#' For natural language processing this function might not give
-#' you desired results. Refer to \link{stringi-search-fixed} for more details.
-#' 
-#' The resulting vector is of course always in UTF-8.
-#'
-#' @param str character vector
-#' @param pattern character vector
-#'
-#' @return Returns a character vector.
-#'
-#' @examples
-#' \donttest{
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
-#' }
-#'
-#' @export
-#' @family search_subset
-#' @family search_fixed
-stri_subset_fixed <- function(str, pattern) {
-   .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")
-}
+invisible(NULL) # TO BE DONE, version >= 0.3
+
+
+# #' @title
+# #' t.b.d.
+# #' 
+# #' @description
+# #' t.b.d.
+# #' 
+# #' @details
+# #' t.b.d.
+# #' 
+# #' @param x numeric vector
+# #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
+# #'                 \code{numbering_system}?
+# #' @param locale \code{NULL} or \code{""} for case mapping following
+# #' the conventions of the default locale, or a single string with
+# #' locale identifier, see \link{stringi-locale}.
+# #' 
+# #' @return
+# #' Returns a character vector
+# #' 
+# #' @family number_format
+# #' @export
+# stri_num_rbnf_format <- function(x, ruleset='spellout', locale=NULL) # stri_format_rbnf?
+# {
+#    stop('t.b.d.')  
+# }
+# 
+# 
+# #' @title
+# #' t.b.d.
+# #' 
+# #' @description
+# #' t.b.d.
+# #' 
+# #' @details
+# #' t.b.d.
+# #' 
+# #' @param str character vector
+# #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
+# #'                 \code{numbering_system}?
+# #' @param locale \code{NULL} or \code{""} for case mapping following
+# #' the conventions of the default locale, or a single string with
+# #' locale identifier, see \link{stringi-locale}.
+# #' @param lenient single logical value; ....
+# #' 
+# #' @return
+# #' Returns a numeric vector (list of numeric vectors?)
+# #' 
+# #' @family number_format
+# #' @export
+# stri_num_rbnf_parse <- function(str, ruleset='spellout', locale=NULL, lenient=TRUE) # stri_parse_rbnf?
+# {
+#    stop('t.b.d.')
+# }
+

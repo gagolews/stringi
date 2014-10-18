@@ -56,15 +56,12 @@
 #' Double \code{NA}s iff not found or \code{NA} argument is given.
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_locate_all('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_all('Bartolini', fixed='i')
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_all('a b c', charclass='\\p{Zs}') # all white spaces
+#' }
 #'
 #' @export
 #' @family search_locate
@@ -113,17 +110,13 @@ stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
 #' double \code{NA}s in a row if a pattern not found.
 #'
 #' @examples
+#' \donttest{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_first('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_first('Bartolini', fixed=letters[1:3])
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_first('a b c', charclass='\\p{Zs}')
+#' }
 #'
 #' @export
 #' @family search_locate
@@ -172,17 +165,13 @@ stri_locate_first <- function(str, ..., regex, fixed, coll, charclass) {
 #' double \code{NA}s in a row if a pattern has not been found.
 #'
 #' @examples
+#' \donttest{
 #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_last('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_last('Bartolini', fixed=letters[1:3])
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_locate_last('a b c', charclass='\\p{Zs}')
+#' }
 #'
 #' @export
 #' @family search_locate
@@ -246,102 +235,4 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
       last =stri_locate_last(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass),
       all  =stri_locate_all(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass)
    )
-}
-
-
-#' @title
-#' Locate Specific Text Boundaries
-#'
-#' @description
-#' This function locates specific text boundaries
-#' (like character, word, line, or sentence boundaries)
-#' and splits strings at the indicated positions.
-#'
-#' @details
-#' Vectorized over \code{str} and \code{boundary}.
-#'
-#' For more information on the text boundary analysis
-#' performed by \pkg{ICU}'s \code{BreakIterator}, see
-#' \code{\link{stri_split_boundaries}}.
-#'
-#' For locating words in a text using \pkg{ICU}'s word iterator,
-#' see \code{\link{stri_locate_words}}.
-#'
-#'
-#' @param str character vector or an object coercible to
-#' @param boundary character vector, each string is one of \code{character},
-#' \code{line_break}, \code{sentence}, or \code{word}
-#' @param locale \code{NULL} or \code{""} for text boundary analysis following
-#' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale}.
-#'
-#' @return
-#' A list of \code{max(length(str), length(boundary))} integer matrices
-#' is returned. The first column gives the start positions
-#' of substrings between located boundaries, and the second column gives
-#' the end positions. The indices are code point-based, thus
-#' they may be passed e.g. to the \code{\link{stri_sub}} function.
-#'
-#' Moreover, you may get two \code{NA}s in one row
-#' for no match or \code{NA} arguments.
-#'
-#' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_locate_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
-#'
-#' @export
-#' @family search_locate
-#' @family indexing
-#' @family locale_sensitive
-#' @family text_boundaries
-stri_locate_boundaries <- function(str, boundary='line_break', locale=NULL) {
-   .Call("stri_locate_boundaries", str, boundary, locale, PACKAGE="stringi")
-}
-
-
-#' @title
-#' Locate Words in a Text
-#'
-#' @description
-#' This function locates all words in each string.
-#'
-#' @details
-#' Vectorized over \code{str}.
-#'
-#' Just like in \code{\link{stri_extract_words}},
-#' \pkg{ICU}'s word \code{BreakIterator} iterator is used
-#' to locate word boundaries, and all non-word characters
-#' (\code{UBRK_WORD_NONE} rule status) are ignored.
-#'
-#'
-#' @param str character vector or an object coercible to
-#' @param locale \code{NULL} or \code{""} for text boundary analysis following
-#' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale}.
-#'
-#' @return
-#' A list of integer matrices
-#' is returned. The first column gives the start positions
-#' of the words, and the second column gives
-#' the end positions. The indices are code point-based, thus
-#' they may be passed e.g. to the \code{\link{stri_sub}} function.
-#'
-#' Moreover, you may get two \code{NA}s in one row
-#' for no match or \code{NA} arguments.
-#'
-#' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_locate_words("  stringi: THE string processing package 123.48...  ")
-#'
-#' @references
-#' \emph{Boundary Analysis} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/boundaryanalysis}
-#'
-#' @export
-#' @family search_locate
-#' @family indexing
-#' @family locale_sensitive
-#' @family text_boundaries
-stri_locate_words <- function(str, locale=NULL) {
-   .Call("stri_locate_words", str, locale, PACKAGE="stringi")
 }

@@ -41,8 +41,9 @@ For locating words in a text using \pkg{ICU}'s word iterator,
 see \code{\link{stri_locate_words}}.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
-stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
+\donttest{
+stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary="line")
+}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},
@@ -150,6 +151,8 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_wrap}}
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_split_lines1}},
+  \code{\link{stri_split_lines1}}; \code{\link{stri_wrap}}
 }
 

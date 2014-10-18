@@ -53,13 +53,11 @@
 #' @return Each function returns a character vector.
 #'
 #' @examples
+#' \donttest{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_replace_all_fixed(s, " ", "#")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_replace_all_fixed(s, "o", "0")
+#' }
 #'
 #' @export
 #' @rdname stri_replace_fixed

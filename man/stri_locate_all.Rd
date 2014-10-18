@@ -36,15 +36,12 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_locate_all('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all('Bartolini', fixed='i')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locate_all('a b c', charclass='\\\\p{Zs}') # all white spaces
+}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_charclass}},

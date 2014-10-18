@@ -43,9 +43,10 @@ specific class (e.g. whitespaces), \code{\link{stri_split_charclass}}
 will be a little bit faster.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_split_regex("Lorem ipsum dolor sit amet",
    "\\\\p{Z}+") # see also stri_split_charclass
+}
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};

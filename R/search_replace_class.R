@@ -59,12 +59,10 @@
 #' @family search_replace
 #'
 #' @examples
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", TRUE)
+#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", Tmerge=RUE)
+#' }
 stri_replace_all_charclass <- function(str, pattern, replacement, merge=FALSE) {
    .Call("stri_replace_all_charclass", str, pattern, replacement, merge,
          PACKAGE="stringi")

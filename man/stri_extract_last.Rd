@@ -31,16 +31,12 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 }
 \examples{
+\donttest{
 s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_last('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_last('Bartolini', coll=letters[1:3])
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_last(s, charclass='\\\\p{Zs}')
+}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_all_charclass}},

@@ -30,34 +30,45 @@
 
 
 #' @title
-#' Select Elements with a Fixed Pattern Match
+#' Extract Words from a Text
 #'
 #' @description
-#' This function is roughly equivalent to a call to
-#' \code{str[\link{stri_detect_fixed}(str, ...)]}.
+#' This function extracts all words from
+#' each string.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
+#' Vectorized over \code{str}.
 #'
-#' For natural language processing this function might not give
-#' you desired results. Refer to \link{stringi-search-fixed} for more details.
-#' 
-#' The resulting vector is of course always in UTF-8.
+#' Just like in \code{\link{stri_locate_words}},
+#' \pkg{ICU}'s word \code{BreakIterator} iterator is used
+#' to locate word boundaries, and all non-word characters
+#' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #'
-#' @param str character vector
-#' @param pattern character vector
 #'
-#' @return Returns a character vector.
+#' @param str character vector or an object coercible to
+#' @param locale \code{NULL} or \code{""} for text boundary analysis following
+#' the conventions of the default locale, or a single string with
+#' locale identifier, see \link{stringi-locale}.
+#'
+#' @return
+#' A list of character vectors is returned. Each string consists of
+#' a separate word.
+#' If there are no words or if a string is missing, a single \code{NA}
+#' is provided on output.
 #'
 #' @examples
 #' \donttest{
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+#' stri_extract_words("stringi: THE string processing package 123.48...")
 #' }
+#' 
+#' @references
+#' \emph{Boundary Analysis} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/boundaryanalysis}
 #'
 #' @export
-#' @family search_subset
-#' @family search_fixed
-stri_subset_fixed <- function(str, pattern) {
-   .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")
+#' @family search_extract
+#' @family locale_sensitive
+#' @family text_boundaries
+stri_extract_words <- function(str, locale=NULL) {
+   .Call("stri_extract_words", str, locale, PACKAGE="stringi")
 }

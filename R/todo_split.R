@@ -29,59 +29,35 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)
+invisible(NULL) # TO DO, version >= 0.3
 
-# #' @title
-# #' t.b.d.
-# #' 
-# #' @description
-# #' t.b.d.
-# #' 
-# #' @details
-# #' t.b.d.
-# #' 
-# #' @param x numeric vector
-# #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
-# #'                 \code{numbering_system}?
-# #' @param locale \code{NULL} or \code{""} for case mapping following
-# #' the conventions of the default locale, or a single string with
-# #' locale identifier, see \link{stringi-locale}.
-# #' 
-# #' @return
-# #' Returns a character vector
-# #' 
-# #' @family number_format
-# #' @export
-# stri_num_rbnf_format <- function(x, ruleset='spellout', locale=NULL) # stri_format_rbnf?
-# {
-#    stop('t.b.d.')  
-# }
-# 
-# 
-# #' @title
-# #' t.b.d.
-# #' 
-# #' @description
-# #' t.b.d.
-# #' 
-# #' @details
-# #' t.b.d.
-# #' 
-# #' @param str character vector
-# #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
-# #'                 \code{numbering_system}?
-# #' @param locale \code{NULL} or \code{""} for case mapping following
-# #' the conventions of the default locale, or a single string with
-# #' locale identifier, see \link{stringi-locale}.
-# #' @param lenient single logical value; ....
-# #' 
-# #' @return
-# #' Returns a numeric vector (list of numeric vectors?)
-# #' 
-# #' @family number_format
-# #' @export
-# stri_num_rbnf_parse <- function(str, ruleset='spellout', locale=NULL, lenient=TRUE) # stri_parse_rbnf?
-# {
-#    stop('t.b.d.')
-# }
 
+# @TODO: ADD stri_split_chars - split into chars
+# @TODO: ADD stri_split_pos
+
+
+# #' Split the elements of a character vector by position
+# #'
+# #'
+# #' @param str character vector to split
+# #' @param split character element
+# #' @param from integer vector
+# #' @param to integer vector
+# #' @return A list of the same length as the longest of vectors: 
+# #' str, split and omitempty. Shorter vectors are recycled. The i-th element 
+# #' of list contains splitted str[i] character vectors
+# #'
+# #' @examples
+# #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+# #' stri_split_pos(s,c(1,4),c(3,6))
+# #'
+# #' @export
+# stri_split_pos <- function(str, from, to) {
+# #    if(is.matrix(from) && ncol(from) == 2){
+# #       if(!missing(to))
+# #          warning("'from' is matrix, so 'to' is ignored")
+# #       to   <- from[ , 2]
+# #       from <- from[ , 1]
+# #    }
+# #    .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
+# }

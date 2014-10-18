@@ -27,25 +27,15 @@ For natural language processing this function might not give
 you desired results. Refer to \link{stringi-search-fixed} for more details.
 }
 \examples{
+\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed(s, " ")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed(s, "o")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed(s, "it")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed(s, letters)
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed("babab", "b")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_count_fixed(c("stringi", "123"), "string")
+}
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};

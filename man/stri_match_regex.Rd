@@ -38,9 +38,10 @@ groups, i.e. subpatterns given in round parentheses.
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
    "(\\\\w+)=(\\\\w+)")
+}
 }
 \seealso{
 Other search_match: \code{\link{stri_match_all}};

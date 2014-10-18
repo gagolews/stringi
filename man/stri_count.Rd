@@ -33,13 +33,11 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 }
 \examples{
+\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-
-\dontshow{if (stri_install_check(silent=TRUE))}
-stri_count(s, fixed=letters)
-
-\dontshow{if (stri_install_check(silent=TRUE))}
-stri_count(s, regex="[[:alpha:]]")
+stri_count(s, fixed="dolor")
+stri_count(s, regex="\\\\p{L}+")
+}
 }
 \seealso{
 Other search_count: \code{\link{stri_count_charclass}};

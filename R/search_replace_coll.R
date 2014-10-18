@@ -57,13 +57,10 @@
 #' @return Each function discussed returns a character vector.
 #'
 #' @examples
+#' \donttest{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_replace_all_coll(s, " ", "#")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_replace_all_coll(s, "o", "0")
+#' stri_replace_all_coll(s, " ", "#") # in fact, we don't need ICU's collator for that
+#' }
 #'
 #' @export
 #' @rdname stri_replace_coll

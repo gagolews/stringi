@@ -31,14 +31,11 @@ Unless you are very lazy, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_extract_all('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_all('Bartolini', coll='i')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_all('stringi is so good!', charclass='\\\\p{Zs}') # all whitespaces
+}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_all_charclass}},

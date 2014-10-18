@@ -26,11 +26,10 @@ you desired results. Refer to \link{stringi-search-fixed} for more details.
 The resulting vector is of course always in UTF-8.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+}
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};

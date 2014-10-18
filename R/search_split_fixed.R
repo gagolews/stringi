@@ -59,9 +59,10 @@
 #'
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_split_fixed("Lorem ipsum dolor sit amet", " ")
-#'
+#' }
+#' 
 #' @export
 #' @family search_fixed
 #' @family search_split

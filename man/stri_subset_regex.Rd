@@ -27,11 +27,9 @@ Vectorized over \code{str} and \code{pattern}.
 The resulting vector is of course always in UTF-8.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
-stri_subset_regex(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
-stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]')
+\donttest{
+stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]+')
+}
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};

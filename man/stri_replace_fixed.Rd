@@ -36,13 +36,11 @@ Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
 }
 \examples{
+\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_fixed(s, " ", "#")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_fixed(s, "o", "0")
+}
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};
