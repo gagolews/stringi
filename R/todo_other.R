@@ -29,31 +29,25 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Reverse Each String
-#'
-#' @description
-#' Reverses code points in every string.
-#'
-#' @details
-#' Note that this operation may result in non-Unicode-normalized
-#' strings and may give strange output for bidirectional strings.
-#'
-#' See also \code{\link{stri_rand_shuffle}} for a random permutation
-#' of code points.
-#'
-#' @param str character vector
-#'
-#' @return Returns a character vector.
-#'
-#' @examples
-#' \donttest{
-#' stri_reverse(c("123", "abc d e f"))
-#' stri_reverse("ZXY (\u0105\u0104123$^).")
-#' stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
-#' }
-#' 
-#' @export
-stri_reverse <- function(str) {
-   .Call("stri_reverse", str, PACKAGE="stringi")
-}
+invisible(NULL) # version >= 0.2
+
+
+
+# #' Count the Width of Characters [version >0.1]
+# #'
+# #' Missing values are handled properly.
+# #' This is equivalent to the number of columns the cat() function will use
+# #' to print the string in a monospaced font.
+# #'
+# #' @param str character vector, or a vector to be coerced to a character vector
+# #' @return an integer vector giving the sizes of each element
+# #' @examples
+# #' stri_width(LETTERS[1:5])
+# #' stri_width(c('abc','123','\u0105\u0104'))
+# #' @export
+# #' @family length
+# stri_width <- function(str) {
+#    .Call("stri_width", str, PACKAGE="stringi")
+# }
+
+

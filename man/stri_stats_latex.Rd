@@ -31,12 +31,12 @@ We use a slightly modified LaTeX Word Count algorithm taken from Kile 2.1.3,
 see \url{http://kile.sourceforge.net/team.php} for original contributors.
 }
 \examples{
+\donttest{
 s <- c("Lorem \\\\textbf{ipsum} dolor sit \\\\textit{amet}, consectetur adipisicing elit.",
        "\\\\begin{small}Proin nibh augue,\\\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
        "")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_stats_latex(s)
+}
 
 \dontrun{
 # Stats for the preprint version of M. Gagolewski's book

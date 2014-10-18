@@ -33,11 +33,10 @@ It may be used, however, to get insight on how ICU understands a provided
 locale identifier.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_locale_info("pl_PL")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_locale_info("Pl_pL") # the same result
+}
 }
 \seealso{
 Other locale_management: \code{\link{stri_locale_get}},
