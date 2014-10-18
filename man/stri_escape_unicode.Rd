@@ -28,6 +28,11 @@ otherwise.
 As usual, any input string is converted to Unicode
 before executing the escape process.
 }
+\examples{
+\donttest{
+stri_escape_unicode("a\\u0105!")
+}
+}
 \seealso{
 Other escape: \code{\link{stri_unescape_unicode}}
 }

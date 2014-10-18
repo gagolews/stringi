@@ -41,6 +41,14 @@ Missing values are regarded as equal.
 These functions test for canonical equivalence of strings.
 Such an operation is locale-dependent.
 }
+\examples{
+\donttest{
+# In the following examples, we have 3 duplicated values,
+# "a" - 2 times, NA - 1 time
+stri_duplicated(c("a", "b", "a", NA, "a", NA))
+stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
+}
+}
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},

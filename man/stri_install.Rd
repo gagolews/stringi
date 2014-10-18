@@ -47,7 +47,7 @@ installed, see \code{\link{find.package}}, so make sure
 you have sufficient write permissions.
 }
 \examples{
-\dontrun{stri_install_check()}
+\donttest{stri_install_check()}
 }
 \references{
 \emph{ICU Data} -- ICU User Guide,

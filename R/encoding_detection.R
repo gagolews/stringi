@@ -99,11 +99,10 @@ stri_enc_isutf32le <- function(str) {
 #' corresponds to a valid ASCII byte sequence.
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_enc_isascii(letters[1:3])
-#' 
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_enc_isascii("\u0105\u0104")
+#' }
 #'
 #' @family encoding_detection
 #' @export
@@ -145,14 +144,11 @@ stri_enc_isascii <- function(str) {
 #' corresponds to a valid UTF-8 byte sequence.
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_enc_isutf8(letters[1:3])
-#' 
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_enc_isutf8("\u0105\u0104")
-#' 
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_enc_isutf8("\u1234\u0222")
+#' }
 #'
 #' @family encoding_detection
 #' @export

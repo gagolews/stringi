@@ -99,38 +99,31 @@
 #' in \code{e1} and \code{e2}.
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' # in Polish ch < h:
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
-#'     
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # in Slovak ch > h:
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # < or > (depends on locale):
 #' stri_cmp("hladny", "chladny")
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # ignore case differences:
 #' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # alse ignore diacritical differences:
 #' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # non-normalized vs normalized string:
 #' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # note the difference:
 #' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
-#'    
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' 
 #' # ligatures:
 #' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
-#'
+#' }
 #'
 #' @family locale_sensitive
 #' @export
@@ -225,12 +218,11 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' "a" %stri<% "b"
-#' 
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' c("a", "b", "c") %stri>=% "b"
-#'
+#' }
+#' 
 #' @usage
 #' e1 \%s<\% e2
 #'
@@ -421,11 +413,11 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname stri_order
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #' 
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
+#' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
    .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
 }
@@ -458,10 +450,11 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @return Returns a character vector.
 #'
 #' @examples
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' # normalized and non-unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
-#'
+#' }
+#' 
 #' @family locale_sensitive
 #' @export
 stri_unique <-  function(str, opts_collator=NULL) {
@@ -501,6 +494,14 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' \code{stri_duplicated_any()} returns a single non-negative integer.
 #' Value of 0 indicates that all the elements in \code{str} are unique.
 #' Otherwise, it gives the index of the first non-unique element.
+#' 
+#' @examples
+#' \donttest{
+#' # In the following examples, we have 3 duplicated values,
+#' # "a" - 2 times, NA - 1 time
+#' stri_duplicated(c("a", "b", "a", NA, "a", NA))
+#' stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
+#' }
 #'
 #' @rdname stri_duplicated
 #' @family locale_sensitive

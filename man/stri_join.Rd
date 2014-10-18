@@ -51,23 +51,14 @@ Moreover, as usual in \pkg{stringi}, the resulting strings are
 always in UTF-8.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_join(1:13, letters)
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_join(1:13, letters, sep='!')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_join(1:13, letters, collapse='?')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_join(1:13, letters, sep='!', collapse='?')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_join(c('abc', '123', '\\u0105\\u0104'),'###', 1:5, sep='...')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_join(c('abc', '123', '\\u0105\\u0104'),'###', 1:5, sep='...', collapse='?')
+}
 }
 \seealso{
 Other join: \code{\link{stri_dup}};
