@@ -33,16 +33,11 @@ is always done with replacement and each code point appears with equal
 probability.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_rand_strings(5, 10) # 5 strings of length 10
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_rand_strings(10, 5, "[\\\\p{script=latin}&\\\\p{Ll}]") # small letters from the Latin script
 
-\dontrun{
 # generate n random passwords of length in [8, 14]
 # consisting of at least one digit, small and big ASCII letter:
 n <- 10

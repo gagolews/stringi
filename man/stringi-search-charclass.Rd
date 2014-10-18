@@ -13,7 +13,7 @@ All \code{stri_*_charclass} functions in \pkg{stringi} perform
 a single character (Unicode codepoint) search-based operations.
 Since stringi_0.2-1 you may obtain
 roughly the same results using \link{stringi-search-regex}.
-However, these very functions aim to be quite faster.
+However, these very functions aim to be faster.
 
 Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
 patterns. Below we briefly summarize their syntax.

@@ -68,19 +68,13 @@
 #' @return All these functions return a character vector.
 #'
 #' @examples
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_trim_left("               aaa")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_trim_right("rexamine.com/", "\\p{P}")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{N}")
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{L}")
-#'
+#' }
+#' 
 #' @aliases stri_trim
 #' @family search_trim
 #' @family search_charclass

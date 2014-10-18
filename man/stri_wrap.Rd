@@ -67,19 +67,15 @@ text in Latin script.
 text boundaries at which a line break is possible.
 }
 \examples{
+\donttest{
 s <- stri_paste(
    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
    "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
    "lorem. Etiam pellentesque aliquet tellus.")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 cat(stri_wrap(s, 20, 2.0), sep="\\n") # dynamic
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 cat(stri_pad(stri_wrap(s), side='both'), sep="\\n")
+}
 }
 \references{
 D.E. Knuth, M.F. Plass,
