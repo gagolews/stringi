@@ -43,22 +43,14 @@ References are of the form \code{$n}, where \code{n} is the number
 of the capture group (their numbering starts from 1).
 }
 \examples{
+\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_regex(s, " .*? ", "#")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_regex(s, "(el|s)it", "1234")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_regex('123|456|789', '(\\\\p{N}).(\\\\p{N})', '$2-$1')
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
+}
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};

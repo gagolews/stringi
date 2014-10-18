@@ -36,12 +36,11 @@ set to \code{TRUE},
 then empty strings will never appear in the resulting vector.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_split_charclass("Lorem ipsum dolor sit amet", "\\\\p{WHITE_SPACE}")
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_split_charclass(" Lorem  ipsum dolor", "\\\\p{WHITE_SPACE}", n=3,
    omit_empty=c(FALSE, TRUE))
+}
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

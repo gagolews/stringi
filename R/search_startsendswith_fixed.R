@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Determines if the Start or End of a String Matches a Fixed Pattern
+#' Determine if the Start or End of a String Matches a Fixed Pattern
 #'
 #' @description
 #' These functions check if a string starts or ends with a fixed

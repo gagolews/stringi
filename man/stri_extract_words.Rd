@@ -31,8 +31,9 @@ to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_extract_words("stringi: THE string processing package 123.48...")
+}
 }
 \references{
 \emph{Boundary Analysis} -- ICU User Guide,
@@ -111,6 +112,8 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
 Other text_boundaries: \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_wrap}}
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_split_lines1}},
+  \code{\link{stri_split_lines1}}; \code{\link{stri_wrap}}
 }
 

@@ -36,8 +36,9 @@ For natural language processing this function might not give
 you desired results. Refer to \link{stringi-search-fixed} for more details.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_split_fixed("Lorem ipsum dolor sit amet", " ")
+}
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};

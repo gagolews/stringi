@@ -51,12 +51,10 @@
 #' @return Returns a logical vector.
 #'
 #' @examples
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
+#' \donttest{
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+#' }
 #'
 #' @export
 #' @family search_detect

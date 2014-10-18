@@ -37,14 +37,11 @@ matches together with regex capture groups.
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_all_charclass}},

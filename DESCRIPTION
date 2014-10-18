@@ -1,12 +1,12 @@
 Package: stringi
 Version: 0.3-1
-Date: 2014-10-18
+Date: 2014-10-19
 Title: Character string processing facilities
 Description: stringi allows for fast, correct, consistent, portable
     and convenient character string/text processing in every locale
     and any native encoding. Thanks to the use of the ICU library,
     the package provides R users with platform-independent functions
-    known to Java, Perl, Python, PHP and Ruby programmers.
+    known to Java, Perl, Python, PHP, and Ruby programmers.
 URL: http://stringi.rexamine.com/
     http://site.icu-project.org/
     http://www.unicode.org/

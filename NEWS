@@ -7,24 +7,25 @@
    * [IMPORTANT CHANGE] Issue #87: %>% overlapped with pipe operator
      from magrittr; now each operator like %>% has been renamed %s>%.
 
-   * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
-     determine whether a string starts or ends with a given pattern.
-     [TO DO: documentation, coll, charclass, regex?, other]
-
    * [NEW FUNCTIONS] #91: stri_subset_*, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
 
-   * [NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
-     UTF-8 conversion)
+   * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
+     determine whether a string starts or ends with a given pattern.
+     [TO DO.........: documentation, coll, charclass, regex?, other]
+
+   * ....[NEW FEATURE] #100: TO DO.... (replace n_max....)
+
+   * ....[NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
+     UTF-8 conversion) [TO DO..... rewrite in C++.....]
 
    * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 
    * [BUGFIX] Issue #99: `stri_replace_all' did not use the `replacement` arg.
 
-   * [BUGFIX] Issue #94: TO DO..... (solaris....)
-
-   * [NEW FEATURE] #100: TO DO.... (replace n_max....)
+   * [BUGFIX] Issue #94: `R CMD check` should no longer fail
+     when `icudt` download failed 
 
 
 * 0.2-5 (2014-05-16) **CRAN**
@@ -239,4 +240,4 @@
 
 * 0.1-1 (2013-01-05) **devel**
 
-   *  The stringi project has been established on GitHub.
+   * The stringi project has been established on GitHub.

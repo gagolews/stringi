@@ -29,7 +29,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL) # version >= 0.2
+invisible(NULL) # version >= 0.3
 
 
 

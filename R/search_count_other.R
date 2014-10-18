@@ -53,13 +53,11 @@
 #' @return Returns an integer vector.
 #'
 #' @examples
+#' \donttest{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count(s, fixed=letters)
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_count(s, regex="[[:alpha:]]")
+#' stri_count(s, fixed="dolor")
+#' stri_count(s, regex="\\p{L}+")
+#' }
 #'
 #' @export
 #' @family search_count

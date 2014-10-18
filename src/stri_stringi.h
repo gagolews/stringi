@@ -44,11 +44,8 @@
 
 // ------------------------------------------------------------------------
 
-// @TODO: stri_multisub                                   // ...TODO... [version >0.1]
-// @TODO: stri_multisub_replacement                       // ...TODO... [version >0.1]
-// @TODO: SEXP stri_enc_fromutf16(SEXP str);              // ...TODO... be careful: BOMs! [version >0.1]
-// @TODO: SEXP stri_enc_toutf16(SEXP str);                // ...TODO... -> list with elems of type raw [version >0.1]
-// @TODO: stri_enc_detect()                               // ...TODO... [version >0.1]
+// @TODO: SEXP stri_enc_fromutf16(SEXP str);              // ...TODO... be careful: BOMs! [version >=0.3]
+// @TODO: SEXP stri_enc_toutf16(SEXP str);                // ...TODO... -> list with elems of type raw [version >=0.3]
 
 // ------------------------------------------------------------------------
 
@@ -104,7 +101,7 @@ R_len_t stri__numbytes_max(SEXP str);
 SEXP    stri_numbytes(SEXP str);
 SEXP    stri_length(SEXP str);
 SEXP    stri_isempty(SEXP str);
-// SEXP stri_width(SEXP str);                               // ...TODO... [version >= 0.2]
+// SEXP stri_width(SEXP str);                               // ...TODO... [version >= 0.3]
 
 
 // prepare_arg.cpp:
@@ -137,8 +134,8 @@ SEXP stri_reverse(SEXP s);
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to,
                           SEXP length, SEXP value);
-// SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.2]
-// SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.2]
+// SEXP stri_split_pos(SEXP str, SEXP from, SEXP to);                        // ...TO DO... [version >= 0.3]
+// SEXP stri__split_pos(const char* s, int* from, int* to, int ns, int n);   // ...TO DO... [version >= 0.3]
 
 // encoding_management.cpp:
 SEXP stri_enc_list();
@@ -171,7 +168,7 @@ SEXP stri_locale_set(SEXP loc);
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale);
 
 // justify.cpp
-// SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.2]
+// SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.3]
 
 
 // ----------- SEARCH --------------------------------------------
@@ -182,8 +179,6 @@ SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
    const std::vector<int>& which, int result_counter);
 SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
    const std::vector<int>& which, int result_counter);
-
-// SEXP stri_in_fixed(SEXP str, SEXP table, SEXP nomatch);
 
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
@@ -266,8 +261,8 @@ SEXP stri_replace_na(SEXP str, SEXP replacement);
 
 
 // uchar.cpp:
-// SEXP stri_charcategories();        // ...TO DO... [version >= 0.2]
-// SEXP stri_chartype(SEXP str);      // ...TO DO... [version >= 0.2]
+// SEXP stri_charcategories();        // ...TO DO... [version >= 0.3]
+// SEXP stri_chartype(SEXP str);      // ...TO DO... [version >= 0.3]
 
 
 // trim.cpp:

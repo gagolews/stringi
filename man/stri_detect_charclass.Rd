@@ -22,9 +22,10 @@ class (e.g. letters, digits, or white spaces).
 Vectorized over \code{str} and \code{pattern}.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_detect_charclass(c("stRRRingi","REXAMINE","123"),
    c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
+}
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

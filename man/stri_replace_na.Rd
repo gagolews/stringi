@@ -26,15 +26,12 @@ It may be used e.g. wherever ``plain \R'' \code{NA} handling is
 desired, see Examples.
 }
 \examples{
+\donttest{
 x <- c('test', NA)
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_paste(x, 1:2)                           # "test1" NA
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 paste(x, 1:2)                                # "test 1" "NA 2"
-
-\dontshow{if (stri_install_check(silent=TRUE))}
 stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
+}
 }
 \seealso{
 Other search_replace: \code{\link{stri_replace_all_charclass}},

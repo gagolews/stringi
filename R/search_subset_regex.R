@@ -50,13 +50,10 @@
 #' @return Returns a character vector.
 #'
 #' @examples
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_subset_regex(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#'
-#' \dontshow{if (stri_install_check(silent=TRUE))}
-#' stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]')
-#'
+#' \donttest{
+#' stri_subset_regex(c("stringi R", "REXAMINE", "123"), '[a-z]+')
+#' }
+#' 
 #' @export
 #' @family search_subset
 #' @family search_regex

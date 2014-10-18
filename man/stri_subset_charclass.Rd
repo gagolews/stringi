@@ -24,9 +24,10 @@ Vectorized over \code{str} and \code{pattern}.
 The resulting vector is of course always in UTF-8.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 stri_subset_charclass(c("stRRRingi","REXAMINE","123"),
    c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
+}
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};

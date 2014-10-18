@@ -30,34 +30,35 @@
 
 
 #' @title
-#' Select Elements with a Fixed Pattern Match
+#' Replace Missing Values in a Character Vector
 #'
 #' @description
-#' This function is roughly equivalent to a call to
-#' \code{str[\link{stri_detect_fixed}(str, ...)]}.
+#' This function offers a convenient way to replace each \code{NA}
+#' in a character vector with a given string.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
+#' This function is roughly equivalent to
+#' \code{str2 <- stri_enc_toutf8(str);
+#' str2[is.na(str2)] <- stri_enc_toutf8(replacement);
+#' str2}.
+#' It may be used e.g. wherever ``plain \R'' \code{NA} handling is
+#' desired, see Examples.
 #'
-#' For natural language processing this function might not give
-#' you desired results. Refer to \link{stringi-search-fixed} for more details.
-#' 
-#' The resulting vector is of course always in UTF-8.
-#'
-#' @param str character vector
-#' @param pattern character vector
+#' @param str character vector or an object coercible to
+#' @param replacement single string
 #'
 #' @return Returns a character vector.
 #'
 #' @examples
 #' \donttest{
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+#' x <- c('test', NA)
+#' stri_paste(x, 1:2)                           # "test1" NA
+#' paste(x, 1:2)                                # "test 1" "NA 2"
+#' stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
 #' }
 #'
 #' @export
-#' @family search_subset
-#' @family search_fixed
-stri_subset_fixed <- function(str, pattern) {
-   .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")
+#' @family search_replace
+stri_replace_na <- function(str, replacement="NA"){
+   .Call("stri_replace_na", str, replacement, PACKAGE="stringi")
 }
