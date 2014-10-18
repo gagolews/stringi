@@ -36,6 +36,11 @@ Note that some versions of \R on Windows cannot handle
 characters defined with  {\\UXXXXXXXX}.
 We are working on that.
 }
+\examples{
+\donttest{
+stri_unescape_unicode("a\\\\u0105!\\\\u0032\\\\n")
+}
+}
 \seealso{
 Other escape: \code{\link{stri_escape_unicode}}
 }

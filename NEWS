@@ -7,8 +7,9 @@
    * [IMPORTANT CHANGE] Issue #87: %>% overlapped with pipe operator
      from magrittr; now each operator like %>% has been renamed %s>%.
 
-   * [NEW FUNCTIONS] `stri_startswith_*` and `stri_endswith_*`
-     determine whether a string starts or ends with a given pattern. [TO DO: documentation]
+   * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
+     determine whether a string starts or ends with a given pattern.
+     [TO DO: documentation, coll, charclass, regex?, other]
 
    * [NEW FUNCTIONS] #91: stri_subset_*, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
@@ -20,6 +21,10 @@
      give incorrect results if one of search strings were of length 0.
 
    * [BUGFIX] Issue #99: `stri_replace_all' did not use the `replacement` arg.
+
+   * [BUGFIX] Issue #94: TO DO..... (solaris....)
+
+   * [NEW FEATURE] #100: TO DO.... (replace n_max....)
 
 
 * 0.2-5 (2014-05-16) **CRAN**

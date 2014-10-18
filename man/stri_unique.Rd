@@ -26,9 +26,10 @@ tests for canonical equivalence of strings. Such an operation
 is locale-dependent.
 }
 \examples{
-\dontshow{if (stri_install_check(silent=TRUE))}
+\donttest{
 # normalized and non-unicode-normalized version of the same code point:
 stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
+}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
