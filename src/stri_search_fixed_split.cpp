@@ -62,20 +62,25 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_split_fixed now uses byte search only
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
+ *          added tokens_only param
  */
-SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
+SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP tokens_only)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
 
    STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, 
+      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
-   StriContainerInteger   n_max_cont(n_max, vectorize_length);
-   StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
+   StriContainerInteger n_max_cont(n_max, vectorize_length);
+   StriContainerLogical omit_empty_cont(omit_empty, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
@@ -109,22 +114,31 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty)
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
+      
+      if (tokens_only1 && n_max_cur < INT_MAX)
+         n_max_cur++; // we need to do one split ahead here
 
       for (k=1; k < n_max_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
          R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
          R_len_t s2 = (R_len_t)pattern_cont.getMatchedLength() + s1;
 
          if (omit_empty_cur && fields.back().first == s1)
-            fields.back().first = s2; // don't start new field
+            fields.back().first = s2; // don't start any new field
          else {
             fields.back().second = s1;
-            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start new field here
+            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start a new field here
             ++k; // another field
          }
       }
       fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
+         
+      if (tokens_only1 && n_max_cur < INT_MAX) {
+         n_max_cur--; // one split ahead could have been made, see above
+         while (fields.size() > (size_t)n_max_cur)
+            fields.pop_back(); // get rid of the remainder
+      }
 
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
