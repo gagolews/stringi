@@ -59,15 +59,20 @@ using namespace std;
  *
  * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
  *          Added missing utext_close call to avoid memleaks
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
+ *          added tokens_only param
  */
-SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_regex)
+SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, 
+                      SEXP tokens_only, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str),
-         LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+   R_len_t vectorize_length = stri__recycling_rule(true, 4,
+      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
@@ -100,12 +105,16 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
 
-      if (n_max_cur < 0)
+      if (n_max_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
+      else if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
+      else if (tokens_only1)
+         n_max_cur++; // we need to do one split ahead here
 
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -135,6 +144,12 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
+         
+      if (tokens_only1 && n_max_cur < INT_MAX) {
+         n_max_cur--; // one split ahead could have been made, see above
+         while (fields.size() > (size_t)n_max_cur)
+            fields.pop_back(); // get rid of the remainder
+      }
 
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));

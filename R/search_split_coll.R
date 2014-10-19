@@ -55,6 +55,8 @@
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
+#' @param tokens_only single logical value;
+#' may affect the result if \code{n_max} is positive, see Details
 #' @param opts_collator a named list with \pkg{ICU} Collator's settings
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings
@@ -65,7 +67,9 @@
 #' @family search_coll
 #' @family search_split
 #' @family locale_sensitive
-stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_collator=NULL) {
+stri_split_coll <- function(str, pattern, n_max=-1L, 
+            omit_empty=FALSE, tokens_only=FALSE, opts_collator=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_coll", str, pattern, n_max, omit_empty, opts_collator, PACKAGE="stringi")
+   .Call("stri_split_coll", str, pattern, 
+      n_max, omit_empty, tokens_only, opts_collator, PACKAGE="stringi")
 }

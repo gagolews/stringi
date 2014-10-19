@@ -20,4 +20,17 @@ test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass("a  b", "\\p{Z}"), list(c("a", "", "b")))
    expect_identical(stri_split_charclass("a  b", "\\p{Z}", omit_empty=TRUE), list(c("a", "b")))
    expect_identical(stri_split_charclass(c("a1a", "aXa"), c("\\p{N}", "\\p{Lu}")), list(c("a", "a"), c("a", "a")))
+   
+   # tokens_only
+   expect_identical(stri_split_charclass("a_b_c_d", "[_]"), list(c("a", "b", "c", "d")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]"), list(c("a", "b", "c", "", "d")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]", omit_empty=TRUE), list(c("a", "b", "c", "d")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]", n_max=2, tokens_only=FALSE), list(c("a", "b_c__d")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]", n_max=2, tokens_only=TRUE), list(c("a", "b")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]", n_max=4, omit_empty=TRUE, tokens_only=TRUE), list(c("a", "b", "c", "d")))
+   expect_identical(stri_split_charclass("a_b_c__d", "[_]", n_max=4, omit_empty=FALSE, tokens_only=TRUE), list(c("a", "b", "c", "")))
+   expect_identical(stri_split_charclass(c("ab_c", "d_ef_g", "h", ""), "[_]", n_max=1, tokens_only=TRUE, omit_empty=TRUE), list("ab", "d", "h", character(0)))
+   expect_identical(stri_split_charclass(c("ab_c", "d_ef_g", "h", ""), "[_]", n_max=2, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef"), "h", character(0)))
+   expect_identical(stri_split_charclass(c("ab_c", "d_ef_g", "h", ""), "[_]", n_max=3, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef", "g"), "h", character(0)))
+
 })

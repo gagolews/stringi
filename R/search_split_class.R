@@ -54,6 +54,8 @@
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
+#' @param tokens_only single logical value;
+#' may affect the result if \code{n_max} is positive, see Details
 #'
 #' @return Returns a list of character vectors.
 #'
@@ -70,7 +72,9 @@
 #' @aliases stri_split_charclass
 #' @family search_charclass
 #' @family search_split
-stri_split_charclass <- function(str, pattern, n_max=-1L, omit_empty=FALSE) {
+stri_split_charclass <- function(str, pattern, n_max=-1L, 
+                  omit_empty=FALSE, tokens_only=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_charclass", str, pattern, n_max, omit_empty, PACKAGE="stringi")
+   .Call("stri_split_charclass", str, pattern, 
+      n_max, omit_empty, tokens_only, PACKAGE="stringi")
 }

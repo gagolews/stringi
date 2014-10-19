@@ -105,6 +105,8 @@
 #define MSG__EXPECTED_POSITIVE \
    "argument `%s`: expected a positive numeric value"
 
+#define MSG__EXPECTED_SMALLER \
+   "argument `%s`: value too large"
 
 #define MSG__EXPECTED_ASCII \
    "incorrect argument: the string contains non-ASCII characters"

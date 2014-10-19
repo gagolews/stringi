@@ -4,7 +4,7 @@
 \title{Split a String By Regex Pattern Matches}
 \usage{
 stri_split_regex(str, pattern, n_max = -1L, omit_empty = FALSE,
-  opts_regex = NULL)
+  tokens_only = FALSE, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -15,6 +15,9 @@ stri_split_regex(str, pattern, n_max = -1L, omit_empty = FALSE,
 
 \item{omit_empty}{logical vector; determines whether empty
 strings should be removed from the result}
+
+\item{tokens_only}{single logical value;
+may affect the result if \code{n_max} is positive, see Details}
 
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}

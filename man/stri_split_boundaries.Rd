@@ -58,7 +58,7 @@ using a \code{BreakIterator}, see \code{\link{stri_extract_words}}.
 }
 \examples{
 \donttest{
-stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary='line')
+stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary="line")
 }
 }
 \references{
