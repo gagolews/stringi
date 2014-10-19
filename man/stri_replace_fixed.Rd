@@ -52,7 +52,6 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_fixed}};
-  \code{\link{stri_split_fixed}};
   \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search}}

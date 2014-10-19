@@ -30,13 +30,12 @@
 
 
 #' @title
-#' Split a String By Fixed Pattern Matches
+#' Split a String By Pattern Matches
 #'
 #' @description
 #' Splits each element of \code{str} into substrings.
-#' \code{pattern} indicates delimiters that separate
-#' the input into fields. The input data between the matches become
-#' the fields themselves.
+#' \code{pattern} indicates delimiters that separate the input into tokens.
+#' The input data between the matches become the fields themselves.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
@@ -52,23 +51,39 @@
 #' \code{omit_empty} is applied during splitting: if it is set to \code{TRUE},
 #' then tokens of zero length are ignored. Thus, empty strings will never
 #' appear in the resulting vector.
-#'
-#' For natural language processing this function might not give
-#' you desired results. Refer to \link{stringi-search-fixed} for more details.
 #' 
 #' Empty search patterns are not supported. If you would like to split a
 #' string into individual characters, use e.g.
 #' \code{\link{stri_extract_all_regex}(str, ".")}
+#' 
+#' \code{stri_split} is a convenience function.
+#' It calls either \code{stri_split_regex},
+#' \code{stri_split_fixed}, \code{stri_split_coll},
+#' or \code{stri_split_charclass},
+#' depending on the argument used.
+#' Unless you are a very lazy person, please call the underlying functions
+#' directly for better performance.
 #'
 #' @param str character vector with strings to search in
-#' @param pattern character vector with fixed patterns
+#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
+#' for more details refer to \link{stringi-search}
 #' @param n_max integer vector, maximal number of strings to return
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
 #' @param tokens_only single logical value;
 #' may affect the result if \code{n_max} is positive, see Details
-#'
-#' @return Returns a list of character vectors.
+#' @param opts_regex a named list with \pkg{ICU} Regex settings
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default settings;
+#' \code{stri_split_regex} only
+#' @param opts_collator a named list with \pkg{ICU} Collator's settings
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default settings;
+#' \code{stri_split_coll} only
+#' @param ... additional arguments passed to the underlying functions;
+#' \code{stri_split} only
+#' 
+#' @return All the functions return a list of character vectors.
 #'
 #'
 #' @examples
@@ -83,15 +98,77 @@
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
+#' 
+#' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
+#' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n_max=3,
+#'    omit_empty=c(FALSE, TRUE))
+#'    
+#' stri_split_regex("Lorem ipsum dolor sit amet",
+#'    "\\p{Z}+") # see also stri_split_charclass
 #' }
 #' 
 #' @export
-#' @family search_fixed
+#' @rdname stri_split
 #' @family search_split
+#' @export
+stri_split <- function(str, ..., regex, fixed, coll, charclass) {
+   providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
+                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
+
+   if (sum(providedarg) != 1)
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+
+   if (providedarg["regex"])
+      stri_split_regex(str, regex, ...)
+   else if (providedarg["fixed"])
+      stri_split_fixed(str, fixed, ...)
+   else if (providedarg["coll"])
+      stri_split_coll(str, coll, ...)
+   else if (providedarg["charclass"])
+      stri_split_charclass(str, charclass, ...)
+}
+
+
+#' @export
+#' @rdname stri_split
 stri_split_fixed <- function(str, pattern, n_max=-1L, 
                            omit_empty=FALSE, tokens_only=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_fixed", str, pattern, 
+      n_max, omit_empty, tokens_only, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_split
+stri_split_regex <- function(str, pattern, n_max=-1L, 
+               omit_empty=FALSE, tokens_only=FALSE, opts_regex=NULL)  {
+   # omit_empty defaults to FALSE for compatibility with the stringr package
+   # tokens_only defaults to FALSE for compatibility with the stringr package
+   .Call("stri_split_regex", str, pattern, 
+      n_max, omit_empty, tokens_only, opts_regex, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_split
+stri_split_coll <- function(str, pattern, n_max=-1L, 
+            omit_empty=FALSE, tokens_only=FALSE, opts_collator=NULL) {
+   # omit_empty defaults to FALSE for compatibility with the stringr package
+   # tokens_only defaults to FALSE for compatibility with the stringr package
+   .Call("stri_split_coll", str, pattern, 
+      n_max, omit_empty, tokens_only, opts_collator, PACKAGE="stringi")
+}
+
+
+
+#' @export
+#' @rdname stri_split
+stri_split_charclass <- function(str, pattern, n_max=-1L, 
+                  omit_empty=FALSE, tokens_only=FALSE) {
+   # omit_empty defaults to FALSE for compatibility with the stringr package
+   # tokens_only defaults to FALSE for compatibility with the stringr package
+   .Call("stri_split_charclass", str, pattern, 
       n_max, omit_empty, tokens_only, PACKAGE="stringi")
 }

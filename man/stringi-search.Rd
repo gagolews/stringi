@@ -12,10 +12,11 @@ There are four independent string searching ``engines'' in \pkg{stringi}.
    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
         see \link{stringi-search-regex},
    \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
-   \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
-       locale-sensitive, Collator-based ``fixed'' patterns search,
-       useful for natural language processing tasks,
        see \link{stringi-search-fixed},
+   \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
+       locale-sensitive, Collator-based pattern search,
+       useful for natural language processing tasks,
+       see \link{stringi-search-coll},
    \item \code{stri_*_charclass} -- character classes search,
       e.g. Unicode General Categories or Binary Properties,
        see \link{stringi-search-charclass},
@@ -59,7 +60,6 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
-  \code{\link{stri_split_charclass}};
   \code{\link{stri_subset_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},
@@ -84,7 +84,6 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
-  \code{\link{stri_split_coll}};
   \code{\link{stri_subset_coll}};
   \code{\link{stringi-search-coll}}
 
@@ -134,7 +133,6 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
-  \code{\link{stri_split_fixed}};
   \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search-fixed}}
 
@@ -199,7 +197,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_replace_first_regex}},
   \code{\link{stri_replace_last_regex}},
   \code{\link{stri_replace_last_regex}};
-  \code{\link{stri_split_regex}};
   \code{\link{stri_subset_regex}};
   \code{\link{stringi-search-regex}}
 
@@ -229,13 +226,14 @@ Other search_replace: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_na}}; \code{\link{stri_replace}}
 
 Other search_split: \code{\link{stri_split_boundaries}};
-  \code{\link{stri_split_charclass}};
-  \code{\link{stri_split_coll}};
-  \code{\link{stri_split_fixed}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},
   \code{\link{stri_split_lines1}};
-  \code{\link{stri_split_regex}}; \code{\link{stri_split}}
+  \code{\link{stri_split}},
+  \code{\link{stri_split_charclass}},
+  \code{\link{stri_split_coll}},
+  \code{\link{stri_split_fixed}},
+  \code{\link{stri_split_regex}}
 
 Other search_subset: \code{\link{stri_subset_charclass}};
   \code{\link{stri_subset_coll}};

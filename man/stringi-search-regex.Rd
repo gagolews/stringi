@@ -24,7 +24,7 @@ by JDK 1.4 \code{java.util.regex}.
 (see References section) and its features are summarized in
 the ICU User Guide (see below). A good general introduction
 to regexes is (Friedl, 2002).
-Some topics are also covered in the \R manual, see \link{regex}.
+Some general topics are also covered in the \R manual, see \link{regex}.
 }
 \section{Regexes in \pkg{stringi}}{
 
@@ -34,9 +34,12 @@ and generate a warning.
 On syntax error, a quite informative failure message is shown.
 
 If you would like to search for a fixed pattern,
-refer to \link{stringi-search-fixed}.
+refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
 This allows to do a locale-aware text lookup,
-or a very fast exact-byte search.
+or a very fast exact-byte search, respectively.
+
+For descriptions of ways to define character classes
+in regexes, refer to \code{stri-search-charclass}.
 }
 \references{
 \emph{Regular expressions} -- ICU User Guide,
@@ -47,7 +50,8 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 \url{http://www.unicode.org/reports/tr18/}
 
-\emph{Unicode Regular Expressions} -- Regex tutorial, \url{http://www.regular-expressions.info/unicode.html}
+\emph{Unicode Regular Expressions} -- Regex tutorial,
+\url{http://www.regular-expressions.info/unicode.html}
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};
@@ -73,7 +77,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_replace_first_regex}},
   \code{\link{stri_replace_last_regex}},
   \code{\link{stri_replace_last_regex}};
-  \code{\link{stri_split_regex}};
   \code{\link{stri_subset_regex}};
   \code{\link{stringi-search}}
 

@@ -7,6 +7,8 @@ In this man page we describe how character classes are
 declared in the \pkg{stringi} package
 so that you may e.g. find their occurrences in your search activities
 or generate random codepoints with \code{\link{stri_rand_strings}}.
+Moreover, \pkg{ICU} regex engines uses the same
+scheme for denoting character classes.
 }
 \details{
 All \code{stri_*_charclass} functions in \pkg{stringi} perform
@@ -65,8 +67,8 @@ A malformed pattern always results in an error.
 
 
 Unicode property sets are specified with a POSIX-like syntax,
-e.g. \code{[:Letter:]}, or with a (extended) Perl-style syntax,
-e.g. \code{\\p{L}}.
+e.g. \code{[:Letter:]},
+or with a (extended) Perl-style syntax, e.g. \code{\\p{L}}.
 The complements of the above sets are
 \code{[:^Letter:]} and \code{\\P{L}}, respectively.
 
@@ -203,6 +205,28 @@ marks the end of textual units;
 }
 and many more.
 }
+
+\section{POSIX Character Classes}{
+
+
+Beware of using POSIX character classes,
+e.g. \code{[:punct:]}. ICU User Guide (see below)
+states that in general they are not well-defined, so may end up
+with something different than you expect.
+
+In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
+the character class corresponding to the \code{ispunct()} classification
+function (check out \code{man 3 ispunct} on UNIX-like systems).
+According to ISO/IEC 9899:1990 (ISO C90), the \code{ispunct()} function
+tests for any printing character except for space or a character
+for which \code{isalnum()} is true. However, in a POSIX setting,
+the details of what characters belong into which class depend
+on the current locale. So the \code{[:punct:]} class does not lead
+to portable code (again, in POSIX-like regex engines).
+
+So a POSIX flavor of \code{[:punct:]} is more like
+\code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
+}
 \references{
 \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
 \url{http://www.unicode.org/reports/tr44/}
@@ -212,6 +236,9 @@ and many more.
 
 \emph{Properties} -- ICU User Guide,
 \url{http://userguide.icu-project.org/strings/properties}
+
+\emph{C/POSIX Migration} -- ICU User Guide,
+\url{http://userguide.icu-project.org/posix}
 
 \emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
 
@@ -236,7 +263,6 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
-  \code{\link{stri_split_charclass}};
   \code{\link{stri_subset_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},
