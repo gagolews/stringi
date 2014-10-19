@@ -4,10 +4,8 @@
 \title{Locale-Insensitive Fixed Pattern Matching in \pkg{stringi}}
 \description{
 String searching facilities described in this very man page
-provide a way to locate a specific piece of
-text. Note that locale-sensitive searching, especially
-on a non-English language text, is a much more complex process
-than it seems at the first glance.
+provide a way to locate an exact specific piece of
+text.
 }
 \section{Byte Compare}{
 
@@ -44,7 +42,6 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
-  \code{\link{stri_split_fixed}};
   \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search}}
 

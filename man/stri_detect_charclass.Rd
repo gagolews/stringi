@@ -44,7 +44,6 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
-  \code{\link{stri_split_charclass}};
   \code{\link{stri_subset_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},

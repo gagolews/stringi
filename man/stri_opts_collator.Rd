@@ -124,7 +124,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_split_coll}};
   \code{\link{stri_subset_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},

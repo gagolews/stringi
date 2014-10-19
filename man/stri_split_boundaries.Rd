@@ -106,7 +106,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
-  \code{\link{stri_split_coll}};
   \code{\link{stri_subset_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
@@ -115,13 +114,14 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-coll}}
 
-Other search_split: \code{\link{stri_split_charclass}};
-  \code{\link{stri_split_coll}};
-  \code{\link{stri_split_fixed}};
-  \code{\link{stri_split_lines}},
+Other search_split: \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},
   \code{\link{stri_split_lines1}};
-  \code{\link{stri_split_regex}}; \code{\link{stri_split}};
+  \code{\link{stri_split}},
+  \code{\link{stri_split_charclass}},
+  \code{\link{stri_split_coll}},
+  \code{\link{stri_split_fixed}},
+  \code{\link{stri_split_regex}};
   \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};

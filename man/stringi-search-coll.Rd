@@ -78,7 +78,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_split_coll}};
   \code{\link{stri_subset_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
@@ -103,7 +102,6 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
-  \code{\link{stri_split_coll}};
   \code{\link{stri_subset_coll}};
   \code{\link{stringi-search}}
 

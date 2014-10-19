@@ -41,10 +41,11 @@
 #'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
 #'         see \link{stringi-search-regex},
 #'    \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
-#'    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
-#'        locale-sensitive, Collator-based ``fixed'' patterns search,
-#'        useful for natural language processing tasks,
 #'        see \link{stringi-search-fixed},
+#'    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
+#'        locale-sensitive, Collator-based pattern search,
+#'        useful for natural language processing tasks,
+#'        see \link{stringi-search-coll},
 #'    \item \code{stri_*_charclass} -- character classes search,
 #'       e.g. Unicode General Categories or Binary Properties,
 #'        see \link{stringi-search-charclass},
@@ -115,7 +116,7 @@ invisible(NULL)
 #' (see References section) and its features are summarized in
 #' the ICU User Guide (see below). A good general introduction
 #' to regexes is (Friedl, 2002).
-#' Some topics are also covered in the \R manual, see \link{regex}.
+#' Some general topics are also covered in the \R manual, see \link{regex}.
 #'
 #' @section Regexes in \pkg{stringi}:
 #' Note that if a given regex \code{pattern} is empty,
@@ -124,9 +125,12 @@ invisible(NULL)
 #' On syntax error, a quite informative failure message is shown.
 #'
 #' If you would like to search for a fixed pattern,
-#' refer to \link{stringi-search-fixed}.
+#' refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
 #' This allows to do a locale-aware text lookup,
-#' or a very fast exact-byte search.
+#' or a very fast exact-byte search, respectively.
+#' 
+#' For descriptions of ways to define character classes
+#' in regexes, refer to \code{stri-search-charclass}.
 #'
 #' @references
 #' \emph{Regular expressions} -- ICU User Guide,
@@ -137,7 +141,8 @@ invisible(NULL)
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 #' \url{http://www.unicode.org/reports/tr18/}
 #'
-#' \emph{Unicode Regular Expressions} -- Regex tutorial, \url{http://www.regular-expressions.info/unicode.html}
+#' \emph{Unicode Regular Expressions} -- Regex tutorial, 
+#' \url{http://www.regular-expressions.info/unicode.html}
 #'
 #' @name stringi-search-regex
 #' @rdname stringi-search-regex
@@ -151,10 +156,8 @@ invisible(NULL)
 #'
 #' @description
 #' String searching facilities described in this very man page
-#' provide a way to locate a specific piece of
-#' text. Note that locale-sensitive searching, especially
-#' on a non-English language text, is a much more complex process
-#' than it seems at the first glance.
+#' provide a way to locate an exact specific piece of
+#' text.
 #'
 #'
 #' @section Byte Compare:
@@ -237,6 +240,8 @@ invisible(NULL)
 #' declared in the \pkg{stringi} package
 #' so that you may e.g. find their occurrences in your search activities
 #' or generate random codepoints with \code{\link{stri_rand_strings}}.
+#' Moreover, \pkg{ICU} regex engines uses the same 
+#' scheme for denoting character classes.
 #'
 #'
 #' @details
@@ -295,8 +300,8 @@ invisible(NULL)
 #' @section Unicode properties:
 #'
 #' Unicode property sets are specified with a POSIX-like syntax,
-#' e.g. \code{[:Letter:]}, or with a (extended) Perl-style syntax,
-#' e.g. \code{\\p{L}}.
+#' e.g. \code{[:Letter:]}, 
+#' or with a (extended) Perl-style syntax, e.g. \code{\\p{L}}.
 #' The complements of the above sets are
 #' \code{[:^Letter:]} and \code{\\P{L}}, respectively.
 #'
@@ -429,6 +434,28 @@ invisible(NULL)
 #' \item \code{CHANGES_WHEN_NFKC_CASEFOLDED}.
 #' }
 #' and many more.
+#' 
+#' 
+#' @section POSIX Character Classes:
+#' 
+#' Beware of using POSIX character classes,
+#' e.g. \code{[:punct:]}. ICU User Guide (see below)
+#' states that in general they are not well-defined, so may end up
+#' with something different than you expect.
+#' 
+#' In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
+#' the character class corresponding to the \code{ispunct()} classification 
+#' function (check out \code{man 3 ispunct} on UNIX-like systems).
+#' According to ISO/IEC 9899:1990 (ISO C90), the \code{ispunct()} function
+#' tests for any printing character except for space or a character
+#' for which \code{isalnum()} is true. However, in a POSIX setting,
+#' the details of what characters belong into which class depend
+#' on the current locale. So the \code{[:punct:]} class does not lead
+#' to portable code (again, in POSIX-like regex engines).
+#' 
+#' So a POSIX flavor of \code{[:punct:]} is more like
+#' \code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
+#' 
 #'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
@@ -439,7 +466,10 @@ invisible(NULL)
 #'
 #' \emph{Properties} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/properties}
-#'
+#' 
+#' \emph{C/POSIX Migration} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/posix}
+#' 
 #' \emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
 #'
 #' \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
