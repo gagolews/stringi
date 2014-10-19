@@ -148,7 +148,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_split_boundaries,           3),
    STRI__MAKE_CALL_METHOD(stri_split_charclass,            4),
    STRI__MAKE_CALL_METHOD(stri_split_coll,                 5),
-   STRI__MAKE_CALL_METHOD(stri_split_fixed,                4),
+   STRI__MAKE_CALL_METHOD(stri_split_fixed,                5),
    STRI__MAKE_CALL_METHOD(stri_startswith_fixed,           3),
    STRI__MAKE_CALL_METHOD(stri_split_lines,                3),
    STRI__MAKE_CALL_METHOD(stri_split_lines1,               1),

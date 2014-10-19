@@ -3,14 +3,15 @@
 \alias{stri_split_fixed}
 \title{Split a String By Fixed Pattern Matches}
 \usage{
-stri_split_fixed(str, pattern, n_max = -1L, omit_empty = FALSE)
+stri_split_fixed(str, pattern, n_max = -1L, omit_empty = FALSE,
+  tokens_only = FALSE)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
 
 \item{pattern}{character vector with fixed patterns}
 
-\item{n_max}{integer vector, maximal number of pieces to return}
+\item{n_max}{integer vector, maximal number of strings to return}
 
 \item{omit_empty}{logical vector; determines whether empty
 strings should be removed from the result}
@@ -28,16 +29,36 @@ the fields themselves.
 Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 
 If \code{n_max} is negative (default), then all pieces are extracted.
+Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
+for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
+tokes are extracted (if possible) and the \code{n_max}th string
+gives the (unsplit) remainder (see Examples).
+On the other hand, if \code{tokens_only} is \code{TRUE},
+then only full tokens (up to \code{n_max} pieces) are extracted.
 
-\code{omit_empty} is applied during splitting: if set to \code{TRUE},
-then empty strings will never appear in the resulting vector.
+\code{omit_empty} is applied during splitting: if it is set to \code{TRUE},
+then tokens of zero length are ignored. Thus, empty strings will never
+appear in the resulting vector.
 
 For natural language processing this function might not give
 you desired results. Refer to \link{stringi-search-fixed} for more details.
+
+Empty search patterns are not supported. If you would like to split a
+string into individual characters, use e.g.
+\code{\link{stri_extract_all_regex}(str, ".")}
 }
 \examples{
 \donttest{
-stri_split_fixed("Lorem ipsum dolor sit amet", " ")
+stri_split_fixed("a_b_c_d", "_")
+stri_split_fixed("a_b_c__d", "_")
+stri_split_fixed("a_b_c__d", "_", omit_empty=TRUE)
+stri_split_fixed("a_b_c__d", "_", n_max=2, tokens_only=FALSE) # "a" & remainder
+stri_split_fixed("a_b_c__d", "_", n_max=2, tokens_only=TRUE) # "a" & "b" only
+stri_split_fixed("a_b_c__d", "_", n_max=4, omit_empty=TRUE, tokens_only=TRUE)
+stri_split_fixed("a_b_c__d", "_", n_max=4, omit_empty=FALSE, tokens_only=TRUE)
+stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE)
+stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE)
+stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
 }
 }
 \seealso{
