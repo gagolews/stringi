@@ -56,6 +56,8 @@
 #' @param n_max integer vector, maximal number of pieces to return
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
+#' @param tokens_only single logical value;
+#' may affect the result if \code{n_max} is positive, see Details
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 #' for default settings
@@ -74,7 +76,10 @@
 #' @aliases stri_split_regex
 #' @family search_regex
 #' @family search_split
-stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE, opts_regex=NULL)  {
+stri_split_regex <- function(str, pattern, n_max=-1L, 
+               omit_empty=FALSE, tokens_only=FALSE, opts_regex=NULL)  {
    # omit_empty defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_regex", str, pattern, n_max, omit_empty, opts_regex, PACKAGE="stringi")
+   # tokens_only defaults to FALSE for compatibility with the stringr package
+   .Call("stri_split_regex", str, pattern, 
+      n_max, omit_empty, tokens_only, opts_regex, PACKAGE="stringi")
 }

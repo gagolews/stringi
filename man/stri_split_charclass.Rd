@@ -3,7 +3,8 @@
 \alias{stri_split_charclass}
 \title{Split a String by a Character Class}
 \usage{
-stri_split_charclass(str, pattern, n_max = -1L, omit_empty = FALSE)
+stri_split_charclass(str, pattern, n_max = -1L, omit_empty = FALSE,
+  tokens_only = FALSE)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -15,6 +16,9 @@ see \link{stringi-search-charclass}}
 
 \item{omit_empty}{logical vector; determines whether empty
 strings should be removed from the result}
+
+\item{tokens_only}{single logical value;
+may affect the result if \code{n_max} is positive, see Details}
 }
 \value{
 Returns a list of character vectors.

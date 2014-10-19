@@ -7,14 +7,16 @@
    * [IMPORTANT CHANGE] #87: `%>%` overlapped with pipe operator from
      the magrittr package; now each operator like `%>%` has been renamed `%s>%`.
 
-   * [NEW FUNCTIONS] #91: `stri_subset_*`, a convenient substitute
+   * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
+
+   * [NEW FEATURE] #100: `stri_split_fixed`, `stri_split_charclass`,
+     `stri_split_regex`, `stri_split_coll` gained a `tokens_only` parameter,
+     which defaults to `FALSE` for backward compatibility.
 
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
      [TO DO.........: documentation, coll, charclass, regex?, other]
-
-   * ....[NEW FEATURE] #100: `stri_split_*` gained a `tokens_only` parameter.
 
    * ....[NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
      UTF-8 conversion) [TO DO..... rewrite in C++.....]

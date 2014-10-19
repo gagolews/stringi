@@ -65,19 +65,25 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_split_coll (opts_collator == NA not allowed)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
+ *          added tokens_only param
  */
-SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP opts_collator)
+SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
+                     SEXP tokens_only, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
 
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+   R_len_t vectorize_length = stri__recycling_rule(true, 4, 
+      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
    StriContainerInteger   n_max_cont(n_max, vectorize_length);
@@ -106,12 +112,16 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP o
       usearch_reset(matcher);
 
 
-      if (n_max_cur < 0)
+      if (n_max_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
+      else if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
+      else if (tokens_only1)
+         n_max_cur++; // we need to do one split ahead here
 
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
@@ -134,6 +144,12 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP o
       fields.back().second = str_cont.get(i).length();
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
+         
+      if (tokens_only1 && n_max_cur < INT_MAX) {
+         n_max_cur--; // one split ahead could have been made, see above
+         while (fields.size() > (size_t)n_max_cur)
+            fields.pop_back(); // get rid of the remainder
+      }
 
       R_len_t noccurences = (R_len_t)fields.size();
       StriContainerUTF16 out_cont(noccurences);

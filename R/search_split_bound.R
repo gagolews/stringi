@@ -153,7 +153,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @examples
 #' \donttest{
-#' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary='line')
+#' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary="line")
 #' }
 #' 
 #' @export

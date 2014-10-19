@@ -66,7 +66,8 @@ using namespace std;
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
  */
-SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP tokens_only)
+SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, 
+                      SEXP omit_empty, SEXP tokens_only)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
@@ -103,20 +104,21 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, SEXP 
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
 
-      if (n_max_cur < 0)
+      if (n_max_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
+      else if (n_max_cur < 0)
          n_max_cur = INT_MAX;
       else if (n_max_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
+      else if (tokens_only1)
+         n_max_cur++; // we need to do one split ahead here
 
       pattern_cont.setupMatcherFwd(i, str_cur_s, str_cur_n);
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
-      
-      if (tokens_only1 && n_max_cur < INT_MAX)
-         n_max_cur++; // we need to do one split ahead here
 
       for (k=1; k < n_max_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
          R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
