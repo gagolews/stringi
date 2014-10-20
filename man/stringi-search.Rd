@@ -60,7 +60,6 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_charclass}};
-  \code{\link{stri_subset_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},
   \code{\link{stri_trim_left}},
@@ -84,7 +83,6 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_coll}};
-  \code{\link{stri_subset_coll}};
   \code{\link{stringi-search-coll}}
 
 Other search_count: \code{\link{stri_count_charclass}};
@@ -133,7 +131,6 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
-  \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search-fixed}}
 
 Other search_in: \code{\link{stri_in_fixed}}
@@ -197,7 +194,6 @@ Other search_regex: \code{\link{stri_count_regex}};
   \code{\link{stri_replace_first_regex}},
   \code{\link{stri_replace_last_regex}},
   \code{\link{stri_replace_last_regex}};
-  \code{\link{stri_subset_regex}};
   \code{\link{stringi-search-regex}}
 
 Other search_replace: \code{\link{stri_replace_all_charclass}},
@@ -235,11 +231,11 @@ Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_fixed}},
   \code{\link{stri_split_regex}}
 
-Other search_subset: \code{\link{stri_subset_charclass}};
-  \code{\link{stri_subset_coll}};
-  \code{\link{stri_subset_fixed}};
-  \code{\link{stri_subset_regex}};
-  \code{\link{stri_subset}}
+Other search_subset: \code{\link{stri_subset}},
+  \code{\link{stri_subset_charclass}},
+  \code{\link{stri_subset_coll}},
+  \code{\link{stri_subset_fixed}},
+  \code{\link{stri_subset_regex}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};

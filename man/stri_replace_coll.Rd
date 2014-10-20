@@ -83,7 +83,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
   \code{\link{stri_split_boundaries}};
-  \code{\link{stri_subset_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
   \code{\link{stri_trans_toupper}};
@@ -103,7 +102,6 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_locate_first_coll}},
   \code{\link{stri_locate_last_coll}},
   \code{\link{stri_locate_last_coll}};
-  \code{\link{stri_subset_coll}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search}}
 
