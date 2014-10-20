@@ -30,30 +30,53 @@
 
 
 #' @title
-#' Select Elements That Match a Given Pattern
+#' Select Elements that Match a Given Pattern
 #'
 #' @description
-#' A convenience function.
-#' Calls either \code{\link{stri_subset_regex}},
-#' \code{\link{stri_subset_fixed}}, \code{\link{stri_subset_coll}},
-#' or \code{\link{stri_subset_charclass}},
-#' depending on the argument used.
+#' These functions return a subvector consisting of
+#' strings that match a given pattern, i.e. they
+#' are roughly equivalent to a call to
+#' \code{str[\link{stri_detect}(str, ...)]}.
 #'
 #' @details
-#' Unless you are very lazy, please call the underlying functions
+#' Vectorized over \code{str} and \code{pattern}.
+#' 
+#' \code{stri_subset} is a convenience function.
+#' It calls either \code{stri_subset_regex},
+#' \code{stri_subset_fixed}, \code{stri_subset_coll},
+#' or \code{stri_subset_charclass},
+#' depending on the argument used.
+#' Unless you are a very lazy person, please call the underlying functions
 #' directly for better performance.
 #'
-#' @param str character vector of strings to search in
-#' @param ... additional arguments passed to the underlying functions
-#' @param regex character vector; regular expressions
-#' @param fixed character vector; fixed patterns
-#' @param coll character vector; canonically equivalent patterns
-#' @param charclass character vector; identifiers of character classes
+#' @param str character vector with strings to search in
+#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
+#' for more details refer to \link{stringi-search}
+#' @param opts_regex a named list with \pkg{ICU} Regex settings
+#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default settings;
+#' \code{stri_subset_regex} only
+#' @param opts_collator a named list with \pkg{ICU} Collator's settings
+#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+#' for default settings;
+#' \code{stri_subset_coll} only
+#' @param ... additional arguments passed to the underlying functions;
+#' \code{stri_subset} only
 #'
-#' @return Returns a character vector.
+#' @return All the functions return a character vector.
+#' Of course, the output encoding is always UTF-8.
 #'
-#' @export
+#' @examples
+#' \donttest{
+#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
+#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+#' stri_subset_charclass(c("stRRRingi","REXAMINE","123"),
+#'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
+#' }
+#'
 #' @family search_subset
+#' @export
+#' @rdname stri_subset
 stri_subset <- function(str, ..., regex, fixed, coll, charclass) {
    providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
@@ -69,4 +92,32 @@ stri_subset <- function(str, ..., regex, fixed, coll, charclass) {
       stri_subset_coll(str, coll, ...)
    else if (providedarg["charclass"])
       stri_subset_charclass(str, charclass, ...)
+}
+
+
+#' @export
+#' @rdname stri_subset
+stri_subset_fixed <- function(str, pattern) {
+   .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_subset
+stri_subset_charclass <- function(str, pattern) {
+   .Call("stri_subset_charclass", str, pattern, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_subset
+stri_subset_coll <- function(str, pattern, opts_collator=NULL) {
+   .Call("stri_subset_coll", str, pattern, opts_collator, PACKAGE="stringi")
+}
+
+
+#' @export
+#' @rdname stri_subset
+stri_subset_regex <- function(str, pattern, opts_regex=NULL) {
+   .Call("stri_subset_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }

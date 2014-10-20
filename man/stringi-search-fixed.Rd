@@ -42,7 +42,6 @@ Other search_fixed: \code{\link{stri_count_fixed}};
   \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_fixed}};
-  \code{\link{stri_subset_fixed}};
   \code{\link{stringi-search}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
