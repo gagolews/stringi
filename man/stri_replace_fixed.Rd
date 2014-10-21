@@ -43,8 +43,7 @@ stri_replace_all_fixed(s, "o", "0")
 }
 }
 \seealso{
-Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_endswith_fixed}},
+Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},

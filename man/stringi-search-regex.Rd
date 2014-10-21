@@ -54,8 +54,7 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 \url{http://www.regular-expressions.info/unicode.html}
 }
 \seealso{
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_extract_all_regex}},
+Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},

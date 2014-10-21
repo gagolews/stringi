@@ -49,8 +49,7 @@ Other search_match: \code{\link{stri_match_all}};
   \code{\link{stri_match_last}}; \code{\link{stri_match}};
   \code{\link{stringi-search}}
 
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_extract_all_regex}},
+Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
