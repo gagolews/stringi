@@ -42,8 +42,7 @@ Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stri_count_fixed}}; \code{\link{stri_count}};
   \code{\link{stringi-search}}
 
-Other search_regex: \code{\link{stri_detect_regex}};
-  \code{\link{stri_extract_all_regex}},
+Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},

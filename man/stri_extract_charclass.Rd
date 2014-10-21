@@ -49,7 +49,6 @@ stri_extract_last_charclass('AaBbCc', '\\\\p{Ll}')
 }
 \seealso{
 Other search_charclass: \code{\link{stri_count_charclass}};
-  \code{\link{stri_detect_charclass}};
   \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_first_charclass}},
   \code{\link{stri_locate_first_charclass}},

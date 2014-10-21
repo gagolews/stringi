@@ -123,7 +123,7 @@ test_that("stri_enc_toascii", {
    expect_identical(stri_enc_toascii(c('sgajhgaoi', NA, '\u0105fds\u5432\u0104')), c('sgajhgaoi', NA, '\x1afds\x1a\x1a'))
 
    s <- c('\xa3\xb1ka')
-   enc <- stri_enc_set('latin-2')
+   suppressMessages(enc <- stri_enc_set('latin-2'))
    expect_identical(stri_enc_toascii(s), "\x1a\x1aka")
-   stri_enc_set(enc)
+   suppressMessages(stri_enc_set(enc))
 })

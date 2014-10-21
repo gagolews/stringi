@@ -18,8 +18,8 @@ test_that("stri_read/write_lines", {
    expect_identical(text, stri_read_lines(fname, 'utf32'))
 
    stri_write_lines(text, fname, 'latin2')
-   oldCS <- stri_enc_set("latin2")
+   suppressMessages(oldCS <- stri_enc_set("latin2"))
    expect_identical(text, stri_read_lines(fname, 'auto'))
-   stri_enc_set(oldCS)
+   suppressMessages(stri_enc_set(oldCS))
    expect_identical(text, stri_read_lines(fname, 'latin2'))
 })

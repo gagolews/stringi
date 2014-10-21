@@ -29,7 +29,6 @@ to Unicode is done as usual.
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_detect_fixed}};
   \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stri_locate_all_fixed}},

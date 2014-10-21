@@ -86,7 +86,6 @@ Other indexing: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_sub<-}}
 
 Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_detect_fixed}};
   \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stri_replace_all_fixed}},

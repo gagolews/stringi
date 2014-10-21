@@ -42,8 +42,8 @@ Of course, the output encoding is always UTF-8.
 }
 \description{
 These functions return a subvector consisting of
-strings that match a given pattern, i.e. they
-are roughly equivalent to a call to
+strings that match a given pattern. In other words, they
+are roughly equivalent (but faster and easier to use) to a call to
 \code{str[\link{stri_detect}(str, ...)]}.
 }
 \details{

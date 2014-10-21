@@ -30,8 +30,7 @@ stri_count_charclass(" \\t\\n", "\\\\p{Z}") # whitespace - general category (not
 }
 }
 \seealso{
-Other search_charclass: \code{\link{stri_detect_charclass}};
-  \code{\link{stri_extract_all_charclass}},
+Other search_charclass: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},

@@ -43,8 +43,7 @@ Other search_count: \code{\link{stri_count_charclass}};
   \code{\link{stri_count_regex}}; \code{\link{stri_count}};
   \code{\link{stringi-search}}
 
-Other search_fixed: \code{\link{stri_detect_fixed}};
-  \code{\link{stri_endswith_fixed}},
+Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},

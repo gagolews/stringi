@@ -27,11 +27,11 @@ test_that("stri_length-cjk", {
    expect_equivalent(stri_numbytes(cjk_test), 27)
    expect_equivalent(stri_length(cjk_test), 9)
 
-   suppressWarnings(oldenc <- stri_enc_set('Big5'))
+   suppressWarnings(suppressMessages(oldenc <- stri_enc_set('Big5')))
    cjk_test_Big5 <- stri_encode(cjk_test, 'UTF-8', 'Big5')
    expect_equivalent(stri_numbytes(cjk_test_Big5), 18)
    expect_equivalent(stri_length(cjk_test_Big5), 9)
-   suppressWarnings(stri_enc_set(oldenc))
+   suppressMessages(stri_enc_set(oldenc))
 })
 
 

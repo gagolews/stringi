@@ -55,7 +55,6 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 }
 \seealso{
 Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_detect_regex}};
   \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
