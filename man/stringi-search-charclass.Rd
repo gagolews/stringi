@@ -61,6 +61,34 @@ Any character may be preceded by
 a backslash in order to remove any special meaning.
 
 A malformed pattern always results in an error.
+
+\cr
+Set expressions at a glance
+(according to \url{http://userguide.icu-project.org/strings/regexp}):
+
+\tabular{ll}{
+\strong{Example}  \tab  \strong{Description}\cr
+\code{[abc]} 	\tab Match any of the characters a, b or c\cr
+\code{[^abc]} 	\tab Negation -- match any character except a, b or c\cr
+\code{[A-M]} 	\tab Range -- match any character from A to M. The characters
+to include are determined by Unicode code point ordering.\cr
+\code{[\\u0000-\\U0010ffff]} 	\tab Range -- match all characters.\cr
+\code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]} 	\tab
+Characters with Unicocde Category = Letter. All forms shown are equivalent.\cr
+\code{[\\P{Letter}]} 	\tab Negated property.
+(Upper case \code{\\P}) Match everything except Letters.\cr
+\code{[\\p{numeric_value=9}]} 	\tab Match all numbers with a numeric value of 9.
+Any Unicode Property may be used in set expressions.\cr
+\code{[\\p{Letter}&&\\p{script=cyrillic}]} 	\tab Logical AND
+or intersection -- match the set of all Cyrillic letters.\cr
+\code{[\\p{Letter}--\\p{script=latin}]}  	\tab Subtraction --
+match all non-Latin letters.\cr
+\code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}  	\tab Implicit Logical
+OR or Union of Sets -- the examples match ASCII letters and digits.
+The two forms are equivalent.\cr
+\code{[:script=Greek:]} \tab Alternate POSIX-like syntax for properties --
+equivalent to \code{\\p{script=Greek}}\cr
+}
 }
 
 \section{Unicode properties}{
@@ -101,45 +129,45 @@ The Unicode General Category property of a code point provides the most
 general classification of that code point.
 Each code point falls into one and only one Category.
 
-\itemize{
-\item \code{Cc} -- a C0 or C1 control code;
-\item \code{Cf} -- a format control character;
-\item \code{Cn} -- a reserved unassigned code point or a non-character;
-\item \code{Co} -- a private-use character;
-\item \code{Cs} -- a surrogate code point;
-\item \code{Lc} -- the union of Lu, Ll, Lt;
-\item \code{Ll} -- a lowercase letter;
-\item \code{Lm} -- a modifier letter;
-\item \code{Lo} -- other letters, including syllables and ideographs;
-\item \code{Lt} -- a digraphic character, with first part uppercase;
-\item \code{Lu} -- an uppercase letter;
-\item \code{Mc} -- a spacing combining mark (positive advance width);
-\item \code{Me} -- an enclosing combining mark;
-\item \code{Mn} -- a non-spacing combining mark (zero advance width);
-\item \code{Nd} -- a decimal digit;
-\item \code{Nl} -- a letter-like numeric character;
-\item \code{No} -- a numeric character of other type;
-\item \code{Pd} -- a dash or hyphen punctuation mark;
-\item \code{Ps} -- an opening punctuation mark (of a pair);
-\item \code{Pe} -- a closing punctuation mark (of a pair);
-\item \code{Pc} -- a connecting punctuation mark, like a tie;
-\item \code{Po} -- a punctuation mark of other type;
-\item \code{Pi} -- an initial quotation mark;
-\item \code{Pf} -- a final quotation mark;
-\item \code{Sm} -- a symbol of mathematical use;
-\item \code{Sc} -- a currency sign;
-\item \code{Sk} -- a non-letter-like modifier symbol;
-\item \code{So} -- a symbol of other type;
-\item \code{Zs} -- a space character (of non-zero width);
-\item \code{Zl} -- U+2028 LINE SEPARATOR only;
-\item \code{Zp} -- U+2029 PARAGRAPH SEPARATOR only;
-\item \code{C}  -- the union of Cc, Cf, Cs, Co, Cn;
-\item \code{L}  -- the union of Lu, Ll, Lt, Lm, Lo;
-\item \code{M}  -- the union of Mn, Mc, Me;
-\item \code{N}  -- the union of Nd, Nl, No;
-\item \code{P}  -- the union of Pc, Pd, Ps, Pe, Pi, Pf, Po;
-\item \code{S}  -- the union of Sm, Sc, Sk, So;
-\item \code{Z}  -- the union of Zs, Zl, Zp.
+\tabular{ll}{
+ \code{Cc} \tab a C0 or C1 control code\cr
+ \code{Cf} \tab a format control character\cr
+ \code{Cn} \tab a reserved unassigned code point or a non-character\cr
+ \code{Co} \tab a private-use character\cr
+ \code{Cs} \tab a surrogate code point\cr
+ \code{Lc} \tab the union of Lu, Ll, Lt\cr
+ \code{Ll} \tab a lowercase letter\cr
+ \code{Lm} \tab a modifier letter\cr
+ \code{Lo} \tab other letters, including syllables and ideographs\cr
+ \code{Lt} \tab a digraphic character, with first part uppercase\cr
+ \code{Lu} \tab an uppercase letter\cr
+ \code{Mc} \tab a spacing combining mark (positive advance width)\cr
+ \code{Me} \tab an enclosing combining mark\cr
+ \code{Mn} \tab a non-spacing combining mark (zero advance width)\cr
+ \code{Nd} \tab a decimal digit\cr
+ \code{Nl} \tab a letter-like numeric character\cr
+ \code{No} \tab a numeric character of other type\cr
+ \code{Pd} \tab a dash or hyphen punctuation mark\cr
+ \code{Ps} \tab an opening punctuation mark (of a pair)\cr
+ \code{Pe} \tab a closing punctuation mark (of a pair)\cr
+ \code{Pc} \tab a connecting punctuation mark, like a tie\cr
+ \code{Po} \tab a punctuation mark of other type\cr
+ \code{Pi} \tab an initial quotation mark\cr
+ \code{Pf} \tab a final quotation mark\cr
+ \code{Sm} \tab a symbol of mathematical use\cr
+ \code{Sc} \tab a currency sign\cr
+ \code{Sk} \tab a non-letter-like modifier symbol\cr
+ \code{So} \tab a symbol of other type\cr
+ \code{Zs} \tab a space character (of non-zero width)\cr
+ \code{Zl} \tab U+2028 LINE SEPARATOR only\cr
+ \code{Zp} \tab U+2029 PARAGRAPH SEPARATOR only\cr
+ \code{C}  \tab the union of Cc, Cf, Cs, Co, Cn\cr
+ \code{L}  \tab the union of Lu, Ll, Lt, Lm, Lo\cr
+ \code{M}  \tab the union of Mn, Mc, Me\cr
+ \code{N}  \tab the union of Nd, Nl, No\cr
+ \code{P}  \tab the union of Pc, Pd, Ps, Pe, Pi, Pf, Po\cr
+ \code{S}  \tab the union of Sm, Sc, Sk, So\cr
+ \code{Z}  \tab the union of Zs, Zl, Zp \cr
 }
 }
 
@@ -148,62 +176,62 @@ Each code point falls into one and only one Category.
 
 Each character may follow many Binary Properties at a time.
 
-Here is the complete list of supported Binary Properties:
-\itemize{
-\item \code{ALPHABETIC}      -- alphabetic character;
-\item \code{ASCII_HEX_DIGIT} -- a character matching the \code{[0-9A-Fa-f]} charclass;
-\item \code{BIDI_CONTROL}    -- a format control which have specific functions
-                             in the Bidi (bidirectional text) Algorithm;
-\item \code{BIDI_MIRRORED}   -- a character that may change display in right-to-left text;
-\item \code{DASH}            -- a kind of a dash character;
-\item \code{DEFAULT_IGNORABLE_CODE_POINT} -- characters that are ignorable in most
+Here is a comprehensive list of supported Binary Properties:
+
+\tabular{ll}{
+  \code{ALPHABETIC}      \tab alphabetic character\cr
+  \code{ASCII_HEX_DIGIT} \tab a character matching the \code{[0-9A-Fa-f]} charclass\cr
+  \code{BIDI_CONTROL}    \tab a format control which have specific functions
+                             in the Bidi (bidirectional text) Algorithm\cr
+  \code{BIDI_MIRRORED}   \tab a character that may change display in right-to-left text\cr
+  \code{DASH}            \tab a kind of a dash character\cr
+  \code{DEFAULT_IGNORABLE_CODE_POINT} \tab characters that are ignorable in most
                                text processing activities,
-                               e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>;
-\item \code{DEPRECATED}      -- a deprecated character according
+                               e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>\cr
+  \code{DEPRECATED}      \tab a deprecated character according
           to the current Unicode standard (the usage of deprecated characters
-          is strongly discouraged);
-\item \code{DIACRITIC}       -- a character that linguistically modifies
-             the meaning of another character to which it applies;
-\item \code{EXTENDER}        -- a character that extends the value
+          is strongly discouraged)\cr
+  \code{DIACRITIC}       \tab a character that linguistically modifies
+             the meaning of another character to which it applies\cr
+  \code{EXTENDER}        \tab a character that extends the value
                              or shape of a preceding alphabetic character,
-                             e.g. a length and iteration mark.
-\item \code{HEX_DIGIT}       -- a character commonly
+                             e.g. a length and iteration mark.\cr
+  \code{HEX_DIGIT}       \tab a character commonly
                             used for hexadecimal numbers,
-                            cf. also \code{ASCII_HEX_DIGIT};
-\item \code{HYPHEN} -- a dash used to mark connections between
-              pieces of words, plus the Katakana middle dot;
-\item \code{ID_CONTINUE} -- a character that can continue an identifier,
-                     \code{ID_START}+\code{Mn}+\code{Mc}+\code{Nd}+\code{Pc};
-\item \code{ID_START} -- a character that can start an identifier,
-                 \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl};
-\item \code{IDEOGRAPHIC} -- a CJKV (Chinese-Japanese-Korean-Vietnamese)
-ideograph;
-\item \code{LOWERCASE} ;
-\item \code{MATH} ;
-\item \code{NONCHARACTER_CODE_POINT} ;
-\item \code{QUOTATION_MARK} ;
-\item \code{SOFT_DOTTED} -- a character with a ``soft dot'', like i or j,
-such that an accent placed on this character causes the dot to disappear;
-\item \code{TERMINAL_PUNCTUATION} -- a punctuation character that generally
-marks the end of textual units;
-\item \code{UPPERCASE} ;
-\item \code{WHITE_SPACE} -- a space character or TAB or CR or LF or ZWSP or ZWNBSP;
-\item \code{CASE_SENSITIVE} ;
-\item \code{POSIX_ALNUM} ;
-\item \code{POSIX_BLANK} ;
-\item \code{POSIX_GRAPH} ;
-\item \code{POSIX_PRINT} ;
-\item \code{POSIX_XDIGIT} ;
-\item \code{CASED} ;
-\item \code{CASE_IGNORABLE} ;
-\item \code{CHANGES_WHEN_LOWERCASED} ;
-\item \code{CHANGES_WHEN_UPPERCASED} ;
-\item \code{CHANGES_WHEN_TITLECASED} ;
-\item \code{CHANGES_WHEN_CASEFOLDED} ;
-\item \code{CHANGES_WHEN_CASEMAPPED} ;
-\item \code{CHANGES_WHEN_NFKC_CASEFOLDED}.
+                            cf. also \code{ASCII_HEX_DIGIT}\cr
+  \code{HYPHEN} \tab a dash used to mark connections between
+              pieces of words, plus the Katakana middle dot\cr
+  \code{ID_CONTINUE} \tab a character that can continue an identifier,
+                     \code{ID_START}+\code{Mn}+\code{Mc}+\code{Nd}+\code{Pc}\cr
+  \code{ID_START} \tab a character that can start an identifier,
+                 \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl}\cr
+  \code{IDEOGRAPHIC} \tab a CJKV (Chinese-Japanese-Korean-Vietnamese)
+ideograph\cr
+  \code{LOWERCASE} \tab \cr
+  \code{MATH} \tab \cr
+  \code{NONCHARACTER_CODE_POINT} \tab \cr
+  \code{QUOTATION_MARK} \tab \cr
+  \code{SOFT_DOTTED} \tab a character with a ``soft dot'', like i or j,
+such that an accent placed on this character causes the dot to disappear\cr
+  \code{TERMINAL_PUNCTUATION} \tab a punctuation character that generally
+marks the end of textual units\cr
+  \code{UPPERCASE} \tab \cr
+  \code{WHITE_SPACE} \tab a space character or TAB or CR or LF or ZWSP or ZWNBSP\cr
+  \code{CASE_SENSITIVE} \tab \cr
+  \code{POSIX_ALNUM} \tab \cr
+  \code{POSIX_BLANK} \tab \cr
+  \code{POSIX_GRAPH} \tab \cr
+  \code{POSIX_PRINT} \tab \cr
+  \code{POSIX_XDIGIT} \tab \cr
+  \code{CASED} \tab \cr
+  \code{CASE_IGNORABLE} \tab \cr
+  \code{CHANGES_WHEN_LOWERCASED} \tab \cr
+  \code{CHANGES_WHEN_UPPERCASED} \tab \cr
+  \code{CHANGES_WHEN_TITLECASED} \tab \cr
+  \code{CHANGES_WHEN_CASEFOLDED} \tab \cr
+  \code{CHANGES_WHEN_CASEMAPPED} \tab \cr
+  \code{CHANGES_WHEN_NFKC_CASEFOLDED} \tab \cr
 }
-and many more.
 }
 
 \section{POSIX Character Classes}{

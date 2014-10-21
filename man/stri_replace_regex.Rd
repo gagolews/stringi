@@ -41,6 +41,8 @@ The replacement string may contain references to capture groups
 (in round parentheses).
 References are of the form \code{$n}, where \code{n} is the number
 of the capture group (their numbering starts from 1).
+In order to treat the \code{$} character literally,
+escape it with a backslash.
 }
 \examples{
 \donttest{

@@ -7,12 +7,12 @@ stri_opts_regex(case_insensitive, comments, dotall, literal, multiline,
   unix_lines, uword, error_on_unknown_escapes)
 }
 \arguments{
-\item{case_insensitive}{logical; enable case insensitive matching}
+\item{case_insensitive}{logical; enable case insensitive matching [regex flag \code{(?i)}]}
 
-\item{comments}{logical; allow white space and comments within patterns}
+\item{comments}{logical; allow white space and comments within patterns [regex flag \code{(?x)}]}
 
 \item{dotall}{logical;  if set, `\code{.}` matches line terminators,
-otherwise matching of `\code{.}`  stops at a line end}
+otherwise matching of `\code{.}`  stops at a line end [regex flag \code{(?s)}]}
 
 \item{literal}{logical; if set, treat the entire pattern as a literal string:
 metacharacters or escape sequences in the input sequence will be given no special meaning;
@@ -21,7 +21,7 @@ facilities in this case (with \code{opts_collator=NA}).}
 
 \item{multiline}{logical; controls the behavior of `\code{$}` and `\code{^}`.
 If set, recognize line terminators within a string, otherwise,
- match only at start and end of input string}
+ match only at start and end of input string [regex flag \code{(?m)}]}
 
 \item{unix_lines}{logical; Unix-only line endings.
 When this mode is enabled, only \code{U+000a} is recognized as a
@@ -30,20 +30,14 @@ line ending by `\code{.}`, `\code{$}`, and `\code{^}`.}
 \item{uword}{logical; Unicode word boundaries.
 If set, uses the Unicode TR 29 definition of word boundaries;
 warning: Unicode word boundaries are quite different from traditional
-regex word boundaries.
+regex word boundaries. [regex flag \code{(?w)}]
 See \url{http://unicode.org/reports/tr29/#Word_Boundaries}}
 
 \item{error_on_unknown_escapes}{logical;
 whether to generate an error on unrecognized backslash escapes;
 if set, fail with an error on patterns that contain backslash-escaped ASCII
 letters without a known special meaning;
-otherwise, these escaped letters represent themselves.
-
-Note that some regex settings may be changed using ICU regex flags
-inside regexes. For example, \code{"(?i)pattern"} does
-a case-insensitive match of a given pattern,
-see the \pkg{ICU} User Guide entry on Regular Expressions
-in the References section.}
+otherwise, these escaped letters represent themselves.}
 }
 \value{
 Returns a named list object; missing settings are left with default values.
@@ -53,11 +47,18 @@ A convenience function to tune the \pkg{ICU} regular expressions matcher's behav
 e.g. in \code{\link{stri_count_regex}}
 and other \link{stringi-search-regex} functions.
 }
+\details{
+Note that some regex settings may be changed using ICU regex flags
+inside regexes. For example, \code{"(?i)pattern"} does
+a case-insensitive match of a given pattern,
+see the \pkg{ICU} User Guide entry on Regular Expressions
+in the References section or \link{stringi-search-regex}.
+}
 \examples{
 \donttest{
 stri_detect_regex("ala", "ALA") # case-sensitive by default
 stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
-stri_detect_regex("ala", "(?i:)ALA") # equivalent
+stri_detect_regex("ala", "(?i)ALA") # equivalent
 }
 }
 \references{
