@@ -48,7 +48,6 @@ in the string.
 }
 \seealso{
 Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_detect_fixed}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_fixed}},

@@ -98,7 +98,6 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate}}; \code{\link{stringi-search}}
 
 Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_detect_regex}};
   \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},

@@ -78,7 +78,6 @@ Other indexing: \code{\link{stri_locate_all_coll}},
   \code{\link{stri_sub<-}}
 
 Other search_charclass: \code{\link{stri_count_charclass}};
-  \code{\link{stri_detect_charclass}};
   \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_first_charclass}},
