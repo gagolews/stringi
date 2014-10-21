@@ -157,14 +157,13 @@ Other search_locate: \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_locate}}
 
-Other search_match: \code{\link{stri_match_all_regex}},
+Other search_match: \code{\link{stri_match}},
+  \code{\link{stri_match_all}},
+  \code{\link{stri_match_all_regex}},
+  \code{\link{stri_match_first}},
   \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_last_regex}},
-  \code{\link{stri_match_last_regex}};
-  \code{\link{stri_match_all}};
-  \code{\link{stri_match_first}};
-  \code{\link{stri_match_last}}; \code{\link{stri_match}}
+  \code{\link{stri_match_last}},
+  \code{\link{stri_match_last_regex}}
 
 Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
@@ -176,11 +175,6 @@ Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_locate_first_regex}},
   \code{\link{stri_locate_last_regex}},
   \code{\link{stri_locate_last_regex}};
-  \code{\link{stri_match_all_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_last_regex}},
-  \code{\link{stri_match_last_regex}};
   \code{\link{stri_opts_regex}};
   \code{\link{stri_replace_all_regex}},
   \code{\link{stri_replace_first_regex}},

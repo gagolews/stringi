@@ -102,11 +102,6 @@ Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_match_all_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_first_regex}},
-  \code{\link{stri_match_last_regex}},
-  \code{\link{stri_match_last_regex}};
   \code{\link{stri_opts_regex}};
   \code{\link{stri_replace_all_regex}},
   \code{\link{stri_replace_first_regex}},
