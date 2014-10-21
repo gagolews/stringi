@@ -60,8 +60,7 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_words}};
   \code{\link{stri_extract}}; \code{\link{stringi-search}}
 
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_locate_all_regex}},
+Other search_regex: \code{\link{stri_locate_all_regex}},
   \code{\link{stri_locate_first_regex}},
   \code{\link{stri_locate_first_regex}},
   \code{\link{stri_locate_last_regex}},

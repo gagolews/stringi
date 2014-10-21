@@ -38,11 +38,14 @@ for default settings; \code{stri_detect_regex} only}
 All the functions return a logical vector.
 }
 \description{
-This function determines, for each string in \code{str},
+These functions determine, for each string in \code{str},
 if there is at least one match to a corresponding \code{pattern}.
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
+
+If \code{pattern} is empty, then the result is \code{NA}
+and a warning is generated.
 
 \code{stri_detect} is a convenience function.
 It calls either \code{stri_detect_regex},
@@ -50,9 +53,6 @@ It calls either \code{stri_detect_regex},
 or \code{stri_detect_charclass}, depending on the argument used.
 Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
-
-If \code{pattern} is empty, then the result is \code{NA}
-and a warning is generated.
 }
 \examples{
 \donttest{

@@ -43,8 +43,7 @@ Each ``engine'' is able to perform many search-based operations, including:
 }
 }
 \seealso{
-Other search_charclass: \code{\link{stri_count_charclass}};
-  \code{\link{stri_extract_all_charclass}},
+Other search_charclass: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},
@@ -65,8 +64,7 @@ Other search_charclass: \code{\link{stri_count_charclass}};
   \code{\link{stri_trim_right}};
   \code{\link{stringi-search-charclass}}
 
-Other search_coll: \code{\link{stri_count_coll}};
-  \code{\link{stri_extract_all_coll}},
+Other search_coll: \code{\link{stri_extract_all_coll}},
   \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_last_coll}},
@@ -83,10 +81,11 @@ Other search_coll: \code{\link{stri_count_coll}};
   \code{\link{stri_replace_last_coll}};
   \code{\link{stringi-search-coll}}
 
-Other search_count: \code{\link{stri_count_charclass}};
-  \code{\link{stri_count_coll}};
-  \code{\link{stri_count_fixed}};
-  \code{\link{stri_count_regex}}; \code{\link{stri_count}}
+Other search_count: \code{\link{stri_count}},
+  \code{\link{stri_count_charclass}},
+  \code{\link{stri_count_coll}},
+  \code{\link{stri_count_fixed}},
+  \code{\link{stri_count_regex}}
 
 Other search_detect: \code{\link{stri_detect}},
   \code{\link{stri_detect_charclass}},
@@ -115,8 +114,7 @@ Other search_extract: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_words}};
   \code{\link{stri_extract}}
 
-Other search_fixed: \code{\link{stri_count_fixed}};
-  \code{\link{stri_endswith_fixed}},
+Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stri_locate_all_fixed}},
   \code{\link{stri_locate_first_fixed}},
@@ -168,8 +166,7 @@ Other search_match: \code{\link{stri_match_all_regex}},
   \code{\link{stri_match_first}};
   \code{\link{stri_match_last}}; \code{\link{stri_match}}
 
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_extract_all_regex}},
+Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},

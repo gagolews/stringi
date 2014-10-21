@@ -69,8 +69,7 @@ stri_detect_regex("ala", "(?i:)ALA") # equivalent
 \url{http://userguide.icu-project.org/strings/regexp}
 }
 \seealso{
-Other search_regex: \code{\link{stri_count_regex}};
-  \code{\link{stri_extract_all_regex}},
+Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
