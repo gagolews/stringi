@@ -274,12 +274,7 @@ So a POSIX flavor of \code{[:punct:]} is more like
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
 }
 \seealso{
-Other search_charclass: \code{\link{stri_extract_all_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_last_charclass}},
-  \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_replace_all_charclass}},
+Other search_charclass: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},

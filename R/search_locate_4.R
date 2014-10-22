@@ -65,6 +65,8 @@
 #' @param merge logical;
 #' indicates whether consecutive sequences of indices in the resulting
 #' matrix shall be merged;  \code{stri_locate_all_charclass} only
+#' @param mode single string;
+#' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions
 #'
 #' @return

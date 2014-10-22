@@ -56,6 +56,9 @@ stri_locate_last_fixed(str, pattern)
 
 \item{...}{additional arguments passed to the underlying functions}
 
+\item{mode}{single string;
+one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
+
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 

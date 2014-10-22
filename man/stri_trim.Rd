@@ -62,12 +62,7 @@ stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 }
 }
 \seealso{
-Other search_charclass: \code{\link{stri_extract_all_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_last_charclass}},
-  \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_replace_all_charclass}},
+Other search_charclass: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},

@@ -43,12 +43,7 @@ Each ``engine'' is able to perform many search-based operations, including:
 }
 }
 \seealso{
-Other search_charclass: \code{\link{stri_extract_all_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_last_charclass}},
-  \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_replace_all_charclass}},
+Other search_charclass: \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_first_charclass}},
   \code{\link{stri_replace_last_charclass}},
@@ -59,12 +54,7 @@ Other search_charclass: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_trim_right}};
   \code{\link{stringi-search-charclass}}
 
-Other search_coll: \code{\link{stri_extract_all_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_last_coll}},
-  \code{\link{stri_extract_last_coll}};
-  \code{\link{stri_replace_all_coll}},
+Other search_coll: \code{\link{stri_replace_all_coll}},
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_first_coll}},
   \code{\link{stri_replace_last_coll}},
@@ -83,26 +73,20 @@ Other search_detect: \code{\link{stri_detect}},
   \code{\link{stri_detect_fixed}},
   \code{\link{stri_detect_regex}}
 
-Other search_extract: \code{\link{stri_extract_all_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_last_charclass}},
-  \code{\link{stri_extract_last_charclass}};
+Other search_extract: \code{\link{stri_extract_words}};
+  \code{\link{stri_extract}},
+  \code{\link{stri_extract_all}},
+  \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_all_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_last_coll}},
-  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_all_regex}},
+  \code{\link{stri_extract_first}},
+  \code{\link{stri_extract_first_charclass}},
+  \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_last_regex}},
-  \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_extract_all}};
-  \code{\link{stri_extract_first}};
-  \code{\link{stri_extract_last}};
-  \code{\link{stri_extract_words}};
-  \code{\link{stri_extract}}
+  \code{\link{stri_extract_last}},
+  \code{\link{stri_extract_last_charclass}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_regex}}
 
 Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
@@ -141,12 +125,7 @@ Other search_match: \code{\link{stri_match}},
   \code{\link{stri_match_last}},
   \code{\link{stri_match_last_regex}}
 
-Other search_regex: \code{\link{stri_extract_all_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_last_regex}},
-  \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_opts_regex}};
+Other search_regex: \code{\link{stri_opts_regex}};
   \code{\link{stri_replace_all_regex}},
   \code{\link{stri_replace_first_regex}},
   \code{\link{stri_replace_first_regex}},
