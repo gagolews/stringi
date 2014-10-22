@@ -27,9 +27,9 @@
    * [BUGFIX] Issue #99: `stri_replace_all' did not use the `replacement` arg.
 
    * [BUGFIX] Issue #94: `R CMD check` should no longer fail
-     when `icudt` download failed
+     when `icudt` download failed.
 
-   * significant extensions in the stringi manual
+   * Significant extensions/clean ups in the stringi manual.
 
 
 * 0.2-5 (2014-05-16) **CRAN**

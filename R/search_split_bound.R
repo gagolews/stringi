@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Split a String into Text Lines
+#' Split a String Into Text Lines
 #'
 #' @description
 #' These functions split each character string

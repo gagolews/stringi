@@ -34,29 +34,22 @@ stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
 }
 }
 \seealso{
-Other search_replace: \code{\link{stri_replace_all_charclass}},
-  \code{\link{stri_replace_first_charclass}},
-  \code{\link{stri_replace_first_charclass}},
-  \code{\link{stri_replace_last_charclass}},
-  \code{\link{stri_replace_last_charclass}};
+Other search_replace: \code{\link{stri_replace}},
+  \code{\link{stri_replace_all}},
+  \code{\link{stri_replace_all_charclass}},
   \code{\link{stri_replace_all_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_last_coll}},
-  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_replace_all_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_last_fixed}},
-  \code{\link{stri_replace_last_fixed}};
   \code{\link{stri_replace_all_regex}},
+  \code{\link{stri_replace_first}},
+  \code{\link{stri_replace_first_charclass}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_fixed}},
   \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_last_regex}},
+  \code{\link{stri_replace_last}},
+  \code{\link{stri_replace_last_charclass}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_regex}};
-  \code{\link{stri_replace_all}};
-  \code{\link{stri_replace_first}};
-  \code{\link{stri_replace_last}};
-  \code{\link{stri_replace}}; \code{\link{stringi-search}}
+  \code{\link{stringi-search}}
 }
 

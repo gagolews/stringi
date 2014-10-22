@@ -79,7 +79,6 @@
 #' @family search_charclass
 #' @family search_detect
 #' @family search_count
-#' @family search_match
 #' @family search_locate
 #' @family search_replace
 #' @family search_split

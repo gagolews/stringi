@@ -143,11 +143,6 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 }
 \seealso{
 Other search_regex: \code{\link{stri_opts_regex}};
-  \code{\link{stri_replace_all_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_last_regex}},
-  \code{\link{stri_replace_last_regex}};
   \code{\link{stringi-search}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
