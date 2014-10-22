@@ -48,11 +48,6 @@ Other search_charclass: \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_charclass}};
-  \code{\link{stri_locate_all_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_last_charclass}},
-  \code{\link{stri_locate_last_charclass}};
   \code{\link{stri_trim}}, \code{\link{stri_trim}},
   \code{\link{stri_trim_both}},
   \code{\link{stri_trim_left}},

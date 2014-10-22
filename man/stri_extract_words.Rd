@@ -63,11 +63,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_coll}};
-  \code{\link{stri_locate_all_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_last_coll}},
-  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};

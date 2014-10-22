@@ -46,32 +46,23 @@ stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary="li
 }
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_all_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_last_charclass}},
-  \code{\link{stri_locate_last_charclass}};
+Other indexing: \code{\link{stri_locate_words}};
+  \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
+  \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_all_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_last_coll}},
-  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_last_fixed}},
-  \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},
+  \code{\link{stri_locate_first}},
+  \code{\link{stri_locate_first_charclass}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_last_regex}},
+  \code{\link{stri_locate_last}},
+  \code{\link{stri_locate_last_charclass}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_regex}};
-  \code{\link{stri_locate_all}};
-  \code{\link{stri_locate_first}};
-  \code{\link{stri_locate_last}};
-  \code{\link{stri_locate_words}};
-  \code{\link{stri_locate}}; \code{\link{stri_sub}},
-  \code{\link{stri_sub<-}}
+  \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
 
 Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},
@@ -97,11 +88,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_all_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_last_coll}},
-  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
@@ -118,31 +104,23 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-coll}}
 
-Other search_locate: \code{\link{stri_locate_all_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_first_charclass}},
-  \code{\link{stri_locate_last_charclass}},
-  \code{\link{stri_locate_last_charclass}};
+Other search_locate: \code{\link{stri_locate_words}};
+  \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
+  \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_all_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_first_coll}},
-  \code{\link{stri_locate_last_coll}},
-  \code{\link{stri_locate_last_coll}};
   \code{\link{stri_locate_all_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_first_fixed}},
-  \code{\link{stri_locate_last_fixed}},
-  \code{\link{stri_locate_last_fixed}};
   \code{\link{stri_locate_all_regex}},
+  \code{\link{stri_locate_first}},
+  \code{\link{stri_locate_first_charclass}},
+  \code{\link{stri_locate_first_coll}},
+  \code{\link{stri_locate_first_fixed}},
   \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_last_regex}},
+  \code{\link{stri_locate_last}},
+  \code{\link{stri_locate_last_charclass}},
+  \code{\link{stri_locate_last_coll}},
+  \code{\link{stri_locate_last_fixed}},
   \code{\link{stri_locate_last_regex}};
-  \code{\link{stri_locate_all}};
-  \code{\link{stri_locate_first}};
-  \code{\link{stri_locate_last}};
-  \code{\link{stri_locate_words}};
-  \code{\link{stri_locate}}; \code{\link{stringi-search}}
+  \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_words}};
