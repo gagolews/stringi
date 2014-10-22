@@ -204,7 +204,7 @@ invisible(NULL)
 #' }
 #' 
 #' For information on how to define character classes
-#' in regexes, refer to \link{stri-search-charclass}.
+#' in regexes, refer to \link{stringi-search-charclass}.
 #'
 #' @section Regex Functions in \pkg{stringi}:
 #' Note that if a given regex \code{pattern} is empty,

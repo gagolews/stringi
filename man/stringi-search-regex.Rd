@@ -114,7 +114,7 @@ ICU User Guide on regexes.
 }
 
 For information on how to define character classes
-in regexes, refer to \link{stri-search-charclass}.
+in regexes, refer to \link{stringi-search-charclass}.
 }
 
 \section{Regex Functions in \pkg{stringi}}{
@@ -147,11 +147,6 @@ Other search_regex: \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last_regex}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_locate_all_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_first_regex}},
-  \code{\link{stri_locate_last_regex}},
-  \code{\link{stri_locate_last_regex}};
   \code{\link{stri_opts_regex}};
   \code{\link{stri_replace_all_regex}},
   \code{\link{stri_replace_first_regex}},
