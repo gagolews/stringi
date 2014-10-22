@@ -58,11 +58,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
-  \code{\link{stri_extract_all_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_last_coll}},
-  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
@@ -80,25 +75,20 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-coll}}
 
-Other search_extract: \code{\link{stri_extract_all_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_first_charclass}},
-  \code{\link{stri_extract_last_charclass}},
-  \code{\link{stri_extract_last_charclass}};
+Other search_extract: \code{\link{stri_extract}},
+  \code{\link{stri_extract_all}},
+  \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_all_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_first_coll}},
-  \code{\link{stri_extract_last_coll}},
-  \code{\link{stri_extract_last_coll}};
   \code{\link{stri_extract_all_regex}},
+  \code{\link{stri_extract_first}},
+  \code{\link{stri_extract_first_charclass}},
+  \code{\link{stri_extract_first_coll}},
   \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_first_regex}},
-  \code{\link{stri_extract_last_regex}},
+  \code{\link{stri_extract_last}},
+  \code{\link{stri_extract_last_charclass}},
+  \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_regex}};
-  \code{\link{stri_extract_all}};
-  \code{\link{stri_extract_first}};
-  \code{\link{stri_extract_last}};
-  \code{\link{stri_extract}}; \code{\link{stringi-search}}
+  \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
