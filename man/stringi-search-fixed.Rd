@@ -30,11 +30,6 @@ to Unicode is done as usual.
 \seealso{
 Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
-  \code{\link{stri_replace_all_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_first_fixed}},
-  \code{\link{stri_replace_last_fixed}},
-  \code{\link{stri_replace_last_fixed}};
   \code{\link{stringi-search}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};

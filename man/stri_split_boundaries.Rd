@@ -89,11 +89,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
-  \code{\link{stri_replace_all_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_last_coll}},
-  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
   \code{\link{stri_trans_toupper}};

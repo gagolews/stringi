@@ -92,7 +92,7 @@
 #'    "(\\w+)=(\\w+)")
 #' }
 #'
-#' @family search_match
+#' @family search_extract
 #' @export
 #' @rdname search_match
 stri_match_all <- function(str, ..., regex) {

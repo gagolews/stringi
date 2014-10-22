@@ -50,7 +50,7 @@ stri_extract_last_regex(str, pattern, opts_regex = NULL)
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 
-\item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
+\item{pattern,regex,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
 \item{merge}{logical;
@@ -89,6 +89,9 @@ Vectorized over \code{str}, \code{pattern}, and \code{merge}.
 Note that a \code{stri_extract_*_fixed} family of functions does not
 make sense. Thus, it has not been implemented in \pkg{stringi}.
 
+If you would like to extract regex capture groups individually,
+check out \code{\link{stri_match}}.
+
 \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 and \code{stri_extract_last} are convenience functions.
 They just call \code{stri_extract_*_*}, depending on arguments used.
@@ -119,6 +122,12 @@ stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}',
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_words}};
+  \code{\link{stri_match}}, \code{\link{stri_match_all}},
+  \code{\link{stri_match_all_regex}},
+  \code{\link{stri_match_first}},
+  \code{\link{stri_match_first_regex}},
+  \code{\link{stri_match_last}},
+  \code{\link{stri_match_last_regex}};
   \code{\link{stringi-search}}
 }
 

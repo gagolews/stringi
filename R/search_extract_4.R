@@ -45,6 +45,9 @@
 #' Note that a \code{stri_extract_*_fixed} family of functions does not
 #' make sense. Thus, it has not been implemented in \pkg{stringi}.
 #' 
+#' If you would like to extract regex capture groups individually,
+#' check out \code{\link{stri_match}}.
+#' 
 #' \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 #' and \code{stri_extract_last} are convenience functions.
 #' They just call \code{stri_extract_*_*}, depending on arguments used.
@@ -52,7 +55,7 @@
 #' directly for better performance.
 #'
 #' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
+#' @param pattern,regex,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}

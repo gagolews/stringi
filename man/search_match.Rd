@@ -88,6 +88,20 @@ stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
 }
 }
 \seealso{
-Other search_match: \code{\link{stringi-search}}
+Other search_extract: \code{\link{stri_extract_words}};
+  \code{\link{stri_extract}},
+  \code{\link{stri_extract_all}},
+  \code{\link{stri_extract_all_charclass}},
+  \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_all_regex}},
+  \code{\link{stri_extract_first}},
+  \code{\link{stri_extract_first_charclass}},
+  \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_regex}},
+  \code{\link{stri_extract_last}},
+  \code{\link{stri_extract_last_charclass}},
+  \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_regex}};
+  \code{\link{stringi-search}}
 }
 

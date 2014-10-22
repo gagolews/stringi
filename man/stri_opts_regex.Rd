@@ -70,12 +70,7 @@ stri_detect_regex("ala", "(?i)ALA") # equivalent
 \url{http://userguide.icu-project.org/strings/regexp}
 }
 \seealso{
-Other search_regex: \code{\link{stri_replace_all_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_first_regex}},
-  \code{\link{stri_replace_last_regex}},
-  \code{\link{stri_replace_last_regex}};
-  \code{\link{stringi-search-regex}};
+Other search_regex: \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
 }
 

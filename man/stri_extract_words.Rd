@@ -62,11 +62,6 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
-  \code{\link{stri_replace_all_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_first_coll}},
-  \code{\link{stri_replace_last_coll}},
-  \code{\link{stri_replace_last_coll}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
@@ -88,6 +83,12 @@ Other search_extract: \code{\link{stri_extract}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_coll}},
   \code{\link{stri_extract_last_regex}};
+  \code{\link{stri_match}}, \code{\link{stri_match_all}},
+  \code{\link{stri_match_all_regex}},
+  \code{\link{stri_match_first}},
+  \code{\link{stri_match_first_regex}},
+  \code{\link{stri_match_last}},
+  \code{\link{stri_match_last_regex}};
   \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_locate_boundaries}};
