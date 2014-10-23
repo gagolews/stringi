@@ -97,6 +97,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_join2_nocollapse,           2),
 //   STRI__MAKE_CALL_METHOD(stri_justify,                    2),  // TODO: version >= 0.2
    STRI__MAKE_CALL_METHOD(stri_length,                     1),
+   STRI__MAKE_CALL_METHOD(stri_list2matrix,                3),
    STRI__MAKE_CALL_METHOD(stri_locale_info,                1),
    STRI__MAKE_CALL_METHOD(stri_locale_list,                0),
    STRI__MAKE_CALL_METHOD(stri_locale_set,                 1),

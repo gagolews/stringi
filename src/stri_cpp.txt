@@ -72,4 +72,5 @@ stri_trans_transliterate.cpp \
 stri_uchar.cpp \
 stri_ucnv.cpp \
 stri_uloc.cpp \
+stri_utils.cpp \
 stri_wrap.cpp

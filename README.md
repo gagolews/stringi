@@ -12,6 +12,8 @@ platform-independent set of functions known to *Java*, *Perl*, *Python*,
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
 package.
 
+**Package maintainer**: [Marek Gagolewski](http://gagolewski.rexamine.com/)
+
 **Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
 [Bartlomiej Tartanus](http://tartanus.rexamine.com/)
 
@@ -37,7 +39,7 @@ For more details on copyright holders see the `LICENSE` file.
 > [ICU license](http://source.icu-project.org/repos/icu/icu/trunk/license.html),
 > a simple, permissive non-copyleft free software license, compatible with
 > the GNU GPL. The *ICU* license is 
-> [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed)
+> [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed-)
 > to allow *ICU* to be included both in free software projects 
 > and in proprietary or commercial products.
 

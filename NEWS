@@ -14,6 +14,10 @@
      `stri_split_regex`, `stri_split_coll` gained a `tokens_only` parameter,
      which defaults to `FALSE` for backward compatibility.
 
+   * [NEW FUNCTION] #105: `stri_list2matrix` converts lists of atomic vectors
+     to character matrices, useful in connection with `stri_split`
+     and `stri_extract`.
+
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
      [TO DO.........: documentation, coll, charclass, regex?, other]
