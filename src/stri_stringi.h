@@ -307,6 +307,10 @@ SEXP stri_test_UnicodeContainer16(SEXP str);
 SEXP stri_test_UnicodeContainer8(SEXP str);
 SEXP stri_test_returnasis(SEXP x);
 
+
+// utils.cpp
+SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill);
+
 // ------------------------------------------------------------------------
 
 

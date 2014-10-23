@@ -84,7 +84,8 @@
 #' \code{stri_split} only
 #' 
 #' @return All the functions return a list of character vectors.
-#'
+#' If you do not like playing with lists, consider calling
+#' \code{\link{stri_list2matrix}} on the resulting object.
 #'
 #' @examples
 #' \donttest{
@@ -98,6 +99,8 @@
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
+#' 
+#' stri_list2matrix(stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE))
 #' 
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
 #' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n_max=3,
