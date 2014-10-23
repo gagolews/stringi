@@ -21,6 +21,10 @@
    * ....[NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
      UTF-8 conversion) [TO DO..... rewrite in C++.....]
 
+   * ... #77 stri_rand_lipsum
+
+   * ... #102 replace_set?? replace arg vectorize=FALSE?
+
    * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 

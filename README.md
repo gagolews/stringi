@@ -26,6 +26,21 @@ For more details on copyright holders see the `LICENSE` file.
 
 **License**: BSD-3-clause, for more details see the `LICENSE` file
 
+> **stringi**'s source code itself is released under the BSD-3-clause license,
+> which is 100% open source compatible. Such a license has been verified as 
+> [GPL-compatible](http://en.wikipedia.org/wiki/BSD_licenses)
+> by the Free Software Foundation.
+>
+> The reason for using BSD-3-clause is that we include full source
+> code of the *ICU* library, which has its own license.
+> The *ICU* projects are covered by the 
+> [ICU license](http://source.icu-project.org/repos/icu/icu/trunk/license.html),
+> a simple, permissive non-copyleft free software license, compatible with
+> the GNU GPL. The *ICU* license is 
+> [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed)
+> to allow *ICU* to be included both in free software projects 
+> and in proprietary or commercial products.
+
 **Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html 
 [for a recent development version]
 
