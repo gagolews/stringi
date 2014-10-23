@@ -52,4 +52,6 @@ test_that("stri_split_coll", {
    expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef"), "h", character(0)))
    expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef", "g"), "h", character(0)))
 
+   expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE, simplify=TRUE),
+      matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
 })
