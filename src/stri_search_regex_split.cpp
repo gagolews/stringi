@@ -67,7 +67,7 @@ using namespace std;
  *          added tokens_only param
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
- *          added split param
+ *          added simplify param
  */
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, 
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex)

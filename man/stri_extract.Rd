@@ -24,19 +24,19 @@ stri_extract_last(str, ..., regex, coll, charclass)
 stri_extract(str, ..., regex, coll, charclass, mode = c("first", "all",
   "last"))
 
-stri_extract_all_charclass(str, pattern, merge = TRUE)
+stri_extract_all_charclass(str, pattern, merge = TRUE, simplify = FALSE)
 
 stri_extract_first_charclass(str, pattern)
 
 stri_extract_last_charclass(str, pattern)
 
-stri_extract_all_coll(str, pattern, opts_collator = NULL)
+stri_extract_all_coll(str, pattern, simplify = FALSE, opts_collator = NULL)
 
 stri_extract_first_coll(str, pattern, opts_collator = NULL)
 
 stri_extract_last_coll(str, pattern, opts_collator = NULL)
 
-stri_extract_all_regex(str, pattern, opts_regex = NULL)
+stri_extract_all_regex(str, pattern, simplify = FALSE, opts_regex = NULL)
 
 stri_extract_first_regex(str, pattern, opts_regex = NULL)
 
@@ -56,6 +56,11 @@ for more details refer to \link{stringi-search}}
 \item{merge}{logical;
 should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only}
 
+\item{simplify}{single logical value;
+if \code{TRUE}, then a character matrix is returned;
+otherwise (the default), a list of character vectors is given, see Value;
+\code{stri_extract_all_*} only}
+
 \item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 for default settings; \code{stri_extract_*_coll} only}
@@ -66,13 +71,17 @@ for default settings;
 \code{stri_extract_*_regex} only}
 }
 \value{
-For \code{stri_extract_all*},
+For \code{stri_extract_all*}, if \code{simplify == FALSE} (the default), then
 a list of character vectors is returned. Each list element
 represents the results of a separate search scenario.
 If a pattern is not found, then a character vector of length 1,
 with single \code{NA} value will be generated.
-If you do not like playing with lists, consider calling
-\code{\link{stri_list2matrix}} on the resulting object.
+Otherwise, i.e. if \code{simplify == TRUE},
+then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+is called on the resulting object.
+In such a case, a character matrix with an appropriate number of rows
+(according to the length of \code{str}, \code{pattern}, etc.)
+is returned.
 
 \code{stri_extract_first*} and \code{stri_extract_last*},
 on the other hand, return a character vector.
@@ -122,6 +131,7 @@ stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}'
 stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 
 stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+')))
+stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+'), simplify=TRUE)
 }
 }
 \seealso{

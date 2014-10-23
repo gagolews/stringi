@@ -66,18 +66,26 @@
 #' for default settings; \code{stri_extract_*_coll} only
 #' @param merge logical;
 #' should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only
+#' @param simplify single logical value;
+#' if \code{TRUE}, then a character matrix is returned;
+#' otherwise (the default), a list of character vectors is given, see Value;
+#' \code{stri_extract_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions
 #'
 #' @return
-#' For \code{stri_extract_all*},
+#' For \code{stri_extract_all*}, if \code{simplify == FALSE} (the default), then
 #' a list of character vectors is returned. Each list element
 #' represents the results of a separate search scenario.
 #' If a pattern is not found, then a character vector of length 1,
 #' with single \code{NA} value will be generated.
-#' If you do not like playing with lists, consider calling
-#' \code{\link{stri_list2matrix}} on the resulting object.
+#' Otherwise, i.e. if \code{simplify == TRUE},
+#' then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+#' is called on the resulting object.
+#' In such a case, a character matrix with an appropriate number of rows
+#' (according to the length of \code{str}, \code{pattern}, etc.)
+#' is returned.
 #' 
 #' \code{stri_extract_first*} and \code{stri_extract_last*},
 #' on the other hand, return a character vector.
@@ -105,6 +113,7 @@
 #' stri_extract_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' 
 #' stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
+#' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 #' }
 #'
 #' @family search_extract
@@ -180,8 +189,8 @@ stri_extract <- function(str, ..., regex, coll, charclass,
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_charclass <- function(str, pattern, merge=TRUE) {
-   .Call("stri_extract_all_charclass", str, pattern, merge, PACKAGE="stringi")
+stri_extract_all_charclass <- function(str, pattern, merge=TRUE, simplify=FALSE) {
+   .Call("stri_extract_all_charclass", str, pattern, merge, simplify, PACKAGE="stringi")
 }
 
 
@@ -201,8 +210,8 @@ stri_extract_last_charclass <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_extract_all_coll", str, pattern, opts_collator, PACKAGE="stringi")
+stri_extract_all_coll <- function(str, pattern, simplify=FALSE, opts_collator=NULL) {
+   .Call("stri_extract_all_coll", str, pattern, simplify, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -222,8 +231,8 @@ stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_extract_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
+stri_extract_all_regex <- function(str, pattern, simplify=FALSE, opts_regex=NULL) {
+   .Call("stri_extract_all_regex", str, pattern, simplify, opts_regex, PACKAGE="stringi")
 }
 
 
