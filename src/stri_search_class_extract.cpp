@@ -156,7 +156,9 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @param str character vector
  * @param pattern character vector
- * @return list of character vectors
+ * @param simplify single logical value
+ * 
+ * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
  *
@@ -171,13 +173,18 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
+ *          added simplify param
  */
-SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
+SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    merge = stri_prepare_arg_logical(merge, "merge");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(merge));
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   R_len_t vectorize_length = stri__recycling_rule(true, 3,
+      LENGTH(str), LENGTH(pattern), LENGTH(merge));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -261,6 +268,11 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, cur_res);
          STRI__UNPROTECT(1)
       }
+   }
+   
+   if (simplify1) {
+      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1));
    }
 
    STRI__UNPROTECT_ALL

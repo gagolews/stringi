@@ -149,16 +149,21 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @return list of character vectors
+ * @param simplify single logical value
+ * 
+ * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
+ *          added simplify param
  */
-SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
    pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
@@ -215,6 +220,12 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       utext_close(str_text);
       str_text = NULL;
    }
+   
+   if (simplify1) {
+      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1));
+   }
+   
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)

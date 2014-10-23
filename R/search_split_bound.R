@@ -154,6 +154,9 @@ stri_split_lines1 <- function(str) {
 #' @examples
 #' \donttest{
 #' stri_split_boundaries("The\u00a0above-mentioned packages are...", boundary="line")
+#' stri_split_boundaries("This is it. I in heaven.", boundary="sentence")
+#' stri_split_boundaries("Wait a second... I know it!", boundary="sentence")
+#' stri_split_boundaries("Wait a second... I know it!", boundary="word") # cf. stri_extract_words
 #' }
 #' 
 #' @export
