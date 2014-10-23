@@ -18,6 +18,10 @@
      to character matrices, useful in connection with `stri_split`
      and `stri_extract`.
 
+   * [NEW FEATURE] #106: stri_split, stri_extract_all gained a `simplify`
+     argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
+     is called on the resulting list.
+
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
      [TO DO.........: documentation, coll, charclass, regex?, other]

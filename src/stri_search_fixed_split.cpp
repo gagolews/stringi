@@ -50,7 +50,10 @@ using namespace std;
  * @param pattern character vector
  * @param n_max integer vector
  * @param omit_empty logical vector
- *
+ * @param tokens_only single logical value
+ * @param simplify single logical value
+ * 
+ * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Bartek Tartanus)
  *
@@ -65,15 +68,19 @@ using namespace std;
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
+ *          added split param
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, 
-                      SEXP omit_empty, SEXP tokens_only)
+                      SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
 
    STRI__ERROR_HANDLER_BEGIN
    R_len_t vectorize_length = stri__recycling_rule(true, 4, 
@@ -154,6 +161,11 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
 
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
+   }
+   
+   if (simplify1) {
+      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1));
    }
 
    STRI__UNPROTECT_ALL

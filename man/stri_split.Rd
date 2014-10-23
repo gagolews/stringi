@@ -10,16 +10,16 @@
 stri_split(str, ..., regex, fixed, coll, charclass)
 
 stri_split_fixed(str, pattern, n_max = -1L, omit_empty = FALSE,
-  tokens_only = FALSE)
+  tokens_only = FALSE, simplify = FALSE)
 
 stri_split_regex(str, pattern, n_max = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, opts_regex = NULL)
+  tokens_only = FALSE, simplify = FALSE, opts_regex = NULL)
 
 stri_split_coll(str, pattern, n_max = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, opts_collator = NULL)
+  tokens_only = FALSE, simplify = FALSE, opts_collator = NULL)
 
 stri_split_charclass(str, pattern, n_max = -1L, omit_empty = FALSE,
-  tokens_only = FALSE)
+  tokens_only = FALSE, simplify = FALSE)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -38,6 +38,10 @@ strings should be removed from the result}
 \item{tokens_only}{single logical value;
 may affect the result if \code{n_max} is positive, see Details}
 
+\item{simplify}{single logical value;
+if \code{TRUE}, then a character matrix is returned;
+otherwise (the default), a list of character vectors is given, see Value}
+
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 for default settings;
@@ -49,7 +53,14 @@ for default settings;
 \code{stri_split_coll} only}
 }
 \value{
-All the functions return a list of character vectors.
+If \code{simplify == FALSE} (the default),
+then the functions return a list of character vectors.
+
+Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+is called on the resulting object.
+In such a case, a character matrix with an appropriate number of rows
+(according to the length of \code{str}, \code{pattern}, etc.)
+is returned.
 }
 \description{
 Splits each element of \code{str} into substrings.
@@ -95,6 +106,9 @@ stri_split_fixed("a_b_c__d", "_", n_max=4, omit_empty=FALSE, tokens_only=TRUE)
 stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE)
 stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE)
 stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
+
+stri_list2matrix(stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE))
+stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE, simplify=TRUE)
 
 stri_split_charclass("Lorem ipsum dolor sit amet", "\\\\p{WHITE_SPACE}")
 stri_split_charclass(" Lorem  ipsum dolor", "\\\\p{WHITE_SPACE}", n_max=3,

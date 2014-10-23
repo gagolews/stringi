@@ -36,7 +36,8 @@ and \code{result[i,j] == fill} otherwise, see Examples.
 If \code{byrow} is \code{TRUE}, then the resulting matrix is
 a transposition of the above-described one.
 
-This function may be useful e.g. in connection with \code{\link{stri_split}}.
+This function may be useful e.g. in connection with \code{\link{stri_split}}
+and \code{\link{stri_extract_all}}.
 }
 \examples{
 \donttest{

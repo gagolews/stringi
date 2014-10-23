@@ -52,7 +52,10 @@ using namespace std;
  * @param omit_empty logical vector
  * @param opts_collator passed to stri__ucol_open(),
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
- * @return list of character vectors
+ * @param tokens_only single logical value
+ * @param simplify single logical value
+ * 
+ * @return list of character vectors or character matrix
  *
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -68,15 +71,19 @@ using namespace std;
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
+ *          added split param
  */
 SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
-                     SEXP tokens_only, SEXP opts_collator)
+                     SEXP tokens_only, SEXP simplify, SEXP opts_collator)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
    n_max = stri_prepare_arg_integer(n_max, "n_max");
    omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
 
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
@@ -162,6 +169,12 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
+   
+   if (simplify1) {
+      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1));
+   }
+   
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(

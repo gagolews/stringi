@@ -80,12 +80,20 @@
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings;
 #' \code{stri_split_coll} only
+#' @param simplify single logical value;
+#' if \code{TRUE}, then a character matrix is returned;
+#' otherwise (the default), a list of character vectors is given, see Value
 #' @param ... additional arguments passed to the underlying functions;
 #' \code{stri_split} only
 #' 
-#' @return All the functions return a list of character vectors.
-#' If you do not like playing with lists, consider calling
-#' \code{\link{stri_list2matrix}} on the resulting object.
+#' @return If \code{simplify == FALSE} (the default),
+#' then the functions return a list of character vectors.
+#' 
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+#' is called on the resulting object.
+#' In such a case, a character matrix with an appropriate number of rows
+#' (according to the length of \code{str}, \code{pattern}, etc.)
+#' is returned.
 #'
 #' @examples
 #' \donttest{
@@ -101,6 +109,7 @@
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
 #' 
 #' stri_list2matrix(stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE))
+#' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE, simplify=TRUE)
 #' 
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
 #' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n_max=3,
@@ -135,33 +144,33 @@ stri_split <- function(str, ..., regex, fixed, coll, charclass) {
 #' @export
 #' @rdname stri_split
 stri_split_fixed <- function(str, pattern, n_max=-1L, 
-                           omit_empty=FALSE, tokens_only=FALSE) {
+      omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_fixed", str, pattern, 
-      n_max, omit_empty, tokens_only, PACKAGE="stringi")
+      n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_regex <- function(str, pattern, n_max=-1L, 
-               omit_empty=FALSE, tokens_only=FALSE, opts_regex=NULL)  {
+stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
+      tokens_only=FALSE, simplify=FALSE, opts_regex=NULL)  {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_regex", str, pattern, 
-      n_max, omit_empty, tokens_only, opts_regex, PACKAGE="stringi")
+      n_max, omit_empty, tokens_only, simplify, opts_regex, PACKAGE="stringi")
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_coll <- function(str, pattern, n_max=-1L, 
-            omit_empty=FALSE, tokens_only=FALSE, opts_collator=NULL) {
+stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
+      tokens_only=FALSE, simplify=FALSE, opts_collator=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_coll", str, pattern, 
-      n_max, omit_empty, tokens_only, opts_collator, PACKAGE="stringi")
+      n_max, omit_empty, tokens_only, simplify, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -169,9 +178,9 @@ stri_split_coll <- function(str, pattern, n_max=-1L,
 #' @export
 #' @rdname stri_split
 stri_split_charclass <- function(str, pattern, n_max=-1L, 
-                  omit_empty=FALSE, tokens_only=FALSE) {
+                  omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
    .Call("stri_split_charclass", str, pattern, 
-      n_max, omit_empty, tokens_only, PACKAGE="stringi")
+      n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
 }

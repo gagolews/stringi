@@ -71,6 +71,8 @@ a list of character vectors is returned. Each list element
 represents the results of a separate search scenario.
 If a pattern is not found, then a character vector of length 1,
 with single \code{NA} value will be generated.
+If you do not like playing with lists, consider calling
+\code{\link{stri_list2matrix}} on the resulting object.
 
 \code{stri_extract_first*} and \code{stri_extract_last*},
 on the other hand, return a character vector.
@@ -118,6 +120,8 @@ stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+
+stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+')))
 }
 }
 \seealso{
