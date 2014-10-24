@@ -38,6 +38,8 @@
 
    * ... #98 stri_trans_totitle with a breakiterator
 
+   * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`
+
    * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 
@@ -103,8 +105,8 @@
    * [NEW FUNCTION] `stri_pad`, `stri_pad_left`, `stri_pad_right`,
       and `stri_pad_both` pad a string with a specific code point.
 
-   * [NEW FUNCTION] `stri_wrap breaks` paragraphs of text into lines.
-     Two algorithms (greedy and minimal-raggedness) are available.
+   * [NEW FUNCTION] `stri_wrap` breaks paragraphs of text into lines.
+     Two algorithms (greedy and minimal raggedness) are available.
 
 
 * 0.2-1 (2014-04-18) **devel**

@@ -38,18 +38,29 @@
 #'
 #' @details
 #' Vectorized over \code{str}.
+#' 
+#' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
+#' text boundaries at which a line break is possible.
+#' This is a locale-dependent operation.
+#' Note that Unicode code points may have various widths when
+#' printed on screen. This function acts like each code point
+#' is of width 1. This function should rather be used with
+#' text in Latin script.
 #'
-#' Any of the strings must not contain \code{\\r}, \code{\\n},
+#' If \code{normalize} is \code{FALSE} (the default),
+#' then multiple white spaces between the word boundaries are
+#' preserved withing each wrapped line.
+#' In such a case, none of the strings can contain \code{\\r}, \code{\\n},
 #' or other new line characters, otherwise you will get at error.
 #' You should split the input text into lines
 #' or e.g. substitute line breaks with spaces
 #' before applying this function.
-#'
-#' Multiple white spaces between the word boundaries are
-#' preserved withing each wrapped line. If you wish to substitute
-#' all such sequences with single spaces, call e.g.
-#' \code{stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))}
-#' prior to string wrapping.
+#'  
+#' On the other hand, if \code{normalize} is \code{TRUE}, then
+#' all consecutive white space sequences are replaced with single spaces, by calling i.a.
+#' \code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
+#' before actual string wrapping. Moreover, \code{\link{stri_split_lines}} 
+#' and \code{\link{stri_trans_nfc}} is called on the input character vector.
 #'
 #' The greedy algorithm (for \code{cost_exponent} being non-positive)
 #' provides a very simple way for word wrapping.
@@ -62,14 +73,6 @@
 #' (by default, see \code{cost_exponent}) number of spaces  (raggedness)
 #' at the end of each line, so the text is mode arranged evenly.
 #'
-#' Note that Unicode code points may have various widths when
-#' printed on screen. This function acts like each code point
-#' is of width 1. This function should rather be used with
-#' text in Latin script.
-#'
-#' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
-#' text boundaries at which a line break is possible.
-#'
 #' @param str character vector of strings to reformat
 #' @param width single positive integer giving the desired
 #'        maximal number of code points per line
@@ -79,6 +82,7 @@
 #'        of a (more aesthetic) dynamic programming-based algorithm
 #'        (values in [2, 3] are recommended)
 #' @param simplify single logical value, see Value
+#' @param normalize single logical value, see Details
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}
@@ -107,17 +111,17 @@
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
 stri_wrap <- function(str, width=floor(0.9*getOption("width")),
-   cost_exponent=2.0, simplify=TRUE, locale=NULL)
+   cost_exponent=2.0, simplify=TRUE, normalize=FALSE, locale=NULL)
 {
    simplify <- as.logical(simplify)
 
-#   # @TODO: add param normalize?
-#   normalize <- as.logical(normalize)
-#   if (normalize) {
-#      str <- unlist(stri_split_lines(str))
-#      str <- stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))
-#      str <- stri_paste(str, collapse=' ')
-#   }
+   normalize <- as.logical(normalize)
+   if (normalize)  # this will give an informative warning or error if sth is wrong
+   {
+      str <- sapply(stri_split_lines(str), function(s) stri_flatten(s, collapse=' '))
+      str <- stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))
+      str <- stri_trans_nfc(str)
+   }
 
    ret <- .Call("stri_wrap", str, width, cost_exponent, locale, PACKAGE="stringi")
 
