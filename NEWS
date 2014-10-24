@@ -36,7 +36,9 @@
 
    * ... #102 replace_set?? replace arg vectorize=FALSE?
 
-   * ... #98 stri_trans_totitle with a breakiterator
+   * [NEW FEATURE] #98: `stri_trans_totitle` gained a `boundary`
+     parameter; it indicates which ICU BreakIterator should be used when
+     case mapping.
 
    * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`
 
