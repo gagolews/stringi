@@ -9,7 +9,6 @@ test_that("stri_split_coll", {
    expect_identical(stri_split_coll(NA,"a"),list(NA_character_))
    expect_identical(stri_split_coll("NA",NA),list(NA_character_))
    expect_identical(stri_split_coll("NA","a",NA),list(NA_character_))
-   expect_identical(stri_split_coll("NA","a",1,NA),list(NA_character_))
    expect_identical(stri_split_coll(" "," "),list(rep("",2)))
    expect_identical(stri_split_coll("aa","a"),list(rep("",3)))
    expect_identical(stri_split_coll("aa","a",omit_empty=TRUE),list(character(0)))
@@ -52,6 +51,16 @@ test_that("stri_split_coll", {
    expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef"), "h", character(0)))
    expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef", "g"), "h", character(0)))
 
-   expect_identical(stri_split_coll(c("ab_c", "d_ef_g", "h", ""), "_", omit_empty=TRUE, simplify=TRUE),
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE),
+      matrix(c("ab", "d", "", "", "c", "ef", "h", NA, NA, "g", NA, NA), nrow=4))
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE),
+      matrix(c("ab", "d", NA, NA, "c", "ef", "h", NA, NA, "g", NA, NA), nrow=4))
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE),
+      list(c("ab", "c"), c("d", "ef", "g"), "h", character()))
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE),
+      list(c("ab", "c"), c("d", "ef", "g"), c("", "h"), ""))
+   expect_identical(stri_split_coll(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA),
+      list(c("ab", "c"), c("d", "ef", "g"), c(NA, "h"), NA_character_))
 })

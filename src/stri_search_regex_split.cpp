@@ -66,8 +66,11 @@ using namespace std;
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
  * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
+ *          added split param
+ * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
- *          added simplify param
+ *          allow omit_empty=NA
  */
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, 
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex)
@@ -97,17 +100,19 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (n_max_cont.isNA(i) || omit_empty_cont.isNA(i)) {
+      if (n_max_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
       int  n_max_cur        = n_max_cont.get(i);
-      int  omit_empty_cur   = omit_empty_cont.get(i);
+      int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
+         SET_VECTOR_ELT(ret, i, 
+            (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
+            stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
@@ -164,7 +169,10 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
          pair<R_len_t, R_len_t> curoccur = *iter;
-         SET_STRING_ELT(ans, k,
+         if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
+            SET_STRING_ELT(ans, k, NA_STRING);
+         else
+            SET_STRING_ELT(ans, k,
             Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 

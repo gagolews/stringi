@@ -23,6 +23,8 @@
      is called on the resulting list.
 .....TO DO: stri_extract_words, stri_split_boundaries
 
+   * [NEW FEATURE] #107: `stri_split_*` now allow setting `omit_empty=NA` argument.
+
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
      [TO DO.........: documentation, coll, charclass, regex?, other]
@@ -33,6 +35,8 @@
    * ... #77 stri_rand_lipsum
 
    * ... #102 replace_set?? replace arg vectorize=FALSE?
+
+   * ... #98 stri_trans_totitle with a breakiterator
 
    * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
