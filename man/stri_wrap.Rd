@@ -4,7 +4,7 @@
 \title{Word Wrap Text to Format Paragraphs}
 \usage{
 stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
-  simplify = TRUE, locale = NULL)
+  simplify = TRUE, normalize = FALSE, locale = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to reformat}
@@ -19,6 +19,8 @@ of a (more aesthetic) dynamic programming-based algorithm
 (values in [2, 3] are recommended)}
 
 \item{simplify}{single logical value, see Value}
+
+\item{normalize}{single logical value, see Details}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
@@ -35,17 +37,28 @@ each consisting of at most \code{width} code points.
 \details{
 Vectorized over \code{str}.
 
-Any of the strings must not contain \code{\\r}, \code{\\n},
+\pkg{ICU}'s line-\code{BreakIterator} is used to determine
+text boundaries at which a line break is possible.
+This is a locale-dependent operation.
+Note that Unicode code points may have various widths when
+printed on screen. This function acts like each code point
+is of width 1. This function should rather be used with
+text in Latin script.
+
+If \code{normalize} is \code{FALSE} (the default),
+then multiple white spaces between the word boundaries are
+preserved withing each wrapped line.
+In such a case, none of the strings can contain \code{\\r}, \code{\\n},
 or other new line characters, otherwise you will get at error.
 You should split the input text into lines
 or e.g. substitute line breaks with spaces
 before applying this function.
 
-Multiple white spaces between the word boundaries are
-preserved withing each wrapped line. If you wish to substitute
-all such sequences with single spaces, call e.g.
-\code{stri_trim(stri_replace_all_charclass(str, "\\p{WHITE_SPACE}", " ", TRUE))}
-prior to string wrapping.
+On the other hand, if \code{normalize} is \code{TRUE}, then
+all consecutive white space sequences are replaced with single spaces, by calling i.a.
+\code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
+before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
+and \code{\link{stri_trans_nfc}} is called on the input character vector.
 
 The greedy algorithm (for \code{cost_exponent} being non-positive)
 provides a very simple way for word wrapping.
@@ -57,14 +70,6 @@ is more complex, but it returns text wrapped
 in a more aesthetic way. This method minimizes the squared
 (by default, see \code{cost_exponent}) number of spaces  (raggedness)
 at the end of each line, so the text is mode arranged evenly.
-
-Note that Unicode code points may have various widths when
-printed on screen. This function acts like each code point
-is of width 1. This function should rather be used with
-text in Latin script.
-
-\pkg{ICU}'s line-\code{BreakIterator} is used to determine
-text boundaries at which a line break is possible.
 }
 \examples{
 \donttest{
