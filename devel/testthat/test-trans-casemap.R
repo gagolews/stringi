@@ -68,7 +68,7 @@ test_that("stri_trans_totitle", {
    expect_equivalent(stri_trans_totitle(letters), LETTERS)
    expect_equivalent(stri_trans_totitle(stri_flatten(letters)), stri_flatten(c("A",letters[-1])))
 
-   expect_equivalent(stri_trans_totitle("\u0105\u0104", "pl_PL"), "\u0104\u0105")
+   expect_equivalent(stri_trans_totitle("\u0105\u0104", locale="pl_PL"), "\u0104\u0105")
 
    expect_equivalent(stri_trans_totitle("ala   ma   kota"), "Ala   Ma   Kota")
    expect_equivalent(stri_trans_totitle("ala\tma\tkota"), "Ala\tMa\tKota")

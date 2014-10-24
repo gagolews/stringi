@@ -35,6 +35,8 @@
 #include "stri_string8buf.h"
 #include <unicode/uloc.h>
 #include <unicode/locid.h>
+#include <unicode/ucasemap.h>
+#include <unicode/brkiter.h>
 
 
 // used 2 times in stri_trans_case() below:
@@ -88,11 +90,18 @@
  *          use UCaseMap + StriContainerUTF8
  *          (this is much faster for UTF-8 and slightly faster for 8bit enc)
  *          Estimates minimal buffer size.
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
+ *          Use a custom BreakIterator with stri_trans_totitle
 */
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP boundary, SEXP locale)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   boundary = stri_prepare_arg_string_1(boundary, "boundary");
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
+   
+   const char* boundary_opts[] = {"character", "line_break",
+      "sentence", "word", NULL};
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
    UCaseMap* ucasemap = NULL;
@@ -108,6 +117,49 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
    if (U_FAILURE(status)) throw StriException(status);
+   
+   // determine BreakIterator to use
+   if (_type == 3) {
+      int boundary_cur = -1;
+      StriContainerUTF8 boundary_cont(boundary, 1);
+      if (!boundary_cont.isNA(0))
+         boundary_cur = stri__match_arg(boundary_cont.get(0).c_str(), boundary_opts);
+      if (boundary_cur < 0)
+         throw StriException(MSG__INCORRECT_MATCH_OPTION, "boundary");
+
+      UBreakIterator* briter = NULL;
+      status = U_ZERO_ERROR;
+      switch (boundary_cur) {
+         case 0: // character [this is not documented]
+            briter = ubrk_open(UBRK_CHARACTER, qloc, NULL, 0, &status);
+            break;
+
+         case 1: // line_break [this is not documented]
+            briter = ubrk_open(UBRK_LINE, qloc, NULL, 0, &status);
+            break;
+
+         case 2: // sentence
+            briter = ubrk_open(UBRK_SENTENCE, qloc, NULL, 0, &status);
+            break;
+
+         case 3: // word
+            briter = ubrk_open(UBRK_WORD, qloc, NULL, 0, &status);
+            break;
+      }
+      if (U_FAILURE(status)) throw StriException(status);
+      status = U_ZERO_ERROR;
+      ucasemap_setBreakIterator(ucasemap, briter, &status);
+      if (U_FAILURE(status)) {
+         ubrk_close(briter);
+         throw StriException(status);
+      }
+      
+//      ucasemap_setOptions(ucasemap, U_TITLECASE_NO_LOWERCASE, &status); // to do?
+
+      // now briter is owned by ucasemap.
+      // it will be released on ucasemap_close
+      // (checked with ICU man & src code)
+   }
 
    R_len_t str_n = LENGTH(str);
    StriContainerUTF8 str_cont(str, str_n);
