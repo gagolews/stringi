@@ -21,3 +21,10 @@ test_that("stri_rand_strings", {
    expect_identical(stri_rand_strings(10, 5, NA), rep(NA_character_, 10))
    expect_identical(stri_rand_strings(10, NA, "[a-z]"), rep(NA_character_, 10))
 })
+
+
+test_that("stri_rand_lipsum", {
+   
+   expect_true(all(sapply(lapply(1:100, stri_rand_lipsum), length) == 1:100))
+   
+})
