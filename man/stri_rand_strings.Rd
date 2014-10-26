@@ -50,6 +50,7 @@ stri_rand_shuffle(stri_paste(
 }
 }
 \seealso{
-Other random: \code{\link{stri_rand_shuffle}}
+Other random: \code{\link{stri_rand_lipsum}};
+  \code{\link{stri_rand_shuffle}}
 }
 

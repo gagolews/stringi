@@ -98,8 +98,8 @@ to split a string into text lines.
 \item \code{\link{stri_escape_unicode}} (among others) for escaping
 certain code points.
 
-\item \code{\link{stri_rand_strings}} and \code{\link{stri_rand_shuffle}}
-for generating (pseudo)random strings.
+\item \code{\link{stri_rand_strings}}, \code{\link{stri_rand_shuffle}},
+and \code{\link{stri_rand_lipsum}} for generating (pseudo)random strings.
 
 \item DRAFT API: \code{\link{stri_read_raw}},
 \code{\link{stri_read_lines}}, and  \code{\link{stri_write_lines}}

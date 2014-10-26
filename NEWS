@@ -18,12 +18,12 @@
      to character matrices, useful in connection with `stri_split`
      and `stri_extract`.
 
+   * [NEW FEATURE] #107: `stri_split_*` now allow setting `omit_empty=NA` argument.
+
    * [NEW FEATURE] #106: `stri_split` and `stri_extract_all` gained a `simplify`
      argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
      is called on the resulting list.
 .....TO DO: stri_extract_words, stri_split_boundaries
-
-   * [NEW FEATURE] #107: `stri_split_*` now allow setting `omit_empty=NA` argument.
 
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
@@ -32,9 +32,10 @@
    * ....[NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
      UTF-8 conversion) [TO DO..... rewrite in C++.....]
 
-   * ... #77 stri_rand_lipsum
-
    * ... #102 replace_set?? replace arg vectorize=FALSE?
+
+   * [NEW FUNCTION] #77: `stri_rand_lipsum` generates 
+     (pseudo)random dummy *lorem ipsum* text.
 
    * [NEW FEATURE] #98: `stri_trans_totitle` gained a `boundary`
      parameter; it indicates which ICU BreakIterator should be used when
