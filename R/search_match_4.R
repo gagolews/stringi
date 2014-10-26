@@ -37,15 +37,15 @@
 #' match a given regex \code{pattern}. Additionally, they extract matches
 #' to every \emph{capture group}, i.e. to all the subpatterns given
 #' in round parentheses.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If no pattern match is detected or if a capture group match is unavailable,
 #' then \code{NA}s are included in the resulting matrix (matrices), see Examples.
-#' 
+#'
 #' By the way, \pkg{ICU} regex engine currently does not support named capture groups.
-#' 
+#'
 #' \code{stri_match}, \code{stri_match_all}, \code{stri_match_first},
 #' and \code{stri_match_last} are convenience functions.
 #' They just call \code{stri_match_*_regex} -- they have been
@@ -66,14 +66,14 @@
 #' For \code{stri_match_all*},
 #' a list of character matrices is returned. Each list element
 #' represents the results of a separate search scenario.
-#' 
+#'
 #' For \code{stri_match_first*} and \code{stri_match_last*},
 #' on the other hand, a character matrix is returned.
 #' Here the search results are provided as separate rows.
-#' 
+#'
 #' The first matrix column gives the whole match. The second one corresponds to
 #' the first capture group, the third -- the second capture group, and so on.
-#' 
+#'
 #'
 #' @examples
 #' \donttest{
@@ -81,15 +81,20 @@
 #'    "(\\w+)=(\\w+)")
 #' stri_match_all_regex(c("breakfast=eggs", "lunch=pizza", "no food here"),
 #'    "(\\w+)=(\\w+)")
-#' stri_match_all_regex(c("breakfast=eggs;lunch=pizza", 
+#' stri_match_all_regex(c("breakfast=eggs;lunch=pizza",
 #'    "breakfast=bacon;lunch=spaghetti", "no food here"),
 #'    "(\\w+)=(\\w+)")
-#' stri_match_first_regex(c("breakfast=eggs;lunch=pizza", 
+#' stri_match_first_regex(c("breakfast=eggs;lunch=pizza",
 #'    "breakfast=bacon;lunch=spaghetti", "no food here"),
 #'    "(\\w+)=(\\w+)")
-#' stri_match_last_regex(c("breakfast=eggs;lunch=pizza", 
+#' stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
 #'    "breakfast=bacon;lunch=spaghetti", "no food here"),
 #'    "(\\w+)=(\\w+)")
+#'
+#' # Match all the pattern of the form XYX, including overlapping matches:
+#' stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\2))")[[1]][,2]
+#' # Compare the above to:
+#' stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\1")
 #' }
 #'
 #' @family search_extract

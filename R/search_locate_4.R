@@ -38,14 +38,14 @@
 #' \code{stri_locate_all_*} locates all the matches.
 #' On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
 #' give the first or the last matches, respectively.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
-#' 
+#'
 #' The matched string(s) may be extracted by calling
 #' the \code{\link{stri_sub}} function.
 #' Alternatively, you may call \code{\link{stri_extract}} directly.
-#' 
+#'
 #' \code{stri_locate}, \code{stri_locate_all}, \code{stri_locate_first},
 #' and \code{stri_locate_last} are convenience functions.
 #' They just call \code{stri_locate_*_*}, depending on arguments used.
@@ -77,7 +77,7 @@
 #' of matches, and the second column gives the end positions.
 #' Moreover, you may get two \code{NA}s in one row
 #' for no match or \code{NA} arguments.
-#' 
+#'
 #' \code{stri_locate_first*} and \code{stri_locate_last*},
 #' on the other hand, return an integer matrix with
 #' two columns, giving the start and end positions of the first
@@ -89,19 +89,19 @@
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
 #' stri_locate_all('a b c', charclass='\\p{Zs}') # all white spaces
-#' 
+#'
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
 #' stri_locate_first_charclass('AaBbCc', '\\p{Ll}')
 #' stri_locate_last_charclass('AaBbCc', '\\p{Ll}')
 #' stri_locate_all_charclass(c('REXAMINE'), '\\p{Lu}', merge=c(TRUE, FALSE))
-#' 
+#'
 #' stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=2, locale="sk_SK"))
 #' stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=1, locale="sk_SK"))
-#'    
+#'
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #' stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
@@ -113,18 +113,23 @@
 #' # but last row is 3-4, unlike in locate_last,
 #' # keep this in mind [overlapping pattern match OK]!
 #' stri_locate_last_fixed('bbbbb', 'bb')
-#' 
+#'
 #' stri_locate_all_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_first_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_last_regex('XaaaaX',
 #'    c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
+#'
+#' # Use regex positive-lookahead to locate overlapping pattern matches:
+#' stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
+#' # note that start > end here (match of 0 length)
 #' }
+#'
 #'
 #' @family search_locate
 #' @family indexing
-#' 
+#'
 #' @export
 #' @rdname stri_locate
 stri_locate_all <- function(str, ..., regex, fixed, coll, charclass) {
