@@ -146,6 +146,10 @@ stri_locate_first_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_last_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
+
+# Use regex positive-lookahead to locate overlapping pattern matches:
+stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
+# note that start > end here (match of 0 length)
 }
 }
 \seealso{

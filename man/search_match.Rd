@@ -85,6 +85,11 @@ stri_match_first_regex(c("breakfast=eggs;lunch=pizza",
 stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
    "breakfast=bacon;lunch=spaghetti", "no food here"),
    "(\\\\w+)=(\\\\w+)")
+
+# Match all the pattern of the form XYX, including overlapping matches:
+stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\\\2))")[[1]][,2]
+# Compare the above to:
+stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\\\1")
 }
 }
 \seealso{
