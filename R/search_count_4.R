@@ -125,8 +125,8 @@ stri_count_coll <- function(str, pattern, opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_count
-stri_count_fixed <- function(str, pattern) {
-   .Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
+stri_count_fixed <- function(str, pattern, overlap = TRUE) {
+   .Call("stri_count_fixed", str, pattern, overlap, PACKAGE="stringi")
 }
 
 

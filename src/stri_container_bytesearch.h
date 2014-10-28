@@ -69,6 +69,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t searchPos; // -1 after reset, searchLen on no further matches
       const char* searchStr; // owned by caller
       R_len_t searchLen; // in bytes
+      bool overlap;
 
 #ifndef NDEBUG
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
@@ -98,8 +99,8 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       ~StriContainerByteSearch();
       StriContainerByteSearch& operator=(StriContainerByteSearch& container);
 
-      void setupMatcherFwd(R_len_t i, const char* searchStr, R_len_t searchLen);
-      void setupMatcherBack(R_len_t i, const char* searchStr, R_len_t searchLen);
+      void setupMatcherFwd(R_len_t i, const char* searchStr, R_len_t searchLen, bool overlap = false);
+      void setupMatcherBack(R_len_t i, const char* searchStr, R_len_t searchLen, bool overlap = false);
       void resetMatcher();
       R_len_t findFirst();
       R_len_t findNext();

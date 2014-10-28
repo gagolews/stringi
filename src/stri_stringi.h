@@ -200,7 +200,7 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 
 
 SEXP stri_detect_fixed(SEXP str, SEXP pattern);
-SEXP stri_count_fixed(SEXP str, SEXP pattern);
+SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP overlap);
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_first_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
