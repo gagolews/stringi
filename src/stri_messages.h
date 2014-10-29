@@ -46,6 +46,8 @@
 #define MSG__INCORRECT_COLLATOR_OPTION_SPEC \
    "incorrect collator option specifier. see ?stri_opts_collator"
 
+#define MSG__INCORRECT_BRKITER_OPTION_SPEC \
+   "incorrect break iterator option specifier. see ?stri_opts_brkiter"
 
 #define MSG__INCORRECT_REGEX_OPTION \
    "incorrect regex option: `%s`. ignoring"

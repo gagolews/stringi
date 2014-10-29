@@ -68,7 +68,8 @@ The strings are Unicode-normalized before the comparison.
 }
 \examples{
 \donttest{
-stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
+stri_cmp("number100", "number2")
+stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
 stri_cmp("above mentioned", "above-mentioned")
 stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
 }

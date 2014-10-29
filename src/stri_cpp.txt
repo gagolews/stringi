@@ -49,7 +49,6 @@ stri_search_fixed_split.cpp \
 stri_search_fixed_subset.cpp \
 stri_search_fixed_startsendswith.cpp \
 stri_search_in.cpp \
-stri_search_words.cpp \
 stri_search_boundaries.cpp \
 stri_search_other_replace.cpp \
 stri_search_other_split.cpp \

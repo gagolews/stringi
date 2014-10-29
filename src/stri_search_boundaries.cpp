@@ -34,86 +34,65 @@
 #include "stri_container_utf8_indexable.h"
 #include <deque>
 #include <utility>
+#include <vector>
 #include <unicode/brkiter.h>
+#include <unicode/rbbi.h>
 
 
-/** Locate or Split string by all BreakIterator boundaries
+/** Get Break Iterator
  *
- * @param str character vector
- * @param boundary single string, one of \code{character},
- * \code{line-break}, \code{sentence}, or \code{word}
- * @param locale identifier
- * @param split [internal]
- * @return character vector
+ * @param opts_brkiter named list
+ * @param loc locale
+ * @return RuleBasedBreakIterator
  *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
- *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
- *          return NA if no matches found
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  */
-SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool split)
-{
-   str = stri_prepare_arg_string(str, "str");
-   boundary = stri_prepare_arg_string(boundary, "boundary");
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   Locale loc = Locale::createFromName(qloc);
-
-   R_len_t str_length = LENGTH(str);
-   R_len_t boundary_length = LENGTH(boundary);
-   R_len_t vectorize_length = stri__recycling_rule(true, 2,
-      str_length, boundary_length);
-
-   const char* boundary_opts[] = {"character", "line_break",
+RuleBasedBreakIterator* stri__opts_brkiter_get_iterator(SEXP opts_brkiter, const Locale& loc) {
+   const char* type_opts[] = {"character", "line_break",
       "sentence", "word", NULL};
+      
+   if (isNull(opts_brkiter)) // a BreakIterator must always be specified
+      Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+      
+   if (!Rf_isVectorList(opts_brkiter))
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      
+   R_len_t narg = LENGTH(opts_brkiter);
+   SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
+   if (names == R_NilValue || LENGTH(names) != narg)
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
 
-   BreakIterator* briter = NULL;
-   UText* str_text = NULL;
-   STRI__ERROR_HANDLER_BEGIN
-   StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerUTF8 boundary_cont(boundary, vectorize_length);
-
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
-
-   int last_boundary = -1;
-   for (R_len_t i = boundary_cont.vectorize_init();
-         i != boundary_cont.vectorize_end();
-         i = boundary_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i) || boundary_cont.isNA(i)) {
-         if (split) {
-            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         }
-         else {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
-         }
-         continue;
-      }
-
-      // get the boundary type and open BreakIterator (if needed)
-      int boundary_cur = stri__match_arg(boundary_cont.get(i).c_str(), boundary_opts);
-      if (boundary_cur < 0)
-         throw StriException(MSG__INCORRECT_MATCH_OPTION, "boundary");
-
-      if (last_boundary != boundary_cur) { // otherwise reuse BreakIterator
-         if (briter) { delete briter; briter = NULL; }
-         last_boundary = boundary_cur;
+   // search for "locale" option
+   for (R_len_t i=0; i<narg; ++i) {
+      if (STRING_ELT(names, i) == NA_STRING)
+         Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      const char* curname = CHAR(STRING_ELT(names, i));
+      if (!strcmp(curname, "type")) {
+         SEXP curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type");
+         if (STRING_ELT(curval, i) == NA_STRING)
+            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");
+            
+         int boundary_cur = stri__match_arg(CHAR(STRING_ELT(curval, i)), type_opts);
+         if (boundary_cur < 0)
+            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+            
          UErrorCode status = U_ZERO_ERROR;
+         RuleBasedBreakIterator* briter = NULL;
          switch (boundary_cur) {
             case 0: // character
-               briter = BreakIterator::createCharacterInstance(loc, status);
+               briter = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
                break;
 
             case 1: // line_break
-               briter = BreakIterator::createLineInstance(loc, status);
+               briter = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
                break;
 
             case 2: // sentence
-               briter = BreakIterator::createSentenceInstance(loc, status);
+               briter = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
                break;
 
             case 3: // word
-               briter = BreakIterator::createWordInstance(loc, status);
+               briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
 
 //            case 4: // title
@@ -121,7 +100,173 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
 //               break;
          }
          if (U_FAILURE(status))
-            throw StriException(status); // briter will be deleted automagically
+            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+         return briter;
+      }
+   }
+   
+   // a BreakIterator must always be specified
+   Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+}
+
+
+/** Get Break Iterator's locale
+ *
+ * @param opts_brkiter named list
+ * @return Locale object
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ */
+Locale stri__opts_brkiter_get_locale(SEXP opts_brkiter) {
+   if (isNull(opts_brkiter))
+      return Locale::createFromName(stri__prepare_arg_locale(R_NilValue, "locale", true));      
+
+   if (!Rf_isVectorList(opts_brkiter))
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      
+   R_len_t narg = LENGTH(opts_brkiter);
+   SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
+   if (names == R_NilValue || LENGTH(names) != narg)
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+
+   // search for "locale" option
+   for (R_len_t i=0; i<narg; ++i) {
+      if (STRING_ELT(names, i) == NA_STRING)
+         Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      const char* curname = CHAR(STRING_ELT(names, i));
+      if (!strcmp(curname, "locale")) {
+         const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true);
+         return Locale::createFromName(qloc);
+      }
+   }
+   
+   return Locale::createFromName(stri__prepare_arg_locale(R_NilValue, "locale", true));
+}
+
+
+/** Get Break Iterator's skip rule status
+ *
+ * @param opts_brkiter named list
+ * @return vector of indices [even, odd) -- ids to skip
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ */
+vector<int32_t> stri__opts_brkiter_get_skip_rule_status(SEXP opts_brkiter) {
+   vector<int32_t> out;
+   if (isNull(opts_brkiter))
+      return out; // nothing to skip
+      
+   if (!Rf_isVectorList(opts_brkiter))
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      
+   R_len_t narg = LENGTH(opts_brkiter);
+   SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
+   if (names == R_NilValue || LENGTH(names) != narg)
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      
+   for (R_len_t i=0; i<narg; ++i) {
+      if (STRING_ELT(names, i) == NA_STRING)
+         Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+         
+      const char* curname = CHAR(STRING_ELT(names, i));
+      if  (!strcmp(curname, "skip_word_none")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_word_none");
+         if (val) { out.push_back(UBRK_WORD_NONE); out.push_back(UBRK_WORD_NONE_LIMIT); }
+      } else if  (!strcmp(curname, "skip_word_number")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_word_number");
+         if (val) { out.push_back(UBRK_WORD_NUMBER); out.push_back(UBRK_WORD_NUMBER_LIMIT); }
+      } else if  (!strcmp(curname, "skip_word_letter")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_word_letter");
+         if (val) { out.push_back(UBRK_WORD_LETTER); out.push_back(UBRK_WORD_LETTER_LIMIT); }
+      } else if  (!strcmp(curname, "skip_word_kana")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_word_kana");
+         if (val) { out.push_back(UBRK_WORD_KANA); out.push_back(UBRK_WORD_KANA_LIMIT); }
+      } else if  (!strcmp(curname, "skip_word_ideo")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_word_ideo");
+         if (val) { out.push_back(UBRK_WORD_IDEO); out.push_back(UBRK_WORD_IDEO_LIMIT); }
+      } else if  (!strcmp(curname, "skip_line_soft")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_line_soft");
+         if (val) { out.push_back(UBRK_LINE_SOFT); out.push_back(UBRK_LINE_SOFT_LIMIT); }
+      } else if  (!strcmp(curname, "skip_line_hard")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_line_hard");
+         if (val) { out.push_back(UBRK_LINE_HARD); out.push_back(UBRK_LINE_HARD_LIMIT); }
+      } else if  (!strcmp(curname, "skip_sentence_term")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_sentence_term");
+         if (val) { out.push_back(UBRK_SENTENCE_TERM); out.push_back(UBRK_SENTENCE_TERM_LIMIT); }
+      } else if  (!strcmp(curname, "skip_sentence_sep")) {
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_brkiter, i), "skip_sentence_sep");
+         if (val) { out.push_back(UBRK_SENTENCE_SEP); out.push_back(UBRK_SENTENCE_SEP_LIMIT); }
+      } else {
+         /* ignore */
+      }
+   }
+   
+   return out;
+}
+
+
+/** Should a boundary be ignored by a Break Iterator
+ *
+ * @param brkskip vector of indices [even, odd) -- ids to skip
+ * @param rule current rule
+ * @return logical value
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ */
+bool stri__opts_brkiter_ignore_skip_status(const vector<int32_t>& brkskip, int32_t rule) {
+   int n = (int)brkskip.size();
+   for (int i=0; i<n; i += 2) {
+      // n is even - that's sure
+      
+      if (rule >= brkskip[i] && rule < brkskip[i+1])
+         return true;
+   }
+   
+   return false; // don't ignore
+}
+
+
+/** Locate or Split string by all BreakIterator boundaries
+ *
+ * @param str character vector
+ * @param opts_brkiter identifier
+ * @param split [internal]
+ * @return character vector
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
+ *          return NA if no matches found
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ *          use opts_brkiter
+ */
+SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
+{
+   str = stri_prepare_arg_string(str, "str");
+   Locale loc = stri__opts_brkiter_get_locale(opts_brkiter);
+   vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
+
+   RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(opts_brkiter, loc);
+   UText* str_text = NULL;
+   
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t str_length = LENGTH(str);
+   StriContainerUTF8_indexable str_cont(str, str_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_length));
+
+   for (R_len_t i = 0; i < str_length; ++i)
+   {
+      if (str_cont.isNA(i)) {
+         if (split) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         }
+         else {
+            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         }
+         continue;
       }
 
       // get the current string
@@ -137,7 +282,9 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
       deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
       R_len_t match, last_match = briter->first();
       while ((match = briter->next()) != BreakIterator::DONE) {
-         occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+         int rule = briter->getRuleStatus();
+         if (!stri__opts_brkiter_ignore_skip_status(brkskip, rule))
+            occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
          last_match = match;
       }
 
@@ -201,10 +348,8 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
 /** Locate all BreakIterator boundaries
  *
  * @param str character vector
- * @param boundary single string, one of \code{character},
- * \code{line-break}, \code{sentence}, or \code{word}
- * @param locale identifier
- * @return character vector
+ * @param opts_brkiter named list
+ * @return list
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-22)
  *
@@ -214,20 +359,21 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP boundary, SEXP locale, bool
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
  *          use stri__split_or_locate_boundaries
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ *          use opts_brkiter
  */
-SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
+SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter)
 {
-   return stri__split_or_locate_boundaries(str, boundary, locale, false);
+   return stri__split_or_locate_boundaries(str, opts_brkiter, false);
 }
 
 
 /** Split a string at BreakIterator boundaries
  *
  * @param str character vector
- * @param boundary single string, one of \code{character},
- * \code{line_break}, \code{sentence}, \code{word}
- * @param locale identifier
- * @return character vector
+ * @param opts_brkiter named list
+ * @return list
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-21)
  *
@@ -237,8 +383,11 @@ SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale)
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
  *          use stri__split_or_locate_boundaries
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ *          use opts_brkiter
  */
-SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale)
+SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter)
 {
-   return stri__split_or_locate_boundaries(str, boundary, locale, true);
+   return stri__split_or_locate_boundaries(str, opts_brkiter, true);
 }

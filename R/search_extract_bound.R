@@ -33,8 +33,7 @@
 #' Extract Words from a Text
 #'
 #' @description
-#' This function extracts all words from
-#' each string.
+#' This function extracts all words from each string.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -43,6 +42,8 @@
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
+#' This is function is equivalent to a call to 
+#' \code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 #'
 #'
 #' @param str character vector or an object coercible to
@@ -52,23 +53,18 @@
 #'
 #' @return
 #' A list of character vectors is returned. Each string consists of
-#' a separate word.
-#' If there are no words or if a string is missing, a single \code{NA}
-#' is provided on output.
+#' a separate word. If there are no words or if a string is missing,
+#' a single \code{NA} is provided on output.
 #'
 #' @examples
 #' \donttest{
 #' stri_extract_words("stringi: THE string processing package 123.48...")
 #' }
-#' 
-#' @references
-#' \emph{Boundary Analysis} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/boundaryanalysis}
 #'
 #' @export
 #' @family search_extract
 #' @family locale_sensitive
 #' @family text_boundaries
 stri_extract_words <- function(str, locale=NULL) {
-   .Call("stri_extract_words", str, locale, PACKAGE="stringi")
+   stri_split_boundaries(str, stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
 }

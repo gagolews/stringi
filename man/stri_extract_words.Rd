@@ -14,13 +14,11 @@ locale identifier, see \link{stringi-locale}.}
 }
 \value{
 A list of character vectors is returned. Each string consists of
-a separate word.
-If there are no words or if a string is missing, a single \code{NA}
-is provided on output.
+a separate word. If there are no words or if a string is missing,
+a single \code{NA} is provided on output.
 }
 \description{
-This function extracts all words from
-each string.
+This function extracts all words from each string.
 }
 \details{
 Vectorized over \code{str}.
@@ -29,15 +27,13 @@ Just like in \code{\link{stri_locate_words}},
 \pkg{ICU}'s word \code{BreakIterator} iterator is used
 to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
+This is function is equivalent to a call to
+\code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 }
 \examples{
 \donttest{
 stri_extract_words("stringi: THE string processing package 123.48...")
 }
-}
-\references{
-\emph{Boundary Analysis} -- ICU User Guide,
-\url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
@@ -94,6 +90,7 @@ Other search_extract: \code{\link{stri_extract}},
 
 Other text_boundaries: \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

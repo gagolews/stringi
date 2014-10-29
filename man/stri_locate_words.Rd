@@ -32,6 +32,8 @@ Just like in \code{\link{stri_extract_words}},
 \pkg{ICU}'s word \code{BreakIterator} iterator is used
 to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
+This is function is equivalent to a call to
+\code{\link{stri_locate_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 }
 \examples{
 \donttest{
@@ -112,6 +114,7 @@ Other search_locate: \code{\link{stri_locate_boundaries}};
 
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

@@ -34,29 +34,25 @@
 #'
 #' @description
 #' This function locates specific text boundaries
-#' (like character, word, line, or sentence boundaries)
-#' and splits strings at the indicated positions.
+#' (like character, word, line, or sentence boundaries).
 #'
 #' @details
-#' Vectorized over \code{str} and \code{boundary}.
-#'
+#' Vectorized over \code{str}.
+#' 
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
-#' \code{\link{stri_split_boundaries}}.
+#' \link{stringi-search-boundaries}.
 #'
 #' For locating words in a text using \pkg{ICU}'s word iterator,
 #' see \code{\link{stri_locate_words}}.
 #'
 #'
 #' @param str character vector or an object coercible to
-#' @param boundary character vector, each string is one of \code{character},
-#' \code{line_break}, \code{sentence}, or \code{word}
-#' @param locale \code{NULL} or \code{""} for text boundary analysis following
-#' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale}.
+#' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
+#' as generated with \code{\link{stri_opts_brkiter}}
 #'
 #' @return
-#' A list of \code{max(length(str), length(boundary))} integer matrices
+#' A list of \code{length(str)} integer matrices
 #' is returned. The first column gives the start positions
 #' of substrings between located boundaries, and the second column gives
 #' the end positions. The indices are code point-based, thus
@@ -68,10 +64,10 @@
 #' @examples
 #' \donttest{
 #' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-#' stri_locate_boundaries(test, boundary="line")
-#' stri_locate_boundaries(test, boundary="word")
-#' stri_locate_boundaries(test, boundary="sentence")
-#' stri_locate_boundaries(test, boundary="character")
+#' stri_locate_boundaries(test, stri_opts_brkiter(type="line"))
+#' stri_locate_boundaries(test, stri_opts_brkiter(type="word"))
+#' stri_locate_boundaries(test, stri_opts_brkiter(type="sentence"))
+#' stri_locate_boundaries(test, stri_opts_brkiter(type="character"))
 #' }
 #' 
 #' @export
@@ -79,8 +75,8 @@
 #' @family indexing
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_locate_boundaries <- function(str, boundary='line_break', locale=NULL) {
-   .Call("stri_locate_boundaries", str, boundary, locale, PACKAGE="stringi")
+stri_locate_boundaries <- function(str, opts_brkiter=stri_opts_brkiter(type="line_break")) {
+   .Call("stri_locate_boundaries", str, opts_brkiter, PACKAGE="stringi")
 }
 
 
@@ -97,7 +93,8 @@ stri_locate_boundaries <- function(str, boundary='line_break', locale=NULL) {
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
-#'
+#' This is function is equivalent to a call to 
+#' \code{\link{stri_locate_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 #'
 #' @param str character vector or an object coercible to
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
@@ -129,5 +126,5 @@ stri_locate_boundaries <- function(str, boundary='line_break', locale=NULL) {
 #' @family locale_sensitive
 #' @family text_boundaries
 stri_locate_words <- function(str, locale=NULL) {
-   .Call("stri_locate_words", str, locale, PACKAGE="stringi")
+   stri_locate_boundaries(str, stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
 }
