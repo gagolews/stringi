@@ -100,6 +100,7 @@ Other locale_sensitive: \code{\link{stri_cmp}},
   \code{\link{stri_trans_toupper}};
   \code{\link{stri_unique}}; \code{\link{stri_wrap}};
   \code{\link{stringi-locale}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-coll}}
 }
 

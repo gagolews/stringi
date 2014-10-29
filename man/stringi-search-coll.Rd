@@ -65,7 +65,8 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_trans_totitle}},
   \code{\link{stri_trans_toupper}};
   \code{\link{stri_unique}}; \code{\link{stri_wrap}};
-  \code{\link{stringi-locale}}
+  \code{\link{stringi-locale}};
+  \code{\link{stringi-search-boundaries}}
 
 Other search_coll: \code{\link{stringi-search}}
 
@@ -73,6 +74,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}};

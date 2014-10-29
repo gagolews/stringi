@@ -67,7 +67,11 @@
 #'
 #' @examples
 #' \donttest{
-#' stri_locate_boundaries("The\u00a0above-mentioned packages are...", boundary="line")
+#' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
+#' stri_locate_boundaries(test, boundary="line")
+#' stri_locate_boundaries(test, boundary="word")
+#' stri_locate_boundaries(test, boundary="sentence")
+#' stri_locate_boundaries(test, boundary="character")
 #' }
 #' 
 #' @export

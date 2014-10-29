@@ -3,11 +3,12 @@
 \alias{stringi-search}
 \title{String Searching}
 \description{
-This man page explains how to perform string search-based
+This man page instructs how to perform string search-based
 operations in \pkg{stringi}.
 }
 \details{
-There are four independent string searching ``engines'' in \pkg{stringi}.
+The following independent string searching ``engines'' are available
+in \pkg{stringi}.
 \itemize{
    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
         see \link{stringi-search-regex},
@@ -20,14 +21,16 @@ There are four independent string searching ``engines'' in \pkg{stringi}.
    \item \code{stri_*_charclass} -- character classes search,
       e.g. Unicode General Categories or Binary Properties,
        see \link{stringi-search-charclass},
+   \item \code{stri_*_boundaries} -- text boundary analysis,
+      see \link{stringi-search-boundaries}
 }
 
-Each ``engine'' is able to perform many search-based operations, including:
+Each ``engine'' is able to perform many search-based operations.
+These may include:
 \itemize{
    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
    see e.g. \code{\link{stri_detect}},
-   \item \code{stri_count_*} - counts the number of occurrences of text
-     matching a pattern,
+   \item \code{stri_count_*} - counts the number of pattern occurences,
    see e.g. \code{\link{stri_count}},
    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
    see e.g. \code{\link{stri_locate}},
@@ -149,9 +152,23 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}}
+
+Other text_boundaries: \code{\link{stri_extract_words}};
+  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_words}};
+  \code{\link{stri_split_boundaries}};
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_split_lines1}},
+  \code{\link{stri_split_lines1}};
+  \code{\link{stri_trans_tolower}},
+  \code{\link{stri_trans_totitle}},
+  \code{\link{stri_trans_toupper}};
+  \code{\link{stri_wrap}};
+  \code{\link{stringi-search-boundaries}}
 }
 

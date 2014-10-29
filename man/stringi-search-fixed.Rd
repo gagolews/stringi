@@ -36,6 +36,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-regex}};
