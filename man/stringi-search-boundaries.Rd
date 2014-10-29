@@ -29,7 +29,8 @@ These languages have punctuation and diacritical
 marks that cannot start or end a line, so this must also be taken into account.
 
 \pkg{stringi} uses \pkg{ICU}'s \code{BreakIterator} to locate specific
-text boundaries.
+text boundaries. Note that the \code{BreakIterator}'s behavior
+may be controlled in come cases, see \code{\link{stri_opts_brkiter}}.
 \itemize{
 \item The \code{character} boundary iterator tries to match what a user
 would think of as a ``character''  -- a basic unit of a writing system
@@ -94,6 +95,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

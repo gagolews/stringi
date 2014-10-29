@@ -253,11 +253,8 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern);
 SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);
 
-SEXP stri_locate_boundaries(SEXP str, SEXP boundary, SEXP locale);
-SEXP stri_split_boundaries(SEXP str, SEXP boundary, SEXP locale);
-
-SEXP stri_locate_words(SEXP str, SEXP locale);
-SEXP stri_extract_words(SEXP str, SEXP locale);
+SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter);
+SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter);
 
 SEXP stri_replace_na(SEXP str, SEXP replacement);
 

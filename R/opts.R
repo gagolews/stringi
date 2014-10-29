@@ -99,7 +99,8 @@
 #'
 #' @examples
 #' \donttest{
-#' stri_cmp("zupa100", "zupa2") != stri_cmp("zupa100", "zupa2", stri_opts_collator(numeric=TRUE))
+#' stri_cmp("number100", "number2")
+#' stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
 #' stri_cmp("above mentioned", "above-mentioned")
 #' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
 #' }
@@ -195,3 +196,80 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
    if (!missing(error_on_unknown_escapes)) opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
    opts
 }
+
+
+#' @title
+#' Generate a List with BreakIterator Settings
+#'
+#' @description
+#' A convenience function to tune the \pkg{ICU} \code{BreakIterator}'s behavior
+#' in some text boundary analysis functions, see
+#' \link{stringi-search-boundaries}.
+#'
+#' @details
+#' The \code{skip_*} family of settings may be used to prevent perfoming
+#' any special actions on particular types of text boundaries, e.g.
+#' in case of the \code{\link{stri_locate_boundaries}} and
+#' \code{\link{stri_split_boundaries}} functions.
+#'
+#' @param type single string; break iterator type, one of \code{character},
+#' \code{line_break}, \code{sentence}, or \code{word};
+#' see \link{stringi-search-boundaries}
+#' @param locale single string, \code{NULL} or \code{""} for default locale
+#' @param skip_word_none logical; perform no action for "words" that 
+#' do not fit into any other categories
+#' @param skip_word_number logical; perform no action for words that 
+#' appear to be numbers
+#' @param skip_word_letter logical; perform no action for words that 
+#' contain letters, excluding hiragana, katakana, or ideographic characters
+#' @param skip_word_kana logical; perform no action for words 
+#' containing kana characters
+#' @param skip_word_ideo logical; perform no action for words 
+#' containing ideographic characters
+#' @param skip_line_soft logical; perform no action for soft line breaks, 
+#' i.e. positions at which a line break is acceptable but not required
+#' @param skip_line_hard logical; perform no action for hard, 
+#' or mandatory line breaks
+#' @param skip_sentence_term logical; perform no action for sentences 
+#' ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}", 
+#' "\code{!}"), possibly followed by a hard separator 
+#' (\code{CR}, \code{LF}, \code{PS}, etc.)
+#' @param skip_sentence_sep logical; perform no action for sentences 
+#' that do not contain an ending sentence terminator, but are ended 
+#' by a hard separator or end of input
+#'
+#' @return
+#' Returns a named list object.
+#' Omitted \code{skip_*} values act as they have been set to \code{FALSE}.
+#'
+#' @export
+#' @family text_boundaries
+#'
+#' @references
+#' \emph{\code{ubrk.h} File Reference} -- ICU4C API Documentation,
+#' \url{http://icu-project.org/apiref/icu4c/ubrk_8h.html}
+#'
+#' \emph{Boundary Analysis} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/boundaryanalysis}
+stri_opts_brkiter <- function(type, locale, skip_word_none,
+      skip_word_number, skip_word_letter,
+      skip_word_kana, skip_word_ideo,
+      skip_line_soft, skip_line_hard,
+      skip_sentence_term, skip_sentence_sep
+   )
+{
+   opts <- list()
+   if (!missing(type))                opts["type"]                <- type
+   if (!missing(locale))              opts["locale"]              <- locale
+   if (!missing(skip_word_none))      opts["skip_word_none"]      <- skip_word_none
+   if (!missing(skip_word_number))    opts["skip_word_number"]    <- skip_word_number
+   if (!missing(skip_word_letter))    opts["skip_word_letter"]    <- skip_word_letter
+   if (!missing(skip_word_kana))      opts["skip_word_kana"]      <- skip_word_kana
+   if (!missing(skip_word_ideo))      opts["skip_word_ideo"]      <- skip_word_ideo
+   if (!missing(skip_line_soft))      opts["skip_line_soft"]      <- skip_line_soft
+   if (!missing(skip_line_hard))      opts["skip_line_hard"]      <- skip_line_hard
+   if (!missing(skip_sentence_term))  opts["skip_sentence_term"]  <- skip_sentence_term
+   if (!missing(skip_sentence_sep))   opts["skip_sentence_sep"]   <- skip_sentence_sep
+   opts
+}
+

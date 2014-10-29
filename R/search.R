@@ -629,7 +629,8 @@ invisible(NULL)
 #' marks that cannot start or end a line, so this must also be taken into account.
 #'
 #' \pkg{stringi} uses \pkg{ICU}'s \code{BreakIterator} to locate specific
-#' text boundaries.
+#' text boundaries. Note that the \code{BreakIterator}'s behavior
+#' may be controlled in come cases, see \code{\link{stri_opts_brkiter}}.
 #' \itemize{
 #' \item The \code{character} boundary iterator tries to match what a user 
 #' would think of as a ``character''  -- a basic unit of a writing system

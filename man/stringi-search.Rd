@@ -161,6 +161,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

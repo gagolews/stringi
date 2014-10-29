@@ -3,17 +3,14 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, boundary = "line_break", locale = NULL)
+stri_split_boundaries(str, opts_brkiter = stri_opts_brkiter(type =
+  "line_break"))
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
-\item{boundary}{character vector, each string is one of \code{character},
-\code{line_break}, \code{sentence}, or \code{word}}
-
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
-the conventions of the default locale, or a single string with
-locale identifier, see \link{stringi-locale}.}
+\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
+as generated with \code{\link{stri_opts_brkiter}}}
 }
 \value{
 Returns a list of character vectors.
@@ -24,49 +21,24 @@ This function locates specific text boundaries
 and splits strings at the indicated positions.
 }
 \details{
-Vectorized over \code{str} and \code{boundary}.
+Vectorized over \code{str}.
 
-Text boundary analysis is the process of locating linguistic boundaries
-while formatting and handling text. Examples of this process include:
-
-\itemize{
-\item Locating appropriate points to word-wrap text to fit
-within specific margins while displaying or printing.
-\item Counting characters, words, sentences, or paragraphs.
-\item Making a list of the unique words in a document.
-\item Capitalizing the first letter of each word.
-\item Locating a particular unit of the text (For example,
-finding the third word in the document).
-}
-
-This function uses \pkg{ICU}'s \code{BreakIterator} to split given
-strings at specific boundaries.
-The \code{character} boundary iterator tries to match what a user would think
-of as a ``character''  -- a basic unit of a writing system for a
-language -- which may be more than just a single Unicode code point.
-The \code{word} boundary iterator locates the boundaries of words, for purposes
-such as ``Find whole words'' operations.
-The \code{line_break} iterator locates positions that would
-be appropriate points to wrap lines when displaying the text.
-On the other hand, a \code{sentence}-break iterator
-locates sentence boundaries.
-
-For technical details on different classes of text boundaries refer
-to the \pkg{ICU} User Guide, see below.
-For extracting individual words from the text
-using a \code{BreakIterator}, see \code{\link{stri_extract_words}}.
+For more information on the text boundary analysis
+performed by \pkg{ICU}'s \code{BreakIterator}, see
+\link{stringi-search-boundaries}.
 }
 \examples{
 \donttest{
-stri_split_boundaries("The\\u00a0above-mentioned packages are...", boundary="line")
-stri_split_boundaries("This is it. I in heaven.", boundary="sentence")
-stri_split_boundaries("Wait a second... I know it!", boundary="sentence")
-stri_split_boundaries("Wait a second... I know it!", boundary="word") # cf. stri_extract_words
+test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers. 123 456 789"
+stri_split_boundaries(test, stri_opts_brkiter(type="line"))
+stri_split_boundaries(test, stri_opts_brkiter(type="word"))
+stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE, skip_word_letter=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE, skip_word_number=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="sentence"))
+stri_split_boundaries(test, stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="character"))
 }
-}
-\references{
-\emph{Boundary Analysis} -- ICU User Guide,
-\url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
@@ -113,6 +85,7 @@ Other search_split: \code{\link{stri_split_lines}},
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}};
   \code{\link{stri_locate_words}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},
   \code{\link{stri_split_lines1}};

@@ -3,20 +3,17 @@
 \alias{stri_locate_boundaries}
 \title{Locate Specific Text Boundaries}
 \usage{
-stri_locate_boundaries(str, boundary = "line_break", locale = NULL)
+stri_locate_boundaries(str, opts_brkiter = stri_opts_brkiter(type =
+  "line_break"))
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
-\item{boundary}{character vector, each string is one of \code{character},
-\code{line_break}, \code{sentence}, or \code{word}}
-
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
-the conventions of the default locale, or a single string with
-locale identifier, see \link{stringi-locale}.}
+\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
+as generated with \code{\link{stri_opts_brkiter}}}
 }
 \value{
-A list of \code{max(length(str), length(boundary))} integer matrices
+A list of \code{length(str)} integer matrices
 is returned. The first column gives the start positions
 of substrings between located boundaries, and the second column gives
 the end positions. The indices are code point-based, thus
@@ -27,15 +24,14 @@ for no match or \code{NA} arguments.
 }
 \description{
 This function locates specific text boundaries
-(like character, word, line, or sentence boundaries)
-and splits strings at the indicated positions.
+(like character, word, line, or sentence boundaries).
 }
 \details{
-Vectorized over \code{str} and \code{boundary}.
+Vectorized over \code{str}.
 
 For more information on the text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
-\code{\link{stri_split_boundaries}}.
+\link{stringi-search-boundaries}.
 
 For locating words in a text using \pkg{ICU}'s word iterator,
 see \code{\link{stri_locate_words}}.
@@ -43,10 +39,10 @@ see \code{\link{stri_locate_words}}.
 \examples{
 \donttest{
 test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-stri_locate_boundaries(test, boundary="line")
-stri_locate_boundaries(test, boundary="word")
-stri_locate_boundaries(test, boundary="sentence")
-stri_locate_boundaries(test, boundary="character")
+stri_locate_boundaries(test, stri_opts_brkiter(type="line"))
+stri_locate_boundaries(test, stri_opts_brkiter(type="word"))
+stri_locate_boundaries(test, stri_opts_brkiter(type="sentence"))
+stri_locate_boundaries(test, stri_opts_brkiter(type="character"))
 }
 }
 \seealso{
@@ -119,6 +115,7 @@ Other search_locate: \code{\link{stri_locate_words}};
 
 Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_locate_words}};
+  \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

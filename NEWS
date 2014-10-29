@@ -5,7 +5,13 @@
 * 0.3-1 (2014-??-??) **devel**
 
    * [IMPORTANT CHANGE] #87: `%>%` overlapped with pipe operator from
-     the magrittr package; now each operator like `%>%` has been renamed `%s>%`.
+     the `magrittr` package; now each operator like `%>%` has been renamed `%s>%`.
+
+   * [IMPORTANT CHANGE] #108: Now the BreakIterator (for text boundary analysis)
+     may be better controlled via `stri_opts_brkiter()` (see options `type`,
+     and `locale` which aim to replace now-removed `boundary` and `locale` parameters
+     to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
+     `stri_extract_words`, `stri_locate_words`).
 
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
@@ -37,7 +43,7 @@
    * [NEW FUNCTION] #77: `stri_rand_lipsum` generates 
      (pseudo)random dummy *lorem ipsum* text.
 
-   * [NEW FEATURE] #98: `stri_trans_totitle` gained a `boundary`
+   * [NEW FEATURE] #98: `stri_trans_totitle` gained a `opts_brkiter`
      parameter; it indicates which ICU BreakIterator should be used when
      case mapping.
 

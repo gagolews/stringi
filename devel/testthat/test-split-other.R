@@ -24,13 +24,13 @@ test_that("stri_split_lines", {
 
 
 test_that("stri_split_boundaries", {
-   expect_error(stri_split_boundaries("aaa", "???"))
-   expect_error(stri_split_boundaries("aaa", "word2"))
-   expect_identical(stri_split_boundaries(c(NA, NA), "word"), list(NA_character_, NA_character_))
-   expect_identical(stri_split_boundaries("aa", c(NA, NA)), list(NA_character_, NA_character_))
-   expect_identical(stri_split_boundaries("", "word"), list(NA_character_))
-   expect_identical(stri_split_boundaries("aaa", "word"), list("aaa"))
-   expect_identical(stri_split_boundaries("aaa", "line"), list("aaa"))
-   expect_identical(stri_split_boundaries("aaa", "sentence"), list("aaa"))
-   expect_identical(stri_split_boundaries(stri_trans_nfkd("a\u0105"), 'chara')[[1]], stri_trans_nfkd(c("a", "\u0105")))
+   expect_error(stri_split_boundaries("aaa", stri_opts_brkiter(type="???")))
+   expect_error(stri_split_boundaries("aaa", stri_opts_brkiter(type="word2")))
+   expect_error(stri_split_boundaries("aaa", list()))
+   expect_identical(stri_split_boundaries(c(NA, NA), stri_opts_brkiter(type="word")), list(NA_character_, NA_character_))
+   expect_identical(stri_split_boundaries("", stri_opts_brkiter(type="word")), list(NA_character_))
+   expect_identical(stri_split_boundaries("aaa", stri_opts_brkiter(type="word")), list("aaa"))
+   expect_identical(stri_split_boundaries("aaa", stri_opts_brkiter(type="line")), list("aaa"))
+   expect_identical(stri_split_boundaries("aaa", stri_opts_brkiter(type="sentence")), list("aaa"))
+   expect_identical(stri_split_boundaries(stri_trans_nfkd("a\u0105"), stri_opts_brkiter(type='chara'))[[1]], stri_trans_nfkd(c("a", "\u0105")))
 })
