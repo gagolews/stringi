@@ -54,9 +54,7 @@ The following independent search engines are provided:
    for natural language processing tasks;
 \item \link{stringi-search-charclass} -- for finding elements of
 particular character classes, like ``all whitespaces'' or ``all digits''.
-\item Moreover, \code{\link{stri_split_boundaries}} and
-\code{\link{stri_locate_boundaries}} apply
-text boundary analysis to split or just locate specific substrings.
+\item \link{stringi-search-charclass} -- text boundary analysis.
 \item \code{\link{stri_in_fixed}} -- value matching.
 }
 
@@ -142,6 +140,7 @@ see the COPYRIGHTS file for more details.
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};

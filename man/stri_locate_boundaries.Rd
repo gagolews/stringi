@@ -42,7 +42,11 @@ see \code{\link{stri_locate_words}}.
 }
 \examples{
 \donttest{
-stri_locate_boundaries("The\\u00a0above-mentioned packages are...", boundary="line")
+test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
+stri_locate_boundaries(test, boundary="line")
+stri_locate_boundaries(test, boundary="word")
+stri_locate_boundaries(test, boundary="sentence")
+stri_locate_boundaries(test, boundary="character")
 }
 }
 \seealso{
@@ -92,6 +96,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_trans_toupper}};
   \code{\link{stri_unique}}; \code{\link{stri_wrap}};
   \code{\link{stringi-locale}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-coll}}
 
 Other search_locate: \code{\link{stri_locate_words}};
@@ -120,6 +125,9 @@ Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_split_lines1}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
-  \code{\link{stri_trans_toupper}}; \code{\link{stri_wrap}}
+  \code{\link{stri_trans_toupper}};
+  \code{\link{stri_wrap}};
+  \code{\link{stringi-search-boundaries}};
+  \code{\link{stringi-search}}
 }
 

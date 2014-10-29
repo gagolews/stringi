@@ -91,6 +91,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_unique}}; \code{\link{stri_wrap}};
   \code{\link{stringi-locale}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-coll}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
@@ -99,7 +100,9 @@ Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},
-  \code{\link{stri_split_lines1}}; \code{\link{stri_wrap}}
+  \code{\link{stri_split_lines1}}; \code{\link{stri_wrap}};
+  \code{\link{stringi-search-boundaries}};
+  \code{\link{stringi-search}}
 
 Other transform: \code{\link{stri_trans_general}};
   \code{\link{stri_trans_isnfc}},

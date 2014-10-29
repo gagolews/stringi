@@ -77,6 +77,9 @@ Other text_boundaries: \code{\link{stri_extract_words}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},
-  \code{\link{stri_trans_toupper}}; \code{\link{stri_wrap}}
+  \code{\link{stri_trans_toupper}};
+  \code{\link{stri_wrap}};
+  \code{\link{stringi-search-boundaries}};
+  \code{\link{stringi-search}}
 }
 

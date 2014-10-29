@@ -7,8 +7,8 @@ A regular expression is a pattern describing, possibly in a very
 abstract way, a part of text.
 Thanks to many regex functions in \pkg{stringi},
 regular expressions may be a very powerful tool in your hand
-to do string searching,
-substring extraction, string splitting, etc.
+to perform string searching, substring extraction, string splitting, etc.,
+tasks.
 }
 \details{
 All \code{stri_*_regex} functions in \pkg{stringi} use
@@ -17,8 +17,8 @@ to perform case-insensitive search) with the
 \code{\link{stri_opts_regex}} function.
 
 
-Regular expression patterns in \pkg{ICU} are quite similar in form and behavior
-to Perl's regexes.  Their implementation is loosely inspired
+Regular expression patterns in \pkg{ICU} are quite similar in form and
+behavior to Perl's regexes.  Their implementation is loosely inspired
 by JDK 1.4 \code{java.util.regex}.
 \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 (see References section) and its features are summarized in
@@ -149,6 +149,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
+  \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};

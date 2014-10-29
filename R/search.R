@@ -32,11 +32,12 @@
 #' @title String Searching
 #'
 #' @description
-#' This man page explains how to perform string search-based
+#' This man page instructs how to perform string search-based
 #' operations in \pkg{stringi}.
 #'
 #' @details
-#' There are four independent string searching ``engines'' in \pkg{stringi}.
+#' The following independent string searching ``engines'' are available
+#' in \pkg{stringi}.
 #' \itemize{
 #'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
 #'         see \link{stringi-search-regex},
@@ -49,14 +50,16 @@
 #'    \item \code{stri_*_charclass} -- character classes search,
 #'       e.g. Unicode General Categories or Binary Properties,
 #'        see \link{stringi-search-charclass},
+#'    \item \code{stri_*_boundaries} -- text boundary analysis,
+#'       see \link{stringi-search-boundaries}
 #' }
 #'
-#' Each ``engine'' is able to perform many search-based operations, including:
+#' Each ``engine'' is able to perform many search-based operations.
+#' These may include:
 #' \itemize{
 #'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
 #'    see e.g. \code{\link{stri_detect}},
-#'    \item \code{stri_count_*} - counts the number of occurrences of text
-#'      matching a pattern,
+#'    \item \code{stri_count_*} - counts the number of pattern occurences,
 #'    see e.g. \code{\link{stri_count}},
 #'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_locate}},
@@ -73,6 +76,7 @@
 #'
 #' @name stringi-search
 #' @rdname stringi-search
+#' @family text_boundaries
 #' @family search_regex
 #' @family search_fixed
 #' @family search_coll
@@ -97,8 +101,8 @@ invisible(NULL)
 #' abstract way, a part of text.
 #' Thanks to many regex functions in \pkg{stringi},
 #' regular expressions may be a very powerful tool in your hand
-#' to do string searching,
-#' substring extraction, string splitting, etc.
+#' to perform string searching, substring extraction, string splitting, etc.,
+#' tasks.
 #'
 #'
 #' @details
@@ -108,8 +112,8 @@ invisible(NULL)
 #' \code{\link{stri_opts_regex}} function.
 #'
 #'
-#' Regular expression patterns in \pkg{ICU} are quite similar in form and behavior
-#' to Perl's regexes.  Their implementation is loosely inspired
+#' Regular expression patterns in \pkg{ICU} are quite similar in form and 
+#' behavior to Perl's regexes.  Their implementation is loosely inspired
 #' by JDK 1.4 \code{java.util.regex}.
 #' \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
 #' (see References section) and its features are summarized in
@@ -591,5 +595,63 @@ invisible(NULL)
 #' @name stringi-search-charclass
 #' @rdname stringi-search-charclass
 #' @family search_charclass
+#' @family stringi_general_topics
+invisible(NULL)
+
+
+#' @title
+#' Text Boundary Analysis in \pkg{stringi}
+#'
+#' @description
+#' Text boundary analysis is the process of locating linguistic boundaries
+#' while formatting and handling text. 
+#' 
+#' @details
+#' Examples of the boundary analysis process process include:
+#'
+#' \itemize{
+#' \item Locating appropriate points to word-wrap text to fit
+#' within specific margins while displaying or printing,
+#' see \code{\link{stri_locate_boundaries}}.
+#' \item Counting characters, words, sentences, or paragraphs.
+#' \item Making a list of the unique words in a document,
+#' cf. \code{\link{stri_extract_words}} and \code{\link{stri_unique}}.
+#' \item Capitalizing the first letter of each word
+#' or sentence, see also \code{\link{stri_trans_totitle}}.
+#' \item Locating a particular unit of the text (for example,
+#' finding the third word in the document).
+#' }
+#' 
+#' Generally, text boundary analysis is a locale-dependent operation.
+#' For example, in Japanese and Chinese one does not separate words with spaces
+#' - a line break can occur even in the middle of a word.
+#' These languages have punctuation and diacritical 
+#' marks that cannot start or end a line, so this must also be taken into account.
+#'
+#' \pkg{stringi} uses \pkg{ICU}'s \code{BreakIterator} to locate specific
+#' text boundaries.
+#' \itemize{
+#' \item The \code{character} boundary iterator tries to match what a user 
+#' would think of as a ``character''  -- a basic unit of a writing system
+#' for a language -- which may be more than just a single Unicode code point.
+#' \item The \code{word} boundary iterator locates the boundaries 
+#' of words, for purposes such as ``Find whole words'' operations.
+#' \item The \code{line_break} iterator locates positions that would
+#' be appropriate points to wrap lines when displaying the text.
+#' \item On the other hand, a break iterator of type \code{sentence}
+#' locates sentence boundaries.
+#' }
+#' 
+#' For technical details on different classes of text boundaries refer
+#' to the \pkg{ICU} User Guide, see below.
+#' 
+#' @references
+#' \emph{Boundary Analysis} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/boundaryanalysis}
+#' 
+#' @name stringi-search-boundaries
+#' @rdname stringi-search-boundaries
+#' @family locale_sensitive
+#' @family text_boundaries
 #' @family stringi_general_topics
 invisible(NULL)
