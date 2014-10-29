@@ -34,7 +34,6 @@
 #include "stri_container_base.h"
 #include "stri_container_utf8.h"
 #include "stri_container_bytesearch.h"
-#include "stri_container_logical.h"
 
 
 /**
@@ -60,17 +59,15 @@
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_count_fixed now uses byte search only
  */
-SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP overlap)
+SEXP stri_count_fixed(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   overlap = stri_prepare_arg_logical(overlap, "overlap");
 
    STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(overlap));
+   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
-   StriContainerLogical overlap_cont(overlap, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
@@ -83,7 +80,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP overlap)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
       ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length(), overlap_cont.get(i));
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t found = 0;
       while (USEARCH_DONE != pattern_cont.findNext())
          ++found;
