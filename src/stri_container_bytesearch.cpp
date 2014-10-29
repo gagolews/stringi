@@ -47,7 +47,6 @@ StriContainerByteSearch::StriContainerByteSearch()
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   this->overlap = false;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -72,7 +71,6 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   this->overlap = false;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -95,7 +93,6 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   this->overlap = false;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -120,7 +117,6 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   this->overlap = false;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -199,7 +195,7 @@ void StriContainerByteSearch::createKMPtableFwd()
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  */
-void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr, R_len_t _searchLen, bool _overlap)
+void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
    if (i >= n && this->patternStr == get(i).c_str()) {
 #ifndef NDEBUG
@@ -224,7 +220,6 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
 #endif
    }
 
-   this->overlap = _overlap;
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->resetMatcher();
@@ -250,7 +245,7 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
  *          KMP upgrade;
  *          special procedure for patternLen <= 4
  */
-void StriContainerByteSearch::setupMatcherFwd(R_len_t i, const char* _searchStr, R_len_t _searchLen, bool _overlap)
+void StriContainerByteSearch::setupMatcherFwd(R_len_t i, const char* _searchStr, R_len_t _searchLen)
 {
    if (i >= n && this->patternStr == get(i).c_str()) {
 #ifndef NDEBUG
@@ -275,7 +270,6 @@ void StriContainerByteSearch::setupMatcherFwd(R_len_t i, const char* _searchStr,
 #endif
    }
 
-   this->overlap = _overlap;
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->resetMatcher();
@@ -551,24 +545,16 @@ R_len_t StriContainerByteSearch::findNext()
 #endif
 
    if (searchPos < 0) return findFirst();
-   
-   int nextSearchPos = searchPos;
-   
-   if(overlap){
-      nextSearchPos++;
-   }else{
-      nextSearchPos = nextSearchPos + patternLen;
-   }
 
 #ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
    if (patternLen <= 4)
-      return findFromPosFwd_short(nextSearchPos);
+      return findFromPosFwd_short(searchPos+patternLen);
 #endif
 
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
-   return findFromPosFwd_KMP(nextSearchPos);
+   return findFromPosFwd_KMP(searchPos+patternLen);
 #else
-   return findFromPosFwd_naive(nextSearchPos);
+   return findFromPosFwd_naive(searchPos+patternLen);
 #endif
 }
 
