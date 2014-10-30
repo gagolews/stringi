@@ -216,26 +216,26 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' \code{line_break}, \code{sentence}, or \code{word};
 #' see \link{stringi-search-boundaries}
 #' @param locale single string, \code{NULL} or \code{""} for default locale
-#' @param skip_word_none logical; perform no action for "words" that 
+#' @param skip_word_none logical; perform no action for "words" that
 #' do not fit into any other categories
-#' @param skip_word_number logical; perform no action for words that 
+#' @param skip_word_number logical; perform no action for words that
 #' appear to be numbers
-#' @param skip_word_letter logical; perform no action for words that 
+#' @param skip_word_letter logical; perform no action for words that
 #' contain letters, excluding hiragana, katakana, or ideographic characters
-#' @param skip_word_kana logical; perform no action for words 
+#' @param skip_word_kana logical; perform no action for words
 #' containing kana characters
-#' @param skip_word_ideo logical; perform no action for words 
+#' @param skip_word_ideo logical; perform no action for words
 #' containing ideographic characters
-#' @param skip_line_soft logical; perform no action for soft line breaks, 
+#' @param skip_line_soft logical; perform no action for soft line breaks,
 #' i.e. positions at which a line break is acceptable but not required
-#' @param skip_line_hard logical; perform no action for hard, 
+#' @param skip_line_hard logical; perform no action for hard,
 #' or mandatory line breaks
-#' @param skip_sentence_term logical; perform no action for sentences 
-#' ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}", 
-#' "\code{!}"), possibly followed by a hard separator 
+#' @param skip_sentence_term logical; perform no action for sentences
+#' ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}",
+#' "\code{!}"), possibly followed by a hard separator
 #' (\code{CR}, \code{LF}, \code{PS}, etc.)
-#' @param skip_sentence_sep logical; perform no action for sentences 
-#' that do not contain an ending sentence terminator, but are ended 
+#' @param skip_sentence_sep logical; perform no action for sentences
+#' that do not contain an ending sentence terminator, but are ended
 #' by a hard separator or end of input
 #'
 #' @return
@@ -272,4 +272,3 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
    if (!missing(skip_sentence_sep))   opts["skip_sentence_sep"]   <- skip_sentence_sep
    opts
 }
-

@@ -10,7 +10,7 @@ test_that("stri_detect_coll", {
    expect_identical(stri_detect_coll(character(0), character(0)), logical(0))
    expect_identical(stri_detect_coll(c("ab", "cab", "ccccab", "aaaabaaaa"), "ab"), c(T, T, T, T))
    expect_identical(stri_detect_coll(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
-   
+
    expect_identical(stri_detect_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105")), c(F, F, F, T))
    expect_warning(stri_detect_coll(rep("asd", 5), rep("a", 2)))
    expect_identical(stri_detect_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), TRUE)

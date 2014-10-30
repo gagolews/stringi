@@ -72,7 +72,7 @@
 #'
 #' @examples
 #' \donttest{stri_install_check()}
-#' 
+#'
 #' @rdname
 #' stri_install
 #' @export

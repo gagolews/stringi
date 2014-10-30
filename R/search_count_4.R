@@ -38,10 +38,10 @@
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' \code{stri_count} is a convenience function.
 #' It calls either \code{stri_count_regex},
 #' \code{stri_count_fixed}, \code{stri_count_coll},
@@ -68,19 +68,19 @@
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count(s, fixed="dolor")
 #' stri_count(s, regex="\\p{L}+")
-#' 
+#'
 #' stri_count_fixed(s, " ")
 #' stri_count_fixed(s, "o")
 #' stri_count_fixed(s, "it")
 #' stri_count_fixed(s, letters)
 #' stri_count_fixed("babab", "b")
 #' stri_count_fixed(c("stringi", "123"), "string")
-#' 
+#'
 #' stri_count_charclass(c("stRRRingi", "STrrrINGI", "123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #' stri_count_charclass(" \t\n", "\\p{WHITE_SPACE}") # white space - binary property
 #' stri_count_charclass(" \t\n", "\\p{Z}") # whitespace - general category (note the difference)
-#' 
+#'
 #' stri_count_regex(s, "(s|el)it")
 #' stri_count_regex(s, "i.i")
 #' stri_count_regex(s, ".it")
@@ -135,4 +135,3 @@ stri_count_fixed <- function(str, pattern) {
 stri_count_regex <- function(str, pattern, opts_regex=NULL) {
    .Call("stri_count_regex", str, pattern, opts_regex, PACKAGE="stringi")
 }
-

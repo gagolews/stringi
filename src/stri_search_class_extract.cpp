@@ -157,7 +157,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  * @param str character vector
  * @param pattern character vector
  * @param simplify single logical value
- * 
+ *
  * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-08)
@@ -173,7 +173,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          added simplify param
  */
@@ -269,7 +269,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
          STRI__UNPROTECT(1)
       }
    }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));

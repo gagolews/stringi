@@ -74,7 +74,7 @@
 #' stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{N}")
 #' stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{L}")
 #' }
-#' 
+#'
 #' @aliases stri_trim
 #' @family search_trim
 #' @family search_charclass

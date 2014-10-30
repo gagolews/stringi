@@ -68,7 +68,7 @@
  *
  *  @param str character vector
  *  @param type internal code of case conversion type
- *  @param opts single string identifying 
+ *  @param opts single string identifying
  *         the locale ("" or NULL for default locale) or opts_brkiter
  *  @return character vector
  *
@@ -90,23 +90,23 @@
  *          use UCaseMap + StriContainerUTF8
  *          (this is much faster for UTF-8 and slightly faster for 8bit enc)
  *          Estimates minimal buffer size.
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          Use a custom BreakIterator with stri_trans_totitle
 */
 SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
 {
    str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   
+
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
    int _type = INTEGER(type)[0];
    if (_type < 1 || _type > 3)
       Rf_error(MSG__INTERNAL_ERROR);
-   
+
    const char* qloc = NULL;
    UBreakIterator* briter = NULL;
-   
+
    if (_type != 3) { // tolower, toupper
       qloc = stri__prepare_arg_locale(opts, "locale", true);
    }
@@ -123,7 +123,7 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
    if (U_FAILURE(status)) throw StriException(status);
-   
+
    // set BreakIterator for stri_totitle
    if (_type == 3) {
       status = U_ZERO_ERROR;

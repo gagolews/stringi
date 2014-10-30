@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' \pkg{ICU} implements full Unicode string case mappings. In general,
 #' \itemize{
 #' \item case mapping can change the number of code points and/or code units
@@ -47,7 +47,7 @@
 #' \item is context-sensitive (a character in the input string may map
 #'    differently depending on surrounding characters).
 #' }
-#' 
+#'
 #' With \code{stri_trans_totitle}, if \code{word} \code{BreakIterator}
 #' is used (the default), then the first letter of each word will be capitalized
 #' and the rest will be transformed to lower case.
@@ -67,7 +67,7 @@
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{word};
 #' \code{stri_trans_totitle} only
-#' 
+#'
 #' @return
 #' Each function returns a character vector.
 #'

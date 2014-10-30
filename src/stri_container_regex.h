@@ -46,7 +46,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-18)
  *          BUGFIX: memleaks on StriException
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-05-27)
  *          BUGFIX: invalid matcher reuse on empty search string
  */

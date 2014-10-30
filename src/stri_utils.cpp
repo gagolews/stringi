@@ -50,18 +50,18 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill)
    x = stri_prepare_arg_list_string(x, "x");
    bool byrow2 = stri__prepare_arg_logical_1_notNA(byrow, "byrow");
    fill = stri_prepare_arg_string_1(fill, "fill"); // enc2utf8 called in R
-   
+
    STRI__ERROR_HANDLER_BEGIN
    R_len_t n = LENGTH(x);
    SEXP fill2 = STRING_ELT(fill, 0);
-   
+
    R_len_t m = 0; // maximal vector length
    for (int i=0; i<n; ++i) {
       R_len_t k = LENGTH(VECTOR_ELT(x, i));
       if (k >  m) m = k;
    }
-   
-   SEXP ret;   
+
+   SEXP ret;
    if (!byrow2) {
       STRI__PROTECT(ret = Rf_allocMatrix(STRSXP, m, n));
       int ret_idx = 0;
@@ -87,10 +87,9 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill)
             SET_STRING_ELT(ret, i+j*n, fill2);
       }
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
-   
+
    STRI__ERROR_HANDLER_END({/* no-op on err */})
 }
-

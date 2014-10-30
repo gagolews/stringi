@@ -52,7 +52,7 @@
 #' stri_reverse("ZXY (\u0105\u0104123$^).")
 #' stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
 #' }
-#' 
+#'
 #' @export
 stri_reverse <- function(str) {
    .Call("stri_reverse", str, PACKAGE="stringi")

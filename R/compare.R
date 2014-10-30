@@ -460,7 +460,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' 
-#' stri_unique(c("groß", "GROSS", "Groß", "Gross"), 
+#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), 
 #'    stri_opts_collator(strength=1))
 #' }
 #' 
@@ -523,9 +523,9 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #' 
-#' stri_duplicated(c("groß", "GROSS", "Groß", "Gross"), 
+#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), 
 #'    opts_collator=stri_opts_collator(strength=1))
-#' duplicated(c("groß", "GROSS", "Groß", "Gross"))
+#' duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
 #' }
 #'
 #' @rdname stri_duplicated

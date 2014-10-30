@@ -30,7 +30,7 @@ These may include:
 \itemize{
    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
    see e.g. \code{\link{stri_detect}},
-   \item \code{stri_count_*} - counts the number of pattern occurences,
+   \item \code{stri_count_*} - counts the number of pattern occurrences,
    see e.g. \code{\link{stri_count}},
    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
    see e.g. \code{\link{stri_locate}},

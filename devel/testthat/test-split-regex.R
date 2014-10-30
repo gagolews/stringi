@@ -26,7 +26,7 @@ test_that("stri_split_regex", {
    expect_identical(stri_split_regex("123-456-789", "-", n=1:3),
                     list(c("123-456-789"),c("123","456-789"),c("123","456","789")))
    expect_identical(stri_split_regex("123-456-789", "[1-8]-.", n=5), list(c("12","5","89")))
-   
+
    # tokens_only
    expect_identical(stri_split_regex("a_b_c_d", "_"), list(c("a", "b", "c", "d")))
    expect_identical(stri_split_regex("a_b_c__d", "_"), list(c("a", "b", "c", "", "d")))
@@ -38,7 +38,7 @@ test_that("stri_split_regex", {
    expect_identical(stri_split_regex(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE), list("ab", "d", "h", character(0)))
    expect_identical(stri_split_regex(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef"), "h", character(0)))
    expect_identical(stri_split_regex(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE), list(c("ab", "c"), c("d", "ef", "g"), "h", character(0)))
-   
+
    expect_identical(stri_split_regex(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
    expect_identical(stri_split_regex(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE),

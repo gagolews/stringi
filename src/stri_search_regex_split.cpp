@@ -52,7 +52,7 @@ using namespace std;
  * @param opts_regex
  * @param tokens_only single logical value
  * @param simplify single logical value
- * 
+ *
  * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
@@ -62,17 +62,17 @@ using namespace std;
  *
  * @version 0.1-24 (Marek Gagolewski, 2014-03-11)
  *          Added missing utext_close call to avoid memleaks
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
  *          added split param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          allow omit_empty=NA
  */
-SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty, 
+SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex)
 {
    str = stri_prepare_arg_string(str, "str");
@@ -110,7 +110,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, 
+         SET_VECTOR_ELT(ret, i,
             (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
             stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
@@ -156,7 +156,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
-         
+
       if (tokens_only1 && n_max_cur < INT_MAX) {
          n_max_cur--; // one split ahead could have been made, see above
          while (fields.size() > (size_t)n_max_cur)
@@ -184,7 +184,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       utext_close(str_text);
       str_text = NULL;
    }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));

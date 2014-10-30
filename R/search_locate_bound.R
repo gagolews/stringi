@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
@@ -48,7 +48,7 @@
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
-#' This is function is equivalent to a call to 
+#' This is function is equivalent to a call to
 #' \code{\link{stri_locate_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 #'
 #'
@@ -81,7 +81,7 @@
 #' stri_locate_boundaries(test, stri_opts_brkiter(type="character"))
 #' stri_locate_words(test)
 #' }
-#' 
+#'
 #' @export
 #' @family search_locate
 #' @family indexing

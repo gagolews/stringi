@@ -32,7 +32,6 @@
 invisible(NULL) # version >= 0.3
 
 
-
 # #' Count the Width of Characters [version >0.1]
 # #'
 # #' Missing values are handled properly.
@@ -49,5 +48,3 @@ invisible(NULL) # version >= 0.3
 # stri_width <- function(str) {
 #    .Call("stri_width", str, PACKAGE="stringi")
 # }
-
-

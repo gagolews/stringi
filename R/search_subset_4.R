@@ -40,7 +40,7 @@
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' \code{stri_subset} is a convenience function.
 #' It calls either \code{stri_subset_regex},
 #' \code{stri_subset_fixed}, \code{stri_subset_coll},

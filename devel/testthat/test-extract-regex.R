@@ -10,7 +10,7 @@ test_that("stri_extract_all_regex", {
    suppressWarnings(expect_identical(stri_extract_all_regex("test", ""), list(NA_character_)))
    expect_identical(stri_extract_all_regex(c("bacab", "bacaba\u0105a", "aa"), "a.a"),
       list("aca", c("aca", "a\u0105a"), NA_character_))
-   
+
    expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=TRUE),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
 

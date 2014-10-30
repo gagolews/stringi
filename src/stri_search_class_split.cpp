@@ -49,7 +49,7 @@ using namespace std;
  * @param omit_empty logical vector
  * @param tokens_only single logical value
  * @param simplify single logical value
- * 
+ *
  * @return a list of character vectors or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-14)
@@ -66,17 +66,17 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
  *          added split param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          allow omit_empty=NA
  */
-SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max, 
+SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
    str = stri_prepare_arg_string(str, "str");
@@ -148,7 +148,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
          fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
-         
+
       if (tokens_only1 && n_max_cur < INT_MAX) {
          n_max_cur--; // one split ahead could have been made, see above
          while (fields.size() > (size_t)n_max_cur)
@@ -172,7 +172,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1)
    }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));

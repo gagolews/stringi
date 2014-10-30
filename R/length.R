@@ -62,7 +62,7 @@
 #' \donttest{
 #' stri_numbytes(letters)
 #' stri_numbytes(c('abc', '123', '\u0105\u0104'))
-#' 
+#'
 #' # this used to fail on Windows, as there was no native support for 4-bytes
 #' # Unicode characters; see, however, stri_escape_unicode():
 #' stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
@@ -109,7 +109,7 @@ stri_numbytes <- function(str) {
 #' stri_numbytes('\u0105') # 2 bytes are used
 #' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 #' }
-#' 
+#'
 #' @export
 #' @family length
 stri_length <- function(str) {
@@ -137,7 +137,7 @@ stri_length <- function(str) {
 #' stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 #' stri_isempty(character(1))
 #' }
-#' 
+#'
 #' @export
 #' @family length
 stri_isempty <- function(str) {

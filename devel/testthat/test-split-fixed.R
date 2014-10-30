@@ -18,7 +18,7 @@ test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed(";123", ";", n=2, omit_empty=TRUE), list("123"))
    expect_identical(stri_split_fixed("123abc456", "abc", n=2), list(c("123", "456")))
    expect_identical(stri_split_fixed("123abc456abc789", "abc", n=2), list(c("123", "456abc789")))
-   
+
    # tokens_only
    expect_identical(stri_split_fixed("a_b_c_d", "_"), list(c("a", "b", "c", "d")))
    expect_identical(stri_split_fixed("a_b_c__d", "_"), list(c("a", "b", "c", "", "d")))

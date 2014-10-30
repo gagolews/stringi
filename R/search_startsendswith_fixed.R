@@ -34,7 +34,7 @@
 #'
 #' @description
 #' These functions check if a string starts or ends with a fixed
-#' pattern occurence.
+#' pattern occurrence.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern},
@@ -45,11 +45,11 @@
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
-#' 
+#'
 #' Argument \code{start} controls the start position in \code{str}
 #' at which \code{pattern} is mathed.
 #' On the other hand, \code{to} gives the end position.
-#' 
+#'
 #' Indices given by \code{from} or \code{to} are 1-based,
 #' i.e. an index equal to 1 denotes the first character
 #' in a string, which gives a typical R look-and-feel.

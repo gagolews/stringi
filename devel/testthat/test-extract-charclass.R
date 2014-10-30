@@ -26,7 +26,7 @@ test_that("stri_extract_all_charclass", {
 
 #    expect_identical(stri_extract_all_charclass(c("a1b2c3", NA, "12", "ba"), "\\p{N}", merge=FALSE),
 #       str_extract_all(c("a1b2c3", NA, "12", "ba"), "[0-9]"))
-   
+
    expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', charclass="\\p{L}", merge=TRUE, simplify=TRUE),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
 })

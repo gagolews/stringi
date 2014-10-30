@@ -59,7 +59,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // BT: this cannot be done with deque, because pattern is reused so i does not
    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
    // MG: agreed
    std::vector<int> which(vectorize_length);
@@ -78,7 +78,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       which[i] = (int)matcher->find();
       if (which[i]) result_counter++;
    }
-   
+
    return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

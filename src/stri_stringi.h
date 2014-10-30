@@ -194,7 +194,7 @@ SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement,
                               SEXP opts_collator);
 SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_collator);
-SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty, 
+SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_collator);
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 
@@ -207,7 +207,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max, 
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max,
             SEXP omit_empty, SEXP tokens_only, SEXP simplify);
 SEXP stri_subset_fixed(SEXP str, SEXP pattern);
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to);

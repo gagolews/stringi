@@ -54,7 +54,7 @@ using namespace std;
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @param tokens_only single logical value
  * @param simplify single logical value
- * 
+ *
  * @return list of character vectors or character matrix
  *
  *
@@ -68,13 +68,13 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_split_coll (opts_collator == NA not allowed)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
  *          added split param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          allow omit_empty=NA
  */
@@ -92,7 +92,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
    collator = stri__ucol_open(opts_collator);
 
    STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, 
+   R_len_t vectorize_length = stri__recycling_rule(true, 4,
       LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
@@ -116,7 +116,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, 
+         SET_VECTOR_ELT(ret, i,
             (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
             stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
@@ -156,7 +156,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       fields.back().second = str_cont.get(i).length();
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
-         
+
       if (tokens_only1 && n_max_cur < INT_MAX) {
          n_max_cur--; // one split ahead could have been made, see above
          while (fields.size() > (size_t)n_max_cur)
@@ -171,19 +171,19 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
          if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
             out_cont.setNA(k);
          else
-            out_cont.getWritable(k).setTo(str_cont.get(i), 
+            out_cont.getWritable(k).setTo(str_cont.get(i),
                curoccur.first, curoccur.second-curoccur.first);
       }
       SET_VECTOR_ELT(ret, i, out_cont.toR());
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(

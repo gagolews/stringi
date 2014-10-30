@@ -37,8 +37,8 @@ test_that("stri_split_coll", {
    expect_identical(stri_split_coll(";123", ";", n=2, omit_empty=TRUE), list("123"))
    expect_identical(stri_split_coll("123;456", ";", n=2), list(c("123", "456")))
    expect_identical(stri_split_coll("123;456;789", ";", n=2), list(c("123", "456;789")))
-   
-   
+
+
    # tokens_only
    expect_identical(stri_split_coll("a_b_c_d", "_"), list(c("a", "b", "c", "d")))
    expect_identical(stri_split_coll("a_b_c__d", "_"), list(c("a", "b", "c", "", "d")))
