@@ -38,15 +38,31 @@ strings in a character vector.
 \details{
 Missing values are regarded as equal.
 
-These functions test for canonical equivalence of strings.
-Such an operation is locale-dependent.
+Unlike \code{\link{duplicated}} and \code{\link{anyDuplicated}},
+these functions test for canonical equivalence of strings
+(and not whether the strings are just bytewise equal)
+Such operations is locale-dependent.
+Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
+are significantly slower (but much better suited for natural language
+processing) than their base R counterpart.
+
+See also \code{\link{stri_unique}} for extracting unique elements.
 }
 \examples{
 \donttest{
 # In the following examples, we have 3 duplicated values,
 # "a" - 2 times, NA - 1 time
 stri_duplicated(c("a", "b", "a", NA, "a", NA))
+stri_duplicated(c("a", "b", "a", NA, "a", NA), fromLast=TRUE)
 stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
+
+# compare the results:
+stri_duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
+duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
+
+stri_duplicated(c("groß", "GROSS", "Groß", "Gross"),
+   opts_collator=stri_opts_collator(strength=1))
+duplicated(c("groß", "GROSS", "Groß", "Gross"))
 }
 }
 \seealso{
@@ -67,7 +83,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_compare}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
@@ -97,7 +113,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_compare}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};

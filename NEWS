@@ -31,6 +31,9 @@
      is called on the resulting list.
 .....TO DO: stri_extract_words, stri_split_boundaries
 
+   * [NEW FUNCTION] #109: `stri_count_boundaries`...........
+.....
+
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
      [TO DO.........: documentation, coll, charclass, regex?, other]
@@ -45,7 +48,7 @@
 
    * [NEW FEATURE] #98: `stri_trans_totitle` gained a `opts_brkiter`
      parameter; it indicates which ICU BreakIterator should be used when
-     case mapping.
+     performing case mapping.
 
    * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`
 

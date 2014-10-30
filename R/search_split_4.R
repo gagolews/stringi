@@ -56,7 +56,8 @@
 #' 
 #' Empty search patterns are not supported. If you would like to split a
 #' string into individual characters, use e.g.
-#' \code{\link{stri_extract_all_regex}(str, ".")}
+#' \code{\link{stri_split_boundaries}(str, 
+#' \link{stri_opts_brkiter}(type="character"))} for THE Unicode way.
 #' 
 #' \code{stri_split} is a convenience function.
 #' It calls either \code{stri_split_regex},

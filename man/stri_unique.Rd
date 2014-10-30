@@ -22,13 +22,22 @@ but with duplicate elements removed.
 \details{
 As usual in \pkg{stringi}, no attributes are copied.
 Unlike \code{\link{unique}}, this function
-tests for canonical equivalence of strings. Such an operation
-is locale-dependent.
+tests for canonical equivalence of strings (and not
+whether the strings are just bytewise equal). Such an operation
+is locale-dependent. Hence, \code{stri_unique} is significantly
+slower (but much better suited for natural language processing)
+than its base R counterpart.
+
+See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 }
 \examples{
 \donttest{
 # normalized and non-unicode-normalized version of the same code point:
 stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
+unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
+
+stri_unique(c("groß", "GROSS", "Groß", "Gross"),
+   stri_opts_collator(strength=1))
 }
 }
 \seealso{
@@ -51,7 +60,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};

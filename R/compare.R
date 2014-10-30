@@ -439,8 +439,13 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @details
 #' As usual in \pkg{stringi}, no attributes are copied.
 #' Unlike \code{\link{unique}}, this function
-#' tests for canonical equivalence of strings. Such an operation
-#' is locale-dependent.
+#' tests for canonical equivalence of strings (and not
+#' whether the strings are just bytewise equal). Such an operation
+#' is locale-dependent. Hence, \code{stri_unique} is significantly
+#' slower (but much better suited for natural language processing)
+#' than its base R counterpart.
+#' 
+#' See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 #'
 #' @param str character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
@@ -453,6 +458,10 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' \donttest{
 #' # normalized and non-unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
+#' unique(c("\u0105", stri_trans_nfkd("\u0105")))
+#' 
+#' stri_unique(c("groß", "GROSS", "Groß", "Gross"), 
+#'    stri_opts_collator(strength=1))
 #' }
 #' 
 #' @family locale_sensitive
@@ -475,8 +484,15 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' @details
 #' Missing values are regarded as equal.
 #'
-#' These functions test for canonical equivalence of strings.
-#' Such an operation is locale-dependent.
+#' Unlike \code{\link{duplicated}} and \code{\link{anyDuplicated}},
+#' these functions test for canonical equivalence of strings
+#' (and not whether the strings are just bytewise equal)
+#' Such operations is locale-dependent.
+#' Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
+#' are significantly slower (but much better suited for natural language
+#' processing) than their base R counterpart.
+#' 
+#' See also \code{\link{stri_unique}} for extracting unique elements.
 #'
 #' @param str character vector
 #' @param fromLast single logical value;
@@ -500,7 +516,16 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' # In the following examples, we have 3 duplicated values,
 #' # "a" - 2 times, NA - 1 time
 #' stri_duplicated(c("a", "b", "a", NA, "a", NA))
+#' stri_duplicated(c("a", "b", "a", NA, "a", NA), fromLast=TRUE)
 #' stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
+#' 
+#' # compare the results:
+#' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
+#' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
+#' 
+#' stri_duplicated(c("groß", "GROSS", "Groß", "Gross"), 
+#'    opts_collator=stri_opts_collator(strength=1))
+#' duplicated(c("groß", "GROSS", "Groß", "Gross"))
 #' }
 #'
 #' @rdname stri_duplicated

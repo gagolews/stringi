@@ -3,14 +3,14 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, opts_brkiter = stri_opts_brkiter(type =
-  "line_break"))
+stri_split_boundaries(str, opts_brkiter = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
-as generated with \code{\link{stri_opts_brkiter}}}
+as generated with \code{\link{stri_opts_brkiter}};
+\code{NULL} for default break iterator, i.e. \code{line_break}}
 }
 \value{
 Returns a list of character vectors.
@@ -60,7 +60,7 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
@@ -83,7 +83,7 @@ Other search_split: \code{\link{stri_split_lines}},
   \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_lines}},
