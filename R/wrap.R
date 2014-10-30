@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' \pkg{ICU}'s line-\code{BreakIterator} is used to determine
 #' text boundaries at which a line break is possible.
 #' This is a locale-dependent operation.
@@ -55,11 +55,11 @@
 #' You should split the input text into lines
 #' or e.g. substitute line breaks with spaces
 #' before applying this function.
-#'  
+#'
 #' On the other hand, if \code{normalize} is \code{TRUE}, then
 #' all consecutive white space sequences are replaced with single spaces, by calling i.a.
 #' \code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
-#' before actual string wrapping. Moreover, \code{\link{stri_split_lines}} 
+#' before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
 #' and \code{\link{stri_trans_nfc}} is called on the input character vector.
 #'
 #' The greedy algorithm (for \code{cost_exponent} being non-positive)

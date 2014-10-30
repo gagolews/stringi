@@ -19,7 +19,7 @@ test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass("a  b", "\\p{Z}"), list(c("a", "", "b")))
    expect_identical(stri_split_charclass("a  b", "\\p{Z}", omit_empty=TRUE), list(c("a", "b")))
    expect_identical(stri_split_charclass(c("a1a", "aXa"), c("\\p{N}", "\\p{Lu}")), list(c("a", "a"), c("a", "a")))
-   
+
    # tokens_only
    expect_identical(stri_split_charclass("a_b_c_d", "[_]"), list(c("a", "b", "c", "d")))
    expect_identical(stri_split_charclass("a_b_c__d", "[_]"), list(c("a", "b", "c", "", "d")))

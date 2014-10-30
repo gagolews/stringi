@@ -69,24 +69,24 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ret_tab[i] = NA_LOGICAL,
          ret_tab[i] = FALSE)
-         
+
       if (from_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-      
+
       R_len_t from_cur = from_cont.get(i);
       if (from_cur >= 0)
-         from_cur = str_cont.UChar32_to_UTF8_index_fwd(i, from_cur-1);                                                           
+         from_cur = str_cont.UChar32_to_UTF8_index_fwd(i, from_cur-1);
       else
-         from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur); 
+         from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
 
 
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* pattern_cur_s = pattern_cont.get(i).c_str();
       R_len_t     pattern_cur_n = pattern_cont.get(i).length();
-      
+
       if (str_cur_n-from_cur < pattern_cur_n)
          ret_tab[i] = FALSE;
       else {
@@ -140,24 +140,24 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ret_tab[i] = NA_LOGICAL,
          ret_tab[i] = FALSE)
-         
+
       if (to_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-      
+
       R_len_t to_cur = to_cont.get(i);
       if (to_cur >= 0)
-         to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);                                                           
+         to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);
       else
-         to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1); 
+         to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
 
 
       const char* str_cur_s = str_cont.get(i).c_str();
 //      R_len_t     str_cur_n = str_cont.get(i).length();
       const char* pattern_cur_s = pattern_cont.get(i).c_str();
       R_len_t     pattern_cur_n = pattern_cont.get(i).length();
-      
+
       if (to_cur - pattern_cur_n < 0)
          ret_tab[i] = FALSE;
       else {

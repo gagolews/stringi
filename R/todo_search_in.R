@@ -35,16 +35,16 @@ invisible(NULL) # TO DO: later (>0.3)
 # #' Value Matching
 # #'
 # #' @description
-# #' For each element in \code{str}, this function returns 
+# #' For each element in \code{str}, this function returns
 # #' a position of the first matching element in \code{table}.
 # #'
 # #' @details
 # #' Vectorized over \code{str}.
-# #' 
+# #'
 # #' This is a dummy wrapper for R's \code{\link{match}} function.
 # #' The only difference is that it ensures that the comparison
 # #' is made in UTF-8 (by calling \code{\link{stri_enc_toutf8}}).
-# #' 
+# #'
 # #' It is (most likely) impossible to implement an algorithm
 # #' faster than the built-in \code{\link{match}}:
 # #' this function uses R's clever, hash table-based, string caching

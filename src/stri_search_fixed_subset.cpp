@@ -47,7 +47,7 @@
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
  * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
  *                using std::vector<int> to avoid mem-leaks
- */ 
+ */
 SEXP stri_subset_fixed(SEXP str, SEXP pattern)
 {
    str = stri_prepare_arg_string(str, "str");
@@ -58,7 +58,7 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // BT: this cannot be done with deque, because pattern is reused so i does not
    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
    // MG: agreed
    std::vector<int> which(vectorize_length);
@@ -76,7 +76,7 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern)
       which[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
       if (which[i]) result_counter++;
    }
-   
+
    return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }

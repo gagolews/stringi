@@ -87,10 +87,10 @@ stri_dup <- function(str, times) {
 #' }
 #'
 #' @rdname oper_plus
-#' 
+#'
 #' @usage
 #' e1 \%s+\% e2
-#' 
+#'
 #' @export
 "%s+%" <- function(e1, e2) {
    .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
@@ -152,11 +152,11 @@ stri_dup <- function(str, times) {
 #' stri_join(1:13, letters, sep='!', collapse='?')
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...')
 #' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
-#' 
+#'
 #' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!'))
 #' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
 #' }
-#' 
+#'
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL) {
@@ -205,7 +205,7 @@ stri_paste <- stri_join
 #' stri_flatten(c('abc', '123', '\u0105\u0104'))
 #' stri_flatten(stri_dup(letters[1:6],1:3))
 #' }
-#' 
+#'
 #' @export
 #' @family join
 stri_flatten <- function(str, collapse="") {

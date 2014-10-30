@@ -56,7 +56,7 @@
  *          KMP used by default;
  *          KMP_from back implemented;
  *          tweeks for short patterns
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-05-27)
  *          BUGFIX: invalid matcher reuse on empty search string
  */

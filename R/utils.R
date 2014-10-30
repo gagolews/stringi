@@ -42,16 +42,16 @@
 #' even if each element in \code{x} is of length 1
 #' or if elements in \code{x} are not of the same lenghts.
 #' Moreover, the elements in \code{x} are always coerced to character vectors.
-#' 
+#'
 #' If \code{byrow} is \code{FALSE}, then a matrix with \code{length(x)}
 #' columns is returned. The number of rows is the lenght of the
-#' longest vector in \code{x}. Basically, we have 
+#' longest vector in \code{x}. Basically, we have
 #' \code{result[i,j] == x[[j]][i]} if \code{i <= length(x[[j]])}
 #' and \code{result[i,j] == fill} otherwise, see Examples.
-#' 
-#' If \code{byrow} is \code{TRUE}, then the resulting matrix is 
-#' a transposition of the above-described one. 
-#' 
+#'
+#' If \code{byrow} is \code{TRUE}, then the resulting matrix is
+#' a transposition of the above-described one.
+#'
 #' This function may be useful e.g. in connection with \code{\link{stri_split}}
 #' and \code{\link{stri_extract_all}}.
 #'
@@ -60,7 +60,7 @@
 #' transposed?
 #' @param fill single string, see Details
 #'
-#' @return 
+#' @return
 #' Always returns a character matrix.
 #'
 #' @examples
@@ -68,12 +68,12 @@
 #' simplify2array(list(c("a", "b"), c("c", "d"), c("e", "f")))
 #' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")))
 #' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")), byrow=TRUE)
-#' 
+#'
 #' simplify2array(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")), fill="")
 #' }
-#' 
+#'
 #' @family utils
 #' @export
 stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_) {

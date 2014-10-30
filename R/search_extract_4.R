@@ -34,20 +34,20 @@
 #'
 #' @description
 #' These functions extract all substrings matching a given pattern.
-#' 
+#'
 #' \code{stri_extract_all_*} extracts all the matches.
 #' On the other hand, \code{stri_extract_first_*} and \code{stri_extract_last_*}
 #' provide the first or the last matches, respectively.
-#' 
+#'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
-#' 
+#'
 #' Note that a \code{stri_extract_*_fixed} family of functions does not
 #' make sense. Thus, it has not been implemented in \pkg{stringi}.
-#' 
+#'
 #' If you would like to extract regex capture groups individually,
 #' check out \code{\link{stri_match}}.
-#' 
+#'
 #' \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 #' and \code{stri_extract_last} are convenience functions.
 #' They just call \code{stri_extract_*_*}, depending on arguments used.
@@ -86,7 +86,7 @@
 #' In such a case, a character matrix with an appropriate number of rows
 #' (according to the length of \code{str}, \code{pattern}, etc.)
 #' is returned.
-#' 
+#'
 #' \code{stri_extract_first*} and \code{stri_extract_last*},
 #' on the other hand, return a character vector.
 #' A \code{NA} element indicates no match.
@@ -96,28 +96,28 @@
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', coll='i')
 #' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all whitespaces
-#' 
+#'
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
 #' stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
 #' stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
-#' 
+#'
 #' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=2, locale="sk_SK"))
 #' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',
 #'    stri_opts_collator(strength=1, locale="sk_SK"))
-#'    
+#'
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_last_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
-#' 
+#'
 #' stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 #' }
 #'
 #' @family search_extract
-#' 
+#'
 #' @export
 #' @rdname stri_extract
 stri_extract_all <- function(str, ..., regex, coll, charclass) {

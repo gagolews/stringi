@@ -63,7 +63,7 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // BT: this cannot be done with deque, because pattern is reused so i does not
    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
    // MG: agreed
    std::vector<int> which(vectorize_length);

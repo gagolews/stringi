@@ -22,7 +22,7 @@ Returns a logical vector.
 }
 \description{
 These functions check if a string starts or ends with a fixed
-pattern occurence.
+pattern occurrence.
 }
 \details{
 Vectorized over \code{str}, \code{pattern},

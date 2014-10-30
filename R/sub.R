@@ -98,7 +98,7 @@
 #' (stri_sub(s, -6, length=5) <- ".")
 #' (stri_sub(s, 1, 1:3) <- 1:2)
 #' }
-#' 
+#'
 #' @family indexing
 #' @rdname stri_sub
 #' @export

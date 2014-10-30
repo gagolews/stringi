@@ -43,8 +43,8 @@ invisible(NULL) # TO DO, version >= 0.3
 # #' @param split character element
 # #' @param from integer vector
 # #' @param to integer vector
-# #' @return A list of the same length as the longest of vectors: 
-# #' str, split and omitempty. Shorter vectors are recycled. The i-th element 
+# #' @return A list of the same length as the longest of vectors:
+# #' str, split and omitempty. Shorter vectors are recycled. The i-th element
 # #' of list contains splitted str[i] character vectors
 # #'
 # #' @examples

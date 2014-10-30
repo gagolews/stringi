@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
-#' 
+#'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.
 #'
@@ -68,10 +68,10 @@
 #' \donttest{
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
-#' 
+#'
 #' stri_detect_charclass(c("stRRRingi","REXAMINE","123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
-#'    
+#'
 #' stri_detect_regex(c("stringi R", "REXAMINE","123"), 'R.')
 #' stri_detect_regex(c("stringi R", "REXAMINE","123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi R", "REXAMINE","123"), '[a-zC1]')

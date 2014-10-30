@@ -52,7 +52,7 @@ using namespace std;
  * @param omit_empty logical vector
  * @param tokens_only single logical value
  * @param simplify single logical value
- * 
+ *
  * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -65,17 +65,17 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_split_fixed now uses byte search only
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-19)
  *          added tokens_only param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
  *          added split param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          allow omit_empty=NA
  */
-SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max, 
+SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
    str = stri_prepare_arg_string(str, "str");
@@ -86,7 +86,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
 
    STRI__ERROR_HANDLER_BEGIN
-   R_len_t vectorize_length = stri__recycling_rule(true, 4, 
+   R_len_t vectorize_length = stri__recycling_rule(true, 4,
       LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
@@ -109,7 +109,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, 
+         SET_VECTOR_ELT(ret, i,
             (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
             stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
 
@@ -147,7 +147,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
       fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
-         
+
       if (tokens_only1 && n_max_cur < INT_MAX) {
          n_max_cur--; // one split ahead could have been made, see above
          while (fields.size() > (size_t)n_max_cur)
@@ -164,14 +164,14 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
             SET_STRING_ELT(ans, k, NA_STRING);
          else
             SET_STRING_ELT(ans, k,
-               Rf_mkCharLenCE(str_cur_s+curoccur.first, 
+               Rf_mkCharLenCE(str_cur_s+curoccur.first,
                   curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
    }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));

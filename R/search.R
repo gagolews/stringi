@@ -59,7 +59,7 @@
 #' \itemize{
 #'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
 #'    see e.g. \code{\link{stri_detect}},
-#'    \item \code{stri_count_*} - counts the number of pattern occurences,
+#'    \item \code{stri_count_*} - counts the number of pattern occurrences,
 #'    see e.g. \code{\link{stri_count}},
 #'    \item \code{stri_locate_*} - locates all, first, or last occurrences of a pattern,
 #'    see e.g. \code{\link{stri_locate}},
@@ -112,7 +112,7 @@ invisible(NULL)
 #' \code{\link{stri_opts_regex}} function.
 #'
 #'
-#' Regular expression patterns in \pkg{ICU} are quite similar in form and 
+#' Regular expression patterns in \pkg{ICU} are quite similar in form and
 #' behavior to Perl's regexes.  Their implementation is loosely inspired
 #' by JDK 1.4 \code{java.util.regex}.
 #' \pkg{ICU} Regular Expressions conform to the Unicode Technical Standard #18
@@ -120,12 +120,12 @@ invisible(NULL)
 #' the ICU User Guide (see below). A good general introduction
 #' to regexes is (Friedl, 2002).
 #' Some general topics are also covered in the \R manual, see \link{regex}.
-#' 
+#'
 #' @section \pkg{ICU} Regex Operators at a Glance:
-#' 
+#'
 #' Here is a list of operators provided by the
 #' ICU User Guide on regexes.
-#' 
+#'
 #' \tabular{ll}{
 #' \strong{Operator} \tab    \strong{Description}\cr
 #' \code{|} \tab 	Alternation. A|B matches either A or B.\cr
@@ -158,13 +158,13 @@ invisible(NULL)
 #' \code{(?ismwx-ismwx:...)} \tab 	Flag settings. Evaluate the parenthesized expression with the specified flags enabled or \code{-}disabled, see also \code{\link{stri_opts_regex}}.\cr
 #' \code{(?ismwx-ismwx)} \tab 	Flag settings. Change the flag settings. Changes apply to the portion of the pattern following the setting. For example, \code{(?i)} changes to a case insensitive match, see also \code{\link{stri_opts_regex}}. \cr
 #' }
-#' 
-#' 
+#'
+#'
 #' @section \pkg{ICU} Regex Metacharacters at a Glance:
-#' 
+#'
 #' Here is a list of metacharacters provided by the
 #' ICU User Guide on regexes.
-#' 
+#'
 #' \tabular{ll}{
 #' \strong{Character}  \tab 	\strong{Description} \cr
 #' \code{\\a} \tab Match a BELL, \code{\\u0007} \cr
@@ -205,7 +205,7 @@ invisible(NULL)
 #' \code{\\} \tab [outside of sets] Quotes the following character. Characters that must be quoted to be treated as literals are \code{* ? + [ ( ) { } ^ $ | \\ .} \cr
 #' \code{\\} \tab [inside sets] Quotes the following character. Characters that must be quoted to be treated as literals are \code{[ ] \\}; Characters that may need to be quoted, depending on the context are \code{- &} \cr
 #' }
-#' 
+#'
 #' For information on how to define character classes
 #' in regexes, refer to \link{stringi-search-charclass}.
 #'
@@ -219,8 +219,8 @@ invisible(NULL)
 #' refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
 #' This allows to do a locale-aware text lookup,
 #' or a very fast exact-byte search, respectively.
-#' 
-#' 
+#'
+#'
 #'
 #' @references
 #' \emph{Regular expressions} -- ICU User Guide,
@@ -231,7 +231,7 @@ invisible(NULL)
 #' \emph{Unicode Regular Expressions} -- Unicode Technical Standard #18,
 #' \url{http://www.unicode.org/reports/tr18/}
 #'
-#' \emph{Unicode Regular Expressions} -- Regex tutorial, 
+#' \emph{Unicode Regular Expressions} -- Regex tutorial,
 #' \url{http://www.regular-expressions.info/unicode.html}
 #'
 #' @name stringi-search-regex
@@ -330,7 +330,7 @@ invisible(NULL)
 #' declared in the \pkg{stringi} package
 #' so that you may e.g. find their occurrences in your search activities
 #' or generate random codepoints with \code{\link{stri_rand_strings}}.
-#' Moreover, \pkg{ICU} regex engines uses the same 
+#' Moreover, \pkg{ICU} regex engines uses the same
 #' scheme for denoting character classes.
 #'
 #'
@@ -385,39 +385,39 @@ invisible(NULL)
 #' a backslash in order to remove any special meaning.
 #'
 #' A malformed pattern always results in an error.
-#' 
+#'
 #' \cr
 #' Set expressions at a glance
 #' (according to \url{http://userguide.icu-project.org/strings/regexp}):
-#' 
+#'
 #' \tabular{ll}{
 #' \strong{Example}  \tab  \strong{Description}\cr
 #' \code{[abc]} 	\tab Match any of the characters a, b or c\cr
 #' \code{[^abc]} 	\tab Negation -- match any character except a, b or c\cr
-#' \code{[A-M]} 	\tab Range -- match any character from A to M. The characters 
+#' \code{[A-M]} 	\tab Range -- match any character from A to M. The characters
 #' to include are determined by Unicode code point ordering.\cr
 #' \code{[\\u0000-\\U0010ffff]} 	\tab Range -- match all characters.\cr
-#' \code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]} 	\tab 
+#' \code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]} 	\tab
 #' Characters with Unicocde Category = Letter. All forms shown are equivalent.\cr
-#' \code{[\\P{Letter}]} 	\tab Negated property. 
+#' \code{[\\P{Letter}]} 	\tab Negated property.
 #' (Upper case \code{\\P}) Match everything except Letters.\cr
-#' \code{[\\p{numeric_value=9}]} 	\tab Match all numbers with a numeric value of 9. 
+#' \code{[\\p{numeric_value=9}]} 	\tab Match all numbers with a numeric value of 9.
 #' Any Unicode Property may be used in set expressions.\cr
-#' \code{[\\p{Letter}&&\\p{script=cyrillic}]} 	\tab Logical AND 
+#' \code{[\\p{Letter}&&\\p{script=cyrillic}]} 	\tab Logical AND
 #' or intersection -- match the set of all Cyrillic letters.\cr
-#' \code{[\\p{Letter}--\\p{script=latin}]}  	\tab Subtraction -- 
+#' \code{[\\p{Letter}--\\p{script=latin}]}  	\tab Subtraction --
 #' match all non-Latin letters.\cr
-#' \code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}  	\tab Implicit Logical 
-#' OR or Union of Sets -- the examples match ASCII letters and digits.  
+#' \code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}  	\tab Implicit Logical
+#' OR or Union of Sets -- the examples match ASCII letters and digits.
 #' The two forms are equivalent.\cr
-#' \code{[:script=Greek:]} \tab Alternate POSIX-like syntax for properties -- 
+#' \code{[:script=Greek:]} \tab Alternate POSIX-like syntax for properties --
 #' equivalent to \code{\\p{script=Greek}}\cr
 #' }
 #'
 #' @section Unicode properties:
 #'
 #' Unicode property sets are specified with a POSIX-like syntax,
-#' e.g. \code{[:Letter:]}, 
+#' e.g. \code{[:Letter:]},
 #' or with a (extended) Perl-style syntax, e.g. \code{\\p{L}}.
 #' The complements of the above sets are
 #' \code{[:^Letter:]} and \code{\\P{L}}, respectively.
@@ -496,7 +496,7 @@ invisible(NULL)
 #' Each character may follow many Binary Properties at a time.
 #'
 #' Here is a comprehensive list of supported Binary Properties:
-#' 
+#'
 #' \tabular{ll}{
 #'   \code{ALPHABETIC}      \tab alphabetic character\cr
 #'   \code{ASCII_HEX_DIGIT} \tab a character matching the \code{[0-9A-Fa-f]} charclass\cr
@@ -551,17 +551,17 @@ invisible(NULL)
 #'   \code{CHANGES_WHEN_CASEMAPPED} \tab \cr
 #'   \code{CHANGES_WHEN_NFKC_CASEFOLDED} \tab \cr
 #' }
-#' 
-#' 
+#'
+#'
 #' @section POSIX Character Classes:
-#' 
+#'
 #' Beware of using POSIX character classes,
 #' e.g. \code{[:punct:]}. ICU User Guide (see below)
 #' states that in general they are not well-defined, so may end up
 #' with something different than you expect.
-#' 
+#'
 #' In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
-#' the character class corresponding to the \code{ispunct()} classification 
+#' the character class corresponding to the \code{ispunct()} classification
 #' function (check out \code{man 3 ispunct} on UNIX-like systems).
 #' According to ISO/IEC 9899:1990 (ISO C90), the \code{ispunct()} function
 #' tests for any printing character except for space or a character
@@ -569,10 +569,10 @@ invisible(NULL)
 #' the details of what characters belong into which class depend
 #' on the current locale. So the \code{[:punct:]} class does not lead
 #' to portable code (again, in POSIX-like regex engines).
-#' 
+#'
 #' So a POSIX flavor of \code{[:punct:]} is more like
 #' \code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
-#' 
+#'
 #'
 #' @references
 #' \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
@@ -583,10 +583,10 @@ invisible(NULL)
 #'
 #' \emph{Properties} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/strings/properties}
-#' 
+#'
 #' \emph{C/POSIX Migration} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/posix}
-#' 
+#'
 #' \emph{Unicode Script Data}, \url{http://www.unicode.org/Public/UNIDATA/Scripts.txt}
 #'
 #' \emph{icu::Unicodeset Class Reference} -- ICU4C API Documentation,
@@ -604,8 +604,8 @@ invisible(NULL)
 #'
 #' @description
 #' Text boundary analysis is the process of locating linguistic boundaries
-#' while formatting and handling text. 
-#' 
+#' while formatting and handling text.
+#'
 #' @details
 #' Examples of the boundary analysis process process include:
 #'
@@ -622,35 +622,35 @@ invisible(NULL)
 #' finding the third word in the document),
 #' see \code{\link{stri_locate_boundaries}}.
 #' }
-#' 
+#'
 #' Generally, text boundary analysis is a locale-dependent operation.
 #' For example, in Japanese and Chinese one does not separate words with spaces
 #' - a line break can occur even in the middle of a word.
-#' These languages have punctuation and diacritical 
+#' These languages have punctuation and diacritical
 #' marks that cannot start or end a line, so this must also be taken into account.
 #'
 #' \pkg{stringi} uses \pkg{ICU}'s \code{BreakIterator} to locate specific
 #' text boundaries. Note that the \code{BreakIterator}'s behavior
 #' may be controlled in come cases, see \code{\link{stri_opts_brkiter}}.
 #' \itemize{
-#' \item The \code{character} boundary iterator tries to match what a user 
+#' \item The \code{character} boundary iterator tries to match what a user
 #' would think of as a ``character''  -- a basic unit of a writing system
 #' for a language -- which may be more than just a single Unicode code point.
-#' \item The \code{word} boundary iterator locates the boundaries 
+#' \item The \code{word} boundary iterator locates the boundaries
 #' of words, for purposes such as ``Find whole words'' operations.
 #' \item The \code{line_break} iterator locates positions that would
 #' be appropriate points to wrap lines when displaying the text.
 #' \item On the other hand, a break iterator of type \code{sentence}
 #' locates sentence boundaries.
 #' }
-#' 
+#'
 #' For technical details on different classes of text boundaries refer
 #' to the \pkg{ICU} User Guide, see below.
-#' 
+#'
 #' @references
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
-#' 
+#'
 #' @name stringi-search-boundaries
 #' @rdname stringi-search-boundaries
 #' @family locale_sensitive

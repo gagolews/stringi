@@ -150,11 +150,11 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @param pattern character vector
  * @param opts_regex list
  * @param simplify single logical value
- * 
+ *
  * @return list of character vectors  or character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          added simplify param
  */
@@ -220,12 +220,12 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_reg
       utext_close(str_text);
       str_text = NULL;
    }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(if (str_text) utext_close(str_text);)

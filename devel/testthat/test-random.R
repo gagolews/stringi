@@ -24,7 +24,7 @@ test_that("stri_rand_strings", {
 
 
 test_that("stri_rand_lipsum", {
-   
+
    expect_true(all(sapply(lapply(1:100, stri_rand_lipsum), length) == 1:100))
-   
+
 })

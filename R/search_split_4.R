@@ -51,14 +51,14 @@
 #' \code{omit_empty} is applied during splitting: if it is set to \code{TRUE},
 #' then tokens of zero length are ignored. Thus, empty strings will never
 #' appear in the resulting vector.
-#' On the other hand, if \code{omit_empty} is \code{NA}, then 
+#' On the other hand, if \code{omit_empty} is \code{NA}, then
 #' empty tokes are substituted with missing strings.
-#' 
+#'
 #' Empty search patterns are not supported. If you would like to split a
 #' string into individual characters, use e.g.
-#' \code{\link{stri_split_boundaries}(str, 
+#' \code{\link{stri_split_boundaries}(str,
 #' \link{stri_opts_brkiter}(type="character"))} for THE Unicode way.
-#' 
+#'
 #' \code{stri_split} is a convenience function.
 #' It calls either \code{stri_split_regex},
 #' \code{stri_split_fixed}, \code{stri_split_coll},
@@ -89,10 +89,10 @@
 #' otherwise (the default), a list of character vectors is given, see Value
 #' @param ... additional arguments passed to the underlying functions;
 #' \code{stri_split} only
-#' 
+#'
 #' @return If \code{simplify == FALSE} (the default),
 #' then the functions return a list of character vectors.
-#' 
+#'
 #' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 #' is called on the resulting object.
 #' In such a case, a character matrix with an appropriate number of rows
@@ -112,22 +112,22 @@
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=1, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=2, tokens_only=TRUE, omit_empty=TRUE)
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n_max=3, tokens_only=TRUE, omit_empty=TRUE)
-#' 
+#'
 #' stri_list2matrix(stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE))
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE)
-#' 
+#'
 #' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""), "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)
-#' 
+#'
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
 #' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n_max=3,
 #'    omit_empty=c(FALSE, TRUE))
-#'    
+#'
 #' stri_split_regex("Lorem ipsum dolor sit amet",
 #'    "\\p{Z}+") # see also stri_split_charclass
 #' }
-#' 
+#'
 #' @export
 #' @rdname stri_split
 #' @family search_split
@@ -152,11 +152,11 @@ stri_split <- function(str, ..., regex, fixed, coll, charclass) {
 
 #' @export
 #' @rdname stri_split
-stri_split_fixed <- function(str, pattern, n_max=-1L, 
+stri_split_fixed <- function(str, pattern, n_max=-1L,
       omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_fixed", str, pattern, 
+   .Call("stri_split_fixed", str, pattern,
       n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
 }
 
@@ -167,7 +167,7 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
       tokens_only=FALSE, simplify=FALSE, opts_regex=NULL)  {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_regex", str, pattern, 
+   .Call("stri_split_regex", str, pattern,
       n_max, omit_empty, tokens_only, simplify, opts_regex, PACKAGE="stringi")
 }
 
@@ -178,18 +178,17 @@ stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
       tokens_only=FALSE, simplify=FALSE, opts_collator=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_coll", str, pattern, 
+   .Call("stri_split_coll", str, pattern,
       n_max, omit_empty, tokens_only, simplify, opts_collator, PACKAGE="stringi")
 }
 
 
-
 #' @export
 #' @rdname stri_split
-stri_split_charclass <- function(str, pattern, n_max=-1L, 
+stri_split_charclass <- function(str, pattern, n_max=-1L,
                   omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_charclass", str, pattern, 
+   .Call("stri_split_charclass", str, pattern,
       n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
 }

@@ -106,7 +106,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @details
 #' Vectorized over \code{str}.
-#' 
+#'
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
@@ -131,7 +131,7 @@ stri_split_lines1 <- function(str) {
 #' stri_split_boundaries(test, stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))
 #' stri_split_boundaries(test, stri_opts_brkiter(type="character"))
 #' }
-#' 
+#'
 #' @export
 #' @family search_split
 #' @family locale_sensitive

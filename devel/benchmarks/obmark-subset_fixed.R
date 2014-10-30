@@ -44,4 +44,3 @@ microbenchmark( y[stri_detect_fixed(y, pat4)], stri_subset_fixed(y, pat4))
 
 # a very long search string, a very long pattern
 microbenchmark( y[stri_detect_fixed(y, pat)], stri_subset_fixed(y, pat))
-

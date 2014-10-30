@@ -38,19 +38,19 @@
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern}, \code{replacement}, and \code{merge}.
-#' 
+#'
 #' These functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
-#' 
-#' In case of \code{stri_replace_*_regex}, 
+#'
+#' In case of \code{stri_replace_*_regex},
 #' the replacement string may contain references to capture groups
 #' (in round parentheses).
 #' References are of the form \code{$n}, where \code{n} is the number
 #' of the capture group (their numbering starts from 1).
 #' In order to treat the \code{$} character literally,
 #' escape it with a backslash.
-#' 
+#'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions.
 #' They just call \code{stri_replace_*_*}, depending on arguments used.
@@ -74,18 +74,18 @@
 #' @param ... additional arguments passed to the underlying functions
 #'
 #' @return All the functions return a character vector.
-#' 
+#'
 #' @examples
 #' \donttest{
 #' stri_replace_all_charclass("aaaa", "[a]", "b", merge=c(TRUE, FALSE))
-#' 
+#'
 #' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ")
 #' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", merge=RUE)
-#' 
+#'
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_replace_all_fixed(s, " ", "#")
 #' stri_replace_all_fixed(s, "o", "0")
-#' 
+#'
 #' stri_replace_all_regex(s, " .*? ", "#")
 #' stri_replace_all_regex(s, "(el|s)it", "1234")
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))

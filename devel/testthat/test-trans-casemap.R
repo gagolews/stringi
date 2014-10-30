@@ -76,7 +76,7 @@ test_that("stri_trans_totitle", {
    #totitle(totitle(x))==totitle(x)
    expect_equivalent(stri_trans_totitle(stri_trans_totitle("Ala\nMa\nKota")),
                      stri_trans_totitle("Ala\nMa\nKota"))
-   
+
    expect_equivalent(stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
       stri_opts_brkiter(type="word")), "Good-Old Cookie Monster Is Watching You. Here He Comes!")
    expect_equivalent(stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",

@@ -53,7 +53,7 @@
 #' @param str character vector
 #' @return
 #' Returns a character vector.
-#' 
+#'
 #' @examples
 #' \donttest{
 #' stri_escape_unicode("a\u0105!")
@@ -97,7 +97,7 @@ stri_escape_unicode <- function(str) {
 #' Returns a character vector.
 #' If an escape sequence is ill-formed,
 #' result will be \code{NA} and a warning will be given.
-#' 
+#'
 #' @examples
 #' \donttest{
 #' stri_unescape_unicode("a\\u0105!\\u0032\\n")

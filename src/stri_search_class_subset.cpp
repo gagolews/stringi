@@ -57,7 +57,7 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not 
+   // BT: this cannot be done with deque, because pattern is reused so i does not
    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
    // MG: agreed
    std::vector<int> which(vectorize_length);

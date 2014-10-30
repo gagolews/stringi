@@ -78,7 +78,6 @@ void stri__locate_set_dimnames_list(SEXP list) {
 }
 
 
-
 // I really love macros /MG/ :)
 #define stri__subset_by_logical__MACRO \
    SEXP ret; \
@@ -91,11 +90,11 @@ void stri__locate_set_dimnames_list(SEXP list) {
    } \
    UNPROTECT(1); \
    return ret;
-   
+
 
 /**
  * Subset str_cont to SEXP by logical table ret_tab
- * 
+ *
  * @param str_cont
  * @param which logical
  * @param result_counter
@@ -115,7 +114,7 @@ SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
 
 /**
  * Subset str_cont to SEXP by logical table ret_tab
- * 
+ *
  * @param str_cont
  * @param which logical
  * @param result_counter
@@ -131,4 +130,3 @@ SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
 {
    stri__subset_by_logical__MACRO
 }
-
