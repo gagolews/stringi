@@ -12,8 +12,9 @@ Examples of the boundary analysis process process include:
 \itemize{
 \item Locating appropriate points to word-wrap text to fit
 within specific margins while displaying or printing,
-see \code{\link{stri_wrap}}.
-\item Counting characters, words, sentences, or paragraphs.
+see \code{\link{stri_wrap}} and \code{\link{stri_split_boundaries}}.
+\item Counting characters, words, sentences, or paragraphs,
+see \code{\link{stri_count_boundaries}}.
 \item Making a list of the unique words in a document,
 cf. \code{\link{stri_extract_words}} and then \code{\link{stri_unique}}.
 \item Capitalizing the first letter of each word
@@ -67,6 +68,8 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_cmp_neq}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
+  \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
@@ -93,7 +96,9 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-search-regex}};
   \code{\link{stringi-search}}
 
-Other text_boundaries: \code{\link{stri_extract_words}};
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
+  \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};

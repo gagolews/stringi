@@ -86,6 +86,8 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_cmp_neq}},
   \code{\link{stri_cmp_nequiv}},
   \code{\link{stri_compare}};
+  \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
@@ -100,7 +102,9 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-coll}}
 
-Other text_boundaries: \code{\link{stri_extract_words}};
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
+  \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};

@@ -66,7 +66,9 @@ Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_regex}};
   \code{\link{stringi-search}}
 
-Other text_boundaries: \code{\link{stri_extract_words}};
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
+  \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};

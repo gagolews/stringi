@@ -22,7 +22,8 @@ printed on the screen.
 
 If a given string is in UTF-8 and  has not been properly normalized
 (e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
-misleading. Moreover, if an incorrect UTF-8 byte sequence is detected,
+misleading. See \code{\link{stri_count_boundaries}} for a method to count
+\emph{Unicode characters}. Moreover, if an incorrect UTF-8 byte sequence is detected,
 then a warning is generated and the corresponding output element
 is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
 to deal with such cases.
@@ -37,7 +38,10 @@ stri_length(LETTERS)
 stri_length(c('abc', '123', '\\u0105\\u0104'))
 stri_length('\\u0105') # length is one, but...
 stri_numbytes('\\u0105') # 2 bytes are used
+stri_numbytes(stri_trans_nfkd('\\u0105')) # 3 bytes here but...
 stri_length(stri_trans_nfkd('\\u0105')) # ...two code points (!)
+stri_count_boundaries(stri_trans_nfkd('\\u0105'),
+   stri_opts_brkiter(type="character")) # ...and one Unicode character
 }
 }
 \seealso{

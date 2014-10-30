@@ -257,6 +257,7 @@ const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter);
 vector<int32_t> stri__opts_brkiter_get_skip_rule_status(SEXP opts_brkiter);
 SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter);
+SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_lines(SEXP str, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);
 

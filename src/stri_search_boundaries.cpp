@@ -450,3 +450,68 @@ SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter)
 {
    return stri__split_or_locate_boundaries(str, opts_brkiter, true);
 }
+
+
+
+/** Count the number of BreakIterator boundaries
+ *
+ * @param str character vector
+ * @param opts_brkiter identifier
+ * @return character vector
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
+ */
+SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
+{
+   str = stri_prepare_arg_string(str, "str");
+   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter);
+   vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
+   int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
+   RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);
+   UText* str_text = NULL;
+
+   STRI__ERROR_HANDLER_BEGIN
+   R_len_t str_length = LENGTH(str);
+   StriContainerUTF8_indexable str_cont(str, str_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_length));
+
+   for (R_len_t i = 0; i < str_length; ++i)
+   {
+      if (str_cont.isNA(i)) {
+         INTEGER(ret)[i] = NA_INTEGER;
+         continue;
+      }
+
+      // get the current string
+      UErrorCode status = U_ZERO_ERROR;
+      const char* str_cur_s = str_cont.get(i).c_str();
+      str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+      briter->setText(str_text, status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+
+      int cur_count = 0;
+      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
+      R_len_t match = briter->first();
+      while ((match = briter->next()) != BreakIterator::DONE) {
+         int rule = briter->getRuleStatus();
+         if (!stri__opts_brkiter_ignore_skip_status(brkskip, rule))
+            cur_count++;
+      }
+      
+      INTEGER(ret)[i] = cur_count;
+   }
+
+   if (briter) { delete briter; briter = NULL; }
+   if (str_text) { utext_close(str_text); str_text = NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (briter) { delete briter; briter = NULL; }
+      if (str_text) { utext_close(str_text); str_text = NULL; }
+   })
+}

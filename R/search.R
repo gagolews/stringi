@@ -666,8 +666,9 @@ invisible(NULL)
 #' \itemize{
 #' \item Locating appropriate points to word-wrap text to fit
 #' within specific margins while displaying or printing,
-#' see \code{\link{stri_wrap}}.
-#' \item Counting characters, words, sentences, or paragraphs.
+#' see \code{\link{stri_wrap}} and \code{\link{stri_split_boundaries}}.
+#' \item Counting characters, words, sentences, or paragraphs,
+#' see \code{\link{stri_count_boundaries}}.
 #' \item Making a list of the unique words in a document,
 #' cf. \code{\link{stri_extract_words}} and then \code{\link{stri_unique}}.
 #' \item Capitalizing the first letter of each word

@@ -67,7 +67,9 @@ in case of the \code{\link{stri_locate_boundaries}} and
 \url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
-Other text_boundaries: \code{\link{stri_extract_words}};
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
+  \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_split_boundaries}};

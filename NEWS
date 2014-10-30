@@ -13,8 +13,8 @@
      to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
      `stri_extract_words`, `stri_locate_words`).
 
-   * [NEW FUNCTION] #109: `stri_count_boundaries`...........
-.....
+   * [NEW FUNCTIONS] #109: `stri_count_boundaries` and `str_count_words`
+     count the number of text boundaries in a string.
 
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
