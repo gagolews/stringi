@@ -62,7 +62,6 @@ a backslash in order to remove any special meaning.
 
 A malformed pattern always results in an error.
 
-\cr
 Set expressions at a glance
 (according to \url{http://userguide.icu-project.org/strings/regexp}):
 
