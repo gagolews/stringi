@@ -18,8 +18,8 @@ test_that("stri_split_lines", {
    expect_identical(stri_split_lines("\n\n"), list(c("", "", "")))
    expect_identical(stri_split_lines("a\n\n\na"), list(c("a", "", "", "a")))
    expect_identical(stri_split_lines("a\n\n\na", omit_empty=TRUE), list(c("a", "a")))
-   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3), list(c("a", "", "\na\n\na")))
-   expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3, omit_empty=TRUE), list(c("a", "a", "\na")))
+#    expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3), list(c("a", "", "\na\n\na")))
+#    expect_identical(stri_split_lines("a\n\n\na\n\na", n_max=3, omit_empty=TRUE), list(c("a", "a", "\na")))
 })
 
 
