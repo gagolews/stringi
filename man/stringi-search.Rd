@@ -91,8 +91,6 @@ Other search_fixed: \code{\link{stri_endswith_fixed}},
   \code{\link{stri_startswith_fixed}};
   \code{\link{stringi-search-fixed}}
 
-Other search_in: \code{\link{stri_in_fixed}}
-
 Other search_locate: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},

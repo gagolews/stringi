@@ -12,14 +12,15 @@ Examples of the boundary analysis process process include:
 \itemize{
 \item Locating appropriate points to word-wrap text to fit
 within specific margins while displaying or printing,
-see \code{\link{stri_locate_boundaries}}.
+see \code{\link{stri_wrap}}.
 \item Counting characters, words, sentences, or paragraphs.
 \item Making a list of the unique words in a document,
-cf. \code{\link{stri_extract_words}} and \code{\link{stri_unique}}.
+cf. \code{\link{stri_extract_words}} and then \code{\link{stri_unique}}.
 \item Capitalizing the first letter of each word
 or sentence, see also \code{\link{stri_trans_totitle}}.
 \item Locating a particular unit of the text (for example,
-finding the third word in the document).
+finding the third word in the document),
+see \code{\link{stri_locate_boundaries}}.
 }
 
 Generally, text boundary analysis is a locale-dependent operation.
