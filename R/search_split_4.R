@@ -118,7 +118,8 @@
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE)
 #'
-#' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""), "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)
+#' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""), 
+#'    "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)
 #'
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
 #' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n_max=3,

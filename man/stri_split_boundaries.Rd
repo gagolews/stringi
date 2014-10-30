@@ -29,12 +29,15 @@ performed by \pkg{ICU}'s \code{BreakIterator}, see
 }
 \examples{
 \donttest{
-test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers. 123 456 789"
+test <- "The\\u00a0above-mentioned    features are very useful. " \%s+\%
+   "Warm thanks to their developers. 123 456 789"
 stri_split_boundaries(test, stri_opts_brkiter(type="line"))
 stri_split_boundaries(test, stri_opts_brkiter(type="word"))
 stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE))
-stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE, skip_word_letter=TRUE))
-stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE, skip_word_number=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="word",
+   skip_word_none=TRUE, skip_word_letter=TRUE))
+stri_split_boundaries(test, stri_opts_brkiter(type="word",
+   skip_word_none=TRUE, skip_word_number=TRUE))
 stri_split_boundaries(test, stri_opts_brkiter(type="sentence"))
 stri_split_boundaries(test, stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))
 stri_split_boundaries(test, stri_opts_brkiter(type="character"))

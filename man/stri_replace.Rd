@@ -54,6 +54,8 @@ stri_replace_last_regex(str, pattern, replacement, opts_regex = NULL)
 \arguments{
 \item{str}{character vector with strings to search in}
 
+\item{replacement}{character vector with replacements for matched patterns}
+
 \item{...}{additional arguments passed to the underlying functions}
 
 \item{mode}{single string;
@@ -82,7 +84,8 @@ These functions replace with the given replacement string every/first/last
 substring of the input that matches the specified \code{pattern}.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, \code{replacement}, and \code{merge}.
+Vectorized over \code{str}, \code{pattern}, \code{replacement},
+and \code{merge}.
 
 These functions scan the input string for matches of the pattern.
 Input that is not part of any match is left unchanged;

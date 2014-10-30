@@ -218,6 +218,6 @@ stri_rand_lipsum <- function(nparagraphs, start_lipsum=TRUE) {
    }
 
    ret <- stri_split_charclass(stri_paste(words, seps, collapse=""), "[\\n]")[[1]]
-   ret <- stri_trans_totitle(ret, opts=stri_opts_brkiter(type="sentence"))
+   ret <- stri_trans_totitle(ret, opts_brkiter=stri_opts_brkiter(type="sentence"))
    ret
 }

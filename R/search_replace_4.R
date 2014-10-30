@@ -37,7 +37,8 @@
 #' substring of the input that matches the specified \code{pattern}.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{replacement}, and \code{merge}.
+#' Vectorized over \code{str}, \code{pattern}, \code{replacement}, 
+#' and \code{merge}.
 #'
 #' These functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
@@ -60,6 +61,7 @@
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
+#' @param replacement character vector with replacements for matched patterns
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 #' for default settings;
