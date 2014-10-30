@@ -55,7 +55,8 @@ Other search_charclass: \code{\link{stri_trim}},
 
 Other search_coll: \code{\link{stringi-search-coll}}
 
-Other search_count: \code{\link{stri_count}},
+Other search_count: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}}; \code{\link{stri_count}},
   \code{\link{stri_count_charclass}},
   \code{\link{stri_count_coll}},
   \code{\link{stri_count_fixed}},
@@ -157,7 +158,9 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}}
 
-Other text_boundaries: \code{\link{stri_extract_words}};
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count_words}};
+  \code{\link{stri_extract_words}};
   \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};

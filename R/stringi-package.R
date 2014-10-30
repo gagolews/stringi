@@ -105,7 +105,8 @@
 #' Additionally, \code{\link{stri_wrap}} wraps text into lines.
 #'
 #' \item \code{\link{stri_length}} (among others) for determining the number
-#' of code points in a string.
+#' of code points in a string. See also \code{\link{stri_count_boundaries}}
+#' for counting the number of \code{Unicode characters}.
 #'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
 #' i.e. conversion to lower, UPPER, or Title Case,

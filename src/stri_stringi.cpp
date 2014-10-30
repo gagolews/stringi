@@ -48,11 +48,12 @@
  */
 static const R_CallMethodDef cCallMethods[] = {
 
-//   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>=0.2
-//   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>=0.2
+//   STRI__MAKE_CALL_METHOD(stri_charcategories,             0),  // TO BE v>0.3
+//   STRI__MAKE_CALL_METHOD(stri_chartype,                   1),  // TO BE v>0.3
    STRI__MAKE_CALL_METHOD(stri_cmp_codepoints,             3),
    STRI__MAKE_CALL_METHOD(stri_cmp_integer,                3),
    STRI__MAKE_CALL_METHOD(stri_cmp_logical,                4),
+   STRI__MAKE_CALL_METHOD(stri_count_boundaries,           2),
    STRI__MAKE_CALL_METHOD(stri_count_charclass,            2),
    STRI__MAKE_CALL_METHOD(stri_count_fixed,                2),
    STRI__MAKE_CALL_METHOD(stri_count_coll,                 3),
@@ -89,12 +90,12 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_extract_last_regex,         3),
    STRI__MAKE_CALL_METHOD(stri_extract_all_regex,          4),
    STRI__MAKE_CALL_METHOD(stri_flatten_withressep,         2),
-//   STRI__MAKE_CALL_METHOD(stri_in_fixed,                   3),
+//   STRI__MAKE_CALL_METHOD(stri_in_fixed,                   3),  // TODO: version > 0.3
    STRI__MAKE_CALL_METHOD(stri_info,                       0),
    STRI__MAKE_CALL_METHOD(stri_isempty,                    1),
    STRI__MAKE_CALL_METHOD(stri_join_withcollapse,          3),
    STRI__MAKE_CALL_METHOD(stri_join2_nocollapse,           2),
-//   STRI__MAKE_CALL_METHOD(stri_justify,                    2),  // TODO: version >= 0.2
+//   STRI__MAKE_CALL_METHOD(stri_justify,                    2),  // TODO: version > 0.3
    STRI__MAKE_CALL_METHOD(stri_length,                     1),
    STRI__MAKE_CALL_METHOD(stri_list2matrix,                3),
    STRI__MAKE_CALL_METHOD(stri_locale_info,                1),
@@ -151,7 +152,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_split_lines,                2),
    STRI__MAKE_CALL_METHOD(stri_split_lines1,               1),
    STRI__MAKE_CALL_METHOD(stri_split_regex,                7),
-//   STRI__MAKE_CALL_METHOD(stri_split_pos,              3), // TODO: version >= 0.2
+//   STRI__MAKE_CALL_METHOD(stri_split_pos,              3), // TODO: version > 0.3
    STRI__MAKE_CALL_METHOD(stri_startswith_fixed,           3),
    STRI__MAKE_CALL_METHOD(stri_stats_general,              1),
    STRI__MAKE_CALL_METHOD(stri_stats_latex,                1),
@@ -176,8 +177,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_unescape_unicode,           1),
    STRI__MAKE_CALL_METHOD(stri_unique,				           2),
    STRI__MAKE_CALL_METHOD(stri_wrap,                       4),
-//   STRI__MAKE_CALL_METHOD(stri_trim_double,                3), // TODO: version >= 0.2
-//   STRI__MAKE_CALL_METHOD(stri_width,                      1), // TODO: version >= 0.2
+//   STRI__MAKE_CALL_METHOD(stri_trim_double,                3), // TODO: version > 0.3
+//   STRI__MAKE_CALL_METHOD(stri_width,                      1), // TODO: version > 0.3
 
    // the list must be NULL-terminated:
    {NULL,                           NULL,                  0}
