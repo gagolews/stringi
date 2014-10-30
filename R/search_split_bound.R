@@ -37,9 +37,7 @@
 #' into text lines.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{n_max}, and \code{omit_empty}.
-#'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
+#' Vectorized over \code{str} and \code{omit_empty}.
 #'
 #' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
@@ -59,8 +57,6 @@
 #'
 #' @param str character vector (\code{stri_split_lines})
 #'        or a single string (\code{stri_split_lines1})
-#' @param n_max integer vector, maximal number of pieces to return
-#'    [\code{stri_split_lines}  only]
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
 #'    [\code{stri_split_lines}  only]
@@ -88,8 +84,8 @@
 #' @export
 #' @rdname stri_split_lines
 #' @aliases stri_split_lines stri_split_lines1
-stri_split_lines <- function(str, n_max=-1L, omit_empty=FALSE) {
-   .Call("stri_split_lines", str, n_max, omit_empty, PACKAGE="stringi")
+stri_split_lines <- function(str, omit_empty=FALSE) {
+   .Call("stri_split_lines", str, omit_empty, PACKAGE="stringi")
 }
 
 
