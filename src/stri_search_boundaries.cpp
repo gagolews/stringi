@@ -35,112 +35,171 @@
 #include <deque>
 #include <utility>
 #include <vector>
-#include <unicode/brkiter.h>
-#include <unicode/rbbi.h>
 
 
-/** Get Break Iterator
+/** Select Break Iterator
  *
  * @param opts_brkiter named list
- * @param loc locale
- * @return RuleBasedBreakIterator
+ * @param _default default break iterator type
+ * @return break iterator ID
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
+ *                add param `_default`
  */
-RuleBasedBreakIterator* stri__opts_brkiter_get_iterator(SEXP opts_brkiter, const Locale& loc) {
-   const char* type_opts[] = {"character", "line_break",
-      "sentence", "word", NULL};
-      
-   if (isNull(opts_brkiter)) // a BreakIterator must always be specified
+int stri__opts_brkiter_select_iterator(SEXP opts_brkiter, const char* _default) {
+   const char* type_opts[] = {"character", "line_break", "sentence", "word", NULL};
+   const char* cur = _default;
+   
+   if (isNull(opts_brkiter)) {
+      // use default settings
+   }
+   else if (Rf_isVectorList(opts_brkiter)) {
+      R_len_t narg = LENGTH(opts_brkiter);
+      SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
+      if (names == R_NilValue || LENGTH(names) != narg)
+         Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+      // search for "locale" option
+      for (R_len_t i=0; i<narg; ++i) {
+         if (STRING_ELT(names, i) == NA_STRING)
+            Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+         const char* curname = CHAR(STRING_ELT(names, i));
+         if (!strcmp(curname, "type")) {
+            SEXP curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type");
+            if (STRING_ELT(curval, i) == NA_STRING)
+               Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");
+               
+            cur = CHAR(STRING_ELT(curval, i));
+            break;
+         }
+      }
+   }
+   else {
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC);
+   }
+   
+   // a BreakIterator must always be specified
+   if (!cur)
       Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
       
-   if (!Rf_isVectorList(opts_brkiter))
-      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+   int brkiter_cur = stri__match_arg(cur, type_opts);
+   if (brkiter_cur < 0)
+      Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
       
-   R_len_t narg = LENGTH(opts_brkiter);
-   SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
-   if (names == R_NilValue || LENGTH(names) != narg)
-      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+//   0: // character
+//   1: // line_break
+//   2: // sentence
+//   3: // word
+   return brkiter_cur;
+}
 
-   // search for "locale" option
-   for (R_len_t i=0; i<narg; ++i) {
-      if (STRING_ELT(names, i) == NA_STRING)
-         Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
-      const char* curname = CHAR(STRING_ELT(names, i));
-      if (!strcmp(curname, "type")) {
-         SEXP curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type");
-         if (STRING_ELT(curval, i) == NA_STRING)
-            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");
-            
-         int boundary_cur = stri__match_arg(CHAR(STRING_ELT(curval, i)), type_opts);
-         if (boundary_cur < 0)
-            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
-            
-         UErrorCode status = U_ZERO_ERROR;
-         RuleBasedBreakIterator* briter = NULL;
-         switch (boundary_cur) {
-            case 0: // character
-               briter = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
-               break;
 
-            case 1: // line_break
-               briter = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
-               break;
+/** Get RuleBasedBreakIterator
+ *
+ * @param brkiter_cur break iterator ID;
+ *        0:character, 1:line_break, 2:sentence, 3:word
+ * @param qloc locale ID
+ * @return RuleBasedBreakIterator
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
+ */
+RuleBasedBreakIterator* stri__opts_brkiter_get_iterator(int brkiter_cur, const char* qloc) {
+   UErrorCode status = U_ZERO_ERROR;
+   RuleBasedBreakIterator* briter = NULL;
+   Locale loc = Locale::createFromName(qloc);
+   switch (brkiter_cur) {
+      case 0: // character
+         briter = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
+         break;
 
-            case 2: // sentence
-               briter = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
-               break;
+      case 1: // line_break
+         briter = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
+         break;
 
-            case 3: // word
-               briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
-               break;
+      case 2: // sentence
+         briter = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
+         break;
+
+      case 3: // word
+         briter = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
+         break;
 
 //            case 4: // title
 //               briter = (RuleBasedBreakIterator*)BreakIterator::createTitleInstance(loc, status);
 //               break;
-         }
-         if (U_FAILURE(status))
-            Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
-         return briter;
-      }
    }
-   
-   // a BreakIterator must always be specified
-   Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+   if (U_FAILURE(status))
+      Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+   return briter;
+}
+
+
+/** Get UBreakIterator
+ *
+ * @param brkiter_cur break iterator ID;
+ *        0:character, 1:line_break, 2:sentence, 3:word
+ * @param qloc locale ID
+ * @return UBreakIterator
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
+ */
+UBreakIterator* stri__opts_brkiter_get_uiterator(int brkiter_cur, const char* qloc) {
+   UErrorCode status = U_ZERO_ERROR;
+   UBreakIterator* briter = NULL;
+   switch (brkiter_cur) {
+      case 0: // character [this is not documented]
+         briter = ubrk_open(UBRK_CHARACTER, qloc, NULL, 0, &status);
+         break;
+      case 1: // line_break [this is not documented]
+         briter = ubrk_open(UBRK_LINE, qloc, NULL, 0, &status);
+         break;
+      case 2: // sentence
+         briter = ubrk_open(UBRK_SENTENCE, qloc, NULL, 0, &status);
+         break;
+      case 3: // word
+         briter = ubrk_open(UBRK_WORD, qloc, NULL, 0, &status);
+         break;
+   }
+   if (U_FAILURE(status))
+      Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
+   return briter;
 }
 
 
 /** Get Break Iterator's locale
  *
  * @param opts_brkiter named list
- * @return Locale object
+ * @return locale ID
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  */
-Locale stri__opts_brkiter_get_locale(SEXP opts_brkiter) {
-   if (isNull(opts_brkiter))
-      return Locale::createFromName(stri__prepare_arg_locale(R_NilValue, "locale", true));      
-
-   if (!Rf_isVectorList(opts_brkiter))
-      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
-      
-   R_len_t narg = LENGTH(opts_brkiter);
-   SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
-   if (names == R_NilValue || LENGTH(names) != narg)
-      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
-
-   // search for "locale" option
-   for (R_len_t i=0; i<narg; ++i) {
-      if (STRING_ELT(names, i) == NA_STRING)
+const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter) {
+   if (isNull(opts_brkiter)) {
+      // use default locale
+   }
+   else if (Rf_isVectorList(opts_brkiter)) {
+      R_len_t narg = LENGTH(opts_brkiter);
+      SEXP names = Rf_getAttrib(opts_brkiter, R_NamesSymbol);
+      if (names == R_NilValue || LENGTH(names) != narg)
          Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
-      const char* curname = CHAR(STRING_ELT(names, i));
-      if (!strcmp(curname, "locale")) {
-         const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true);
-         return Locale::createFromName(qloc);
+   
+      // search for "locale" option
+      for (R_len_t i=0; i<narg; ++i) {
+         if (STRING_ELT(names, i) == NA_STRING)
+            Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+         const char* curname = CHAR(STRING_ELT(names, i));
+         if (!strcmp(curname, "locale")) {
+            return stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true);
+         }
       }
    }
+   else {
+      Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
+   }
    
-   return Locale::createFromName(stri__prepare_arg_locale(R_NilValue, "locale", true));
+   // otherwise return default locale
+   return stri__prepare_arg_locale(R_NilValue, "locale", true);
 }
 
 
@@ -244,10 +303,10 @@ bool stri__opts_brkiter_ignore_skip_status(const vector<int32_t>& brkskip, int32
 SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
 {
    str = stri_prepare_arg_string(str, "str");
-   Locale loc = stri__opts_brkiter_get_locale(opts_brkiter);
+   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter);
    vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
-
-   RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(opts_brkiter, loc);
+   int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
+   RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);
    UText* str_text = NULL;
    
    STRI__ERROR_HANDLER_BEGIN

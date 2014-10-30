@@ -56,6 +56,8 @@
 #include <unicode/stringpiece.h>
 #include <unicode/utf8.h>
 #include <unicode/utf16.h>
+#include <unicode/brkiter.h>
+#include <unicode/rbbi.h>
 using namespace icu;
 
 #define USE_RINTERNALS

@@ -93,7 +93,7 @@ Other search_fixed: \code{\link{stri_endswith_fixed}},
 
 Other search_in: \code{\link{stri_in_fixed}}
 
-Other search_locate: \code{\link{stri_locate_boundaries}};
+Other search_locate: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
   \code{\link{stri_locate_all_charclass}},
@@ -159,7 +159,7 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-search-regex}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};

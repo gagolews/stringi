@@ -80,7 +80,7 @@ stri_sub(s, -5, length=4)
 }
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_boundaries}};
+Other indexing: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
   \code{\link{stri_locate_all_charclass}},

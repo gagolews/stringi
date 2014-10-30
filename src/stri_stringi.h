@@ -253,6 +253,11 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern);
 SEXP stri_split_lines(SEXP str, SEXP n_max, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);
 
+int stri__opts_brkiter_select_iterator(SEXP opts_brkiter, const char* _default);
+RuleBasedBreakIterator* stri__opts_brkiter_get_iterator(int brkiter_cur, const char* qloc);
+UBreakIterator* stri__opts_brkiter_get_uiterator(int brkiter_cur, const char* qloc);
+const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter);
+vector<int32_t> stri__opts_brkiter_get_skip_rule_status(SEXP opts_brkiter);
 SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter);
 
@@ -285,7 +290,7 @@ SEXP stri_stats_latex(SEXP str);
 
 
 // trans_casemap.cpp:
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP boundary, SEXP locale);
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts);
 
 
 // trans_normalization.cpp:

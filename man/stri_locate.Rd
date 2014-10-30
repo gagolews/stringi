@@ -153,11 +153,11 @@ stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
 }
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_boundaries}};
+Other indexing: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}}; \code{\link{stri_sub}},
   \code{\link{stri_sub<-}}
 
-Other search_locate: \code{\link{stri_locate_boundaries}};
+Other search_locate: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stringi-search}}
 }

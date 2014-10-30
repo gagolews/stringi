@@ -72,7 +72,7 @@ Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stringi-search}}
 
 Other text_boundaries: \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}};
+  \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};

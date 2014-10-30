@@ -117,7 +117,8 @@ stri_split_lines1 <- function(str) {
 #'
 #' @param str character vector or an object coercible to
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
-#' as generated with \code{\link{stri_opts_brkiter}}
+#' as generated with \code{\link{stri_opts_brkiter}};
+#' \code{NULL} for default break iterator, i.e. \code{line_break}
 #'
 #' @return
 #' Returns a list of character vectors.
@@ -139,6 +140,6 @@ stri_split_lines1 <- function(str) {
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_split_boundaries <- function(str, opts_brkiter=stri_opts_brkiter(type="line_break")) {
+stri_split_boundaries <- function(str, opts_brkiter=NULL) {
    .Call("stri_split_boundaries", str, opts_brkiter, PACKAGE="stringi")
 }
