@@ -13,6 +13,15 @@
      to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
      `stri_extract_words`, `stri_locate_words`).
 
+   * [NEW FUNCTION] #109: `stri_count_boundaries`...........
+.....
+
+   * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
+     determine whether a string starts or ends with a given pattern.
+     [TO DO.........: documentation, coll, charclass, regex?, other]
+
+   * ... #102 replace_set?? replace arg vectorize=FALSE?
+
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
 
@@ -29,19 +38,6 @@
    * [NEW FEATURE] #106: `stri_split` and `stri_extract_all` gained a `simplify`
      argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
      is called on the resulting list.
-.....TO DO: stri_extract_words, stri_split_boundaries
-
-   * [NEW FUNCTION] #109: `stri_count_boundaries`...........
-.....
-
-   * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
-     determine whether a string starts or ends with a given pattern.
-     [TO DO.........: documentation, coll, charclass, regex?, other]
-
-   * ....[NEW FUNCTION] #44: `stri_in_fixed` (like R's `match`, but with forced
-     UTF-8 conversion) [TO DO..... rewrite in C++.....]
-
-   * ... #102 replace_set?? replace arg vectorize=FALSE?
 
    * [NEW FUNCTION] #77: `stri_rand_lipsum` generates 
      (pseudo)random dummy *lorem ipsum* text.

@@ -82,9 +82,8 @@
 #' \item \link{stringi-search-coll} -- locale-aware pattern matching
 #'    for natural language processing tasks;
 #' \item \link{stringi-search-charclass} -- for finding elements of
-#' particular character classes, like ``all whitespaces'' or ``all digits''.
-#' \item \link{stringi-search-charclass} -- text boundary analysis.
-#' \item \code{\link{stri_in_fixed}} -- value matching.
+#' particular character classes, like ``all whitespaces'' or ``all digits'';
+#' \item \link{stringi-search-boundaries} -- text boundary analysis.
 #' }
 #'
 #'
@@ -136,7 +135,7 @@
 #' of \pkg{stringi}]: HTML entities,
 #' MIME Base 64 encode/decode,
 #' number and data/time formatting,
-#' and many more.
+#' number spellout, and many more.
 #' }
 #'
 #' Note that each man page has many links to other interesting facilities.
