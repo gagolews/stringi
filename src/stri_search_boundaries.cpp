@@ -452,7 +452,6 @@ SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter)
 }
 
 
-
 /** Count the number of BreakIterator boundaries
  *
  * @param str character vector
@@ -502,7 +501,7 @@ SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
          if (!stri__opts_brkiter_ignore_skip_status(brkskip, rule))
             cur_count++;
       }
-      
+
       INTEGER(ret)[i] = cur_count;
    }
 

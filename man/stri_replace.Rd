@@ -105,7 +105,7 @@ They just call \code{stri_replace_*_*}, depending on arguments used.
 Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 
-If you would like to ged rid of e.g. whitespaces from the start or end
+If you would like to get rid of e.g. whitespaces from the start or end
 of a string, see \code{\link{stri_trim}}.
 }
 \examples{

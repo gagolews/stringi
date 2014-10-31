@@ -44,7 +44,7 @@
 #' and a warning is generated.
 #'
 #' Argument \code{start} controls the start position in \code{str}
-#' at which the \code{pattern} is mathed.
+#' at which the \code{pattern} is matched.
 #' On the other hand, \code{to} gives the end position.
 #'
 #' Indices given by \code{from} or \code{to} are 1-based,
@@ -54,16 +54,16 @@
 #' For negative indices in \code{from} or \code{to}, counting starts
 #' at the end of the string. E.g. index -1 denotes the last code point
 #' in the string.
-#' 
+#'
 #' If you would like to test for a pattern match at \emph{any}
 #' position in \code{str}, use \code{\link{stri_detect}}.
-#' 
+#'
 #' \code{stri_startswith} and \code{stri_endswith} are convenience functions.
 #' They call either \code{stri_*_fixed}, \code{stri_*_coll},
 #' or \code{stri_*_charclass}, depending on the argument used.
 #' Unless you are a very lazy person, please refer to the underlying functions
 #' directly for better performance.
-#' 
+#'
 #' Note that testing for a pattern match at the start or end of a string
 #' has not been implemented separately for regex patterns.
 #' For that you may use the "\code{^}" and "\code{$}" metacharacters,
@@ -81,8 +81,8 @@
 #' \code{stri_startswith} and \code{stri_endswith} only
 #'
 #' @return All the functions return a logical vector.
-#' 
-#' 
+#'
+#'
 #' @examples
 #' \donttest{
 #' stri_startswith_charclass(" trim me! ", "\\p{WSpace}")
@@ -90,6 +90,8 @@
 #' stri_detect_regex(c("a1", "a2", "b3", "a4", "c5"), "^a")
 #' stri_startswith_fixed("ababa", "ba")
 #' stri_startswith_fixed("ababa", "ba", from=2)
+#' stri_startswith_coll(c("a1", "A2", "b3", "A4", "C5"), "a",
+#'    opts_collator=stri_opts_collator(strength=1))
 #' }
 #'
 #' @family search_detect
@@ -171,4 +173,3 @@ stri_startswith_coll <- function(str, pattern, from=1L, opts_collator=NULL) {
 stri_endswith_coll <- function(str, pattern, to=-1L, opts_collator=NULL) {
    .Call("stri_endswith_coll", str, pattern, to, opts_collator, PACKAGE="stringi")
 }
-

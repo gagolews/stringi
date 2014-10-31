@@ -137,11 +137,11 @@ SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to)
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-      
+
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
       const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      
+
       R_len_t to_cur = to_cont.get(i);
       if (to_cur == -1)
          to_cur = str_cur_n; /* most commonly used case */

@@ -48,7 +48,7 @@
 #' or \code{stri_detect_charclass}, depending on the argument used.
 #' Unless you are a very lazy person, please call the underlying functions
 #' directly for better performance.
-#' 
+#'
 #' See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
 #' for testing whether a string starts or ends with a given pattern
 #' match, respectively.

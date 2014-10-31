@@ -21,4 +21,3 @@ test_that("stri_count_boundaries", {
    expect_identical(stri_count_boundaries("Check this out. This is great.", opts_brkiter=stri_opts_brkiter(type="word")), 13L)
    expect_identical(stri_count_boundaries("Check this out. This is great.", opts_brkiter=stri_opts_brkiter(type="character")), 30L)
 })
-

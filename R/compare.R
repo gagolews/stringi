@@ -102,25 +102,25 @@
 #' \donttest{
 #' # in Polish ch < h:
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
-#' 
+#'
 #' # in Slovak ch > h:
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
-#' 
+#'
 #' # < or > (depends on locale):
 #' stri_cmp("hladny", "chladny")
-#' 
+#'
 #' # ignore case differences:
 #' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
-#' 
+#'
 #' # alse ignore diacritical differences:
 #' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
-#' 
+#'
 #' # non-normalized vs normalized string:
 #' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
-#' 
+#'
 #' # note the difference:
 #' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
-#' 
+#'
 #' # ligatures:
 #' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
 #' }
@@ -222,7 +222,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' "a" %stri<% "b"
 #' c("a", "b", "c") %stri>=% "b"
 #' }
-#' 
+#'
 #' @usage
 #' e1 \%s<\% e2
 #'
@@ -415,7 +415,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @examples
 #' \donttest{
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
-#' 
+#'
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 #' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
@@ -444,7 +444,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' is locale-dependent. Hence, \code{stri_unique} is significantly
 #' slower (but much better suited for natural language processing)
 #' than its base R counterpart.
-#' 
+#'
 #' See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 #'
 #' @param str character vector
@@ -459,11 +459,11 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' # normalized and non-unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
-#' 
-#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), 
+#'
+#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
 #'    stri_opts_collator(strength=1))
 #' }
-#' 
+#'
 #' @family locale_sensitive
 #' @export
 stri_unique <-  function(str, opts_collator=NULL) {
@@ -491,7 +491,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
 #' are significantly slower (but much better suited for natural language
 #' processing) than their base R counterpart.
-#' 
+#'
 #' See also \code{\link{stri_unique}} for extracting unique elements.
 #'
 #' @param str character vector
@@ -510,7 +510,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' \code{stri_duplicated_any()} returns a single non-negative integer.
 #' Value of 0 indicates that all the elements in \code{str} are unique.
 #' Otherwise, it gives the index of the first non-unique element.
-#' 
+#'
 #' @examples
 #' \donttest{
 #' # In the following examples, we have 3 duplicated values,
@@ -518,12 +518,12 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' stri_duplicated(c("a", "b", "a", NA, "a", NA))
 #' stri_duplicated(c("a", "b", "a", NA, "a", NA), fromLast=TRUE)
 #' stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
-#' 
+#'
 #' # compare the results:
 #' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
-#' 
-#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), 
+#'
+#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
 #'    opts_collator=stri_opts_collator(strength=1))
 #' duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
 #' }

@@ -58,7 +58,7 @@ If \code{pattern} is empty, then the result is \code{NA}
 and a warning is generated.
 
 Argument \code{start} controls the start position in \code{str}
-at which the \code{pattern} is mathed.
+at which the \code{pattern} is matched.
 On the other hand, \code{to} gives the end position.
 
 Indices given by \code{from} or \code{to} are 1-based,
@@ -90,6 +90,8 @@ stri_startswith_fixed(c("a1", "a2", "b3", "a4", "c5"), "a")
 stri_detect_regex(c("a1", "a2", "b3", "a4", "c5"), "^a")
 stri_startswith_fixed("ababa", "ba")
 stri_startswith_fixed("ababa", "ba", from=2)
+stri_startswith_coll(c("a1", "A2", "b3", "A4", "C5"), "a",
+   opts_collator=stri_opts_collator(strength=1))
 }
 }
 \seealso{

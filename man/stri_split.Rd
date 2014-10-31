@@ -74,8 +74,8 @@ Vectorized over \code{str}, \code{pattern}, \code{n_max}, and \code{omit_empty}.
 If \code{n_max} is negative (default), then all pieces are extracted.
 Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
 for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
-tokes are extracted (if possible) and the \code{n_max}th string
-gives the (unsplit) remainder (see Examples).
+tokes are extracted (if possible) and the \code{n_max}-th string
+gives the (non-split) remainder (see Examples).
 On the other hand, if \code{tokens_only} is \code{TRUE},
 then only full tokens (up to \code{n_max} pieces) are extracted.
 
