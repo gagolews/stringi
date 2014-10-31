@@ -73,7 +73,9 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
       }
 
       R_len_t from_cur = from_cont.get(i);
-      if (from_cur >= 0)
+      if (from_cur == 1)
+         from_cur = 0; /* most commonly used case */
+      else if (from_cur >= 0)
          from_cur = str_cont.UChar32_to_UTF8_index_fwd(i, from_cur-1);
       else
          from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
@@ -136,16 +138,18 @@ SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to)
          continue;
       }
       
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+      
       R_len_t to_cur = to_cont.get(i);
-      if (to_cur >= 0)
+      if (to_cur == -1)
+         to_cur = str_cur_n; /* most commonly used case */
+      else if (to_cur >= 0)
          to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);
       else
          to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
       // now surely to_cur >= 0 && to_cur <= cur_n
-      
-      const char* str_cur_s = str_cont.get(i).c_str();
-//      R_len_t     str_cur_n = str_cont.get(i).length();
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
 
       if (to_cur <= 0)
          ret_tab[i] = FALSE;
