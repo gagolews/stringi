@@ -33,6 +33,7 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8_indexable.h"
 #include "stri_container_integer.h"
+#include "stri_container_charclass.h"
 
 
 /**
@@ -47,7 +48,55 @@
  */
 SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
 {
-   Rf_error("TO DO");
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   from = stri_prepare_arg_integer(from, "from");
+
+   STRI__ERROR_HANDLER_BEGIN
+   int vectorize_length = stri__recycling_rule(true, 3,
+      LENGTH(str), LENGTH(pattern), LENGTH(from));
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+   StriContainerInteger from_cont(from, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
+
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i) || from_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
+      }
+
+      R_len_t from_cur = from_cont.get(i);
+      if (from_cur >= 0)
+         from_cur = str_cont.UChar32_to_UTF8_index_fwd(i, from_cur-1);
+      else
+         from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
+      // now surely from_cur >= 0 && from_cur <= cur_n
+
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+
+      if (from_cur > str_cur_n)
+         ret_tab[i] = FALSE;
+      else {
+         UChar32 chr = 0;
+         U8_NEXT(str_cur_s, from_cur, str_cur_n, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
+         ret_tab[i] = pattern_cur->contains(chr);
+      }
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
 
 
@@ -63,5 +112,53 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
  */
 SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to)
 {
-   Rf_error("TO DO");
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   to = stri_prepare_arg_integer(to, "to");
+
+   STRI__ERROR_HANDLER_BEGIN
+   int vectorize_length = stri__recycling_rule(true, 3,
+      LENGTH(str), LENGTH(pattern), LENGTH(to));
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+   StriContainerInteger to_cont(to, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
+
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i) || to_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
+      }
+      
+      R_len_t to_cur = to_cont.get(i);
+      if (to_cur >= 0)
+         to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);
+      else
+         to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
+      // now surely to_cur >= 0 && to_cur <= cur_n
+      
+      const char* str_cur_s = str_cont.get(i).c_str();
+//      R_len_t     str_cur_n = str_cont.get(i).length();
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+
+      if (to_cur <= 0)
+         ret_tab[i] = FALSE;
+      else {
+         UChar32 chr = 0;
+         U8_PREV(str_cur_s, 0, to_cur, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
+         ret_tab[i] = pattern_cur->contains(chr);
+      }
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
