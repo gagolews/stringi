@@ -57,21 +57,25 @@
 #' Each ``engine'' is able to perform many search-based operations.
 #' These may include:
 #' \itemize{
-#'    \item \code{stri_detect_*} - detects if a pattern occurs in a string,
+#'    \item \code{stri_detect_*} - detect if a pattern occurs in a string,
 #'    see e.g. \code{\link{stri_detect}},
-#'    \item \code{stri_count_*} - counts the number of pattern occurrences,
+#'    \item \code{stri_count_*} - count the number of pattern occurrences,
 #'    see e.g. \code{\link{stri_count}},
-#'    \item \code{stri_locate_*} - locates all, first, or last occurrences 
+#'    \item \code{stri_locate_*} - locate all, first, or last occurrences 
 #'    of a pattern, see e.g. \code{\link{stri_locate}},
-#'    \item \code{stri_extract_*} - extracts all, first, or last occurrences 
+#'    \item \code{stri_extract_*} - extract all, first, or last occurrences 
 #'    of a pattern, see e.g. \code{\link{stri_extract}}
 #'    and, in case of regexes, \code{\link{stri_match}},
-#'    \item \code{stri_replace_*} - replaces all, first, or last occurrences 
-#'    of a pattern, see e.g. \code{\link{stri_replace}},
-#'    \item \code{stri_split_*} - splits a string into chunks indicated 
+#'    \item \code{stri_replace_*} - replace all, first, or last occurrences 
+#'    of a pattern, see e.g. \code{\link{stri_replace}}
+#'    and also \code{\link{stri_trim}},
+#'    \item \code{stri_split_*} - split a string into chunks indicated 
 #'    by occurrences of a pattern,
 #'    see e.g. \code{\link{stri_split}},
-#'    \item \code{stri_subset_*} - returns a subset of a character vector
+#'    \item \code{stri_startswith_*} and \code{stri_endswith_*} detect
+#'    if a string starts or ends with a pattern match, see
+#'    e.g. \code{\link{stri_startswith}},
+#'    \item \code{stri_subset_*} - return a subset of a character vector
 #'    with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
 #' }
 #'

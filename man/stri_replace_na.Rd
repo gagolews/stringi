@@ -50,6 +50,10 @@ Other search_replace: \code{\link{stri_replace}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_fixed}},
   \code{\link{stri_replace_last_regex}};
+  \code{\link{stri_trim}}, \code{\link{stri_trim}},
+  \code{\link{stri_trim_both}},
+  \code{\link{stri_trim_left}},
+  \code{\link{stri_trim_right}};
   \code{\link{stringi-search}}
 }
 

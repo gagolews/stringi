@@ -196,6 +196,8 @@ SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_collator);
 SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_collator);
+SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator);
+SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator);
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 
 
@@ -212,6 +214,7 @@ SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max,
 SEXP stri_subset_fixed(SEXP str, SEXP pattern);
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to);
 SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from);
+
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);
@@ -248,6 +251,8 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge);
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify);
+SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to);
+SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from);
 SEXP stri_subset_charclass(SEXP str, SEXP pattern);
 
 int stri__opts_brkiter_select_iterator(SEXP opts_brkiter, const char* _default);

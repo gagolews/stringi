@@ -48,6 +48,10 @@
 #' or \code{stri_detect_charclass}, depending on the argument used.
 #' Unless you are a very lazy person, please call the underlying functions
 #' directly for better performance.
+#' 
+#' See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
+#' for testing whether a string starts or ends with a given pattern
+#' match, respectively.
 #'
 #'
 #' @param str character vector with strings to search in
@@ -69,13 +73,13 @@
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 #'
-#' stri_detect_charclass(c("stRRRingi","REXAMINE","123"),
+#' stri_detect_charclass(c("stRRRingi","REXAMINE", "123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #'
-#' stri_detect_regex(c("stringi R", "REXAMINE","123"), 'R.')
-#' stri_detect_regex(c("stringi R", "REXAMINE","123"), '[[:alpha:]]*?')
-#' stri_detect_regex(c("stringi R", "REXAMINE","123"), '[a-zC1]')
-#' stri_detect_regex(c("stringi R", "REXAMINE","123"), '( R|RE)')
+#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), 'R.')
+#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[[:alpha:]]*?')
+#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
+#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
 #' stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
 #' }
 #'

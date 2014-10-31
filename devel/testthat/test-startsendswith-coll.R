@@ -1,0 +1,52 @@
+require("testthat")
+
+test_that("stri_startswith_coll", {
+   expect_identical(stri_startswith_coll("a", NA), NA)
+   expect_identical(stri_startswith_coll(NA, "a"), NA)
+   expect_identical(stri_startswith_coll(NA, NA), NA)
+   expect_identical(stri_startswith_coll(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_startswith_coll(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
+   expect_identical(stri_startswith_coll("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_startswith_coll(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_startswith_coll(character(0), character(0)), logical(0))
+   expect_identical(stri_startswith_coll(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"), c(T, F, F, T))
+   expect_identical(stri_startswith_coll(c("Lorem\n123", " ", "kota", "\t\u01054"), c(" ", "\t\u0105")), c(F, F, F, T))
+   expect_warning(stri_startswith_coll(rep("asd", 5), rep("a", 2)))
+   expect_identical(stri_startswith_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
+   expect_equivalent(stri_startswith_coll("aaaab", "ab"), FALSE)
+   expect_equivalent(stri_startswith_coll("bababababaab", "bab"), TRUE)
+   expect_equivalent(stri_startswith_coll("bababababaab", "bab", from=c(1,2,3)), c(T,F,T))
+   expect_equivalent(stri_startswith_coll("\u0105\u0104\u0105\u0104\u0105", "\u0105\u0104\u0105",
+      from=c(1,2,3,100,-3)), c(T,F,T,F,T))
+   expect_equivalent(stri_startswith_coll("a", "agsdgsjgidjso", c(-1,1,-2,2,0)), c(F,F,F,F,F))
+
+   suppressWarnings(expect_identical(stri_startswith_coll("",""), NA))
+   suppressWarnings(expect_identical(stri_startswith_coll("a",""), NA))
+   suppressWarnings(expect_identical(stri_startswith_coll("","a"), FALSE))
+})
+
+
+test_that("stri_endswith_coll", {
+   expect_identical(stri_endswith_coll("a", NA), NA)
+   expect_identical(stri_endswith_coll(NA, "a"), NA)
+   expect_identical(stri_endswith_coll(NA, NA), NA)
+   expect_identical(stri_endswith_coll(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_endswith_coll(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
+   expect_identical(stri_endswith_coll("kot lorem1", character(0)), logical(0))
+   expect_identical(stri_endswith_coll(character(0), "ipsum 1234"), logical(0))
+   expect_identical(stri_endswith_coll(character(0), character(0)), logical(0))
+   expect_identical(stri_endswith_coll(c("ab", "cab", "ccccab", "abaabaaaa"), "ab"), c(T, T, T, F))
+   expect_identical(stri_endswith_coll(c("Lorem\n123", " ", "kota", "4\t\u0105"), c(" ", "\t\u0105")), c(F, F, F, T))
+   expect_warning(stri_endswith_coll(rep("asd", 5), rep("a", 2)))
+   expect_identical(stri_endswith_coll("\u0104\u0105", stri_trans_nfkd("\u0104\u0105")), FALSE)
+   expect_equivalent(stri_endswith_coll("aaaab", "ab"), TRUE)
+   expect_equivalent(stri_endswith_coll("bababababaab", "bab", to=c(-1,-2,-3,-4,4,3)), c(F,F,F,T,F,T))
+   expect_equivalent(stri_endswith_coll("\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0105\u0104\u0104\u0105",
+      "\u0105\u0104\u0105", to=c(-1,-2,-3,-4,4,3)), c(F,F,F,T,F,T))
+
+   expect_equivalent(stri_endswith_coll("aba", "a", c(-1,-100000000, 0, 10000000)), c(T,F,F,T))
+   expect_equivalent(stri_endswith_coll("a", "agsdgsjgidjso", c(-1,1,-2,2,0)), c(F,F,F,F,F))
+   suppressWarnings(expect_identical(stri_endswith_coll("",""), NA))
+   suppressWarnings(expect_identical(stri_endswith_coll("a",""), NA))
+   suppressWarnings(expect_identical(stri_endswith_coll("","a"), FALSE))
+})

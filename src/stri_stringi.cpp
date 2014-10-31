@@ -78,6 +78,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_enc_toutf32,                1),
    STRI__MAKE_CALL_METHOD(stri_encode,                     4),
    STRI__MAKE_CALL_METHOD(stri_encode_from_marked,         3),
+   STRI__MAKE_CALL_METHOD(stri_endswith_charclass,         3),
+   STRI__MAKE_CALL_METHOD(stri_endswith_coll,              4),
    STRI__MAKE_CALL_METHOD(stri_endswith_fixed,             3),
    STRI__MAKE_CALL_METHOD(stri_escape_unicode,             1),
    STRI__MAKE_CALL_METHOD(stri_extract_first_charclass,    2),
@@ -153,6 +155,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_split_lines1,               1),
    STRI__MAKE_CALL_METHOD(stri_split_regex,                7),
 //   STRI__MAKE_CALL_METHOD(stri_split_pos,              3), // TODO: version > 0.3
+   STRI__MAKE_CALL_METHOD(stri_startswith_charclass,       3),
+   STRI__MAKE_CALL_METHOD(stri_startswith_coll,            4),
    STRI__MAKE_CALL_METHOD(stri_startswith_fixed,           3),
    STRI__MAKE_CALL_METHOD(stri_stats_general,              1),
    STRI__MAKE_CALL_METHOD(stri_stats_latex,                1),
