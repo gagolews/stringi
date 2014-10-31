@@ -28,21 +28,25 @@ in \pkg{stringi}.
 Each ``engine'' is able to perform many search-based operations.
 These may include:
 \itemize{
-   \item \code{stri_detect_*} - detects if a pattern occurs in a string,
+   \item \code{stri_detect_*} - detect if a pattern occurs in a string,
    see e.g. \code{\link{stri_detect}},
-   \item \code{stri_count_*} - counts the number of pattern occurrences,
+   \item \code{stri_count_*} - count the number of pattern occurrences,
    see e.g. \code{\link{stri_count}},
-   \item \code{stri_locate_*} - locates all, first, or last occurrences
+   \item \code{stri_locate_*} - locate all, first, or last occurrences
    of a pattern, see e.g. \code{\link{stri_locate}},
-   \item \code{stri_extract_*} - extracts all, first, or last occurrences
+   \item \code{stri_extract_*} - extract all, first, or last occurrences
    of a pattern, see e.g. \code{\link{stri_extract}}
    and, in case of regexes, \code{\link{stri_match}},
-   \item \code{stri_replace_*} - replaces all, first, or last occurrences
-   of a pattern, see e.g. \code{\link{stri_replace}},
-   \item \code{stri_split_*} - splits a string into chunks indicated
+   \item \code{stri_replace_*} - replace all, first, or last occurrences
+   of a pattern, see e.g. \code{\link{stri_replace}}
+   and also \code{\link{stri_trim}},
+   \item \code{stri_split_*} - split a string into chunks indicated
    by occurrences of a pattern,
    see e.g. \code{\link{stri_split}},
-   \item \code{stri_subset_*} - returns a subset of a character vector
+   \item \code{stri_startswith_*} and \code{stri_endswith_*} detect
+   if a string starts or ends with a pattern match, see
+   e.g. \code{\link{stri_startswith}},
+   \item \code{stri_subset_*} - return a subset of a character vector
    with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
 }
 }
@@ -66,7 +70,15 @@ Other search_detect: \code{\link{stri_detect}},
   \code{\link{stri_detect_charclass}},
   \code{\link{stri_detect_coll}},
   \code{\link{stri_detect_fixed}},
-  \code{\link{stri_detect_regex}}
+  \code{\link{stri_detect_regex}};
+  \code{\link{stri_endswith}},
+  \code{\link{stri_endswith_charclass}},
+  \code{\link{stri_endswith_coll}},
+  \code{\link{stri_endswith_fixed}},
+  \code{\link{stri_startswith}},
+  \code{\link{stri_startswith_charclass}},
+  \code{\link{stri_startswith_coll}},
+  \code{\link{stri_startswith_fixed}}
 
 Other search_extract: \code{\link{stri_extract_words}};
   \code{\link{stri_extract}},
@@ -89,9 +101,7 @@ Other search_extract: \code{\link{stri_extract_words}};
   \code{\link{stri_match_last}},
   \code{\link{stri_match_last_regex}}
 
-Other search_fixed: \code{\link{stri_endswith_fixed}},
-  \code{\link{stri_startswith_fixed}};
-  \code{\link{stringi-search-fixed}}
+Other search_fixed: \code{\link{stringi-search-fixed}}
 
 Other search_locate: \code{\link{stri_locate_boundaries}},
   \code{\link{stri_locate_words}};
@@ -130,7 +140,11 @@ Other search_replace: \code{\link{stri_replace_na}};
   \code{\link{stri_replace_last_charclass}},
   \code{\link{stri_replace_last_coll}},
   \code{\link{stri_replace_last_fixed}},
-  \code{\link{stri_replace_last_regex}}
+  \code{\link{stri_replace_last_regex}};
+  \code{\link{stri_trim}}, \code{\link{stri_trim}},
+  \code{\link{stri_trim_both}},
+  \code{\link{stri_trim_left}},
+  \code{\link{stri_trim_right}}
 
 Other search_split: \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},

@@ -104,6 +104,9 @@ and \code{stri_replace_last} are convenience functions.
 They just call \code{stri_replace_*_*}, depending on arguments used.
 Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
+
+If you would like to ged rid of e.g. whitespaces from the start or end
+of a string, see \code{\link{stri_trim}}.
 }
 \examples{
 \donttest{
@@ -125,6 +128,10 @@ stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
 }
 \seealso{
 Other search_replace: \code{\link{stri_replace_na}};
+  \code{\link{stri_trim}}, \code{\link{stri_trim}},
+  \code{\link{stri_trim_both}},
+  \code{\link{stri_trim_left}},
+  \code{\link{stri_trim_right}};
   \code{\link{stringi-search}}
 }
 

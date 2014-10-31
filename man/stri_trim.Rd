@@ -42,7 +42,8 @@ Contrary to many other string processing libraries,
 our trimming functions are quite general. A character class,
 given by \code{pattern},
 may be adjusted to suit your needs (most often you will use the default
-value).
+value). On the other hand, for replacing pattern matches with
+arbitrary replacement string, see \code{\link{stri_replace}}.
 
 Interestingly, with these functions you may sometimes extract data, which
 in some cases require using regular expressions. E.g. you may get
@@ -63,6 +64,25 @@ stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 }
 \seealso{
 Other search_charclass: \code{\link{stringi-search-charclass}};
+  \code{\link{stringi-search}}
+
+Other search_replace: \code{\link{stri_replace_na}};
+  \code{\link{stri_replace}},
+  \code{\link{stri_replace_all}},
+  \code{\link{stri_replace_all_charclass}},
+  \code{\link{stri_replace_all_coll}},
+  \code{\link{stri_replace_all_fixed}},
+  \code{\link{stri_replace_all_regex}},
+  \code{\link{stri_replace_first}},
+  \code{\link{stri_replace_first_charclass}},
+  \code{\link{stri_replace_first_coll}},
+  \code{\link{stri_replace_first_fixed}},
+  \code{\link{stri_replace_first_regex}},
+  \code{\link{stri_replace_last}},
+  \code{\link{stri_replace_last_charclass}},
+  \code{\link{stri_replace_last_coll}},
+  \code{\link{stri_replace_last_fixed}},
+  \code{\link{stri_replace_last_regex}};
   \code{\link{stringi-search}}
 }
 
