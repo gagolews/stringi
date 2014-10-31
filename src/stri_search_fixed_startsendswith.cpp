@@ -80,7 +80,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from)
          from_cur = str_cont.UChar32_to_UTF8_index_fwd(i, from_cur-1);
       else
          from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
-
+      // now surely from_cur >= 0 && from_cur <= cur_n
 
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
@@ -151,7 +151,7 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to)
          to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);
       else
          to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
-
+      // now surely to_cur >= 0 && to_cur <= cur_n
 
       const char* str_cur_s = str_cont.get(i).c_str();
 //      R_len_t     str_cur_n = str_cont.get(i).length();

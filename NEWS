@@ -18,7 +18,6 @@
 
    * ....[NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
-     [TO DO.........: documentation, coll, charclass, regex?, other]
 
    * ... #102 replace_set?? replace arg vectorize=FALSE?
 
