@@ -126,9 +126,9 @@ stri_split_lines1 <- function(str) {
 #' stri_split_boundaries(test, stri_opts_brkiter(type="line"))
 #' stri_split_boundaries(test, stri_opts_brkiter(type="word"))
 #' stri_split_boundaries(test, stri_opts_brkiter(type="word", skip_word_none=TRUE))
-#' stri_split_boundaries(test, stri_opts_brkiter(type="word", 
+#' stri_split_boundaries(test, stri_opts_brkiter(type="word",
 #'    skip_word_none=TRUE, skip_word_letter=TRUE))
-#' stri_split_boundaries(test, stri_opts_brkiter(type="word", 
+#' stri_split_boundaries(test, stri_opts_brkiter(type="word",
 #'    skip_word_none=TRUE, skip_word_number=TRUE))
 #' stri_split_boundaries(test, stri_opts_brkiter(type="sentence"))
 #' stri_split_boundaries(test, stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))

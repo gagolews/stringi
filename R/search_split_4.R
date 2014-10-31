@@ -43,8 +43,8 @@
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
 #' for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
-#' tokes are extracted (if possible) and the \code{n_max}th string
-#' gives the (unsplit) remainder (see Examples).
+#' tokes are extracted (if possible) and the \code{n_max}-th string
+#' gives the (non-split) remainder (see Examples).
 #' On the other hand, if \code{tokens_only} is \code{TRUE},
 #' then only full tokens (up to \code{n_max} pieces) are extracted.
 #'
@@ -118,7 +118,7 @@
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE)
 #'
-#' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""), 
+#' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""),
 #'    "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)
 #'
 #' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")

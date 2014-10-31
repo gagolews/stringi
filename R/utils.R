@@ -40,11 +40,11 @@
 #' This function is similar to the builtin \code{\link{simplify2array}}
 #' function. However, it always returns a character matrix,
 #' even if each element in \code{x} is of length 1
-#' or if elements in \code{x} are not of the same lenghts.
+#' or if elements in \code{x} are not of the same lengths.
 #' Moreover, the elements in \code{x} are always coerced to character vectors.
 #'
 #' If \code{byrow} is \code{FALSE}, then a matrix with \code{length(x)}
-#' columns is returned. The number of rows is the lenght of the
+#' columns is returned. The number of rows is the length of the
 #' longest vector in \code{x}. Basically, we have
 #' \code{result[i,j] == x[[j]][i]} if \code{i <= length(x[[j]])}
 #' and \code{result[i,j] == fill} otherwise, see Examples.

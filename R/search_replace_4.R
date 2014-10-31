@@ -37,7 +37,7 @@
 #' substring of the input that matches the specified \code{pattern}.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{replacement}, 
+#' Vectorized over \code{str}, \code{pattern}, \code{replacement},
 #' and \code{merge}.
 #'
 #' These functions scan the input string for matches of the pattern.
@@ -57,8 +57,8 @@
 #' They just call \code{stri_replace_*_*}, depending on arguments used.
 #' Unless you are a very lazy person, please call the underlying functions
 #' directly for better performance.
-#' 
-#' If you would like to ged rid of e.g. whitespaces from the start or end
+#'
+#' If you would like to get rid of e.g. whitespaces from the start or end
 #' of a string, see \code{\link{stri_trim}}.
 #'
 #' @param str character vector with strings to search in

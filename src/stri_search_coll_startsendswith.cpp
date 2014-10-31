@@ -31,7 +31,8 @@
 
 
 #include "stri_stringi.h"
-#include "stri_container_utf8_indexable.h"
+#include "stri_container_utf16.h"
+#include "stri_container_usearch.h"
 #include "stri_container_integer.h"
 
 
@@ -44,11 +45,52 @@
  * @param opts_collator named list
  * @return logical vector
  *
- * @version 0.3-1 (Marek Gagolewski, 2014-10-31)
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  */
 SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
 {
-   Rf_error("TO DO");
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   from = stri_prepare_arg_integer(from, "from");
+
+   UCollator* collator = NULL;
+   collator = stri__ucol_open(opts_collator);
+
+   STRI__ERROR_HANDLER_BEGIN
+   int vectorize_length = stri__recycling_rule(true, 3,
+      LENGTH(str), LENGTH(pattern), LENGTH(from));
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+   StriContainerInteger from_cont(from, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
+
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         ret_tab[i] = NA_LOGICAL,
+         ret_tab[i] = FALSE)
+
+      if (from_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
+      }
+
+      throw StriException("TO DO"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+   }
+
+   if (collator) { ucol_close(collator); collator=NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
 }
 
 
@@ -61,9 +103,50 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
  * @param opts_collator named list
  * @return logical vector
  *
- * @version 0.3-1 (Marek Gagolewski, 2014-10-31)
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  */
 SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
 {
-   Rf_error("TO DO");
+   str = stri_prepare_arg_string(str, "str");
+   pattern = stri_prepare_arg_string(pattern, "pattern");
+   to = stri_prepare_arg_integer(to, "to");
+
+   UCollator* collator = NULL;
+   collator = stri__ucol_open(opts_collator);
+
+   STRI__ERROR_HANDLER_BEGIN
+   int vectorize_length = stri__recycling_rule(true, 3,
+      LENGTH(str), LENGTH(pattern), LENGTH(to));
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+   StriContainerInteger to_cont(to, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+   int* ret_tab = LOGICAL(ret);
+
+   for (R_len_t i = pattern_cont.vectorize_init();
+         i != pattern_cont.vectorize_end();
+         i = pattern_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+         ret_tab[i] = NA_LOGICAL,
+         ret_tab[i] = FALSE)
+
+      if (to_cont.isNA(i)) {
+         ret_tab[i] = NA_LOGICAL;
+         continue;
+      }
+
+      throw StriException("TO DO"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+   }
+
+   if (collator) { ucol_close(collator); collator=NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) ucol_close(collator);
+   )
 }

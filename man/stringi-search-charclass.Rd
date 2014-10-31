@@ -73,7 +73,7 @@ Set expressions at a glance
 to include are determined by Unicode code point ordering.\cr
 \code{[\\u0000-\\U0010ffff]} 	\tab Range -- match all characters.\cr
 \code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]} 	\tab
-Characters with Unicocde Category = Letter. All forms shown are equivalent.\cr
+Characters with Unicode Category = Letter. All forms shown are equivalent.\cr
 \code{[\\P{Letter}]} 	\tab Negated property.
 (Upper case \code{\\P}) Match everything except Letters.\cr
 \code{[\\p{numeric_value=9}]} 	\tab Match all numbers with a numeric value of 9.

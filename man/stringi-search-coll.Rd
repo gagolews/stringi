@@ -27,7 +27,9 @@ and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 Please note that \pkg{ICU}'s \code{StringSearch}-based functions
-often exhibit poor performance.
+often exhibit poor performance. These functions are not intended to
+be fast; they are made to give \emph{correct} in natural
+language processing tasks.
 }
 \references{
 \emph{ICU String Search Service} -- ICU User Guide,

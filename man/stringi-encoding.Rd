@@ -132,7 +132,7 @@ Character strings in \R (internally) can be declared to be in:
 \itemize{
 \item \code{UTF-8};
 \item \code{latin1}, i.e. ISO-8859-1 (Western European);
-\item \code{bytes} -- for strings thet
+\item \code{bytes} -- for strings that
     should be manipulated as sequences of bytes.
 }
 Moreover, there are two other cases:

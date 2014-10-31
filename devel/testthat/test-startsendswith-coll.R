@@ -21,14 +21,14 @@ test_that("stri_startswith_coll", {
    expect_equivalent(stri_startswith("\u0105\u0104\u0105\u0104\u0105", "\u0105\u0104\u0105",
       from=c(1,2,3,100,-3)), coll=c(T,F,T,F,T))
    expect_equivalent(stri_startswith_coll("a", "agsdgsjgidjso", c(-1,1,-2,2,0)), c(F,F,F,F,F))
-   
+
    expect_equivalent(stri_startswith_coll("abc", "a", c(1,2,3)), c(TRUE, FALSE, FALSE))
    expect_equivalent(stri_startswith_coll("abc", "b", c(1,2,3)), c(FALSE, TRUE, FALSE))
    expect_equivalent(stri_startswith_coll("abc", "c", c(1,2,3)), c(FALSE, FALSE, TRUE))
    expect_equivalent(stri_startswith_coll("abc", "a", c(-3,-2,-1)), c(TRUE, FALSE, FALSE))
    expect_equivalent(stri_startswith_coll("abc", "b", c(-3,-2,-1)), c(FALSE, TRUE, FALSE))
    expect_equivalent(stri_startswith_coll("abc", "c", c(-3,-2,-1)), c(FALSE, FALSE, TRUE))
-   
+
    expect_equivalent(stri_startswith_coll("abc", "a", c(-1000, 0, 4)), c(TRUE, TRUE, FALSE))
    expect_equivalent(stri_startswith_coll("ab",  "b", c(-1000, 0, 3)), c(FALSE, FALSE, FALSE))
    expect_equivalent(stri_startswith_coll("a",  "b", c(-1000, 0, 2)), c(FALSE, FALSE, FALSE))
@@ -64,14 +64,14 @@ test_that("stri_endswith_coll", {
    suppressWarnings(expect_identical(stri_endswith_coll("",""), NA))
    suppressWarnings(expect_identical(stri_endswith_coll("a",""), NA))
    suppressWarnings(expect_identical(stri_endswith_coll("","a"), FALSE))
-   
+
    expect_equivalent(stri_endswith_coll("abc", "a", c(1,2,3)), c(TRUE, FALSE, FALSE))
    expect_equivalent(stri_endswith_coll("abc", "b", c(1,2,3)), c(FALSE, TRUE, FALSE))
    expect_equivalent(stri_endswith_coll("abc", "c", c(1,2,3)), c(FALSE, FALSE, TRUE))
    expect_equivalent(stri_endswith_coll("abc", "a", c(-3,-2,-1)), c(TRUE, FALSE, FALSE))
    expect_equivalent(stri_endswith_coll("abc", "b", c(-3,-2,-1)), c(FALSE, TRUE, FALSE))
    expect_equivalent(stri_endswith_coll("abc", "c", c(-3,-2,-1)), c(FALSE, FALSE, TRUE))
-   
+
    expect_equivalent(stri_endswith_coll("abc", "a", c(-1000, 0, 4)), c(FALSE, FALSE, FALSE))
    expect_equivalent(stri_endswith_coll("ab",  "b", c(-1000, 0, 4)), c(FALSE, FALSE, TRUE))
    expect_equivalent(stri_endswith_coll("a",  "b", c(-1000, 0, 4)), c(FALSE, FALSE, FALSE))

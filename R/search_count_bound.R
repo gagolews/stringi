@@ -50,13 +50,13 @@
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #' This is function is equivalent to a call to
 #' \code{\link{stri_count_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
-#' 
+#'
 #' Note that a \code{BreakIterator} of type \code{character}
 #' may be used to count the number of \emph{Unicode characters} in a string.
 #' This may lead to different results than that returned by the
 #' \code{\link{stri_length}} function, which is designed to return
 #' the number of \emph{Unicode code points}.
-#' 
+#'
 #' On the other hand, a \code{BreakIterator} of type \code{sentence}
 #' may be used to count the number of sentences in a piece of text.
 #'
@@ -81,7 +81,7 @@
 #' stri_count_boundaries(test, stri_opts_brkiter(type="sentence"))
 #' stri_count_boundaries(test, stri_opts_brkiter(type="character"))
 #' stri_count_words(test)
-#' 
+#'
 #' test2 <- stri_trans_nfkd("\u03c0\u0153\u0119\u00a9\u00df\u2190\u2193\u2192")
 #' stri_count_boundaries(test2, stri_opts_brkiter(type="character"))
 #' stri_length(test2)
