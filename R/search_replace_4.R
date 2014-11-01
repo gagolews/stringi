@@ -48,10 +48,9 @@
 #' is replaced by a corresponding \code{replacement} string.
 #' In such a case, the vectorization is over \code{str}
 #' and - independently - \code{pattern} and \code{replacement},
-#' see Examples.
-#' Note that you must set \code{length(pattern) >= length(replacement)}.
-#' If there are overlapping matches to different patterns, the function
-#' will throw an error.
+#' see Examples. Note that you must set \code{length(pattern) >= length(replacement)}.
+#' Anyway, this is equivalent to something like
+#' \code{for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]}.
 #'
 #' In case of \code{stri_replace_*_regex},
 #' the replacement string may contain references to capture groups
@@ -60,7 +59,6 @@
 #' of the capture group (their numbering starts from 1).
 #' In order to treat the \code{$} character literally,
 #' escape it with a backslash.
-#' This feature is not available for \code{vectorize_all} equal to \code{TRUE}.
 #'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions.
