@@ -34,13 +34,12 @@
 #include "stri_container_utf8.h"
 #include "stri_container_bytesearch.h"
 #include "stri_string8buf.h"
-#include "stri_interval.h"
+//#include "stri_interval.h"
 #include <deque>
-#include <queue>
-#include <algorithm>
+//#include <queue>
+//#include <algorithm>
 using namespace std;
 
-#include <time.h>
 
 /**
  * Replace all/first/last occurences of a fixed pattern
@@ -160,8 +159,8 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
 {  // version beta: for-loop like
-   pattern      = stri_prepare_arg_string(pattern, "pattern");
-   replacement  = stri_prepare_arg_string(replacement, "replacement");
+   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
    
    R_len_t pattern_n = LENGTH(pattern);
    R_len_t replacement_n = LENGTH(replacement);
@@ -175,15 +174,19 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
    PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
    
+   PROTECT(str);
    for (R_len_t i=0; i<pattern_n; ++i) {
       SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
       SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
       str = stri__replace_allfirstlast_fixed(str, pattern_cur, replacement_cur, 0);
+      UNPROTECT(1);
+      PROTECT(str);
    }
 
-   UNPROTECT(2);
+   UNPROTECT(5);
    return str;
 }
+
 
 // stri__replace_all_fixed_no_vectorize_all
 // Version alpha: benchmarks: 32 ms vs 35 ms for the loop-version

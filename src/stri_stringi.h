@@ -222,7 +222,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement,
-                           SEXP opts_regex);
+                           SEXP vectorize_all, SEXP opts_regex);
 SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement,
                               SEXP opts_regex);
 SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement,

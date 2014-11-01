@@ -127,6 +127,48 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
 
 
 /**
+ * Replace all occurences of a regex pattern; vectorize_all=FALSE
+ *
+ * @param str character vector
+ * @param pattern character vector
+ * @param replacement character vector
+ * @param opts_regex a named list
+ * @return character vector
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
+ */
+SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
+{
+   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+   
+   R_len_t pattern_n = LENGTH(pattern);
+   R_len_t replacement_n = LENGTH(replacement);
+   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
+      Rf_error(MSG__WARN_RECYCLING_RULE2);
+   if (pattern_n % replacement_n != 0)
+      Rf_warning(MSG__WARN_RECYCLING_RULE);
+   
+   // no str_error_handlers needed here
+   SEXP pattern_cur, replacement_cur;
+   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
+   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
+   
+   PROTECT(str);
+   for (R_len_t i=0; i<pattern_n; ++i) {
+      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
+      SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
+      str = stri__replace_allfirstlast_regex(str, pattern_cur, replacement_cur, opts_regex, 0);
+      UNPROTECT(1);
+      PROTECT(str);
+   }
+
+   UNPROTECT(5);
+   return str;
+}
+
+
+/**
  * Replace all occurences of a regex pattern
  *
  * @param str strings to search in
@@ -136,10 +178,16 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
+ *          vectorize_all argument added
  */
-SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
+SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_regex)
 {
-   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
+   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+      return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
+   else
+      return stri__replace_all_regex_no_vectorize_all(str, pattern, replacement, opts_regex);
 }
 
 
