@@ -45,7 +45,8 @@ stri_replace_first_fixed(str, pattern, replacement)
 
 stri_replace_last_fixed(str, pattern, replacement)
 
-stri_replace_all_regex(str, pattern, replacement, opts_regex = NULL)
+stri_replace_all_regex(str, pattern, replacement, vectorize_all = TRUE,
+  opts_regex = NULL)
 
 stri_replace_first_regex(str, pattern, replacement, opts_regex = NULL)
 
@@ -143,6 +144,12 @@ stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=TRUE)
 stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
+
+# Compare the results:
+stri_replace_all_fixed("The quicker brown fox jumped over the lazy dog.",
+     c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
+stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
+     "\\\\b"\%s+\%c("quick", "brown", "fox")\%s+\%"\\\\b", c("slow",  "black", "bear"), vectorize_all=FALSE)
 }
 }
 \seealso{

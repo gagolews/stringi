@@ -1,5 +1,23 @@
 require(testthat)
 
+
+test_that("stri_replace_all_regex", {
+   expect_error(stri_replace_all_regex("a", "a", c("b", "d"), vectorize_all=FALSE))
+   expect_error(stri_replace_all_regex("a", c(), "a", vectorize_all=FALSE))
+   expect_error(stri_replace_all_regex("a", "a", c(), vectorize_all=FALSE))
+   expect_warning(stri_replace_all_regex("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
+   expect_equivalent(stri_replace_all_regex("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
+   expect_equivalent(stri_replace_all_regex(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
+   expect_equivalent(stri_replace_all_regex(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, NA_character_))
+   expect_equivalent(stri_replace_all_regex(character(0), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), character(0))
+   expect_equivalent(stri_replace_all_regex(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
+   expect_equivalent(stri_replace_all_regex(c("abacada", "aaa", "fdsueo"), c("a+", "b"), c("x", "y"), vectorize_all = FALSE),
+      c("xyxcxdx", "x", "fdsueo"))
+   expect_equivalent(stri_replace_all_regex("The quick brown fox jumped over the lazy dog.", 
+      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all = FALSE),
+      "The slow black bear jumped over the lazy dog.")
+})
+
 test_that("stri_replace_all_regex", {
    expect_identical(stri_replace_all_regex(character(0),1,2),character(0))
    expect_identical(stri_replace_all_regex(1,character(0),2),character(0))

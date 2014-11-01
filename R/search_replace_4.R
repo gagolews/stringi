@@ -114,6 +114,12 @@
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=TRUE)
 #' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
+#'      
+#' # Compare the results:
+#' stri_replace_all_fixed("The quicker brown fox jumped over the lazy dog.", 
+#'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
+#' stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.", 
+#'      "\\b"%s+%c("quick", "brown", "fox")%s+%"\\b", c("slow",  "black", "bear"), vectorize_all=FALSE)
 #' }
 #'
 #' @family search_replace
@@ -269,8 +275,8 @@ stri_replace_last_fixed <- function(str, pattern, replacement) {
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_regex <- function(str, pattern, replacement, opts_regex=NULL) {
-   .Call("stri_replace_all_regex", str, pattern, replacement, opts_regex,
+stri_replace_all_regex <- function(str, pattern, replacement, vectorize_all=TRUE, opts_regex=NULL) {
+   .Call("stri_replace_all_regex", str, pattern, replacement, vectorize_all, opts_regex,
          PACKAGE="stringi")
 }
 
