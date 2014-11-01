@@ -253,4 +253,7 @@
 #define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \
    "empty search patterns are not supported"
 
+#define MSG__OVERLAPPING_PATTERN_UNSUPPORTED \
+   "overlapping pattern matches are not supported"
+
 #endif
