@@ -189,8 +189,13 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          throw StriException(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
    }
 
-   vector< deque< StriInterval<R_len_t> > > queues(str_n); // matches
+   vector< vector< StriInterval<R_len_t> > > queues(str_n); // matches
+   // BTW vector < deque < ... > > gives worse performance in my benchmarks
 
+   vector<bool> which_NA(str_n, false); // which str[i] will be NA
+   for (R_len_t j=0; j<str_n; ++j)
+      if (str_cont.isNA(j))
+         which_NA[j] = true;
 
    // get indices at which we have a pattern match
    // for each pattern, for each search string
@@ -201,23 +206,25 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       // current pattern is not NA and is not empty
       
       for (R_len_t j=0; j<str_n; ++j) {
-         
-         if (str_cont.isNA(j) || str_cont.get(j).length() <= 0)
-            continue;
-            
-         R_len_t start;
+         if (which_NA[j] || str_cont.get(j).length() <= 0)
+            continue; // there's nothing interesting to play with here
+
+         R_len_t match_idx;
          pattern_cont.setupMatcherFwd(i, str_cont.get(j).c_str(), str_cont.get(j).length());
-         start = pattern_cont.findFirst();
-         if (start == USEARCH_DONE)
-            continue;
-         R_len_t len = pattern_cont.getMatchedLength();
-         queues[j].push_back(StriInterval<R_len_t>(start, start+len, i));
+         match_idx = pattern_cont.findFirst();
+         if (match_idx == USEARCH_DONE) continue; // no match at all
          
-         while (USEARCH_DONE != pattern_cont.findNext()) {
-            start = pattern_cont.getMatchedStart();
-            len = pattern_cont.getMatchedLength();
-            queues[j].push_back(StriInterval<R_len_t>(start, start+len, i));
+         // otherwise, there is >= 1 match
+         if (replacement_cont.isNA(i)) {
+            which_NA[j] = true; // this string will be missing in result
+            // it may have overlapping patterns BTW, but we won't check for that
+            continue; // the same pattern, next string
+         }         
+         do {
+            queues[j].push_back(StriInterval<R_len_t>(match_idx, match_idx+pattern_cont.getMatchedLength(), i));
+            match_idx = pattern_cont.findNext();
          }
+         while (match_idx != USEARCH_DONE);
       }
    }
    
@@ -225,40 +232,28 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    // determine max buf size
    R_len_t bufsize = 0;
    for (R_len_t i=0; i<str_n; ++i) {
-      if (str_cont.isNA(i) || str_cont.get(i).length() <= 0)
-            continue;
-      if (!queues[i].size())
-         continue; // no matches
+      if (which_NA[i] || str_cont.get(i).length() <= 0 || !queues[i].size())
+         continue; // nothing interesting
       
+      // sort the i-th queue w.r.t. lower interval bound:
       sort(queues[i].begin(), queues[i].end());
       
       R_len_t bufsize_cur = str_cont.get(i).length();
-      deque< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
+      vector< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
       
-      StriInterval<R_len_t> last_int = *(iter++);
-      if (replacement_cont.isNA(last_int.data))
-         continue; // an NA replacement found
-         
+      StriInterval<R_len_t> last_int = *(iter++);         
       bufsize_cur = bufsize_cur - pattern_cont.get(last_int.data).length()
-                                 + replacement_cont.get(last_int.data).length();
-                                 
-      bool willBeNA = false;
+                                + replacement_cont.get(last_int.data).length();
       for (; iter != queues[i].end(); ++iter) {
          StriInterval<R_len_t> cur_int = *iter;
-         
          if (cur_int.a < last_int.b)
             throw StriException(MSG__OVERLAPPING_PATTERN_UNSUPPORTED);
-         
-         if (replacement_cont.isNA(cur_int.data)) {
-            willBeNA = true;
-            continue; // an NA replacement found
-         }
          bufsize_cur = bufsize_cur - pattern_cont.get(cur_int.data).length() 
-                                    + replacement_cont.get(cur_int.data).length();
+                                   + replacement_cont.get(cur_int.data).length();
          last_int = cur_int;
       }
 
-      if (!willBeNA && bufsize < bufsize_cur) bufsize = bufsize_cur;
+      if (bufsize < bufsize_cur) bufsize = bufsize_cur;
    }
      
    
@@ -267,12 +262,12 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_n));
    String8buf buf(bufsize);
    for (R_len_t i=0; i<str_n; ++i) {
-      if (str_cont.isNA(i)) {
+      if (which_NA[i]) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
-      if (str_cont.get(i).length() <= 0 || !queues[i].size()) {
+      else if (str_cont.get(i).length() <= 0 || !queues[i].size()) {
+         // copy as-is
          SET_STRING_ELT(ret, i, str_cont.toR(i));
          continue;
       }
@@ -284,26 +279,21 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       R_len_t str_cur_n = str_cont.get(i).length();
      
       R_len_t last_b = 0;
-      for (deque< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
+      for (vector< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
                iter != queues[i].end(); ++iter) {
          StriInterval<R_len_t> cur_int = *iter;
-         if (replacement_cont.isNA(cur_int.data)) {
-            SET_STRING_ELT(ret, i, NA_STRING);
-            break;
-         }
-         
          memcpy(curbuf+bufused, str_cur_s+last_b, cur_int.a-last_b);
          bufused += (cur_int.a-last_b);
-         memcpy(curbuf+bufused, replacement_cont.get(cur_int.data).c_str(), replacement_cont.get(cur_int.data).length());
+         memcpy(curbuf+bufused, replacement_cont.get(cur_int.data).c_str(),
+            replacement_cont.get(cur_int.data).length());
          bufused += replacement_cont.get(cur_int.data).length();
          last_b = cur_int.b;
       }
       
-      if (STRING_ELT(ret, i) != NA_STRING) {
-         memcpy(curbuf+bufused, str_cur_s+last_b, str_cur_n-last_b);
-         bufused += (str_cur_n-last_b);
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), bufused, CE_UTF8));
-      }
+      // the remainder
+      memcpy(curbuf+bufused, str_cur_s+last_b, str_cur_n-last_b);
+      bufused += (str_cur_n-last_b);
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), bufused, CE_UTF8));
    }
 
    STRI__UNPROTECT_ALL
