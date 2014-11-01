@@ -19,7 +19,8 @@
    * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
 
-   * ... #102 replace_set?? replace arg vectorize=FALSE?
+   * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_ALL` parameter.
+........................
 
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.

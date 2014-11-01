@@ -134,7 +134,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MAKE_CALL_METHOD(stri_rand_shuffle,               1),
    STRI__MAKE_CALL_METHOD(stri_rand_strings,               3),
    STRI__MAKE_CALL_METHOD(stri_replace_na,                 2),
-   STRI__MAKE_CALL_METHOD(stri_replace_all_fixed,          3),
+   STRI__MAKE_CALL_METHOD(stri_replace_all_fixed,          4),
    STRI__MAKE_CALL_METHOD(stri_replace_first_fixed,        3),
    STRI__MAKE_CALL_METHOD(stri_replace_last_fixed,         3),
    STRI__MAKE_CALL_METHOD(stri_replace_all_coll,           4),

@@ -1,5 +1,22 @@
 require(testthat)
 
+test_that("stri_replace_all_fixed", {
+   expect_error(stri_replace_all_fixed("a", "a", c("b", "d"), vectorize_all=FALSE))
+   expect_error(stri_replace_all_fixed("a", c(), "a", vectorize_all=FALSE))
+   expect_error(stri_replace_all_fixed("a", "a", c(), vectorize_all=FALSE))
+   expect_warning(stri_replace_all_fixed("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
+   expect_equivalent(stri_replace_all_fixed("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
+   expect_equivalent(stri_replace_all_fixed(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
+   expect_equivalent(stri_replace_all_fixed(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, "bbbb"))
+   expect_equivalent(stri_replace_all_fixed(character(0), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), character(0))
+   expect_equivalent(stri_replace_all_fixed(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
+   expect_equivalent(stri_replace_all_fixed(c("abacada", "aaa", "fdsueo"), c("a", "b"), c("x", "y"), vectorize_all = FALSE),
+      c("xyxcxdx", "xxx", "fdsueo"))
+   expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all = FALSE),
+      "The slow black bear jumped over the lazy dog.")
+})
+
 
 test_that("stri_replace_all_fixed", {
    expect_identical(stri_replace_all("abcde", fixed="bcd", replacement=""), "ae")

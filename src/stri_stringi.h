@@ -206,7 +206,7 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_first_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement);
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all);
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max,
@@ -319,6 +319,5 @@ SEXP stri_test_returnasis(SEXP x);
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill);
 
 // ------------------------------------------------------------------------
-
 
 #endif

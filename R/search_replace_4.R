@@ -37,12 +37,21 @@
 #' substring of the input that matches the specified \code{pattern}.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, \code{replacement},
-#' and \code{merge}.
-#'
-#' These functions scan the input string for matches of the pattern.
+#' By default, all the functions are vectorized over
+#' \code{str}, \code{pattern}, \code{replacement}, and \code{merge}. Then
+#' these functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
+#' 
+#' However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
+#' the each substring matching any of the supplied \code{pattern}s
+#' is replaced by a corresponding \code{replacement} string.
+#' In such a case, the vectorization is over \code{str}
+#' and - independently - \code{pattern} and \code{replacement},
+#' see Examples.
+#' Note that you must set \code{length(pattern) >= length(replacement)}.
+#' If there are overlapping matches to different patterns, the function
+#' will throw an error.
 #'
 #' In case of \code{stri_replace_*_regex},
 #' the replacement string may contain references to capture groups
@@ -51,6 +60,7 @@
 #' of the capture group (their numbering starts from 1).
 #' In order to treat the \code{$} character literally,
 #' escape it with a backslash.
+#' This feature is not available for \code{vectorize_all} equal to \code{TRUE}.
 #'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions.
@@ -74,6 +84,10 @@
 #' for default settings; \code{stri_replace_*_coll} only
 #' @param merge logical;
 #' should consecutive matches be merged into one string;  \code{stri_replace_all_charclass} only
+#' @param vectorize_all single logical value;
+#' should each occurence of a pattern in every string
+#' be replaced by a corresponding replacement string?;
+#' \code{stri_replace_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions
@@ -96,6 +110,12 @@
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
+#' 
+#' # Compare the results:
+#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+#'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=TRUE)
+#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+#'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
 #' }
 #'
 #' @family search_replace
@@ -227,8 +247,8 @@ stri_replace_last_coll <- function(str, pattern, replacement, opts_collator=NULL
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_fixed <- function(str, pattern, replacement) {
-   .Call("stri_replace_all_fixed", str, pattern, replacement,
+stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all=TRUE) {
+   .Call("stri_replace_all_fixed", str, pattern, replacement, vectorize_all,
          PACKAGE="stringi")
 }
 

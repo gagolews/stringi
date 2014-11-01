@@ -39,7 +39,7 @@ stri_replace_first_coll(str, pattern, replacement, opts_collator = NULL)
 
 stri_replace_last_coll(str, pattern, replacement, opts_collator = NULL)
 
-stri_replace_all_fixed(str, pattern, replacement)
+stri_replace_all_fixed(str, pattern, replacement, vectorize_all = TRUE)
 
 stri_replace_first_fixed(str, pattern, replacement)
 
@@ -71,6 +71,11 @@ should consecutive matches be merged into one string;  \code{stri_replace_all_ch
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 for default settings; \code{stri_replace_*_coll} only}
 
+\item{vectorize_all}{single logical value;
+should each occurence of a pattern in every string
+be replaced by a corresponding replacement string?;
+\code{stri_replace_all_*} only}
+
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 for default settings;
@@ -84,12 +89,21 @@ These functions replace with the given replacement string every/first/last
 substring of the input that matches the specified \code{pattern}.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, \code{replacement},
-and \code{merge}.
-
-These functions scan the input string for matches of the pattern.
+By default, all the functions are vectorized over
+\code{str}, \code{pattern}, \code{replacement}, and \code{merge}. Then
+these functions scan the input string for matches of the pattern.
 Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
+
+However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
+the each substring matching any of the supplied \code{pattern}s
+is replaced by a corresponding \code{replacement} string.
+In such a case, the vectorization is over \code{str}
+and - independently - \code{pattern} and \code{replacement},
+see Examples.
+Note that you must set \code{length(pattern) >= length(replacement)}.
+If there are overlapping matches to different patterns, the function
+will throw an error.
 
 In case of \code{stri_replace_*_regex},
 the replacement string may contain references to capture groups
@@ -98,6 +112,7 @@ References are of the form \code{$n}, where \code{n} is the number
 of the capture group (their numbering starts from 1).
 In order to treat the \code{$} character literally,
 escape it with a backslash.
+This feature is not available for \code{vectorize_all} equal to \code{TRUE}.
 
 \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 and \code{stri_replace_last} are convenience functions.
@@ -124,6 +139,12 @@ stri_replace_all_regex(s, "(el|s)it", "1234")
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
 stri_replace_all_regex('123|456|789', '(\\\\p{N}).(\\\\p{N})', '$2-$1')
 stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
+
+# Compare the results:
+stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
+     c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=TRUE)
+stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
+     c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
 }
 }
 \seealso{
