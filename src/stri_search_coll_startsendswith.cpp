@@ -79,10 +79,36 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-
-      throw StriException("TO DO"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+      
+      const UnicodeString* str_cur_data = &(str_cont.get(i));
+      const UChar* str_cur_s = str_cur_data->getBuffer();
+      const int str_cur_n = str_cur_data->length();
+      
+      R_len_t from_cur = from_cont.get(i);
+      if (from_cur == 1)
+         from_cur = 0; /* most commonly used case */
+      else if (from_cur >= 0) {
+         R_len_t nskip = from_cur-1;
+         from_cur = 0;
+         U16_FWD_N(str_cur_s, from_cur, str_cur_n, nskip);
+      }
+      else {
+         R_len_t nskip = -from_cur;
+         from_cur = str_cur_n;
+         U16_BACK_N(str_cur_s, 0, from_cur, nskip);
+      }
+      // now surely from_cur >= 0 && from_cur <= str_cur_n
+      
+      ret_tab[i] = FALSE;
+      if (from_cur >= str_cur_n) continue; // no match
+      
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s+from_cur, str_cur_n-from_cur);
+      usearch_reset(matcher);
+      UErrorCode status = U_ZERO_ERROR;
+      int start = usearch_first(matcher, &status);
+      if (U_FAILURE(status)) throw StriException(status);
+      
+      if (start != USEARCH_DONE && start == 0) ret_tab[i] = TRUE;
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
@@ -138,9 +164,36 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
          continue;
       }
 
-      throw StriException("TO DO"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+      const UnicodeString* str_cur_data = &(str_cont.get(i));
+      const UChar* str_cur_s = str_cur_data->getBuffer();
+      const int str_cur_n = str_cur_data->length();
+      
+      R_len_t to_cur = to_cont.get(i);
+      if (to_cur == -1)
+         to_cur = str_cur_n; /* most commonly used case */
+      else if (to_cur >= 0) {
+         R_len_t nskip = to_cur;
+         to_cur = 0;
+         U16_FWD_N(str_cur_s, to_cur, str_cur_n, nskip);
+      }
+      else {
+         R_len_t nskip = -to_cur-1;
+         to_cur = str_cur_n;
+         U16_BACK_N(str_cur_s, 0, to_cur, nskip);
+      }
+      // now surely to_cur >= 0 && to_cur <= str_cur_n
+      
+      ret_tab[i] = FALSE;
+      if (to_cur <= 0) continue; // no match
+      
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s, to_cur);
+      usearch_reset(matcher);
+      UErrorCode status = U_ZERO_ERROR;
+      int start = usearch_last(matcher, &status);
+      if (U_FAILURE(status)) throw StriException(status);
+      
+      if (start != USEARCH_DONE && start+usearch_getMatchedLength(matcher) == to_cur)
+         ret_tab[i] = TRUE;
    }
 
    if (collator) { ucol_close(collator); collator=NULL; }
