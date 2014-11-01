@@ -92,6 +92,10 @@
 #' stri_startswith_fixed("ababa", "ba", from=2)
 #' stri_startswith_coll(c("a1", "A2", "b3", "A4", "C5"), "a",
 #'    opts_collator=stri_opts_collator(strength=1))
+#' pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+#'                   "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
+#' stri_endswith_coll("\ufdfa\ufdfa\ufdfaXYZ", pat,
+#'    opts=stri_opts_collator(strength = 1))
 #' }
 #'
 #' @family search_detect

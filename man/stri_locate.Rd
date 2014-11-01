@@ -130,7 +130,8 @@ stri_locate_last_coll(c('Yy\\u00FD', 'AAA'), 'y',
 
 pat <- stri_paste("\\u0635\\u0644\\u0649 \\u0627\\u0644\\u0644\\u0647 ",
                   "\\u0639\\u0644\\u064a\\u0647 \\u0648\\u0633\\u0644\\u0645XYZ")
-stri_locate_last_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat, stri_opts_collator(strength = 1))
+stri_locate_last_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat,
+   stri_opts_collator(strength = 1))
 
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
