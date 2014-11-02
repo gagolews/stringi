@@ -10,7 +10,7 @@ x <- x[!(x$Original %in% c("ZWSP", "UTF", "UTR", "POSIX", "regex", "ipsum",
    "Mc", "NULs", "Nl", "Tf",
    "vectorized", "Vectorized", "LaTeX", "KOI", "IEC", "FCD", "FFFB", "FFFF",
    "Vectorization", "UnicodeSet", "UChar", "transliterators", "Friedl",
-   "Transliterators", "stringi", "Solaris", "Regex", "regexes", "CTYPE", 
+   "Transliterators", "stringi", "Solaris", "Regex", "regexes", "CTYPE",
    "nondecreasing", "nonincreasing", "CJKV", "CN", "BOM", "BOMs", "API")),]
 
 print(x)

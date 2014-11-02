@@ -42,7 +42,7 @@
 #' these functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
-#' 
+#'
 #' However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
 #' the each substring matching any of the supplied \code{pattern}s
 #' is replaced by a corresponding \code{replacement} string.
@@ -83,7 +83,7 @@
 #' @param merge logical;
 #' should consecutive matches be merged into one string;  \code{stri_replace_all_charclass} only
 #' @param vectorize_all single logical value;
-#' should each occurence of a pattern in every string
+#' should each occurrence of a pattern in every string
 #' be replaced by a corresponding replacement string?;
 #' \code{stri_replace_all_*} only
 #' @param mode single string;
@@ -108,17 +108,17 @@
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
-#' 
+#'
 #' # Compare the results:
-#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=TRUE)
-#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+#' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
-#'      
+#'
 #' # Compare the results:
-#' stri_replace_all_fixed("The quicker brown fox jumped over the lazy dog.", 
+#' stri_replace_all_fixed("The quicker brown fox jumped over the lazy dog.",
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
-#' stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.", 
+#' stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
 #'      "\\b"%s+%c("quick", "brown", "fox")%s+%"\\b", c("slow",  "black", "bear"), vectorize_all=FALSE)
 #' }
 #'

@@ -134,9 +134,9 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  * @param replacement character vector
  * @param opts_regex a named list
  * @return character vector
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
- * 
+ *
  * @version 0.3-2 (Marek Gagolewski, 2014-11-02)
  *          Second version, 3x faster, 2 for loops + replaceAll
  */
@@ -146,22 +146,22 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    pattern      = stri_prepare_arg_string(pattern, "pattern");
    replacement  = stri_prepare_arg_string(replacement, "replacement");
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
-   
+
    // if str_n is 0, then return an empty vector
    R_len_t str_n = LENGTH(str);
    if (str_n <= 0)
       return stri__vector_empty_strings(0);
-      
+
    R_len_t pattern_n = LENGTH(pattern);
    R_len_t replacement_n = LENGTH(replacement);
    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
       Rf_error(MSG__WARN_RECYCLING_RULE2);
    if (pattern_n % replacement_n != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE);
-      
+
    if (pattern_n == 1) // this will be much faster:
       return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
-   
+
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 str_cont(str, str_n, false); // writable
    StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_flags);
@@ -177,15 +177,15 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       }
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      
+
       for (R_len_t j = 0; j<str_n; ++j) {
          if (str_cont.isNA(j)) continue;
-         
+
          matcher->reset(str_cont.get(j));
-   
+
          UErrorCode status = U_ZERO_ERROR;
          str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
-      
+
          if (U_FAILURE(status))
             throw StriException(status);
       }
@@ -201,19 +201,19 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //{
 //   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
 //   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-//   
+//
 //   R_len_t pattern_n = LENGTH(pattern);
 //   R_len_t replacement_n = LENGTH(replacement);
 //   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
 //      Rf_error(MSG__WARN_RECYCLING_RULE2);
 //   if (pattern_n % replacement_n != 0)
 //      Rf_warning(MSG__WARN_RECYCLING_RULE);
-//   
+//
 //   // no str_error_handlers needed here
 //   SEXP pattern_cur, replacement_cur;
 //   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
 //   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
-//   
+//
 //   PROTECT(str);
 //   for (R_len_t i=0; i<pattern_n; ++i) {
 //      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
@@ -238,7 +238,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-21)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *          vectorize_all argument added
  */

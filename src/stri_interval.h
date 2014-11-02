@@ -41,7 +41,7 @@ template<class T> struct StriInterval {
    int a;
    int b;
    T data;
-   
+
    StriInterval(int _a, int _b, const T& _data) {
       this->a = _a;
       this->b = _b;

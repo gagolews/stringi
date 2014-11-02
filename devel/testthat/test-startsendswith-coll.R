@@ -36,7 +36,7 @@ test_that("stri_startswith_coll", {
    suppressWarnings(expect_identical(stri_startswith_coll("",""), NA))
    suppressWarnings(expect_identical(stri_startswith_coll("a",""), NA))
    suppressWarnings(expect_identical(stri_startswith_coll("","a"), FALSE))
-   
+
    expect_equivalent(stri_startswith_coll("\ufdfa\ufdfa\ufdfa\ufdfaXYZ\ufdfa",
       stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                 "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ"),
@@ -90,7 +90,7 @@ test_that("stri_endswith_coll", {
    expect_equivalent(stri_endswith_coll("abc", "a", c(-1000, 0, 4)), c(FALSE, FALSE, FALSE))
    expect_equivalent(stri_endswith_coll("ab",  "b", c(-1000, 0, 4)), c(FALSE, FALSE, TRUE))
    expect_equivalent(stri_endswith_coll("a",  "b", c(-1000, 0, 4)), c(FALSE, FALSE, FALSE))
-   
+
    expect_equivalent(stri_endswith_coll("\ufdfa\ufdfa\ufdfa\ufdfaXYZ\ufdfa",
       stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                 "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ"),
