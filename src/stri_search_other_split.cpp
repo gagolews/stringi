@@ -69,8 +69,8 @@ SEXP stri_split_lines1(SEXP str)
 
    UChar32 c;
    R_len_t jlast;
-   deque< pair<R_len_t, R_len_t> > occurences;
-   occurences.push_back(pair<R_len_t, R_len_t>(0, 0));
+   deque< pair<R_len_t, R_len_t> > occurrences;
+   occurrences.push_back(pair<R_len_t, R_len_t>(0, 0));
    for (R_len_t j=0; j < str_cur_n; /* null */) {
       jlast = j;
       U8_NEXT(str_cur_s, j, str_cur_n, c);
@@ -103,19 +103,19 @@ SEXP stri_split_lines1(SEXP str)
 
          default:
             /* not a newline character */
-            occurences.back().second = j;
+            occurrences.back().second = j;
             continue;
       }
 
-      occurences.back().second = jlast;
+      occurrences.back().second = jlast;
       if (j < str_cur_n)
-         occurences.push_back(pair<R_len_t, R_len_t>(j, j));
+         occurrences.push_back(pair<R_len_t, R_len_t>(j, j));
    }
 
    SEXP ans;
-   STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
-   deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-   for (R_len_t k = 0; iter != occurences.end(); ++iter, ++k) {
+   STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
+   deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+   for (R_len_t k = 0; iter != occurrences.end(); ++iter, ++k) {
       pair<R_len_t, R_len_t> curoccur = *iter;
       SET_STRING_ELT(ans, k,
          Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
@@ -191,8 +191,8 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
 
       UChar32 c;
       R_len_t jlast, k=1;
-      deque< pair<R_len_t, R_len_t> > occurences;
-      occurences.push_back(pair<R_len_t, R_len_t>(0, 0));
+      deque< pair<R_len_t, R_len_t> > occurrences;
+      occurrences.push_back(pair<R_len_t, R_len_t>(0, 0));
       for (R_len_t j=0; j < str_cur_n /*&& k < n_max_cur*/; /* null */) {
          jlast = j;
          U8_NEXT(str_cur_s, j, str_cur_n, c);
@@ -234,30 +234,30 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
 
             default:
                /* not a newline character */
-               occurences.back().second = j;
+               occurrences.back().second = j;
                continue;
          }
 
          // if here, then at newline
-         if (omit_empty_cur && occurences.back().second == occurences.back().first)
-            occurences.back().first = occurences.back().second = j; // don't start new field
+         if (omit_empty_cur && occurrences.back().second == occurrences.back().first)
+            occurrences.back().first = occurrences.back().second = j; // don't start new field
          else {
-            occurences.back().second = jlast;
-            occurences.push_back(pair<R_len_t, R_len_t>(j, j));
+            occurrences.back().second = jlast;
+            occurrences.push_back(pair<R_len_t, R_len_t>(j, j));
             ++k; // another field
          }
       }
 
 //      if (k == n_max_cur)
-//         occurences.back().second = str_cur_n;
-      if (omit_empty_cur && occurences.back().first == occurences.back().second)
-         occurences.pop_back();
+//         occurrences.back().second = str_cur_n;
+      if (omit_empty_cur && occurrences.back().first == occurrences.back().second)
+         occurrences.pop_back();
 
       SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurences.size()));
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
 
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t l = 0; iter != occurences.end(); ++iter, ++l) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t l = 0; iter != occurrences.end(); ++iter, ++l) {
          pair<R_len_t, R_len_t> curoccur = *iter;
          SET_STRING_ELT(ans, l,
             Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));

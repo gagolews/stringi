@@ -338,17 +338,17 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
       if (U_FAILURE(status))
          throw StriException(status);
 
-      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
+      deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue
       R_len_t match, last_match = briter->first();
       while ((match = briter->next()) != BreakIterator::DONE) {
          int rule = briter->getRuleStatus();
          if (!stri__opts_brkiter_ignore_skip_status(brkskip, rule))
-            occurences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+            occurrences.push_back(pair<R_len_t, R_len_t>(last_match, match));
          last_match = match;
       }
 
-      R_len_t noccurences = (R_len_t)occurences.size();
-      if (noccurences <= 0) {
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      if (noccurrences <= 0) {
          if (split) {
             SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          }
@@ -360,9 +360,9 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
 
       if (split) {
          SEXP ans;
-         STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurences));
-         deque< pair<R_len_t,R_len_t> >::iterator iter = occurences.begin();
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
+         deque< pair<R_len_t,R_len_t> >::iterator iter = occurrences.begin();
+         for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
             SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
                (*iter).second-(*iter).first, CE_UTF8));
          }
@@ -371,18 +371,18 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
       }
       else {
          SEXP ans;
-         STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+         STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
          int* ans_tab = INTEGER(ans);
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-         for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+         for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
             pair<R_len_t, R_len_t> cur_match = *iter;
             ans_tab[j]             = cur_match.first;
-            ans_tab[j+noccurences] = cur_match.second;
+            ans_tab[j+noccurrences] = cur_match.second;
          }
 
          // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
          str_cont.UTF8_to_UChar32_index(i, ans_tab,
-               ans_tab+noccurences, noccurences,
+               ans_tab+noccurrences, noccurrences,
                1, // 0-based index -> 1-based
                0  // end returns position of next character after match
          );
@@ -494,7 +494,7 @@ SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
          throw StriException(status);
 
       int cur_count = 0;
-      deque< pair<R_len_t,R_len_t> > occurences; // this could be an R_len_t queue
+      deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue
       R_len_t match = briter->first();
       while ((match = briter->next()) != BreakIterator::DONE) {
          int rule = briter->getRuleStatus();

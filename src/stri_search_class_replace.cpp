@@ -151,7 +151,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
 
 
 /**
- * Replace first or last occurence of a character class [internal]
+ * Replace first or last occurrence of a character class [internal]
  *
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for
@@ -213,7 +213,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur->contains(chr)) {
-               break; // break at first occurence
+               break; // break at first occurrence
             }
             jlast = j;
          }
@@ -224,7 +224,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur->contains(chr)) {
-               break; // break at first occurence
+               break; // break at first occurrence
             }
             j = jlast;
          }
@@ -254,7 +254,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
 
 
 /**
- * Replace first occurence of a character class
+ * Replace first occurrence of a character class
  *
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for
@@ -271,7 +271,7 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 
 
 /**
- * Replace last occurence of a character class
+ * Replace last occurrence of a character class
  *
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for

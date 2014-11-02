@@ -41,7 +41,7 @@ using namespace std;
 
 
 /**
- * Split a string by occurences of a character class
+ * Split a string by occurrences of a character class
  *
  * @param str character vector
  * @param pattern character vector

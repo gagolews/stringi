@@ -16,6 +16,7 @@ for (f in srcfiles) {
    cf <- stri_replace_first_regex(cf, "^\\t\\t\\t",       "         ")
    cf <- stri_replace_first_regex(cf, "^\\t\\t",          "      ")
    cf <- stri_replace_first_regex(cf, "^\\t",             "   ")
+   cf <- stri_replace_first_regex(cf, "\\p{Wspace}+^",    "")
 
 
    # newlines at end:

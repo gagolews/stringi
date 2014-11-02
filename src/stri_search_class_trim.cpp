@@ -94,7 +94,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur->contains(chr)) {
-               break; // break at first occurence
+               break; // break at first occurrence
             }
             jlast1 = j;
          }
@@ -107,7 +107,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
             if (chr < 0) // invalid utf-8 sequence
                throw StriException(MSG__INVALID_UTF8);
             if (pattern_cur->contains(chr)) {
-               break; // break at first occurence
+               break; // break at first occurrence
             }
             jlast2 = j;
          }

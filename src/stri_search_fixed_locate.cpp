@@ -39,7 +39,7 @@ using namespace std;
 
 
 /**
- * Locate first or last occurences of pattern in a string
+ * Locate first or last occurrences of pattern in a string
  *
  * @param str character vector
  * @param pattern character vector
@@ -110,7 +110,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, bool first)
 
 
 /**
- * Locate first occurences of pattern in a string [with collation]
+ * Locate first occurrences of pattern in a string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -134,7 +134,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern)
 
 
 /**
- * Locate last occurences of pattern in a string [with collation]
+ * Locate last occurrences of pattern in a string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -157,7 +157,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern)
 }
 
 
-/** Locate all occurences of fixed-byte pattern
+/** Locate all occurrences of fixed-byte pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -203,26 +203,26 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern)
          continue;
       }
 
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
       while (start != USEARCH_DONE) {
-         occurences.push_back(pair<R_len_t, R_len_t>(start, start+pattern_cont.getMatchedLength()));
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+pattern_cont.getMatchedLength()));
          start = pattern_cont.findNext();
       }
 
-      R_len_t noccurences = (R_len_t)occurences.size();
+      R_len_t noccurrences = (R_len_t)occurrences.size();
       SEXP ans;
-      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* ans_tab = INTEGER(ans);
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
          ans_tab[j]             = match.first;
-         ans_tab[j+noccurences] = match.second;
+         ans_tab[j+noccurrences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
       str_cont.UTF8_to_UChar32_index(i, ans_tab,
-            ans_tab+noccurences, noccurences,
+            ans_tab+noccurrences, noccurrences,
             1, // 0-based index -> 1-based
             0  // end returns position of next character after match
       );

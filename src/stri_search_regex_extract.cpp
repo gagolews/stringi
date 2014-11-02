@@ -39,12 +39,12 @@ using namespace std;
 
 
 /**
- * Extract first occurence of a regex pattern in each string
+ * Extract first occurrence of a regex pattern in each string
  *
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @param first logical - search for the first or the last occurence?
+ * @param first logical - search for the first or the last occurrence?
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-20)
@@ -112,7 +112,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
 
 
 /**
- * Extract first occurence of a regex pattern in each string
+ * Extract first occurrence of a regex pattern in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -128,7 +128,7 @@ SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
 
 /**
- * Extract last occurence of a regex pattern in each string
+ * Extract last occurrence of a regex pattern in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -144,7 +144,7 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
 
 /**
- * Extract all occurences of a regex pattern in each string
+ * Extract all occurrences of a regex pattern in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -189,25 +189,25 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_reg
 
       matcher->reset(str_text);
 
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
       while ((int)matcher->find()) {
-         occurences.push_back(pair<R_len_t, R_len_t>(
+         occurrences.push_back(pair<R_len_t, R_len_t>(
             (R_len_t)matcher->start(status), (R_len_t)matcher->end(status)
          ));
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = (R_len_t)occurences.size();
-      if (noccurences <= 0) {
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      if (noccurrences <= 0) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
-      STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurences));
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+      STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> curo = *iter;
          SET_STRING_ELT(cur_res, j,
             Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));

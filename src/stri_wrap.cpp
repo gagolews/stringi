@@ -233,33 +233,33 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       if (U_FAILURE(status)) throw StriException(status);
 
       // all right, first let's generate a list of places at which we may do line breaks
-      deque< R_len_t > occurences_list; // this could be an R_len_t queue
+      deque< R_len_t > occurrences_list; // this could be an R_len_t queue
       R_len_t match = briter->first();
       while (match != BreakIterator::DONE) {
-         occurences_list.push_back(match);
+         occurrences_list.push_back(match);
          match = briter->next();
       }
 
-      R_len_t noccurences = (R_len_t)occurences_list.size(); // number of boundaries
-      if (noccurences <= 1) { // no match (1 boundary == 0)
+      R_len_t noccurrences = (R_len_t)occurrences_list.size(); // number of boundaries
+      if (noccurrences <= 1) { // no match (1 boundary == 0)
          SET_VECTOR_ELT(ret, i, str_cont.toR(i));
          continue;
       }
 
       // the number of "words" is:
-      R_len_t nwords = noccurences - 1;
+      R_len_t nwords = noccurrences - 1;
 
-      // convert occurences_list to a vector
+      // convert occurrences_list to a vector
       // in order to obtain end positions (in a string) of each "words",
-      // noting that occurences_list.at(0) == 0
+      // noting that occurrences_list.at(0) == 0
 #ifndef NDEBUG
-      if (occurences_list.at(0) != 0)
-         throw StriException("NDEBUG: stri_wrap: (occurences_list.at(0) != 0)");
+      if (occurrences_list.at(0) != 0)
+         throw StriException("NDEBUG: stri_wrap: (occurrences_list.at(0) != 0)");
 #endif
 
       std::vector<R_len_t> end_pos_orig(nwords);
-      deque<R_len_t>::iterator iter = ++(occurences_list.begin());
-      for (R_len_t j = 0; iter != occurences_list.end(); ++iter, ++j) {
+      deque<R_len_t>::iterator iter = ++(occurrences_list.begin());
+      for (R_len_t j = 0; iter != occurrences_list.end(); ++iter, ++j) {
          end_pos_orig[j] = (*iter); // this is a UTF-8 index
       }
 

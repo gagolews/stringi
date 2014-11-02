@@ -163,8 +163,8 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
             fields.pop_back(); // get rid of the remainder
       }
 
-      R_len_t noccurences = (R_len_t)fields.size();
-      StriContainerUTF16 out_cont(noccurences);
+      R_len_t noccurrences = (R_len_t)fields.size();
+      StriContainerUTF16 out_cont(noccurrences);
       deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
       for (k = 0; iter != fields.end(); ++iter, ++k) {
          pair<R_len_t, R_len_t> curoccur = *iter;

@@ -43,7 +43,7 @@
 
 
 // /**
-//  * Extract first or last occurences of pattern in a string [exact byte search]
+//  * Extract first or last occurrences of pattern in a string [exact byte search]
 //  * - THIS IS DUMB! :)
 //  *
 //  * @param str character vector
@@ -93,7 +93,7 @@
 //
 //
 // /**
-//  * Extract first occurence of a fixed pattern in each string
+//  * Extract first occurrence of a fixed pattern in each string
 //  *
 //  * @param str character vector
 //  * @param pattern character vector
@@ -111,7 +111,7 @@
 //
 //
 // /**
-//  * Extract last occurence of a fixed pattern in each string
+//  * Extract last occurrence of a fixed pattern in each string
 //  *
 //  * @param str character vector
 //  * @param pattern character vector
@@ -129,7 +129,7 @@
 //
 //
 // /**
-//  * Extract all occurences of pattern in a string [exact byte search]
+//  * Extract all occurrences of pattern in a string [exact byte search]
 //  *
 //  * @param str character vector
 //  * @param pattern character vector

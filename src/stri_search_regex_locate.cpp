@@ -38,7 +38,7 @@
 using namespace std;
 
 
-/** Locate all occurences of a regex pattern
+/** Locate all occurrences of a regex pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -86,31 +86,31 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          continue;
       }
 
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
       do {
          UErrorCode status = U_ZERO_ERROR;
          int start = (int)matcher->start(status);
          int end  =  (int)matcher->end(status);
          if (U_FAILURE(status)) throw StriException(status);
 
-         occurences.push_back(pair<R_len_t, R_len_t>(start, end));
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
          found = (int)matcher->find();
       } while (found);
 
-      R_len_t noccurences = (R_len_t)occurences.size();
+      R_len_t noccurrences = (R_len_t)occurrences.size();
       SEXP ans;
-      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurences, 2));
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* ans_tab = INTEGER(ans);
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
          ans_tab[j]             = match.first;
-         ans_tab[j+noccurences] = match.second;
+         ans_tab[j+noccurrences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
       str_cont.UChar16_to_UChar32_index(i, ans_tab,
-            ans_tab+noccurences, noccurences,
+            ans_tab+noccurrences, noccurrences,
             1, // 0-based index -> 1-based
             0  // end returns position of next character after match
       );
@@ -125,12 +125,12 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 }
 
 
-/** Locate first occurence of a regex pattern
+/** Locate first occurrence of a regex pattern
  *
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
- * @param firs logical - search for the first or the last occurence?
+ * @param firs logical - search for the first or the last occurrence?
  * @return list of integer matrices (2 columns)
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -203,7 +203,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
 }
 
 
-/** Locate first or last occurence of a regex pattern
+/** Locate first or last occurrence of a regex pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -224,7 +224,7 @@ SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 }
 
 
-/** Locate first occurence of a regex pattern
+/** Locate first occurrence of a regex pattern
  * @param str character vector
  * @param pattern character vector
  * @param opts_regex list
