@@ -248,7 +248,8 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
-SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge);
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement,
+                                SEXP merge, SEXP vectorize_all);
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify);
 SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to);

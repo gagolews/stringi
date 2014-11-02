@@ -46,6 +46,9 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          Use StriContainerUTF8 to convert pattern strings in a constructor;
  *          Use UnicodeSet instead of stringi::CharClass
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          New method: locateAll
  */
 class StriContainerCharClass : public StriContainerBase {
 
@@ -147,6 +150,59 @@ class StriContainerCharClass : public StriContainerBase {
             throw StriException("StriContainerCharClass::get(): isNA");
 #endif
          return (data[i%n]);
+      }
+      
+      
+      /** Locate all occurrences of a charclass
+       * 
+       * @return total number of bytes @ pattern matches (idx_codepoint==false)
+       * or total number of codepoints matched (idx_codepoint==true)
+       */
+      static R_len_t locateAll(deque< pair<R_len_t, R_len_t> >& occurrences,
+            const UnicodeSet* pattern_cur,
+            const char* str_cur_s, R_len_t str_cur_n,
+            bool merge_cur, bool idx_codepoint)
+      {
+         if (idx_codepoint) {
+            R_len_t j, k;
+            UChar32 chr;
+            R_len_t sumcodepoints = 0;
+            for (k=j=0; j<str_cur_n; ) {
+               ++k;
+               U8_NEXT(str_cur_s, j, str_cur_n, chr);
+               if (chr < 0) // invalid utf-8 sequence
+                  throw StriException(MSG__INVALID_UTF8);
+               if (pattern_cur->contains(chr)) {
+                  if (merge_cur && occurrences.size() > 0 &&
+                        occurrences.back().second == k-1)
+                     occurrences.back().second = k;
+                  else
+                     occurrences.push_back(pair<R_len_t, R_len_t>(k-1, k));
+                  ++sumcodepoints;
+               }
+            }
+            return sumcodepoints;
+         }
+         else {
+            R_len_t j, jlast;
+            UChar32 chr;
+            R_len_t sumbytes = 0;
+            for (jlast=j=0; j<str_cur_n; ) {
+               U8_NEXT(str_cur_s, j, str_cur_n, chr);
+               if (chr < 0) // invalid utf-8 sequence
+                  throw StriException(MSG__INVALID_UTF8);
+               if (pattern_cur->contains(chr)) {
+                  if (merge_cur && occurrences.size() > 0 &&
+                        occurrences.back().second == jlast)
+                     occurrences.back().second = j;
+                  else
+                     occurrences.push_back(pair<R_len_t, R_len_t>(jlast, j));
+                  sumbytes += j-jlast;
+               }
+               jlast = j;
+            }
+            return sumbytes;
+         }
       }
 };
 
