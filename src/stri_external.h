@@ -69,5 +69,6 @@ using namespace icu;
 #include <R_ext/Rdynload.h>
 
 #include <vector>
+#include <deque>
 
 #endif

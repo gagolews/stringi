@@ -179,7 +179,7 @@ SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
    const std::vector<int>& which, int result_counter);
 SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
    const std::vector<int>& which, int result_counter);
-
+   
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator);

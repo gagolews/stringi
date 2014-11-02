@@ -87,7 +87,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
       if (IS_ASCII(curs) || IS_UTF8(curs)) {
          // ASCII or UTF-8 - ultra fast
-         this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle, true);  /* kill UTF-8 BOM */
+         this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, true);  /* kill UTF-8 BOM */
          // the same is done for native encoding && ucnvNative_isUTF8
          // @TODO: use macro (here & ucnvNative_isUTF8 below)
       }
@@ -108,7 +108,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             if (ucnvNative.isUTF8()) {
                // UTF-8 - ultra fast
                // @TODO: use macro
-               this->str[i].initialize(CHAR(curs), LENGTH(curs), !_shallowrecycle, true); /* kill UTF-8 BOM */
+               this->str[i].initialize(CHAR(curs), LENGTH(curs), false /*!_shallowrecycle*/, true); /* kill UTF-8 BOM */
                continue;
             }
 
@@ -266,6 +266,9 @@ StriContainerUTF8::~StriContainerUTF8()
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
  *    returns original CHARSXP if possible for increased performance
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *    call toR(int)
  */
 SEXP StriContainerUTF8::toR() const
 {
@@ -273,18 +276,7 @@ SEXP StriContainerUTF8::toR() const
    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
 
    for (R_len_t i=0; i<nrecycle; ++i) {
-      String8* curs = &(str[i%n]);
-      if (curs->isNA()) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-      }
-      else if (curs->isReadOnly()) {
-         // if ReadOnly, then surely in ASCII or UTF-8
-         SET_STRING_ELT(ret, i, STRING_ELT(sexp, i%n)); // return original CHARSXP
-      }
-      else {
-         SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(curs->c_str(), curs->length(), CE_UTF8));
-      }
+      SET_STRING_ELT(ret, i, this->toR(i));
    }
 
    UNPROTECT(1);
@@ -315,7 +307,7 @@ SEXP StriContainerUTF8::toR(R_len_t i) const
       return NA_STRING;
    }
    else if (curs->isReadOnly()) {
-      // if ReadOnly, then surely in ASCII or UTF-8
+      // if ReadOnly, then surely in ASCII or UTF-8 and without BOMS (see SEXP-constructor)
       return STRING_ELT(sexp, i%n);
    }
    else {
