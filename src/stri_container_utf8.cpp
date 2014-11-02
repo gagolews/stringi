@@ -266,7 +266,7 @@ StriContainerUTF8::~StriContainerUTF8()
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-22)
  *    returns original CHARSXP if possible for increased performance
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *    call toR(int)
  */

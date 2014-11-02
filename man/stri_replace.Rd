@@ -73,7 +73,7 @@ as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 for default settings; \code{stri_replace_*_coll} only}
 
 \item{vectorize_all}{single logical value;
-should each occurence of a pattern in every string
+should each occurrence of a pattern in every string
 be replaced by a corresponding replacement string?;
 \code{stri_replace_all_*} only}
 

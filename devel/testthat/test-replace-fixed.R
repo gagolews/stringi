@@ -12,10 +12,10 @@ test_that("stri_replace_all_fixed", {
    expect_equivalent(stri_replace_all_fixed(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
    expect_equivalent(stri_replace_all_fixed(c("abacada", "aaa", "fdsueo"), c("a", "b"), c("x", "y"), vectorize_all = FALSE),
       c("xyxcxdx", "xxx", "fdsueo"))
-   expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+   expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all = FALSE),
       "The slow black bear jumped over the lazy dog.")
-   expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.", 
+   expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
 })

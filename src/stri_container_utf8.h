@@ -68,7 +68,7 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          New methods: getMaxNumBytes, getMaxLength
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          New methods: set, getWritable, isNA;
  *          Always try to use shallow copy of char* data in SEXP-based constructor (be lazy)
@@ -117,8 +117,8 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return str[i%n];
       }
-      
-      
+
+
       /** get the vectorized ith element
        * @param i index
        * @return string
@@ -138,8 +138,8 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return str[i%n]; // in fact, "%n" is not necessary
       }
-      
-      
+
+
       /** set NA
        * @param i index
        */
@@ -194,8 +194,8 @@ class StriContainerUTF8 : public StriContainerBase {
          }
          return bufsize;
       }
-      
-      
+
+
       /** set the vectorized ith element
        * @param i index
        * @param s string to be copied

@@ -79,11 +79,11 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
-      
+
       const UnicodeString* str_cur_data = &(str_cont.get(i));
       const UChar* str_cur_s = str_cur_data->getBuffer();
       const int str_cur_n = str_cur_data->length();
-      
+
       R_len_t from_cur = from_cont.get(i);
       if (from_cur == 1)
          from_cur = 0; /* most commonly used case */
@@ -98,16 +98,16 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
          U16_BACK_N(str_cur_s, 0, from_cur, nskip);
       }
       // now surely from_cur >= 0 && from_cur <= str_cur_n
-      
+
       ret_tab[i] = FALSE;
       if (from_cur >= str_cur_n) continue; // no match
-      
+
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s+from_cur, str_cur_n-from_cur);
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       int start = usearch_first(matcher, &status);
       if (U_FAILURE(status)) throw StriException(status);
-      
+
       if (start != USEARCH_DONE && start == 0) ret_tab[i] = TRUE;
    }
 
@@ -167,7 +167,7 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
       const UnicodeString* str_cur_data = &(str_cont.get(i));
       const UChar* str_cur_s = str_cur_data->getBuffer();
       const int str_cur_n = str_cur_data->length();
-      
+
       R_len_t to_cur = to_cont.get(i);
       if (to_cur == -1)
          to_cur = str_cur_n; /* most commonly used case */
@@ -182,16 +182,16 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
          U16_BACK_N(str_cur_s, 0, to_cur, nskip);
       }
       // now surely to_cur >= 0 && to_cur <= str_cur_n
-      
+
       ret_tab[i] = FALSE;
       if (to_cur <= 0) continue; // no match
-      
+
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s, to_cur);
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       int start = usearch_last(matcher, &status);
       if (U_FAILURE(status)) throw StriException(status);
-      
+
       if (start != USEARCH_DONE && start+usearch_getMatchedLength(matcher) == to_cur)
          ret_tab[i] = TRUE;
    }

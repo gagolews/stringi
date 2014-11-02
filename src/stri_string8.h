@@ -56,7 +56,7 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          new method: countCodePoints()
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          BUGFIX?: Added explicit zero bytes at the end of each array;
  *          new methods: replaceAllAtPos(), setNA()
@@ -144,8 +144,8 @@ class String8  {
          }
          this->m_str = NULL;
       }
-      
-      
+
+
       /** destructor */
       void setNA()
       {
@@ -154,7 +154,7 @@ class String8  {
          }
          this->m_str = NULL;
       }
-      
+
 
       /** copy constructor */
       String8(const String8& s)
@@ -244,11 +244,11 @@ class String8  {
 
          return i;
       }
-      
-      
+
+
       /** Replace substrings with a given replacement string
-       * 
-       * 
+       *
+       *
        * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
        */
       void replaceAllAtPos(R_len_t buf_size,
@@ -264,10 +264,10 @@ class String8  {
          this->m_str = new char[buf_size+1];
          this->m_n = buf_size;
          this->m_memalloc = true;
-         
+
          R_len_t buf_used = 0;
          R_len_t jlast = 0;
-         
+
          std::deque< std::pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
          for (; iter != occurrences.end(); ++iter) {
             pair<R_len_t, R_len_t> match = *iter;
@@ -277,7 +277,7 @@ class String8  {
             if (buf_used > buf_size)
                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
-            
+
             jlast = match.second;
             memcpy(m_str+buf_used, replacement_cur_s, (size_t)(replacement_cur_n));
             buf_used += replacement_cur_n;
@@ -286,20 +286,20 @@ class String8  {
                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
          }
-         
+
          memcpy(m_str+buf_used, old_str+jlast, (size_t)(old_n-jlast));
          buf_used += (old_n-jlast);
 #ifndef NDEBUG
          if (buf_used > buf_size)
             throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
-         
+
 #ifndef NDEBUG
          if (buf_used != this->m_n)
             throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
          this->m_str[this->m_n] = '\0';
-         
+
          if (old_str && old_memalloc)
             delete [] old_str;
       }

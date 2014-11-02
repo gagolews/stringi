@@ -133,9 +133,9 @@ class String8buf  {
       }
 
       /** Replace substrings with a given replacement string
-       * 
+       *
        * @return number of bytes written
-       * 
+       *
        * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
        */
       int replaceAllAtPos(const char* str_cur_s, R_len_t str_cur_n,
@@ -144,7 +144,7 @@ class String8buf  {
       {
          R_len_t buf_used = 0;
          R_len_t jlast = 0;
-         
+
          std::deque< std::pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
          for (; iter != occurrences.end(); ++iter) {
             pair<R_len_t, R_len_t> match = *iter;
@@ -154,7 +154,7 @@ class String8buf  {
             if (buf_used > m_size)
                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
-            
+
             jlast = match.second;
             memcpy(m_str+buf_used, replacement_cur_s, (size_t)(replacement_cur_n));
             buf_used += replacement_cur_n;
@@ -163,14 +163,14 @@ class String8buf  {
                throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
          }
-         
+
          memcpy(m_str+buf_used, str_cur_s+jlast, (size_t)(str_cur_n-jlast));
          buf_used += (str_cur_n-jlast);
 #ifndef NDEBUG
          if (buf_used > m_size)
             throw StriException("!NDEBUG: String8::replaceAllAtPos: buf_used > buf_size");
 #endif
-         
+
          return buf_used;
       }
 

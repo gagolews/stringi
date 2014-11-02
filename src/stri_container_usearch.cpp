@@ -99,7 +99,6 @@ StriContainerUStringSearch::~StriContainerUStringSearch()
 }
 
 
-
 /** the returned matcher shall not be deleted by the user
  *
  * it is assumed that \code{vectorize_next()} is used:
