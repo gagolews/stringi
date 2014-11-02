@@ -19,7 +19,8 @@
    * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
 
-   * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_ALL` parameter.
+   * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_all` parameter,
+     which defaults to TRUE for backward compatibility.
 ........................
 
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
@@ -48,15 +49,20 @@
 
    * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`
 
-   * [BUGFIX] Issue #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
+   * [BUGFIX] #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 
-   * [BUGFIX] Issue #99: `stri_replace_all' did not use the `replacement` arg.
+   * [BUGFIX] #99: `stri_replace_all' did not use the `replacement` arg.
 
-   * [BUGFIX] Issue #94: `R CMD check` should no longer fail
+   * [BUGFIX] #94: `R CMD check` should no longer fail
      when `icudt` download failed.
 
-   * Significant extensions/clean ups in the stringi manual.
+   * [BUGFIX] #112: Some of the objects were not PROTECTed from
+     being garbage collected.
+......................................
+......................................
+
+   * [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
 
 
 * 0.2-5 (2014-05-16) **CRAN**

@@ -47,10 +47,10 @@
 #' the each substring matching any of the supplied \code{pattern}s
 #' is replaced by a corresponding \code{replacement} string.
 #' In such a case, the vectorization is over \code{str}
-#' and - independently - \code{pattern} and \code{replacement},
-#' see Examples. Note that you must set \code{length(pattern) >= length(replacement)}.
-#' Anyway, this is equivalent to something like
+#' and - independently - \code{pattern} and \code{replacement}.
+#' In other words, this is equivalent to something like
 #' \code{for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]}.
+#' Note that you must set \code{length(pattern) >= length(replacement)}.
 #'
 #' In case of \code{stri_replace_*_regex},
 #' the replacement string may contain references to capture groups
