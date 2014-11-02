@@ -16,6 +16,9 @@ test_that("stri_replace_all_regex", {
    expect_equivalent(stri_replace_all_regex("The quick brown fox jumped over the lazy dog.", 
       c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all = FALSE),
       "The slow black bear jumped over the lazy dog.")
+   expect_equivalent(stri_replace_all_regex("The quick brown fox jumped over the lazy dog.", 
+      c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
+      "The    jumped over the lazy .")
 })
 
 test_that("stri_replace_all_regex", {

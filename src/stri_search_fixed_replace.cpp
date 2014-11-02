@@ -42,7 +42,7 @@ using namespace std;
 
 
 /**
- * Replace all/first/last occurences of a fixed pattern
+ * Replace all/first/last occurrences of a fixed pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -59,6 +59,9 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          using String8buf::replaceAllAtPos, slightly faster
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, int type)
 {
@@ -106,39 +109,34 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 
       R_len_t len = pattern_cont.getMatchedLength();
       R_len_t sumbytes = len;
-      deque< pair<R_len_t, R_len_t> > occurences;
-      occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+      deque< pair<R_len_t, R_len_t> > occurrences;
+      occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
       if (type == 0) {
          while (USEARCH_DONE != pattern_cont.findNext()) { // all
             start = pattern_cont.getMatchedStart();
             len = pattern_cont.getMatchedLength();
-            occurences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
             sumbytes += len;
          }
       }
 
       R_len_t str_cur_n     = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
-      const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need =
-         str_cur_n+replacement_cur_n*(R_len_t)occurences.size()-sumbytes;
+         str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
       buf.resize(buf_need, false/*destroy contents*/);
+      
+      R_len_t buf_used = buf.replaceAllAtPos(str_cont.get(i).c_str(), str_cur_n,
+         replacement_cont.get(i).c_str(), replacement_cur_n,
+         occurrences);
+         
+#ifndef NDEBUG
+      if (buf_need != buf_used)
+         throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
+#endif
 
-      R_len_t jlast = 0;
-      char* curbuf = buf.data();
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (; iter != occurences.end(); ++iter) {
-         pair<R_len_t, R_len_t> match = *iter;
-         memcpy(curbuf, str_cur_s+jlast, (size_t)match.first-jlast);
-         curbuf += match.first-jlast;
-         jlast = match.second;
-         memcpy(curbuf, replacement_cur_s, (size_t)replacement_cur_n);
-         curbuf += replacement_cur_n;
-      }
-      memcpy(curbuf, str_cur_s+jlast, (size_t)str_cur_n-jlast);
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
    }
 
    STRI__UNPROTECT_ALL
@@ -147,8 +145,78 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 }
 
 
+// Version 2, 2014-11-02, using String8::replaceAllAtPos, slower
+//SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, int type)
+//{
+//   str          = stri_prepare_arg_string(str, "str");
+//   pattern      = stri_prepare_arg_string(pattern, "pattern");
+//   replacement  = stri_prepare_arg_string(replacement, "replacement");
+//   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+// 
+//   STRI__ERROR_HANDLER_BEGIN
+//   StriContainerUTF8 str_cont(str, vectorize_length, false); // writable);
+//   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
+//   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+//
+//   for (R_len_t i = pattern_cont.vectorize_init();
+//         i != pattern_cont.vectorize_end();
+//         i = pattern_cont.vectorize_next(i))
+//   {
+//      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+//         str_cont.setNA(i),
+//         {/* zero-length string, just continue */})
+//
+//      if (replacement_cont.isNA(i)) {
+//         str_cont.setNA(i);
+//         continue;
+//      }
+//
+//      R_len_t start;
+//      if (type >= 0) { // first or all
+//         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+//         start = pattern_cont.findFirst();
+//      } else {
+//         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+//         start = pattern_cont.findLast();
+//      }
+//
+//      if (start == USEARCH_DONE) {
+//         // nothing to do, no change, leave as-is
+//         continue;
+//      }
+//
+//      R_len_t len = pattern_cont.getMatchedLength();
+//      R_len_t sumbytes = len;
+//      deque< pair<R_len_t, R_len_t> > occurrences;
+//      occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+//
+//      if (type == 0) {
+//         while (USEARCH_DONE != pattern_cont.findNext()) { // all
+//            start = pattern_cont.getMatchedStart();
+//            len = pattern_cont.getMatchedLength();
+//            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+//            sumbytes += len;
+//         }
+//      }
+//
+//      R_len_t str_cur_n     = str_cont.get(i).length();
+//      R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+//      R_len_t buf_need =
+//         str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
+//      
+//      str_cont.getWritable(i).replaceAllAtPos(buf_need,
+//         replacement_cont.get(i).c_str(), replacement_cur_n,
+//         occurrences);
+//   }
+//
+//   STRI__UNPROTECT_ALL
+//   return str_cont.toR();
+//   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+//}
+
+
 /**
- * Replace all occurences of a fixed pattern; vectorize_all=FALSE
+ * Replace all occurrences of a fixed pattern; vectorize_all=FALSE
  *
  * @param str character vector
  * @param pattern character vector
@@ -156,41 +224,112 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  * @return character vector
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *                Complete rewrite; faster
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
-{  // version beta: for-loop like
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+{ // version gamma:
+   str          = stri_prepare_arg_string(str, "str");
+   pattern      = stri_prepare_arg_string(pattern, "pattern");
+   replacement  = stri_prepare_arg_string(replacement, "replacement");
    
+   // if str_n is 0, then return an empty vector
+   R_len_t str_n = LENGTH(str);
+   if (str_n <= 0)
+      return stri__vector_empty_strings(0);
+      
    R_len_t pattern_n = LENGTH(pattern);
    R_len_t replacement_n = LENGTH(replacement);
    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
       Rf_error(MSG__WARN_RECYCLING_RULE2);
    if (pattern_n % replacement_n != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE);
+      
+   if (pattern_n == 1) // this will be much faster:
+      return stri__replace_allfirstlast_fixed(str, pattern, replacement, 0);
    
-   // no str_error_handlers needed here
-   SEXP pattern_cur, replacement_cur;
-   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
-   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
-   
-   PROTECT(str);
-   for (R_len_t i=0; i<pattern_n; ++i) {
-      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
-      SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
-      str = stri__replace_allfirstlast_fixed(str, pattern_cur, replacement_cur, 0);
-      UNPROTECT(1);
-      PROTECT(str);
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, str_n, false); // writable
+   StriContainerUTF8 replacement_cont(replacement, pattern_n);
+   StriContainerByteSearch pattern_cont(pattern, pattern_n);
+
+   for (R_len_t i = 0; i<pattern_n; ++i)
+   {
+      if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
+         return stri__vector_NA_strings(str_n);
+      if (pattern_cont.get(i).length() <= 0) {
+         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+         return stri__vector_NA_strings(str_n);
+      }
+
+      for (R_len_t j = 0; j<str_n; ++j) {
+         if (str_cont.isNA(j)) continue;
+         
+         pattern_cont.setupMatcherFwd(i, str_cont.get(j).c_str(), str_cont.get(j).length());
+         R_len_t start = pattern_cont.findFirst();
+         if (start == USEARCH_DONE)  continue;  // nothing to do now
+
+         R_len_t len = pattern_cont.getMatchedLength();
+         R_len_t sumbytes = len;
+         deque< pair<R_len_t, R_len_t> > occurrences;
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+
+         while (USEARCH_DONE != pattern_cont.findNext()) { // all
+            start = pattern_cont.getMatchedStart();
+            len = pattern_cont.getMatchedLength();
+            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+            sumbytes += len;
+         }
+
+         R_len_t str_cur_n     = str_cont.get(j).length();
+         R_len_t replacement_cur_n = replacement_cont.get(i).length();
+         R_len_t buf_need =
+            str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
+      
+         str_cont.getWritable(j).replaceAllAtPos(buf_need,
+            replacement_cont.get(i).c_str(), replacement_cur_n,
+            occurrences);
+      }
    }
 
-   UNPROTECT(5);
-   return str;
+   STRI__UNPROTECT_ALL
+   return str_cont.toR();
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
-
+// stri__replace_all_fixed_no_vectorize_all
+//{  // version beta: for-loop like, 2014-11-01
+//   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+//   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+//   
+//   R_len_t pattern_n = LENGTH(pattern);
+//   R_len_t replacement_n = LENGTH(replacement);
+//   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
+//      Rf_error(MSG__WARN_RECYCLING_RULE2);
+//   if (pattern_n % replacement_n != 0)
+//      Rf_warning(MSG__WARN_RECYCLING_RULE);
+//   
+//   // no str_error_handlers needed here
+//   SEXP pattern_cur, replacement_cur;
+//   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
+//   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
+//   
+//   PROTECT(str);
+//   for (R_len_t i=0; i<pattern_n; ++i) {
+//      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
+//      SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
+//      str = stri__replace_allfirstlast_fixed(str, pattern_cur, replacement_cur, 0);
+//      UNPROTECT(1);
+//      PROTECT(str);
+//   }
+//
+//   UNPROTECT(5);
+//   return str;
+//}
 // stri__replace_all_fixed_no_vectorize_all
 // Version alpha: benchmarks: 32 ms vs 35 ms for the loop-version
-// Not worth fighting for..... :/
+// Not worth fighting for..... :/, 2014-11-01
 //SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
 //{
 //   str          = stri_prepare_arg_string(str, "str");
@@ -335,7 +474,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
 
 /**
- * Replace all occurences of a fixed pattern
+ * Replace all occurrences of a fixed pattern
  *
  * @param str character vector
  * @param pattern character vector

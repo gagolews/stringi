@@ -68,6 +68,10 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          New methods: getMaxNumBytes, getMaxLength
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          New methods: set, getWritable, isNA;
+ *          Always try to use shallow copy of char* data in SEXP-based constructor (be lazy)
  */
 class StriContainerUTF8 : public StriContainerBase {
 
@@ -113,6 +117,43 @@ class StriContainerUTF8 : public StriContainerBase {
 #endif
          return str[i%n];
       }
+      
+      
+      /** get the vectorized ith element
+       * @param i index
+       * @return string
+       */
+      String8& getWritable(R_len_t i) {
+#ifndef NDEBUG
+         if (isShallow)
+            throw StriException("StriContainerUTF8::getWritable(): shallow StriContainerUTF8");
+         if (n != nrecycle)
+            throw StriException("StriContainerUTF8::getWritable(): n!=nrecycle");
+         if (i < 0 || i >= n)
+            throw StriException("StriContainerUTF8::getWritable(): INDEX OUT OF BOUNDS");
+//         if (str[i%n].isReadOnly()) // not needed: readOnly here => changes are possible (but not on m_str directly)
+//            throw StriException("StriContainerUTF8::getWritable(): isReadOnly");
+         if (str[i%n].isNA())
+            throw StriException("StriContainerUTF8::getWritable(): isNA");
+#endif
+         return str[i%n]; // in fact, "%n" is not necessary
+      }
+      
+      
+      /** set NA
+       * @param i index
+       */
+      void setNA(R_len_t i) {
+#ifndef NDEBUG
+         if (isShallow)
+            throw StriException("StriContainerUTF8::setNA(): shallow StriContainerUTF8");
+         if (n != nrecycle)
+            throw StriException("StriContainerUTF8::setNA(): n!=nrecycle");
+         if (i < 0 || i >= n)
+            throw StriException("StriContainerUTF8::setNA(): INDEX OUT OF BOUNDS");
+#endif
+         str[i%n].setNA();
+      }
 
 
       /** get the number of bytes used to represent the longest string */
@@ -153,6 +194,24 @@ class StriContainerUTF8 : public StriContainerBase {
          }
          return bufsize;
       }
+      
+      
+      /** set the vectorized ith element
+       * @param i index
+       * @param s string to be copied
+       */
+      void set(R_len_t i, const String8& s) {
+#ifndef NDEBUG
+         if (isShallow)
+            throw StriException("StriContainerUTF8::set(): shallow StriContainerUTF8");
+         if (n != nrecycle)
+            throw StriException("StriContainerUTF8::set(): n!=nrecycle");
+         if (i < 0 || i >= n)
+            throw StriException("StriContainerUTF8::set(): INDEX OUT OF BOUNDS");
+#endif
+         str[i%n] = s; // in fact, "%n" is not necessary
+      }
+
 };
 
 #endif

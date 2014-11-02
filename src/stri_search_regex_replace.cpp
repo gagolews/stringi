@@ -158,6 +158,9 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       Rf_error(MSG__WARN_RECYCLING_RULE2);
    if (pattern_n % replacement_n != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE);
+      
+   if (pattern_n == 1) // this will be much faster:
+      return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
    
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF16 str_cont(str, str_n, false); // writable
@@ -168,8 +171,10 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    {
       if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
          return stri__vector_NA_strings(str_n);
-      if (pattern_cont.get(i).length() <= 0)
-         throw StriException(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+      if (pattern_cont.get(i).length() <= 0) {
+         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+         return stri__vector_NA_strings(str_n);
+      }
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       

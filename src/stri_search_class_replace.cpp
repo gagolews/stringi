@@ -41,7 +41,7 @@ using namespace std;
 
 
 /**
- * Replace all occurences of a character class
+ * Replace all occurrences of a character class
  *
  * @param str character vector; strings to search in
  * @param pattern character vector; charclasses to search for
@@ -103,36 +103,36 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
       UChar32 chr;
 
       R_len_t sumbytes = 0;
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
       for (jlast=j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur->contains(chr)) {
-            if (merge_cur && occurences.size() > 0 &&
-                  occurences.back().second == jlast)
-               occurences.back().second = j;
+            if (merge_cur && occurrences.size() > 0 &&
+                  occurrences.back().second == jlast)
+               occurrences.back().second = j;
             else
-               occurences.push_back(pair<R_len_t, R_len_t>(jlast, j));
+               occurrences.push_back(pair<R_len_t, R_len_t>(jlast, j));
             sumbytes += j-jlast;
          }
          jlast = j;
       }
 
-      if (occurences.size() == 0) {
+      if (occurrences.size() == 0) {
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
          continue;
       }
 
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
       const char* replacement_cur_s = replacement_cont.get(i).c_str();
-      R_len_t buf_need = str_cur_n+(R_len_t)occurences.size()*replacement_cur_n-sumbytes;
+      R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
       buf.resize(buf_need, false/*destroy contents*/);
 
       jlast = 0;
       char* curbuf = buf.data();
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (; iter != occurences.end(); ++iter) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (; iter != occurrences.end(); ++iter) {
          pair<R_len_t, R_len_t> match = *iter;
          memcpy(curbuf, str_cur_s+jlast, (size_t)match.first-jlast);
          curbuf += match.first-jlast;

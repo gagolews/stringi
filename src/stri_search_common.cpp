@@ -34,6 +34,9 @@
 #include "stri_container_utf8.h"
 #include "stri_container_usearch.h"
 #include <unicode/uregex.h>
+#include "stri_string8buf.h"
+#include <deque>
+using namespace std;
 
 
 /**
