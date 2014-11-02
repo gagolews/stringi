@@ -40,7 +40,7 @@
 #' give the first or the last matches, respectively.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
+#' Vectorized over \code{str} and \code{pattern}.
 #'
 #' The matched string(s) may be extracted by calling
 #' the \code{\link{stri_sub}} function.
@@ -62,7 +62,7 @@
 #' @param opts_collator a named list with \pkg{ICU} Collator's settings
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings; \code{stri_locate_*_coll} only
-#' @param merge logical;
+#' @param merge single logical value;
 #' indicates whether consecutive sequences of indices in the resulting
 #' matrix shall be merged;  \code{stri_locate_all_charclass} only
 #' @param mode single string;
@@ -94,7 +94,6 @@
 #' stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)
 #' stri_locate_first_charclass('AaBbCc', '\\p{Ll}')
 #' stri_locate_last_charclass('AaBbCc', '\\p{Ll}')
-#' stri_locate_all_charclass(c('REXAMINE'), '\\p{Lu}', merge=c(TRUE, FALSE))
 #'
 #' stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y',

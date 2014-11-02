@@ -62,7 +62,7 @@ one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
-\item{merge}{logical;
+\item{merge}{single logical value;
 indicates whether consecutive sequences of indices in the resulting
 matrix shall be merged;  \code{stri_locate_all_charclass} only}
 
@@ -97,7 +97,7 @@ On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
 give the first or the last matches, respectively.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, and \code{merge}.
+Vectorized over \code{str} and \code{pattern}.
 
 The matched string(s) may be extracted by calling
 the \code{\link{stri_sub}} function.
@@ -120,7 +120,6 @@ stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}')
 stri_locate_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\\\p{Ll}', merge=FALSE)
 stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
 stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
-stri_locate_all_charclass(c('REXAMINE'), '\\\\p{Lu}', merge=c(TRUE, FALSE))
 
 stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_first_coll(c('Yy\\u00FD', 'AAA'), 'y',

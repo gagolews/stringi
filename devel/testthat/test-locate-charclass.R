@@ -14,8 +14,7 @@ test_that("stri_locate_all_charclass", {
    expect_equivalent(as.integer(stri_locate_all_charclass("", NA)[[1]]),
                      c(NA_integer_, NA_integer_))
 
-   expect_equivalent(as.integer(stri_locate_all_charclass("", "\\P{WHITE_SPACE}", NA)[[1]]),
-                     c(NA_integer_, NA_integer_))
+   expect_error(stri_locate_all_charclass("", "\\P{WHITE_SPACE}", NA))
 
    expect_equivalent(as.integer(stri_locate_all_charclass(NA, "\\P{WHITE_SPACE}")[[1]]),
                      c(NA_integer_, NA_integer_))

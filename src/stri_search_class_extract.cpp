@@ -187,8 +187,8 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
    pattern = stri_prepare_arg_string(pattern, "pattern");
    bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3,
-      LENGTH(str), LENGTH(pattern), LENGTH(merge));
+   R_len_t vectorize_length = stri__recycling_rule(true, 2,
+      LENGTH(str), LENGTH(pattern));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
