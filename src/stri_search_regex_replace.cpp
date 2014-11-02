@@ -136,12 +136,22 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  * @return character vector
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
+ * 
+ * @version 0.3-2 (Marek Gagolewski, 2014-11-02)
+ *          Second version, 3x faster, 2 for loops + replaceAll
  */
 SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
-{
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+{ // version beta
+   str          = stri_prepare_arg_string(str, "str");
+   pattern      = stri_prepare_arg_string(pattern, "pattern");
+   replacement  = stri_prepare_arg_string(replacement, "replacement");
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
    
+   // if str_n is 0, then return an empty vector
+   R_len_t str_n = LENGTH(str);
+   if (str_n <= 0)
+      return stri__vector_empty_strings(0);
+      
    R_len_t pattern_n = LENGTH(pattern);
    R_len_t replacement_n = LENGTH(replacement);
    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
@@ -149,23 +159,68 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
    if (pattern_n % replacement_n != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE);
    
-   // no str_error_handlers needed here
-   SEXP pattern_cur, replacement_cur;
-   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
-   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF16 str_cont(str, str_n, false); // writable
+   StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_flags);
+   StriContainerUTF16 replacement_cont(replacement, pattern_n);
+
+   for (R_len_t i = 0; i<pattern_n; ++i)
+   {
+      if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
+         return stri__vector_NA_strings(str_n);
+      if (pattern_cont.get(i).length() <= 0)
+         throw StriException(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      
+      for (R_len_t j = 0; j<str_n; ++j) {
+         if (str_cont.isNA(j)) continue;
+         
+         matcher->reset(str_cont.get(j));
    
-   PROTECT(str);
-   for (R_len_t i=0; i<pattern_n; ++i) {
-      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
-      SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
-      str = stri__replace_allfirstlast_regex(str, pattern_cur, replacement_cur, opts_regex, 0);
-      UNPROTECT(1);
-      PROTECT(str);
+         UErrorCode status = U_ZERO_ERROR;
+         str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
+      
+         if (U_FAILURE(status))
+            throw StriException(status);
+      }
    }
 
-   UNPROTECT(5);
-   return str;
+   STRI__UNPROTECT_ALL
+   return str_cont.toR();
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
+
+// version alpha == to slow == too many toutf16 conversions
+//{
+//   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+//   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+//   
+//   R_len_t pattern_n = LENGTH(pattern);
+//   R_len_t replacement_n = LENGTH(replacement);
+//   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
+//      Rf_error(MSG__WARN_RECYCLING_RULE2);
+//   if (pattern_n % replacement_n != 0)
+//      Rf_warning(MSG__WARN_RECYCLING_RULE);
+//   
+//   // no str_error_handlers needed here
+//   SEXP pattern_cur, replacement_cur;
+//   PROTECT(pattern_cur = Rf_allocVector(STRSXP, 1));
+//   PROTECT(replacement_cur = Rf_allocVector(STRSXP, 1));
+//   
+//   PROTECT(str);
+//   for (R_len_t i=0; i<pattern_n; ++i) {
+//      SET_STRING_ELT(pattern_cur, 0, STRING_ELT(pattern, i));
+//      SET_STRING_ELT(replacement_cur, 0, STRING_ELT(replacement, i%replacement_n));
+//      str = stri__replace_allfirstlast_regex(str, pattern_cur, replacement_cur, opts_regex, 0);
+//      UNPROTECT(1);
+//      PROTECT(str);
+//   }
+//
+//   UNPROTECT(5);
+//   return str;
+//}
 
 
 /**
