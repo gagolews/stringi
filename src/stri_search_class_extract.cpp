@@ -176,12 +176,16 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          added simplify param
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          using StriContainerCharClass::locateAll;
+ *          no longer vectorized over merge
  */
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify)
 {
    str = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   merge = stri_prepare_arg_logical(merge, "merge");
+   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    R_len_t vectorize_length = stri__recycling_rule(true, 3,
       LENGTH(str), LENGTH(pattern), LENGTH(merge));
@@ -189,7 +193,6 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
-   StriContainerLogical merge_cont(merge, vectorize_length);
 
    SEXP notfound; // this vector will be set iff not found or NA
    STRI__PROTECT(notfound = stri__vector_NA_strings(1));
@@ -201,73 +204,36 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (pattern_cont.isNA(i) || str_cont.isNA(i) || merge_cont.isNA(i)) {
+      if (pattern_cont.isNA(i) || str_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
-
-      bool merge_cur = merge_cont.get(i);
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      R_len_t     str_cur_n = str_cont.get(i).length();
+      
+      R_len_t str_cur_n     = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t j, jlast;
-      UChar32 chr;
-      deque< pair<R_len_t, R_len_t> > occurrences; // codepoint based-indices
-
-      for (jlast=j=0; j<str_cur_n; ) {
-         U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (chr < 0) // invalid utf-8 sequence
-            throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur->contains(chr)) {
-            occurrences.push_back(pair<R_len_t, R_len_t>(jlast, j));
-         }
-         jlast = j;
-      }
+      deque< pair<R_len_t, R_len_t> > occurrences;
+      StriContainerCharClass::locateAll(
+         occurrences, &pattern_cont.get(i),
+         str_cur_s, str_cur_n, merge_cur,
+         false /* byte-based indices */
+      );
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
-      if (noccurrences == 0)
+      if (noccurrences == 0) {
          SET_VECTOR_ELT(ret, i, notfound);
-      else if (merge_cur && noccurrences > 1) {
-         // do merge
-         deque< pair<R_len_t, R_len_t> > occurrences2;
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-         occurrences2.push_back(*iter);
-         for (++iter; iter != occurrences.end(); ++iter) {
-            pair<R_len_t, R_len_t> curoccur = *iter;
-            if (occurrences2.back().second == curoccur.first) { // continue seq
-               occurrences2.back().second = curoccur.second;  // change `end`
-            }
-            else { // new seq
-               occurrences2.push_back(curoccur);
-            }
-         }
-
-         // create resulting matrix from occurrences2
-         R_len_t noccurrences2 = (R_len_t)occurrences2.size();
-         SEXP cur_res;
-         STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences2));
-         iter = occurrences2.begin();
-         for (R_len_t f = 0; iter != occurrences2.end(); ++iter, ++f) {
-            pair<R_len_t, R_len_t> curo = *iter;
-            SET_STRING_ELT(cur_res, f,
-               Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
-         }
-         SET_VECTOR_ELT(ret, i, cur_res);
-         STRI__UNPROTECT(1)
+         continue;
       }
-      else {
-         // do not merge
-         SEXP cur_res;
-         STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-         for (R_len_t f = 0; iter != occurrences.end(); ++iter, ++f) {
-            pair<R_len_t, R_len_t> curo = *iter;
-            SET_STRING_ELT(cur_res, f,
-               Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
-         }
-         SET_VECTOR_ELT(ret, i, cur_res);
-         STRI__UNPROTECT(1)
+      
+      SEXP cur_res;
+      STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t f = 0; iter != occurrences.end(); ++iter, ++f) {
+         pair<R_len_t, R_len_t> curo = *iter;
+         SET_STRING_ELT(cur_res, f,
+            Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
       }
+      SET_VECTOR_ELT(ret, i, cur_res);
+      STRI__UNPROTECT(1)
    }
 
    if (simplify1) {
