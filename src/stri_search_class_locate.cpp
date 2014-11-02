@@ -169,20 +169,20 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  *          StriContainerCharClass now relies on UnicodeSet
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
- *          using StriContainerCharClass::locateAll
+ *          using StriContainerCharClass::locateAll;
+ *          no longer vectorized over `merge`
  */
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
 {
    str     = stri_prepare_arg_string(str, "str");
    pattern = stri_prepare_arg_string(pattern, "pattern");
-   merge   = stri_prepare_arg_logical(merge, "merge");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3,
-         LENGTH(str), LENGTH(pattern), LENGTH(merge));
+   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
+   R_len_t vectorize_length = stri__recycling_rule(true, 2,
+         LENGTH(str), LENGTH(pattern));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
-   StriContainerLogical merge_cont(merge, vectorize_length);
 
    SEXP notfound; // this matrix will be set iff not found or NA
    STRI__PROTECT(notfound = stri__matrix_NA_INTEGER(1, 2));
@@ -194,7 +194,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (pattern_cont.isNA(i) || str_cont.isNA(i) || merge_cont.isNA(i)) {
+      if (pattern_cont.isNA(i) || str_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
@@ -202,7 +202,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       deque< pair<R_len_t, R_len_t> > occurrences;
       StriContainerCharClass::locateAll(
          occurrences, &pattern_cont.get(i),
-         str_cont.get(i).c_str(), str_cont.get(i).length(), merge_cont.get(i),
+         str_cont.get(i).c_str(), str_cont.get(i).length(), merge_cur,
          true /* code point-based indices */
       );
       
