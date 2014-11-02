@@ -503,7 +503,7 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
 
 
 /**
- * Replace last occurence of a fixed pattern
+ * Replace last occurrence of a fixed pattern
  *
  * @param str character vector
  * @param pattern character vector
@@ -525,7 +525,7 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement)
 
 
 /**
- * Replace first occurence of a fixed pattern
+ * Replace first occurrence of a fixed pattern
  *
  * @param str character vector
  * @param pattern character vector

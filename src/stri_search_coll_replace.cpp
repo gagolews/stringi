@@ -39,7 +39,7 @@ using namespace std;
 
 
 /**
- * Replace all/first/last occurences of a fixed pattern [with collation]
+ * Replace all/first/last occurrences of a fixed pattern [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -91,7 +91,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
 
       UErrorCode status = U_ZERO_ERROR;
       R_len_t remUChars = 0;
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
 
       if (type >= 0) { // first or all
          int start = (int)usearch_first(matcher, &status);
@@ -103,7 +103,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
          while (start != USEARCH_DONE) {
             R_len_t mlen = usearch_getMatchedLength(matcher);
             remUChars += mlen;
-            occurences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
+            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
             if (type > 0) break; // break if first and not all
             start = usearch_next(matcher, &status);
             if (U_FAILURE(status)) throw StriException(status);
@@ -116,16 +116,16 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
             continue; // no change in str_cont[i] at all
          R_len_t mlen = usearch_getMatchedLength(matcher);
          remUChars += mlen;
-         occurences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
       }
 
       R_len_t replacement_cur_n = replacement_cont.get(i).length();
-      R_len_t noccurences = (R_len_t)occurences.size();
-      UnicodeString ans(str_cont.get(i).length()-remUChars+noccurences*replacement_cur_n, (UChar)0xfffd, 0);
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      UnicodeString ans(str_cont.get(i).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
       R_len_t jlast = 0;
       R_len_t anslast = 0;
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (; iter != occurences.end(); ++iter) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (; iter != occurrences.end(); ++iter) {
          pair<R_len_t, R_len_t> match = *iter;
          ans.replace(anslast, match.first-jlast, str_cont.get(i), jlast, match.first-jlast);
          anslast += match.first-jlast;
@@ -146,7 +146,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
 
 
 /**
- * Replace all occurences of a fixed pattern [with collation]
+ * Replace all occurrences of a fixed pattern [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -169,7 +169,7 @@ SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_c
 
 
 /**
- * Replace last occurence of a fixed pattern [with collation]
+ * Replace last occurrence of a fixed pattern [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -192,7 +192,7 @@ SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_
 
 
 /**
- * Replace first occurence of a fixed pattern [with collation]
+ * Replace first occurrence of a fixed pattern [with collation]
  *
  * @param str character vector
  * @param pattern character vector

@@ -39,12 +39,12 @@ using namespace std;
 
 
 /**
- * Extract first occurence of a fixed pattern in each string [with collation]
+ * Extract first occurrence of a fixed pattern in each string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
  * @param opts_collator list
- * @param firs logical - search for the first or the last occurence?
+ * @param firs logical - search for the first or the last occurrence?
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
@@ -111,7 +111,7 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
 
 
 /**
- * Extract first occurence of a fixed pattern in each string [with collation]
+ * Extract first occurrence of a fixed pattern in each string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -130,7 +130,7 @@ SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 
 
 /**
- * Extract last occurence of a fixed pattern in each string [with collation]
+ * Extract last occurrence of a fixed pattern in each string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -149,7 +149,7 @@ SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 
 
 /**
- * Extract all occurences of a fixed pattern in each string [with collation]
+ * Extract all occurrences of a fixed pattern in each string [with collation]
  *
  * @param str character vector
  * @param pattern character vector
@@ -205,17 +205,17 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_coll
          continue;
       }
 
-      deque< pair<R_len_t, R_len_t> > occurences;
+      deque< pair<R_len_t, R_len_t> > occurrences;
       while (start != USEARCH_DONE) {
-         occurences.push_back(pair<R_len_t, R_len_t>(start, usearch_getMatchedLength(matcher)));
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, usearch_getMatchedLength(matcher)));
          start = usearch_next(matcher, &status);
          if (U_FAILURE(status)) throw StriException(status);
       }
 
-      R_len_t noccurences = (R_len_t)occurences.size();
-      StriContainerUTF16 out_cont(noccurences);
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurences.begin();
-      for (R_len_t j = 0; iter != occurences.end(); ++iter, ++j) {
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      StriContainerUTF16 out_cont(noccurrences);
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
          out_cont.getWritable(j).setTo(str_cont.get(i), match.first, match.second);
       }

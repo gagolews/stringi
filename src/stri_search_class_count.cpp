@@ -36,7 +36,7 @@
 
 
 /**
- * Count the number of occurences of a character class
+ * Count the number of occurrences of a character class
  *
  * @param str character vector
  * @param pattern character vector

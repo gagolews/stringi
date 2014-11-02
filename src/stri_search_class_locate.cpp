@@ -40,7 +40,7 @@ using namespace std;
 
 
 /**
- * Locate first or last occurences of a character class in each string
+ * Locate first or last occurrences of a character class in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -114,7 +114,7 @@ SEXP stri__locate_firstlast_charclass(SEXP str, SEXP pattern, bool first)
 
 
 /**
- * Locate first occurence of a character class in each string
+ * Locate first occurrence of a character class in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -129,7 +129,7 @@ SEXP stri_locate_first_charclass(SEXP str, SEXP pattern)
 
 
 /**
- * Locate last occurence of a character class in each string
+ * Locate last occurrence of a character class in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -144,7 +144,7 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
 
 
 /**
- * Locate first or last occurences of a character class in each string
+ * Locate first or last occurrences of a character class in each string
  *
  * @param str character vector
  * @param pattern character vector
@@ -203,7 +203,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       R_len_t j;
       R_len_t k = 0;
       UChar32 chr;
-      deque< R_len_t > occurences; // codepoint based-indices
+      deque< R_len_t > occurrences; // codepoint based-indices
 
       for (j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
@@ -211,38 +211,38 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
             throw StriException(MSG__INVALID_UTF8);
          k++; // 1-based index
          if (pattern_cur->contains(chr)) {
-            occurences.push_back(k);
+            occurrences.push_back(k);
          }
       }
 
-      R_len_t noccurences = (R_len_t)occurences.size();
-      if (noccurences == 0)
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      if (noccurrences == 0)
          SET_VECTOR_ELT(ret, i, notfound);
-      else if (merge_cur && noccurences > 1) {
+      else if (merge_cur && noccurrences > 1) {
          // do merge
-         deque< pair<R_len_t, R_len_t> > occurences2;
-         deque<R_len_t>::iterator iter = occurences.begin();
-         occurences2.push_back(pair<R_len_t, R_len_t>(*iter, *iter));
-         for (++iter; iter != occurences.end(); ++iter) {
+         deque< pair<R_len_t, R_len_t> > occurrences2;
+         deque<R_len_t>::iterator iter = occurrences.begin();
+         occurrences2.push_back(pair<R_len_t, R_len_t>(*iter, *iter));
+         for (++iter; iter != occurrences.end(); ++iter) {
             R_len_t curoccur = *iter;
-            if (occurences2.back().second == curoccur - 1) { // continue seq
-               occurences2.back().second = curoccur;  // change `end`
+            if (occurrences2.back().second == curoccur - 1) { // continue seq
+               occurrences2.back().second = curoccur;  // change `end`
             }
             else { // new seq
-               occurences2.push_back(pair<R_len_t, R_len_t>(curoccur, curoccur));
+               occurrences2.push_back(pair<R_len_t, R_len_t>(curoccur, curoccur));
             }
          }
 
-         // create resulting matrix from occurences2
-         R_len_t noccurences2 = (R_len_t)occurences2.size();
+         // create resulting matrix from occurrences2
+         R_len_t noccurrences2 = (R_len_t)occurrences2.size();
          SEXP cur_res;
-         STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences2, 2));
+         STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurrences2, 2));
          int* cur_res_int = INTEGER(cur_res);
-         deque< pair<R_len_t, R_len_t> >::iterator iter2 = occurences2.begin();
-         for (R_len_t f = 0; iter2 != occurences2.end(); ++iter2, ++f) {
+         deque< pair<R_len_t, R_len_t> >::iterator iter2 = occurrences2.begin();
+         for (R_len_t f = 0; iter2 != occurrences2.end(); ++iter2, ++f) {
             pair<R_len_t, R_len_t> curoccur = *iter2;
             cur_res_int[f] = curoccur.first;
-            cur_res_int[f+noccurences2] = curoccur.second;
+            cur_res_int[f+noccurrences2] = curoccur.second;
          }
          SET_VECTOR_ELT(ret, i, cur_res);
          STRI__UNPROTECT(1)
@@ -250,11 +250,11 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
       else {
          // do not merge
          SEXP cur_res;
-         STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurences, 2));
+         STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurrences, 2));
          int* cur_res_int = INTEGER(cur_res);
-         deque<R_len_t>::iterator iter = occurences.begin();
-         for (R_len_t f = 0; iter != occurences.end(); ++iter, ++f)
-            cur_res_int[f] = cur_res_int[f+noccurences] = *iter;
+         deque<R_len_t>::iterator iter = occurrences.begin();
+         for (R_len_t f = 0; iter != occurrences.end(); ++iter, ++f)
+            cur_res_int[f] = cur_res_int[f+noccurrences] = *iter;
          SET_VECTOR_ELT(ret, i, cur_res);
          STRI__UNPROTECT(1)
       }

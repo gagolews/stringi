@@ -36,7 +36,7 @@
 
 
 /**
- * Replace occurences of a regex pattern
+ * Replace occurrences of a regex pattern
  *
  * @param str strings to search in
  * @param pattern regex patterns to search for
@@ -127,7 +127,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
 
 
 /**
- * Replace all occurences of a regex pattern; vectorize_all=FALSE
+ * Replace all occurrences of a regex pattern; vectorize_all=FALSE
  *
  * @param str character vector
  * @param pattern character vector
@@ -229,7 +229,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
 
 /**
- * Replace all occurences of a regex pattern
+ * Replace all occurrences of a regex pattern
  *
  * @param str strings to search in
  * @param pattern regex patterns to search for
@@ -252,7 +252,7 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
 
 
 /**
- * Replace first occurence of a regex pattern
+ * Replace first occurrence of a regex pattern
  *
  * @param str strings to search in
  * @param pattern regex patterns to search for
@@ -269,7 +269,7 @@ SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opt
 
 
 /**
- * Replace last occurence of a regex pattern
+ * Replace last occurrence of a regex pattern
  *
  * @param str strings to search in
  * @param pattern regex patterns to search for
