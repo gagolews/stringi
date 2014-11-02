@@ -53,7 +53,7 @@ one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 \item{pattern,regex,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
-\item{merge}{logical;
+\item{merge}{single logical value;
 should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only}
 
 \item{simplify}{single logical value;
@@ -95,7 +95,7 @@ On the other hand, \code{stri_extract_first_*} and \code{stri_extract_last_*}
 provide the first or the last matches, respectively.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, and \code{merge}.
+Vectorized over \code{str} and \code{pattern}.
 
 Note that a \code{stri_extract_*_fixed} family of functions does not
 make sense. Thus, it has not been implemented in \pkg{stringi}.

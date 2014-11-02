@@ -13,7 +13,7 @@ test_that("stri_extract_all_charclass", {
 
    expect_equivalent(stri_extract_all_charclass("", NA)[[1]], NA_character_)
 
-   expect_equivalent(stri_extract_all_charclass("", "\\P{WHITE_SPACE}", NA)[[1]], NA_character_)
+   expect_error(stri_extract_all_charclass("", "\\P{WHITE_SPACE}", NA)[[1]])
 
    expect_equivalent(stri_extract_all_charclass(NA, "\\P{WHITE_SPACE}")[[1]], NA_character_)
 

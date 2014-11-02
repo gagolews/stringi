@@ -40,7 +40,7 @@
 #' provide the first or the last matches, respectively.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern}, and \code{merge}.
+#' Vectorized over \code{str} and \code{pattern}.
 #'
 #' Note that a \code{stri_extract_*_fixed} family of functions does not
 #' make sense. Thus, it has not been implemented in \pkg{stringi}.
@@ -64,7 +64,7 @@
 #' @param opts_collator a named list with \pkg{ICU} Collator's settings
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings; \code{stri_extract_*_coll} only
-#' @param merge logical;
+#' @param merge single logical value;
 #' should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only
 #' @param simplify single logical value;
 #' if \code{TRUE}, then a character matrix is returned;
