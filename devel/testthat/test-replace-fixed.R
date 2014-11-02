@@ -3,7 +3,7 @@ require(testthat)
 test_that("stri_replace_all_fixed", {
    expect_error(stri_replace_all_fixed("a", "a", c("b", "d"), vectorize_all=FALSE))
    expect_error(stri_replace_all_fixed("a", c(), "a", vectorize_all=FALSE))
-   expect_error(stri_replace_all_fixed("a", "a", c(), vectorize_all=FALSE))
+   expect_error(stri_replace_all_fixed("a", c("a", "b"), c(), vectorize_all=FALSE))
    expect_warning(stri_replace_all_fixed("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
    expect_equivalent(stri_replace_all_fixed("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
    expect_equivalent(stri_replace_all_fixed(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
@@ -18,6 +18,7 @@ test_that("stri_replace_all_fixed", {
    expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
+   expect_identical(stri_replace_all_fixed("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
 })
 
 

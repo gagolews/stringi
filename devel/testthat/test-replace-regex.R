@@ -4,7 +4,7 @@ require(testthat)
 test_that("stri_replace_all_regex", {
    expect_error(stri_replace_all_regex("a", "a", c("b", "d"), vectorize_all=FALSE))
    expect_error(stri_replace_all_regex("a", c(), "a", vectorize_all=FALSE))
-   expect_error(stri_replace_all_regex("a", "a", c(), vectorize_all=FALSE))
+   expect_error(stri_replace_all_regex("a", c("a", "b"), c(), vectorize_all=FALSE))
    expect_warning(stri_replace_all_regex("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
    expect_equivalent(stri_replace_all_regex("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
    expect_equivalent(stri_replace_all_regex(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
@@ -19,6 +19,7 @@ test_that("stri_replace_all_regex", {
    expect_equivalent(stri_replace_all_regex("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
+   expect_identical(stri_replace_all_regex("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
 })
 
 test_that("stri_replace_all_regex", {

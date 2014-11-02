@@ -27,7 +27,8 @@ stri_replace_last(str, replacement, ..., regex, fixed, coll, charclass)
 stri_replace(str, replacement, ..., regex, fixed, coll, charclass,
   mode = c("first", "all", "last"))
 
-stri_replace_all_charclass(str, pattern, replacement, merge = FALSE)
+stri_replace_all_charclass(str, pattern, replacement, merge = FALSE,
+  vectorize_all = TRUE)
 
 stri_replace_first_charclass(str, pattern, replacement)
 
@@ -65,17 +66,18 @@ one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
-\item{merge}{logical;
-should consecutive matches be merged into one string;  \code{stri_replace_all_charclass} only}
-
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_replace_*_coll} only}
+\item{merge}{single logical value;
+should consecutive matches be merged into one string;
+\code{stri_replace_all_charclass} only}
 
 \item{vectorize_all}{single logical value;
 should each occurrence of a pattern in every string
 be replaced by a corresponding replacement string?;
 \code{stri_replace_all_*} only}
+
+\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
+as generated with \code{\link{stri_opts_collator}}; \code{NULL}
+for default settings; \code{stri_replace_*_coll} only}
 
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
@@ -91,7 +93,7 @@ substring of the input that matches the specified \code{pattern}.
 }
 \details{
 By default, all the functions are vectorized over
-\code{str}, \code{pattern}, \code{replacement}, and \code{merge}. Then
+\code{str}, \code{pattern}, \code{replacement}. Then
 these functions scan the input string for matches of the pattern.
 Input that is not part of any match is left unchanged;
 each match is replaced in the result by the replacement string.
@@ -99,8 +101,8 @@ each match is replaced in the result by the replacement string.
 However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
 the each substring matching any of the supplied \code{pattern}s
 is replaced by a corresponding \code{replacement} string.
-In such a case, the vectorization is over \code{str}
-and - independently - \code{pattern} and \code{replacement}.
+In such a case, the vectorization is over \code{str},
+and - independently - over \code{pattern} and \code{replacement}.
 In other words, this is equivalent to something like
 \code{for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]}.
 Note that you must set \code{length(pattern) >= length(replacement)}.

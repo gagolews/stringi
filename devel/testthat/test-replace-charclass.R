@@ -1,5 +1,30 @@
 require(testthat)
 
+test_that("stri_replace_all_charclass-vectorize_all=FALSE", {
+   expect_identical(stri_replace_all_charclass(character(0),c("\\p{Z}", "\\P{Z}"),"", vectorize_all=FALSE),character(0))
+   expect_error(stri_replace_all_charclass("b",character(0),c("a", "b"), vectorize_all=FALSE))
+   expect_error(stri_replace_all_charclass("b",c("", ""),"a", vectorize_all=FALSE))
+   expect_identical(stri_replace_all_charclass(NA,c("\\p{WHITE_SPACE}", "[a]"),"?", vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_charclass("X",c("\\p{WHITE_SPACE}", "[a]"),NA, vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_charclass("X",NA,"?", vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_charclass(NA,NA,"?", vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_charclass(NA,NA,NA, vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_charclass("","\\p{Wspace}","?", vectorize_all=FALSE),"")
+   expect_identical(stri_replace_all_charclass(c("a a", " aa", "aa ", "aa"), "\\p{Wspace}", "X", vectorize_all=FALSE), c("aXa", "Xaa", "aaX", "aa"))
+   expect_identical(stri_replace_all_charclass(c("a a ", " aa ", "aa  ", "aa"), "\\p{Wspace}", "X", vectorize_all=FALSE), c("aXaX", "XaaX", "aaXX", "aa"))
+   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Z}", "\\p{Nd}", "\\p{Ll}", "\\p{P}"), 
+      c("x", "y", "z", "w"), vectorize_all=FALSE), "zzz")
+   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Ll}", "\\p{Z}", "\\p{Nd}", "\\p{P}"), 
+      c("x", "y", "z", "w"), vectorize_all=FALSE), "xzy")
+   expect_identical(stri_replace_all_charclass("aaa bbb   ccc", c("\\P{Z}", "\\p{Z}"), 
+      c("x", "y"), vectorize_all=FALSE), "xxxyxxxyyyxxx")
+   expect_identical(stri_replace_all_charclass("aaa bbb   ccc", c("\\P{Z}", "\\p{Z}"), merge=TRUE,
+      c("x", "y"), vectorize_all=FALSE), "xyxyx")
+   expect_identical(stri_replace_all_charclass("aaa bbb,   ccc", c("\\p{L}", "\\p{Z}"), merge=TRUE,
+      c("xxxxx", ""), vectorize_all=FALSE), "xxxxxxxxxx,xxxxx")
+
+})
+
 test_that("stri_replace_all_charclass", {
    expect_identical(stri_replace_all_charclass(character(0),"\\p{Z}",""),character(0))
    expect_identical(stri_replace_all_charclass("b",character(0),"a"),character(0))

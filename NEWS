@@ -162,7 +162,7 @@
    * [NEW FEATURE] `stri_order` and `stri_sort` now have an additional argument
      `na_last` (defaults to `TRUE` and `NA`, respectively).
 
-   * [NEW FEATURE] `stri_replace_all_charclass` now has `merge` arg
+   * [NEW FEATURE] `stri_replace_all_charclass` now has a new arg, `merge`
      (defaults to `FALSE` for backward-compatibility). It may be used
      to e.g. replace sequences of white spaces with a single space.
 

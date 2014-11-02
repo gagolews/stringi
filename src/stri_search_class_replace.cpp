@@ -64,21 +64,24 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          using String8buf::replaceAllAtPos and StriContainerCharClass::locateAll;
+ *          no longer vectorized over merge
  */
-SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
+SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
-   str          = stri_prepare_arg_string(str, "str");
-   pattern      = stri_prepare_arg_string(pattern, "pattern");
-   replacement  = stri_prepare_arg_string(replacement, "replacement");
-   merge        = stri_prepare_arg_logical(merge, "merge");
-   R_len_t vectorize_length = stri__recycling_rule(true, 4,
-            LENGTH(str), LENGTH(pattern), LENGTH(replacement), LENGTH(merge));
+   str            = stri_prepare_arg_string(str, "str");
+   pattern        = stri_prepare_arg_string(pattern, "pattern");
+   replacement    = stri_prepare_arg_string(replacement, "replacement");
+   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
+   R_len_t vectorize_length = stri__recycling_rule(true, 3,
+            LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
    STRI__ERROR_HANDLER_BEGIN
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
-   StriContainerLogical merge_cont(merge, vectorize_length);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -89,35 +92,19 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)
-            || merge_cont.isNA(i)) {
+      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
-      bool merge_cur        = merge_cont.get(i);
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
       R_len_t str_cur_n     = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t j, jlast;
-      UChar32 chr;
-
-      R_len_t sumbytes = 0;
       deque< pair<R_len_t, R_len_t> > occurrences;
-      for (jlast=j=0; j<str_cur_n; ) {
-         U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (chr < 0) // invalid utf-8 sequence
-            throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur->contains(chr)) {
-            if (merge_cur && occurrences.size() > 0 &&
-                  occurrences.back().second == jlast)
-               occurrences.back().second = j;
-            else
-               occurrences.push_back(pair<R_len_t, R_len_t>(jlast, j));
-            sumbytes += j-jlast;
-         }
-         jlast = j;
-      }
+      R_len_t sumbytes = StriContainerCharClass::locateAll(
+         occurrences, &pattern_cont.get(i),
+         str_cur_s, str_cur_n, merge_cur,
+         false /* byte-based indices */
+      );
 
       if (occurrences.size() == 0) {
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
@@ -125,28 +112,122 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
       }
 
       R_len_t     replacement_cur_n = replacement_cont.get(i).length();
-      const char* replacement_cur_s = replacement_cont.get(i).c_str();
       R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
       buf.resize(buf_need, false/*destroy contents*/);
 
-      jlast = 0;
-      char* curbuf = buf.data();
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-      for (; iter != occurrences.end(); ++iter) {
-         pair<R_len_t, R_len_t> match = *iter;
-         memcpy(curbuf, str_cur_s+jlast, (size_t)match.first-jlast);
-         curbuf += match.first-jlast;
-         jlast = match.second;
-         memcpy(curbuf, replacement_cur_s, (size_t)replacement_cur_n);
-         curbuf += replacement_cur_n;
-      }
-      memcpy(curbuf, str_cur_s+jlast, (size_t)str_cur_n-jlast);
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+      R_len_t buf_used = buf.replaceAllAtPos(str_cur_s, str_cur_n,
+         replacement_cont.get(i).c_str(), replacement_cur_n,
+         occurrences);
+
+#ifndef NDEBUG
+      if (buf_need != buf_used)
+         throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
+#endif
+
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
    }
 
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+/**
+ * Replace all occurrences of a character class
+ *
+ * @param str character vector; strings to search in
+ * @param pattern character vector; charclasses to search for
+ * @param replacement character vector; strings to replace with
+ * @param merge merge consecutive matches into a single one?
+ *
+ * @return character vector
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ */
+SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
+{
+   str          = stri_prepare_arg_string(str, "str");
+   pattern      = stri_prepare_arg_string(pattern, "pattern");
+   replacement  = stri_prepare_arg_string(replacement, "replacement");
+
+   // if str_n is 0, then return an empty vector
+   R_len_t str_n = LENGTH(str);
+   if (str_n <= 0)
+      return stri__vector_empty_strings(0);
+
+   R_len_t pattern_n = LENGTH(pattern);
+   R_len_t replacement_n = LENGTH(replacement);
+   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
+      Rf_error(MSG__WARN_RECYCLING_RULE2);
+   if (pattern_n % replacement_n != 0)
+      Rf_warning(MSG__WARN_RECYCLING_RULE);
+
+   if (pattern_n == 1) // this will be much faster:
+      return stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge);
+      
+   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
+   
+   STRI__ERROR_HANDLER_BEGIN
+   StriContainerUTF8 str_cont(str, str_n, false); // writable);
+   StriContainerUTF8 replacement_cont(replacement, pattern_n);
+   StriContainerCharClass pattern_cont(pattern, pattern_n);
+
+   String8buf buf(0); // @TODO: calculate buf len a priori?
+
+   for (R_len_t i = 0; i<pattern_n; ++i)
+   {
+      if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
+         return stri__vector_NA_strings(str_n);
+         
+      for (R_len_t j = 0; j<str_n; ++j) {
+         if (str_cont.isNA(j)) continue;
+
+         R_len_t str_cur_n     = str_cont.get(j).length();
+         const char* str_cur_s = str_cont.get(j).c_str();
+         deque< pair<R_len_t, R_len_t> > occurrences;
+         R_len_t sumbytes = StriContainerCharClass::locateAll(
+            occurrences, &pattern_cont.get(i),
+            str_cur_s, str_cur_n, merge_cur,
+            false /* byte-based indices */
+         );
+         
+         R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+         R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
+         buf.resize(buf_need, false/*destroy contents*/);
+
+         str_cont.getWritable(j).replaceAllAtPos(buf_need,
+            replacement_cont.get(i).c_str(), replacement_cur_n,
+            occurrences);
+      }
+   }
+
+   STRI__UNPROTECT_ALL
+   return str_cont.toR();
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+/**
+ * Replace all occurrences of a character class
+ *
+ * @param str character vector; strings to search in
+ * @param pattern character vector; charclasses to search for
+ * @param replacement character vector; strings to replace with
+ * @param merge merge consecutive matches into a single one?
+ * @param vectorize_all single logical value
+ *
+ * @return character vector
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
+ *          added `vectorize_all` arg
+ */
+SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge, SEXP vectorize_all)
+{
+   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+      return stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge);
+   else
+      return stri__replace_all_charclass_no_vectorize_all(str, pattern, replacement, merge);
 }
 
 

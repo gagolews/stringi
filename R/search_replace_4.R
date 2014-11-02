@@ -38,7 +38,7 @@
 #'
 #' @details
 #' By default, all the functions are vectorized over
-#' \code{str}, \code{pattern}, \code{replacement}, and \code{merge}. Then
+#' \code{str}, \code{pattern}, \code{replacement}. Then
 #' these functions scan the input string for matches of the pattern.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
@@ -46,8 +46,8 @@
 #' However, for \code{stri_replace_all*}, if \code{vectorize_all} is \code{FALSE},
 #' the each substring matching any of the supplied \code{pattern}s
 #' is replaced by a corresponding \code{replacement} string.
-#' In such a case, the vectorization is over \code{str}
-#' and - independently - \code{pattern} and \code{replacement}.
+#' In such a case, the vectorization is over \code{str},
+#' and - independently - over \code{pattern} and \code{replacement}.
 #' In other words, this is equivalent to something like
 #' \code{for (i in 1:npatterns) str <- stri_replace_all(str, pattern[i], replacement[i]}.
 #' Note that you must set \code{length(pattern) >= length(replacement)}.
@@ -80,8 +80,9 @@
 #' @param opts_collator a named list with \pkg{ICU} Collator's settings
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings; \code{stri_replace_*_coll} only
-#' @param merge logical;
-#' should consecutive matches be merged into one string;  \code{stri_replace_all_charclass} only
+#' @param merge single logical value;
+#' should consecutive matches be merged into one string;  
+#' \code{stri_replace_all_charclass} only
 #' @param vectorize_all single logical value;
 #' should each occurrence of a pattern in every string
 #' be replaced by a corresponding replacement string?;
@@ -203,8 +204,8 @@ stri_replace <- function(str, replacement, ..., regex, fixed, coll, charclass,
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_charclass <- function(str, pattern, replacement, merge=FALSE) {
-   .Call("stri_replace_all_charclass", str, pattern, replacement, merge,
+stri_replace_all_charclass <- function(str, pattern, replacement, merge=FALSE, vectorize_all=TRUE) {
+   .Call("stri_replace_all_charclass", str, pattern, replacement, merge, vectorize_all,
          PACKAGE="stringi")
 }
 

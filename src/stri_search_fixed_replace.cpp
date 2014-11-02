@@ -122,7 +122,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
       }
 
       R_len_t str_cur_n     = str_cont.get(i).length();
-      R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+      R_len_t replacement_cur_n = replacement_cont.get(i).length();
       R_len_t buf_need =
          str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
       buf.resize(buf_need, false/*destroy contents*/);
