@@ -50,12 +50,15 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
  *          StriException friently;
  *          use StriContainerListInt
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_fromutf32(SEXP vec)
 {
-   vec = stri_prepare_arg_list_integer(vec, "vec");
+   PROTECT(vec = stri_prepare_arg_list_integer(vec, "vec"));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerListInt vec_cont(vec);
    R_len_t vec_n = vec_cont.get_n();
 
@@ -122,14 +125,17 @@ SEXP stri_enc_fromutf32(SEXP vec)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-12)
  *          Use UChar32* instead of vector<UChar32> as ::data is C++11
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_toutf32(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t n = LENGTH(str);
 
    UChar32* buf = NULL;
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, n);
 
    R_len_t bufsize = 0;
@@ -207,16 +213,19 @@ SEXP stri_enc_toutf32(SEXP str)
  *
  * @version 0.2-1  (Marek Gagolewksi, 2014-03-30)
  *                 added validate arg
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
 {
-   validate = stri_prepare_arg_logical_1(validate, "validate");
+   PROTECT(validate = stri_prepare_arg_logical_1(validate, "validate"));
    bool is_unknown_8bit_logical =
       stri__prepare_arg_logical_1_notNA(is_unknown_8bit, "is_unknown_8bit");
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    SEXP ret;
    if (!is_unknown_8bit_logical) {
       // Trivial - everything we need is in StriContainerUTF8 :)
@@ -348,13 +357,16 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-30)
  *          use single common buf;
  *          warn on invalid utf8 byte stream
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_toascii(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    // get buf size
    R_len_t bufsize = 0;
@@ -436,14 +448,17 @@ SEXP stri_enc_toascii(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          calc required buf size a priori
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t str_n = LENGTH(str);
    StriContainerUTF16 str_cont(str, str_n);
 
@@ -548,6 +563,9 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          estimate required buf size a priori
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
@@ -556,16 +574,19 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       return stri_encode_from_marked(str, to, to_raw);
 
    // raw vector, character vector, or list of raw vectors:
-   str = stri_prepare_arg_list_raw(str, "str");
+   PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true);
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();
 
    // get the number of strings to convert; if == 0, then you know what's the result
-   if (str_n <= 0) return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);
+   if (str_n <= 0) {
+      STRI__UNPROTECT_ALL
+      return Rf_allocVector(to_raw_logical?VECSXP:STRSXP, 0);  
+   }
 
    // Open converters
    StriUcnv ucnv1(selected_from);

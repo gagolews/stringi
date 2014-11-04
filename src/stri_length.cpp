@@ -82,12 +82,15 @@ R_len_t stri__numbytes_max(SEXP str)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-27)
  *          using StriUcnv;
  *          warn on invalid utf-8 sequences
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_length(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    R_len_t str_n = LENGTH(str);
    SEXP ret;
@@ -168,13 +171,16 @@ SEXP stri_length(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          StriException-friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_numbytes(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    R_len_t str_n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
    int* retint = LOGICAL(ret);
@@ -201,13 +207,16 @@ SEXP stri_numbytes(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          StriException-friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_isempty(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    R_len_t str_n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
    int* retlog = LOGICAL(ret);

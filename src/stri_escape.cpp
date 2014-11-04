@@ -45,12 +45,15 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          fail on incorrect utf8 byte seqs;
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_escape_unicode(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t str_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, str_length);
 
@@ -148,12 +151,15 @@ SEXP stri_escape_unicode(SEXP str)
  *  @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-17)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_unescape_unicode(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t str_length = LENGTH(str);
    StriContainerUTF16 str_cont(str, str_length, false); // writable
 
@@ -172,6 +178,7 @@ SEXP stri_unescape_unicode(SEXP str)
       }
    }
 
+   STRI__UNPROTECT_ALL
    return str_cont.toR();
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
