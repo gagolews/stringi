@@ -18,7 +18,6 @@ stri_escape.cpp \
 stri_exception.cpp \
 stri_ICU_settings.cpp \
 stri_join.cpp \
-stri_justify.cpp \
 stri_length.cpp \
 stri_pad.cpp \
 stri_prepare_arg.cpp \
@@ -62,7 +61,6 @@ stri_search_regex_match.cpp \
 stri_search_regex_replace.cpp \
 stri_search_regex_split.cpp \
 stri_search_regex_subset.cpp \
-stri_splitpos.cpp \
 stri_stats.cpp \
 stri_stringi.cpp \
 stri_sub.cpp \
@@ -70,7 +68,6 @@ stri_test.cpp \
 stri_trans_casemap.cpp \
 stri_trans_normalization.cpp \
 stri_trans_transliterate.cpp \
-stri_uchar.cpp \
 stri_ucnv.cpp \
 stri_uloc.cpp \
 stri_utils.cpp \

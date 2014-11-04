@@ -46,12 +46,15 @@
  * @version 0.2-3 (Marek Gagolewski, 2015-05-12)
  *          uses Transliterator::getAvailableIDs
  *          as getAvailableID is obsolete as of ICU 3.x
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_trans_list()
 {
    StringEnumeration* trans_enum = NULL;
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(0)
 
    UErrorCode status = U_ZERO_ERROR;
    trans_enum = Transliterator::getAvailableIDs(status);
@@ -93,15 +96,17 @@ SEXP stri_trans_list()
  */
 SEXP stri_trans_general(SEXP str, SEXP id)
 {
-   str = stri_prepare_arg_string(str, "str");
-   id  = stri_prepare_arg_string_1(id, "id");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(id  = stri_prepare_arg_string_1(id, "id"));
    R_len_t str_length = LENGTH(str);
 
    Transliterator* trans = NULL;
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF16  id_cont(id, 1);
-   if (id_cont.isNA(0))
+   if (id_cont.isNA(0)) {
+      STRI__UNPROTECT_ALL
       return stri__vector_NA_strings(str_length);
+   }
 
    UErrorCode status = U_ZERO_ERROR;
    trans = Transliterator::createInstance(id_cont.get(0), UTRANS_FORWARD, status);
@@ -116,6 +121,7 @@ SEXP stri_trans_general(SEXP str, SEXP id)
    }
 
    if (trans) { delete trans; trans = NULL; }
+   STRI__UNPROTECT_ALL
    return str_cont.toR();
    STRI__ERROR_HANDLER_END(
       if (trans) { delete trans; trans = NULL; }
