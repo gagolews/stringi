@@ -137,7 +137,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *
- * @version 0.3-2 (Marek Gagolewski, 2014-11-02)
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          Second version, 3x faster, 2 for loops + replaceAll
  */
 SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)

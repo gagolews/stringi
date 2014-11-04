@@ -189,7 +189,7 @@ SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_collator);
 SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement,
-                            SEXP opts_collator);
+                            SEXP vectorize_all, SEXP opts_collator);
 SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement,
                               SEXP opts_collator);
 SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
