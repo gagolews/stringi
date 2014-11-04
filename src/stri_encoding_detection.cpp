@@ -432,6 +432,9 @@ double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-09)
  *          one function for is_*, do dispatch
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_isenc(SEXP str, SEXP type)
 {
@@ -450,9 +453,9 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
    }
 
 
-   str = stri_prepare_arg_list_raw(str, "str");
+   PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerListRaw str_cont(str);
    R_len_t str_length = str_cont.get_n();
 
@@ -488,16 +491,19 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-08)
  *          use StriContainerListRaw + BUGFIX
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 {
-   str = stri_prepare_arg_list_raw(str, "str");
-   filter_angle_brackets = stri_prepare_arg_logical(filter_angle_brackets, "filter_angle_brackets");
+   PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
+   PROTECT(filter_angle_brackets = stri_prepare_arg_logical(filter_angle_brackets, "filter_angle_brackets"));
 
    UCharsetDetector* ucsdet = NULL;
 
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    UErrorCode status = U_ZERO_ERROR;
    ucsdet = ucsdet_open(&status);
@@ -897,14 +903,17 @@ struct EncGuess {
  *
  * @version 0.1-?? (2013-11-13, Marek Gagolewski)
  *          added loc NA handling (no locale)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_detect2(SEXP str, SEXP loc)
 {
    // raw vector, character vector, or list of raw vectors:
-   str = stri_prepare_arg_list_raw(str, "str");
+   PROTECT(str = stri_prepare_arg_list_raw(str, "str"));
    const char* qloc = stri__prepare_arg_locale(loc, "locale", true, true); // allowdefault, allowna
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();

@@ -102,6 +102,9 @@
  * @return logical vector
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
 {
@@ -112,10 +115,10 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
    if (_negate < 0 || _negate > 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
-   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
@@ -175,6 +178,9 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
 {
@@ -187,15 +193,15 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
    if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
-   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
 
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
@@ -273,18 +279,21 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
 {
-   e1 = stri_prepare_arg_string(e1, "e1");
-   e2 = stri_prepare_arg_string(e2, "e2");
+   PROTECT(e1 = stri_prepare_arg_string(e1, "e1"));
+   PROTECT(e2 = stri_prepare_arg_string(e2, "e2"));
 
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
@@ -392,13 +401,16 @@ struct StriSortComparer {
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    SEXP opts_collator, SEXP type)
 {
    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
-   na_last   = stri_prepare_arg_logical_1(na_last, "na_last");
-   str       = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(na_last   = stri_prepare_arg_logical_1(na_last, "na_last"));
+   PROTECT(str       = stri_prepare_arg_string(str, "str")); // prepare string argument
 
    // type is an internal arg -- check manually
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
@@ -413,7 +425,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    col = stri__ucol_open(opts_collator);
 
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -509,17 +521,20 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_unique(SEXP str, SEXP opts_collator)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -576,10 +591,13 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    // call stri__ucol_open after prepare_arg:
@@ -587,7 +605,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -653,10 +671,13 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
    // call stri__ucol_open after prepare_arg:
@@ -664,7 +685,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
    UCollator* col = NULL;
    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
 
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF8 str_cont(str, vectorize_length);

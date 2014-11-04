@@ -46,6 +46,9 @@
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_set(SEXP enc)
 {
@@ -53,7 +56,7 @@ SEXP stri_enc_set(SEXP enc)
    const char* selected_enc
       = stri__prepare_arg_enc(enc, "enc", false/*no default*/);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(0)
 
    StriUcnv uconv_obj(selected_enc);
    // this will generate an error if selected_enc is not supported:
@@ -82,12 +85,15 @@ SEXP stri_enc_set(SEXP enc)
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_list()
 {
    R_len_t c = (R_len_t)ucnv_countAvailable();
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(0)
    SEXP ret;
    SEXP names;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, c));
@@ -140,12 +146,15 @@ SEXP stri_enc_list()
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_info(SEXP enc)
 {
    const char* selected_enc = stri__prepare_arg_enc(enc, "enc", true/*default ok*/);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(0)
    StriUcnv uconv_obj(selected_enc);
    uconv_obj.setCallBackSubstitute(); // restore default callbacks (no warning)
    UConverter* uconv = uconv_obj.getConverter();
@@ -233,11 +242,14 @@ SEXP stri_enc_info(SEXP enc)
  * @return a character vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_mark(SEXP str) {
-   str = stri_prepare_arg_string(str, "str");    // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t str_len = LENGTH(str);
 
    // some of them will not be used in this call, but we're lazy

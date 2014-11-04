@@ -63,15 +63,21 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *                  make StriException friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_dup(SEXP str, SEXP times)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   times = stri_prepare_arg_integer(times, "times"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+   PROTECT(times = stri_prepare_arg_integer(times, "times")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(times));
-   if (vectorize_length <= 0) return Rf_allocVector(STRSXP, 0);
+   if (vectorize_length <= 0) {
+      UNPROTECT(2);
+      return Rf_allocVector(STRSXP, 0);
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerInteger times_cont(times, vectorize_length);
 
@@ -164,20 +170,29 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 {
-   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
-   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
+   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
 
    R_len_t e1_length = LENGTH(e1);
    R_len_t e2_length = LENGTH(e2);
    R_len_t vectorize_length = stri__recycling_rule(true, 2, e1_length, e2_length);
 
-   if (e1_length <= 0) return e1;
-   if (e2_length <= 0) return e2;
+   if (e1_length <= 0) {
+      UNPROTECT(2);
+      return e1;
+   }
+   if (e2_length <= 0) {
+      UNPROTECT(2);
+      return e2;
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 e1_cont(e1, vectorize_length);
    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
@@ -246,30 +261,39 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          first version;
  *          This is much faster than stri_flatten(stri_join2(...), ...)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
-   e1 = stri_prepare_arg_string(e1, "e1"); // prepare string argument
-   e2 = stri_prepare_arg_string(e2, "e2"); // prepare string argument
-
    if (isNull(collapse)) {
       // no collapse - used e.g. by %s+% operator
       return stri_join2_nocollapse(e1, e2);
    }
 
-   collapse = stri_prepare_arg_string_1(collapse, "collapse");
-   if (STRING_ELT(collapse, 0) == NA_STRING)
+   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+   PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+   if (STRING_ELT(collapse, 0) == NA_STRING) {
+      UNPROTECT(3);
       return stri__vector_NA_strings(1);
-
+   }
 
    R_len_t e1_length = LENGTH(e1);
    R_len_t e2_length = LENGTH(e2);
    R_len_t vectorize_length = stri__recycling_rule(true, 2, e1_length, e2_length);
 
-   if (e1_length <= 0) return e1;
-   if (e2_length <= 0) return e2;
+   if (e1_length <= 0) {
+      UNPROTECT(3);
+      return e1;
+   }
+   if (e2_length <= 0) {
+      UNPROTECT(3);
+      return e2;
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 e1_cont(e1, vectorize_length);
    StriContainerUTF8 e2_cont(e2, vectorize_length);
    StriContainerUTF8 collapse_cont(collapse, 1);
@@ -280,8 +304,10 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    // find maximal length of the buffer needed:
    R_len_t nchar = 0;
    for (int i=0; i<vectorize_length; ++i) {
-      if (e1_cont.isNA(i) || e2_cont.isNA(i))
+      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(1); // at least 1 NA => return NA
+      }
 
       nchar += e1_cont.get(i).length() + e2_cont.get(i).length()
                + ((i>0)?collapse_nbytes:0);
@@ -338,6 +364,9 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
  *          stri_join2_withcollapse and stri_flatten_withressep, if needed.
  *          If collapse!=NULL and sep=NA, then the result will be single NA
  *          (and not n*NA);
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 {
@@ -347,38 +376,50 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
 
    // *result will surely be a single string*
 
-   strlist = stri_prepare_arg_list_string(strlist, "...");
+   PROTECT(strlist = stri_prepare_arg_list_string(strlist, "..."));
    R_len_t strlist_length = LENGTH(strlist);
-   if (strlist_length <= 0) return stri__vector_empty_strings(0);
-
-   sep = stri_prepare_arg_string_1(sep, "sep");
-   collapse = stri_prepare_arg_string_1(collapse, "collapse");
-   if (STRING_ELT(sep, 0) == NA_STRING || STRING_ELT(collapse, 0) == NA_STRING) {
-      return stri__vector_NA_strings(1);
-   }
-
-   // * special cases: *
-   if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
-      // sep==empty string and 2 vectors --
-      // an often occuring case - we have some specialized functions for this :-)
-      return stri_join2_withcollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse);
+   if (strlist_length <= 0) {
+      UNPROTECT(1);
+      return stri__vector_empty_strings(0);
    }
    else if (strlist_length == 1) {
       // one vector + collapse string -- another frequently occuring case
       // sep is ignored here
-      return stri_flatten_withressep(VECTOR_ELT(strlist, 0), collapse);
+      SEXP ret;
+      PROTECT(ret = stri_flatten_withressep(VECTOR_ELT(strlist, 0), collapse));
+      UNPROTECT(2);
+      return ret;
+   }
+
+   PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
+   PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+   if (STRING_ELT(sep, 0) == NA_STRING || STRING_ELT(collapse, 0) == NA_STRING) {
+      UNPROTECT(3);
+      return stri__vector_NA_strings(1);
+   }
+   else if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
+      // sep==empty string and 2 vectors --
+      // an often occuring case - we have some specialized functions for this :-)
+      SEXP ret;
+      PROTECT(ret = stri_join2_withcollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse));
+      UNPROTECT(4);
+      return ret;
    }
 
    // get length of the longest character vector on the list, i.e. vectorize_length
    R_len_t vectorize_length = 0;
    for (R_len_t i=0; i<strlist_length; ++i) {
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
-      if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
-      if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
+      if (strlist_cur_length <= 0) {
+         UNPROTECT(3);
+         return stri__vector_empty_strings(0);
+      }
+      if (strlist_cur_length > vectorize_length)
+         vectorize_length = strlist_cur_length;
    }
 
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
 
    StriContainerListUTF8 strlist_cont(strlist, vectorize_length);
 
@@ -394,8 +435,10 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
    R_len_t buf_maxbytes = 0;
    for (R_len_t i=0; i<vectorize_length; ++i) {   // for each vectorized string (vertically)
       for (R_len_t j=0; j<strlist_length; ++j) {  // for each character vector  (horizontally)
-         if (strlist_cont.get(j).isNA(i))
+         if (strlist_cont.get(j).isNA(i)) {
+            STRI__UNPROTECT_ALL
             return stri__vector_NA_strings(1);
+         }
 
          buf_maxbytes += strlist_cont.get(j).get(i).length()+ ((j>0)?sep_n:0);
       }
@@ -467,24 +510,35 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          stri_join has been splitted to stri_join_nocollapse
  *          and stri_join_withcollapse (for efficiency reasons)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
 {
-   strlist = stri_prepare_arg_list_string(strlist, "...");
+   PROTECT(strlist = stri_prepare_arg_list_string(strlist, "..."));
    R_len_t strlist_length = LENGTH(strlist);
-   if (strlist_length <= 0) return stri__vector_empty_strings(0);
+   if (strlist_length <= 0) {
+      UNPROTECT(1);
+      return stri__vector_empty_strings(0);
+   }
 
    // get length of the longest character vector on the list, i.e. vectorize_length
    R_len_t vectorize_length = 0;
    for (R_len_t i=0; i<strlist_length; ++i) {
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
-      if (strlist_cur_length <= 0) return stri__vector_empty_strings(0);
-      if (strlist_cur_length > vectorize_length) vectorize_length = strlist_cur_length;
+      if (strlist_cur_length <= 0) {
+         UNPROTECT(1);
+         return stri__vector_empty_strings(0);
+      }
+      if (strlist_cur_length > vectorize_length)
+         vectorize_length = strlist_cur_length;
    }
 
-   sep = stri_prepare_arg_string_1(sep, "sep");
+   PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
    if (STRING_ELT(sep, 0) == NA_STRING) {
-         return stri__vector_NA_strings(vectorize_length);
+      UNPROTECT(2);
+      return stri__vector_NA_strings(vectorize_length);
    }
 
 
@@ -492,7 +546,10 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
    if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
       // sep==empty string and 2 vectors --
       // an often occuring case - we have some specialized functions for this :-)
-      return stri_join2_nocollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1));
+      SEXP ret;
+      PROTECT(ret = stri_join2_nocollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1)));
+      UNPROTECT(3);
+      return ret;
    }
 
    // note that if 1 vector is given
@@ -501,7 +558,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
    // so we proceed
 
    SEXP ret;
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    StriContainerUTF8 sep_cont(sep, 1);
    const char* sep_char = sep_cont.get(0).c_str();
@@ -584,20 +641,27 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
  *          This function hasn't been used at all before (strange, isn't it?);
  *          From now on it's being called by stri_flatten_withressep
  *          (a small performance gain)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_flatten_noressep(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t str_length = LENGTH(str);
-   if (str_length <= 0) return str;
+   if (str_length <= 0) {
+      UNPROTECT(1);
+      return str;
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, str_length);
 
    // 1. Get required buffer size
    R_len_t nchar = 0;
    for (int i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) {
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(1); // at least 1 NA => return NA
       }
       nchar += str_cont.get(i).length();
@@ -644,26 +708,35 @@ SEXP stri_flatten_noressep(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          Call stri_flatten_noressep if needed
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
  */
 SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
 {
-   collapse = stri_prepare_arg_string_1(collapse, "collapse");
+   PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
 
-   if (STRING_ELT(collapse, 0) == NA_STRING)
+   if (STRING_ELT(collapse, 0) == NA_STRING) {
+      UNPROTECT(1);
       return stri__vector_NA_strings(1);
+   }
 
    // if collapse is an empty string, we may use the following
    // specialized function:
-   if (LENGTH(STRING_ELT(collapse, 0)) == 0)
+   if (LENGTH(STRING_ELT(collapse, 0)) == 0) {
+      UNPROTECT(1);
       return stri_flatten_noressep(str);
+   }
 
-
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    R_len_t str_length = LENGTH(str);
-   if (str_length <= 0) return stri__vector_empty_strings(0);
+   if (str_length <= 0) {
+      UNPROTECT(2);
+      return stri__vector_empty_strings(0);
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, str_length);
    StriContainerUTF8 collapse_cont(collapse, 1);
    R_len_t collapse_nbytes = collapse_cont.get(0).length();
@@ -674,6 +747,7 @@ SEXP stri_flatten_withressep(SEXP str, SEXP collapse)
    R_len_t nbytes = 0;
    for (int i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) {
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(1); // at least 1 NA => return NA
       }
       nbytes += str_cont.get(i).length() + ((i>0)?collapse_nbytes:0);

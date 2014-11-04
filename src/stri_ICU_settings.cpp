@@ -49,10 +49,13 @@
  *
  *  @version 0.1-?? (Marek Gagolewski, 2013-11-17)
  *                   added U_ICU_VERSION
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_info()
 {
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(0)
    const R_len_t infosize = 5;
    SEXP vals;
 

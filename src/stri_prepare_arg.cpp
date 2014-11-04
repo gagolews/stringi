@@ -117,14 +117,15 @@ SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
                SET_VECTOR_ELT(x, i, stri_prepare_arg_integer(VECTOR_ELT(xold, i), argname));
          }
          UNPROTECT(1);
+         return x;
       }
       else {
          // the object may be modified in place
          for (R_len_t i=0; i<narg; ++i)
             if (!isNull(VECTOR_ELT(x, i)))
                SET_VECTOR_ELT(x, i, stri_prepare_arg_integer(VECTOR_ELT(x, i), argname));
+         return x;
       }
-      return x;
    }
    else
       return stri_prepare_arg_integer(x, argname);
@@ -168,13 +169,14 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
          SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(xold, i), argname));
       }
       UNPROTECT(1);
+      return x;
    }
    else {
       // the object may be modified in place
       for (R_len_t i=0; i<narg; ++i)
          SET_VECTOR_ELT(x, i, stri_prepare_arg_string(VECTOR_ELT(x, i), argname));
+      return x;
    }
-   return x;
 }
 
 
@@ -690,19 +692,23 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
    if (allowdefault && isNull(enc))
       return (const char*)NULL;
    else {
-      enc = stri_prepare_arg_string_1(enc, argname);
+      PROTECT(enc = stri_prepare_arg_string_1(enc, argname));
       if (STRING_ELT(enc, 0) == NA_STRING) {
+         UNPROTECT(1);
          Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
       }
 
       if (LENGTH(STRING_ELT(enc, 0)) == 0) {
-         if (allowdefault)
+         UNPROTECT(1);
+         if (allowdefault) {
             return (const char*)NULL;
          else
             Rf_error(MSG__ENC_INCORRECT_ID); // allowed here
       }
-      else
+      else {
+         UNPROTECT(1)
          return (const char*)CHAR(STRING_ELT(enc, 0));
+      }
    }
 
    // won't come here anyway
