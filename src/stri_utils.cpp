@@ -47,11 +47,11 @@
  */
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill)
 {
-   x = stri_prepare_arg_list_string(x, "x");
+   PROTECT(x = stri_prepare_arg_list_string(x, "x"));
    bool byrow2 = stri__prepare_arg_logical_1_notNA(byrow, "byrow");
-   fill = stri_prepare_arg_string_1(fill, "fill"); // enc2utf8 called in R
+   PROTECT(fill = stri_prepare_arg_string_1(fill, "fill")); // enc2utf8 called in R
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t n = LENGTH(x);
    SEXP fill2 = STRING_ELT(fill, 0);
 

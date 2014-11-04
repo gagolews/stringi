@@ -35,57 +35,45 @@
 #include "stri_string8buf.h"
 
 
-/** Prepare args for stri_sub* [internal]
- *
- * @param from
- * @param to
- * @param length
- * @param from_len
- * @param to_len
- * @param length_len
- * @param from_tab
- * @param to_tab
- * @param length_tab
- *
- * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
- */
-void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
-   R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,
-   int*& from_tab, int*& to_tab, int*& length_tab)
-{
-   bool from_ismatrix = Rf_isMatrix(from);
-   if (from_ismatrix) {
-      SEXP t = Rf_getAttrib(from, R_DimSymbol);
-      if (INTEGER(t)[1] == 1)
-         from_ismatrix = false; // it's a column vector
-      else if (INTEGER(t)[1] > 2) {
-         // error() is allowed here
-         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);
-      }
+#define STRI__SUB_PREPARE_FROM_TO_LENGTH                                     \
+   bool from_ismatrix = Rf_isMatrix(from);                                   \
+   if (from_ismatrix) {                                                      \
+      SEXP t = Rf_getAttrib(from, R_DimSymbol);                              \
+      if (INTEGER(t)[1] == 1)                                                \
+         from_ismatrix = false; /* it's a column vector */                   \
+      else if (INTEGER(t)[1] > 2) {                                          \
+         /* error() is allowed here */                                       \
+         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);   \
+      }                                                                      \
+   }                                                                         \
+   PROTECT(from = stri_prepare_arg_integer(from, "from"));                   \
+   /* may remove R_DimSymbol */                                              \
+                                                                             \
+   if (from_ismatrix) {                                                      \
+      from_len      = LENGTH(from)/2;                                        \
+      to_len        = from_len;                                              \
+      from_tab      = INTEGER(from);                                         \
+      to_tab        = from_tab+from_len;                                     \
+      PROTECT(to); /* fake - not to provoke stack imbalance */               \
+      PROTECT(length); /* fake - not to provoke stack imbalance */           \
+   }                                                                         \
+   else if (isNull(length)) {                                                \
+      PROTECT(to    = stri_prepare_arg_integer(to, "to"));                   \
+      from_len      = LENGTH(from);                                          \
+      from_tab      = INTEGER(from);                                         \
+      to_len        = LENGTH(to);                                            \
+      to_tab        = INTEGER(to);                                           \
+      PROTECT(length); /* fake - not to provoke stack imbalance */           \
+   }                                                                         \
+   else {                                                                    \
+      PROTECT(length= stri_prepare_arg_integer(length, "length"));           \
+      from_len      = LENGTH(from);                                          \
+      from_tab      = INTEGER(from);                                         \
+      length_len    = LENGTH(length);                                        \
+      length_tab    = INTEGER(length);                                       \
+      PROTECT(to); /* fake - not to provoke stack imbalance */               \
    }
-   from = stri_prepare_arg_integer(from, "from"); // may remove R_DimSymbol
-
-   if (from_ismatrix) {
-      from_len      = LENGTH(from)/2;
-      to_len        = from_len;
-      from_tab      = INTEGER(from);
-      to_tab        = from_tab+from_len;
-   }
-   else if (isNull(length)) {
-      to            = stri_prepare_arg_integer(to, "to");
-      from_len      = LENGTH(from);
-      from_tab      = INTEGER(from);
-      to_len        = LENGTH(to);
-      to_tab        = INTEGER(to);
-   }
-   else { // length is NULL
-      length        = stri_prepare_arg_integer(length, "length");
-      from_len      = LENGTH(from);
-      from_tab      = INTEGER(from);
-      length_len    = LENGTH(length);
-      length_tab    = INTEGER(length);
-   }
-}
+   
 
 
 #define STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2) \
@@ -136,10 +124,13 @@ void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          Use stri__sub_prepare_from_to_length()
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
 
    R_len_t str_len       = LENGTH(str);
    R_len_t from_len      = 0;
@@ -149,19 +140,19 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    int* to_tab           = 0;
    int* length_tab       = 0;
 
-   stri__sub_prepare_from_to_length(from, to, length,
-      from_len, to_len, length_len,
-      from_tab, to_tab, length_tab);
+   STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
 
    R_len_t vectorize_len = stri__recycling_rule(true, 4,
       str_len, from_len,
       (to_len>0)?to_len:1, (length_len>0)?length_len:1);
 
 
-   if (vectorize_len <= 0)
+   if (vectorize_len <= 0) {
+      UNPROTECT(4);
       return Rf_allocVector(STRSXP, 0);
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(4)
    StriContainerUTF8_indexable str_cont(str, vectorize_len);
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_len));
@@ -235,11 +226,14 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          Use stri__sub_prepare_from_to_length()
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 {
-   str   = stri_prepare_arg_string(str, "str");
-   value = stri_prepare_arg_string(value, "value");
+   PROTECT(str   = stri_prepare_arg_string(str, "str"));
+   PROTECT(value = stri_prepare_arg_string(value, "value"));
 
    R_len_t value_len     = LENGTH(value);
    R_len_t str_len       = LENGTH(str);
@@ -250,19 +244,19 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    int* to_tab           = 0; // see below
    int* length_tab       = 0; // see below
 
-   stri__sub_prepare_from_to_length(from, to, length,
-      from_len, to_len, length_len,
-      from_tab, to_tab, length_tab);
+   STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
 
    R_len_t vectorize_len = stri__recycling_rule(true, 5,
       str_len, value_len, from_len,
       (to_len>0)?to_len:1, (length_len>0)?length_len:1);
 
 
-   if (vectorize_len <= 0)
+   if (vectorize_len <= 0) {
+      UNPROTECT(5);
       return Rf_allocVector(STRSXP, 0);
-
-   STRI__ERROR_HANDLER_BEGIN
+   }
+   
+   STRI__ERROR_HANDLER_BEGIN(5)
    StriContainerUTF8_indexable str_cont(str, vectorize_len);
    StriContainerUTF8 value_cont(value, vectorize_len);
    SEXP ret;
