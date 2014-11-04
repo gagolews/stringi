@@ -55,18 +55,21 @@
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_detect_coll (opts_collator == NA not allowed)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+   
    // call stri__ucol_open after prepare_arg:
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
