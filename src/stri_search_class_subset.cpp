@@ -42,18 +42,21 @@
  * @return logical vector
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
+ * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
  *                using std::vector<int> to avoid mem-leaks
  *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_subset_charclass(SEXP str, SEXP pattern)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
       stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
@@ -91,6 +94,7 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern)
       }
    }
 
+   STRI__UNPROTECT_ALL /* not dependent on PROTECTed objects anymore */
    return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
