@@ -44,14 +44,17 @@
  * @return character vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-04)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_rand_shuffle(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t n = LENGTH(str);
 
    GetRNGstate();
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, n);
 
    R_len_t bufsize = 0;
@@ -137,29 +140,36 @@ SEXP stri_rand_shuffle(SEXP str)
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          Use StriContainerCharClass which now contains UnicodeSets;
  *          vectorized also over pattern
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 {
    int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
-   length    = stri_prepare_arg_integer(length, "length");
-   pattern   = stri_prepare_arg_string(pattern, "pattern");
+   PROTECT(length    = stri_prepare_arg_integer(length, "length")_;
+   PROTECT(pattern   = stri_prepare_arg_string(pattern, "pattern"));
 
    if (n_val < 0) n_val = 0; /* that's not NA for sure now */
 
    R_len_t length_len = LENGTH(length);
-   if (length_len <= 0)
+   if (length_len <= 0) {
+      UNPROTECT(2);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "length");
+   }
    else if (length_len > n_val || n_val % length_len != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
    R_len_t pattern_len = LENGTH(pattern);
-   if (pattern_len <= 0)
+   if (pattern_len <= 0) {
+      UNPROTECT(2);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "pattern");
+   }
    else if (pattern_len > n_val || n_val % pattern_len != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
    GetRNGstate();
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
 
    StriContainerCharClass pattern_cont(pattern, max(n_val, pattern_len));
    StriContainerInteger   length_cont(length, max(n_val, length_len));

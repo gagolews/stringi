@@ -54,22 +54,25 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          use stri_error_handler, pad should be a single code point, not byte
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
 {
-   str        = stri_prepare_arg_string(str, "str");
-   min_length = stri_prepare_arg_integer(min_length, "min_length");
-   pad        = stri_prepare_arg_string(pad, "pad");
-
-//   side       = stri_prepare_arg_string(side, "side");
-//   const char* side_opts[] = {"left", "right", "both", NULL};
-
    // this is an internal arg, check manually, error() allowed here
    if (!Rf_isInteger(side) || LENGTH(side) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
    int _side = INTEGER(side)[0];
    if (_side < 0 || _side > 2)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+
+   PROTECT(str        = stri_prepare_arg_string(str, "str"));
+   PROTECT(min_length = stri_prepare_arg_integer(min_length, "min_length"));
+   PROTECT(pad        = stri_prepare_arg_string(pad, "pad"));
+
+//   side       = stri_prepare_arg_string(side, "side");
+//   const char* side_opts[] = {"left", "right", "both", NULL};
 
    R_len_t str_length     = LENGTH(str);
    R_len_t length_length  = LENGTH(min_length);
@@ -79,7 +82,7 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
    R_len_t vectorize_length = stri__recycling_rule(true, 3,
       str_length, length_length, /*side_length, */ pad_length);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8       str_cont(str, vectorize_length);
    StriContainerInteger length_cont(min_length, vectorize_length);
 //   StriContainerUTF8      side_cont(side, vectorize_length);

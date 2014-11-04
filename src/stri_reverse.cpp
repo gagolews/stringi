@@ -51,12 +51,15 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          detect incorrect utf8 byte stream
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_reverse(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");    // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t str_len = LENGTH(str);
    StriContainerUTF8 str_cont(str, str_len); // writable, no recycle
 

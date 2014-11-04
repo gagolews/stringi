@@ -53,11 +53,14 @@ SEXP stri_test_returnasis(SEXP x)
  *  Results are printed on STDERR
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_test_Rmark(SEXP s)
 {
 #ifndef NDEBUG
-   s = stri_prepare_arg_string(s, "str");
+   PROTECT(s = stri_prepare_arg_string(s, "str"));
    int ns = LENGTH(s);
    for (int i=0; i < ns; ++i) {
       fprintf(stdout, "!NDEBUG: Element #%d:\n", i);
@@ -73,6 +76,7 @@ SEXP stri_test_Rmark(SEXP s)
       fprintf(stdout, "!NDEBUG: \tMARK_BYTES = %d\n", (IS_BYTES(curs) > 0));
       fprintf(stdout, "!NDEBUG: \n");
    }
+   UNPROTECT(1)
    return R_NilValue;
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");
@@ -87,12 +91,16 @@ SEXP stri_test_Rmark(SEXP s)
  * @return R_NilValue
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
-   STRI__ERROR_HANDLER_BEGIN
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF16 ss(str, LENGTH(str));
+   STRI__UNPROTECT_ALL
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
@@ -106,9 +114,10 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
  */
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
-   STRI__ERROR_HANDLER_BEGIN
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 ss(str, LENGTH(str));
+   STRI__UNPROTECT_ALL
    return R_NilValue;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

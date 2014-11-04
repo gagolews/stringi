@@ -49,13 +49,16 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *                detect invalid UTF-8 byte streams
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_stats_general(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, str_length);
 
    enum {
@@ -127,13 +130,16 @@ SEXP stri_stats_general(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *                detect invalid UTF-8 byte streams
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_stats_latex(SEXP str)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, str_length);
 
    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;

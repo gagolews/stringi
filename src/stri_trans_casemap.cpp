@@ -93,11 +93,12 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          Use a custom BreakIterator with stri_trans_totitle
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
 SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
    int _type = INTEGER(type)[0];
@@ -115,11 +116,13 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
       int brkiter_cur = stri__opts_brkiter_select_iterator(opts, "word");
       briter = stri__opts_brkiter_get_uiterator(brkiter_cur, qloc);
    }
+   
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
    UCaseMap* ucasemap = NULL;
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
    if (U_FAILURE(status)) throw StriException(status);
