@@ -700,13 +700,13 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
 
       if (LENGTH(STRING_ELT(enc, 0)) == 0) {
          UNPROTECT(1);
-         if (allowdefault) {
+         if (allowdefault)
             return (const char*)NULL;
          else
             Rf_error(MSG__ENC_INCORRECT_ID); // allowed here
       }
       else {
-         UNPROTECT(1)
+         UNPROTECT(1);
          return (const char*)CHAR(STRING_ELT(enc, 0));
       }
    }

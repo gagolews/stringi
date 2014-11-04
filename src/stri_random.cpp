@@ -147,7 +147,7 @@ SEXP stri_rand_shuffle(SEXP str)
 SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 {
    int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
-   PROTECT(length    = stri_prepare_arg_integer(length, "length")_;
+   PROTECT(length    = stri_prepare_arg_integer(length, "length"));
    PROTECT(pattern   = stri_prepare_arg_string(pattern, "pattern"));
 
    if (n_val < 0) n_val = 0; /* that's not NA for sure now */
