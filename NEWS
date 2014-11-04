@@ -21,7 +21,6 @@
 
    * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_all` parameter,
      which defaults to TRUE for backward compatibility.
-........................
 
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
      for `str[stri_detect_*(str, ...)]`, added.
@@ -58,7 +57,7 @@
      when `icudt` download failed.
 
    * [BUGFIX] #112: Some of the objects were not PROTECTed from
-     being garbage collected.
+     being garbage collected, which might have caused spontaneous SEGFAULTS.
 ......................................
 ......................................
 
@@ -162,7 +161,8 @@
    * [NEW FEATURE] `stri_order` and `stri_sort` now have an additional argument
      `na_last` (defaults to `TRUE` and `NA`, respectively).
 
-   * [NEW FEATURE] `stri_replace_all_charclass` now has a new arg, `merge`
+   * [NEW FEATURE] `stri_replace_all_charclass`, `stri_extract_all_charclass`,
+     and `stri_locate_all_charclass` now have a new arg, `merge`
      (defaults to `FALSE` for backward-compatibility). It may be used
      to e.g. replace sequences of white spaces with a single space.
 

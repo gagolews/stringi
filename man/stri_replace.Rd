@@ -34,7 +34,8 @@ stri_replace_first_charclass(str, pattern, replacement)
 
 stri_replace_last_charclass(str, pattern, replacement)
 
-stri_replace_all_coll(str, pattern, replacement, opts_collator = NULL)
+stri_replace_all_coll(str, pattern, replacement, vectorize_all = TRUE,
+  opts_collator = NULL)
 
 stri_replace_first_coll(str, pattern, replacement, opts_collator = NULL)
 

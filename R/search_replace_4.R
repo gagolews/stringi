@@ -228,8 +228,8 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_coll <- function(str, pattern, replacement, opts_collator=NULL) {
-   .Call("stri_replace_all_coll", str, pattern, replacement, opts_collator,
+stri_replace_all_coll <- function(str, pattern, replacement, vectorize_all=TRUE, opts_collator=NULL) {
+   .Call("stri_replace_all_coll", str, pattern, replacement, vectorize_all, opts_collator,
          PACKAGE="stringi")
 }
 

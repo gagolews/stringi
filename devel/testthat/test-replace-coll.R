@@ -1,6 +1,27 @@
 require(testthat)
 
 test_that("stri_replace_all_coll", {
+   expect_error(stri_replace_all_coll("a", "a", c("b", "d"), vectorize_all=FALSE))
+   expect_error(stri_replace_all_coll("a", c(), "a", vectorize_all=FALSE))
+   expect_error(stri_replace_all_coll("a", c("a", "b"), c(), vectorize_all=FALSE))
+   expect_warning(stri_replace_all_coll("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
+   expect_equivalent(stri_replace_all_coll("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
+   expect_equivalent(stri_replace_all_coll(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
+   expect_equivalent(stri_replace_all_coll(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, NA_character_))
+   expect_equivalent(stri_replace_all_coll(character(0), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), character(0))
+   expect_equivalent(stri_replace_all_coll(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
+   expect_equivalent(stri_replace_all_coll(c("abacada", "aaa", "fdsueo"), c("a", "b"), c("x", "y"), vectorize_all = FALSE),
+      c("xyxcxdx", "xxx", "fdsueo"))
+   expect_equivalent(stri_replace_all_coll("The quick brown fox jumped over the lazy dog.",
+      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all = FALSE),
+      "The slow black bear jumped over the lazy dog.")
+   expect_equivalent(stri_replace_all_coll("The quick brown fox jumped over the lazy dog.",
+      c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
+      "The    jumped over the lazy .")
+   expect_identical(stri_replace_all_coll("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
+})
+
+test_that("stri_replace_all_coll", {
    expect_identical(stri_replace_all_coll(character(0),1,2),character(0))
    expect_identical(stri_replace_all_coll("abab123 a","a",1),"1b1b123 1")
    expect_identical(stri_replace_all_coll("","\\p{Wspace}","?"),"")
