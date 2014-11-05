@@ -14,6 +14,7 @@ TO DO list - Preparing `stringi` for submission
       Win: *** http://win-builder.r-project.org/ ***
 
 Check PDF manual:
+
 ```
 R CMD Rd2pdf stringi/
 ```
