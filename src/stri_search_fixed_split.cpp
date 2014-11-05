@@ -74,18 +74,21 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          allow omit_empty=NA
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-   n_max = stri_prepare_arg_integer(n_max, "n_max");
-   omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
+   PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(4)
    R_len_t vectorize_length = stri__recycling_rule(true, 4,
       LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
    StriContainerUTF8 str_cont(str, vectorize_length);

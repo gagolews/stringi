@@ -69,7 +69,8 @@ int stri__opts_brkiter_select_iterator(SEXP opts_brkiter, const char* _default) 
             Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "type")) {
-            PROTECT(SEXP curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type"));
+            SEXP curval;
+            PROTECT(curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type"));
             if (STRING_ELT(curval, i) == NA_STRING) {
                UNPROTECT(1);
                Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");

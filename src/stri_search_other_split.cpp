@@ -52,17 +52,22 @@ using namespace std;
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_split_lines1(SEXP str)
 {
-   str = stri_prepare_arg_string_1(str, "str");
+   PROTECT(str = stri_prepare_arg_string_1(str, "str"));
    R_len_t vectorize_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, vectorize_length);
 
-   if (str_cont.isNA(0))
+   if (str_cont.isNA(0)) {
+      STRI__UNPROTECT_ALL
       return str;
+   }
 
    const char* str_cur_s = str_cont.get(0).c_str();
    R_len_t str_cur_n = str_cont.get(0).length();
@@ -136,17 +141,21 @@ SEXP stri_split_lines1(SEXP str)
  * @return list of character vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
+ * 
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
  *                removed `n_max` arg, as it doesn't make sense
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_split_lines(SEXP str, SEXP omit_empty)
 {
-   str = stri_prepare_arg_string(str, "str");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
 //   n_max = stri_prepare_arg_integer(n_max, "n_max");
-   omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty");
+   PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), /*LENGTH(n_max), */LENGTH(omit_empty));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
 //   StriContainerInteger   n_max_cont(n_max, vectorize_length);
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);

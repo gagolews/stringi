@@ -62,15 +62,18 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          using String8buf::replaceAllAtPos, slightly faster
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, int type)
 {
-   str          = stri_prepare_arg_string(str, "str");
-   pattern      = stri_prepare_arg_string(pattern, "pattern");
-   replacement  = stri_prepare_arg_string(replacement, "replacement");
+   PROTECT(str          = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
    StriContainerByteSearch pattern_cont(pattern, vectorize_length);
@@ -227,39 +230,54 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *                Complete rewrite; faster
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
 { // version gamma:
-   str          = stri_prepare_arg_string(str, "str");
-   pattern      = stri_prepare_arg_string(pattern, "pattern");
-   replacement  = stri_prepare_arg_string(replacement, "replacement");
+   PROTECT(str          = stri_prepare_arg_string(str, "str"));
 
    // if str_n is 0, then return an empty vector
    R_len_t str_n = LENGTH(str);
-   if (str_n <= 0)
+   if (str_n <= 0) {
+      UNPROTECT(1);
       return stri__vector_empty_strings(0);
+   }
+
+   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
 
    R_len_t pattern_n = LENGTH(pattern);
    R_len_t replacement_n = LENGTH(replacement);
-   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0)
+   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
+      UNPROTECT(3);
       Rf_error(MSG__WARN_RECYCLING_RULE2);
+   }
    if (pattern_n % replacement_n != 0)
       Rf_warning(MSG__WARN_RECYCLING_RULE);
 
-   if (pattern_n == 1) // this will be much faster:
-      return stri__replace_allfirstlast_fixed(str, pattern, replacement, 0);
+   if (pattern_n == 1) { // this will be much faster:
+      SEXP ret;
+      PROTECT(ret = stri__replace_allfirstlast_fixed(str, pattern, replacement, 0));
+      UNPROTECT(4);
+      return ret;
+   }
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, str_n, false); // writable
    StriContainerUTF8 replacement_cont(replacement, pattern_n);
    StriContainerByteSearch pattern_cont(pattern, pattern_n);
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
+      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
-      if (pattern_cont.get(i).length() <= 0) {
+      }
+      else if (pattern_cont.get(i).length() <= 0) {
          Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
 

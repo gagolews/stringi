@@ -52,18 +52,21 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          use StriContainerRegexPattern + opts_regex
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
    // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
    // ??? OR introduce stri_matchpos_*_regex ???
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
@@ -140,16 +143,19 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          Use StriContainerRegexPattern + opts_regex
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 

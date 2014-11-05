@@ -50,18 +50,21 @@ using namespace std;
  * @return character matrix
  *
  * @version 0.1-??? (Marek Gagolewski, 2013-06-22)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
    // @TODO: capture_groups arg (integer vector/set - which capture groups to extract)
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
@@ -172,17 +175,20 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @return list of character matrices
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   str = stri_prepare_arg_string(str, "str"); // prepare string argument
-   pattern = stri_prepare_arg_string(pattern, "pattern"); // prepare string argument
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
