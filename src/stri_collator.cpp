@@ -53,7 +53,8 @@
  *          disallow NA as opts_collator
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc;
+ *    + many other bugs in settings establishment
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
@@ -105,32 +106,37 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       const char* curname = CHAR(STRING_ELT(names, i));
       err = U_ZERO_ERROR;
 
-      SEXP val;
       if (!strcmp(curname, "locale")) {
          // ignore
       } else if  (!strcmp(curname, "strength")) {
-         PROTECT(val = stri_prepare_arg_integer_1(VECTOR_ELT(opts_collator, i), "strength"));
-         ucol_setAttribute(col, UCOL_STRENGTH, (UColAttributeValue)(INTEGER(val)[0]-1), &err);
-         UNPROTECT(1);
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
+         int val = stri__prepare_arg_integer_1_notNA(VECTOR_ELT(opts_collator, i), "strength");
+         ucol_setAttribute(col, UCOL_STRENGTH, (UColAttributeValue)(val-1), &err);
       } else if  (!strcmp(curname, "alternate_shifted")) {
-         PROTECT(val = stri_prepare_arg_string_1(VECTOR_ELT(opts_collator, i), "alternate_shifted"));
-         ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, LOGICAL(val)[0]?UCOL_SHIFTED:UCOL_NON_IGNORABLE, &err);
-         UNPROTECT(1);
-      } else if  (!strcmp(curname, "french")) {
-         PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_collator, i), "french"));
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
+         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "alternate_shifted");
+         ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, val?UCOL_SHIFTED:UCOL_NON_IGNORABLE, &err);
+      } else if  (!strcmp(curname, "uppercase_first")) {
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
+         SEXP val;
+         PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_collator, i), "uppercase_first"));
          ucol_setAttribute(col, UCOL_CASE_FIRST,
             (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:(LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST)), &err);
          UNPROTECT(1);
-      } else if  (!strcmp(curname, "uppercase_first")) {
-         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "uppercase_first");
-         ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, val_bool?UCOL_ON:UCOL_OFF, &err);
+      } else if  (!strcmp(curname, "french")) {
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "french");
+         ucol_setAttribute(col, UCOL_FRENCH_COLLATION , val_bool?UCOL_ON:UCOL_OFF, &err);
       } else if  (!strcmp(curname, "case_level")) {
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
          bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "case_level");
          ucol_setAttribute(col, UCOL_CASE_LEVEL, val_bool?UCOL_ON:UCOL_OFF, &err);
       } else if  (!strcmp(curname, "normalization")) {
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
          bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "normalization");
          ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, val_bool?UCOL_ON:UCOL_OFF, &err);
       } else if  (!strcmp(curname, "numeric")) {
+         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
          bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "numeric");
          ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, val_bool?UCOL_ON:UCOL_OFF, &err);
       } else {
