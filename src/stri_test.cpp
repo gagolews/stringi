@@ -76,7 +76,7 @@ SEXP stri_test_Rmark(SEXP s)
       fprintf(stdout, "!NDEBUG: \tMARK_BYTES = %d\n", (IS_BYTES(curs) > 0));
       fprintf(stdout, "!NDEBUG: \n");
    }
-   UNPROTECT(1)
+   UNPROTECT(1);
    return R_NilValue;
 #else
    Rf_error("This function is enabled only if NDEBUG is undef.");

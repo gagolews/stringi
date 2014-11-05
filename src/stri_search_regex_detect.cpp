@@ -52,17 +52,20 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-18)
  *          use StriContainerRegexPattern + opts_regex
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
       stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF16 str_cont(str, vectorize_length);
 //   StriContainerUTF8 str_cont(str, vectorize_length); // utext_openUTF8, see below
    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);

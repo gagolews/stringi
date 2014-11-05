@@ -44,14 +44,17 @@
  * @return logical vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-06-03)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-   from = stri_prepare_arg_integer(from, "from");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(from = stri_prepare_arg_integer(from, "from"));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    int vectorize_length = stri__recycling_rule(true, 3,
       LENGTH(str), LENGTH(pattern), LENGTH(from));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
@@ -117,14 +120,17 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from)
  * @return logical vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-06-03)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to)
 {
-   str = stri_prepare_arg_string(str, "str");
-   pattern = stri_prepare_arg_string(pattern, "pattern");
-   to = stri_prepare_arg_integer(to, "to");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+   PROTECT(to = stri_prepare_arg_integer(to, "to"));
 
-   STRI__ERROR_HANDLER_BEGIN
+   STRI__ERROR_HANDLER_BEGIN(3)
    int vectorize_length = stri__recycling_rule(true, 3,
       LENGTH(str), LENGTH(pattern), LENGTH(to));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
