@@ -183,7 +183,6 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
       Rf_error(MSG__WARN_RECYCLING_RULE2);
    }
    if (pattern_n % replacement_n != 0) {
-      UNPROTECT(3);
       Rf_warning(MSG__WARN_RECYCLING_RULE);
    }
 
@@ -204,10 +203,13 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i))
+      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
+      }
       if (pattern_cont.get(i).length() <= 0) {
          Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+         STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
 

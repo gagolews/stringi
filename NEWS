@@ -58,8 +58,6 @@
 
    * [BUGFIX] #112: Some of the objects were not PROTECTed from
      being garbage collected, which might have caused spontaneous SEGFAULTS.
-......................................
-......................................
 
    * [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
 
