@@ -256,19 +256,21 @@ extern "C" void R_init_stringi(DllInfo* dll)
 }
 
 
-//#ifndef NDEBUG
-//
-//#include <unicode/uclean.h>
-//
-///**
-// * Library cleanup
-// */
-//extern "C" void  R_unload_stringi(DllInfo*)
-//{
+#ifndef NDEBUG
+
+#include <unicode/uclean.h>
+
+/**
+ * Library cleanup
+ */
+extern "C" void  R_unload_stringi(DllInfo*)
+{
+   // see http://bugs.icu-project.org/trac/ticket/10897
+   // and https://github.com/Rexamine/stringi/issues/78
 //   fprintf(stdout, "!NDEBUG: ************************************************\n");
 //   fprintf(stdout, "!NDEBUG: Dynamic library 'stringi' unloaded.\n");
 //   fprintf(stdout, "!NDEBUG: ************************************************\n");
-//   u_cleanup();
-//}
-//
-//#endif
+   u_cleanup();
+}
+
+#endif

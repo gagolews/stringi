@@ -57,7 +57,7 @@ SEXP stri_trans_list()
    STRI__ERROR_HANDLER_BEGIN(0)
 
    UErrorCode status = U_ZERO_ERROR;
-   trans_enum = Transliterator::getAvailableIDs(status);
+   trans_enum = Transliterator::getAvailableIDs(status); /*The caller should delete this object when done using it. */
    if (U_FAILURE(status)) throw StriException(status);
 
    trans_enum->reset(status);

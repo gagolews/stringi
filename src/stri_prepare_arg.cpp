@@ -710,6 +710,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
       else {
          const char* ret = (const char*)CHAR(STRING_ELT(loc, 0));
          UNPROTECT(1);
+         // @TODO: ret may be gc'ed!!!!!
          return ret;
       }
    }
@@ -766,6 +767,7 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
       else {
          const char* ret = (const char*)CHAR(STRING_ELT(enc, 0));
          UNPROTECT(1);
+         // @TODO: ret may be gc'ed!!!!!
          return ret;
       }
    }
