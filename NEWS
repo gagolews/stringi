@@ -2,7 +2,7 @@
 ========================================
 
 
-* 0.3-1 (2014-??-??) **devel**
+* 0.3-1 (2014-11-06) **CRAN**
 
    * [IMPORTANT CHANGE] #87: `%>%` overlapped with pipe operator from
      the `magrittr` package; now each operator like `%>%` has been renamed `%s>%`.
@@ -39,7 +39,7 @@
      argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
      is called on the resulting list.
 
-   * [NEW FUNCTION] #77: `stri_rand_lipsum` generates 
+   * [NEW FUNCTION] #77: `stri_rand_lipsum` generates
      (pseudo)random dummy *lorem ipsum* text.
 
    * [NEW FEATURE] #98: `stri_trans_totitle` gained a `opts_brkiter`
@@ -58,6 +58,9 @@
 
    * [BUGFIX] #112: Some of the objects were not PROTECTed from
      being garbage collected, which might have caused spontaneous SEGFAULTS.
+
+   * [BUGFIX] All memory leaks causes as detected by
+     `valgrind --tool=memcheck --leak-check=full` have been fixed.......
 
    * [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
 
@@ -83,7 +86,7 @@
       test for canonical equivalence.
 
    * [IMPORTANT CHANGE] `stri_*_fixed` search functions now perform
-      a locale-independent exact (bytewise, of course after conversion to UTF-8)
+      a locale-independent exact (byte-wise, of course after conversion to UTF-8)
       pattern search. All the Collator-based, locale-dependent search routines
       are now available via `stri_*_coll`. The reason for this is that
       ICU USearch has currently very poor performance and in many search tasks
@@ -230,7 +233,7 @@
      ICU is autodetected with `pkg-config` in `./configure`.
      Pass `'--disable-pkg-config'` to `./configure` to force building
      ICU from sources.
-   
+
    * icudt52b (custom subset) is now shipped with stringi
      (for big-endian, ASCII systems).
 
@@ -245,7 +248,7 @@
 
    * ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
      loaded dynamically). Compilation via Makevars.
-   
+
    * stringi now does not depend on any external libraries.
 
 
@@ -254,21 +257,21 @@
    * ICU4C is now statically linked on Windows.
 
    * First OS X binary build.
-   
+
    * The package is being intensively tested by our students @ FMIS WUT.
 
 
 * 0.1-10 (2013-11-13) **devel**
-   
+
    * Using pkg-config via ./configure to look for ICU4C libs.
 
 
 * 0.1-6 (2013-07-05) **devel**
 
    * First Windows binary build.
-   
+
    * Compilation passed on Oracle Sun Studio compiler collection.
-   
+
    * By now we have implemented most of the functionality
      scheduled for milestone 0.1.
 

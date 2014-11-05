@@ -139,6 +139,9 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-09)
  *          allow NULL for opts_regex
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
@@ -160,30 +163,39 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 
          const char* curname = CHAR(STRING_ELT(names, i));
 
+         SEXP val;
          if  (!strcmp(curname, "case_insensitive")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "case_insensitive");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "case_insensitive"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_CASE_INSENSITIVE;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "comments")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "comments");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "comments"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_COMMENTS;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "dotall")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "dotall");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "dotall"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_DOTALL;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "literal")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "literal");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "literal"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_LITERAL;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "multiline")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "multiline");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "multiline"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_MULTILINE;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "unix_lines")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "unix_lines");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "unix_lines"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_UNIX_LINES;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "uword")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "uword");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "uword"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_UWORD;
+            UNPROTECT(1);
          } else if  (!strcmp(curname, "error_on_unknown_escapes")) {
-            SEXP val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "error_on_unknown_escapes");
+            PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_regex, i), "error_on_unknown_escapes"));
             if (LOGICAL(val)[0]==TRUE) flags |= UREGEX_ERROR_ON_UNKNOWN_ESCAPES;
+            UNPROTECT(1);
          } else {
             Rf_warning(MSG__INCORRECT_REGEX_OPTION, curname);
          }

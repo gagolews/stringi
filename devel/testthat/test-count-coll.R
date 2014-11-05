@@ -21,4 +21,13 @@ test_that("stri_count_coll", {
 
    expect_equivalent(stri_count_coll("aaaab", "ab"), 1L)
    expect_equivalent(stri_count_coll("bababababaab", "aab"), 1L)
+
+   
+   # stri_opts_collator tests:
+   expect_equivalent(stri_count_coll("bababababaab", "aab",
+      opts_collator=stri_opts_collator(locale="UNKNOWN")), 1L)
+   expect_equivalent(stri_count_coll("bababababaab", "aab",
+      opts_collator=stri_opts_collator(strength=-100)), 1L)
+   expect_error(stri_count_coll("bababababaab", "aab",
+      opts_collator=stri_opts_collator(strength=100)))
 })

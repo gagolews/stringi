@@ -398,27 +398,36 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  * @return always an R character vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   x = stri_prepare_arg_string(x, argname);
+   PROTECT(x = stri_prepare_arg_string(x, argname));
    R_len_t nx = LENGTH(x);
 
-   if (nx <= 0)
+   if (nx <= 0) {
+      UNPROTECT(1);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
-
-   if (nx > 1) {
+      // won't come here anyway
+      return x; // avoid compiler warning
+   }
+   else if (nx > 1) {
       Rf_warning(MSG__ARG_EXPECTED_1_STRING, argname);
       SEXP xold = x;
       PROTECT(x = Rf_allocVector(STRSXP, 1));
       SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
-      UNPROTECT(1);
+      UNPROTECT(2);
+      return x;
    }
-
-   return x;
+   else { // if (nx == 1)
+      UNPROTECT(1);
+      return x;
+   }
 }
 
 
@@ -436,27 +445,36 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  * @return always an R double vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   x = stri_prepare_arg_double(x, argname);
+   PROTECT(x = stri_prepare_arg_double(x, argname));
    R_len_t nx = LENGTH(x);
 
-   if (nx <= 0)
+   if (nx <= 0) {
+      UNPROTECT(1);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
-
-   if (nx > 1) {
+      // won't come here anyway
+      return x; // avoid compiler warning
+   }
+   else if (nx > 1) {
       Rf_warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
       double x0 = REAL(x)[0];
       PROTECT(x = Rf_allocVector(REALSXP, 1));
       REAL(x)[0] = x0;
-      UNPROTECT(1);
+      UNPROTECT(2);
+      return x;
    }
-
-   return x;
+   else {// if (nx == 1)
+      UNPROTECT(1);
+      return x;
+   }
 }
 
 
@@ -474,27 +492,36 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  * @return always an R integer vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   x = stri_prepare_arg_integer(x, argname);
+   PROTECT(x = stri_prepare_arg_integer(x, argname));
    R_len_t nx = LENGTH(x);
 
-   if (nx <= 0)
+   if (nx <= 0) {
+      UNPROTECT(1);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
-
-   if (nx > 1) {
+      // won't come here anyway
+      return x; // avoid compiler warning
+   }
+   else if (nx > 1) {
       Rf_warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
       int x0 = INTEGER(x)[0];
       PROTECT(x = Rf_allocVector(INTSXP, 1));
       INTEGER(x)[0] = x0;
-      UNPROTECT(1);
+      UNPROTECT(2);
+      return x;
    }
-
-   return x;
+   else { // if (nx == 1)
+      UNPROTECT(1);
+      return x;
+   }
 }
 
 
@@ -512,27 +539,36 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  * @return always an R logical vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   x = stri_prepare_arg_logical(x, argname);
+   PROTECT(x = stri_prepare_arg_logical(x, argname));
    R_len_t nx = LENGTH(x);
 
-   if (nx <= 0)
+   if (nx <= 0) {
+      UNPROTECT(1);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
-
-   if (nx > 1) {
+      // won't come here anyway
+      return x; // avoid compiler warning
+   }
+   else if (nx > 1) {
       Rf_warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
       int x0 = LOGICAL(x)[0];
       PROTECT(x = Rf_allocVector(LGLSXP, 1));
       LOGICAL(x)[0] = x0;
-      UNPROTECT(1);
+      UNPROTECT(2);
+      return x;
    }
-
-   return x;
+   else { // if (nx == 1)
+      UNPROTECT(1);
+      return x;
+   }
 }
 
 
@@ -550,11 +586,15 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
  * @return a boolean value
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
 {
-   x = stri_prepare_arg_logical_1(x, argname);
+   PROTECT(x = stri_prepare_arg_logical_1(x, argname));
    int xval = LOGICAL(x)[0];
+   UNPROTECT(1);
    if (xval == NA_LOGICAL)
       Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
    return (bool)xval;
@@ -575,11 +615,15 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
  * @return an integer value
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 int stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname)
 {
-   x = stri_prepare_arg_integer_1(x, argname);
+   PROTECT(x = stri_prepare_arg_integer_1(x, argname));
    int xval = INTEGER(x)[0];
+   UNPROTECT(1);
    if (xval == NA_INTEGER)
       Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
    return (int)xval;
@@ -600,11 +644,15 @@ int stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname)
  * @return a double value
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-26)
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
 {
-   x = stri_prepare_arg_double_1(x, argname);
+   PROTECT(x = stri_prepare_arg_double_1(x, argname));
    double xval = REAL(x)[0];
+   UNPROTECT(1);
    if (ISNA(xval))
       Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
    return (double)xval;
@@ -634,14 +682,18 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault, bool allowna)
 {
    if (allowdefault && isNull(loc))
       return uloc_getDefault();
    else {
-      loc = stri_prepare_arg_string_1(loc, argname);
+      PROTECT(loc = stri_prepare_arg_string_1(loc, argname));
       if (STRING_ELT(loc, 0) == NA_STRING) {
+         UNPROTECT(1);
          if (allowna)
             return NULL;
          else
@@ -649,13 +701,17 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
       }
 
       if (LENGTH(STRING_ELT(loc, 0)) == 0) {
+         UNPROTECT(1);
          if (allowdefault)
             return uloc_getDefault();
          else
             Rf_error(MSG__LOCALE_INCORRECT_ID); // allowed here
       }
-      else
-         return (const char*)CHAR(STRING_ELT(loc, 0));
+      else {
+         const char* ret = (const char*)CHAR(STRING_ELT(loc, 0));
+         UNPROTECT(1);
+         return ret;
+      }
    }
 
    // won't come here anyway
@@ -686,6 +742,8 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
  *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+ *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefault)
 {
@@ -706,8 +764,9 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
             Rf_error(MSG__ENC_INCORRECT_ID); // allowed here
       }
       else {
+         const char* ret = (const char*)CHAR(STRING_ELT(enc, 0));
          UNPROTECT(1);
-         return (const char*)CHAR(STRING_ELT(enc, 0));
+         return ret;
       }
    }
 
