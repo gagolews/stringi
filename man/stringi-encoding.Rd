@@ -55,8 +55,8 @@ then be represented either as a sequence of one to four 8-bit bytes,
 one or two 16-bit code units, or a single 32-bit integer
 (cf. the ICU FAQ).
 
- In most cases, Unicode is a superset of the characters
-supported by any given codepage.
+In most cases, Unicode is a superset of the characters
+supported by any given code page.
 }
 \section{UTF-8 and UTF-16}{
 
@@ -143,12 +143,12 @@ Moreover, there are two other cases:
 quite a misleading name: no explicit encoding mark) -- for
 strings that are assumed to be in your platform's native (default) encoding.
 This can represent UTF-8 if you are an OS X user,
-or some 8-bit Windows codepage, for example.
+or some 8-bit Windows code page, for example.
 The native encoding used by \R may be determined by examining
 the LC_CTYPE category, see \code{\link{Sys.getlocale}}.
 }
 
-Intuitively, ``native'' strings result by inputing
+Intuitively, ``native'' strings result by inputting
 a string from keyboard or file. This makes sense: you operating
 system works in some encoding and provides \R with some data.
 
@@ -157,8 +157,8 @@ declared in native encoding,
 it assumes that the input data should be translated from the default
 encoding, i.e. the one returned by \code{\link{stri_enc_get}}
 (unless you know what you are doing,
-the default encoding should only be changed if autodetect fails
-on \pkg{stringi} load).
+the default encoding should only be changed if the automatic
+encoding detection process fails on \pkg{stringi} load).
 
 Functions which allow \code{"bytes"} encoding markings are very rare in \pkg{stringi},
 and were carefully selected. These are: \code{\link{stri_enc_toutf8}}

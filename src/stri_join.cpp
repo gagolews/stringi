@@ -63,7 +63,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *                  make StriException friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
@@ -170,7 +170,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
  *          make StriException friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
@@ -261,7 +261,7 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          first version;
  *          This is much faster than stri_flatten(stri_join2(...), ...)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
@@ -364,7 +364,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
  *          stri_join2_withcollapse and stri_flatten_withressep, if needed.
  *          If collapse!=NULL and sep=NA, then the result will be single NA
  *          (and not n*NA);
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -510,7 +510,7 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          stri_join has been splitted to stri_join_nocollapse
  *          and stri_join_withcollapse (for efficiency reasons)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -641,7 +641,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep)
  *          This function hasn't been used at all before (strange, isn't it?);
  *          From now on it's being called by stri_flatten_withressep
  *          (a small performance gain)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -708,7 +708,7 @@ SEXP stri_flatten_noressep(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-18)
  *          Call stri_flatten_noressep if needed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *

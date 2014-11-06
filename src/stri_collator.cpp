@@ -55,7 +55,7 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc;
  *    + many other bugs in settings establishment
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Fetch opts vals first to avoid memleaks (missing ucol_close calls on Rf_error)
  */
@@ -78,7 +78,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    SEXP names = Rf_getAttrib(opts_collator, R_NamesSymbol);
    if (names == R_NilValue || LENGTH(names) != narg)
       Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
-      
+
    /* First, let's fetch collator's options --
    this process may call Rf_error, so we cannot do uloc_open yet (memleaks!) */
    UColAttributeValue  opt_FRENCH_COLLATION = UCOL_DEFAULT;
@@ -93,7 +93,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    for (R_len_t i=0; i<narg; ++i) {
       if (STRING_ELT(names, i) == NA_STRING)
          Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
-         
+
       const char* curname = CHAR(STRING_ELT(names, i));
       if (!strcmp(curname, "locale")) {
          opt_LOCALE = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
@@ -133,7 +133,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
    }
 
-   // set other opts   
+   // set other opts
    if (opt_STRENGTH != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_STRENGTH, opt_STRENGTH, &err);
@@ -142,7 +142,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
    }
-   
+
    if (opt_FRENCH_COLLATION != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_FRENCH_COLLATION, opt_FRENCH_COLLATION, &err);
@@ -151,7 +151,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
    }
-   
+
    if (opt_ALTERNATE_HANDLING != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, opt_ALTERNATE_HANDLING, &err);
@@ -160,7 +160,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
    }
-   
+
    if (opt_CASE_FIRST != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_CASE_FIRST, opt_CASE_FIRST, &err);
@@ -169,7 +169,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
    }
-   
+
    if (opt_CASE_LEVEL != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_CASE_LEVEL, opt_CASE_LEVEL, &err);
@@ -178,7 +178,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
    }
-      
+
    if (opt_NORMALIZATION_MODE != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, opt_NORMALIZATION_MODE, &err);

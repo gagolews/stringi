@@ -52,7 +52,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-18)
  *          use StriContainerRegexPattern + opts_regex
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

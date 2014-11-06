@@ -62,7 +62,7 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          using String8buf::replaceAllAtPos, slightly faster
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -230,7 +230,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *                Complete rewrite; faster
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

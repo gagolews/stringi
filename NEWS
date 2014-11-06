@@ -4,11 +4,11 @@
 
 * 0.3-1 (2014-11-06) **CRAN**
 
-   * [IMPORTANT CHANGE] #87: `%>%` overlapped with pipe operator from
+   * [IMPORTANT CHANGE] #87: `%>%` overlapped with the pipe operator from
      the `magrittr` package; now each operator like `%>%` has been renamed `%s>%`.
 
    * [IMPORTANT CHANGE] #108: Now the BreakIterator (for text boundary analysis)
-     may be better controlled via `stri_opts_brkiter()` (see options `type`,
+     may be better controlled via `stri_opts_brkiter()` (see options `type`
      and `locale` which aim to replace now-removed `boundary` and `locale` parameters
      to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
      `stri_extract_words`, `stri_locate_words`).
@@ -22,8 +22,8 @@
    * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_all` parameter,
      which defaults to TRUE for backward compatibility.
 
-   * [NEW FUNCTION] #91: `stri_subset_*`, a convenient substitute
-     for `str[stri_detect_*(str, ...)]`, added.
+   * [NEW FUNCTION] #91: `stri_subset_*`, a convenient and more efficient
+     substitute for `str[stri_detect_*(str, ...)]`, added.
 
    * [NEW FEATURE] #100: `stri_split_fixed`, `stri_split_charclass`,
      `stri_split_regex`, `stri_split_coll` gained a `tokens_only` parameter,
@@ -33,7 +33,7 @@
      to character matrices, useful in connection with `stri_split`
      and `stri_extract`.
 
-   * [NEW FEATURE] #107: `stri_split_*` now allow setting `omit_empty=NA` argument.
+   * [NEW FEATURE] #107: `stri_split_*` now allow setting an `omit_empty=NA` argument.
 
    * [NEW FEATURE] #106: `stri_split` and `stri_extract_all` gained a `simplify`
      argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
@@ -46,15 +46,14 @@
      parameter; it indicates which ICU BreakIterator should be used when
      performing case mapping.
 
-   * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`
+   * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`.
 
    * [BUGFIX] #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 
    * [BUGFIX] #99: `stri_replace_all' did not use the `replacement` arg.
 
-   * [BUGFIX] #94: `R CMD check` should no longer fail
-     when `icudt` download failed.
+   * [BUGFIX] #94: `R CMD check` should no longer fail if `icudt` download failed.
 
    * [BUGFIX] #112: Some of the objects were not PROTECTed from
      being garbage collected, which might have caused spontaneous SEGFAULTS.

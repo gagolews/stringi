@@ -257,8 +257,8 @@ SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
 
 /** Match an option from a set of options
  *
- * @param option
- * @param set
+ * @param option an option
+ * @param set a set of options to match
  * @return index in set, negative value for no match
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)

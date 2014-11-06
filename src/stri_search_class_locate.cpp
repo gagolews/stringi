@@ -59,7 +59,7 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -170,11 +170,11 @@ SEXP stri_locate_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          using StriContainerCharClass::locateAll;
  *          no longer vectorized over `merge`
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -204,20 +204,20 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge)
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
-      
+
       deque< pair<R_len_t, R_len_t> > occurrences;
       StriContainerCharClass::locateAll(
          occurrences, &pattern_cont.get(i),
          str_cont.get(i).c_str(), str_cont.get(i).length(), merge_cur,
          true /* code point-based indices */
       );
-      
+
       R_len_t noccurrences = (R_len_t)occurrences.size();
       if (noccurrences == 0) {
          SET_VECTOR_ELT(ret, i, notfound);
          continue;
       }
-      
+
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* cur_res_int = INTEGER(cur_res);

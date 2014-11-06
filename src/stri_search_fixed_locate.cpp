@@ -56,7 +56,7 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -176,7 +176,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

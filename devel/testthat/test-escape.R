@@ -24,7 +24,7 @@ test_that("stri_unescape_unicode", {
    expect_equivalent(stri_unescape_unicode(NA), NA_character_)
 
    expect_equivalent(stri_unescape_unicode(letters), letters)
-   
+
    expect_warning(stri_unescape_unicode("\\Uffffffff"))
 
    s <- c("abc\u0105\U00100000", "abc'\a\n\\n")

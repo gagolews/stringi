@@ -44,7 +44,7 @@
  * @return logical vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-06-03)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -120,7 +120,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from)
  * @return logical vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-06-03)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

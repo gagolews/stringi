@@ -45,7 +45,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          fail on incorrect utf8 byte seqs;
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
@@ -151,7 +151,7 @@ SEXP stri_escape_unicode(SEXP str)
  *  @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-17)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */

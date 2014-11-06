@@ -64,11 +64,11 @@ using namespace std;
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          using String8buf::replaceAllAtPos and StriContainerCharClass::locateAll;
  *          no longer vectorized over merge
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -147,7 +147,7 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
  * @return character vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -161,7 +161,7 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
       UNPROTECT(1);
       return stri__vector_empty_strings(0);
    }
-   
+
    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
    R_len_t pattern_n = LENGTH(pattern);
@@ -179,9 +179,9 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
       UNPROTECT(4);
       return ret;
    }
-      
+
    bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
-   
+
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, str_n, false); // writable);
    StriContainerUTF8 replacement_cont(replacement, pattern_n);
@@ -195,7 +195,7 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
-      
+
       for (R_len_t j = 0; j<str_n; ++j) {
          if (str_cont.isNA(j)) continue;
 
@@ -207,7 +207,7 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
             str_cur_s, str_cur_n, merge_cur,
             false /* byte-based indices */
          );
-         
+
          R_len_t     replacement_cur_n = replacement_cont.get(i).length();
          R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
          buf.resize(buf_need, false/*destroy contents*/);
@@ -269,7 +269,7 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          StriContainerCharClass now relies on UnicodeSet
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

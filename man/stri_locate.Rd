@@ -87,7 +87,8 @@ for no match or \code{NA} arguments.
 \code{stri_locate_first*} and \code{stri_locate_last*},
 on the other hand, return an integer matrix with
 two columns, giving the start and end positions of the first
-or the last matches, respectively, and two \code{NA}s iff not found.
+or the last matches, respectively, and two \code{NA}s if and
+only if they are not found.
 }
 \description{
 These functions may be used e.g. to find the indices (positions), at which

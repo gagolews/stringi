@@ -26,7 +26,7 @@ Current implementation is very simple:
 words are selected randomly from a Zipf distribution
 (we base on a set of ca. 190 predefined Latin words).
 Number of words per sentence and sentences per paragraph
-follows a distretized, truncated normal distribution.
+follows a discretized, truncated normal distribution.
 No Markov chain modeling, just i.i.d. word selection.
 }
 \examples{

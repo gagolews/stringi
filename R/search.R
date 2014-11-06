@@ -390,14 +390,14 @@ invisible(NULL)
 #' In this man page we describe how character classes are
 #' declared in the \pkg{stringi} package
 #' so that you may e.g. find their occurrences in your search activities
-#' or generate random codepoints with \code{\link{stri_rand_strings}}.
+#' or generate random code points with \code{\link{stri_rand_strings}}.
 #' Moreover, \pkg{ICU} regex engines uses the same
 #' scheme for denoting character classes.
 #'
 #'
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
-#' a single character (Unicode codepoint) search-based operations.
+#' a single character (i.e. Unicode code point) search-based operations.
 #' Since stringi_0.2-1 you may obtain
 #' roughly the same results using \link{stringi-search-regex}.
 #' However, these very functions aim to be faster.
@@ -432,7 +432,7 @@ invisible(NULL)
 #' all characters but ``a'' through ``z''.
 #' On the other hand, \code{[[pat1][pat2]]},
 #' \code{[[pat1]\&[pat2]]}, and \code{[[pat1]-[pat2]]}
-#' denote union, intersection, and asymmetric diference of sets
+#' denote union, intersection, and asymmetric difference of sets
 #' specified by \code{pat1} and \code{pat2}, respectively.
 #'
 #' Note that all white spaces are ignored unless they are quoted or backslashed

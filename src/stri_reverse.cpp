@@ -51,7 +51,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          detect incorrect utf8 byte stream
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

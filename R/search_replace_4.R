@@ -81,7 +81,7 @@
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings; \code{stri_replace_*_coll} only
 #' @param merge single logical value;
-#' should consecutive matches be merged into one string;  
+#' should consecutive matches be merged into one string;
 #' \code{stri_replace_all_charclass} only
 #' @param vectorize_all single logical value;
 #' should each occurrence of a pattern in every string

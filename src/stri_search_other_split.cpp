@@ -52,7 +52,7 @@ using namespace std;
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -141,10 +141,10 @@ SEXP stri_split_lines1(SEXP str)
  * @return list of character vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-08-04)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
  *                removed `n_max` arg, as it doesn't make sense
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

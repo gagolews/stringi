@@ -30,7 +30,7 @@ scheme reversible?;
    to represent an UChar (in UTF-16, this is not the same as UChar32)
 \item \code{CharSize.max} -- maximal number of bytes used
    to represent an UChar (in UTF-16, this is not the same as UChar32,
-   i.e. does not reflect the maximal codepoint representation size)
+   i.e. does not reflect the maximal code point representation size)
 }
 }
 \description{

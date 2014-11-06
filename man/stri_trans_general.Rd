@@ -19,7 +19,7 @@ Returns a character vector.
 for processing Unicode text. They are a powerful and flexible mechanism
 for handling a variety of different tasks, including:
 \itemize{
-\item    Uppercase, Lowercase, Titlecase, Full/Halfwidth conversions,
+\item    Upper Case, Lower Case, Title Case, Full/Halfwidth conversions,
 \item    Normalization,
 \item    Hex and Character Name conversions,
 \item    Script to Script conversion/transliteration.
