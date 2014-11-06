@@ -55,6 +55,9 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc;
  *    + many other bugs in settings establishment
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ *    Fetch opts vals first to avoid memleaks (missing ucol_close calls on Rf_error)
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
@@ -75,74 +78,119 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    SEXP names = Rf_getAttrib(opts_collator, R_NamesSymbol);
    if (names == R_NilValue || LENGTH(names) != narg)
       Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
+      
+   /* First, let's fetch collator's options --
+   this process may call Rf_error, so we cannot do uloc_open yet (memleaks!) */
+   UColAttributeValue  opt_FRENCH_COLLATION = UCOL_DEFAULT;
+   UColAttributeValue  opt_ALTERNATE_HANDLING = UCOL_DEFAULT;
+   UColAttributeValue  opt_CASE_FIRST = UCOL_DEFAULT;
+   UColAttributeValue  opt_CASE_LEVEL = UCOL_DEFAULT;
+   UColAttributeValue  opt_NORMALIZATION_MODE = UCOL_DEFAULT;
+   UColAttributeValue  opt_STRENGTH = UCOL_DEFAULT;
+   UColAttributeValue  opt_NUMERIC_COLLATION = UCOL_DEFAULT;
+   const char*         opt_LOCALE = NULL;
 
-   // search for locale & create collator
-   UErrorCode err = U_ZERO_ERROR;
-   UCollator* col = NULL;
    for (R_len_t i=0; i<narg; ++i) {
       if (STRING_ELT(names, i) == NA_STRING)
          Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
+         
       const char* curname = CHAR(STRING_ELT(names, i));
       if (!strcmp(curname, "locale")) {
-         const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
-         col = ucol_open(qloc, &err);
-         break;
+         opt_LOCALE = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
+      } else if  (!strcmp(curname, "strength")) {
+         int val = stri__prepare_arg_integer_1_notNA(VECTOR_ELT(opts_collator, i), "strength");
+         opt_STRENGTH = (UColAttributeValue)(val-1);
+      } else if  (!strcmp(curname, "alternate_shifted")) {
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "alternate_shifted");
+         opt_ALTERNATE_HANDLING = (val_bool?UCOL_SHIFTED:UCOL_NON_IGNORABLE);
+      } else if  (!strcmp(curname, "uppercase_first")) {
+         SEXP val;
+         PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_collator, i), "uppercase_first"));
+         opt_CASE_FIRST = (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:
+                          (LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST));
+         UNPROTECT(1);
+      } else if  (!strcmp(curname, "french")) {
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "french");
+         opt_FRENCH_COLLATION = (val_bool?UCOL_ON:UCOL_OFF);
+      } else if  (!strcmp(curname, "case_level")) {
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "case_level");
+         opt_CASE_LEVEL = (val_bool?UCOL_ON:UCOL_OFF);
+      } else if  (!strcmp(curname, "normalization")) {
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "normalization");
+         opt_NORMALIZATION_MODE = (val_bool?UCOL_ON:UCOL_OFF);
+      } else if  (!strcmp(curname, "numeric")) {
+         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "numeric");
+         opt_NUMERIC_COLLATION = (val_bool?UCOL_ON:UCOL_OFF);
+      } else {
+         Rf_warning(MSG__INCORRECT_COLLATOR_OPTION, curname);
       }
    }
 
-   if (!col) col = ucol_open(NULL, &err); // default locale
-
+   // create collator
+   UErrorCode err = U_ZERO_ERROR;
+   UCollator* col = ucol_open(opt_LOCALE, &err);
    if (U_FAILURE(err)) {
       Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
    }
 
-   // other opts
-   for (R_len_t i=0; i<narg; ++i) {
-      if (STRING_ELT(names, i) == NA_STRING) {
-         ucol_close(col);
-         Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
-      }
-
-      const char* curname = CHAR(STRING_ELT(names, i));
+   // set other opts   
+   if (opt_STRENGTH != UCOL_DEFAULT) {
       err = U_ZERO_ERROR;
-
-      if (!strcmp(curname, "locale")) {
-         // ignore
-      } else if  (!strcmp(curname, "strength")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         int val = stri__prepare_arg_integer_1_notNA(VECTOR_ELT(opts_collator, i), "strength");
-         ucol_setAttribute(col, UCOL_STRENGTH, (UColAttributeValue)(val-1), &err);
-      } else if  (!strcmp(curname, "alternate_shifted")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "alternate_shifted");
-         ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, val?UCOL_SHIFTED:UCOL_NON_IGNORABLE, &err);
-      } else if  (!strcmp(curname, "uppercase_first")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         SEXP val;
-         PROTECT(val = stri_prepare_arg_logical_1(VECTOR_ELT(opts_collator, i), "uppercase_first"));
-         ucol_setAttribute(col, UCOL_CASE_FIRST,
-            (LOGICAL(val)[0]==NA_LOGICAL?UCOL_OFF:(LOGICAL(val)[0]?UCOL_UPPER_FIRST:UCOL_LOWER_FIRST)), &err);
-         UNPROTECT(1);
-      } else if  (!strcmp(curname, "french")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "french");
-         ucol_setAttribute(col, UCOL_FRENCH_COLLATION , val_bool?UCOL_ON:UCOL_OFF, &err);
-      } else if  (!strcmp(curname, "case_level")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "case_level");
-         ucol_setAttribute(col, UCOL_CASE_LEVEL, val_bool?UCOL_ON:UCOL_OFF, &err);
-      } else if  (!strcmp(curname, "normalization")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "normalization");
-         ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, val_bool?UCOL_ON:UCOL_OFF, &err);
-      } else if  (!strcmp(curname, "numeric")) {
-         // @TODO: stri_prepare may call Rf_error ---> where's ucol_close??
-         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "numeric");
-         ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, val_bool?UCOL_ON:UCOL_OFF, &err);
-      } else {
-         Rf_warning(MSG__INCORRECT_COLLATOR_OPTION, curname);
+      ucol_setAttribute(col, UCOL_STRENGTH, opt_STRENGTH, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
       }
+   }
+   
+   if (opt_FRENCH_COLLATION != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_FRENCH_COLLATION, opt_FRENCH_COLLATION, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
+      }
+   }
+   
+   if (opt_ALTERNATE_HANDLING != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_ALTERNATE_HANDLING, opt_ALTERNATE_HANDLING, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
+      }
+   }
+   
+   if (opt_CASE_FIRST != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_CASE_FIRST, opt_CASE_FIRST, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
+      }
+   }
+   
+   if (opt_CASE_LEVEL != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_CASE_LEVEL, opt_CASE_LEVEL, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
+      }
+   }
+      
+   if (opt_NORMALIZATION_MODE != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_NORMALIZATION_MODE, opt_NORMALIZATION_MODE, &err);
+      if (U_FAILURE(err)) {
+         ucol_close(col);
+         Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
+      }
+   }
 
+   if (opt_NUMERIC_COLLATION != UCOL_DEFAULT) {
+      err = U_ZERO_ERROR;
+      ucol_setAttribute(col, UCOL_NUMERIC_COLLATION, opt_NUMERIC_COLLATION, &err);
       if (U_FAILURE(err)) {
          ucol_close(col);
          Rf_error(MSG__RESOURCE_ERROR_GET); // error() allowed here
