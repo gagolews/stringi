@@ -1,10 +1,33 @@
-** stringi package NEWS and CHANGELOG **
-========================================
+                  ** stringi package NEWS and CHANGELOG **
+===============================================================================
 
 
 * 0.4-1 (2014-??-??) **under development**
 
    * t.b.d.
+
+TO DO: high priority
+
+   * #113 ...
+
+   * #111 ...
+
+   * #110 ...
+
+   * #23 ...
+
+TO DO: possibly
+
+   * #93 ...
+
+   * #89 ...
+
+   * #46 ...
+
+   * #44 ...
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.3-1 (2014-11-06) **CRAN**
@@ -18,13 +41,13 @@
      to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
      `stri_extract_words`, `stri_locate_words`).
 
-   * [NEW FUNCTIONS] #109: `stri_count_boundaries` and `str_count_words`
+   * [NEW FUNCTIONS] #109: `stri_count_boundaries` and `stri_count_words`
      count the number of text boundaries in a string.
 
    * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
      determine whether a string starts or ends with a given pattern.
 
-   * [NEW FEATURE] #102: stri_replace_all_* gained a `vectorize_all` parameter,
+   * [NEW FEATURE] #102: `stri_replace_all_*` gained a `vectorize_all` parameter,
      which defaults to TRUE for backward compatibility.
 
    * [NEW FUNCTION] #91: `stri_subset_*`, a convenient and more efficient
@@ -56,7 +79,7 @@
    * [BUGFIX] #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
      give incorrect results if one of search strings were of length 0.
 
-   * [BUGFIX] #99: `stri_replace_all' did not use the `replacement` arg.
+   * [BUGFIX] #99: `stri_replace_all` did not use the `replacement` arg.
 
    * [BUGFIX] #94: `R CMD check` should no longer fail if `icudt` download failed.
 
@@ -69,6 +92,9 @@
      `valgrind --tool=memcheck --leak-check=full` have been removed.
 
    * [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.2-5 (2014-05-16) **CRAN**
@@ -204,6 +230,9 @@
    * [BUGFIX] `stri_sort` did not guarantee to return strings in UTF-8.
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.1-25 (2014-03-12) **CRAN**
 
     * LICENCE tweaks.
@@ -285,3 +314,6 @@
 * 0.1-1 (2013-01-05) **devel**
 
    * The stringi project has been established on GitHub.
+
+
+-------------------------------------------------------------------------------
