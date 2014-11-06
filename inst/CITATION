@@ -1,0 +1,14 @@
+citHeader("To cite package 'stringi' in publications use:")
+
+citEntry(entry = "Manual",
+  title = "R package stringi: Character string processing facilities",
+  author = personList(as.person("Marek Gagolewski"), as.person("Bartek Tartanus")),
+  year = "2014",
+  url = "http://stringi.rexamine.com/",
+  doi = "10.5281/zenodo.12594",
+  textVersion =
+  paste("Gagolewski M., Tartanus B. (2014).",
+        "R package stringi: Character string processing facilities.",
+        "http://stringi.rexamine.com/.",
+        "DOI:10.5281/zenodo.12594")
+)
