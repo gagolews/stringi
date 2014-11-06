@@ -15,8 +15,13 @@ TO DO list - Preparing `stringi` for submission
 7. test with valgrind, asan, ubsan
 8. check with win-builder + then run tests on Windows
 9. Check PDF manual: `R CMD Rd2pdf stringi/`
-10. Check depending packages + email their authors
+10. Check depending packages + email their authors:
 
+```
+pkgs <- c("qdapRegex", "RcmdrPlugin.temis", "rplexos")
+install.packages(pkgs, INSTALL_opts = "--install-tests")
+for (p in pkgs) tryCatch({print(p); testthat::test_package(p)}, error=function(e) print(e))
+```
 
 
 Check examples when there is no icu52dt
