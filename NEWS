@@ -61,9 +61,8 @@
 
    * [BUGFIX] Some collator's options were not passed correctly to ICU services.
 
-   * [BUGFIX] Memmory leaks causes as detected by
-     `valgrind --tool=memcheck --leak-check=full` have been fixed.......
-TODO: stri_collator, stri_prepareargs.............
+   * [BUGFIX] Memory leaks causes as detected by
+     `valgrind --tool=memcheck --leak-check=full` have been removed.
 
    * [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
 
