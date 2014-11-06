@@ -44,7 +44,7 @@
  */
 SEXP stri_locale_set(SEXP loc)
 {
-   const char* qloc = stri__prepare_arg_locale(loc, "locale", false);
+   const char* qloc = stri__prepare_arg_locale(loc, "locale", false); /* this is R_alloc'ed */
    UErrorCode err = U_ZERO_ERROR;
    uloc_setDefault(qloc, &err);
    if (U_FAILURE(err))
@@ -87,7 +87,7 @@ SEXP stri_locale_list()
  */
 SEXP stri_locale_info(SEXP loc)
 {
-   const char* qloc = stri__prepare_arg_locale(loc, "locale", true);
+   const char* qloc = stri__prepare_arg_locale(loc, "locale", true); /* this is R_alloc'ed */
    const R_len_t infosize = 4;
    SEXP vals;
 
