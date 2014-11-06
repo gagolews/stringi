@@ -57,7 +57,7 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri__replace_allfirstlast_coll (opts_collator == NA not allowed)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -159,9 +159,12 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
  * @return character vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ *    Added missing ucol_close
  */
 SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
 { // version beta
@@ -192,7 +195,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
       UNPROTECT(4);
       return ret;
    }
-   
+
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
 
@@ -204,10 +207,12 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
       if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+         if (collator) { ucol_close(collator); collator=NULL; }
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
-      if (pattern_cont.get(i).length() <= 0) {
+      else if (pattern_cont.get(i).length() <= 0) {
+         if (collator) { ucol_close(collator); collator=NULL; }
          Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
@@ -215,19 +220,19 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
 
       for (R_len_t j = 0; j<str_n; ++j) {
          if (str_cont.isNA(j) || str_cont.get(j).length() <= 0) continue;
-         
+
          UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(j));
          usearch_reset(matcher);
          UErrorCode status = U_ZERO_ERROR;
          R_len_t remUChars = 0;
          deque< pair<R_len_t, R_len_t> > occurrences;
-   
+
          int start = (int)usearch_first(matcher, &status);
          if (U_FAILURE(status)) throw StriException(status);
-   
+
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[j] at all
-   
+
          while (start != USEARCH_DONE) {
             R_len_t mlen = usearch_getMatchedLength(matcher);
             remUChars += mlen;
@@ -235,7 +240,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
             start = usearch_next(matcher, &status);
             if (U_FAILURE(status)) throw StriException(status);
          }
-         
+
          R_len_t replacement_cur_n = replacement_cont.get(i).length();
          R_len_t noccurrences = (R_len_t)occurrences.size();
          UnicodeString ans(str_cont.get(j).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
@@ -280,7 +285,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri_replace_all_coll (opts_collator == NA not allowed)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *          vectorize_all arg added
  */

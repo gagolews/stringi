@@ -12,11 +12,11 @@ test_that("stri_replace_all_charclass-vectorize_all=FALSE", {
    expect_identical(stri_replace_all_charclass("","\\p{Wspace}","?", vectorize_all=FALSE),"")
    expect_identical(stri_replace_all_charclass(c("a a", " aa", "aa ", "aa"), "\\p{Wspace}", "X", vectorize_all=FALSE), c("aXa", "Xaa", "aaX", "aa"))
    expect_identical(stri_replace_all_charclass(c("a a ", " aa ", "aa  ", "aa"), "\\p{Wspace}", "X", vectorize_all=FALSE), c("aXaX", "XaaX", "aaXX", "aa"))
-   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Z}", "\\p{Nd}", "\\p{Ll}", "\\p{P}"), 
+   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Z}", "\\p{Nd}", "\\p{Ll}", "\\p{P}"),
       c("x", "y", "z", "w"), vectorize_all=FALSE), "zzz")
-   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Ll}", "\\p{Z}", "\\p{Nd}", "\\p{P}"), 
+   expect_identical(stri_replace_all_charclass("a1 ", c("\\p{Ll}", "\\p{Z}", "\\p{Nd}", "\\p{P}"),
       c("x", "y", "z", "w"), vectorize_all=FALSE), "xzy")
-   expect_identical(stri_replace_all_charclass("aaa bbb   ccc", c("\\P{Z}", "\\p{Z}"), 
+   expect_identical(stri_replace_all_charclass("aaa bbb   ccc", c("\\P{Z}", "\\p{Z}"),
       c("x", "y"), vectorize_all=FALSE), "xxxyxxxyyyxxx")
    expect_identical(stri_replace_all_charclass("aaa bbb   ccc", c("\\P{Z}", "\\p{Z}"), merge=TRUE,
       c("x", "y"), vectorize_all=FALSE), "xyxyx")

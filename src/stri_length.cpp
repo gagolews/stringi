@@ -82,7 +82,7 @@ R_len_t stri__numbytes_max(SEXP str)
  * @version 0.2-1 (Marek Gagolewski, 2014-03-27)
  *          using StriUcnv;
  *          warn on invalid utf-8 sequences
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -171,7 +171,7 @@ SEXP stri_length(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          StriException-friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -207,7 +207,7 @@ SEXP stri_numbytes(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *          StriException-friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

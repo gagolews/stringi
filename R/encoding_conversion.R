@@ -214,7 +214,7 @@ stri_enc_fromutf32 <- function(vec) {
 #' A similar behavior is observed when calling \code{\link{enc2utf8}}.
 #'
 #' For \code{is_unknown_8bit == TRUE}, if a string is declared to be neither in ASCII
-#' nor in UTF-8, then all bytecodes > 127 are replaced with
+#' nor in UTF-8, then all byte codes > 127 are replaced with
 #' the Unicode REPLACEMENT CHARACTER (\\Ufffd).
 #' Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
 #' missing value for single characters.

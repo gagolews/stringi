@@ -139,7 +139,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-09)
  *          allow NULL for opts_regex
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Disallow NA options
  */

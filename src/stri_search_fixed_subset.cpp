@@ -45,10 +45,10 @@
  * @return character vector
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
  *                using std::vector<int> to avoid mem-leaks
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

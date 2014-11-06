@@ -54,7 +54,7 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-20)
  *          use stri_error_handler, pad should be a single code point, not byte
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */

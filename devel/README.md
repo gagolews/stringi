@@ -8,16 +8,16 @@ TO DO list - Preparing `stringi` for submission
 2. Rebuild & reinstall the package. Documentation files in man/ will be updated
       via Roxygen2.
 3. Call R CMD build --compact-vignettes
-4. Call R CMD check --as-cran
+4. Call R CMD check --as-cran (also on the latest R-devel)
 5. Make sure string_*.tar.gz does not contain devel/
 6. Check how the package compiles with Oracle Solaris Studio, on Win and OS X
       Win: *** http://win-builder.r-project.org/ ***
+7. test with valgrind, asan, ubsan
+8. check with win-builder + then run tests on Windows
+9. Check PDF manual: `R CMD Rd2pdf stringi/`
+10. Check depending packages + email their authors
 
-Check PDF manual:
 
-```
-R CMD Rd2pdf stringi/
-```
 
 Check examples when there is no icu52dt
 (comment appropriate section in `src/install.libs.R`)
@@ -30,7 +30,7 @@ CC="clang" CXX="clang++" ./configure --prefix=/opt/R-devel-clang
 make
 
 clang -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c99 -c *.c
-clang++ -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -w -std=c++98 -c *.cpp
+clang++ -I. -Iunicode -Icommon -Ii18n -I/usr/local/include -I/usr/include/R -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DNDEBUG -pedantic  -Wall -std=c++98 -c *.cpp
 
 
 ###

@@ -50,7 +50,7 @@ using namespace std;
  * @return character matrix
  *
  * @version 0.1-??? (Marek Gagolewski, 2013-06-22)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -175,7 +175,7 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @return list of character matrices
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

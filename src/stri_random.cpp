@@ -44,7 +44,7 @@
  * @return character vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-04)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -140,7 +140,7 @@ SEXP stri_rand_shuffle(SEXP str)
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          Use StriContainerCharClass which now contains UnicodeSets;
  *          vectorized also over pattern
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

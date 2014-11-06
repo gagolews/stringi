@@ -53,7 +53,7 @@ SEXP stri_test_returnasis(SEXP x)
  *  Results are printed on STDERR
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -91,7 +91,7 @@ SEXP stri_test_Rmark(SEXP s)
  * @return R_NilValue
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

@@ -398,7 +398,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  * @return always an R character vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -445,7 +445,7 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  * @return always an R double vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -492,7 +492,7 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  * @return always an R integer vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -539,7 +539,7 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  * @return always an R logical vector with >=1 element
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -586,7 +586,7 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
  * @return a boolean value
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -615,7 +615,7 @@ bool stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname)
  * @return an integer value
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -644,7 +644,7 @@ int stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname)
  * @return a double value
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-26)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -682,10 +682,10 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
   * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Use R_alloc for the string returned
  */
@@ -714,7 +714,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
          const char* ret_tmp = (const char*)CHAR(STRING_ELT(loc, 0)); // ret may be gc'ed
          size_t ret_n = strlen(ret_tmp);
          /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
-         char* ret = R_alloc(ret_n+1, sizeof(char));
+         char* ret = R_alloc(ret_n+1, (int)sizeof(char));
          memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
          return ret;
@@ -751,7 +751,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Use R_alloc for the string returned
  */
@@ -777,7 +777,7 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
          const char* ret_tmp = (const char*)CHAR(STRING_ELT(enc, 0)); // ret may be gc'ed
          size_t ret_n = strlen(ret_tmp);
          /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
-         char* ret = R_alloc(ret_n+1, sizeof(char));
+         char* ret = R_alloc(ret_n+1, (int)sizeof(char));
          memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
          return ret;

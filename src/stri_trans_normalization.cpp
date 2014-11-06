@@ -111,7 +111,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
  *          renamed: stri_enc_nf -> stri_trans_nf
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -128,7 +128,7 @@ SEXP stri_trans_nf(SEXP str, SEXP type)
 
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
-      
+
    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
    R_len_t str_length = LENGTH(str);
 
@@ -165,7 +165,7 @@ SEXP stri_trans_nf(SEXP str, SEXP type)
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-19)
  *          renamed: stri_enc_nf -> stri_trans_nf
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

@@ -52,7 +52,7 @@ using namespace std;
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          use StriContainerRegexPattern + opts_regex
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -143,7 +143,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-19)
  *          Use StriContainerRegexPattern + opts_regex
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

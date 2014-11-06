@@ -45,12 +45,15 @@
  * @return character vector
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-17)
  *                using std::vector<int> to avoid mem-leaks
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ *    Added missing ucol_close
  */
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 {
@@ -89,9 +92,10 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
       if (U_FAILURE(status)) throw StriException(status);
    }
 
+   if (collator) { ucol_close(collator); collator = NULL; }
    STRI__UNPROTECT_ALL /* not dependent on PROTECTed objects anymore */
    return stri__subset_by_logical(str_cont, which, result_counter);
    STRI__ERROR_HANDLER_END(
-      if (collator) ucol_close(collator);
+      if (collator) { ucol_close(collator); collator = NULL; }
    )
 }

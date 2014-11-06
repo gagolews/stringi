@@ -102,7 +102,7 @@
  * @return logical vector
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -178,7 +178,7 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -279,7 +279,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -401,7 +401,7 @@ struct StriSortComparer {
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -521,7 +521,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -591,7 +591,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -671,7 +671,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-07)
  *          opts_collator == NA no longer allowed
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

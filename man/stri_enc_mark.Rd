@@ -29,7 +29,7 @@ strings can be declared to be in \code{latin1},
 \code{UTF-8} or \code{bytes}.
 
 Moreover, via the C API we may check whether
-a string is in ASCII (\R assumes that this holds iff
+a string is in ASCII (\R assumes that this holds if and only if
 all bytes in a string are not greater than 127,
 so there is an implicit assumption that your platform uses
 an encoding which is an ASCII superset)

@@ -46,7 +46,7 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-04-05)
  *          Use StriContainerUTF8 to convert pattern strings in a constructor;
  *          Use UnicodeSet instead of stringi::CharClass
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          New method: locateAll
  */
@@ -151,10 +151,10 @@ class StriContainerCharClass : public StriContainerBase {
 #endif
          return (data[i%n]);
       }
-      
-      
+
+
       /** Locate all occurrences of a charclass
-       * 
+       *
        * @return total number of bytes @ pattern matches (idx_codepoint==false)
        * or total number of codepoints matched (idx_codepoint==true)
        */

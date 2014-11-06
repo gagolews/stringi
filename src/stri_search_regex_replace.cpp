@@ -54,7 +54,7 @@
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-07-10)
  *          BUGFIX: wrong behavior on empty str
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -142,7 +142,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          Second version, 3x faster, 2 for loops + replaceAll
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -156,7 +156,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       UNPROTECT(1);
       return stri__vector_empty_strings(0);
    }
-   
+
    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
@@ -188,7 +188,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
-      if (pattern_cont.get(i).length() <= 0) {
+      else if (pattern_cont.get(i).length() <= 0) {
          Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);

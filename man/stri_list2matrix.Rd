@@ -21,7 +21,7 @@ This function converts a given list of atomic vectors to
 a character matrix.
 }
 \details{
-This function is similar to the builtin \code{\link{simplify2array}}
+This function is similar to the built-in \code{\link{simplify2array}}
 function. However, it always returns a character matrix,
 even if each element in \code{x} is of length 1
 or if elements in \code{x} are not of the same lengths.

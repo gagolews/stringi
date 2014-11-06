@@ -46,7 +46,7 @@
  * @version 0.2-3 (Marek Gagolewski, 2015-05-12)
  *          uses Transliterator::getAvailableIDs
  *          as getAvailableID is obsolete as of ICU 3.x
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

@@ -49,7 +49,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *                detect invalid UTF-8 byte streams
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -130,7 +130,7 @@ SEXP stri_stats_general(SEXP str)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-01)
  *                detect invalid UTF-8 byte streams
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

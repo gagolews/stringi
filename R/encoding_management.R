@@ -103,7 +103,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #'    to represent an UChar (in UTF-16, this is not the same as UChar32)
 #' \item \code{CharSize.max} -- maximal number of bytes used
 #'    to represent an UChar (in UTF-16, this is not the same as UChar32,
-#'    i.e. does not reflect the maximal codepoint representation size)
+#'    i.e. does not reflect the maximal code point representation size)
 #' }
 #'
 #' @family encoding_management
@@ -183,7 +183,7 @@ stri_enc_get <- function() {
 #' \code{UTF-8} or \code{bytes}.
 #'
 #' Moreover, via the C API we may check whether
-#' a string is in ASCII (\R assumes that this holds iff
+#' a string is in ASCII (\R assumes that this holds if and only if
 #' all bytes in a string are not greater than 127,
 #' so there is an implicit assumption that your platform uses
 #' an encoding which is an ASCII superset)

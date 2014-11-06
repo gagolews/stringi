@@ -51,7 +51,7 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          new fun: stri__extract_firstlast_coll (opts_collator == NA not allowed)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -61,7 +61,7 @@ SEXP stri__extract_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, bo
    // if prepare_arg had failed, we would have a mem leak
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
-   
+
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -168,10 +168,10 @@ SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          added simplify param
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */

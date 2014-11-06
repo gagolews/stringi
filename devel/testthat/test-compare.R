@@ -46,14 +46,14 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE)), 0)
 
    expect_equivalent(stri_cmp(stri_trans_nfkd('\u0105'), '\u105'), 0L)
-   
+
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=NA)))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(strength=NA)))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(french=NA)))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(case_level=NA)))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(normalization=NA)))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(numeric=NA)))
-   
+
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted="error:)")))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(french="error:)")))
    expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(case_level="error:)")))

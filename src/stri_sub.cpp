@@ -73,7 +73,6 @@
       length_tab    = INTEGER(length);                                       \
       PROTECT(to); /* fake - not to provoke stack imbalance */               \
    }
-   
 
 
 #define STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2) \
@@ -124,7 +123,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          Use stri__sub_prepare_from_to_length()
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -226,7 +225,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-04-03)
  *          Use stri__sub_prepare_from_to_length()
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -255,7 +254,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
       UNPROTECT(5);
       return Rf_allocVector(STRSXP, 0);
    }
-   
+
    STRI__ERROR_HANDLER_BEGIN(5)
    StriContainerUTF8_indexable str_cont(str, vectorize_len);
    StriContainerUTF8 value_cont(value, vectorize_len);
