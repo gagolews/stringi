@@ -93,7 +93,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-24)
  *          Use a custom BreakIterator with stri_trans_totitle
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
 */
@@ -109,14 +109,14 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
    UBreakIterator* briter = NULL;
 
    if (_type != 3) { // tolower, toupper
-      qloc = stri__prepare_arg_locale(opts, "locale", true);
+      qloc = stri__prepare_arg_locale(opts, "locale", true); /* this is R_alloc'ed */
    }
    else { // totitle
-      qloc = stri__opts_brkiter_get_locale(opts);
+      qloc = stri__opts_brkiter_get_locale(opts); /* this is R_alloc'ed */
       int brkiter_cur = stri__opts_brkiter_select_iterator(opts, "word");
       briter = stri__opts_brkiter_get_uiterator(brkiter_cur, qloc);
    }
-   
+
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)

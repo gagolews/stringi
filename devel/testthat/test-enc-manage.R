@@ -18,7 +18,7 @@ test_that("stri_enc_list, stri_enc_info", {
 
    suppressWarnings(expect_true(length(sapply(
       stri_enc_list(),
-      function(enc) stri_enc_info(enc[[1]])$Name.friendly
+      function(enc) {stri_enc_info(enc[[1]])$Name.friendly}
    )) > 0))
 
    expect_equivalent(stri_enc_info("CP-1250")$Name.friendly, "windows-1250") # CE

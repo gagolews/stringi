@@ -181,20 +181,20 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
  *          single function for wrap_greedy and wrap_dynamic
  *          (dispatch inside);
  *          use BreakIterator
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
 {
-   const char* qloc = stri__prepare_arg_locale(locale, "locale", true);
-   Locale loc = Locale::createFromName(qloc);
    double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "width");
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
    if (width_val <= 0)
       Rf_error(MSG__EXPECTED_POSITIVE, "width");
    // @TODO: check if width_val > 0
 
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+   Locale loc = Locale::createFromName(qloc);
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t str_length = LENGTH(str);
    BreakIterator* briter = NULL;

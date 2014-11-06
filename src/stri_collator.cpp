@@ -51,7 +51,7 @@
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-09)
  *          disallow NA as opts_collator
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc;
  *    + many other bugs in settings establishment
@@ -84,7 +84,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
       const char* curname = CHAR(STRING_ELT(names, i));
       if (!strcmp(curname, "locale")) {
-         const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true);
+         const char* qloc = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
          col = ucol_open(qloc, &err);
          break;
       }
@@ -102,7 +102,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          ucol_close(col);
          Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
       }
-      
+
       const char* curname = CHAR(STRING_ELT(names, i));
       err = U_ZERO_ERROR;
 

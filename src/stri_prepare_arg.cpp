@@ -685,6 +685,9 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
  * 
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ *    Use R_alloc for the string returned
  */
 const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault, bool allowna)
 {
@@ -708,9 +711,12 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
             Rf_error(MSG__LOCALE_INCORRECT_ID); // allowed here
       }
       else {
-         const char* ret = (const char*)CHAR(STRING_ELT(loc, 0));
+         const char* ret_tmp = (const char*)CHAR(STRING_ELT(loc, 0)); // ret may be gc'ed
+         size_t ret_n = strlen(ret_tmp);
+         /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
+         char* ret = R_alloc(ret_n+1, sizeof(char));
+         memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
-         // @TODO: ret may be gc'ed!!!!!
          return ret;
       }
    }
@@ -745,6 +751,9 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ *    Use R_alloc for the string returned
  */
 const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefault)
 {
@@ -765,9 +774,12 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
             Rf_error(MSG__ENC_INCORRECT_ID); // allowed here
       }
       else {
-         const char* ret = (const char*)CHAR(STRING_ELT(enc, 0));
+         const char* ret_tmp = (const char*)CHAR(STRING_ELT(enc, 0)); // ret may be gc'ed
+         size_t ret_n = strlen(ret_tmp);
+         /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
+         char* ret = R_alloc(ret_n+1, sizeof(char));
+         memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
-         // @TODO: ret may be gc'ed!!!!!
          return ret;
       }
    }

@@ -21,12 +21,13 @@ make install
 /opt/R-devel-clang/bin/R CMD check --as-cran --run-donttest  /home/gagolews/Projekty/stringi_0.3-1.tar.gz 
 /opt/R-devel-clang/bin/R CMD INSTALL  /home/gagolews/Projekty/stringi_0.3-1.tar.gz 
 
-#/opt/R-devel-clang/bin/R CMD INSTALL --configure-args="--disable-pkg-config --with-extra-cppflags=\"-fsanitize=undefined-trap,unsigned-integer-overflow  -Wall -pedantic -fsanitize-undefined-trap-on-error\" --with-extra-ldflags=\"-fsanitize=undefined-trap\"" /home/gagolews/Projekty/stringi_0.3-1.tar.gz
-
+#/opt/R-devel-clang/bin/R CMD INSTALL --configure-args="--disable-pkg-config --with-extra-cppflags=\"-fsanitize=undefined-trap,unsigned-integer-overflow  -Wall -pedantic -fsanitize-undefined-trap-on-error\" --with-extra-ldflags=\"-lasan\"" /home/gagolews/Projekty/stringi_0.3-1.tar.gz
+ASAN_OPTIONS="detect_leaks=1" /opt/R-devel-clang/bin/R
+setwd('/home/gagolews/Projekty/stringi')
+source('devel/testthat/run_package_tests.R')
 
 # ...
 R CMD INSTALL --configure-args="--with-extra-cppflags=\"-fsanitize=address  -Wall -pedantic -fno-omit-frame-pointer\" --with-extra-ldflags=\"-fsanitize=address -fno-omit-frame-pointer -lasan\"" /home/gagolews/Projekty/stringi_0.3-1.tar.gz
-
 
 ASAN_OPTIONS="detect_leaks=1" R
 setwd('/home/gagolews/Projekty/stringi')

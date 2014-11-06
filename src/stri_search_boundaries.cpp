@@ -47,7 +47,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
  *                add param `_default`
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -179,7 +179,7 @@ UBreakIterator* stri__opts_brkiter_get_uiterator(int brkiter_cur, const char* ql
 /** Get Break Iterator's locale
  *
  * @param opts_brkiter named list
- * @return locale ID
+ * @return locale ID, R_alloc'ed
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  */
@@ -199,7 +199,7 @@ const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter) {
             Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "locale")) {
-            return stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true);
+            return stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true); /* this is R_alloc'ed */
          }
       }
    }
@@ -208,7 +208,7 @@ const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter) {
    }
 
    // otherwise return default locale
-   return stri__prepare_arg_locale(R_NilValue, "locale", true);
+   return stri__prepare_arg_locale(R_NilValue, "locale", true); /* this is R_alloc'ed */
 }
 
 
@@ -308,14 +308,14 @@ bool stri__opts_brkiter_ignore_skip_status(const vector<int32_t>& brkskip, int32
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *          use opts_brkiter
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
 {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
-   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter);
+   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter); /* this is R_alloc'ed */
    vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
    int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
    RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);
@@ -471,14 +471,14 @@ SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter)
  * @return character vector
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
 {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
-   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter);
+   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter); /* this is R_alloc'ed */
    vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
    int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
    RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);

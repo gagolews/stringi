@@ -46,7 +46,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -54,7 +54,7 @@ SEXP stri_enc_set(SEXP enc)
 {
    // here, the default encoding may not be requested:
    const char* selected_enc
-      = stri__prepare_arg_enc(enc, "enc", false/*no default*/);
+      = stri__prepare_arg_enc(enc, "enc", false/*no default*/); /* this is R_alloc'ed */
 
    STRI__ERROR_HANDLER_BEGIN(0)
 
@@ -85,7 +85,7 @@ SEXP stri_enc_set(SEXP enc)
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
@@ -146,13 +146,13 @@ SEXP stri_enc_list()
  *
  * @version 0.2-1 (Marek Gagolewski)
  *          use StriUcnv; make StriException-friendly
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
 SEXP stri_enc_info(SEXP enc)
 {
-   const char* selected_enc = stri__prepare_arg_enc(enc, "enc", true/*default ok*/);
+   const char* selected_enc = stri__prepare_arg_enc(enc, "enc", true/*default ok*/); /* this is R_alloc'ed */
 
    STRI__ERROR_HANDLER_BEGIN(0)
    StriUcnv uconv_obj(selected_enc);
@@ -242,7 +242,7 @@ SEXP stri_enc_info(SEXP enc)
  * @return a character vector
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-25)
- * 
+ *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
