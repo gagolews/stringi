@@ -197,6 +197,9 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
+ *    BUGFIX: PROTECT mem from GC in factor object given
  */
 SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
@@ -209,8 +212,8 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-      UNPROTECT(1);
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      UNPROTECT(2);
       return x;
    }
    else if (Rf_isVectorAtomic(x))
@@ -240,6 +243,9 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
+ *    BUGFIX: PROTECT mem from GC in factor object given
  */
 SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
@@ -250,9 +256,10 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-      UNPROTECT(1);
-      return Rf_coerceVector(x, REALSXP);
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_coerceVector(x, REALSXP));
+      UNPROTECT(3);
+      return x;
    }
    else if(isReal(x))
       return x; //return as-is
@@ -281,6 +288,9 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
+ *    BUGFIX: PROTECT mem from GC in factor object given
  */
 SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
@@ -291,9 +301,10 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-      UNPROTECT(1);
-      return Rf_coerceVector(x, INTSXP);
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_coerceVector(x, INTSXP));
+      UNPROTECT(3);
+      return x;
    }
    else if (Rf_isInteger(x))
       return x; // return as-is
@@ -322,6 +333,9 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
+ *    BUGFIX: PROTECT mem from GC in factor object given
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
@@ -332,9 +346,10 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-      UNPROTECT(1);
-      return Rf_coerceVector(x, LGLSXP);
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_coerceVector(x, LGLSXP));
+      UNPROTECT(3);
+      return x;
    }
    else if (isLogical(x))
       return x; // return as-is
@@ -360,6 +375,9 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  * @return raw vector
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
+ *    BUGFIX: PROTECT mem from GC in factor object given
  */
 SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
 {
@@ -370,9 +388,10 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      x = Rf_eval(call, R_GlobalEnv); // this will mark it's encoding manually
-      UNPROTECT(1);
-      return Rf_coerceVector(x, RAWSXP);
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_coerceVector(x, RAWSXP));
+      UNPROTECT(3);
+      return x;
    }
    else if (TYPEOF(x) == RAWSXP)
       return x; // return as-is

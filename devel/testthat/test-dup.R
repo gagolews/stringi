@@ -5,6 +5,11 @@ test_that("stri_dup", {
    # basic tests (ASCII, border-line):
    suppressWarnings(expect_identical(stri_dup(c("A", "B"), c(2,3,4)), c("AA", "BBB", "AAAA")))
    expect_warning(stri_dup(c("A", "B"), c(2,3,4)))
+   
+   expect_identical(stri_dup("1", 3), "111")
+   expect_identical(stri_dup(1, 3), "111")
+   expect_identical(stri_dup(1L, 3), "111")
+   expect_identical(stri_dup(factor("1"), 3), "111")
 
    expect_identical(stri_dup(NA,NA),NA_character_)
    expect_identical(stri_dup(NA,3),NA_character_)
