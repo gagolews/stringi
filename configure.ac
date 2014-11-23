@@ -4,7 +4,7 @@
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 0.1, gagolews@rexamine.com)
+AC_INIT(stringi, 0.4, stringi@rexamine.com)
 
 ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
@@ -102,7 +102,7 @@ AC_PROG_CXX
 ##### CHECK FOR CAT ############################################################
 
 # Check for 'cat' and get full path.
-AC_ARG_VAR([CAT], [the 'cat' program used for generating the list of source files to compile])
+AC_ARG_VAR([CAT], [the 'cat' command used for generating the list of source files to compile])
 AC_PATH_PROG([CAT],[cat],[])
 if test "x$CAT" = "x"; then
    AC_MSG_NOTICE([==> cat command not found!])

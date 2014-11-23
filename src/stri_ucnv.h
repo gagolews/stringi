@@ -85,6 +85,7 @@ class StriUcnv  {
       {
          if (m_ucnv)
             ucnv_close(m_ucnv);
+         m_ucnv = NULL;
       }
 
 
