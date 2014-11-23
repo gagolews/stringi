@@ -55,9 +55,12 @@ void StriUcnv::openConverter() {
    UErrorCode err = U_ZERO_ERROR;
 
    m_ucnv = ucnv_open(m_name, &err);
-   if (U_FAILURE(err))
+   if (U_FAILURE(err)) {
+      m_ucnv = NULL;
       throw StriException(MSG__ENC_ERROR_SET);
-
+   }
+   
+   err = U_ZERO_ERROR;
    ucnv_setFromUCallBack((UConverter*)m_ucnv,
       (UConverterFromUCallback)STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN,
       (const void *)NULL, (UConverterFromUCallback *)NULL,
@@ -67,6 +70,7 @@ void StriUcnv::openConverter() {
       throw StriException(MSG__ENC_ERROR_SET);
    }
 
+   err = U_ZERO_ERROR;
    ucnv_setToUCallBack  ((UConverter*)m_ucnv,
       (UConverterToUCallback)STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,
       (const void *)NULL,
@@ -349,6 +353,7 @@ bool StriUcnv::is1to1Unicode()
    ucnv_reset(m_ucnv);
 
    while (ascii1 < ascii2) {
+      status = U_ZERO_ERROR;
       c = ucnv_getNextUChar(m_ucnv, &ascii1, ascii2, &status);
       if (U_FAILURE(status)) {
 #ifndef NDEBUG
@@ -376,6 +381,7 @@ bool StriUcnv::is1to1Unicode()
       }
 
       // character not convertable => ignore
+      status = U_ZERO_ERROR;
       if (c != UCHAR_REPLACEMENT) {
          ucnv_fromUChars(m_ucnv, buf, buflen, (UChar*)&c, 1, &status);
          if (U_FAILURE(status)) {
