@@ -123,13 +123,7 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
    mirror2 <- "http://www.mini.pw.edu.pl/~gagolews/stringi/"
    mirror3 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
 
-
-   if (.Platform$endian == 'little') {
-      fname <- "icudt52l.zip"
-   }
-   else {
-      fname <- "icudt52b.zip"
-   }
+   fname <- if (.Platform$endian == 'little') "icudt52l.zip" else "icudt52b.zip"
 
    outfname <- tempfile(fileext=".zip")
    download_from_mirror <- function(mirror, outfname) {
@@ -154,7 +148,7 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
    message("download OK")
 
    message("decompressing downloaded archive")
-   res <- unzip(outfname, exdir=path)
+   res <- unzip(outfname, exdir=path, overwrite=TRUE)
    if (!is.character(res) || length(res) <= 0) {
       message("error decompressing archive")
       return(invisible(FALSE))

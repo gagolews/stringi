@@ -1,0 +1,45 @@
+=============================================================================
+
+ICU 52.1 customized data file
+needed for wrapped ICU services to work properly
+
+generated with ICU Data Library Customizer
+(http://apps.icu-project.org/datacustom/)
+
+current version (for stringi_0.4) includes i.a.:
+* Charset Mapping Tables
+* Break Iterators
+* Collators
+* Formatting, Display Names and Other Localized Data
+     (needed e.g. for stri_locale_list)
+* Miscellaneous Data/lang
+     (needed for stri_enc_detect2)
+
+filtered out (22857 KB -> 16908 KB):
+* rbnf (Rule Based Number Format)  |
+* curr (Currencies)                |
+* region (Regions and Countries)   | (Misc Data)
+* zone (Time Format)               |
+the above services are not used yet.
+
+
+TO DO: next edition: use FULL data
+
+=============================================================================
+
+ICU 52.1 minimal (fallback) data file
+
+generated with ICU Data Library Customizer
+(http://apps.icu-project.org/datacustom/)
+
+* All Latin 1 charset mapping tables
+* Break iterators: brkitr/char.brk, brkitr/line.brk,
+   brkitr/sent.brk, brkitr/title.brk, brkitr/word.brk, brkitr/word_POSIX.brk
+* Collators for en, en_US, en_US_POSIX
+* NO rbnf
+* en, root transliterators
+* localized data for en_001, en_150, en_GB, en_US, en_US_POSIX
+* Misc data: en, en_150 etc.
+
+Filters: "Latin 1", "Latin-1", "Latin 2", "windows-12", "en_US", "en_GB",
+"en_150", "en_001", "POSIX", "pool", "root"

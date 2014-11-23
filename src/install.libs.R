@@ -16,9 +16,16 @@ if (copyicudt) {
    outdir <- file.path(R_PACKAGE_DIR, paste0('libs'))
    if (length(dir(outdir, glob2rx("*.dat"))) == 0) {
       # avoids multiple download attempts while multiarch building
+      
+#     -----------------------------------------------------------------------
+#       # first copy minimal (fallback) data
+#       fname <- if (.Platform$endian == 'little') "icudt52l.dat" else "icudt52b.dat"
+#       file.copy(file.path("./icu52/minimaldata", fname), outdir, overwrite=TRUE)
+#     -----------------------------------------------------------------------
+      
       stri_install_icudt(FALSE, outdir)
    }
-# Note that if the data file may not be found, some features will
+# Note that if the data file is not found, some features will
 # be unavailable (but the package itself will load properly,
 # and UCD-independent functions will work properly)
 }

@@ -214,6 +214,13 @@ void stri_set_icu_data_directory(const char* libpath)
 
    // anyway, if .dat file will not be found,
    // ICU will use system data (may be stub)
+   
+
+   // 1. Examine the contents of the default ICU data shared library. 
+   //    If it contains data, use that data.
+   //    If the data library is empty, a stub library, proceed to the next step. 
+   // 2. Dynamically load (memory map, typically) a common format (.dat) file
+   //    containing the default ICU data. 
 }
 
 
