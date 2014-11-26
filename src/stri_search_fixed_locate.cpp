@@ -179,9 +179,13 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern)
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match)
 {
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -199,13 +203,13 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
 
       pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
 
       int start = pattern_cont.findFirst();
       if (start == USEARCH_DONE) { // no matches at all
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
       }
 

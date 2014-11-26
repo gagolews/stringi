@@ -197,9 +197,13 @@ SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
-SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator)
+SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_collator)
 {
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -220,7 +224,7 @@ SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
@@ -230,7 +234,7 @@ SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator)
       if (U_FAILURE(status)) throw StriException(status);
 
       if (start == USEARCH_DONE) {
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
       }
 

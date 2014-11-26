@@ -27,25 +27,27 @@ stri_locate_last(str, ..., regex, fixed, coll, charclass)
 stri_locate(str, ..., regex, fixed, coll, charclass, mode = c("first", "all",
   "last"))
 
-stri_locate_all_charclass(str, pattern, merge = TRUE)
+stri_locate_all_charclass(str, pattern, merge = TRUE, omit_no_match = FALSE)
 
 stri_locate_first_charclass(str, pattern)
 
 stri_locate_last_charclass(str, pattern)
 
-stri_locate_all_coll(str, pattern, opts_collator = NULL)
+stri_locate_all_coll(str, pattern, omit_no_match = FALSE,
+  opts_collator = NULL)
 
 stri_locate_first_coll(str, pattern, opts_collator = NULL)
 
 stri_locate_last_coll(str, pattern, opts_collator = NULL)
 
-stri_locate_all_regex(str, pattern, opts_regex = NULL)
+stri_locate_all_regex(str, pattern, omit_no_match = FALSE,
+  opts_regex = NULL)
 
 stri_locate_first_regex(str, pattern, opts_regex = NULL)
 
 stri_locate_last_regex(str, pattern, opts_regex = NULL)
 
-stri_locate_all_fixed(str, pattern)
+stri_locate_all_fixed(str, pattern, omit_no_match = FALSE)
 
 stri_locate_first_fixed(str, pattern)
 
@@ -66,6 +68,10 @@ for more details refer to \link{stringi-search}}
 indicates whether consecutive sequences of indices in the resulting
 matrix shall be merged;  \code{stri_locate_all_charclass} only}
 
+\item{omit_no_match}{single logical value; if \code{FALSE},
+then 2 missing values will indicate that there was no match;
+\code{stri_locate_all_*} only}
+
 \item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 for default settings; \code{stri_locate_*_coll} only}
@@ -74,10 +80,6 @@ for default settings; \code{stri_locate_*_coll} only}
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 for default settings;
 \code{stri_locate_*_regex} only}
-
-\item{omit_no_match}{single logical value; if \code{FALSE},
-then 2 missing values will indicate that there was no match;
-\code{stri_locate_all_*} only}
 }
 \value{
 For \code{stri_locate_all*},
