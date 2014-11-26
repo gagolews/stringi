@@ -12,6 +12,13 @@ test_that("stri_locate_all_regex", {
    suppressWarnings(expect_equivalent(stri_locate_all_regex("abc", ""), list(matrix(c(NA_integer_,NA_integer_)))))
    suppressWarnings(expect_equivalent(stri_locate_all_regex("", "abc"), list(matrix(c(NA_integer_,NA_integer_)))))
    suppressWarnings(expect_equivalent(stri_locate_all_regex("", ""), list(matrix(c(NA_integer_,NA_integer_)))))
+   
+   expect_equivalent(as.integer(stri_locate_all_regex(NA, "[a-z]")[[1]]),
+                     c(NA_integer_, NA_integer_))
+   expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]")[[1]]),
+                     c(NA_integer_, NA_integer_))
+   expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]", omit_no_match = TRUE)[[1]]),
+                     integer(0))
 
    expect_equivalent(stri_locate_all_regex("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_regex("X\U00024B62\U00024B63\U00024B64X",

@@ -182,7 +182,7 @@ SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
 
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
-SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP opts_collator);
+SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_collator);
 SEXP stri_locate_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
@@ -203,7 +203,7 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 
 SEXP stri_detect_fixed(SEXP str, SEXP pattern);
 SEXP stri_count_fixed(SEXP str, SEXP pattern);
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match);
 SEXP stri_locate_first_fixed(SEXP str, SEXP pattern);
 SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all);
@@ -218,7 +218,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from);
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex);
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex);
 SEXP stri_locate_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_locate_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement,
@@ -245,7 +245,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);
 SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify, SEXP omit_no_match);
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);
-SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);
+SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_match);
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement,

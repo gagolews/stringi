@@ -178,6 +178,9 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
 {

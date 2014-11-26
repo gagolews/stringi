@@ -55,16 +55,19 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
-SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
 {
    // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
    // ??? OR introduce stri_matchpos_*_regex ???
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF16 str_cont(str, vectorize_length);
@@ -79,13 +82,13 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       int found = (int)matcher->find();
       if (!found) {
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
       }
 

@@ -11,6 +11,13 @@ test_that("stri_locate_all_coll", {
    suppressWarnings(expect_equivalent(stri_locate_all_coll(NA, ""), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_coll("", NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_coll(NA, NA), list(matrix(c(NA,NA_integer_))))
+   
+   expect_equivalent(as.integer(stri_locate_all_coll(NA, "[a-z]")[[1]]),
+                     c(NA_integer_, NA_integer_))
+   expect_equivalent(as.integer(stri_locate_all_coll("?", "[a-z]")[[1]]),
+                     c(NA_integer_, NA_integer_))
+   expect_equivalent(as.integer(stri_locate_all_coll("?", "[a-z]", omit_no_match = TRUE)[[1]]),
+                     integer(0))
 
    expect_equivalent(stri_locate_all_coll("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_coll("aaa", "aa"), list(matrix(c(1,2))))
