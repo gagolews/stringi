@@ -179,8 +179,9 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
 {
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
@@ -199,13 +200,26 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1));,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1+pattern_cont.getMatcher(i)->groupCount()));)
-
+      if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
+         if (!(pattern_cont).isNA(i))
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1));                                                                                  \
+         continue;                                            
+      }   
+      
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       int pattern_cur_groups = matcher->groupCount();
+      
+      if ((str_cont).isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
+         continue;
+      }
+      else if ((str_cont).get(i).length() <= 0) {                         
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
+         continue;                                                        
+      }           
+      
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
       if (U_FAILURE(status)) throw StriException(status);
 
@@ -221,7 +235,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 
       R_len_t noccurrences = (R_len_t)occurrences.size()/(pattern_cur_groups+1);
       if (noccurrences <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
          continue;
       }
 

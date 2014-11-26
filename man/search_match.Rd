@@ -17,7 +17,7 @@ stri_match_last(str, ..., regex)
 
 stri_match(str, ..., regex, mode = c("first", "all", "last"))
 
-stri_match_all_regex(str, pattern, opts_regex = NULL)
+stri_match_all_regex(str, pattern, omit_no_match = FALSE, opts_regex = NULL)
 
 stri_match_first_regex(str, pattern, opts_regex = NULL)
 
@@ -34,13 +34,13 @@ one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 \item{pattern,regex}{character vector defining regex patterns to search for;
 for more details refer to \link{stringi-search-regex}}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings;}
-
 \item{omit_no_match}{single logical value; if \code{FALSE},
 then a missing value will indicate that there was no match;
 \code{stri_locate_all_*} only}
+
+\item{opts_regex}{a named list with \pkg{ICU} Regex settings
+as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+for default settings;}
 }
 \value{
 For \code{stri_match_all*},

@@ -190,7 +190,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));)
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));)
 
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
