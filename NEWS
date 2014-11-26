@@ -4,28 +4,8 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
-   * t.b.d.
-
-TO DO: high priority
-
-   * #113 ...
-
-   * #111 ...
-
-   * #110 ...
-
-   * #23 ...
-
-TO DO: possibly
-
-   * #93 ...
-
-   * #89 ...
-
-   * #46 ...
-
-   * #44 ...
-
+   * [BUGFIX] #114: `stri_paste()`'s behavior was not consistent with
+     `paste()`'s one.
 
 -------------------------------------------------------------------------------
 

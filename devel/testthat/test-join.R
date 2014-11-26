@@ -39,4 +39,14 @@ test_that("stri_join", {
    expect_identical(stri_paste(stri_dup("aaaa",1000),NA), NA_character_)
    expect_identical(stri_join(stri_dup(LETTERS, 1000), stri_dup(letters, 1000), stri_dup(LETTERS,100), NA),
       rep(NA_character_, 26))
+   
+   expect_identical(stri_paste(letters[1:3],1:6,collapse = " "), paste(letters[1:3],1:6,collapse = " ", sep=""))
+   expect_identical(stri_paste(letters[1:3],1:6,collapse = ""), stri_paste(letters[1:3],1:6,"",collapse = ""))
+   expect_identical(stri_paste(1:6,letters[1:3],collapse = " "), paste(1:6,letters[1:3],collapse = " ", sep=""))
+   expect_identical(stri_paste(1:6,letters[1:3],collapse = ""), paste(1:6,letters[1:3],collapse = "", sep=""))
+   expect_identical(stri_paste(letters[1:3],1:6,collapse = " ",sep=" "), paste(letters[1:3],1:6,collapse = " ", sep=" "))
+   expect_identical(stri_paste(letters[1:3],1:6,collapse = NULL), paste(letters[1:3],1:6,collapse = NULL, sep=""))
+   expect_identical(stri_paste(letters[1:3],1:6,"a",collapse = " "), paste(letters[1:3],1:6,"a", collapse = " ", sep=""))
+   expect_identical(stri_paste(letters[1:3],1:6,"a",collapse = " "), paste(letters[1:3],1:6,"a",collapse = " ", sep=""))
+   expect_identical(stri_paste(letters[1:3],1:6,LETTERS[1:2],collapse = " "), paste(letters[1:3],1:6,LETTERS[1:2],collapse = " ", sep=""))
 })
