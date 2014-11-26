@@ -4,6 +4,11 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
+   * [NEW FEATURE] #117: `stri_extract_all_*`, `stri_locate_all_*`,
+     `stri_match_all_*` gained a new argument: `omit_no_match`.
+     Setting it to `TRUE` makes these functions compatible with their
+     `stringr` equivalents.
+
    * [BUGFIX] #114: `stri_paste()`'s behavior was not consistent with
      `paste()`'s one.
 

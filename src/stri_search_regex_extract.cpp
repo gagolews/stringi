@@ -163,14 +163,18 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
-SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_regex)
+SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_regex)
 {
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
    STRI__ERROR_HANDLER_BEGIN(2)
@@ -205,7 +209,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_reg
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
       if (noccurrences <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));
          continue;
       }
 

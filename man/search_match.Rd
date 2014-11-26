@@ -37,6 +37,10 @@ for more details refer to \link{stringi-search-regex}}
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 for default settings;}
+
+\item{omit_no_match}{single logical value; if \code{FALSE},
+then a missing value will indicate that there was no match;
+\code{stri_locate_all_*} only}
 }
 \value{
 For \code{stri_match_all*},

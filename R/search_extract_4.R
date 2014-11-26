@@ -70,6 +70,9 @@
 #' if \code{TRUE}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value;
 #' \code{stri_extract_all_*} only
+#' @param omit_no_match single logical value; if \code{FALSE},
+#' then a missing value will indicate that there was no match;
+#' \code{stri_extract_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions
@@ -78,7 +81,8 @@
 #' For \code{stri_extract_all*}, if \code{simplify == FALSE} (the default), then
 #' a list of character vectors is returned. Each list element
 #' represents the results of a separate search scenario.
-#' If a pattern is not found, then a character vector of length 1,
+#' If a pattern is not found and \code{omit_no_match == FALSE},
+#' then a character vector of length 1,
 #' with single \code{NA} value will be generated.
 #' Otherwise, i.e. if \code{simplify == TRUE},
 #' then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
@@ -189,8 +193,8 @@ stri_extract <- function(str, ..., regex, coll, charclass,
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_charclass <- function(str, pattern, merge=TRUE, simplify=FALSE) {
-   .Call("stri_extract_all_charclass", str, pattern, merge, simplify, PACKAGE="stringi")
+stri_extract_all_charclass <- function(str, pattern, merge=TRUE, simplify=FALSE, omit_no_match=FALSE) {
+   .Call("stri_extract_all_charclass", str, pattern, merge, simplify, omit_no_match, PACKAGE="stringi")
 }
 
 
@@ -210,8 +214,8 @@ stri_extract_last_charclass <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_coll <- function(str, pattern, simplify=FALSE, opts_collator=NULL) {
-   .Call("stri_extract_all_coll", str, pattern, simplify, opts_collator, PACKAGE="stringi")
+stri_extract_all_coll <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, opts_collator=NULL) {
+   .Call("stri_extract_all_coll", str, pattern, simplify, omit_no_match, opts_collator, PACKAGE="stringi")
 }
 
 
@@ -231,8 +235,8 @@ stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_regex <- function(str, pattern, simplify=FALSE, opts_regex=NULL) {
-   .Call("stri_extract_all_regex", str, pattern, simplify, opts_regex, PACKAGE="stringi")
+stri_extract_all_regex <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, opts_regex=NULL) {
+   .Call("stri_extract_all_regex", str, pattern, simplify, omit_no_match, opts_regex, PACKAGE="stringi")
 }
 
 
