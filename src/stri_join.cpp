@@ -173,6 +173,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
 */
 SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 {
@@ -264,6 +265,9 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ *  @version 0.4-1 (Marek Gagolewski, 2014-11-26)
+ *    Issue #114: inconsistent behavior w.r.t. paste()
 */
 SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
@@ -316,12 +320,9 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 
    String8buf buf(nchar);
    R_len_t last_buf_idx = 0;
-   for (R_len_t i = e1_cont.vectorize_init(); // this iterator allows for...
-         i != e1_cont.vectorize_end();        // ...smart buffer reusage
-         i = e1_cont.vectorize_next(i))
+   for (R_len_t i = 0; i < vectorize_length; ++i) // don't change this order, see #114
    {
-      // not need to detect NAs - they already have been excluded
-
+      // no need to detect NAs - they already have been excluded
       if (collapse_nbytes > 0 && i > 0) { // copy collapse (separator)
          memcpy(buf.data()+last_buf_idx, collapse_s, (size_t)collapse_nbytes);
          last_buf_idx += collapse_nbytes;
