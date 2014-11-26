@@ -74,6 +74,10 @@ for default settings; \code{stri_locate_*_coll} only}
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 for default settings;
 \code{stri_locate_*_regex} only}
+
+\item{omit_no_match}{single logical value; if \code{FALSE},
+then 2 missing values will indicate that there was no match;
+\code{stri_locate_all_*} only}
 }
 \value{
 For \code{stri_locate_all*},
@@ -82,7 +86,8 @@ represents the results of a separate search scenario.
 The first column gives the start positions
 of matches, and the second column gives the end positions.
 Moreover, you may get two \code{NA}s in one row
-for no match or \code{NA} arguments.
+for no match (if \code{omit_no_match} is \code{FALSE})
+or \code{NA} arguments.
 
 \code{stri_locate_first*} and \code{stri_locate_last*},
 on the other hand, return an integer matrix with

@@ -7,7 +7,8 @@ test_that("stri_extract_all_coll", {
    expect_identical(stri_extract_all_coll(NA, "test"), list(NA_character_))
    expect_identical(stri_extract_all_coll("test", NA), list(NA_character_))
    suppressWarnings(expect_identical(stri_extract_all_coll("test", ""), list(NA_character_)))
-   suppressWarnings(expect_identical(stri_extract_all_coll("test", " "), list(NA_character_)))
+   expect_identical(stri_extract_all_coll("test", " "), list(NA_character_))
+   expect_identical(stri_extract_all_coll("test", " ", omit_no_match = TRUE), list(character(0)))
    expect_identical(stri_extract_all_coll("alaALA", "ala", opts_collator=stri_opts_collator(strength=1)), list(c("ala", "ALA")))
 })
 

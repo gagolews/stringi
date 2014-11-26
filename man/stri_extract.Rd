@@ -24,19 +24,22 @@ stri_extract_last(str, ..., regex, coll, charclass)
 stri_extract(str, ..., regex, coll, charclass, mode = c("first", "all",
   "last"))
 
-stri_extract_all_charclass(str, pattern, merge = TRUE, simplify = FALSE)
+stri_extract_all_charclass(str, pattern, merge = TRUE, simplify = FALSE,
+  omit_no_match = FALSE)
 
 stri_extract_first_charclass(str, pattern)
 
 stri_extract_last_charclass(str, pattern)
 
-stri_extract_all_coll(str, pattern, simplify = FALSE, opts_collator = NULL)
+stri_extract_all_coll(str, pattern, simplify = FALSE, omit_no_match = FALSE,
+  opts_collator = NULL)
 
 stri_extract_first_coll(str, pattern, opts_collator = NULL)
 
 stri_extract_last_coll(str, pattern, opts_collator = NULL)
 
-stri_extract_all_regex(str, pattern, simplify = FALSE, opts_regex = NULL)
+stri_extract_all_regex(str, pattern, simplify = FALSE,
+  omit_no_match = FALSE, opts_regex = NULL)
 
 stri_extract_first_regex(str, pattern, opts_regex = NULL)
 
@@ -61,6 +64,10 @@ if \code{TRUE}, then a character matrix is returned;
 otherwise (the default), a list of character vectors is given, see Value;
 \code{stri_extract_all_*} only}
 
+\item{omit_no_match}{single logical value; if \code{FALSE},
+then a missing value will indicate that there was no match;
+\code{stri_extract_all_*} only}
+
 \item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 for default settings; \code{stri_extract_*_coll} only}
@@ -74,7 +81,8 @@ for default settings;
 For \code{stri_extract_all*}, if \code{simplify == FALSE} (the default), then
 a list of character vectors is returned. Each list element
 represents the results of a separate search scenario.
-If a pattern is not found, then a character vector of length 1,
+If a pattern is not found and \code{omit_no_match == FALSE},
+then a character vector of length 1,
 with single \code{NA} value will be generated.
 Otherwise, i.e. if \code{simplify == TRUE},
 then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument

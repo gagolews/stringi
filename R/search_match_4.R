@@ -58,6 +58,9 @@
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 #' for default settings;
+#' @param omit_no_match single logical value; if \code{FALSE},
+#' then a missing value will indicate that there was no match;
+#' \code{stri_locate_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions

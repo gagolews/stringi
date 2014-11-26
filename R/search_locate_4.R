@@ -65,6 +65,9 @@
 #' @param merge single logical value;
 #' indicates whether consecutive sequences of indices in the resulting
 #' matrix shall be merged;  \code{stri_locate_all_charclass} only
+#' @param omit_no_match single logical value; if \code{FALSE},
+#' then 2 missing values will indicate that there was no match;
+#' \code{stri_locate_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... additional arguments passed to the underlying functions
@@ -76,7 +79,8 @@
 #' The first column gives the start positions
 #' of matches, and the second column gives the end positions.
 #' Moreover, you may get two \code{NA}s in one row
-#' for no match or \code{NA} arguments.
+#' for no match (if \code{omit_no_match} is \code{FALSE})
+#' or \code{NA} arguments.
 #'
 #' \code{stri_locate_first*} and \code{stri_locate_last*},
 #' on the other hand, return an integer matrix with

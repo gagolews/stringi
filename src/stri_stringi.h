@@ -187,7 +187,7 @@ SEXP stri_locate_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_extract_first_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator);
-SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_collator);
+SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_collator);
 SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement,
                             SEXP vectorize_all, SEXP opts_collator);
 SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement,
@@ -232,7 +232,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
 SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
-SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP opts_regex);
+SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_regex);
 SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP opts_regex);
@@ -242,7 +242,7 @@ SEXP stri_count_charclass(SEXP str, SEXP pattern);
 SEXP stri_detect_charclass(SEXP str, SEXP pattern);
 SEXP stri_extract_first_charclass(SEXP str, SEXP pattern);
 SEXP stri_extract_last_charclass(SEXP str, SEXP pattern);
-SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify);
+SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify, SEXP omit_no_match);
 SEXP stri_locate_first_charclass(SEXP str, SEXP pattern);
 SEXP stri_locate_last_charclass(SEXP str, SEXP pattern);
 SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge);

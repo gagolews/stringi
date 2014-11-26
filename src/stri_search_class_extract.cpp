@@ -186,22 +186,23 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *    FR #117: omit_no_match arg added
  */
-SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify)
+SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplify, SEXP omit_no_match)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length = stri__recycling_rule(true, 2,
       LENGTH(str), LENGTH(pattern));
 
    STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
-
-   SEXP notfound; // this vector will be set iff not found or NA
-   STRI__PROTECT(notfound = stri__vector_NA_strings(1));
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
@@ -211,7 +212,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
          i = pattern_cont.vectorize_next(i))
    {
       if (pattern_cont.isNA(i) || str_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, notfound);
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
@@ -226,7 +227,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
       if (noccurrences == 0) {
-         SET_VECTOR_ELT(ret, i, notfound);
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));
          continue;
       }
 

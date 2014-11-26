@@ -8,6 +8,9 @@ test_that("stri_extract_all_charclass", {
 
    expect_equivalent(stri_extract_all_charclass(character(0), "\\p{Z}"), list())
    expect_equivalent(stri_extract_all_charclass(LETTERS, integer(0)), list())
+   
+   expect_identical(stri_extract_all_charclass("test", "[a]"), list(NA_character_))
+   expect_identical(stri_extract_all_charclass("test", "[a]", omit_no_match = TRUE), list(character(0)))
 
    expect_equivalent(stri_extract_all_charclass("", "\\P{WHITE_SPACE}")[[1]], NA_character_)
 
