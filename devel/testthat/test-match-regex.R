@@ -4,6 +4,8 @@ test_that("stri_match_all_regex", {
 
    expect_identical(stri_match_all_regex(NA, "test"), list(matrix(NA_character_,1,1)))
    expect_identical(stri_match_all_regex("", "(test)(rest)"), list(matrix(NA_character_,1,3)))
+   expect_identical(stri_match_all_regex(NA, "(test)(rest)"), list(matrix(NA_character_,1,3)))
+   expect_identical(stri_match_all_regex("", "(test)(rest)", omit_no_match=TRUE), list(matrix(NA_character_,0,3)))
    expect_identical(stri_match_all_regex("test", NA), list(matrix(NA_character_,1,1)))
    suppressWarnings(expect_identical(stri_match_all_regex("test", ""), list(matrix(NA_character_,1,1))))
    expect_equivalent(sapply(stri_match_all_regex(c("bacab", "bacaba\u0105a", "aa"), "a.a"), as.character),

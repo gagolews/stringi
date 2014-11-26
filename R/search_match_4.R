@@ -139,8 +139,8 @@ stri_match <- function(str, ..., regex,
 
 #' @export
 #' @rdname search_match
-stri_match_all_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_match_all_regex", str, pattern, opts_regex, PACKAGE="stringi")
+stri_match_all_regex <- function(str, pattern, omit_no_match=FALSE, opts_regex=NULL) {
+   .Call("stri_match_all_regex", str, pattern, omit_no_match, opts_regex, PACKAGE="stringi")
 }
 
 
