@@ -31,7 +31,7 @@ suppressWarnings(test_that("stri_prepare_arg_string", {
                      ts(as.character(1:10))))
 
 
-   suppressWarnings(expect_error(stringi:::stri_prepare_arg_string(NULL)))
+   suppressWarnings(expect_identical(stringi:::stri_prepare_arg_string(NULL), character(0)))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_string(list(1, 2, 3))))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_string(data.frame(1, 2, 3))))
 
@@ -46,7 +46,7 @@ suppressWarnings(test_that("stri_prepare_arg_double", {
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_double(as.factor(1:5)),1:5))
 
 
-   suppressWarnings(expect_error(stringi:::stri_prepare_arg_double(NULL)))
+   suppressWarnings(expect_identical(stringi:::stri_prepare_arg_double(NULL), numeric(0)))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_double(list(1,2,3))))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_double(data.frame(1,2,3))))
 }))
@@ -64,7 +64,7 @@ suppressWarnings(test_that("stri_prepare_arg_integer", {
    suppressWarnings(suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_integer(
       c("1", "one", "1.5")), c(1L, NA_integer_, 1L))))
 
-   suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(NULL)))
+   suppressWarnings(expect_identical(stringi:::stri_prepare_arg_integer(NULL), integer(0)))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(list(1, 2, 3))))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(data.frame(1, 2, 3))))
 }))
@@ -75,7 +75,7 @@ suppressWarnings(test_that("stri_prepare_arg_logical", {
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_logical((-3):3), c(T,T,T,F,T,T,T)))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_logical(c("TRUE", "FALSE", "T", "F", NA)), c(T,F,T,F,NA)))
 
-   suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(NULL)))
+   suppressWarnings(expect_identical(stringi:::stri_prepare_arg_logical(NULL), logical(0)))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(list(1, 2, 3))))
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_integer(data.frame(1, 2, 3))))
 }))
@@ -83,6 +83,7 @@ suppressWarnings(test_that("stri_prepare_arg_logical", {
 suppressWarnings(test_that("stri_prepare_arg_raw", {
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_raw(0:3), as.raw(0:3)))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_raw(c(T,F,T,F)), as.raw(c(T,F,T,F))))
+   suppressWarnings(expect_identical(stringi:::stri_prepare_arg_raw(NULL), raw(0)))
 }))
 
 ## ---- tests for prepare_1 ----
