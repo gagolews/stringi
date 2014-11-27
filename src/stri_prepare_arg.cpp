@@ -200,6 +200,9 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *        treat NULLs as empty vectors
  */
 SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
@@ -216,7 +219,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
       UNPROTECT(2);
       return x;
    }
-   else if (Rf_isVectorAtomic(x))
+   else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, STRSXP);
    else if (isSymbol(x))
       return Rf_ScalarString(PRINTNAME(x));
@@ -246,6 +249,9 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *        treat NULLs as empty vectors
  */
 SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
@@ -261,9 +267,9 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if(isReal(x))
+   else if (isReal(x))
       return x; //return as-is
-   else if (Rf_isVectorAtomic(x))
+   else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, REALSXP);
 
    Rf_error(MSG__ARG_EXPECTED_NUMERIC, argname); // allowed here
@@ -291,6 +297,9 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *        treat NULLs as empty vectors
  */
 SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
@@ -308,7 +317,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
    }
    else if (Rf_isInteger(x))
       return x; // return as-is
-   else if (Rf_isVectorAtomic(x))
+   else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, INTSXP);
 
    Rf_error(MSG__ARG_EXPECTED_INTEGER, argname); //allowed here
@@ -336,6 +345,9 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *        treat NULLs as empty vectors
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
@@ -353,7 +365,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
    }
    else if (isLogical(x))
       return x; // return as-is
-   else if (Rf_isVectorAtomic(x))
+   else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, LGLSXP);
 
    Rf_error(MSG__ARG_EXPECTED_LOGICAL, argname); // allowed here
@@ -378,6 +390,9 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
+ *        treat NULLs as empty vectors
  */
 SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
 {
@@ -395,7 +410,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    }
    else if (TYPEOF(x) == RAWSXP)
       return x; // return as-is
-   else if (Rf_isVectorAtomic(x))
+   else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, RAWSXP);
 
    Rf_error(MSG__ARG_EXPECTED_RAW, argname); // allowed here
