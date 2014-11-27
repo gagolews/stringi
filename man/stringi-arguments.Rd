@@ -16,16 +16,8 @@ otherwise an error is generated.
 
 When a logical, numeric or integer vector argument is expected,
 factors are converted with \code{as.*(\link{as.character}(...))},
-and other coercible vectors
-are converted with \code{as.*},
+and other coercible vectors are converted with \code{as.*},
 otherwise an error is generated.
-
-
-
-See the links below for the description of internal methods used
-in all functions from the \pkg{stringi} package (just to get more insight,
-in case you are interested in technical details).
-Anyway, we hope that everything works as you intuitively expect.
 }
 
 \section{Vectorization}{
@@ -76,16 +68,6 @@ please remember to copy important attributes manually
 or use e.g. the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 }
 \seealso{
-Other prepare_arg: \code{\link{stri_prepare_arg_double_1}};
-  \code{\link{stri_prepare_arg_double}};
-  \code{\link{stri_prepare_arg_integer_1}};
-  \code{\link{stri_prepare_arg_integer}};
-  \code{\link{stri_prepare_arg_logical_1}};
-  \code{\link{stri_prepare_arg_logical}};
-  \code{\link{stri_prepare_arg_raw}};
-  \code{\link{stri_prepare_arg_string_1}};
-  \code{\link{stri_prepare_arg_string}}
-
 Other stringi_general_topics: \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
   \code{\link{stringi-package}};
