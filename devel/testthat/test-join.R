@@ -9,6 +9,20 @@ test_that("stri_join", {
    # join2 with sep and collapse
    # join - general, with collapse
    # join - general, no collapse
+   
+   
+   #stringr tests:
+   test <- c("a", "b", "c")
+   expect_that(stri_c(test, ignore_null=TRUE), equals(test))
+   expect_that(stri_c(test, sep = " ", ignore_null=TRUE), equals(test))
+   expect_that(stri_c(test, collapse = "", ignore_null=TRUE), equals("abc"))
+   test <- letters[1:3]
+   expect_that(stri_c(test, c(), ignore_null=TRUE), equals(test))
+   expect_that(stri_c(test, NULL, ignore_null=TRUE), equals(test))
+   expect_that(
+      stri_c(test, NULL, "a", sep = " ", ignore_null=TRUE),
+      equals(c("a a", "b a", "c a")))
+   
 
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
@@ -41,7 +55,7 @@ test_that("stri_join", {
    expect_identical(stri_join(character(0), rep("a", 2), "b", collapse="", ignore_null=TRUE), "abab")
    expect_identical(stri_join(character(0), rep("a", 2), collapse="", ignore_null=TRUE), "aa")
    
-   expect_identical(stri_paste(NULL, c("a", "b"), sep=" ", ignore_null = TRUE), paste(NULL, c("a", "b")))
+   expect_identical(stri_paste(NULL, c("a", "b"), sep=" ", ignore_null = TRUE), paste(c("a", "b")))
    
    expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))

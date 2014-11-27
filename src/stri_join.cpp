@@ -68,39 +68,39 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
       UNPROTECT(1);
       return x;
    }
-   else if (narg == 1 && LENGTH(VECTOR_ELT(x, 0)) == 0) {
-      UNPROTECT(1);
-      return Rf_allocVector(VECSXP, 0);
-   }
+//   else if (narg == 1 && LENGTH(VECTOR_ELT(x, 0)) == 0) {
+//      UNPROTECT(1);
+//      return Rf_allocVector(VECSXP, 0);
+//   }
    
    SEXP ret;
 //   if (ignore_null != NA_INTEGER && ignore_null < 0) { // remove NULL elements
-//      R_len_t nret = 0;
-//      for (R_len_t i=0; i<narg; ++i) {
-//#ifndef NDEBUG
-//      if (!Rf_isVector(VECTOR_ELT(x, i)))
-//         Rf_error("stri_prepare_arg_list_ignore_null:: !NDEBUG: not a vector element"); // error() allowed here
-//#endif
-//         if (LENGTH(VECTOR_ELT(x, i)) > 0)
-//            ++nret;
-//      }
-//   
-//      PROTECT(ret = Rf_allocVector(VECSXP, nret));
-//      for (R_len_t i=0, j=0; i<narg; ++i) {
-//         if (LENGTH(VECTOR_ELT(x, i)) > 0)
-//            SET_VECTOR_ELT(ret, j++, VECTOR_ELT(x, i));
-//      }
+   R_len_t nret = 0;
+   for (R_len_t i=0; i<narg; ++i) {
+#ifndef NDEBUG
+   if (!Rf_isVector(VECTOR_ELT(x, i)))
+      Rf_error("stri_prepare_arg_list_ignore_null:: !NDEBUG: not a vector element"); // error() allowed here
+#endif
+      if (LENGTH(VECTOR_ELT(x, i)) > 0)
+         ++nret;
+   }
+
+   PROTECT(ret = Rf_allocVector(VECSXP, nret));
+   for (R_len_t i=0, j=0; i<narg; ++i) {
+      if (LENGTH(VECTOR_ELT(x, i)) > 0)
+         SET_VECTOR_ELT(ret, j++, VECTOR_ELT(x, i));
+   }
 //   }
 //   else { // insert one empty string
-      PROTECT(ret = Rf_allocVector(VECSXP, narg));
-      for (R_len_t i=0; i<narg; ++i) {
-         if (LENGTH(VECTOR_ELT(x, i)) > 0)
-            SET_VECTOR_ELT(ret, i, VECTOR_ELT(x, i));
-         else if (ignore_null != NA_INTEGER)
-            SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(1));
-//         else
-//            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-      }
+//      PROTECT(ret = Rf_allocVector(VECSXP, narg));
+//      for (R_len_t i=0; i<narg; ++i) {
+//         if (LENGTH(VECTOR_ELT(x, i)) > 0)
+//            SET_VECTOR_ELT(ret, i, VECTOR_ELT(x, i));
+//         else if (ignore_null != NA_INTEGER)
+//            SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(1));
+////         else
+////            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+//      }
 //   }
    UNPROTECT(2);
    return ret;
