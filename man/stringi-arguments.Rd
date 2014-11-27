@@ -3,7 +3,7 @@
 \alias{stringi-arguments}
 \title{Passing Arguments to Functions in \pkg{stringi}}
 \description{
-Below we explain how \pkg{stringi} deals (in almost all cases)
+Below we explain how \pkg{stringi} deals (in almost all the possible cases)
 with its functions' arguments.
 }
 \section{Coercion of Arguments}{
