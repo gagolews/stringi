@@ -122,8 +122,10 @@ stri_dup <- function(str, times) {
 #' to the length of the longest argument.
 #'
 #' If any of the arguments in `\code{...}` is a vector of length 0
-#' (not to be confused with vectors of empty strings), then
+#' (not to be confused with vectors of empty strings) 
+#' and \code{ignore_null == FALSE}, then
 #' you will get a 0-length character vector in result.
+#' Otherwise, the function behaves just like \code{paste()} here.
 #'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string
 #' will be used.
@@ -136,10 +138,12 @@ stri_dup <- function(str, times) {
 #' always in UTF-8.
 #'
 #' @param ... character vectors (or objects coercible to character vectors)
-#' which corresponding elements are to be concatenated.
-#' @param sep single string; separates terms.
+#' which corresponding elements are to be concatenated
+#' @param sep single string; separates terms
 #' @param collapse single string or \code{NULL}; an optional
-#' results separator.
+#' results separator
+#' @param ignore_null single logical value; if \code{TRUE}, then empty
+#' vectors on input are treated like empty strings
 #'
 #' @return Returns a character vector.
 #'
@@ -159,8 +163,8 @@ stri_dup <- function(str, times) {
 #'
 #' @family join
 #' @rdname stri_join
-stri_join <- function(..., sep="", collapse=NULL) {
-   .Call("stri_join_withcollapse", list(...), sep, collapse, PACKAGE="stringi")
+stri_join <- function(..., sep="", collapse=NULL, ignore_null=FALSE) {
+   .Call("stri_join_withcollapse", list(...), sep, collapse, ignore_null, PACKAGE="stringi")
 }
 
 

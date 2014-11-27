@@ -15,8 +15,8 @@
    * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION
 
    * [NEW FEATURE] #116: `stri_paste` gained a new argument:
-     `ignore_null`. Setting it to `TRUE` makes this function compatible with its
-     `stringr` equivalent.
+     `ignore_null`. Setting it to `TRUE` makes this function compatible with 
+     `paste()`.
 
    * [NEW FEATURE] #117: `stri_extract_all_*`, `stri_locate_all_*`,
      `stri_match_all_*` gained a new argument: `omit_no_match`.

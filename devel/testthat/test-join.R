@@ -28,8 +28,20 @@ test_that("stri_join", {
    expect_identical(stri_join(NULL), character(0))
    expect_identical(stri_join("a", "b", NULL), character(0))
    expect_identical(stri_join(character(0), "a", "b", collapse=""), character(0))
-   expect_identical(stri_join(character(0), "a", collapse=""), character(0))
+   expect_identical(stri_join(character(0), rep("a", 2), collapse=""), character(0))
    
+   expect_identical(stri_join(character(0), "a", "b", ignore_null=TRUE), "ab")
+   expect_identical(stri_join(character(0), "a", rep("b",2), ignore_null=TRUE), c("ab", "ab"))
+   expect_identical(stri_join("a", "b", character(0), ignore_null=TRUE), "ab")
+   expect_identical(stri_join("a", character(0), ignore_null=TRUE), "a")
+   expect_identical(stri_join(character(0), "a", ignore_null=TRUE), "a")
+   expect_identical(stri_join(character(0), ignore_null=TRUE), character(0))
+   expect_identical(stri_join(NULL, ignore_null=TRUE), character(0))
+   expect_identical(stri_join("a", "b", NULL, ignore_null=TRUE), "ab")
+   expect_identical(stri_join(character(0), rep("a", 2), "b", collapse="", ignore_null=TRUE), "abab")
+   expect_identical(stri_join(character(0), rep("a", 2), collapse="", ignore_null=TRUE), "aa")
+   
+   expect_identical(stri_paste(NULL, c("a", "b"), sep=" ", ignore_null = TRUE), paste(NULL, c("a", "b")))
    
    expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))

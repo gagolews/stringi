@@ -5,20 +5,23 @@
 \alias{stri_paste}
 \title{Concatenate Character Vectors}
 \usage{
-stri_join(..., sep = "", collapse = NULL)
+stri_join(..., sep = "", collapse = NULL, ignore_null = FALSE)
 
-stri_c(..., sep = "", collapse = NULL)
+stri_c(..., sep = "", collapse = NULL, ignore_null = FALSE)
 
-stri_paste(..., sep = "", collapse = NULL)
+stri_paste(..., sep = "", collapse = NULL, ignore_null = FALSE)
 }
 \arguments{
 \item{...}{character vectors (or objects coercible to character vectors)
-which corresponding elements are to be concatenated.}
+which corresponding elements are to be concatenated}
 
-\item{sep}{single string; separates terms.}
+\item{sep}{single string; separates terms}
 
 \item{collapse}{single string or \code{NULL}; an optional
-results separator.}
+results separator}
+
+\item{ignore_null}{single logical value; if \code{TRUE}, then empty
+vectors on input are treated like empty strings}
 }
 \value{
 Returns a character vector.
@@ -37,8 +40,10 @@ Otherwise, you will get a character vector of length equal
 to the length of the longest argument.
 
 If any of the arguments in `\code{...}` is a vector of length 0
-(not to be confused with vectors of empty strings), then
+(not to be confused with vectors of empty strings)
+and \code{ignore_null == FALSE}, then
 you will get a 0-length character vector in result.
+Otherwise, the function behaves just like \code{paste()} here.
 
 If \code{collapse} or \code{sep} has length > 1, then only first string
 will be used.
