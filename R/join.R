@@ -125,7 +125,6 @@ stri_dup <- function(str, times) {
 #' (not to be confused with vectors of empty strings) 
 #' and \code{ignore_null == FALSE}, then
 #' you will get a 0-length character vector in result.
-#' Otherwise, the function behaves just like \code{paste()} here.
 #'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string
 #' will be used.
@@ -143,7 +142,7 @@ stri_dup <- function(str, times) {
 #' @param collapse single string or \code{NULL}; an optional
 #' results separator
 #' @param ignore_null single logical value; if \code{TRUE}, then empty
-#' vectors on input are treated like empty strings
+#' vectors on input are silently ignored
 #'
 #' @return Returns a character vector.
 #'
