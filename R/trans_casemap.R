@@ -94,19 +94,19 @@
 #'     stri_opts_brkiter(type="sentence"))
 #' }
 stri_trans_tolower <- function(str, locale=NULL) {
-   .Call("stri_trans_casemap", str, 1L, locale, PACKAGE="stringi")
+   .Call(C_stri_trans_casemap, str, 1L, locale)
 }
 
 
 #' @export
 #' @rdname stri_trans_casemap
 stri_trans_toupper <- function(str, locale=NULL) {
-   .Call("stri_trans_casemap", str, 2L, locale, PACKAGE="stringi")
+   .Call(C_stri_trans_casemap, str, 2L, locale)
 }
 
 
 #' @export
 #' @rdname stri_trans_casemap
 stri_trans_totitle <- function(str, opts_brkiter=NULL) {
-   .Call("stri_trans_casemap", str, 3L, opts_brkiter, PACKAGE="stringi")
+   .Call(C_stri_trans_casemap, str, 3L, opts_brkiter)
 }

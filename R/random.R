@@ -57,7 +57,7 @@
 #' @family random
 #' @export
 stri_rand_shuffle <- function(str) {
-   .Call("stri_rand_shuffle", str, PACKAGE="stringi")
+   .Call(C_stri_rand_shuffle, str)
 }
 
 
@@ -107,7 +107,7 @@ stri_rand_shuffle <- function(str) {
 #' @family random
 #' @export
 stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
-   .Call("stri_rand_strings", n, length, pattern, PACKAGE="stringi")
+   .Call(C_stri_rand_strings, n, length, pattern)
 }
 
 

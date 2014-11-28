@@ -42,7 +42,7 @@ invisible(NULL) # TO BE DONE, version >= 0.3
 # # @export
 # #' @family charclass
 # stri_chartype <- function(s) {
-#    .Call("stri_chartype", s, PACKAGE="stringi")
+#    .Call(C_stri_chartype, s)
 # }
 
 
@@ -56,7 +56,7 @@ invisible(NULL) # TO BE DONE, version >= 0.3
 # # @export
 # #' @family charclass
 # stri_charcategories <- function() {
-#    categories <- as.data.frame(.Call("stri_charcategories", PACKAGE="stringi"),
+#    categories <- as.data.frame(.Call(C_stri_charcategories),
 #       stringsAsFactors=FALSE)
 #    rownames(categories) <- categories[,2]
 #    categories[,-2]

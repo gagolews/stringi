@@ -60,5 +60,5 @@
 #' @export
 #' @family search_replace
 stri_replace_na <- function(str, replacement="NA"){
-   .Call("stri_replace_na", str, replacement, PACKAGE="stringi")
+   .Call(C_stri_replace_na, str, replacement)
 }

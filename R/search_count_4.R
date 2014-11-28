@@ -112,26 +112,26 @@ stri_count <- function(str, ..., regex, fixed, coll, charclass) {
 #' @export
 #' @rdname stri_count
 stri_count_charclass <- function(str, pattern) {
-   .Call("stri_count_charclass", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_count_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_count
 stri_count_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_count_coll", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_count_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_count
 stri_count_fixed <- function(str, pattern) {
-   .Call("stri_count_fixed", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_count_fixed, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_count
 stri_count_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_count_regex", str, pattern, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_count_regex, str, pattern, opts_regex)
 }

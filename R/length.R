@@ -71,7 +71,7 @@
 #' @export
 #' @family length
 stri_numbytes <- function(str) {
-   .Call("stri_numbytes", str, PACKAGE="stringi")
+   .Call(C_stri_numbytes, str)
 }
 
 
@@ -117,7 +117,7 @@ stri_numbytes <- function(str) {
 #' @export
 #' @family length
 stri_length <- function(str) {
-   .Call("stri_length", str, PACKAGE="stringi")
+   .Call(C_stri_length, str)
 }
 
 
@@ -145,5 +145,5 @@ stri_length <- function(str) {
 #' @export
 #' @family length
 stri_isempty <- function(str) {
-   .Call("stri_isempty", str, PACKAGE="stringi")
+   .Call(C_stri_isempty, str)
 }

@@ -56,28 +56,28 @@
 #' @family encoding_detection
 #' @export
 stri_enc_isutf16be <- function(str) {
-   .Call("stri_enc_isenc", str, 3L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 3L)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf16le <- function(str) {
-   .Call("stri_enc_isenc", str, 4L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 4L)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf32be <- function(str) {
-   .Call("stri_enc_isenc", str, 5L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 5L)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf32le <- function(str) {
-   .Call("stri_enc_isenc", str, 6L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 6L)
 }
 
 
@@ -107,7 +107,7 @@ stri_enc_isutf32le <- function(str) {
 #' @family encoding_detection
 #' @export
 stri_enc_isascii <- function(str) {
-   .Call("stri_enc_isenc", str, 1L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 1L)
 }
 
 
@@ -153,5 +153,5 @@ stri_enc_isascii <- function(str) {
 #' @family encoding_detection
 #' @export
 stri_enc_isutf8 <- function(str) {
-   .Call("stri_enc_isenc", str, 2L, PACKAGE="stringi")
+   .Call(C_stri_enc_isenc, str, 2L)
 }

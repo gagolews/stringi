@@ -129,7 +129,7 @@
 #' @export
 #' @rdname stri_compare
 stri_compare <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_integer", e1, e2, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_cmp_integer, e1, e2, opts_collator)
 }
 
 
@@ -141,54 +141,54 @@ stri_cmp <- stri_compare
 #' @export
 #' @rdname stri_compare
 stri_cmp_eq <- function(e1, e2) {
-   .Call("stri_cmp_codepoints", e1, e2, 0L, PACKAGE="stringi")
+   .Call(C_stri_cmp_codepoints, e1, e2, 0L)
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_neq <- function(e1, e2) {
-   .Call("stri_cmp_codepoints", e1, e2, 1L, PACKAGE="stringi")
+   .Call(C_stri_cmp_codepoints, e1, e2, 1L)
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_equiv <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 0L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 0L))
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_nequiv <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(0L, 1L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 1L))
 }
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_lt <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 0L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 0L))
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_gt <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 0L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 0L))
 }
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_le <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(1L, 1L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 1L))
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
-   .Call("stri_cmp_logical", e1, e2, opts_collator, c(-1L, 1L), PACKAGE="stringi")
+   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 1L))
 }
 
 
@@ -419,14 +419,14 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
 #' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
-   .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 1L, PACKAGE="stringi")
+   .Call(C_stri_order_or_sort, str, decreasing, na_last, opts_collator, 1L)
 }
 
 
 #' @export
 #' @rdname stri_order
 stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
-   .Call("stri_order_or_sort", str, decreasing, na_last, opts_collator, 2L, PACKAGE="stringi")
+   .Call(C_stri_order_or_sort, str, decreasing, na_last, opts_collator, 2L)
 }
 
 
@@ -467,7 +467,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @family locale_sensitive
 #' @export
 stri_unique <-  function(str, opts_collator=NULL) {
-   .Call("stri_unique", str, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_unique, str, opts_collator)
 }
 
 
@@ -532,7 +532,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' @family locale_sensitive
 #' @export
 stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
-   .Call("stri_duplicated", str, fromLast, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_duplicated, str, fromLast, opts_collator)
 }
 
 
@@ -540,5 +540,5 @@ stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
 #' @family locale_sensitive
 #' @export
 stri_duplicated_any <-  function(str, fromLast=FALSE, opts_collator=NULL) {
-   .Call("stri_duplicated_any", str, fromLast, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_duplicated_any, str, fromLast, opts_collator)
 }

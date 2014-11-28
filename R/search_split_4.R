@@ -157,8 +157,8 @@ stri_split_fixed <- function(str, pattern, n_max=-1L,
       omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_fixed", str, pattern,
-      n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
+   .Call(C_stri_split_fixed, str, pattern,
+      n_max, omit_empty, tokens_only, simplify)
 }
 
 
@@ -168,8 +168,8 @@ stri_split_regex <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
       tokens_only=FALSE, simplify=FALSE, opts_regex=NULL)  {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_regex", str, pattern,
-      n_max, omit_empty, tokens_only, simplify, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_split_regex, str, pattern,
+      n_max, omit_empty, tokens_only, simplify, opts_regex)
 }
 
 
@@ -179,8 +179,8 @@ stri_split_coll <- function(str, pattern, n_max=-1L, omit_empty=FALSE,
       tokens_only=FALSE, simplify=FALSE, opts_collator=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_coll", str, pattern,
-      n_max, omit_empty, tokens_only, simplify, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_split_coll, str, pattern,
+      n_max, omit_empty, tokens_only, simplify, opts_collator)
 }
 
 
@@ -190,6 +190,6 @@ stri_split_charclass <- function(str, pattern, n_max=-1L,
                   omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call("stri_split_charclass", str, pattern,
-      n_max, omit_empty, tokens_only, simplify, PACKAGE="stringi")
+   .Call(C_stri_split_charclass, str, pattern,
+      n_max, omit_empty, tokens_only, simplify)
 }

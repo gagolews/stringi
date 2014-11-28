@@ -49,7 +49,7 @@
 #' @family locale_management
 #' @export
 stri_locale_list <- function() {
-   .Call("stri_locale_list", PACKAGE="stringi")
+   .Call(C_stri_locale_list)
 }
 
 
@@ -94,7 +94,7 @@ stri_locale_list <- function() {
 #' @export
 stri_locale_set <- function(locale) {
    previous <- stri_locale_get()
-   .Call("stri_locale_set", locale, PACKAGE="stringi")
+   .Call(C_stri_locale_set, locale)
 
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
@@ -148,5 +148,5 @@ stri_locale_get <- function() {
 #' @family locale_management
 #' @export
 stri_locale_info <- function(locale=NULL) {
-   .Call("stri_locale_info", locale, PACKAGE="stringi")
+   .Call(C_stri_locale_info, locale)
 }

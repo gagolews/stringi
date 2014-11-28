@@ -73,21 +73,21 @@
 #' }
 #' @export
 stri_pad_both <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call("stri_pad", str, min_length, 2L, pad, PACKAGE="stringi")
+   .Call(C_stri_pad, str, min_length, 2L, pad)
 }
 
 
 #' @rdname stri_pad
 #' @export
 stri_pad_left <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call("stri_pad", str, min_length, 0L, pad, PACKAGE="stringi")
+   .Call(C_stri_pad, str, min_length, 0L, pad)
 }
 
 
 #' @rdname stri_pad
 #' @export
 stri_pad_right <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call("stri_pad", str, min_length, 1L, pad, PACKAGE="stringi")
+   .Call(C_stri_pad, str, min_length, 1L, pad)
 }
 
 

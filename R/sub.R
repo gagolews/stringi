@@ -107,14 +107,14 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
          warning("argument `to` is ignored in given context")
-      .Call("stri_sub", str, from, to, NULL, PACKAGE="stringi")
+      .Call(C_stri_sub, str, from, to, NULL)
    }
    else {
       if (!missing(to))
          warning("argument `to` is ignored in given context")
       if (is.matrix(from))
          warning("argument `length` is ignored in given context")
-      .Call("stri_sub", str, from, NULL, length, PACKAGE="stringi")
+      .Call(C_stri_sub, str, from, NULL, length)
    }
 }
 
@@ -127,13 +127,13 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
          warning("argument `to` is ignored in given context")
-      .Call("stri_sub_replacement", str, from, to, NULL, value, PACKAGE="stringi")
+      .Call(C_stri_sub_replacement, str, from, to, NULL, value)
    }
    else {
       if (!missing(to))
          warning("argument `to` is ignored in given context")
       if (is.matrix(from))
          warning("argument `length` is ignored in given context")
-      .Call("stri_sub_replacement", str, from, NULL, length, value, PACKAGE="stringi")
+      .Call(C_stri_sub_replacement, str, from, NULL, length, value)
    }
 }

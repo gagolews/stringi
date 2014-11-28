@@ -12,6 +12,10 @@
 
    * [NEW FEATURE] #110 t.b.d.
 
+   * [NEW FEATURE] #122 t.b.d.
+
+   * [NEW FEATURE] #120 t.b.d.
+
    * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION
 
    * [NEW FEATURE] #116: `stri_paste` gained a new argument:
@@ -27,6 +31,9 @@
      `paste()`'s one.
 
    * [BUGFIX] #115 & #94 t.b.d.
+
+   * [OTHER] #123: `useDynLib` is used to speed up symbol lookup in 
+     the compiled dynamic library
 
 -------------------------------------------------------------------------------
 
