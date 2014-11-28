@@ -6,11 +6,16 @@
 
    * [IMPORTANT CHANGE] #111 t.b.d.
 
-   * [NEW FEATURE] #119 t.b.d.
+   * [NEW FEATURE] #119  `stri_split_boundaries()` now have
+      `n_max`, `omit_empty`, `tokens_only`, `simplify` arguments.
 
    * [NEW FEATURE] #118  t.b.d.
 
    * [NEW FEATURE] #110 t.b.d.
+
+   * [NEW FEATURE] #122 t.b.d.
+
+   * [NEW FEATURE] #120 t.b.d.
 
    * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION
 
