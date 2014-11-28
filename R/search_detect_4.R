@@ -106,25 +106,25 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
 #' @export
 #' @rdname stri_detect
 stri_detect_fixed <- function(str, pattern) {
-   .Call("stri_detect_fixed", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_detect_fixed, str, pattern)
 }
 
 #' @export
 #' @rdname stri_detect
 stri_detect_charclass <- function(str, pattern) {
-   .Call("stri_detect_charclass", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_detect_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_detect
 stri_detect_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_detect_coll", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_detect_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_detect
 stri_detect_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_detect_regex", str, pattern, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_detect_regex, str, pattern, opts_regex)
 }

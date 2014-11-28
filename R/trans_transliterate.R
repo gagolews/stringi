@@ -93,7 +93,7 @@
 #' stri_trans_general("tato nie wraca ranki wieczory", "pl-pl_FONIPA")
 #' }
 stri_trans_general <- function(str, id) {
-   .Call("stri_trans_general", str, id, PACKAGE="stringi")
+   .Call(C_stri_trans_general, str, id)
 }
 
 
@@ -114,5 +114,5 @@ stri_trans_general <- function(str, id) {
 #' @family transform
 #' @export
 stri_trans_list <- function() {
-   .Call("stri_trans_list", PACKAGE="stringi")
+   .Call(C_stri_trans_list)
 }

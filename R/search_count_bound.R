@@ -94,7 +94,7 @@
 #' @family text_boundaries
 #' @rdname stri_count_boundaries
 stri_count_boundaries <- function(str, opts_brkiter=NULL) {
-   .Call("stri_count_boundaries", str, opts_brkiter, PACKAGE="stringi")
+   .Call(C_stri_count_boundaries, str, opts_brkiter)
 }
 
 

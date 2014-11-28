@@ -62,7 +62,7 @@
 #' @family escape
 #' @export
 stri_escape_unicode <- function(str) {
-   .Call("stri_escape_unicode", str, PACKAGE="stringi")
+   .Call(C_stri_escape_unicode, str)
 }
 
 
@@ -106,5 +106,5 @@ stri_escape_unicode <- function(str) {
 #' @family escape
 #' @export
 stri_unescape_unicode <- function(str) {
-   .Call("stri_unescape_unicode", str, PACKAGE="stringi")
+   .Call(C_stri_unescape_unicode, str)
 }

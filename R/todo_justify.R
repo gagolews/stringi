@@ -47,5 +47,5 @@ invisible(NULL) # TO BE DONE, version >= 0.3
 # #' @export
 # stri_justify <- function(str, width) {
 #    # prepare_arg done internally
-#    .Call("stri_justify", str, width, PACKAGE="stringi")
+#    .Call(C_stri_justify, str, width)
 # }

@@ -85,14 +85,14 @@
 #' @rdname stri_split_lines
 #' @aliases stri_split_lines stri_split_lines1
 stri_split_lines <- function(str, omit_empty=FALSE) {
-   .Call("stri_split_lines", str, omit_empty, PACKAGE="stringi")
+   .Call(C_stri_split_lines, str, omit_empty)
 }
 
 
 #' @rdname stri_split_lines
 #' @export
 stri_split_lines1 <- function(str) {
-   .Call("stri_split_lines1", str, PACKAGE="stringi")
+   .Call(C_stri_split_lines1, str)
 }
 
 
@@ -140,5 +140,5 @@ stri_split_lines1 <- function(str) {
 #' @family locale_sensitive
 #' @family text_boundaries
 stri_split_boundaries <- function(str, opts_brkiter=NULL) {
-   .Call("stri_split_boundaries", str, opts_brkiter, PACKAGE="stringi")
+   .Call(C_stri_split_boundaries, str, opts_brkiter)
 }

@@ -89,7 +89,7 @@
 #' @family text_boundaries
 #' @rdname stri_locate_boundaries
 stri_locate_boundaries <- function(str, opts_brkiter=NULL) {
-   .Call("stri_locate_boundaries", str, opts_brkiter, PACKAGE="stringi")
+   .Call(C_stri_locate_boundaries, str, opts_brkiter)
 }
 
 

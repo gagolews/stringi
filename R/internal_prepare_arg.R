@@ -116,7 +116,7 @@ invisible(NULL)
 # 
 # @family prepare_arg
 stri_prepare_arg_string <- function(x) {
-   .Call("stri_prepare_arg_string", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_string, x, NULL)
 }
 
 
@@ -139,7 +139,7 @@ stri_prepare_arg_string <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_double <- function(x) {
-   .Call("stri_prepare_arg_double", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_double, x, NULL)
 }
 
 
@@ -162,7 +162,7 @@ stri_prepare_arg_double <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
-   .Call("stri_prepare_arg_integer", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_integer, x, NULL)
 }
 
 
@@ -185,7 +185,7 @@ stri_prepare_arg_integer <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
-   .Call("stri_prepare_arg_logical", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_logical, x, NULL)
 }
 
 
@@ -208,7 +208,7 @@ stri_prepare_arg_logical <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_raw <- function(x) {
-   .Call("stri_prepare_arg_raw", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_raw, x, NULL)
 }
 
 
@@ -229,7 +229,7 @@ stri_prepare_arg_raw <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_string_1 <- function(x) {
-   .Call("stri_prepare_arg_string_1", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_string_1, x, NULL)
 }
 
 
@@ -250,7 +250,7 @@ stri_prepare_arg_string_1 <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_double_1 <- function(x) {
-   .Call("stri_prepare_arg_double_1", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_double_1, x, NULL)
 }
 
 
@@ -271,7 +271,7 @@ stri_prepare_arg_double_1 <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_integer_1 <- function(x) {
-   .Call("stri_prepare_arg_integer_1", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_integer_1, x, NULL)
 }
 
 
@@ -292,5 +292,5 @@ stri_prepare_arg_integer_1 <- function(x) {
 # 
 # @family prepare_arg
 stri_prepare_arg_logical_1 <- function(x) {
-   .Call("stri_prepare_arg_logical_1", x, NULL, PACKAGE="stringi")
+   .Call(C_stri_prepare_arg_logical_1, x, NULL)
 }

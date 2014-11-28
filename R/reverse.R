@@ -55,5 +55,5 @@
 #'
 #' @export
 stri_reverse <- function(str) {
-   .Call("stri_reverse", str, PACKAGE="stringi")
+   .Call(C_stri_reverse, str)
 }

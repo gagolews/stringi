@@ -53,7 +53,7 @@
 #' stri_dup(c("abc", "pqrst"), c(4, 2))
 #' }
 stri_dup <- function(str, times) {
-   .Call("stri_dup", str, times, PACKAGE="stringi")
+   .Call(C_stri_dup, str, times)
 }
 
 
@@ -93,7 +93,7 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 "%s+%" <- function(e1, e2) {
-   .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
+   .Call(C_stri_join2_nocollapse, e1, e2)
 }
 
 #' @usage
@@ -101,7 +101,7 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%stri+%" <- function(e1, e2) {
-   .Call("stri_join2_nocollapse", e1, e2, PACKAGE="stringi")
+   .Call(C_stri_join2_nocollapse, e1, e2)
 }
 
 
@@ -163,7 +163,7 @@ stri_dup <- function(str, times) {
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL, ignore_null=FALSE) {
-   .Call("stri_join_withcollapse", list(...), sep, collapse, ignore_null, PACKAGE="stringi")
+   .Call(C_stri_join_withcollapse, list(...), sep, collapse, ignore_null)
 }
 
 
@@ -212,5 +212,5 @@ stri_paste <- stri_join
 #' @export
 #' @family join
 stri_flatten <- function(str, collapse="") {
-   .Call("stri_flatten_withressep", str, collapse, PACKAGE="stringi")
+   .Call(C_stri_flatten_withressep, str, collapse)
 }
