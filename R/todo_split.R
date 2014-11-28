@@ -59,5 +59,5 @@ invisible(NULL) # TO DO, version >= 0.3
 # #       to   <- from[ , 2]
 # #       from <- from[ , 1]
 # #    }
-# #    .Call("stri_split_pos", str, from, to, PACKAGE="stringi")
+# #    .Call(C_stri_split_pos, str, from, to)
 # }

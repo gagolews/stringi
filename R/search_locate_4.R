@@ -217,82 +217,82 @@ stri_locate <- function(str, ..., regex, fixed, coll, charclass,
 #' @export
 #' @rdname stri_locate
 stri_locate_all_charclass <- function(str, pattern, merge=TRUE, omit_no_match=FALSE) {
-   .Call("stri_locate_all_charclass", str, pattern, merge, omit_no_match, PACKAGE="stringi")
+   .Call(C_stri_locate_all_charclass, str, pattern, merge, omit_no_match)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_first_charclass <- function(str, pattern) {
-   .Call("stri_locate_first_charclass", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_locate_first_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_last_charclass <- function(str, pattern) {
-   .Call("stri_locate_last_charclass", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_locate_last_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_all_coll <- function(str, pattern, omit_no_match=FALSE, opts_collator=NULL) {
-   .Call("stri_locate_all_coll", str, pattern, omit_no_match, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_locate_all_coll, str, pattern, omit_no_match, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_first_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_locate_first_coll", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_locate_first_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_last_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_locate_last_coll", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_locate_last_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_all_regex <- function(str, pattern, omit_no_match=FALSE, opts_regex=NULL) {
-   .Call("stri_locate_all_regex", str, pattern, omit_no_match, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_locate_all_regex, str, pattern, omit_no_match, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_first_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_locate_first_regex", str, pattern, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_locate_first_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_last_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_locate_last_regex", str, pattern, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_locate_last_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE) {
-   .Call("stri_locate_all_fixed", str, pattern, omit_no_match, PACKAGE="stringi")
+   .Call(C_stri_locate_all_fixed, str, pattern, omit_no_match)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_first_fixed <- function(str, pattern) {
-   .Call("stri_locate_first_fixed", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_locate_first_fixed, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_locate
 stri_locate_last_fixed <- function(str, pattern) {
-   .Call("stri_locate_last_fixed", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_locate_last_fixed, str, pattern)
 }

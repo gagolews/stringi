@@ -140,40 +140,40 @@ stri_endswith <- function(str, ..., fixed, coll, charclass) {
 #' @export
 #' @rdname stri_startsendswith
 stri_startswith_fixed <- function(str, pattern, from=1L) {
-   .Call("stri_startswith_fixed", str, pattern, from, PACKAGE="stringi")
+   .Call(C_stri_startswith_fixed, str, pattern, from)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
 stri_endswith_fixed <- function(str, pattern, to=-1L) {
-   .Call("stri_endswith_fixed", str, pattern, to, PACKAGE="stringi")
+   .Call(C_stri_endswith_fixed, str, pattern, to)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
 stri_startswith_charclass <- function(str, pattern, from=1L) {
-   .Call("stri_startswith_charclass", str, pattern, from, PACKAGE="stringi")
+   .Call(C_stri_startswith_charclass, str, pattern, from)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
 stri_endswith_charclass <- function(str, pattern, to=-1L) {
-   .Call("stri_endswith_charclass", str, pattern, to, PACKAGE="stringi")
+   .Call(C_stri_endswith_charclass, str, pattern, to)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
 stri_startswith_coll <- function(str, pattern, from=1L, opts_collator=NULL) {
-   .Call("stri_startswith_coll", str, pattern, from, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_startswith_coll, str, pattern, from, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
 stri_endswith_coll <- function(str, pattern, to=-1L, opts_collator=NULL) {
-   .Call("stri_endswith_coll", str, pattern, to, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_endswith_coll, str, pattern, to, opts_collator)
 }

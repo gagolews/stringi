@@ -42,26 +42,26 @@
 #' converter names. E.g. \code{"UTF8"} is also valid,
 #' see \link{stringi-encoding} for more information.
 #'
-#' @param simplified single logical value; return a character vector or a
+#' @param simplify single logical value; return a character vector or a
 #' list of character vectors?
 #'
-#' @return If \code{simplified} is \code{FALSE} (the default), a list of
+#' @return If \code{simplify} is \code{FALSE} (the default), a list of
 #'  character vectors is returned. Each list element represents a unique
 #'  character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
 #'  Name of an encoding family. The elements (character vectors) are
 #'  its aliases.
 #'
-#' If \code{simplified} is \code{TRUE}, then the resulting list
+#' If \code{simplify} is \code{TRUE}, then the resulting list
 #' is coerced to a character vector and sorted, and returned with
 #' removed duplicated entries.
 #'
 #' @family encoding_management
 #' @export
-stri_enc_list <- function(simplified=FALSE) {
-   simplified <- !identical(simplified, FALSE)
+stri_enc_list <- function(simplify=FALSE) {
+   simplify <- !identical(simplify, FALSE)
 
-   ret <- .Call("stri_enc_list", PACKAGE="stringi")
-   if (simplified)
+   ret <- .Call(C_stri_enc_list)
+   if (simplify)
       return(stri_sort(unique(unlist(ret)))) # @TODO: use stri_unique
    else
       return(ret)
@@ -109,7 +109,7 @@ stri_enc_list <- function(simplified=FALSE) {
 #' @family encoding_management
 #' @export
 stri_enc_info <- function(enc=NULL) {
-   .Call("stri_enc_info", enc, PACKAGE="stringi")
+   .Call(C_stri_enc_info, enc)
 }
 
 
@@ -156,7 +156,7 @@ stri_enc_set <- function(enc) {
 
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
-   .Call("stri_enc_set", enc, PACKAGE="stringi")
+   .Call(C_stri_enc_set, enc)
    message(stri_paste('You are now working with ', stri_info(short=TRUE)))
    invisible(previous)
 }
@@ -214,5 +214,5 @@ stri_enc_get <- function() {
 #' @family encoding_management
 #' @export
 stri_enc_mark <- function(str) {
-   .Call("stri_enc_mark", str, PACKAGE="stringi")
+   .Call(C_stri_enc_mark, str)
 }

@@ -123,7 +123,7 @@ stri_wrap <- function(str, width=floor(0.9*getOption("width")),
       str <- stri_trans_nfc(str)
    }
 
-   ret <- .Call("stri_wrap", str, width, cost_exponent, locale, PACKAGE="stringi")
+   ret <- .Call(C_stri_wrap, str, width, cost_exponent, locale)
 
    if (simplify) # this will give an informative warning or error if sth is wrong
       as.character(unlist(ret))

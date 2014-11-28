@@ -39,7 +39,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_Rmark <- function(str) {
-   invisible(.Call("stri_test_Rmark", str, PACKAGE="stringi"))
+   invisible(.Call(C_stri_test_Rmark, str))
 }
 
 
@@ -48,7 +48,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_StriContainerUTF16 <- function(str) {
-   .Call("stri_test_UnicodeContainer16", str, PACKAGE="stringi")
+   .Call(C_stri_test_UnicodeContainer16, str)
 }
 
 
@@ -57,7 +57,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_StriContainerUTF8 <- function(str) {
-   .Call("stri_test_UnicodeContainer8", str, PACKAGE="stringi")
+   .Call(C_stri_test_UnicodeContainer8, str)
 }
 
 
@@ -66,5 +66,5 @@
 # @param str some object
 # @return \code{str}
 .stri_test_returnasis <- function(x) {
-   .Call("stri_test_returnasis", x, PACKAGE="stringi")
+   .Call(C_stri_test_returnasis, x)
 }

@@ -98,26 +98,26 @@ stri_subset <- function(str, ..., regex, fixed, coll, charclass) {
 #' @export
 #' @rdname stri_subset
 stri_subset_fixed <- function(str, pattern) {
-   .Call("stri_subset_fixed", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_subset_fixed, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_subset
 stri_subset_charclass <- function(str, pattern) {
-   .Call("stri_subset_charclass", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_subset_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_subset
 stri_subset_coll <- function(str, pattern, opts_collator=NULL) {
-   .Call("stri_subset_coll", str, pattern, opts_collator, PACKAGE="stringi")
+   .Call(C_stri_subset_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_subset
 stri_subset_regex <- function(str, pattern, opts_regex=NULL) {
-   .Call("stri_subset_regex", str, pattern, opts_regex, PACKAGE="stringi")
+   .Call(C_stri_subset_regex, str, pattern, opts_regex)
 }

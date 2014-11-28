@@ -4,20 +4,28 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
-   * [IMPORTANT CHANGE] #111 t.b.d.
+   * [IMPORTANT CHANGE] #111 t.b.d. `opts_regex` as `...` etc.
 
    * [NEW FEATURE] #119  `stri_split_boundaries()` now have
       `n_max`, `omit_empty`, `tokens_only`, `simplify` arguments.
 
-   * [NEW FEATURE] #118  t.b.d.
+   * [NEW FEATURE] #118  t.b.d. `stri_wrap`: `indent`, `exdent`
 
-   * [NEW FEATURE] #110 t.b.d.
+   * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
 
-   * [NEW FEATURE] #122 t.b.d.
+   * [NEW FEATURE] #122 t.b.d. `stri_subset`, `omit_na` arg
 
-   * [NEW FEATURE] #120 t.b.d.
+   * [NEW FEATURE] #120 t.b.d. `stri_locate_first_boundaries` etc.
 
-   * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION
+   * [BUGFIX] #115 & #94 t.b.d. Solaris!!!, `icudt` package
+
+(...)
+
+   * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION [overlapping patterns in fixed search]
+
+   * [NEW FEATURE] #113 [[[not sure if for 0.4-1]]]  -- QUESTION [brkiter in coll/fixed search]
+
+(...)
 
    * [NEW FEATURE] #116: `stri_paste` gained a new argument:
      `ignore_null`. Setting it to `TRUE` makes this function compatible with 
@@ -31,7 +39,8 @@
    * [BUGFIX] #114: `stri_paste()`'s behavior was not consistent with
      `paste()`'s one.
 
-   * [BUGFIX] #115 & #94 t.b.d.
+   * [OTHER] #123: `useDynLib` is used to speed up symbol lookup in 
+     the compiled dynamic library
 
 -------------------------------------------------------------------------------
 

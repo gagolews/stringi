@@ -3,20 +3,20 @@
 \alias{stri_enc_list}
 \title{List Known Character Encodings}
 \usage{
-stri_enc_list(simplified = FALSE)
+stri_enc_list(simplify = FALSE)
 }
 \arguments{
-\item{simplified}{single logical value; return a character vector or a
+\item{simplify}{single logical value; return a character vector or a
 list of character vectors?}
 }
 \value{
-If \code{simplified} is \code{FALSE} (the default), a list of
+If \code{simplify} is \code{FALSE} (the default), a list of
  character vectors is returned. Each list element represents a unique
  character encoding. The \code{name} attribute gives the \pkg{ICU} Canonical
  Name of an encoding family. The elements (character vectors) are
  its aliases.
 
-If \code{simplified} is \code{TRUE}, then the resulting list
+If \code{simplify} is \code{TRUE}, then the resulting list
 is coerced to a character vector and sorted, and returned with
 removed duplicated entries.
 }
