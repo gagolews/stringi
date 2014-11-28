@@ -139,6 +139,7 @@ stri_split_lines1 <- function(str) {
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_split_boundaries <- function(str, opts_brkiter=NULL) {
+stri_split_boundaries <- function(str, n_max=-1L,
+   omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
    .Call("stri_split_boundaries", str, opts_brkiter, PACKAGE="stringi")
 }
