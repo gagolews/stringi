@@ -136,7 +136,7 @@
 #' @family encoding_detection
 #' @export
 stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
-   .Call("stri_enc_detect", str, filter_angle_brackets, PACKAGE="stringi")
+   .Call(C_stri_enc_detect, str, filter_angle_brackets)
 }
 
 
@@ -204,5 +204,5 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' @family encoding_detection
 #' @export
 stri_enc_detect2 <- function(str, locale=NULL) {
-   .Call("stri_enc_detect2", str, locale, PACKAGE="stringi")
+   .Call(C_stri_enc_detect2, str, locale)
 }

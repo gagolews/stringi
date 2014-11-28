@@ -46,5 +46,5 @@ invisible(NULL) # version >= 0.3
 # #' @export
 # #' @family length
 # stri_width <- function(str) {
-#    .Call("stri_width", str, PACKAGE="stringi")
+#    .Call(C_stri_width, str)
 # }

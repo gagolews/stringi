@@ -77,5 +77,5 @@
 #' @family utils
 #' @export
 stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_) {
-   .Call("stri_list2matrix", x, byrow, stri_enc_toutf8(fill), PACKAGE="stringi")
+   .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill))
 }

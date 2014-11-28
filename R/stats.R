@@ -69,7 +69,7 @@
 #' @family stats
 #' @export
 stri_stats_general <- function(str) {
-   .Call("stri_stats_general", str, PACKAGE="stringi")
+   .Call(C_stri_stats_general, str)
 }
 
 
@@ -126,5 +126,5 @@ stri_stats_general <- function(str) {
 #' @family stats
 #' @export
 stri_stats_latex <- function(str) {
-   .Call("stri_stats_latex", str, PACKAGE="stringi")
+   .Call(C_stri_stats_latex, str)
 }

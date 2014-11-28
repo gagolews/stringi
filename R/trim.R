@@ -82,21 +82,21 @@
 #' @rdname stri_trim
 #' @export
 stri_trim_both <- function(str, pattern="\\P{Wspace}") {
-   .Call("stri_trim_both", str, pattern, PACKAGE="stringi")
+   .Call(C_stri_trim_both, str, pattern)
 }
 
 
 #' @rdname stri_trim
 #' @export
 stri_trim_left <- function(str, pattern="\\P{Wspace}") {
-  .Call("stri_trim_left", str, pattern, PACKAGE="stringi")
+  .Call(C_stri_trim_left, str, pattern)
 }
 
 
 #' @rdname stri_trim
 #' @export
 stri_trim_right <- function(str, pattern="\\P{Wspace}") {
-  .Call("stri_trim_right", str, pattern, PACKAGE="stringi")
+  .Call(C_stri_trim_right, str, pattern)
 }
 
 

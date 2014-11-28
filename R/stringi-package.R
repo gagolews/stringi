@@ -167,7 +167,7 @@
 #' \url{http://tools.ietf.org/html/rfc3629}
 #'
 #' @family stringi_general_topics
-#' @useDynLib stringi
+#' @useDynLib stringi, .registration = TRUE
 invisible(NULL)
 
 
