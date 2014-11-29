@@ -81,12 +81,12 @@ using namespace std;
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n_max,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
+   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
-   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
 
    STRI__ERROR_HANDLER_BEGIN(4)
    R_len_t vectorize_length = stri__recycling_rule(true, 4,

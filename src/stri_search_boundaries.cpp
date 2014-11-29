@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8_indexable.h"
+#include "stri_container_integer.h"
 #include <deque>
 #include <utility>
 #include <vector>
@@ -294,28 +295,33 @@ bool stri__opts_brkiter_ignore_skip_status(const vector<int32_t>& brkskip, int32
 }
 
 
-/** Locate or Split string by all BreakIterator boundaries
+/** Locate all BreakIterator boundaries
  *
  * @param str character vector
- * @param opts_brkiter identifier
- * @param split [internal]
- * @return character vector
+ * @param omit_no_match logical
+ * @param opts_brkiter named list
+ * @return list
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-22)
+ *
+ * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
+ *          removed "title": For Unicode 4.0 and above title boundary
+ *          iteration, please use Word Boundary iterator.
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
- *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-27)
- *          return NA if no matches found
+ *          use stri__split_or_locate_boundaries
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *          use opts_brkiter
- *
- * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+* @version 0.4-1 (Marek Gagolewski, 2014-11-28)
+ *          new args: omit_no_match
  */
-SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
+SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter); /* this is R_alloc'ed */
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
    vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
    int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
    RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);
@@ -331,12 +337,7 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
    for (R_len_t i = 0; i < str_length; ++i)
    {
       if (str_cont.isNA(i)) {
-         if (split) {
-            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         }
-         else {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
-         }
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
          continue;
       }
 
@@ -361,52 +362,33 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
       if (noccurrences <= 0) {
-         if (split) {
-            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         }
-         else {
-            SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));
-         }
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
       }
 
-      if (split) {
-         SEXP ans;
-         STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
-         deque< pair<R_len_t,R_len_t> >::iterator iter = occurrences.begin();
-         for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
-            SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
-               (*iter).second-(*iter).first, CE_UTF8));
-         }
-         SET_VECTOR_ELT(ret, i, ans);
-         STRI__UNPROTECT(1);
+      SEXP ans;
+      STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
+      int* ans_tab = INTEGER(ans);
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+         pair<R_len_t, R_len_t> cur_match = *iter;
+         ans_tab[j]             = cur_match.first;
+         ans_tab[j+noccurrences] = cur_match.second;
       }
-      else {
-         SEXP ans;
-         STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
-         int* ans_tab = INTEGER(ans);
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-         for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
-            pair<R_len_t, R_len_t> cur_match = *iter;
-            ans_tab[j]             = cur_match.first;
-            ans_tab[j+noccurrences] = cur_match.second;
-         }
 
-         // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
-         str_cont.UTF8_to_UChar32_index(i, ans_tab,
-               ans_tab+noccurrences, noccurrences,
-               1, // 0-based index -> 1-based
-               0  // end returns position of next character after match
-         );
-         SET_VECTOR_ELT(ret, i, ans);
-         STRI__UNPROTECT(1);
-      }
+      // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)
+      str_cont.UTF8_to_UChar32_index(i, ans_tab,
+            ans_tab+noccurrences, noccurrences,
+            1, // 0-based index -> 1-based
+            0  // end returns position of next character after match
+      );
+      SET_VECTOR_ELT(ret, i, ans);
+      STRI__UNPROTECT(1);
    }
 
    if (briter) { delete briter; briter = NULL; }
    if (str_text) { utext_close(str_text); str_text = NULL; }
-   if (!split)
-      stri__locate_set_dimnames_list(ret);
+   stri__locate_set_dimnames_list(ret);
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
@@ -416,33 +398,12 @@ SEXP stri__split_or_locate_boundaries(SEXP str, SEXP opts_brkiter, bool split)
 }
 
 
-/** Locate all BreakIterator boundaries
- *
- * @param str character vector
- * @param opts_brkiter named list
- * @return list
- *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-22)
- *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-23)
- *          removed "title": For Unicode 4.0 and above title boundary
- *          iteration, please use Word Boundary iterator.
- *
- * @version 0.2-2 (Marek Gagolewski, 2014-04-25)
- *          use stri__split_or_locate_boundaries
- *
- * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
- *          use opts_brkiter
- */
-SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter)
-{
-   return stri__split_or_locate_boundaries(str, opts_brkiter, false);
-}
-
-
 /** Split a string at BreakIterator boundaries
  *
  * @param str character vector
+ * @param n_max integer
+ * @param tokens_only logical
+ * @param simplify logical
  * @param opts_brkiter named list
  * @return list
  *
@@ -457,10 +418,108 @@ SEXP stri_locate_boundaries(SEXP str, SEXP opts_brkiter)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *          use opts_brkiter
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
+ *          new args: n_max, tokens_only, simplify
  */
-SEXP stri_split_boundaries(SEXP str, SEXP opts_brkiter)
+SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter)
 {
-   return stri__split_or_locate_boundaries(str, opts_brkiter, true);
+   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
+   const char* qloc = stri__opts_brkiter_get_locale(opts_brkiter); /* this is R_alloc'ed */
+   vector<int32_t> brkskip = stri__opts_brkiter_get_skip_rule_status(opts_brkiter);
+   int brkiter_cur = stri__opts_brkiter_select_iterator(opts_brkiter, "line_break");
+   RuleBasedBreakIterator* briter = stri__opts_brkiter_get_iterator(brkiter_cur, qloc);
+   UText* str_text = NULL;
+
+   STRI__ERROR_HANDLER_BEGIN(2)
+   R_len_t vectorize_length = stri__recycling_rule(true, 2,
+      LENGTH(str), LENGTH(n_max));
+   StriContainerUTF8_indexable str_cont(str, vectorize_length);
+   StriContainerInteger n_max_cont(n_max, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+
+   for (R_len_t i = 0; i < vectorize_length; ++i)
+   {
+      if (n_max_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+      int  n_max_cur        = n_max_cont.get(i);
+      
+      if (str_cont.isNA(i)) {
+         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+         continue;
+      }
+      
+      if (n_max_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
+      else if (n_max_cur < 0)
+         n_max_cur = INT_MAX;
+      else if (n_max_cur == 0) {
+         SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
+         continue;
+      }
+
+      // get the current string
+      UErrorCode status = U_ZERO_ERROR;
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+      str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+      briter->setText(str_text, status);
+      if (U_FAILURE(status))
+         throw StriException(status);
+
+      deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue
+      R_len_t match, last_match = briter->first();
+      R_len_t k;
+      for (k=0; k < n_max_cur && (match = briter->next()) != BreakIterator::DONE; ) {
+         int rule = briter->getRuleStatus();
+         if (!stri__opts_brkiter_ignore_skip_status(brkskip, rule)) {
+            occurrences.push_back(pair<R_len_t, R_len_t>(last_match, match));
+            ++k; // another field
+         }
+         last_match = match;
+      }
+
+      R_len_t noccurrences = (R_len_t)occurrences.size();
+      if (noccurrences <= 0) {
+         SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(0)); // @TODO: Should it be a NA? Hard to say...
+         continue;
+      }
+      if (k == n_max_cur && !tokens_only1)
+         occurrences.back().second = str_cur_n;
+
+      SEXP ans;
+      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
+      deque< pair<R_len_t,R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
+            (*iter).second-(*iter).first, CE_UTF8));
+      }
+      SET_VECTOR_ELT(ret, i, ans);
+      STRI__UNPROTECT(1);
+   }
+
+   if (briter) { delete briter; briter = NULL; }
+   if (str_text) { utext_close(str_text); str_text = NULL; }
+   
+   if (simplify1) {
+      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1));
+   }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (briter) { delete briter; briter = NULL; }
+      if (str_text) { utext_close(str_text); str_text = NULL; }
+   })
 }
 
 

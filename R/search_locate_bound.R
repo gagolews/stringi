@@ -53,6 +53,8 @@
 #'
 #'
 #' @param str character vector or an object coercible to
+#' @param omit_no_match single logical value; if \code{FALSE},
+#' then 2 missing values will indicate that there are no text bondaries
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{line_break};
@@ -70,7 +72,8 @@
 #' they may be passed e.g. to the \code{\link{stri_sub}} function.
 #'
 #' Moreover, you may get two \code{NA}s in one row
-#' for no match or \code{NA} arguments.
+#' for no match (if \code{omit_no_match} is \code{FALSE})
+#' or \code{NA} arguments.
 #'
 #' @examples
 #' \donttest{
@@ -88,13 +91,14 @@
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @rdname stri_locate_boundaries
-stri_locate_boundaries <- function(str, opts_brkiter=NULL) {
-   .Call(C_stri_locate_boundaries, str, opts_brkiter)
+stri_locate_boundaries <- function(str, omit_no_match=FALSE, opts_brkiter=NULL) {
+   .Call(C_stri_locate_boundaries, str, omit_no_match, opts_brkiter)
 }
 
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_words <- function(str, locale=NULL) {
-   stri_locate_boundaries(str, stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+stri_locate_words <- function(str, omit_no_match=FALSE, locale=NULL) {
+   stri_locate_boundaries(str, omit_no_match,
+      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
 }

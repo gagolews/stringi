@@ -30,7 +30,8 @@ stri_split_charclass(str, pattern, n_max = -1L, omit_empty = FALSE,
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
-\item{n_max}{integer vector, maximal number of strings to return}
+\item{n_max}{integer vector, maximal number of strings to return,
+and, at the same time, maximal number of text boundaries to look for}
 
 \item{omit_empty}{logical vector; determines whether empty
 tokens should be removed from the result (\code{TRUE})
