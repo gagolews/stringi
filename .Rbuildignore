@@ -10,8 +10,8 @@
 ^src/icu52/stubdata/.*\.o$
 ^src/icu52/i18n/.*\.o$
 ^src/icu52/common/.*\.o$
-^src/icu52/fulldata
-^src/icu52/minimaldata
+^src/icu52/pkgdata
+^src/icu52/icupkg
 ^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$
