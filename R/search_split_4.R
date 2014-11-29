@@ -70,12 +70,16 @@
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
-#' @param n_max integer vector, maximal number of strings to return
+#' @param n_max integer vector, maximal number of strings to return,
+#' and, at the same time, maximal number of text boundaries to look for
 #' @param omit_empty logical vector; determines whether empty
 #' tokens should be removed from the result (\code{TRUE})
 #' or replaced with \code{NA}s (\code{NA})
 #' @param tokens_only single logical value;
 #' may affect the result if \code{n_max} is positive, see Details
+#' @param simplify single logical value;
+#' if \code{TRUE}, then a character matrix is returned;
+#' otherwise (the default), a list of character vectors is given, see Value
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
 #' for default settings;
@@ -84,9 +88,6 @@
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings;
 #' \code{stri_split_coll} only
-#' @param simplify single logical value;
-#' if \code{TRUE}, then a character matrix is returned;
-#' otherwise (the default), a list of character vectors is given, see Value
 #' @param ... additional arguments passed to the underlying functions;
 #' \code{stri_split} only
 #'

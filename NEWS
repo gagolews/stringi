@@ -6,9 +6,6 @@
 
    * [IMPORTANT CHANGE] #111 t.b.d. `opts_regex` as `...` etc.
 
-   * [NEW FEATURE] #119  `stri_split_boundaries()` now have
-      `n_max`, `omit_empty`, `tokens_only`, `simplify` arguments.
-
    * [NEW FEATURE] #118  t.b.d. `stri_wrap`: `indent`, `exdent`
 
    * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
@@ -27,6 +24,10 @@
 
 (...)
 
+   * [NEW FEATURE] #119  `stri_split_boundaries()` now have
+      `n_max`, `tokens_only`, and `simplify` arguments.
+      Additionally, `stri_extract_words()` is now equipped with `simplify` arg.
+
    * [NEW FEATURE] #116: `stri_paste` gained a new argument:
      `ignore_null`. Setting it to `TRUE` makes this function compatible with 
      `paste()`.
@@ -36,8 +37,7 @@
      Setting it to `TRUE` makes these functions compatible with their
      `stringr` equivalents.
 
-   * [BUGFIX] #114: `stri_paste()`'s behavior was not consistent with
-     `paste()`'s one.
+   * [NEW FEATURE] #114: `stri_paste()`: `ignore_null` arg has been added.
 
    * [OTHER] #123: `useDynLib` is used to speed up symbol lookup in 
      the compiled dynamic library

@@ -3,19 +3,34 @@
 \alias{stri_extract_words}
 \title{Extract Words from a Text}
 \usage{
-stri_extract_words(str, locale = NULL)
+stri_extract_words(str, simplify = FALSE, omit_no_match = FALSE,
+  locale = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
+
+\item{simplify}{single logical value;
+if \code{TRUE}, then a character matrix is returned;
+otherwise (the default), a list of character vectors is given, see Value}
+
+\item{omit_no_match}{single logical value; if \code{FALSE},
+then a missing value will indicate that there are no words}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}.}
 }
 \value{
-A list of character vectors is returned. Each string consists of
-a separate word. If there are no words or if a string is missing,
+If \code{simplify == FALSE} (the default), then a
+ list of character vectors is returned. Each string consists of
+a separate word. In case of \code{omit_no_match == FALSE} and
+if there are no words or if a string is missing,
 a single \code{NA} is provided on output.
+
+Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+is called on the resulting object.
+In such a case, a character matrix with \code{length(str)} rows
+is returned.
 }
 \description{
 This function extracts all words from each string.

@@ -48,14 +48,27 @@
 #'
 #'
 #' @param str character vector or an object coercible to
+#' @param omit_no_match single logical value; if \code{FALSE},
+#' then a missing value will indicate that there are no words
+#' @param simplify single logical value;
+#' if \code{TRUE}, then a character matrix is returned;
+#' otherwise (the default), a list of character vectors is given, see Value
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
 #'
 #' @return
-#' A list of character vectors is returned. Each string consists of
-#' a separate word. If there are no words or if a string is missing,
+#' If \code{simplify == FALSE} (the default), then a
+#'  list of character vectors is returned. Each string consists of
+#' a separate word. In case of \code{omit_no_match == FALSE} and
+#' if there are no words or if a string is missing,
 #' a single \code{NA} is provided on output.
+#'
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+#' is called on the resulting object.
+#' In such a case, a character matrix with \code{length(str)} rows
+#' is returned.
+#'
 #'
 #' @examples
 #' \donttest{
@@ -66,6 +79,13 @@
 #' @family search_extract
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_extract_words <- function(str, locale=NULL) {
-   stri_split_boundaries(str, stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+stri_extract_words <- function(str, simplify=FALSE, omit_no_match=FALSE, locale=NULL) {
+   res <- stri_split_boundaries(str, simplify=FALSE,
+      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+   if (!omit_no_match) # auto arg check
+      res[sapply(res, length) == 0] <- NA_character_
+   if (simplify) # auto arg check
+      stri_list2matrix(res, byrow=TRUE)
+   else
+      res
 }

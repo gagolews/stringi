@@ -105,19 +105,38 @@ stri_split_lines1 <- function(str) {
 #' and splits strings at the indicated positions.
 #'
 #' @details
-#' Vectorized over \code{str}.
+#' Vectorized over \code{str} and \code{n_max}.
+#' 
+#' If \code{n_max} is negative (default), then all pieces are extracted.
+#' Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
+#' for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
+#' tokes are extracted (if possible) and the \code{n_max}-th string
+#' gives the (non-split) remainder (see Examples).
+#' On the other hand, if \code{tokens_only} is \code{TRUE},
+#' then only full tokens (up to \code{n_max} pieces) are extracted.
 #'
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
 #'
 #' @param str character vector or an object coercible to
+#' @param n_max integer vector, maximal number of strings to return
+#' @param tokens_only single logical value;
+#' may affect the result if \code{n_max} is positive, see Details
+#' @param simplify single logical value;
+#' if \code{TRUE}, then a character matrix is returned;
+#' otherwise (the default), a list of character vectors is given, see Value
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{line_break}
 #'
-#' @return
-#' Returns a list of character vectors.
+#' @return If \code{simplify == FALSE} (the default),
+#' then the functions return a list of character vectors.
+#'
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+#' is called on the resulting object.
+#' In such a case, a character matrix with \code{length(str)} rows
+#' is returned.
 #'
 #' @examples
 #' \donttest{
@@ -140,7 +159,7 @@ stri_split_lines1 <- function(str) {
 #' @family locale_sensitive
 #' @family text_boundaries
 stri_split_boundaries <- function(str, n_max=-1L,
-   omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
+   tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
    .Call(C_stri_split_boundaries, str, 
-      n_max, omit_empty, tokens_only, simplify, opts_brkiter)
+      n_max, tokens_only, simplify, opts_brkiter)
 }
