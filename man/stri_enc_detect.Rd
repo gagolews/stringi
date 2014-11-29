@@ -100,7 +100,7 @@ If you have some initial guess on language and encoding, try with
 }
 \examples{
 \dontrun{
-f <- rawToChar(readBin("test.txt", "raw", 1024))
+f <- rawToChar(readBin("test.txt", "raw", 100000))
 stri_enc_detect(f)
 }
 }
