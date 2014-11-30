@@ -117,14 +117,8 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 
    UErrorCode status = U_ZERO_ERROR;
    lastMatcher = new RegexMatcher(this->get(i), flags, status);
-   if (U_FAILURE(status)) {
-      if (lastMatcher)
-         delete lastMatcher;
-      lastMatcher = NULL;
-      throw StriException(status);
-   }
-   else if (!lastMatcher)
-      throw StriException(MSG__MEM_ALLOC_ERROR);
+   STRI__CHECKICUSTATUS_THROW(status, {if (lastMatcher) delete lastMatcher; lastMatcher = NULL;})
+   if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
    this->lastMatcherIndex = (i % n);
 
    return lastMatcher;

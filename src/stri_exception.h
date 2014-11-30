@@ -82,6 +82,34 @@ using namespace std;
    __stri_protected_sexp_num = 0; }
 
 
+#define STRI__CHECKICUSTATUS_THROW(status, onerror) {       \
+   if (U_FAILURE(status)) {                                 \
+      onerror;                                              \
+      throw StriException(status);                          \
+   }                                                        \
+   else if (status <= U_ERROR_WARNING_LIMIT && status > U_USING_DEFAULT_WARNING) { \
+      Rf_warning(MSG__ICU_WARNING,                          \
+         StriException::getICUerrorName(status),            \
+         u_errorName(status));                              \
+   }                                                        \
+}
+
+
+#define STRI__CHECKICUSTATUS_RFERROR(status, onerror) {     \
+   if (U_FAILURE(status)) {                                 \
+      onerror;                                              \
+      Rf_error(MSG__ICU_ERROR,                              \
+         StriException::getICUerrorName(status),            \
+         u_errorName(status));                              \
+   }                                                        \
+   else if (status <= U_ERROR_WARNING_LIMIT && status > U_USING_DEFAULT_WARNING) { \
+      Rf_warning(MSG__ICU_WARNING,                          \
+         StriException::getICUerrorName(status),            \
+         u_errorName(status));                              \
+   }                                                        \
+}
+
+
 /**
  * A class representing exceptions
  *
@@ -119,7 +147,6 @@ public:
    }
 
    static const char* getICUerrorName(UErrorCode status);
-
 };
 
 #endif

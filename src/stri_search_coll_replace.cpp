@@ -98,7 +98,7 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
 
       if (type >= 0) { // first or all
          int start = (int)usearch_first(matcher, &status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[i] at all
@@ -109,12 +109,12 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
             if (type > 0) break; // break if first and not all
             start = usearch_next(matcher, &status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
       }
       else { // if last
          int start = (int)usearch_last(matcher, &status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[i] at all
          R_len_t mlen = usearch_getMatchedLength(matcher);
@@ -228,7 +228,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
          deque< pair<R_len_t, R_len_t> > occurrences;
 
          int start = (int)usearch_first(matcher, &status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[j] at all
@@ -238,7 +238,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
             remUChars += mlen;
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
             start = usearch_next(matcher, &status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
 
          R_len_t replacement_cur_n = replacement_cont.get(i).length();

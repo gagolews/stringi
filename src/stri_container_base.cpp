@@ -73,7 +73,7 @@ void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowre
 
 #ifndef NDEBUG
    if (this->n < _n)
-      throw StriException("StriContainerBase::init_Base(...): this->n < n");
+      throw StriException("StriContainerBase::init_Base(...): this->n < _n");
    if (this->n > this->nrecycle)
       throw StriException("StriContainerBase::init_Base(...): this->n > this->nrecycle");
 #endif

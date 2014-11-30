@@ -101,6 +101,9 @@
 #define MSG__ICU_ERROR \
    "%s (%s)"
 
+#define MSG__ICU_WARNING \
+   "%s (%s)"
+
 #define MSG__EXPECTED_NONNEGATIVE \
    "argument `%s`: expected a nonnegative numeric value"
 
@@ -255,7 +258,7 @@
 
 #define MSG__OVERLAPPING_PATTERN_UNSUPPORTED \
    "overlapping pattern matches are not supported"
-   
+
 #define MSG__MEM_ALLOC_ERROR \
    "memory allocation error"
 

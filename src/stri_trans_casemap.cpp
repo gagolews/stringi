@@ -125,21 +125,18 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
    STRI__ERROR_HANDLER_BEGIN(1)
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    // set BreakIterator for stri_totitle
    if (_type == 3) {
       status = U_ZERO_ERROR;
       ucasemap_setBreakIterator(ucasemap, briter, &status);
-      if (U_FAILURE(status))
-         throw StriException(status);
-      else {
-         briter = NULL;
-         // ucasemap_setOptions(ucasemap, U_TITLECASE_NO_LOWERCASE, &status); // to do?
-         // now briter is owned by ucasemap.
-         // it will be released on ucasemap_close
-         // (checked with ICU man & src code)
-      }
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      briter = NULL;
+      // ucasemap_setOptions(ucasemap, U_TITLECASE_NO_LOWERCASE, &status); // to do?
+      // now briter is owned by ucasemap.
+      // it will be released on ucasemap_close
+      // (checked with ICU man & src code)
    }
 
    R_len_t str_n = LENGTH(str);
@@ -189,11 +186,8 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
          buf.resize(buf_need, false/*destroy contents*/);
          STRI_CASEFOLD_DO /* retry */
 
-         if (U_FAILURE(status)) {
-            // this shouldn't happen
-            // we do have the buffer size required to complete this op
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
+                                             // we do have the buffer size required to complete this op
       }
 
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
@@ -229,7 +223,7 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
 ////    if (_type == 6) {
 ////       UErrorCode status = U_ZERO_ERROR;
 ////       briter = BreakIterator::createWordInstance(loc, status);
-////       if (U_FAILURE(status)) throw StriException(status);
+////       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 ////    }
 //
 //   for (R_len_t i = str_cont.vectorize_init();

@@ -313,7 +313,7 @@ bool stri__opts_brkiter_ignore_skip_status(const vector<int32_t>& brkskip, int32
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *          use opts_brkiter
- * 
+ *
 * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
  *          new args: omit_no_match
  */
@@ -345,11 +345,9 @@ SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
       UErrorCode status = U_ZERO_ERROR;
       const char* str_cur_s = str_cont.get(i).c_str();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       briter->setText(str_text, status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue
       R_len_t match, last_match = briter->first();
@@ -418,7 +416,7 @@ SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *          use opts_brkiter
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
  *          new args: n_max, tokens_only, simplify
  */
@@ -450,12 +448,12 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
          continue;
       }
       int  n_max_cur        = n_max_cont.get(i);
-      
+
       if (str_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
-      
+
       if (n_max_cur >= INT_MAX-1)
          throw StriException(MSG__EXPECTED_SMALLER, "n_max");
       else if (n_max_cur < 0)
@@ -470,11 +468,9 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       briter->setText(str_text, status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue
       R_len_t match, last_match = briter->first();
@@ -509,7 +505,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
 
    if (briter) { delete briter; briter = NULL; }
    if (str_text) { utext_close(str_text); str_text = NULL; }
-   
+
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
          stri__vector_NA_strings(1));
@@ -561,11 +557,9 @@ SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
       UErrorCode status = U_ZERO_ERROR;
       const char* str_cur_s = str_cont.get(i).c_str();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       briter->setText(str_text, status);
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       int cur_count = 0;
       deque< pair<R_len_t,R_len_t> > occurrences; // this could be an R_len_t queue

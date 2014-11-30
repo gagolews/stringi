@@ -507,7 +507,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 
    UErrorCode status = U_ZERO_ERROR;
    ucsdet = ucsdet_open(&status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    StriContainerListRaw str_cont(str);
    R_len_t str_n = str_cont.get_n();
@@ -541,7 +541,7 @@ SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets)
 
       status = U_ZERO_ERROR;
       ucsdet_setText(ucsdet, str_cur_s, str_cur_n, &status);
-   	if (U_FAILURE(status)) throw StriException(status);
+   	STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       ucsdet_enableInputFilter(ucsdet, filter.get(i));
 
       status = U_ZERO_ERROR;
@@ -815,13 +815,11 @@ struct EncGuess {
 
       UErrorCode status = U_ZERO_ERROR;
       ULocaleData* uld = ulocdata_open(qloc, &status);
-   	if (U_FAILURE(status))
-         throw StriException(status);
+   	STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       USet* exset_tmp = ulocdata_getExemplarSet(uld, NULL,
          USET_ADD_CASE_MAPPINGS, ULOCDATA_ES_STANDARD, &status);
-   	if (U_FAILURE(status))
-         throw StriException(status);
+   	STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       UnicodeSet* exset = UnicodeSet::fromUSet(exset_tmp); // don't delete, just a pointer
       exset->removeAllStrings();
 

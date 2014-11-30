@@ -155,7 +155,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
             ++k; // another field
          }
       }
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       fields.back().second = str_cont.get(i).length();
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();

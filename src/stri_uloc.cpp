@@ -45,10 +45,9 @@
 SEXP stri_locale_set(SEXP loc)
 {
    const char* qloc = stri__prepare_arg_locale(loc, "locale", false); /* this is R_alloc'ed */
-   UErrorCode err = U_ZERO_ERROR;
-   uloc_setDefault(qloc, &err);
-   if (U_FAILURE(err))
-      Rf_error(MSG__LOCALE_ERROR_SET); // allowed here
+   UErrorCode status = U_ZERO_ERROR;
+   uloc_setDefault(qloc, &status);
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */}) // error() allowed here
    return R_NilValue;
 }
 

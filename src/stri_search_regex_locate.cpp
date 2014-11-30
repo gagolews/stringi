@@ -55,7 +55,7 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
  */
@@ -97,7 +97,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
          UErrorCode status = U_ZERO_ERROR;
          int start = (int)matcher->start(status);
          int end  =  (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
          found = (int)matcher->find();
@@ -180,9 +180,9 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
       if ((int)matcher->find()) { //find first matches
          UErrorCode status = U_ZERO_ERROR;
          ret_tab[i] = (int)matcher->start(status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          ret_tab[i+vectorize_length] = (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else
          continue; // no match
@@ -191,9 +191,9 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
          while ((int)matcher->find()) {
             UErrorCode status = U_ZERO_ERROR;
             ret_tab[i]                  = (int)matcher->start(status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             ret_tab[i+vectorize_length] = (int)matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
       }
 

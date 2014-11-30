@@ -104,11 +104,9 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          UConverter* ucnv = ucnvASCII.getConverter();
          UErrorCode status = U_ZERO_ERROR;
          this->str[i].setTo(
-            UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
+            UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
          );
-         if (U_FAILURE(status)) {
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          // Performance improvement attempt #1:
          // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
@@ -138,11 +136,9 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
          UConverter* ucnv = ucnvLatin1.getConverter();
          UErrorCode status = U_ZERO_ERROR;
          this->str[i].setTo(
-            UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
+            UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
          );
-         if (U_FAILURE(status)) {
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else if (IS_BYTES(curs)) {
          throw StriException(MSG__BYTESENC);
@@ -157,11 +153,9 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
             UConverter* ucnv = ucnvNative.getConverter();
             UErrorCode status = U_ZERO_ERROR;
             this->str[i].setTo(
-               UnicodeString(CHAR(curs), LENGTH(curs), ucnv, status)
+               UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
             );
-            if (U_FAILURE(status)) {
-               throw StriException(status);
-            }
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
       }
    }
@@ -268,10 +262,7 @@ SEXP StriContainerUTF16::toR() const
          int outrealsize = 0;
          u_strToUTF8(outbuf.data(), outbufsize, &outrealsize,
             str[i%n].getBuffer(), str[i%n].length(), &status);
-         if (U_FAILURE(status)) {
-            UNPROTECT(1); // unprotect procected mem before leaving
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {UNPROTECT(1);})
          SET_STRING_ELT(ret, i,
             Rf_mkCharLenCE(outbuf.data(), outrealsize, (cetype_t)CE_UTF8));
       }

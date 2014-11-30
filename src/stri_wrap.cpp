@@ -203,19 +203,19 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
    STRI__ERROR_HANDLER_BEGIN(1)
    UErrorCode status = U_ZERO_ERROR;
    briter = BreakIterator::createLineInstance(loc, status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    StriContainerUTF8_indexable str_cont(str, str_length);
 
    status = U_ZERO_ERROR;
    //Unicode Newline Guidelines - Unicode Technical Report #13
    UnicodeSet uset_linebreaks(UnicodeString::fromUTF8("[\\u000A-\\u000D\\u0085\\u2028\\u2029]"), status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    uset_linebreaks.freeze();
 
    status = U_ZERO_ERROR;
    UnicodeSet uset_whitespaces(UnicodeString::fromUTF8("\\p{White_space}"), status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    uset_whitespaces.freeze();
 
    SEXP ret;
@@ -231,9 +231,9 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t str_cur_n = str_cont.get(i).length();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       briter->setText(str_text, status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       // all right, first let's generate a list of places at which we may do line breaks
       deque< R_len_t > occurrences_list; // this could be an R_len_t queue

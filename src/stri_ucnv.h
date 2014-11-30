@@ -114,9 +114,7 @@ class StriUcnv  {
          UErrorCode status = U_ZERO_ERROR;
          // get "offical" encoder name
          const char* ucnv_name = ucnv_getName(m_ucnv, &status);
-         if (U_FAILURE(status)) {
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          m_isutf8 = !strcmp(ucnv_name, "UTF-8");
          return m_isutf8;
       }
@@ -147,13 +145,11 @@ class StriUcnv  {
 
          UErrorCode status = U_ZERO_ERROR;
          ucnv_setFromUCallBack(m_ucnv, UCNV_FROM_U_CALLBACK_SUBSTITUTE, NULL, NULL, NULL, &status);
-         if (U_FAILURE(status))
-            throw StriException(MSG__ENC_ERROR_SET); // error() allowed here
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          status = U_ZERO_ERROR;
          ucnv_setToUCallBack(m_ucnv, UCNV_TO_U_CALLBACK_SUBSTITUTE,   NULL, NULL, NULL, &status);
-         if (U_FAILURE(status))
-            throw StriException(MSG__ENC_ERROR_SET); // error() allowed here
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
 
       /**
@@ -163,8 +159,7 @@ class StriUcnv  {
          openConverter();
          UErrorCode status = U_ZERO_ERROR;
          const char* ucnv_name = ucnv_getName(m_ucnv, &status);
-         if (U_FAILURE(status))
-            throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          if (!strcmp(ucnv_name, "US-ASCII")) {
             m_is8bit = true;

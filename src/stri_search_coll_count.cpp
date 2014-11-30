@@ -92,7 +92,7 @@ SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator)
       R_len_t found = 0;
       while (!U_FAILURE(status) && ((int)usearch_next(matcher, &status) != USEARCH_DONE))
          ++found;
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       ret_tab[i] = found;
    }
 

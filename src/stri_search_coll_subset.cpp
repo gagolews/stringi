@@ -89,7 +89,7 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
       UErrorCode status = U_ZERO_ERROR;
       which[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
       if (which[i]) result_counter++;
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
    if (collator) { ucol_close(collator); collator = NULL; }
