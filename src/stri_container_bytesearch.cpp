@@ -312,10 +312,19 @@ void StriContainerByteSearch::resetMatcher()
  *
  * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
  *          BUGFIX: load of misaligned adresses
+ *
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-30)
+ *          BUGFIX: ret USEARCH_DONE immediately if startPos is too far away
  */
 R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 {
+   if (startPos > searchLen-patternLen) {
+      searchPos = searchLen;
+      return USEARCH_DONE;
+   }
+
    if (patternLen == 1) {
+         // else not found
       unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos; searchPos<searchLen-1+1; ++searchPos) {
          if (pat == (unsigned char)searchStr[searchPos]) {
@@ -639,9 +648,18 @@ R_len_t StriContainerByteSearch::getMatchedLength()
  *
  * @version 0.2-4 (Marek Gagolewski, 2014-05-15)
  *          BUGFIX: load of misaligned adresses
+ *
+ * @version 0.4-1 (Marek Gagolewski, 2014-11-30)
+ *          BUGFIX: ret USEARCH_DONE immediately if startPos indicates no match
+ *
  */
 R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
 {
+   if (startPos+1 < patternLen) {
+      searchPos = searchLen;
+      return USEARCH_DONE;
+   }
+
    if (patternLen == 1) {
       unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos-0; searchPos>=0; --searchPos) {
