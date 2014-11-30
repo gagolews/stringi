@@ -1,4 +1,5 @@
 require(testthat)
+context("test-split-fixed.R")
 
 test_that("stri_split_fixed", {
    expect_identical(stri_split_fixed(character(0)," "),list())

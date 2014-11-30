@@ -1,4 +1,5 @@
 require(testthat)
+context("test-list2matrix.R")
 
 test_that("stri_list2matrix", {
 

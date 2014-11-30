@@ -1,4 +1,5 @@
 require(testthat)
+context("test-count-charclass.R")
 
 test_that("stri_count_charclass", {
    expect_identical(stri_count_charclass("a", NA), NA_integer_)

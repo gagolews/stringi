@@ -15,6 +15,7 @@
 ^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$
+^src/symbols\.rds$
 ^README.md$
 ^\.git
 ^src/Makevars$

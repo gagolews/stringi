@@ -1,4 +1,5 @@
 require(testthat)
+context("test-locate-other.R")
 
 test_that("stri_locate_boundaries", {
    expect_identical(colnames(stri_locate_boundaries("stringi")[[1]]), c("start", "end"))
@@ -21,7 +22,7 @@ test_that("stri_locate_words", {
       list(matrix(c(NA, NA), ncol=2),
            matrix(c(1, 7), ncol=2),
            matrix(c(NA, NA), ncol=2)))
-   
+
    expect_equivalent(stri_locate_words(c("    \t   ", "stringi", NA), omit_no_match = TRUE),
       list(matrix(integer(0), ncol=2),
            matrix(c(1, 7), ncol=2),

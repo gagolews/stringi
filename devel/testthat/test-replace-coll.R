@@ -1,4 +1,5 @@
 require(testthat)
+context("test-replace-coll.R")
 
 test_that("stri_replace_all_coll", {
    expect_error(stri_replace_all_coll("a", "a", c("b", "d"), vectorize_all=FALSE))

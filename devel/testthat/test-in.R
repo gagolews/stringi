@@ -1,4 +1,5 @@
 require(testthat)
+context("test-in.R")
 
 # test_that("stri_in_fixed", {
 #    expect_identical(stri_in_fixed(c(NA, NA, NA), "test"), rep(NA_integer_, 3))

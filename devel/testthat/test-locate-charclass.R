@@ -1,4 +1,5 @@
 require(testthat)
+context("test-locate-charclass.R")
 
 test_that("stri_locate_all_charclass", {
 
@@ -13,7 +14,7 @@ test_that("stri_locate_all_charclass", {
 
    expect_equivalent(as.integer(stri_locate_all_charclass("", NA)[[1]]),
                      c(NA_integer_, NA_integer_))
-   
+
    expect_equivalent(as.integer(stri_locate_all_charclass(NA, "[a-z]")[[1]]),
                      c(NA_integer_, NA_integer_))
    expect_equivalent(as.integer(stri_locate_all_charclass("?", "[a-z]")[[1]]),

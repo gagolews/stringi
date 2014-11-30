@@ -1,4 +1,5 @@
 require("testthat")
+context("test-subset-fixed.R")
 
 test_that("stri_subset_fixed", {
    expect_identical(stri_subset_fixed("a", NA), NA_character_)

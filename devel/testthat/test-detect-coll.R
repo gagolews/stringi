@@ -1,4 +1,5 @@
 require("testthat")
+context("test-detect-coll.R")
 
 test_that("stri_detect_coll", {
    expect_identical(stri_detect_coll("a", NA), NA)

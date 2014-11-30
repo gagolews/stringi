@@ -20,7 +20,11 @@ TO DO list - Preparing `stringi` for submission
 ```
 pkgs <- c("qdapRegex", "RcmdrPlugin.temis", "rplexos")
 install.packages(pkgs, INSTALL_opts = "--install-tests")
-for (p in pkgs) tryCatch({print(p); testthat::test_package(p)}, error=function(e) print(e))
+for (p in pkgs) {
+   library(p,  character.only=TRUE)
+   tryCatch({print(p); testthat::test_package(p)}, error=function(e) print(e))
+   # example(package=p, character.only=TRUE)
+}
 ```
 
 

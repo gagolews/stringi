@@ -1,5 +1,6 @@
 require(testthat)
 require(stringr)
+context("test-extract-charclass.R")
 
 test_that("stri_extract_all_charclass", {
 
@@ -8,7 +9,7 @@ test_that("stri_extract_all_charclass", {
 
    expect_equivalent(stri_extract_all_charclass(character(0), "\\p{Z}"), list())
    expect_equivalent(stri_extract_all_charclass(LETTERS, integer(0)), list())
-   
+
    expect_identical(stri_extract_all_charclass("", "[a]"), list(NA_character_))
    expect_identical(stri_extract_all_charclass("", "[a]", omit_no_match = TRUE), list(character(0)))
    expect_identical(stri_extract_all_charclass("test", "[a]"), list(NA_character_))

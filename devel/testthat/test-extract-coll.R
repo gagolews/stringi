@@ -1,6 +1,6 @@
 require(testthat)
 require(stringr)
-
+context("test-extract-coll.R")
 
 test_that("stri_extract_all_coll", {
 

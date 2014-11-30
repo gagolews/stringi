@@ -1,4 +1,5 @@
 require(testthat)
+context("test-flatten.R")
 
 test_that("stri_flatten", {
 

@@ -1,4 +1,5 @@
 require(testthat)
+context("test-match-regex.R")
 
 test_that("stri_match_all_regex", {
 

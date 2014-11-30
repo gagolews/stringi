@@ -1,4 +1,5 @@
 require("testthat")
+context("test-subset-regex.R")
 
 test_that("stri_subset_regex", {
    expect_identical(stri_subset_regex(NA, NA), NA_character_)

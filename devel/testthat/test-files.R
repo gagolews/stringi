@@ -1,4 +1,5 @@
 require(testthat)
+context("test-files.R")
 
 test_that("stri_read/write_lines", {
 

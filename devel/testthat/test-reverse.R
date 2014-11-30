@@ -1,4 +1,5 @@
 require(testthat)
+context("test-reverse.R")
 
 test_that("stri_reverse", {
    expect_identical(stri_reverse(character(0)), character(0))

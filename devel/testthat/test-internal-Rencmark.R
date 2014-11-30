@@ -1,5 +1,5 @@
 require('testthat')
-
+context("test-internal-Rencmark.R")
 
 # some internal encoding tests....
 # testing disabled by default

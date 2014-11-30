@@ -1,4 +1,5 @@
 require(testthat)
+context("test-join.R")
 
 test_that("stri_join", {
 
@@ -9,8 +10,8 @@ test_that("stri_join", {
    # join2 with sep and collapse
    # join - general, with collapse
    # join - general, no collapse
-   
-   
+
+
    #stringr tests:
    test <- c("a", "b", "c")
    expect_that(stri_c(test, ignore_null=TRUE), equals(test))
@@ -22,7 +23,7 @@ test_that("stri_join", {
    expect_that(
       stri_c(test, NULL, "a", sep = " ", ignore_null=TRUE),
       equals(c("a a", "b a", "c a")))
-   
+
 
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
@@ -31,9 +32,9 @@ test_that("stri_join", {
    expect_error(stri_join(LETTERS, LETTERS, sep=character(0)))
    expect_warning(stri_join(LETTERS, LETTERS, sep=LETTERS))
    expect_error(stri_join(LETTERS, LETTERS, sep=mean))
-   
+
    expect_identical(stri_join(), character(0))
-   
+
    expect_identical(stri_join(character(0), "a", "b"), character(0))
    expect_identical(stri_join("a", "b", character(0)), character(0))
    expect_identical(stri_join("a", character(0)), character(0))
@@ -43,7 +44,7 @@ test_that("stri_join", {
    expect_identical(stri_join("a", "b", NULL), character(0))
    expect_identical(stri_join(character(0), "a", "b", collapse=""), character(0))
    expect_identical(stri_join(character(0), rep("a", 2), collapse=""), character(0))
-   
+
    expect_identical(stri_join(character(0), "a", "b", ignore_null=TRUE), "ab")
    expect_identical(stri_join(character(0), "a", rep("b",2), ignore_null=TRUE), c("ab", "ab"))
    expect_identical(stri_join("a", "b", character(0), ignore_null=TRUE), "ab")
@@ -54,9 +55,9 @@ test_that("stri_join", {
    expect_identical(stri_join("a", "b", NULL, ignore_null=TRUE), "ab")
    expect_identical(stri_join(character(0), rep("a", 2), "b", collapse="", ignore_null=TRUE), "abab")
    expect_identical(stri_join(character(0), rep("a", 2), collapse="", ignore_null=TRUE), "aa")
-   
+
    expect_identical(stri_paste(NULL, c("a", "b"), sep=" ", ignore_null = TRUE), paste(c("a", "b")))
-   
+
    expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(c('\u0105', '\u0104')), c('\u0105', '\u0104'))
@@ -79,7 +80,7 @@ test_that("stri_join", {
    expect_identical(stri_paste(stri_dup("aaaa",1000),NA), NA_character_)
    expect_identical(stri_join(stri_dup(LETTERS, 1000), stri_dup(letters, 1000), stri_dup(LETTERS,100), NA),
       rep(NA_character_, 26))
-   
+
    expect_identical(stri_paste(letters[1:3],1:6,collapse = " "), paste(letters[1:3],1:6,collapse = " ", sep=""))
    expect_identical(stri_paste(letters[1:3],1:6,collapse = ""), stri_paste(letters[1:3],1:6,"",collapse = ""))
    expect_identical(stri_paste(1:6,letters[1:3],collapse = " "), paste(1:6,letters[1:3],collapse = " ", sep=""))

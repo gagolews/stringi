@@ -1,4 +1,5 @@
 require(testthat)
+context("test-split-coll.R")
 
 test_that("stri_split_coll", {
    expect_identical(stri_split_coll(character(0)," "),list())

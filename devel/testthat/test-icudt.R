@@ -1,4 +1,5 @@
 require(testthat)
+context("test-icudt.R")
 
 # test whether we have enough ICU data
 # further sevices (like collator) are queried in other tests

@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-trim.R")
 
 test_that("stri_trim_both", {
 

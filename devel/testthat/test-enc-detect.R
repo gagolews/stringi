@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-enc-detect.R")
 
 test_that("stri_enc_isascii",{
    expect_identical(stri_enc_isascii(character(0)),logical(0))

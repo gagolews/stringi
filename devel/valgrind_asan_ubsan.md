@@ -1,3 +1,10 @@
+Enable GC torture:
+
+```
+gctorture(TRUE) # + run_package_tests
+```
+
+
 VALGRIND memleak check:
 
 ```
