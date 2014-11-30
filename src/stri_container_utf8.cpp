@@ -69,6 +69,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
 
    this->str = new String8[this->n];
+   if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
 
    // for conversion from non-utf8/ascii native charsets:
    StriUcnv ucnvLatin1("ISO-8859-1");
@@ -128,6 +129,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             }
 //                  tmpbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(maxlen, 4)+1;
 //                  tmpbuf = new UChar[tmpbufsize];
+//                  if (!tmpbuf) throw StriException(MSG__MEM_ALLOC_ERROR);
             // UCNV_GET_MAX_BYTES_FOR_STRING calculates the size
             // of a buffer for conversion from Unicode to a charset.
             // this may be overestimated
@@ -213,6 +215,7 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
 {
    if (container.str) {
       this->str = new String8[this->n];
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<this->n; ++i) {
          this->str[i] = container.str[i];
       }
@@ -230,6 +233,7 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 
    if (container.str) {
       this->str = new String8[this->n];
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<this->n; ++i) {
          this->str[i] = container.str[i];
       }

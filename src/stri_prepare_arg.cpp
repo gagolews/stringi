@@ -197,10 +197,10 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *        treat NULLs as empty vectors
  */
@@ -246,10 +246,10 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *        treat NULLs as empty vectors
  */
@@ -294,10 +294,10 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *        treat NULLs as empty vectors
  */
@@ -342,10 +342,10 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  *
  * @version 0.1-?? (Marek Gagolewski)
  *          argname added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *        treat NULLs as empty vectors
  */
@@ -387,10 +387,10 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  * @return raw vector
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-19)
  *    BUGFIX: PROTECT mem from GC in factor object given
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *        treat NULLs as empty vectors
  */
@@ -749,6 +749,10 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
          size_t ret_n = strlen(ret_tmp);
          /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
          char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+         if (!ret) {
+            UNPROTECT(1);
+            Rf_error(MSG__MEM_ALLOC_ERROR);
+         }
          memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
          return ret;
@@ -812,6 +816,10 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
          size_t ret_n = strlen(ret_tmp);
          /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
          char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+         if (!ret) {
+            UNPROTECT(1);
+            Rf_error(MSG__MEM_ALLOC_ERROR);
+         }
          memcpy(ret, ret_tmp, ret_n+1);
          UNPROTECT(1);
          return ret;

@@ -255,5 +255,8 @@
 
 #define MSG__OVERLAPPING_PATTERN_UNSUPPORTED \
    "overlapping pattern matches are not supported"
+   
+#define MSG__MEM_ALLOC_ERROR \
+   "memory allocation error"
 
 #endif

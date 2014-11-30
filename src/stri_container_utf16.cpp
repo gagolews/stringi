@@ -59,6 +59,7 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
    this->init_Base(_nrecycle, _nrecycle, false);
    if (this->n > 0) {
       this->str = new UnicodeString[this->n];
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
    }
 }
 
@@ -84,6 +85,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
       return; /* nothing more to do */
 
    this->str = new UnicodeString[this->n];
+   if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
    for (R_len_t i=0; i<this->n; ++i)
       this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
@@ -110,6 +112,7 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
 
          // Performance improvement attempt #1:
          // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
+         // if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
          // slower than the above
 
          // Performance improvement attempt #2:
@@ -180,6 +183,7 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
 {
    if (container.str) {
       this->str = new UnicodeString[this->n];
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<this->n; ++i) {
          this->str[i].setTo(container.str[i]);
       }
@@ -201,6 +205,7 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 
    if (container.str) {
       this->str = new UnicodeString[this->n];
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<this->n; ++i) {
          this->str[i].setTo(container.str[i]);
       }
