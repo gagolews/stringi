@@ -210,7 +210,7 @@ SEXP stri_stats_latex(SEXP str)
                }
                else {
                   if (isLetter || isNumber) {
-                     // only start new word if first character is a letter
+                     // only start a new word if first character is a letter
                      // (42test is still counted as a word, but 42.2 not)
                      if (isLetter && !word) {
                         word = true;
@@ -238,7 +238,7 @@ SEXP stri_stats_latex(SEXP str)
                      stats[lsCharsCmdEnvir] +=3;
                      state = stEnvironment;
                      j += 2;
-                  } // we don't count \end as new environment, this can give wrong results in selections
+                  } // we don't count \end as a new environment, this can give wrong results in selections
                   else {
                      ++stats[lsCmd];
                      ++stats[lsCharsCmdEnvir];

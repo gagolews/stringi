@@ -137,9 +137,9 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur->contains(chr)) {
             if (omit_empty_cur && fields.back().second == fields.back().first)
-               fields.back().first = fields.back().second = j; // don't start new field
+               fields.back().first = fields.back().second = j; // don't start any new field
             else {
-               fields.push_back(pair<R_len_t, R_len_t>(j, j)); // start new field here
+               fields.push_back(pair<R_len_t, R_len_t>(j, j)); // start a new field here
                ++k; // another field
             }
          }

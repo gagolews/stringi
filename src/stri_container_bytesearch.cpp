@@ -78,6 +78,7 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
    this->patternPos = -1;
    this->kmpMaxSize = getMaxNumBytes()+1;
    this->kmpNext = new int[kmpMaxSize];
+   if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
 #endif
 }
 
@@ -100,6 +101,7 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->patternPos = -1;
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
+   if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
 #endif
 }
 
@@ -124,6 +126,7 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->patternPos = -1;
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
+   if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
 #endif
    return *this;
 }
@@ -138,6 +141,7 @@ StriContainerByteSearch::~StriContainerByteSearch()
 #ifndef STRI__BYTESEARCH_DISABLE_KMP
    if (kmpNext)
       delete [] kmpNext;
+   kmpNext = NULL;
 #endif
 }
 

@@ -63,11 +63,14 @@ StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t _nrecycle, bool 
 
    if (this->n > 0) {
       this->data = new StriContainerUTF8*[this->n];
+      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (R_len_t i=0; i<this->n; ++i)
          this->data[i] = NULL; // in case it fails during conversion (this is "NA")
 
-      for (R_len_t i=0; i<this->n; ++i)
+      for (R_len_t i=0; i<this->n; ++i) {
          this->data[i] = new StriContainerUTF8(VECTOR_ELT(rvec, i), _nrecycle, _shallowrecycle);
+         if (!this->data[i]) throw StriException(MSG__MEM_ALLOC_ERROR);
+      }
    }
 }
 
@@ -77,9 +80,12 @@ StriContainerListUTF8::StriContainerListUTF8(StriContainerListUTF8& container)
 {
    if (container.data) {
       this->data = new StriContainerUTF8*[this->n];
+      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<container.n; ++i) {
-         if (container.data[i])
+         if (container.data[i]) {
             this->data[i] = new StriContainerUTF8(*container.data[i]);
+            if (!this->data[i]) throw StriException(MSG__MEM_ALLOC_ERROR);
+         }
          else
             this->data[i] = NULL;
       }
@@ -97,9 +103,12 @@ StriContainerListUTF8& StriContainerListUTF8::operator=(StriContainerListUTF8& c
 
    if (container.data) {
       this->data = new StriContainerUTF8*[this->n];
+      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
       for (int i=0; i<container.n; ++i) {
-         if (container.data[i])
+         if (container.data[i]) {
             this->data[i] = new StriContainerUTF8(*container.data[i]);
+            if (!this->data[i]) throw StriException(MSG__MEM_ALLOC_ERROR);
+         }
          else
             this->data[i] = NULL;
       }

@@ -46,7 +46,7 @@
 //
 //   R_len_t bufsize = stri__numbytes_max(s);
 //   int* buf = 0;
-//   if (bufsize > 0) buf = new int[bufsize];
+//   if (bufsize > 0) buf = new int[bufsize]; // to do: use R_alloc
 //
 //   SEXP ret;
 //   PROTECT(ret = allocVector(VECSXP, ns));

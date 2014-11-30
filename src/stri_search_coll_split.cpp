@@ -148,10 +148,10 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
          R_len_t s2 = (R_len_t)usearch_getMatchedLength(matcher) + s1;
 
          if (omit_empty_cur && fields.back().first == s1)
-            fields.back().first = s2; // don't start new field
+            fields.back().first = s2; // don't start any new field
          else {
             fields.back().second = s1;
-            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start new field here
+            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start a new field here
             ++k; // another field
          }
       }

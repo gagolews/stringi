@@ -249,7 +249,7 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
 
          // if here, then at newline
          if (omit_empty_cur && occurrences.back().second == occurrences.back().first)
-            occurrences.back().first = occurrences.back().second = j; // don't start new field
+            occurrences.back().first = occurrences.back().second = j; // don't start any new field
          else {
             occurrences.back().second = jlast;
             occurrences.push_back(pair<R_len_t, R_len_t>(j, j));
