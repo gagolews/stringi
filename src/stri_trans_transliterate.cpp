@@ -58,13 +58,13 @@ SEXP stri_trans_list()
 
    UErrorCode status = U_ZERO_ERROR;
    trans_enum = Transliterator::getAvailableIDs(status); /*The caller should delete this object when done using it. */
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    trans_enum->reset(status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    R_len_t n = (R_len_t)trans_enum->count(status);
-   if (U_FAILURE(status)) throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
@@ -73,7 +73,7 @@ SEXP stri_trans_list()
    for (R_len_t i=0; i<n; ++i) {
       int len;
       const char* cur = trans_enum->next(&len, status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(cur, len, CE_UTF8));
    }
 
@@ -110,8 +110,7 @@ SEXP stri_trans_general(SEXP str, SEXP id)
 
    UErrorCode status = U_ZERO_ERROR;
    trans = Transliterator::createInstance(id_cont.get(0), UTRANS_FORWARD, status);
-   if (U_FAILURE(status))
-      throw StriException(status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
 

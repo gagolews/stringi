@@ -87,8 +87,7 @@ const Normalizer2* stri__normalizer_get(SEXP type)
          Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
    }
 
-   if (U_FAILURE(status))
-      Rf_error(MSG__RESOURCE_ERROR_GET);
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})  /* Rf_error */
 
    return normalizer;
 }
@@ -139,8 +138,7 @@ SEXP stri_trans_nf(SEXP str, SEXP type)
       if (str_cont.isNA(i)) continue;
       UErrorCode status = U_ZERO_ERROR;
       str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
    // normalizer shall not be deleted at all
@@ -198,8 +196,7 @@ SEXP stri_trans_isnf(SEXP str, SEXP type)
 
       UErrorCode status = U_ZERO_ERROR;
       ret_tab[i] = normalizer->isNormalized(str_cont.get(i), status) ? TRUE : FALSE;
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
    // normalizer shall not be deleted at all

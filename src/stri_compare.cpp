@@ -229,8 +229,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
       ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
          cur1_s, cur1_n, cur2_s, cur2_n, &status
       ));
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       if (_negate)
          ret_tab[i] = !ret_tab[i];
@@ -322,8 +321,7 @@ SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
       ret_int[i] = (int)ucol_strcollUTF8(col,
          cur1_s, cur1_n, cur2_s, cur2_n, &status
       );
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
    if (col) {
@@ -360,8 +358,7 @@ struct StriSortComparer {
          int ret = (int)ucol_strcollUTF8(col,
             cont->get(a).c_str(), cont->get(a).length(),
             cont->get(b).c_str(), cont->get(b).length(), &status);
-         if (U_FAILURE(status))
-            throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          return (decreasing)?(ret > 0):(ret < 0);
 //      }
 //      else {

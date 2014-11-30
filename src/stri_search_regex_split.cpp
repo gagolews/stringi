@@ -134,7 +134,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       matcher->reset(str_text);
 
@@ -146,7 +146,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       for (k=1; k < n_max_cur && (int)matcher->find(); ) {
          R_len_t s1 = (R_len_t)matcher->start(status);
          R_len_t s2 = (R_len_t)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          if (omit_empty_cur && fields.back().first == s1)
             fields.back().first = s2; // don't start any new field

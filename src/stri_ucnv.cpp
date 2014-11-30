@@ -52,34 +52,27 @@ void StriUcnv::openConverter() {
    if (m_ucnv)
       return;
 
-   UErrorCode err = U_ZERO_ERROR;
+   UErrorCode status = U_ZERO_ERROR;
 
-   m_ucnv = ucnv_open(m_name, &err);
-   if (U_FAILURE(err)) {
-      m_ucnv = NULL;
-      throw StriException(MSG__ENC_ERROR_SET);
-   }
-   
-   err = U_ZERO_ERROR;
+   m_ucnv = ucnv_open(m_name, &status);
+   STRI__CHECKICUSTATUS_THROW(status, { m_ucnv = NULL; })
+
+   status = U_ZERO_ERROR;
    ucnv_setFromUCallBack((UConverter*)m_ucnv,
       (UConverterFromUCallback)STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN,
       (const void *)NULL, (UConverterFromUCallback *)NULL,
       (const void **)NULL,
-      &err);
-   if (U_FAILURE(err)) {
-      throw StriException(MSG__ENC_ERROR_SET);
-   }
+      &status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-   err = U_ZERO_ERROR;
+   status = U_ZERO_ERROR;
    ucnv_setToUCallBack  ((UConverter*)m_ucnv,
       (UConverterToUCallback)STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,
       (const void *)NULL,
       (UConverterToUCallback *)NULL,
       (const void **)NULL,
-      &err);
-   if (U_FAILURE(err)) {
-      throw StriException(MSG__ENC_ERROR_SET);
-   }
+      &status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 }
 
 
@@ -92,6 +85,9 @@ void StriUcnv::openConverter() {
 UConverter* StriUcnv::getConverter()
 {
    openConverter();
+#ifndef NDEBUG
+   if (!m_ucnv) throw StriException("!NDEBUG: StriUcnv::getConverter()");
+#endif
    return m_ucnv;
 }
 

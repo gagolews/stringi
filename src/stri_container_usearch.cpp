@@ -131,11 +131,7 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UChar* se
       UErrorCode status = U_ZERO_ERROR;
       lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
             searchStr, searchStr_len, col, NULL, &status);
-      if (U_FAILURE(status)) {
-         usearch_close(lastMatcher);
-         lastMatcher = NULL;
-         throw StriException(status);
-      }
+      STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
       return lastMatcher;
    }
 
@@ -146,20 +142,12 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UChar* se
       this->lastMatcherIndex = (i % n);
       UErrorCode status = U_ZERO_ERROR;
       usearch_setPattern(lastMatcher, this->get(i).getBuffer(), this->get(i).length(), &status);
-      if (U_FAILURE(status)) {
-         usearch_close(lastMatcher);
-         lastMatcher = NULL;
-         throw StriException(status);
-      }
+      STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
    }
 
    UErrorCode status = U_ZERO_ERROR;
    usearch_setText(lastMatcher, searchStr, searchStr_len, &status);
-   if (U_FAILURE(status)) {
-      usearch_close(lastMatcher);
-      lastMatcher = NULL;
-      throw StriException(status);
-   }
+   STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
 
    return lastMatcher;
 }

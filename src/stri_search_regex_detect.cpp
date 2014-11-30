@@ -90,7 +90,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 //      UErrorCode status = U_ZERO_ERROR;
 //      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
 //      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-//      if (U_FAILURE(status)) throw StriException(status);
+//      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 //      matcher->reset(str_text);
 //      ret_tab[i] = (int)matcher->find(); // returns UBool
 //      utext_close(str_text);

@@ -99,7 +99,7 @@ SEXP stri__locate_firstlast_coll(SEXP str, SEXP pattern, SEXP opts_collator, boo
       } else {
          start = usearch_last(matcher, &status);
       }
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       // if we have match (otherwise don't do anything)
       if (start != USEARCH_DONE) {
@@ -197,7 +197,7 @@ SEXP stri_locate_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
  */
@@ -231,7 +231,7 @@ SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_
 
       UErrorCode status = U_ZERO_ERROR;
       int start = (int)usearch_first(matcher, &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       if (start == USEARCH_DONE) {
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
@@ -242,7 +242,7 @@ SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_
       while (start != USEARCH_DONE) {
          occurrences.push_back(pair<R_len_t, R_len_t>(start, start+usearch_getMatchedLength(matcher)));
          start = usearch_next(matcher, &status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

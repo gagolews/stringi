@@ -109,7 +109,7 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       int start = usearch_first(matcher, &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       if (start != USEARCH_DONE && start == 0) ret_tab[i] = TRUE;
    }
@@ -196,7 +196,7 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       int start = usearch_last(matcher, &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       if (start != USEARCH_DONE && start+usearch_getMatchedLength(matcher) == to_cur)
          ret_tab[i] = TRUE;

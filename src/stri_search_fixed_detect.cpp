@@ -125,8 +125,7 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern)
 //         if (matcher) uregex_close(matcher);
 //         utp = utext_openUTF8(utp, last_p->c_str(), last_p->length(), &err);
 //         matcher = uregex_openUText(utp, UREGEX_LITERAL, NULL, &err);
-//         if (U_FAILURE(err))
-//            throw StriException(MSG__REGEXP_FAILED);
+//         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 //      }
 //
 //      if (last_s != cur_s) {

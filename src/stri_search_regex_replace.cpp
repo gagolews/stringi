@@ -80,7 +80,7 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_STRING_ELT(ret, i, NA_STRING);,
-         /*just skip on empty str*/;)
+         SET_STRING_ELT(ret, i, Rf_mkCharLenCE((const char*)NULL, 0, CE_UTF8));)
 
       if (replacement_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -93,23 +93,27 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
       UErrorCode status = U_ZERO_ERROR;
       if (type == 0) { // all
          str_cont.set(i, matcher->replaceAll(replacement_cont.get(i), status));
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else if (type == 1) { // first
          str_cont.set(i, matcher->replaceFirst(replacement_cont.get(i), status));
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else if (type == -1) { // end
          int start = -1;
          int end = -1;
          while (matcher->find()) { // find last match
             start = matcher->start(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             end = matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
          if (start >= 0) {
             matcher->find(start, status); // go back
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             UnicodeString out;
             matcher->appendReplacement(out, replacement_cont.get(i), status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             out.append(str_cont.get(i), end, str_cont.get(i).length()-end);
             str_cont.set(i, out);
          }
@@ -118,8 +122,6 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
          throw StriException(MSG__INTERNAL_ERROR);
       }
 
-      if (U_FAILURE(status))
-         throw StriException(status);
       SET_STRING_ELT(ret, i, str_cont.toR(i));
    }
 
@@ -203,9 +205,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
          UErrorCode status = U_ZERO_ERROR;
          str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
-
-         if (U_FAILURE(status))
-            throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
    }
 

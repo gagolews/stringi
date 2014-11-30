@@ -65,8 +65,7 @@ SEXP stri_enc_set(SEXP enc)
    UErrorCode status = U_ZERO_ERROR;
    // get "official" encoding name:
    const char* name = ucnv_getName(uconv, &status);
-   if (U_FAILURE(status))
-      throw StriException(MSG__ENC_ERROR_SET);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    ucnv_setDefaultName(name); // set as default
 
    return R_NilValue;

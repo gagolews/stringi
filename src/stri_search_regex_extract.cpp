@@ -78,15 +78,16 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       int m_start = -1;
       int m_end = -1;
       matcher->reset(str_text);
       if ((int)matcher->find()) { // find first match
          m_start = (int)matcher->start(status); // The **native** position in the input string :-)
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          m_end   = (int)matcher->end(status);
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else {
          SET_STRING_ELT(ret, i, NA_STRING);
@@ -97,7 +98,7 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
          while ((int)matcher->find()) {
             m_start = (int)matcher->start(status);
             m_end   = (int)matcher->end(status);
-            if (U_FAILURE(status)) throw StriException(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
       }
 
@@ -163,7 +164,7 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
  */
@@ -195,7 +196,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      if (U_FAILURE(status)) throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       matcher->reset(str_text);
 
@@ -204,7 +205,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
          occurrences.push_back(pair<R_len_t, R_len_t>(
             (R_len_t)matcher->start(status), (R_len_t)matcher->end(status)
          ));
-         if (U_FAILURE(status)) throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

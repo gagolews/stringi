@@ -500,16 +500,14 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
       R_len_t bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
             curs_tmp, curn_tmp, &status);
       if (bufneed <= buf.size()) {
-         if (U_FAILURE(status))
-            throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else {// larger buffer needed [this shouldn't happen?]
          buf.resize(bufneed, false/*destroy contents*/);
          status = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
                curs_tmp, curn_tmp, &status);
-         if (U_FAILURE(status))
-            throw StriException(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
 
       if (to_raw_logical) {
@@ -620,8 +618,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
       UErrorCode status = U_ZERO_ERROR;
       UnicodeString encs(curs, curn, uconv_from, status); // FROM -> UTF-16 [this is the slow part]
-      if (U_FAILURE(status))
-         throw StriException(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       R_len_t curn_tmp = encs.length();
       const UChar* curs_tmp = encs.getBuffer(); // The buffer contents is (probably) not NUL-terminated.
@@ -639,9 +636,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
       bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
          curn_tmp, &status);
       if (bufneed <= buf.size()) {
-         if (U_FAILURE(status)) {
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
       else {// larger buffer needed [this shouldn't happen?]
 //         warning("buf extending");
@@ -649,9 +644,7 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          status = U_ZERO_ERROR;
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
             curn_tmp, &status);
-         if (U_FAILURE(status)) {
-            throw StriException(status);
-         }
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
 
       if (to_raw_logical) {

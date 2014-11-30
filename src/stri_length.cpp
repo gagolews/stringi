@@ -145,8 +145,7 @@ SEXP stri_length(SEXP str)
          R_len_t j;
          for (j = 0; source != sourceLimit; j++) {
             /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &status);
-            if (U_FAILURE(status))
-               throw StriException(MSG__ENC_ERROR_CONVERT);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          }
          retint[k] = j; // all right, we got it!
       }
