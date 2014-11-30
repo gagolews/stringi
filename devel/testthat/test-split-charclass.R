@@ -1,4 +1,5 @@
 require(testthat)
+context("test-split-charclass.R")
 
 test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass(character(0),"\\p{Z}"),list())

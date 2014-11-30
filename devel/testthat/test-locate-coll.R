@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-locate-coll.R")
 
 test_that("stri_locate_all_coll", {
 
@@ -11,7 +11,7 @@ test_that("stri_locate_all_coll", {
    suppressWarnings(expect_equivalent(stri_locate_all_coll(NA, ""), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_coll("", NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_coll(NA, NA), list(matrix(c(NA,NA_integer_))))
-   
+
    expect_equivalent(as.integer(stri_locate_all_coll(NA, "[a-z]")[[1]]),
                      c(NA_integer_, NA_integer_))
    expect_equivalent(as.integer(stri_locate_all_coll("?", "[a-z]")[[1]]),

@@ -1,4 +1,5 @@
 require(testthat)
+context("test-count-other.R")
 
 test_that("stri_count", {
 

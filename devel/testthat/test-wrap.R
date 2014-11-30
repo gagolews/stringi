@@ -1,5 +1,6 @@
 require(testthat)
 require(stringr)
+context("test-wrap.R")
 
 test_that("stri_wrap", {
    expect_error(stri_wrap("whatever", 0))

@@ -1,4 +1,5 @@
 require(testthat)
+context("test-replace-charclass.R")
 
 test_that("stri_replace_all_charclass-vectorize_all=FALSE", {
    expect_identical(stri_replace_all_charclass(character(0),c("\\p{Z}", "\\P{Z}"),"", vectorize_all=FALSE),character(0))

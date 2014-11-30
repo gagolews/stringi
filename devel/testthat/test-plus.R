@@ -1,4 +1,5 @@
 require(testthat)
+context("test-plus.R")
 
 test_that("%s+%", {
 

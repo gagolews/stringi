@@ -1,5 +1,5 @@
 # require(testthat)
-#
+# context("test-uchar.R")
 # test_that("stri_chartype", {
 #    expect_equivalent(stri_chartype(character(0)), NULL)
 #    expect_equivalent(stri_chartype(c("", NA_character_)),

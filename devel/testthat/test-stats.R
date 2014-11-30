@@ -1,4 +1,5 @@
 require('testthat')
+context("test-stats.R")
 
 test_that("stri_stats_general", {
 

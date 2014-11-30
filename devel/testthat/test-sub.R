@@ -1,4 +1,5 @@
 require(testthat)
+context("test-sub.R")
 
 test_that("stri_sub", {
    s <- c("ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")

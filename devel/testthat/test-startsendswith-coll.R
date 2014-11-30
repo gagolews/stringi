@@ -1,4 +1,5 @@
 require("testthat")
+context("test-startsendswith-coll.R")
 
 test_that("stri_startswith_coll", {
    expect_identical(stri_startswith_coll("a", NA), NA)

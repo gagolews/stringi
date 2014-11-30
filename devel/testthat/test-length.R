@@ -1,4 +1,5 @@
 require(testthat)
+context("test-length.R")
 
 test_that("stri_numbytes", {
    expect_equivalent(stri_numbytes(character(0)), integer(0))

@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-compare.R")
 
 test_that("stri_cmp_operators", {
 

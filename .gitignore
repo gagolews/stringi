@@ -2,6 +2,7 @@
 # man/*.Rd
 
 # Autoconf
+src/symbols.rds
 src/Makevars
 src/icu52_found.txt
 autom4te.cache

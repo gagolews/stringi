@@ -1,4 +1,5 @@
 require(testthat)
+context("test-trans-normalize.R")
 
 test_that("stri_trans_nf*, stri_trans_isnf*", {
 

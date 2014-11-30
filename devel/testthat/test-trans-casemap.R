@@ -1,4 +1,5 @@
 require(testthat)
+context("test-trans-casemap.R")
 
 test_that("stri_trans_tolower", {
 

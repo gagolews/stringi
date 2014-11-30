@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-replace-regex.R")
 
 test_that("stri_replace_all_regex", {
    expect_error(stri_replace_all_regex("a", "a", c("b", "d"), vectorize_all=FALSE))

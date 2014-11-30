@@ -1,4 +1,5 @@
 require(testthat)
+context("test-count-fixed.R")
 
 test_that("stri_count_fixed", {
    expect_identical(stri_count_fixed(character(0)," "),integer(0))

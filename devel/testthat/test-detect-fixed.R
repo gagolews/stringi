@@ -1,4 +1,5 @@
 require("testthat")
+context("test-detect-fixed.R")
 
 test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed("a", NA), NA)

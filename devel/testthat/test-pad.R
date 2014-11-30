@@ -1,5 +1,6 @@
 require(testthat)
 require(stringr)
+context("test-pad.R")
 
 test_that("stri_pad", {
    expect_warning(stri_pad(letters, 1:5))

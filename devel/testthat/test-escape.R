@@ -1,4 +1,5 @@
 require(testthat)
+context("test-escape.R")
 
 test_that("stri_escape_unicode", {
 

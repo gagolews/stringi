@@ -1,4 +1,5 @@
 require(testthat)
+context("test-random.R")
 
 test_that("stri_rand_shuffle", {
    expect_identical({set.seed(123); stri_rand_shuffle(c("abcdefghi", NA, "", "a"))},

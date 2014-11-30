@@ -1,4 +1,5 @@
 require(testthat)
+context("test-trans-transliterate.R")
 
 test_that("stri_trans_general", {
 

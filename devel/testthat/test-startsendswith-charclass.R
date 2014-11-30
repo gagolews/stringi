@@ -1,4 +1,5 @@
 require("testthat")
+context("test-startsendswith-charclass.R")
 
 test_that("stri_startswith_charclass", {
    expect_identical(stri_startswith_charclass("a", NA), NA)

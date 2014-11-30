@@ -1,4 +1,5 @@
 require("testthat")
+context("test-detect-regex.R")
 
 test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex(NA, NA), NA)

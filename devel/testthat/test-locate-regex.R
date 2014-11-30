@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-locate-regex.R")
 
 
 test_that("stri_locate_all_regex", {
@@ -12,7 +12,7 @@ test_that("stri_locate_all_regex", {
    suppressWarnings(expect_equivalent(stri_locate_all_regex("abc", ""), list(matrix(c(NA_integer_,NA_integer_)))))
    suppressWarnings(expect_equivalent(stri_locate_all_regex("", "abc"), list(matrix(c(NA_integer_,NA_integer_)))))
    suppressWarnings(expect_equivalent(stri_locate_all_regex("", ""), list(matrix(c(NA_integer_,NA_integer_)))))
-   
+
    expect_equivalent(as.integer(stri_locate_all_regex(NA, "[a-z]")[[1]]),
                      c(NA_integer_, NA_integer_))
    expect_equivalent(as.integer(stri_locate_all_regex("?", "[a-z]")[[1]]),

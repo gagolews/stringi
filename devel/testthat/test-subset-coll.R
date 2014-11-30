@@ -1,4 +1,5 @@
 require("testthat")
+context("test-subset-coll.R")
 
 test_that("stri_subset_coll", {
    expect_identical(stri_subset_coll("a", NA), NA_character_)

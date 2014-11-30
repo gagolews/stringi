@@ -1,4 +1,5 @@
 require(testthat)
+context("test-count-regex.R")
 
 test_that("stri_count_regex", {
    expect_identical(stri_count_regex(character(0)," "),integer(0))

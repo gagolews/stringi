@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-enc-convert.R")
 
 test_that("stri_encode", {
 

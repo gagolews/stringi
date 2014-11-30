@@ -1,4 +1,5 @@
 require(testthat)
+context("test-count-coll.R")
 
 test_that("stri_count_coll", {
    expect_identical(stri_count_coll(character(0)," "),integer(0))

@@ -1,4 +1,5 @@
 require("testthat")
+context("test-startsendswith-fixed.R")
 
 test_that("stri_startswith_fixed", {
    expect_identical(stri_startswith_fixed("a", NA), NA)

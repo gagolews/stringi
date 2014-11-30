@@ -1,4 +1,5 @@
 require(testthat)
+context("test-split-regex.R")
 
 test_that("stri_split_regex", {
    expect_identical(stri_split_regex(character(0)," "),list())

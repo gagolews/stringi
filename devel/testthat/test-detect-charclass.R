@@ -1,4 +1,5 @@
 require("testthat")
+context("test-detect-charclass.R")
 
 test_that("stri_detect_charclass", {
    expect_identical(stri_detect_charclass("a", NA), NA)

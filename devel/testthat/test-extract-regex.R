@@ -1,5 +1,6 @@
 require(testthat)
 require(stringr)
+context("test-extract-regex.R")
 
 test_that("stri_extract_all_regex", {
    expect_identical(stri_extract_all_regex(character(0), "test"), list())
@@ -10,7 +11,7 @@ test_that("stri_extract_all_regex", {
    suppressWarnings(expect_identical(stri_extract_all_regex("test", ""), list(NA_character_)))
    expect_identical(stri_extract_all_regex(c("bacab", "bacaba\u0105a", "aa"), "a.a"),
       list("aca", c("aca", "a\u0105a"), NA_character_))
-   
+
    expect_identical(stri_extract_all_regex("", " "), list(NA_character_))
    expect_identical(stri_extract_all_regex("", " ", omit_no_match = TRUE), list(character(0)))
    expect_identical(stri_extract_all_regex("test", " "), list(NA_character_))

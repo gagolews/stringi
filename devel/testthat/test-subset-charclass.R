@@ -1,4 +1,5 @@
 require("testthat")
+context("test-subset-charclass.R")
 
 test_that("stri_subset_charclass", {
    expect_identical(stri_subset_charclass("a", NA), NA_character_)

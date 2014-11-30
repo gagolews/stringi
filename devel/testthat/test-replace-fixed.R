@@ -1,4 +1,5 @@
 require(testthat)
+context("test-replace-fixed.R")
 
 test_that("stri_replace_all_fixed", {
    expect_error(stri_replace_all_fixed("a", "a", c("b", "d"), vectorize_all=FALSE))

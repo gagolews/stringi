@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-uloc.R")
 
 test_that("stri_locale", {
 

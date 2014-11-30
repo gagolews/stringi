@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-enc-manage.R")
 
 test_that("stri_enc_list, stri_enc_info", {
    x <- c("a", rep("\u0105", 4))

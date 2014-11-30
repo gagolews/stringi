@@ -1,5 +1,5 @@
 require(testthat)
-
+context("test-locate-fixed.R")
 
 test_that("stri_locate_all_fixed", {
 
@@ -11,7 +11,7 @@ test_that("stri_locate_all_fixed", {
    suppressWarnings(expect_equivalent(stri_locate_all_fixed(NA, ""), list(matrix(c(NA,NA_integer_)))))
    expect_equivalent(stri_locate_all_fixed("", NA), list(matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed(NA, NA), list(matrix(c(NA,NA_integer_))))
-   
+
       expect_equivalent(as.integer(stri_locate_all_fixed(NA, "[a-z]")[[1]]),
                      c(NA_integer_, NA_integer_))
    expect_equivalent(as.integer(stri_locate_all_fixed("?", "[a-z]")[[1]]),

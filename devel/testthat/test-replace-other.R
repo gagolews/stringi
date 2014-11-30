@@ -1,4 +1,5 @@
 require(testthat)
+context("test-replace-other.R")
 
 test_that("stri_replace_na", {
    s <- c("ala",NA,"kota")
