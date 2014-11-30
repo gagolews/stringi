@@ -15,6 +15,30 @@ test_that("stri_count_fixed", {
    expect_identical(stri_count_fixed("","a"), 0L)
    expect_equivalent(stri_count_fixed("aaaab", "ab"), 1L)
    expect_equivalent(stri_count_fixed("bababababaab", "aab"), 1L)
+   expect_equivalent(stri_count_fixed("bababababaab", "b"), 6L)
+   expect_equivalent(stri_count_fixed("bababababaab", "ba"), 5L)
+   expect_equivalent(stri_count_fixed("bababababaab", "bab"), 2L)
+   expect_equivalent(stri_count_fixed("bababababaab", "baba"), 2L)
+   expect_equivalent(stri_count_fixed("bababababaabababab", "ababab"), 2L)
+
+   # we have special cases for patterns of length 1,2,3,4
+   expect_equivalent(stri_count_fixed("ba", "b"), 1L)
+   expect_equivalent(stri_count_fixed("bba", "bb"), 1L)
+   expect_equivalent(stri_count_fixed("bbba", "bbb"), 1L)
+   expect_equivalent(stri_count_fixed("bbbba", "bbbb"), 1L)
+   expect_equivalent(stri_count_fixed("bbbbba", "bbbbb"), 1L)
+
+   for (p in stri_sub("abcdefghij", 1, 1:6)) {
+      for (i in 1:5) {
+         expect_equivalent(stri_count_fixed(stri_dup(p, i), p), i)
+         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "y"), i), p), i)
+         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yy"), i), p), i)
+         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyy"), i), p), i)
+         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyy"), i), p), i)
+         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyyy"), i), p), i)
+      }
+   }
+
 
    s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin
 nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel

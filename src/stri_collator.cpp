@@ -86,7 +86,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    UColAttributeValue  opt_CASE_FIRST = UCOL_DEFAULT;
    UColAttributeValue  opt_CASE_LEVEL = UCOL_DEFAULT;
    UColAttributeValue  opt_NORMALIZATION_MODE = UCOL_DEFAULT;
-   UColAttributeValue  opt_STRENGTH = UCOL_DEFAULT;
+   UColAttributeValue  opt_STRENGTH =  UCOL_DEFAULT_STRENGTH;
    UColAttributeValue  opt_NUMERIC_COLLATION = UCOL_DEFAULT;
    const char*         opt_LOCALE = NULL;
 
@@ -99,6 +99,8 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          opt_LOCALE = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
       } else if  (!strcmp(curname, "strength")) {
          int val = stri__prepare_arg_integer_1_notNA(VECTOR_ELT(opts_collator, i), "strength");
+         if (val < (int)UCOL_PRIMARY + 1) val = (int)UCOL_PRIMARY + 1;
+         else if (val > (int)UCOL_STRENGTH_LIMIT + 1) val = (int)UCOL_STRENGTH_LIMIT + 1;
          opt_STRENGTH = (UColAttributeValue)(val-1);
       } else if  (!strcmp(curname, "alternate_shifted")) {
          bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "alternate_shifted");
