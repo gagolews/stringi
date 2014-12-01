@@ -71,6 +71,10 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
    this->str = new String8[this->n];
    if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
 
+   /* Important: ICU provides full internationalization functionality 
+   without any conversion table data. The common library contains 
+   code to handle several important encodings algorithmically: US-ASCII, 
+   ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
    // for conversion from non-utf8/ascii native charsets:
    StriUcnv ucnvLatin1("ISO-8859-1");
    StriUcnv ucnvNative(NULL);

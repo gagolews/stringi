@@ -69,7 +69,7 @@ class StriUcnv  {
                  UConverterCallbackReason reason,
                  UErrorCode* err);
 
-      void openConverter();
+      void openConverter(bool register_callbacks);
 
    public:
 
@@ -110,7 +110,7 @@ class StriUcnv  {
       bool isUTF8() {
          if (m_isutf8 != NA_LOGICAL) return m_isutf8;
 
-         openConverter();
+         openConverter(false);
          UErrorCode status = U_ZERO_ERROR;
          // get "offical" encoder name
          const char* ucnv_name = ucnv_getName(m_ucnv, &status);
@@ -123,13 +123,13 @@ class StriUcnv  {
       bool is8bit() {
          if (m_is8bit != NA_LOGICAL) return m_is8bit;
 
-         openConverter();
+         openConverter(false);
          m_is8bit = (ucnv_getMaxCharSize(m_ucnv) == 1);
          return m_is8bit;
       }
 
 
-      UConverter* getConverter();
+      UConverter* getConverter(bool register_callbacks=false);
 
       bool hasASCIIsubset();
       bool is1to1Unicode();
@@ -138,25 +138,25 @@ class StriUcnv  {
       static const char* getFriendlyName(const char* canname);
 
 
-      /** restores default ICU's substitute callbacks
-       */
-      void setCallBackSubstitute() {
-         openConverter();
-
-         UErrorCode status = U_ZERO_ERROR;
-         ucnv_setFromUCallBack(m_ucnv, UCNV_FROM_U_CALLBACK_SUBSTITUTE, NULL, NULL, NULL, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-         status = U_ZERO_ERROR;
-         ucnv_setToUCallBack(m_ucnv, UCNV_TO_U_CALLBACK_SUBSTITUTE,   NULL, NULL, NULL, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
+//      /** restores default ICU's substitute callbacks
+//       */
+//      void setCallBackSubstitute() {
+//         openConverter();
+//
+//         UErrorCode status = U_ZERO_ERROR;
+//         ucnv_setFromUCallBack(m_ucnv, UCNV_FROM_U_CALLBACK_SUBSTITUTE, NULL, NULL, NULL, &status);
+//         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+//
+//         status = U_ZERO_ERROR;
+//         ucnv_setToUCallBack(m_ucnv, UCNV_TO_U_CALLBACK_SUBSTITUTE,   NULL, NULL, NULL, &status);
+//         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+//      }
 
       /**
        * get R's cetype_t corresponding to this converter
        */
       cetype_t getCE() {
-         openConverter();
+         openConverter(false);
          UErrorCode status = U_ZERO_ERROR;
          const char* ucnv_name = ucnv_getName(m_ucnv, &status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})

@@ -639,8 +639,8 @@ struct Converter8bit {
       if (!ucnv_obj.is8bit())
          return; // not an 8-bit converter
 
-      ucnv_obj.setCallBackSubstitute(); // restore default (no warn) callbacks
-      UConverter* ucnv = ucnv_obj.getConverter();
+      //ucnv_obj.setCallBackSubstitute(); // restore default (no warn) callbacks
+      UConverter* ucnv = ucnv_obj.getConverter(false);
 
 
       // Check which characters in given encoding
