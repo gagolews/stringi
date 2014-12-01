@@ -59,10 +59,10 @@
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
-#' \donttest{
 #' stri_numbytes(letters)
 #' stri_numbytes(c('abc', '123', '\u0105\u0104'))
 #'
+#' \dontrun{
 #' # this used to fail on Windows, as there was no native support for 4-bytes
 #' # Unicode characters; see, however, stri_escape_unicode():
 #' stri_numbytes('\U7fffffff') # compare stri_length('\U7fffffff')
@@ -103,7 +103,6 @@ stri_numbytes <- function(str) {
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
-#' \donttest{
 #' stri_length(LETTERS)
 #' stri_length(c('abc', '123', '\u0105\u0104'))
 #' stri_length('\u0105') # length is one, but...
@@ -112,7 +111,6 @@ stri_numbytes <- function(str) {
 #' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
 #' stri_count_boundaries(stri_trans_nfkd('\u0105'),
 #'    stri_opts_brkiter(type="character")) # ...and one Unicode character
-#' }
 #'
 #' @export
 #' @family length
@@ -136,11 +134,9 @@ stri_length <- function(str) {
 #' @return Returns a logical vector of the same length as \code{str}.
 #'
 #' @examples
-#' \donttest{
 #' stri_isempty(letters[1:3])
 #' stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 #' stri_isempty(character(1))
-#' }
 #'
 #' @export
 #' @family length

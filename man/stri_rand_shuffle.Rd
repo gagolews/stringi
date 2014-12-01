@@ -23,11 +23,9 @@ See also \code{\link{stri_reverse}} for a reverse permutation
 of code points.
 }
 \examples{
-\donttest{
 stri_rand_shuffle(c("abcdefghi", "0123456789"))
 # you can do better than this with stri_rand_strings:
 stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
-}
 }
 \seealso{
 Other random: \code{\link{stri_rand_lipsum}};

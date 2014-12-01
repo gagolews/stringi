@@ -67,12 +67,10 @@
 #' Of course, the output encoding is always UTF-8.
 #'
 #' @examples
-#' \donttest{
 #' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 #' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 #' stri_subset_charclass(c("stRRRingi","REXAMINE","123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
-#' }
 #'
 #' @family search_subset
 #' @export

@@ -64,7 +64,6 @@
 #' @return All the functions return an integer vector.
 #'
 #' @examples
-#' \donttest{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_count(s, fixed="dolor")
 #' stri_count(s, regex="\\p{L}+")
@@ -86,7 +85,6 @@
 #' stri_count_regex(s, ".it")
 #' stri_count_regex("bab baab baaab", c("b.*?b", "b.b"))
 #' stri_count_regex(c("stringi", "123"), "^(s|1)")
-#' }
 #'
 #' @family search_count
 #' @export

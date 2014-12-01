@@ -96,7 +96,6 @@
 #' A \code{NA} element indicates no match.
 #'
 #' @examples
-#' \donttest{
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', coll='i')
 #' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all whitespaces
@@ -118,7 +117,6 @@
 #'
 #' stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
-#' }
 #'
 #' @family search_extract
 #'

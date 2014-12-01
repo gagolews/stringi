@@ -100,7 +100,6 @@ Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\donttest{
 stri_split_fixed("a_b_c_d", "_")
 stri_split_fixed("a_b_c__d", "_")
 stri_split_fixed("a_b_c__d", "_", omit_empty=TRUE)
@@ -127,7 +126,6 @@ stri_split_charclass(" Lorem  ipsum dolor", "\\\\p{WHITE_SPACE}", n_max=3,
 
 stri_split_regex("Lorem ipsum dolor sit amet",
    "\\\\p{Z}+") # see also stri_split_charclass
-}
 }
 \seealso{
 Other search_split: \code{\link{stri_split_boundaries}};

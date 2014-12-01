@@ -55,9 +55,7 @@
 #' Returns a character vector.
 #'
 #' @examples
-#' \donttest{
 #' stri_escape_unicode("a\u0105!")
-#' }
 #'
 #' @family escape
 #' @export
@@ -99,9 +97,7 @@ stri_escape_unicode <- function(str) {
 #' result will be \code{NA} and a warning will be given.
 #'
 #' @examples
-#' \donttest{
 #' stri_unescape_unicode("a\\u0105!\\u0032\\n")
-#' }
 #'
 #' @family escape
 #' @export

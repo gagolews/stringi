@@ -71,9 +71,7 @@
 #'
 #'
 #' @examples
-#' \donttest{
 #' stri_extract_words("stringi: THE string processing package 123.48...")
-#' }
 #'
 #' @export
 #' @family search_extract

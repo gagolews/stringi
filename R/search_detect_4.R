@@ -69,7 +69,6 @@
 #' @return All the functions return a logical vector.
 #'
 #' @examples
-#' \donttest{
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 #'
@@ -81,7 +80,6 @@
 #' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
 #' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
 #' stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
-#' }
 #'
 #' @family search_detect
 #' @export

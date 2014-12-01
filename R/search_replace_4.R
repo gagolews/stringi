@@ -94,11 +94,10 @@
 #' @return All the functions return a character vector.
 #'
 #' @examples
-#' \donttest{
 #' stri_replace_all_charclass("aaaa", "[a]", "b", merge=c(TRUE, FALSE))
 #'
 #' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ")
-#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", merge=RUE)
+#' stri_replace_all_charclass("a\nb\tc   d", "\\p{WHITE_SPACE}", " ", merge=TRUE)
 #'
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_replace_all_fixed(s, " ", "#")
@@ -121,7 +120,6 @@
 #'      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
 #' stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
 #'      "\\b"%s+%c("quick", "brown", "fox")%s+%"\\b", c("slow",  "black", "bear"), vectorize_all=FALSE)
-#' }
 #'
 #' @family search_replace
 #' @export

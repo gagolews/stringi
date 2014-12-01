@@ -87,7 +87,6 @@
 #' side effect: after a call, \code{str} is modified.
 #'
 #' @examples
-#' \donttest{
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 #' stri_sub(s, from=1:3*6, to=21)
 #' stri_sub(s, from=c(1,7,13), length=5)
@@ -97,7 +96,6 @@
 #' (stri_sub(s, 1, 5) <- "stringi")
 #' (stri_sub(s, -6, length=5) <- ".")
 #' (stri_sub(s, 1, 1:3) <- 1:2)
-#' }
 #'
 #' @family indexing
 #' @rdname stri_sub

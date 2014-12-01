@@ -55,12 +55,10 @@ and general character category `\code{\\p\{Z\}}`,
 see \link{stringi-search-charclass}.
 }
 \examples{
-\donttest{
 stri_trim_left("               aaa")
 stri_trim_right("rexamine.com/", "\\\\p{P}")
 stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{N}")
 stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
-}
 }
 \seealso{
 Other search_charclass: \code{\link{stringi-search-charclass}};

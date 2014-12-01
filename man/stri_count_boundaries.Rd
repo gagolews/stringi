@@ -53,7 +53,6 @@ On the other hand, a \code{BreakIterator} of type \code{sentence}
 may be used to count the number of sentences in a piece of text.
 }
 \examples{
-\donttest{
 test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
 stri_count_boundaries(test, stri_opts_brkiter(type="word"))
 stri_count_boundaries(test, stri_opts_brkiter(type="sentence"))
@@ -64,7 +63,6 @@ test2 <- stri_trans_nfkd("\\u03c0\\u0153\\u0119\\u00a9\\u00df\\u2190\\u2193\\u21
 stri_count_boundaries(test2, stri_opts_brkiter(type="character"))
 stri_length(test2)
 stri_numbytes(test2)
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

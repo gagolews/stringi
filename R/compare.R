@@ -99,7 +99,6 @@
 #' in \code{e1} and \code{e2}.
 #'
 #' @examples
-#' \donttest{
 #' # in Polish ch < h:
 #' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
 #'
@@ -123,7 +122,6 @@
 #'
 #' # ligatures:
 #' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
-#' }
 #'
 #' @family locale_sensitive
 #' @export
@@ -218,10 +216,8 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #'
 #'
 #' @examples
-#' \donttest{
 #' "a" %stri<% "b"
 #' c("a", "b", "c") %stri>=% "b"
-#' }
 #'
 #' @usage
 #' e1 \%s<\% e2
@@ -413,11 +409,9 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname stri_order
 #'
 #' @examples
-#' \donttest{
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 #'
 #' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
-#' }
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
    .Call(C_stri_order_or_sort, str, decreasing, na_last, opts_collator, 1L)
 }
@@ -455,14 +449,12 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @return Returns a character vector.
 #'
 #' @examples
-#' \donttest{
 #' # normalized and non-unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
 #' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
 #'    stri_opts_collator(strength=1))
-#' }
 #'
 #' @family locale_sensitive
 #' @export
@@ -512,7 +504,6 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' Otherwise, it gives the index of the first non-unique element.
 #'
 #' @examples
-#' \donttest{
 #' # In the following examples, we have 3 duplicated values,
 #' # "a" - 2 times, NA - 1 time
 #' stri_duplicated(c("a", "b", "a", NA, "a", NA))
@@ -526,7 +517,6 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
 #'    opts_collator=stri_opts_collator(strength=1))
 #' duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
-#' }
 #'
 #' @rdname stri_duplicated
 #' @family locale_sensitive

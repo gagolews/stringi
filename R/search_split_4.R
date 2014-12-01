@@ -101,7 +101,6 @@
 #' is returned.
 #'
 #' @examples
-#' \donttest{
 #' stri_split_fixed("a_b_c_d", "_")
 #' stri_split_fixed("a_b_c__d", "_")
 #' stri_split_fixed("a_b_c__d", "_", omit_empty=TRUE)
@@ -128,7 +127,6 @@
 #'
 #' stri_split_regex("Lorem ipsum dolor sit amet",
 #'    "\\p{Z}+") # see also stri_split_charclass
-#' }
 #'
 #' @export
 #' @rdname stri_split

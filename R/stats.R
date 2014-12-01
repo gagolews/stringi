@@ -58,13 +58,11 @@
 #'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
-#' \donttest{
 #' s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
 #'        "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
 #'        "Cras vel lorem. Etiam pellentesque aliquet tellus.",
 #'        "")
 #' stri_stats_general(s)
-#' }
 #'
 #' @family stats
 #' @export
@@ -100,12 +98,10 @@ stri_stats_general <- function(str) {
 #'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
-#' \donttest{
 #' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",
 #'        "\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
 #'        "")
 #' stri_stats_latex(s)
-#' }
 #'
 #' \dontrun{
 #' # Stats for the preprint version of M. Gagolewski's book

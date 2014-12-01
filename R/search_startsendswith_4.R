@@ -84,7 +84,6 @@
 #'
 #'
 #' @examples
-#' \donttest{
 #' stri_startswith_charclass(" trim me! ", "\\p{WSpace}")
 #' stri_startswith_fixed(c("a1", "a2", "b3", "a4", "c5"), "a")
 #' stri_detect_regex(c("a1", "a2", "b3", "a4", "c5"), "^a")
@@ -96,7 +95,6 @@
 #'                   "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
 #' stri_endswith_coll("\ufdfa\ufdfa\ufdfaXYZ", pat,
 #'    opts=stri_opts_collator(strength = 1))
-#' }
 #'
 #' @family search_detect
 #' @export

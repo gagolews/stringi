@@ -47,11 +47,9 @@
 #' @export
 #' @family join
 #' @examples
-#' \donttest{
 #' stri_dup("a", 1:5)
 #' stri_dup(c("a", NA, "ba"), 4)
 #' stri_dup(c("abc", "pqrst"), c(4, 2))
-#' }
 stri_dup <- function(str, times) {
    .Call(C_stri_dup, str, times)
 }
@@ -81,10 +79,8 @@ stri_dup <- function(str, times) {
 #'
 #'
 #' @examples
-#' \donttest{
 #' c('abc', '123', '\u0105\u0104') %stri+% letters[1:6]
 #' 'ID_' %stri+% 1:5
-#' }
 #'
 #' @rdname oper_plus
 #'
@@ -148,7 +144,6 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 #' @examples
-#' \donttest{
 #' stri_join(1:13, letters)
 #' stri_join(1:13, letters, sep='!')
 #' stri_join(1:13, letters, collapse='?')
@@ -158,7 +153,6 @@ stri_dup <- function(str, times) {
 #'
 #' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!'))
 #' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
-#' }
 #'
 #' @family join
 #' @rdname stri_join
@@ -202,12 +196,10 @@ stri_paste <- stri_join
 #' vector of length 1.
 #'
 #' @examples
-#' \donttest{
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
 #' stri_flatten(c('abc', '123', '\u0105\u0104'))
 #' stri_flatten(stri_dup(letters[1:6],1:3))
-#' }
 #'
 #' @export
 #' @family join

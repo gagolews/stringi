@@ -26,12 +26,10 @@ It may be used e.g. wherever ``plain \R'' \code{NA} handling is
 desired, see Examples.
 }
 \examples{
-\donttest{
 x <- c('test', NA)
 stri_paste(x, 1:2)                           # "test1" NA
 paste(x, 1:2)                                # "test 1" "NA 2"
 stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
-}
 }
 \seealso{
 Other search_replace: \code{\link{stri_replace}},

@@ -30,9 +30,7 @@ because it creates a new (temporary) result vector each time
 the operator is applied.
 }
 \examples{
-\donttest{
 c('abc', '123', '\\u0105\\u0104') \%stri+\% letters[1:6]
 'ID_' \%stri+\% 1:5
-}
 }
 

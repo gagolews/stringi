@@ -95,7 +95,6 @@
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @examples
-#' \donttest{
 #' s <- stri_paste(
 #'    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
 #'    "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
@@ -103,7 +102,6 @@
 #' cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
 #' cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
 #' cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
-#' }
 #'
 #' @export
 #' @references

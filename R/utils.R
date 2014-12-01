@@ -64,7 +64,6 @@
 #' Always returns a character matrix.
 #'
 #' @examples
-#' \donttest{
 #' simplify2array(list(c("a", "b"), c("c", "d"), c("e", "f")))
 #' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")))
 #' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")), byrow=TRUE)
@@ -72,7 +71,6 @@
 #' simplify2array(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")), fill="")
-#' }
 #'
 #' @family utils
 #' @export

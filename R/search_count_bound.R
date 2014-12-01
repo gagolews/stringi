@@ -75,7 +75,6 @@
 #' Both functions return an integer vector.
 #'
 #' @examples
-#' \donttest{
 #' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
 #' stri_count_boundaries(test, stri_opts_brkiter(type="word"))
 #' stri_count_boundaries(test, stri_opts_brkiter(type="sentence"))
@@ -86,7 +85,6 @@
 #' stri_count_boundaries(test2, stri_opts_brkiter(type="character"))
 #' stri_length(test2)
 #' stri_numbytes(test2)
-#' }
 #'
 #' @export
 #' @family search_count

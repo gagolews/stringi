@@ -67,12 +67,10 @@ Set to 1 to also ignore diacritical differences.
 The strings are Unicode-normalized before the comparison.
 }
 \examples{
-\donttest{
 stri_cmp("number100", "number2")
 stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
 stri_cmp("above mentioned", "above-mentioned")
 stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
-}
 }
 \references{
 \emph{Collation} -- ICU User Guide,

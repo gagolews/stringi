@@ -58,12 +58,10 @@ Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\donttest{
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 stri_subset_charclass(c("stRRRingi","REXAMINE","123"),
    c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
-}
 }
 \seealso{
 Other search_subset: \code{\link{stringi-search}}

@@ -89,7 +89,6 @@
 #' only if they are not found.
 #'
 #' @examples
-#' \donttest{
 #' stri_locate_all('XaaaaX',
 #'    regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_locate_all('Bartolini', fixed='i')
@@ -133,7 +132,6 @@
 #' # Use regex positive-lookahead to locate overlapping pattern matches:
 #' stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
 #' # note that start > end here (match of 0 length)
-#' }
 #'
 #'
 #' @family search_locate

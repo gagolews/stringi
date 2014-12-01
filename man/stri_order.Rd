@@ -48,11 +48,9 @@ Interestingly, our benchmarks indicate that \code{stri_order}
 is most often faster that \R's \code{order}.
 }
 \examples{
-\donttest{
 stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
 
 stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

@@ -59,7 +59,6 @@ for testing whether a string starts or ends with a given pattern
 match, respectively.
 }
 \examples{
-\donttest{
 stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
 stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
 
@@ -71,7 +70,6 @@ stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[[:alpha:]]*?')
 stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
 stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
 stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
-}
 }
 \seealso{
 Other search_detect: \code{\link{stri_endswith}},

@@ -47,9 +47,7 @@ This is function is equivalent to a call to
 \code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 }
 \examples{
-\donttest{
 stri_extract_words("stringi: THE string processing package 123.48...")
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

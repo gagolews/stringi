@@ -140,10 +140,8 @@ stri_locale_get <- function() {
 #' \code{Name}, being their underscore separated combination.
 #'
 #' @examples
-#' \donttest{
 #' stri_locale_info("pl_PL")
 #' stri_locale_info("Pl_pL") # the same result
-#' }
 #'
 #' @family locale_management
 #' @export
