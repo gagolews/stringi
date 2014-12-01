@@ -14,7 +14,7 @@
 *   created by: Markus W. Scherer
 *
 *	6/25/08 - Added Cygwin specific code in uprv_mkdir - Brian Rower
-*	
+*
 *   This file contains utility functions for ICU tools like genccode.
 */
 
@@ -82,7 +82,7 @@ static int32_t currentYear = -1;
 
 U_CAPI int32_t U_EXPORT2 getCurrentYear() {
 #if !UCONFIG_NO_FORMATTING
-    UErrorCode status=U_ZERO_ERROR;    
+    UErrorCode status=U_ZERO_ERROR;
     UCalendar *cal = NULL;
 
     if(currentYear == -1) {
@@ -221,7 +221,7 @@ uprv_getModificationDate(const char *pathname, UErrorCode *status)
     }
     //  TODO: handle case where stat is not available
     struct stat st;
-    
+
     if(stat(pathname,&st) != 0)
     {
         *status = U_FILE_ACCESS_ERROR;

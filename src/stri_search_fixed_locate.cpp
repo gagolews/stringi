@@ -179,7 +179,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
  */

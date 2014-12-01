@@ -106,7 +106,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @details
 #' Vectorized over \code{str} and \code{n_max}.
-#' 
+#'
 #' If \code{n_max} is negative (default), then all pieces are extracted.
 #' Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
 #' for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
@@ -160,6 +160,6 @@ stri_split_lines1 <- function(str) {
 #' @family text_boundaries
 stri_split_boundaries <- function(str, n_max=-1L,
    tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
-   .Call(C_stri_split_boundaries, str, 
+   .Call(C_stri_split_boundaries, str,
       n_max, tokens_only, simplify, opts_brkiter)
 }

@@ -62,7 +62,7 @@
 #' \code{file.path(find.package('stringi'), 'libs')} will be used.
 #' Custom, non-default paths should not be used normally by \pkg{stringi} users.
 #'
-#' @return The functions return a logical value, invisibly.
+#' @return These functions return a logical value, invisibly.
 #' \code{TRUE} denotes that the requested operation has been completed
 #' successfully.
 #'
@@ -73,23 +73,17 @@
 #' @examples
 #' \donttest{stri_install_check()}
 #'
-#' @rdname
-#' stri_install
+#' @rdname stri_install
 #' @export
 stri_install_check <- function(silent=FALSE) {
    stopifnot(is.logical(silent), length(silent) == 1)
 
    allok <- tryCatch({
-      if (!silent)
-         message(stri_info(TRUE)) # this may also throw an error
+      if (!silent) message(stri_info(TRUE)) # this may also throw an error
 
-      if (length(stri_enc_list()) <= 0) stop("encodings unsupported")
+      if (length(stri_enc_list()) <= 0)    stop("encodings unsupported")
       if (length(stri_locale_list()) <= 0) stop("locales unsupported")
-      if (length(stri_trans_list()) <= 0) stop("transliterators unsupported")
-      if (stri_cmp("a", "b", opts_collator=stri_opts_collator(locale="en_US")) != -1)
-         stop("no collator rules installed")
-      if (stri_detect_regex("123abc!@#", "\\p{L}") != TRUE)
-         stop("regex engine failure")
+      if (length(stri_trans_list()) <= 0)  stop("transliterators unsupported")
       TRUE
    }, error=function(e) { FALSE })
 
@@ -105,44 +99,57 @@ stri_install_check <- function(silent=FALSE) {
 }
 
 
-#' @rdname
-#' stri_install
+#' @rdname stri_install
 #' @export
+#' @importFrom tools md5sum
 stri_install_icudt <- function(check=TRUE, path=NULL) {
-   stopifnot(is.logical(check), length(check) == 1)
+   stopifnot(is.logical(check), length(check) == 1, !is.na(check))
    if (check && stri_install_check(TRUE)) {
       message("icudt has been already installed.")
       return(invisible(TRUE))
    }
 
    if (is.null(path))
-      path <- file.path(find.package('stringi'), 'libs')
-   stopifnot(is.character(path), length(path) == 1)
+      path <- file.path(path.package("stringi"), "libs")
+   stopifnot(is.character(path), length(path) == 1, file.exists(path))
 
-   mirror1 <- "http://static.rexamine.com/packages/"
-   mirror2 <- "http://www.mini.pw.edu.pl/~gagolews/stringi/"
-   mirror3 <- "http://www.ibspan.waw.pl/~gagolews/stringi/"
+   mirrors <- c("http://static.rexamine.com/packages/",
+                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
+                "http://www.ibspan.waw.pl/~gagolews/stringi/")
 
-   fname <- if (.Platform$endian == 'little') "icudt52l.zip" else "icudt52b.zip"
+   fname <- if (.Platform$endian == 'little') "icudt52l.zip"
+                                         else "icudt52b.zip"
+
+   md5ex <- if (.Platform$endian == 'little') "d86d3191818ae58d5703f1ac78b0050c"
+                                         else "91cd9aacaa4e776bd14f20c8839cd9c2"
 
    outfname <- tempfile(fileext=".zip")
-   download_from_mirror <- function(mirror, outfname) {
+   download_from_mirror <- function(href, outfname) {
       tryCatch({
-         ret <- download.file(paste0(mirror, fname), outfname, mode="wb")
-         if (ret != 0) stop("download error")
-         if (!file.exists(outfname)) stop("download error")
+         suppressWarnings(file.remove(outfname))
+         ret <- download.file(href, outfname, mode="wb")
+         if (ret != 0) stop("download error", call.=FALSE)
+         if (!file.exists(outfname)) stop("download error", call.=FALSE)
+         md5ob <- tools::md5sum(outfname)
+         if (is.na(md5ob)) stop("error checking md5sum", call.=FALSE)
+         if (md5ob != md5ex) stop("md5sum mismatch", call.=FALSE)
          TRUE
-      }, error = function(e) FALSE)
+      }, error = function(e) as.character(e))
    }
 
    message("downloading ICU data library (icudt)")
    message("the files will be extracted to: ", path)
-   allok <- download_from_mirror(mirror1, outfname)
-   allok <- allok || download_from_mirror(mirror2, outfname)
-   allok <- allok || download_from_mirror(mirror3, outfname)
+   allok <- FALSE
+   for (m in mirrors) {
+      if (identical(status <- download_from_mirror(paste0(m, fname), outfname), TRUE)) {
+         allok <- TRUE
+         break
+      }
+      else message(status)
+   }
 
    if (!allok) {
-      message("download failed")
+      message("icudt download failed")
       return(invisible(FALSE))
    }
    message("download OK")
@@ -154,6 +161,7 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       return(invisible(FALSE))
    }
 
+   suppressWarnings(file.remove(outfname))
    message("icudt has been installed successfully")
    message("restart R to apply changes")
    invisible(TRUE)

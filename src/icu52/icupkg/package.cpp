@@ -384,7 +384,7 @@ U_CDECL_END
 
 U_NAMESPACE_BEGIN
 
-Package::Package() 
+Package::Package()
         : doAutoPrefix(FALSE), prefixEndsWithType(FALSE) {
     inPkgName[0]=0;
     pkgPrefix[0]=0;
@@ -1283,7 +1283,7 @@ Package::sortItems() {
     }
 }
 
-void Package::setItemCapacity(int32_t max) 
+void Package::setItemCapacity(int32_t max)
 {
   if(max<=itemMax) {
     return;
@@ -1291,7 +1291,7 @@ void Package::setItemCapacity(int32_t max)
   Item *newItems = (Item*)uprv_malloc(max * sizeof(items[0]));
   Item *oldItems = items;
   if(newItems == NULL) {
-    fprintf(stderr, "icupkg: Out of memory trying to allocate %lu bytes for %d items\n", 
+    fprintf(stderr, "icupkg: Out of memory trying to allocate %lu bytes for %d items\n",
         (unsigned long)max*sizeof(items[0]), max);
     exit(U_MEMORY_ALLOCATION_ERROR);
   }

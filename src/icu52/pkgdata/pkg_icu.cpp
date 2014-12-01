@@ -181,4 +181,3 @@ writePackageDatFile(const char *outFilename, const char *outComment, const char 
 
     return 0;
 }
-
