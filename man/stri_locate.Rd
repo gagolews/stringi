@@ -118,7 +118,6 @@ Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\donttest{
 stri_locate_all('XaaaaX',
    regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_locate_all('Bartolini', fixed='i')
@@ -162,7 +161,6 @@ stri_locate_last_regex('XaaaaX',
 # Use regex positive-lookahead to locate overlapping pattern matches:
 stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
 # note that start > end here (match of 0 length)
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_boundaries}},

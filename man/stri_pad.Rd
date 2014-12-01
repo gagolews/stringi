@@ -51,12 +51,10 @@ See \code{\link{stri_trim_left}} (among others) for reverse operation.
 Also check out \code{\link{stri_wrap}} for line wrapping.
 }
 \examples{
-\donttest{
 stri_pad_left("stringi", 10, pad="#")
 stri_pad_both("stringi", 8:12, pad="*")
 # center on screen:
 cat(stri_pad_both(c("the", "string", "processing", "package"),
    getOption("width")*0.9), sep='\\n')
-}
 }
 

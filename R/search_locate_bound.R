@@ -76,14 +76,12 @@
 #' or \code{NA} arguments.
 #'
 #' @examples
-#' \donttest{
 #' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-#' stri_locate_boundaries(test, stri_opts_brkiter(type="line"))
-#' stri_locate_boundaries(test, stri_opts_brkiter(type="word"))
-#' stri_locate_boundaries(test, stri_opts_brkiter(type="sentence"))
-#' stri_locate_boundaries(test, stri_opts_brkiter(type="character"))
+#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
+#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
+#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
+#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
 #' stri_locate_words(test)
-#' }
 #'
 #' @export
 #' @family search_locate

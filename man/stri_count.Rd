@@ -55,7 +55,6 @@ Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\donttest{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_count(s, fixed="dolor")
 stri_count(s, regex="\\\\p{L}+")
@@ -77,7 +76,6 @@ stri_count_regex(s, "i.i")
 stri_count_regex(s, ".it")
 stri_count_regex("bab baab baaab", c("b.*?b", "b.b"))
 stri_count_regex(c("stringi", "123"), "^(s|1)")
-}
 }
 \seealso{
 Other search_count: \code{\link{stri_count_boundaries}},

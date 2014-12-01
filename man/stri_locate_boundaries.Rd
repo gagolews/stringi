@@ -55,14 +55,12 @@ This is function is equivalent to a call to
 \code{\link{stri_locate_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 }
 \examples{
-\donttest{
 test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-stri_locate_boundaries(test, stri_opts_brkiter(type="line"))
-stri_locate_boundaries(test, stri_opts_brkiter(type="word"))
-stri_locate_boundaries(test, stri_opts_brkiter(type="sentence"))
-stri_locate_boundaries(test, stri_opts_brkiter(type="character"))
+stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
+stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
+stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
+stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
 stri_locate_words(test)
-}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate}},

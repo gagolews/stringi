@@ -118,7 +118,6 @@ Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
 \examples{
-\donttest{
 stri_extract_all('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_all('Bartolini', coll='i')
 stri_extract_all('stringi is so good!', charclass='\\\\p{Zs}') # all whitespaces
@@ -140,7 +139,6 @@ stri_extract_last_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}',
 
 stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+')))
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+'), simplify=TRUE)
-}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_words}};

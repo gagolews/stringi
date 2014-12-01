@@ -34,10 +34,10 @@ The returned values does not of course include the trailing NUL bytes,
 which are used internally to mark the end of string data (in C).
 }
 \examples{
-\donttest{
 stri_numbytes(letters)
 stri_numbytes(c('abc', '123', '\\u0105\\u0104'))
 
+\dontrun{
 # this used to fail on Windows, as there was no native support for 4-bytes
 # Unicode characters; see, however, stri_escape_unicode():
 stri_numbytes('\\U7fffffff') # compare stri_length('\\U7fffffff')

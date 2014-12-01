@@ -30,12 +30,10 @@ If \code{collapse} has length > 1, then only first string
 will be used.
 }
 \examples{
-\donttest{
 stri_flatten(LETTERS)
 stri_flatten(LETTERS, collapse=",")
 stri_flatten(c('abc', '123', '\\u0105\\u0104'))
 stri_flatten(stri_dup(letters[1:6],1:3))
-}
 }
 \seealso{
 Other join: \code{\link{stri_c}}, \code{\link{stri_join}},

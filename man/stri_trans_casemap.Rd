@@ -54,7 +54,6 @@ For more general (but not locale dependent)
 text transforms refer to \code{\link{stri_trans_general}}.
 }
 \examples{
-\donttest{
 stri_trans_toupper("\\u00DF", "de_DE") # small German Eszett / scharfes S
 stri_cmp_eq(stri_trans_toupper("i", "en_US"), stri_trans_toupper("i", "tr_TR"))
 stri_trans_toupper(c('abc', '123', '\\u0105\\u0104'))
@@ -64,7 +63,6 @@ stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
     stri_opts_brkiter(type="word")) # default boundary
 stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
     stri_opts_brkiter(type="sentence"))
-}
 }
 \references{
 \emph{Case Mappings} -- ICU User Guide,

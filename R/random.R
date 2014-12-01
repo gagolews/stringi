@@ -48,11 +48,9 @@
 #' @return Returns a character vector.
 #'
 #' @examples
-#' \donttest{
 #' stri_rand_shuffle(c("abcdefghi", "0123456789"))
 #' # you can do better than this with stri_rand_strings:
 #' stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
-#' }
 #'
 #' @family random
 #' @export
@@ -88,7 +86,6 @@ stri_rand_shuffle <- function(str) {
 #' @return Returns a character vector.
 #'
 #' @examples
-#' \donttest{
 #' stri_rand_strings(5, 10) # 5 strings of length 10
 #' stri_rand_strings(5, sample(1:10, 5, replace=TRUE)) # 5 strings of random lengths
 #' stri_rand_strings(10, 5, "[\\p{script=latin}&\\p{Ll}]") # small letters from the Latin script
@@ -102,7 +99,6 @@ stri_rand_shuffle <- function(str) {
 #'    stri_rand_strings(n, 1, '[A-Z]'),
 #'    stri_rand_strings(n, sample(5:11, 5, replace=TRUE), '[a-zA-Z0-9]')
 #' ))
-#' }
 #'
 #' @family random
 #' @export
@@ -136,12 +132,10 @@ stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
 #' @return Returns a character vector of length \code{nparagraphs}.
 #'
 #' @examples
-#' \donttest{
 #' cat(sapply(
 #'    stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
 #'    stri_flatten, collapse="\n"), sep="\n\n")
 #' cat(stri_rand_lipsum(10), sep="\n\n")
-#' }
 #'
 #' @family random
 #' @export

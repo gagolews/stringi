@@ -126,11 +126,10 @@ If you would like to get rid of e.g. whitespaces from the start or end
 of a string, see \code{\link{stri_trim}}.
 }
 \examples{
-\donttest{
 stri_replace_all_charclass("aaaa", "[a]", "b", merge=c(TRUE, FALSE))
 
 stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ")
-stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ", merge=RUE)
+stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ", merge=TRUE)
 
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_fixed(s, " ", "#")
@@ -153,7 +152,6 @@ stri_replace_all_fixed("The quicker brown fox jumped over the lazy dog.",
      c("quick", "brown", "fox"), c("slow",  "black", "bear"), vectorize_all=FALSE)
 stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
      "\\\\b"\%s+\%c("quick", "brown", "fox")\%s+\%"\\\\b", c("slow",  "black", "bear"), vectorize_all=FALSE)
-}
 }
 \seealso{
 Other search_replace: \code{\link{stri_replace_na}};

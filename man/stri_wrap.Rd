@@ -72,7 +72,6 @@ in a more aesthetic way. This method minimizes the squared
 at the end of each line, so the text is mode arranged evenly.
 }
 \examples{
-\donttest{
 s <- stri_paste(
    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
    "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
@@ -80,7 +79,6 @@ s <- stri_paste(
 cat(stri_wrap(s, 20, 0.0), sep="\\n") # greedy
 cat(stri_wrap(s, 20, 2.0), sep="\\n") # dynamic
 cat(stri_pad(stri_wrap(s), side='both'), sep="\\n")
-}
 }
 \references{
 D.E. Knuth, M.F. Plass,

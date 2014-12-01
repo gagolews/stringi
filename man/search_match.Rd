@@ -75,7 +75,6 @@ provided for consistency with other string searching functions' wrappers,
 cf. e.g. \code{\link{stri_extract}}.
 }
 \examples{
-\donttest{
 stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
    "(\\\\w+)=(\\\\w+)")
 stri_match_all_regex(c("breakfast=eggs", "lunch=pizza", "no food here"),
@@ -94,7 +93,6 @@ stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
 stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\\\2))")[[1]][,2]
 # Compare the above to:
 stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\\\1")
-}
 }
 \seealso{
 Other search_extract: \code{\link{stri_extract_words}};

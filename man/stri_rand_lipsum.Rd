@@ -30,12 +30,10 @@ follows a discretized, truncated normal distribution.
 No Markov chain modeling, just i.i.d. word selection.
 }
 \examples{
-\donttest{
 cat(sapply(
    stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
    stri_flatten, collapse="\\n"), sep="\\n\\n")
 cat(stri_rand_lipsum(10), sep="\\n\\n")
-}
 }
 \seealso{
 Other random: \code{\link{stri_rand_shuffle}};

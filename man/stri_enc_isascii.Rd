@@ -22,10 +22,8 @@ This function is independent of the way \R marks encodings in
 character strings (see \link{Encoding} and \link{stringi-encoding}).
 }
 \examples{
-\donttest{
 stri_enc_isascii(letters[1:3])
 stri_enc_isascii("\\u0105\\u0104")
-}
 }
 \seealso{
 Other encoding_detection: \code{\link{stri_enc_detect2}};

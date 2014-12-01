@@ -98,12 +98,10 @@
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 #'
 #' @examples
-#' \donttest{
 #' stri_cmp("number100", "number2")
 #' stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
 #' stri_cmp("above mentioned", "above-mentioned")
 #' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
-#' }
 stri_opts_collator <- function(locale=NULL, strength=3L,
    alternate_shifted=FALSE, french=FALSE,
    uppercase_first=NA, case_level=FALSE,
@@ -177,11 +175,9 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' \url{http://userguide.icu-project.org/strings/regexp}
 #'
 #' @examples
-#' \donttest{
 #' stri_detect_regex("ala", "ALA") # case-sensitive by default
 #' stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
 #' stri_detect_regex("ala", "(?i)ALA") # equivalent
-#' }
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
                             multiline, unix_lines, uword, error_on_unknown_escapes)
 {

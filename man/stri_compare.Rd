@@ -100,7 +100,6 @@ Please note that different locale settings may lead to different results
 (see the examples below).
 }
 \examples{
-\donttest{
 # in Polish ch < h:
 stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
 
@@ -124,7 +123,6 @@ stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105')
 
 # ligatures:
 stri_cmp_equiv("\\ufb00", "ff", stri_opts_collator(strength=2))
-}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

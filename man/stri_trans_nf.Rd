@@ -79,10 +79,8 @@ it will be converted to UTF-8 automatically.
 For more general text transforms refer to \code{\link{stri_trans_general}}.
 }
 \examples{
-\donttest{
 stri_trans_nfd("\\u0105") # Polish a with ogonek -> a, ogonek
 stri_trans_nfkc("\\ufdfa") # 1 codepoint -> 18 codepoints
-}
 }
 \references{
 \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,
