@@ -464,7 +464,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 
    // Open converters
    StriUcnv ucnv(selected_to);
-   UConverter* uconv_to = ucnv.getConverter();
+   UConverter* uconv_to = ucnv.getConverter(true /*register_callbacks*/);
 
    // Get target encoding mark
    cetype_t encmark_to = to_raw_logical?CE_BYTES:ucnv.getCE();
@@ -587,8 +587,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    // Open converters
    StriUcnv ucnv1(selected_from);
    StriUcnv ucnv2(selected_to);
-   UConverter* uconv_from = ucnv1.getConverter();
-   UConverter* uconv_to   = ucnv2.getConverter();
+   UConverter* uconv_from = ucnv1.getConverter(true /*register_callbacks*/);
+   UConverter* uconv_to   = ucnv2.getConverter(true /*register_callbacks*/);
 
    // Get target encoding mark
    cetype_t encmark_to = to_raw_logical?CE_BYTES:ucnv2.getCE();

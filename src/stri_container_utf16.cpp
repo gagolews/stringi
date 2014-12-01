@@ -89,6 +89,10 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
    for (R_len_t i=0; i<this->n; ++i)
       this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
+   /* Important: ICU provides full internationalization functionality 
+   without any conversion table data. The common library contains 
+   code to handle several important encodings algorithmically: US-ASCII, 
+   ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
    StriUcnv ucnvASCII("US-ASCII");
    StriUcnv ucnvLatin1("ISO-8859-1");
    StriUcnv ucnvNative(NULL);
