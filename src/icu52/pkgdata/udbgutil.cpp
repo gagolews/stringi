@@ -54,8 +54,8 @@ To add a new enum type
  */
 struct Field {
     int32_t prefix;   /**< how many characters to remove in the prefix - i.e. UCHAR_ = 5 */
-	const char *str;  /**< The actual string value */
-	int32_t num;      /**< The numeric value */
+   const char *str;  /**< The actual string value */
+   int32_t num;      /**< The numeric value */
 };
 
 /**
@@ -237,12 +237,12 @@ static const Field names_UDebugEnumType[] =
  * @param actual TRUE: for the actual enum's type (UCAL_FIELD_COUNT, etc), or FALSE for the string count
  */
 static int32_t _udbg_enumCount(UDebugEnumType type, UBool actual) {
-	switch(type) {
-		COUNT_CASE(UDebugEnumType)
+   switch(type) {
+      COUNT_CASE(UDebugEnumType)
 #if !UCONFIG_NO_FORMATTING
-		COUNT_CASE(UCalendarDateFields)
-		COUNT_CASE(UCalendarMonths)
-		COUNT_CASE(UDateFormatStyle)
+      COUNT_CASE(UCalendarDateFields)
+      COUNT_CASE(UCalendarMonths)
+      COUNT_CASE(UDateFormatStyle)
 #endif
         COUNT_CASE(UPlugReason)
         COUNT_CASE(UPlugLevel)
@@ -250,75 +250,75 @@ static int32_t _udbg_enumCount(UDebugEnumType type, UBool actual) {
 #if !UCONFIG_NO_COLLATION
         COUNT_CASE(UColAttributeValue)
 #endif
-		// COUNT_FAIL_CASE(UNonExistentEnum)
-	default:
-		return -1;
-	}
+      // COUNT_FAIL_CASE(UNonExistentEnum)
+   default:
+      return -1;
+   }
 }
 
 static const Field* _udbg_enumFields(UDebugEnumType type) {
-	switch(type) {
-		FIELD_CASE(UDebugEnumType)
+   switch(type) {
+      FIELD_CASE(UDebugEnumType)
 #if !UCONFIG_NO_FORMATTING
-		FIELD_CASE(UCalendarDateFields)
-		FIELD_CASE(UCalendarMonths)
-		FIELD_CASE(UDateFormatStyle)
+      FIELD_CASE(UCalendarDateFields)
+      FIELD_CASE(UCalendarMonths)
+      FIELD_CASE(UDateFormatStyle)
 #endif
         FIELD_CASE(UPlugReason)
         FIELD_CASE(UPlugLevel)
         FIELD_CASE(UAcceptResult)
-		// FIELD_FAIL_CASE(UNonExistentEnum)
+      // FIELD_FAIL_CASE(UNonExistentEnum)
 #if !UCONFIG_NO_COLLATION
         FIELD_CASE(UColAttributeValue)
 #endif
-	default:
-		return NULL;
-	}
+   default:
+      return NULL;
+   }
 }
 
 // implementation
 
 int32_t  udbg_enumCount(UDebugEnumType type) {
-	return _udbg_enumCount(type, FALSE);
+   return _udbg_enumCount(type, FALSE);
 }
 
 int32_t  udbg_enumExpectedCount(UDebugEnumType type) {
-	return _udbg_enumCount(type, TRUE);
+   return _udbg_enumCount(type, TRUE);
 }
 
 const char *  udbg_enumName(UDebugEnumType type, int32_t field) {
-	if(field<0 ||
-				field>=_udbg_enumCount(type,FALSE)) { // also will catch unsupported items
-		return NULL;
-	} else {
-		const Field *fields = _udbg_enumFields(type);
-		if(fields == NULL) {
-			return NULL;
-		} else {
-			return fields[field].str + fields[field].prefix;
-		}
-	}
+   if(field<0 ||
+            field>=_udbg_enumCount(type,FALSE)) { // also will catch unsupported items
+      return NULL;
+   } else {
+      const Field *fields = _udbg_enumFields(type);
+      if(fields == NULL) {
+         return NULL;
+      } else {
+         return fields[field].str + fields[field].prefix;
+      }
+   }
 }
 
 int32_t  udbg_enumArrayValue(UDebugEnumType type, int32_t field) {
-	if(field<0 ||
-				field>=_udbg_enumCount(type,FALSE)) { // also will catch unsupported items
-		return -1;
-	} else {
-		const Field *fields = _udbg_enumFields(type);
-		if(fields == NULL) {
-			return -1;
-		} else {
-			return fields[field].num;
-		}
-	}
+   if(field<0 ||
+            field>=_udbg_enumCount(type,FALSE)) { // also will catch unsupported items
+      return -1;
+   } else {
+      const Field *fields = _udbg_enumFields(type);
+      if(fields == NULL) {
+         return -1;
+      } else {
+         return fields[field].num;
+      }
+   }
 }
 
 int32_t udbg_enumByName(UDebugEnumType type, const char *value) {
     if(type<0||type>=_udbg_enumCount(UDBG_UDebugEnumType, TRUE)) {
         return -1; // type out of range
     }
-	const Field *fields = _udbg_enumFields(type);
+   const Field *fields = _udbg_enumFields(type);
     for(int32_t field = 0;field<_udbg_enumCount(type, FALSE);field++) {
         if(!strcmp(value, fields[field].str + fields[field].prefix)) {
             return fields[field].num;

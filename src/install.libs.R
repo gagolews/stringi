@@ -1,6 +1,6 @@
 # copy lib:
-libfile <- paste0('stringi', SHLIB_EXT)
-dest <- file.path(R_PACKAGE_DIR, paste0('libs', R_ARCH))
+libfile <- paste0("stringi", SHLIB_EXT)
+dest <- file.path(R_PACKAGE_DIR, paste0("libs", R_ARCH))
 dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
@@ -13,23 +13,15 @@ if (file.exists('icu52_found.txt')) {
 
 if (copyicudt) {
    source('../R/install.R')
-   outdir <- file.path(R_PACKAGE_DIR, paste0('libs'))
-   if (length(dir(outdir, glob2rx("*.dat"))) == 0) {
+   outdir <- file.path(R_PACKAGE_DIR, "libs")
+   if (length(dir(outdir, pattern=glob2rx("*.dat"))) == 0) {
       # avoids multiple download attempts while multiarch building
-      
-#     -----------------------------------------------------------------------
-#       # first copy minimal (fallback) data
-#       fname <- if (.Platform$endian == 'little') "icudt52l.dat" else "icudt52b.dat"
-#       file.copy(file.path("./icu52/minimaldata", fname), outdir, overwrite=TRUE)
-#     -----------------------------------------------------------------------
-      
       stri_install_icudt(FALSE, outdir)
    }
 # Note that if the data file is not found, some features will
 # be unavailable (but the package itself will load properly,
 # and UCD-independent functions will work properly)
 }
-
 
 # Copy symbols.rds
 if (file.exists('symbols.rds'))

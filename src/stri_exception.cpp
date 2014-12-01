@@ -39,7 +39,7 @@
  * @return string
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.4-1  (Marek Gagolewski, 2014-11-30)
  *    ICU warning info added
  */

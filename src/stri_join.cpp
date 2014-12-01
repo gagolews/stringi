@@ -40,8 +40,6 @@
 using namespace std;
 
 
-
-
 /**
  * Prepare list argument -- ignore empty vectors if needed, used by stri_paste
  *
@@ -55,7 +53,7 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
 {
    if (!ignore_null)
       return x;
-      
+
    PROTECT(x);
 
 #ifndef NDEBUG
@@ -72,7 +70,7 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
 //      UNPROTECT(1);
 //      return Rf_allocVector(VECSXP, 0);
 //   }
-   
+
    SEXP ret;
 //   if (ignore_null != NA_INTEGER && ignore_null < 0) { // remove NULL elements
    R_len_t nret = 0;
@@ -105,7 +103,6 @@ SEXP stri__prepare_arg_list_ignore_null(SEXP x, bool ignore_null)
    UNPROTECT(2);
    return ret;
 }
-
 
 
 /** Duplicate given strings
@@ -241,7 +238,7 @@ SEXP stri_dup(SEXP str, SEXP times)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
 */
 SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
 {
@@ -333,7 +330,7 @@ SEXP stri_join2_nocollapse(SEXP e1, SEXP e2)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  *  @version 0.4-1 (Marek Gagolewski, 2014-11-26)
  *    Issue #114: inconsistent behavior w.r.t. paste()
 */
@@ -437,7 +434,7 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #116: ignore_null arg added
  */
@@ -590,7 +587,7 @@ SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_n
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #116: ignore_null arg added
  */

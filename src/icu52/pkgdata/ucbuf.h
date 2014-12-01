@@ -45,11 +45,11 @@ struct  ULine {
 /**
  * Opens the UCHARBUF with the given file stream and code page for conversion
  * @param fileName  Name of the file to open.
- * @param codepage  The encoding of the file stream to convert to Unicode. 
+ * @param codepage  The encoding of the file stream to convert to Unicode.
  *                  If *codepoge is NULL on input the API will try to autodetect
  *                  popular Unicode encodings
  * @param showWarning Flag to print out warnings to STDOUT
- * @param buffered  If TRUE performs a buffered read of the input file. If FALSE reads 
+ * @param buffered  If TRUE performs a buffered read of the input file. If FALSE reads
  *                  the whole file into memory and converts it.
  * @param err is a pointer to a valid <code>UErrorCode</code> value. If this value
  *        indicates a failure on entry, the function will immediately return.
@@ -82,7 +82,7 @@ U_CAPI int32_t U_EXPORT2
 ucbuf_getc32(UCHARBUF* buf,UErrorCode* err);
 
 /**
- * Gets a UTF-16 code unit at the current position from the converted buffer after 
+ * Gets a UTF-16 code unit at the current position from the converted buffer after
  * unescaping and increments the current position. If the escape sequence is for UTF-32
  * code point (\\Uxxxxxxxx) then a UTF-32 codepoint is returned
  * @param buf Pointer to UCHARBUF structure
@@ -145,7 +145,7 @@ ucbuf_ungetc(int32_t ungetChar,UCHARBUF* buf);
 
 
 /**
- * Autodetects the encoding of the file stream. Only Unicode charsets are autodectected. 
+ * Autodetects the encoding of the file stream. Only Unicode charsets are autodectected.
  * Some Unicode charsets are stateful and need byte identifiers to be converted also to bring
  * the converter to correct state for converting the rest of the stream. So the UConverter parameter
  * is necessary.
@@ -165,7 +165,7 @@ ucbuf_autodetect(const char* fileName, const char** cp,UConverter** conv,
 int32_t* signatureLength, UErrorCode* status);
 
 /**
- * Autodetects the encoding of the file stream. Only Unicode charsets are autodectected. 
+ * Autodetects the encoding of the file stream. Only Unicode charsets are autodectected.
  * Some Unicode charsets are stateful and need byte identifiers to be converted also to bring
  * the converter to correct state for converting the rest of the stream. So the UConverter parameter
  * is necessary.
@@ -194,4 +194,3 @@ ucbuf_resolveFileName(const char* inputDir, const char* fileName, char* target, 
 
 #endif
 #endif
-

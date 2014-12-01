@@ -18,7 +18,7 @@ stri_install_icudt(check = TRUE, path = NULL)
 Custom, non-default paths should not be used normally by \pkg{stringi} users.}
 }
 \value{
-The functions return a logical value, invisibly.
+These functions return a logical value, invisibly.
 \code{TRUE} denotes that the requested operation has been completed
 successfully.
 }
