@@ -256,11 +256,7 @@ SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to);
 SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from);
 SEXP stri_subset_charclass(SEXP str, SEXP pattern);
 
-int stri__opts_brkiter_select_iterator(SEXP opts_brkiter, const char* _default);
-RuleBasedBreakIterator* stri__opts_brkiter_get_iterator(int brkiter_cur, const char* qloc);
-UBreakIterator* stri__opts_brkiter_get_uiterator(int brkiter_cur, const char* qloc);
-const char* stri__opts_brkiter_get_locale(SEXP opts_brkiter);
-vector<int32_t> stri__opts_brkiter_get_skip_rule_status(SEXP opts_brkiter);
+
 SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter);
 SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter);
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter);
@@ -312,6 +308,7 @@ SEXP stri_trans_general(SEXP str, SEXP id);
 // test.cpp /* internal, but in namespace: for testing */
 SEXP stri_test_Rmark(SEXP str);
 SEXP stri_test_UnicodeContainer16(SEXP str);
+SEXP stri_test_UnicodeContainer16b(SEXP str);
 SEXP stri_test_UnicodeContainer8(SEXP str);
 SEXP stri_test_returnasis(SEXP x);
 
