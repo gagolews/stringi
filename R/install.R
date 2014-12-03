@@ -58,8 +58,10 @@
 #'
 #' @param silent suppress diagnostic messages
 #' @param check enable \code{stri_install_check()} tests
-#' @param path path to install icudt to. If \code{NULL}, then
-#' \code{file.path(find.package('stringi'), 'libs')} will be used.
+#' @param outpath path to install icudt to. If \code{NULL}, then
+#' \code{file.path(path.package("stringi"), "libs")} will be used.
+#' @param inpath path to search icudt archive in (must end with a slash).
+#' If \code{NULL}, then only stringi mirror servers will be used as possible sources
 #' Custom, non-default paths should not be used normally by \pkg{stringi} users.
 #'
 #' @return These functions return a logical value, invisibly.
@@ -102,43 +104,57 @@ stri_install_check <- function(silent=FALSE) {
 #' @rdname stri_install
 #' @export
 #' @importFrom tools md5sum
-stri_install_icudt <- function(check=TRUE, path=NULL) {
+stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
    stopifnot(is.logical(check), length(check) == 1, !is.na(check))
    if (check && stri_install_check(TRUE)) {
       message("icudt has been already installed.")
       return(invisible(TRUE))
    }
 
-   if (is.null(path))
-      path <- file.path(path.package("stringi"), "libs")
-   stopifnot(is.character(path), length(path) == 1, file.exists(path))
-
-   mirrors <- c("http://static.rexamine.com/packages/",
-                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                "http://www.ibspan.waw.pl/~gagolews/stringi/")
+   if (is.null(outpath))
+      outpath <- file.path(path.package("stringi"), "libs")
+   stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
 
    fname <- if (.Platform$endian == 'little') "icudt52l.zip"
                                          else "icudt52b.zip"
 
    md5ex <- if (.Platform$endian == 'little') "d86d3191818ae58d5703f1ac78b0050c"
                                          else "91cd9aacaa4e776bd14f20c8839cd9c2"
+   
+   mirrors <- c("http://static.rexamine.com/packages/",
+                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
+                "http://www.ibspan.waw.pl/~gagolews/stringi/")
+   
+   if (!is.null(inpath)) {
+      stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
+      mirrors <- c(inpath, mirrors)
+   }
 
    outfname <- tempfile(fileext=".zip")
    download_from_mirror <- function(href, outfname) {
       tryCatch({
          suppressWarnings(file.remove(outfname))
-         ret <- download.file(href, outfname, mode="wb")
-         if (ret != 0) stop("download error", call.=FALSE)
-         if (!file.exists(outfname)) stop("download error", call.=FALSE)
+         if (!grepl("^https?://", href)) {
+            # try to copy icudt from a local repo
+            if (!file.exists(href)) return("no icudt in a local repo")
+            message("icudt has been found in a local repo")
+            file.copy(href, outfname)
+         }
+         else {
+            # download icudt
+            if (download.file(href, outfname, mode="wb") != 0)
+               return("download error")
+         }
+         if (!file.exists(outfname)) return("download error")
          md5ob <- tools::md5sum(outfname)
-         if (is.na(md5ob)) stop("error checking md5sum", call.=FALSE)
-         if (md5ob != md5ex) stop("md5sum mismatch", call.=FALSE)
+         if (is.na(md5ob)) return("error checking md5sum")
+         if (md5ob != md5ex) return("md5sum mismatch")
          TRUE
       }, error = function(e) as.character(e))
    }
 
    message("downloading ICU data library (icudt)")
-   message("the files will be extracted to: ", path)
+   message("the files will be extracted to: ", outpath)
    allok <- FALSE
    for (m in mirrors) {
       if (identical(status <- download_from_mirror(paste0(m, fname), outfname), TRUE)) {
@@ -152,10 +168,10 @@ stri_install_icudt <- function(check=TRUE, path=NULL) {
       message("icudt download failed")
       return(invisible(FALSE))
    }
-   message("download OK")
+   message("icudt fetch OK")
 
    message("decompressing downloaded archive")
-   res <- unzip(outfname, exdir=path, overwrite=TRUE)
+   res <- unzip(outfname, exdir=outpath, overwrite=TRUE)
    if (!is.character(res) || length(res) <= 0) {
       message("error decompressing archive")
       return(invisible(FALSE))
