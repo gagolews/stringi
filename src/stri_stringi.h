@@ -292,7 +292,8 @@ SEXP stri_stats_latex(SEXP str);
 
 
 // trans_casemap.cpp:
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts);
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale);
+SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter);
 
 
 // trans_normalization.cpp:

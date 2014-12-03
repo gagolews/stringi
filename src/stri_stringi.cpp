@@ -176,6 +176,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_trans_general",              stri_trans_general,              2),
    STRI__MK_CALL("C_stri_trans_list",                 stri_trans_list,                 0),
    STRI__MK_CALL("C_stri_trans_nf",                   stri_trans_nf,                   2),
+   STRI__MK_CALL("C_stri_trans_totitle",              stri_trans_totitle,              2),
    STRI__MK_CALL("C_stri_trim_both",                  stri_trim_both,                  2),
    STRI__MK_CALL("C_stri_trim_left",                  stri_trim_left,                  2),
    STRI__MK_CALL("C_stri_trim_right",                 stri_trim_right,                 2),
