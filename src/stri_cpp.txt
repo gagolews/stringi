@@ -1,3 +1,4 @@
+stri_brkiter.cpp \
 stri_collator.cpp \
 stri_common.cpp \
 stri_compare.cpp \

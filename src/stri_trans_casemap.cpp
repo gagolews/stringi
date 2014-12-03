@@ -33,43 +33,111 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_string8buf.h"
-#include <unicode/uloc.h>
-#include <unicode/locid.h>
+#include "stri_brkiter.h"
 #include <unicode/ucasemap.h>
-#include <unicode/brkiter.h>
 
-
-// used 2 times in stri_trans_case() below:
-#define STRI_CASEFOLD_DO                                                            \
-      switch(_type) {                                                               \
-         case 1:                                                                    \
-            buf_need = ucasemap_utf8ToLower(ucasemap, buf.data(), buf.size(),       \
-               (const char*)str_cur_s, str_cur_n, &status);                         \
-            break;                                                                  \
-                                                                                    \
-         case 2:                                                                    \
-            buf_need = ucasemap_utf8ToUpper(ucasemap, buf.data(), buf.size(),       \
-               (const char*)str_cur_s, str_cur_n, &status);                         \
-            break;                                                                  \
-                                                                                    \
-         case 3:                                                                    \
-            buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),       \
-               (const char*)str_cur_s, str_cur_n, &status);                         \
-            break;                                                                  \
-                                                                                    \
-         default:                                                                   \
-            throw StriException("stri_trans_case: incorrect case conversion type"); \
-      }
 
 
 /**
- *  Convert case (TitleCase, lowercase, UPPERCASE, etc.)
+ *  Convert case (TitleCase)
+ *
+ *
+ *  @param str character vector
+ *  @param opts_brkiter list
+ *  @return character vector
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
+ *    separated from stri_trans_casemap;
+ *    use StriUBreakIterator
+ * 
+ */
+
+SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
+   StriBrkIterOptions opts_brkiter2(opts_brkiter, "word");
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+
+// version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
+   UCaseMap* ucasemap = NULL;
+
+   STRI__ERROR_HANDLER_BEGIN(1)
+   StriUBreakIterator brkiter(opts_brkiter2);
+   
+   UErrorCode status = U_ZERO_ERROR;
+   ucasemap = ucasemap_open(brkiter.getLocale(), U_FOLD_CASE_DEFAULT, &status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   
+   status = U_ZERO_ERROR;
+   ucasemap_setBreakIterator(ucasemap, brkiter.getIterator(), &status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   brkiter.free(false);
+   // ucasemap_setOptions(ucasemap, U_TITLECASE_NO_LOWERCASE, &status); // to do?
+   // now briter is owned by ucasemap.
+   // it will be released on ucasemap_close
+   // (checked with ICU man & src code)
+
+   R_len_t str_n = LENGTH(str);
+   StriContainerUTF8 str_cont(str, str_n);
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, str_n));
+
+
+   // STEP 1.
+   // Estimate the required buffer length
+   // Notice: The resulting number of codepoints may be larger or smaller than
+   // the number before casefolding
+   R_len_t bufsize = str_cont.getMaxNumBytes();
+   bufsize += 10; // a small margin
+   String8buf buf(bufsize);
+
+   // STEP 2.
+   // Do case folding
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      R_len_t str_cur_n     = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+
+      status = U_ZERO_ERROR;
+      int buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),       
+               (const char*)str_cur_s, str_cur_n, &status);                   
+
+      if (U_FAILURE(status)) {
+         buf.resize(buf_need, false/*destroy contents*/);
+         status = U_ZERO_ERROR;
+         buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),    
+               (const char*)str_cur_s, str_cur_n, &status);                   
+
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
+                                             // we do have the buffer size required to complete this op
+      }
+
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+   }
+
+   if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL;}
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
+   })
+}
+
+
+/**
+ *  Convert case (TitleCase, lowercase, etc.)
  *
  *
  *  @param str character vector
  *  @param type internal code of case conversion type
- *  @param opts single string identifying
- *         the locale ("" or NULL for default locale) or opts_brkiter
+ *  @param locale single string identifying
+ *         the locale ("" or NULL for default locale)
  *  @return character vector
  *
  *
@@ -96,27 +164,18 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
+ *    use StriUBreakIterator
 */
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
+SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
 {
    if (!Rf_isInteger(type) || LENGTH(type) != 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
    int _type = INTEGER(type)[0];
-   if (_type < 1 || _type > 3)
-      Rf_error(MSG__INTERNAL_ERROR);
+   if (_type < 1 || _type > 2) Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   const char* qloc = NULL;
-   UBreakIterator* briter = NULL;
-
-   if (_type != 3) { // tolower, toupper
-      qloc = stri__prepare_arg_locale(opts, "locale", true); /* this is R_alloc'ed */
-   }
-   else { // totitle
-      qloc = stri__opts_brkiter_get_locale(opts); /* this is R_alloc'ed */
-      int brkiter_cur = stri__opts_brkiter_select_iterator(opts, "word");
-      briter = stri__opts_brkiter_get_uiterator(brkiter_cur, qloc);
-   }
-
+   const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
 // version 0.2-1 - Does not work with ICU 4.8 (but we require ICU >= 50)
@@ -126,18 +185,6 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(qloc, U_FOLD_CASE_DEFAULT, &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-   // set BreakIterator for stri_totitle
-   if (_type == 3) {
-      status = U_ZERO_ERROR;
-      ucasemap_setBreakIterator(ucasemap, briter, &status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      briter = NULL;
-      // ucasemap_setOptions(ucasemap, U_TITLECASE_NO_LOWERCASE, &status); // to do?
-      // now briter is owned by ucasemap.
-      // it will be released on ucasemap_close
-      // (checked with ICU man & src code)
-   }
 
    R_len_t str_n = LENGTH(str);
    StriContainerUTF8 str_cont(str, str_n);
@@ -149,18 +196,7 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
    // Estimate the required buffer length
    // Notice: The resulting number of codepoints may be larger or smaller than
    // the number before casefolding
-   R_len_t bufsize = 0;
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i))
-         continue;
-
-      R_len_t cursize = str_cont.get(i).length();
-      if (cursize > bufsize)
-         bufsize = cursize;
-   }
+   R_len_t bufsize = str_cont.getMaxNumBytes();
    bufsize += 10; // a small margin
    String8buf buf(bufsize);
 
@@ -180,11 +216,18 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
 
       status = U_ZERO_ERROR;
       int buf_need;
-      STRI_CASEFOLD_DO
+      if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
+         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+      else buf_need = ucasemap_utf8ToUpper(ucasemap,
+         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
 
-      if (U_FAILURE(status)) {
+      if (U_FAILURE(status)) { /* retry */
          buf.resize(buf_need, false/*destroy contents*/);
-         STRI_CASEFOLD_DO /* retry */
+         status = U_ZERO_ERROR;
+         if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
+            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+         else buf_need = ucasemap_utf8ToUpper(ucasemap,
+            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
 
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
                                              // we do have the buffer size required to complete this op
@@ -193,13 +236,11 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP opts)
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
    }
 
-   if (briter) { ubrk_close(briter); briter = NULL; }
    if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL;}
    STRI__UNPROTECT_ALL
    return ret;
 
    STRI__ERROR_HANDLER_END({
-      if (briter) { ubrk_close(briter); briter = NULL; }
       if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    })
 }
