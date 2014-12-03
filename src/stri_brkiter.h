@@ -118,7 +118,7 @@ class StriUBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                uiterator = ubrk_open(UBRK_WORD, locale, NULL, 0, &status);
                break;
-            case UBRK_COUNT:
+            default:
                throw StriException(MSG__INTERNAL_ERROR);
                break;
          }
@@ -216,7 +216,7 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                rbiterator = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
-            case UBRK_COUNT:
+            default:
                throw StriException(MSG__INTERNAL_ERROR);
                break;
          }
