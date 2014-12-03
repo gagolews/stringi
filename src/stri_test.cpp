@@ -106,6 +106,24 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
 }
 
 
+/** for testing efficiency of StriContainerUTF16 [internal]
+ *
+ * @param str character vector
+ * @return R_NilValue
+ *
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
+ */
+SEXP stri_test_UnicodeContainer16b(SEXP str)
+{
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   STRI__ERROR_HANDLER_BEGIN(1)
+   StriContainerUTF16 ss(str, LENGTH(str));
+   STRI__UNPROTECT_ALL
+   return ss.toR();
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
 /** for testing efficiency of StriContainerUTF8  [internal]
  * @param str character vector
  * @return R_NilValue
