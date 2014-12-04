@@ -124,19 +124,23 @@ stri_split_lines1 <- function(str) {
 #' @param tokens_only single logical value;
 #' may affect the result if \code{n} is positive, see Details
 #' @param simplify single logical value;
-#' if \code{TRUE}, then a character matrix is returned;
+#' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{line_break}
 #'
-#' @return If \code{simplify == FALSE} (the default),
+#' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
 #'
-#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} 
+#' and \code{n_min=n} arguments
 #' is called on the resulting object.
 #' In such a case, a character matrix with \code{length(str)} rows
 #' is returned.
+#' Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
+#' to an empty string and \code{NA},
+#' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 #'
 #' @examples
 #' test <- "The\u00a0above-mentioned    features are very useful. " %s+%

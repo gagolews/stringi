@@ -77,18 +77,21 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    allow `simplify=NA`
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(n = stri_prepare_arg_integer(n, "n"));
    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
 
-   STRI__ERROR_HANDLER_BEGIN(4)
+   STRI__ERROR_HANDLER_BEGIN(5)
    R_len_t vectorize_length = stri__recycling_rule(true, 4,
       LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -175,9 +178,13 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
       STRI__UNPROTECT(1);
    }
 
-   if (simplify1) {
-      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0));
+   if (LOGICAL(simplify)[0] == NA_LOGICAL) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
+   }
+   else if (LOGICAL(simplify)[0]) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
    }
 
    STRI__UNPROTECT_ALL

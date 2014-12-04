@@ -149,16 +149,19 @@ SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    allow `simplify=NA`
  */
 SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter)
 {
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
+   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(n = stri_prepare_arg_integer(n, "n"));
    StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
-   STRI__ERROR_HANDLER_BEGIN(2)
+   STRI__ERROR_HANDLER_BEGIN(3)
    R_len_t vectorize_length = stri__recycling_rule(true, 2,
       LENGTH(str), LENGTH(n));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
@@ -223,10 +226,15 @@ SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SE
       STRI__UNPROTECT(1);
    }
 
-   if (simplify1) {
-      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0));
+   if (LOGICAL(simplify)[0] == NA_LOGICAL) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
    }
+   else if (LOGICAL(simplify)[0]) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
+   }
+   
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({ /* no action */ })
