@@ -105,24 +105,24 @@ stri_split_lines1 <- function(str) {
 #' and splits strings at the indicated positions.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{n_max}.
+#' Vectorized over \code{str} and \code{n}.
 #'
-#' If \code{n_max} is negative (default), then all pieces are extracted.
+#' If \code{n} is negative (default), then all pieces are extracted.
 #' Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
-#' for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
-#' tokes are extracted (if possible) and the \code{n_max}-th string
+#' for compatibility with the \pkg{stringr} package), then \code{n-1}
+#' tokes are extracted (if possible) and the \code{n}-th string
 #' gives the (non-split) remainder (see Examples).
 #' On the other hand, if \code{tokens_only} is \code{TRUE},
-#' then only full tokens (up to \code{n_max} pieces) are extracted.
+#' then only full tokens (up to \code{n} pieces) are extracted.
 #'
 #' For more information on the text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
 #'
 #' @param str character vector or an object coercible to
-#' @param n_max integer vector, maximal number of strings to return
+#' @param n integer vector, maximal number of strings to return
 #' @param tokens_only single logical value;
-#' may affect the result if \code{n_max} is positive, see Details
+#' may affect the result if \code{n} is positive, see Details
 #' @param simplify single logical value;
 #' if \code{TRUE}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
@@ -156,8 +156,8 @@ stri_split_lines1 <- function(str) {
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_split_boundaries <- function(str, n_max=-1L,
+stri_split_boundaries <- function(str, n=-1L,
    tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
    .Call(C_stri_split_boundaries, str,
-      n_max, tokens_only, simplify, opts_brkiter)
+      n, tokens_only, simplify, opts_brkiter)
 }

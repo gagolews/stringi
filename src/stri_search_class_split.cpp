@@ -45,7 +45,7 @@ using namespace std;
  *
  * @param str character vector
  * @param pattern character vector
- * @param n_max integer vector
+ * @param n integer vector
  * @param omit_empty logical vector
  * @param tokens_only single logical value
  * @param simplify single logical value
@@ -79,21 +79,21 @@ using namespace std;
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
+SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify)
 {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
+   PROTECT(n = stri_prepare_arg_integer(n, "n"));
    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    R_len_t vectorize_length = stri__recycling_rule(true, 4,
-      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+      LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
 
    STRI__ERROR_HANDLER_BEGIN(4)
    StriContainerUTF8      str_cont(str, vectorize_length);
-   StriContainerInteger   n_max_cont(n_max, vectorize_length);
+   StriContainerInteger   n_cont(n, vectorize_length);
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
@@ -104,25 +104,25 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i) || n_max_cont.isNA(i)) {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i) || n_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
       const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      int  n_max_cur        = n_max_cont.get(i);
+      int  n_cur            = n_cont.get(i);
       int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
 
-      if (n_max_cur >= INT_MAX-1)
-         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
-      else if (n_max_cur < 0)
-         n_max_cur = INT_MAX;
-      else if (n_max_cur == 0) {
+      if (n_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n");
+      else if (n_cur < 0)
+         n_cur = INT_MAX;
+      else if (n_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
       else if (tokens_only1)
-         n_max_cur++; // we need to do one split ahead here
+         n_cur++; // we need to do one split ahead here
 
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
@@ -131,7 +131,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
-      for (j=0, k=1; j<str_cur_n && k < n_max_cur; ) {
+      for (j=0, k=1; j<str_cur_n && k < n_cur; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
          if (chr < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
@@ -147,14 +147,14 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
             fields.back().second = j;
          }
       }
-      if (k == n_max_cur)
+      if (k == n_cur)
          fields.back().second = str_cur_n;
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
-      if (tokens_only1 && n_max_cur < INT_MAX) {
-         n_max_cur--; // one split ahead could have been made, see above
-         while (fields.size() > (size_t)n_max_cur)
+      if (tokens_only1 && n_cur < INT_MAX) {
+         n_cur--; // one split ahead could have been made, see above
+         while (fields.size() > (size_t)n_cur)
             fields.pop_back(); // get rid of the remainder
       }
 

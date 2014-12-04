@@ -126,7 +126,7 @@ SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
 /** Split a string at BreakIterator boundaries
  *
  * @param str character vector
- * @param n_max integer
+ * @param n integer
  * @param tokens_only logical
  * @param simplify logical
  * @param opts_brkiter named list
@@ -145,24 +145,24 @@ SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
  *          use opts_brkiter
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
- *          new args: n_max, tokens_only, simplify
+ *          new args: n, tokens_only, simplify
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
  */
-SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter)
+SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter)
 {
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
+   PROTECT(n = stri_prepare_arg_integer(n, "n"));
    StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
    STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t vectorize_length = stri__recycling_rule(true, 2,
-      LENGTH(str), LENGTH(n_max));
+      LENGTH(str), LENGTH(n));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerInteger n_max_cont(n_max, vectorize_length);
+   StriContainerInteger n_cont(n, vectorize_length);
    StriRuleBasedBreakIterator brkiter(opts_brkiter2);
 
    SEXP ret;
@@ -170,22 +170,22 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
 
    for (R_len_t i = 0; i < vectorize_length; ++i)
    {
-      if (n_max_cont.isNA(i)) {
+      if (n_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
-      int  n_max_cur        = n_max_cont.get(i);
+      int  n_cur = n_cont.get(i);
 
       if (str_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
-      if (n_max_cur >= INT_MAX-1)
-         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
-      else if (n_max_cur < 0)
-         n_max_cur = INT_MAX;
-      else if (n_max_cur == 0) {
+      if (n_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n");
+      else if (n_cur < 0)
+         n_cur = INT_MAX;
+      else if (n_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
@@ -198,7 +198,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
       
       pair<R_len_t,R_len_t> curpair;
       R_len_t k = 0;
-      while (k < n_max_cur && brkiter.next(curpair)) {
+      while (k < n_cur && brkiter.next(curpair)) {
          occurrences.push_back(curpair);
          ++k; // another field
       }
@@ -209,7 +209,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify
          SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(0)); // @TODO: Should it be a NA? Hard to say...
          continue;
       }
-      if (k == n_max_cur && !tokens_only1)
+      if (k == n_cur && !tokens_only1)
          occurrences.back().second = str_cur_n;
 
       SEXP ans;
