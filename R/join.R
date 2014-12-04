@@ -119,7 +119,7 @@ stri_dup <- function(str, times) {
 #'
 #' If any of the arguments in `\code{...}` is a vector of length 0
 #' (not to be confused with vectors of empty strings)
-#' and \code{ignore_null == FALSE}, then
+#' and \code{ignore_null=FALSE}, then
 #' you will get a 0-length character vector in result.
 #'
 #' If \code{collapse} or \code{sep} has length > 1, then only first string

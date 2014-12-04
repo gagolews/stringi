@@ -67,7 +67,7 @@
 #' @param merge single logical value;
 #' should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only
 #' @param simplify single logical value;
-#' if \code{TRUE}, then a character matrix is returned;
+#' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value;
 #' \code{stri_extract_all_*} only
 #' @param omit_no_match single logical value; if \code{FALSE},
@@ -78,18 +78,20 @@
 #' @param ... additional arguments passed to the underlying functions
 #'
 #' @return
-#' For \code{stri_extract_all*}, if \code{simplify == FALSE} (the default), then
+#' For \code{stri_extract_all*}, if \code{simplify=FALSE} (the default), then
 #' a list of character vectors is returned. Each list element
 #' represents the results of a separate search scenario.
-#' If a pattern is not found and \code{omit_no_match == FALSE},
+#' If a pattern is not found and \code{omit_no_match=FALSE},
 #' then a character vector of length 1,
 #' with single \code{NA} value will be generated.
-#' Otherwise, i.e. if \code{simplify == TRUE},
+#' Otherwise, i.e. if \code{simplify} is not \code{FALSE},
 #' then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 #' is called on the resulting object.
 #' In such a case, a character matrix with an appropriate number of rows
 #' (according to the length of \code{str}, \code{pattern}, etc.)
-#' is returned.
+#' is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
+#' to an empty string and \code{NA},
+#' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 #'
 #' \code{stri_extract_first*} and \code{stri_extract_last*},
 #' on the other hand, return a character vector.
@@ -117,6 +119,7 @@
 #'
 #' stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
+#' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 #'
 #' @family search_extract
 #'

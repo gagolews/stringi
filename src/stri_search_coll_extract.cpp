@@ -177,11 +177,14 @@ SEXP stri_extract_last_coll(SEXP str, SEXP pattern, SEXP opts_collator)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    allow `simplify=NA`
  */
 SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_collator)
 {
-   bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
    bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -190,7 +193,7 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_m
    UCollator* collator = NULL;
    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
+   STRI__ERROR_HANDLER_BEGIN(3)
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
@@ -238,9 +241,13 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_m
 
    if (collator) { ucol_close(collator); collator=NULL; }
 
-   if (simplify1) {
-      ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0));
+   if (LOGICAL(simplify)[0] == NA_LOGICAL) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
+   }
+   else if (LOGICAL(simplify)[0]) {
+      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
+         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
    }
 
    STRI__UNPROTECT_ALL

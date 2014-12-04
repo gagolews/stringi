@@ -10,7 +10,7 @@ stri_info(short = FALSE)
 in a concise form; defaults to \code{TRUE}}
 }
 \value{
-If \code{short==TRUE}, then a single string containing
+If \code{short=TRUE}, then a single string containing
 information on default character encoding, locale, and Unicode
 as well as \pkg{ICU} version is returned.
 

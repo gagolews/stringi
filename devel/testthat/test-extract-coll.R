@@ -12,6 +12,12 @@ test_that("stri_extract_all_coll", {
    expect_identical(stri_extract_all_coll("", " "), list(NA_character_))
    expect_identical(stri_extract_all_coll("", " ", omit_no_match = TRUE), list(character(0)))
    expect_identical(stri_extract_all_coll("alaALA", "ala", opts_collator=stri_opts_collator(strength=1)), list(c("ala", "ALA")))
+   
+   expect_identical(stri_extract(c("a_A", "a_a_A", "A", ""), mode='all', coll="a", simplify=NA, opts_collator=stri_opts_collator(strength=1)),
+      matrix(c("a", "a", "A", NA, "A", "a", NA, NA, NA, "A", NA, NA), nrow=4))
+   
+   expect_identical(stri_extract(c("a_A", "a_a_A", "A", ""), mode='all', coll="a", simplify=TRUE, omit_no_match=TRUE, opts_collator=stri_opts_collator(strength=1)),
+      matrix(c("a", "a", "A", "", "A", "a", "", "", "", "A", "", ""), nrow=4))
 })
 
 

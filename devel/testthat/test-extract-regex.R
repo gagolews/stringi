@@ -17,8 +17,11 @@ test_that("stri_extract_all_regex", {
    expect_identical(stri_extract_all_regex("test", " "), list(NA_character_))
    expect_identical(stri_extract_all_regex("test", " ", omit_no_match = TRUE), list(character(0)))
 
-   expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=TRUE),
+   expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=NA),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
+   
+   expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=TRUE, omit_no_match=TRUE),
+      matrix(c("ab", "d", "h", "", "c", "ef", "", "", "", "g", "", ""), nrow=4))
 
 #    expect_identical(stri_extract_all_regex(c("ababab", NA, "ab", "ba"), "ab"),
 #       str_extract_all(c("ababab", NA, "ab", "ba"), "ab"))

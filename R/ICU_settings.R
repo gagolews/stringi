@@ -38,7 +38,7 @@
 #' @param short logical; whether or not the results should be given
 #' in a concise form; defaults to \code{TRUE}
 #'
-#' @return If \code{short==TRUE}, then a single string containing
+#' @return If \code{short=TRUE}, then a single string containing
 #' information on default character encoding, locale, and Unicode
 #' as well as \pkg{ICU} version is returned.
 #'

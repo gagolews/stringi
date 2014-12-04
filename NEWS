@@ -4,9 +4,15 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
+   * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*` has been renamed `n`.
+
+   * [IMPORTANT CHANGE] `simplify=FALSE` in `stri_extract_all_*` and
+     `stri_split_*` now calls `stri_list2matrix` with `fill=""`.
+     `fill=NA_character_` may be obtained by using `simplify=NA`.
+
    * [IMPORTANT CHANGE] #111 t.b.d. `opts_regex` as `...` etc.
 
-   * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*` has been renamed `n`.
+(...)
 
    * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
 

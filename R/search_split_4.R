@@ -78,7 +78,7 @@
 #' @param tokens_only single logical value;
 #' may affect the result if \code{n} is positive, see Details
 #' @param simplify single logical value;
-#' if \code{TRUE}, then a character matrix is returned;
+#' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
 #' @param opts_regex a named list with \pkg{ICU} Regex settings
 #' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
@@ -91,14 +91,17 @@
 #' @param ... additional arguments passed to the underlying functions;
 #' \code{stri_split} only
 #'
-#' @return If \code{simplify == FALSE} (the default),
+#' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
 #'
-#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
-#' is called on the resulting object.
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} 
+#' and \code{n_min=n} arguments is called on the resulting object.
 #' In such a case, a character matrix with an appropriate number of rows
 #' (according to the length of \code{str}, \code{pattern}, etc.)
 #' is returned.
+#' Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
+#' to an empty string and \code{NA},
+#' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 #'
 #' @examples
 #' stri_split_fixed("a_b_c_d", "_")
@@ -114,9 +117,10 @@
 #' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n=3, tokens_only=TRUE, omit_empty=TRUE)
 #'
 #' stri_list2matrix(stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE))
-#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE)
 #' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE)
+#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE)
+#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=NA)
 #'
 #' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""),
 #'    "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)

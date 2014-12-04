@@ -10,7 +10,7 @@ stri_extract_words(str, simplify = FALSE, omit_no_match = FALSE,
 \item{str}{character vector or an object coercible to}
 
 \item{simplify}{single logical value;
-if \code{TRUE}, then a character matrix is returned;
+if \code{TRUE} or \code{NA}, then a character matrix is returned;
 otherwise (the default), a list of character vectors is given, see Value}
 
 \item{omit_no_match}{single logical value; if \code{FALSE},
@@ -21,16 +21,18 @@ the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}.}
 }
 \value{
-If \code{simplify == FALSE} (the default), then a
+If \code{simplify=FALSE} (the default), then a
  list of character vectors is returned. Each string consists of
-a separate word. In case of \code{omit_no_match == FALSE} and
+a separate word. In case of \code{omit_no_match=FALSE} and
 if there are no words or if a string is missing,
 a single \code{NA} is provided on output.
 
 Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 is called on the resulting object.
 In such a case, a character matrix with \code{length(str)} rows
-is returned.
+is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill} argument
+is set to an empty string and \code{NA},
+for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 }
 \description{
 This function extracts all words from each string.
