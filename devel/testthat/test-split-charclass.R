@@ -47,6 +47,9 @@ test_that("stri_split_charclass", {
    expect_identical(stri_split_charclass(c("ab,c", "d,ef,g", ",h", ""), "[,]", omit_empty=NA, simplify=TRUE),
       matrix(c("ab", "d", NA, NA, "c", "ef", "h", "", "", "g", "", ""), nrow=4))
    
+   expect_identical(stri_split_charclass(c("ab,c", "d,ef,g", ",h", ""), "[,]", omit_empty=FALSE, simplify=TRUE, n=4),
+      matrix(c("ab", "d", "", "", "c", "ef", "h", "", "", "g", "", "", "", "", "", ""), nrow=4))
+   
    expect_identical(stri_split_charclass(c("ab,c", "d,ef,g", ",h", ""), "[,]", omit_empty=TRUE),
       list(c("ab", "c"), c("d", "ef", "g"), "h", character()))
    expect_identical(stri_split_charclass(c("ab,c", "d,ef,g", ",h", ""), "[,]", omit_empty=FALSE),
