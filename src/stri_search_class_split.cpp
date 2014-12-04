@@ -80,7 +80,7 @@ using namespace std;
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
- *    allow `simplify=NA`
+ *    allow `simplify=NA`; FR #126: pass n to stri_list2matrix
  */
 SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify)
@@ -179,13 +179,18 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
       STRI__UNPROTECT(1)
    }
 
-   if (LOGICAL(simplify)[0] == NA_LOGICAL) {
+   if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
+      R_len_t n_min = 0;
+      R_len_t n_length = LENGTH(n);
+      int* n_tab = INTEGER(n);
+      for (R_len_t i=0; i<n_length; ++i) {
+         if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
+            n_min = n_tab[i];
+      }
       STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
-   }
-   else if (LOGICAL(simplify)[0]) {
-      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
+         (LOGICAL(simplify)[0] == NA_LOGICAL)?stri__vector_NA_strings(1)
+                                             :stri__vector_empty_strings(1),
+         Rf_ScalarInteger(n_min)))
    }
 
    STRI__UNPROTECT_ALL

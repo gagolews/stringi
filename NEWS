@@ -4,48 +4,49 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
-   * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*` has been renamed `n`.
+   * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*()` has been renamed `n`.
 
-   * [IMPORTANT CHANGE] `simplify=FALSE` in `stri_extract_all_*` and
-     `stri_split_*` now calls `stri_list2matrix` with `fill=""`.
+   * [IMPORTANT CHANGE] `simplify=FALSE` in `stri_extract_all_*()` and
+     `stri_split_*()` now calls `stri_list2matrix()` with `fill=""`.
      `fill=NA_character_` may be obtained by using `simplify=NA`.
 
-   * [IMPORTANT CHANGE] #111 t.b.d. `opts_regex` as `...` etc.
+   * [IMPORTANT CHANGE] #111: t.b.d. `opts_regex` as `...` etc.
 
 (...)
 
-   * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
+   * [NEW FEATURE] #110: t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
 
-   * [NEW FEATURE] #118  t.b.d. `stri_wrap`: `indent`, `exdent`
+   * [NEW FEATURE] #118:  t.b.d. `stri_wrap()`: `indent`, `exdent`
 
-   * [NEW FEATURE] #126 t.b.d. like str_split_fixed...
+   * [NEW FEATURE] #120: t.b.d. `stri_locate_first_boundaries()` etc.
 
-   * [NEW FEATURE] #120 t.b.d. `stri_locate_first_boundaries` etc.
-
-   * [BUGFIX]  #94 t.b.d. Solaris!!! 
+   * [BUGFIX]  #94: t.b.d. Solaris!!! 
 
 (...)
 
-   * [NEW FEATURE] #23 [[[not sure if for 0.4-1]]]  -- QUESTION [overlapping patterns in fixed search]
+   * [NEW FEATURE] #23: [[[not sure if for 0.4-1]]]  -- QUESTION [overlapping patterns in fixed search]
 
-   * [NEW FEATURE] #113 [[[not sure if for 0.4-1]]]  -- QUESTION [brkiter in coll/fixed search]
+   * [NEW FEATURE] #113: [[[not sure if for 0.4-1]]]  -- QUESTION [brkiter in coll/fixed search]
 
 (...)
 
-   * [NEW FEATURE] #122: `stri_subset` gained an `omit_na` argument.
+   * [NEW FEATURE] #122: `stri_subset()` gained an `omit_na` argument.
 
-   * [NEW FEATURE] `stri_list2matrix` gained an `n_min` argument.
+   * [NEW FEATURE] `stri_list2matrix()` gained an `n_min` argument.
+
+   * [NEW FEATURE] #126: `stri_split()` now is also able to act
+     just like `stringr::str_split_fixed()`.
 
    * [NEW FEATURE] #119:  `stri_split_boundaries()` now have
       `n`, `tokens_only`, and `simplify` arguments.
       Additionally, `stri_extract_words()` is now equipped with `simplify` arg.
 
-   * [NEW FEATURE] #116: `stri_paste` gained a new argument:
+   * [NEW FEATURE] #116: `stri_paste()` gained a new argument:
      `ignore_null`. Setting it to `TRUE` makes this function compatible with 
      `paste()`.
 
-   * [NEW FEATURE] #117: `stri_extract_all_*`, `stri_locate_all_*`,
-     `stri_match_all_*` gained a new argument: `omit_no_match`.
+   * [NEW FEATURE] #117: `stri_extract_all_*()`, `stri_locate_all_*()`,
+     `stri_match_all_*()` gained a new argument: `omit_no_match`.
      Setting it to `TRUE` makes these functions compatible with their
      `stringr` equivalents.
 
@@ -68,47 +69,45 @@
      to `stri_locate_boundaries`, `stri_split_boundaries`, `stri_trans_totitle`,
      `stri_extract_words`, `stri_locate_words`).
 
-   * [NEW FUNCTIONS] #109: `stri_count_boundaries` and `stri_count_words`
+   * [NEW FUNCTIONS] #109: `stri_count_boundaries()` and `stri_count_words()`
      count the number of text boundaries in a string.
 
-   * [NEW FUNCTIONS] #41: `stri_startswith_*` and `stri_endswith_*`
+   * [NEW FUNCTIONS] #41: `stri_startswith_*()` and `stri_endswith_*()`
      determine whether a string starts or ends with a given pattern.
 
-   * [NEW FEATURE] #102: `stri_replace_all_*` gained a `vectorize_all` parameter,
+   * [NEW FEATURE] #102: `stri_replace_all_*()` gained a `vectorize_all()` parameter,
      which defaults to TRUE for backward compatibility.
 
-   * [NEW FUNCTION] #91: `stri_subset_*`, a convenient and more efficient
+   * [NEW FUNCTION] #91: `stri_subset_*()`, a convenient and more efficient
      substitute for `str[stri_detect_*(str, ...)]`, added.
 
-   * [NEW FEATURE] #100: `stri_split_fixed`, `stri_split_charclass`,
-     `stri_split_regex`, `stri_split_coll` gained a `tokens_only` parameter,
+   * [NEW FEATURE] #100: `stri_split_fixed()`, `stri_split_charclass()`,
+     `stri_split_regex()`, `stri_split_coll()` gained a `tokens_only` parameter,
      which defaults to `FALSE` for backward compatibility.
 
-   * [NEW FUNCTION] #105: `stri_list2matrix` converts lists of atomic vectors
+   * [NEW FUNCTION] #105: `stri_list2matrix()` converts lists of atomic vectors
      to character matrices, useful in connection with `stri_split`
      and `stri_extract`.
 
-   * [NEW FEATURE] #107: `stri_split_*` now allow setting an `omit_empty=NA` argument.
+   * [NEW FEATURE] #107: `stri_split_*()` now allow setting an `omit_empty=NA` argument.
 
-   * [NEW FEATURE] #106: `stri_split` and `stri_extract_all` gained a `simplify`
+   * [NEW FEATURE] #106: `stri_split()` and `stri_extract_all()` gained a `simplify`
      argument (if `TRUE`, then `stri_list2matrix(..., byrow=TRUE)`
      is called on the resulting list.
 
-   * [NEW FUNCTION] #77: `stri_rand_lipsum` generates
+   * [NEW FUNCTION] #77: `stri_rand_lipsum()` generates
      (pseudo)random dummy *lorem ipsum* text.
 
-   * [NEW FEATURE] #98: `stri_trans_totitle` gained a `opts_brkiter`
+   * [NEW FEATURE] #98: `stri_trans_totitle()` gained a `opts_brkiter`
      parameter; it indicates which ICU BreakIterator should be used when
      performing case mapping.
 
-   * [NEW FEATURE] `stri_wrap` gained a new parameter: `normalize`.
+   * [NEW FEATURE] `stri_wrap()` gained a new parameter: `normalize`.
 
-   * [BUGFIX] #86: `stri_*_fixed`, `stri_*_coll`, and `stri_*_regex` could
+   * [BUGFIX] #86: `stri_*_fixed()`, `stri_*_coll()`, and `stri_*_regex()` could
      give incorrect results if one of search strings were of length 0.
 
-   * [BUGFIX] #99: `stri_replace_all` did not use the `replacement` arg.
-
-   * [BUGFIX] #94: `R CMD check` should no longer fail if `icudt` download failed.
+   * [BUGFIX] #99: `stri_replace_all()` did not use the `replacement` arg.
 
    * [BUGFIX] #112: Some of the objects were not PROTECTed from
      being garbage collected, which might have caused spontaneous SEGFAULTS.
@@ -131,12 +130,12 @@
 
 * 0.2-4 (2014-05-15) **CRAN**
 
-   * [BUGFIX] Issues with loading of misaligned addresses in `stri_*_fixed`.
+   * [BUGFIX] Issues with loading of misaligned addresses in `stri_*_fixed()`.
 
 
 * 0.2-3 (2014-05-14) **CRAN**
 
-   * [IMPORTANT CHANGE] `stri_cmp*` now do not allow for passing
+   * [IMPORTANT CHANGE] `stri_cmp*()` now do not allow for passing
       `opts_collator=NA`. From now on, `stri_cmp_eq`, `stri_cmp_neq`,
       and the new operators `%===%`, `%!==%`, `%stri===%`, and `%stri!==%`
       are locale-independent operations, which base on code point comparisons.
@@ -144,10 +143,10 @@
       (and from now on also `%==%`, `%!=%`, `%stri==%`, and `%stri!=%`)
       test for canonical equivalence.
 
-   * [IMPORTANT CHANGE] `stri_*_fixed` search functions now perform
+   * [IMPORTANT CHANGE] `stri_*_fixed()` search functions now perform
       a locale-independent exact (byte-wise, of course after conversion to UTF-8)
       pattern search. All the Collator-based, locale-dependent search routines
-      are now available via `stri_*_coll`. The reason for this is that
+      are now available via `stri_*_coll()`. The reason for this is that
       ICU USearch has currently very poor performance and in many search tasks
       in fact it is sufficient to do exact pattern matching.
 
@@ -157,76 +156,76 @@
 
 * 0.2-2 (2014-05-01) **devel**
 
-   * [IMPORTANT CHANGE] `stri_enc_nf*` and `stri_enc_isnf*` function families
-      have been renamed to `stri_trans_nf*` and `stri_trans_isnf*`,
+   * [IMPORTANT CHANGE] `stri_enc_nf*()` and `stri_enc_isnf*()` function families
+      have been renamed to `stri_trans_nf*()` and `stri_trans_isnf*()`,
       respectively. This is because they deal with text transforming,
       and not with character encoding. Moreover, all such operations may
       also be performed by ICU's Transliterator (see below).
 
-   * [NEW FUNCTION] `stri_trans_general` and `stri_trans_list` give access
+   * [NEW FUNCTION] `stri_trans_general()` and `stri_trans_list()` give access
       to ICU's Transliterator: may be used to perform very general
       text transforms.
 
-   * [NEW FUNCTION `stri_split_boundaries` utilizes ICU's BreakIterator
+   * [NEW FUNCTION `stri_split_boundaries()` utilizes ICU's BreakIterator
       to split strings at specific text boundaries. Moreover,
       stri_locate_boundaries indicates positions of these boundaries.
 
-   * [NEW FUNCTION] `stri_extract_words` uses ICU's BreakIterator to
+   * [NEW FUNCTION] `stri_extract_words()` uses ICU's BreakIterator to
       extract all words from a text. Additionally, `stri_locate_words`
       locates start and end positions of words in a text.
 
-   * [NEW FUNCTION] `stri_pad`, `stri_pad_left`, `stri_pad_right`,
+   * [NEW FUNCTION] `stri_pad()`, `stri_pad_left()`, `stri_pad_right()`,
       and `stri_pad_both` pad a string with a specific code point.
 
-   * [NEW FUNCTION] `stri_wrap` breaks paragraphs of text into lines.
+   * [NEW FUNCTION] `stri_wrap()` breaks paragraphs of text into lines.
      Two algorithms (greedy and minimal raggedness) are available.
 
 
 * 0.2-1 (2014-04-18) **devel**
 
-   * [IMPORTANT CHANGE] `stri_*_charclass` search functions now
+   * [IMPORTANT CHANGE] `stri_*_charclass()` search functions now
      rely solely on ICU's UnicodeSet patterns. All previously accepted
      charclass identifiers became invalid. However, new patterns
      should now be more familiar to the users (they are regex-like).
      Moreover, we observe a very nice performance gain.
 
-   * [IMPORTANT CHANGE] `stri_sort` now does not include `NA`s
+   * [IMPORTANT CHANGE] `stri_sort()` now does not include `NA`s
      in output vectors by default, for compatibility with `sort()`.
      Moreover, currently none of the input vector's attributes are preserved.
 
-   * [NEW FUNCTION] `stri_unique extracts` unique elements from
+   * [NEW FUNCTION] `stri_unique()` extracts unique elements from
      a character vector.
 
-   * [NEW FUNCTIONS] `stri_duplicated` and `stri_duplicated_any`
+   * [NEW FUNCTIONS] `stri_duplicated()` and `stri_duplicated_any()`
      determine duplicate elements in a character vector.
 
-   * [NEW FUNCTION] `stri_replace_na` replaces `NA`s in a character vector
+   * [NEW FUNCTION] `stri_replace_na()` replaces `NA`s in a character vector
       with a given string, useful for emulating e.g. R's `paste()` behavior.
 
-   * [NEW FUNCTION] `stri_rand_shuffle` generates a random permutation
+   * [NEW FUNCTION] `stri_rand_shuffle()` generates a random permutation
      of code points in a string.
 
-   * [NEW FUNCTION] `stri_rand_strings` generates random strings.
+   * [NEW FUNCTION] `stri_rand_strings()` generates random strings.
 
    * [NEW FUNCTIONS] New functions and binary operators for string comparison:
-     `stri_cmp_eq`, `stri_cmp_neq`, `stri_cmp_lt`, `stri_cmp_le`,
-     `stri_cmp_gt`, `stri_cmp_ge`, `%==%`, `%!=%`, `%<%`, `%<=%`, `%>%`, `%>=%`.
+     `stri_cmp_eq()`, `stri_cmp_neq()`, `stri_cmp_lt()`, `stri_cmp_le()`,
+     `stri_cmp_gt()`, `stri_cmp_ge()`, `%==%`, `%!=%`, `%<%`, `%<=%`, `%>%`, `%>=%`.
 
-   * [NEW FUNCTION] `stri_enc_mark` reads declared encodings of character
+   * [NEW FUNCTION] `stri_enc_mark()` reads declared encodings of character
      strings as seen by stringi.
 
    * [NEW FUNCTION] `stri_enc_tonative(str)` is an alias to
      `stri_encode(str, NULL, NULL)`.
 
-   * [NEW FEATURE] `stri_order` and `stri_sort` now have an additional argument
+   * [NEW FEATURE] `stri_order()` and `stri_sort()` now have an additional argument
      `na_last` (defaults to `TRUE` and `NA`, respectively).
 
-   * [NEW FEATURE] `stri_replace_all_charclass`, `stri_extract_all_charclass`,
-     and `stri_locate_all_charclass` now have a new arg, `merge`
+   * [NEW FEATURE] `stri_replace_all_charclass()`, `stri_extract_all_charclass()`,
+     and `stri_locate_all_charclass()` now have a new arg, `merge`
      (defaults to `FALSE` for backward-compatibility). It may be used
      to e.g. replace sequences of white spaces with a single space.
 
-   * [NEW FEATURE] `stri_enc_toutf8` now has a new `validate` arg (defaults
+   * [NEW FEATURE] `stri_enc_toutf8()` now has a new `validate` arg (defaults
      to FALSE for backward-compatibility). It may be used in a (rare) case
      in which a user wants to fix an invalid UTF-8 byte sequence.
      stri_length (among others) now detect invalid UTF-8 byte sequences.
@@ -236,8 +235,8 @@
    * Performance improvements in `StriContainerUTF8` and `StriContainerUTF16`
      (they affect most other functions).
 
-   * Significant performance improvements in `stri_join`, `stri_flatten`,
-     `stri_cmp`, `stri_trans_to*`, and others.
+   * Significant performance improvements in `stri_join()`, `stri_flatten()`,
+     `stri_cmp()`, `stri_trans_to*()`, and others.
 
    * Added 3rd mirror site for our icudt binary distribution.
 
@@ -251,10 +250,10 @@
 
    * [BUGFIX] possible memory leaks when throwing errors via `Rf_error()`.
 
-   * [BUGFIX] `stri_order` and `stri_cmp` could return incorrect results
+   * [BUGFIX] `stri_order()` and `stri_cmp()` could return incorrect results
      for `opts_collator=NA`.
 
-   * [BUGFIX] `stri_sort` did not guarantee to return strings in UTF-8.
+   * [BUGFIX] `stri_sort()` did not guarantee to return strings in UTF-8.
 
 
 -------------------------------------------------------------------------------

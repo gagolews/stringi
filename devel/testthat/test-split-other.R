@@ -66,6 +66,15 @@ test_that("stri_split_boundaries", {
 
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       list(c("aaa", "bbb", "ccc", "ddd")))
+   
+   expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=4, tokens_only=TRUE, simplify=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
+      matrix(c("aaa", "bbb", "ccc", "ddd"), byrow=TRUE, nrow=1))
+   
+   expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, simplify=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
+      matrix(c("aaa", "bbb", "ccc", "ddd", ""), byrow=TRUE, nrow=1))
+   
+   expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, simplify=NA, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
+      matrix(c("aaa", "bbb", "ccc", "ddd", NA), byrow=TRUE, nrow=1))
 
    expect_identical(stri_split_boundaries(c("aaa bbb", "ccc"),
       opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
