@@ -26,7 +26,9 @@
 
 (...)
 
-   * [NEW FEATURE] #122: `stri_subset`, gained an `omit_na` argument.
+   * [NEW FEATURE] #122: `stri_subset` gained an `omit_na` argument.
+
+   * [NEW FEATURE] `stri_list2matrix` gained an `n_min` argument.
 
    * [NEW FEATURE] #119:  `stri_split_boundaries()` now have
       `n`, `tokens_only`, and `simplify` arguments.

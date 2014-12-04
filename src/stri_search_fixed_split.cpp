@@ -177,7 +177,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
 
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1));
+         stri__vector_NA_strings(1), Rf_ScalarInteger(0));
    }
 
    STRI__UNPROTECT_ALL

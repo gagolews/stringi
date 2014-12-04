@@ -44,8 +44,9 @@
 #' Moreover, the elements in \code{x} are always coerced to character vectors.
 #'
 #' If \code{byrow} is \code{FALSE}, then a matrix with \code{length(x)}
-#' columns is returned. The number of rows is the length of the
-#' longest vector in \code{x}. Basically, we have
+#' columns is returned.
+#' The number of rows is the length of the
+#' longest vector in \code{x}, but no less than \code{n_min}. Basically, we have
 #' \code{result[i,j] == x[[j]][i]} if \code{i <= length(x[[j]])}
 #' and \code{result[i,j] == fill} otherwise, see Examples.
 #'
@@ -59,6 +60,8 @@
 #' @param byrow single logical value; should the resulting matrix be
 #' transposed?
 #' @param fill single string, see Details
+#' @param n_min single integer value; minimal number of rows (\code{byrow==FALSE})
+#' or columns (otherwise) in the resulting matrix
 #'
 #' @return
 #' Always returns a character matrix.
@@ -71,9 +74,10 @@
 #' simplify2array(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")))
 #' stri_list2matrix(list("a", c("b", "c")), fill="")
+#' stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
 #'
 #' @family utils
 #' @export
-stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_) {
-   .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill))
+stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
+   .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
 }

@@ -41,24 +41,30 @@
  * @param x a list
  * @param fill single string
  * @param byrow single logical value
+ * @param n_min single integer
  * @return character matrix
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    new arg: n_min
  */
-SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill)
+SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
 {
-   PROTECT(x = stri_prepare_arg_list_string(x, "x"));
    bool byrow2 = stri__prepare_arg_logical_1_notNA(byrow, "byrow");
+   R_len_t n_min2 = stri__prepare_arg_integer_1_notNA(n_min, "n_min");
+   if (n_min2 < 0) Rf_error(MSG__EXPECTED_NONNEGATIVE, "n_min");
+   PROTECT(x = stri_prepare_arg_list_string(x, "x"));
    PROTECT(fill = stri_prepare_arg_string_1(fill, "fill")); // enc2utf8 called in R
 
    STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t n = LENGTH(x);
    SEXP fill2 = STRING_ELT(fill, 0);
 
-   R_len_t m = 0; // maximal vector length
+   R_len_t m = n_min2; // maximal vector length
    for (int i=0; i<n; ++i) {
       R_len_t k = LENGTH(VECTOR_ELT(x, i));
-      if (k >  m) m = k;
+      if (k > m) m = k;
    }
 
    SEXP ret;
