@@ -6,9 +6,11 @@
 
    * [IMPORTANT CHANGE] #111 t.b.d. `opts_regex` as `...` etc.
 
-   * [NEW FEATURE] #118  t.b.d. `stri_wrap`: `indent`, `exdent`
+   * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*` has been renamed `n`.
 
    * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
+
+   * [NEW FEATURE] #118  t.b.d. `stri_wrap`: `indent`, `exdent`
 
    * [NEW FEATURE] #126 t.b.d. like str_split_fixed...
 
@@ -27,7 +29,7 @@
    * [NEW FEATURE] #122: `stri_subset`, gained an `omit_na` argument.
 
    * [NEW FEATURE] #119:  `stri_split_boundaries()` now have
-      `n_max`, `tokens_only`, and `simplify` arguments.
+      `n`, `tokens_only`, and `simplify` arguments.
       Additionally, `stri_extract_words()` is now equipped with `simplify` arg.
 
    * [NEW FEATURE] #116: `stri_paste` gained a new argument:

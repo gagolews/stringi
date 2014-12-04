@@ -3,16 +3,16 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, n_max = -1L, tokens_only = FALSE,
-  simplify = FALSE, opts_brkiter = NULL)
+stri_split_boundaries(str, n = -1L, tokens_only = FALSE, simplify = FALSE,
+  opts_brkiter = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
-\item{n_max}{integer vector, maximal number of strings to return}
+\item{n}{integer vector, maximal number of strings to return}
 
 \item{tokens_only}{single logical value;
-may affect the result if \code{n_max} is positive, see Details}
+may affect the result if \code{n} is positive, see Details}
 
 \item{simplify}{single logical value;
 if \code{TRUE}, then a character matrix is returned;
@@ -37,15 +37,15 @@ This function locates specific text boundaries
 and splits strings at the indicated positions.
 }
 \details{
-Vectorized over \code{str} and \code{n_max}.
+Vectorized over \code{str} and \code{n}.
 
-If \code{n_max} is negative (default), then all pieces are extracted.
+If \code{n} is negative (default), then all pieces are extracted.
 Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
-for compatibility with the \pkg{stringr} package), then \code{n_max - 1}
-tokes are extracted (if possible) and the \code{n_max}-th string
+for compatibility with the \pkg{stringr} package), then \code{n-1}
+tokes are extracted (if possible) and the \code{n}-th string
 gives the (non-split) remainder (see Examples).
 On the other hand, if \code{tokens_only} is \code{TRUE},
-then only full tokens (up to \code{n_max} pieces) are extracted.
+then only full tokens (up to \code{n} pieces) are extracted.
 
 For more information on the text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see

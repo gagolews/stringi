@@ -222,17 +222,17 @@ void StriBrkIterOptions::setSkipRuleStatus(SEXP opts_brkiter) {
  * 
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-03)
  */
-void StriRuleBasedBreakIterator::setupMatcher(const char* searchStr, R_len_t searchLen)
+void StriRuleBasedBreakIterator::setupMatcher(const char* _searchStr, R_len_t _searchLen)
 {
    if (!rbiterator) open();
    
-   this->searchStr = searchStr;
-   this->searchLen = searchLen;
+   this->searchStr = _searchStr;
+   this->searchLen = _searchLen;
    this->searchPos = BreakIterator::DONE;
    
    UErrorCode status = U_ZERO_ERROR;
    this->searchText = utext_openUTF8(this->searchText,
-      searchStr, searchLen, &status);
+      _searchStr, _searchLen, &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    
    status = U_ZERO_ERROR;

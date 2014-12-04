@@ -194,7 +194,7 @@ SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement,
                               SEXP opts_collator);
 SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_collator);
-SEXP stri_split_coll(SEXP str, SEXP split, SEXP n_max, SEXP omit_empty,
+SEXP stri_split_coll(SEXP str, SEXP split, SEXP n, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_collator);
 SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator);
 SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator);
@@ -209,7 +209,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all);
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
-SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n_max,
+SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n,
             SEXP omit_empty, SEXP tokens_only, SEXP simplify);
 SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na);
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to);
@@ -227,7 +227,7 @@ SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement,
                               SEXP opts_regex);
 SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement,
                              SEXP opts_regex);
-SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
+SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex);
 SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex);
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
@@ -250,7 +250,7 @@ SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement);
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement,
                                 SEXP merge, SEXP vectorize_all);
-SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n_max,
+SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
                           SEXP omit_empty, SEXP tokens_only, SEXP simplify);
 SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to);
 SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from);
@@ -258,7 +258,7 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na);
 
 
 SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter);
-SEXP stri_split_boundaries(SEXP str, SEXP n_max, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter);
+SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter);
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_lines(SEXP str, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);

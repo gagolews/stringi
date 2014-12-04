@@ -48,7 +48,7 @@ using namespace std;
  *
  * @param str character vector
  * @param pattern character vector
- * @param n_max integer vector
+ * @param n integer vector
  * @param omit_empty logical vector
  * @param opts_collator passed to stri__ucol_open(),
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
@@ -81,12 +81,12 @@ using namespace std;
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
+SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
                      SEXP tokens_only, SEXP simplify, SEXP opts_collator)
 {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(n_max = stri_prepare_arg_integer(n_max, "n_max"));
+   PROTECT(n = stri_prepare_arg_integer(n, "n"));
    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
    bool simplify1 = stri__prepare_arg_logical_1_notNA(simplify, "simplify");
@@ -96,10 +96,10 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
 
    STRI__ERROR_HANDLER_BEGIN(4)
    R_len_t vectorize_length = stri__recycling_rule(true, 4,
-      LENGTH(str), LENGTH(pattern), LENGTH(n_max), LENGTH(omit_empty));
+      LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
    StriContainerUTF16 str_cont(str, vectorize_length);
    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
-   StriContainerInteger   n_max_cont(n_max, vectorize_length);
+   StriContainerInteger   n_cont(n, vectorize_length);
    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
 
    SEXP ret;
@@ -109,41 +109,41 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (n_max_cont.isNA(i)) {
+      if (n_cont.isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
 
-      int  n_max_cur        = n_max_cont.get(i);
+      int  n_cur        = n_cont.get(i);
       int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
          SET_VECTOR_ELT(ret, i,
             (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
-            stri__vector_empty_strings((omit_empty_cur || n_max_cur == 0)?0:1));)
+            stri__vector_empty_strings((omit_empty_cur || n_cur == 0)?0:1));)
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
 
 
-      if (n_max_cur >= INT_MAX-1)
-         throw StriException(MSG__EXPECTED_SMALLER, "n_max");
-      else if (n_max_cur < 0)
-         n_max_cur = INT_MAX;
-      else if (n_max_cur == 0) {
+      if (n_cur >= INT_MAX-1)
+         throw StriException(MSG__EXPECTED_SMALLER, "n");
+      else if (n_cur < 0)
+         n_cur = INT_MAX;
+      else if (n_cur == 0) {
          SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
          continue;
       }
       else if (tokens_only1)
-         n_max_cur++; // we need to do one split ahead here
+         n_cur++; // we need to do one split ahead here
 
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
       UErrorCode status = U_ZERO_ERROR;
 
-      for (k=1; k < n_max_cur && USEARCH_DONE != usearch_next(matcher, &status) && !U_FAILURE(status); ) {
+      for (k=1; k < n_cur && USEARCH_DONE != usearch_next(matcher, &status) && !U_FAILURE(status); ) {
          R_len_t s1 = (R_len_t)usearch_getMatchedStart(matcher);
          R_len_t s2 = (R_len_t)usearch_getMatchedLength(matcher) + s1;
 
@@ -160,9 +160,9 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n_max, SEXP omit_empty,
       if (omit_empty_cur && fields.back().first == fields.back().second)
          fields.pop_back();
 
-      if (tokens_only1 && n_max_cur < INT_MAX) {
-         n_max_cur--; // one split ahead could have been made, see above
-         while (fields.size() > (size_t)n_max_cur)
+      if (tokens_only1 && n_cur < INT_MAX) {
+         n_cur--; // one split ahead could have been made, see above
+         while (fields.size() > (size_t)n_cur)
             fields.pop_back(); // get rid of the remainder
       }
 
