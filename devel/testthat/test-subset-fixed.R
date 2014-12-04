@@ -21,5 +21,12 @@ test_that("stri_subset_fixed", {
 
    expect_warning(expect_identical(stri_subset_fixed("",""), NA_character_))
    expect_warning(expect_identical(stri_subset_fixed("a",""), NA_character_))
-   (expect_identical(stri_subset_fixed("","a"), character(0)))
+   expect_identical(stri_subset_fixed("","a"), character(0))
+   
+   expect_identical(stri_subset_fixed(NA, NA, omit_na=TRUE), character(0))
+   suppressWarnings(expect_identical(stri_subset_fixed("","", omit_na=TRUE), character(0)))
+   suppressWarnings(expect_identical(stri_subset_fixed("a","", omit_na=TRUE), character(0)))
+   suppressWarnings(expect_identical(stri_subset_fixed("","a", omit_na=TRUE), character(0)))
+   expect_identical(stri_subset_fixed(c("a","b", NA, "aaa", ""),c("a"), omit_na=TRUE), c("a", "aaa"))
+   expect_identical(stri_subset_fixed('a', c('a', 'b', 'c'), omit_na=TRUE), "a")
 })

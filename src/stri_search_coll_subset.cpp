@@ -40,6 +40,7 @@
  *
  * @param str character vector
  * @param pattern character vector
+ * @param omit_na single logical value
  * @param opts_collator passed to stri__ucol_open(),
  * if \code{NA}, then \code{stri_detect_fixed_byte} is called
  * @return character vector
@@ -54,9 +55,13 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Added missing ucol_close
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    FR #122: omit_na arg added
  */
-SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
+SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
 {
+   bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -81,7 +86,7 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         {which[i] = NA_LOGICAL; result_counter++; },
+         {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} },
          {which[i] = FALSE; })
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
@@ -93,8 +98,10 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    }
 
    if (collator) { ucol_close(collator); collator = NULL; }
-   STRI__UNPROTECT_ALL /* not dependent on PROTECTed objects anymore */
-   return stri__subset_by_logical(str_cont, which, result_counter);
+   SEXP ret;
+   STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+   STRI__UNPROTECT_ALL
+   return ret;
    STRI__ERROR_HANDLER_END(
       if (collator) { ucol_close(collator); collator = NULL; }
    )
