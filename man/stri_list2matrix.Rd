@@ -3,7 +3,7 @@
 \alias{stri_list2matrix}
 \title{Convert a List to a Character Matrix}
 \usage{
-stri_list2matrix(x, byrow = FALSE, fill = NA_character_)
+stri_list2matrix(x, byrow = FALSE, fill = NA_character_, n_min = 0)
 }
 \arguments{
 \item{x}{a list of atomic vectors}
@@ -12,6 +12,9 @@ stri_list2matrix(x, byrow = FALSE, fill = NA_character_)
 transposed?}
 
 \item{fill}{single string, see Details}
+
+\item{n_min}{single integer value; minimal number of rows (\code{byrow==FALSE})
+or columns (otherwise) in the resulting matrix}
 }
 \value{
 Always returns a character matrix.
@@ -28,8 +31,9 @@ or if elements in \code{x} are not of the same lengths.
 Moreover, the elements in \code{x} are always coerced to character vectors.
 
 If \code{byrow} is \code{FALSE}, then a matrix with \code{length(x)}
-columns is returned. The number of rows is the length of the
-longest vector in \code{x}. Basically, we have
+columns is returned.
+The number of rows is the length of the
+longest vector in \code{x}, but no less than \code{n_min}. Basically, we have
 \code{result[i,j] == x[[j]][i]} if \code{i <= length(x[[j]])}
 and \code{result[i,j] == fill} otherwise, see Examples.
 
@@ -47,5 +51,6 @@ stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")), byrow=TRUE)
 simplify2array(list("a", c("b", "c")))
 stri_list2matrix(list("a", c("b", "c")))
 stri_list2matrix(list("a", c("b", "c")), fill="")
+stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
 }
 

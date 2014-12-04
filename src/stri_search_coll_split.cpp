@@ -184,7 +184,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
 
    if (simplify1) {
       ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1));
+         stri__vector_NA_strings(1), Rf_ScalarInteger(0));
    }
 
    STRI__UNPROTECT_ALL

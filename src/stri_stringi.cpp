@@ -99,7 +99,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_join2_nocollapse",           stri_join2_nocollapse,           2),
 //   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version > 0.3
    STRI__MK_CALL("C_stri_length",                     stri_length,                     1),
-   STRI__MK_CALL("C_stri_list2matrix",                stri_list2matrix,                3),
+   STRI__MK_CALL("C_stri_list2matrix",                stri_list2matrix,                4),
    STRI__MK_CALL("C_stri_locale_info",                stri_locale_info,                1),
    STRI__MK_CALL("C_stri_locale_list",                stri_locale_list,                0),
    STRI__MK_CALL("C_stri_locale_set",                 stri_locale_set,                 1),
