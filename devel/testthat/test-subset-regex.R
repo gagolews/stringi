@@ -9,6 +9,7 @@ test_that("stri_subset_regex", {
    suppressWarnings(expect_identical(stri_subset_regex("a",""), NA_character_))
    suppressWarnings(expect_identical(stri_subset_regex("","a"), character(0)))
    expect_identical(stri_subset_regex(c("","ala"),"ala"), "ala")
+   expect_identical(stri_subset_regex(c("","ala","AlA"),"ala", opts=stri_opts_regex(case_insensitive=TRUE)), c("ala", "AlA"))
    expect_identical(stri_subset_regex(c("","ala", "ala", "bbb"),c("ala", "bbb")), c("ala", "bbb"))
    expect_identical(stri_subset_regex(c("ala","", "", "bbb"),c("ala", "bbb")), c("ala", "bbb"))
    expect_identical(stri_subset_regex(c("a","b", NA, "aaa", ""),c("a")), c("a", NA, "aaa"))
@@ -22,7 +23,8 @@ test_that("stri_subset_regex", {
 
    s <- c("Lorem", "123", " ", " ", "kota", "4\t\u0105")
    p <- c("[[:alpha:]]+", "[[:blank:]]+")
-   expect_identical(stri_subset_regex(s, p), s[c(T, F, F, T, T, T)])
+   expect_identical(stri_subset_regex(s, p, omit_na = TRUE), s[c(T, F, F, T, T, T)])
+   expect_identical(stri_subset_regex(s, p, omit_na = FALSE), s[c(T, F, F, T, T, T)])
    expect_identical(stri_subset_regex("Lo123\trem", c("[[:alpha:]]", "[4-9]+")), "Lo123\trem")
 
    expect_warning(stri_subset_regex(rep("asd", 5), rep("[A-z]", 2)))
@@ -42,4 +44,12 @@ test_that("stri_subset_regex", {
    expect_equivalent(stri_subset_regex("caacbacab", "(a+b)+"), "caacbacab")
    expect_equivalent(stri_subset_regex("caacbacacb", "(a+b)+"), character(0))
 
+   expect_equivalent(stri_subset_regex("abc", c("a", "b", "d")), c("abc", "abc")) # this is weird
+   
+   expect_identical(stri_subset_regex(NA, NA, omit_na=TRUE), character(0))
+   suppressWarnings(expect_identical(stri_subset_regex("","", omit_na=TRUE), character(0)))
+   suppressWarnings(expect_identical(stri_subset_regex("a","", omit_na=TRUE), character(0)))
+   suppressWarnings(expect_identical(stri_subset_regex("","a", omit_na=TRUE), character(0)))
+   expect_identical(stri_subset_regex(c("a","b", NA, "aaa", ""),c("a"), omit_na=TRUE), c("a", "aaa"))
+   expect_identical(stri_subset_regex('a', c('a', 'b', 'c'), omit_na=TRUE), "a")
 })

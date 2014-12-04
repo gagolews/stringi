@@ -73,7 +73,7 @@
 #' @param n_max integer vector, maximal number of strings to return,
 #' and, at the same time, maximal number of text boundaries to look for
 #' @param omit_empty logical vector; determines whether empty
-#' tokens should be removed from the result (\code{TRUE})
+#' tokens should be removed from the result (\code{TRUE} or \code{FALSE})
 #' or replaced with \code{NA}s (\code{NA})
 #' @param tokens_only single logical value;
 #' may affect the result if \code{n_max} is positive, see Details

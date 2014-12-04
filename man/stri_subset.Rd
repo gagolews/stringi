@@ -9,13 +9,13 @@
 \usage{
 stri_subset(str, ..., regex, fixed, coll, charclass)
 
-stri_subset_fixed(str, pattern)
+stri_subset_fixed(str, pattern, omit_na = FALSE)
 
-stri_subset_charclass(str, pattern)
+stri_subset_charclass(str, pattern, omit_na = FALSE)
 
-stri_subset_coll(str, pattern, opts_collator = NULL)
+stri_subset_coll(str, pattern, omit_na = FALSE, opts_collator = NULL)
 
-stri_subset_regex(str, pattern, opts_regex = NULL)
+stri_subset_regex(str, pattern, omit_na = FALSE, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -25,6 +25,9 @@ stri_subset_regex(str, pattern, opts_regex = NULL)
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
+
+\item{omit_na}{single logical value; should missing values be excluded
+from the result?}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's settings
 as generated with \code{\link{stri_opts_collator}}; \code{NULL}
@@ -38,7 +41,7 @@ for default settings;
 }
 \value{
 All the functions return a character vector.
-Of course, the output encoding is always UTF-8.
+As usual, the output encoding is always UTF-8.
 }
 \description{
 These functions return a subvector consisting of
@@ -48,6 +51,8 @@ are roughly equivalent (but faster and easier to use) to a call to
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
+Of course, normally you will use that function in case
+of \code{length(str) >= length(pattern)}.
 
 \code{stri_subset} is a convenience function.
 It calls either \code{stri_subset_regex},

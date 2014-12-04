@@ -34,7 +34,7 @@ for more details refer to \link{stringi-search}}
 and, at the same time, maximal number of text boundaries to look for}
 
 \item{omit_empty}{logical vector; determines whether empty
-tokens should be removed from the result (\code{TRUE})
+tokens should be removed from the result (\code{TRUE} or \code{FALSE})
 or replaced with \code{NA}s (\code{NA})}
 
 \item{tokens_only}{single logical value;

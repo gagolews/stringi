@@ -40,6 +40,7 @@
  *
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
+ * @param omit_na single logical value
  * @param opts_regex list
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
@@ -49,9 +50,13 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
+ *    FR #122: omit_na arg added
  */
-SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
 {
+   bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
@@ -74,7 +79,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i = pattern_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         {which[i] = NA_LOGICAL; result_counter++; },
+         {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} },
          {which[i] = FALSE; })
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -83,7 +88,9 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       if (which[i]) result_counter++;
    }
 
-   STRI__UNPROTECT_ALL /* not dependent on PROTECTed objects anymore */
-   return stri__subset_by_logical(str_cont, which, result_counter);
+   SEXP ret;
+   STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+   STRI__UNPROTECT_ALL
+   return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

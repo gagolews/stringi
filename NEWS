@@ -10,7 +10,7 @@
 
    * [NEW FEATURE] #110 t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
 
-   * [NEW FEATURE] #122 t.b.d. `stri_subset`, `omit_na` arg
+   * [NEW FEATURE] #126 t.b.d. like str_split_fixed...
 
    * [NEW FEATURE] #120 t.b.d. `stri_locate_first_boundaries` etc.
 
@@ -24,7 +24,9 @@
 
 (...)
 
-   * [NEW FEATURE] #119  `stri_split_boundaries()` now have
+   * [NEW FEATURE] #122: `stri_subset`, gained an `omit_na` argument.
+
+   * [NEW FEATURE] #119:  `stri_split_boundaries()` now have
       `n_max`, `tokens_only`, and `simplify` arguments.
       Additionally, `stri_extract_words()` is now equipped with `simplify` arg.
 
