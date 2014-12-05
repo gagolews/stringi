@@ -123,7 +123,9 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
-  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
   \code{\link{stri_split_boundaries}};
@@ -155,7 +157,9 @@ Other search_locate: \code{\link{stri_locate}},
 
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
-  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
