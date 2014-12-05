@@ -205,7 +205,7 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' @details
 #' The \code{skip_*} family of settings may be used to prevent performing
 #' any special actions on particular types of text boundaries, e.g.
-#' in case of the \code{\link{stri_locate_boundaries}} and
+#' in case of the \code{\link{stri_locate_all_boundaries}} and
 #' \code{\link{stri_split_boundaries}} functions.
 #'
 #' @param type single string; break iterator type, one of \code{character},

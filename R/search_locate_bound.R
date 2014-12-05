@@ -43,13 +43,14 @@
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
 #'
-#' In case of \code{stri_locate_words},
-#' just like in \code{\link{stri_extract_words}} and \code{\link{stri_count_words}},
+#' In case of \code{stri_locate_all_words},
+#' just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #' This is function is equivalent to a call to
-#' \code{\link{stri_locate_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
+#' \code{\link{stri_locate_all_boundaries}(str,
+#'   \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 #'
 #'
 #' @param str character vector or an object coercible to
@@ -77,11 +78,11 @@
 #'
 #' @examples
 #' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
-#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
-#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
-#' stri_locate_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
-#' stri_locate_words(test)
+#' stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
+#' stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
+#' stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
+#' stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
+#' stri_locate_all_words(test)
 #'
 #' @export
 #' @family search_locate
@@ -89,14 +90,14 @@
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @rdname stri_locate_boundaries
-stri_locate_boundaries <- function(str, omit_no_match=FALSE, opts_brkiter=NULL) {
-   .Call(C_stri_locate_boundaries, str, omit_no_match, opts_brkiter)
+stri_locate_all_boundaries <- function(str, omit_no_match=FALSE, opts_brkiter=NULL) {
+   .Call(C_stri_locate_all_boundaries, str, omit_no_match, opts_brkiter)
 }
 
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_words <- function(str, omit_no_match=FALSE, locale=NULL) {
-   stri_locate_boundaries(str, omit_no_match,
+stri_locate_all_words <- function(str, omit_no_match=FALSE, locale=NULL) {
+   stri_locate_all_boundaries(str, omit_no_match,
       opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
 }

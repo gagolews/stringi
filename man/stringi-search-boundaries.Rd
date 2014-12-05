@@ -16,12 +16,12 @@ see \code{\link{stri_wrap}} and \code{\link{stri_split_boundaries}}.
 \item Counting characters, words, sentences, or paragraphs,
 see \code{\link{stri_count_boundaries}}.
 \item Making a list of the unique words in a document,
-cf. \code{\link{stri_extract_words}} and then \code{\link{stri_unique}}.
+cf. \code{\link{stri_extract_all_words}} and then \code{\link{stri_unique}}.
 \item Capitalizing the first letter of each word
 or sentence, see also \code{\link{stri_trans_totitle}}.
 \item Locating a particular unit of the text (for example,
 finding the third word in the document),
-see \code{\link{stri_locate_boundaries}}.
+see \code{\link{stri_locate_all_boundaries}}.
 }
 
 Generally, text boundary analysis is a locale-dependent operation.
@@ -73,9 +73,9 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
-  \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}},
-  \code{\link{stri_locate_words}};
+  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_locate_all_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
   \code{\link{stri_split_boundaries}};
@@ -98,9 +98,9 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
 
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
-  \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}},
-  \code{\link{stri_locate_words}};
+  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_locate_all_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},

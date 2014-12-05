@@ -95,7 +95,7 @@ stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\\\2))")[[1]
 stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\\\1")
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_words}};
+Other search_extract: \code{\link{stri_extract_all_words}};
   \code{\link{stri_extract}},
   \code{\link{stri_extract_all}},
   \code{\link{stri_extract_all_charclass}},

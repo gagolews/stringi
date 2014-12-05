@@ -78,8 +78,8 @@ stri_sub(s, -5, length=4)
 (stri_sub(s, 1, 1:3) <- 1:2)
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_boundaries}},
-  \code{\link{stri_locate_words}};
+Other indexing: \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_locate_all_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
   \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_all_coll}},

@@ -73,9 +73,9 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
-  \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}},
-  \code{\link{stri_locate_words}};
+  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_locate_all_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_trans_tolower}},
