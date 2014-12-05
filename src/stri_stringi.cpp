@@ -104,6 +104,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_locale_list",                stri_locale_list,                0),
    STRI__MK_CALL("C_stri_locale_set",                 stri_locale_set,                 1),
    STRI__MK_CALL("C_stri_locate_all_boundaries",      stri_locate_all_boundaries,      3),
+   STRI__MK_CALL("C_stri_locate_first_boundaries",    stri_locate_first_boundaries,    2),
+   STRI__MK_CALL("C_stri_locate_last_boundaries",     stri_locate_last_boundaries,     2),
    STRI__MK_CALL("C_stri_locate_first_charclass",     stri_locate_first_charclass,     2),
    STRI__MK_CALL("C_stri_locate_last_charclass",      stri_locate_last_charclass,      2),
    STRI__MK_CALL("C_stri_locate_all_charclass",       stri_locate_all_charclass,       4),

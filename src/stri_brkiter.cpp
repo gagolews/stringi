@@ -323,4 +323,47 @@ bool StriRuleBasedBreakIterator::next(std::pair<R_len_t, R_len_t>& bdr)
    }
    return false;
 }
-      
+
+
+/**
+ * 
+ * @ version 0.4-1 (Marek Gagolewski, 2014-12-05)
+ */
+void StriRuleBasedBreakIterator::last()
+{
+#ifndef NDBEGUG
+   if (!rbiterator)
+      throw StriException("!NDEBUG: StriRuleBasedBreakIterator::last");
+   if (searchLen <= 0)
+      throw StriException("!NDEBUG: StriRuleBasedBreakIterator::last");
+#endif
+
+   rbiterator->first();
+   this->searchPos = rbiterator->last(); // ICU man: "The text's past-the-end offset. "
+
+#ifndef NDBEGUG
+   if (this->searchPos > this->searchLen)
+      throw StriException("!NDEBUG: StriRuleBasedBreakIterator::last");
+#endif
+}
+
+
+/**
+ * 
+ * @ version 0.4-1 (Marek Gagolewski, 2014-12-05)
+ */
+bool StriRuleBasedBreakIterator::previous(std::pair<R_len_t, R_len_t>& bdr)
+{
+   do {
+      if (!ignoreBoundary()) {
+         bdr.second  = searchPos;
+         searchPos = rbiterator->previous();
+         if (searchPos == BreakIterator::DONE) return false;
+         bdr.first = searchPos;
+         return true;
+      }
+      searchPos = rbiterator->previous();
+   }
+   while (searchPos != BreakIterator::DONE);
+   return false;
+}

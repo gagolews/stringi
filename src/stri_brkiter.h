@@ -257,9 +257,13 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
       }
 
       void setupMatcher(const char* searchStr, R_len_t searchLen);
+      
       void first();
       bool next();
       bool next(std::pair<R_len_t, R_len_t>& bdr);
+      
+      void last();
+      bool previous(std::pair<R_len_t, R_len_t>& bdr);
 };
 
 #endif

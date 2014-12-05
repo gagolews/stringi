@@ -82,7 +82,7 @@ for default settings;
 \code{stri_locate_*_regex} only}
 }
 \value{
-For \code{stri_locate_all*},
+For \code{stri_locate_all_*},
 a list of integer matrices is returned. Each list element
 represents the results of a separate search scenario.
 The first column gives the start positions
@@ -91,7 +91,7 @@ Moreover, you may get two \code{NA}s in one row
 for no match (if \code{omit_no_match} is \code{FALSE})
 or \code{NA} arguments.
 
-\code{stri_locate_first*} and \code{stri_locate_last*},
+\code{stri_locate_first_*} and \code{stri_locate_last_*},
 on the other hand, return an integer matrix with
 two columns, giving the start and end positions of the first
 or the last matches, respectively, and two \code{NA}s if and
@@ -100,7 +100,7 @@ only if they are not found.
 \description{
 These functions may be used e.g. to find the indices (positions), at which
 a given pattern is matched.
-\code{stri_locate_all_*} locates all the matches.
+\code{stri_locate_all_*} locate all the matches.
 On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
 give the first or the last matches, respectively.
 }
@@ -164,11 +164,19 @@ stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_sub}}, \code{\link{stri_sub<-}}
 
 Other search_locate: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stringi-search}}
 }
 

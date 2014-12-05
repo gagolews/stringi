@@ -2,42 +2,63 @@
 \name{stri_locate_all_boundaries}
 \alias{stri_locate_all_boundaries}
 \alias{stri_locate_all_words}
+\alias{stri_locate_first_boundaries}
+\alias{stri_locate_first_words}
+\alias{stri_locate_last_boundaries}
+\alias{stri_locate_last_words}
 \title{Locate Specific Text Boundaries}
 \usage{
 stri_locate_all_boundaries(str, omit_no_match = FALSE, opts_brkiter = NULL)
 
+stri_locate_last_boundaries(str, opts_brkiter = NULL)
+
+stri_locate_first_boundaries(str, opts_brkiter = NULL)
+
 stri_locate_all_words(str, omit_no_match = FALSE, locale = NULL)
+
+stri_locate_last_words(str, locale = NULL)
+
+stri_locate_first_words(str, locale = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
 
 \item{omit_no_match}{single logical value; if \code{FALSE},
-then 2 missing values will indicate that there are no text bondaries}
+then 2 missing values will indicate that there are no text boundaries;
+\code{stri_locate_all_*} only}
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
 as generated with \code{\link{stri_opts_brkiter}};
 \code{NULL} for default break iterator, i.e. \code{line_break};
-\code{stri_locate_boundaries} only}
+\code{stri_locate_all_boundaries} only}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale};
-\code{stri_locate_words} only}
+\code{stri_locate_all_words} only}
 }
 \value{
-A list of \code{length(str)} integer matrices
+For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices
 is returned. The first column gives the start positions
 of substrings between located boundaries, and the second column gives
 the end positions. The indices are code point-based, thus
 they may be passed e.g. to the \code{\link{stri_sub}} function.
-
 Moreover, you may get two \code{NA}s in one row
 for no match (if \code{omit_no_match} is \code{FALSE})
 or \code{NA} arguments.
+
+\code{stri_locate_first_*} and \code{stri_locate_last_*},
+on the other hand, return an integer matrix with
+two columns, giving the start and end positions of the first
+or the last matches, respectively, and two \code{NA}s if and
+only if they are not found.
 }
 \description{
-This function locates specific text boundaries
+These functions locate specific text boundaries
 (like character, word, line, or sentence boundaries).
+\code{stri_locate_all_*} locate all the matches.
+On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
+give the first or the last matches, respectively.
 }
 \details{
 Vectorized over \code{str}.
@@ -46,13 +67,13 @@ For more information on the text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
 \link{stringi-search-boundaries}.
 
-In case of \code{stri_locate_all_words},
+In case of \code{stri_locate_*_words},
 just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_words}},
 \pkg{ICU}'s word \code{BreakIterator} iterator is used
 to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 This is function is equivalent to a call to
-\code{\link{stri_locate_all_boundaries}(str,
+\code{stri_locate_*_boundaries(str,
   \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 }
 \examples{
