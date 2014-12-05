@@ -80,6 +80,7 @@
 #' @family search_extract
 #' @family locale_sensitive
 #' @family text_boundaries
+#' @rdname stri_extract_words
 stri_extract_all_words <- function(str, simplify=FALSE, omit_no_match=FALSE, locale=NULL) {
    res <- stri_split_boundaries(str, simplify=FALSE,
       opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
@@ -89,4 +90,20 @@ stri_extract_all_words <- function(str, simplify=FALSE, omit_no_match=FALSE, loc
       stri_list2matrix(res, byrow=TRUE)
    else
       res
+}
+
+
+#' @export
+#' @rdname stri_extract_words
+stri_extract_first_words <- function(str, locale=NULL) {
+   stri_sub(str, stri_locate_first_boundaries(str, 
+      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale)))
+}
+
+
+#' @export
+#' @rdname stri_extract_words
+stri_extract_last_words <- function(str, locale=NULL) {
+   stri_sub(str, stri_locate_last_boundaries(str, 
+      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale)))
 }

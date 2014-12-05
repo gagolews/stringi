@@ -16,11 +16,11 @@
      `stri_locate_all_words`. New functions are now available:
      `stri_locate_first_boundaries`, `stri_locate_last_boundaries`,
      `stri_locate_first_words`, `stri_locate_last_words`,
-     `stri_extract_first_words`, `stri_extract_last_words`.          [[[....IN PROGRESS....]]]
-
-   * [IMPORTANT CHANGE] #111: t.b.d. `opts_regex` as `...` etc.
+     `stri_extract_first_words`, `stri_extract_last_words`.
 
 (...)
+
+   * [IMPORTANT CHANGE] #111: t.b.d. `opts_regex` as `...` etc.
 
    * [NEW FEATURE] #110: t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
 
