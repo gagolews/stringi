@@ -10,6 +10,14 @@
      `stri_split_*()` now calls `stri_list2matrix()` with `fill=""`.
      `fill=NA_character_` may be obtained by using `simplify=NA`.
 
+   * [IMPORTANT CHANGE, NEW FUNCTIONS] #120: `stri_extract_words` has been
+     renamed `stri_extract_all_words` and `stri_locate_boundaries` - 
+     `stri_locate_all_boundaries` as well as `stri_locate_words` -
+     `stri_locate_all_words`. New functions are now available:
+     `stri_locate_first_boundaries`, `stri_locate_last_boundaries`,
+     `stri_locate_first_words`, `stri_locate_last_words`,
+     `stri_extract_first_words`, `stri_extract_last_words`.          [[[....IN PROGRESS....]]]
+
    * [IMPORTANT CHANGE] #111: t.b.d. `opts_regex` as `...` etc.
 
 (...)

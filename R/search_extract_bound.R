@@ -38,13 +38,14 @@
 #' @details
 #' Vectorized over \code{str}.
 #'
-#' Just like in the case of \code{\link{stri_locate_words}}
+#' Just like in the case of \code{\link{stri_locate_all_words}}
 #' and \code{\link{stri_count_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #' This is function is equivalent to a call to
-#' \code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
+#' \code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word",
+#'    skip_word_none=TRUE, locale=locale))}
 #'
 #'
 #' @param str character vector or an object coercible to
@@ -73,13 +74,13 @@
 #'
 #'
 #' @examples
-#' stri_extract_words("stringi: THE string processing package 123.48...")
+#' stri_extract_all_words("stringi: THE string processing package 123.48...")
 #'
 #' @export
 #' @family search_extract
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_extract_words <- function(str, simplify=FALSE, omit_no_match=FALSE, locale=NULL) {
+stri_extract_all_words <- function(str, simplify=FALSE, omit_no_match=FALSE, locale=NULL) {
    res <- stri_split_boundaries(str, simplify=FALSE,
       opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
    if (!omit_no_match) # auto arg check

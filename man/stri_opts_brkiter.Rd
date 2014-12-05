@@ -56,7 +56,7 @@ in some text boundary analysis functions, see
 \details{
 The \code{skip_*} family of settings may be used to prevent performing
 any special actions on particular types of text boundaries, e.g.
-in case of the \code{\link{stri_locate_boundaries}} and
+in case of the \code{\link{stri_locate_all_boundaries}} and
 \code{\link{stri_split_boundaries}} functions.
 }
 \references{
@@ -69,9 +69,9 @@ in case of the \code{\link{stri_locate_boundaries}} and
 \seealso{
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
-  \code{\link{stri_extract_words}};
-  \code{\link{stri_locate_boundaries}},
-  \code{\link{stri_locate_words}};
+  \code{\link{stri_extract_all_words}};
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_locate_all_words}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},
   \code{\link{stri_split_lines1}},

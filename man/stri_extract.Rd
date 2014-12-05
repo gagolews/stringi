@@ -144,7 +144,7 @@ stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+'), simplify=TRUE)
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+'), simplify=NA)
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_words}};
+Other search_extract: \code{\link{stri_extract_all_words}};
   \code{\link{stri_match}}, \code{\link{stri_match_all}},
   \code{\link{stri_match_all_regex}},
   \code{\link{stri_match_first}},

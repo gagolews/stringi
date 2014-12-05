@@ -61,7 +61,7 @@
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
  */
-SEXP stri_locate_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
+SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
 {
    bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
