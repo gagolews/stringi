@@ -87,7 +87,11 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_enc_detect2}};
   \code{\link{stri_extract_all_words}};
   \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
   \code{\link{stri_split_boundaries}};
@@ -108,7 +112,11 @@ Other search_count: \code{\link{stri_count}},
 
 Other text_boundaries: \code{\link{stri_extract_all_words}};
   \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},

@@ -104,7 +104,11 @@ Other search_extract: \code{\link{stri_extract_all_words}};
 Other search_fixed: \code{\link{stringi-search-fixed}}
 
 Other search_locate: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
   \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_all_coll}},
@@ -176,7 +180,11 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
   \code{\link{stri_extract_all_words}};
   \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
   \code{\link{stri_split_lines}},

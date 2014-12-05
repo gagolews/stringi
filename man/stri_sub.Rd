@@ -79,7 +79,11 @@ stri_sub(s, -5, length=4)
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all_words}};
+  \code{\link{stri_locate_all_words}},
+  \code{\link{stri_locate_first_boundaries}},
+  \code{\link{stri_locate_first_words}},
+  \code{\link{stri_locate_last_boundaries}},
+  \code{\link{stri_locate_last_words}};
   \code{\link{stri_locate}}, \code{\link{stri_locate_all}},
   \code{\link{stri_locate_all_charclass}},
   \code{\link{stri_locate_all_coll}},

@@ -39,7 +39,7 @@ using namespace std;
 
 
 /**
- * Locate first or last occurrences of pattern in a string
+ * Locate first or last occurrences of a pattern in a string
  *
  * @param str character vector
  * @param pattern character vector
@@ -113,7 +113,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, bool first)
 
 
 /**
- * Locate first occurrences of pattern in a string [with collation]
+ * Locate first occurrences of pattern in a string [fixed pattern]
  *
  * @param str character vector
  * @param pattern character vector
@@ -137,7 +137,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern)
 
 
 /**
- * Locate last occurrences of pattern in a string [with collation]
+ * Locate last occurrences of pattern in a string [fixed pattern]
  *
  * @param str character vector
  * @param pattern character vector

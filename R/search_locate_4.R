@@ -35,7 +35,7 @@
 #' @description
 #' These functions may be used e.g. to find the indices (positions), at which
 #' a given pattern is matched.
-#' \code{stri_locate_all_*} locates all the matches.
+#' \code{stri_locate_all_*} locate all the matches.
 #' On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
 #' give the first or the last matches, respectively.
 #'
@@ -73,7 +73,7 @@
 #' @param ... additional arguments passed to the underlying functions
 #'
 #' @return
-#' For \code{stri_locate_all*},
+#' For \code{stri_locate_all_*},
 #' a list of integer matrices is returned. Each list element
 #' represents the results of a separate search scenario.
 #' The first column gives the start positions
@@ -82,7 +82,7 @@
 #' for no match (if \code{omit_no_match} is \code{FALSE})
 #' or \code{NA} arguments.
 #'
-#' \code{stri_locate_first*} and \code{stri_locate_last*},
+#' \code{stri_locate_first_*} and \code{stri_locate_last_*},
 #' on the other hand, return an integer matrix with
 #' two columns, giving the start and end positions of the first
 #' or the last matches, respectively, and two \code{NA}s if and
