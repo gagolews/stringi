@@ -47,9 +47,9 @@
 #' is of width 1. This function should rather be used with
 #' text in Latin script.
 #'
-#' If \code{normalize} is \code{FALSE} (the default),
+#' If \code{normalize} is \code{FALSE},
 #' then multiple white spaces between the word boundaries are
-#' preserved withing each wrapped line.
+#' preserved within each wrapped line.
 #' In such a case, none of the strings can contain \code{\\r}, \code{\\n},
 #' or other new line characters, otherwise you will get at error.
 #' You should split the input text into lines
@@ -83,6 +83,12 @@
 #'        (values in [2, 3] are recommended)
 #' @param simplify single logical value, see Value
 #' @param normalize single logical value, see Details
+#' @param indent single non-negative integer; gives the indentation of the
+#'  first line in each paragraph
+#' @param exdent single non-negative integer; specifies the indentation
+#' of subsequent lines in paragraphs
+#' @param prefix,initial single strings; \code{prefix} is used as prefix for each
+#' line except the first, for which \code{initial} is utilized
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}
@@ -109,7 +115,8 @@
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
 stri_wrap <- function(str, width=floor(0.9*getOption("width")),
-   cost_exponent=2.0, simplify=TRUE, normalize=FALSE, locale=NULL)
+   cost_exponent=2.0, simplify=TRUE, normalize=FALSE, indent=0, exdent=0,
+   prefix="", initial=prefix, locale=NULL)
 {
    simplify <- as.logical(simplify)
 
@@ -121,7 +128,7 @@ stri_wrap <- function(str, width=floor(0.9*getOption("width")),
       str <- stri_trans_nfc(str)
    }
 
-   ret <- .Call(C_stri_wrap, str, width, cost_exponent, locale)
+   ret <- .Call(C_stri_wrap, str, width, cost_exponent, indent, exdent, prefix, initial, locale)
 
    if (simplify) # this will give an informative warning or error if sth is wrong
       as.character(unlist(ret))
