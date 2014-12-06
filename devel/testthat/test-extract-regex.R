@@ -19,7 +19,7 @@ test_that("stri_extract_all_regex", {
 
    expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=NA),
       matrix(c("ab", "d", "h", NA, "c", "ef", NA, NA, NA, "g", NA, NA), nrow=4))
-   
+
    expect_identical(stri_extract(c("ab_c", "d_ef_g", "h", ""), mode='all', regex="\\p{L}+", simplify=TRUE, omit_no_match=TRUE),
       matrix(c("ab", "d", "h", "", "c", "ef", "", "", "", "g", "", ""), nrow=4))
 

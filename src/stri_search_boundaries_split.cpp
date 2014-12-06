@@ -59,10 +59,10 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
  *          new args: n, tokens_only, simplify
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    allow `simplify=NA`; FR #126: pass n to stri_list2matrix
  */
@@ -111,14 +111,14 @@ SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SE
       deque< pair<R_len_t,R_len_t> > occurrences;
       brkiter.setupMatcher(str_cur_s, str_cur_n);
       brkiter.first();
-      
+
       pair<R_len_t,R_len_t> curpair;
       R_len_t k = 0;
       while (k < n_cur && brkiter.next(curpair)) {
          occurrences.push_back(curpair);
          ++k; // another field
       }
-      
+
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
       if (noccurrences <= 0) {
@@ -152,7 +152,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SE
                                              :stri__vector_empty_strings(1),
          Rf_ScalarInteger(n_min)))
    }
-   
+
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({ /* no action */ })

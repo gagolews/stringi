@@ -47,7 +47,7 @@
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
  *          moved to StriUcnv;
  *          throws StriException instead of calling Rf_error
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-01)
  *    don't register callbacks by default
  */
@@ -68,7 +68,7 @@ void StriUcnv::openConverter(bool register_callbacks) {
          (const void **)NULL,
          &status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
       status = U_ZERO_ERROR;
       ucnv_setToUCallBack  ((UConverter*)m_ucnv,
          (UConverterToUCallback)STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN,
@@ -87,7 +87,7 @@ void StriUcnv::openConverter(bool register_callbacks) {
  * @param register_callbacks
  *
  * @version 0.2-1 (Marek Gagolewski)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-01)
  *    don't register callbacks by default
  */

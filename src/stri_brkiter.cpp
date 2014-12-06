@@ -46,14 +46,14 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *     moved to the StriBrkIterOptions class
  */
 void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
    const char* type_opts[] = {"character", "line_break", "sentence", "word", NULL};
    int brkiter_cur = stri__match_arg(_default, type_opts);
-   
+
    if (isNull(opts_brkiter)) {
       // use default settings
    }
@@ -104,14 +104,13 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
 }
 
 
-
 /** Get Break Iterator's locale
  *
  * @param opts_brkiter named list
  * @return locale ID, R_alloc'ed
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *     moved to the StriBrkIterOptions class
  */
@@ -151,7 +150,7 @@ void StriBrkIterOptions::setLocale(SEXP opts_brkiter) {
  * @return vector of indices [even, odd) -- ids to skip
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *     moved to the StriBrkIterOptions class
  */
@@ -159,7 +158,7 @@ void StriBrkIterOptions::setSkipRuleStatus(SEXP opts_brkiter) {
    if (isNull(opts_brkiter)) {
       return; // leave as-is (empty)
    }
-   
+
    R_len_t tmp_size = 0;
    int32_t tmp_rules[32];
 
@@ -210,7 +209,7 @@ void StriBrkIterOptions::setSkipRuleStatus(SEXP opts_brkiter) {
 
    if (tmp_size <= 0)
       return;
-      
+
    skip_size  = tmp_size;
    skip_rules = (int32_t*)R_alloc((size_t)tmp_size, (int)sizeof(int32_t));
    for (R_len_t i=0; i<tmp_size; ++i)
@@ -219,22 +218,22 @@ void StriBrkIterOptions::setSkipRuleStatus(SEXP opts_brkiter) {
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-03)
  */
 void StriRuleBasedBreakIterator::setupMatcher(const char* _searchStr, R_len_t _searchLen)
 {
    if (!rbiterator) open();
-   
+
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->searchPos = BreakIterator::DONE;
-   
+
    UErrorCode status = U_ZERO_ERROR;
    this->searchText = utext_openUTF8(this->searchText,
       _searchStr, _searchLen, &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
    status = U_ZERO_ERROR;
    this->rbiterator->setText(this->searchText, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -248,7 +247,7 @@ void StriRuleBasedBreakIterator::setupMatcher(const char* _searchStr, R_len_t _s
  * @return logical value
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
- * 
+ *
  * @version 0.4-1 (Marek Gagolews, 2014-12-03)
  *    moved to StriRuleBasedBreakIterator
  */
@@ -257,7 +256,7 @@ bool StriRuleBasedBreakIterator::ignoreBoundary() {
    if (!rbiterator || !searchText)
       throw StriException("!NDEBUG: StriRuleBasedBreakIterator::ignoreBoundary()");
 #endif
-   
+
    if (skip_size <= 0) return false;
 
    int rule = rbiterator->getRuleStatus();
@@ -272,7 +271,7 @@ bool StriRuleBasedBreakIterator::ignoreBoundary() {
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-03)
  */
 void StriRuleBasedBreakIterator::first()
@@ -283,7 +282,7 @@ void StriRuleBasedBreakIterator::first()
 #endif
 
    this->searchPos = rbiterator->first(); // ICU man: "The offset of the beginning of the text, zero."
-   
+
 #ifndef NDBEGUG
    if (this->searchPos != 0)
       throw StriException("!NDEBUG: StriRuleBasedBreakIterator::first");
@@ -292,7 +291,7 @@ void StriRuleBasedBreakIterator::first()
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-03)
  */
 bool StriRuleBasedBreakIterator::next()
@@ -306,13 +305,13 @@ bool StriRuleBasedBreakIterator::next()
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-03)
  */
 bool StriRuleBasedBreakIterator::next(std::pair<R_len_t, R_len_t>& bdr)
 {
    R_len_t lastPos = searchPos;
-   while ((searchPos = rbiterator->next()) != BreakIterator::DONE) {      
+   while ((searchPos = rbiterator->next()) != BreakIterator::DONE) {
       if (!ignoreBoundary()) {
          bdr.first  = lastPos;
          bdr.second = searchPos;
@@ -326,7 +325,7 @@ bool StriRuleBasedBreakIterator::next(std::pair<R_len_t, R_len_t>& bdr)
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-05)
  */
 void StriRuleBasedBreakIterator::last()
@@ -349,7 +348,7 @@ void StriRuleBasedBreakIterator::last()
 
 
 /**
- * 
+ *
  * @ version 0.4-1 (Marek Gagolewski, 2014-12-05)
  */
 bool StriRuleBasedBreakIterator::previous(std::pair<R_len_t, R_len_t>& bdr)

@@ -189,7 +189,7 @@ SEXP stri_extract_last_charclass(SEXP str, SEXP pattern)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    allow `simplify=NA`
  */

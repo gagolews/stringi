@@ -34,6 +34,8 @@
 
 (...)
 
+   * [NEW FEATURE] #129: `stri_match_*_regex` gained a `cg_missing` argument.
+
    * [NEW FEATURE] #118: `stri_wrap()` gained `indent`, `exdent`, `initial`,
      and `prefix` arguments. Moreover Knuth's dynamic word wrapping algorithm
      now assumes that the cost of printing the last line is zero, see #128.

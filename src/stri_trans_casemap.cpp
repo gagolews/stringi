@@ -37,7 +37,6 @@
 #include <unicode/ucasemap.h>
 
 
-
 /**
  *  Convert case (TitleCase)
  *
@@ -45,11 +44,11 @@
  *  @param str character vector
  *  @param opts_brkiter list
  *  @return character vector
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
  *    separated from stri_trans_casemap;
  *    use StriUBreakIterator
- * 
+ *
  */
 
 SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
@@ -61,11 +60,11 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
 
    STRI__ERROR_HANDLER_BEGIN(1)
    StriUBreakIterator brkiter(opts_brkiter2);
-   
+
    UErrorCode status = U_ZERO_ERROR;
    ucasemap = ucasemap_open(brkiter.getLocale(), U_FOLD_CASE_DEFAULT, &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
    status = U_ZERO_ERROR;
    ucasemap_setBreakIterator(ucasemap, brkiter.getIterator(), &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -104,14 +103,14 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
       const char* str_cur_s = str_cont.get(i).c_str();
 
       status = U_ZERO_ERROR;
-      int buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),       
-               (const char*)str_cur_s, str_cur_n, &status);                   
+      int buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
+               (const char*)str_cur_s, str_cur_n, &status);
 
       if (U_FAILURE(status)) {
          buf.resize(buf_need, false/*destroy contents*/);
          status = U_ZERO_ERROR;
-         buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),    
-               (const char*)str_cur_s, str_cur_n, &status);                   
+         buf_need = ucasemap_utf8ToTitle(ucasemap, buf.data(), buf.size(),
+               (const char*)str_cur_s, str_cur_n, &status);
 
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
                                              // we do have the buffer size required to complete this op
@@ -164,7 +163,7 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
  *    use StriUBreakIterator
 */
@@ -217,17 +216,17 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
       status = U_ZERO_ERROR;
       int buf_need;
       if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
-         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
       else buf_need = ucasemap_utf8ToUpper(ucasemap,
-         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+         buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
 
       if (U_FAILURE(status)) { /* retry */
          buf.resize(buf_need, false/*destroy contents*/);
          status = U_ZERO_ERROR;
          if (_type == 1) buf_need = ucasemap_utf8ToLower(ucasemap,
-            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
          else buf_need = ucasemap_utf8ToUpper(ucasemap,
-            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);                         
+            buf.data(), buf.size(), (const char*)str_cur_s, str_cur_n, &status);
 
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */}) // this shouldn't happen
                                              // we do have the buffer size required to complete this op

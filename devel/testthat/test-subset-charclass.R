@@ -16,7 +16,7 @@ test_that("stri_subset_charclass", {
    expect_identical(stri_subset_charclass("a\u0105bc", c("\\P{l}", "\\P{ll}", "\\P{lu}")), "a\u0105bc")
    expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{AlPh_a  bEtic}")), "a\u0105bc")
    expect_identical(stri_subset_charclass("","\\p{L}"), character(0))
-   
+
    expect_identical(stri_subset_regex(NA, NA, omit_na=TRUE), character(0))
    suppressWarnings(expect_identical(stri_subset_regex("","", omit_na=TRUE), character(0)))
    suppressWarnings(expect_identical(stri_subset_regex("a","", omit_na=TRUE), character(0)))

@@ -55,7 +55,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Added missing ucol_close
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    FR #122: omit_na arg added
  */

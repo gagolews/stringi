@@ -46,7 +46,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
  */
@@ -72,7 +72,7 @@ SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter)
 
       brkiter.setupMatcher(str_cont.get(i).c_str(), str_cont.get(i).length());
       brkiter.first();
-      
+
       R_len_t cur_count = 0;
       while (brkiter.next())
          ++cur_count;

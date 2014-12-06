@@ -94,7 +94,7 @@
 #' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
 #'
-#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} 
+#' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE}
 #' and \code{n_min=n} arguments is called on the resulting object.
 #' In such a case, a character matrix with an appropriate number of rows
 #' (according to the length of \code{str}, \code{pattern}, etc.)

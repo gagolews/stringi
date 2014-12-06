@@ -54,7 +54,7 @@
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new args: add_para_1, add_para_n
  */
@@ -94,7 +94,7 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-30)
  *          BreakIterator usage mods
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new args: add_para_1, add_para_n,
  *    cost of the last line is zero
@@ -189,7 +189,7 @@ struct StriWrapLineStart {
    std::string str;
    R_len_t nbytes;
    R_len_t count;
-   
+
    StriWrapLineStart(const String8& s, R_len_t v) :
       str(s.c_str()) {
       nbytes  = s.length()+v;
@@ -197,7 +197,6 @@ struct StriWrapLineStart {
       str.append(std::string(v, ' '));
    }
 };
-
 
 
 /** Word wrap text
@@ -222,7 +221,7 @@ struct StriWrapLineStart {
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new args: indent, exdent, prefix, initial
  */
@@ -230,16 +229,15 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP locale)
 {
    double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
-   
+
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
    if (width_val <= 0) Rf_error(MSG__EXPECTED_POSITIVE, "width");
-   
+
    int indent_val = stri__prepare_arg_integer_1_notNA(indent, "indent");
    if (indent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "indent");
-   
+
    int exdent_val = stri__prepare_arg_integer_1_notNA(exdent, "exdent");
    if (exdent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "exdent");
-   
 
 
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
@@ -247,7 +245,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    PROTECT(str     = stri_prepare_arg_string(str, "str"));
    PROTECT(prefix  = stri_prepare_arg_string_1(prefix, "prefix"));
    PROTECT(initial = stri_prepare_arg_string_1(initial, "initial"));
-   
+
    BreakIterator* briter = NULL;
    UText* str_text = NULL;
 
@@ -260,8 +258,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    StriContainerUTF8_indexable str_cont(str, str_length);
    StriContainerUTF8 prefix_cont(prefix, 1);
    StriContainerUTF8 initial_cont(initial, 1);
-   
-   
+
+
    // prepare indent/exdent/prefix/initial stuff:
    // 1st line, 1st para (i==0, u==0): initial+indent
    // nth line, 1st para (i==0, u> 0): prefix +exdent
@@ -297,7 +295,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       R_len_t str_cur_n = str_cont.get(i).length();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      
+
       status = U_ZERO_ERROR;
       briter->setText(str_text, status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -398,17 +396,17 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       for (R_len_t u = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++u) {
          R_len_t wrap_after_cur = *iter_wrap;
          R_len_t cur_pos = end_pos_trim[wrap_after_cur];
-         
+
          std::string cs;
          if (i == 0 && u == 0)     cs = ii.str;
          else if (i > 0 && u == 0) cs = pi.str;
          else                      cs = pe.str;
          cs.append(str_cur_s+last_pos, cur_pos-last_pos);
          SET_STRING_ELT(ans, u, Rf_mkCharLenCE(cs.c_str(), cs.size(), CE_UTF8));
-         
+
          last_pos = end_pos_orig[wrap_after_cur];
       }
-      
+
       // last line goes here:
       std::string cs;
       if (i == 0 && nlines-1 == 0)     cs = ii.str;

@@ -48,34 +48,34 @@
  */
 class StriBrkIterOptions {
    protected:
-   
+
       const char* locale; // R_alloc'd
       UBreakIteratorType type;
       int32_t* skip_rules; // R_alloc'd
       R_len_t  skip_size; // number of elements in skip_rules
-   
-   
+
+
    private:
-   
+
       void setEmptyOpts() {
          locale = NULL;
          type = UBRK_COUNT;
          skip_rules = NULL;
-         skip_size = 0;    
+         skip_size = 0;
       }
-      
+
       void setType(SEXP opts_brkiter, const char* default_type);
       void setLocale(SEXP opts_brkiter);
       void setSkipRuleStatus(SEXP opts_brkiter);
-      
-      
+
+
    public:
-      
-   
+
+
       StriBrkIterOptions() {
          setEmptyOpts();
       }
-      
+
       StriBrkIterOptions(SEXP opts_brkiter, const char* default_type) {
          setEmptyOpts();
          setLocale(opts_brkiter);
@@ -83,8 +83,6 @@ class StriBrkIterOptions {
          setType(opts_brkiter, default_type);
       }
 };
-
-
 
 
 /**
@@ -97,9 +95,9 @@ class StriBrkIterOptions {
  */
 class StriUBreakIterator : public StriBrkIterOptions {
    private:
-   
+
       UBreakIterator* uiterator;
-      
+
       void open() {
 #ifndef NDEBUG
          if (uiterator) throw StriException("!NDEBUG: StriUBreakIterator::open()");
@@ -118,80 +116,77 @@ class StriUBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                uiterator = ubrk_open(UBRK_WORD, locale, NULL, 0, &status);
                break;
+            case UBRK_COUNT:
             default:
                throw StriException(MSG__INTERNAL_ERROR);
-               break;
          }
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
-      
 
-   
+
    public:
-   
+
       StriUBreakIterator()
          : StriBrkIterOptions() {
          uiterator = NULL;
       }
-   
+
       StriUBreakIterator(const StriBrkIterOptions& bropt)
          : StriBrkIterOptions(bropt) {
          uiterator = NULL;
       }
-      
+
       StriUBreakIterator& operator=(const StriBrkIterOptions& bropt) {
          this->~StriUBreakIterator();
          (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
          uiterator = NULL;
          return *this;
       }
-      
+
       ~StriUBreakIterator() {
          if (uiterator) {
             ubrk_close(uiterator);
             uiterator = NULL;
          }
       }
-      
+
       void free(bool dealloc=true) {
          if (uiterator && dealloc) {
             ubrk_close(uiterator);
          }
          uiterator = NULL;
       }
-      
-      
+
+
       UBreakIterator* getIterator() {
          if (!uiterator) open();
          return uiterator;
       }
-      
-      
+
+
       const char* getLocale() {
          return locale;
       }
 };
 
 
-
-
 /**
  * A class to manage a break iterator
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  * separate class
  */
 class StriRuleBasedBreakIterator : public StriBrkIterOptions {
    private:
-   
+
       RuleBasedBreakIterator* rbiterator;
       UText* searchText;
       R_len_t searchPos; // may be BreakIterator::DONE
       const char* searchStr; // owned by caller
       R_len_t searchLen; // in bytes
-      
+
       void setEmptyOpts() {
          rbiterator = NULL;
          searchText = NULL;
@@ -199,7 +194,7 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
          searchStr = NULL;
          searchLen = 0;
       }
-      
+
       void open() {
          UErrorCode status = U_ZERO_ERROR;
          Locale loc = Locale::createFromName(locale);
@@ -216,40 +211,40 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                rbiterator = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
+            case UBRK_COUNT:
             default:
                throw StriException(MSG__INTERNAL_ERROR);
-               break;
          }
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
-      
+
       bool ignoreBoundary();
-   
+
    public:
-   
+
       StriRuleBasedBreakIterator()
          : StriBrkIterOptions() {
          setEmptyOpts();
       }
-   
+
       StriRuleBasedBreakIterator(const StriBrkIterOptions& bropt)
          : StriBrkIterOptions(bropt) {
          setEmptyOpts();
       }
-      
+
       StriRuleBasedBreakIterator& operator=(const StriBrkIterOptions& bropt) {
          this->~StriRuleBasedBreakIterator();
          (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
          setEmptyOpts();
          return *this;
       }
-      
+
       ~StriRuleBasedBreakIterator() {
          if (rbiterator) {
             delete rbiterator;
             rbiterator = NULL;
          }
-         
+
          if (searchText) {
             utext_close(searchText);
             searchText = NULL;
@@ -257,11 +252,11 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
       }
 
       void setupMatcher(const char* searchStr, R_len_t searchLen);
-      
+
       void first();
       bool next();
       bool next(std::pair<R_len_t, R_len_t>& bdr);
-      
+
       void last();
       bool previous(std::pair<R_len_t, R_len_t>& bdr);
 };

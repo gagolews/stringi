@@ -55,22 +55,22 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
    R_len_t str_length = LENGTH(str);
    StriContainerUTF8_indexable str_cont(str, str_length);
    StriRuleBasedBreakIterator brkiter(opts_brkiter2);
-   
+
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, str_length, 2));
    stri__locate_set_dimnames_matrix(ret);
    int* ret_tab = INTEGER(ret);
-   
+
    for (R_len_t i = 0; i < str_length; ++i)
    {
       ret_tab[i]            = NA_INTEGER;
       ret_tab[i+str_length] = NA_INTEGER;
-         
+
       if (str_cont.isNA(i) || str_cont.get(i).length() == 0) continue;
 
       brkiter.setupMatcher(str_cont.get(i).c_str(), str_cont.get(i).length());
       pair<R_len_t,R_len_t> curpair;
-      
+
       if (first) {
          brkiter.first();
          if (!brkiter.next(curpair)) continue;
@@ -79,10 +79,10 @@ SEXP stri__locate_firstlast_boundaries(SEXP str, SEXP opts_brkiter, bool first)
          brkiter.last();
          if (!brkiter.previous(curpair)) continue;
       }
-      
+
       ret_tab[i]            = curpair.first;
       ret_tab[i+str_length] = curpair.second;
-      
+
       // Adjust UTF8 byte index -> UChar32 index
       str_cont.UTF8_to_UChar32_index(i,
             ret_tab+i, ret_tab+i+str_length, 1,
@@ -127,7 +127,6 @@ SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter)
 }
 
 
-
 /** Locate all BreakIterator boundaries
  *
  * @param str character vector
@@ -149,7 +148,7 @@ SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-28)
  *          new args: omit_no_match
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *          use StriRuleBasedBreakIterator
  */
@@ -176,7 +175,7 @@ SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter)
 
       brkiter.setupMatcher(str_cont.get(i).c_str(), str_cont.get(i).length());
       brkiter.first();
-      
+
       deque< pair<R_len_t,R_len_t> > occurrences;
       pair<R_len_t,R_len_t> curpair;
       while (brkiter.next(curpair))

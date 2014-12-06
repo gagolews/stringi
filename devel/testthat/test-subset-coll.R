@@ -23,7 +23,7 @@ test_that("stri_subset_coll", {
    suppressWarnings(expect_identical(stri_subset_coll("",""), NA_character_))
    suppressWarnings(expect_identical(stri_subset_coll("a",""), NA_character_))
    suppressWarnings(expect_identical(stri_subset_coll("","a"), character(0)))
-   
+
    expect_identical(stri_subset_coll(NA, NA, omit_na=TRUE), character(0))
    suppressWarnings(expect_identical(stri_subset_coll("","", omit_na=TRUE), character(0)))
    suppressWarnings(expect_identical(stri_subset_coll("a","", omit_na=TRUE), character(0)))
