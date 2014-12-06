@@ -123,6 +123,8 @@ stri_subset_coll <- function(str, pattern, omit_na=FALSE, ..., opts_collator=NUL
 
 #' @export
 #' @rdname stri_subset
-stri_subset_regex <- function(str, pattern, omit_na=FALSE, opts_regex=NULL) {
+stri_subset_regex <- function(str, pattern, omit_na=FALSE, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_subset_regex, str, pattern, omit_na, opts_regex)
 }

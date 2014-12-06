@@ -144,7 +144,9 @@ stri_match <- function(str, ..., regex,
 #' @export
 #' @rdname search_match
 stri_match_all_regex <- function(str, pattern, omit_no_match=FALSE,
-      cg_missing=NA_character_, opts_regex=NULL) {
+      cg_missing=NA_character_, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_match_all_regex, str, pattern, omit_no_match, cg_missing, opts_regex)
 }
 
@@ -152,7 +154,9 @@ stri_match_all_regex <- function(str, pattern, omit_no_match=FALSE,
 #' @export
 #' @rdname search_match
 stri_match_first_regex <- function(str, pattern,
-      cg_missing=NA_character_, opts_regex=NULL) {
+      cg_missing=NA_character_, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_match_first_regex, str, pattern, cg_missing, opts_regex)
 }
 
@@ -160,6 +164,8 @@ stri_match_first_regex <- function(str, pattern,
 #' @export
 #' @rdname search_match
 stri_match_last_regex <- function(str, pattern,
-      cg_missing=NA_character_, opts_regex=NULL) {
+      cg_missing=NA_character_, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_match_last_regex, str, pattern, cg_missing, opts_regex)
 }

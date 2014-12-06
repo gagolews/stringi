@@ -15,7 +15,7 @@ stri_detect_charclass(str, pattern)
 
 stri_detect_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_detect_regex(str, pattern, opts_regex = NULL)
+stri_detect_regex(str, pattern, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -70,7 +70,7 @@ stri_detect_regex(c("stringi R", "REXAMINE", "123"), 'R.')
 stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[[:alpha:]]*?')
 stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
 stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
-stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
+stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
 }
 \seealso{
 Other search_detect: \code{\link{stri_endswith}},

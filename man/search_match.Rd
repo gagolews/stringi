@@ -18,12 +18,12 @@ stri_match_last(str, ..., regex)
 stri_match(str, ..., regex, mode = c("first", "all", "last"))
 
 stri_match_all_regex(str, pattern, omit_no_match = FALSE,
-  cg_missing = NA_character_, opts_regex = NULL)
+  cg_missing = NA_character_, ..., opts_regex = NULL)
 
-stri_match_first_regex(str, pattern, cg_missing = NA_character_,
+stri_match_first_regex(str, pattern, cg_missing = NA_character_, ...,
   opts_regex = NULL)
 
-stri_match_last_regex(str, pattern, cg_missing = NA_character_,
+stri_match_last_regex(str, pattern, cg_missing = NA_character_, ...,
   opts_regex = NULL)
 }
 \arguments{

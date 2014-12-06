@@ -242,20 +242,26 @@ stri_extract_last_coll <- function(str, pattern, ..., opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_regex <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, opts_regex=NULL) {
+stri_extract_all_regex <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_extract_all_regex, str, pattern, simplify, omit_no_match, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first_regex <- function(str, pattern, opts_regex=NULL) {
+stri_extract_first_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_extract_first_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last_regex <- function(str, pattern, opts_regex=NULL) {
+stri_extract_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_extract_last_regex, str, pattern, opts_regex)
 }

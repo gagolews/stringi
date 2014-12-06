@@ -15,7 +15,7 @@ stri_count_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_count_fixed(str, pattern)
 
-stri_count_regex(str, pattern, opts_regex = NULL)
+stri_count_regex(str, pattern, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}

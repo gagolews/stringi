@@ -261,21 +261,27 @@ stri_locate_last_coll <- function(str, pattern, ..., opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_regex <- function(str, pattern, omit_no_match=FALSE, opts_regex=NULL) {
+stri_locate_all_regex <- function(str, pattern, omit_no_match=FALSE, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_locate_all_regex, str, pattern, omit_no_match, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_regex <- function(str, pattern, opts_regex=NULL) {
+stri_locate_first_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_locate_first_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_regex <- function(str, pattern, opts_regex=NULL) {
+stri_locate_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_locate_last_regex, str, pattern, opts_regex)
 }
 

@@ -80,7 +80,7 @@
 #' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[[:alpha:]]*?')
 #' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
 #' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
-#' stri_detect_regex("stringi", "STRING.", opts_regex=stri_opts_regex(case_insensitive=TRUE))
+#' stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
 #'
 #' @family search_detect
 #' @export
@@ -126,6 +126,8 @@ stri_detect_coll <- function(str, pattern, ..., opts_collator=NULL) {
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, opts_regex=NULL) {
+stri_detect_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_detect_regex, str, pattern, opts_regex)
 }
