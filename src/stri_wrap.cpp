@@ -96,7 +96,8 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  *          BreakIterator usage mods
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
- *    new args: add_para_1, add_para_n
+ *    new args: add_para_1, add_para_n,
+ *    cost of the last line is zero
  */
 void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
    R_len_t nwords, int width_val, double exponent_val,
@@ -107,8 +108,6 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
 #define IDX(i,j) (i)*nwords+(j)
    vector<double> cost(nwords*nwords);
    // where cost[IDX(i,j)] == cost of printing words i..j in a single line, i<=j
-
-   // @TODO: we may wish not to include the cost of the last line...
 
    // calculate costs:
    // there is some "punishment" for leaving blanks at the end of each line
@@ -131,7 +130,13 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
          if (i == 0) ct -= add_para_1;
          else        ct -= add_para_n;
 
-         if (j==i)
+         if (j == nwords-1) { // last line == cost 0
+            if (j == i || ct >= 0)
+               cost[IDX(i,j)] = 0.0;
+            else
+               cost[IDX(i,j)] = -1.0/*Inf*/;
+         }
+         else if (j == i)
             // some words don't fit in a line at all -> cost 0.0
             cost[IDX(i,j)] = (ct < 0) ? 0.0 : pow((double)ct, exponent_val);
          else
