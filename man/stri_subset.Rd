@@ -15,7 +15,7 @@ stri_subset_charclass(str, pattern, omit_na = FALSE)
 
 stri_subset_coll(str, pattern, omit_na = FALSE, ..., opts_collator = NULL)
 
-stri_subset_regex(str, pattern, omit_na = FALSE, opts_regex = NULL)
+stri_subset_regex(str, pattern, omit_na = FALSE, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}

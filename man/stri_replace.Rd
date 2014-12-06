@@ -47,12 +47,12 @@ stri_replace_first_fixed(str, pattern, replacement)
 
 stri_replace_last_fixed(str, pattern, replacement)
 
-stri_replace_all_regex(str, pattern, replacement, vectorize_all = TRUE,
+stri_replace_all_regex(str, pattern, replacement, vectorize_all = TRUE, ...,
   opts_regex = NULL)
 
-stri_replace_first_regex(str, pattern, replacement, opts_regex = NULL)
+stri_replace_first_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
-stri_replace_last_regex(str, pattern, replacement, opts_regex = NULL)
+stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}

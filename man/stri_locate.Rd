@@ -40,12 +40,12 @@ stri_locate_first_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_locate_last_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_locate_all_regex(str, pattern, omit_no_match = FALSE,
+stri_locate_all_regex(str, pattern, omit_no_match = FALSE, ...,
   opts_regex = NULL)
 
-stri_locate_first_regex(str, pattern, opts_regex = NULL)
+stri_locate_first_regex(str, pattern, ..., opts_regex = NULL)
 
-stri_locate_last_regex(str, pattern, opts_regex = NULL)
+stri_locate_last_regex(str, pattern, ..., opts_regex = NULL)
 
 stri_locate_all_fixed(str, pattern, omit_no_match = FALSE)
 

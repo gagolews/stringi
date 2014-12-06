@@ -39,11 +39,11 @@ stri_extract_first_coll(str, pattern, ..., opts_collator = NULL)
 stri_extract_last_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_extract_all_regex(str, pattern, simplify = FALSE,
-  omit_no_match = FALSE, opts_regex = NULL)
+  omit_no_match = FALSE, ..., opts_regex = NULL)
 
-stri_extract_first_regex(str, pattern, opts_regex = NULL)
+stri_extract_first_regex(str, pattern, ..., opts_regex = NULL)
 
-stri_extract_last_regex(str, pattern, opts_regex = NULL)
+stri_extract_last_regex(str, pattern, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}

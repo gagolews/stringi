@@ -273,20 +273,26 @@ stri_replace_last_fixed <- function(str, pattern, replacement) {
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_regex <- function(str, pattern, replacement, vectorize_all=TRUE, opts_regex=NULL) {
+stri_replace_all_regex <- function(str, pattern, replacement, vectorize_all=TRUE, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_replace_all_regex, str, pattern, replacement, vectorize_all, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_regex <- function(str, pattern, replacement, opts_regex=NULL) {
+stri_replace_first_regex <- function(str, pattern, replacement, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_replace_first_regex, str, pattern, replacement, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_regex <- function(str, pattern, replacement, opts_regex=NULL) {
+stri_replace_last_regex <- function(str, pattern, replacement, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_replace_last_regex, str, pattern, replacement, opts_regex)
 }

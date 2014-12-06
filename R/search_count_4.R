@@ -133,6 +133,8 @@ stri_count_fixed <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_count
-stri_count_regex <- function(str, pattern, opts_regex=NULL) {
+stri_count_regex <- function(str, pattern, ..., opts_regex=NULL) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_count_regex, str, pattern, opts_regex)
 }

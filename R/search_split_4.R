@@ -169,9 +169,11 @@ stri_split_fixed <- function(str, pattern, n=-1L,
 #' @export
 #' @rdname stri_split
 stri_split_regex <- function(str, pattern, n=-1L, omit_empty=FALSE,
-      tokens_only=FALSE, simplify=FALSE, opts_regex=NULL)  {
+      tokens_only=FALSE, simplify=FALSE, ..., opts_regex=NULL)  {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_split_regex, str, pattern,
       n, omit_empty, tokens_only, simplify, opts_regex)
 }
