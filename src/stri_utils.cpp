@@ -45,7 +45,7 @@
  * @return character matrix
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-23)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    new arg: n_min
  */

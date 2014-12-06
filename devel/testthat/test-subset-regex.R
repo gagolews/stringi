@@ -45,7 +45,7 @@ test_that("stri_subset_regex", {
    expect_equivalent(stri_subset_regex("caacbacacb", "(a+b)+"), character(0))
 
    expect_equivalent(stri_subset_regex("abc", c("a", "b", "d")), c("abc", "abc")) # this is weird
-   
+
    expect_identical(stri_subset_regex(NA, NA, omit_na=TRUE), character(0))
    suppressWarnings(expect_identical(stri_subset_regex("","", omit_na=TRUE), character(0)))
    suppressWarnings(expect_identical(stri_subset_regex("a","", omit_na=TRUE), character(0)))

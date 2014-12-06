@@ -15,43 +15,43 @@ test_that("stri_locate_all_boundaries", {
 
 
 test_that("stri_locate_first_boundaries", {
-   
+
    expect_equivalent(stri_locate_first_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), opts=stri_opts_brkiter(type="character")),
       matrix(c(1,1,1,1, NA,NA,NA,NA), ncol=2, byrow=TRUE))
    expect_equivalent(stri_locate_first_boundaries(character(0), opts=stri_opts_brkiter(type="character")),
       matrix(integer(0), ncol=2, byrow=TRUE))
    expect_equivalent(colnames(stri_locate_first_boundaries(character(0), opts=stri_opts_brkiter(type="character"))),
       c("start", "end"))
-   
+
 })
 
 
 test_that("stri_locate_last_boundaries", {
-   
+
    expect_equivalent(stri_locate_last_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), opts=stri_opts_brkiter(type="character")),
       matrix(c(11,11,11,11, NA,NA,NA,NA), ncol=2, byrow=TRUE))
    expect_equivalent(stri_locate_last_boundaries(character(0), opts=stri_opts_brkiter(type="character")),
       matrix(integer(0), ncol=2, byrow=TRUE))
    expect_equivalent(colnames(stri_locate_last_boundaries(character(0), opts=stri_opts_brkiter(type="character"))),
       c("start", "end"))
-   
+
 })
 
 
 test_that("stri_locate_first_words", {
-   
+
    expect_equivalent(stri_locate_first_words(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "   ", NA)),
       matrix(c(1,3,5,7,NA,NA,NA,NA), ncol=2, byrow=TRUE))
    expect_equivalent(stri_locate_first_words(character(0)),
       matrix(integer(0), ncol=2, byrow=TRUE))
    expect_equivalent(colnames(stri_locate_first_words(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot", "   ", NA))),
       c("start", "end"))
-   
+
 })
 
 
 test_that("stri_locate_last_words", {
-   
+
    expect_equivalent(stri_locate_last_words(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot   ", "   ", NA)),
       matrix(c(8,11,5,7,NA,NA,NA,NA), ncol=2, byrow=TRUE))
    expect_equivalent(stri_locate_last_words(c("ala ma kota", "    kot", "   ", "", NA, "a", "aa ", "aa")),
@@ -60,7 +60,7 @@ test_that("stri_locate_last_words", {
       matrix(integer(0), ncol=2, byrow=TRUE))
    expect_equivalent(colnames(stri_locate_last_words(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot", "   ", NA))),
       c("start", "end"))
-   
+
 })
 
 

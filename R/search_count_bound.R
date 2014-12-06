@@ -44,13 +44,13 @@
 #' \link{stringi-search-boundaries}.
 #'
 #' In case of \code{stri_count_words},
-#' just like in \code{\link{stri_extract_all_words}} and 
+#' just like in \code{\link{stri_extract_all_words}} and
 #' \code{\link{stri_locate_all_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
 #' to locate word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #' This is function is equivalent to a call to
-#' \code{\link{stri_count_boundaries}(str, 
+#' \code{\link{stri_count_boundaries}(str,
 #'    \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
 #'
 #' Note that a \code{BreakIterator} of type \code{character}

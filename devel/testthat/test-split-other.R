@@ -39,7 +39,7 @@ test_that("stri_split_boundaries", {
 
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       list(c("aaa", "bbb", "ccc", "ddd")))
-   
+
    expect_identical(stri_split_boundaries("   \u0105\u0105\u0105 \u0106\u0106\u0106 \u0107 \u0108\u0108\u0108\u0108   ", opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       list(c("\u0105\u0105\u0105", "\u0106\u0106\u0106", "\u0107", "\u0108\u0108\u0108\u0108")))
 
@@ -69,13 +69,13 @@ test_that("stri_split_boundaries", {
 
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       list(c("aaa", "bbb", "ccc", "ddd")))
-   
+
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=4, tokens_only=TRUE, simplify=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       matrix(c("aaa", "bbb", "ccc", "ddd"), byrow=TRUE, nrow=1))
-   
+
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, simplify=TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       matrix(c("aaa", "bbb", "ccc", "ddd", ""), byrow=TRUE, nrow=1))
-   
+
    expect_identical(stri_split_boundaries("   aaa bbb ccc ddd   ", n=5, tokens_only=TRUE, simplify=NA, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       matrix(c("aaa", "bbb", "ccc", "ddd", NA), byrow=TRUE, nrow=1))
 
@@ -86,7 +86,7 @@ test_that("stri_split_boundaries", {
    expect_identical(stri_split_boundaries(c("aaa bbb", "ccc"), simplify=NA,
       opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
          matrix(c("aaa", "bbb", "ccc", NA), nrow=2, byrow=TRUE))
-   
+
    expect_identical(stri_split_boundaries(c("aaa bbb", "ccc"), simplify=TRUE,
       opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
          matrix(c("aaa", "bbb", "ccc", ""), nrow=2, byrow=TRUE))

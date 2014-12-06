@@ -36,7 +36,7 @@ test_that("stri_extract_first_words", {
 
    expect_identical(stri_extract_first_words(c("", "ala", "ma kota")),
       c(NA, "ala", "ma"))
-      
+
 })
 
 
@@ -53,5 +53,5 @@ test_that("stri_extract_last_words", {
 
    expect_identical(stri_extract_last_words(c("", "ala", "ma kota")),
       c(NA, "ala", "kota"))
-      
+
 })

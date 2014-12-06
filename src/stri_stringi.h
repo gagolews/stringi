@@ -234,9 +234,9 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex);
 SEXP stri_extract_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_regex);
-SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP opts_regex);
-SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP opts_regex);
-SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex);
+SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex);
+SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex);
+SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_missing, SEXP opts_regex);
 
 
 SEXP stri_count_charclass(SEXP str, SEXP pattern);

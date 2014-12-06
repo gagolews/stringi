@@ -271,7 +271,7 @@ int stri__match_arg(const char* option, const char** set) {
    while (set[set_length] != NULL) ++set_length;
    if (set_length <= 0) return -1;
     // this could be substituted for a linked list:
-   std::vector<bool> excluded(set_length, false);
+   std::vector<bool> excluded((size_t)set_length, false);
 
    for (int k=0; option[k] != '\0'; ++k) {
       for (int i=0; i<set_length; ++i) {

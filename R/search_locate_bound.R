@@ -78,7 +78,7 @@
 #' Moreover, you may get two \code{NA}s in one row
 #' for no match (if \code{omit_no_match} is \code{FALSE})
 #' or \code{NA} arguments.
-#' 
+#'
 #' \code{stri_locate_first_*} and \code{stri_locate_last_*},
 #' on the other hand, return an integer matrix with
 #' two columns, giving the start and end positions of the first

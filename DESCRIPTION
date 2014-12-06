@@ -1,7 +1,7 @@
 Package: stringi
 Version: 0.4-1
 Date: 2014-12-06
-Title: Character string processing facilities
+Title: Character String Processing Facilities
 Description: stringi allows for fast, correct, consistent, portable,
     and convenient character string/text processing in every locale
     and any native encoding. Owing to the use of the ICU library,

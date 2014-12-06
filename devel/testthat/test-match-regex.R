@@ -5,6 +5,20 @@ test_that("stri_match_all_regex", {
 
    expect_identical(stri_match_all_regex(NA, "test"), list(matrix(NA_character_,1,1)))
    expect_identical(stri_match_all_regex("", "(test)(rest)"), list(matrix(NA_character_,1,3)))
+   expect_identical(stri_match_all_regex("", "(test)(rest)", omit_no_match = TRUE), list(matrix(NA_character_,0,3)))
+   
+   expect_identical(stri_match_all_regex("abcd", "^(:)?([^:]*)(:)?$", omit_no_match = TRUE, cg_missing="")[[1]],
+      matrix(c("abcd", "", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_all_regex("abcd", "^(:)?([^:]*)(:)?$")[[1]],
+      matrix(c("abcd", NA, "abcd", NA) ,1,4))
+   
+   expect_identical(stri_match_all_regex(":abcd", "^(:)?([^:]*)(:)?$", omit_no_match = TRUE, cg_missing="")[[1]],
+      matrix(c(":abcd", ":", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_all_regex(":abcd", "^(:)?([^:]*)(:)?$")[[1]],
+      matrix(c(":abcd", ":", "abcd", NA) ,1,4))
+   
    expect_identical(stri_match_all_regex(NA, "(test)(rest)"), list(matrix(NA_character_,1,3)))
    expect_identical(stri_match_all_regex("", "(test)(rest)", omit_no_match=TRUE), list(matrix(NA_character_,0,3)))
    expect_identical(stri_match_all_regex("test", NA), list(matrix(NA_character_,1,1)))
@@ -21,6 +35,19 @@ test_that("stri_match_first_regex", {
 
    expect_identical(stri_match_first_regex(NA, "test"), matrix(NA_character_,1,1))
    expect_identical(stri_match_first_regex("", "(test)(rest)"), matrix(NA_character_,1,3))
+   
+   expect_identical(stri_match_first_regex("abcd", "^(:)?([^:]*)(:)?$", cg_missing=""),
+      matrix(c("abcd", "", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_first_regex("abcd", "^(:)?([^:]*)(:)?$"),
+      matrix(c("abcd", NA, "abcd", NA) ,1,4))
+   
+   expect_identical(stri_match_first_regex(":abcd", "^(:)?([^:]*)(:)?$", cg_missing=""),
+      matrix(c(":abcd", ":", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_first_regex(":abcd", "^(:)?([^:]*)(:)?$"),
+      matrix(c(":abcd", ":", "abcd", NA) ,1,4))
+   
    expect_identical(stri_match_first_regex("test", NA), matrix(NA_character_,1,1))
    suppressWarnings(expect_identical(stri_match_first_regex("test", ""), matrix(NA_character_,1,1)))
    expect_equivalent(stri_match_first_regex(c("bacab", "ba\u0105aacaba\u0105a", "aa"), "a.a"),
@@ -35,6 +62,19 @@ test_that("stri_match_last_regex", {
 
    expect_identical(stri_match_last_regex(NA, "test"), matrix(NA_character_,1,1))
    expect_identical(stri_match_last_regex("", "(test)(rest)"), matrix(NA_character_,1,3))
+   
+   expect_identical(stri_match_last_regex("abcd", "^(:)?([^:]*)(:)?$", cg_missing=""),
+      matrix(c("abcd", "", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_last_regex("abcd", "^(:)?([^:]*)(:)?$"),
+      matrix(c("abcd", NA, "abcd", NA) ,1,4))
+   
+   expect_identical(stri_match_last_regex(":abcd", "^(:)?([^:]*)(:)?$", cg_missing=""),
+      matrix(c(":abcd", ":", "abcd", "") ,1,4))
+   
+   expect_identical(stri_match_last_regex(":abcd", "^(:)?([^:]*)(:)?$"),
+      matrix(c(":abcd", ":", "abcd", NA) ,1,4))
+   
    expect_identical(stri_match_last_regex("test", NA), matrix(NA_character_,1,1))
    suppressWarnings(expect_identical(stri_match_last_regex("test", ""), matrix(NA_character_,1,1)))
    expect_equivalent(stri_match_last_regex(c("bacab", "ba\u0105aacaba\u0104a", "aa"), "a.a"),

@@ -17,11 +17,14 @@ stri_match_last(str, ..., regex)
 
 stri_match(str, ..., regex, mode = c("first", "all", "last"))
 
-stri_match_all_regex(str, pattern, omit_no_match = FALSE, opts_regex = NULL)
+stri_match_all_regex(str, pattern, omit_no_match = FALSE,
+  cg_missing = NA_character_, opts_regex = NULL)
 
-stri_match_first_regex(str, pattern, opts_regex = NULL)
+stri_match_first_regex(str, pattern, cg_missing = NA_character_,
+  opts_regex = NULL)
 
-stri_match_last_regex(str, pattern, opts_regex = NULL)
+stri_match_last_regex(str, pattern, cg_missing = NA_character_,
+  opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -35,8 +38,11 @@ one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 for more details refer to \link{stringi-search-regex}}
 
 \item{omit_no_match}{single logical value; if \code{FALSE},
-then a missing value will indicate that there was no match;
-\code{stri_locate_all_*} only}
+then a row with missing values will indicate that there was no match;
+\code{stri_match_all_*} only}
+
+\item{cg_missing}{single string to be used if a capture group match
+is unavailable}
 
 \item{opts_regex}{a named list with \pkg{ICU} Regex settings
 as generated with \code{\link{stri_opts_regex}}; \code{NULL}
@@ -63,7 +69,7 @@ in round parentheses.
 \details{
 Vectorized over \code{str} and \code{pattern}.
 
-If no pattern match is detected or if a capture group match is unavailable,
+If no pattern match is detected and \code{omit_no_match=FALSE},
 then \code{NA}s are included in the resulting matrix (matrices), see Examples.
 
 By the way, \pkg{ICU} regex engine currently does not support named capture groups.
