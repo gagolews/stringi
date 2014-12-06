@@ -4,7 +4,7 @@
 \title{Split a String at Specific Text Boundaries}
 \usage{
 stri_split_boundaries(str, n = -1L, tokens_only = FALSE, simplify = FALSE,
-  opts_brkiter = NULL)
+  ..., opts_brkiter = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
@@ -17,6 +17,8 @@ may affect the result if \code{n} is positive, see Details}
 \item{simplify}{single logical value;
 if \code{TRUE} or \code{NA}, then a character matrix is returned;
 otherwise (the default), a list of character vectors is given, see Value}
+
+\item{...}{additional settings for \code{opts_brkiter}}
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
 as generated with \code{\link{stri_opts_brkiter}};
@@ -58,16 +60,14 @@ performed by \pkg{ICU}'s \code{BreakIterator}, see
 \examples{
 test <- "The\\u00a0above-mentioned    features are very useful. " \%s+\%
    "Warm thanks to their developers. 123 456 789"
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word",
-   skip_word_none=TRUE, skip_word_letter=TRUE))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word",
-   skip_word_none=TRUE, skip_word_number=TRUE))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))
-stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
+stri_split_boundaries(test, type="line")
+stri_split_boundaries(test, type="word")
+stri_split_boundaries(test, type="word", skip_word_none=TRUE)
+stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_letter=TRUE)
+stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_number=TRUE)
+stri_split_boundaries(test, type="sentence")
+stri_split_boundaries(test, type="sentence", skip_sentence_sep=TRUE)
+stri_split_boundaries(test, type="character")
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

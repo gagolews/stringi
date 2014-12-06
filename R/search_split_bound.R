@@ -129,6 +129,7 @@ stri_split_lines1 <- function(str) {
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{line_break}
+#' @param ... additional settings for \code{opts_brkiter}
 #'
 #' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
@@ -145,23 +146,22 @@ stri_split_lines1 <- function(str) {
 #' @examples
 #' test <- "The\u00a0above-mentioned    features are very useful. " %s+%
 #'    "Warm thanks to their developers. 123 456 789"
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word",
-#'    skip_word_none=TRUE, skip_word_letter=TRUE))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word",
-#'    skip_word_none=TRUE, skip_word_number=TRUE))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence", skip_sentence_sep=TRUE))
-#' stri_split_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
+#' stri_split_boundaries(test, type="line")
+#' stri_split_boundaries(test, type="word")
+#' stri_split_boundaries(test, type="word", skip_word_none=TRUE)
+#' stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_letter=TRUE)
+#' stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_number=TRUE)
+#' stri_split_boundaries(test, type="sentence")
+#' stri_split_boundaries(test, type="sentence", skip_sentence_sep=TRUE)
+#' stri_split_boundaries(test, type="character")
 #'
 #' @export
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
 stri_split_boundaries <- function(str, n=-1L,
-   tokens_only=FALSE, simplify=FALSE, opts_brkiter=NULL) {
-   .Call(C_stri_split_boundaries, str,
-      n, tokens_only, simplify, opts_brkiter)
+      tokens_only=FALSE, simplify=FALSE, ..., opts_brkiter=NULL) {
+   if (!missing(...))
+       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+   .Call(C_stri_split_boundaries, str, n, tokens_only, simplify, opts_brkiter)
 }

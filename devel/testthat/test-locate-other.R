@@ -3,12 +3,12 @@ context("test-locate-other.R")
 
 test_that("stri_locate_all_boundaries", {
    expect_identical(colnames(stri_locate_all_boundaries("stringi")[[1]]), c("start", "end"))
-   expect_error(stri_locate_all_boundaries("aaa", opts=stri_opts_brkiter(type="???")))
-   expect_equivalent(stri_locate_all_boundaries(c(NA, NA), opts=stri_opts_brkiter(type="word")),
+   expect_error(stri_locate_all_boundaries("aaa", opts_brkiter=stri_opts_brkiter(type="???")))
+   expect_equivalent(stri_locate_all_boundaries(c(NA, NA), type="word"),
       list(matrix(NA_integer_, ncol=2, nrow=1), matrix(NA_integer_, ncol=2, nrow=1)))
-   expect_equivalent(stri_locate_all_boundaries(c(NA, "     "), omit_no_match = TRUE, opts=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
+   expect_equivalent(stri_locate_all_boundaries(c(NA, "     "), omit_no_match = TRUE, opts_brkiter=stri_opts_brkiter(type="word", skip_word_none = TRUE)),
       list(matrix(NA_integer_, ncol=2, nrow=1), matrix(integer(0), ncol=2, nrow=0)))
-   expect_equivalent(stri_locate_all_boundaries(stri_trans_nfkd("a\u0105"), opts=stri_opts_brkiter(type='chara'))[[1]],
+   expect_equivalent(stri_locate_all_boundaries(stri_trans_nfkd("a\u0105"), type='chara')[[1]],
       matrix(c(1,1,2,3), nrow=2, byrow=TRUE))
 })
 
@@ -16,11 +16,11 @@ test_that("stri_locate_all_boundaries", {
 
 test_that("stri_locate_first_boundaries", {
 
-   expect_equivalent(stri_locate_first_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), opts=stri_opts_brkiter(type="character")),
+   expect_equivalent(stri_locate_first_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), opts_brkiter=stri_opts_brkiter(type="character")),
       matrix(c(1,1,1,1, NA,NA,NA,NA), ncol=2, byrow=TRUE))
-   expect_equivalent(stri_locate_first_boundaries(character(0), opts=stri_opts_brkiter(type="character")),
+   expect_equivalent(stri_locate_first_boundaries(character(0), opts_brkiter=stri_opts_brkiter(type="character")),
       matrix(integer(0), ncol=2, byrow=TRUE))
-   expect_equivalent(colnames(stri_locate_first_boundaries(character(0), opts=stri_opts_brkiter(type="character"))),
+   expect_equivalent(colnames(stri_locate_first_boundaries(character(0), type="character")),
       c("start", "end"))
 
 })
@@ -28,11 +28,12 @@ test_that("stri_locate_first_boundaries", {
 
 test_that("stri_locate_last_boundaries", {
 
-   expect_equivalent(stri_locate_last_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), opts=stri_opts_brkiter(type="character")),
+   expect_equivalent(stri_locate_last_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), 
+      opts_brkiter=stri_opts_brkiter(type="character")),
       matrix(c(11,11,11,11, NA,NA,NA,NA), ncol=2, byrow=TRUE))
-   expect_equivalent(stri_locate_last_boundaries(character(0), opts=stri_opts_brkiter(type="character")),
+   expect_equivalent(stri_locate_last_boundaries(character(0), type="character"),
       matrix(integer(0), ncol=2, byrow=TRUE))
-   expect_equivalent(colnames(stri_locate_last_boundaries(character(0), opts=stri_opts_brkiter(type="character"))),
+   expect_equivalent(colnames(stri_locate_last_boundaries(character(0), opts_brkiter=stri_opts_brkiter(type="character"))),
       c("start", "end"))
 
 })

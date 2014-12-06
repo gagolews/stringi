@@ -52,8 +52,7 @@ and \code{\link{stri_count_words}},
 to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 This is function is equivalent to a call to
-\code{\link{stri_split_boundaries}(str, \link{stri_opts_brkiter}(type="word",
-   skip_word_none=TRUE, locale=locale))}
+\code{\link{stri_split_boundaries}(str, type="word", skip_word_none=TRUE, locale=locale)}
 }
 \examples{
 stri_extract_all_words("stringi: THE string processing package 123.48...")

@@ -67,6 +67,7 @@
 #' as generated with \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e. \code{word};
 #' \code{stri_trans_totitle} only
+#' @param ... additional settings for \code{opts_brkiter}
 #'
 #' @return
 #' Each function returns a character vector.
@@ -87,10 +88,8 @@
 #' stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 #' stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
-#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
-#'     stri_opts_brkiter(type="word")) # default boundary
-#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!",
-#'     stri_opts_brkiter(type="sentence"))
+#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="word") # default boundary
+#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="sentence")
 stri_trans_tolower <- function(str, locale=NULL) {
    .Call(C_stri_trans_casemap, str, 1L, locale)
 }
@@ -105,6 +104,8 @@ stri_trans_toupper <- function(str, locale=NULL) {
 
 #' @export
 #' @rdname stri_trans_casemap
-stri_trans_totitle <- function(str, opts_brkiter=NULL) {
+stri_trans_totitle <- function(str, ..., opts_brkiter=NULL) {
+   if (!missing(...))
+       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
    .Call(C_stri_trans_totitle, str, opts_brkiter)
 }

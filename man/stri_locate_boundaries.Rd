@@ -8,11 +8,12 @@
 \alias{stri_locate_last_words}
 \title{Locate Specific Text Boundaries}
 \usage{
-stri_locate_all_boundaries(str, omit_no_match = FALSE, opts_brkiter = NULL)
+stri_locate_all_boundaries(str, omit_no_match = FALSE, ...,
+  opts_brkiter = NULL)
 
-stri_locate_last_boundaries(str, opts_brkiter = NULL)
+stri_locate_last_boundaries(str, ..., opts_brkiter = NULL)
 
-stri_locate_first_boundaries(str, opts_brkiter = NULL)
+stri_locate_first_boundaries(str, ..., opts_brkiter = NULL)
 
 stri_locate_all_words(str, omit_no_match = FALSE, locale = NULL)
 
@@ -26,6 +27,8 @@ stri_locate_first_words(str, locale = NULL)
 \item{omit_no_match}{single logical value; if \code{FALSE},
 then 2 missing values will indicate that there are no text boundaries;
 \code{stri_locate_all_*} only}
+
+\item{...}{additional settings for \code{opts_brkiter}}
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
 as generated with \code{\link{stri_opts_brkiter}};
@@ -73,15 +76,14 @@ just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_wor
 to locate word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 This is function is equivalent to a call to
-\code{stri_locate_*_boundaries(str,
-  \link{stri_opts_brkiter}(type="word", skip_word_none=TRUE, locale=locale))}
+\code{stri_locate_*_boundaries(str, type="word", skip_word_none=TRUE, locale=locale)}
 }
 \examples{
 test <- "The\\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
-stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="line"))
-stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="word"))
-stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="sentence"))
-stri_locate_all_boundaries(test, opts_brkiter=stri_opts_brkiter(type="character"))
+stri_locate_all_boundaries(test, type="line")
+stri_locate_all_boundaries(test, type="word")
+stri_locate_all_boundaries(test, type="sentence")
+stri_locate_all_boundaries(test, type="character")
 stri_locate_all_words(test)
 }
 \seealso{
