@@ -4,7 +4,7 @@
 \title{Word Wrap Text to Format Paragraphs}
 \usage{
 stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
-  simplify = TRUE, normalize = FALSE, indent = 0, exdent = 0,
+  simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0,
   prefix = "", initial = prefix, locale = NULL)
 }
 \arguments{
@@ -42,7 +42,7 @@ Otherwise, you will get a list of \code{length(str)} character vectors.
 }
 \description{
 This function breaks text paragraphs into lines,
-each consisting of at most \code{width} code points.
+each consisting - if it is possible - of at most \code{width} code points.
 }
 \details{
 Vectorized over \code{str}.
@@ -80,6 +80,7 @@ is more complex, but it returns text wrapped
 in a more aesthetic way. This method minimizes the squared
 (by default, see \code{cost_exponent}) number of spaces  (raggedness)
 at the end of each line, so the text is mode arranged evenly.
+Note that the cost of printing the last line is always zero.
 }
 \examples{
 s <- stri_paste(

@@ -4,7 +4,7 @@ context("test-wrap.R")
 
 test_that("stri_wrap", {
    expect_error(stri_wrap("whatever", 0))
-   expect_error(stri_wrap("what\never"))
+   expect_error(stri_wrap("what\never", normalize=FALSE))
    expect_identical(stri_wrap(c("", "singleword", NA), cost=0.0), c("", "singleword", NA))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 0.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 1.0), c("a12345", "b123456", "c1234567"))
@@ -12,8 +12,9 @@ test_that("stri_wrap", {
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 3.0), c("a12345", "b123456", "c1234567"))
    
    expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12),
-      c("\u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
-         "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105"))
+      c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
+         "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
+         "\u0105\u0105\u0105\u0105\u0105"))
    expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12, cost=-1),
       c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
          "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
@@ -79,23 +80,23 @@ test_that("stri_wrap", {
          "quis augue ut massa pellentesque tincidunt. In sed pretium eros.")
    )
 
-   for (s in strings) {
-      for (i in c(12,20,30,40)) {
-         exponents <- c(0, 1, 2, 3)
-         res <- vector('list', length(exponents))
-         for (j in seq_along(exponents))
-            res[[j]] <- stri_wrap(s, i, cost_exponent=exponents[j])
-
-         for (j in seq_along(exponents))
-            expect_true(all(stri_length(res[[j]]) <= i))
-
-         for (j in seq_along(exponents)[-1]) {
-            cost_greedy <- sum((i-stri_length(res[[1]]))^exponents[j])
-            cost_dynamic <- sum((i-stri_length(res[[j]]))^exponents[j])
-            expect_true(cost_greedy >= cost_dynamic)
-         }
-      }
-   }
+#    for (s in strings) { # to do: cost of the last line is zero since stringi_0.4-1
+#       for (i in c(12,20,30,40)) {
+#          exponents <- c(0, 1, 2, 3)
+#          res <- vector('list', length(exponents))
+#          for (j in seq_along(exponents))
+#             res[[j]] <- stri_wrap(s, i, cost_exponent=exponents[j])
+# 
+#          for (j in seq_along(exponents))
+#             expect_true(all(stri_length(res[[j]]) <= i))
+# 
+#          for (j in seq_along(exponents)[-1]) {
+#             cost_greedy <- sum((i-stri_length(res[[1]]))^exponents[j])
+#             cost_dynamic <- sum((i-stri_length(res[[j]]))^exponents[j])
+#             expect_true(cost_greedy >= cost_dynamic)
+#          }
+#       }
+#    }
 })
 
 

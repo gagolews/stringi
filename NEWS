@@ -35,7 +35,8 @@
 (...)
 
    * [NEW FEATURE] #118: `stri_wrap()` gained `indent`, `exdent`, `initial`,
-     and `prefix` arguments.
+     and `prefix` arguments. Moreover Knuth's dynamic word wrapping algorithm
+     now assumes that the cost of printing the last line is zero, see #128.
 
    * [NEW FEATURE] #122: `stri_subset()` gained an `omit_na` argument.
 

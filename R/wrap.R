@@ -34,7 +34,7 @@
 #'
 #' @description
 #' This function breaks text paragraphs into lines,
-#' each consisting of at most \code{width} code points.
+#' each consisting - if it is possible - of at most \code{width} code points.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -72,6 +72,7 @@
 #' in a more aesthetic way. This method minimizes the squared
 #' (by default, see \code{cost_exponent}) number of spaces  (raggedness)
 #' at the end of each line, so the text is mode arranged evenly.
+#' Note that the cost of printing the last line is always zero.
 #'
 #' @param str character vector of strings to reformat
 #' @param width single positive integer giving the desired
@@ -115,7 +116,7 @@
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
 stri_wrap <- function(str, width=floor(0.9*getOption("width")),
-   cost_exponent=2.0, simplify=TRUE, normalize=FALSE, indent=0, exdent=0,
+   cost_exponent=2.0, simplify=TRUE, normalize=TRUE, indent=0, exdent=0,
    prefix="", initial=prefix, locale=NULL)
 {
    simplify <- as.logical(simplify)
