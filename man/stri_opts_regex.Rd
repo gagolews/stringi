@@ -4,7 +4,7 @@
 \title{Generate a List with Regex Matcher Settings}
 \usage{
 stri_opts_regex(case_insensitive, comments, dotall, literal, multiline,
-  unix_lines, uword, error_on_unknown_escapes)
+  unix_lines, uword, error_on_unknown_escapes, ...)
 }
 \arguments{
 \item{case_insensitive}{logical; enable case insensitive matching [regex flag \code{(?i)}]}
@@ -37,7 +37,9 @@ See \url{http://unicode.org/reports/tr29/#Word_Boundaries}}
 whether to generate an error on unrecognized backslash escapes;
 if set, fail with an error on patterns that contain backslash-escaped ASCII
 letters without a known special meaning;
-otherwise, these escaped letters represent themselves.}
+otherwise, these escaped letters represent themselves}
+
+\item{...}{any other arguments to this function are purposedly ignored}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

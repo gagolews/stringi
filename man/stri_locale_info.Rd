@@ -27,7 +27,7 @@ See \link{stringi-locale} for discussion.
 
 This function does nothing complicated. In many
 cases it is similar to a call to
-\code{\link{as.list}(\link{stri_split_fixed}(locale, "_", 3L, opts_collator=NA)[[1]])},
+\code{\link{as.list}(\link{stri_split_fixed}(locale, "_", 3L)[[1]])},
 with \code{locale} case mapped.
 It may be used, however, to get insight on how ICU understands a provided
 locale identifier.

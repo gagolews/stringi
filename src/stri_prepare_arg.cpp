@@ -65,7 +65,7 @@ SEXP stri_prepare_arg_list_raw(SEXP x, const char* argname)
       R_len_t nv = LENGTH(x);
       for (R_len_t i=0; i<nv; ++i) {
          SEXP cur = VECTOR_ELT(x, i);
-         if (isNull(cur))
+         if ((bool)isNull(cur))
             continue; // NA
          if (!isRaw(cur))
             Rf_error(MSG__ARG_EXPECTED_RAW_IN_LIST_NO_COERCION, argname);  // error() allowed here
@@ -98,7 +98,7 @@ SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   if (isNull(x)) {
+   if ((bool)isNull(x)) {
        return x;
    }
    else if (Rf_isVectorList(x)) {
@@ -110,7 +110,7 @@ SEXP stri_prepare_arg_list_integer(SEXP x, const char* argname)
          SEXP xold = x;
          PROTECT(x = Rf_allocVector(VECSXP, narg));
          for (R_len_t i=0; i<narg; ++i) {
-            if (isNull(VECTOR_ELT(xold, i)))
+            if ((bool)isNull(VECTOR_ELT(xold, i)))
                SET_VECTOR_ELT(x, i, R_NilValue);
             // @TODO: stri_prepare_arg_integer may call Rf_error, no UNPROTECT
             else
@@ -209,7 +209,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   if (isString(x))
+   if ((bool)isString(x))
       return x; // return as-is
    else if (Rf_isFactor(x))
    {
@@ -221,7 +221,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    }
    else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, STRSXP);
-   else if (isSymbol(x))
+   else if ((bool)isSymbol(x))
       return Rf_ScalarString(PRINTNAME(x));
 
    Rf_error(MSG__ARG_EXPECTED_STRING, argname); // allowed here
@@ -267,7 +267,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (isReal(x))
+   else if ((bool)isReal(x))
       return x; //return as-is
    else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, REALSXP);
@@ -363,7 +363,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (isLogical(x))
+   else if ((bool)isLogical(x))
       return x; // return as-is
    else if (Rf_isVectorAtomic(x) || isNull(x))
       return Rf_coerceVector(x, LGLSXP);

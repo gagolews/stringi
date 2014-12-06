@@ -63,8 +63,9 @@
 #' @param opts_collator a named list with \pkg{ICU} Collator's settings
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings; \code{stri_detect_coll} only
-#' @param ... additional arguments passed to the underlying functions;
-#' \code{stri_detect} only
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return All the functions return a logical vector.
 #'
@@ -116,7 +117,9 @@ stri_detect_charclass <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, opts_collator=NULL) {
+stri_detect_coll <- function(str, pattern, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_detect_coll, str, pattern, opts_collator)
 }
 

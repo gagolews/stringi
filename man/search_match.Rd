@@ -29,7 +29,8 @@ stri_match_last_regex(str, pattern, cg_missing = NA_character_,
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_regex}}
 
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
@@ -94,6 +95,9 @@ stri_match_first_regex(c("breakfast=eggs;lunch=pizza",
 stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
    "breakfast=bacon;lunch=spaghetti", "no food here"),
    "(\\\\w+)=(\\\\w+)")
+
+stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$")
+stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$", cg_missing="")
 
 # Match all the pattern of the form XYX, including overlapping matches:
 stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\\\2))")[[1]][,2]

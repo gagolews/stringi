@@ -11,7 +11,7 @@ stri_count(str, ..., regex, fixed, coll, charclass)
 
 stri_count_charclass(str, pattern)
 
-stri_count_coll(str, pattern, opts_collator = NULL)
+stri_count_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_count_fixed(str, pattern)
 
@@ -20,8 +20,9 @@ stri_count_regex(str, pattern, opts_regex = NULL)
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions;
-\code{stri_count} only}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}

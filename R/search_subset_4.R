@@ -64,8 +64,9 @@
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings;
 #' \code{stri_subset_coll} only
-#' @param ... additional arguments passed to the underlying functions;
-#' \code{stri_subset} only
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return All the functions return a character vector.
 #' As usual, the output encoding is always UTF-8.
@@ -113,7 +114,9 @@ stri_subset_charclass <- function(str, pattern, omit_na=FALSE) {
 
 #' @export
 #' @rdname stri_subset
-stri_subset_coll <- function(str, pattern, omit_na=FALSE, opts_collator=NULL) {
+stri_subset_coll <- function(str, pattern, omit_na=FALSE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_subset_coll, str, pattern, omit_na, opts_collator)
 }
 

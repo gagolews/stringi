@@ -12,28 +12,30 @@
 \alias{stri_compare}
 \title{Compare Strings with or without Collation}
 \usage{
-stri_compare(e1, e2, opts_collator = NULL)
+stri_compare(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp(e1, e2, opts_collator = NULL)
+stri_cmp(e1, e2, ..., opts_collator = NULL)
 
 stri_cmp_eq(e1, e2)
 
 stri_cmp_neq(e1, e2)
 
-stri_cmp_equiv(e1, e2, opts_collator = NULL)
+stri_cmp_equiv(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp_nequiv(e1, e2, opts_collator = NULL)
+stri_cmp_nequiv(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp_lt(e1, e2, opts_collator = NULL)
+stri_cmp_lt(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp_gt(e1, e2, opts_collator = NULL)
+stri_cmp_gt(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp_le(e1, e2, opts_collator = NULL)
+stri_cmp_le(e1, e2, ..., opts_collator = NULL)
 
-stri_cmp_ge(e1, e2, opts_collator = NULL)
+stri_cmp_ge(e1, e2, ..., opts_collator = NULL)
 }
 \arguments{
 \item{e1,e2}{character vectors or objects coercible to character vectors}
+
+\item{...}{additional settings for \code{opts_collator}}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
@@ -101,19 +103,19 @@ Please note that different locale settings may lead to different results
 }
 \examples{
 # in Polish ch < h:
-stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
+stri_cmp_lt("hladny", "chladny", locale="pl_PL")
 
 # in Slovak ch > h:
-stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
+stri_cmp_lt("hladny", "chladny", locale="sk_SK")
 
 # < or > (depends on locale):
 stri_cmp("hladny", "chladny")
 
 # ignore case differences:
-stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
+stri_cmp_equiv("hladny", "HLADNY", strength=2)
 
 # alse ignore diacritical differences:
-stri_cmp_equiv("hladn\\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+stri_cmp_equiv("hladn\\u00FD", "hladny", strength=1, locale="sk_SK")
 
 # non-normalized vs normalized string:
 stri_cmp_equiv(stri_trans_nfkd('\\u0105'), '\\u105')
@@ -122,7 +124,7 @@ stri_cmp_equiv(stri_trans_nfkd('\\u0105'), '\\u105')
 stri_cmp_eq(stri_trans_nfkd('\\u0105'), '\\u105')
 
 # ligatures:
-stri_cmp_equiv("\\ufb00", "ff", stri_opts_collator(strength=2))
+stri_cmp_equiv("\\ufb00", "ff", strength=2)
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

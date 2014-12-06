@@ -78,8 +78,9 @@
 #' normalization is performed
 #' @param numeric single logical value;
 #' when turned on, this attribute generates a collation key for
-#'  the numeric value of substrings of digits;
-#'  This is a way to get '100' to sort AFTER '2'.
+#' the numeric value of substrings of digits;
+#' this is a way to get '100' to sort AFTER '2'
+#' @param ... any other arguments to this function are purposedly ignored
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -105,7 +106,7 @@
 stri_opts_collator <- function(locale=NULL, strength=3L,
    alternate_shifted=FALSE, french=FALSE,
    uppercase_first=NA, case_level=FALSE,
-   normalization=FALSE, numeric=FALSE)
+   normalization=FALSE, numeric=FALSE, ...)
 {
    opts <- list()
    if (!missing(locale))            opts["locale"]            <- locale
@@ -158,7 +159,8 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' whether to generate an error on unrecognized backslash escapes;
 #' if set, fail with an error on patterns that contain backslash-escaped ASCII
 #' letters without a known special meaning;
-#' otherwise, these escaped letters represent themselves.
+#' otherwise, these escaped letters represent themselves
+#' @param ... any other arguments to this function are purposedly ignored
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -179,7 +181,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
 #' stri_detect_regex("ala", "(?i)ALA") # equivalent
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
-                            multiline, unix_lines, uword, error_on_unknown_escapes)
+                            multiline, unix_lines, uword, error_on_unknown_escapes, ...)
 {
    opts <- list()
    if (!missing(case_insensitive))         opts["case_insensitive"]         <- case_insensitive
@@ -233,6 +235,7 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' @param skip_sentence_sep logical; perform no action for sentences
 #' that do not contain an ending sentence terminator, but are ended
 #' by a hard separator or end of input
+#' @param ... any other arguments to this function are purposedly ignored
 #'
 #' @return
 #' Returns a named list object.
@@ -251,7 +254,7 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
       skip_word_number, skip_word_letter,
       skip_word_kana, skip_word_ideo,
       skip_line_soft, skip_line_hard,
-      skip_sentence_term, skip_sentence_sep
+      skip_sentence_term, skip_sentence_sep, ...
    )
 {
    opts <- list()

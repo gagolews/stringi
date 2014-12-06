@@ -70,7 +70,9 @@
 #' \code{stri_locate_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
-#' @param ... additional arguments passed to the underlying functions
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return
 #' For \code{stri_locate_all_*},
@@ -100,15 +102,12 @@
 #' stri_locate_last_charclass('AaBbCc', '\\p{Ll}')
 #'
 #' stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-#' stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y',
-#'    stri_opts_collator(strength=2, locale="sk_SK"))
-#' stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y',
-#'    stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
+#' stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale="sk_SK")
 #'
 #' pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
 #'                   "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
-#' stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat,
-#'    stri_opts_collator(strength = 1))
+#' stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength = 1)
 #'
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
@@ -235,21 +234,27 @@ stri_locate_last_charclass <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_coll <- function(str, pattern, omit_no_match=FALSE, opts_collator=NULL) {
+stri_locate_all_coll <- function(str, pattern, omit_no_match=FALSE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_locate_all_coll, str, pattern, omit_no_match, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_coll <- function(str, pattern, opts_collator=NULL) {
+stri_locate_first_coll <- function(str, pattern, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_locate_first_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_coll <- function(str, pattern, opts_collator=NULL) {
+stri_locate_last_coll <- function(str, pattern, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_locate_last_coll, str, pattern, opts_collator)
 }
 

@@ -5,7 +5,7 @@
 \usage{
 stri_opts_brkiter(type, locale, skip_word_none, skip_word_number,
   skip_word_letter, skip_word_kana, skip_word_ideo, skip_line_soft,
-  skip_line_hard, skip_sentence_term, skip_sentence_sep)
+  skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
 }
 \arguments{
 \item{type}{single string; break iterator type, one of \code{character},
@@ -43,6 +43,8 @@ ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}",
 \item{skip_sentence_sep}{logical; perform no action for sentences
 that do not contain an ending sentence terminator, but are ended
 by a hard separator or end of input}
+
+\item{...}{any other arguments to this function are purposedly ignored}
 }
 \value{
 Returns a named list object.

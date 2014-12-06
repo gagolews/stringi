@@ -13,15 +13,16 @@ stri_detect_fixed(str, pattern)
 
 stri_detect_charclass(str, pattern)
 
-stri_detect_coll(str, pattern, opts_collator = NULL)
+stri_detect_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_detect_regex(str, pattern, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions;
-\code{stri_detect} only}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}

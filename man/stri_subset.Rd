@@ -13,15 +13,16 @@ stri_subset_fixed(str, pattern, omit_na = FALSE)
 
 stri_subset_charclass(str, pattern, omit_na = FALSE)
 
-stri_subset_coll(str, pattern, omit_na = FALSE, opts_collator = NULL)
+stri_subset_coll(str, pattern, omit_na = FALSE, ..., opts_collator = NULL)
 
 stri_subset_regex(str, pattern, omit_na = FALSE, opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions;
-\code{stri_subset} only}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}

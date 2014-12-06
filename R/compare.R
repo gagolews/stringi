@@ -86,6 +86,7 @@
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options.
+#' @param ... additional settings for \code{opts_collator}
 #'
 #' @return The \code{stri_cmp} and \code{stri_compare} functions
 #' return an integer vector
@@ -100,19 +101,19 @@
 #'
 #' @examples
 #' # in Polish ch < h:
-#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="pl_PL"))
+#' stri_cmp_lt("hladny", "chladny", locale="pl_PL")
 #'
 #' # in Slovak ch > h:
-#' stri_cmp_lt("hladny", "chladny", stri_opts_collator(locale="sk_SK"))
+#' stri_cmp_lt("hladny", "chladny", locale="sk_SK")
 #'
 #' # < or > (depends on locale):
 #' stri_cmp("hladny", "chladny")
 #'
 #' # ignore case differences:
-#' stri_cmp_equiv("hladny", "HLADNY", stri_opts_collator(strength=2))
+#' stri_cmp_equiv("hladny", "HLADNY", strength=2)
 #'
 #' # alse ignore diacritical differences:
-#' stri_cmp_equiv("hladn\u00FD", "hladny", stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_cmp_equiv("hladn\u00FD", "hladny", strength=1, locale="sk_SK")
 #'
 #' # non-normalized vs normalized string:
 #' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
@@ -121,12 +122,14 @@
 #' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
 #'
 #' # ligatures:
-#' stri_cmp_equiv("\ufb00", "ff", stri_opts_collator(strength=2))
+#' stri_cmp_equiv("\ufb00", "ff", strength=2)
 #'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_compare
-stri_compare <- function(e1, e2, opts_collator=NULL) {
+stri_compare <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_integer, e1, e2, opts_collator)
 }
 
@@ -152,40 +155,52 @@ stri_cmp_neq <- function(e1, e2) {
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_equiv <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_equiv <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 0L))
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_nequiv <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_nequiv <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 1L))
 }
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_lt <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_lt <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 0L))
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_gt <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_gt <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 0L))
 }
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_le <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_le <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 1L))
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
+stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 1L))
 }
 
@@ -397,6 +412,7 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
+#' @param ... additional settings for \code{opts_collator}
 #'
 #' @return For \code{stri_order}, an integer vector that gives the sort order
 #' is returned.
@@ -409,17 +425,21 @@ stri_cmp_ge <- function(e1, e2, opts_collator=NULL) {
 #' @rdname stri_order
 #'
 #' @examples
-#' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
+#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
 #'
-#' stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
-stri_order <- function(str, decreasing=FALSE, na_last=TRUE, opts_collator=NULL) {
+#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
+stri_order <- function(str, decreasing=FALSE, na_last=TRUE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_order_or_sort, str, decreasing, na_last, opts_collator, 1L)
 }
 
 
 #' @export
 #' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
+stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_order_or_sort, str, decreasing, na_last, opts_collator, 2L)
 }
 
@@ -445,6 +465,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
+#' @param ... additional settings for \code{opts_collator}
 #'
 #' @return Returns a character vector.
 #'
@@ -453,12 +474,13 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, opts_collator=NULL) {
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
-#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
-#'    stri_opts_collator(strength=1))
+#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
 #'
 #' @family locale_sensitive
 #' @export
-stri_unique <-  function(str, opts_collator=NULL) {
+stri_unique <-  function(str, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_unique, str, opts_collator)
 }
 
@@ -493,6 +515,7 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
+#' @param ... additional settings for \code{opts_collator}
 #'
 #' @return
 #' \code{stri_duplicated()} returns a logical vector of the same length
@@ -514,14 +537,15 @@ stri_unique <-  function(str, opts_collator=NULL) {
 #' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
-#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"),
-#'    opts_collator=stri_opts_collator(strength=1))
+#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
 #' duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
 #'
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
+stri_duplicated <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_duplicated, str, fromLast, opts_collator)
 }
 
@@ -529,6 +553,8 @@ stri_duplicated <-  function(str, fromLast=FALSE, opts_collator=NULL) {
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated_any <-  function(str, fromLast=FALSE, opts_collator=NULL) {
+stri_duplicated_any <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_duplicated_any, str, fromLast, opts_collator)
 }
