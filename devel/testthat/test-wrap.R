@@ -10,10 +10,38 @@ test_that("stri_wrap", {
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 1.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 2.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 3.0), c("a12345", "b123456", "c1234567"))
+   
+   expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12),
+      c("\u0105\u0105\u0105\u0105\u0105", "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
+         "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105"))
+   expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12, cost=-1),
+      c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
+         "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
+         "\u0105\u0105\u0105\u0105\u0105"))
 
    expect_identical(stri_wrap("aaa bb cc ddddd", 6, cost=2), c("aaa", "bb cc", "ddddd")) # wikipedia
    expect_identical(stri_wrap("aaa bb cc ddddd", 6, cost=0), c("aaa bb", "cc", "ddddd")) # wikipedia
 
+   
+   expect_identical(stri_wrap(stri_paste(stri_dup(LETTERS[1:4], 3), collapse=" "), exdent=1, indent=2, cost=-1, width=6),
+      c("  AAA", " BBB", " CCC", " DDD"))
+   
+   expect_identical(stri_wrap(stri_paste(stri_dup(LETTERS[1:4], 3), collapse=" "), exdent=1, indent=2, initial=">", prefix="!", cost=-1, width=6),
+      c(">  AAA", "! BBB", "! CCC", "! DDD"))
+   
+   expect_identical(stri_wrap(c("AAA BBB", "CCC DDD"), exdent=1, indent=2, initial=">", prefix="!", cost=-1, width=6),
+      c(">  AAA", "! BBB", "!  CCC", "! DDD"))
+   
+   expect_identical(stri_wrap(stri_paste(stri_dup(LETTERS[1:4], 3), collapse=" "), exdent=1, indent=2, cost=2, width=6),
+      c("  AAA", " BBB", " CCC", " DDD"))
+   
+   expect_identical(stri_wrap(stri_paste(stri_dup(LETTERS[1:4], 3), collapse=" "), exdent=1, indent=2, initial=">", prefix="!", cost=2, width=6),
+      c(">  AAA", "! BBB", "! CCC", "! DDD"))
+   
+   expect_identical(stri_wrap(c("AAA BBB", "CCC DDD"), exdent=1, indent=2, initial=">", prefix="!", cost=2, width=6),
+      c(">  AAA", "! BBB", "!  CCC", "! DDD"))
+   
+   
    strings <- list(
       stri_paste("ala ma \u0105 \u00F1 kota i kotek ma alicje oraz dwie gruszeczki oraz ",
          "gruby czarny pies ma kotka ale nie ma alibaby"),
@@ -52,7 +80,7 @@ test_that("stri_wrap", {
    )
 
    for (s in strings) {
-      for (i in 12:40) {
+      for (i in c(12,20,30,40)) {
          exponents <- c(0, 1, 2, 3)
          res <- vector('list', length(exponents))
          for (j in seq_along(exponents))

@@ -4,7 +4,8 @@
 \title{Word Wrap Text to Format Paragraphs}
 \usage{
 stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
-  simplify = TRUE, normalize = FALSE, locale = NULL)
+  simplify = TRUE, normalize = FALSE, indent = 0, exdent = 0,
+  prefix = "", initial = prefix, locale = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to reformat}
@@ -21,6 +22,15 @@ of a (more aesthetic) dynamic programming-based algorithm
 \item{simplify}{single logical value, see Value}
 
 \item{normalize}{single logical value, see Details}
+
+\item{indent}{single non-negative integer; gives the indentation of the
+first line in each paragraph}
+
+\item{exdent}{single non-negative integer; specifies the indentation
+of subsequent lines in paragraphs}
+
+\item{prefix,initial}{single strings; \code{prefix} is used as prefix for each
+line except the first, for which \code{initial} is utilized}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
@@ -45,9 +55,9 @@ printed on screen. This function acts like each code point
 is of width 1. This function should rather be used with
 text in Latin script.
 
-If \code{normalize} is \code{FALSE} (the default),
+If \code{normalize} is \code{FALSE},
 then multiple white spaces between the word boundaries are
-preserved withing each wrapped line.
+preserved within each wrapped line.
 In such a case, none of the strings can contain \code{\\r}, \code{\\n},
 or other new line characters, otherwise you will get at error.
 You should split the input text into lines

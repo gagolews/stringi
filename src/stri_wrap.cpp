@@ -46,22 +46,28 @@
  * @param width_val maximal desired out line width
  * @param counts_orig ith word width original
  * @param counts_trim ith word width trimmed
+ * @param add_para_1
+ * @param add_para_n
  *
  * @version 0.1-?? (Bartek Tartanus)
  *          original implementation
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-28)
  *          BreakIterator usage mods
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
+ *    new args: add_para_1, add_para_n
  */
 void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
    R_len_t nwords, int width_val,
    const std::vector<R_len_t>& counts_orig,
-   const std::vector<R_len_t>& counts_trim)
+   const std::vector<R_len_t>& counts_trim,
+   int add_para_1, int add_para_n)
 {
-   R_len_t cur_len = counts_orig[0];
+   R_len_t cur_len = add_para_1+counts_orig[0];
    for (R_len_t j = 1; j < nwords; ++j) {
       if (cur_len + counts_trim[j] > width_val) {
-         cur_len = counts_orig[j];
+         cur_len = add_para_n+counts_orig[j];
          wrap_after.push_back(j-1);
       }
       else {
@@ -80,17 +86,23 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  * @param exponent_val cost function exponent
  * @param counts_orig ith word width original
  * @param counts_trim ith word width trimmed
+ * @param add_para_1
+ * @param add_para_a
  *
  * @version 0.1-?? (Bartek Tartanus)
  *          original implementation
  *
  * @version 0.2-2 (Marek Gagolewski, 2014-04-30)
  *          BreakIterator usage mods
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
+ *    new args: add_para_1, add_para_n
  */
 void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
    R_len_t nwords, int width_val, double exponent_val,
    const std::vector<R_len_t>& counts_orig,
-   const std::vector<R_len_t>& counts_trim)
+   const std::vector<R_len_t>& counts_trim,
+   int add_para_1, int add_para_n)
 {
 #define IDX(i,j) (i)*nwords+(j)
    vector<double> cost(nwords*nwords);
@@ -116,6 +128,8 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
          }
          sum += counts_trim[j];
          int ct = width_val - sum;
+         if (i == 0) ct -= add_para_1;
+         else        ct -= add_para_n;
 
          if (j==i)
             // some words don't fit in a line at all -> cost 0.0
@@ -166,11 +180,30 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
 }
 
 
+struct StriWrapLineStart {
+   std::string str;
+   R_len_t nbytes;
+   R_len_t count;
+   
+   StriWrapLineStart(const String8& s, R_len_t v) :
+      str(s.c_str()) {
+      nbytes  = s.length()+v;
+      count   = s.countCodePoints()+v;
+      str.append(std::string(v, ' '));
+   }
+};
+
+
+
 /** Word wrap text
  *
  * @param str character vector
  * @param width single integer
  * @param cost_exponent single double
+ * @param indent single integer
+ * @param exdent single integer
+ * @param prefix single string
+ * @param initial single string
  * @param locale locale identifier or NULL for default locale
  *
  * @return list
@@ -184,28 +217,55 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
+ *    new args: indent, exdent, prefix, initial
  */
-SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
+SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
+   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP locale)
 {
-   double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "width");
+   double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
+   
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
-   if (width_val <= 0)
-      Rf_error(MSG__EXPECTED_POSITIVE, "width");
-   // @TODO: check if width_val > 0
+   if (width_val <= 0) Rf_error(MSG__EXPECTED_POSITIVE, "width");
+   
+   int indent_val = stri__prepare_arg_integer_1_notNA(indent, "indent");
+   if (indent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "indent");
+   
+   int exdent_val = stri__prepare_arg_integer_1_notNA(exdent, "exdent");
+   if (exdent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "exdent");
+   
+
 
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
    Locale loc = Locale::createFromName(qloc);
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   R_len_t str_length = LENGTH(str);
+   PROTECT(str     = stri_prepare_arg_string(str, "str"));
+   PROTECT(prefix  = stri_prepare_arg_string_1(prefix, "prefix"));
+   PROTECT(initial = stri_prepare_arg_string_1(initial, "initial"));
+   
    BreakIterator* briter = NULL;
    UText* str_text = NULL;
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+   STRI__ERROR_HANDLER_BEGIN(3)
    UErrorCode status = U_ZERO_ERROR;
    briter = BreakIterator::createLineInstance(loc, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
+   R_len_t str_length = LENGTH(str);
    StriContainerUTF8_indexable str_cont(str, str_length);
+   StriContainerUTF8 prefix_cont(prefix, 1);
+   StriContainerUTF8 initial_cont(initial, 1);
+   
+   
+   // prepare indent/exdent/prefix/initial stuff:
+   // 1st line, 1st para (i==0, u==0): initial+indent
+   // nth line, 1st para (i==0, u> 0): prefix +exdent
+   // 1st line, nth para (i> 0, u==0): prefix +indent
+   // nth line, nth para (i> 0, u> 0): prefix +exdent
+   StriWrapLineStart ii(initial_cont.get(0), indent_val);
+   StriWrapLineStart pi(prefix_cont.get(0), indent_val);
+   StriWrapLineStart pe(prefix_cont.get(0), exdent_val);
+
 
    status = U_ZERO_ERROR;
    //Unicode Newline Guidelines - Unicode Technical Report #13
@@ -222,7 +282,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, str_length));
    for (R_len_t i = 0; i < str_length; ++i)
    {
-      if (str_cont.isNA(i)) {
+      if (str_cont.isNA(i) || prefix_cont.isNA(0) || initial_cont.isNA(0)) {
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
          continue;
       }
@@ -232,6 +292,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       R_len_t str_cur_n = str_cont.get(i).length();
       str_text = utext_openUTF8(str_text, str_cur_s, str_cont.get(i).length(), &status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      
+      status = U_ZERO_ERROR;
       briter->setText(str_text, status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
@@ -315,11 +377,11 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       std::deque<R_len_t> wrap_after; // wrap line after which word in {0..nwords-1}?
       if (exponent_val <= 0.0) {
          stri__wrap_greedy(wrap_after, nwords, width_val,
-            counts_orig, counts_trim);
+            counts_orig, counts_trim, (i==0)?ii.count:pi.count, pe.count);
       }
       else {
          stri__wrap_dynamic(wrap_after, nwords, width_val, exponent_val,
-            counts_orig, counts_trim);
+            counts_orig, counts_trim, (i==0)?ii.count:pi.count, pe.count);
       }
 
       // wrap_after.size() line breaks => wrap_after.size()+1 lines
@@ -331,14 +393,24 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent, SEXP locale)
       for (R_len_t u = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++u) {
          R_len_t wrap_after_cur = *iter_wrap;
          R_len_t cur_pos = end_pos_trim[wrap_after_cur];
-         SET_STRING_ELT(ans, u,
-            Rf_mkCharLenCE(str_cur_s+last_pos, cur_pos-last_pos, CE_UTF8));
+         
+         std::string cs;
+         if (i == 0 && u == 0)     cs = ii.str;
+         else if (i > 0 && u == 0) cs = pi.str;
+         else                      cs = pe.str;
+         cs.append(str_cur_s+last_pos, cur_pos-last_pos);
+         SET_STRING_ELT(ans, u, Rf_mkCharLenCE(cs.c_str(), cs.size(), CE_UTF8));
+         
          last_pos = end_pos_orig[wrap_after_cur];
       }
-
+      
       // last line goes here:
-      SET_STRING_ELT(ans, nlines-1,
-         Rf_mkCharLenCE(str_cur_s+last_pos, end_pos_trim[nwords-1]-last_pos, CE_UTF8));
+      std::string cs;
+      if (i == 0 && nlines-1 == 0)     cs = ii.str;
+      else if (i > 0 && nlines-1 == 0) cs = pi.str;
+      else                             cs = pe.str;
+      cs.append(str_cur_s+last_pos, end_pos_trim[nwords-1]-last_pos);
+      SET_STRING_ELT(ans, nlines-1, Rf_mkCharLenCE(cs.c_str(), cs.size(), CE_UTF8));
 
       SET_VECTOR_ELT(ret, i, ans);
       STRI__UNPROTECT(1);
