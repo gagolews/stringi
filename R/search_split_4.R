@@ -88,8 +88,9 @@
 #' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
 #' for default settings;
 #' \code{stri_split_coll} only
-#' @param ... additional arguments passed to the underlying functions;
-#' \code{stri_split} only
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
@@ -179,9 +180,11 @@ stri_split_regex <- function(str, pattern, n=-1L, omit_empty=FALSE,
 #' @export
 #' @rdname stri_split
 stri_split_coll <- function(str, pattern, n=-1L, omit_empty=FALSE,
-      tokens_only=FALSE, simplify=FALSE, opts_collator=NULL) {
+      tokens_only=FALSE, simplify=FALSE, ..., opts_collator=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_split_coll, str, pattern,
       n, omit_empty, tokens_only, simplify, opts_collator)
 }

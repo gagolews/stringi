@@ -32,11 +32,11 @@ stri_extract_first_charclass(str, pattern)
 stri_extract_last_charclass(str, pattern)
 
 stri_extract_all_coll(str, pattern, simplify = FALSE, omit_no_match = FALSE,
-  opts_collator = NULL)
+  ..., opts_collator = NULL)
 
-stri_extract_first_coll(str, pattern, opts_collator = NULL)
+stri_extract_first_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_extract_last_coll(str, pattern, opts_collator = NULL)
+stri_extract_last_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_extract_all_regex(str, pattern, simplify = FALSE,
   omit_no_match = FALSE, opts_regex = NULL)
@@ -48,7 +48,9 @@ stri_extract_last_regex(str, pattern, opts_regex = NULL)
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
@@ -130,10 +132,8 @@ stri_extract_first_charclass('AaBbCc', '\\\\p{Ll}')
 stri_extract_last_charclass('AaBbCc', '\\\\p{Ll}')
 
 stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-stri_extract_first_coll(c('Yy\\u00FD', 'AAA'), 'y',
-   stri_opts_collator(strength=2, locale="sk_SK"))
-stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',
-   stri_opts_collator(strength=1, locale="sk_SK"))
+stri_extract_first_coll(c('Yy\\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
+stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
 
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))

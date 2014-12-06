@@ -3,10 +3,12 @@
 \alias{stri_unique}
 \title{Extract Unique Elements}
 \usage{
-stri_unique(str, opts_collator = NULL)
+stri_unique(str, ..., opts_collator = NULL)
 }
 \arguments{
 \item{str}{character vector}
+
+\item{...}{additional settings for \code{opts_collator}}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
@@ -35,8 +37,7 @@ See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
 unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
 
-stri_unique(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"),
-   stri_opts_collator(strength=1))
+stri_unique(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"), strength=1)
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

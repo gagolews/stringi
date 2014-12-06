@@ -32,33 +32,33 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp(LETTERS, letters), rep(+1L, length(LETTERS)))
    expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a'), c(NA_integer_, 0L, 1L))
 
-   expect_equivalent(stri_cmp("hladny", "chladny", stri_opts_collator(locale="pl_PL")),  1L)
-   expect_equivalent(stri_cmp("hladny", "chladny", stri_opts_collator(locale="sk_SK")), -1L)
-   expect_equivalent(stri_cmp(letters, LETTERS, stri_opts_collator(strength=2)), rep(0L, length(LETTERS)))
+   expect_equivalent(stri_cmp("hladny", "chladny", locale="pl_PL"),  1L)
+   expect_equivalent(stri_cmp("hladny", "chladny", locale="sk_SK"), -1L)
+   expect_equivalent(stri_cmp(letters, LETTERS, strength=2), rep(0L, length(LETTERS)))
 
    expect_equivalent(stri_cmp("dupa100", "dupa2"), -1)
    expect_equivalent(stri_cmp("dupa100", NA), NA_integer_)
    expect_equivalent(stri_cmp(NA, "dupa2"), NA_integer_)
    expect_equivalent(stri_cmp("dupa100", "dupa1000"), -1)
    expect_equivalent(stri_cmp("dupa10000", "dupa1000"), 1)
-   expect_equivalent(stri_cmp("dupa100", "dupa2", stri_opts_collator(numeric=TRUE)), 1)
+   expect_equivalent(stri_cmp("dupa100", "dupa2", numeric=TRUE), 1)
    expect_equivalent(stri_cmp("above mentioned", "above-mentioned"), -1)
-   expect_equivalent(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE)), 0)
+   expect_equivalent(stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE), 0)
 
    expect_equivalent(stri_cmp(stri_trans_nfkd('\u0105'), '\u105'), 0L)
 
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=NA)))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(strength=NA)))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(french=NA)))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(case_level=NA)))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(normalization=NA)))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(numeric=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(alternate_shifted=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(strength=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(french=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(case_level=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(normalization=NA)))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(numeric=NA)))
 
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted="error:)")))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(french="error:)")))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(case_level="error:)")))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(normalization="error:)")))
-   expect_error(stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(numeric="error:)")))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(alternate_shifted="error:)")))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(french="error:)")))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(case_level="error:)")))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(normalization="error:)")))
+   expect_error(stri_cmp("above mentioned", "above-mentioned", opts_collator=stri_opts_collator(numeric="error:)")))
 
 })
 
@@ -97,7 +97,7 @@ test_that("stri_cmp_equiv", {
    expect_equivalent(stri_cmp_equiv("dupa10000", "dupa1000"), FALSE)
    expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned"), FALSE)
    expect_equivalent(stri_cmp_equiv("above mentioned", "above-mentioned",
-      stri_opts_collator(alternate_shifted=TRUE)), TRUE)
+      alternate_shifted=TRUE), TRUE)
 
    expect_equivalent(stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105'), TRUE)
 
@@ -146,8 +146,8 @@ test_that("stri_order", {
    expect_equivalent(stri_order(rev(LETTERS)), rev(stri_order(LETTERS)))
    expect_equivalent(stri_order(LETTERS, decreasing=TRUE), length(LETTERS):1)
 
-   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts=stri_opts_collator(locale="pl_PL")),2:1)
-   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts=stri_opts_collator(locale="sk_SK")),1:2)
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts_collator=stri_opts_collator(locale="pl_PL")),2:1)
+   expect_equivalent(stri_order(c("hladny", "chladny"), F, opts_collator=stri_opts_collator(locale="sk_SK")),1:2)
 
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6))
 })

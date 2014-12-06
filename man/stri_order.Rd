@@ -4,9 +4,11 @@
 \alias{stri_sort}
 \title{Ordering Permutation and Sorting}
 \usage{
-stri_order(str, decreasing = FALSE, na_last = TRUE, opts_collator = NULL)
+stri_order(str, decreasing = FALSE, na_last = TRUE, ...,
+  opts_collator = NULL)
 
-stri_sort(str, decreasing = FALSE, na_last = NA, opts_collator = NULL)
+stri_sort(str, decreasing = FALSE, na_last = NA, ...,
+  opts_collator = NULL)
 }
 \arguments{
 \item{str}{character vector}
@@ -19,6 +21,8 @@ or nonincreasing (\code{TRUE})?}
 in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 at the end; if \code{FALSE}, they are put first;
 if \code{NA}, then they are removed from the output.}
+
+\item{...}{additional settings for \code{opts_collator}}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
@@ -48,9 +52,9 @@ Interestingly, our benchmarks indicate that \code{stri_order}
 is most often faster that \R's \code{order}.
 }
 \examples{
-stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="pl_PL"))
+stri_sort(c("hladny", "chladny"), locale="pl_PL")
 
-stri_sort(c("hladny", "chladny"), opts_collator=stri_opts_collator(locale="sk_SK"))
+stri_sort(c("hladny", "chladny"), locale="sk_SK")
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

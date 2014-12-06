@@ -65,7 +65,8 @@
 #' is unavailable
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
-#' @param ... additional arguments passed to the underlying functions
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_regex}
 #'
 #' @return
 #' For \code{stri_match_all*},
@@ -94,6 +95,9 @@
 #' stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
 #'    "breakfast=bacon;lunch=spaghetti", "no food here"),
 #'    "(\\w+)=(\\w+)")
+#'
+#' stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$")
+#' stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$", cg_missing="")
 #'
 #' # Match all the pattern of the form XYX, including overlapping matches:
 #' stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\2))")[[1]][,2]

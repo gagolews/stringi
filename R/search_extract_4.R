@@ -75,7 +75,9 @@
 #' \code{stri_extract_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
-#' @param ... additional arguments passed to the underlying functions
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return
 #' For \code{stri_extract_all*}, if \code{simplify=FALSE} (the default), then
@@ -108,10 +110,8 @@
 #' stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 #'
 #' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-#' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y',
-#'    stri_opts_collator(strength=2, locale="sk_SK"))
-#' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',
-#'    stri_opts_collator(strength=1, locale="sk_SK"))
+#' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
+#' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
 #'
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
@@ -215,21 +215,27 @@ stri_extract_last_charclass <- function(str, pattern) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_coll <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, opts_collator=NULL) {
+stri_extract_all_coll <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_extract_all_coll, str, pattern, simplify, omit_no_match, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first_coll <- function(str, pattern, opts_collator=NULL) {
+stri_extract_first_coll <- function(str, pattern, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_extract_first_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last_coll <- function(str, pattern, opts_collator=NULL) {
+stri_extract_last_coll <- function(str, pattern, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_extract_last_coll, str, pattern, opts_collator)
 }
 

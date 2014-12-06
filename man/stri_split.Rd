@@ -16,7 +16,7 @@ stri_split_regex(str, pattern, n = -1L, omit_empty = FALSE,
   tokens_only = FALSE, simplify = FALSE, opts_regex = NULL)
 
 stri_split_coll(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE, opts_collator = NULL)
+  tokens_only = FALSE, simplify = FALSE, ..., opts_collator = NULL)
 
 stri_split_charclass(str, pattern, n = -1L, omit_empty = FALSE,
   tokens_only = FALSE, simplify = FALSE)
@@ -24,8 +24,9 @@ stri_split_charclass(str, pattern, n = -1L, omit_empty = FALSE,
 \arguments{
 \item{str}{character vector with strings to search in}
 
-\item{...}{additional arguments passed to the underlying functions;
-\code{stri_split} only}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}

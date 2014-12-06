@@ -89,7 +89,9 @@
 #' \code{stri_replace_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
-#' @param ... additional arguments passed to the underlying functions
+#' @param ... supplementary arguments passed to the underlying functions,
+#' including additional settings for \code{opts_collator}, \code{opts_regex},
+#' and so on
 #'
 #' @return All the functions return a character vector.
 #'
@@ -223,21 +225,27 @@ stri_replace_last_charclass <- function(str, pattern, replacement) {
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_coll <- function(str, pattern, replacement, vectorize_all=TRUE, opts_collator=NULL) {
+stri_replace_all_coll <- function(str, pattern, replacement, vectorize_all=TRUE, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_replace_all_coll, str, pattern, replacement, vectorize_all, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_coll <- function(str, pattern, replacement, opts_collator=NULL) {
+stri_replace_first_coll <- function(str, pattern, replacement, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_replace_first_coll, str, pattern, replacement, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_coll <- function(str, pattern, replacement, opts_collator=NULL) {
+stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_replace_last_coll, str, pattern, replacement, opts_collator)
 }
 

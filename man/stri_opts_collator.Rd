@@ -5,7 +5,7 @@
 \usage{
 stri_opts_collator(locale = NULL, strength = 3L,
   alternate_shifted = FALSE, french = FALSE, uppercase_first = NA,
-  case_level = FALSE, normalization = FALSE, numeric = FALSE)
+  case_level = FALSE, normalization = FALSE, numeric = FALSE, ...)
 }
 \arguments{
 \item{locale}{single string, \code{NULL} or
@@ -38,8 +38,10 @@ normalization is performed}
 
 \item{numeric}{single logical value;
 when turned on, this attribute generates a collation key for
- the numeric value of substrings of digits;
- This is a way to get '100' to sort AFTER '2'.}
+the numeric value of substrings of digits;
+this is a way to get '100' to sort AFTER '2'}
+
+\item{...}{any other arguments to this function are purposedly ignored}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

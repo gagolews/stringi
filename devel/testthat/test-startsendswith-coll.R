@@ -41,19 +41,18 @@ test_that("stri_startswith_coll", {
    expect_equivalent(stri_startswith_coll("\ufdfa\ufdfa\ufdfa\ufdfaXYZ\ufdfa",
       stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                 "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ"),
-      opts=stri_opts_collator(strength = 1), from=4), TRUE)
+      opts_collator=stri_opts_collator(strength = 1), from=4), TRUE)
    expect_equivalent(stri_startswith_coll(
        stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645"),
        "\ufdfa",
-       opts=stri_opts_collator(strength = 1)), TRUE)
+       strength = 1), TRUE)
    expect_equivalent(stri_startswith_coll(
        stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645\ufdfa"),
        "\ufdfa",
-       opts=stri_opts_collator(strength = 1)), TRUE)
+       opts_collator=stri_opts_collator(strength = 1)), TRUE)
 })
-
 
 test_that("stri_endswith_coll", {
    expect_identical(stri_endswith_coll("a", NA), NA)
@@ -95,15 +94,15 @@ test_that("stri_endswith_coll", {
    expect_equivalent(stri_endswith_coll("\ufdfa\ufdfa\ufdfa\ufdfaXYZ\ufdfa",
       stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                 "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ"),
-      opts=stri_opts_collator(strength = 1), to=-2), TRUE)
+      opts_collator=stri_opts_collator(strength = 1), to=-2), TRUE)
    expect_equivalent(stri_endswith_coll(
        stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645"),
        "\ufdfa",
-       opts=stri_opts_collator(strength = 1)), TRUE)
+       strength = 1), TRUE)
    expect_equivalent(stri_endswith_coll(
        stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645\ufdfa"),
        "\ufdfa",
-       opts=stri_opts_collator(strength = 1), to=-2), TRUE)
+       opts_collator=stri_opts_collator(strength = 1), to=-2), TRUE)
 })

@@ -34,12 +34,12 @@ stri_replace_first_charclass(str, pattern, replacement)
 
 stri_replace_last_charclass(str, pattern, replacement)
 
-stri_replace_all_coll(str, pattern, replacement, vectorize_all = TRUE,
+stri_replace_all_coll(str, pattern, replacement, vectorize_all = TRUE, ...,
   opts_collator = NULL)
 
-stri_replace_first_coll(str, pattern, replacement, opts_collator = NULL)
+stri_replace_first_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
-stri_replace_last_coll(str, pattern, replacement, opts_collator = NULL)
+stri_replace_last_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
 stri_replace_all_fixed(str, pattern, replacement, vectorize_all = TRUE)
 
@@ -59,7 +59,9 @@ stri_replace_last_regex(str, pattern, replacement, opts_regex = NULL)
 
 \item{replacement}{character vector with replacements for matched patterns}
 
-\item{...}{additional arguments passed to the underlying functions}
+\item{...}{supplementary arguments passed to the underlying functions,
+including additional settings for \code{opts_collator}, \code{opts_regex},
+and so on}
 
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}

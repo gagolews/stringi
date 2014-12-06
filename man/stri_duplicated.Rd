@@ -4,9 +4,9 @@
 \alias{stri_duplicated_any}
 \title{Determine Duplicated Elements}
 \usage{
-stri_duplicated(str, fromLast = FALSE, opts_collator = NULL)
+stri_duplicated(str, fromLast = FALSE, ..., opts_collator = NULL)
 
-stri_duplicated_any(str, fromLast = FALSE, opts_collator = NULL)
+stri_duplicated_any(str, fromLast = FALSE, ..., opts_collator = NULL)
 }
 \arguments{
 \item{str}{character vector}
@@ -14,6 +14,8 @@ stri_duplicated_any(str, fromLast = FALSE, opts_collator = NULL)
 \item{fromLast}{single logical value;
 indicating whether duplication should be considered from the
 reverse side}
+
+\item{...}{additional settings for \code{opts_collator}}
 
 \item{opts_collator}{a named list with \pkg{ICU} Collator's options
 as generated with \code{\link{stri_opts_collator}}, \code{NULL}
@@ -59,8 +61,7 @@ stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
 stri_duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
 duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
 
-stri_duplicated(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"),
-   opts_collator=stri_opts_collator(strength=1))
+stri_duplicated(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"), strength=1)
 duplicated(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"))
 }
 \seealso{
