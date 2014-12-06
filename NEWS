@@ -22,7 +22,7 @@
      `opts_brkiter` can now be supplied via `...`.
      In other words, you may now simply call e.g.
      `stri_detect_regex(str, pattern, case_insensitive=TRUE)` instead of
-     `stri_detect_regex(str, pattern, opts_regex=stri_opts_regex(case_insensitive=TRUE))`.
+     `stri_detect_regex(str, pattern, opts_regex=stri_opts_regex(case_insensitive=TRUE))`.    [[TODO: #110: opts_fixed]]
 
 (...)
 

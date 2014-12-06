@@ -202,7 +202,7 @@ stri_rand_lipsum <- function(nparagraphs, start_lipsum=TRUE) {
    words <- rwords(totwords)
    seps <- sample(c(" ", ", "), replace=TRUE, size=totwords, prob=c(0.9, 0.1))
    seps[cumsum(unlist(word_sent))] <- sample(c(". ", "? ", "! "),
-      size=length(unlist(word_sent)), replace=TRUE, prob=c(0.9, 0.05, 0.05)) # end of sentence
+      size=length(unlist(word_sent)), replace=TRUE, prob=c(0.95, 0.025, 0.025)) # end of sentence
    seps[cumsum(sapply(word_sent, sum))] <- ".\n" # end of para
    seps[totwords] <- "." # very last sentence in very last para
 
