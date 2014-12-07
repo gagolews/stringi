@@ -202,19 +202,19 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator);
 
 
-SEXP stri_detect_fixed(SEXP str, SEXP pattern);
-SEXP stri_count_fixed(SEXP str, SEXP pattern);
-SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match);
-SEXP stri_locate_first_fixed(SEXP str, SEXP pattern);
-SEXP stri_locate_last_fixed(SEXP str, SEXP pattern);
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all);
-SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement);
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement);
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP opts_fixed);
+SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP opts_fixed);
+SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_fixed);
+SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed);
+SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed);
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_fixed);
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed);
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed);
 SEXP stri_split_fixed(SEXP str, SEXP split, SEXP n,
-            SEXP omit_empty, SEXP tokens_only, SEXP simplify);
-SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na);
-SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to);
-SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from);
+            SEXP omit_empty, SEXP tokens_only, SEXP simplify, SEXP opts_fixed);
+SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_fixed);
+SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed);
+SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed);
 
 
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex);

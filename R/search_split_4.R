@@ -160,7 +160,7 @@ stri_split_fixed <- function(str, pattern, n=-1L,
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_split_fixed, str, pattern,
-      n, omit_empty, tokens_only, simplify)
+      n, omit_empty, tokens_only, simplify, opts_fixed)
 }
 
 

@@ -18,15 +18,18 @@
      `stri_locate_first_words`, `stri_locate_last_words`,
      `stri_extract_first_words`, `stri_extract_last_words`.
 
-   * [IMPORTANT CHANGE] #111: `opts_regex`, `opts_collator`, and
-     `opts_brkiter` can now be supplied via `...`.
+   * [IMPORTANT CHANGE] #111: `opts_regex`, `opts_collator`, `opts_fixed`, and
+     `opts_brkiter` can now be supplied individually via `...`.
      In other words, you may now simply call e.g.
      `stri_detect_regex(str, pattern, case_insensitive=TRUE)` instead of
-     `stri_detect_regex(str, pattern, opts_regex=stri_opts_regex(case_insensitive=TRUE))`.    [[TODO: #110: opts_fixed]]
+     `stri_detect_regex(str, pattern, opts_regex=stri_opts_regex(case_insensitive=TRUE))`.
 
 (...)
 
-   * [NEW FEATURE] #110: t.b.d. `*_fixed`: `case_insensitive` + `stri_opts_fixed`
+   * [NEW FEATURE] #110: Fixed pattern search engine's settings can
+     now be supplied via `opts_fixed` argument in `stri_*_fixed()`,
+     see `str_opts_fixed()`. A simple yet very fast `case_insensitive`
+     pattern matching can be performed now.                               [TO DO]
 
    * [BUGFIX]  #94: t.b.d. Solaris!!! 
 

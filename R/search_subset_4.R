@@ -100,7 +100,7 @@ stri_subset <- function(str, ..., regex, fixed, coll, charclass) {
 stri_subset_fixed <- function(str, pattern, omit_na=FALSE, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_subset_fixed, str, pattern, omit_na)
+   .Call(C_stri_subset_fixed, str, pattern, omit_na, opts_fixed)
 }
 
 

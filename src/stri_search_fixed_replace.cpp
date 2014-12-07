@@ -65,8 +65,11 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, int type)
+SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed, int type)
 {
    PROTECT(str          = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
@@ -233,8 +236,11 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement)
+SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 { // version gamma:
    PROTECT(str          = stri_prepare_arg_string(str, "str"));
 
@@ -259,7 +265,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
    if (pattern_n == 1) { // this will be much faster:
       SEXP ret;
-      PROTECT(ret = stri__replace_allfirstlast_fixed(str, pattern, replacement, 0));
+      PROTECT(ret = stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0));
       UNPROTECT(4);
       return ret;
    }
@@ -510,13 +516,16 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *          vectorize_all argument added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all)
+SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_fixed)
 {
    if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
-      return stri__replace_allfirstlast_fixed(str, pattern, replacement, 0);
+      return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0);
    else
-      return stri__replace_all_fixed_no_vectorize_all(str, pattern, replacement);
+      return stri__replace_all_fixed_no_vectorize_all(str, pattern, replacement, opts_fixed);
 }
 
 
@@ -535,10 +544,13 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement)
+SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 {
-   return stri__replace_allfirstlast_fixed(str, pattern, replacement, -1);
+   return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, -1);
 }
 
 
@@ -557,8 +569,11 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement)
+SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 {
-   return stri__replace_allfirstlast_fixed(str, pattern, replacement, 1);
+   return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 1);
 }

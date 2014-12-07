@@ -128,7 +128,7 @@ stri_count_coll <- function(str, pattern, ..., opts_collator=NULL) {
 stri_count_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_count_fixed, str, pattern)
+   .Call(C_stri_count_fixed, str, pattern, opts_fixed)
 }
 
 
