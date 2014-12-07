@@ -26,14 +26,7 @@
 
 (...)
 
-   * [NEW FEATURE] #110: Fixed pattern search engine's settings can
-     now be supplied via `opts_fixed` argument in `stri_*_fixed()`,
-     see `str_opts_fixed()`. A simple yet very fast `case_insensitive`
-     pattern matching can be performed now.                               [TO DO]
-
    * [BUGFIX]  #94: t.b.d. Solaris!!! 
-
-(...)
 
    * [NEW FEATURE] #23: [[[not sure if for 0.4-1]]]  -- QUESTION [overlapping patterns in fixed search]
 
@@ -41,7 +34,17 @@
 
 (...)
 
+   * [NEW FEATURE] #110: Fixed pattern search engine's settings can
+     now be supplied via `opts_fixed` argument in `stri_*_fixed()`,
+     see `stri_opts_fixed()`. A simple (not suitable for natural language
+     processing) yet very fast `case_insensitive` pattern matching can be performed now.
+
    * [NEW FEATURE] #129: `stri_match_*_regex` gained a `cg_missing` argument.
+
+   * [NEW FEATURE] #117: `stri_extract_all_*()`, `stri_locate_all_*()`,
+     `stri_match_all_*()` gained a new argument: `omit_no_match`.
+     Setting it to `TRUE` makes these functions compatible with their
+     `stringr` equivalents.
 
    * [NEW FEATURE] #118: `stri_wrap()` gained `indent`, `exdent`, `initial`,
      and `prefix` arguments. Moreover Knuth's dynamic word wrapping algorithm
@@ -59,13 +62,8 @@
      `stri_extract_all_words()` is now equipped with `simplify` arg.
 
    * [NEW FEATURE] #116: `stri_paste()` gained a new argument:
-     `ignore_null`. Setting it to `TRUE` makes this function compatible with 
-     `paste()`.
-
-   * [NEW FEATURE] #117: `stri_extract_all_*()`, `stri_locate_all_*()`,
-     `stri_match_all_*()` gained a new argument: `omit_no_match`.
-     Setting it to `TRUE` makes these functions compatible with their
-     `stringr` equivalents.
+     `ignore_null`. Setting it to `TRUE` makes this function more compatible
+     with `paste()`.
 
    * [NEW FEATURE] #114: `stri_paste()`: `ignore_null` arg has been added.
 
