@@ -32,6 +32,7 @@
 
 #include "stri_stringi.h"
 #include "stri_container_utf8_indexable.h"
+#include "stri_container_bytesearch.h"
 #include "stri_container_integer.h"
 
 
@@ -49,10 +50,12 @@
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
- *    FR #110, #23: opts_fixed arg added
+ *    FR #110, #23: opts_fixed arg added;
+ *    use StriContainerByteSearch::startsWith() and endsWith()
  */
 SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(from = stri_prepare_arg_integer(from, "from"));
@@ -61,7 +64,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
    int vectorize_length = stri__recycling_rule(true, 3,
       LENGTH(str), LENGTH(pattern), LENGTH(from));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerUTF8 pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
    StriContainerInteger from_cont(from, vectorize_length);
 
    SEXP ret;
@@ -81,8 +84,6 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
          continue;
       }
 
-      // @TODO: move to StriContainerByteSearch
-
       R_len_t from_cur = from_cont.get(i);
       if (from_cur == 1)
          from_cur = 0; /* most commonly used case */
@@ -91,23 +92,9 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
       else
          from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
       // now surely from_cur >= 0 && from_cur <= cur_n
-
-      const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* pattern_cur_s = pattern_cont.get(i).c_str();
-      R_len_t     pattern_cur_n = pattern_cont.get(i).length();
-
-      if (str_cur_n-from_cur < pattern_cur_n)
-         ret_tab[i] = FALSE;
-      else {
-         ret_tab[i] = TRUE;
-         for (R_len_t j=0; j<pattern_cur_n; ++j) {
-            if (str_cur_s[j+from_cur] != pattern_cur_s[j]) {
-               ret_tab[i] = FALSE;
-               break;
-            }
-         }
-      }
+      
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      ret_tab[i] = (int)(pattern_cont.startsWith(from_cur));
    }
 
    STRI__UNPROTECT_ALL
@@ -134,6 +121,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
  */
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(to = stri_prepare_arg_integer(to, "to"));
@@ -142,7 +130,7 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
    int vectorize_length = stri__recycling_rule(true, 3,
       LENGTH(str), LENGTH(pattern), LENGTH(to));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerUTF8 pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
    StriContainerInteger to_cont(to, vectorize_length);
 
    SEXP ret;
@@ -162,34 +150,17 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
          continue;
       }
 
-      const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* pattern_cur_s = pattern_cont.get(i).c_str();
-      R_len_t     pattern_cur_n = pattern_cont.get(i).length();
-      
-      
-      // @TODO: move to StriContainerByteSearch
-
       R_len_t to_cur = to_cont.get(i);
       if (to_cur == -1)
-         to_cur = str_cur_n; /* most commonly used case */
+         to_cur = str_cont.get(i).length(); /* most commonly used case */
       else if (to_cur >= 0)
          to_cur = str_cont.UChar32_to_UTF8_index_fwd(i, to_cur);
       else
          to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
       // now surely to_cur >= 0 && to_cur <= cur_n
 
-      if (to_cur - pattern_cur_n < 0)
-         ret_tab[i] = FALSE;
-      else {
-         ret_tab[i] = TRUE;
-         for (R_len_t j=0; j<pattern_cur_n; ++j) {
-            if (str_cur_s[to_cur-pattern_cur_n+j] != pattern_cur_s[j]) {
-               ret_tab[i] = FALSE;
-               break;
-            }
-         }
-      }
+      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      ret_tab[i] = (int)(pattern_cont.endsWith(to_cur));
    }
 
    STRI__UNPROTECT_ALL
