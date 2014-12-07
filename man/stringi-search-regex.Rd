@@ -12,9 +12,9 @@ tasks.
 }
 \details{
 All \code{stri_*_regex} functions in \pkg{stringi} use
-the \pkg{ICU} regex engine, which settings may be tuned up (for example
-to perform case-insensitive search) with the
-\code{\link{stri_opts_regex}} function.
+the \pkg{ICU} regex engine. Its settings may be tuned up (for example
+to perform case-insensitive search), see the
+\code{\link{stri_opts_regex}} function for more details.
 
 
 Regular expression patterns in \pkg{ICU} are quite similar in form and

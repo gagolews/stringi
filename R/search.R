@@ -112,9 +112,9 @@ invisible(NULL)
 #'
 #' @details
 #' All \code{stri_*_regex} functions in \pkg{stringi} use
-#' the \pkg{ICU} regex engine, which settings may be tuned up (for example
-#' to perform case-insensitive search) with the
-#' \code{\link{stri_opts_regex}} function.
+#' the \pkg{ICU} regex engine. Its settings may be tuned up (for example
+#' to perform case-insensitive search), see the
+#' \code{\link{stri_opts_regex}} function for more details.
 #'
 #'
 #' Regular expression patterns in \pkg{ICU} are quite similar in form and
@@ -305,8 +305,10 @@ invisible(NULL)
 #'
 #' @description
 #' String searching facilities described in this very man page
-#' provide a way to locate an exact specific piece of
-#' text.
+#' provide a way to locate a specific sequence of bytes in a string.
+#' Fixed pattern search engine's settings may be tuned up (for example
+#' to perform case-insensitive search), see the
+#' \code{\link{stri_opts_fixed}} function for more details.
 #'
 #'
 #' @section Byte Compare:
@@ -325,7 +327,7 @@ invisible(NULL)
 #' }
 #' see also \link{stringi-search-coll}.
 #'
-#' Note that, the conversion of input data
+#' Note that the conversion of input data
 #' to Unicode is done as usual.
 #'
 #' @name stringi-search-fixed
