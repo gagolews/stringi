@@ -44,18 +44,21 @@ StriContainerByteSearch::StriContainerByteSearch()
 {
    this->patternLen = 0;
    this->patternStr = NULL;
+   this->patternLenCaseInsensitive = 0;
+   this->patternStrCaseInsensitive = NULL;
    this->searchPos = -1;
+   this->searchEnd = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
    this->flags = 0;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
    this->kmpMaxSize = 0;
    this->patternPos = -1;
    this->kmpNext = NULL;
-#endif
+//#endif
 }
 
 
@@ -67,21 +70,34 @@ StriContainerByteSearch::StriContainerByteSearch()
 StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle, uint32_t _flags)
    : StriContainerUTF8(rstr, _nrecycle, true)
 {
+   this->flags = _flags;
+   
    this->patternLen = 0;
    this->patternStr = NULL;
+   
    this->searchPos = -1;
+   this->searchEnd = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   this->flags = _flags;
+   
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
+
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
    this->patternPos = -1;
    this->kmpMaxSize = getMaxNumBytes()+1;
    this->kmpNext = new int[kmpMaxSize];
    if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
-#endif
+//#endif
+
+   this->patternLenCaseInsensitive = 0;
+   if (flags&BYTESEARCH_CASE_INSENSITIVE) {
+      this->patternStrCaseInsensitive = new UChar32[this->kmpMaxSize];
+      if (!this->patternStrCaseInsensitive) throw StriException(MSG__MEM_ALLOC_ERROR);
+   }
+   else
+      this->patternStrCaseInsensitive = NULL;
 }
 
 
@@ -94,18 +110,27 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->patternLen = 0;
    this->patternStr = NULL;
    this->searchPos = -1;
+   this->searchEnd = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
    this->flags = container.flags;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
    this->patternPos = -1;
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
    if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
-#endif
+   
+   this->patternLenCaseInsensitive = 0;
+   if (flags&BYTESEARCH_CASE_INSENSITIVE) {
+      this->patternStrCaseInsensitive = new UChar32[this->kmpMaxSize];
+      if (!this->patternStrCaseInsensitive) throw StriException(MSG__MEM_ALLOC_ERROR);
+   }
+   else
+      this->patternStrCaseInsensitive = NULL;
+//#endif
 }
 
 
@@ -120,18 +145,27 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->patternLen = 0;
    this->patternStr = NULL;
    this->searchPos = -1;
+   this->searchEnd = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
    this->flags = container.flags;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
    this->patternPos = -1;
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
    if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
-#endif
+   
+   this->patternLenCaseInsensitive = 0;
+   if (flags&BYTESEARCH_CASE_INSENSITIVE) {
+      this->patternStrCaseInsensitive = new UChar32[this->kmpMaxSize];
+      if (!this->patternStrCaseInsensitive) throw StriException(MSG__MEM_ALLOC_ERROR);
+   }
+   else
+      this->patternStrCaseInsensitive = NULL;
+//#endif
    return *this;
 }
 
@@ -142,11 +176,41 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
 StriContainerByteSearch::~StriContainerByteSearch()
 {
    // nothing to clean
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   if (kmpNext)
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   if (kmpNext) {
       delete [] kmpNext;
-   kmpNext = NULL;
-#endif
+      kmpNext = NULL;
+   }
+   
+   if (patternStrCaseInsensitive) {
+      delete [] patternStrCaseInsensitive;
+      patternStrCaseInsensitive = NULL;
+   }
+//#endif
+}
+
+
+/** Create KMP table for rev iteration [case insensitive search]
+ *
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+*/
+void StriContainerByteSearch::createKMPtableBackCaseInsensitive()
+{
+   int k = 0, j = -1;
+   kmpNext[0] = -1;
+   
+   while (k < patternLenCaseInsensitive) {
+      while (j > -1 && patternStrCaseInsensitive[patternLenCaseInsensitive-1-k] 
+                    != patternStrCaseInsensitive[patternLenCaseInsensitive-1-j])
+         j = kmpNext[j];
+      k++;
+      j++;
+      if (patternStrCaseInsensitive[patternLenCaseInsensitive-1-k]
+       == patternStrCaseInsensitive[patternLenCaseInsensitive-1-j])
+         kmpNext[k] = kmpNext[j];
+      else
+         kmpNext[k] = j;
+   }
 }
 
 
@@ -158,6 +222,7 @@ void StriContainerByteSearch::createKMPtableBack()
 {
    int k = 0, j = -1;
    kmpNext[0] = -1;
+   
    while (k < patternLen) {
       while (j > -1 && patternStr[patternLen-1-k] != patternStr[patternLen-1-j])
          j = kmpNext[j];
@@ -169,6 +234,29 @@ void StriContainerByteSearch::createKMPtableBack()
          kmpNext[k] = j;
    }
 }
+
+
+/** Create KMP table for fwd iteration [case insensitive]
+ *
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+*/
+void StriContainerByteSearch::createKMPtableFwdCaseInsensitive()
+{
+   int k = 0, j = -1;
+   kmpNext[0] = -1;
+   while (k < patternLenCaseInsensitive) {
+      while (j > -1 && patternStrCaseInsensitive[k] != patternStrCaseInsensitive[j])
+         j = kmpNext[j];
+      k++;
+      j++;
+      if (patternStrCaseInsensitive[k] == patternStrCaseInsensitive[j])
+         kmpNext[k] = kmpNext[j];
+      else
+         kmpNext[k] = j;
+   }
+}
+
 
 
 /** Create KMP table for fwd iteration
@@ -216,18 +304,19 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
    else {
       this->patternStr = get(i).c_str();
       this->patternLen = get(i).length();
-
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
-      if (this->patternLen > 4) { // a short pattern => don't use KMP
-#endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-         createKMPtableBack();
-#endif
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+      
+      if (flags & BYTESEARCH_CASE_INSENSITIVE) {
+         upgradePatternCaseInsensitive();
+         createKMPtableBackCaseInsensitive();
       }
+      else {
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+         if (this->patternLen > 4) // a short pattern => don't use KMP
+            createKMPtableBack();
 #endif
+      }
    }
-
+   
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->resetMatcher();
@@ -267,15 +356,16 @@ void StriContainerByteSearch::setupMatcherFwd(R_len_t i, const char* _searchStr,
       this->patternStr = get(i).c_str();
       this->patternLen = get(i).length();
 
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
-      if (this->patternLen > 4) { // a short pattern => don't use KMP
-#endif
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-         createKMPtableFwd();
-#endif
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+      if (flags & BYTESEARCH_CASE_INSENSITIVE) {
+         upgradePatternCaseInsensitive();
+         createKMPtableFwdCaseInsensitive();
       }
+      else {
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+         if (this->patternLen > 4) // a short pattern => don't use KMP
+            createKMPtableFwd();
 #endif
+      }
    }
 
    this->searchStr = _searchStr;
@@ -300,9 +390,8 @@ void StriContainerByteSearch::resetMatcher()
 #endif
 
    this->searchPos = -1;
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   this->searchEnd = -1;
    this->patternPos = -1;
-#endif
 }
 
 
@@ -322,8 +411,8 @@ void StriContainerByteSearch::resetMatcher()
  */
 R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 {
-   if (startPos > searchLen-patternLen) {
-      searchPos = searchLen;
+   if (startPos > searchLen-patternLen) { // this check is OK, we do a case-sensitive search
+      searchPos = searchEnd = searchLen;
       return USEARCH_DONE;
    }
 
@@ -332,6 +421,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
       unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos; searchPos<searchLen-1+1; ++searchPos) {
          if (pat == (unsigned char)searchStr[searchPos]) {
+            searchEnd = searchPos + 1;
             return searchPos;
          }
       }
@@ -358,6 +448,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
          cur |= (uint16_t)(*curstr);
          ++curstr;
          if (pat == cur) {
+            searchEnd = searchPos + 2;
             return searchPos;
          }
       }
@@ -394,6 +485,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
          cur |= (uint32_t)(*curstr);
          ++curstr;
          if ((pat&mask) == (cur&mask)) {
+            searchEnd = searchPos + 3;
             return searchPos;
          }
       }
@@ -432,42 +524,43 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
          cur |= (uint32_t)(*curstr);
          ++curstr;
          if (pat == cur) {
+            searchEnd = searchPos + 4;
             return searchPos;
          }
       }
    }
    // else not found
-   searchPos = searchLen;
+   searchPos = searchEnd = searchLen;
    return USEARCH_DONE;
 }
 
 
-/** find first match - naive search
- *
- * @param startPos where to start
- * @return USEARCH_DONE on no match, otherwise start index
- *
- * @version 0.1-?? (Marek Gagolewski)
- *
- * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- *          separate method
- */
-R_len_t StriContainerByteSearch::findFromPosFwd_naive(R_len_t startPos)
-{
-   // Naive search algorithm
-   for (searchPos = startPos; searchPos<searchLen-patternLen+1; ++searchPos) {
-      R_len_t k=0;
-      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
-         k++;
-      if (k == patternLen) {
-         // found!
-         return searchPos;
-      }
-   }
-   // not found
-   searchPos = searchLen;
-   return USEARCH_DONE;
-}
+///** find first match - naive search
+// *
+// * @param startPos where to start
+// * @return USEARCH_DONE on no match, otherwise start index
+// *
+// * @version 0.1-?? (Marek Gagolewski)
+// *
+// * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+// *          separate method
+// */
+//R_len_t StriContainerByteSearch::findFromPosFwd_naive(R_len_t startPos)
+//{
+//   // Naive search algorithm
+//   for (searchPos = startPos; searchPos<searchLen-patternLen+1; ++searchPos) {
+//      R_len_t k=0;
+//      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
+//         k++;
+//      if (k == patternLen) {
+//         // found!
+//         return searchPos;
+//      }
+//   }
+//   // not found
+//   searchPos = searchLen;
+//   return USEARCH_DONE;
+//}
 
 
 /** find first match - KMP
@@ -480,166 +573,52 @@ R_len_t StriContainerByteSearch::findFromPosFwd_naive(R_len_t startPos)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          KMP upgraded; separate method
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    use BYTESEARCH_CASE_INSENSITIVE
  */
 R_len_t StriContainerByteSearch::findFromPosFwd_KMP(R_len_t startPos)
 {
    int j = startPos;
    patternPos = 0;
-   while (j < searchLen) {
-      while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
-         patternPos = kmpNext[patternPos];
-      patternPos++;
-      j++;
-      if (patternPos >= patternLen) {
-         searchPos = j-patternPos;
-         return searchPos;
+   if (flags&BYTESEARCH_CASE_INSENSITIVE) {
+      UChar32 c = 0;
+      while (j < searchLen) {
+         U8_NEXT(searchStr, j, searchLen, c);
+         c = u_toupper(c);
+         while (patternPos >= 0 && patternStrCaseInsensitive[patternPos] != c)
+            patternPos = kmpNext[patternPos];
+         patternPos++;
+         if (patternPos == patternLenCaseInsensitive) {
+            searchEnd = j;
+            
+            // we need to go back by patternLenCaseInsensitive code points
+            R_len_t k = patternLenCaseInsensitive;
+            searchPos = j;
+            while (k > 0) {
+               U8_BACK_1((const uint8_t*)searchStr, 0, searchPos);
+               k--;
+            }
+            return searchPos;
+         }
+      }
+   }
+   else {
+      while (j < searchLen) {
+         while (patternPos >= 0 && patternStr[patternPos] != searchStr[j])
+            patternPos = kmpNext[patternPos];
+         patternPos++;
+         j++;
+         if (patternPos == patternLen) {
+            searchEnd = j;
+            searchPos = j-patternLen;
+            return searchPos;
+         }
       }
    }
    // else not found
-   searchPos = searchLen;
+   searchPos = searchEnd = searchLen;
    return USEARCH_DONE;
-}
-
-
-/** find first match
- *
- * resets the matcher
- *
- * @return USEARCH_DONE on no match, otherwise start index
- *
- * @version 0.1-?? (Marek Gagolewski)
- *
- * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
- *          uses KMP
- *
- * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- *          KMP upgraded and now used by default;
- *          special procedure for patternLen <= 4
- */
-R_len_t StriContainerByteSearch::findFirst()
-{
-   // "Any byte oriented string searching algorithm can be used with
-   // UTF-8 data, since the sequence of bytes for a character cannot
-   // occur anywhere else."
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
-
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
-   if (patternLen <= 4)
-      return findFromPosFwd_short(0);
-#endif
-
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   return findFromPosFwd_KMP(0);
-#else
-   return findFromPosFwd_naive(0);
-#endif
-}
-
-
-/** find next match
- *
- * continues previous search
- *
- * @return USEARCH_DONE on no match, otherwise start index
- *
- * @version 0.1-?? (Marek Gagolewski)
- *
- * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
- *          uses KMP
- *
- * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- *          KMP upgraded and now used by default;
- *          use findFromPosFwd
- */
-R_len_t StriContainerByteSearch::findNext()
-{
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
-
-   if (searchPos < 0) return findFirst();
-
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
-   if (patternLen <= 4)
-      return findFromPosFwd_short(searchPos+patternLen);
-#endif
-
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   return findFromPosFwd_KMP(searchPos+patternLen);
-#else
-   return findFromPosFwd_naive(searchPos+patternLen);
-#endif
-}
-
-
-/** find last match
- *
- * resets the matcher
- *
- * @return USEARCH_DONE on no match, otherwise start index
- *
- * @version 0.1-?? (Marek Gagolewski)
- *
- * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- *          Using KNP
- */
-R_len_t StriContainerByteSearch::findLast()
-{
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
-
-#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
-   if (patternLen <= 4)
-      return findFromPosBack_short(searchLen-1);
-#endif
-
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-   return findFromPosBack_KMP(searchLen-1);
-#else
-   return findFromPosBack_naive(searchLen-1);
-#endif
-}
-
-
-/** get start index of pattern match from the last search
- *
- * @return byte index in searchStr
- */
-R_len_t StriContainerByteSearch::getMatchedStart()
-{
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
-
-   if (searchPos < 0 || searchPos > searchLen-patternLen)
-      throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
-
-   return searchPos;
-}
-
-
-/** get length of pattern match from the last search
- *
- * @return byte index in searchStr
- */
-R_len_t StriContainerByteSearch::getMatchedLength()
-{
-#ifndef NDEBUG
-   if (!this->searchStr || !this->patternStr)
-      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-#endif
-
-   if (searchPos < 0 || searchPos > searchLen-patternLen)
-      throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
-
-   return patternLen; // trivial :>
 }
 
 
@@ -659,8 +638,8 @@ R_len_t StriContainerByteSearch::getMatchedLength()
  */
 R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
 {
-   if (startPos+1 < patternLen) {
-      searchPos = searchLen;
+   if (startPos+1 < patternLen) { // check OK, case-sensitive search
+      searchPos = searchEnd = searchLen;
       return USEARCH_DONE;
    }
 
@@ -668,6 +647,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
       unsigned char pat = (unsigned char)patternStr[0];
       for (searchPos = startPos-0; searchPos>=0; --searchPos) {
          if (pat == (unsigned char)searchStr[searchPos]) {
+            searchEnd = searchPos + 1;
             return searchPos;
          }
       }
@@ -686,6 +666,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
          cur |= (uint16_t)(*curstr);
          --curstr;
          if (pat == cur) {
+            searchEnd = searchPos + 2;
             return searchPos;
          }
       }
@@ -711,6 +692,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
          cur |= (uint32_t)(*curstr);
          --curstr;
          if ((pat&mask) == (cur&mask)) {
+            searchEnd = searchPos + 3;
             return searchPos;
          }
       }
@@ -740,39 +722,40 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
          cur |= (uint32_t)(*curstr);
          --curstr;
          if (pat == cur) {
+            searchEnd = searchPos + 4;
             return searchPos;
          }
       }
    }
    // else not found
-   searchPos = searchLen;
+   searchPos = searchEnd = searchLen;
    return USEARCH_DONE;
 }
 
 
-/** find last match - naive search
- *
- * @param startPos where to start
- * @return USEARCH_DONE on no match, otherwise start index
- *
- * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- */
-R_len_t StriContainerByteSearch::findFromPosBack_naive(R_len_t startPos)
-{
-   // Naive search algorithm
-   for (searchPos = startPos-patternLen+1; searchPos>=0; --searchPos) {
-      R_len_t k=0;
-      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
-         k++;
-      if (k == patternLen) {
-         // found!
-         return searchPos;
-      }
-   }
-   // not found
-   searchPos = searchLen;
-   return USEARCH_DONE;
-}
+///** find last match - naive search
+// *
+// * @param startPos where to start
+// * @return USEARCH_DONE on no match, otherwise start index
+// *
+// * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+// */
+//R_len_t StriContainerByteSearch::findFromPosBack_naive(R_len_t startPos)
+//{
+//   // Naive search algorithm
+//   for (searchPos = startPos-patternLen+1; searchPos>=0; --searchPos) {
+//      R_len_t k=0;
+//      while (k<patternLen && searchStr[searchPos+k] == patternStr[k])
+//         k++;
+//      if (k == patternLen) {
+//         // found!
+//         return searchPos;
+//      }
+//   }
+//   // not found
+//   searchPos = searchLen;
+//   return USEARCH_DONE;
+//}
 
 
 /** find last match - KMP
@@ -781,23 +764,54 @@ R_len_t StriContainerByteSearch::findFromPosBack_naive(R_len_t startPos)
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    use BYTESEARCH_CASE_INSENSITIVE
  */
 R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
 {
    int j = startPos;
    patternPos = 0;
-   while (j >= 0) {
-      while (patternPos >= 0 && patternStr[patternLen-1-patternPos] != searchStr[j])
-         patternPos = kmpNext[patternPos];
-      patternPos++;
-      j--;
-      if (patternPos >= patternLen) {
-         searchPos = j+1;
-         return searchPos;
+   if (flags&BYTESEARCH_CASE_INSENSITIVE) {
+      while (j > 0) {
+         UChar32 c;
+         U8_PREV(searchStr, 0, j, c);
+         c = u_toupper(c);
+         while (patternPos >= 0 &&
+               patternStrCaseInsensitive[patternLenCaseInsensitive-1-patternPos] != c)
+            patternPos = kmpNext[patternPos];
+         patternPos++;
+         if (patternPos == patternLenCaseInsensitive) {
+            searchPos = j;
+            
+            // we need to go forward by patternLenCaseInsensitive code points
+            R_len_t k = patternLenCaseInsensitive;
+            searchEnd = j;
+            while (k > 0) {
+               U8_FWD_1((const uint8_t*)searchStr, searchEnd, searchLen);
+               k--;
+            }
+            
+            return searchPos;
+         }
       }
    }
+   else {
+      while (j > 0) {
+         j--;
+         while (patternPos >= 0 && patternStr[patternLen-1-patternPos] != searchStr[j])
+            patternPos = kmpNext[patternPos];
+         patternPos++;
+         if (patternPos == patternLen) {
+            searchEnd = j+patternLen;
+            searchPos = j;
+            return searchPos;
+         }
+      }
+   }
+   
    // else not found
-   searchPos = searchLen;
+   searchPos = searchEnd = searchLen;
    return USEARCH_DONE;
 }
 
@@ -843,4 +857,154 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed)
    }
 
    return flags;
+}
+
+
+
+/**
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ */
+void StriContainerByteSearch::upgradePatternCaseInsensitive()
+{
+   UChar32 c = 0;
+   R_len_t j = 0;
+   patternLenCaseInsensitive = 0;
+   while (j < patternLen) {
+      U8_NEXT(patternStr, j, patternLen, c);
+      patternStrCaseInsensitive[patternLenCaseInsensitive++] = u_toupper(c);
+   }
+}
+
+
+/** find first match
+ *
+ * resets the matcher
+ *
+ * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgraded and now used by default;
+ *          special procedure for patternLen <= 4
+ */
+R_len_t StriContainerByteSearch::findFirst()
+{
+   // "Any byte oriented string searching algorithm can be used with
+   // UTF-8 data, since the sequence of bytes for a character cannot
+   // occur anywhere else."
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+   if (!(flags&BYTESEARCH_CASE_INSENSITIVE) && patternLen <= 4)
+      return findFromPosFwd_short(0);
+#endif
+
+//#ifndef STRI__BYTESEARCH_DISABLE_KMP
+   return findFromPosFwd_KMP(0);
+//#else
+//   return findFromPosFwd_naive(0);
+//#endif
+}
+
+
+/** find next match
+ *
+ * continues previous search
+ *
+ * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
+ *          uses KMP
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          KMP upgraded and now used by default;
+ *          use findFromPosFwd
+ */
+R_len_t StriContainerByteSearch::findNext()
+{
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+   if (searchPos < 0) return findFirst();
+
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+   if (!(flags&BYTESEARCH_CASE_INSENSITIVE) && patternLen <= 4)
+      return findFromPosFwd_short(searchEnd);
+#endif
+
+   return findFromPosFwd_KMP(searchEnd);}
+
+
+/** find last match
+ *
+ * resets the matcher
+ *
+ * @return USEARCH_DONE on no match, otherwise start index
+ *
+ * @version 0.1-?? (Marek Gagolewski)
+ *
+ * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ *          Using KNP
+ */
+R_len_t StriContainerByteSearch::findLast()
+{
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+#ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
+   if (!(flags&BYTESEARCH_CASE_INSENSITIVE) && patternLen <= 4)
+      return findFromPosBack_short(searchLen);
+#endif
+
+   return findFromPosBack_KMP(searchLen);
+}
+
+
+/** get start index of pattern match from the last search
+ *
+ * @return byte index in searchStr
+ */
+R_len_t StriContainerByteSearch::getMatchedStart()
+{
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+   if (searchPos < 0 || searchEnd-searchPos <= 0)
+      throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
+
+   return searchPos;
+}
+
+
+/** get length of pattern match from the last search
+ *
+ * @return byte index in searchStr
+ */
+R_len_t StriContainerByteSearch::getMatchedLength()
+{
+#ifndef NDEBUG
+   if (!this->searchStr || !this->patternStr)
+      throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
+#endif
+
+   if (searchPos < 0 || searchEnd-searchPos <= 0)
+      throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
+
+   return searchEnd-searchPos;
 }
