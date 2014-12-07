@@ -20,6 +20,13 @@ test_that("stri_count_fixed", {
    expect_equivalent(stri_count_fixed("bababababaab", "bab"), 2L)
    expect_equivalent(stri_count_fixed("bababababaab", "baba"), 2L)
    expect_equivalent(stri_count_fixed("bababababaabababab", "ababab"), 2L)
+   expect_equivalent(stri_count_fixed("aaaab", "ab", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bababababaab", "aAb", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bababaBabaab", "b", case_insensitive=TRUE), 6L)
+   expect_equivalent(stri_count_fixed("baBabababaab", "ba", case_insensitive=TRUE), 5L)
+   expect_equivalent(stri_count_fixed("babaBababaab", "bAb", case_insensitive=TRUE), 2L)
+   expect_equivalent(stri_count_fixed("bababaBabaab", "baba", case_insensitive=TRUE), 2L)
+   expect_equivalent(stri_count_fixed("bababababaababaBab", "ababab", case_insensitive=TRUE), 2L)
 
    # we have special cases for patterns of length 1,2,3,4
    expect_equivalent(stri_count_fixed("ba", "b"), 1L)
@@ -27,15 +34,22 @@ test_that("stri_count_fixed", {
    expect_equivalent(stri_count_fixed("bbba", "bbb"), 1L)
    expect_equivalent(stri_count_fixed("bbbba", "bbbb"), 1L)
    expect_equivalent(stri_count_fixed("bbbbba", "bbbbb"), 1L)
+   expect_equivalent(stri_count_fixed("ba", "B", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bba", "BB", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bbba", "BBB", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bbbba", "BBBB", case_insensitive=TRUE), 1L)
+   expect_equivalent(stri_count_fixed("bbbbba", "BBBBB", case_insensitive=TRUE), 1L)
 
    for (p in stri_sub("abcdefghij", 1, 1:6)) {
       for (i in 1:5) {
-         expect_equivalent(stri_count_fixed(stri_dup(p, i), p), i)
-         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "y"), i), p), i)
-         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yy"), i), p), i)
-         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyy"), i), p), i)
-         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyy"), i), p), i)
-         expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyyy"), i), p), i)
+         for (val in c(TRUE, FALSE)) {
+            expect_equivalent(stri_count_fixed(stri_dup(p, i), p, case_insensitive=val), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "y", case_insensitive=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yy", case_insensitive=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyy", case_insensitive=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyy", case_insensitive=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyyy", case_insensitive=val), i), p), i)
+         }
       }
    }
 

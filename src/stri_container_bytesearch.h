@@ -36,7 +36,6 @@
 #include "stri_container_utf8.h"
 
 
-// #define STRI__BYTESEARCH_DISABLE_KMP
 // #define STRI__BYTESEARCH_DISABLE_SHORTPAT
 
 #ifndef USEARCH_DONE
@@ -61,7 +60,8 @@
  *          BUGFIX: invalid matcher reuse on empty search string
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
- *          getByteSearchFlags static method added
+ *          getByteSearchFlags static method added,
+ *          allow for case-insensitive search
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
@@ -71,32 +71,38 @@ class StriContainerByteSearch : public StriContainerUTF8 {
          BYTESEARCH_CASE_INSENSITIVE = 2
       } ByteSearchFlag;
 
+      R_len_t searchPos; // -1 after reset, searchLen on no further matches
+      R_len_t searchEnd;
+      const char* searchStr; // owned by caller
+      R_len_t searchLen; // in bytes
+      
+      int* kmpNext;
+      int patternPos;
+      R_len_t kmpMaxSize;
+      
       uint32_t flags; ///< ByteSearch flags
       R_len_t patternLen;
       const char* patternStr;
-      R_len_t searchPos; // -1 after reset, searchLen on no further matches
-      const char* searchStr; // owned by caller
-      R_len_t searchLen; // in bytes
+      R_len_t patternLenCaseInsensitive;
+      UChar32* patternStrCaseInsensitive;
 
 #ifndef NDEBUG
       R_len_t debugMatcherIndex;  ///< used by vectorize_getMatcher (internally - check)
 #endif
 
-#ifndef STRI__BYTESEARCH_DISABLE_KMP
-      int* kmpNext;
-      int patternPos;
-      R_len_t kmpMaxSize;
-#endif
+      void upgradePatternCaseInsensitive();
 
       void createKMPtableFwd();
+      void createKMPtableFwdCaseInsensitive();
       R_len_t findFromPosFwd_short(R_len_t startPos);
-      R_len_t findFromPosFwd_naive(R_len_t startPos);
       R_len_t findFromPosFwd_KMP(R_len_t startPos);
+//      R_len_t findFromPosFwd_naive(R_len_t startPos);
 
       void createKMPtableBack();
+      void createKMPtableBackCaseInsensitive();
       R_len_t findFromPosBack_short(R_len_t startPos);
-      R_len_t findFromPosBack_naive(R_len_t startPos);
       R_len_t findFromPosBack_KMP(R_len_t startPos);
+//      R_len_t findFromPosBack_naive(R_len_t startPos);
 
    public:
    
