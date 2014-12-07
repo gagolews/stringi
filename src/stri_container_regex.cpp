@@ -43,6 +43,7 @@ StriContainerRegexPattern::StriContainerRegexPattern()
 {
    this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
+   this->flags =0;
 }
 
 

@@ -65,13 +65,14 @@ using namespace std;
  */
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
    STRI__ERROR_HANDLER_BEGIN(2)
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
@@ -197,6 +198,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  */
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_fixed)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -204,7 +206,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
    STRI__ERROR_HANDLER_BEGIN(2)
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));

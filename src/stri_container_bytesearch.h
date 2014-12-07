@@ -59,11 +59,19 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-05-27)
  *          BUGFIX: invalid matcher reuse on empty search string
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *          getByteSearchFlags static method added
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
    private:
+   
+      typedef enum ByteSearchFlag {
+         BYTESEARCH_CASE_INSENSITIVE = 2
+      } ByteSearchFlag;
 
+      uint32_t flags; ///< ByteSearch flags
       R_len_t patternLen;
       const char* patternStr;
       R_len_t searchPos; // -1 after reset, searchLen on no further matches
@@ -91,9 +99,11 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       R_len_t findFromPosBack_KMP(R_len_t startPos);
 
    public:
+   
+      static uint32_t getByteSearchFlags(SEXP opts_fixed);
 
       StriContainerByteSearch();
-      StriContainerByteSearch(SEXP rstr, R_len_t nrecycle);
+      StriContainerByteSearch(SEXP rstr, R_len_t nrecycle, uint32_t flags);
       StriContainerByteSearch(StriContainerByteSearch& container);
       ~StriContainerByteSearch();
       StriContainerByteSearch& operator=(StriContainerByteSearch& container);

@@ -81,6 +81,8 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
          continue;
       }
 
+      // @TODO: move to StriContainerByteSearch
+
       R_len_t from_cur = from_cont.get(i);
       if (from_cur == 1)
          from_cur = 0; /* most commonly used case */
@@ -164,6 +166,9 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
       R_len_t     str_cur_n = str_cont.get(i).length();
       const char* pattern_cur_s = pattern_cont.get(i).c_str();
       R_len_t     pattern_cur_n = pattern_cont.get(i).length();
+      
+      
+      // @TODO: move to StriContainerByteSearch
 
       R_len_t to_cur = to_cont.get(i);
       if (to_cur == -1)

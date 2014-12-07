@@ -47,6 +47,7 @@ StriContainerByteSearch::StriContainerByteSearch()
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
+   this->flags = 0;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -63,7 +64,7 @@ StriContainerByteSearch::StriContainerByteSearch()
  * @param rstr R character vector
  * @param _nrecycle extend length [vectorization]
  */
-StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
+StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle, uint32_t _flags)
    : StriContainerUTF8(rstr, _nrecycle, true)
 {
    this->patternLen = 0;
@@ -71,6 +72,7 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle)
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
+   this->flags = _flags;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -94,6 +96,7 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
+   this->flags = container.flags;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -119,6 +122,7 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->searchPos = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
+   this->flags = container.flags;
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -795,4 +799,48 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
    // else not found
    searchPos = searchLen;
    return USEARCH_DONE;
+}
+
+
+/** Read settings flags from a list
+ *
+ * may call Rf_error
+ *
+ * @param opts_fixed list
+ * @return flags
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ */
+uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed)
+{
+   uint32_t flags = 0;
+   if (!isNull(opts_fixed) && !Rf_isVectorList(opts_fixed))
+      Rf_error(MSG__ARG_EXPECTED_LIST, "opts_fixed"); // error() call allowed here
+
+   R_len_t narg = isNull(opts_fixed)?0:LENGTH(opts_fixed);
+
+   if (narg > 0) {
+
+      SEXP names = Rf_getAttrib(opts_fixed, R_NamesSymbol);
+      if (names == R_NilValue || LENGTH(names) != narg)
+         Rf_error(MSG__FIXED_CONFIG_FAILED); // error() call allowed here
+
+      for (R_len_t i=0; i<narg; ++i) {
+         if (STRING_ELT(names, i) == NA_STRING)
+            Rf_error(MSG__FIXED_CONFIG_FAILED); // error() call allowed here
+
+         const char* curname = CHAR(STRING_ELT(names, i));
+
+         if  (!strcmp(curname, "case_insensitive")) {
+            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "case_insensitive");
+            if (val) flags |= BYTESEARCH_CASE_INSENSITIVE;
+//         } else if  (!strcmp(curname, "overlap??")) {
+//            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "overlap??");
+//            if (val) flags |= FIXED_?????;
+         } else {
+            Rf_warning(MSG__INCORRECT_FIXED_OPTION, curname);
+         }
+      }
+   }
+
+   return flags;
 }
