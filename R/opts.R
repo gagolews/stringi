@@ -100,9 +100,10 @@
 #'
 #' @examples
 #' stri_cmp("number100", "number2")
-#' stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
+#' stri_cmp("number100", "number2", opts_collator=stri_opts_collator(numeric=TRUE))
+#' stri_cmp("number100", "number2", numeric=TRUE) # equivalent
 #' stri_cmp("above mentioned", "above-mentioned")
-#' stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
+#' stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
 stri_opts_collator <- function(locale=NULL, strength=3L,
    alternate_shifted=FALSE, french=FALSE,
    uppercase_first=NA, case_level=FALSE,
@@ -178,7 +179,8 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #'
 #' @examples
 #' stri_detect_regex("ala", "ALA") # case-sensitive by default
-#' stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
+#' stri_detect_regex("ala", "ALA", opts_regex=stri_opts_regex(case_insensitive=TRUE))
+#' stri_detect_regex("ala", "ALA", case_insensitive=TRUE) # equivalent
 #' stri_detect_regex("ala", "(?i)ALA") # equivalent
 stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
                             multiline, unix_lines, uword, error_on_unknown_escapes, ...)
@@ -271,3 +273,44 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
    if (!missing(skip_sentence_sep))   opts["skip_sentence_sep"]   <- skip_sentence_sep
    opts
 }
+
+
+#' @title
+#' Generate a List with Fixed Pattern Search Engine's Settings
+#'
+#' @description
+#' A convenience function used to tune up the \code{stri_*_fixed} functions'
+#' behavior, see \link{stringi-search-fixed}.
+#'
+#' @details
+#' Case-insensitive matching uses a simple, single-code point case mapping
+#' (via ICU's \code{u_toupper()} function). 
+#' Full case mappings should be used whenever possible because they produce 
+#' better results by working on whole strings. They take into account 
+#' the string context and the language and can map to a result string with
+#'  a different length as appropriate, see \link{stringi-search-coll}.
+#'
+#' @param case_insensitive logical; enable simple case insensitive matching
+#' @param ... any other arguments to this function are purposedly ignored
+#'
+#' @return
+#' Returns a named list object.
+#'
+#' @export
+#' @family search_fixed
+#'
+#' @references
+#' \emph{C/POSIX Migration} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/posix#case_mappings}
+#' 
+#' @examples
+#' stri_detect_fixed("ala", "ALA") # case-sensitive by default
+#' stri_detect_fixed("ala", "ALA", opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
+#' stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
+stri_opts_fixed <- function(case_insensitive, ...)
+{
+   opts <- list()
+   if (!missing(case_insensitive))    opts["case_insensitive"] <- case_insensitive
+   opts
+}
+

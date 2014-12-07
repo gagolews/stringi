@@ -4,8 +4,10 @@
 \title{Locale-Insensitive Fixed Pattern Matching in \pkg{stringi}}
 \description{
 String searching facilities described in this very man page
-provide a way to locate an exact specific piece of
-text.
+provide a way to locate a specific sequence of bytes in a string.
+Fixed pattern search engine's settings may be tuned up (for example
+to perform case-insensitive search), see the
+\code{\link{stri_opts_fixed}} function for more details.
 }
 \section{Byte Compare}{
 
@@ -24,11 +26,12 @@ not give correct results in cases of:
 }
 see also \link{stringi-search-coll}.
 
-Note that, the conversion of input data
+Note that the conversion of input data
 to Unicode is done as usual.
 }
 \seealso{
-Other search_fixed: \code{\link{stringi-search}}
+Other search_fixed: \code{\link{stri_opts_fixed}};
+  \code{\link{stringi-search}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};

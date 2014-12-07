@@ -70,9 +70,10 @@ The strings are Unicode-normalized before the comparison.
 }
 \examples{
 stri_cmp("number100", "number2")
-stri_cmp("number100", "number2", stri_opts_collator(numeric=TRUE))
+stri_cmp("number100", "number2", opts_collator=stri_opts_collator(numeric=TRUE))
+stri_cmp("number100", "number2", numeric=TRUE) # equivalent
 stri_cmp("above mentioned", "above-mentioned")
-stri_cmp("above mentioned", "above-mentioned", stri_opts_collator(alternate_shifted=TRUE))
+stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
 }
 \references{
 \emph{Collation} -- ICU User Guide,

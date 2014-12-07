@@ -84,7 +84,8 @@ stri_info <- function(short=FALSE) {
    else {
       locale <- info$Locale$Name
       charset <- info$Charset.native$Name.friendly
-      return(stri_paste(locale, ".", charset,
+      return(stri_paste("stringi_", as.character(packageVersion("stringi")), "; ",
+         locale, ".", charset,
          "; ICU4C ", info$ICU.version,
          "; Unicode ", info$Unicode.version))
    }

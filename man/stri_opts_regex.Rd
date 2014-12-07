@@ -58,7 +58,8 @@ in the References section or \link{stringi-search-regex}.
 }
 \examples{
 stri_detect_regex("ala", "ALA") # case-sensitive by default
-stri_detect_regex("ala", "ALA", stri_opts_regex(case_insensitive=TRUE))
+stri_detect_regex("ala", "ALA", opts_regex=stri_opts_regex(case_insensitive=TRUE))
+stri_detect_regex("ala", "ALA", case_insensitive=TRUE) # equivalent
 stri_detect_regex("ala", "(?i)ALA") # equivalent
 }
 \references{

@@ -103,7 +103,8 @@ Other search_extract: \code{\link{stri_extract_all_words}},
   \code{\link{stri_match_last}},
   \code{\link{stri_match_last_regex}}
 
-Other search_fixed: \code{\link{stringi-search-fixed}}
+Other search_fixed: \code{\link{stri_opts_fixed}};
+  \code{\link{stringi-search-fixed}}
 
 Other search_locate: \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all_words}},
