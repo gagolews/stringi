@@ -234,7 +234,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
 #ifndef NDEBUG
          if (!this->searchStr || !this->patternStr)
             throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-         if (searchPos < 0 || searchEnd-searchPos <= 0)
+         if (searchPos < 0 || searchEnd-searchPos <= 0 || searchPos >= searchLen)
             throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
 #endif
       
@@ -251,7 +251,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
 #ifndef NDEBUG
          if (!this->searchStr || !this->patternStr)
             throw StriException("DEBUG: StriContainerByteSearch: setupMatcher() hasn't been called yet");
-         if (searchPos < 0 || searchEnd-searchPos <= 0)
+         if (searchPos < 0 || searchEnd-searchPos <= 0 || searchEnd > searchLen)
             throw StriException("StriContainerByteSearch: no match at current position! This is a BUG.");
 #endif
       

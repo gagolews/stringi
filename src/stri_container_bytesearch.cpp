@@ -62,6 +62,7 @@ StriContainerByteSearch::StriContainerByteSearch()
 }
 
 
+
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector
@@ -196,20 +197,12 @@ StriContainerByteSearch::~StriContainerByteSearch()
 */
 void StriContainerByteSearch::createKMPtableBackCaseInsensitive()
 {
-   int k = 0, j = -1;
-   kmpNext[0] = -1;
-   
-   while (k < patternLenCaseInsensitive) {
-      while (j > -1 && patternStrCaseInsensitive[patternLenCaseInsensitive-1-k] 
-                    != patternStrCaseInsensitive[patternLenCaseInsensitive-1-j])
-         j = kmpNext[j];
-      k++;
-      j++;
-      if (patternStrCaseInsensitive[patternLenCaseInsensitive-1-k]
-       == patternStrCaseInsensitive[patternLenCaseInsensitive-1-j])
-         kmpNext[k] = kmpNext[j];
-      else
-         kmpNext[k] = j;
+   kmpNext[0] = -1;  
+   for (R_len_t i=0; i<patternLenCaseInsensitive; ++i) {
+      kmpNext[i+1] = kmpNext[i]+1;
+      while (kmpNext[i+1] > 0 &&
+            patternStrCaseInsensitive[patternLen-i-1] != patternStrCaseInsensitive[patternLenCaseInsensitive-(kmpNext[i+1]-1)-1])
+         kmpNext[i+1] = kmpNext[kmpNext[i+1]-1]+1;
    }
 }
 
@@ -217,21 +210,18 @@ void StriContainerByteSearch::createKMPtableBackCaseInsensitive()
 /** Create KMP table for rev iteration
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *          KMP upgrade
 */
 void StriContainerByteSearch::createKMPtableBack()
 {
-   int k = 0, j = -1;
-   kmpNext[0] = -1;
-   
-   while (k < patternLen) {
-      while (j > -1 && patternStr[patternLen-1-k] != patternStr[patternLen-1-j])
-         j = kmpNext[j];
-      k++;
-      j++;
-      if (patternStr[patternLen-1-k] == patternStr[patternLen-1-j])
-         kmpNext[k] = kmpNext[j];
-      else
-         kmpNext[k] = j;
+   kmpNext[0] = -1;  
+   for (R_len_t i=0; i<patternLen; ++i) {
+      kmpNext[i+1] = kmpNext[i]+1;
+      while (kmpNext[i+1] > 0 &&
+            patternStr[patternLen-i-1] != patternStr[patternLen-(kmpNext[i+1]-1)-1])
+         kmpNext[i+1] = kmpNext[kmpNext[i+1]-1]+1;
    }
 }
 
@@ -243,17 +233,12 @@ void StriContainerByteSearch::createKMPtableBack()
 */
 void StriContainerByteSearch::createKMPtableFwdCaseInsensitive()
 {
-   int k = 0, j = -1;
-   kmpNext[0] = -1;
-   while (k < patternLenCaseInsensitive) {
-      while (j > -1 && patternStrCaseInsensitive[k] != patternStrCaseInsensitive[j])
-         j = kmpNext[j];
-      k++;
-      j++;
-      if (patternStrCaseInsensitive[k] == patternStrCaseInsensitive[j])
-         kmpNext[k] = kmpNext[j];
-      else
-         kmpNext[k] = j;
+   kmpNext[0] = -1;  
+   for (R_len_t i=0; i<patternLenCaseInsensitive; ++i) {
+      kmpNext[i+1] = kmpNext[i]+1;
+      while (kmpNext[i+1] > 0 &&
+            patternStrCaseInsensitive[i] != patternStrCaseInsensitive[kmpNext[i+1]-1])
+         kmpNext[i+1] = kmpNext[kmpNext[i+1]-1]+1;
    }
 }
 
@@ -265,20 +250,18 @@ void StriContainerByteSearch::createKMPtableFwdCaseInsensitive()
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          KMP upgrade; special procedure for patternLen <= 4
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *          KMP upgrade
 */
 void StriContainerByteSearch::createKMPtableFwd()
 {
-   int k = 0, j = -1;
-   kmpNext[0] = -1;
-   while (k < patternLen) {
-      while (j > -1 && patternStr[k] != patternStr[j])
-         j = kmpNext[j];
-      k++;
-      j++;
-      if (patternStr[k] == patternStr[j])
-         kmpNext[k] = kmpNext[j];
-      else
-         kmpNext[k] = j;
+   kmpNext[0] = -1;  
+   for (R_len_t i=0; i<patternLen; ++i) {
+      kmpNext[i+1] = kmpNext[i]+1;
+      while (kmpNext[i+1] > 0 &&
+            patternStr[i] != patternStr[kmpNext[i+1]-1])
+         kmpNext[i+1] = kmpNext[kmpNext[i+1]-1]+1;
    }
 }
 
@@ -872,8 +855,13 @@ void StriContainerByteSearch::upgradePatternCaseInsensitive()
    patternLenCaseInsensitive = 0;
    while (j < patternLen) {
       U8_NEXT(patternStr, j, patternLen, c);
+#ifndef NDEBUG
+      if (patternLenCaseInsensitive >= this->kmpMaxSize)
+         throw StriException("!NDEBUG: StriContainerByteSearch::upgradePatternCaseInsensitive()");
+#endif
       patternStrCaseInsensitive[patternLenCaseInsensitive++] = u_toupper(c);
    }
+   patternStrCaseInsensitive[patternLenCaseInsensitive] = 0;
 }
 
 

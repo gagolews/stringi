@@ -34,7 +34,9 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed(c("a",""), "a"), list(matrix(c(1,1)),matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed("aaaab", "ab"), list(matrix(4:5)))
    expect_equivalent(stri_locate_all_fixed("bababababaab", "aab"), list(matrix(5:6*2)))
+   
 })
+
 
 test_that("stri_locate_first_fixed", {
 
@@ -178,3 +180,15 @@ test_that("stri_locate_last_fixed", {
    expect_equivalent(stri_locate_last_fixed("bababababaabaa", "aabaa"), matrix(c(10,14)))
    expect_equivalent(stri_locate_last_fixed("bababababaabaaaabbabababbbabaaaabbba", "aabaa"), matrix(c(10,14)))
 })
+
+
+#    for (i in 1:1000) {
+#       s <- stri_flatten(sample(c("\u0105", "x"), 10000, replace=TRUE))
+#       p <- stri_flatten(sample(c("\u0105", "x"), 10, replace=TRUE))
+#       expect_identical(stri_locate_all_fixed(s, p), stri_locate_all_regex(s, p))
+#       expect_identical(stri_locate_all_fixed(s, p, case_insensitive=TRUE), stri_locate_all_regex(s, p, case_insensitive=TRUE))
+#       expect_identical(stri_locate_first_fixed(s, p), stri_locate_first_regex(s, p))
+#       expect_identical(stri_locate_first_fixed(s, p, case_insensitive=TRUE), stri_locate_first_regex(s, p, case_insensitive=TRUE))
+#       expect_identical(stri_sub(s, stri_locate_last_fixed(s, p)), p)
+#       expect_identical(stri_sub(s, stri_locate_last_fixed(s, p, case_insensitive=FALSE)), p)
+#    }
