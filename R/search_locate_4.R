@@ -289,7 +289,7 @@ stri_locate_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
 stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_locate_all_fixed, str, pattern, omit_no_match)
+   .Call(C_stri_locate_all_fixed, str, pattern, omit_no_match, opts_fixed)
 }
 
 
@@ -298,7 +298,7 @@ stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE, ..., opts_f
 stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_locate_first_fixed, str, pattern)
+   .Call(C_stri_locate_first_fixed, str, pattern, opts_fixed)
 }
 
 
@@ -307,5 +307,5 @@ stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
 stri_locate_last_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_locate_last_fixed, str, pattern)
+   .Call(C_stri_locate_last_fixed, str, pattern, opts_fixed)
 }

@@ -41,6 +41,8 @@
 // THESE FUNCTIONS HAVE NO SENSE :)
 // THIS FILE SHOULD BE REMOVED
 
+// TO DO: , SEXP opts_fixed
+
 
 // /**
 //  * Extract first or last occurrences of pattern in a string [exact byte search]

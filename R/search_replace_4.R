@@ -253,7 +253,7 @@ stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator
 stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all=TRUE, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_replace_all_fixed, str, pattern, replacement, vectorize_all)
+   .Call(C_stri_replace_all_fixed, str, pattern, replacement, vectorize_all, opts_fixed)
 }
 
 
@@ -262,7 +262,7 @@ stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all=TRUE
 stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_replace_first_fixed, str, pattern, replacement)
+   .Call(C_stri_replace_first_fixed, str, pattern, replacement, opts_fixed)
 }
 
 
@@ -271,7 +271,7 @@ stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed=
 stri_replace_last_fixed <- function(str, pattern, replacement, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_replace_last_fixed, str, pattern, replacement)
+   .Call(C_stri_replace_last_fixed, str, pattern, replacement, opts_fixed)
 }
 
 

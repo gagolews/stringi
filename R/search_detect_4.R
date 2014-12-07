@@ -106,7 +106,7 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
 stri_detect_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_detect_fixed, str, pattern)
+   .Call(C_stri_detect_fixed, str, pattern, opts_fixed)
 }
 
 #' @export

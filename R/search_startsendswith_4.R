@@ -140,7 +140,7 @@ stri_endswith <- function(str, ..., fixed, coll, charclass) {
 stri_startswith_fixed <- function(str, pattern, from=1L, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_startswith_fixed, str, pattern, from)
+   .Call(C_stri_startswith_fixed, str, pattern, from, opts_fixed)
 }
 
 
@@ -149,7 +149,7 @@ stri_startswith_fixed <- function(str, pattern, from=1L, ..., opts_fixed=NULL) {
 stri_endswith_fixed <- function(str, pattern, to=-1L, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_endswith_fixed, str, pattern, to)
+   .Call(C_stri_endswith_fixed, str, pattern, to, opts_fixed)
 }
 
 

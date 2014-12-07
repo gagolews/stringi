@@ -55,8 +55,11 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    FR #122: omit_na arg added
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ *    FR #110, #23: opts_fixed arg added
  */
-SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na)
+SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_fixed)
 {
    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
