@@ -10,7 +10,7 @@
 stri_split(str, ..., regex, fixed, coll, charclass)
 
 stri_split_fixed(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE)
+  tokens_only = FALSE, simplify = FALSE, ..., opts_fixed = NULL)
 
 stri_split_regex(str, pattern, n = -1L, omit_empty = FALSE,
   tokens_only = FALSE, simplify = FALSE, ..., opts_regex = NULL)
@@ -26,7 +26,7 @@ stri_split_charclass(str, pattern, n = -1L, omit_empty = FALSE,
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
-and so on}
+\code{opts_fixed}, and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
@@ -45,15 +45,11 @@ may affect the result if \code{n} is positive, see Details}
 if \code{TRUE} or \code{NA}, then a character matrix is returned;
 otherwise (the default), a list of character vectors is given, see Value}
 
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings;
-\code{stri_split_regex} only}
-
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings;
-\code{stri_split_coll} only}
+\item{opts_collator,opts_fixed,opts_regex}{a named list used to tune up
+a search engine's settings; see
+\code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 If \code{simplify=FALSE} (the default),

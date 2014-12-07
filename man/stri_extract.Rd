@@ -70,14 +70,10 @@ otherwise (the default), a list of character vectors is given, see Value;
 then a missing value will indicate that there was no match;
 \code{stri_extract_all_*} only}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_extract_*_coll} only}
-
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings;
-\code{stri_extract_*_regex} only}
+\item{opts_collator,opts_regex}{a named list used to tune up
+a search engine's settings; see \code{\link{stri_opts_collator}}
+and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 For \code{stri_extract_all*}, if \code{simplify=FALSE} (the default), then

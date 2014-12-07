@@ -74,11 +74,13 @@
 #' for more details refer to \link{stringi-search}
 #' @param from integer vector
 #' @param to integer vector
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings; \code{stri_*_coll} only
+#' @param opts_collator,opts_fixed a named list used to tune up
+#' a search engine's settings; see \code{\link{stri_opts_collator}}
+#' and \code{\link{stri_opts_fixed}}, respectively; \code{NULL}
+#' for default settings;
 #' @param ... supplementary arguments passed to the underlying functions,
-#' including additional settings for \code{opts_collator}
+#' including additional settings for \code{opts_collator}, \code{opts_fixed}, 
+#' and so on.
 #'
 #' @return All the functions return a logical vector.
 #'
@@ -135,14 +137,18 @@ stri_endswith <- function(str, ..., fixed, coll, charclass) {
 
 #' @export
 #' @rdname stri_startsendswith
-stri_startswith_fixed <- function(str, pattern, from=1L) {
+stri_startswith_fixed <- function(str, pattern, from=1L, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_startswith_fixed, str, pattern, from)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
-stri_endswith_fixed <- function(str, pattern, to=-1L) {
+stri_endswith_fixed <- function(str, pattern, to=-1L, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_endswith_fixed, str, pattern, to)
 }
 

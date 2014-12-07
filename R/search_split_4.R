@@ -79,17 +79,14 @@
 #' @param simplify single logical value;
 #' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
+#' a search engine's settings; see 
+#' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;
-#' \code{stri_split_regex} only
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings;
-#' \code{stri_split_coll} only
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' and so on
+#' \code{opts_fixed}, and so on
 #'
 #' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
@@ -157,9 +154,11 @@ stri_split <- function(str, ..., regex, fixed, coll, charclass) {
 #' @export
 #' @rdname stri_split
 stri_split_fixed <- function(str, pattern, n=-1L,
-      omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
+      omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE, ..., opts_fixed=NULL) {
    # omit_empty defaults to FALSE for compatibility with the stringr package
    # tokens_only defaults to FALSE for compatibility with the stringr package
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_split_fixed, str, pattern,
       n, omit_empty, tokens_only, simplify)
 }

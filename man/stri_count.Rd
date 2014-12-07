@@ -13,7 +13,7 @@ stri_count_charclass(str, pattern)
 
 stri_count_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_count_fixed(str, pattern)
+stri_count_fixed(str, pattern, ..., opts_fixed = NULL)
 
 stri_count_regex(str, pattern, ..., opts_regex = NULL)
 }
@@ -22,18 +22,16 @@ stri_count_regex(str, pattern, ..., opts_regex = NULL)
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
-and so on}
+\code{opts_fixed}, and so on}
 
 \item{pattern,regex,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_count_coll} only}
-
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings; \code{stri_count_regex} only}
+\item{opts_collator,opts_fixed,opts_regex}{a named list used to tune up
+a search engine's settings; see
+\code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 All the functions return an integer vector.

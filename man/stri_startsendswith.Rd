@@ -14,9 +14,9 @@ stri_startswith(str, ..., fixed, coll, charclass)
 
 stri_endswith(str, ..., fixed, coll, charclass)
 
-stri_startswith_fixed(str, pattern, from = 1L)
+stri_startswith_fixed(str, pattern, from = 1L, ..., opts_fixed = NULL)
 
-stri_endswith_fixed(str, pattern, to = -1L)
+stri_endswith_fixed(str, pattern, to = -1L, ..., opts_fixed = NULL)
 
 stri_startswith_charclass(str, pattern, from = 1L)
 
@@ -30,7 +30,8 @@ stri_endswith_coll(str, pattern, to = -1L, ..., opts_collator = NULL)
 \item{str}{character vector}
 
 \item{...}{supplementary arguments passed to the underlying functions,
-including additional settings for \code{opts_collator}}
+including additional settings for \code{opts_collator}, \code{opts_fixed},
+and so on.}
 
 \item{pattern,fixed,coll,charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
@@ -39,9 +40,10 @@ for more details refer to \link{stringi-search}}
 
 \item{to}{integer vector}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_*_coll} only}
+\item{opts_collator,opts_fixed}{a named list used to tune up
+a search engine's settings; see \code{\link{stri_opts_collator}}
+and \code{\link{stri_opts_fixed}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 All the functions return a logical vector.

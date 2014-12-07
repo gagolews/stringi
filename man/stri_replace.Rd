@@ -41,11 +41,12 @@ stri_replace_first_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
 stri_replace_last_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
-stri_replace_all_fixed(str, pattern, replacement, vectorize_all = TRUE)
+stri_replace_all_fixed(str, pattern, replacement, vectorize_all = TRUE, ...,
+  opts_fixed = NULL)
 
-stri_replace_first_fixed(str, pattern, replacement)
+stri_replace_first_fixed(str, pattern, replacement, ..., opts_fixed = NULL)
 
-stri_replace_last_fixed(str, pattern, replacement)
+stri_replace_last_fixed(str, pattern, replacement, ..., opts_fixed = NULL)
 
 stri_replace_all_regex(str, pattern, replacement, vectorize_all = TRUE, ...,
   opts_regex = NULL)
@@ -61,7 +62,7 @@ stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
-and so on}
+\code{opts_fixed}, and so on}
 
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
@@ -78,14 +79,11 @@ should each occurrence of a pattern in every string
 be replaced by a corresponding replacement string?;
 \code{stri_replace_all_*} only}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_replace_*_coll} only}
-
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings;
-\code{stri_replace_*_regex} only}
+\item{opts_collator,opts_fixed,opts_regex}{a named list used to tune up
+a search engine's settings; see
+\code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 All the functions return a character vector.

@@ -56,17 +56,14 @@
 #' for more details refer to \link{stringi-search}
 #' @param omit_na single logical value; should missing values be excluded
 #' from the result?
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
+#' a search engine's settings; see
+#' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;
-#' \code{stri_subset_regex} only
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings;
-#' \code{stri_subset_coll} only
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' and so on
+#' \code{opts_fixed}, and so on
 #'
 #' @return All the functions return a character vector.
 #' As usual, the output encoding is always UTF-8.
@@ -100,7 +97,9 @@ stri_subset <- function(str, ..., regex, fixed, coll, charclass) {
 
 #' @export
 #' @rdname stri_subset
-stri_subset_fixed <- function(str, pattern, omit_na=FALSE) {
+stri_subset_fixed <- function(str, pattern, omit_na=FALSE, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_subset_fixed, str, pattern, omit_na)
 }
 
