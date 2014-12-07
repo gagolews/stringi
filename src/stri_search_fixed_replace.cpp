@@ -71,6 +71,7 @@ using namespace std;
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed, int type)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str          = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
@@ -79,7 +80,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -269,11 +270,13 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       UNPROTECT(4);
       return ret;
    }
+   
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
 
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, str_n, false); // writable
    StriContainerUTF8 replacement_cont(replacement, pattern_n);
-   StriContainerByteSearch pattern_cont(pattern, pattern_n);
+   StriContainerByteSearch pattern_cont(pattern, pattern_n, pattern_flags);
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {

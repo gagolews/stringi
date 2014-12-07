@@ -61,6 +61,7 @@
  */
 SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_fixed)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -68,7 +69,7 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_fixed)
    STRI__ERROR_HANDLER_BEGIN(2)
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
    // BT: this cannot be done with deque, because pattern is reused so i does not
    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on

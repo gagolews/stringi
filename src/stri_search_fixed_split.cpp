@@ -87,6 +87,7 @@ using namespace std;
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify, SEXP opts_fixed)
 {
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
    PROTECT(str = stri_prepare_arg_string(str, "str"));
@@ -98,7 +99,7 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
    R_len_t vectorize_length = stri__recycling_rule(true, 4,
       LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
    StriContainerInteger n_cont(n, vectorize_length);
    StriContainerLogical omit_empty_cont(omit_empty, vectorize_length);
 
