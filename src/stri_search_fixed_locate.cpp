@@ -240,7 +240,7 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
       for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
-         ans_tab[j]             = match.first;
+         ans_tab[j]              = match.first;
          ans_tab[j+noccurrences] = match.second;
       }
 
