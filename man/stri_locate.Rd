@@ -47,18 +47,19 @@ stri_locate_first_regex(str, pattern, ..., opts_regex = NULL)
 
 stri_locate_last_regex(str, pattern, ..., opts_regex = NULL)
 
-stri_locate_all_fixed(str, pattern, omit_no_match = FALSE)
+stri_locate_all_fixed(str, pattern, omit_no_match = FALSE, ...,
+  opts_fixed = NULL)
 
-stri_locate_first_fixed(str, pattern)
+stri_locate_first_fixed(str, pattern, ..., opts_fixed = NULL)
 
-stri_locate_last_fixed(str, pattern)
+stri_locate_last_fixed(str, pattern, ..., opts_fixed = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
-and so on}
+\code{opts_fixed}, and so on}
 
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
@@ -74,14 +75,11 @@ matrix shall be merged;  \code{stri_locate_all_charclass} only}
 then 2 missing values will indicate that there was no match;
 \code{stri_locate_all_*} only}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's settings
-as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-for default settings; \code{stri_locate_*_coll} only}
-
-\item{opts_regex}{a named list with \pkg{ICU} Regex settings
-as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-for default settings;
-\code{stri_locate_*_regex} only}
+\item{opts_collator,opts_fixed,opts_regex}{a named list used to tune up
+a search engine's settings; see
+\code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
+for default settings;}
 }
 \value{
 For \code{stri_locate_all_*},

@@ -73,13 +73,11 @@
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
 #' @param replacement character vector with replacements for matched patterns
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
+#' a search engine's settings; see 
+#' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;
-#' \code{stri_replace_*_regex} only
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings; \code{stri_replace_*_coll} only
 #' @param merge single logical value;
 #' should consecutive matches be merged into one string;
 #' \code{stri_replace_all_charclass} only
@@ -91,7 +89,7 @@
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' and so on
+#' \code{opts_fixed}, and so on
 #'
 #' @return All the functions return a character vector.
 #'
@@ -252,21 +250,27 @@ stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all=TRUE) {
+stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all=TRUE, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_replace_all_fixed, str, pattern, replacement, vectorize_all)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_fixed <- function(str, pattern, replacement) {
+stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_replace_first_fixed, str, pattern, replacement)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_fixed <- function(str, pattern, replacement) {
+stri_replace_last_fixed <- function(str, pattern, replacement, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_replace_last_fixed, str, pattern, replacement)
 }
 

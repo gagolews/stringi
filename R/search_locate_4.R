@@ -55,13 +55,11 @@
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
+#' a search engine's settings; see 
+#' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
+#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;
-#' \code{stri_locate_*_regex} only
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings; \code{stri_locate_*_coll} only
 #' @param merge single logical value;
 #' indicates whether consecutive sequences of indices in the resulting
 #' matrix shall be merged;  \code{stri_locate_all_charclass} only
@@ -72,7 +70,7 @@
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
-#' and so on
+#' \code{opts_fixed}, and so on
 #'
 #' @return
 #' For \code{stri_locate_all_*},
@@ -288,20 +286,26 @@ stri_locate_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
 
 #' @export
 #' @rdname stri_locate
-stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE) {
+stri_locate_all_fixed <- function(str, pattern, omit_no_match=FALSE, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_locate_all_fixed, str, pattern, omit_no_match)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_first_fixed <- function(str, pattern) {
+stri_locate_first_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_locate_first_fixed, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_locate
-stri_locate_last_fixed <- function(str, pattern) {
+stri_locate_last_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
    .Call(C_stri_locate_last_fixed, str, pattern)
 }

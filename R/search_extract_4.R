@@ -57,13 +57,10 @@
 #' @param str character vector with strings to search in
 #' @param pattern,regex,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
+#' @param opts_collator,opts_regex a named list used to tune up
+#' a search engine's settings; see \code{\link{stri_opts_collator}}
+#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;
-#' \code{stri_extract_*_regex} only
-#' @param opts_collator a named list with \pkg{ICU} Collator's settings
-#' as generated with \code{\link{stri_opts_collator}}; \code{NULL}
-#' for default settings; \code{stri_extract_*_coll} only
 #' @param merge single logical value;
 #' should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only
 #' @param simplify single logical value;
