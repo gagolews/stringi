@@ -19,6 +19,7 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(as.integer(stri_locate_all_fixed("?", "[a-z]", omit_no_match = TRUE)[[1]]),
                      integer(0))
 
+   expect_equivalent(stri_locate_all_fixed("\u0105\u0105\u0105", "\u0105\u0105", overlap=TRUE), list(matrix(c(1,2, 2, 3), byrow=TRUE,ncol=2)))
    expect_equivalent(stri_locate_all_fixed("1a\u0105a", "\u0105"), list(matrix(c(3,3))))
    expect_equivalent(stri_locate_all_fixed("aaa", "aa"), list(matrix(c(1,2))))
    expect_equivalent(stri_locate_all_fixed("aaa", "a"), list(matrix(rep(1:3,2),ncol=2)))
@@ -81,6 +82,7 @@ test_that("stri_locate_first_fixed", {
       expect_equivalent(stri_locate_first_fixed("1-1-2-33--2", "-32", case_insensitive=val), matrix(c(NA_integer_,NA_integer_)))
    }
 
+   expect_warning(expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a", overlap=TRUE), matrix(c(1,2))))
    expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
    expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,NA)))
    expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))

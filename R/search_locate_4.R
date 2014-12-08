@@ -108,6 +108,7 @@
 #' stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength = 1)
 #'
 #' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
+#' stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
 #' stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #' stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 #'

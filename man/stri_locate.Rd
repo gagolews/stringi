@@ -137,6 +137,7 @@ pat <- stri_paste("\\u0635\\u0644\\u0649 \\u0627\\u0644\\u0644\\u0647 ",
 stri_locate_last_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat, strength = 1)
 
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
+stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
 stri_locate_first_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 stri_locate_last_fixed(c('AaaaaaaA', 'aaa', 'AAA'), 'a')
 

@@ -28,8 +28,6 @@
 
    * [BUGFIX]  #94: t.b.d. Solaris!!! 
 
-   * [NEW FEATURE] #23: [[[not sure if for 0.4-1]]]  -- QUESTION [overlapping patterns in fixed search]
-
    * [NEW FEATURE] #113: [[[not sure if for 0.4-1]]]  -- QUESTION [brkiter in coll/fixed search]
 
 (...)
@@ -39,6 +37,10 @@
      see `stri_opts_fixed()`. A simple (not suitable for natural language
      processing) yet very fast `case_insensitive` pattern matching can be 
      performed now. `stri_extract_*_fixed` is again available.
+
+   * [NEW FEATURE] #23: `stri_extract_all_fixed`, `stri_count`, and
+     `stri_locate_all_fixed` may now also look for overlapping pattern
+     matches, see `?stri_opts_fixed`.
 
    * [NEW FEATURE] #129: `stri_match_*_regex` gained a `cg_missing` argument.
 

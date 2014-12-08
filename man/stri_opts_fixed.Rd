@@ -3,10 +3,12 @@
 \alias{stri_opts_fixed}
 \title{Generate a List with Fixed Pattern Search Engine's Settings}
 \usage{
-stri_opts_fixed(case_insensitive, ...)
+stri_opts_fixed(case_insensitive, overlap, ...)
 }
 \arguments{
 \item{case_insensitive}{logical; enable simple case insensitive matching}
+
+\item{overlap}{logical; enable overlapping matches detection in certain functions}
 
 \item{...}{any other arguments to this function are purposedly ignored}
 }
@@ -23,7 +25,11 @@ Case-insensitive matching uses a simple, single-code point case mapping
 Full case mappings should be used whenever possible because they produce
 better results by working on whole strings. They take into account
 the string context and the language and can map to a result string with
- a different length as appropriate, see \link{stringi-search-coll}.
+a different length as appropriate, see \link{stringi-search-coll}.
+
+Searching for overlapping pattern matches works in case of the
+\code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
+and \code{\link{stri_count}} functions.
 }
 \examples{
 stri_detect_fixed("ala", "ALA") # case-sensitive by default
