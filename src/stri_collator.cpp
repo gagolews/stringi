@@ -32,7 +32,7 @@
 
 #include "stri_stringi.h"
 #include <unicode/ucol.h>
-
+#include <unicode/usearch.h>
 
 /**
  * Create & set up an ICU Collator
@@ -58,6 +58,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Fetch opts vals first to avoid memleaks (missing ucol_close calls on Rf_error)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
+ *    #23: add `overlap` option
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
@@ -86,6 +89,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    UColAttributeValue  opt_NORMALIZATION_MODE = UCOL_DEFAULT;
    UColAttributeValue  opt_STRENGTH =  UCOL_DEFAULT_STRENGTH;
    UColAttributeValue  opt_NUMERIC_COLLATION = UCOL_DEFAULT;
+//   USearchAttributeValue  opt_OVERLAP = USEARCH_OFF;
    const char*         opt_LOCALE = NULL;
 
    for (R_len_t i=0; i<narg; ++i) {
@@ -100,6 +104,9 @@ UCollator* stri__ucol_open(SEXP opts_collator)
          if (val < (int)UCOL_PRIMARY + 1) val = (int)UCOL_PRIMARY + 1;
          else if (val > (int)UCOL_STRENGTH_LIMIT + 1) val = (int)UCOL_STRENGTH_LIMIT + 1;
          opt_STRENGTH = (UColAttributeValue)(val-1);
+//      } else if  (!strcmp(curname, "overlap") && allow_overlap) {
+//         bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "overlap");
+//         opt_OVERLAP = (val_bool?USEARCH_ON:USEARCH_OFF);
       } else if  (!strcmp(curname, "alternate_shifted")) {
          bool val_bool = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_collator, i), "alternate_shifted");
          opt_ALTERNATE_HANDLING = (val_bool?UCOL_SHIFTED:UCOL_NON_IGNORABLE);
@@ -132,6 +139,12 @@ UCollator* stri__ucol_open(SEXP opts_collator)
    STRI__CHECKICUSTATUS_RFERROR(status, { /* nothing special on err */ }) // error() allowed here
 
    // set other opts
+//   if (opt_OVERLAP != UCOL_OFF) {
+//      status = U_ZERO_ERROR;
+//      ucol_setAttribute(col, UCOL_OVERLAP, opt_OVERLAP, &status);
+//      STRI__CHECKICUSTATUS_RFERROR(status, { ucol_close(col); }) // error() allowed here
+//   }
+   
    if (opt_STRENGTH != UCOL_DEFAULT) {
       status = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_STRENGTH, opt_STRENGTH, &status);

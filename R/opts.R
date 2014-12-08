@@ -293,7 +293,7 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' 
 #' Searching for overlapping pattern matches works in case of the
 #' \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
-#' and \code{\link{stri_count}} functions.
+#' and \code{\link{stri_count_fixed}} functions.
 #'
 #' @param case_insensitive logical; enable simple case insensitive matching
 #' @param overlap logical; enable overlapping matches detection in certain functions
@@ -313,7 +313,7 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' stri_detect_fixed("ala", "ALA") # case-sensitive by default
 #' stri_detect_fixed("ala", "ALA", opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
 #' stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
-stri_opts_fixed <- function(case_insensitive, overlap, ...)
+stri_opts_fixed <- function(case_insensitive=FALSE, overlap=FALSE, ...)
 {
    opts <- list()
    if (!missing(case_insensitive))    opts["case_insensitive"] <- case_insensitive

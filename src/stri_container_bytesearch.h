@@ -62,6 +62,9 @@
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *          getByteSearchFlags static method added,
  *          allow for case-insensitive search
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
+ *          #23: add `overlap` option
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
