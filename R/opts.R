@@ -87,6 +87,7 @@
 #'
 #' @export
 #' @family locale_sensitive
+#' @family search_coll
 #'
 #' @references
 #' \emph{Collation} -- ICU User Guide,
@@ -144,7 +145,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' @param literal logical; if set, treat the entire pattern as a literal string:
 #' metacharacters or escape sequences in the input sequence will be given no special meaning;
 #' note that in most cases you would rather use the \link{stringi-search-fixed}
-#' facilities in this case (with \code{opts_collator=NA}).
+#' facilities in this case
 #' @param multiline logical; controls the behavior of `\code{$}` and `\code{^}`.
 #' If set, recognize line terminators within a string, otherwise,
 #'  match only at start and end of input string [regex flag \code{(?m)}]

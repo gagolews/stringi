@@ -37,7 +37,8 @@
    * [NEW FEATURE] #110: Fixed pattern search engine's settings can
      now be supplied via `opts_fixed` argument in `stri_*_fixed()`,
      see `stri_opts_fixed()`. A simple (not suitable for natural language
-     processing) yet very fast `case_insensitive` pattern matching can be performed now.
+     processing) yet very fast `case_insensitive` pattern matching can be 
+     performed now. `stri_extract_*_fixed` is again available.
 
    * [NEW FEATURE] #129: `stri_match_*_regex` gained a `cg_missing` argument.
 
