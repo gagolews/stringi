@@ -158,7 +158,7 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  */
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_fixed)
 {
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
    bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument

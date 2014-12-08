@@ -68,7 +68,8 @@ class StriContainerByteSearch : public StriContainerUTF8 {
    private:
    
       typedef enum ByteSearchFlag {
-         BYTESEARCH_CASE_INSENSITIVE = 2
+         BYTESEARCH_CASE_INSENSITIVE = 2,
+         BYTESEARCH_OVERLAP = 4
       } ByteSearchFlag;
 
       R_len_t searchPos; // -1 after reset, searchLen on no further matches
@@ -106,7 +107,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
 
    public:
    
-      static uint32_t getByteSearchFlags(SEXP opts_fixed);
+      static uint32_t getByteSearchFlags(SEXP opts_fixed, bool allow_overlap=false);
 
       StriContainerByteSearch();
       StriContainerByteSearch(SEXP rstr, R_len_t nrecycle, uint32_t flags);
@@ -185,13 +186,21 @@ class StriContainerByteSearch : public StriContainerUTF8 {
 #endif
       
          if (searchPos < 0) return findFirst();
+         
+         int pos;
+         if (flags&BYTESEARCH_OVERLAP) {
+            pos = searchPos;
+            U8_FWD_1(searchStr, pos, searchLen);
+         }
+         else
+            pos = searchEnd;
       
 #ifndef STRI__BYTESEARCH_DISABLE_SHORTPAT
          if (!(flags&BYTESEARCH_CASE_INSENSITIVE) && patternLen <= 4)
-            return findFromPosFwd_short(searchEnd);
+            return findFromPosFwd_short(pos);
 #endif
       
-         return findFromPosFwd_KMP(searchEnd);
+         return findFromPosFwd_KMP(pos);
       }
       
       

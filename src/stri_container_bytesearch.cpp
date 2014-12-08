@@ -804,11 +804,12 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
  * may call Rf_error
  *
  * @param opts_fixed list
+ * @param allow_overlap
  * @return flags
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  */
-uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed)
+uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow_overlap)
 {
    uint32_t flags = 0;
    if (!isNull(opts_fixed) && !Rf_isVectorList(opts_fixed))
@@ -831,9 +832,9 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed)
          if  (!strcmp(curname, "case_insensitive")) {
             bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "case_insensitive");
             if (val) flags |= BYTESEARCH_CASE_INSENSITIVE;
-//         } else if  (!strcmp(curname, "overlap??")) {
-//            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "overlap??");
-//            if (val) flags |= FIXED_?????;
+         } else if  (!strcmp(curname, "overlap") && allow_overlap) {
+            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "overlap");
+            if (val) flags |= BYTESEARCH_OVERLAP;
          } else {
             Rf_warning(MSG__INCORRECT_FIXED_OPTION, curname);
          }

@@ -289,9 +289,14 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' Full case mappings should be used whenever possible because they produce 
 #' better results by working on whole strings. They take into account 
 #' the string context and the language and can map to a result string with
-#'  a different length as appropriate, see \link{stringi-search-coll}.
+#' a different length as appropriate, see \link{stringi-search-coll}.
+#' 
+#' Searching for overlapping pattern matches works in case of the
+#' \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
+#' and \code{\link{stri_count}} functions.
 #'
 #' @param case_insensitive logical; enable simple case insensitive matching
+#' @param overlap logical; enable overlapping matches detection in certain functions
 #' @param ... any other arguments to this function are purposedly ignored
 #'
 #' @return
@@ -308,10 +313,11 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' stri_detect_fixed("ala", "ALA") # case-sensitive by default
 #' stri_detect_fixed("ala", "ALA", opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
 #' stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
-stri_opts_fixed <- function(case_insensitive, ...)
+stri_opts_fixed <- function(case_insensitive, overlap, ...)
 {
    opts <- list()
    if (!missing(case_insensitive))    opts["case_insensitive"] <- case_insensitive
+   if (!missing(overlap))             opts["overlap"]          <- overlap
    opts
 }
 

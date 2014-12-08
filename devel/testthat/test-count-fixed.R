@@ -41,14 +41,14 @@ test_that("stri_count_fixed", {
    expect_equivalent(stri_count_fixed("bbbbba", "BBBBB", case_insensitive=TRUE), 1L)
 
    for (p in stri_sub("abcdefghij", 1, 1:6)) {
-      for (i in 1:5) {
+      for (i in 0:5) {
          for (val in c(TRUE, FALSE)) {
-            expect_equivalent(stri_count_fixed(stri_dup(p, i), p, case_insensitive=val), i)
-            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "y", case_insensitive=val), i), p), i)
-            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yy", case_insensitive=val), i), p), i)
-            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyy", case_insensitive=val), i), p), i)
-            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyy", case_insensitive=val), i), p), i)
-            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyyy", case_insensitive=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(p, i), p, case_insensitive=val, overlap=val), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "y", case_insensitive=val, overlap=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yy", case_insensitive=val, overlap=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyy", case_insensitive=val, overlap=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyy", case_insensitive=val, overlap=val), i), p), i)
+            expect_equivalent(stri_count_fixed(stri_dup(stri_c("x", p, "yyyyy", case_insensitive=val, overlap=val), i), p), i)
          }
       }
    }
@@ -77,4 +77,5 @@ massa nibh nec erat."
    expect_identical(stri_count_fixed(s,"bab"),c(5L,0L))
    expect_identical(stri_count_fixed(c("lalal","12l34l56","\u0105\u0f3l\u0142"),"l"),3:1)
 
+   expect_equivalent(stri_count_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE), c(8, 4))
 })

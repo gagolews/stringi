@@ -115,7 +115,8 @@
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 #' 
-#' stri_extract_all_fixed('abaBAba', "aba", case_insensitive=TRUE)
+#' stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE)
+#' stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE)
 #'
 #' @family search_extract
 #'
