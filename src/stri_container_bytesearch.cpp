@@ -808,6 +808,9 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
  * @return flags
  * 
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+ * 
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
+ *    add `overlap` option
  */
 uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow_overlap)
 {

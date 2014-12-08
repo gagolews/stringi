@@ -3,7 +3,7 @@
 \alias{stri_opts_fixed}
 \title{Generate a List with Fixed Pattern Search Engine's Settings}
 \usage{
-stri_opts_fixed(case_insensitive, overlap, ...)
+stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 }
 \arguments{
 \item{case_insensitive}{logical; enable simple case insensitive matching}
@@ -29,7 +29,7 @@ a different length as appropriate, see \link{stringi-search-coll}.
 
 Searching for overlapping pattern matches works in case of the
 \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
-and \code{\link{stri_count}} functions.
+and \code{\link{stri_count_fixed}} functions.
 }
 \examples{
 stri_detect_fixed("ala", "ALA") # case-sensitive by default
