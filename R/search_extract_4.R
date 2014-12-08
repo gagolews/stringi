@@ -42,9 +42,6 @@
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' Note that a \code{stri_extract_*_fixed} family of functions does not
-#' make sense. Thus, it has not been implemented in \pkg{stringi}.
-#'
 #' If you would like to extract regex capture groups individually,
 #' check out \code{\link{stri_match}}.
 #'
@@ -55,12 +52,12 @@
 #' directly for better performance.
 #'
 #' @param str character vector with strings to search in
-#' @param pattern,regex,coll,charclass character vector defining search patterns;
+#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
-#' @param opts_collator,opts_regex a named list used to tune up
-#' a search engine's settings; see \code{\link{stri_opts_collator}}
-#' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-#' for default settings;
+#' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
+#' a search engine's settings; see \code{\link{stri_opts_collator}},
+#' \code{\link{stri_opts_fixed}}, and \code{\link{stri_opts_regex}},
+#' respectively; \code{NULL} for default settings;
 #' @param merge single logical value;
 #' should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only
 #' @param simplify single logical value;
@@ -117,20 +114,24 @@
 #' stri_list2matrix(stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+')))
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
+#' 
+#' stri_extract_all_fixed('abaBAba', "aba", case_insensitive=TRUE)
 #'
 #' @family search_extract
 #'
 #' @export
 #' @rdname stri_extract
-stri_extract_all <- function(str, ..., regex, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex),
+stri_extract_all <- function(str, ..., regex, fixed, coll, charclass) {
+   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
 
    if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
       stri_extract_all_regex(str, regex, ...)
+   else if (providedarg["fixed"])
+      stri_extract_all_fixed(str, fixed, ...)
    else if (providedarg["coll"])
       stri_extract_all_coll(str, coll, ...)
    else if (providedarg["charclass"])
@@ -140,15 +141,17 @@ stri_extract_all <- function(str, ..., regex, coll, charclass) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first <- function(str, ..., regex, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex),
+stri_extract_first <- function(str, ..., regex, fixed, coll, charclass) {
+   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
 
    if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
       stri_extract_first_regex(str, regex, ...)
+   else if (providedarg["fixed"])
+      stri_extract_first_fixed(str, fixed, ...)
    else if (providedarg["coll"])
       stri_extract_first_coll(str, coll, ...)
    else if (providedarg["charclass"])
@@ -158,15 +161,17 @@ stri_extract_first <- function(str, ..., regex, coll, charclass) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last <- function(str, ..., regex, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex),
+stri_extract_last <- function(str, ..., regex, fixed, coll, charclass) {
+   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
 
    if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, or `charclass`")
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
       stri_extract_last_regex(str, regex, ...)
+   else if (providedarg["fixed"])
+      stri_extract_last_fixed(str, fixed, ...)
    else if (providedarg["coll"])
       stri_extract_last_coll(str, coll, ...)
    else if (providedarg["charclass"])
@@ -176,15 +181,15 @@ stri_extract_last <- function(str, ..., regex, coll, charclass) {
 
 #' @export
 #' @rdname stri_extract
-stri_extract <- function(str, ..., regex, coll, charclass,
+stri_extract <- function(str, ..., regex, fixed, coll, charclass,
                         mode=c("first", "all", "last")) {
    # `first` is default for compatibility with stringr
    mode <- match.arg(mode) # this is slow
 
    switch(mode,
-          first=stri_extract_first(str, ..., regex=regex, coll=coll, charclass=charclass),
-          last =stri_extract_last(str, ..., regex=regex, coll=coll, charclass=charclass),
-          all  =stri_extract_all(str, ..., regex=regex, coll=coll, charclass=charclass)
+          first=stri_extract_first(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass),
+          last =stri_extract_last(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass),
+          all  =stri_extract_all(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass)
    )
 }
 
@@ -261,4 +266,31 @@ stri_extract_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
    if (!missing(...))
        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_extract_last_regex, str, pattern, opts_regex)
+}
+
+
+#' @export
+#' @rdname stri_extract
+stri_extract_all_fixed <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+   .Call(C_stri_extract_all_fixed, str, pattern, simplify, omit_no_match, opts_fixed)
+}
+
+
+#' @export
+#' @rdname stri_extract
+stri_extract_first_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+   .Call(C_stri_extract_first_fixed, str, pattern, opts_fixed)
+}
+
+
+#' @export
+#' @rdname stri_extract
+stri_extract_last_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+   .Call(C_stri_extract_last_fixed, str, pattern, opts_fixed)
 }

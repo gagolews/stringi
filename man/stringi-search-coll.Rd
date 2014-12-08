@@ -78,7 +78,8 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stringi-locale}};
   \code{\link{stringi-search-boundaries}}
 
-Other search_coll: \code{\link{stringi-search}}
+Other search_coll: \code{\link{stri_opts_collator}};
+  \code{\link{stringi-search}}
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};

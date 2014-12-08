@@ -57,7 +57,8 @@ Other search_charclass: \code{\link{stri_trim}},
   \code{\link{stri_trim_right}};
   \code{\link{stringi-search-charclass}}
 
-Other search_coll: \code{\link{stringi-search-coll}}
+Other search_coll: \code{\link{stri_opts_collator}};
+  \code{\link{stringi-search-coll}}
 
 Other search_count: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}}; \code{\link{stri_count}},
@@ -87,14 +88,17 @@ Other search_extract: \code{\link{stri_extract_all_words}},
   \code{\link{stri_extract_all}},
   \code{\link{stri_extract_all_charclass}},
   \code{\link{stri_extract_all_coll}},
+  \code{\link{stri_extract_all_fixed}},
   \code{\link{stri_extract_all_regex}},
   \code{\link{stri_extract_first}},
   \code{\link{stri_extract_first_charclass}},
   \code{\link{stri_extract_first_coll}},
+  \code{\link{stri_extract_first_fixed}},
   \code{\link{stri_extract_first_regex}},
   \code{\link{stri_extract_last}},
   \code{\link{stri_extract_last_charclass}},
   \code{\link{stri_extract_last_coll}},
+  \code{\link{stri_extract_last_fixed}},
   \code{\link{stri_extract_last_regex}};
   \code{\link{stri_match}}, \code{\link{stri_match_all}},
   \code{\link{stri_match_all_regex}},
