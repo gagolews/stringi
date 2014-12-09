@@ -80,7 +80,7 @@
 #' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see 
+#' a search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;

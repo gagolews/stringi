@@ -10,7 +10,7 @@ stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 
 \item{overlap}{logical; enable overlapping matches detection in certain functions}
 
-\item{...}{any other arguments to this function are purposedly ignored}
+\item{...}{any other arguments to this function are purposely ignored}
 }
 \value{
 Returns a named list object.

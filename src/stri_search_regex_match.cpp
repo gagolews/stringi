@@ -54,7 +54,7 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
  */
@@ -153,7 +153,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
  * @return character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
  */
@@ -173,7 +173,7 @@ SEXP stri_match_first_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_r
  * @return character matrix
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-22)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
  */
@@ -199,7 +199,7 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_re
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
  */

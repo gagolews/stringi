@@ -20,7 +20,7 @@ test_that("stri_extract_all_fixed", {
 
    expect_identical(stri_extract(c("a_a", "a_a_a", "a", ""), mode='all', fixed="a", simplify=TRUE, omit_no_match=TRUE),
       matrix(c("a", "a", "a", "", "a", "a", "", "", "", "a", "", ""), nrow=4))
-   
+
    expect_identical(stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE), list(c("aba", "aBA", "Aba")))
 
 #    expect_identical(stri_extract_all_fixed(c("ababab", NA, "ab", "ba"), "ab"),

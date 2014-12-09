@@ -58,7 +58,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Fetch opts vals first to avoid memleaks (missing ucol_close calls on Rf_error)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *    #23: add `overlap` option
  */
@@ -144,7 +144,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
 //      ucol_setAttribute(col, UCOL_OVERLAP, opt_OVERLAP, &status);
 //      STRI__CHECKICUSTATUS_RFERROR(status, { ucol_close(col); }) // error() allowed here
 //   }
-   
+
    if (opt_STRENGTH != UCOL_DEFAULT) {
       status = U_ZERO_ERROR;
       ucol_setAttribute(col, UCOL_STRENGTH, opt_STRENGTH, &status);

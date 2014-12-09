@@ -80,7 +80,7 @@
 #' when turned on, this attribute generates a collation key for
 #' the numeric value of substrings of digits;
 #' this is a way to get '100' to sort AFTER '2'
-#' @param ... any other arguments to this function are purposedly ignored
+#' @param ... any other arguments to this function are purposely ignored
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -162,7 +162,7 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' if set, fail with an error on patterns that contain backslash-escaped ASCII
 #' letters without a known special meaning;
 #' otherwise, these escaped letters represent themselves
-#' @param ... any other arguments to this function are purposedly ignored
+#' @param ... any other arguments to this function are purposely ignored
 #'
 #' @return
 #' Returns a named list object; missing settings are left with default values.
@@ -238,7 +238,7 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' @param skip_sentence_sep logical; perform no action for sentences
 #' that do not contain an ending sentence terminator, but are ended
 #' by a hard separator or end of input
-#' @param ... any other arguments to this function are purposedly ignored
+#' @param ... any other arguments to this function are purposely ignored
 #'
 #' @return
 #' Returns a named list object.
@@ -285,19 +285,19 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #'
 #' @details
 #' Case-insensitive matching uses a simple, single-code point case mapping
-#' (via ICU's \code{u_toupper()} function). 
-#' Full case mappings should be used whenever possible because they produce 
-#' better results by working on whole strings. They take into account 
+#' (via ICU's \code{u_toupper()} function).
+#' Full case mappings should be used whenever possible because they produce
+#' better results by working on whole strings. They take into account
 #' the string context and the language and can map to a result string with
 #' a different length as appropriate, see \link{stringi-search-coll}.
-#' 
+#'
 #' Searching for overlapping pattern matches works in case of the
 #' \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
 #' and \code{\link{stri_count_fixed}} functions.
 #'
 #' @param case_insensitive logical; enable simple case insensitive matching
 #' @param overlap logical; enable overlapping matches detection in certain functions
-#' @param ... any other arguments to this function are purposedly ignored
+#' @param ... any other arguments to this function are purposely ignored
 #'
 #' @return
 #' Returns a named list object.
@@ -308,7 +308,7 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' @references
 #' \emph{C/POSIX Migration} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/posix#case_mappings}
-#' 
+#'
 #' @examples
 #' stri_detect_fixed("ala", "ALA") # case-sensitive by default
 #' stri_detect_fixed("ala", "ALA", opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
@@ -320,4 +320,3 @@ stri_opts_fixed <- function(case_insensitive=FALSE, overlap=FALSE, ...)
    if (!missing(overlap))             opts["overlap"]          <- overlap
    opts
 }
-

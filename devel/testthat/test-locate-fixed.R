@@ -35,7 +35,7 @@ test_that("stri_locate_all_fixed", {
    expect_equivalent(stri_locate_all_fixed(c("a",""), "a"), list(matrix(c(1,1)),matrix(c(NA,NA_integer_))))
    expect_equivalent(stri_locate_all_fixed("aaaab", "ab"), list(matrix(4:5)))
    expect_equivalent(stri_locate_all_fixed("bababababaab", "aab"), list(matrix(5:6*2)))
-   
+
 })
 
 
@@ -63,7 +63,7 @@ test_that("stri_locate_first_fixed", {
       expect_equivalent(stri_locate_first_fixed("abcd", "abcd", case_insensitive=val),     matrix(c(1,4)))
       expect_equivalent(stri_locate_first_fixed("abcde", "abcde", case_insensitive=val),   matrix(c(1,5)))
       expect_equivalent(stri_locate_first_fixed("abcdef", "abcdef", case_insensitive=val), matrix(c(1,6)))
-   
+
       expect_equivalent(stri_locate_first_fixed("1a\u0105a", "\u0105", case_insensitive=val), matrix(c(3,3)))
       expect_equivalent(stri_locate_first_fixed("aaaaaa", "a", case_insensitive=val),     matrix(c(1,1)))
       expect_equivalent(stri_locate_first_fixed("aaaaaa", "aa", case_insensitive=val),    matrix(c(1,2)))
@@ -86,7 +86,7 @@ test_that("stri_locate_first_fixed", {
    expect_equivalent(stri_locate_first_fixed("\u0105a", "\u0105a"), matrix(c(1,2)))
    expect_equivalent(stri_locate_first_fixed(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(NA_integer_,NA)))
    expect_equivalent(stri_locate_first_fixed("\U0001F0A0a", "a"), matrix(c(2,2)))
-   
+
    # According to UnicodeData.txt, there are characters x for which numbytes(x) != numbytes(u_toupper(x))
    expect_equivalent(stri_locate_first_fixed("aIO", "a\u0131o", case_insensitive=TRUE), matrix(c(1,3)))
    expect_equivalent(stri_locate_first_fixed("aIOoo", "a\u0131o", case_insensitive=TRUE), matrix(c(1,3)))
@@ -135,7 +135,7 @@ test_that("stri_locate_last_fixed", {
       expect_equivalent(stri_locate_last_fixed("abcdabc", "abcd", case_insensitive=val),     matrix(c(1,4)))
       expect_equivalent(stri_locate_last_fixed("abcdeabcd", "abcde", case_insensitive=val),   matrix(c(1,5)))
       expect_equivalent(stri_locate_last_fixed("abcdefabcde", "abcdef", case_insensitive=val), matrix(c(1,6)))
-   
+
       # we have special cases for patterns of length 1,2,3,4
       expect_equivalent(stri_locate_last_fixed("aaaaaa", "a", case_insensitive=val),       matrix(c(6,6)))
       expect_equivalent(stri_locate_last_fixed("aaaaaa", "aa", case_insensitive=val),      matrix(c(5,6)))
@@ -155,7 +155,7 @@ test_that("stri_locate_last_fixed", {
       expect_equivalent(stri_locate_last_fixed("aaaaaaxaaxaaa", "aaaa", case_insensitive=val),  matrix(c(3,6)))
       expect_equivalent(stri_locate_last_fixed("aaaaaaxaaaaxaaaa", "aaaaa", case_insensitive=val), matrix(c(2,6)))
    }
-   
+
    # According to UnicodeData.txt, there are characters x for which numbytes(x) != numbytes(u_toupper(x))
    expect_equivalent(stri_locate_last_fixed("aIO", "a\u0131o", case_insensitive=TRUE), matrix(c(1,3)))
    expect_equivalent(stri_locate_last_fixed("aIOoo", "a\u0131o", case_insensitive=TRUE), matrix(c(1,3)))

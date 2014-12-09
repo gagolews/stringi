@@ -59,7 +59,7 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -133,7 +133,7 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -160,7 +160,7 @@ SEXP stri_locate_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_locate_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -192,7 +192,7 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */

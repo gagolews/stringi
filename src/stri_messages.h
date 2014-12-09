@@ -48,7 +48,7 @@
 
 #define MSG__INCORRECT_BRKITER_OPTION_SPEC \
    "incorrect break iterator option specifier. see ?stri_opts_brkiter"
-   
+
 #define MSG__INCORRECT_FIXED_OPTION \
    "incorrect opts_fixed setting: `%s`. ignoring"
 
@@ -151,7 +151,7 @@
 
 #define MSG__REGEXP_CONFIG_FAILED \
    "regexp engine config failed"
-   
+
 #define MSG__FIXED_CONFIG_FAILED \
    "fixed search engine config failed"
 
