@@ -39,7 +39,7 @@ if set, fail with an error on patterns that contain backslash-escaped ASCII
 letters without a known special meaning;
 otherwise, these escaped letters represent themselves}
 
-\item{...}{any other arguments to this function are purposedly ignored}
+\item{...}{any other arguments to this function are purposely ignored}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

@@ -80,7 +80,7 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    allow `simplify=NA`; FR #126: pass n to stri_list2matrix
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */

@@ -28,7 +28,7 @@ test_that("stri_locate_first_boundaries", {
 
 test_that("stri_locate_last_boundaries", {
 
-   expect_equivalent(stri_locate_last_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA), 
+   expect_equivalent(stri_locate_last_boundaries(c("\u0105l\u0105 m\u0105 kot\u0105", "    kot    ", "", NA),
       opts_brkiter=stri_opts_brkiter(type="character")),
       matrix(c(11,11,11,11, NA,NA,NA,NA), ncol=2, byrow=TRUE))
    expect_equivalent(stri_locate_last_boundaries(character(0), type="character"),

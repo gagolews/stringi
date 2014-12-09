@@ -50,7 +50,7 @@ using namespace std;
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_extract_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed
  */
@@ -59,7 +59,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
-   
+
    STRI__ERROR_HANDLER_BEGIN(2)
    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
    StriContainerUTF8 str_cont(str, vectorize_length);
@@ -87,7 +87,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       len = pattern_cont.getMatchedLength();
 
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+start, len, CE_UTF8));
@@ -110,7 +110,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_extract_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed
  */
@@ -131,7 +131,7 @@ SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_extract_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed
  */
@@ -147,12 +147,12 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  * @param str character vector
  * @param pattern character vector
  * @return character vector
- * 
+ *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-24)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_extract_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed, omit_no_match, simplify
  */

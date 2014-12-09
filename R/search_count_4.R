@@ -53,7 +53,7 @@
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see 
+#' a search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;

@@ -48,7 +48,7 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added;
  *    use StriContainerByteSearch::startsWith() and endsWith()
@@ -92,7 +92,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
       else
          from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
       // now surely from_cur >= 0 && from_cur <= cur_n
-      
+
       pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
       ret_tab[i] = (int)(pattern_cont.startsWith(from_cur));
    }
@@ -115,7 +115,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */

@@ -74,7 +74,7 @@
 #' for more details refer to \link{stringi-search}
 #' @param replacement character vector with replacements for matched patterns
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see 
+#' a search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 #' for default settings;

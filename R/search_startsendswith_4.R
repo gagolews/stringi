@@ -79,7 +79,7 @@
 #' and \code{\link{stri_opts_fixed}}, respectively; \code{NULL}
 #' for default settings;
 #' @param ... supplementary arguments passed to the underlying functions,
-#' including additional settings for \code{opts_collator}, \code{opts_fixed}, 
+#' including additional settings for \code{opts_collator}, \code{opts_fixed},
 #' and so on.
 #'
 #' @return All the functions return a logical vector.

@@ -62,7 +62,6 @@ StriContainerByteSearch::StriContainerByteSearch()
 }
 
 
-
 /**
  * Construct String Container from R character vector
  * @param rstr R character vector
@@ -72,15 +71,15 @@ StriContainerByteSearch::StriContainerByteSearch(SEXP rstr, R_len_t _nrecycle, u
    : StriContainerUTF8(rstr, _nrecycle, true)
 {
    this->flags = _flags;
-   
+
    this->patternLen = 0;
    this->patternStr = NULL;
-   
+
    this->searchPos = -1;
    this->searchEnd = -1;
    this->searchStr = NULL;
    this->searchLen = 0;
-   
+
 #ifndef NDEBUG
    this->debugMatcherIndex = -1;
 #endif
@@ -123,7 +122,7 @@ StriContainerByteSearch::StriContainerByteSearch(StriContainerByteSearch& contai
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
    if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
-   
+
    this->patternLenCaseInsensitive = 0;
    if (flags&BYTESEARCH_CASE_INSENSITIVE) {
       this->patternStrCaseInsensitive = new UChar32[this->kmpMaxSize];
@@ -158,7 +157,7 @@ StriContainerByteSearch& StriContainerByteSearch::operator=(StriContainerByteSea
    this->kmpMaxSize = container.kmpMaxSize;
    this->kmpNext = new int[kmpMaxSize];
    if (!this->kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
-   
+
    this->patternLenCaseInsensitive = 0;
    if (flags&BYTESEARCH_CASE_INSENSITIVE) {
       this->patternStrCaseInsensitive = new UChar32[this->kmpMaxSize];
@@ -182,7 +181,7 @@ StriContainerByteSearch::~StriContainerByteSearch()
       delete [] kmpNext;
       kmpNext = NULL;
    }
-   
+
    if (patternStrCaseInsensitive) {
       delete [] patternStrCaseInsensitive;
       patternStrCaseInsensitive = NULL;
@@ -197,7 +196,7 @@ StriContainerByteSearch::~StriContainerByteSearch()
 */
 void StriContainerByteSearch::createKMPtableBackCaseInsensitive()
 {
-   kmpNext[0] = -1;  
+   kmpNext[0] = -1;
    for (R_len_t i=0; i<patternLenCaseInsensitive; ++i) {
       kmpNext[i+1] = kmpNext[i]+1;
       while (kmpNext[i+1] > 0 &&
@@ -210,13 +209,13 @@ void StriContainerByteSearch::createKMPtableBackCaseInsensitive()
 /** Create KMP table for rev iteration
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *          KMP upgrade
 */
 void StriContainerByteSearch::createKMPtableBack()
 {
-   kmpNext[0] = -1;  
+   kmpNext[0] = -1;
    for (R_len_t i=0; i<patternLen; ++i) {
       kmpNext[i+1] = kmpNext[i]+1;
       while (kmpNext[i+1] > 0 &&
@@ -228,12 +227,12 @@ void StriContainerByteSearch::createKMPtableBack()
 
 /** Create KMP table for fwd iteration [case insensitive]
  *
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
 */
 void StriContainerByteSearch::createKMPtableFwdCaseInsensitive()
 {
-   kmpNext[0] = -1;  
+   kmpNext[0] = -1;
    for (R_len_t i=0; i<patternLenCaseInsensitive; ++i) {
       kmpNext[i+1] = kmpNext[i]+1;
       while (kmpNext[i+1] > 0 &&
@@ -243,20 +242,19 @@ void StriContainerByteSearch::createKMPtableFwdCaseInsensitive()
 }
 
 
-
 /** Create KMP table for fwd iteration
  *
  * @version 0.1-?? (Bartek Tartanus, 2013-08-15)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          KMP upgrade; special procedure for patternLen <= 4
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *          KMP upgrade
 */
 void StriContainerByteSearch::createKMPtableFwd()
 {
-   kmpNext[0] = -1;  
+   kmpNext[0] = -1;
    for (R_len_t i=0; i<patternLen; ++i) {
       kmpNext[i+1] = kmpNext[i]+1;
       while (kmpNext[i+1] > 0 &&
@@ -287,7 +285,7 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
    else {
       this->patternStr = get(i).c_str();
       this->patternLen = get(i).length();
-      
+
       if (flags & BYTESEARCH_CASE_INSENSITIVE) {
          upgradePatternCaseInsensitive();
          createKMPtableBackCaseInsensitive();
@@ -299,7 +297,7 @@ void StriContainerByteSearch::setupMatcherBack(R_len_t i, const char* _searchStr
 #endif
       }
    }
-   
+
    this->searchStr = _searchStr;
    this->searchLen = _searchLen;
    this->resetMatcher();
@@ -556,7 +554,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
  *          KMP upgraded; separate method
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    use BYTESEARCH_CASE_INSENSITIVE
  */
@@ -574,7 +572,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_KMP(R_len_t startPos)
          patternPos++;
          if (patternPos == patternLenCaseInsensitive) {
             searchEnd = j;
-            
+
             // we need to go back by patternLenCaseInsensitive code points
             R_len_t k = patternLenCaseInsensitive;
             searchPos = j;
@@ -747,7 +745,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
  * @return USEARCH_DONE on no match, otherwise start index
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-11)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    use BYTESEARCH_CASE_INSENSITIVE
  */
@@ -766,7 +764,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
          patternPos++;
          if (patternPos == patternLenCaseInsensitive) {
             searchPos = j;
-            
+
             // we need to go forward by patternLenCaseInsensitive code points
             R_len_t k = patternLenCaseInsensitive;
             searchEnd = j;
@@ -774,7 +772,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
                U8_FWD_1((const uint8_t*)searchStr, searchEnd, searchLen);
                k--;
             }
-            
+
             return searchPos;
          }
       }
@@ -792,7 +790,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
          }
       }
    }
-   
+
    // else not found
    searchPos = searchEnd = searchLen;
    return USEARCH_DONE;
@@ -806,9 +804,9 @@ R_len_t StriContainerByteSearch::findFromPosBack_KMP(R_len_t startPos)
  * @param opts_fixed list
  * @param allow_overlap
  * @return flags
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *    add `overlap` option
  */
@@ -849,7 +847,7 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow
 
 
 /**
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  */
 void StriContainerByteSearch::upgradePatternCaseInsensitive()
@@ -870,7 +868,7 @@ void StriContainerByteSearch::upgradePatternCaseInsensitive()
 
 
 /**
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  */
 bool StriContainerByteSearch::endsWith(R_len_t byteindex)
@@ -889,13 +887,13 @@ bool StriContainerByteSearch::endsWith(R_len_t byteindex)
          if (searchStr[byteindex-k-1] != patternStr[patternLen-k-1])
             return false;
    }
-   
+
    return true; // found
 }
 
 
 /**
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  */
 bool StriContainerByteSearch::startsWith(R_len_t byteindex)
@@ -914,6 +912,6 @@ bool StriContainerByteSearch::startsWith(R_len_t byteindex)
          if (searchStr[byteindex+k] != patternStr[k])
             return false;
    }
-   
+
    return true; // found
 }

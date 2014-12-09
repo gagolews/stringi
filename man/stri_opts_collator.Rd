@@ -41,7 +41,7 @@ when turned on, this attribute generates a collation key for
 the numeric value of substrings of digits;
 this is a way to get '100' to sort AFTER '2'}
 
-\item{...}{any other arguments to this function are purposedly ignored}
+\item{...}{any other arguments to this function are purposely ignored}
 }
 \value{
 Returns a named list object; missing settings are left with default values.

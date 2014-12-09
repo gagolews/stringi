@@ -55,7 +55,7 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    FR #122: omit_na arg added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */

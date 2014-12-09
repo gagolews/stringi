@@ -65,7 +65,7 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -237,7 +237,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -270,7 +270,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
       UNPROTECT(4);
       return ret;
    }
-   
+
    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
 
    STRI__ERROR_HANDLER_BEGIN(3)
@@ -519,7 +519,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *          vectorize_all argument added
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -547,7 +547,7 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
@@ -572,7 +572,7 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts
  *
  * @version 0.2-3 (Marek Gagolewski, 2014-05-08)
  *          stri_replace_fixed now uses byte search only
- * 
+ *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
  */
