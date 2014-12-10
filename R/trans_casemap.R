@@ -88,7 +88,7 @@
 #' stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 #' stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
-#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="word") # default boundary
+#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!") # word boundary
 #' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="sentence")
 stri_trans_tolower <- function(str, locale=NULL) {
    .Call(C_stri_trans_casemap, str, 1L, locale)

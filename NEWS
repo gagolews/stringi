@@ -4,11 +4,6 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
-   * [BUGFIX]  #94: t.b.d. Solaris!!!
-
-(...)
-
-
    * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*()` has been renamed `n`.
 
    * [IMPORTANT CHANGE] `simplify=FALSE` in `stri_extract_all_*()` and
@@ -69,6 +64,12 @@
 
    * [OTHER] #123: `useDynLib` is used to speed up symbol look-up in
      the compiled dynamic library.
+
+   * [BUGFIX]  #94: Run-time errors on Solaris caused by setting
+     `-DU_DISABLE_RENAMING=1` -- memory allocation errors in i.a. ICU's
+     UnicodeString. This setting also caused some ABSan sanity check
+     failures within ICU code.
+
 
 -------------------------------------------------------------------------------
 
