@@ -17,9 +17,9 @@ stri_sort(str, decreasing = FALSE, na_last = NA, ...,
 be nondecreasing (\code{FALSE}, default)
 or nonincreasing (\code{TRUE})?}
 
-\item{na_last}{single logical value controlling the treatment of \code{NA}s
+\item{na_last}{single logical value; controls the treatment of \code{NA}s
 in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
-at the end; if \code{FALSE}, they are put first;
+at the end; if \code{FALSE}, they are put at the beginning;
 if \code{NA}, then they are removed from the output.}
 
 \item{...}{additional settings for \code{opts_collator}}
@@ -37,7 +37,7 @@ i.e. a character vector.
 }
 \description{
 \link{stri_order} determines a permutation which rearranges
-strings into ascending or descending order.
+strings into an ascending or descending order.
 \link{stri_sort} sorts the vector according to a lexicographic order.
 }
 \details{

@@ -33,13 +33,12 @@
 #' Split a String Into Text Lines
 #'
 #' @description
-#' These functions split each character string
-#' into text lines.
+#' These functions split each character string into text lines.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{omit_empty}.
 #'
-#' \code{omit_empty} is applied during splitting: if set to \code{TRUE},
+#' \code{omit_empty} is applied during splitting. If it is set to \code{TRUE},
 #' then empty strings will never appear in the resulting vector.
 #'
 #' Newlines are represented on different platforms e.g. by carriage return
@@ -50,16 +49,15 @@
 #' are used. These functions follow UTR#18 rules, where a newline sequence
 #' corresponds to the following regular expression:
 #' \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
-#' Each match is used to split a text line.
-#' For efficiency reasons, the search is not performed via regexes here,
-#' however.
+#' Each match is used to split a text line. For efficiency reasons, the search
+#' here is not performed by the regex engine, however.
 #'
 #'
 #' @param str character vector (\code{stri_split_lines})
 #'        or a single string (\code{stri_split_lines1})
 #' @param omit_empty logical vector; determines whether empty
 #' strings should be removed from the result
-#'    [\code{stri_split_lines}  only]
+#'    [\code{stri_split_lines} only]
 #'
 #' @return \code{stri_split_lines} returns a list of character vectors.
 #' If any input string is \code{NA}, then the corresponding list element
@@ -69,8 +67,8 @@
 #' \code{stri_split_lines(str[1])[[1]]} (with default parameters),
 #' thus it returns a character vector. Moreover, if the input string ends at
 #' a newline sequence, the last empty string is omitted from the result.
-#' Therefore, this function is convenient for splitting a loaded text file
-#' into text lines.
+#' Therefore, this function may be handy if you wish to split a loaded text
+#' file into text lines.
 #'
 #' @references
 #' \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
@@ -121,26 +119,24 @@ stri_split_lines1 <- function(str) {
 #'
 #' @param str character vector or an object coercible to
 #' @param n integer vector, maximal number of strings to return
-#' @param tokens_only single logical value;
-#' may affect the result if \code{n} is positive, see Details
-#' @param simplify single logical value;
-#' if \code{TRUE} or \code{NA}, then a character matrix is returned;
-#' otherwise (the default), a list of character vectors is given, see Value
+#' @param tokens_only single logical value; may affect the result if \code{n}
+#' is positive, see Details
+#' @param simplify single logical value; if \code{TRUE} or \code{NA},
+#' then a character matrix is returned; otherwise (the default), a list of
+#' character vectors is given, see Value
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
-#' as generated with \code{\link{stri_opts_brkiter}};
-#' \code{NULL} for default break iterator, i.e. \code{line_break}
+#' as generated with \code{\link{stri_opts_brkiter}}; \code{NULL} for the
+#' default break iterator, i.e. \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
 #'
 #' @return If \code{simplify=FALSE} (the default),
 #' then the functions return a list of character vectors.
 #'
 #' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE}
-#' and \code{n_min=n} arguments
-#' is called on the resulting object.
+#' and \code{n_min=n} arguments is called on the resulting object.
 #' In such a case, a character matrix with \code{length(str)} rows
-#' is returned.
-#' Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
-#' to an empty string and \code{NA},
+#' is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill}
+#' argument is set to an empty string and \code{NA},
 #' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 #'
 #' @examples

@@ -55,8 +55,8 @@ e1 \%stri!==\% e2
 }
 \value{
 All the functions return a logical vector
-indicating the result of the element-by-element comparison.
-As usual, the elements of shorter vectors are recycled as necessary.
+indicating the result of a pairwise comparison.
+As usual, the elements of shorter vectors are recycled if necessary.
 }
 \description{
 Relational operators for comparing corresponding strings in

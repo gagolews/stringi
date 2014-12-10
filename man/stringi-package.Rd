@@ -10,7 +10,7 @@ character encoding. We put great effort to create software that
 gives predictable results on any platform, in each locale, and any
 ``native'' system encoding.
 
-\bold{Keywords}: R, text processing, strings, internationalization,
+\bold{Keywords}: R, text processing, character strings, internationalization,
     localization, ICU, ICU4C, i18n, l10n, Unicode.
 
 \bold{Homepage}: \url{http://stringi.rexamine.com}
@@ -23,19 +23,19 @@ See the COPYRIGHTS and LICENSE file for more details.
 \details{
 Manual pages on general topics (must-read):
 \itemize{
-\item \link{stringi-encoding} -- character encoding issues,
-   including information on encoding management in \pkg{stringi}, as well as
+\item \link{stringi-encoding} -- character encoding issues, including
+   information on encoding management in \pkg{stringi}, as well as
    on encoding detection and conversion.
 
 \item \link{stringi-locale} -- locale issues, including i.a. locale
    management and specification in \pkg{stringi}, and the list of
-   locale-sensitive operations.
-   In particular, see \code{\link{stri_opts_collator}} for a description
-   of the string collation algorithm, which is used for
-   string comparing, ordering, sorting, case-folding, and searching.
+   locale-sensitive operations. In particular, see
+   \code{\link{stri_opts_collator}} for a description of the string
+   collation algorithm, which is used for string comparing, ordering,
+   sorting, case-folding, and searching.
 
-\item \link{stringi-arguments} -- how \pkg{stringi}
-   deals with its functions' arguments.
+\item \link{stringi-arguments} -- how \pkg{stringi} deals with its
+   functions' arguments.
 }
 }
 \section{Facilities available}{
@@ -86,7 +86,7 @@ and \code{\link{stri_trans_general}} for other very general yet powerful
 text transforms, including transliteration.
 
 \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
-\code{\link{stri_sort}}, \code{\link{stri_unique}} and
+\code{\link{stri_sort}}, \code{\link{stri_unique}}, and
 \code{\link{stri_duplicated}} for collation-based,
 locale-aware operations, see also \link{stringi-locale}.
 
