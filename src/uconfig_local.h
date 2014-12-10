@@ -33,7 +33,9 @@
 #ifndef uconfig_local_h
 #define uconfig_local_h
 
-#define U_DISABLE_RENAMING 1
+
+// This caused a serious bug on Solaris, see #94:
+// #define U_DISABLE_RENAMING 1
 
 
 /* localtime_r is not a C++98 nor C99 function: it is POSIX.  Solaris has
