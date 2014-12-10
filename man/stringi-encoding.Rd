@@ -3,7 +3,7 @@
 \alias{stringi-encoding}
 \title{Character Encodings and \pkg{stringi}}
 \description{
-This manual page aims to explain (or at least to cast light on)
+This man page aims to explain (or at least to cast light on)
 how \pkg{stringi} deals with character strings in various encodings.
 
 In particular you should note that:
@@ -13,19 +13,16 @@ In particular you should note that:
    with \code{\link{print}}, \code{\link{cat}} etc.
    silently reencodes each string so that it can be properly
    shown e.g. in the \R's console.
-   \item Functions in \pkg{stringi} process each string
-   internally in Unicode,
-   which is a superset of all character representation schemes.
+   \item Functions in \pkg{stringi} process each string internally in
+   Unicode, which is a superset of all character representation schemes.
    Even if a string is given in the native encoding, i.e. your platform's
    default one, it will be converted to Unicode (precisely: UTF-8 or UTF-16).
    \item Most \pkg{stringi} functions always return UTF-8 encoded strings,
-   regardless of the input encoding.
-   What is more, the functions have been optimized
-   for UTF-8/ASCII input (they have competitive, if not better performance,
-   especially when doing more complex operations
-   like string comparison, sorting, and even concatenation).
-   Thus, it is best to rely on cascading
-   calls to \pkg{stringi} operations solely.
+   regardless of the input encoding. What is more, the functions have been
+   optimized for UTF-8/ASCII input (they have competitive, if not better
+   performance, especially when doing more complex operations like string
+   comparison, sorting, and even concatenation). Thus, it is best to rely
+   on cascading calls to \pkg{stringi} operations solely.
 }
 }
 \details{
@@ -45,9 +42,8 @@ It is designed for best interoperability with both ASCII and ISO-8859-1
 used in almost all applications and protocols" (see the ICU User Guide).
 
 The Unicode Standard determines the way to map any possible character
-to a numeric value -- a so-called code point.
-Such code points, however, have to be stored
-somehow in computer's memory.
+to a numeric value -- a so-called code point. Such code points, however,
+have to be stored somehow in computer's memory.
 The Unicode Standard encodes characters in the range U+0000..U+10FFFF,
 which amounts to a 21-bit code space. Depending on the encoding
 form (UTF-8, UTF-16, or UTF-32), each character will
@@ -61,70 +57,57 @@ supported by any given code page.
 \section{UTF-8 and UTF-16}{
 
 
-For portability reasons,
-the UTF-8 encoding is the most natural choice for representing
-Unicode characters in \R.
-UTF-8 has ASCII as its subset (code points 1--127 are the same
-in both of them). Code points larger than 127
-are represented by multi-byte sequences
-(from 2 to 4 bytes:
-not all sequences of bytes are valid UTF-8,
+For portability reasons, the UTF-8 encoding is the most natural choice
+for representing Unicode character strings in \R. UTF-8 has ASCII as its
+subset (code points 1--127 represent the same characters in both of them).
+Code points larger than 127 are represented by multi-byte sequences
+(from 2 to 4 bytes: by the way, not all sequences of bytes are valid UTF-8,
 cf. \code{\link{stri_enc_isutf8}}).
 
 Most of the computations in \pkg{stringi} are performed internally
-using either UTF-8 or UTF-16 encodings
-(this depends on type of service you request:
-some \pkg{ICU} services are designed only to work with UTF-16).
-Thanks to such a choice, with \pkg{stringi}
-you get the same result on each platform,
-which is -- unfortunately -- not the case of base \R's functions
-(it is for example known that performing a regular expression
+using either UTF-8 or UTF-16 encodings (this depends on type of service
+you request: some \pkg{ICU} services are designed only to work with UTF-16).
+Thanks to such a choice, with \pkg{stringi} you get the same result on
+each platform, which is -- unfortunately -- not the case of base \R's
+functions (it is for example known that performing a regular expression
 search under Linux on some texts may give you a different result
-to those obtained under Windows).
-We really had portability in our minds while developing
-our package!
+to those obtained under Windows). We really had portability in our minds
+while developing our package!
 
 We have observed that \R correctly handles UTF-8 strings regardless of your
-platform's native encoding (see below).
-Therefore, we decided that most functions
-in \pkg{stringi} will output its results in UTF-8
+platform's native encoding (see below). Therefore, we decided that most
+functions in \pkg{stringi} will output its results in UTF-8
 -- this speeds ups computations on cascading calls to our functions:
 the strings does not have to be re-encoded each time.
 
-Note that some Unicode characters may have an
-ambiguous representation. For example, ``a with ogonek'' (one character)
-and ``a''+``ogonek'' (two graphemes) are semantically the same.
-\pkg{stringi} provides functions to normalize
-character sequences, see \code{\link{stri_trans_nfc}}
-for discussion. However, denormalized strings
+Note that some Unicode characters may have an ambiguous representation.
+For example, ``a with ogonek'' (one character) and ``a''+``ogonek''
+(two graphemes) are semantically the same. \pkg{stringi} provides functions
+to normalize character sequences, see \code{\link{stri_trans_nfc}}
+for discussion. However, it is observed that denormalized strings
 do appear very rarely in typical string processing activities.
 
-Additionally, do note that \pkg{stringi} silently removes
-byte order marks (BOMs - they may incidentally appear
-in a string read from a text file) from UTF8-encoded strings,
-see \code{\link{stri_enc_toutf8}}.
+Additionally, do note that \pkg{stringi} silently removes byte order marks
+(BOMs - they may incidentally appear in a string read from a text file)
+from UTF8-encoded strings, see \code{\link{stri_enc_toutf8}}.
 }
 
 \section{Character Encodings in \R}{
 
 
-You should keep in mind that data in memory are just bytes
-(small integer values) -- an en\emph{coding} is a way to represent
-characters with such numbers, it is a semantic "key" to understand
-a given byte sequence. For example,
-in ISO-8859-2 (Central European), the value 177 represents
-Polish ``a with ogonek'',
-and in ISO-8859-1 (Western European), the same value
-denotes the ``plus-minus'' sign.
-Thus, a character encoding is a translation scheme:
-we need to communicate
-with \R somehow, relying on how it represents strings.
+You should keep in mind that data in memory are just bytes (small integer
+values) -- an en\emph{coding} is a way to represent characters with such
+numbers, it is a semantic "key" to understand a given byte sequence.
+For example, in ISO-8859-2 (Central European), the value 177 represents
+Polish ``a with ogonek'', and in ISO-8859-1 (Western European),
+the same value denotes the ``plus-minus'' sign. Thus, a character encoding
+is a translation scheme: we need to communicate with \R somehow,
+relying on how it represents strings.
 
-Basically, \R has a very simple encoding-marking mechanism,
+Basically, \R has a very simple encoding marking mechanism,
 see \code{\link{stri_enc_mark}}. There is an implicit assumption
-that your platform's default (native) encoding is
-always a superset of ASCII --
-\pkg{stringi} checks that when your native encoding
+that your platform's default (native) encoding is always a superset
+of ASCII -- \pkg{stringi} checks that when your native encoding
 is being detected automatically on \pkg{ICU}'s initialization and each time
 when you change it manually by calling \code{\link{stri_enc_set}}.
 
@@ -148,28 +131,26 @@ The native encoding used by \R may be determined by examining
 the LC_CTYPE category, see \code{\link{Sys.getlocale}}.
 }
 
-Intuitively, ``native'' strings result by inputting
-a string from keyboard or file. This makes sense: you operating
+Intuitively, ``native'' strings result from inputting
+a string e.g. via a keyboard. This makes sense: your operating
 system works in some encoding and provides \R with some data.
 
-Each time when a \pkg{stringi} function encounters a string
-declared in native encoding,
-it assumes that the input data should be translated from the default
-encoding, i.e. the one returned by \code{\link{stri_enc_get}}
-(unless you know what you are doing,
-the default encoding should only be changed if the automatic
-encoding detection process fails on \pkg{stringi} load).
+Each time when a \pkg{stringi} function encounters a string declared
+in native encoding, it assumes that the input data should be translated
+from the default encoding, i.e. the one returned by \code{\link{stri_enc_get}}
+(unless you know what you are doing, the default encoding should only be
+changed if the automatic encoding detection process fails on \pkg{stringi}
+load).
 
-Functions which allow \code{"bytes"} encoding markings are very rare in \pkg{stringi},
-and were carefully selected. These are: \code{\link{stri_enc_toutf8}}
-(with argument \code{is_unknown_8bit=TRUE}), \code{\link{stri_enc_toascii}},
-and \code{\link{stri_encode}}.
+Functions which allow \code{"bytes"} encoding markings are very rare in
+\pkg{stringi}, and were carefully selected. These are:
+\code{\link{stri_enc_toutf8}} (with argument \code{is_unknown_8bit=TRUE}),
+\code{\link{stri_enc_toascii}}, and \code{\link{stri_encode}}.
 
 Finally, note that R lets strings in ASCII, UTF-8, and your platform's
-native encoding coexist peacefully. Character vector output
-with \code{\link{print}}, \code{\link{cat}} etc.
-silently reencodes each string so that it can be properly
-shown e.g. in the console.
+native encoding coexist peacefully. Character vector printed with
+\code{\link{print}}, \code{\link{cat}} etc. silently reencodes each
+ string so that it can be properly shown e.g. on the console.
 }
 
 \section{Encoding Conversion}{
@@ -177,7 +158,7 @@ shown e.g. in the console.
 
 Apart from automatic conversion from the native encoding,
 you may re-encode a string manually, for example
-when you load it from a file saved in different platform.
+when you load it from a file saved in a different platform.
 Call \code{\link{stri_enc_list}} for the list of
 encodings supported by \pkg{ICU}.
 Note that converter names are case-insensitive
@@ -198,8 +179,7 @@ bytes with the SUBSTITUTE CHARACTER,
 which plays a similar role as \R's \code{NA} value).
 
 There are also some routines for automated encoding detection,
-see e.g. \code{\link{stri_enc_detect}} (for \pkg{ICU}-provided facilities)
-or \code{\link{stri_enc_detect2}} for our own, locale-sensitive solution.
+see e.g. \code{\link{stri_enc_detect}}.
 }
 
 \section{Encoding Detection}{
@@ -213,9 +193,8 @@ needs a considerable amount of data. However, in case of some
 encodings (like UTF-8, ASCII, or UTF-32) a ``false positive'' byte
 sequence is quite rare (statistically speaking).
 
-Check out \code{\link{stri_enc_detect}} and
-\code{\link{stri_enc_detect2}} (among others) for useful
-functions from this category.
+Check out \code{\link{stri_enc_detect}} (among others) for a useful
+function in this category.
 }
 \references{
 \emph{Unicode Basics} -- ICU User Guide,

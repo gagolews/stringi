@@ -23,8 +23,8 @@ for default collation options}
 }
 \value{
 \code{stri_duplicated()} returns a logical vector of the same length
-as \code{str}. Each of its elements indicates if an equivalent string
-already appeared in \code{str}.
+as \code{str}. Each of its elements indicates whether a canonically
+equivalent string was already found in \code{str}.
 
 \code{stri_duplicated_any()} returns a single non-negative integer.
 Value of 0 indicates that all the elements in \code{str} are unique.
@@ -43,7 +43,7 @@ Missing values are regarded as equal.
 Unlike \code{\link{duplicated}} and \code{\link{anyDuplicated}},
 these functions test for canonical equivalence of strings
 (and not whether the strings are just bytewise equal)
-Such operations is locale-dependent.
+Such operations are locale-dependent.
 Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
 are significantly slower (but much better suited for natural language
 processing) than their base R counterpart.
@@ -61,8 +61,8 @@ stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
 stri_duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
 duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
 
-stri_duplicated(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"), strength=1)
-duplicated(c("gro\\\\u00df", "GROSS", "Gro\\\\u00df", "Gross"))
+stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
+duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

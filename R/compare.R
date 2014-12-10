@@ -33,29 +33,27 @@
 #' Compare Strings with or without Collation
 #'
 #' @description
-#' These functions  may be used to determine if two strings
-#' are equal, canonically equivalent (this is performed in a way more clever
+#' These functions may be used to determine if two strings
+#' are equal, canonically equivalent (this is performed in a much more clever
 #' fashion than when testing for equality),
 #' or to check whether they appear in
 #' a specific lexicographic order.
 #'
 #'
 #' @details
-#' All the functions are vectorized over \code{e1} and \code{e2}.
+#' All the functions listed here are vectorized over \code{e1} and \code{e2}.
 #'
 #' \code{stri_cmp_eq} tests whether two corresponding strings
 #' consist of exactly the same code points, while \code{stri_cmp_neq} allow
-#' to check whether there is any difference between them.
-#' These are locale-independent operations: for
-#' natural language text processing, in which the notion of canonical equivalence
-#' is more valid, this may not be exactly what
-#' you are looking for, see Examples.
-#' Also note that \pkg{stringi} always silently removes UTF-8
-#' BOMs from input strings,
-#' so e.g. \code{stri_cmp_eq} does not take BOMs into account while
-#' comparing strings.
+#' to check whether there is any difference between them. These are
+#' locale-independent operations: for natural language text processing, 
+#' in which the notion of canonical equivalence is more valid, this might
+#' not be exactly what you are looking for, see Examples.
+#' By the way, note that \pkg{stringi} always silently removes UTF-8
+#' BOMs from input strings, so e.g. \code{stri_cmp_eq} does not take
+#' BOMs into account while comparing strings.
 #'
-#' On the other hand, \code{stri_cmp_equiv} test for
+#' On the other hand, \code{stri_cmp_equiv} tests for
 #' canonical equivalence of two strings and is locale-dependent.
 #' Additionally, the \pkg{ICU}'s Collator may be tuned up so that
 #' e.g. the comparison is case-insensitive.
@@ -65,9 +63,8 @@
 #' What is more,  \code{stri_cmp_le} tests whether
 #' the elements in the first vector are less than or equal to
 #' the corresponding elements in the second vector,
-#' \code{stri_cmp_ge} whether they are greater or equal,
-#' \code{stri_cmp_lt} if less,
-#' and \code{stri_cmp_gt} if greater,
+#' \code{stri_cmp_ge} tests whether they are greater or equal,
+#' \code{stri_cmp_lt} if less, and \code{stri_cmp_gt} if greater,
 #' see also e.g. \code{\link{\%s<\%}}.
 #'
 #' Finally, \code{stri_compare} is an alias to \code{stri_cmp}. They both
@@ -89,8 +86,7 @@
 #' @param ... additional settings for \code{opts_collator}
 #'
 #' @return The \code{stri_cmp} and \code{stri_compare} functions
-#' return an integer vector
-#' with comparison results of corresponding
+#' return an integer vector with comparison results of corresponding
 #' pairs of elements in \code{e1} and \code{e2}:
 #' \code{-1} if \code{e1[...] < e2[...]},
 #' \code{0} if they are canonically equivalent, and \code{1} if greater.
@@ -112,14 +108,14 @@
 #' # ignore case differences:
 #' stri_cmp_equiv("hladny", "HLADNY", strength=2)
 #'
-#' # alse ignore diacritical differences:
+#' # also ignore diacritical differences:
 #' stri_cmp_equiv("hladn\u00FD", "hladny", strength=1, locale="sk_SK")
 #'
-#' # non-normalized vs normalized string:
-#' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
+#' # non-Unicode-normalized vs normalized string:
+#' stri_cmp_equiv(stri_trans_nfkd("\u0105"), "\u105")
 #'
 #' # note the difference:
-#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
+#' stri_cmp_eq(stri_trans_nfkd("\u0105"), "\u105")
 #'
 #' # ligatures:
 #' stri_cmp_equiv("\ufb00", "ff", strength=2)
@@ -226,8 +222,8 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @param e1,e2 character vectors or objects coercible to character vectors
 #'
 #' @return All the functions return a logical vector
-#' indicating the result of the element-by-element comparison.
-#' As usual, the elements of shorter vectors are recycled as necessary.
+#' indicating the result of a pairwise comparison.
+#' As usual, the elements of shorter vectors are recycled if necessary.
 #'
 #'
 #' @examples
@@ -386,7 +382,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #'
 #' @description
 #' \link{stri_order} determines a permutation which rearranges
-#' strings into ascending or descending order.
+#' strings into an ascending or descending order.
 #' \link{stri_sort} sorts the vector according to a lexicographic order.
 #'
 #'
@@ -405,9 +401,9 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @param decreasing single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
 #'    or nonincreasing (\code{TRUE})?
-#' @param na_last single logical value controlling the treatment of \code{NA}s
+#' @param na_last single logical value; controls the treatment of \code{NA}s
 #'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
-#'    at the end; if \code{FALSE}, they are put first;
+#'    at the end; if \code{FALSE}, they are put at the beginning;
 #'    if \code{NA}, then they are removed from the output.
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
@@ -470,11 +466,11 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #' @return Returns a character vector.
 #'
 #' @examples
-#' # normalized and non-unicode-normalized version of the same code point:
+#' # normalized and non-Unicode-normalized version of the same code point:
 #' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
-#' stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
+#' stri_unique(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
 #'
 #' @family locale_sensitive
 #' @export
@@ -501,7 +497,7 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' Unlike \code{\link{duplicated}} and \code{\link{anyDuplicated}},
 #' these functions test for canonical equivalence of strings
 #' (and not whether the strings are just bytewise equal)
-#' Such operations is locale-dependent.
+#' Such operations are locale-dependent.
 #' Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
 #' are significantly slower (but much better suited for natural language
 #' processing) than their base R counterpart.
@@ -519,8 +515,8 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #'
 #' @return
 #' \code{stri_duplicated()} returns a logical vector of the same length
-#' as \code{str}. Each of its elements indicates if an equivalent string
-#' already appeared in \code{str}.
+#' as \code{str}. Each of its elements indicates whether a canonically
+#' equivalent string was already found in \code{str}.
 #'
 #' \code{stri_duplicated_any()} returns a single non-negative integer.
 #' Value of 0 indicates that all the elements in \code{str} are unique.
@@ -537,8 +533,8 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
-#' stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
-#' duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
+#' stri_duplicated(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
+#' duplicated(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"))
 #'
 #' @rdname stri_duplicated
 #' @family locale_sensitive

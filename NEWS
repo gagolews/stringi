@@ -4,6 +4,11 @@
 
 * 0.4-1 (2014-??-??) **under development**
 
+   * [BUGFIX]  #94: t.b.d. Solaris!!!
+
+(...)
+
+
    * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*()` has been renamed `n`.
 
    * [IMPORTANT CHANGE] `simplify=FALSE` in `stri_extract_all_*()` and
@@ -11,7 +16,7 @@
      `fill=NA_character_` may be obtained by using `simplify=NA`.
 
    * [IMPORTANT CHANGE, NEW FUNCTIONS] #120: `stri_extract_words` has been
-     renamed `stri_extract_all_words` and `stri_locate_boundaries` - 
+     renamed `stri_extract_all_words` and `stri_locate_boundaries` -
      `stri_locate_all_boundaries` as well as `stri_locate_words` -
      `stri_locate_all_words`. New functions are now available:
      `stri_locate_first_boundaries`, `stri_locate_last_boundaries`,
@@ -24,18 +29,10 @@
      `stri_detect_regex(str, pattern, case_insensitive=TRUE)` instead of
      `stri_detect_regex(str, pattern, opts_regex=stri_opts_regex(case_insensitive=TRUE))`.
 
-(...)
-
-   * [BUGFIX]  #94: t.b.d. Solaris!!! 
-
-   * [NEW FEATURE] #113: [[[not sure if for 0.4-1]]]  -- QUESTION [brkiter in coll/fixed search]
-
-(...)
-
    * [NEW FEATURE] #110: Fixed pattern search engine's settings can
      now be supplied via `opts_fixed` argument in `stri_*_fixed()`,
      see `stri_opts_fixed()`. A simple (not suitable for natural language
-     processing) yet very fast `case_insensitive` pattern matching can be 
+     processing) yet very fast `case_insensitive` pattern matching can be
      performed now. `stri_extract_*_fixed` is again available.
 
    * [NEW FEATURE] #23: `stri_extract_all_fixed`, `stri_count`, and
@@ -70,7 +67,7 @@
 
    * [NEW FEATURE] #114: `stri_paste()`: `ignore_null` arg has been added.
 
-   * [OTHER] #123: `useDynLib` is used to speed up symbol lookup in 
+   * [OTHER] #123: `useDynLib` is used to speed up symbol look-up in
      the compiled dynamic library.
 
 -------------------------------------------------------------------------------

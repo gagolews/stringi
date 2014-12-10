@@ -14,7 +14,7 @@ or a single string (\code{stri_split_lines1})}
 
 \item{omit_empty}{logical vector; determines whether empty
 strings should be removed from the result
-   [\code{stri_split_lines}  only]}
+   [\code{stri_split_lines} only]}
 }
 \value{
 \code{stri_split_lines} returns a list of character vectors.
@@ -25,17 +25,16 @@ is a single \code{NA} string.
 \code{stri_split_lines(str[1])[[1]]} (with default parameters),
 thus it returns a character vector. Moreover, if the input string ends at
 a newline sequence, the last empty string is omitted from the result.
-Therefore, this function is convenient for splitting a loaded text file
-into text lines.
+Therefore, this function may be handy if you wish to split a loaded text
+file into text lines.
 }
 \description{
-These functions split each character string
-into text lines.
+These functions split each character string into text lines.
 }
 \details{
 Vectorized over \code{str} and \code{omit_empty}.
 
-\code{omit_empty} is applied during splitting: if set to \code{TRUE},
+\code{omit_empty} is applied during splitting. If it is set to \code{TRUE},
 then empty strings will never appear in the resulting vector.
 
 Newlines are represented on different platforms e.g. by carriage return
@@ -46,9 +45,8 @@ Sometimes also vertical tab (VT, 0x0B) and form feed (FF, 0x0C)
 are used. These functions follow UTR#18 rules, where a newline sequence
 corresponds to the following regular expression:
 \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
-Each match is used to split a text line.
-For efficiency reasons, the search is not performed via regexes here,
-however.
+Each match is used to split a text line. For efficiency reasons, the search
+here is not performed by the regex engine, however.
 }
 \references{
 \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,

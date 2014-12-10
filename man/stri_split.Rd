@@ -59,42 +59,39 @@ Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE}
 and \code{n_min=n} arguments is called on the resulting object.
 In such a case, a character matrix with an appropriate number of rows
 (according to the length of \code{str}, \code{pattern}, etc.)
-is returned.
-Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
-to an empty string and \code{NA},
-for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
+is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill} argument
+is set to an empty string and \code{NA}, for \code{simplify} equal to
+\code{TRUE} and \code{NA}, respectively.
 }
 \description{
-Splits each element of \code{str} into substrings.
+These functions split each element of \code{str} into substrings.
 \code{pattern} indicates delimiters that separate the input into tokens.
 The input data between the matches become the fields themselves.
 }
 \details{
 Vectorized over \code{str}, \code{pattern}, \code{n}, and \code{omit_empty}.
 
-If \code{n} is negative (default), then all pieces are extracted.
+If \code{n} is negative, then all pieces are extracted.
 Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
 for compatibility with the \pkg{stringr} package), then \code{n-1}
 tokes are extracted (if possible) and the \code{n}-th string
-gives the (non-split) remainder (see Examples).
+gives the remainder (see Examples).
 On the other hand, if \code{tokens_only} is \code{TRUE},
 then only full tokens (up to \code{n} pieces) are extracted.
 
-\code{omit_empty} is applied during splitting: if it is set to \code{TRUE},
-then tokens of zero length are ignored. Thus, empty strings will never
-appear in the resulting vector.
-On the other hand, if \code{omit_empty} is \code{NA}, then
-empty tokes are substituted with missing strings.
+\code{omit_empty} is applied during the split process: if it is set to
+\code{TRUE}, then tokens of zero length are ignored. Thus, empty strings
+will never appear in the resulting vector. On the other hand, if
+\code{omit_empty} is \code{NA}, then empty tokes are substituted with
+missing strings.
 
 Empty search patterns are not supported. If you would like to split a
 string into individual characters, use e.g.
 \code{\link{stri_split_boundaries}(str, type="character")} for THE Unicode way.
 
-\code{stri_split} is a convenience function.
-It calls either \code{stri_split_regex},
-\code{stri_split_fixed}, \code{stri_split_coll},
-or \code{stri_split_charclass},
-depending on the argument used.
+\code{stri_split} is a convenience function. It calls either
+\code{stri_split_regex}, \code{stri_split_fixed}, \code{stri_split_coll},
+or \code{stri_split_charclass}, depending on the argument used.
 Unless you are a very lazy person, please call the underlying functions
 directly for better performance.
 }
