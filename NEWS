@@ -2,7 +2,7 @@
 ===============================================================================
 
 
-* 0.4-1 (2014-??-??) **under development**
+* 0.4-1 (2014-12-11) **CRAN**
 
    * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*()` has been renamed `n`.
 
