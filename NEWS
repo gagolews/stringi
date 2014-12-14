@@ -2,6 +2,19 @@
 ===============================================================================
 
 
+* 0.5-1 (2015-??-??) **t.b.d.**
+
+   * ...
+
+TO BE DONE:
+
+   * [BUGFIX] long long ICU warnings...
+
+   * [NEW FEATURE] #133: stri_wrap width <= 0 the same as str_wrap == 0?
+
+-------------------------------------------------------------------------------
+
+
 * 0.4-1 (2014-12-11) **CRAN**
 
    * [IMPORTANT CHANGE] `n_max` argument in `stri_split_*()` has been renamed `n`.
