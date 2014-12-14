@@ -10,6 +10,8 @@ TO BE DONE:
 
    * [BUGFIX] long long ICU warnings...
 
+   * [BUGFIX] #134: ....
+
    * [NEW FEATURE] #133: stri_wrap width <= 0 the same as str_wrap == 0?
 
 -------------------------------------------------------------------------------
@@ -73,10 +75,10 @@ TO BE DONE:
      `ignore_null`. Setting it to `TRUE` makes this function more compatible
      with `paste()`.
 
-   * [NEW FEATURE] #114: `stri_paste()`: `ignore_null` arg has been added.
-
    * [OTHER] #123: `useDynLib` is used to speed up symbol look-up in
      the compiled dynamic library.
+
+   * [BUGFIX] #114: `stri_paste()`: could return result in an incorrect order.
 
    * [BUGFIX]  #94: Run-time errors on Solaris caused by setting
      `-DU_DISABLE_RENAMING=1` -- memory allocation errors in i.a. ICU's
