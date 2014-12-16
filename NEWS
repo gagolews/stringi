@@ -9,6 +9,8 @@
 TO BE DONE:
 
    * [BUGFIX] long long ICU warnings...
+ 
+   * [BUGFIX] #132: stri_locate_regex - match of zero length
 
    * [BUGFIX] #134: ....
 
