@@ -25,20 +25,17 @@ stri_locate_first_words(str, locale = NULL)
 \item{str}{character vector or an object coercible to}
 
 \item{omit_no_match}{single logical value; if \code{FALSE},
-then 2 missing values will indicate that there are no text boundaries;
-\code{stri_locate_all_*} only}
+then 2 missing values will indicate that there are no text boundaries}
 
 \item{...}{additional settings for \code{opts_brkiter}}
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
 as generated with \code{\link{stri_opts_brkiter}};
-\code{NULL} for default break iterator, i.e. \code{line_break};
-\code{stri_locate_all_boundaries} only}
+\code{NULL} for default break iterator, i.e. \code{line_break}}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
-locale identifier, see \link{stringi-locale};
-\code{stri_locate_all_words} only}
+locale identifier, see \link{stringi-locale}}
 }
 \value{
 For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices
@@ -125,8 +122,11 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
+  \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_opts_collator}};
   \code{\link{stri_order}}, \code{\link{stri_sort}};
@@ -159,8 +159,11 @@ Other search_locate: \code{\link{stri_locate}},
 
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
+  \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_opts_brkiter}};
   \code{\link{stri_split_boundaries}};
