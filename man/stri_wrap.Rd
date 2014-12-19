@@ -10,7 +10,7 @@ stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
 \arguments{
 \item{str}{character vector of strings to reformat}
 
-\item{width}{single positive integer giving the desired
+\item{width}{single integer giving the suggested
 maximal number of code points per line}
 
 \item{cost_exponent}{single numeric value, values not greater than zero

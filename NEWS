@@ -9,13 +9,14 @@
 
    * [BUGFIX] #134: `stri_extract_all_words` did not accept `simplify=NA`.
 
+   * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
+     (for compatibility with `strwrap`.
+
 TO BE DONE:
 
    * [BUGFIX] #135: long long ICU warnings...
  
    * [BUGFIX] #132: stri_locate_regex - match of zero length
-
-   * [NEW FEATURE] #133: stri_wrap width <= 0 the same as str_wrap == 0?
 
 -------------------------------------------------------------------------------
 
