@@ -81,8 +81,11 @@ Other search_detect: \code{\link{stri_detect}},
   \code{\link{stri_startswith_coll}},
   \code{\link{stri_startswith_fixed}}
 
-Other search_extract: \code{\link{stri_extract_all_words}},
+Other search_extract: \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_extract}},
   \code{\link{stri_extract_all}},
@@ -185,8 +188,11 @@ Other stringi_general_topics: \code{\link{stringi-arguments}};
 
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
+  \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all_words}},

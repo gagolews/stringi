@@ -13,10 +13,16 @@ test_that("stri_extract_all_words", {
       list(character(0), character(0), NA_character_))
 
    expect_identical(stri_extract_all_words(c("", "ala", "ma kota"), simplify=TRUE),
+      matrix(c(NA, "", "ala", "", "ma", "kota"), nrow=3, byrow=TRUE))
+   
+   expect_identical(stri_extract_all_words(c("", "ala", "ma kota"), simplify=NA),
       matrix(c(NA, NA, "ala", NA, "ma", "kota"), nrow=3, byrow=TRUE))
 
-   expect_identical(stri_extract_all_words(c("", "ala", "ma kota"), simplify=TRUE, omit_no_match=TRUE),
+   expect_identical(stri_extract_all_words(c("", "ala", "ma kota"), simplify=NA, omit_no_match=TRUE),
       matrix(c(NA, NA, "ala", NA, "ma", "kota"), nrow=3, byrow=TRUE))
+   
+   
+   
 
 #    expect_identical(stri_extract_all_words(c("", "stringi", NA)),
 #       list(character(0), "stringi", NA_character_))

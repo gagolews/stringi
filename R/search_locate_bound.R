@@ -57,17 +57,14 @@
 #'
 #' @param str character vector or an object coercible to
 #' @param omit_no_match single logical value; if \code{FALSE},
-#' then 2 missing values will indicate that there are no text boundaries;
-#' \code{stri_locate_all_*} only
+#' then 2 missing values will indicate that there are no text boundaries
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
-#' \code{NULL} for default break iterator, i.e. \code{line_break};
-#' \code{stri_locate_all_boundaries} only
+#' \code{NULL} for default break iterator, i.e. \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale};
-#' \code{stri_locate_all_words} only
+#' locale identifier, see \link{stringi-locale}
 #'
 #' @return
 #' For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices

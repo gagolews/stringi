@@ -15,13 +15,11 @@ stri_count_words(str, locale = NULL)
 
 \item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
 as generated with \code{\link{stri_opts_brkiter}};
-\code{NULL} for default break iterator, i.e. \code{line_break};
-\code{stri_count_boundaries} only}
+\code{NULL} for default break iterator, i.e. \code{line_break}}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
-locale identifier, see \link{stringi-locale};
-\code{stri_count_words} only}
+locale identifier, see \link{stringi-locale}}
 }
 \value{
 Both functions return an integer vector.
@@ -86,8 +84,11 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{stri_duplicated}},
   \code{\link{stri_duplicated_any}};
   \code{\link{stri_enc_detect2}};
+  \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all_words}},
@@ -113,8 +114,11 @@ Other search_count: \code{\link{stri_count}},
   \code{\link{stri_count_regex}};
   \code{\link{stringi-search}}
 
-Other text_boundaries: \code{\link{stri_extract_all_words}},
+Other text_boundaries: \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all_words}},

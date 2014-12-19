@@ -43,6 +43,7 @@ stri_search_coll_split.cpp \
 stri_search_coll_startsendswith.cpp \
 stri_search_coll_subset.cpp \
 stri_search_boundaries_count.cpp \
+stri_search_boundaries_extract.cpp \
 stri_search_boundaries_locate.cpp \
 stri_search_boundaries_split.cpp \
 stri_search_fixed_count.cpp \

@@ -261,11 +261,15 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from);
 SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na);
 
 
+SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SEXP opts_brkiter);
+SEXP stri_extract_first_boundaries(SEXP str, SEXP opts_brkiter);
+SEXP stri_extract_last_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_locate_all_boundaries(SEXP str, SEXP omit_no_match, SEXP opts_brkiter);
 SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter);
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter);
+
 SEXP stri_split_lines(SEXP str, SEXP omit_empty);
 SEXP stri_split_lines1(SEXP str);
 

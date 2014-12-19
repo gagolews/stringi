@@ -65,13 +65,11 @@
 #' @param str character vector or an object coercible to
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
 #' as generated with \code{\link{stri_opts_brkiter}};
-#' \code{NULL} for default break iterator, i.e. \code{line_break};
-#' \code{stri_count_boundaries} only
+#' \code{NULL} for default break iterator, i.e. \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale};
-#' \code{stri_count_words} only
+#' locale identifier, see \link{stringi-locale}
 #'
 #' @return
 #' Both functions return an integer vector.

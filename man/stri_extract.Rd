@@ -150,8 +150,11 @@ stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE)
 stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE)
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_all_words}},
+Other search_extract: \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_extract_all_words}},
+  \code{\link{stri_extract_first_boundaries}},
   \code{\link{stri_extract_first_words}},
+  \code{\link{stri_extract_last_boundaries}},
   \code{\link{stri_extract_last_words}};
   \code{\link{stri_match}}, \code{\link{stri_match_all}},
   \code{\link{stri_match_all_regex}},
