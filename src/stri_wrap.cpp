@@ -224,6 +224,9 @@ struct StriWrapLineStart {
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new args: indent, exdent, prefix, initial
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2014-12-19)
+ *    #133 allow width <= 0
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP locale)
@@ -231,7 +234,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
 
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
-   if (width_val <= 0) Rf_error(MSG__EXPECTED_POSITIVE, "width");
+   if (width_val <= 0) width_val = 0;
 
    int indent_val = stri__prepare_arg_integer_1_notNA(indent, "indent");
    if (indent_val < 0) Rf_error(MSG__EXPECTED_POSITIVE, "indent");

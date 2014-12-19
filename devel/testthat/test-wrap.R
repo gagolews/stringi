@@ -3,13 +3,14 @@ require(stringr)
 context("test-wrap.R")
 
 test_that("stri_wrap", {
-   expect_error(stri_wrap("whatever", 0))
    expect_error(stri_wrap("what\never", normalize=FALSE))
    expect_identical(stri_wrap(c("", "singleword", NA), cost=0.0), c("", "singleword", NA))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 0.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 1.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 2.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 3.0), c("a12345", "b123456", "c1234567"))
+   expect_identical(stri_wrap("a12345     b123456 c1234567", -100, 2.0), c("a12345", "b123456", "c1234567"))
+   expect_identical(stri_wrap("a b c", -100), c("a", "b", "c"))
 
    expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12),
       c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",

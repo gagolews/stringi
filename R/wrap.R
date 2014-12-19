@@ -75,7 +75,7 @@
 #' Note that the cost of printing the last line is always zero.
 #'
 #' @param str character vector of strings to reformat
-#' @param width single positive integer giving the desired
+#' @param width single integer giving the suggested
 #'        maximal number of code points per line
 #' @param cost_exponent single numeric value, values not greater than zero
 #'        will select a greedy word-wrapping algorithm; otherwise
