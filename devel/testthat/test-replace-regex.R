@@ -1,7 +1,7 @@
 require(testthat)
 context("test-replace-regex.R")
 
-test_that("stri_replace_all_regex", {
+test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
    expect_error(stri_replace_all_regex("a", "a", c("b", "d"), vectorize_all=FALSE))
    expect_error(stri_replace_all_regex("a", c(), "a", vectorize_all=FALSE))
    expect_error(stri_replace_all_regex("a", c("a", "b"), c(), vectorize_all=FALSE))
@@ -20,6 +20,9 @@ test_that("stri_replace_all_regex", {
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
    expect_identical(stri_replace_all_regex("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
+   
+   
+
 })
 
 test_that("stri_replace_all_regex", {
@@ -64,6 +67,11 @@ test_that("stri_replace_all_regex", {
    expect_identical(stri_replace_all_regex("X\U00024B62X",
              c("\U00024B62", "\U00024B63", "X"), ""),
                     c("XX", "X\U00024B62X", "\U00024B62"))
+   
+   expect_identical(stri_replace_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"),
+      c("\u0108\u0105\u0108\u0108\u0107\u0108", "\u0108\u0105\u0108\u0107\u0108")) # match of zero length
+   expect_identical(stri_replace_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+      c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
 })
 
 
@@ -82,6 +90,13 @@ test_that("stri_replace_first_regex", {
    expect_identical(stri_replace_first_regex(NA,"A",NA),NA_character_)
    expect_identical(stri_replace_first_regex("A",NA,NA),NA_character_)
    expect_identical(stri_replace_first_regex(NA,NA,NA),NA_character_)
+   
+   
+   
+   expect_identical(stri_replace_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"),
+      c("\u0108\u0105\u0106\u0107", "\u0108\u0105\u0107")) # match of zero length
+   expect_identical(stri_replace_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+      c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
 
 })
 
@@ -101,5 +116,10 @@ test_that("stri_replace_last_regex", {
    expect_identical(stri_replace_last_regex(NA,"A",NA),NA_character_)
    expect_identical(stri_replace_last_regex("A",NA,NA),NA_character_)
    expect_identical(stri_replace_last_regex(NA,NA,NA),NA_character_)
+   
+   expect_identical(stri_replace_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*", "\u0108"),
+      c("\u0105\u0106\u0107\u0108", "\u0105\u0107\u0108")) # match of zero length
+   expect_identical(stri_replace_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
+      c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
 
 })
