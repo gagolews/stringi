@@ -87,6 +87,9 @@
 #' two columns, giving the start and end positions of the first
 #' or the last matches, respectively, and two \code{NA}s if and
 #' only if they are not found.
+#' 
+#' For \code{stri_locate_*_regex}, if the match is of length 0, 
+#' \code{end} will be one character less than \code{start}.
 #'
 #' @examples
 #' stri_locate_all('XaaaaX',
