@@ -12,11 +12,12 @@
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`.
 
+   * [BUGFIX] #132: incorrect behavior in stri_locate_regex for match
+     of zero lengths
+
 TO BE DONE:
 
    * [BUGFIX] #135: long long ICU warnings...
- 
-   * [BUGFIX] #132: stri_locate_regex - match of zero length
 
 -------------------------------------------------------------------------------
 
