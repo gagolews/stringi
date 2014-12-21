@@ -17,6 +17,12 @@
 
 TO BE DONE:
 
+   * #69: ICU 54.1
+
+   * #137: date/time formatting/parsing
+
+   * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
+
    * [BUGFIX] #135: long long ICU warnings...
 
 -------------------------------------------------------------------------------

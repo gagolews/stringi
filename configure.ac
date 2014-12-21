@@ -4,7 +4,7 @@
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 0.4, stringi@rexamine.com)
+AC_INIT(stringi, 0.5, stringi@rexamine.com)
 
 ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
