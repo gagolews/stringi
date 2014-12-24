@@ -101,8 +101,7 @@ stri_trans_nfkc("\\ufdfa") # 1 codepoint -> 18 codepoints
 \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 }
 \seealso{
-Other transform: \code{\link{stri_timezone_list}};
-  \code{\link{stri_trans_general}};
+Other transform: \code{\link{stri_trans_general}};
   \code{\link{stri_trans_list}};
   \code{\link{stri_trans_tolower}},
   \code{\link{stri_trans_totitle}},

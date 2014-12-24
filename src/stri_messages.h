@@ -119,6 +119,9 @@
 #define MSG__EXPECTED_ASCII \
    "incorrect argument: the string contains non-ASCII characters"
 
+#define MSG__TIMEZONE_INCORRECT_ID \
+   "incorrect time zone identifier"
+
 #define MSG__LOCALE_ERROR_SET \
    "could not set or select given locale"
 
