@@ -65,8 +65,7 @@ stri_trans_general("tato nie wraca ranki wieczory", "pl-pl_FONIPA")
 \url{http://userguide.icu-project.org/transforms/general}
 }
 \seealso{
-Other transform: \code{\link{stri_timezone_list}};
-  \code{\link{stri_trans_isnfc}},
+Other transform: \code{\link{stri_trans_isnfc}},
   \code{\link{stri_trans_isnfd}},
   \code{\link{stri_trans_isnfkc}},
   \code{\link{stri_trans_isnfkc_casefold}},

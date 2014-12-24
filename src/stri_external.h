@@ -58,6 +58,7 @@
 #include <unicode/utf16.h>
 #include <unicode/brkiter.h>
 #include <unicode/rbbi.h>
+#include <unicode/timezone.h>
 using namespace icu;
 
 #define USE_RINTERNALS

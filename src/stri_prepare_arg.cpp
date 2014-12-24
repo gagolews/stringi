@@ -764,6 +764,62 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
 }
 
 
+
+/**
+ * Prepare character vector argument that will be used to choose a time zone
+ *
+ * If the \code{tz} argument is incorrect, the an error is generated.
+ * If something goes wrong, a warning is given.
+ *
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param tz generally, a single character string
+ * @param allowdefault do we allow \code{R_NilValue} or a single empty string
+ *    to work as a default tz selector?
+ * @return TimeZone object - owned by the caller
+ *
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
+ */
+TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault)
+{
+   if (allowdefault && isNull(tz)) {
+      return TimeZone::createDefault();   
+   }
+   else {
+      PROTECT(tz = stri_prepare_arg_string_1(tz, argname));
+      if (STRING_ELT(tz, 0) == NA_STRING) {
+         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+      }
+
+      if (LENGTH(STRING_ELT(tz, 0)) == 0) {
+         UNPROTECT(1);
+         if (allowdefault)
+            return TimeZone::createDefault();  
+         else
+            Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
+      }
+      else {
+         UnicodeString id((const char*)CHAR(STRING_ELT(tz, 0)));
+         UNPROTECT(1);
+         TimeZone* ret = TimeZone::createTimeZone(id);
+         if (*ret == TimeZone::getUnknown()) {
+            delete ret;
+            Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
+         }
+         else
+            return ret;
+      }
+   }
+
+   // won't come here anyway
+   return NULL; // avoid compiler warning
+}
+
+
+
 /**
  * Prepare character vector argument that will be used to choose a character encoding
  *

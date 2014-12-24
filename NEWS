@@ -21,7 +21,8 @@ TO BE DONE:
 
    * #137: date/time formatting/parsing
         * stri_timezone_list() - lists all time zone identifiers
-        * ...
+        * stri_timezone_set(), stri_timezone_get() - manage current default tz
+        * stri_timezone_info() - basic information on a given time zone
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 

@@ -22,12 +22,14 @@ Returns a list of available time zone identifiers.
 If  \code{offset} and \code{region} are \code{NA} (the default),
 all time zones are returned. Otherwise,
 only time zone IDs with a given raw offset from GMT are given
-and/or time zones corresponding to a given region.
+and/or time zones corresponding to a given region are provided.
 Note that the effect of daylight savings time is ignored.
 }
 \examples{
 stri_timezone_list()
 stri_timezone_list(offset=1)
+stri_timezone_list(offset=5.5)
+stri_timezone_list(offset=5.75)
 stri_timezone_list(region="PL")
 }
 \references{
@@ -35,20 +37,12 @@ stri_timezone_list(region="PL")
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
 }
 \seealso{
-Other transform: \code{\link{stri_trans_general}};
-  \code{\link{stri_trans_isnfc}},
-  \code{\link{stri_trans_isnfd}},
-  \code{\link{stri_trans_isnfkc}},
-  \code{\link{stri_trans_isnfkc_casefold}},
-  \code{\link{stri_trans_isnfkd}},
-  \code{\link{stri_trans_nfc}},
-  \code{\link{stri_trans_nfd}},
-  \code{\link{stri_trans_nfkc}},
-  \code{\link{stri_trans_nfkc_casefold}},
-  \code{\link{stri_trans_nfkd}};
-  \code{\link{stri_trans_list}};
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_trans_totitle}},
-  \code{\link{stri_trans_toupper}}
+Other time: \code{\link{stri_timezone_get}},
+  \code{\link{stri_timezone_set}};
+  \code{\link{stri_timezone_info}}
+
+Other timezone: \code{\link{stri_timezone_get}},
+  \code{\link{stri_timezone_set}};
+  \code{\link{stri_timezone_info}}
 }
 

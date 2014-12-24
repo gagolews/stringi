@@ -19,8 +19,7 @@ tasks.
 \url{http://userguide.icu-project.org/transforms/general}
 }
 \seealso{
-Other transform: \code{\link{stri_timezone_list}};
-  \code{\link{stri_trans_general}};
+Other transform: \code{\link{stri_trans_general}};
   \code{\link{stri_trans_isnfc}},
   \code{\link{stri_trans_isnfd}},
   \code{\link{stri_trans_isnfkc}},

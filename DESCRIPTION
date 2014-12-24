@@ -7,6 +7,9 @@ Description: stringi allows for fast, correct, consistent, portable,
     and any native encoding. Owing to the use of the ICU library,
     the package provides R users with platform-independent functions
     known to Java, Perl, Python, PHP, and Ruby programmers.
+    Among available features there are: pattern searching
+    (e.g. via regular expressions), random string generation,
+    string collation, transliteration, concatenation, etc.
 URL: http://stringi.rexamine.com/
     http://site.icu-project.org/
     http://www.unicode.org/
