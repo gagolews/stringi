@@ -20,6 +20,8 @@ TO BE DONE:
    * #69: ICU 54.1
 
    * #137: date/time formatting/parsing
+        * stri_timezone_list() - lists all time zone identifiers
+        * ...
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 

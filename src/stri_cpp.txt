@@ -69,6 +69,7 @@ stri_stats.cpp \
 stri_stringi.cpp \
 stri_sub.cpp \
 stri_test.cpp \
+stri_time_zone.cpp \
 stri_trans_casemap.cpp \
 stri_trans_normalization.cpp \
 stri_trans_transliterate.cpp \

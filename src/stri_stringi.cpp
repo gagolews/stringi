@@ -179,6 +179,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_test_UnicodeContainer16",    stri_test_UnicodeContainer16,    1),
    STRI__MK_CALL("C_stri_test_UnicodeContainer16b",   stri_test_UnicodeContainer16b,   1),
    STRI__MK_CALL("C_stri_test_UnicodeContainer8",     stri_test_UnicodeContainer8,     1),
+   STRI__MK_CALL("C_stri_timezone_list",              stri_timezone_list,              2),
    STRI__MK_CALL("C_stri_trans_casemap",              stri_trans_casemap,              3),
    STRI__MK_CALL("C_stri_trans_isnf",                 stri_trans_isnf,                 2),
    STRI__MK_CALL("C_stri_trans_general",              stri_trans_general,              2),
