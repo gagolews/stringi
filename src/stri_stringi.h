@@ -324,6 +324,10 @@ SEXP stri_test_UnicodeContainer8(SEXP str);
 SEXP stri_test_returnasis(SEXP x);
 
 
+// date/time
+SEXP stri_timezone_list(SEXP region, SEXP offset);
+
+
 // utils.cpp
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min);
 
