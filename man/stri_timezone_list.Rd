@@ -19,6 +19,17 @@ Returns a character vector.
 \description{
 Returns a list of available time zone identifiers.
 
+A time zone represents an offset applied to Greenwich Mean Time (GMT)
+to obtain local time (GMT is similar, but not precisely identical,
+to Universal Coordinated Time, or UTC. In \pkg{ICU} the two terms
+are used interchangeably since \pkg{ICU} does not concern itself with
+either leap seconds or historical behavior).
+The offset might vary throughout the year,
+if daylight savings time (DST) is used, or might be the same all year long.
+Typically, regions closer to the equator do not use DST.
+If DST is in use, then specific rules define the point at which
+ the offset changes and the amount by which it changes.
+
 If  \code{offset} and \code{region} are \code{NA} (the default),
 all time zones are returned. Otherwise,
 only time zone IDs with a given raw offset from GMT are given
@@ -35,9 +46,16 @@ stri_timezone_list(region="PL")
 \references{
 \emph{TimeZone} class -- ICU API Documentation,
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
+
+\emph{ICU 4.8 Time Zone Names}.
+\url{http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names}
+
+\emph{ICU TimeZone classes} -- ICU User Guide,
+\url{http://userguide.icu-project.org/datetime/timezone}
 }
 \seealso{
-Other time: \code{\link{stri_timezone_get}},
+Other datetime: \code{\link{stri_datetime_symbols}};
+  \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
   \code{\link{stri_timezone_info}}
 

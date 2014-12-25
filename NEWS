@@ -23,6 +23,7 @@ TO BE DONE:
         * stri_timezone_list() - lists all time zone identifiers
         * stri_timezone_set(), stri_timezone_get() - manage current default tz
         * stri_timezone_info() - basic information on a given time zone
+        * stri_datetime_symbols() - localizable date-time formatting data
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 

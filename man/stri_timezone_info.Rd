@@ -29,13 +29,17 @@ Provides some basic information on a given time zone identifier.
 \details{
 With this function you may obtain some basic information
 on any supported time zone.
+
+For more information on time zone representation in \pkg{ICU},
+see \code{\link{stri_timezone_list}}.
 }
 \examples{
 stri_timezone_info()
 stri_timezone_info(locale="sk_SK")
 }
 \seealso{
-Other time: \code{\link{stri_timezone_get}},
+Other datetime: \code{\link{stri_datetime_symbols}};
+  \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
   \code{\link{stri_timezone_list}}
 

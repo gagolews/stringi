@@ -693,6 +693,41 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
 }
 
 
+
+/** Prepare double argument - one value, not NA [no re-encoding done!!!]
+ *
+ * If there are 0 elements -> error
+ * If there are >1 elements -> warning
+ *
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x R object to be checked/coerced
+ * @param argname argument name (message formatting)
+ * @return a character string
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2014-12-25)
+ */
+const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
+{
+   PROTECT(x = stri_prepare_arg_string_1(x, argname));
+   if (STRING_ELT(x, 0) == NA_STRING)
+      Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
+   const char* ret_tmp = (const char*)CHAR(STRING_ELT(x, 0)); // ret may be gc'ed
+   size_t ret_n = strlen(ret_tmp);
+   /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
+   char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+   if (!ret) {
+      UNPROTECT(1);
+      Rf_error(MSG__MEM_ALLOC_ERROR);
+   }
+   memcpy(ret, ret_tmp, ret_n+1);
+   UNPROTECT(1);
+   return ret;
+}
+
+
 /**
  * Prepare character vector argument that will be used to choose a locale
  *
