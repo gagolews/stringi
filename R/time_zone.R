@@ -34,6 +34,17 @@
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
+#' 
+#' A time zone represents an offset applied to Greenwich Mean Time (GMT) 
+#' to obtain local time (GMT is similar, but not precisely identical, 
+#' to Universal Coordinated Time, or UTC. In \pkg{ICU} the two terms
+#' are used interchangeably since \pkg{ICU} does not concern itself with 
+#' either leap seconds or historical behavior).
+#' The offset might vary throughout the year, 
+#' if daylight savings time (DST) is used, or might be the same all year long. 
+#' Typically, regions closer to the equator do not use DST. 
+#' If DST is in use, then specific rules define the point at which
+#'  the offset changes and the amount by which it changes.
 #'
 #' If  \code{offset} and \code{region} are \code{NA} (the default),
 #' all time zones are returned. Otherwise,
@@ -52,6 +63,12 @@
 #' \emph{TimeZone} class -- ICU API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
 #' 
+#' \emph{ICU 4.8 Time Zone Names}.
+#' \url{http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names}
+#' 
+#' \emph{ICU TimeZone classes} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/datetime/timezone}
+#' 
 #' @examples
 #' stri_timezone_list()
 #' stri_timezone_list(offset=1)
@@ -59,7 +76,7 @@
 #' stri_timezone_list(offset=5.75)
 #' stri_timezone_list(region="PL")
 #' 
-#' @family time
+#' @family datetime
 #' @family timezone
 #' @export
 stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
@@ -76,6 +93,9 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' i.e. establishes the meaning of the ``\code{NULL} time zone'' argument
 #' of date/time processing functions. On the other hand, \code{stri_timezone_get}
 #' gets current default time zone.
+#' 
+#' For more information on time zone representation in \pkg{ICU},
+#' see \code{\link{stri_timezone_list}}.
 #'
 #' @details
 #' Unless the default time zone has already been set using \code{stri_timezone_set},
@@ -105,7 +125,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' }
 #' 
 #' @export
-#' @family time
+#' @family datetime
 #' @family timezone
 #' @rdname stri_timezone_set
 #' @export
@@ -132,6 +152,9 @@ stri_timezone_set <- function(tz) {
 #' @details
 #' With this function you may obtain some basic information
 #' on any supported time zone.
+#' 
+#' For more information on time zone representation in \pkg{ICU},
+#' see \code{\link{stri_timezone_list}}.
 #'
 #' @param tz \code{NULL} or \code{""} for default time zone,
 #' a single string with time zone ID otherwise.
@@ -152,7 +175,7 @@ stri_timezone_set <- function(tz) {
 #' stri_timezone_info()
 #' stri_timezone_info(locale="sk_SK")
 #'
-#' @family time
+#' @family datetime
 #' @family timezone
 #' @export
 stri_timezone_info <- function(tz=NULL, locale=NULL) {

@@ -69,15 +69,15 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
       r = region_cont.get(0).c_str();
 
    tz_enum = TimeZone::createTimeZoneIDEnumeration(UCAL_ZONE_TYPE_ANY, r, o, status);
-   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
    
    status = U_ZERO_ERROR;
    tz_enum->reset(status);
-   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
 
    status = U_ZERO_ERROR;
    R_len_t n = (R_len_t)tz_enum->count(status);
-   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
@@ -87,7 +87,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
       int len;
       status = U_ZERO_ERROR;
       const char* cur = tz_enum->next(&len, status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(cur, len, CE_UTF8));
    }
 
@@ -143,7 +143,7 @@ SEXP stri_timezone_set(SEXP tz) {
  *
  * @param tz single string or NULL
  * @param locale single string or NULL
- * @return character vector
+ * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
  */
@@ -168,7 +168,8 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale) {
    
    curtz->getID(val1);
    val1.toUTF8String(val2);
-   SET_VECTOR_ELT(vals, 0, Rf_mkString(val2.c_str()));
+   SET_VECTOR_ELT(vals, 0, Rf_allocVector(STRSXP, 1));
+   SET_STRING_ELT(VECTOR_ELT(vals, 0), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
    
    // ICU >= 52
 //   UnicodeString id = val1;
@@ -181,7 +182,8 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale) {
    curtz->getDisplayName(Locale::createFromName(qloc), val1);
    val2.clear();
    val1.toUTF8String(val2);
-   SET_VECTOR_ELT(vals, 1, Rf_mkString(val2.c_str()));
+   SET_VECTOR_ELT(vals, 1, Rf_allocVector(STRSXP, 1));
+   SET_STRING_ELT(VECTOR_ELT(vals, 1), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
    
    SET_VECTOR_ELT(vals, 2, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));
    SET_VECTOR_ELT(vals, 3, Rf_ScalarLogical((bool)curtz->useDaylightTime()));

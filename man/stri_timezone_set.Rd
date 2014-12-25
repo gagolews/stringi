@@ -25,6 +25,9 @@ in the \pkg{stringi} package,
 i.e. establishes the meaning of the ``\code{NULL} time zone'' argument
 of date/time processing functions. On the other hand, \code{stri_timezone_get}
 gets current default time zone.
+
+For more information on time zone representation in \pkg{ICU},
+see \code{\link{stri_timezone_list}}.
 }
 \details{
 Unless the default time zone has already been set using \code{stri_timezone_set},
@@ -45,7 +48,8 @@ stri_timezone_set(oldtz) # restore previous default time zone
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
 }
 \seealso{
-Other time: \code{\link{stri_timezone_info}};
+Other datetime: \code{\link{stri_datetime_symbols}};
+  \code{\link{stri_timezone_info}};
   \code{\link{stri_timezone_list}}
 
 Other timezone: \code{\link{stri_timezone_info}};

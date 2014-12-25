@@ -114,6 +114,7 @@ SEXP        stri_prepare_arg_integer(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
 SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
+const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname);
 SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname);
 double      stri__prepare_arg_double_1_notNA(SEXP x,  const char* argname);
 SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
@@ -329,6 +330,8 @@ SEXP stri_test_returnasis(SEXP x);
 SEXP stri_timezone_list(SEXP region, SEXP offset);
 SEXP stri_timezone_set(SEXP tz);
 SEXP stri_timezone_info(SEXP tz, SEXP locale);
+
+SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 
 // utils.cpp
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min);
