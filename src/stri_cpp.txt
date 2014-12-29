@@ -70,6 +70,7 @@ stri_stringi.cpp \
 stri_sub.cpp \
 stri_test.cpp \
 stri_time_zone.cpp \
+stri_time_calendar.cpp \
 stri_time_symbols.cpp \
 stri_trans_casemap.cpp \
 stri_trans_normalization.cpp \

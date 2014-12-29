@@ -333,6 +333,9 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale);
 
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 
+SEXP stri_datetime_now();
+SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP calendar);
+
 // utils.cpp
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min);
 

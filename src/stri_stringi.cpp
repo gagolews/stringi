@@ -59,6 +59,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_count_coll",                 stri_count_coll,                 3),
    STRI__MK_CALL("C_stri_count_regex",                stri_count_regex,                3),
    STRI__MK_CALL("C_stri_datetime_symbols",           stri_datetime_symbols,           3),
+   STRI__MK_CALL("C_stri_datetime_now",               stri_datetime_now,               0),
    STRI__MK_CALL("C_stri_detect_charclass",           stri_detect_charclass,           2),
    STRI__MK_CALL("C_stri_detect_coll",                stri_detect_coll,                3),
    STRI__MK_CALL("C_stri_detect_fixed",               stri_detect_fixed,               3),
