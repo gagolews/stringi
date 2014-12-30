@@ -38,7 +38,8 @@ stri_timezone_info()
 stri_timezone_info(locale="sk_SK")
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}};
+Other datetime: \code{\link{stri_datetime_add}},
+  \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},

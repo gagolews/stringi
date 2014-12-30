@@ -7,12 +7,13 @@
 stri_datetime_now()
 }
 \value{
-Returns an object of class \code{StringiTime},
-which inherits from \code{POSIXct} and \code{POSIX}.
-In fact, it is a numeric vector of length 1.
+Returns an object of class \code{POSIXst},
+which (for compatibility with other base R functions)
+also inherits from \code{POSIXct} and \code{POSIX}.
+In fact, it is a numeric vector.
 }
 \description{
-Get Current Date and Time
+Returns current date and time.
 }
 \details{
 The current date and time in \pkg{stringi} is represented as the (signed)
@@ -20,7 +21,8 @@ number of seconds since 1970-01-01, 00:00 UTC.
 UTC leap seconds are ignored.
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}};
+Other datetime: \code{\link{stri_datetime_add}},
+  \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};

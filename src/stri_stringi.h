@@ -110,6 +110,7 @@ SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
 SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);
 SEXP        stri_prepare_arg_string(SEXP x,           const char* argname);
 SEXP        stri_prepare_arg_double(SEXP x,           const char* argname);
+SEXP        stri_prepare_arg_POSIXct(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_integer(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname);
 SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
@@ -334,6 +335,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale);
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 
 SEXP stri_datetime_now();
+void stri__set_class_POSIXct(SEXP x);
 SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP calendar);
 
 // utils.cpp

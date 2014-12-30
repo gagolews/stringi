@@ -32,15 +32,19 @@
 #' @title
 #' Get Current Date and Time
 #' 
+#' @description
+#' Returns current date and time.
+#' 
 #' @details
 #' The current date and time in \pkg{stringi} is represented as the (signed)
 #' number of seconds since 1970-01-01, 00:00 UTC.
 #' UTC leap seconds are ignored. 
 #' 
 #' @return
-#' Returns an object of class \code{StringiTime},
-#' which inherits from \code{POSIXct} and \code{POSIX}.
-#' In fact, it is a numeric vector of length 1.
+#' Returns an object of class \code{POSIXst},
+#' which (for compatibility with other base R functions)
+#' also inherits from \code{POSIXct} and \code{POSIX}.
+#' In fact, it is a numeric vector.
 #' 
 #' @family datetime
 #' @export
@@ -52,23 +56,57 @@ stri_datetime_now <- function() {
 #' @title
 #' Date and Time Arithmetic
 #' 
+#' @description
+#' Modifies a date-time object by adding a specific amount of time units.
+#' 
 #' @details
-#' Vectorized over \code{time} and \code{delta}
+#' Vectorized over \code{time} and \code{value}.
 #' 
-#' t.b.d.
+#' These date-time arithmetic operations are performed under the current
+#' default time zone and locale. The \code{tzone} argument of \code{time}
+#' is ignored.
 #' 
-#' @param time
-#' @param delta
-#' @param units
-#' @param calendar 
+#' 
+#' Note that e.g. January, 31 + 1 month = Feburary, 28 or 29.
+#' 
+#' 
+#' 
+#' @param time a \code{POSIXct} object
+#' @param value integer vector; signed number of units to add to a given time
+#' @param units single string; one of \code{"years"}, \code{"months"},
+#' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
+#' \code{"seconds"}, or \code{"milliseconds"}
+#' @param calendar single string; currently only
+#' the \code{"gregorian"} calendar is supported
 #' 
 #' @return
-#' Returns an object of class \code{StringiTime},
-#' see \code{\link{stri_datetime_now}}.
+#' Returns an object of class \code{POSIXst},
+#' which (for compatibility with other base R functions)
+#' also inherits from \code{POSIXct} and \code{POSIX}.
+#' In fact, it is a numeric vector representing the number of seconds
+#' since the UNIX Epoch.
+#' 
+#' The replacement version of \code{stri_datetime_add} modifies
+#' the state of the \code{time} object.
+#' 
+#' 
+#' @examples
+#' x <- stri_datetime_now()
+#' stri_datetime_add(x, units="months") <- 2
+#' x
+#' stri_datetime_add(x, -2, units="months")
 #' 
 #' @family datetime
+#' @rdname stri_datetime_add
 #' @export
-stri_datetime_add <- function(time, delta, units="secs", calendar="gregorian") {
-   .Call(C_stri_datetime_now, time, delta, units, calendar)
+stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregorian") {
+   .Call(C_stri_datetime_add, time, value, units, calendar)
+}
+
+
+#' @rdname stri_datetime_add
+#' @export
+"stri_datetime_add<-" <- function(time, value, units="seconds", calendar="gregorian") {
+   .Call(C_stri_datetime_add, time, value, units, calendar)
 }
 

@@ -54,7 +54,8 @@ stri_timezone_list(region="PL")
 \url{http://userguide.icu-project.org/datetime/timezone}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}};
+Other datetime: \code{\link{stri_datetime_add}},
+  \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},

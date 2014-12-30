@@ -59,10 +59,12 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
    
    DateFormatSymbols::DtContextType context_val = DateFormatSymbols::STANDALONE;
    if (context_cur == 0)            context_val = DateFormatSymbols::FORMAT;
+   else Rf_error(MSG__INCORRECT_MATCH_OPTION, "context");
    
    DateFormatSymbols::DtWidthType width_val = DateFormatSymbols::WIDE;
         if (width_cur == 0)       width_val = DateFormatSymbols::ABBREVIATED;
    else if (width_cur == 2)       width_val = DateFormatSymbols::NARROW;
+   else Rf_error(MSG__INCORRECT_MATCH_OPTION, "width");
    
    UErrorCode status = U_ZERO_ERROR;
    DateFormatSymbols sym(Locale::createFromName(qloc), status);

@@ -40,7 +40,8 @@ and \code{width} - for  date formatting width.
 \url{http://userguide.icu-project.org/formatparse/datetime}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}};
+Other datetime: \code{\link{stri_datetime_add}},
+  \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
