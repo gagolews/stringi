@@ -48,7 +48,8 @@ stri_timezone_set(oldtz) # restore previous default time zone
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}};
+Other datetime: \code{\link{stri_datetime_add}},
+  \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_info}};

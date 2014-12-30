@@ -277,6 +277,46 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 }
 
 
+/**&POSIXt
+ *
+ * If the object cannot be coerced, then an error will be generated
+ *
+ * WARNING: this fuction is allowed to call the error() function.
+ * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
+ *
+ *
+ * @param x a numeric vector with class POSIXct
+ * @param argname argument name (message formatting)
+ * @return numeric vector
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2014-12-30)
+ */
+SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
+{
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+   
+   if (Rf_inherits(x, "POSIXlt") || Rf_inherits(x, "Date")) {
+      PROTECT(x = Rf_eval(Rf_lang2(Rf_install("as.POSIXct"), x), R_GlobalEnv));
+   }
+   else
+      PROTECT(x);
+   
+   if (!Rf_inherits(x, "POSIXct")) {
+      Rf_error(MSG__ARG_EXPECTED_POSIXct, argname);
+   }
+   
+   SEXP attrib_class, attrib_tzone;
+   PROTECT(attrib_class = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("class"))));
+   PROTECT(attrib_tzone = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("tzone"))));
+   PROTECT(x = stri_prepare_arg_double(x, argname));
+   Rf_setAttrib(x, Rf_ScalarString(Rf_mkChar("class")), attrib_class);
+   Rf_setAttrib(x, Rf_ScalarString(Rf_mkChar("tzone")), attrib_tzone);
+   UNPROTECT(4);
+   return x;
+}
+
+
 /**
  * Prepare integer vector argument
  *

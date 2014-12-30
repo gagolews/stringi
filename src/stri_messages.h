@@ -230,6 +230,9 @@
 
 #define MSG__ARG_EXPECTED_NUMERIC \
    "argument `%s` should be a numeric vector (or an object coercible to)"
+   
+#define MSG__ARG_EXPECTED_POSIXct \
+   "argument `%s` should be an object of class POSIXct (or an object coercible to)"
 
 #define MSG__ARG_EXPECTED_STRING_NO_COERCION \
    "argument `%s` should be a character vector"
