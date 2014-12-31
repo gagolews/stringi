@@ -269,18 +269,16 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurrences, pattern_cur_groups+1));
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-      for (R_len_t j = 0; iter != occurrences.end(); ++j) {
-         pair<R_len_t, R_len_t> curo = *iter;
-         SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
+      auto iter = occurrences.cbegin();
+      for (R_len_t j = 0; iter != occurrences.cend(); ++j) {
+         SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
          ++iter;
-         for (R_len_t k = 0; iter != occurrences.end() && k < pattern_cur_groups; ++iter, ++k) {
-            curo = *iter;
-            if (curo.first < 0 || curo.second < 0)
+         for (R_len_t k = 0; iter != occurrences.cend() && k < pattern_cur_groups; ++iter, ++k) {
+            if ((*iter).first < 0 || (*iter).second < 0)
                SET_STRING_ELT(cur_res, j+(k+1)*noccurrences, cg_missing);
             else
                SET_STRING_ELT(cur_res, j+(k+1)*noccurrences,
-                  Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
+                  Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
          }
       }
       SET_VECTOR_ELT(ret, i, cur_res);

@@ -329,8 +329,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 #endif
 
       std::vector<R_len_t> end_pos_orig(nwords);
-      deque<R_len_t>::iterator iter = ++(occurrences_list.begin());
-      for (R_len_t j = 0; iter != occurrences_list.end(); ++iter, ++j) {
+      auto iter = ++(occurrences_list.cbegin());
+      for (R_len_t j = 0; iter != occurrences_list.cend(); ++iter, ++j) {
          end_pos_orig[j] = (*iter); // this is a UTF-8 index
       }
 
@@ -395,8 +395,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       R_len_t last_pos = 0;
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, nlines));
-      deque<R_len_t>::iterator iter_wrap = wrap_after.begin();
-      for (R_len_t u = 0; iter_wrap != wrap_after.end(); ++iter_wrap, ++u) {
+      auto iter_wrap = wrap_after.cbegin();
+      for (R_len_t u = 0; iter_wrap != wrap_after.cend(); ++iter_wrap, ++u) {
          R_len_t wrap_after_cur = *iter_wrap;
          R_len_t cur_pos = end_pos_trim[wrap_after_cur];
 
