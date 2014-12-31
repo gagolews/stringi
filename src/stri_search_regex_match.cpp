@@ -269,7 +269,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocMatrix(STRSXP, noccurrences, pattern_cur_groups+1));
-      auto iter = occurrences.cbegin();
+      auto iter = occurrences./*c*/begin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++j) {
          SET_STRING_ELT(cur_res, j, Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
          ++iter;

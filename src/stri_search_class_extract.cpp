@@ -236,7 +236,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
 
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-      auto iter = occurrences.cbegin();
+      auto iter = occurrences./*c*/begin();
       for (R_len_t f = 0; iter != occurrences.cend(); ++iter, ++f) {
          SET_STRING_ELT(cur_res, f,
             Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));

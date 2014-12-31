@@ -438,7 +438,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //      sort(queues[i].begin(), queues[i].end());
 //
 //      R_len_t bufsize_cur = str_cont.get(i).length();
-//      auto iter = queues[i].cbegin();
+//      auto iter = queues[i]./*c*/begin();
 //
 //      StriInterval<R_len_t> last_int = *(iter++);
 //      bufsize_cur = bufsize_cur - pattern_cont.get(last_int.data).length()
@@ -477,7 +477,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //      R_len_t str_cur_n = str_cont.get(i).length();
 //
 //      R_len_t last_b = 0;
-//      for (auto iter = queues[i].cbegin();
+//      for (auto iter = queues[i]./*c*/begin();
 //               iter != queues[i].cend(); ++iter) {
 //         StriInterval<R_len_t> cur_int = *iter;
 //         memcpy(curbuf+bufused, str_cur_s+last_b, cur_int.a-last_b);
