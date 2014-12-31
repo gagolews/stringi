@@ -106,6 +106,6 @@ stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregori
 
 #' @rdname stri_datetime_add
 #' @export
-"stri_datetime_add<-" <- function(time, value, units="seconds", calendar="gregorian") {
+"stri_datetime_add<-" <- function(time, units="seconds", calendar="gregorian", value) {
    .Call(C_stri_datetime_add, time, value, units, calendar)
 }
