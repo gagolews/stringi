@@ -227,7 +227,7 @@
 //      }
 //
 //      std::string str_cur(str_cont.get(i).c_str());
-//      auto it = dict.find(str_cur);
+//      boost::unordered_map<std::string, R_len_t>::iterator it = dict.find(str_cur);
 //      if (it != dict.end())
 //         ret_tab[i] = (*it).second;
 //      else

@@ -171,13 +171,14 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
 
       R_len_t noccurrences = (R_len_t)fields.size();
       StriContainerUTF16 out_cont(noccurrences);
-      auto iter = fields.cbegin();
-      for (k = 0; iter != fields.cend(); ++iter, ++k) {
-         if ((*iter).second == (*iter).first && omit_empty_cont.isNA(i))
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
+      for (k = 0; iter != fields.end(); ++iter, ++k) {
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
             out_cont.setNA(k);
          else
             out_cont.getWritable(k).setTo(str_cont.get(i),
-               (*iter).first, (*iter).second-(*iter).first);
+               curoccur.first, curoccur.second-curoccur.first);
       }
       SET_VECTOR_ELT(ret, i, out_cont.toR());
    }

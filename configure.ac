@@ -87,11 +87,11 @@ fi
 AC_MSG_RESULT($R_PATH)
 
 CC=`"${R_PATH}" CMD config CC`
-CXX=`"${R_PATH}" CMD config CXX1X`
+CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX1XFLAGS`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 
 AC_LANG(C)

@@ -119,10 +119,11 @@ SEXP stri_split_lines1(SEXP str)
 
    SEXP ans;
    STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
-   auto iter = occurrences.cbegin();
-   for (R_len_t k = 0; iter != occurrences.cend(); ++iter, ++k) {
+   deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+   for (R_len_t k = 0; iter != occurrences.end(); ++iter, ++k) {
+      pair<R_len_t, R_len_t> curoccur = *iter;
       SET_STRING_ELT(ans, k,
-         Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
+         Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
    }
    STRI__UNPROTECT_ALL
    return ans;
@@ -264,10 +265,11 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
 
-      auto iter = occurrences.cbegin();
-      for (R_len_t l = 0; iter != occurrences.cend(); ++iter, ++l) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t l = 0; iter != occurrences.end(); ++iter, ++l) {
+         pair<R_len_t, R_len_t> curoccur = *iter;
          SET_STRING_ELT(ans, l,
-            Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
+            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
