@@ -172,7 +172,7 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      auto iter = fields./*c*/begin();
+      auto iter = fields.cbegin();
       for (k = 0; iter != fields.cend(); ++iter, ++k) {
          pair<R_len_t, R_len_t> curoccur = *iter;
          if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))

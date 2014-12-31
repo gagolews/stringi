@@ -130,7 +130,7 @@ SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SE
 
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
-      auto iter = occurrences./*c*/begin();
+      auto iter = occurrences.cbegin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
          SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
             (*iter).second-(*iter).first, CE_UTF8));

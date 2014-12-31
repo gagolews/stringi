@@ -230,7 +230,7 @@ SEXP stri_extract_all_coll(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_m
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
       StriContainerUTF16 out_cont(noccurrences);
-      auto iter = occurrences./*c*/begin();
+      auto iter = occurrences.cbegin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
          out_cont.getWritable(j).setTo(str_cont.get(i), (*iter).first, (*iter).second);
       }
