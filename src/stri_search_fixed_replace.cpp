@@ -438,12 +438,12 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //      sort(queues[i].begin(), queues[i].end());
 //
 //      R_len_t bufsize_cur = str_cont.get(i).length();
-//      deque< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
+//      auto iter = queues[i].cbegin();
 //
 //      StriInterval<R_len_t> last_int = *(iter++);
 //      bufsize_cur = bufsize_cur - pattern_cont.get(last_int.data).length()
 //                                + replacement_cont.get(last_int.data).length();
-//      for (; iter != queues[i].end(); ++iter) {
+//      for (; iter != queues[i].cend(); ++iter) {
 //         StriInterval<R_len_t> cur_int = *iter;
 //         if (cur_int.a < last_int.b)
 //            throw StriException(MSG__OVERLAPPING_PATTERN_UNSUPPORTED);
@@ -477,8 +477,8 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //      R_len_t str_cur_n = str_cont.get(i).length();
 //
 //      R_len_t last_b = 0;
-//      for (deque< StriInterval<R_len_t> >::iterator iter = queues[i].begin();
-//               iter != queues[i].end(); ++iter) {
+//      for (auto iter = queues[i].cbegin();
+//               iter != queues[i].cend(); ++iter) {
 //         StriInterval<R_len_t> cur_int = *iter;
 //         memcpy(curbuf+bufused, str_cur_s+last_b, cur_int.a-last_b);
 //         bufused += (cur_int.a-last_b);

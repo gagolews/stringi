@@ -458,16 +458,16 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
       }
 
-      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+      for (auto it=order.cbegin(); it!=order.cend(); ++it, ++j)
          ret_tab[j] = (*it)+1; // 1-based indices
 
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
       }
    }
@@ -477,16 +477,16 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             SET_STRING_ELT(ret, j, NA_STRING);
       }
 
-      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+      for (auto it=order.cbegin(); it!=order.cend(); ++it, ++j)
          SET_STRING_ELT(ret, j, str_cont.toR(*it));
 
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             SET_STRING_ELT(ret, j, NA_STRING);
       }
    }
@@ -549,7 +549,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
          }
       }
       else {
-         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+         auto result = uniqueset.insert(i);
          if (result.second) {
             temp.push_back(str_cont.toR(i));
          }
@@ -559,7 +559,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
    R_len_t i = 0;
-   for (deque<SEXP>::iterator it = temp.begin(); it != temp.end(); it++) {
+   for (auto it = temp.cbegin(); it != temp.cend(); it++) {
       SET_STRING_ELT(ret, i++, *it);
    }
 
@@ -623,7 +623,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
                was_na = true;
          }
          else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            auto result = uniqueset.insert(i);
             ret_tab[i] = !result.second;
          }
       }
@@ -636,7 +636,7 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
                was_na = true;
          }
          else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            auto result = uniqueset.insert(i);
             ret_tab[i] = !result.second;
          }
       }
@@ -707,7 +707,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
             }
          }
          else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            auto result = uniqueset.insert(i);
             if (!result.second) {
                ret_tab[0] = i+1;
                break;
@@ -726,7 +726,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
             }
          }
          else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            auto result = uniqueset.insert(i);
             if (!result.second) {
                ret_tab[0] = i+1;
                break;

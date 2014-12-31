@@ -127,8 +127,8 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
       UnicodeString ans(str_cont.get(i).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
       R_len_t jlast = 0;
       R_len_t anslast = 0;
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-      for (; iter != occurrences.end(); ++iter) {
+      auto iter = occurrences.cbegin();
+      for (; iter != occurrences.cend(); ++iter) {
          pair<R_len_t, R_len_t> match = *iter;
          ans.replace(anslast, match.first-jlast, str_cont.get(i), jlast, match.first-jlast);
          anslast += match.first-jlast;
@@ -246,12 +246,11 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
          UnicodeString ans(str_cont.get(j).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
          R_len_t jlast = 0;
          R_len_t anslast = 0;
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-         for (; iter != occurrences.end(); ++iter) {
-            pair<R_len_t, R_len_t> match = *iter;
-            ans.replace(anslast, match.first-jlast, str_cont.get(j), jlast, match.first-jlast);
-            anslast += match.first-jlast;
-            jlast = match.second;
+         auto iter = occurrences.cbegin();
+         for (; iter != occurrences.cend(); ++iter) {
+            ans.replace(anslast, (*iter).first-jlast, str_cont.get(j), jlast, (*iter).first-jlast);
+            anslast += (*iter).first-jlast;
+            jlast = (*iter).second;
             ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
             anslast += replacement_cur_n;
          }
