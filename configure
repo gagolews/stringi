@@ -1328,7 +1328,7 @@ Optional Features:
                           such a case ICU4C will be compiled from sources.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
                           /for stringi developers/
-  --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
+  --enable-gcc-pedantic   Enable -Wall -Wextra -pedantic when compiling
                           stringi with gcc/g++ /for stringi developers/
 
 Optional Packages:
@@ -3607,8 +3607,8 @@ if test "$enable_gcc_debug" == "yes"; then
 fi
 
 if test "$enable_gcc_pedantic" == "yes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99 -ansi"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -ansi"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
 
 
