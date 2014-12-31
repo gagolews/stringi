@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -295,17 +295,17 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
 {
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
-   
+
    if (Rf_inherits(x, "POSIXlt") || Rf_inherits(x, "Date")) {
       PROTECT(x = Rf_eval(Rf_lang2(Rf_install("as.POSIXct"), x), R_GlobalEnv));
    }
    else
       PROTECT(x);
-   
+
    if (!Rf_inherits(x, "POSIXct")) {
       Rf_error(MSG__ARG_EXPECTED_POSIXct, argname);
    }
-   
+
    SEXP attrib_class, attrib_tzone;
    PROTECT(attrib_class = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("class"))));
    PROTECT(attrib_tzone = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("tzone"))));
@@ -733,7 +733,6 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
 }
 
 
-
 /** Prepare double argument - one value, not NA [no re-encoding done!!!]
  *
  * If there are 0 elements -> error
@@ -839,7 +838,6 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
 }
 
 
-
 /**
  * Prepare character vector argument that will be used to choose a time zone
  *
@@ -861,7 +859,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault)
 {
    if (allowdefault && isNull(tz)) {
-      return TimeZone::createDefault();   
+      return TimeZone::createDefault();
    }
    else {
       PROTECT(tz = stri_prepare_arg_string_1(tz, argname));
@@ -872,7 +870,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
       if (LENGTH(STRING_ELT(tz, 0)) == 0) {
          UNPROTECT(1);
          if (allowdefault)
-            return TimeZone::createDefault();  
+            return TimeZone::createDefault();
          else
             Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
       }
@@ -892,7 +890,6 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
    // won't come here anyway
    return NULL; // avoid compiler warning
 }
-
 
 
 /**

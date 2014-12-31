@@ -1,5 +1,5 @@
 ## mod of rbenchmark::benchmark by Wacek Kusnierczyk <mailto:waku@idi.ntnu.no>
-## mod Copyright (c) 2013-2014, Marek Gagolewski
+## mod Copyright (C) 2013-2015, Marek Gagolewski
 
 benchmark2 <- function (...,
    replications = 100L, environment = parent.frame(), warmup = 2L)

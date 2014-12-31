@@ -1,7 +1,7 @@
 ** The R and C++ source code of the stringi package **
 ** [including src/stri_* files]                     **
 
-Copyright (c) 2013-2014 Marek Gagolewski and Bartek Tartanus
+Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
 
 
 ** The ICU4C library   **

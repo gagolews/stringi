@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+## Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -34,15 +34,15 @@
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
-#' 
-#' A time zone represents an offset applied to Greenwich Mean Time (GMT) 
-#' to obtain local time (GMT is similar, but not precisely identical, 
+#'
+#' A time zone represents an offset applied to Greenwich Mean Time (GMT)
+#' to obtain local time (GMT is similar, but not precisely identical,
 #' to Universal Coordinated Time, or UTC. In \pkg{ICU} the two terms
-#' are used interchangeably since \pkg{ICU} does not concern itself with 
+#' are used interchangeably since \pkg{ICU} does not concern itself with
 #' either leap seconds or historical behavior).
-#' The offset might vary throughout the year, 
-#' if daylight savings time (DST) is used, or might be the same all year long. 
-#' Typically, regions closer to the equator do not use DST. 
+#' The offset might vary throughout the year,
+#' if daylight savings time (DST) is used, or might be the same all year long.
+#' Typically, regions closer to the equator do not use DST.
 #' If DST is in use, then specific rules define the point at which
 #'  the offset changes and the amount by which it changes.
 #'
@@ -51,31 +51,31 @@
 #' only time zone IDs with a given raw offset from GMT are given
 #' and/or time zones corresponding to a given region are provided.
 #' Note that the effect of daylight savings time is ignored.
-#' 
+#'
 #' @param offset single numeric value;
 #' a given raw offset from GMT, in hours
 #' @param region single string;
 #' a ISO 3166 two-letter country code or UN M.49 three-digit area code
-#' 
+#'
 #' @return Returns a character vector.
 #'
 #' @references
 #' \emph{TimeZone} class -- ICU API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
-#' 
+#'
 #' \emph{ICU 4.8 Time Zone Names}.
 #' \url{http://site.icu-project.org/design/formatting/timezone/icu-4-8-time-zone-names}
-#' 
+#'
 #' \emph{ICU TimeZone classes} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/datetime/timezone}
-#' 
+#'
 #' @examples
 #' stri_timezone_list()
 #' stri_timezone_list(offset=1)
 #' stri_timezone_list(offset=5.5)
 #' stri_timezone_list(offset=5.75)
 #' stri_timezone_list(region="PL")
-#' 
+#'
 #' @family datetime
 #' @family timezone
 #' @export
@@ -93,7 +93,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' i.e. establishes the meaning of the ``\code{NULL} time zone'' argument
 #' of date/time processing functions. On the other hand, \code{stri_timezone_get}
 #' gets current default time zone.
-#' 
+#'
 #' For more information on time zone representation in \pkg{ICU},
 #' see \code{\link{stri_timezone_list}}.
 #'
@@ -112,7 +112,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #'
 #' \code{stri_timezone_get} returns a single string
 #' with the current default time zone.
-#' 
+#'
 #' @references
 #' \emph{TimeZone} class -- ICU API Documentation,
 #' \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1TimeZone.html}
@@ -123,7 +123,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' # ... some time zone-dependent operations
 #' stri_timezone_set(oldtz) # restore previous default time zone
 #' }
-#' 
+#'
 #' @export
 #' @family datetime
 #' @family timezone
@@ -152,7 +152,7 @@ stri_timezone_set <- function(tz) {
 #' @details
 #' With this function you may obtain some basic information
 #' on any supported time zone.
-#' 
+#'
 #' For more information on time zone representation in \pkg{ICU},
 #' see \code{\link{stri_timezone_list}}.
 #'
@@ -170,7 +170,7 @@ stri_timezone_set <- function(tz) {
 #' \item \code{UsesDaylightTime} (states whether a time zone uses daylight savings time
 #'  in the current Gregorian calendar year).
 #' }
-#' 
+#'
 #' @examples
 #' stri_timezone_info()
 #' stri_timezone_info(locale="sk_SK")
@@ -181,4 +181,3 @@ stri_timezone_set <- function(tz) {
 stri_timezone_info <- function(tz=NULL, locale=NULL) {
    .Call(C_stri_timezone_info, tz, locale)
 }
-

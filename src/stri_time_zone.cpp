@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,23 +54,23 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
    StriContainerUTF8 region_cont(region, 1);
 
    UErrorCode status = U_ZERO_ERROR;
-   
+
    int32_t offset_hours = 0;
    const int32_t* o = NULL;
    const char* r = NULL;
-   
+
    if (!ISNA(REAL(offset)[0])) {
       // 0.5 and 0.75 are represented exactly within the double type
       offset_hours = (int32_t)(REAL(offset)[0]*1000.0*3600.0);
       o = &offset_hours;
    }
-   
+
    if (!region_cont.isNA(0))
       r = region_cont.get(0).c_str();
 
    tz_enum = TimeZone::createTimeZoneIDEnumeration(UCAL_ZONE_TYPE_ANY, r, o, status);
    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
-   
+
    status = U_ZERO_ERROR;
    tz_enum->reset(status);
    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
@@ -100,7 +100,6 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
 }
 
 
-
 ///** Get default time zone
 // *
 // * @return single string
@@ -113,7 +112,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
 //   UnicodeString id;
 //   curtz->getID(id);
 //   delete curtz;
-//   
+//
 //   std::string id2;
 //   id.toUTF8String(id2);
 //
@@ -130,11 +129,11 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
  */
 SEXP stri_timezone_set(SEXP tz) {
    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", /*allowdefault*/false);
-   
-   /* This call adopts the TimeZone object passed in; 
+
+   /* This call adopts the TimeZone object passed in;
       the client is no longer responsible for deleting it. */
    TimeZone::adoptDefault(curtz);
-   
+
    return R_NilValue;
 }
 
@@ -150,27 +149,27 @@ SEXP stri_timezone_set(SEXP tz) {
 SEXP stri_timezone_info(SEXP tz, SEXP locale) {
    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", /*allowdefault*/true);
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
-   
-   // ID -> UnicodeString getID (UnicodeString &ID) 
-   // Name -> UnicodeString &    getDisplayName (const Locale &locale, UnicodeString &result) const 
+
+   // ID -> UnicodeString getID (UnicodeString &ID)
+   // Name -> UnicodeString &    getDisplayName (const Locale &locale, UnicodeString &result) const
    // RawOffset -> int getRawOffset (void) const =0 [ms]
    // UsesDaylightTime -> UBool useDaylightTime (void) const =0
-   
+
    const R_len_t infosize = 4;
    SEXP vals;
 
    PROTECT(vals = Rf_allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i)
       SET_VECTOR_ELT(vals, i, R_NilValue);
-      
+
    UnicodeString val1;
    std::string val2;
-   
+
    curtz->getID(val1);
    val1.toUTF8String(val2);
    SET_VECTOR_ELT(vals, 0, Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(VECTOR_ELT(vals, 0), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
-   
+
    // ICU >= 52
 //   UnicodeString id = val1;
 //   UErrorCode err = U_ZERO_ERROR;
@@ -178,16 +177,16 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale) {
 //   val2.clear();
 //   val1.toUTF8String(val2);
 //   SET_VECTOR_ELT(vals, 2, Rf_mkString(val2.c_str()));
-   
+
    curtz->getDisplayName(Locale::createFromName(qloc), val1);
    val2.clear();
    val1.toUTF8String(val2);
    SET_VECTOR_ELT(vals, 1, Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(VECTOR_ELT(vals, 1), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
-   
+
    SET_VECTOR_ELT(vals, 2, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));
    SET_VECTOR_ELT(vals, 3, Rf_ScalarLogical((bool)curtz->useDaylightTime()));
-      
+
    delete curtz;
    stri__set_names(vals, 4, "ID", "Name", /*"WindowsID",*/ "RawOffset", "UsesDaylightTime");
    UNPROTECT(1);

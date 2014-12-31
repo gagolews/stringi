@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -230,7 +230,7 @@
 
 #define MSG__ARG_EXPECTED_NUMERIC \
    "argument `%s` should be a numeric vector (or an object coercible to)"
-   
+
 #define MSG__ARG_EXPECTED_POSIXct \
    "argument `%s` should be an object of class POSIXct (or an object coercible to)"
 

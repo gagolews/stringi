@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+## Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@
 #' \code{stri_cmp_eq} tests whether two corresponding strings
 #' consist of exactly the same code points, while \code{stri_cmp_neq} allow
 #' to check whether there is any difference between them. These are
-#' locale-independent operations: for natural language text processing, 
+#' locale-independent operations: for natural language text processing,
 #' in which the notion of canonical equivalence is more valid, this might
 #' not be exactly what you are looking for, see Examples.
 #' By the way, note that \pkg{stringi} always silently removes UTF-8

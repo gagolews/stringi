@@ -12,7 +12,7 @@
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`.
 
-   * [BUGFIX] #132: incorrect behavior in stri_locate_regex for match
+   * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for match
      of zero lengths
 
 TO BE DONE:
@@ -24,6 +24,8 @@ TO BE DONE:
         * stri_timezone_set(), stri_timezone_get() - manage current default tz
         * stri_timezone_info() - basic information on a given time zone
         * stri_datetime_symbols() - localizable date-time formatting data
+        * stri_datetime_now() - ...
+        * stri_datetime_add() - ...
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 

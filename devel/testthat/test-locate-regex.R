@@ -37,9 +37,9 @@ test_that("stri_locate_all_regex", {
    expect_equivalent(stri_locate_all_regex("aabdaaaba", "(a+b)+"), list(matrix(c(1,5,3,8),ncol=2)))
    expect_equivalent(stri_locate_all_regex("aabdaacba", "(a+b)+"), list(matrix(c(1,3))))
    expect_equivalent(stri_locate_all_regex("ababdacba", "(a+b)+"), list(matrix(c(1,4))))
-   
-   
-   expect_equivalent(stri_locate_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), 
+
+
+   expect_equivalent(stri_locate_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       list(matrix(ncol=2, c(1,2,3,4,0,2,2,3)), matrix(ncol=2, c(1,2,3,0,1,2)))) # match of zero length
    expect_equivalent(stri_locate_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"),
       list(matrix(ncol=2, c(3L, 2L)), matrix(ncol=2, c(NA, NA)))) # match of zero length:
@@ -73,11 +73,11 @@ test_that("stri_locate_first_regex", {
    expect_equivalent(stri_locate_first_regex("aabdaaaba", "(a+b)+"), matrix(c(1,3)))
    expect_equivalent(stri_locate_first_regex("aabdaacba", "(a+b)+"), matrix(c(1,3)))
    expect_equivalent(stri_locate_first_regex("ababdacba", "(a+b)+"), matrix(c(1,4)))
-   
-   
-   expect_equivalent(stri_locate_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), 
+
+
+   expect_equivalent(stri_locate_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       matrix(ncol=2, c(1,1,0,0))) # match of zero length
-   expect_equivalent(stri_locate_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), 
+   expect_equivalent(stri_locate_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"),
       matrix(ncol=2, c(3, NA, 2, NA))) # match of zero length:
 
 })
@@ -115,8 +115,8 @@ test_that("stri_locate_last_regex", {
    expect_equivalent(stri_locate_last_regex("aabdaaaba", "(a+b)+"), matrix(c(5,8)))
    expect_equivalent(stri_locate_last_regex("aabdaacba", "(a+b)+"), matrix(c(1,3)))
    expect_equivalent(stri_locate_last_regex("ababdacba", "(a+b)+"), matrix(c(1,4)))
-   
-   expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), 
+
+   expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       matrix(ncol=2, c(4,3,3,2))) # match of zero length
    expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), matrix(ncol=2, c(3, NA, 2, NA))) # match of zero length:
 

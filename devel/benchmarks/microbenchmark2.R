@@ -1,4 +1,4 @@
-## Copyright (c) 2013-2014, Marek Gagolewski
+## Copyright (C) 2013-2015, Marek Gagolewski
 
 microbenchmark2 <- function(...) {
 

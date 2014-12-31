@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -224,7 +224,7 @@ struct StriWrapLineStart {
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new args: indent, exdent, prefix, initial
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-19)
  *    #133 allow width <= 0
  */

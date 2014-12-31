@@ -18,7 +18,7 @@ test_that("stri_detect_regex", {
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:3], LETTERS[1:5]), c(T,T,T,F,F)))
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:5]), c(T,T,F,F,F)))
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:4], LETTERS[1:5]), c(T,T,T,T,F)))
-   
+
    expect_identical(stri_detect_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c(TRUE, TRUE)) # match of zero length
    expect_identical(stri_detect_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), c(TRUE, FALSE)) # match of zero length:
 
