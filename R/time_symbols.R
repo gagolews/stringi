@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+## Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,21 +30,21 @@
 
 
 #' @title
-#' List Localizable Date-Time Formatting Data 
+#' List Localizable Date-Time Formatting Data
 #'
 #' @description
 #' Returns a list of all localizable date-time formatting data,
 #' including month and weeday names, localized AM/PM strings, etc.
-#' 
+#'
 #' \code{context} stands for a selector for date formatting context
 #' and \code{width} - for  date formatting width.
 #'
-#' 
+#'
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier.
 #' @param context single string; one of: \code{"format"}, \code{"standalone"}.
 #' @param width single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}.
-#' 
+#'
 #' @return Returns a list with the following named components:
 #' \enumerate{
 #' \item \code{Months} - month names,
@@ -57,10 +57,10 @@
 #' @references
 #' \emph{DateFormatSymbols} class -- ICU API Documentation,
 #' \url{http://icu-project.org/apiref/icu4c/classicu_1_1DateFormatSymbols.html}
-#' 
+#'
 #' \emph{Formatting Dates and Times} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/formatparse/datetime}
-#' 
+#'
 #' @family datetime
 #' @export
 stri_datetime_symbols <- function(locale=NULL, context="standalone", width="wide") {

@@ -17,7 +17,7 @@ test_that("stri_timezone_list", {
    expect_true("America/Los_Angeles" %in% stri_timezone_list(offset=-8))
    expect_true("UTC" %in% stri_timezone_list(offset=0))
    expect_true("Europe/Warsaw" %in% stri_timezone_list("pl"))
-   
+
    for (i in (-12):14)
       expect_true(length(stri_timezone_list(offset=i))>0)
 })
@@ -25,7 +25,7 @@ test_that("stri_timezone_list", {
 
 test_that("stri_timezone_get/set", {
    expect_true(stri_length(ctz <- stri_timezone_get()) > 0)
-   
+
    expect_true(ctz == stri_timezone_set("Europe/Tallinn"))
    expect_true(stri_timezone_get() == "Europe/Tallinn")
    expect_true(stri_timezone_set(ctz) == "Europe/Tallinn")
@@ -36,7 +36,7 @@ test_that("stri_timezone_get/set", {
 test_that("stri_timezone_info", {
    expect_equivalent(stri_timezone_info(tz="Europe/Warsaw", locale="en_GB"),
       list("Europe/Warsaw", "Central European Standard Time", 1, TRUE))
-   
+
    expect_equivalent(stri_timezone_info(tz="Asia/Kathmandu", locale="pl_PL"),
       list("Asia/Kathmandu", "Nepal", 5.75, FALSE))
 })

@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,7 +72,7 @@ SEXP stri_datetime_now()
 
 
 /** Date-time artithmetic
- * 
+ *
  * @param time
  * @param value
  * @param units
@@ -93,19 +93,19 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
       UNPROTECT(3);
       return ret;
    }
-   
+
    const char* units_val = stri__prepare_arg_string_1_notNA(units, "units");
    const char* units_opts[] = {"years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds", NULL};
    int units_cur = stri__match_arg(units_val, units_opts);
-   
+
 //   const char* calendar_val = stri__prepare_arg_string_1_notNA(calendar, "calendar");
 //   const char* calendar_opts[] = {"gregorian", NULL};
 //   int calendar_cur = stri__match_arg(calendar_val, calendar_opts);
-   
+
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerDouble time_cont(time, vectorize_length);
    StriContainerInteger value_cont(value, vectorize_length);
-   
+
    UCalendarDateFields units_field;
    switch (units_cur) {
       case 0: units_field = UCAL_YEAR;                   break;
@@ -118,14 +118,14 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
       case 7: units_field = UCAL_MILLISECOND;            break;
       default: throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
    }
-   
+
    // Question: add locale?
    // Question: consider tzone?
-      
+
    UErrorCode status = U_ZERO_ERROR;
    GregorianCalendar cal(status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
    SEXP ret;
    PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
    double* ret_val = REAL(ret);
@@ -137,20 +137,19 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
       status = U_ZERO_ERROR;
       cal.setTime((UDate)(time_cont.get(i)*1000.0), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      
+
       status = U_ZERO_ERROR;
       cal.add(units_field, value_cont.get(i), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      
+
       status = U_ZERO_ERROR;
       ret_val[i] = ((double)cal.getTime(status))/1000.0;
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
-   
+
    Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
    stri__set_class_POSIXct(ret);
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-

@@ -11,8 +11,8 @@ test_that("stri_count_regex", {
    expect_identical(stri_count_regex("aba","abcdef"),0L)
    suppressWarnings(expect_identical(stri_count_regex("",""), NA_integer_))
    suppressWarnings(expect_identical(stri_count_regex("a",""), NA_integer_))
-   
-   
+
+
    expect_identical(stri_count_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c(4L, 3L)) # match of zero length
    expect_identical(stri_count_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), c(1L, 0L)) # match of zero length:
 

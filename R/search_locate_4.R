@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2014, Marek Gagolewski and Bartek Tartanus
+## Copyright (C) 2013-2015, Marek Gagolewski and Bartek Tartanus
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -87,8 +87,8 @@
 #' two columns, giving the start and end positions of the first
 #' or the last matches, respectively, and two \code{NA}s if and
 #' only if they are not found.
-#' 
-#' For \code{stri_locate_*_regex}, if the match is of length 0, 
+#'
+#' For \code{stri_locate_*_regex}, if the match is of length 0,
 #' \code{end} will be one character less than \code{start}.
 #'
 #' @examples

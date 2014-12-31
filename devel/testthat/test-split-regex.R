@@ -18,11 +18,11 @@ test_that("stri_split_regex", {
    expect_identical(stri_split_regex("ala ma kota 1 a","[a-z] [a-z]+"),list(c("al"," kota 1 a")))
    expect_identical(stri_split_regex("ala ma kota 1 a","[a-z] [1-9]"),list(c("ala ma kot"," a")))
    expect_identical(stri_split_regex("ala ma kota 1 a","[a-z] [1-9]+"),list(c("ala ma kot"," a")))
-   
-   
-   expect_identical(stri_split_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), 
+
+
+   expect_identical(stri_split_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       list(c("", "\u0105", "", "\u0107", ""), c("", "\u0105", "\u0107", ""))) # match of zero length
-   expect_identical(stri_split_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), 
+   expect_identical(stri_split_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"),
       list(c("\u0105\u0106", "\u0107"), "\u0105\u0107")) # match of zero length:
 
    # n
