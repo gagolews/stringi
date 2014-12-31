@@ -237,10 +237,11 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* ans_tab = INTEGER(ans);
-      auto iter = occurrences.cbegin();
-      for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
-         ans_tab[j]              = (*iter).first;
-         ans_tab[j+noccurrences] = (*iter).second;
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+         pair<R_len_t, R_len_t> match = *iter;
+         ans_tab[j]              = match.first;
+         ans_tab[j+noccurrences] = match.second;
       }
 
       // Adjust UChar index -> UChar32 index (1-2 byte UTF16 to 1 byte UTF32-code points)

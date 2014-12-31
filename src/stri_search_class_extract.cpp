@@ -236,10 +236,11 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
 
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-      auto iter = occurrences.cbegin();
-      for (R_len_t f = 0; iter != occurrences.cend(); ++iter, ++f) {
+      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+      for (R_len_t f = 0; iter != occurrences.end(); ++iter, ++f) {
+         pair<R_len_t, R_len_t> curo = *iter;
          SET_STRING_ELT(cur_res, f,
-            Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
+            Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, cur_res);
       STRI__UNPROTECT(1)

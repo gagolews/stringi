@@ -164,14 +164,15 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      auto iter = fields.cbegin();
-      for (k = 0; iter != fields.cend(); ++iter, ++k) {
-         if ((*iter).second == (*iter).first && omit_empty_cont.isNA(i))
+      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
+      for (k = 0; iter != fields.end(); ++iter, ++k) {
+         pair<R_len_t, R_len_t> curoccur = *iter;
+         if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
             SET_STRING_ELT(ans, k, NA_STRING);
          else
             SET_STRING_ELT(ans, k,
-               Rf_mkCharLenCE(str_cur_s+(*iter).first,
-                           (*iter).second-(*iter).first, CE_UTF8));
+               Rf_mkCharLenCE(str_cur_s+curoccur.first,
+                           curoccur.second-curoccur.first, CE_UTF8));
       }
 
       SET_VECTOR_ELT(ret, i, ans);
