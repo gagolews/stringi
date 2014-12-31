@@ -1,5 +1,5 @@
 ## `stringi` Makevars
-## Copyright 2013-2014 M. Gagolewski
+## Copyright (C) 2013-2015, M. Gagolewski
 
 PKG_CPPFLAGS=@STRINGI_CPPFLAGS@
 PKG_CXXFLAGS=@STRINGI_CXXFLAGS@

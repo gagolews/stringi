@@ -1,5 +1,5 @@
 ## `stringi` Makevars.win
-## Copyright 2013-2014 M. Gagolewski
+## Copyright (C) 2013-2015, M. Gagolewski
 
 PKG_CPPFLAGS=-I. -Iicu52/ -Iicu52/unicode -Iicu52/common -Iicu52/i18n \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \

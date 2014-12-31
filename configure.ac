@@ -1,5 +1,5 @@
 # autoconf/configure script for stringi
-# (C) 2013-2014 M. Gagolewski
+# Copyright (C) 2013-2015, M. Gagolewski
 # http://stringi.rexamine.com
 
 ##### INIT ####################################################################
