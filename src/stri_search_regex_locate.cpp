@@ -107,7 +107,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* ans_tab = INTEGER(ans);
-      auto iter = occurrences.cbegin();
+      auto iter = occurrences./*c*/begin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
          ans_tab[j]             = match.first;

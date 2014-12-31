@@ -119,7 +119,7 @@ SEXP stri_split_lines1(SEXP str)
 
    SEXP ans;
    STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
-   auto iter = occurrences.cbegin();
+   auto iter = occurrences./*c*/begin();
    for (R_len_t k = 0; iter != occurrences.cend(); ++iter, ++k) {
       SET_STRING_ELT(ans, k,
          Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
@@ -264,7 +264,7 @@ SEXP stri_split_lines(SEXP str, SEXP omit_empty)
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, (R_len_t)occurrences.size()));
 
-      auto iter = occurrences.cbegin();
+      auto iter = occurrences./*c*/begin();
       for (R_len_t l = 0; iter != occurrences.cend(); ++iter, ++l) {
          SET_STRING_ELT(ans, l,
             Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));

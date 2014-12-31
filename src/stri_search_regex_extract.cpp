@@ -220,7 +220,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-      auto iter = occurrences.cbegin();
+      auto iter = occurrences./*c*/begin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
          pair<R_len_t, R_len_t> curo = *iter;
          SET_STRING_ELT(cur_res, j,

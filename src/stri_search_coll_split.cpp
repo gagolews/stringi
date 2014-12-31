@@ -171,7 +171,7 @@ SEXP stri_split_coll(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
 
       R_len_t noccurrences = (R_len_t)fields.size();
       StriContainerUTF16 out_cont(noccurrences);
-      auto iter = fields.cbegin();
+      auto iter = fields./*c*/begin();
       for (k = 0; iter != fields.cend(); ++iter, ++k) {
          if ((*iter).second == (*iter).first && omit_empty_cont.isNA(i))
             out_cont.setNA(k);

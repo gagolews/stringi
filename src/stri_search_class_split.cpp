@@ -164,7 +164,7 @@ SEXP stri_split_charclass(SEXP str, SEXP pattern, SEXP n,
       SEXP ans;
       STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      auto iter = fields.cbegin();
+      auto iter = fields./*c*/begin();
       for (k = 0; iter != fields.cend(); ++iter, ++k) {
          if ((*iter).second == (*iter).first && omit_empty_cont.isNA(i))
             SET_STRING_ELT(ans, k, NA_STRING);
