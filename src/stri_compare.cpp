@@ -458,16 +458,16 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
-         for (auto it=NA_pos./*c*/begin(); it!=NA_pos.cend(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
       }
 
-      for (auto it=order./*c*/begin(); it!=order.cend(); ++it, ++j)
+      for (auto it=order.cbegin(); it!=order.cend(); ++it, ++j)
          ret_tab[j] = (*it)+1; // 1-based indices
 
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
-         for (auto it=NA_pos./*c*/begin(); it!=NA_pos.cend(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
       }
    }
@@ -477,16 +477,16 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
       R_len_t j = 0;
       if (na_last_int != NA_LOGICAL && !na_last_int) {
          // put NAs first
-         for (auto it=NA_pos./*c*/begin(); it!=NA_pos.cend(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             SET_STRING_ELT(ret, j, NA_STRING);
       }
 
-      for (auto it=order./*c*/begin(); it!=order.cend(); ++it, ++j)
+      for (auto it=order.cbegin(); it!=order.cend(); ++it, ++j)
          SET_STRING_ELT(ret, j, str_cont.toR(*it));
 
       if (na_last_int != NA_LOGICAL && na_last_int) {
          // put NAs last
-         for (auto it=NA_pos./*c*/begin(); it!=NA_pos.cend(); ++it, ++j)
+         for (auto it=NA_pos.cbegin(); it!=NA_pos.cend(); ++it, ++j)
             SET_STRING_ELT(ret, j, NA_STRING);
       }
    }
@@ -559,7 +559,7 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
    R_len_t i = 0;
-   for (auto it = temp./*c*/begin(); it != temp.cend(); it++) {
+   for (auto it = temp.cbegin(); it != temp.cend(); it++) {
       SET_STRING_ELT(ret, i++, *it);
    }
 

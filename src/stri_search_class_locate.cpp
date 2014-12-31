@@ -222,7 +222,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocMatrix(INTSXP, noccurrences, 2));
       int* cur_res_int = INTEGER(cur_res);
-      auto iter = occurrences./*c*/begin();
+      auto iter = occurrences.cbegin();
       for (R_len_t f = 0; iter != occurrences.cend(); ++iter, ++f) {
          pair<R_len_t, R_len_t> curoccur = *iter;
          cur_res_int[f] = curoccur.first+1; // 0-based => 1-based

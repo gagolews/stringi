@@ -165,7 +165,7 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SE
       const char* str_cur_s = str_cont.get(i).c_str();
       SEXP cur_res;
       STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-      auto iter = occurrences./*c*/begin();
+      auto iter = occurrences.cbegin();
       for (R_len_t j = 0; iter != occurrences.cend(); ++iter, ++j) {
          SET_STRING_ELT(cur_res, j,
             Rf_mkCharLenCE(str_cur_s+(*iter).first, (*iter).second-(*iter).first, CE_UTF8));
