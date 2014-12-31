@@ -15,9 +15,6 @@
    * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for match
      of zero lengths
 
-   * [BUGFIX] #135: `long long` ICU warnings during compilation;
-     fixed by switching to C++11.
-
 TO BE DONE:
 
    * #69: ICU 54.1
@@ -32,7 +29,7 @@ TO BE DONE:
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 
-
+   * [BUGFIX] #135: long long ICU warnings...
 
 -------------------------------------------------------------------------------
 

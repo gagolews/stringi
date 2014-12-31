@@ -15,10 +15,10 @@ URL: http://stringi.rexamine.com/
     http://site.icu-project.org/
     http://www.unicode.org/
 BugReports: http://github.com/Rexamine/stringi/issues
-SystemRequirements: ICU4C (>= 50.0, optional), C++11
+SystemRequirements: ICU4C (>= 50.0, optional)
 Type: Package
 Depends:
-    R (>= 3.1.0)
+    R (>= 2.15.0)
 Imports:
     tools
 License: file LICENSE
