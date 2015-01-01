@@ -50,6 +50,8 @@ stri_timezone_set(oldtz) # restore previous default time zone
 \seealso{
 Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
+  \code{\link{stri_datetime_create}};
+  \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_info}};

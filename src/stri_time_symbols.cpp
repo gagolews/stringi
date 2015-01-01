@@ -57,12 +57,14 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
    const char* width_opts[] = {"abbreviated", "wide", "narrow", NULL};
    int width_cur = stri__match_arg(width_str, width_opts);
 
-   DateFormatSymbols::DtContextType context_val = DateFormatSymbols::STANDALONE;
+   DateFormatSymbols::DtContextType context_val;
    if (context_cur == 0)            context_val = DateFormatSymbols::FORMAT;
+   else if (context_cur == 1)       context_val = DateFormatSymbols::STANDALONE;
    else Rf_error(MSG__INCORRECT_MATCH_OPTION, "context");
 
-   DateFormatSymbols::DtWidthType width_val = DateFormatSymbols::WIDE;
+   DateFormatSymbols::DtWidthType width_val;
         if (width_cur == 0)       width_val = DateFormatSymbols::ABBREVIATED;
+   else if (width_cur == 1)       width_val = DateFormatSymbols::WIDE;
    else if (width_cur == 2)       width_val = DateFormatSymbols::NARROW;
    else Rf_error(MSG__INCORRECT_MATCH_OPTION, "width");
 
