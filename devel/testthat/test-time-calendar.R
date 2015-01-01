@@ -29,3 +29,10 @@ test_that("stri_datetime_add", {
 
    # to do....
 })
+
+
+test_that("stri_datetime_fields", {
+   stri_datetime_fields(stri_datetime_now())
+   
+   
+})

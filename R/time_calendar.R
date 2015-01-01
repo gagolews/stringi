@@ -69,8 +69,6 @@ stri_datetime_now <- function() {
 #'
 #' Note that e.g. January, 31 + 1 month = Feburary, 28 or 29.
 #'
-#'
-#'
 #' @param time a \code{POSIXct} object
 #' @param value integer vector; signed number of units to add to a given time
 #' @param units single string; one of \code{"years"}, \code{"months"},
@@ -109,3 +107,74 @@ stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregori
 "stri_datetime_add<-" <- function(time, units="seconds", calendar="gregorian", value) {
    .Call(C_stri_datetime_add, time, value, units, calendar)
 }
+
+
+#' @title
+#' Get Values for Date and Time Fields
+#'
+#' @description
+#' Calculates and returns values for all date and time fields.
+#'
+#' @details
+#' Vectorized over \code{time}.
+#'
+#'
+#' @param time a \code{POSIXct} object
+#' @param calendar single string; currently only
+#' the \code{"gregorian"} calendar is supported
+#'
+#' @return
+#' Returns a data frame with the following columns:
+#' \enumerate{
+#' \item year - 0 is 1BC, -1 is 2BC, etc.
+#' \item month... months are 1-based
+#' }
+#' 
+#' @examples
+#' stri_datetime_fields(stri_datetime_now())
+#'
+#' @family datetime
+#' @export
+stri_datetime_fields <- function(time, calendar="gregorian") {
+   as.data.frame(.Call(C_stri_datetime_fields, time, calendar))
+}
+
+
+#' @title
+#' Crate a Date-Time Object
+#' 
+#' @description
+#' ...
+#' 
+#' @details
+#' Vectorized over \code{year}, \code{month}, \code{hour},
+#' \code{hour}, \code{minute}, and \code{second}.
+#' 
+#' @param year iteger vector; 0 is 1BC, -1 is 2BC, etc.
+#' @param month iteger vector; months are 1-based
+#' @param day iteger vector
+#' @param hour iteger vector
+#' @param minute iteger vector
+#' @param second numeric vetor; fractional seconds are allowed
+#' @param tz \code{NULL} or \code{""} for default time zone,
+#' a single string with time zone ID otherwise.
+#' 
+#' @return
+#' Returns an object of class \code{POSIXst},
+#' which (for compatibility with other base R functions)
+#' also inherits from \code{POSIXct} and \code{POSIX}.
+#' In fact, it is a numeric vector representing the number of seconds
+#' since the UNIX Epoch.
+#' 
+#' @family datetime
+#' @export
+stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL) {
+   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz)
+}
+
+# http://userguide.icu-project.org/datetime/calendar
+
+# TO DO: compare dates: equals, before, after -- that's not necessary, just use <>==
+
+# TO DO: field difference
+

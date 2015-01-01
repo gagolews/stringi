@@ -42,6 +42,8 @@ and \code{width} - for  date formatting width.
 \seealso{
 Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
+  \code{\link{stri_datetime_create}};
+  \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
