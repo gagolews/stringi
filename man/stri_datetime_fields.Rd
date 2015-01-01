@@ -4,13 +4,14 @@
 \alias{stri_datetime_fields}
 \title{Get Values for Date and Time Fields}
 \usage{
-stri_datetime_fields(time, calendar = "gregorian")
+stri_datetime_fields(time, locale = NULL)
 }
 \arguments{
 \item{time}{a \code{POSIXct} object}
 
-\item{calendar}{single string; currently only
-the \code{"gregorian"} calendar is supported}
+\item{locale}{\code{NULL} or \code{""} for default locale,
+or a single string with locale identifier; a non-Gregorian calendar
+may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
 Returns a data frame with the following columns:
@@ -29,7 +30,9 @@ Vectorized over \code{time}.
 stri_datetime_fields(stri_datetime_now())
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{POSIXst}},
+  \code{\link{as.POSIXst}};
+  \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_now}};

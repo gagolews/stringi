@@ -76,13 +76,13 @@ SEXP stri_datetime_now()
  * @param time
  * @param value
  * @param units
- * @param calendar
+ * @param locale
  *
  * @return POSIXct
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-30)
  */
-SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
+SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
    PROTECT(value = stri_prepare_arg_integer(value, "value"));
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(value));
@@ -98,11 +98,10 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
    const char* units_val = stri__prepare_arg_string_1_notNA(units, "units");
    const char* units_opts[] = {"years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds", NULL};
    int units_cur = stri__match_arg(units_val, units_opts);
+   
+   const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
 
-//   const char* calendar_val = stri__prepare_arg_string_1_notNA(calendar, "calendar");
-//   const char* calendar_opts[] = {"gregorian", NULL};
-//   int calendar_cur = stri__match_arg(calendar_val, calendar_opts);
-
+   Calendar* cal = NULL;
    STRI__ERROR_HANDLER_BEGIN(2)
    StriContainerDouble time_cont(time, vectorize_length);
    StriContainerInteger value_cont(value, vectorize_length);
@@ -120,11 +119,10 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
       default: throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
    }
 
-   // Question: add locale?
    // Question: consider tzone?
 
    UErrorCode status = U_ZERO_ERROR;
-   GregorianCalendar cal(status);
+   cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    SEXP ret;
@@ -136,23 +134,26 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
          continue;
       }
       status = U_ZERO_ERROR;
-      cal.setTime((UDate)(time_cont.get(i)*1000.0), status);
+      cal->setTime((UDate)(time_cont.get(i)*1000.0), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       status = U_ZERO_ERROR;
-      cal.add(units_field, value_cont.get(i), status);
+      cal->add(units_field, value_cont.get(i), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       status = U_ZERO_ERROR;
-      ret_val[i] = ((double)cal.getTime(status))/1000.0;
+      ret_val[i] = ((double)cal->getTime(status))/1000.0;
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
    Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
    stri__set_class_POSIXct(ret);
+   if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END({
+      if (cal) { delete cal; cal = NULL; }
+   })
 }
 
 
@@ -160,27 +161,23 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP /*calendar*/) {
  * Get values of date-time fields
  * 
  * @param time
- * @param calendar
+ * @param locale
  * 
  * @return list
  * 
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  */
-SEXP stri_datetime_fields(SEXP time, SEXP /*calendar*/) {
+SEXP stri_datetime_fields(SEXP time, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
+   const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
    
-//   const char* calendar_val = stri__prepare_arg_string_1_notNA(calendar, "calendar");
-//   const char* calendar_opts[] = {"gregorian", NULL};
-//   int calendar_cur = stri__match_arg(calendar_val, calendar_opts);
-
+   Calendar* cal = NULL;
    STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t vectorize_length = LENGTH(time);
    StriContainerDouble time_cont(time, vectorize_length);
 
-   // Question: add locale?
-
    UErrorCode status = U_ZERO_ERROR;
-   GregorianCalendar cal(status);
+   cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    
    /* TO DO:
@@ -202,7 +199,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP /*calendar*/) {
       }
       
       status = U_ZERO_ERROR;
-      cal.setTime((UDate)(time_cont.get(i)*1000.0), status);
+      cal->setTime((UDate)(time_cont.get(i)*1000.0), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       
       for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j) {
@@ -222,8 +219,6 @@ SEXP stri_datetime_fields(SEXP time, SEXP /*calendar*/) {
          //UCAL_IS_LEAP_MONTH 
          //UCAL_MILLISECONDS_IN_DAY -> SecondsInDay
          
-         //month + 1
-         
          // UCAL_AM_PM -> "AM" or "PM" (localized? or factor?+index in stri_datetime_symbols) add arg use_symbols????
          // UCAL_DAY_OF_WEEK -> (localized? or factor?) SUNDAY, MONDAY
          // UCAL_DAY_OF_YEAR '
@@ -231,17 +226,22 @@ SEXP stri_datetime_fields(SEXP time, SEXP /*calendar*/) {
          // isWekend
          
          status = U_ZERO_ERROR;
-         INTEGER(VECTOR_ELT(ret, j))[i] = cal.get(units_field, status);
+         INTEGER(VECTOR_ELT(ret, j))[i] = cal->get(units_field, status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         
+         if (units_field == UCAL_MONTH) ++INTEGER(VECTOR_ELT(ret, j))[i]; // month + 1
       }
    }
 
    stri__set_names(ret, STRI__FIELDS_NUM, 
       "Years", "Months", "WeeksOfYear", "Days", 
       "Hours12", "Hours24", "Minutes", "Seconds", "Milliseconds");
+   if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END({
+      if (cal) { delete cal; cal = NULL; }
+   })
 }
 
 
@@ -255,12 +255,13 @@ SEXP stri_datetime_fields(SEXP time, SEXP /*calendar*/) {
  * @param minutes
  * @param seconds
  * @param tz
+ * @param locale
  * 
  * @return POSIXct
  * 
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  */
-SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minute, SEXP second, SEXP /*tz*/)
+SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minute, SEXP second, SEXP /*tz*/, SEXP locale)
 {
    PROTECT(year = stri_prepare_arg_integer(year, "year"));
    PROTECT(month = stri_prepare_arg_integer(month, "month"));
@@ -268,6 +269,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    PROTECT(hour = stri_prepare_arg_integer(hour, "hour"));
    PROTECT(minute = stri_prepare_arg_integer(minute, "minute"));
    PROTECT(second = stri_prepare_arg_double(second, "second"));
+   const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
    
    R_len_t vectorize_length = stri__recycling_rule(true, 6, 
       LENGTH(year), LENGTH(month), LENGTH(day),
@@ -282,6 +284,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
       return ret;
    }
    
+   Calendar* cal = NULL;
    STRI__ERROR_HANDLER_BEGIN(6)
    StriContainerInteger year_cont(year, vectorize_length);
    StriContainerInteger month_cont(month, vectorize_length);
@@ -291,7 +294,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    StriContainerDouble second_cont(second, vectorize_length);
    
    UErrorCode status = U_ZERO_ERROR;
-   GregorianCalendar cal(status);
+   Calendar* cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    SEXP ret;
@@ -304,22 +307,25 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
          continue;
       }
 
-      cal.set(UCAL_EXTENDED_YEAR, (year_cont.get(i)>0)?year_cont.get(i):std::max(0,(year_cont.get(i)+1)));
-      cal.set(UCAL_MONTH, month_cont.get(i)-1);
-      cal.set(UCAL_DATE, day_cont.get(i));
-      cal.set(UCAL_HOUR_OF_DAY, hour_cont.get(i));
-      cal.set(UCAL_MINUTE, minute_cont.get(i));
-      cal.set(UCAL_SECOND, (int)floor(second_cont.get(i)));
-      cal.set(UCAL_MILLISECOND, (int)round((second_cont.get(i)-floor(second_cont.get(i)))*1000.0));
+      cal->set(UCAL_EXTENDED_YEAR, year_cont.get(i));
+      cal->set(UCAL_MONTH, month_cont.get(i)-1);
+      cal->set(UCAL_DATE, day_cont.get(i));
+      cal->set(UCAL_HOUR_OF_DAY, hour_cont.get(i));
+      cal->set(UCAL_MINUTE, minute_cont.get(i));
+      cal->set(UCAL_SECOND, (int)floor(second_cont.get(i)));
+      cal->set(UCAL_MILLISECOND, (int)round((second_cont.get(i)-floor(second_cont.get(i)))*1000.0));
 
       status = U_ZERO_ERROR;
-      ret_val[i] = ((double)cal.getTime(status))/1000.0;
+      ret_val[i] = ((double)cal->getTime(status))/1000.0;
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
    
 //   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
    stri__set_class_POSIXct(ret);
+   if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+   STRI__ERROR_HANDLER_END({
+      if (cal) { delete cal; cal = NULL; }
+   })
 }

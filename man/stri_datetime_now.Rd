@@ -7,21 +7,20 @@
 stri_datetime_now()
 }
 \value{
-Returns an object of class \code{POSIXst},
-which (for compatibility with other base R functions)
-also inherits from \code{POSIXct} and \code{POSIX}.
-In fact, it is a numeric vector.
+Returns an object of class \code{\link{POSIXst}}.
 }
 \description{
 Returns current date and time.
 }
 \details{
 The current date and time in \pkg{stringi} is represented as the (signed)
-number of seconds since 1970-01-01, 00:00 UTC.
+number of seconds since 1970-01-01 00:00:00 UTC.
 UTC leap seconds are ignored.
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{POSIXst}},
+  \code{\link{as.POSIXst}};
+  \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};

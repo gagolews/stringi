@@ -130,8 +130,7 @@ stri_locale_get <- function() {
 #' It may be used, however, to get insight on how ICU understands a provided
 #' locale identifier.
 #'
-#' @param locale \code{NULL} or \code{""}
-#' for default locale,
+#' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier.
 #'
 #' @return

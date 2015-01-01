@@ -65,6 +65,10 @@ duplicated(c("\\u0105", stri_trans_nfkd("\\u0105")))
 stri_duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
 duplicated(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"))
 }
+\references{
+\emph{Collation} - ICU User Guide,
+\url{http://userguide.icu-project.org/collation}
+}
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},

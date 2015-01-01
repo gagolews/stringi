@@ -31,6 +31,7 @@
 
 
 #include "stri_stringi.h"
+#include "stri_string8buf.h"
 #include "stri_container_utf8.h"
 #include <unicode/strenum.h>
 #include <unicode/dtfmtsym.h>
@@ -45,6 +46,9 @@
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-25)
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
+ *    use calendar keyword in locale
  */
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
@@ -69,7 +73,18 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
    else Rf_error(MSG__INCORRECT_MATCH_OPTION, "width");
 
    UErrorCode status = U_ZERO_ERROR;
-   DateFormatSymbols sym(Locale::createFromName(qloc), status);
+   String8buf calendar_type(128);
+   Locale loc = Locale::createFromName(qloc);
+   int32_t kvlen = loc.getKeywordValue("calendar", calendar_type.data(), calendar_type.size(), status);
+   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
+   
+   status = U_ZERO_ERROR;
+   DateFormatSymbols sym(status);
+   status = U_ZERO_ERROR;
+   if (kvlen == 0)
+      sym = DateFormatSymbols(loc, status);
+   else
+      sym = DateFormatSymbols(loc, calendar_type.data(), status);
    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
 
    const R_len_t infosize = 5;

@@ -57,6 +57,10 @@ stri_sort(c("hladny", "chladny"), locale="pl_PL")
 
 stri_sort(c("hladny", "chladny"), locale="sk_SK")
 }
+\references{
+\emph{Collation} - ICU User Guide,
+\url{http://userguide.icu-project.org/collation}
+}
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},
   \code{\link{\%s!=\%}}, \code{\link{\%s<=\%}},

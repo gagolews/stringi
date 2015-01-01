@@ -94,6 +94,10 @@
 #' The other functions return a logical vector that indicates
 #' whether a given relation holds between two corresponding elements
 #' in \code{e1} and \code{e2}.
+#' 
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
 #'
 #' @examples
 #' # in Polish ch < h:
@@ -119,6 +123,10 @@
 #'
 #' # ligatures:
 #' stri_cmp_equiv("\ufb00", "ff", strength=2)
+#' 
+#' # phonebook collation
+#' stri_cmp_equiv("G\u00e4rtner", "Gaertner", locale="de_DE@@collation=phonebook", strength=1L)
+#' stri_cmp_equiv("G\u00e4rtner", "Gaertner", locale="de_DE", strength=1L)
 #'
 #' @family locale_sensitive
 #' @export
@@ -415,6 +423,10 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #'
 #' For \code{stri_order}, you get a sorted version of \code{str},
 #' i.e. a character vector.
+#' 
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
 #'
 #' @family locale_sensitive
 #' @export
@@ -471,6 +483,10 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #' unique(c("\u0105", stri_trans_nfkd("\u0105")))
 #'
 #' stri_unique(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
+#' 
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
 #'
 #' @family locale_sensitive
 #' @export
@@ -521,6 +537,10 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' \code{stri_duplicated_any()} returns a single non-negative integer.
 #' Value of 0 indicates that all the elements in \code{str} are unique.
 #' Otherwise, it gives the index of the first non-unique element.
+#' 
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
 #'
 #' @examples
 #' # In the following examples, we have 3 duplicated values,
