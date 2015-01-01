@@ -122,6 +122,14 @@ stri_cmp_eq(stri_trans_nfkd("\\u0105"), "\\u105")
 
 # ligatures:
 stri_cmp_equiv("\\ufb00", "ff", strength=2)
+
+# phonebook collation
+stri_cmp_equiv("G\\u00e4rtner", "Gaertner", locale="de_DE@collation=phonebook", strength=1L)
+stri_cmp_equiv("G\\u00e4rtner", "Gaertner", locale="de_DE", strength=1L)
+}
+\references{
+\emph{Collation} - ICU User Guide,
+\url{http://userguide.icu-project.org/collation}
 }
 \seealso{
 Other locale_sensitive: \code{\link{\%s!==\%}},

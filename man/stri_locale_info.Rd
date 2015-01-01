@@ -7,8 +7,7 @@
 stri_locale_info(locale = NULL)
 }
 \arguments{
-\item{locale}{\code{NULL} or \code{""}
-for default locale,
+\item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier.}
 }
 \value{

@@ -5,7 +5,7 @@
 \title{Crate a Date-Time Object}
 \usage{
 stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
-  second = 0, tz = NULL)
+  second = 0, tz = NULL, locale = NULL)
 }
 \arguments{
 \item{year}{iteger vector; 0 is 1BC, -1 is 2BC, etc.}
@@ -21,14 +21,14 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
 \item{second}{numeric vetor; fractional seconds are allowed}
 
 \item{tz}{\code{NULL} or \code{""} for default time zone,
-a single string with time zone ID otherwise.}
+a single string with time zone ID otherwise}
+
+\item{locale}{\code{NULL} or \code{""} for default locale,
+or a single string with locale identifier; a non-Gregorian calendar
+may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns an object of class \code{POSIXst},
-which (for compatibility with other base R functions)
-also inherits from \code{POSIXct} and \code{POSIX}.
-In fact, it is a numeric vector representing the number of seconds
-since the UNIX Epoch.
+Returns an object of class \code{\link{POSIXst}}.
 }
 \description{
 ...
@@ -37,8 +37,14 @@ since the UNIX Epoch.
 Vectorized over \code{year}, \code{month}, \code{hour},
 \code{hour}, \code{minute}, and \code{second}.
 }
+\examples{
+stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
+stri_datetime_create(5775, 8, 1, locale="@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+}
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{POSIXst}},
+  \code{\link{as.POSIXst}};
+  \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};

@@ -37,14 +37,11 @@
 #'
 #' @details
 #' The current date and time in \pkg{stringi} is represented as the (signed)
-#' number of seconds since 1970-01-01, 00:00 UTC.
+#' number of seconds since 1970-01-01 00:00:00 UTC.
 #' UTC leap seconds are ignored.
 #'
 #' @return
-#' Returns an object of class \code{POSIXst},
-#' which (for compatibility with other base R functions)
-#' also inherits from \code{POSIXct} and \code{POSIX}.
-#' In fact, it is a numeric vector.
+#' Returns an object of class \code{\link{POSIXst}}.
 #'
 #' @family datetime
 #' @export
@@ -74,18 +71,19 @@ stri_datetime_now <- function() {
 #' @param units single string; one of \code{"years"}, \code{"months"},
 #' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
 #' \code{"seconds"}, or \code{"milliseconds"}
-#' @param calendar single string; currently only
-#' the \code{"gregorian"} calendar is supported
+#' @param locale \code{NULL} or \code{""} for default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
-#' Returns an object of class \code{POSIXst},
-#' which (for compatibility with other base R functions)
-#' also inherits from \code{POSIXct} and \code{POSIX}.
-#' In fact, it is a numeric vector representing the number of seconds
-#' since the UNIX Epoch.
+#' Returns an object of class \code{\link{POSIXst}}.
 #'
 #' The replacement version of \code{stri_datetime_add} modifies
 #' the state of the \code{time} object.
+#' 
+#' @references
+#' \emph{Calendar Classes} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/datetime/calendar}
 #'
 #'
 #' @examples
@@ -93,19 +91,21 @@ stri_datetime_now <- function() {
 #' stri_datetime_add(x, units="months") <- 2
 #' x
 #' stri_datetime_add(x, -2, units="months")
-#'
+#' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years")
+#' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@@calendar=hebrew")
+#' 
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
-stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregorian") {
-   .Call(C_stri_datetime_add, time, value, units, calendar)
+stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
+   .Call(C_stri_datetime_add, time, value, units, locale)
 }
 
 
 #' @rdname stri_datetime_add
 #' @export
-"stri_datetime_add<-" <- function(time, units="seconds", calendar="gregorian", value) {
-   .Call(C_stri_datetime_add, time, value, units, calendar)
+"stri_datetime_add<-" <- function(time, units="seconds", locale=NULL, value) {
+   .Call(C_stri_datetime_add, time, value, units, locale)
 }
 
 
@@ -120,8 +120,9 @@ stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregori
 #'
 #'
 #' @param time a \code{POSIXct} object
-#' @param calendar single string; currently only
-#' the \code{"gregorian"} calendar is supported
+#' @param locale \code{NULL} or \code{""} for default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
 #' Returns a data frame with the following columns:
@@ -135,8 +136,8 @@ stri_datetime_add <- function(time, value=1L, units="seconds", calendar="gregori
 #'
 #' @family datetime
 #' @export
-stri_datetime_fields <- function(time, calendar="gregorian") {
-   as.data.frame(.Call(C_stri_datetime_fields, time, calendar))
+stri_datetime_fields <- function(time, locale=NULL) {
+   as.data.frame(.Call(C_stri_datetime_fields, time, locale))
 }
 
 
@@ -157,24 +158,57 @@ stri_datetime_fields <- function(time, calendar="gregorian") {
 #' @param minute iteger vector
 #' @param second numeric vetor; fractional seconds are allowed
 #' @param tz \code{NULL} or \code{""} for default time zone,
-#' a single string with time zone ID otherwise.
+#' a single string with time zone ID otherwise
+#' @param locale \code{NULL} or \code{""} for default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
 #' 
 #' @return
-#' Returns an object of class \code{POSIXst},
-#' which (for compatibility with other base R functions)
-#' also inherits from \code{POSIXct} and \code{POSIX}.
-#' In fact, it is a numeric vector representing the number of seconds
-#' since the UNIX Epoch.
+#' Returns an object of class \code{\link{POSIXst}}.
+#' 
+#' @examples
+#' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
+#' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
 #' 
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL) {
-   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz)
+stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, locale=NULL) {
+   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, locale)
+}
+
+
+#' @title
+#' Date-Time Objects in \pkg{stringi}
+#' 
+#' @description
+#' t.b.d.
+#' 
+#' @details
+#' An object of class \code{\link{POSIXst}},
+#' inherits from (for compatibility with other base R functions)
+#' \code{POSIXct} and \code{POSIX} classes.
+#' In fact, it is a numeric vector representing the (signed) number of seconds
+#' since the UNIX Epoch, i.e. 1970-01-01 00:00:00 UTC.
+#' UTC leap seconds are ignored.
+#' 
+#' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
+#' etc. or the \code{sort()} function may be used.
+#' 
+#' @param x ...
+#' 
+#' @return
+#' t.b.d.
+#' 
+#' @export
+#' @rdname as.POSIXst
+#' @family datetime
+#' @aliases as.POSIXst POSIXst
+as.POSIXst <- function(x) {
+   stop("TO DO")
 }
 
 # http://userguide.icu-project.org/datetime/calendar
 
-# TO DO: compare dates: equals, before, after -- that's not necessary, just use <>==
 
 # TO DO: field difference
 

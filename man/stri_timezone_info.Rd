@@ -38,7 +38,9 @@ stri_timezone_info()
 stri_timezone_info(locale="sk_SK")
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{POSIXst}},
+  \code{\link{as.POSIXst}};
+  \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};

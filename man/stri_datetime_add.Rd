@@ -5,10 +5,9 @@
 \alias{stri_datetime_add<-}
 \title{Date and Time Arithmetic}
 \usage{
-stri_datetime_add(time, value = 1L, units = "seconds",
-  calendar = "gregorian")
+stri_datetime_add(time, value = 1L, units = "seconds", locale = NULL)
 
-stri_datetime_add(time, units = "seconds", calendar = "gregorian") <- value
+stri_datetime_add(time, units = "seconds", locale = NULL) <- value
 }
 \arguments{
 \item{time}{a \code{POSIXct} object}
@@ -19,15 +18,12 @@ stri_datetime_add(time, units = "seconds", calendar = "gregorian") <- value
 \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
 \code{"seconds"}, or \code{"milliseconds"}}
 
-\item{calendar}{single string; currently only
-the \code{"gregorian"} calendar is supported}
+\item{locale}{\code{NULL} or \code{""} for default locale,
+or a single string with locale identifier; a non-Gregorian calendar
+may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns an object of class \code{POSIXst},
-which (for compatibility with other base R functions)
-also inherits from \code{POSIXct} and \code{POSIX}.
-In fact, it is a numeric vector representing the number of seconds
-since the UNIX Epoch.
+Returns an object of class \code{\link{POSIXst}}.
 
 The replacement version of \code{stri_datetime_add} modifies
 the state of the \code{time} object.
@@ -50,9 +46,17 @@ x <- stri_datetime_now()
 stri_datetime_add(x, units="months") <- 2
 x
 stri_datetime_add(x, -2, units="months")
+stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years")
+stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@calendar=hebrew")
+}
+\references{
+\emph{Calendar Classes} - ICU User Guide,
+\url{http://userguide.icu-project.org/datetime/calendar}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_create}};
+Other datetime: \code{\link{POSIXst}},
+  \code{\link{as.POSIXst}};
+  \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};

@@ -7,10 +7,13 @@
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
 
-   * [BUGFIX] #134: `stri_extract_all_words` did not accept `simplify=NA`.
-
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`.
+
+   * [BUGFIX] locale specifiers are now normalized in a more intelligent way:
+     e.g. `@calendar=gregorian` expands to `DEFAULT_LOCALE@calendar=gregorian`.
+
+   * [BUGFIX] #134: `stri_extract_all_words` did not accept `simplify=NA`.
 
    * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for match
      of zero lengths

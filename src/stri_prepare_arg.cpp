@@ -794,8 +794,11 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
-  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
+ * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Use R_alloc for the string returned
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
+ *    "@keyword=value" may use default locale from now; also, loc is trimmed
  */
 const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowdefault, bool allowna)
 {
@@ -805,32 +808,48 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
       PROTECT(loc = stri_prepare_arg_string_1(loc, argname));
       if (STRING_ELT(loc, 0) == NA_STRING) {
          UNPROTECT(1);
-         if (allowna)
-            return NULL;
-         else
-            Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+         if (allowna) return NULL;
+         else Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+      }
+      
+      UErrorCode err = U_ZERO_ERROR;
+      char buf[ULOC_FULLNAME_CAPACITY];
+      uloc_canonicalize((const char*)CHAR(STRING_ELT(loc, 0)), buf, ULOC_FULLNAME_CAPACITY, &err);
+      STRI__CHECKICUSTATUS_RFERROR(err, {;})
+      
+      R_len_t ret_n = strlen(buf);
+      char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+      memcpy(ret, buf, ret_n+1);
+      
+      // right-trim
+      while (ret_n > 0 && (ret[ret_n-1] == ' ' || ret[ret_n-1] == '\t' || ret[ret_n-1] == '\n' || ret[ret_n-1] == '\r'))
+         ret[--ret_n] = '\0';
+         
+      // left-trim
+      while (ret[0] == ' ' || ret[0] == '\t' || ret[0] == '\n' || ret[0] == '\r') {
+         ++ret;
+         --ret_n;
       }
 
-      if (LENGTH(STRING_ELT(loc, 0)) == 0) {
+      if (ret_n == 0) {
          UNPROTECT(1);
-         if (allowdefault)
-            return uloc_getDefault();
-         else
-            Rf_error(MSG__LOCALE_INCORRECT_ID); // allowed here
+         if (allowdefault) return uloc_getDefault();
+         else Rf_error(MSG__LOCALE_INCORRECT_ID); // Rf_error allowed here
       }
-      else {
-         const char* ret_tmp = (const char*)CHAR(STRING_ELT(loc, 0)); // ret may be gc'ed
-         size_t ret_n = strlen(ret_tmp);
-         /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
-         char* ret = R_alloc(ret_n+1, (int)sizeof(char));
-         if (!ret) {
-            UNPROTECT(1);
-            Rf_error(MSG__MEM_ALLOC_ERROR);
-         }
-         memcpy(ret, ret_tmp, ret_n+1);
-         UNPROTECT(1);
-         return ret;
+
+      if (ret[0] == ULOC_KEYWORD_SEPARATOR) { // length is > 0
+         // no locale specifier, just keywords
+         if (!allowdefault) { UNPROTECT(1); Rf_error(MSG__LOCALE_INCORRECT_ID); }
+         const char* ret_default = uloc_getDefault();
+         R_len_t ret_detault_n = strlen(ret_default);
+         const char* ret_tmp2 = ret;
+         ret = R_alloc(ret_detault_n+ret_n+1, (int)sizeof(char));
+         memcpy(ret, ret_default, ret_detault_n);
+         memcpy(ret+ret_detault_n, ret_tmp2, ret_n+1);
       }
+
+      UNPROTECT(1);
+      return ret;
    }
 
    // won't come here anyway
