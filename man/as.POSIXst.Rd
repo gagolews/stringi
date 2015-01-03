@@ -28,7 +28,9 @@ Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==}
 etc. or the \code{sort()} function may be used.
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{format.POSIXst}},
+  \code{\link{stri_datetime_format}};
+  \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};

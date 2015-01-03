@@ -55,7 +55,8 @@ stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}};
+  \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
+  \code{\link{stri_datetime_format}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
