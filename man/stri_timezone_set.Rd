@@ -49,7 +49,8 @@ stri_timezone_set(oldtz) # restore previous default time zone
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}};
+  \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
+  \code{\link{stri_datetime_format}};
   \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};

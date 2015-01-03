@@ -43,7 +43,8 @@ stri_datetime_create(5775, 8, 1, locale="@calendar=hebrew") # 1 Nisan 5775 -> 20
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}};
+  \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
+  \code{\link{stri_datetime_format}};
   \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_fields}};
