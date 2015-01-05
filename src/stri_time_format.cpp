@@ -49,25 +49,72 @@
  * 
  * @return character vector
  * 
- * @version 0.5-1 (Marek Gagolewski, 2015-01-03)
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-05)
  */
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
-   const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+   const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
+   
+   // "format" may be one of:
+   const char* format_opts[] = {
+      "date_full", "date_long", "date_medium", "date_short", 
+      "date_relative_full", "date_relative_long", "date_relative_medium", "date_relative_short", 
+      "time_full", "time_long", "time_medium", "time_short", 
+      "time_relative_full", "time_relative_long", "time_relative_medium", "time_relative_short", 
+      "datetime_full", "datetime_long", "datetime_medium", "datetime_short", 
+      "datetime_relative_full", "datetime_relative_long", "datetime_relative_medium", "datetime_relative_short",
+      NULL};
+   int format_cur = stri__match_arg(format_val, format_opts);
    
    Calendar* cal = NULL;
+   DateFormat* fmt = NULL;
    STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t vectorize_length = LENGTH(time);
    StriContainerDouble time_cont(time, vectorize_length);
-   UnicodeString format_str(format_val);
+   UnicodeString format_str(format_val); 
    
    UErrorCode status = U_ZERO_ERROR;
-   SimpleDateFormat fmt(format_str, Locale::createFromName(locale_val), status);
+   if (format_cur >= 0) {
+      DateFormat::EStyle style = DateFormat::kNone;
+      switch (format_cur % 8) {
+         case 0:  style = DateFormat::kFull; break;
+         case 1:  style = DateFormat::kLong; break;
+         case 2:  style = DateFormat::kMedium; break;
+         case 3:  style = DateFormat::kShort; break;
+         case 4:  style = DateFormat::kFullRelative; break;
+         case 5:  style = DateFormat::kLongRelative; break;
+         case 6:  style = DateFormat::kMediumRelative; break;
+         case 7:  style = DateFormat::kShortRelative; break;
+         default: style = DateFormat::kNone; break;
+      }
+      
+      /* ICU 54.1: Relative time styles are not currently supported.  */
+      switch (format_cur / 8) {
+         case 0:
+            fmt = DateFormat::createDateInstance(style, Locale::createFromName(locale_val));
+            break;
+            
+         case 1:
+            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            break;
+            
+         case 2:
+            fmt = DateFormat::createDateTimeInstance(style, (DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            break;
+            
+         default:
+            fmt = NULL;
+            break;
+         
+      }
+   }
+   else
+      fmt = new SimpleDateFormat(format_str, Locale::createFromName(locale_val), status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    
    status = U_ZERO_ERROR;
-   Calendar* cal = Calendar::createInstance(locale_val, status);
+   cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    
    /* TO DO:
@@ -89,17 +136,19 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
       
       FieldPosition pos;
       UnicodeString out;
-      fmt.format(*cal, out, pos);
+      fmt->format(*cal, out, pos);
       
       std::string s;
       out.toUTF8String(s);
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(s.c_str(), (int)s.length(), (cetype_t)CE_UTF8));
    }
 
+   if (fmt) { delete fmt; fmt = NULL; }
    if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
+      if (fmt) { delete fmt; fmt = NULL; }
       if (cal) { delete cal; cal = NULL; }
    })
 }

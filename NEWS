@@ -35,6 +35,8 @@ TO BE DONE:
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 
+   *  stri_wrap: control break iterator #139 
+
    * [BUGFIX] #135: long long ICU warnings...
 
 -------------------------------------------------------------------------------
