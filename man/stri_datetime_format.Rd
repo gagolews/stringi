@@ -5,15 +5,15 @@
 \alias{stri_datetime_format}
 \title{Date and Time Formatting}
 \usage{
-stri_datetime_format(time, format = "uuuu-MM-dd'T'HH:mm:ssxxx", tz = NULL,
-  locale = NULL)
+stri_datetime_format(time, format = "uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx",
+  tz = NULL, locale = NULL)
 
 \method{format}{POSIXst}(x, ..., usetz = TRUE)
 }
 \arguments{
 \item{time}{a \code{POSIXct} object}
 
-\item{format}{single string, see Details; defaults to a ISO 8601 guideline}
+\item{format}{single string, see Details; defaults to the ISO 8601 guideline}
 
 \item{tz}{t.b.d}
 
@@ -27,10 +27,46 @@ may be specified by setting \code{@calendar=name} keyword}
 Returns a character vector.
 }
 \description{
-t.b.d
+This function converts a given date/time object
+to a character vector.
 }
 \details{
-t.b.d
+Vectorized over \code{time}.
+
+\code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
+where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
+and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
+This gives a locale-dependent date and/or time format.
+Note that currently ICU does not support \code{relative} \code{time} formats,
+so this flag is currently ignored in such context.
+
+Otherwise, \code{format} is a pattern:
+a string of characters, where specific strings of characters are replaced
+with date and time data from a calendar when formatting or used
+to generate data for a calendar when parsing.
+For example, \code{y} stands for the year. Characters
+may be used multiple times. For instance, if \code{y} is used for the year,
+\code{yy} might produce \code{99}, whereas \code{yyyy} produces \code{1999}.
+For most numerical fields, the number of characters specifies
+the field width. For example, if \code{h} is the hour, \code{h} might
+produce \code{5}, but \code{hh} produces \code{05}.
+For some characters, the count specifies whether an abbreviated
+or full form should be used, but may have other choices, as given below.
+
+Two single quotes represents a literal single quote, either
+inside or outside single quotes. Text within single quotes
+is not interpreted in any way (except for two adjacent single quotes).
+Otherwise all ASCII letter from \code{a} to \code{z} and \code{A} to \code{Z}
+are reserved as syntax characters, and require quoting if
+they are to represent literal characters. In addition, certain
+ASCII punctuation characters may become variable in the future
+(eg \code{:} being interpreted as the time separator and \code{/}
+as a date separator, and replaced by respective
+locale-sensitive characters in display).
+
+TO DO: add table / formats
+
+TO DO: add examples
 }
 \examples{
 # to do

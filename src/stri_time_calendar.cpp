@@ -294,7 +294,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    StriContainerDouble second_cont(second, vectorize_length);
    
    UErrorCode status = U_ZERO_ERROR;
-   Calendar* cal = Calendar::createInstance(locale_val, status);
+   cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    SEXP ret;
