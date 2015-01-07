@@ -83,6 +83,7 @@ Other datetime: \code{\link{POSIXst}},
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
