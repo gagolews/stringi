@@ -108,6 +108,38 @@ format.POSIXst <- function(x, ..., usetz=TRUE) {
    stri_datetime_format(x, ...)
 }
 
+
+#' @title
+#' t.b.d.
+#' 
+#' @description
+#' t,b,d,
+#' 
+#' @details
+#' t.b.d.
+#' 
+#' 
+#' @param str character vector
+#' @param format single string, see \code{\link{stri_datetime_format}};
+#' defaults to the ISO 8601 guideline
+#' @param tz t.b.d
+#' @param locale \code{NULL} or \code{""} for default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
+#' 
+#' @return
+#' Returns an object of class \code{\link{POSIXst}}.
+#' 
+#' @examples
+#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
+#' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
+#' 
+#' @export
+#' @family datetime
+stri_datetime_parse <- function(str, format="uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx", tz=NULL, locale=NULL) {
+   .Call(C_stri_datetime_parse, str, format, tz, locale)
+}
+
 # seq.POSIXst
 
 # rep.POSIXst

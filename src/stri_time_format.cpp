@@ -152,3 +152,126 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
       if (cal) { delete cal; cal = NULL; }
    })
 }
+
+
+
+/**
+ * Parse date-time objects
+ * 
+ * @param str
+ * @param format
+ * @param tz
+ * @param locale
+ * 
+ * @return character vector
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-08)
+ */
+SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP locale) {
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+   const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
+   
+   // "format" may be one of:
+   const char* format_opts[] = {
+      "date_full", "date_long", "date_medium", "date_short", 
+      "date_relative_full", "date_relative_long", "date_relative_medium", "date_relative_short", 
+      "time_full", "time_long", "time_medium", "time_short", 
+      "time_relative_full", "time_relative_long", "time_relative_medium", "time_relative_short", 
+      "datetime_full", "datetime_long", "datetime_medium", "datetime_short", 
+      "datetime_relative_full", "datetime_relative_long", "datetime_relative_medium", "datetime_relative_short",
+      NULL};
+   int format_cur = stri__match_arg(format_val, format_opts);
+   
+   Calendar* cal = NULL;
+   DateFormat* fmt = NULL;
+   STRI__ERROR_HANDLER_BEGIN(1)
+   R_len_t vectorize_length = LENGTH(str);
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   UnicodeString format_str(format_val); 
+   
+   UErrorCode status = U_ZERO_ERROR;
+   if (format_cur >= 0) {
+      DateFormat::EStyle style = DateFormat::kNone;
+      switch (format_cur % 8) {
+         case 0:  style = DateFormat::kFull; break;
+         case 1:  style = DateFormat::kLong; break;
+         case 2:  style = DateFormat::kMedium; break;
+         case 3:  style = DateFormat::kShort; break;
+         case 4:  style = DateFormat::kFullRelative; break;
+         case 5:  style = DateFormat::kLongRelative; break;
+         case 6:  style = DateFormat::kMediumRelative; break;
+         case 7:  style = DateFormat::kShortRelative; break;
+         default: style = DateFormat::kNone; break;
+      }
+      
+      /* ICU 54.1: Relative time styles are not currently supported.  */
+      switch (format_cur / 8) {
+         case 0:
+            fmt = DateFormat::createDateInstance(style, Locale::createFromName(locale_val));
+            break;
+            
+         case 1:
+            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            break;
+            
+         case 2:
+            fmt = DateFormat::createDateTimeInstance(style, (DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            break;
+            
+         default:
+            fmt = NULL;
+            break;
+         
+      }
+   }
+   else
+      fmt = new SimpleDateFormat(format_str, Locale::createFromName(locale_val), status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   
+   status = U_ZERO_ERROR;
+   cal = Calendar::createInstance(locale_val, status);
+   STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   
+   /* TO DO:
+   void    adoptTimeZone (TimeZone *value)
+    Sets the calendar's time zone to be the one passed in. 
+    */
+
+   cal->setLenient(true); // TO DO: add arg lenient here and there.........
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
+   for (R_len_t i=0; i<vectorize_length; ++i) {
+      if (str_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+      
+      status = U_ZERO_ERROR;
+      ParsePosition pos;
+      fmt->parse(str_cont.get(i), *cal, pos);
+      
+      if (pos.getErrorIndex() >= 0)
+         REAL(ret)[i] = NA_REAL;
+      else {
+         status = U_ZERO_ERROR;
+         UDate time = cal->getTime(status);
+         if (U_FAILURE(status))
+            REAL(ret)[i] = NA_REAL;
+         else
+            REAL(ret)[i] = ((double)time)/1000.0;
+      }
+   }
+
+//   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
+   stri__set_class_POSIXct(ret);
+   if (fmt) { delete fmt; fmt = NULL; }
+   if (cal) { delete cal; cal = NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (fmt) { delete fmt; fmt = NULL; }
+      if (cal) { delete cal; cal = NULL; }
+   })
+}
