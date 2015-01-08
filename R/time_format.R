@@ -71,7 +71,7 @@
 #' locale-sensitive characters in display).
 #' 
 #' \tabular{llll}{
-#' \bold{Symbol} \tab \bold{Meaning}         \tab \bold{Example(s)}   \tab \bold{Output}  \cr
+#' \bold{Symbol} \tab \bold{Meaning} \tab \bold{Example(s)} \tab \bold{Output} \cr
 #' G \tab era designator \tab G, GG, or GGG \tab AD \cr
 #'  \tab  \tab GGGG \tab Anno Domini \cr
 #'  \tab  \tab GGGGG \tab A \cr

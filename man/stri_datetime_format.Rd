@@ -75,7 +75,7 @@ as a date separator, and replaced by respective
 locale-sensitive characters in display).
 
 \tabular{llll}{
-\bold{Symbol} \tab \bold{Meaning}         \tab \bold{Example(s)}   \tab \bold{Output}  \cr
+\bold{Symbol} \tab \bold{Meaning} \tab \bold{Example(s)} \tab \bold{Output} \cr
 G \tab era designator \tab G, GG, or GGG \tab AD \cr
  \tab  \tab GGGG \tab Anno Domini \cr
  \tab  \tab GGGGG \tab A \cr
@@ -189,6 +189,7 @@ yyyyy.MMMM.dd GGG hh:mm aaa \tab 01996.July.10 AD 12:08 PM \cr
 \examples{
 stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
 stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
+stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 }
 \references{
 \emph{Formatting Dates and Times} - ICU User Guide,
