@@ -30,11 +30,11 @@
 
 
 #' @title
-#' Date and Time Formatting
+#' Date and Time Formatting and Parsing
 #'
 #' @description
 #' This function converts a given date/time object
-#' to a character vector.
+#' to a character vector or conversely.
 #'
 #' @details
 #' Vectorized over \code{time}.
@@ -44,7 +44,7 @@
 #' and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
 #' This gives a locale-dependent date and/or time format.
 #' Note that currently ICU does not support \code{relative} \code{time} formats,
-#' so this flag is currently ignored in such context.
+#' so this flag is currently in such context.
 #' 
 #' Otherwise, \code{format} is a pattern:
 #' a string of characters, where specific strings of characters are replaced
@@ -59,7 +59,7 @@
 #' For some characters, the count specifies whether an abbreviated
 #' or full form should be used, but may have other choices, as given below.
 #' 
-#' Two single quotes represents a literal single quote, either
+#' Two single quotes represent a literal single quote, either
 #' inside or outside single quotes. Text within single quotes 
 #' is not interpreted in any way (except for two adjacent single quotes).
 #' Otherwise all ASCII letter from \code{a} to \code{z} and \code{A} to \code{Z}
@@ -70,12 +70,122 @@
 #' as a date separator, and replaced by respective
 #' locale-sensitive characters in display).
 #' 
-#' TO DO: add table / formats
+#' \tabular{llll}{
+#' \bold{Symbol} \tab \bold{Meaning}         \tab \bold{Example(s)}   \tab \bold{Output}  \cr
+#' G \tab era designator \tab G, GG, or GGG \tab AD \cr
+#'  \tab  \tab GGGG \tab Anno Domini \cr
+#'  \tab  \tab GGGGG \tab A \cr
+#' y \tab year \tab yy \tab 96 \cr
+#'  \tab  \tab y or yyyy \tab 1996 \cr
+# Y \tab year of "Week of Year" \tab Y \tab 1997 \cr
+#' u \tab extended year \tab u \tab 4601 \cr
+#' U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab 甲子 \cr
+#' r \tab related Gregorian year \tab r \tab 1996 \cr
+#' Q \tab quarter \tab Q or QQ \tab 02 \cr
+#'  \tab  \tab QQQ \tab Q2 \cr
+#'  \tab  \tab QQQQ \tab 2nd quarter \cr
+#'  \tab  \tab QQQQQ \tab 2 \cr
+#' q \tab Stand Alone quarter \tab q or qq \tab 02 \cr
+#'  \tab  \tab qqq \tab Q2 \cr
+#'  \tab  \tab qqqq \tab 2nd quarter \cr
+#'  \tab  \tab qqqqq \tab 2 \cr
+#' M \tab month in year \tab M or MM \tab 09 \cr
+#'  \tab  \tab MMM \tab Sep \cr
+#'  \tab  \tab MMMM \tab September \cr
+#'  \tab  \tab MMMMM \tab S \cr
+#' L \tab Stand Alone month in year \tab L or LL \tab 09 \cr
+#'  \tab  \tab LLL \tab Sep \cr
+#'  \tab  \tab LLLL \tab September \cr
+#'  \tab  \tab LLLLL \tab S \cr
+#' w \tab week of year \tab w or ww \tab 27 \cr
+#' W \tab week of month \tab W \tab 2 \cr
+#' d \tab day in month \tab d \tab 2 \cr
+#'  \tab  \tab dd \tab 02 \cr
+#' D \tab day of year \tab D \tab 189 \cr
+#' F \tab day of week in month \tab F \tab 2 (2nd Wed in July) \cr
+#' g \tab modified julian day \tab g \tab 2451334 \cr
+#' E \tab day of week \tab E, EE, or EEE \tab Tue \cr
+#'  \tab  \tab EEEE \tab Tuesday \cr
+#'  \tab  \tab EEEEE \tab T \cr
+#'  \tab  \tab EEEEEE \tab Tu \cr
+#' e \tab local day of week \tab e or ee \tab 2 \cr
+#'  \tab  example: if Monday is 1st day, Tuesday is 2nd )  \tab eee \tab Tue \cr
+#'  \tab  \tab eeee \tab Tuesday \cr
+#'  \tab  \tab eeeee \tab T \cr
+#'  \tab  \tab eeeeee \tab Tu \cr
+#' c \tab Stand Alone local day of week \tab c or cc \tab 2 \cr
+#'  \tab  \tab ccc \tab Tue \cr
+#'  \tab  \tab cccc \tab Tuesday \cr
+#'  \tab  \tab ccccc \tab T \cr
+#'  \tab  \tab cccccc \tab Tu \cr
+#' a \tab am/pm marker \tab a \tab pm \cr
+#' h \tab hour in am/pm (1~12) \tab h \tab 7 \cr
+#'  \tab  \tab hh \tab 07 \cr
+#' H \tab hour in day (0~23) \tab H \tab 0 \cr
+#'  \tab  \tab HH \tab 00 \cr
+#' k \tab hour in day (1~24) \tab k \tab 24 \cr
+#'  \tab  \tab kk \tab 24 \cr
+#' K \tab hour in am/pm (0~11) \tab K \tab 0 \cr
+#'  \tab  \tab KK \tab 00 \cr
+#' m \tab minute in hour \tab m \tab 4 \cr
+#'  \tab  \tab mm \tab 04 \cr
+#' s \tab second in minute \tab s \tab 5 \cr
+#'  \tab  \tab ss \tab 05 \cr
+#' S \tab fractional second - truncates (like other time fields)  \tab S \tab 2 \cr
+#'  \tab to the count of letters when formatting. Appends  \tab SS \tab 23 \cr
+#'  \tab zeros if more than 3 letters specified. Truncates at  \tab SSS \tab 235 \cr
+#'  \tab three significant digits when parsing.  \tab SSSS \tab 2350 \cr
+#' A \tab milliseconds in day \tab A \tab 61201235 \cr
+#' z \tab Time Zone: specific non-location \tab z, zz, or zzz \tab PDT \cr
+#'  \tab  \tab zzzz \tab Pacific Daylight Time \cr
+#' Z \tab Time Zone: ISO8601 basic hms? / RFC 822 \tab Z, ZZ, or ZZZ \tab -0800 \cr
+#'  \tab Time Zone: long localized GMT (=OOOO) \tab ZZZZ \tab GMT-08:00 \cr
+#'  \tab TIme Zone: ISO8601 extended hms? (=XXXXX) \tab ZZZZZ \tab -08:00, -07:52:58, Z \cr
+#' O \tab Time Zone: short localized GMT \tab O \tab GMT-8 \cr
+#'  \tab Time Zone: long localized GMT (=ZZZZ) \tab OOOO \tab GMT-08:00 \cr
+#' v \tab Time Zone: generic non-location \tab v \tab PT \cr
+#'  \tab (falls back first to VVVV) \tab vvvv \tab Pacific Time or Los Angeles Time \cr
+#' V \tab Time Zone: short time zone ID \tab V \tab uslax \cr
+#'  \tab Time Zone: long time zone ID \tab VV \tab America/Los_Angeles \cr
+#'  \tab Time Zone: time zone exemplar city \tab VVV \tab Los Angeles \cr
+#'  \tab Time Zone: generic location (falls back to OOOO) \tab VVVV \tab Los Angeles Time \cr
+#' X \tab Time Zone: ISO8601 basic hm?, with Z for 0 \tab X \tab -08, +0530, Z \cr
+#'  \tab Time Zone: ISO8601 basic hm, with Z \tab XX \tab -0800, Z \cr
+#'  \tab Time Zone: ISO8601 extended hm, with Z \tab XXX \tab -08:00, Z \cr
+#'  \tab Time Zone: ISO8601 basic hms?, with Z \tab XXXX \tab -0800, -075258, Z \cr
+#'  \tab Time Zone: ISO8601 extended hms?, with Z \tab XXXXX \tab -08:00, -07:52:58, Z \cr
+#' x \tab Time Zone: ISO8601 basic hm?, without Z for 0 \tab x \tab -08, +0530 \cr
+#'  \tab Time Zone: ISO8601 basic hm, without Z \tab xx \tab -0800 \cr
+#'  \tab Time Zone: ISO8601 extended hm, without Z \tab xxx \tab -08:00 \cr
+#'  \tab Time Zone: ISO8601 basic hms?, without Z \tab xxxx \tab -0800, -075258 \cr
+#'  \tab Time Zone: ISO8601 extended hms?, without Z \tab xxxxx \tab -08:00, -07:52:58 \cr
+#' ' \tab escape for text \tab ' \tab (nothing) \cr
+#' ' ' \tab two single quotes produce one \tab ' ' \tab '
+#' }
 #' 
-#' TO DO: add examples
+#' Note that any characters in the pattern that are not in the ranges 
+#' of \code{[a-z]} and \code{[A-Z]} will be treated as quoted text. 
+#' For instance, characters like \code{:}, \code{.}, \code{ } (a space),
+#' \code{#} and \code{@@} will appear in the resulting time text
+#' even they are not enclosed within single quotes. The single quote is used
+#' to ``escape'' letters. Two single quotes in a row,
+#' inside or outside a quoted sequence, represent a ``real'' single quote.
+#' 
+#' Here are some examples:
+#' 
+#' \tabular{ll}{
+#' \bold{Exemplary Pattern} \tab  \bold{Result} \cr
+#' yyyy.MM.dd G 'at' HH:mm:ss zzz \tab 1996.07.10 AD at 15:08:56 PDT \cr
+#' EEE, MMM d, ''yy \tab Wed, July 10, '96 \cr
+#' h:mm a \tab 12:08 PM \cr
+#' hh 'o''clock' a, zzzz \tab 12 o'clock PM, Pacific Daylight Time \cr
+#' K:mm a, z \tab 0:00 PM, PST \cr
+#' yyyyy.MMMM.dd GGG hh:mm aaa \tab 01996.July.10 AD 12:08 PM \cr
+#' }
 #'
 #' @param time a \code{POSIXct} object
 #' @param format single string, see Details; defaults to the ISO 8601 guideline
+#' @param str character vector
 #' @param tz t.b.d
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
@@ -83,7 +193,9 @@
 #' @param usetz this argument is purposely ignored
 #'
 #' @return
-#' Returns a character vector.
+#' \code{stri_datetime_format} and \code{format.POSIXst} return a character vector.
+#' 
+#' \code{stri_datetime_parse} returns an object of class \code{\link{POSIXst}}.
 #' 
 #' @references
 #' \emph{Formatting Dates and Times} - ICU User Guide,
@@ -91,12 +203,14 @@
 #'
 #'
 #' @examples
-#' # to do
+#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
+#' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
+#' stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 #' 
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format="uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx", tz=NULL, locale=NULL) {
+stri_datetime_format <- function(time, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL, locale=NULL) {
    .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
@@ -109,33 +223,9 @@ format.POSIXst <- function(x, ..., usetz=TRUE) {
 }
 
 
-#' @title
-#' t.b.d.
-#' 
-#' @description
-#' t,b,d,
-#' 
-#' @details
-#' t.b.d.
-#' 
-#' 
-#' @param str character vector
-#' @param format single string, see \code{\link{stri_datetime_format}};
-#' defaults to the ISO 8601 guideline
-#' @param tz t.b.d
-#' @param locale \code{NULL} or \code{""} for default locale,
-#' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting \code{@@calendar=name} keyword
-#' 
-#' @return
-#' Returns an object of class \code{\link{POSIXst}}.
-#' 
-#' @examples
-#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
-#' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
 #' 
 #' @export
-#' @family datetime
+#' @rdname stri_datetime_format
 stri_datetime_parse <- function(str, format="uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx", tz=NULL, locale=NULL) {
    .Call(C_stri_datetime_parse, str, format, tz, locale)
 }
