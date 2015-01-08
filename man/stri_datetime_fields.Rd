@@ -32,12 +32,12 @@ stri_datetime_fields(stri_datetime_now())
 \seealso{
 Other datetime: \code{\link{POSIXst}},
   \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_now}};
-  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};

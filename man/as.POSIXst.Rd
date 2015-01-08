@@ -29,13 +29,13 @@ etc. or the \code{sort()} function may be used.
 }
 \seealso{
 Other datetime: \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_now}};
-  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_set}};
