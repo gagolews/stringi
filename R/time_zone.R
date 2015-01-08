@@ -34,6 +34,13 @@
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
+#' 
+#' @details
+#' If  \code{offset} and \code{region} are \code{NA} (the default),
+#' all time zones are returned. Otherwise,
+#' only time zone IDs with a given raw offset from GMT are given
+#' and/or time zones corresponding to a given region are provided.
+#' Note that the effect of daylight savings time is ignored.
 #'
 #' A time zone represents an offset applied to Greenwich Mean Time (GMT)
 #' to obtain local time (GMT is similar, but not precisely identical,
@@ -44,13 +51,20 @@
 #' if daylight savings time (DST) is used, or might be the same all year long.
 #' Typically, regions closer to the equator do not use DST.
 #' If DST is in use, then specific rules define the point at which
-#'  the offset changes and the amount by which it changes.
-#'
-#' If  \code{offset} and \code{region} are \code{NA} (the default),
-#' all time zones are returned. Otherwise,
-#' only time zone IDs with a given raw offset from GMT are given
-#' and/or time zones corresponding to a given region are provided.
-#' Note that the effect of daylight savings time is ignored.
+#' the offset changes and the amount by which it changes.
+#' 
+#' If DST is observed, then three additional pieces of information are needed:
+#' \enumerate{
+#' \item The precise date and time during the year when DST begins. 
+#' In the first half of the year it's in the northern hemisphere, 
+#' and in the second half of the year it's in the southern hemisphere.
+#' \item The precise date and time during the year when DST ends. 
+#' In the first half of the year it's in the southern hemisphere, 
+#' and in the second half of the year it's in the northern hemisphere.
+#' \item The amount by which the GMT offset changes when DST is in effect. 
+#' This is almost always one hour.
+#' }
+#' 
 #'
 #' @param offset single numeric value;
 #' a given raw offset from GMT, in hours
@@ -68,6 +82,9 @@
 #'
 #' \emph{ICU TimeZone classes} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/datetime/timezone}
+#' 
+#' \emph{Date/Time Services} -- ICU User Guide,
+#' \url{http://userguide.icu-project.org/datetime}
 #'
 #' @examples
 #' stri_timezone_list()
