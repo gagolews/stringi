@@ -23,7 +23,7 @@ or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns an object of class \code{\link{POSIXst}}.
+Both functions return an object of class \code{\link{POSIXst}}.
 
 The replacement version of \code{stri_datetime_add} modifies
 the state of the \code{time} object.
@@ -36,10 +36,10 @@ Vectorized over \code{time} and \code{value}.
 
 These date-time arithmetic operations are performed under the current
 default time zone and locale. The \code{tzone} argument of \code{time}
-is ignored.
+is ignored. TO DO......................................................................
 
 
-Note that e.g. January, 31 + 1 month = Feburary, 28 or 29.
+Note that e.g. January, 31 + 1 month = February, 28 or 29. TO DO ...........................
 }
 \examples{
 x <- stri_datetime_now()

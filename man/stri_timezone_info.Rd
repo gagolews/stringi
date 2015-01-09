@@ -18,9 +18,10 @@ Returns a list with the following named components:
 \enumerate{
 \item \code{ID} (time zone identifier),
 \item \code{Name} (localized human-readable time zone name),
-\item \code{RawOffset} (raw GMT offset, in hours, before taking daylight savings int account), and
-\item \code{UsesDaylightTime} (states whether a time zone uses daylight savings time
- in the current Gregorian calendar year).
+\item \code{RawOffset} (raw GMT offset, in hours, before taking
+daylight savings int account), and
+\item \code{UsesDaylightTime} (states whether a time zone uses
+daylight savings time in the current Gregorian calendar year).
 }
 }
 \description{

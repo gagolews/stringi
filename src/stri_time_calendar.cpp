@@ -98,7 +98,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
    const char* units_val = stri__prepare_arg_string_1_notNA(units, "units");
    const char* units_opts[] = {"years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds", NULL};
    int units_cur = stri__match_arg(units_val, units_opts);
-   
+
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
 
    Calendar* cal = NULL;
@@ -159,18 +159,18 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
 
 /**
  * Get values of date-time fields
- * 
+ *
  * @param time
  * @param locale
- * 
+ *
  * @return list
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  */
 SEXP stri_datetime_fields(SEXP time, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-   
+
    Calendar* cal = NULL;
    STRI__ERROR_HANDLER_BEGIN(1)
    R_len_t vectorize_length = LENGTH(time);
@@ -179,10 +179,10 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
    UErrorCode status = U_ZERO_ERROR;
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
    /* TO DO:
    void    adoptTimeZone (TimeZone *value)
- 	Sets the calendar's time zone to be the one passed in. 
+ 	Sets the calendar's time zone to be the one passed in.
     */
 
    SEXP ret;
@@ -190,18 +190,18 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, STRI__FIELDS_NUM));
    for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j)
       SET_VECTOR_ELT(ret, j, Rf_allocVector(INTSXP, vectorize_length));
-   
+
    for (R_len_t i=0; i<vectorize_length; ++i) {
       if (time_cont.isNA(i)) {
          for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j)
             INTEGER(VECTOR_ELT(ret, j))[i] = NA_INTEGER;
          continue;
       }
-      
+
       status = U_ZERO_ERROR;
       cal->setTime((UDate)(time_cont.get(i)*1000.0), status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      
+
       for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j) {
          UCalendarDateFields units_field;
          switch (j) {
@@ -216,25 +216,25 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
             case 8: units_field = UCAL_MILLISECOND;            break;
             default: throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
          }
-         //UCAL_IS_LEAP_MONTH 
+         //UCAL_IS_LEAP_MONTH
          //UCAL_MILLISECONDS_IN_DAY -> SecondsInDay
-         
+
          // UCAL_AM_PM -> "AM" or "PM" (localized? or factor?+index in stri_datetime_symbols) add arg use_symbols????
          // UCAL_DAY_OF_WEEK -> (localized? or factor?) SUNDAY, MONDAY
          // UCAL_DAY_OF_YEAR '
-         
+
          // isWekend
-         
+
          status = U_ZERO_ERROR;
          INTEGER(VECTOR_ELT(ret, j))[i] = cal->get(units_field, status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         
+
          if (units_field == UCAL_MONTH) ++INTEGER(VECTOR_ELT(ret, j))[i]; // month + 1
       }
    }
 
-   stri__set_names(ret, STRI__FIELDS_NUM, 
-      "Years", "Months", "WeeksOfYear", "Days", 
+   stri__set_names(ret, STRI__FIELDS_NUM,
+      "Years", "Months", "WeeksOfYear", "Days",
       "Hours12", "Hours24", "Minutes", "Seconds", "Milliseconds");
    if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
@@ -247,7 +247,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
 
 /**
  * Create a date-time object
- * 
+ *
  * @param year
  * @param month
  * @param day
@@ -256,9 +256,9 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
  * @param seconds
  * @param tz
  * @param locale
- * 
+ *
  * @return POSIXct
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  */
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minute, SEXP second, SEXP /*tz*/, SEXP locale)
@@ -270,11 +270,11 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    PROTECT(minute = stri_prepare_arg_integer(minute, "minute"));
    PROTECT(second = stri_prepare_arg_double(second, "second"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-   
-   R_len_t vectorize_length = stri__recycling_rule(true, 6, 
+
+   R_len_t vectorize_length = stri__recycling_rule(true, 6,
       LENGTH(year), LENGTH(month), LENGTH(day),
       LENGTH(hour), LENGTH(minute), LENGTH(second));
-      
+
    if (vectorize_length <= 0) {
       SEXP ret;
       PROTECT(ret = Rf_allocVector(REALSXP, 0));
@@ -283,7 +283,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
       UNPROTECT(7);
       return ret;
    }
-   
+
    Calendar* cal = NULL;
    STRI__ERROR_HANDLER_BEGIN(6)
    StriContainerInteger year_cont(year, vectorize_length);
@@ -292,7 +292,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    StriContainerInteger hour_cont(hour, vectorize_length);
    StriContainerInteger minute_cont(minute, vectorize_length);
    StriContainerDouble second_cont(second, vectorize_length);
-   
+
    UErrorCode status = U_ZERO_ERROR;
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -319,7 +319,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
       ret_val[i] = ((double)cal->getTime(status))/1000.0;
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
-   
+
 //   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
    stri__set_class_POSIXct(ret);
    if (cal) { delete cal; cal = NULL; }

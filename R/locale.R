@@ -71,11 +71,11 @@
 #' countries while the individual country's currency is still in circulation.
 #' In such case, ICU \code{Variant} "_EURO" could be used for selecting locales
 #' that support the Euro currency.
-#' 
+#'
 #' The final (optional) element of a locale is an optional list of
-#' keywords together with their values. Keywords must be unique. 
-#' Their order is not significant. Unknown keywords are ignored. 
-#' The handling of keywords depends on the specific services that 
+#' keywords together with their values. Keywords must be unique.
+#' Their order is not significant. Unknown keywords are ignored.
+#' The handling of keywords depends on the specific services that
 #' utilize them. Currently, the following keywords are recognized:
 #' \code{calendar}, \code{colation}, \code{currency}, and \code{numbers},
 #' e.g. \code{fr@@collation=phonebook;calendar=islamic-civil} is a valid
@@ -84,7 +84,7 @@
 #'
 #' For a list of locales that are recognized by \pkg{ICU},
 #' call \code{\link{stri_locale_list}}.
-#' 
+#'
 #'
 #' @section A Note on Default Locales:
 #'
@@ -109,7 +109,7 @@
 #'
 #' One of many examples of locale-dependent services is the Collator, which
 #' performs a locale-aware string comparison. It is used for string comparing,
-#' ordering, sorting, and searching. See \code{\link{stri_opts_collator}} 
+#' ordering, sorting, and searching. See \code{\link{stri_opts_collator}}
 #' for the description on how to tune its settings, and its \code{locale}
 #' argument in particular.
 #'

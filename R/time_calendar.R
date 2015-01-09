@@ -61,10 +61,10 @@ stri_datetime_now <- function() {
 #'
 #' These date-time arithmetic operations are performed under the current
 #' default time zone and locale. The \code{tzone} argument of \code{time}
-#' is ignored.
+#' is ignored. TO DO......................................................................
 #'
 #'
-#' Note that e.g. January, 31 + 1 month = Feburary, 28 or 29.
+#' Note that e.g. January, 31 + 1 month = February, 28 or 29. TO DO ...........................
 #'
 #' @param time a \code{POSIXct} object
 #' @param value integer vector; signed number of units to add to a given time
@@ -76,7 +76,7 @@ stri_datetime_now <- function() {
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
-#' Returns an object of class \code{\link{POSIXst}}.
+#' Both functions return an object of class \code{\link{POSIXst}}.
 #'
 #' The replacement version of \code{stri_datetime_add} modifies
 #' the state of the \code{time} object.
@@ -125,7 +125,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
-#' Returns a data frame with the following columns:
+#' Returns a data frame with the following columns: TO DO...................................
 #' \enumerate{
 #' \item year - 0 is 1BC, -1 is 2BC, etc.
 #' \item month... months are 1-based
@@ -206,9 +206,6 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 as.POSIXst <- function(x) {
    stop("TO DO")
 }
-
-# http://userguide.icu-project.org/datetime/calendar
-
 
 # TO DO: field difference
 

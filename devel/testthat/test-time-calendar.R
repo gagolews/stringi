@@ -33,6 +33,6 @@ test_that("stri_datetime_add", {
 
 test_that("stri_datetime_fields", {
    stri_datetime_fields(stri_datetime_now())
-   
-   
+
+
 })

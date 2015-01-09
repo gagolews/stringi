@@ -796,7 +796,7 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Use R_alloc for the string returned
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  *    "@keyword=value" may use default locale from now; also, loc is trimmed
  */
@@ -811,20 +811,20 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
          if (allowna) return NULL;
          else Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
       }
-      
+
       UErrorCode err = U_ZERO_ERROR;
       char buf[ULOC_FULLNAME_CAPACITY];
       uloc_canonicalize((const char*)CHAR(STRING_ELT(loc, 0)), buf, ULOC_FULLNAME_CAPACITY, &err);
       STRI__CHECKICUSTATUS_RFERROR(err, {;})
-      
+
       R_len_t ret_n = strlen(buf);
       char* ret = R_alloc(ret_n+1, (int)sizeof(char));
       memcpy(ret, buf, ret_n+1);
-      
+
       // right-trim
       while (ret_n > 0 && (ret[ret_n-1] == ' ' || ret[ret_n-1] == '\t' || ret[ret_n-1] == '\n' || ret[ret_n-1] == '\r'))
          ret[--ret_n] = '\0';
-         
+
       // left-trim
       while (ret[0] == ' ' || ret[0] == '\t' || ret[0] == '\n' || ret[0] == '\r') {
          ++ret;

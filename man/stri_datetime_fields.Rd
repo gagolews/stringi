@@ -14,7 +14,7 @@ or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns a data frame with the following columns:
+Returns a data frame with the following columns: TO DO...................................
 \enumerate{
 \item year - 0 is 1BC, -1 is 2BC, etc.
 \item month... months are 1-based
