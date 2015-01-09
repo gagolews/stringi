@@ -20,26 +20,23 @@ previously used timezone, invisibly.
 with the current default time zone.
 }
 \description{
-\code{stri_timezone_set} changes default time zone for all  functions
-in the \pkg{stringi} package,
-i.e. establishes the meaning of the ``\code{NULL} time zone'' argument
-of date/time processing functions. On the other hand, \code{stri_timezone_get}
-gets current default time zone.
+\code{stri_timezone_set} changes default time zone for all functions
+in the \pkg{stringi} package, i.e. establishes the meaning of the
+``\code{NULL} time zone'' argument of date/time processing functions.
+On the other hand, \code{stri_timezone_get} gets current default time zone.
 
 For more information on time zone representation in \pkg{ICU},
 see \code{\link{stri_timezone_list}}.
 }
 \details{
-Unless the default time zone has already been set using \code{stri_timezone_set},
-the default time zone is determined by querying the system using methods
-in ICU's \code{TPlatformUtilities}. If the system routines fail,
-or if they specify a TimeZone or TimeZone offset which is not recognized,
-the TimeZone indicated by the ID kLastResortID is instantiated and made the default.
+Unless the default time zone has already been set using
+\code{stri_timezone_set}, the default time zone is determined
+by querying the system using methods in ICU's internal platform utilities.
 }
 \examples{
 \dontrun{
 oldtz <- stri_timezone_set("Europe/Warsaw")
-# ... some time zone-dependent operations
+# ... many time zone-dependent operations
 stri_timezone_set(oldtz) # restore previous default time zone
 }
 }

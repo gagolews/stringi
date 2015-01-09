@@ -35,7 +35,7 @@ may be specified by setting \code{@calendar=name} keyword}
 \code{stri_datetime_parse} returns an object of class \code{\link{POSIXst}}.
 }
 \description{
-This function converts a given date/time object
+These functions convert a given date/time object
 to a character vector or conversely.
 
 
@@ -82,7 +82,7 @@ G \tab era designator \tab G, GG, or GGG \tab AD \cr
 y \tab year \tab yy \tab 96 \cr
  \tab  \tab y or yyyy \tab 1996 \cr
 u \tab extended year \tab u \tab 4601 \cr
-U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab 甲子 \cr
+U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab \cr
 r \tab related Gregorian year \tab r \tab 1996 \cr
 Q \tab quarter \tab Q or QQ \tab 02 \cr
  \tab  \tab QQQ \tab Q2 \cr
@@ -106,7 +106,7 @@ d \tab day in month \tab d \tab 2 \cr
  \tab  \tab dd \tab 02 \cr
 D \tab day of year \tab D \tab 189 \cr
 F \tab day of week in month \tab F \tab 2 (2nd Wed in July) \cr
-g \tab modified julian day \tab g \tab 2451334 \cr
+g \tab modified Julian day \tab g \tab 2451334 \cr
 E \tab day of week \tab E, EE, or EEE \tab Tue \cr
  \tab  \tab EEEE \tab Tuesday \cr
  \tab  \tab EEEEE \tab T \cr
@@ -143,7 +143,7 @@ z \tab Time Zone: specific non-location \tab z, zz, or zzz \tab PDT \cr
  \tab  \tab zzzz \tab Pacific Daylight Time \cr
 Z \tab Time Zone: ISO8601 basic hms? / RFC 822 \tab Z, ZZ, or ZZZ \tab -0800 \cr
  \tab Time Zone: long localized GMT (=OOOO) \tab ZZZZ \tab GMT-08:00 \cr
- \tab TIme Zone: ISO8601 extended hms? (=XXXXX) \tab ZZZZZ \tab -08:00, -07:52:58, Z \cr
+ \tab Time Zone: ISO8601 extended hms? (=XXXXX) \tab ZZZZZ \tab -08:00, -07:52:58, Z \cr
 O \tab Time Zone: short localized GMT \tab O \tab GMT-8 \cr
  \tab Time Zone: long localized GMT (=ZZZZ) \tab OOOO \tab GMT-08:00 \cr
 v \tab Time Zone: generic non-location \tab v \tab PT \cr

@@ -34,37 +34,37 @@
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
-#' 
+#'
 #' @details
-#' If  \code{offset} and \code{region} are \code{NA} (the default),
+#' If  \code{offset} and \code{region} are \code{NA} (the default), then
 #' all time zones are returned. Otherwise,
-#' only time zone IDs with a given raw offset from GMT are given
+#' only time zone identifiers with a given raw offset from GMT
 #' and/or time zones corresponding to a given region are provided.
 #' Note that the effect of daylight savings time is ignored.
 #'
 #' A time zone represents an offset applied to Greenwich Mean Time (GMT)
-#' to obtain local time (GMT is similar, but not precisely identical,
-#' to Universal Coordinated Time, or UTC. In \pkg{ICU} the two terms
+#' to obtain local time (Universal Coordinated Time, or UTC, is similar,
+#' but not precisely identical, to GMT; in \pkg{ICU} the two terms
 #' are used interchangeably since \pkg{ICU} does not concern itself with
 #' either leap seconds or historical behavior).
-#' The offset might vary throughout the year,
-#' if daylight savings time (DST) is used, or might be the same all year long.
+#' The offset might vary throughout the year, if daylight savings time (DST)
+#' is used, or might be the same all year long.
 #' Typically, regions closer to the equator do not use DST.
 #' If DST is in use, then specific rules define the point at which
 #' the offset changes and the amount by which it changes.
-#' 
+#'
 #' If DST is observed, then three additional pieces of information are needed:
 #' \enumerate{
-#' \item The precise date and time during the year when DST begins. 
-#' In the first half of the year it's in the northern hemisphere, 
+#' \item The precise date and time during the year when DST begins.
+#' In the first half of the year it's in the northern hemisphere,
 #' and in the second half of the year it's in the southern hemisphere.
-#' \item The precise date and time during the year when DST ends. 
-#' In the first half of the year it's in the southern hemisphere, 
+#' \item The precise date and time during the year when DST ends.
+#' In the first half of the year it's in the southern hemisphere,
 #' and in the second half of the year it's in the northern hemisphere.
-#' \item The amount by which the GMT offset changes when DST is in effect. 
+#' \item The amount by which the GMT offset changes when DST is in effect.
 #' This is almost always one hour.
 #' }
-#' 
+#'
 #'
 #' @param offset single numeric value;
 #' a given raw offset from GMT, in hours
@@ -82,7 +82,7 @@
 #'
 #' \emph{ICU TimeZone classes} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/datetime/timezone}
-#' 
+#'
 #' \emph{Date/Time Services} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/datetime}
 #'
@@ -105,21 +105,18 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' Set or Get Default Time Zone in \pkg{stringi}
 #'
 #' @description
-#' \code{stri_timezone_set} changes default time zone for all  functions
-#' in the \pkg{stringi} package,
-#' i.e. establishes the meaning of the ``\code{NULL} time zone'' argument
-#' of date/time processing functions. On the other hand, \code{stri_timezone_get}
-#' gets current default time zone.
+#' \code{stri_timezone_set} changes default time zone for all functions
+#' in the \pkg{stringi} package, i.e. establishes the meaning of the
+#' ``\code{NULL} time zone'' argument of date/time processing functions.
+#' On the other hand, \code{stri_timezone_get} gets current default time zone.
 #'
 #' For more information on time zone representation in \pkg{ICU},
 #' see \code{\link{stri_timezone_list}}.
 #'
 #' @details
-#' Unless the default time zone has already been set using \code{stri_timezone_set},
-#' the default time zone is determined by querying the system using methods
-#' in ICU's \code{TPlatformUtilities}. If the system routines fail,
-#' or if they specify a TimeZone or TimeZone offset which is not recognized,
-#' the TimeZone indicated by the ID kLastResortID is instantiated and made the default.
+#' Unless the default time zone has already been set using
+#' \code{stri_timezone_set}, the default time zone is determined
+#' by querying the system using methods in ICU's internal platform utilities.
 #'
 #' @param tz single string; time zone identifier
 #'
@@ -137,7 +134,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' @examples
 #' \dontrun{
 #' oldtz <- stri_timezone_set("Europe/Warsaw")
-#' # ... some time zone-dependent operations
+#' # ... many time zone-dependent operations
 #' stri_timezone_set(oldtz) # restore previous default time zone
 #' }
 #'
@@ -183,9 +180,10 @@ stri_timezone_set <- function(tz) {
 #' \enumerate{
 #' \item \code{ID} (time zone identifier),
 #' \item \code{Name} (localized human-readable time zone name),
-#' \item \code{RawOffset} (raw GMT offset, in hours, before taking daylight savings int account), and
-#' \item \code{UsesDaylightTime} (states whether a time zone uses daylight savings time
-#'  in the current Gregorian calendar year).
+#' \item \code{RawOffset} (raw GMT offset, in hours, before taking
+#' daylight savings int account), and
+#' \item \code{UsesDaylightTime} (states whether a time zone uses
+#' daylight savings time in the current Gregorian calendar year).
 #' }
 #'
 #' @examples

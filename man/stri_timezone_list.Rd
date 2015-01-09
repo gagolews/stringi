@@ -20,19 +20,19 @@ Returns a character vector.
 Returns a list of available time zone identifiers.
 }
 \details{
-If  \code{offset} and \code{region} are \code{NA} (the default),
+If  \code{offset} and \code{region} are \code{NA} (the default), then
 all time zones are returned. Otherwise,
-only time zone IDs with a given raw offset from GMT are given
+only time zone identifiers with a given raw offset from GMT
 and/or time zones corresponding to a given region are provided.
 Note that the effect of daylight savings time is ignored.
 
 A time zone represents an offset applied to Greenwich Mean Time (GMT)
-to obtain local time (GMT is similar, but not precisely identical,
-to Universal Coordinated Time, or UTC. In \pkg{ICU} the two terms
+to obtain local time (Universal Coordinated Time, or UTC, is similar,
+but not precisely identical, to GMT; in \pkg{ICU} the two terms
 are used interchangeably since \pkg{ICU} does not concern itself with
 either leap seconds or historical behavior).
-The offset might vary throughout the year,
-if daylight savings time (DST) is used, or might be the same all year long.
+The offset might vary throughout the year, if daylight savings time (DST)
+is used, or might be the same all year long.
 Typically, regions closer to the equator do not use DST.
 If DST is in use, then specific rules define the point at which
 the offset changes and the amount by which it changes.

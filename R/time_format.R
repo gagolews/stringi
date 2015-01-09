@@ -33,24 +33,24 @@
 #' Date and Time Formatting and Parsing
 #'
 #' @description
-#' This function converts a given date/time object
+#' These functions convert a given date/time object
 #' to a character vector or conversely.
 #'
 #' @details
 #' Vectorized over \code{time}.
-#' 
+#'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
 #' and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
 #' This gives a locale-dependent date and/or time format.
 #' Note that currently ICU does not support \code{relative} \code{time} formats,
 #' so this flag is currently in such context.
-#' 
+#'
 #' Otherwise, \code{format} is a pattern:
 #' a string of characters, where specific strings of characters are replaced
-#' with date and time data from a calendar when formatting or used 
+#' with date and time data from a calendar when formatting or used
 #' to generate data for a calendar when parsing.
-#' For example, \code{y} stands for the year. Characters 
+#' For example, \code{y} stands for the year. Characters
 #' may be used multiple times. For instance, if \code{y} is used for the year,
 #' \code{yy} might produce \code{99}, whereas \code{yyyy} produces \code{1999}.
 #' For most numerical fields, the number of characters specifies
@@ -58,18 +58,18 @@
 #' produce \code{5}, but \code{hh} produces \code{05}.
 #' For some characters, the count specifies whether an abbreviated
 #' or full form should be used, but may have other choices, as given below.
-#' 
+#'
 #' Two single quotes represent a literal single quote, either
-#' inside or outside single quotes. Text within single quotes 
+#' inside or outside single quotes. Text within single quotes
 #' is not interpreted in any way (except for two adjacent single quotes).
 #' Otherwise all ASCII letter from \code{a} to \code{z} and \code{A} to \code{Z}
-#' are reserved as syntax characters, and require quoting if 
-#' they are to represent literal characters. In addition, certain 
+#' are reserved as syntax characters, and require quoting if
+#' they are to represent literal characters. In addition, certain
 #' ASCII punctuation characters may become variable in the future
 #' (eg \code{:} being interpreted as the time separator and \code{/}
 #' as a date separator, and replaced by respective
 #' locale-sensitive characters in display).
-#' 
+#'
 #' \tabular{llll}{
 #' \bold{Symbol} \tab \bold{Meaning} \tab \bold{Example(s)} \tab \bold{Output} \cr
 #' G \tab era designator \tab G, GG, or GGG \tab AD \cr
@@ -79,7 +79,7 @@
 #'  \tab  \tab y or yyyy \tab 1996 \cr
 # Y \tab year of "Week of Year" \tab Y \tab 1997 \cr
 #' u \tab extended year \tab u \tab 4601 \cr
-#' U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab 甲子 \cr
+#' U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab \cr
 #' r \tab related Gregorian year \tab r \tab 1996 \cr
 #' Q \tab quarter \tab Q or QQ \tab 02 \cr
 #'  \tab  \tab QQQ \tab Q2 \cr
@@ -103,7 +103,7 @@
 #'  \tab  \tab dd \tab 02 \cr
 #' D \tab day of year \tab D \tab 189 \cr
 #' F \tab day of week in month \tab F \tab 2 (2nd Wed in July) \cr
-#' g \tab modified julian day \tab g \tab 2451334 \cr
+#' g \tab modified Julian day \tab g \tab 2451334 \cr
 #' E \tab day of week \tab E, EE, or EEE \tab Tue \cr
 #'  \tab  \tab EEEE \tab Tuesday \cr
 #'  \tab  \tab EEEEE \tab T \cr
@@ -140,7 +140,7 @@
 #'  \tab  \tab zzzz \tab Pacific Daylight Time \cr
 #' Z \tab Time Zone: ISO8601 basic hms? / RFC 822 \tab Z, ZZ, or ZZZ \tab -0800 \cr
 #'  \tab Time Zone: long localized GMT (=OOOO) \tab ZZZZ \tab GMT-08:00 \cr
-#'  \tab TIme Zone: ISO8601 extended hms? (=XXXXX) \tab ZZZZZ \tab -08:00, -07:52:58, Z \cr
+#'  \tab Time Zone: ISO8601 extended hms? (=XXXXX) \tab ZZZZZ \tab -08:00, -07:52:58, Z \cr
 #' O \tab Time Zone: short localized GMT \tab O \tab GMT-8 \cr
 #'  \tab Time Zone: long localized GMT (=ZZZZ) \tab OOOO \tab GMT-08:00 \cr
 #' v \tab Time Zone: generic non-location \tab v \tab PT \cr
@@ -162,17 +162,17 @@
 #' ' \tab escape for text \tab ' \tab (nothing) \cr
 #' ' ' \tab two single quotes produce one \tab ' ' \tab '
 #' }
-#' 
-#' Note that any characters in the pattern that are not in the ranges 
-#' of \code{[a-z]} and \code{[A-Z]} will be treated as quoted text. 
+#'
+#' Note that any characters in the pattern that are not in the ranges
+#' of \code{[a-z]} and \code{[A-Z]} will be treated as quoted text.
 #' For instance, characters like \code{:}, \code{.}, \code{ } (a space),
 #' \code{#} and \code{@@} will appear in the resulting time text
 #' even they are not enclosed within single quotes. The single quote is used
 #' to ``escape'' letters. Two single quotes in a row,
 #' inside or outside a quoted sequence, represent a ``real'' single quote.
-#' 
+#'
 #' Here are some examples:
-#' 
+#'
 #' \tabular{ll}{
 #' \bold{Exemplary Pattern} \tab  \bold{Result} \cr
 #' yyyy.MM.dd G 'at' HH:mm:ss zzz \tab 1996.07.10 AD at 15:08:56 PDT \cr
@@ -194,9 +194,9 @@
 #'
 #' @return
 #' \code{stri_datetime_format} and \code{format.POSIXst} return a character vector.
-#' 
+#'
 #' \code{stri_datetime_parse} returns an object of class \code{\link{POSIXst}}.
-#' 
+#'
 #' @references
 #' \emph{Formatting Dates and Times} - ICU User Guide,
 #' \url{http://userguide.icu-project.org/formatparse/datetime}
@@ -206,7 +206,7 @@
 #' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
 #' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
 #' stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
-#' 
+#'
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
@@ -223,7 +223,7 @@ format.POSIXst <- function(x, ..., usetz=TRUE) {
 }
 
 
-#' 
+#'
 #' @export
 #' @rdname stri_datetime_format
 stri_datetime_parse <- function(str, format="uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx", tz=NULL, locale=NULL) {

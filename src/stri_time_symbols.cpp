@@ -46,7 +46,7 @@
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-25)
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  *    use calendar keyword in locale
  */
@@ -77,7 +77,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
    Locale loc = Locale::createFromName(qloc);
    int32_t kvlen = loc.getKeywordValue("calendar", calendar_type.data(), calendar_type.size(), status);
    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
-   
+
    status = U_ZERO_ERROR;
    DateFormatSymbols sym(status);
    status = U_ZERO_ERROR;

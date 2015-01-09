@@ -27,7 +27,7 @@ Returns a list with the following named components:
 }
 \description{
 Returns a list of all localizable date-time formatting data,
-including month and weeday names, localized AM/PM strings, etc.
+including month and weekday names, localized AM/PM strings, etc.
 
 \code{context} stands for a selector for date formatting context
 and \code{width} - for  date formatting width.
