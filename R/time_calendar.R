@@ -145,7 +145,7 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' Crate a Date-Time Object
 #' 
 #' @description
-#' ...
+#' This function constructs date-time objects from numeric representations.
 #' 
 #' @details
 #' Vectorized over \code{year}, \code{month}, \code{hour},
@@ -159,6 +159,7 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' @param second numeric vetor; fractional seconds are allowed
 #' @param tz \code{NULL} or \code{""} for default time zone,
 #' a single string with time zone ID otherwise
+#' @param lenient single logical value; should the operation be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
@@ -169,11 +170,13 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' @examples
 #' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
 #' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+#' stri_datetime_create(2015, 02, 29)
+#' stri_datetime_create(2015, 02, 29, lenient=TRUE)
 #' 
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, locale)
+stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, lenient=FALSE, locale=NULL) {
+   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, lenient, locale)
 }
 
 

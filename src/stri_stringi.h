@@ -339,7 +339,7 @@ void stri__set_class_POSIXct(SEXP x);
 SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP locale);
 SEXP stri_datetime_fields(SEXP time, SEXP locale);
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
-   SEXP minute, SEXP second, SEXP tz, SEXP locale);
+   SEXP minute, SEXP second, SEXP tz, SEXP lenient, SEXP locale);
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale);
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP locale);
 

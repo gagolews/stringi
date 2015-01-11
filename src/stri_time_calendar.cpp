@@ -255,13 +255,16 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
  * @param minutes
  * @param seconds
  * @param tz
+ * @param lenient
  * @param locale
  *
  * @return POSIXct
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  */
-SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minute, SEXP second, SEXP /*tz*/, SEXP locale)
+SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, 
+   SEXP minute, SEXP second, SEXP /*tz*/, SEXP lenient, SEXP locale)
 {
    PROTECT(year = stri_prepare_arg_integer(year, "year"));
    PROTECT(month = stri_prepare_arg_integer(month, "month"));
@@ -270,6 +273,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    PROTECT(minute = stri_prepare_arg_integer(minute, "minute"));
    PROTECT(second = stri_prepare_arg_double(second, "second"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+   bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
 
    R_len_t vectorize_length = stri__recycling_rule(true, 6,
       LENGTH(year), LENGTH(month), LENGTH(day),
@@ -296,6 +300,8 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
    UErrorCode status = U_ZERO_ERROR;
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   
+   cal->setLenient(lenient_val);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
@@ -317,7 +323,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, SEXP minut
 
       status = U_ZERO_ERROR;
       ret_val[i] = ((double)cal->getTime(status))/1000.0;
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      if (U_FAILURE(status)) REAL(ret)[i] = NA_REAL;
    }
 
 //   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
