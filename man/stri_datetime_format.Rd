@@ -11,8 +11,8 @@ stri_datetime_format(time, format = "uuuu-MM-dd'T'HH:mm:ssxxx", tz = NULL,
 
 \method{format}{POSIXst}(x, ..., usetz = TRUE)
 
-stri_datetime_parse(str, format = "uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx",
-  tz = NULL, locale = NULL)
+stri_datetime_parse(str, format = "uuuu-MM-dd'T'HH:mm:ssxxx", tz = NULL,
+  lenient = FALSE, locale = NULL)
 }
 \arguments{
 \item{time}{a \code{POSIXct} object}
@@ -28,6 +28,8 @@ may be specified by setting \code{@calendar=name} keyword}
 \item{usetz}{this argument is purposely ignored}
 
 \item{str}{character vector}
+
+\item{lenient}{single logical value; should date/time parsing be lenient?}
 }
 \value{
 \code{stri_datetime_format} and \code{format.POSIXst} return a character vector.
@@ -188,6 +190,7 @@ yyyyy.MMMM.dd GGG hh:mm aaa \tab 01996.July.10 AD 12:08 PM \cr
 }
 \examples{
 stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
+stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd", lenient=TRUE)
 stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
 stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 }

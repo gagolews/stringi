@@ -63,7 +63,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_datetime_now",               stri_datetime_now,               0),
    STRI__MK_CALL("C_stri_datetime_create",            stri_datetime_create,            8),
    STRI__MK_CALL("C_stri_datetime_format",            stri_datetime_format,            4),
-   STRI__MK_CALL("C_stri_datetime_parse",             stri_datetime_parse,             4),
+   STRI__MK_CALL("C_stri_datetime_parse",             stri_datetime_parse,             5),
    STRI__MK_CALL("C_stri_datetime_add",               stri_datetime_add,               4),
    STRI__MK_CALL("C_stri_detect_charclass",           stri_detect_charclass,           2),
    STRI__MK_CALL("C_stri_detect_coll",                stri_detect_coll,                3),
@@ -264,15 +264,15 @@ extern "C" void R_init_stringi(DllInfo* dll)
 
 
 #ifndef NDEBUG
-   fprintf(stdout, "!NDEBUG: ************************************************\n");
-   fprintf(stdout, "!NDEBUG: Dynamic library `stringi` loaded\n");
-   fprintf(stdout, "!NDEBUG: Check out http://stringi.rexamine.com\n");
-   fprintf(stdout, "!NDEBUG: \n");
-   fprintf(stdout, "!NDEBUG: Please send bug reports to stringi@rexamine.com \n");
-   fprintf(stdout, "!NDEBUG: or at https://github.com/Rexamine/stringi/issues\n");
-   fprintf(stdout, "!NDEBUG: \n");
-   fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
-   fprintf(stdout, "!NDEBUG: ************************************************\n");
+//    fprintf(stdout, "!NDEBUG: ************************************************\n");
+//    fprintf(stdout, "!NDEBUG: Dynamic library `stringi` loaded\n");
+//    fprintf(stdout, "!NDEBUG: Check out http://stringi.rexamine.com\n");
+//    fprintf(stdout, "!NDEBUG: \n");
+//    fprintf(stdout, "!NDEBUG: Please send bug reports to stringi@rexamine.com \n");
+//    fprintf(stdout, "!NDEBUG: or at https://github.com/Rexamine/stringi/issues\n");
+//    fprintf(stdout, "!NDEBUG: \n");
+//    fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
+//    fprintf(stdout, "!NDEBUG: ************************************************\n");
 
 // /* u_init: It is OK to simply use ICU services and functions without
 // first having initialized ICU by calling u_init(). */

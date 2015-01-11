@@ -341,7 +341,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale);
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    SEXP minute, SEXP second, SEXP tz, SEXP locale);
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale);
-SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP locale);
+SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP locale);
 
 // utils.cpp
 SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min);
