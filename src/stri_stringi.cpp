@@ -61,7 +61,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_datetime_symbols",           stri_datetime_symbols,           3),
    STRI__MK_CALL("C_stri_datetime_fields",            stri_datetime_fields,            2),
    STRI__MK_CALL("C_stri_datetime_now",               stri_datetime_now,               0),
-   STRI__MK_CALL("C_stri_datetime_create",            stri_datetime_create,            8),
+   STRI__MK_CALL("C_stri_datetime_create",            stri_datetime_create,            9),
    STRI__MK_CALL("C_stri_datetime_format",            stri_datetime_format,            4),
    STRI__MK_CALL("C_stri_datetime_parse",             stri_datetime_parse,             5),
    STRI__MK_CALL("C_stri_datetime_add",               stri_datetime_add,               4),

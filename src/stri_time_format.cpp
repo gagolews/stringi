@@ -166,7 +166,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @return character vector
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-08)
- * @version 0.5-1 (Marek Gagolewski, 2015-01-11) add lenient arg
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP locale) {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
@@ -258,11 +258,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
          REAL(ret)[i] = NA_REAL;
       else {
          status = U_ZERO_ERROR;
-         UDate time = cal->getTime(status);
-         if (U_FAILURE(status))
-            REAL(ret)[i] = NA_REAL;
-         else
-            REAL(ret)[i] = ((double)time)/1000.0;
+         REAL(ret)[i] = ((double)cal->getTime(status))/1000.0;
+         if (U_FAILURE(status)) REAL(ret)[i] = NA_REAL;
       }
    }
 

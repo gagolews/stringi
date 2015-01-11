@@ -5,7 +5,7 @@
 \title{Crate a Date-Time Object}
 \usage{
 stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
-  second = 0, tz = NULL, locale = NULL)
+  second = 0, tz = NULL, lenient = FALSE, locale = NULL)
 }
 \arguments{
 \item{year}{iteger vector; 0 is 1BC, -1 is 2BC, etc.}
@@ -23,6 +23,8 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
 \item{tz}{\code{NULL} or \code{""} for default time zone,
 a single string with time zone ID otherwise}
 
+\item{lenient}{single logical value; should the operation be lenient?}
+
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
@@ -31,7 +33,7 @@ may be specified by setting \code{@calendar=name} keyword}
 Returns an object of class \code{\link{POSIXst}}.
 }
 \description{
-...
+This function constructs date-time objects from numeric representations.
 }
 \details{
 Vectorized over \code{year}, \code{month}, \code{hour},
@@ -40,6 +42,8 @@ Vectorized over \code{year}, \code{month}, \code{hour},
 \examples{
 stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
 stri_datetime_create(5775, 8, 1, locale="@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+stri_datetime_create(2015, 02, 29)
+stri_datetime_create(2015, 02, 29, lenient=TRUE)
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
