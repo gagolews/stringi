@@ -187,6 +187,7 @@
 #' @param format single string, see Details; defaults to the ISO 8601 guideline
 #' @param str character vector
 #' @param tz t.b.d
+#' @param lenient single logical value; should date/time parsing be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
@@ -204,6 +205,7 @@
 #'
 #' @examples
 #' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
+#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd", lenient=TRUE)
 #' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
 #' stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 #'
@@ -226,8 +228,8 @@ format.POSIXst <- function(x, ..., usetz=TRUE) {
 #'
 #' @export
 #' @rdname stri_datetime_format
-stri_datetime_parse <- function(str, format="uuuu'-'MM'-'dd'T'HH':'mm':'ssxxx", tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_parse, str, format, tz, locale)
+stri_datetime_parse <- function(str, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL, lenient=FALSE, locale=NULL) {
+   .Call(C_stri_datetime_parse, str, format, tz, lenient, locale)
 }
 
 # seq.POSIXst

@@ -160,16 +160,19 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @param str
  * @param format
  * @param tz
+ * @param lenient
  * @param locale
  *
  * @return character vector
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-08)
+ * @version 0.5-1 (Marek Gagolewski, 2015-01-11) add lenient arg
  */
-SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP locale) {
+SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP locale) {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
    const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
+   bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
 
    // "format" may be one of:
    const char* format_opts[] = {
@@ -237,7 +240,7 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP locale) {
     Sets the calendar's time zone to be the one passed in.
     */
 
-   cal->setLenient(true); // TO DO: add arg lenient here and there.........
+   cal->setLenient(lenient_val);
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
