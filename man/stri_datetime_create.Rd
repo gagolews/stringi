@@ -20,7 +20,7 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
 
 \item{second}{numeric vetor; fractional seconds are allowed}
 
-\item{tz}{\code{NULL} or \code{""} for default time zone,
+\item{tz}{\code{NULL} or \code{""} for the default time zone or
 a single string with time zone ID otherwise}
 
 \item{lenient}{single logical value; should the operation be lenient?}
