@@ -36,6 +36,7 @@
 #' Returns a list of all localizable date-time formatting data,
 #' including month and weekday names, localized AM/PM strings, etc.
 #'
+#' @details
 #' \code{context} stands for a selector for date formatting context
 #' and \code{width} - for  date formatting width.
 #'

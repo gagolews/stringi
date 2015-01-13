@@ -127,8 +127,19 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' @return
 #' Returns a data frame with the following columns: TO DO...................................
 #' \enumerate{
-#' \item year - 0 is 1BC, -1 is 2BC, etc.
-#' \item month... months are 1-based
+#' \item Years - 0 is 1BC, -1 is 2BC, etc.
+#' \item Months ... months are 1-based
+#' \item Days - ...
+#' \item Hours - a single integer from 0 to 24,
+#' \item Minutes - a single integer from 0 to 59
+#' \item Seconds - a real number from 0 to 60 (fractional parts allowed)
+#' \item TimeZone - ....
+#' \item gmt offsett...
+#' \item is dst...
+#' \item week number...
+#' \item day in year... ?
+#' \item is weekend? ....
+#' \item TO DO.....
 #' }
 #' 
 #' @examples
@@ -157,7 +168,7 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' @param hour iteger vector
 #' @param minute iteger vector
 #' @param second numeric vetor; fractional seconds are allowed
-#' @param tz \code{NULL} or \code{""} for default time zone,
+#' @param tz \code{NULL} or \code{""} for the default time zone or
 #' a single string with time zone ID otherwise
 #' @param lenient single logical value; should the operation be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
