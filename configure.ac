@@ -177,7 +177,7 @@ detect_icu_with_pkg_config() {
 
    AC_LANG(C++)
 
-   AC_MSG_CHECKING([whether we may build a simple ICU-dependent project])
+   AC_MSG_CHECKING([whether we may build an ICU-based project])
    AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <unicode/unistr.h>
       #include <unicode/uvernum.h>
@@ -199,12 +199,12 @@ detect_icu_with_pkg_config() {
    [
       AC_MSG_RESULT([yes])
    ],[
-      AC_MSG_RESULT([no]) # could not detect icu version
+      AC_MSG_RESULT([no])
       echo "*** We will build ICU4C from sources"
       return 1
    ])
 
-   AC_MSG_CHECKING([whether we may build a more complex ICU-dependent project])
+   AC_MSG_CHECKING([for available ICU data library (ucnv, uloc)])
    AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <unicode/unistr.h>
       #include <unicode/uvernum.h>
@@ -234,12 +234,12 @@ detect_icu_with_pkg_config() {
       int main() {
         // check if we have some converters installed (icudt)
         int c = ucnv_countAvailable();
-        if (c == 0)
+        if (c <= 0)
           return 11;
 
         // check if we have some locales defined (icudt)
         c = uloc_countAvailable();
-        if (c == 0)
+        if (c <= 0)
           return 12;
 
         return 0;
@@ -248,7 +248,7 @@ detect_icu_with_pkg_config() {
    [
       AC_MSG_RESULT([yes])
    ],[
-      AC_MSG_RESULT([no]) # could not detect icu version
+      AC_MSG_RESULT([no]) 
       echo "*** We will build ICU4C from sources"
       return 1
    ])
@@ -288,6 +288,10 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
 
 ##### SETUP COMPILER 2 ###########################################################
+
+
+with_extra_cflags="-UDEBUG -DNDEBUG ${with_extra_cflags}"
+with_extra_cxxflags="-UDEBUG -DNDEBUG ${with_extra_cxxflags}"
 
 
 if test "$enable_gcc_debug" == "yes"; then
