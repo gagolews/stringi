@@ -273,6 +273,75 @@ class String8  {
 
          return i;
       }
+      
+      
+      /**
+       *
+       * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+       * 
+       * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+       *    moved from StriContainerByteSearch to String8
+       */
+      bool endsWith(R_len_t byteindex, const char* patternStr, R_len_t patternLen, bool caseInsensitive) const
+      {
+         if (caseInsensitive) {
+            R_len_t k = patternLen;
+            UChar32 c1;
+            UChar32 c2;
+            while (k > 0) {
+               if (byteindex <= 0) return false;
+               U8_PREV(m_str, 0, byteindex, c1);
+               U8_PREV(patternStr, 0, k, c2);
+               if (u_toupper(c1) != u_toupper(c2))
+                  return false;
+            }
+            return true;
+         }
+         else {
+            if (byteindex-patternLen < 0) return false;
+            
+            for (R_len_t k=0; k < patternLen; ++k)
+               if (m_str[byteindex-k-1] != patternStr[patternLen-k-1])
+                  return false;
+      
+            return true; // found
+         }
+      }
+      
+      
+      /**
+       *
+       * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
+       * 
+       * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+       * moved from StriContainerByteSearch to String8
+       */
+      bool startsWith(R_len_t byteindex, const char* patternStr, R_len_t patternLen, bool caseInsensitive) const
+      {
+         if (caseInsensitive) {
+            R_len_t k = 0;
+            UChar32 c1;
+            UChar32 c2;
+            
+            while (k < patternLen) {
+               if (byteindex >= m_n) return false;
+               U8_NEXT(m_str,      byteindex, m_n,        c1);
+               U8_NEXT(patternStr, k,         patternLen, c2);
+               if (u_toupper(c1) != u_toupper(c2))
+                  return false;
+            }
+            return true;
+         }
+         else {
+            if (byteindex+patternLen > m_n) return false;
+            
+            for (R_len_t k=0; k < patternLen; ++k)
+               if (m_str[byteindex+k] != patternStr[k])
+                  return false;
+                  
+            return true; // found
+         }
+      }
 
 
       /** Replace substrings with a given replacement string

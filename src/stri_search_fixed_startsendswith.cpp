@@ -52,6 +52,9 @@
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added;
  *    use StriContainerByteSearch::startsWith() and endsWith()
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use String8::startsWith() and endsWith()
  */
 SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
 {
@@ -93,8 +96,9 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
          from_cur = str_cont.UChar32_to_UTF8_index_back(i, -from_cur);
       // now surely from_cur >= 0 && from_cur <= cur_n
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = (int)(pattern_cont.startsWith(from_cur));
+      ret_tab[i] = (int)(str_cont.get(i).startsWith(from_cur,
+         pattern_cont.get(i).c_str(), pattern_cont.get(i).length(),
+         pattern_cont.isCaseInsensitive()));
    }
 
    STRI__UNPROTECT_ALL
@@ -118,6 +122,9 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use String8::startsWith() and endsWith()
  */
 SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
 {
@@ -159,8 +166,9 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
          to_cur = str_cont.UChar32_to_UTF8_index_back(i, -to_cur-1);
       // now surely to_cur >= 0 && to_cur <= cur_n
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = (int)(pattern_cont.endsWith(to_cur));
+      ret_tab[i] = (int)(str_cont.get(i).endsWith(to_cur,
+         pattern_cont.get(i).c_str(), pattern_cont.get(i).length(),
+         pattern_cont.isCaseInsensitive()));
    }
 
    STRI__UNPROTECT_ALL

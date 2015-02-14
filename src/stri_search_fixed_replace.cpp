@@ -85,7 +85,7 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8buf buf(0); // @TODO: calculate buf len a priori?
+   String8buf buf(0);
 
    for (R_len_t i = pattern_cont.vectorize_init();
          i != pattern_cont.vectorize_end();

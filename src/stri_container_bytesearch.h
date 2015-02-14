@@ -34,12 +34,12 @@
 #define __stri_container_bytesearch_h
 
 #include "stri_container_utf8.h"
-
+#include "stri_bytesearch_matcher.h"
 
 // #define STRI__BYTESEARCH_DISABLE_SHORTPAT
 
 #ifndef USEARCH_DONE
-#define  USEARCH_DONE   -1
+#define USEARCH_DONE -1
 #endif
 
 
@@ -121,9 +121,14 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       void setupMatcherFwd(R_len_t i, const char* searchStr, R_len_t searchLen);
       void setupMatcherBack(R_len_t i, const char* searchStr, R_len_t searchLen);
       void resetMatcher();
-
-      bool startsWith(R_len_t byteindex);
-      bool endsWith(R_len_t byteindex);
+      
+      inline bool isCaseInsensitive() {
+         return (bool)(flags&BYTESEARCH_CASE_INSENSITIVE);
+      }
+      
+      inline bool isOverlap() {
+         return (bool)(flags&BYTESEARCH_OVERLAP);
+      }
 
 
       /** find first match

@@ -18,6 +18,10 @@
    * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for match
      of zero lengths
 
+   * [GENERAL] Performance improvements in handling ASCII strings
+     (these affect `stri_sub`, `stri_locate` and other string index-based
+      operations)
+
 TO BE DONE:
 
    * #69: ICU 54.1
@@ -185,9 +189,15 @@ TO BE DONE:
    * icudt-dependent examples are no longer run if `icudt` is not available.
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.2-4 (2014-05-15) **CRAN**
 
    * [BUGFIX] Issues with loading of misaligned addresses in `stri_*_fixed()`.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.2-3 (2014-05-14) **CRAN**
@@ -207,8 +217,11 @@ TO BE DONE:
       ICU USearch has currently very poor performance and in many search tasks
       in fact it is sufficient to do exact pattern matching.
 
-   * `stri_*_fixed` now use a tweaked Knuth-Morris-Pratt search algorithm,
-      which improves the search performance drastically.
+   * [GENERAL] `stri_*_fixed` now use a tweaked Knuth-Morris-Pratt search 
+      algorithm, which improves the search performance drastically.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.2-2 (2014-05-01) **devel**
@@ -236,6 +249,9 @@ TO BE DONE:
 
    * [NEW FUNCTION] `stri_wrap()` breaks paragraphs of text into lines.
      Two algorithms (greedy and minimal raggedness) are available.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.2-1 (2014-04-18) **devel**
@@ -289,13 +305,13 @@ TO BE DONE:
 
    * [NEW FEATURE] All binary operators `%???%` now also have aliases `%stri???%`.
 
-   * Performance improvements in `StriContainerUTF8` and `StriContainerUTF16`
-     (they affect most other functions).
+   * [GENERAL] Performance improvements in `StriContainerUTF8`
+     and `StriContainerUTF16` (they affect most other functions).
 
-   * Significant performance improvements in `stri_join()`, `stri_flatten()`,
-     `stri_cmp()`, `stri_trans_to*()`, and others.
+   * [GENERAL] Significant performance improvements in `stri_join()`,
+     `stri_flatten()`, `stri_cmp()`, `stri_trans_to*()`, and others.
 
-   * Added 3rd mirror site for our icudt binary distribution.
+   * [GENERAL] Added 3rd mirror site for our `icudt` binary distribution.
 
    * `U_MISSING_RESOURCE_ERROR` message in `StriException` now suggests
      calling `stri_install_check()`.
@@ -323,6 +339,9 @@ TO BE DONE:
     * Initial CRAN release.
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.1-24 (2014-03-11) **devel**
 
     * Fixed bugs detected with `ASan` and `UBSan`,
@@ -335,6 +354,9 @@ TO BE DONE:
       (reported by `valgrind`).
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.1-23 (2014-03-11) **devel**
 
     * License changed to BSD-3-clause, COPYRIGHTS updated.
@@ -343,6 +365,9 @@ TO BE DONE:
       it is now downloaded in install.libs.R from one of our servers.
 
     * New functions: `stri_install_check()`, `stri_install_icudt()`.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.1-22 (2014-02-20) **devel**
@@ -356,10 +381,16 @@ TO BE DONE:
      (for big-endian, ASCII systems).
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.1-21 (2014-02-19) **devel**
 
    * Fixed some Solaris-related issues while preparing stringi
      for CRAN submission.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.1-20 (2014-02-17) **devel**
@@ -368,6 +399,9 @@ TO BE DONE:
      loaded dynamically). Compilation via Makevars.
 
    * stringi now does not depend on any external libraries.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.1-11 (2013-11-16) **devel**
@@ -379,9 +413,15 @@ TO BE DONE:
    * The package is being intensively tested by our students @ FMIS WUT.
 
 
+-------------------------------------------------------------------------------
+
+
 * 0.1-10 (2013-11-13) **devel**
 
    * Using pkg-config via ./configure to look for ICU4C libs.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.1-6 (2013-07-05) **devel**
@@ -392,6 +432,9 @@ TO BE DONE:
 
    * By now we have implemented most of the functionality
      scheduled for milestone 0.1.
+
+
+-------------------------------------------------------------------------------
 
 
 * 0.1-1 (2013-01-05) **devel**
