@@ -38,9 +38,6 @@
 
 // #define STRI__BYTESEARCH_DISABLE_SHORTPAT
 
-#ifndef USEARCH_DONE
-#define USEARCH_DONE -1
-#endif
 
 
 /**

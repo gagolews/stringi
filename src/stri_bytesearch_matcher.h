@@ -34,6 +34,11 @@
 #define __stri_bytesearch_matcher_h
 
 
+#ifndef USEARCH_DONE
+#define USEARCH_DONE -1
+#endif
+
+
 /**
  * Performs actual pattern matching on behalf of StriContainerByteSearch
  * 
@@ -53,6 +58,8 @@ class StriByteSearchMatcher {
       R_len_t m_patternLen;
       const char* m_patternStr;
       
+      virtual R_len_t findFromPos(R_len_t pos) = 0;
+      
    public:
    
       StriByteSearchMatcher(const char* patternStr, R_len_t patternLen, bool optOverlap) {
@@ -62,6 +69,8 @@ class StriByteSearchMatcher {
          this->m_searchStr = NULL;
       }
       
+      virtual ~StriByteSearchMatcher() { }
+      
       virtual void reset(const char* searchStr, R_len_t searchLen) {
          this->m_searchStr = searchStr;
          this->m_searchLen = searchLen;
@@ -70,8 +79,20 @@ class StriByteSearchMatcher {
       }
    
       virtual R_len_t findFirst() = 0;
-      virtual R_len_t findNext() = 0;
       virtual R_len_t findLast() = 0;
+      
+      R_len_t findNext() {
+         if (m_searchPos < 0) return findFirst();
+
+         if (m_optOverlap) {
+            int pos = m_searchPos;
+            U8_FWD_1(m_searchStr, pos, m_searchLen);
+            return findFromPos(pos);
+         }
+         else
+            return findFromPos(m_searchEnd);
+      }
+
       
       /** get start index of pattern match from the last search
        *
@@ -109,50 +130,224 @@ class StriByteSearchMatcher {
 
 class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
    
-   private:
+   protected:
    
       int* m_kmpNext;
       int m_patternPos;
-      R_len_t m_kmpMaxSize;
    
+   
+      virtual R_len_t findFromPos(R_len_t startPos) {
+         int j = startPos;
+         m_patternPos = 0;
+         
+         while (j < m_searchLen) {
+            while (m_patternPos >= 0 && m_patternStr[m_patternPos] != m_searchStr[j])
+               m_patternPos = m_kmpNext[m_patternPos];
+            m_patternPos++;
+            j++;
+            if (m_patternPos == m_patternLen) {
+               m_searchEnd = j;
+               m_searchPos = j-m_patternLen;
+               return m_searchPos;
+            }
+         }
+         
+         // else not found
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
    
    public:
    
       StriByteSearchMatcherKMP(const char* patternStr, R_len_t patternLen, bool optOverlap)
          : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
       {
-         // .....
+         int kmpMaxSize = patternLen+1; // that's sufficient
+         this->m_kmpNext = new int[kmpMaxSize];
+         if (!this->m_kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
+         this->m_kmpNext[0] = -100; // magic constant for an uninitialized KMP table
       }
    
       virtual void reset(const char* searchStr, R_len_t searchLen) {
          StriByteSearchMatcher::reset(searchStr, searchLen);
          m_patternPos = -1;
       }
+      
+      virtual R_len_t findFirst() {
+         if (this->m_kmpNext[0] <= -100) {
+            // Setup KMP table for FWD search
+            m_kmpNext[0] = -1;
+            for (R_len_t i=0; i<m_patternLen; ++i) {
+               m_kmpNext[i+1] = m_kmpNext[i]+1;
+               while (m_kmpNext[i+1] > 0 &&
+                     m_patternStr[i] != m_patternStr[m_kmpNext[i+1]-1])
+                  m_kmpNext[i+1] = m_kmpNext[m_kmpNext[i+1]-1]+1;
+            }
+         }
+         
+         return findFromPos(0);
+      }
+      
+      virtual R_len_t findLast()  {
+         if (this->m_kmpNext[0] <= -100) {
+            // Setup KMP table for BACK search
+            m_kmpNext[0] = -1;
+            for (R_len_t i=0; i<m_patternLen; ++i) {
+               m_kmpNext[i+1] = m_kmpNext[i]+1;
+               while (m_kmpNext[i+1] > 0 &&
+                     m_patternStr[m_patternLen-i-1] != m_patternStr[m_patternLen-(m_kmpNext[i+1]-1)-1])
+                  m_kmpNext[i+1] = m_kmpNext[m_kmpNext[i+1]-1]+1;
+            }
+         }
+         
+         int j = m_searchLen;
+         m_patternPos = 0;
+         while (j > 0) {
+            j--;
+            while (m_patternPos >= 0 && m_patternStr[m_patternLen-1-m_patternPos] != m_searchStr[j])
+               m_patternPos = m_kmpNext[m_patternPos];
+            m_patternPos++;
+            if (m_patternPos == m_patternLen) {
+               m_searchEnd = j+m_patternLen;
+               m_searchPos = j;
+               return m_searchPos;
+            }
+         }
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
 };
 
 class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
    
-   private:
+   protected:
    
       int* m_kmpNext;
       int m_patternPos;
-      R_len_t m_kmpMaxSize;
       R_len_t m_patternLenCaseInsensitive;
       UChar32* m_patternStrCaseInsensitive;
    
+      virtual R_len_t findFromPos(R_len_t startPos) {
+         int j = startPos;
+         m_patternPos = 0;
+         
+         UChar32 c = 0;
+         while (j < m_searchLen) {
+            U8_NEXT(m_searchStr, j, m_searchLen, c);
+            c = u_toupper(c);
+            while (m_patternPos >= 0 && m_patternStrCaseInsensitive[m_patternPos] != c)
+               m_patternPos = m_kmpNext[m_patternPos];
+            m_patternPos++;
+            if (m_patternPos == m_patternLenCaseInsensitive) {
+               m_searchEnd = j;
+   
+               // we need to go back by patternLenCaseInsensitive code points
+               R_len_t k = m_patternLenCaseInsensitive;
+               m_searchPos = j;
+               while (k > 0) {
+                  U8_BACK_1((const uint8_t*)m_searchStr, 0, m_searchPos);
+                  k--;
+               }
+               return m_searchPos;
+            }
+         }
+         
+         // else not found
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
+      
    
    public:
    
       StriByteSearchMatcherKMPci(const char* patternStr, R_len_t patternLen, bool optOverlap)
          : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
       {
-         // .....
+         int kmpMaxSize = patternLen+1; // that's sufficient
+         this->m_kmpNext = new int[kmpMaxSize];
+         if (!this->m_kmpNext) throw StriException(MSG__MEM_ALLOC_ERROR);
+         this->m_kmpNext[0] = -100; // magic constant for an uninitialized KMP table
+         
+         this->m_patternStrCaseInsensitive = new UChar32[kmpMaxSize];
+         if (!this->m_patternStrCaseInsensitive) throw StriException(MSG__MEM_ALLOC_ERROR);
+            UChar32 c = 0;
+         R_len_t j = 0;
+         m_patternLenCaseInsensitive = 0;
+         while (j < patternLen) {
+            U8_NEXT(patternStr, j, patternLen, c);
+#ifndef NDEBUG
+            if (m_patternLenCaseInsensitive >= kmpMaxSize)
+               throw StriException("!NDEBUG: StriByteSearchMatcherKMPci::StriByteSearchMatcherKMPci()");
+#endif
+            m_patternStrCaseInsensitive[m_patternLenCaseInsensitive++] = u_toupper(c);
+         }
+         m_patternStrCaseInsensitive[m_patternLenCaseInsensitive] = 0;
       }
    
       virtual void reset(const char* searchStr, R_len_t searchLen) {
          StriByteSearchMatcher::reset(searchStr, searchLen);
          m_patternPos = -1;
       }
+      
+      virtual R_len_t findFirst() {
+         if (this->m_kmpNext[0] <= -100) {
+            // Setup KMP table for FWD search
+            m_kmpNext[0] = -1;
+            for (R_len_t i=0; i<m_patternLenCaseInsensitive; ++i) {
+               m_kmpNext[i+1] = m_kmpNext[i]+1;
+               while (m_kmpNext[i+1] > 0 &&
+                     m_patternStrCaseInsensitive[i] != m_patternStrCaseInsensitive[m_kmpNext[i+1]-1])
+                  m_kmpNext[i+1] = m_kmpNext[m_kmpNext[i+1]-1]+1;
+            }
+         }
+         
+         return findFromPos(0);
+      }
+      
+      virtual R_len_t findLast()  {
+         if (this->m_kmpNext[0] <= -100) {
+            // Setup KMP table for BACK search
+            m_kmpNext[0] = -1;
+            for (R_len_t i=0; i<m_patternLenCaseInsensitive; ++i) {
+               m_kmpNext[i+1] = m_kmpNext[i]+1;
+               while (m_kmpNext[i+1] > 0 &&
+                     m_patternStrCaseInsensitive[m_patternLen-i-1] != 
+                        m_patternStrCaseInsensitive[m_patternLenCaseInsensitive-(m_kmpNext[i+1]-1)-1])
+                  m_kmpNext[i+1] = m_kmpNext[m_kmpNext[i+1]-1]+1;
+            }
+         }
+         
+         int j = m_searchLen;
+         m_patternPos = 0;
+         while (j > 0) {
+            UChar32 c;
+            U8_PREV(m_searchStr, 0, j, c);
+            c = u_toupper(c);
+            while (m_patternPos >= 0 &&
+                  m_patternStrCaseInsensitive[m_patternLenCaseInsensitive-1-m_patternPos] != c)
+               m_patternPos = m_kmpNext[m_patternPos];
+            m_patternPos++;
+            if (m_patternPos == m_patternLenCaseInsensitive) {
+               m_searchPos = j;
+   
+               // we need to go forward by patternLenCaseInsensitive code points
+               R_len_t k = m_patternLenCaseInsensitive;
+               m_searchEnd = j;
+               while (k > 0) {
+                  U8_FWD_1((const uint8_t*)m_searchStr, m_searchEnd, m_searchLen);
+                  k--;
+               }
+   
+               return m_searchPos;
+            }
+         }
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
 };
+
+
+
+
 
 #endif
