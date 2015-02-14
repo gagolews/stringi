@@ -53,6 +53,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
 {
@@ -75,20 +78,20 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
 
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       int start, len;
       if (first) {
-         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findFirst();
+         start = matcher->findFirst();
       } else {
-         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findLast();
+         start = matcher->findLast();
       }
       if (start == USEARCH_DONE) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
-      len = pattern_cont.getMatchedLength();
+      len = matcher->getMatchedLength();
 
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+start, len, CE_UTF8));
    }
@@ -155,6 +158,9 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed, omit_no_match, simplify
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_fixed)
 {
@@ -180,13 +186,14 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
          SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));)
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
 
-      int start = pattern_cont.findFirst();
+      int start = matcher->findFirst();
       deque< pair<R_len_t, R_len_t> > occurrences;
       while (start != USEARCH_DONE) {
-         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+pattern_cont.getMatchedLength()));
-         start = pattern_cont.findNext();
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+matcher->getMatchedLength()));
+         start = matcher->findNext();
       }
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

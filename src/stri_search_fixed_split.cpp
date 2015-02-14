@@ -83,6 +83,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
                       SEXP omit_empty, SEXP tokens_only, SEXP simplify, SEXP opts_fixed)
@@ -137,14 +140,15 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
       else if (tokens_only1)
          n_cur++; // we need to do one split ahead here
 
-      pattern_cont.setupMatcherFwd(i, str_cur_s, str_cur_n);
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t k;
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
-      for (k=1; k < n_cur && USEARCH_DONE != pattern_cont.findNext(); ) {
-         R_len_t s1 = (R_len_t)pattern_cont.getMatchedStart();
-         R_len_t s2 = (R_len_t)pattern_cont.getMatchedLength() + s1;
+      for (k=1; k < n_cur && USEARCH_DONE != matcher->findNext(); ) {
+         R_len_t s1 = (R_len_t)matcher->getMatchedStart();
+         R_len_t s2 = (R_len_t)matcher->getMatchedLength() + s1;
 
          if (omit_empty_cur && fields.back().first == s1)
             fields.back().first = s2; // don't start any new field
