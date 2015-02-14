@@ -399,7 +399,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 
    if (patternLen == 1) {
          // else not found
-      unsigned char pat = (unsigned char)patternStr[0];
+      unsigned char pat = (unsigned char)patternStr[0];  /* TO DO: why can't this be cached? */
       for (searchPos = startPos; searchPos<searchLen-1+1; ++searchPos) {
          if (pat == (unsigned char)searchStr[searchPos]) {
             searchEnd = searchPos + 1;
@@ -418,7 +418,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 
 /* v2: 21.62 ms */
       // be careful: little vs big endian!
-      uint16_t pat  = ((uint16_t)((unsigned char)patternStr[0]));
+      uint16_t pat  = ((uint16_t)((unsigned char)patternStr[0]));  /* TO DO: why can't this be cached? */
                pat <<= 8;
                pat |= ((uint16_t)((unsigned char)patternStr[1]));
       unsigned char*  curstr = (unsigned char*)(searchStr+startPos);
@@ -446,7 +446,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 //      }
 
 /* v2: 25.95 ms */
-      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0]));
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0])); /* TO DO: why can't this be cached? */
                pat <<= 8;
                pat |= ((uint32_t)((unsigned char)patternStr[1]));
                pat <<= 8;
@@ -459,7 +459,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
       cur |= (uint32_t)(*curstr);
       ++curstr;
 
-      uint32_t mask = ~(((unsigned char)0xff)<<24);
+      uint32_t mask = ~(((unsigned char)0xff)<<24);  /* TO DO: why can't this be cached? */
 
       for (searchPos = startPos; searchPos<searchLen-3+1; ++searchPos) {
          cur <<= 8;
@@ -481,7 +481,7 @@ R_len_t StriContainerByteSearch::findFromPosFwd_short(R_len_t startPos)
 //      }
 
 /* v2: 21.68 ms */
-      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0]));
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[0])); /* TO DO: why can't this be cached? */
                pat <<= 8;
                pat |= ((uint32_t)((unsigned char)patternStr[1]));
                pat <<= 8;
@@ -679,7 +679,7 @@ R_len_t StriContainerByteSearch::findFromPosBack_short(R_len_t startPos)
       }
    }
    else if (patternLen == 4) {
-      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[3]));
+      uint32_t pat  = ((uint32_t)((unsigned char)patternStr[3])); /* TO DO: can't this be cached? */
                pat <<= 8;
                pat |= ((uint32_t)((unsigned char)patternStr[2]));
                pat <<= 8;

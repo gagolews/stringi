@@ -491,7 +491,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
       }
 
       R_len_t curn_tmp = str_cont.get(i).length();
-      const UChar* curs_tmp = str_cont.get(i).getBuffer(); // The buffer contents is (probably) not NUL-terminated.
+      const UChar* curs_tmp = str_cont.get(i).getBuffer(); // The buffer content is (probably) not NUL-terminated.
       if (!curs_tmp)
          throw StriException(MSG__INTERNAL_ERROR);
 

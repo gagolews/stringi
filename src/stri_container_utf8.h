@@ -108,7 +108,7 @@ class StriContainerUTF8 : public StriContainerBase {
        * @param i index
        * @return string, read only
        */
-      const String8& get(R_len_t i) const {
+      inline const String8& get(R_len_t i) const {
 #ifndef NDEBUG
          if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF8::get(): INDEX OUT OF BOUNDS");
@@ -123,7 +123,7 @@ class StriContainerUTF8 : public StriContainerBase {
        * @param i index
        * @return string
        */
-      String8& getWritable(R_len_t i) {
+      inline String8& getWritable(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF8::getWritable(): shallow StriContainerUTF8");
@@ -143,7 +143,7 @@ class StriContainerUTF8 : public StriContainerBase {
       /** set NA
        * @param i index
        */
-      void setNA(R_len_t i) {
+      inline void setNA(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF8::setNA(): shallow StriContainerUTF8");
@@ -174,23 +174,9 @@ class StriContainerUTF8 : public StriContainerBase {
          R_len_t bufsize = 0;
          for (R_len_t i=0; i<n; ++i) {
             if (isNA(i)) continue;
-            UChar32 c = 0;
-            R_len_t curs_n = get(i).length();
-            const char* curs_s = get(i).c_str();
-
-            R_len_t j = 0;
-            R_len_t k = 0;
-            while (j < curs_n) {
-               U8_NEXT(curs_s, j, curs_n, c);
-               k++;
-
-               if (c < 0) { // invalid utf-8 sequence
-                  Rf_warning(MSG__INVALID_UTF8);
-               }
-            }
-
-            if (k > bufsize)
-               bufsize = k;
+            R_len_t cursize = get(i).countCodePoints();
+            if (cursize > bufsize)
+               bufsize = cursize;
          }
          return bufsize;
       }
@@ -200,7 +186,7 @@ class StriContainerUTF8 : public StriContainerBase {
        * @param i index
        * @param s string to be copied
        */
-      void set(R_len_t i, const String8& s) {
+      inline void set(R_len_t i, const String8& s) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF8::set(): shallow StriContainerUTF8");

@@ -1,4 +1,4 @@
-benchmark_description <- stri_c("Extract signle code points from a string ",
+benchmark_description <- stri_c("Extract single code points from a string ",
                          "[ASCII+Polish letters, native encoding]")
 
 
