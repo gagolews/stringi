@@ -62,6 +62,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
 {
@@ -88,18 +91,18 @@ SEXP stri__locate_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool 
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ;/*nothing*/, ;/*nothing*/)
 
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       int start;
       if (first) {
-         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findFirst();
+         start = matcher->findFirst();
       } else {
-         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findLast();
+         start = matcher->findLast();
       }
 
       if (start != USEARCH_DONE) {
          ret_tab[i]                  = start;
-         ret_tab[i+vectorize_length] = start+pattern_cont.getMatchedLength();
+         ret_tab[i+vectorize_length] = start+matcher->getMatchedLength();
 
          // Adjust UTF8 byte index -> UChar32 index
          str_cont.UTF8_to_UChar32_index(i,
@@ -195,6 +198,9 @@ SEXP stri_locate_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_fixed)
 {
@@ -219,9 +225,10 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
 
-      int start = pattern_cont.findFirst();
+      int start = matcher->findFirst();
       if (start == USEARCH_DONE) { // no matches at all
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
@@ -229,8 +236,8 @@ SEXP stri_locate_all_fixed(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
 
       deque< pair<R_len_t, R_len_t> > occurrences;
       while (start != USEARCH_DONE) {
-         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+pattern_cont.getMatchedLength()));
-         start = pattern_cont.findNext();
+         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+matcher->getMatchedLength()));
+         start = matcher->findNext();
       }
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

@@ -61,6 +61,9 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
 {
@@ -85,8 +88,9 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
          ret_tab[i] = NA_LOGICAL,
          ret_tab[i] = FALSE)
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = (int)(pattern_cont.findFirst() != USEARCH_DONE);
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+      ret_tab[i] = (int)(matcher->findFirst() != USEARCH_DONE);
    }
 
    STRI__UNPROTECT_ALL

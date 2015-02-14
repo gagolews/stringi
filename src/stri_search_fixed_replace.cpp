@@ -100,13 +100,13 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
          continue;
       }
 
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t start;
       if (type >= 0) { // first or all
-         pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findFirst();
+         start = matcher->findFirst();
       } else {
-         pattern_cont.setupMatcherBack(i, str_cont.get(i).c_str(), str_cont.get(i).length());
-         start = pattern_cont.findLast();
+         start = matcher->findLast();
       }
 
       if (start == USEARCH_DONE) {
@@ -114,21 +114,21 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
          continue;
       }
 
-      R_len_t len = pattern_cont.getMatchedLength();
+      R_len_t len = matcher->getMatchedLength();
       R_len_t sumbytes = len;
       deque< pair<R_len_t, R_len_t> > occurrences;
       occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
       if (type == 0) {
-         while (USEARCH_DONE != pattern_cont.findNext()) { // all
-            start = pattern_cont.getMatchedStart();
-            len = pattern_cont.getMatchedLength();
+         while (USEARCH_DONE != matcher->findNext()) { // all
+            start = matcher->getMatchedStart();
+            len = matcher->getMatchedLength();
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
             sumbytes += len;
          }
       }
 
-      R_len_t str_cur_n     = str_cont.get(i).length();
+      R_len_t str_cur_n         = str_cont.get(i).length();
       R_len_t replacement_cur_n = replacement_cont.get(i).length();
       R_len_t buf_need =
          str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
@@ -289,22 +289,22 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
-
+      
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
       for (R_len_t j = 0; j<str_n; ++j) {
          if (str_cont.isNA(j)) continue;
-
-         pattern_cont.setupMatcherFwd(i, str_cont.get(j).c_str(), str_cont.get(j).length());
-         R_len_t start = pattern_cont.findFirst();
+         matcher->reset(str_cont.get(j).c_str(), str_cont.get(j).length());
+         R_len_t start = matcher->findFirst();
          if (start == USEARCH_DONE)  continue;  // nothing to do now
 
-         R_len_t len = pattern_cont.getMatchedLength();
+         R_len_t len = matcher->getMatchedLength();
          R_len_t sumbytes = len;
          deque< pair<R_len_t, R_len_t> > occurrences;
          occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
-         while (USEARCH_DONE != pattern_cont.findNext()) { // all
-            start = pattern_cont.getMatchedStart();
-            len = pattern_cont.getMatchedLength();
+         while (USEARCH_DONE != matcher->findNext()) { // all
+            start = matcher->getMatchedStart();
+            len = matcher->getMatchedLength();
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
             sumbytes += len;
          }

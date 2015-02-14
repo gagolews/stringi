@@ -69,6 +69,8 @@ class StriByteSearchMatcher {
          this->m_searchStr = NULL;
       }
       
+      const char* getPatternStr() const { return m_patternStr; }
+      
       virtual ~StriByteSearchMatcher() { }
       
       virtual void reset(const char* searchStr, R_len_t searchLen) {
@@ -137,6 +139,10 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
    
    
       virtual R_len_t findFromPos(R_len_t startPos) {
+#ifndef DEBUG
+         if (!m_searchStr) throw StriException("!m_searchStr");
+#endif
+
          int j = startPos;
          m_patternPos = 0;
          

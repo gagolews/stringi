@@ -64,6 +64,9 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *    use StriByteSearchMatcher
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
 {
@@ -87,9 +90,10 @@ SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
       ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
-      pattern_cont.setupMatcherFwd(i, str_cont.get(i).c_str(), str_cont.get(i).length());
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t found = 0;
-      while (USEARCH_DONE != pattern_cont.findNext())
+      while (USEARCH_DONE != matcher->findNext())
          ++found;
       ret_tab[i] = found;
    }
