@@ -94,7 +94,7 @@ class StriContainerUTF16 : public StriContainerBase {
        * @param i index
        * @return string
        */
-      const UnicodeString& get(R_len_t i) const {
+      inline const UnicodeString& get(R_len_t i) const {
 #ifndef NDEBUG
          if (isNA(i))
             throw StriException("StriContainerUTF16::get(): isNA");
@@ -106,7 +106,7 @@ class StriContainerUTF16 : public StriContainerBase {
        * @param i index
        * @return string
        */
-      UnicodeString& getWritable(R_len_t i) {
+      inline UnicodeString& getWritable(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
@@ -124,7 +124,7 @@ class StriContainerUTF16 : public StriContainerBase {
       /** set NA
        * @param i index
        */
-      void setNA(R_len_t i) {
+      inline void setNA(R_len_t i) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
@@ -140,7 +140,7 @@ class StriContainerUTF16 : public StriContainerBase {
        * @param i index
        * @param s string to be copied
        */
-      void set(R_len_t i, const UnicodeString& s) {
+      inline void set(R_len_t i, const UnicodeString& s) {
 #ifndef NDEBUG
          if (isShallow)
             throw StriException("StriContainerUTF16::set(): shallow StriContainerUTF16");

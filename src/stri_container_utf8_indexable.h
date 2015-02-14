@@ -44,6 +44,9 @@
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-20)
  *          separated from StriContainerUTF8
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *          use String8::isASCII
  */
 class StriContainerUTF8_indexable : public StriContainerUTF8 {
 

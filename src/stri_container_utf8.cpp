@@ -90,9 +90,13 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
          continue; // keep NA
       }
 
-      if (IS_ASCII(curs) || IS_UTF8(curs)) {
-         // ASCII or UTF-8 - ultra fast
-         this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, true);  /* kill UTF-8 BOM */
+      if (IS_ASCII(curs)) {
+         // ASCII - ultra fast
+         this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, false/*killbom*/, true/*isASCII*/);
+      }
+      else if (IS_UTF8(curs)) {
+         // UTF-8 - ultra fast
+         this->str[i].initialize(CHAR(curs), LENGTH(curs), false/*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
          // the same is done for native encoding && ucnvNative_isUTF8
          // @TODO: use macro (here & ucnvNative_isUTF8 below)
       }
@@ -113,7 +117,8 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             if (ucnvNative.isUTF8()) {
                // UTF-8 - ultra fast
                // @TODO: use macro
-               this->str[i].initialize(CHAR(curs), LENGTH(curs), false /*!_shallowrecycle*/, true); /* kill UTF-8 BOM */
+               this->str[i].initialize(CHAR(curs), LENGTH(curs),
+                  false /*!_shallowrecycle*/, true/*killbom*/, false/*isASCII*/);
                continue;
             }
 
@@ -181,7 +186,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
                tmp.getBuffer(), tmp.length(), &status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-         this->str[i].initialize(outbuf.data(), outrealsize, true);
+         this->str[i].initialize(outbuf.data(), outrealsize, true/*memalloc*/, false/*killbom*/, false/*isASCII*/);
 
          // version 3: use tmpbuf (slower than v2)
 //               UErrorCode status = U_ZERO_ERROR;

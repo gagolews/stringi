@@ -114,13 +114,16 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *          use String8::isASCII
  */
 R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
 {
    R_len_t cur_n = get(i).length();
-   const char* cur_s = get(i).c_str();
-
    if (wh <= 0) return cur_n;
+   if (get(i).isASCII()) return std::max(cur_n-wh, 0);
+   const char* cur_s = get(i).c_str();
 
 #ifndef NDEBUG
    if (!cur_s)
@@ -195,10 +198,14 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *          use String8::isASCII
  */
 R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 {
    if (wh <= 0) return 0;
+   if (get(i).isASCII()) return std::min(wh, get(i).length());
 
    R_len_t cur_n = get(i).length();
    const char* cur_s = get(i).c_str();
@@ -272,10 +279,21 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *          use String8::isASCII
  */
 void StriContainerUTF8_indexable::UTF8_to_UChar32_index(R_len_t i,
    int* i1, int* i2, const int ni, int adj1, int adj2)
 {
+   if (get(i).isASCII()) {
+      for (int i=0; i<ni; ++i) {
+         i1[i] += adj1;
+         i2[i] += adj2;
+      }
+      return;
+   }
+   
    const char* cstr = get(i).c_str();
    const int nstr = get(i).length();
 
