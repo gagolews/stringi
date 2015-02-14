@@ -139,7 +139,7 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
    
    
       virtual R_len_t findFromPos(R_len_t startPos) {
-#ifndef DEBUG
+#ifndef NDEBUG
          if (!m_searchStr) throw StriException("!m_searchStr");
 #endif
 
@@ -164,6 +164,10 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
       }
    
    public:
+   
+      virtual ~StriByteSearchMatcherKMP() {
+         delete [] m_kmpNext;
+      }
    
       StriByteSearchMatcherKMP(const char* patternStr, R_len_t patternLen, bool optOverlap)
          : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
@@ -266,6 +270,12 @@ class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
    
    public:
    
+   
+      virtual ~StriByteSearchMatcherKMPci() {
+         delete [] m_kmpNext;
+         delete [] m_patternStrCaseInsensitive;
+      }
+   
       StriByteSearchMatcherKMPci(const char* patternStr, R_len_t patternLen, bool optOverlap)
          : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
       {
@@ -353,7 +363,68 @@ class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
 };
 
 
+class StriByteSearchMatcher1 : public StriByteSearchMatcher {
+   
+   protected:   
+   
+      virtual R_len_t findFromPos(R_len_t startPos) {
+#ifndef NDEBUG
+         if (!m_searchStr) throw StriException("!m_searchStr");
+#endif
 
+         if (startPos > m_searchLen-m_patternLen) { // this check is OK, we do a case-sensitive search
+            m_searchPos = m_searchEnd = m_searchLen;
+            return USEARCH_DONE;
+         }
+
+         unsigned char pat = (unsigned char)m_patternStr[0];  /* TO DO: why can't this be cached? */
+         for (m_searchPos = startPos; m_searchPos<m_searchLen-1+1; ++m_searchPos) {
+            if (pat == (unsigned char)m_searchStr[m_searchPos]) {
+               m_searchEnd = m_searchPos + 1;
+               return m_searchPos;
+            }
+         }
+         
+         // else not found
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
+   
+   
+   public:
+   
+      StriByteSearchMatcher1(const char* patternStr, R_len_t patternLen, bool optOverlap)
+         : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
+      {
+#ifndef NDEBUG
+         if (patternLen != 1) throw StriException("StriByteSearchMatcher1");
+#endif
+      }
+      
+      virtual R_len_t findFirst() {
+         return findFromPos(0);
+      }
+      
+      virtual R_len_t findLast()  {
+         R_len_t startPos = m_searchLen;
+         if (startPos+1 < m_patternLen) { // check OK, case-sensitive search
+            m_searchPos = m_searchEnd = m_searchLen;
+            return USEARCH_DONE;
+         }
+         
+         unsigned char pat = (unsigned char)m_patternStr[0];
+         for (m_searchPos = startPos-0; m_searchPos>=0; --m_searchPos) {
+            if (pat == (unsigned char)m_searchStr[m_searchPos]) {
+               m_searchEnd = m_searchPos + 1;
+               return m_searchPos;
+            }
+         }
+         
+         // else not found
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
+};
 
 
 #endif
