@@ -41,6 +41,9 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-24)
  *          Separated from String8
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
+ *          Use malloc+realloc
  */
 class String8buf  {
 
@@ -59,7 +62,8 @@ class String8buf  {
        */
       String8buf(R_len_t size=0) {
          this->m_size = size+1;
-         this->m_str = new char[this->m_size];
+         this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
          this->m_str[0] = '\0';
       }
 
@@ -67,16 +71,18 @@ class String8buf  {
       /** destructor */
       ~String8buf()
       {
-         if (this->m_str)
-            delete [] this->m_str;
-         this->m_str = NULL;
+         if (this->m_str) {
+            free(this->m_str);
+            this->m_str = NULL;
+         }
       }
 
       /** copy constructor */
       String8buf(const String8buf& s)
       {
          this->m_size = s.m_size;
-         this->m_str = new char[this->m_size];
+         this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
       }
 
@@ -84,10 +90,11 @@ class String8buf  {
       String8buf& operator=(const String8buf& s)
       {
          if (this->m_str)
-            delete [] this->m_str;
+            free(this->m_str);
 
          this->m_size = s.m_size;
-         this->m_str = new char[this->m_size];
+         this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
 
          return *this;
@@ -115,21 +122,16 @@ class String8buf  {
        */
       inline void resize(R_len_t size, bool copy=true)
       {
-         if (this->m_size >= size)
+         if (this->m_size > size)
             return; // do nothing (the requested buffer size is available)
 
-         size_t oldsize = this->m_size;
+         char* old_str = this->m_str;
          this->m_size = size+1;
-         char* newstr = new char[this->m_size];
-         if (this->m_str && copy) {
-            memcpy(newstr, this->m_str, (size_t)oldsize);
+         this->m_str = (char*)realloc(this->m_str, sizeof(char)*this->m_size);
+         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+         if (!old_str || !copy) {
+            this->m_str[0] = 0;
          }
-         else {
-            newstr[0] = 0;
-         }
-
-         delete[] this->m_str;
-         this->m_str = newstr;
       }
 
       /** Replace substrings with a given replacement string
