@@ -110,6 +110,8 @@ StriByteSearchMatcher* StriContainerByteSearch::getMatcher(R_len_t i) {
       
       if (isCaseInsensitive())
          matcher = new StriByteSearchMatcherKMPci(get(i).c_str(), get(i).length(), isOverlap());
+      else if (get(i).length() == 1)
+         matcher = new StriByteSearchMatcher1(get(i).c_str(), get(i).length(), isOverlap());
       else
          matcher = new StriByteSearchMatcherKMP(get(i).c_str(), get(i).length(), isOverlap());
    }
