@@ -4,6 +4,7 @@
 # Autoconf
 src/symbols.rds
 src/Makevars
+src/install.libs.R
 src/icu52_found.txt
 autom4te.cache
 config.log

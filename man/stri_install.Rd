@@ -17,9 +17,9 @@ stri_install_icudt(check = TRUE, outpath = NULL, inpath = NULL)
 \item{outpath}{path to install icudt to. If \code{NULL}, then
 \code{file.path(path.package("stringi"), "libs")} will be used.}
 
-\item{inpath}{path to search icudt archive in (must end with a slash).
-If \code{NULL}, then only stringi mirror servers will be used as possible sources
-Custom, non-default paths should not be used normally by \pkg{stringi} users.}
+\item{inpath}{path to search icudt archive in.
+If \code{NULL}, then only stringi mirror servers will be used.
+Mainly of interest to system admins and software developers.}
 }
 \value{
 These functions return a logical value, invisibly.

@@ -11,7 +11,10 @@ or
 
 then the library will be built together with stringi
 (a custom subset of ICU4C 52.1 is shipped with the package).
-
+In such a case, if you already downloaded an appropriate version of
+`icudt*.zip`, you may wish to install the package by calling:
+`install.packages("stringi", configure.vars="ICUDT_DIR=<dir_to_copy_icudt_from>")`.
+Otherwise, the ICU data library will be downloaded from one of our mirror servers.
 
 You are encouraged to check whether the ICU data library (`icudt`)
 has been successfully installed by calling:
@@ -19,6 +22,5 @@ has been successfully installed by calling:
     > library('stringi')
     > stri_install_check()
 
-This will also make you sure that ICU has detected your locale and native
+This is also to ensure that ICU has detected your locale and native
 encoding properly.
-

@@ -26,11 +26,12 @@
      on the current `libC`'s implementation of `strchr()` and `strstr()`.
      This is very fast e.g. on `glibc` utilizing the `SSE2` instruction set.
 
+   * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package install;
+     see `./configure --help` for more information.
+
 TO BE DONE:
 
    * #69: ICU 54.1
-
-   * #141: local mirror icudt
 
    * #140: more strict tests for icudt
 
