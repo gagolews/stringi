@@ -22,6 +22,9 @@
      (these affect `stri_sub`, `stri_locate` and other string index-based
       operations)
 
+   * [GENERAL] Performance improvements in searching for short fixed
+     patterns (`stri_*_fixed`)
+
 TO BE DONE:
 
    * #69: ICU 54.1
