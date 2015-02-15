@@ -651,6 +651,7 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
+ICUDT_DIR
 R_HOME
 target_alias
 host_alias
@@ -705,6 +706,7 @@ with_extra_ldflags
 host_alias
 target_alias
 R_HOME
+ICUDT_DIR
 CC
 CFLAGS
 LDFLAGS
@@ -1351,6 +1353,10 @@ Some influential environment variables:
   R_HOME      Override default directory with R installation, e.g.
               /usr/lib64/R. Note that $R_HOME/bin/R should point to R
               executable.
+  ICUDT_DIR   Optional directory from which an already downloaded ICU data
+              archive (icudt*.zip) may be copied; either an absolute path or a
+              path relative to <package source dir>/src; defaults to
+              icu52/data.
   CC          C compiler command
   CFLAGS      C compiler flags
   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
@@ -2127,6 +2133,8 @@ ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 # R_HOME - R's home dir
 
 
+
+
 # Check whether --enable-pkg_config was given.
 if test "${enable_pkg_config+set}" = set; then :
   enableval=$enable_pkg_config;
@@ -2191,6 +2199,15 @@ fi
 
 ##### CHECK FOR R #############################################################
 
+# set ICUDT_DIR
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICUDT_DIR" >&5
+$as_echo_n "checking for ICUDT_DIR... " >&6; }
+if test -z "${ICUDT_DIR}"; then
+   ICUDT_DIR=icu52/data
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
+$as_echo "$ICUDT_DIR" >&6; }
+
 # this is inspired by "Writing R Extensions" manual:
 # determine R_HOME directory...
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R_HOME" >&5
@@ -2206,6 +2223,7 @@ $as_echo "no" >&6; }
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $R_HOME" >&5
 $as_echo "$R_HOME" >&6; }
+
 
 
 # ...and then R_PATH
@@ -4082,6 +4100,10 @@ ac_config_files="$ac_config_files src/Makevars"
 
 ac_config_files="$ac_config_files src/icu52_found.txt"
 
+
+
+ac_config_files="$ac_config_files src/install.libs.R"
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -4789,6 +4811,7 @@ do
   case $ac_config_target in
     "src/Makevars") CONFIG_FILES="$CONFIG_FILES src/Makevars" ;;
     "src/icu52_found.txt") CONFIG_FILES="$CONFIG_FILES src/icu52_found.txt" ;;
+    "src/install.libs.R") CONFIG_FILES="$CONFIG_FILES src/install.libs.R" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

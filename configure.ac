@@ -15,6 +15,10 @@ ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/lib64/R.
                     Note that $R_HOME/bin/R should point to R executable.])
 
+AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU data archive (icudt*.zip)
+                       may be copied; either an absolute path or a path relative to <package source dir>/src;
+                       defaults to icu52/data.])
+
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
       [Disable pkg-config usage for finding ICU4C-devel; in such a case ICU4C will be compiled from sources.]))
@@ -61,6 +65,13 @@ AC_ARG_WITH([extra_ldflags],
 
 ##### CHECK FOR R #############################################################
 
+# set ICUDT_DIR
+AC_MSG_CHECKING(for local ICUDT_DIR)
+if test -z "${ICUDT_DIR}"; then
+   ICUDT_DIR=icu52/data
+fi
+AC_MSG_RESULT($ICUDT_DIR)
+
 # this is inspired by "Writing R Extensions" manual:
 # determine R_HOME directory...
 AC_MSG_CHECKING(for R_HOME)
@@ -74,6 +85,7 @@ if test -z "${R_HOME}"; then
 fi
 AC_MSG_RESULT($R_HOME)
 AC_SUBST(R_HOME)
+
 
 # ...and then R_PATH
 AC_MSG_CHECKING(for R)
@@ -374,4 +386,7 @@ AC_CONFIG_FILES([src/Makevars])
 
 AC_SUBST(ICU_FOUND)
 AC_CONFIG_FILES([src/icu52_found.txt])
+
+AC_SUBST(ICUDT_DIR)
+AC_CONFIG_FILES([src/install.libs.R])
 AC_OUTPUT
