@@ -27,7 +27,7 @@
      This is very fast e.g. on `glibc` utilizing the `SSE2` instruction set.
 
    * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package install;
-     see `./configure --help` for more information.
+     see the `INSTALL` file for more information.
 
 TO BE DONE:
 

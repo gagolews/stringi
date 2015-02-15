@@ -216,7 +216,69 @@ detect_icu_with_pkg_config() {
       return 1
    ])
 
-   AC_MSG_CHECKING([for available ICU data library (ucnv, uloc)])
+   AC_MSG_CHECKING([for available ICU data library (ucnv, uloc, utrans)])
+   AC_LINK_IFELSE([AC_LANG_SOURCE([
+      #include <unicode/unistr.h>
+      #include <unicode/uvernum.h>
+      #include <unicode/ptypes.h>
+      #include <unicode/uchar.h>
+      #include <unicode/utypes.h>
+      #include <unicode/ucnv.h>
+      #include <unicode/ustring.h>
+      #include <unicode/stringpiece.h>
+      #include <unicode/utf8.h>
+      #include <unicode/utf16.h>
+      #include <unicode/normalizer2.h>
+      #include <unicode/locid.h>
+      #include <unicode/uloc.h>
+      #include <unicode/regex.h>
+      #include <unicode/brkiter.h>
+      #include <unicode/coll.h>
+      #include <unicode/ucol.h>
+      #include <unicode/ucsdet.h>
+      #include <unicode/stsearch.h>
+      #include <unicode/ulocdata.h>
+      #include <unicode/usearch.h>
+      #include <unicode/uniset.h>
+      #include <stdio.h>
+      #include <unicode/translit.h>
+      using namespace icu;
+
+      int main() {
+        // check if we have some converters installed (icudt)
+        int c = ucnv_countAvailable();
+        if (c <= 0)
+          return 11;
+
+        // check if we have some locales defined (icudt)
+        c = uloc_countAvailable();
+        if (c <= 0)
+          return 12;
+
+        UErrorCode status = U_ZERO_ERROR;
+        StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status); 
+        if (!U_SUCCESS(status)) return 13;
+
+        trans_enum->reset(status);
+        if (!U_SUCCESS(status)) return 14;
+
+        c = trans_enum->count(status);
+        if (!U_SUCCESS(status)) return 15;
+        if (c <= 0) return 16;
+
+        delete trans_enum;
+        return 0;
+      }])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no]) 
+      echo "*** We will build ICU4C from sources"
+      return 1
+   ])
+
+   AC_MSG_CHECKING([for available ICU data library (ucol)])
    AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <unicode/unistr.h>
       #include <unicode/uvernum.h>
@@ -244,16 +306,20 @@ detect_icu_with_pkg_config() {
       using namespace icu;
 
       int main() {
-        // check if we have some converters installed (icudt)
-        int c = ucnv_countAvailable();
-        if (c <= 0)
-          return 11;
+        UnicodeString a = UnicodeString::fromUTF8("hladny");
+        UnicodeString b = UnicodeString::fromUTF8("chladny");
 
-        // check if we have some locales defined (icudt)
-        c = uloc_countAvailable();
-        if (c <= 0)
-          return 12;
+        UErrorCode status = U_ZERO_ERROR;
+        Locale l = Locale::createFromName("sk_SK");
+        Collator* c = Collator::createInstance(l, status);
+        if (!U_SUCCESS(status)) return 1;
 
+        status = U_ZERO_ERROR;
+        if (UCOL_GREATER != c->compare(a, b, status))
+           return 2;
+        if (!U_SUCCESS(status)) return 3;
+
+        delete c;
         return 0;
       }])
    ],

@@ -2200,8 +2200,8 @@ fi
 ##### CHECK FOR R #############################################################
 
 # set ICUDT_DIR
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICUDT_DIR" >&5
-$as_echo_n "checking for ICUDT_DIR... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
+$as_echo_n "checking for local ICUDT_DIR... " >&6; }
 if test -z "${ICUDT_DIR}"; then
    ICUDT_DIR=icu52/data
 fi
@@ -3519,8 +3519,82 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucnv, uloc)" >&5
-$as_echo_n "checking for available ICU data library (ucnv, uloc)... " >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucnv, uloc, utrans)" >&5
+$as_echo_n "checking for available ICU data library (ucnv, uloc, utrans)... " >&6; }
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      #include <unicode/unistr.h>
+      #include <unicode/uvernum.h>
+      #include <unicode/ptypes.h>
+      #include <unicode/uchar.h>
+      #include <unicode/utypes.h>
+      #include <unicode/ucnv.h>
+      #include <unicode/ustring.h>
+      #include <unicode/stringpiece.h>
+      #include <unicode/utf8.h>
+      #include <unicode/utf16.h>
+      #include <unicode/normalizer2.h>
+      #include <unicode/locid.h>
+      #include <unicode/uloc.h>
+      #include <unicode/regex.h>
+      #include <unicode/brkiter.h>
+      #include <unicode/coll.h>
+      #include <unicode/ucol.h>
+      #include <unicode/ucsdet.h>
+      #include <unicode/stsearch.h>
+      #include <unicode/ulocdata.h>
+      #include <unicode/usearch.h>
+      #include <unicode/uniset.h>
+      #include <stdio.h>
+      #include <unicode/translit.h>
+      using namespace icu;
+
+      int main() {
+        // check if we have some converters installed (icudt)
+        int c = ucnv_countAvailable();
+        if (c <= 0)
+          return 11;
+
+        // check if we have some locales defined (icudt)
+        c = uloc_countAvailable();
+        if (c <= 0)
+          return 12;
+
+        UErrorCode status = U_ZERO_ERROR;
+        StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
+        if (!U_SUCCESS(status)) return 13;
+
+        trans_enum->reset(status);
+        if (!U_SUCCESS(status)) return 14;
+
+        c = trans_enum->count(status);
+        if (!U_SUCCESS(status)) return 15;
+        if (c <= 0) return 16;
+
+        delete trans_enum;
+        return 0;
+      }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      echo "*** We will build ICU4C from sources"
+      return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucol)" >&5
+$as_echo_n "checking for available ICU data library (ucol)... " >&6; }
    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -3550,16 +3624,20 @@ $as_echo_n "checking for available ICU data library (ucnv, uloc)... " >&6; }
       using namespace icu;
 
       int main() {
-        // check if we have some converters installed (icudt)
-        int c = ucnv_countAvailable();
-        if (c <= 0)
-          return 11;
+        UnicodeString a = UnicodeString::fromUTF8("hladny");
+        UnicodeString b = UnicodeString::fromUTF8("chladny");
 
-        // check if we have some locales defined (icudt)
-        c = uloc_countAvailable();
-        if (c <= 0)
-          return 12;
+        UErrorCode status = U_ZERO_ERROR;
+        Locale l = Locale::createFromName("sk_SK");
+        Collator* c = Collator::createInstance(l, status);
+        if (!U_SUCCESS(status)) return 1;
 
+        status = U_ZERO_ERROR;
+        if (UCOL_GREATER != c->compare(a, b, status))
+           return 2;
+        if (!U_SUCCESS(status)) return 3;
+
+        delete c;
         return 0;
       }
 
