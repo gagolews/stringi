@@ -376,8 +376,19 @@ class StriByteSearchMatcher1 : public StriByteSearchMatcher {
             m_searchPos = m_searchEnd = m_searchLen;
             return USEARCH_DONE;
          }
+         
+         const char* res = strchr(m_searchStr+startPos, m_patternStr[0]);
+         if (res) {
+            m_searchPos = (int)(res-m_searchStr);
+            m_searchEnd = m_searchPos+1;
+            return m_searchPos;
+         }
+         else {
+            m_searchPos = m_searchEnd = m_searchLen;
+            return USEARCH_DONE;
+         }
 
-         unsigned char pat = (unsigned char)m_patternStr[0];  /* TO DO: why can't this be cached? */
+         /*unsigned char pat = (unsigned char)m_patternStr[0];  
          for (m_searchPos = startPos; m_searchPos<m_searchLen-1+1; ++m_searchPos) {
             if (pat == (unsigned char)m_searchStr[m_searchPos]) {
                m_searchEnd = m_searchPos + 1;
@@ -388,6 +399,7 @@ class StriByteSearchMatcher1 : public StriByteSearchMatcher {
          // else not found
          m_searchPos = m_searchEnd = m_searchLen;
          return USEARCH_DONE;
+         */
       }
    
    
@@ -416,6 +428,62 @@ class StriByteSearchMatcher1 : public StriByteSearchMatcher {
          for (m_searchPos = startPos-0; m_searchPos>=0; --m_searchPos) {
             if (pat == (unsigned char)m_searchStr[m_searchPos]) {
                m_searchEnd = m_searchPos + 1;
+               return m_searchPos;
+            }
+         }
+         
+         // else not found
+         m_searchPos = m_searchEnd = m_searchLen;
+         return USEARCH_DONE;
+      }
+};
+
+
+class StriByteSearchMatcherShort : public StriByteSearchMatcher {
+   
+   protected:   
+   
+      virtual R_len_t findFromPos(R_len_t startPos) {
+#ifndef NDEBUG
+         if (!m_searchStr) throw StriException("!m_searchStr");
+#endif
+
+         if (startPos > m_searchLen-m_patternLen) { // this check is OK, we do a case-sensitive search
+            m_searchPos = m_searchEnd = m_searchLen;
+            return USEARCH_DONE;
+         }
+         
+         const char* res = strstr(m_searchStr+startPos, m_patternStr);
+         if (res) {
+            m_searchPos = (int)(res-m_searchStr);
+            m_searchEnd = m_searchPos+m_patternLen;
+            return m_searchPos;
+         }
+         else {
+            m_searchPos = m_searchEnd = m_searchLen;
+            return USEARCH_DONE;
+         }
+      }
+   
+   
+   public:
+   
+      StriByteSearchMatcherShort(const char* patternStr, R_len_t patternLen, bool optOverlap)
+         : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
+      {
+
+      }
+      
+      virtual R_len_t findFirst() {
+         return findFromPos(0);
+      }
+      
+      virtual R_len_t findLast()  {
+         R_len_t startPos = m_searchLen;
+      
+         for (m_searchPos = startPos-m_patternLen; m_searchPos>=0; --m_searchPos) {
+            if (0 == strncmp(m_searchStr+m_searchPos, m_patternStr, m_patternLen)) {
+               m_searchEnd = m_searchPos + m_patternLen;
                return m_searchPos;
             }
          }
