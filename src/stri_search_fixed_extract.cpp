@@ -53,7 +53,7 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
  */
@@ -158,7 +158,7 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          new args: opts_fixed, omit_no_match, simplify
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
  */

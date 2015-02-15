@@ -114,7 +114,7 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use String8::isASCII
  */
@@ -198,7 +198,7 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use String8::isASCII
  */
@@ -279,7 +279,7 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-20)
  *          moved to StriContainerUTF8_indexable
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use String8::isASCII
  */
@@ -293,7 +293,7 @@ void StriContainerUTF8_indexable::UTF8_to_UChar32_index(R_len_t i,
       }
       return;
    }
-   
+
    const char* cstr = get(i).c_str();
    const int nstr = get(i).length();
 

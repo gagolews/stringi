@@ -289,7 +289,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
-      
+
       StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
       for (R_len_t j = 0; j<str_n; ++j) {
          if (str_cont.isNA(j)) continue;

@@ -263,7 +263,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  */
-SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour, 
+SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    SEXP minute, SEXP second, SEXP /*tz*/, SEXP lenient, SEXP locale)
 {
    PROTECT(year = stri_prepare_arg_integer(year, "year"));
@@ -300,7 +300,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    UErrorCode status = U_ZERO_ERROR;
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   
+
    cal->setLenient(lenient_val);
 
    SEXP ret;

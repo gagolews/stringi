@@ -80,7 +80,7 @@ stri_datetime_now <- function() {
 #'
 #' The replacement version of \code{stri_datetime_add} modifies
 #' the state of the \code{time} object.
-#' 
+#'
 #' @references
 #' \emph{Calendar Classes} - ICU User Guide,
 #' \url{http://userguide.icu-project.org/datetime/calendar}
@@ -93,7 +93,7 @@ stri_datetime_now <- function() {
 #' stri_datetime_add(x, -2, units="months")
 #' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years")
 #' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@@calendar=hebrew")
-#' 
+#'
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
@@ -141,7 +141,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' \item is weekend? ....
 #' \item TO DO.....
 #' }
-#' 
+#'
 #' @examples
 #' stri_datetime_fields(stri_datetime_now())
 #'
@@ -154,14 +154,14 @@ stri_datetime_fields <- function(time, locale=NULL) {
 
 #' @title
 #' Crate a Date-Time Object
-#' 
+#'
 #' @description
 #' This function constructs date-time objects from numeric representations.
-#' 
+#'
 #' @details
 #' Vectorized over \code{year}, \code{month}, \code{hour},
 #' \code{hour}, \code{minute}, and \code{second}.
-#' 
+#'
 #' @param year iteger vector; 0 is 1BC, -1 is 2BC, etc.
 #' @param month iteger vector; months are 1-based
 #' @param day iteger vector
@@ -174,16 +174,16 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
-#' 
+#'
 #' @return
 #' Returns an object of class \code{\link{POSIXst}}.
-#' 
+#'
 #' @examples
 #' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
 #' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
 #' stri_datetime_create(2015, 02, 29)
 #' stri_datetime_create(2015, 02, 29, lenient=TRUE)
-#' 
+#'
 #' @family datetime
 #' @export
 stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, lenient=FALSE, locale=NULL) {
@@ -193,10 +193,10 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 
 #' @title
 #' Date-Time Objects in \pkg{stringi}
-#' 
+#'
 #' @description
 #' t.b.d.
-#' 
+#'
 #' @details
 #' An object of class \code{\link{POSIXst}},
 #' inherits from (for compatibility with other base R functions)
@@ -204,15 +204,15 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 #' In fact, it is a numeric vector representing the (signed) number of seconds
 #' since the UNIX Epoch, i.e. 1970-01-01 00:00:00 UTC.
 #' UTC leap seconds are ignored.
-#' 
+#'
 #' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
 #' etc. or the \code{sort()} function may be used.
-#' 
+#'
 #' @param x ...
-#' 
+#'
 #' @return
 #' t.b.d.
-#' 
+#'
 #' @export
 #' @rdname as.POSIXst
 #' @family datetime
@@ -222,4 +222,3 @@ as.POSIXst <- function(x) {
 }
 
 # TO DO: field difference
-

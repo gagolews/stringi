@@ -92,7 +92,7 @@ stri_install_check <- function(silent=FALSE) {
    if (!silent) {
       if (allok) message("All tests completed successfully.")
       else {
-         message("It seems that ICU data library has not been installed properly.")
+         message("It seems that the ICU data library has not been installed properly.")
          message("Call stri_install_icudt() to fix this problem.")
       }
    }
