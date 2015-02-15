@@ -39,7 +39,6 @@
 // #define STRI__BYTESEARCH_DISABLE_SHORTPAT
 
 
-
 /**
  * A class to handle StriByteSearch patterns
  *
@@ -62,7 +61,7 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *          #23: add `overlap` option
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use StriByteSearchMatcher
  */
@@ -74,7 +73,7 @@ class StriContainerByteSearch : public StriContainerUTF8 {
          BYTESEARCH_CASE_INSENSITIVE = 2,
          BYTESEARCH_OVERLAP = 4
       } ByteSearchFlag;
-      
+
       StriByteSearchMatcher* matcher;
       uint32_t flags; ///< ByteSearch flags
 
@@ -88,13 +87,13 @@ class StriContainerByteSearch : public StriContainerUTF8 {
       StriContainerByteSearch(StriContainerByteSearch& container);
       ~StriContainerByteSearch();
       StriContainerByteSearch& operator=(StriContainerByteSearch& container);
-      
+
       StriByteSearchMatcher* getMatcher(R_len_t i);
 
       inline bool isCaseInsensitive() {
          return (bool)(flags&BYTESEARCH_CASE_INSENSITIVE);
       }
-      
+
       inline bool isOverlap() {
          return (bool)(flags&BYTESEARCH_OVERLAP);
       }

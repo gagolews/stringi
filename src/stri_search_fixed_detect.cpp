@@ -61,7 +61,7 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
  */

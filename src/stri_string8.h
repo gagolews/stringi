@@ -60,7 +60,7 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
  *          BUGFIX?: Added explicit zero bytes at the end of each array;
  *          new methods: replaceAllAtPos(), setNA()
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          new field: m_isASCII
  */
@@ -211,12 +211,12 @@ class String8  {
       inline bool isNA() const {
          return !this->m_str;
       }
-      
+
       /** does this String8 is in ASCII? */
       inline bool isASCII() const {
          return this->m_isASCII;
       }
-      
+
       /** does this String8 is in UTF-8? */
       inline bool isUTF8() const {
          return !this->m_isASCII;
@@ -259,7 +259,7 @@ class String8  {
 #endif
          if (m_isASCII)
             return m_n;
-            
+
          UChar32 c = 0;
          R_len_t j = 0;
          R_len_t i = 0;
@@ -273,12 +273,12 @@ class String8  {
 
          return i;
       }
-      
-      
+
+
       /**
        *
        * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
-       * 
+       *
        * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
        *    moved from StriContainerByteSearch to String8
        */
@@ -299,20 +299,20 @@ class String8  {
          }
          else {
             if (byteindex-patternLen < 0) return false;
-            
+
             for (R_len_t k=0; k < patternLen; ++k)
                if (m_str[byteindex-k-1] != patternStr[patternLen-k-1])
                   return false;
-      
+
             return true; // found
          }
       }
-      
-      
+
+
       /**
        *
        * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
-       * 
+       *
        * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
        * moved from StriContainerByteSearch to String8
        */
@@ -322,7 +322,7 @@ class String8  {
             R_len_t k = 0;
             UChar32 c1;
             UChar32 c2;
-            
+
             while (k < patternLen) {
                if (byteindex >= m_n) return false;
                U8_NEXT(m_str,      byteindex, m_n,        c1);
@@ -334,11 +334,11 @@ class String8  {
          }
          else {
             if (byteindex+patternLen > m_n) return false;
-            
+
             for (R_len_t k=0; k < patternLen; ++k)
                if (m_str[byteindex+k] != patternStr[k])
                   return false;
-                  
+
             return true; // found
          }
       }

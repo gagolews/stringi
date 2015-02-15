@@ -41,7 +41,7 @@
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-24)
  *          Separated from String8
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          Use malloc+realloc
  */
