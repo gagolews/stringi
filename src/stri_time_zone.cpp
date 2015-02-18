@@ -81,15 +81,28 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
+   
+//   SEXP nam;
+//   STRI__PROTECT(nam = Rf_allocVector(STRSXP, n));
 
-   // MG: I reckon than IDs are more readable than DisplayNames
+   // MG: I reckon that IDs are more readable than DisplayNames (which are moreover localized)
    for (R_len_t i=0; i<n; ++i) {
       int len;
       status = U_ZERO_ERROR;
       const char* cur = tz_enum->next(&len, status);
       STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(cur, len, CE_UTF8));
+      
+//      TimeZone* curtz = TimeZone::createTimeZone(UnicodeString::fromUTF8(cur));
+//      UnicodeString curdn;
+//      curtz->getDisplayName(locale, curdn);
+//      delete curtz;
+//      string out;
+//      curdn.toUTF8String(out);
+//      SET_STRING_ELT(nam, i, Rf_mkCharCE(out.c_str(), CE_UTF8));
    }
+   
+//   Rf_setAttrib(ret, R_NamesSymbol, nam);
 
    if (tz_enum) { delete tz_enum; tz_enum = NULL; }
    STRI__UNPROTECT_ALL
@@ -170,7 +183,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale) {
    SET_VECTOR_ELT(vals, 0, Rf_allocVector(STRSXP, 1));
    SET_STRING_ELT(VECTOR_ELT(vals, 0), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
 
-   // ICU >= 52
+   // @TODO: ICU >= 52
 //   UnicodeString id = val1;
 //   UErrorCode err = U_ZERO_ERROR;
 //   TimeZone::getWindowsID(id, val1, err);

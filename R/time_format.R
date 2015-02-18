@@ -37,17 +37,17 @@
 #' to a character vector or conversely.
 #'
 #' @details
-#' Vectorized over \code{time}.
+#' Vectorized over \code{time} or \code{str}.
 #'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
 #' and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
 #' This gives a locale-dependent date and/or time format.
 #' Note that currently ICU does not support \code{relative} \code{time} formats,
-#' so this flag is currently in such context.
+#' so this flag is currently ignored in such a context.
 #'
 #' Otherwise, \code{format} is a pattern:
-#' a string of characters, where specific strings of characters are replaced
+#' a string, where specific sequences of characters are replaced
 #' with date and time data from a calendar when formatting or used
 #' to generate data for a calendar when parsing.
 #' For example, \code{y} stands for the year. Characters
@@ -225,7 +225,6 @@ format.POSIXst <- function(x, ..., usetz=TRUE) {
 }
 
 
-#'
 #' @export
 #' @rdname stri_datetime_format
 stri_datetime_parse <- function(str, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL, lenient=FALSE, locale=NULL) {

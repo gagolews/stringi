@@ -8,7 +8,7 @@ stri_timezone_info(tz = NULL, locale = NULL)
 }
 \arguments{
 \item{tz}{\code{NULL} or \code{""} for default time zone,
-a single string with time zone ID otherwise.}
+or a single string with time zone ID otherwise.}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier.}
@@ -19,7 +19,7 @@ Returns a list with the following named components:
 \item \code{ID} (time zone identifier),
 \item \code{Name} (localized human-readable time zone name),
 \item \code{RawOffset} (raw GMT offset, in hours, before taking
-daylight savings int account), and
+daylight savings into account), and
 \item \code{UsesDaylightTime} (states whether a time zone uses
 daylight savings time in the current Gregorian calendar year).
 }
@@ -28,7 +28,7 @@ daylight savings time in the current Gregorian calendar year).
 Provides some basic information on a given time zone identifier.
 }
 \details{
-With this function you may obtain some basic information
+With this function you may fetch some basic information
 on any supported time zone.
 
 For more information on time zone representation in \pkg{ICU},
