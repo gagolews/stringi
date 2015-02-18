@@ -36,6 +36,7 @@ and \code{width} - for  date formatting width.
 \examples{
 stri_datetime_symbols() # uses the Gregorian calendar in most locales
 stri_datetime_symbols("@calendar=hebrew")
+stri_datetime_symbols("he_IL@calendar=hebrew")
 stri_datetime_symbols("@calendar=islamic")
 stri_datetime_symbols("@calendar=persian")
 stri_datetime_symbols("@calendar=indian")

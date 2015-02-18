@@ -5,6 +5,7 @@ test_that("stri_timezone_list", {
 
    expect_true(is.character(stri_timezone_list()))
    expect_true(length(stri_timezone_list()) > 0)
+   expect_error(stri_timezone_list(,mean))
    expect_true("UTC" %in% stri_timezone_list())
    expect_true("GMT" %in% stri_timezone_list())
    expect_true("CET" %in% stri_timezone_list())
@@ -17,7 +18,8 @@ test_that("stri_timezone_list", {
    expect_true("America/Los_Angeles" %in% stri_timezone_list(offset=-8))
    expect_true("UTC" %in% stri_timezone_list(offset=0))
    expect_true("Europe/Warsaw" %in% stri_timezone_list("pl"))
-
+   expect_true("America/Atka" %in% stri_timezone_list(region="US", offset=-10))
+   
    for (i in (-12):14)
       expect_true(length(stri_timezone_list(offset=i))>0)
 })

@@ -42,7 +42,7 @@
 #' and/or time zones corresponding to a given region are provided.
 #' Note that the effect of daylight savings time is ignored.
 #'
-#' A time zone represents an offset applied to Greenwich Mean Time (GMT)
+#' A time zone represents an offset applied to the Greenwich Mean Time (GMT)
 #' to obtain local time (Universal Coordinated Time, or UTC, is similar,
 #' but not precisely identical, to GMT; in \pkg{ICU} the two terms
 #' are used interchangeably since \pkg{ICU} does not concern itself with
@@ -53,7 +53,7 @@
 #' If DST is in use, then specific rules define the point at which
 #' the offset changes and the amount by which it changes.
 #'
-#' If DST is observed, then three additional pieces of information are needed:
+#' If DST is observed, then three additional bits of information are needed:
 #' \enumerate{
 #' \item The precise date and time during the year when DST begins.
 #' In the first half of the year it's in the northern hemisphere,
@@ -92,7 +92,12 @@
 #' stri_timezone_list(offset=5.5)
 #' stri_timezone_list(offset=5.75)
 #' stri_timezone_list(region="PL")
-#'
+#' stri_timezone_list(region="US", offset=-10)
+#' 
+#' # Fetch info on all time zones
+#' do.call(rbind.data.frame, 
+#'     lapply(stri_timezone_list(), function(id) stri_timezone_info(id)))
+#' 
 #' @family datetime
 #' @family timezone
 #' @export
@@ -105,10 +110,10 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' Set or Get Default Time Zone in \pkg{stringi}
 #'
 #' @description
-#' \code{stri_timezone_set} changes default time zone for all functions
+#' \code{stri_timezone_set} changes the current default time zone for all functions
 #' in the \pkg{stringi} package, i.e. establishes the meaning of the
 #' ``\code{NULL} time zone'' argument of date/time processing functions.
-#' On the other hand, \code{stri_timezone_get} gets current default time zone.
+#' On the other hand, \code{stri_timezone_get} gets the current default time zone.
 #'
 #' For more information on time zone representation in \pkg{ICU},
 #' see \code{\link{stri_timezone_list}}.
@@ -116,7 +121,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #' @details
 #' Unless the default time zone has already been set using
 #' \code{stri_timezone_set}, the default time zone is determined
-#' by querying the system using methods in ICU's internal platform utilities.
+#' by querying the OS with methods in ICU's internal platform utilities.
 #'
 #' @param tz single string; time zone identifier
 #'
@@ -164,14 +169,14 @@ stri_timezone_set <- function(tz) {
 #' Provides some basic information on a given time zone identifier.
 #'
 #' @details
-#' With this function you may obtain some basic information
+#' With this function you may fetch some basic information
 #' on any supported time zone.
 #'
 #' For more information on time zone representation in \pkg{ICU},
 #' see \code{\link{stri_timezone_list}}.
 #'
 #' @param tz \code{NULL} or \code{""} for default time zone,
-#' a single string with time zone ID otherwise.
+#' or a single string with time zone ID otherwise.
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier.
 #'
@@ -181,7 +186,7 @@ stri_timezone_set <- function(tz) {
 #' \item \code{ID} (time zone identifier),
 #' \item \code{Name} (localized human-readable time zone name),
 #' \item \code{RawOffset} (raw GMT offset, in hours, before taking
-#' daylight savings int account), and
+#' daylight savings into account), and
 #' \item \code{UsesDaylightTime} (states whether a time zone uses
 #' daylight savings time in the current Gregorian calendar year).
 #' }

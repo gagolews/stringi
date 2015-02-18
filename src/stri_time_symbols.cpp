@@ -158,7 +158,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
       SET_STRING_ELT(VECTOR_ELT(vals, j), i, Rf_mkCharCE(out.c_str(), CE_UTF8));
    }
 
-//   // getYearNames -- ICU54 draft
+//   // getYearNames -- @TODO ICU54 draft
 //   ++j;
 //   ret = sym.getYearNames(count, context_val, width_val); //  (DateFormatSymbols retains ownership.)
 //   SET_VECTOR_ELT(vals, j, Rf_allocVector(STRSXP, count));
@@ -168,7 +168,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
 //      SET_STRING_ELT(VECTOR_ELT(vals, j), i, Rf_mkCharCE(out.c_str(), CE_UTF8));
 //   }
 
-//   // getZodiacNames -- ICU54 draft
+//   // getZodiacNames -- @TODO ICU54 draft
 //   ++j;
 //   ret = sym.getZodiacNames(count, context_val, width_val); //  (DateFormatSymbols retains ownership.)
 //   SET_VECTOR_ELT(vals, j, Rf_allocVector(STRSXP, count));

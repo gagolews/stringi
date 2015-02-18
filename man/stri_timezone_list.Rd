@@ -26,7 +26,7 @@ only time zone identifiers with a given raw offset from GMT
 and/or time zones corresponding to a given region are provided.
 Note that the effect of daylight savings time is ignored.
 
-A time zone represents an offset applied to Greenwich Mean Time (GMT)
+A time zone represents an offset applied to the Greenwich Mean Time (GMT)
 to obtain local time (Universal Coordinated Time, or UTC, is similar,
 but not precisely identical, to GMT; in \pkg{ICU} the two terms
 are used interchangeably since \pkg{ICU} does not concern itself with
@@ -37,7 +37,7 @@ Typically, regions closer to the equator do not use DST.
 If DST is in use, then specific rules define the point at which
 the offset changes and the amount by which it changes.
 
-If DST is observed, then three additional pieces of information are needed:
+If DST is observed, then three additional bits of information are needed:
 \enumerate{
 \item The precise date and time during the year when DST begins.
 In the first half of the year it's in the northern hemisphere,
@@ -55,6 +55,11 @@ stri_timezone_list(offset=1)
 stri_timezone_list(offset=5.5)
 stri_timezone_list(offset=5.75)
 stri_timezone_list(region="PL")
+stri_timezone_list(region="US", offset=-10)
+
+# Fetch info on all time zones
+do.call(rbind.data.frame,
+    lapply(stri_timezone_list(), function(id) stri_timezone_info(id)))
 }
 \references{
 \emph{TimeZone} class -- ICU API Documentation,
