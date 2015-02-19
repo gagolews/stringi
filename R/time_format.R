@@ -231,6 +231,128 @@ stri_datetime_parse <- function(str, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL,
    .Call(C_stri_datetime_parse, str, format, tz, lenient, locale)
 }
 
+
+
+#' @title 
+#' Convert \code{strptime}-style Format Strings
+#' 
+#' @description
+#' A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style
+#' format strings to \pkg{ICU} format strings that may be used
+#' in \code{\link{stri_datetime_parse}} and \code{\link{stri_datetime_format}}
+#' functions.
+#' 
+#' @details
+#' For more details on conversion specifiers please refer to
+#' the manual page of \code{\link{strptime}}. Most of the formatters
+#' of the form \code{\%x}, where \code{x} is a letter, are supported.
+#' Moreover, each \code{\%\%} is replaced with \code{\%}.
+#' 
+#' \code{\%U} and \code{\%W} are converted to \code{\%V}, with a warning.
+#' 
+#' Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w}.
+#' 
+#' @param x character vector consisting of date/time format strings
+#' @return Returns a character vector.
+#' 
+#' @examples
+#' stri_datetime_fstr("%Y-%m-%d %H:%M:%S")
+#' 
+#' @family datetime
+#' @export
+stri_datetime_fstr <- function(x) {
+   # %U, %W -> %V + warn
+   # %x, %X -> warn
+   # %u, %w -> warn
+   
+   # problematic entities:
+   warn <- c('%U', '%V', '%x', '%X', '%u', '%w', '%r')
+   search <- c('%U', '%W')
+   needle <- c('ww', 'ww')
+
+# %a (EEE)
+# Abbreviated weekday name in the current locale. (Also matches full name on input.)
+# 
+# %A (EEEE)
+# Full weekday name in the current locale. (Also matches abbreviated name on input.)
+# 
+# %b (MMM)
+# Abbreviated month name in the current locale. (Also matches full name on input.)
+# 
+# %B (MMMM)
+# Full month name in the current locale. (Also matches abbreviated name on input.)
+# 
+# %c
+# Date and time. Locale-specific on output, "%a %b %e %H:%M:%S %Y" on input.
+# 
+# %C 
+# Century (00–99): the integer part of the year divided by 100.
+# 
+# %d (dd)
+# Day of the month as decimal number (01–31).
+# 
+# %D (MM/dd/yy)
+# Date format such as %m/%d/%y: ISO C99 says it should be that exact format.
+# 
+# %e
+# Day of the month as decimal number (1–31), with a leading space for a single-digit number.
+# 
+# %F (yyyy-MM-dd)
+# Equivalent to %Y-%m-%d (the ISO 8601 date format).
+# 
+# %g
+# The last two digits of the week-based year (see %V). (Accepted but ignored on input.)
+# 
+# %G 
+# The week-based year (see %V) as a decimal number. (Accepted but ignored on input.)
+# 
+# %h (....)
+# Equivalent to %b.
+# 
+# %H (HH)
+# Hours as decimal number (00–23). As a special exception strings such as 24:00:00 are accepted for input, since ISO 8601 allows these.
+# 
+# %I (hh)
+# Hours as decimal number (01–12).
+# 
+# %j (D)
+# Day of year as decimal number (001–366).
+# 
+# %m (MM)
+# Month as decimal number (01–12).
+# 
+# %M (mm)
+# Minute as decimal number (00–59).
+# 
+# %n (\n)
+# Newline on output, arbitrary whitespace on input.
+# 
+# %p (a)
+# AM/PM indicator in the locale. Used in conjunction with %I and not with %H. An empty string in some locales (and the behaviour is undefined if used for input in such a locale).
+# Some platforms accept %P for output, which uses a lower-case version: others will output P.
+   
+   search <- c(search, '%r',       '%R',    '%S', '%t', '%T',       '%u')
+   needle <- c(needle, 'hh:mm:ss', 'HH:mm', 'ss', '\t', 'HH:mm:ss', 'e')
+   
+   search <- c(search, '%V', '%w', '%x',       '%X',       "%y", "%Y",   "%z", "%Z")
+   needle <- c(needle, 'ww', 'e',  'yy/MM/dd', 'HH:mm:ss', "yy", "yyyy", "Z",  "z")
+   
+   x <- stri_replace_all_fixed(x, "'", "\\'")
+   x <- stri_replace_all_fixed(x, "%%", "%!") # well, that's not very elegant...
+   x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))", "'$1'")
+   if (any(stri_detect_regex(x, stri_flatten(warn, collapse="|"))))
+      warning(sprintf("Formatters %s might not be 100%% compatible with ICU",
+         stri_flatten(warn, collapse=', ')))
+   x <- stri_replace_all_fixed(x, search, needle, vectorize_all=FALSE)
+   if (any(stri_detect_regex(x, "%[A-Za-z]"))) {
+      warning("Unsupported date/time format specifier. Ignoring")
+      x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?") # unsupported formatter
+   }
+   x <- stri_replace_all_fixed(x, "%!", "%") # well, that's not very elegant...
+   x
+}
+
+
 # seq.POSIXst
 
 # rep.POSIXst
