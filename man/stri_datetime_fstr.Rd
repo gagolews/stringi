@@ -24,9 +24,11 @@ the manual page of \code{\link{strptime}}. Most of the formatters
 of the form \code{\%x}, where \code{x} is a letter, are supported.
 Moreover, each \code{\%\%} is replaced with \code{\%}.
 
-\code{\%U} and \code{\%W} are converted to \code{\%V}, with a warning.
-
-Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w}.
+Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w},
+\code{\%g}, \code{\%G}, \code{\%c}, \code{\%U} and \code{\%W}
+as in such circumstances either \pkg{ICU} does not
+support requested functionality using format-strings API
+or there are some inconsistencies between base R and \pkg{ICU}.
 }
 \examples{
 stri_datetime_fstr("\%Y-\%m-\%d \%H:\%M:\%S")
