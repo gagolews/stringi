@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.5-1
-Date: 2015-02-19
+Date: 2015-02-21
 Title: Character String Processing Facilities
 Description: stringi allows for fast, correct, consistent, portable,
     and convenient character string/text processing in every locale
@@ -15,10 +15,10 @@ URL: http://stringi.rexamine.com/
     http://site.icu-project.org/
     http://www.unicode.org/
 BugReports: http://github.com/Rexamine/stringi/issues
-SystemRequirements: ICU4C (>= 50.0, optional)
+SystemRequirements: C++11, ICU4C (>= 50.0, optional)
 Type: Package
 Depends:
-    R (>= 2.15.0)
+    R (>= 3.1.0)
 Imports:
     tools
 License: file LICENSE
