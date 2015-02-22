@@ -37,3 +37,22 @@ test_that("stri_datetime_fstr", {
 #       strftime(t, f)), "\n",
 #       sep="\t"
 #    )
+
+
+
+test_that("stri_datetime_format", {
+   
+   
+})
+
+
+test_that("format.POSIXct", {
+   
+})
+
+
+test_that("stri_datetime_parse", {
+   
+   
+})
+

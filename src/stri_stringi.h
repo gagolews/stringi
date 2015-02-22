@@ -126,8 +126,7 @@ const char* stri__prepare_arg_locale(SEXP loc,        const char* argname,
                                      bool allowdefault, bool allowna=false);
 const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
                                      bool allowdefault);
-TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname,
-                                     bool allowdefault);
+TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, SEXP defaulttz);
 
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
