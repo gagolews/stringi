@@ -184,14 +184,17 @@
 #' }
 #'
 #' @param time a \code{POSIXct} object
-#' @param format single string, see Details; defaults to the ISO 8601 guideline
+#' @param format single string, see Details; defaults to the ISO 8601 guideline;
+#' see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
-#' @param tz t.b.d
+#' @param tz  \code{NULL} or \code{""} for default time zone;
+#' otherwise, a single string with a timezone identifier
 #' @param lenient single logical value; should date/time parsing be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
 #' @param usetz this argument is purposely ignored
+#' @param ... Further arguments to be passed from or to other methods.
 #'
 #' @return
 #' \code{stri_datetime_format} and \code{format.POSIXst} return a character vector.
@@ -212,22 +215,22 @@
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL, locale=NULL) {
+stri_datetime_format <- function(time, format="uuuu-MM-dd'T'HH:mm:ssZ", tz=NULL, locale=NULL) {
    .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
 
 #' @rdname stri_datetime_format
 #' @export
-format.POSIXst <- function(x, ..., usetz=TRUE) {
+format.POSIXst <- function(x, format="uuuu-MM-dd'T'HH:mm:ssZ", tz=attr(x, "tzone"), usetz=TRUE, ...) {
    stopifnot(identical(usetz, TRUE))
-   stri_datetime_format(x, ...)
+   stri_datetime_format(x, format=format, tz=tz, ...)
 }
 
 
 #' @export
 #' @rdname stri_datetime_format
-stri_datetime_parse <- function(str, format="uuuu-MM-dd'T'HH:mm:ssxxx", tz=NULL, lenient=FALSE, locale=NULL) {
+stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", tz=NULL, lenient=FALSE, locale=NULL) {
    .Call(C_stri_datetime_parse, str, format, tz, lenient, locale)
 }
 

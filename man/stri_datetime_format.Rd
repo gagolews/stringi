@@ -6,26 +6,31 @@
 \alias{stri_datetime_parse}
 \title{Date and Time Formatting and Parsing}
 \usage{
-stri_datetime_format(time, format = "uuuu-MM-dd'T'HH:mm:ssxxx", tz = NULL,
+stri_datetime_format(time, format = "uuuu-MM-dd'T'HH:mm:ssZ", tz = NULL,
   locale = NULL)
 
-\method{format}{POSIXst}(x, ..., usetz = TRUE)
+\method{format}{POSIXst}(x, format = "uuuu-MM-dd'T'HH:mm:ssZ", tz = attr(x,
+  "tzone"), usetz = TRUE, ...)
 
-stri_datetime_parse(str, format = "uuuu-MM-dd'T'HH:mm:ssxxx", tz = NULL,
+stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   lenient = FALSE, locale = NULL)
 }
 \arguments{
 \item{time}{a \code{POSIXct} object}
 
-\item{format}{single string, see Details; defaults to the ISO 8601 guideline}
+\item{format}{single string, see Details; defaults to the ISO 8601 guideline;
+see also \code{\link{stri_datetime_fstr}}}
 
-\item{tz}{t.b.d}
+\item{tz}{\code{NULL} or \code{""} for default time zone;
+otherwise, a single string with a timezone identifier}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 
 \item{usetz}{this argument is purposely ignored}
+
+\item{...}{Further arguments to be passed from or to other methods.}
 
 \item{str}{character vector}
 

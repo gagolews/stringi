@@ -277,7 +277,8 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 }
 
 
-/**&POSIXt
+/** 
+ * POSIXt
  *
  * If the object cannot be coerced, then an error will be generated
  *
@@ -860,50 +861,57 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
 /**
  * Prepare character vector argument that will be used to choose a time zone
  *
- * If the \code{tz} argument is incorrect, the an error is generated.
+ * If the \code{tz} argument is incorrect, then an error is generated.
  * If something goes wrong, a warning is given.
  *
  * WARNING: this fuction is allowed to call the error() function.
  * Use before STRI__ERROR_HANDLER_BEGIN (with other prepareargs).
  *
  *
- * @param tz generally, a single character string
- * @param allowdefault do we allow \code{R_NilValue} or a single empty string
- *    to work as a default tz selector?
+ * @param tz generally, a single character string or NULL
+ * @param defaulttz default time zone to be used here
  * @return TimeZone object - owned by the caller
  *
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-22)
+ *   defaulttz arg added
  */
-TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault)
+TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, SEXP defaulttz)
 {
-   if (allowdefault && isNull(tz)) {
-      return TimeZone::createDefault();
-   }
-   else {
+   UnicodeString tz_val("");
+   
+   if (!isNull(tz)) {
       PROTECT(tz = stri_prepare_arg_string_1(tz, argname));
       if (STRING_ELT(tz, 0) == NA_STRING) {
+         UNPROTECT(1);
          Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
       }
+      tz_val.setTo(UnicodeString((const char*)CHAR(STRING_ELT(tz, 0))));
+      UNPROTECT(1);
+   }
 
-      if (LENGTH(STRING_ELT(tz, 0)) == 0) {
+   if (tz_val.length() == 0 && !isNull(defaulttz)) {
+      PROTECT(defaulttz = stri_prepare_arg_string_1(defaulttz, argname));
+      if (STRING_ELT(defaulttz, 0) == NA_STRING) {
          UNPROTECT(1);
-         if (allowdefault)
-            return TimeZone::createDefault();
-         else
-            Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
+         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
       }
-      else {
-         UnicodeString id((const char*)CHAR(STRING_ELT(tz, 0)));
-         UNPROTECT(1);
-         TimeZone* ret = TimeZone::createTimeZone(id);
-         if (*ret == TimeZone::getUnknown()) {
-            delete ret;
-            Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
-         }
-         else
-            return ret;
+      tz_val.setTo(UnicodeString((const char*)CHAR(STRING_ELT(defaulttz, 0))));
+      UNPROTECT(1);
+   }
+   
+   if (tz_val.length() == 0)
+      return TimeZone::createDefault();
+   else {
+      TimeZone* ret = TimeZone::createTimeZone(tz_val);
+      if (*ret == TimeZone::getUnknown()) {
+         delete ret;
+         Rf_error(MSG__TIMEZONE_INCORRECT_ID); // allowed here
       }
+      else
+         return ret;
    }
 
    // won't come here anyway

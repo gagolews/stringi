@@ -160,7 +160,7 @@ SEXP stri_timezone_set(SEXP tz) {
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
  */
 SEXP stri_timezone_info(SEXP tz, SEXP locale) {
-   TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", /*allowdefault*/true);
+   TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
 
    // ID -> UnicodeString getID (UnicodeString &ID)
