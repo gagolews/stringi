@@ -141,7 +141,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
  */
 SEXP stri_timezone_set(SEXP tz) {
-   TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue); /* @TODO: allowdefault  == false */
+   TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", false/*allowdefault*/);
 
    /* This call adopts the TimeZone object passed in;
       the client is no longer responsible for deleting it. */
