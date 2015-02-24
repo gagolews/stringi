@@ -631,10 +631,12 @@ struct Converter8bit {
    bool countChars[256];
    bool badChars[256];
    const char* name;
+   const char* friendlyname;
 
-   Converter8bit(const char* _name, const UnicodeSet* exset) {
+   Converter8bit(const char* _name, const char* _friendlyname, const UnicodeSet* exset) {
       isNA = true;
       name = NULL;
+      friendlyname = NULL;
       StriUcnv ucnv_obj(_name);
       if (!ucnv_obj.is8bit())
          return; // not an 8-bit converter
@@ -702,6 +704,7 @@ struct Converter8bit {
 
       isNA = false;
       this->name = _name;
+      this->friendlyname = _friendlyname;
    }
 };
 
@@ -720,13 +723,18 @@ struct Converter8bit {
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-13)
  *          allow qloc==NULL in 8bit check
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-24)
+ *          #146 warnings removed
  */
 struct EncGuess {
    const char* name;
+   const char* friendlyname;
    double confidence;
 
-   EncGuess(const char* _name, double _confidence) {
+   EncGuess(const char* _name, const char* _friendlyname, double _confidence) {
       name = _name;
+      friendlyname = _friendlyname;
       confidence = _confidence;
    }
 
@@ -743,20 +751,20 @@ struct EncGuess {
       if (isutf32le >= 0.25 && isutf32be >= 0.25) {
          // no BOM, both valid
          // i think this will never happen
-         guesses.push_back(EncGuess("UTF-32LE", isutf32le));
-         guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+         guesses.push_back(EncGuess("UTF-32LE", "UTF-32LE", isutf32le));
+         guesses.push_back(EncGuess("UTF-32BE", "UTF-32BE", isutf32be));
       }
       else if (isutf32le >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF32LE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-32", isutf32le)); // with BOM
+            guesses.push_back(EncGuess("UTF-32", "UTF-32", isutf32le)); // with BOM
          else
-            guesses.push_back(EncGuess("UTF-32LE", isutf32le));
+            guesses.push_back(EncGuess("UTF-32LE", "UTF-32LE", isutf32le));
       }
       else if (isutf32be >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF32BE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-32", isutf32be)); // with BOM
+            guesses.push_back(EncGuess("UTF-32", "UTF-32", isutf32be)); // with BOM
          else
-            guesses.push_back(EncGuess("UTF-32BE", isutf32be));
+            guesses.push_back(EncGuess("UTF-32BE", "UTF-32BE", isutf32be));
       }
    }
 
@@ -769,20 +777,20 @@ struct EncGuess {
       if (isutf16le >= 0.25 && isutf16be >= 0.25) {
          // no BOM, both valid
          // this may sometimes happen
-         guesses.push_back(EncGuess("UTF-16LE", isutf16le));
-         guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+         guesses.push_back(EncGuess("UTF-16LE", "UTF-16LE", isutf16le));
+         guesses.push_back(EncGuess("UTF-16BE", "UTF-16BE", isutf16be));
       }
       else if (isutf16le >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF16LE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-16", isutf16le)); // with BOM
+            guesses.push_back(EncGuess("UTF-16", "UTF-16", isutf16le)); // with BOM
          else
-            guesses.push_back(EncGuess("UTF-16LE", isutf16le));
+            guesses.push_back(EncGuess("UTF-16LE", "UTF-16LE", isutf16le));
       }
       else if (isutf16be >= 0.25) {
          if (STRI__ENC_HAS_BOM_UTF16BE(str_cur_s, str_cur_n))
-            guesses.push_back(EncGuess("UTF-16", isutf16be)); // with BOM
+            guesses.push_back(EncGuess("UTF-16", "UTF-16", isutf16be)); // with BOM
          else
-            guesses.push_back(EncGuess("UTF-16BE", isutf16be));
+            guesses.push_back(EncGuess("UTF-16BE", "UTF-16BE", isutf16be));
       }
    }
 
@@ -794,12 +802,12 @@ struct EncGuess {
          // may be an 8-bit encoding
          double isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
          if (isascii >= 0.25) // i.e. equal to 1.0 => nothing more to check
-            guesses.push_back(EncGuess("ASCII", isascii));
+            guesses.push_back(EncGuess("US-ASCII", "US-ASCII", isascii));
          else {
             // not ascii
             double isutf8 = stri__enc_check_utf8(str_cur_s, str_cur_n, true);
             if (isutf8 >= 0.25)
-               guesses.push_back(EncGuess("UTF-8", isutf8));
+               guesses.push_back(EncGuess("UTF-8", "UTF-8", isutf8));
             if (isutf8 < 1.0 && qloc) {
                do_8bit_locale(guesses, str_cur_s, str_cur_n, qloc);
             }
@@ -826,7 +834,7 @@ struct EncGuess {
 
       R_len_t ucnv_count = (R_len_t)ucnv_countAvailable();
       for (R_len_t i=0; i<ucnv_count; ++i) { // for each converter
-         Converter8bit conv(StriUcnv::getFriendlyName(ucnv_getAvailableName(i)), exset);
+         Converter8bit conv(ucnv_getAvailableName(i), StriUcnv::getFriendlyName(ucnv_getAvailableName(i)), exset);
          if (!conv.isNA) converters.push_back(conv);
       }
 
@@ -876,7 +884,7 @@ struct EncGuess {
                (double)(countsge128-0.5*badCounts[j]-maxDesiredCounts+desiredCounts[j])/
                (double)(countsge128)));
          if (conf > 0.25)
-            guesses.push_back(EncGuess(converters[j].name, conf));
+            guesses.push_back(EncGuess(converters[j].name, converters[j].friendlyname, conf));
       }
    }
 };
@@ -965,7 +973,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
       STRI__PROTECT(val_conf = Rf_allocVector(REALSXP, matchesFound));
 
       for (R_len_t j=0; j<matchesFound; ++j) {
-         SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].name));
+         SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].friendlyname));
          REAL(val_conf)[j] = guesses[j].confidence;
          SET_STRING_ELT(val_lang, j, NA_STRING); // always no lang
       }

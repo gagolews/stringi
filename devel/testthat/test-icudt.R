@@ -28,7 +28,7 @@ test_that("icudt-encodings", {
       stri_c("windows-", 1250:1258))
 
    for (e in encs) {
-      expect_true(is.list(stri_enc_info(e)))
+      expect_true(is.list(suppressWarnings(stri_enc_info(e))))
    }
 
 })

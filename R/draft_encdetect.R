@@ -204,5 +204,5 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' @family encoding_detection
 #' @export
 stri_enc_detect2 <- function(str, locale=NULL) {
-   .Call(C_stri_enc_detect2, str, locale)
+   suppressWarnings(.Call(C_stri_enc_detect2, str, locale))
 }

@@ -37,6 +37,6 @@ test_that("stri_enc_list, stri_enc_info", {
    expect_equivalent(stri_enc_info("Big5")$Name.friendly, "Big5") # Trad. Chinese
    expect_equivalent(stri_enc_info("EUC-CN")$Name.friendly, "GB2312") # Simpl. Chinese
    expect_equivalent(stri_enc_info("EUC-JP")$Name.friendly, "EUC-JP") # Japanese
-   expect_equivalent(stri_enc_info("Shift-JIS")$Name.friendly, "Shift_JIS") # Japanese
+   expect_equivalent(stri_enc_info("ibm-943_P15A-2003")$Name.friendly, "Shift_JIS") # Japanese
    expect_equivalent(stri_enc_info("EUC-KR")$Name.friendly, "EUC-KR") # Korean
 })
