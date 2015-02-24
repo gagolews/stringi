@@ -70,7 +70,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
       NULL};
    int format_cur = stri__match_arg(format_val, format_opts);
 
-   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
+   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;
    DateFormat* fmt = NULL;
    STRI__ERROR_HANDLER_BEGIN(1)
@@ -190,7 +190,7 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
       NULL};
    int format_cur = stri__match_arg(format_val, format_opts);
 
-   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
+   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;
    DateFormat* fmt = NULL;
    STRI__ERROR_HANDLER_BEGIN(1)

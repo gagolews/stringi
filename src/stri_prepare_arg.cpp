@@ -874,11 +874,8 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
  *
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
- * 
- * @version 0.5-1 (Marek Gagolewski, 2015-02-22)
- *   defaulttz arg added
  */
-TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, SEXP defaulttz)
+TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault)
 {
    UnicodeString tz_val("");
    
@@ -892,15 +889,15 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, SEXP defaultt
       UNPROTECT(1);
    }
 
-   if (tz_val.length() == 0 && !isNull(defaulttz)) {
-      PROTECT(defaulttz = stri_prepare_arg_string_1(defaulttz, argname));
-      if (STRING_ELT(defaulttz, 0) == NA_STRING) {
-         UNPROTECT(1);
-         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
-      }
-      tz_val.setTo(UnicodeString((const char*)CHAR(STRING_ELT(defaulttz, 0))));
-      UNPROTECT(1);
-   }
+//   if (tz_val.length() == 0 && !isNull(defaulttz)) {
+//      PROTECT(defaulttz = stri_prepare_arg_string_1(defaulttz, argname));
+//      if (STRING_ELT(defaulttz, 0) == NA_STRING) {
+//         UNPROTECT(1);
+//         Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // Rf_error allowed here
+//      }
+//      tz_val.setTo(UnicodeString((const char*)CHAR(STRING_ELT(defaulttz, 0))));
+//      UNPROTECT(1);
+//   }
    
    if (tz_val.length() == 0)
       return TimeZone::createDefault();
