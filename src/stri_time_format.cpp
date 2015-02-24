@@ -267,7 +267,7 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
       }
    }
 
-//   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
+//   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
    stri__set_class_POSIXct(ret);
    if (tz_val) { delete tz_val; tz_val = NULL; }
    if (fmt) { delete fmt; fmt = NULL; }

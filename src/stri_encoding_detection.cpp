@@ -967,7 +967,7 @@ SEXP stri_enc_detect2(SEXP str, SEXP loc)
       for (R_len_t j=0; j<matchesFound; ++j) {
          SET_STRING_ELT(val_enc, j, Rf_mkChar(guesses[j].name));
          REAL(val_conf)[j] = guesses[j].confidence;
-    	   SET_STRING_ELT(val_lang, j, NA_STRING); // always no lang
+         SET_STRING_ELT(val_lang, j, NA_STRING); // always no lang
       }
 
       SEXP val;
