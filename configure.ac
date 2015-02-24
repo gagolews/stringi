@@ -39,7 +39,7 @@ fi
 
 AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
-      [Enable -Wall -Wextra -pedantic when compiling stringi with gcc/g++ /for stringi developers/]))
+      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/g++ /for stringi developers/]))
 if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else
@@ -380,8 +380,8 @@ if test "$enable_gcc_debug" == "yes"; then
 fi
 
 if test "$enable_gcc_pedantic" == "yes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic -std=c99 -ansi"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98"
 fi
 
 
