@@ -137,7 +137,7 @@ test_that("stri_enc_detect", {
 
    expect_equivalent(stri_enc_detect(as.raw(c(65:100)))[[1]]$Encoding[1], "UTF-8")
 
-   expect_equivalent(stri_enc_detect2("abc")[[1]]$Encoding, "ASCII")
+   expect_equivalent(stri_enc_detect2("abc")[[1]]$Encoding, "US-ASCII")
 
    expect_error(stri_enc_detect2("abc", encodings=c("don't know what's that")))
 
@@ -149,7 +149,7 @@ test_that("stri_enc_detect", {
    expect_equivalent(stri_enc_detect2(stri_encode("abc", "UTF-8", "UTF-32BE", to_raw=TRUE))[[1]]$Encoding, "UTF-32BE")
 
    text <- stri_flatten(stri_enc_fromutf32(65:127))
-   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8", to_raw=TRUE))[[1]]$Encoding, "ASCII")
+   expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-8", to_raw=TRUE))[[1]]$Encoding, "US-ASCII")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-16", to_raw=TRUE))[[1]]$Encoding, "UTF-16")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-16LE", to_raw=TRUE))[[1]]$Encoding, "UTF-16LE")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-16BE", to_raw=TRUE))[[1]]$Encoding, "UTF-16BE")
