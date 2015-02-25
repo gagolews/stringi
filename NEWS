@@ -15,7 +15,7 @@
 
    * [BUGFIX] #134: `stri_extract_all_words` did not accept `simplify=NA`.
 
-   * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for match
+   * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for matches
      of zero lengths
 
    * [GENERAL] #144: Performance improvements in handling ASCII strings

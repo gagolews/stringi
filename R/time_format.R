@@ -175,17 +175,17 @@
 #'
 #' \tabular{ll}{
 #' \bold{Exemplary Pattern} \tab  \bold{Result} \cr
-#' yyyy.MM.dd G 'at' HH:mm:ss zzz \tab 1996.07.10 AD at 15:08:56 PDT \cr
-#' EEE, MMM d, ''yy \tab Wed, July 10, '96 \cr
-#' h:mm a \tab 12:08 PM \cr
-#' hh 'o''clock' a, zzzz \tab 12 o'clock PM, Pacific Daylight Time \cr
-#' K:mm a, z \tab 0:00 PM, PST \cr
-#' yyyyy.MMMM.dd GGG hh:mm aaa \tab 01996.July.10 AD 12:08 PM \cr
+#' yyyy.MM.dd 'at' HH:mm:ss zzz \tab 2015.12.31 at 23:59:59 GMT+1 \cr
+#' EEE, MMM d, ''yy \tab czw., gru 31, '15 \cr
+#' h:mm a \tab 11:59 PM \cr
+#' hh 'o''clock' a, zzzz \tab 11 o'clock PM, GMT+01:00 \cr
+#' K:mm a, z \tab 11:59 PM, GMT+1 \cr
+#' yyyyy.MMMM.dd GGG hh:mm aaa \tab 02015.grudnia.31 n.e. 11:59 PM \cr
+#' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
 #' @param time a \code{POSIXct} object
-#' @param format single string, see Details; defaults to the ISO 8601 guideline;
-#' see also \code{\link{stri_datetime_fstr}}
+#' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
 #' @param tz  \code{NULL} or \code{""} for default time zone;
 #' otherwise, a single string with a timezone identifier
@@ -215,14 +215,14 @@
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format="uuuu-MM-dd'T'HH:mm:ssZ", tz=NULL, locale=NULL) {
+stri_datetime_format <- function(time, format="uuuu-MM-dd HH:mm:ss", tz=NULL, locale=NULL) {
    .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
 
 #' @rdname stri_datetime_format
 #' @export
-format.POSIXst <- function(x, format="uuuu-MM-dd'T'HH:mm:ssZ", tz=attr(x, "tzone"), usetz=TRUE, ...) {
+format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=TRUE, ...) {
    stopifnot(identical(usetz, TRUE))
    stri_datetime_format(x, format=format, tz=tz, ...)
 }
@@ -295,7 +295,9 @@ stri_datetime_fstr <- function(x) {
    
    x <- stri_replace_all_fixed(x, "'", "\\'")
    x <- stri_replace_all_fixed(x, "%%", "%!") # well, that's not very elegant...
-   x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))", "'$1'")
+   x <- stri_replace_all_regex(x, 
+      "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
+      "'$1'")
    if (any(stri_detect_regex(x, stri_flatten(warn, collapse="|"))))
       warning(sprintf("Formatters %s might not be 100%% compatible with ICU",
          stri_flatten(warn, collapse=', ')))

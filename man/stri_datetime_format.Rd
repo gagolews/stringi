@@ -6,10 +6,10 @@
 \alias{stri_datetime_parse}
 \title{Date and Time Formatting and Parsing}
 \usage{
-stri_datetime_format(time, format = "uuuu-MM-dd'T'HH:mm:ssZ", tz = NULL,
+stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   locale = NULL)
 
-\method{format}{POSIXst}(x, format = "uuuu-MM-dd'T'HH:mm:ssZ", tz = attr(x,
+\method{format}{POSIXst}(x, format = "uuuu-MM-dd HH:mm:ss", tz = attr(x,
   "tzone"), usetz = TRUE, ...)
 
 stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
@@ -18,8 +18,7 @@ stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
 \arguments{
 \item{time}{a \code{POSIXct} object}
 
-\item{format}{single string, see Details; defaults to the ISO 8601 guideline;
-see also \code{\link{stri_datetime_fstr}}}
+\item{format}{single string, see Details; see also \code{\link{stri_datetime_fstr}}}
 
 \item{tz}{\code{NULL} or \code{""} for default time zone;
 otherwise, a single string with a timezone identifier}
@@ -189,6 +188,7 @@ h:mm a \tab 12:08 PM \cr
 hh 'o''clock' a, zzzz \tab 12 o'clock PM, Pacific Daylight Time \cr
 K:mm a, z \tab 0:00 PM, PST \cr
 yyyyy.MMMM.dd GGG hh:mm aaa \tab 01996.July.10 AD 12:08 PM \cr
+uuuu-MM-dd'T'HH:mm:ssZ \tab the ISO 8601 guideline \cr
 }
 }
 \examples{

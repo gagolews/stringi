@@ -40,19 +40,15 @@ test_that("stri_datetime_fstr", {
 
 
 
-test_that("stri_datetime_format", {
+test_that("stri_datetime_parse, stri_datetime_format, format.POSIXct", {
+   t <- stri_datetime_parse("2015-02-25 23:53:01")
+   expect_equivalent(format(t), "2015-02-25 23:53:01")
    
-   
+   t <- stri_datetime_parse("2015-02-25 23:53:01", tz='Europe/Tallinn')
+#    expect_equivalent(attr(t, 'tzone'), 'Europe/Tallinn')
+   expect_equivalent(format(t, tz='Europe/Warsaw'), "2015-02-25 22:53:01")
+   expect_equivalent(format(structure(t, tzone='Europe/Tallinn')), "2015-02-25 23:53:01")
 })
 
 
-test_that("format.POSIXct", {
-   
-})
-
-
-test_that("stri_datetime_parse", {
-   
-   
-})
 
