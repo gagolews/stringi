@@ -416,33 +416,6 @@ STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
 STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
 
 
-#############################################################################
-#AC_CANONICAL_HOST
-#
-#case "${host}" in
-#   *-*-solaris*) 	platform=U_SOLARIS ;;
-#	*-*-linux*|*-*-gnu|*-*-k*bsd*-gnu|*-*-kopensolaris*-gnu) platform=U_LINUX ;;
-#	*-*-*bsd*|*-*-dragonfly*) 	platform=U_BSD ;;
-#	*-*-aix*) 	platform=U_AIX ;;
-#	*-*-hpux*) 	platform=U_HPUX ;;
-#	*-apple-darwin*|*-apple-rhapsody*)	platform=U_DARWIN ;;
-#	*-*-cygwin*)	platform=U_CYGWIN ;;
-#	*-*-mingw*)	platform=U_MINGW ;;
-#	*-*ibm-openedition*|*-*-os390*)	platform=OS390 ;;
-#	*-*-os400*)	platform=OS400 ;;
-#	*-*-nto*)	platform=U_QNX ;;
-#	*-dec-osf*) 	platform=U_OSF ;;
-#	*-*-beos)		platform=U_BEOS ;;
-#	*-*-irix*)		platform=U_IRIX ;;
-#	*-ncr-*)		platform=U_MPRAS ;;
-#	*) 		platform=U_UNKNOWN_PLATFORM ;;
-#esac
-#
-#AC_SUBST(platform)
-#############################################################################
-
-
-
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
 AC_SUBST(STRINGI_CFLAGS)

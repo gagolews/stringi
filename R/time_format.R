@@ -184,7 +184,7 @@
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
-#' @param time a \code{POSIXct} object
+#' @param x,time a \code{POSIXct} object
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
 #' @param tz  \code{NULL} or \code{""} for default time zone;
