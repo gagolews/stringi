@@ -46,6 +46,12 @@
  *    code taken from StriContainerByteSearch
  */
 class StriByteSearchMatcher {
+   
+   private:
+   
+      StriByteSearchMatcher(const StriByteSearchMatcher&); /* no copy-able */
+      StriByteSearchMatcher& operator=(const StriByteSearchMatcher&);
+   
    protected:
 
       bool m_optOverlap;
@@ -131,6 +137,11 @@ class StriByteSearchMatcher {
 };
 
 class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
+   
+   private:
+   
+      StriByteSearchMatcherKMP(const StriByteSearchMatcherKMP&); /* no copy-able */
+      StriByteSearchMatcherKMP& operator=(const StriByteSearchMatcherKMP&);
 
    protected:
 
@@ -168,6 +179,10 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
       virtual ~StriByteSearchMatcherKMP() {
          delete [] m_kmpNext;
       }
+
+#ifndef NDEBUG
+
+#endif
 
       StriByteSearchMatcherKMP(const char* patternStr, R_len_t patternLen, bool optOverlap)
          : StriByteSearchMatcher(patternStr, patternLen, optOverlap)
@@ -229,6 +244,11 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
 };
 
 class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
+   
+   private:
+   
+      StriByteSearchMatcherKMPci(const StriByteSearchMatcherKMPci&); /* no copy-able */
+      StriByteSearchMatcherKMPci& operator=(const StriByteSearchMatcherKMPci&);
 
    protected:
 
@@ -364,6 +384,11 @@ class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
 
 
 class StriByteSearchMatcher1 : public StriByteSearchMatcher {
+   
+   private:
+   
+      StriByteSearchMatcher1(const StriByteSearchMatcher1&); /* no copy-able */
+      StriByteSearchMatcher1& operator=(const StriByteSearchMatcher1&);
 
    protected:
 
@@ -440,6 +465,11 @@ class StriByteSearchMatcher1 : public StriByteSearchMatcher {
 
 
 class StriByteSearchMatcherShort : public StriByteSearchMatcher {
+   
+   private:
+   
+      StriByteSearchMatcherShort(const StriByteSearchMatcherShort&); /* no copy-able */
+      StriByteSearchMatcherShort& operator=(const StriByteSearchMatcherShort&);
 
    protected:
 
