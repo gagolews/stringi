@@ -168,7 +168,7 @@ SEXP stri_locale_set(SEXP loc);
 
 // wrap.cpp
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
-   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP locale);
+   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only, SEXP locale);
 
 // justify.cpp
 // SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.3]
