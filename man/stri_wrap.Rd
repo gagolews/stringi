@@ -6,7 +6,7 @@
 \usage{
 stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
   simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0,
-  prefix = "", initial = prefix, locale = NULL)
+  prefix = "", initial = prefix, whitespace_only = FALSE, locale = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to reformat}
@@ -33,6 +33,10 @@ of subsequent lines in paragraphs}
 \item{prefix,initial}{single strings; \code{prefix} is used as prefix for each
 line except the first, for which \code{initial} is utilized}
 
+\item{whitespace_only}{single logical value; allow breaks only at whitespaces?
+if \code{FALSE}, \pkg{ICU}'s line break iterator is used to split text
+into words, which is suitable for natural language processing}
+
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
@@ -48,9 +52,12 @@ each consisting - if it is possible - of at most \code{width} code points.
 \details{
 Vectorized over \code{str}.
 
-\pkg{ICU}'s line-\code{BreakIterator} is used to determine
+If \code{whitespace_only} is \code{FALSE},
+then \pkg{ICU}'s line-\code{BreakIterator} is used to determine
 text boundaries at which a line break is possible.
 This is a locale-dependent operation.
+Otherwise, the breaks are only at whitespaces.
+
 Note that Unicode code points may have various widths when
 printed on screen. This function acts like each code point
 is of width 1. This function should rather be used with

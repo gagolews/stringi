@@ -899,8 +899,10 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
 //      UNPROTECT(1);
 //   }
    
-   if (tz_val.length() == 0)
+   if (tz_val.length() == 0) {
+      if (!allowdefault) Rf_error(MSG__TIMEZONE_INCORRECT_ID);
       return TimeZone::createDefault();
+   }
    else {
       TimeZone* ret = TimeZone::createTimeZone(tz_val);
       if (*ret == TimeZone::getUnknown()) {

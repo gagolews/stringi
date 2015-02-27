@@ -227,11 +227,16 @@ struct StriWrapLineStart {
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-19)
  *    #133 allow width <= 0
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-02-28)
+ *    don't trim so many white spaces at the end of each word (normalize arg does that)
+ *    #139: allow a "whitespace" break iterator
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
-   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP locale)
+   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only, SEXP locale)
 {
    double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
+   bool whitespace_only_val = stri__prepare_arg_logical_1_notNA(whitespace_only, "whitespace_only");
 
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");
    if (width_val <= 0) width_val = 0;
@@ -307,7 +312,20 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       deque< R_len_t > occurrences_list; // this could be an R_len_t queue
       R_len_t match = briter->first();
       while (match != BreakIterator::DONE) {
-         occurrences_list.push_back(match);
+         
+         if (!whitespace_only_val)
+            occurrences_list.push_back(match);
+         else {
+            if (match > 0 && match < str_cur_n) {
+               UChar32 c;
+               U8_GET((const uint8_t*)str_cur_s, 0, match-1, str_cur_n, c);
+               if (uset_whitespaces.contains(c))
+                  occurrences_list.push_back(match);
+            }
+            else
+               occurrences_list.push_back(match);
+         }
+         
          match = briter->next();
       }
 
@@ -351,6 +369,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       R_len_t cur_count_trim = 0;
       R_len_t cur_end_pos_trim = 0;
       while (j < str_cur_n) {
+         R_len_t jlast = j;
          U8_NEXT(str_cur_s, j, str_cur_n, c);
          if (c < 0) // invalid utf-8 sequence
             throw StriException(MSG__INVALID_UTF8);
@@ -360,7 +379,13 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 
          ++cur_count_orig;
          if (uset_whitespaces.contains(c)) {
-            ++cur_count_trim;
+// OLD: trim all white spaces from the end:
+//            ++cur_count_trim;
+//           [we have the normalize arg for that]
+
+// NEW: trim just one white space at the end:
+            cur_count_trim = 1;
+            cur_end_pos_trim = jlast;
          }
          else {
             cur_count_trim = 0;

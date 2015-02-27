@@ -10,6 +10,8 @@
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`).
 
+   * [NEW FEATURE] #139: `stri_wrap` gained a new argument: `whitespace_only`.
+
    * [BUGFIX] locale specifiers are now normalized in a more intelligent way:
      e.g. `@calendar=gregorian` expands to `DEFAULT_LOCALE@calendar=gregorian`.
 
@@ -52,8 +54,6 @@ TO BE DONE:
         * `stri_datetime_create()` - ...
 
    * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
-
-   * #139: stri_wrap: control break iterator 
 
 -------------------------------------------------------------------------------
 
