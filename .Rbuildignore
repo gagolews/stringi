@@ -25,5 +25,8 @@
 ^autom4te\.cache$
 ^config\.log$
 ^config\.status$
+^m4
+^aclocal\.m4$
+^configure\.ac$
 ^\.gitignore$
 ^\.travis\.yml$

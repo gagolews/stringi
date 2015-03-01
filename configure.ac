@@ -30,7 +30,7 @@ fi
 
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
-      [Enable -UNDEBUG when compiling stringi with gcc/g++ /for stringi developers/]))
+      [Enable -UNDEBUG when compiling stringi with gcc/g++ (for stringi developers)]))
 if test "x$enable_gcc_debug" == "xyes"; then
    enable_gcc_debug="yes"
 else
@@ -39,7 +39,7 @@ fi
 
 AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
-      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/g++ /for stringi developers/]))
+      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/g++ (for stringi developers)]))
 if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else
@@ -72,7 +72,7 @@ if test -z "${ICUDT_DIR}"; then
 fi
 AC_MSG_RESULT($ICUDT_DIR)
 
-# this is inspired by "Writing R Extensions" manual:
+# this is inspired by the "Writing R Extensions" manual:
 # determine R_HOME directory...
 AC_MSG_CHECKING(for R_HOME)
 if test -z "${R_HOME}"; then
@@ -98,19 +98,6 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
-CC=`"${R_PATH}" CMD config CC`
-CXX=`"${R_PATH}" CMD config CXX`
-CPP=`"${R_PATH}" CMD config CXXCPP`
-LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
-CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
-
-AC_LANG(C)
-AC_PROG_CC
-AC_LANG(C++)
-AC_PROG_CXX
-
 ##### CHECK FOR CAT ############################################################
 
 # Check for 'cat' and get full path.
@@ -121,11 +108,105 @@ if test "x$CAT" = "x"; then
    AC_MSG_NOTICE([==> Set CAT variable if present in non-standard path])
 fi
 
+
+###### SETUP COMPILER FLAGS FOR TESTING ######################################
+
+if test "$enable_gcc_debug" == "yes"; then
+   #  -fsanitize=address -fno-omit-frame-pointer
+   with_extra_cppflags="${with_extra_cppflags} -DDEBUG -UNDEBUG"
+else
+   with_extra_cppflags="${with_extra_cppflags} -UDEBUG -DNDEBUG"
+fi
+
+if test "$enable_gcc_pedantic" == "yes"; then
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
+fi
+
+CC=`"${R_PATH}" CMD config CC`
+CXX=`"${R_PATH}" CMD config CXX`
+CPP=`"${R_PATH}" CMD config CXXCPP`
+LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
+CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+
+CFLAGS="${CFLAGS} ${with_extra_cflags}"
+CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
+CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
+LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
+
+AC_LANG(C)
+AC_PROG_CC
+AC_LANG(C++)
+AC_PROG_CXX
+
+AC_CHECK_HEADER([elf.h],
+       [
+            with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
+       ])
+
+##### Checking whether the C++ compiler supports the long long type and STL ####
+
+AC_LANG(C++)
+AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
+AC_LINK_IFELSE([AC_LANG_SOURCE([
+      #include <iostream>
+      using namespace std;
+
+      int main() {
+        long long x = 1;
+        cout << x << endl;
+ 
+        cout << 1LL << 1ULL << endl;
+        cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
+
+        return 0;
+      }])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no])
+      echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
+      exit 1
+   ])
+
+AC_CXX_HAVE_STL
+if test "$ac_cv_cxx_have_stl" = not; then
+   echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
+   exit 1
+fi
+
+AC_MSG_CHECKING(whether std::map is available)
+AC_LINK_IFELSE([AC_LANG_SOURCE([
+      #include <iostream>
+      #include <map>
+      #include <vector>
+      #include <utility>
+
+      int main() {
+         std::map< int, std::vector< int > > curmap;
+         std::vector<int> v1(10);
+         curmap.insert(std::pair< int, std::vector< int > >(100, v1));
+         std::cout << curmap.size() << std::endl;
+        return 0;
+      }])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no])
+      echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
+      exit 1
+   ])
+
+
 ##### CHECK FOR ICU4C ##########################################################
 
 
 
-##### 1. Get settings from pkg-lib
+##### 1. Get settings from pkg-config
 # Note that according to http://userguide.icu-project.org/howtouseicu,
 # icu-config is supported, but no longer recommended for production use.
 
@@ -185,7 +266,7 @@ detect_icu_with_pkg_config() {
    # when 64bit libs are not available, even if we compile a 64bit version.
    # Thus, let us check if everything works
    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
-   LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
+   LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS} ${ICU_LIBS}"
 
    AC_LANG(C++)
 
@@ -367,48 +448,23 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
 ##### SETUP COMPILER 2 ###########################################################
 
-
-with_extra_cflags="-UDEBUG -DNDEBUG ${with_extra_cflags}"
-with_extra_cxxflags="-UDEBUG -DNDEBUG ${with_extra_cxxflags}"
-
-
-if test "$enable_gcc_debug" == "yes"; then
-   #  -fsanitize=address -fno-omit-frame-pointer
-   with_extra_cflags="${with_extra_cflags} -UNDEBUG"
-   with_extra_cxxflags="${with_extra_cxxflags} -UNDEBUG"
-   with_extra_ldflags="${with_extra_ldflags}"
-fi
-
-if test "$enable_gcc_pedantic" == "yes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
-fi
-
-
 if test $ICU_FOUND = 0; then
    # build ICU4C from sources
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
    STRINGI_CPPFLAGS="-I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION \
--DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
--DNDEBUG"
+-DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
 else
    # use system ICU4C
    STRINGI_OBJECTS="\$(STRI_OBJECTS)"
    STRINGI_CFLAGS=""
-   STRINGI_CPPFLAGS="-DNDEBUG -I. ${ICU_CPPFLAGS}"
+   STRINGI_CPPFLAGS="-I. ${ICU_CPPFLAGS}"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
 fi
 AC_SUBST(STRINGI_OBJECTS)
-
-AC_CHECK_HEADER([elf.h],
-       [
-            with_extra_cflags="${with_extra_cflags} -DU_HAVE_ELF_H"
-            with_extra_cxxflags="${with_extra_cxxflags} -DU_HAVE_ELF_H"
-       ])
 
 STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
