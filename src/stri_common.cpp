@@ -42,6 +42,9 @@
  * @param ... variable number of C strings
  *
  * @version 0.1-?? (Marek Gagolewski)
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
+ *    assume UTF-8
 */
 void stri__set_names(SEXP object, R_len_t numnames, ...)
 {
@@ -51,7 +54,7 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 
    va_start(arguments, numnames);
    for (R_len_t i = 0; i < numnames; ++i)
-      SET_STRING_ELT(names, i, Rf_mkChar(va_arg(arguments, char*)));
+      SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
    va_end(arguments);
 
    Rf_setAttrib(object, R_NamesSymbol, names);
@@ -67,8 +70,11 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
+ *     assume UTF-8
 */
-SEXP stri__make_character_vector(R_len_t numnames, ...)
+SEXP stri__make_character_vector_char_ptr(R_len_t numnames, ...)
 {
    va_list arguments;
    SEXP names;
@@ -76,7 +82,36 @@ SEXP stri__make_character_vector(R_len_t numnames, ...)
 
    va_start(arguments, numnames);
    for (R_len_t i = 0; i < numnames; ++i)
-      SET_STRING_ELT(names, i, Rf_mkChar(va_arg(arguments, char*)));
+      SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
+   va_end(arguments);
+
+   UNPROTECT(1);
+   return names;
+}
+
+
+/**
+ * Create a character vector with given UnicodeStrings
+ *
+ * @param numnames number of strings
+ * @param ... variable number of pointers to UnicodeString
+ * @return character vector
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
+*/
+SEXP stri__make_character_vector_UnicodeString_ptr(R_len_t numnames, ...)
+{
+   va_list arguments;
+   SEXP names;
+   PROTECT(names = Rf_allocVector(STRSXP, numnames));
+
+   va_start(arguments, numnames);
+   for (R_len_t i = 0; i < numnames; ++i) {
+      UnicodeString* cur_str16 = (UnicodeString*)va_arg(arguments, UnicodeString*);
+      std::string cur_str8;
+      cur_str16->toUTF8String(cur_str8);
+      SET_STRING_ELT(names, i, Rf_mkCharCE(cur_str8.c_str(), CE_UTF8));
+   }
    va_end(arguments);
 
    UNPROTECT(1);

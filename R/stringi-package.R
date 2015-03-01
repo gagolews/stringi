@@ -85,7 +85,10 @@
 #' particular character classes, like ``all whitespaces'' or ``all digits'';
 #' \item \link{stringi-search-boundaries} -- text boundary analysis.
 #' }
-#'
+#' 
+#' \item \code{\link{stri_datetime_format}} for date/time formatting
+#' and parsing. Also refer to the links therein for other date/time/time zone-
+#' related operations.
 #'
 #' \item \code{\link{stri_stats_general}} and \code{\link{stri_stats_latex}}
 #' for gathering some fancy statistics on a character vector's contents.
@@ -135,8 +138,7 @@
 #' \item TO DO [these will appear in future versions
 #' of \pkg{stringi}]: HTML entities,
 #' MIME Base 64 encode/decode,
-#' number and data/time formatting,
-#' number spellout, and many more.
+#' number formatting, number spellout, and many more.
 #' }
 #'
 #' Note that each man page has many links to other interesting facilities.

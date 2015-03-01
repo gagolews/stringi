@@ -6,7 +6,7 @@
 
 AC_INIT(stringi, 0.5, stringi@rexamine.com)
 
-ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
 ##### OPTIONS #################################################################
 
@@ -212,7 +212,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no])
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
    ])
 
@@ -274,7 +274,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no]) 
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
    ])
 
@@ -327,7 +327,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no]) 
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
    ])
 

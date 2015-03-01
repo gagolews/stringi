@@ -177,6 +177,10 @@ stri_timezone_set <- function(tz) {
 #'
 #' @param tz \code{NULL} or \code{""} for default time zone,
 #' or a single string with time zone ID otherwise.
+#' @param display_type single string;
+#' one of \code{"short"}, \code{"long"}, \code{"generic_short"},
+#' \code{"generic_long"}, \code{"gmt_short"}, \code{"gmt_long"},
+#' \code{"common"}, \code{"generic_location"}.
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier.
 #'
@@ -185,6 +189,8 @@ stri_timezone_set <- function(tz) {
 #' \enumerate{
 #' \item \code{ID} (time zone identifier),
 #' \item \code{Name} (localized human-readable time zone name),
+#' \item \code{Name.Daylight} (localized human-readable time zone name when DST is used, if available),
+#' \item \code{Name.Windows} (Windows time zone ID, if available),
 #' \item \code{RawOffset} (raw GMT offset, in hours, before taking
 #' daylight savings into account), and
 #' \item \code{UsesDaylightTime} (states whether a time zone uses
@@ -194,10 +200,13 @@ stri_timezone_set <- function(tz) {
 #' @examples
 #' stri_timezone_info()
 #' stri_timezone_info(locale="sk_SK")
-#'
+#' sapply(c("short", "long", "generic_short", "generic_long", 
+#'          "gmt_short", "gmt_long", "common", "generic_location"),
+#'   function(e) stri_timezone_info("Europe/London", display_type=e))
+#' 
 #' @family datetime
 #' @family timezone
 #' @export
-stri_timezone_info <- function(tz=NULL, locale=NULL) {
-   .Call(C_stri_timezone_info, tz, locale)
+stri_timezone_info <- function(tz=NULL, locale=NULL, display_type="long") {
+   .Call(C_stri_timezone_info, tz, locale, display_type)
 }

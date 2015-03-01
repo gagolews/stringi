@@ -5,10 +5,14 @@
 \alias{as.POSIXst}
 \title{Date-Time Objects in \pkg{stringi}}
 \usage{
-as.POSIXst(x)
+as.POSIXst(x, tz = "", ...)
 }
 \arguments{
 \item{x}{...}
+
+\item{tz}{...}
+
+\item{...}{further arguments to be passed to or from other methods.}
 }
 \value{
 t.b.d.
@@ -26,6 +30,11 @@ UTC leap seconds are ignored.
 
 Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
 etc. or the \code{sort()} function may be used.
+
+An object of class \code{\link{POSIXst}} may be equipped with
+an attribute called \code{tzone}. Its value is used for date/time
+formatting (e.g. when objects are printed in the console),
+see \code{\link{format.POSIXst}}.
 }
 \seealso{
 Other datetime: \code{\link{format.POSIXst}},

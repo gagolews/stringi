@@ -172,12 +172,15 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-01-08)
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  * @version 0.5-1 (Marek Gagolewski, 2015-02-22) use tz
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-01) set tzone attrib on retval
  */
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP locale) {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
    const char* format_val = stri__prepare_arg_string_1_notNA(format, "format");
    bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
+   if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+   else             PROTECT(tz); /* needed to set tzone attrib */
 
    // "format" may be one of:
    const char* format_opts[] = {
@@ -193,7 +196,7 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
    TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;
    DateFormat* fmt = NULL;
-   STRI__ERROR_HANDLER_BEGIN(1)
+   STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t vectorize_length = LENGTH(str);
    StriContainerUTF16 str_cont(str, vectorize_length);
    UnicodeString format_str(format_val);
@@ -220,11 +223,14 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
             break;
 
          case 1:
-            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), 
+               Locale::createFromName(locale_val));
             break;
 
          case 2:
-            fmt = DateFormat::createDateTimeInstance(style, (DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            fmt = DateFormat::createDateTimeInstance(style, 
+               (DateFormat::EStyle)(style & ~DateFormat::kRelative), 
+               Locale::createFromName(locale_val));
             break;
 
          default:
@@ -267,7 +273,8 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP tz, SEXP lenient, SEXP loca
       }
    }
 
-//   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
+
+   if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
    stri__set_class_POSIXct(ret);
    if (tz_val) { delete tz_val; tz_val = NULL; }
    if (fmt) { delete fmt; fmt = NULL; }

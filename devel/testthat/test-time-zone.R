@@ -37,8 +37,9 @@ test_that("stri_timezone_get/set", {
 
 test_that("stri_timezone_info", {
    expect_equivalent(stri_timezone_info(tz="Europe/Warsaw", locale="en_GB"),
-      list("Europe/Warsaw", "Central European Standard Time", 1, TRUE))
+      list("Europe/Warsaw", "Central European Standard Time", "Central European Summer Time",
+         "Central European Standard Time", 1, TRUE))
 
    expect_equivalent(stri_timezone_info(tz="Asia/Kathmandu", locale="pl_PL"),
-      list("Asia/Kathmandu", "Nepal", 5.75, FALSE))
+      list("Asia/Kathmandu", "Nepal", NULL, "Nepal Standard Time", 5.75, FALSE))
 })
