@@ -10,7 +10,7 @@ stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   locale = NULL)
 
 \method{format}{POSIXst}(x, format = "uuuu-MM-dd HH:mm:ss", tz = attr(x,
-  "tzone"), usetz = TRUE, ...)
+  "tzone"), usetz = FALSE, ...)
 
 stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   lenient = FALSE, locale = NULL)
@@ -27,7 +27,8 @@ may be specified by setting \code{@calendar=name} keyword}
 
 \item{x,time}{a \code{POSIXct} object}
 
-\item{usetz}{this argument is purposely ignored}
+\item{usetz}{single logical value; should the time zone be appended
+to the output?}
 
 \item{...}{Further arguments to be passed from or to other methods.}
 

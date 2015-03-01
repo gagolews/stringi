@@ -191,11 +191,11 @@ SEXP stri_enc_info(SEXP enc)
       Rf_warning(MSG__ENC_ERROR_GETNAME);
    }
    else {
-      SET_VECTOR_ELT(vals, 1, Rf_mkString(canname));
+      SET_VECTOR_ELT(vals, 1, stri__make_character_vector_char_ptr(1, canname));
 
       // friendly name
       const char* frname = StriUcnv::getFriendlyName(canname);
-      if (frname)  SET_VECTOR_ELT(vals, 0, Rf_mkString(frname));
+      if (frname)  SET_VECTOR_ELT(vals, 0, stri__make_character_vector_char_ptr(1, frname));
       else         SET_VECTOR_ELT(vals, 0, Rf_ScalarString(NA_STRING));
 
       // has ASCII as its subset?
@@ -224,7 +224,7 @@ SEXP stri_enc_info(SEXP enc)
          if (U_FAILURE(status) || !stdname)
             SET_VECTOR_ELT(vals, i+2, Rf_ScalarString(NA_STRING));
          else
-            SET_VECTOR_ELT(vals, i+2, Rf_mkString(stdname));
+            SET_VECTOR_ELT(vals, i+2, stri__make_character_vector_char_ptr(1, stdname));
       }
    }
    Rf_setAttrib(vals, R_NamesSymbol, names);

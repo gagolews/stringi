@@ -2,6 +2,13 @@
 ===============================================================================
 
 
+* Known bugs in ICU:
+
+   * #147: regex look-behind assertions may fail to find a multibyte
+     Unicode search pattern [scheduled for ICU4C 56.1, see
+     http://bugs.icu-project.org/trac/ticket/11554]
+
+
 * 0.5-1 (2015-??-??) **t.b.d.**
 
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
@@ -52,8 +59,6 @@ TO BE DONE:
         * `stri_datetime_add()` - ...
         * `stri_datetime_fields()` - ...
         * `stri_datetime_create()` - ...
-
-   * #113: Use BreakIterator for search_coll and search_fixed (optionally) 
 
 -------------------------------------------------------------------------------
 

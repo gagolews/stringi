@@ -193,7 +193,8 @@
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
-#' @param usetz this argument is purposely ignored
+#' @param usetz single logical value; should the time zone be appended
+#' to the output?
 #' @param ... Further arguments to be passed from or to other methods.
 #'
 #' @return
@@ -222,9 +223,9 @@ stri_datetime_format <- function(time, format="uuuu-MM-dd HH:mm:ss", tz=NULL, lo
 
 #' @rdname stri_datetime_format
 #' @export
-format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=TRUE, ...) {
-   stopifnot(identical(usetz, TRUE))
-   stri_datetime_format(x, format=format, tz=tz, ...)
+format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=FALSE, ...) {
+   if (identical(usetz, TRUE)) format <- stri_paste(format, " z")
+   stri_datetime_format(x, format=format, tz=tz) # ignore ... arg
 }
 
 
@@ -311,6 +312,9 @@ stri_datetime_fstr <- function(x) {
 }
 
 
+
+# ?DateTimeClasses
+
 # seq.POSIXst
 
 # rep.POSIXst
@@ -322,3 +326,8 @@ stri_datetime_fstr <- function(x) {
 # round
 
 # trunc
+
+# time + z
+# z + time
+# time - z
+# time1 lop time2

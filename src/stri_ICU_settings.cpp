@@ -64,7 +64,7 @@ SEXP stri_info()
    SET_VECTOR_ELT(vals, 1, Rf_mkString(U_ICU_VERSION));
    SET_VECTOR_ELT(vals, 2, stri_locale_info(R_NilValue)); // may call Rf_error
    SET_VECTOR_ELT(vals, 3,
-      stri__make_character_vector(2, "UTF-8", "UTF-16")); // fixed strings
+      stri__make_character_vector_char_ptr(2, "UTF-8", "UTF-16")); // fixed strings
    SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));  // may call Rf_error
 
    stri__set_names(vals, infosize,

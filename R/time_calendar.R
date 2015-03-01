@@ -207,8 +207,15 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 #'
 #' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
 #' etc. or the \code{sort()} function may be used.
+#' 
+#' An object of class \code{\link{POSIXst}} may be equipped with
+#' an attribute called \code{tzone}. Its value is used for date/time
+#' formatting (e.g. when objects are printed in the console),
+#' see \code{\link{format.POSIXst}}.
 #'
 #' @param x ...
+#' @param tz ...
+#' @param ... further arguments to be passed to or from other methods.
 #'
 #' @return
 #' t.b.d.
@@ -217,7 +224,8 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 #' @rdname as.POSIXst
 #' @family datetime
 #' @aliases as.POSIXst POSIXst
-as.POSIXst <- function(x) {
+as.POSIXst <- function(x, tz="", ...) {
+   # UseMethod("as.POSIXct")
    stop("TO DO")
 }
 

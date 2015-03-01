@@ -155,53 +155,78 @@ SEXP stri_timezone_set(SEXP tz) {
  *
  * @param tz single string or NULL
  * @param locale single string or NULL
+ * @param display_type single string
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
+ *    new out: WindowsID, NameDaylight, new in: display_type
  */
-SEXP stri_timezone_info(SEXP tz, SEXP locale) {
+SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
+   const char* dtype_str = stri__prepare_arg_locale(display_type, "display_type", false); /* this is R_alloc'ed */
+   const char* dtype_opts[] = {
+      "short", "long", "generic_short", "generic_long", "gmt_short", "gmt_long",
+      "common", "generic_location",
+      NULL};
+   int dtype_cur = stri__match_arg(dtype_str, dtype_opts);
+   
+   TimeZone::EDisplayType dtype;
+   switch (dtype_cur) {
+      case 0:  dtype = TimeZone::SHORT; break;
+      case 1:  dtype = TimeZone::LONG; break;
+      case 2:  dtype = TimeZone::SHORT_GENERIC; break;
+      case 3:  dtype = TimeZone::LONG_GENERIC; break;
+      case 4:  dtype = TimeZone::SHORT_GMT; break;
+      case 5:  dtype = TimeZone::LONG_GMT; break;
+      case 6:  dtype = TimeZone::SHORT_COMMONLY_USED; break;
+      case 7:  
+      default: dtype = TimeZone::GENERIC_LOCATION; break;
+   }
 
-   // ID -> UnicodeString getID (UnicodeString &ID)
-   // Name -> UnicodeString &    getDisplayName (const Locale &locale, UnicodeString &result) const
-   // RawOffset -> int getRawOffset (void) const =0 [ms]
-   // UsesDaylightTime -> UBool useDaylightTime (void) const =0
-
-   const R_len_t infosize = 4;
+   const R_len_t infosize = 6;
    SEXP vals;
 
    PROTECT(vals = Rf_allocVector(VECSXP, infosize));
    for (int i=0; i<infosize; ++i)
       SET_VECTOR_ELT(vals, i, R_NilValue);
 
-   UnicodeString val1;
-   std::string val2;
+   R_len_t curidx = -1;
+   
+   ++curidx;
+   UnicodeString val_ID;
+   curtz->getID(val_ID);
+   SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_ID));
 
-   curtz->getID(val1);
-   val1.toUTF8String(val2);
-   SET_VECTOR_ELT(vals, 0, Rf_allocVector(STRSXP, 1));
-   SET_STRING_ELT(VECTOR_ELT(vals, 0), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
+   ++curidx;
+   UnicodeString val_name;
+   curtz->getDisplayName(false, dtype, Locale::createFromName(qloc), val_name);
+   SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name));
+   
+   ++curidx;
+   if ((bool)curtz->useDaylightTime()) {
+      UnicodeString val_name2;
+      curtz->getDisplayName(true, dtype, Locale::createFromName(qloc), val_name2);
+      SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name2));
+   }
 
-   // @TODO: ICU >= 52
-//   UnicodeString id = val1;
-//   UErrorCode err = U_ZERO_ERROR;
-//   TimeZone::getWindowsID(id, val1, err);
-//   val2.clear();
-//   val1.toUTF8String(val2);
-//   SET_VECTOR_ELT(vals, 2, Rf_mkString(val2.c_str()));
-
-   curtz->getDisplayName(Locale::createFromName(qloc), val1);
-   val2.clear();
-   val1.toUTF8String(val2);
-   SET_VECTOR_ELT(vals, 1, Rf_allocVector(STRSXP, 1));
-   SET_STRING_ELT(VECTOR_ELT(vals, 1), 0, Rf_mkCharCE(val2.c_str(), CE_UTF8));
-
-   SET_VECTOR_ELT(vals, 2, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));
-   SET_VECTOR_ELT(vals, 3, Rf_ScalarLogical((bool)curtz->useDaylightTime()));
+   ++curidx;
+   UnicodeString val_windows;
+   UErrorCode status = U_ZERO_ERROR;
+   TimeZone::getWindowsID(val_ID, val_windows, status);
+   if (U_SUCCESS(status)) 
+      SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_windows));
+      
+   ++curidx;
+   SET_VECTOR_ELT(vals, curidx, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));
+   
+   ++curidx;
+   SET_VECTOR_ELT(vals, curidx, Rf_ScalarLogical((bool)curtz->useDaylightTime()));
 
    delete curtz;
-   stri__set_names(vals, 4, "ID", "Name", /*"WindowsID",*/ "RawOffset", "UsesDaylightTime");
+   stri__set_names(vals, infosize, "ID", "Name", "Name.Daylight", "Name.Windows", "RawOffset", "UsesDaylightTime");
    UNPROTECT(1);
    return vals;
 }

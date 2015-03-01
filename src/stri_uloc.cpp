@@ -99,19 +99,19 @@ SEXP stri_locale_info(SEXP loc)
 
    uloc_getLanguage(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 0, Rf_mkString(buf));
+   else SET_VECTOR_ELT(vals, 0, stri__make_character_vector_char_ptr(1, buf));
 
    uloc_getCountry(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 1, Rf_mkString(buf));
+   else SET_VECTOR_ELT(vals, 1, stri__make_character_vector_char_ptr(1, buf));
 
    uloc_getVariant(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 2, Rf_mkString(buf));
+   else SET_VECTOR_ELT(vals, 2, stri__make_character_vector_char_ptr(1, buf));
 
    uloc_canonicalize(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
    if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 3, Rf_mkString(buf));
+   else SET_VECTOR_ELT(vals, 3, stri__make_character_vector_char_ptr(1, buf));
 
    stri__set_names(vals, 4, "Language", "Country", "Variant", "Name");
    UNPROTECT(1);

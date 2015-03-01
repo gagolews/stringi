@@ -52,7 +52,8 @@
 
 // common.cpp
 void    stri__set_names(SEXP object, R_len_t numnames, ...);
-SEXP    stri__make_character_vector(R_len_t numnames, ...);
+SEXP    stri__make_character_vector_char_ptr(R_len_t numnames, ...);
+SEXP    stri__make_character_vector_UnicodeString_ptr(R_len_t numnames, ...);
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...);
 SEXP    stri__vector_NA_integers(R_len_t howmany);
 SEXP    stri__vector_NA_strings(R_len_t howmany);
@@ -329,7 +330,7 @@ SEXP stri_test_returnasis(SEXP x);
 // date/time
 SEXP stri_timezone_list(SEXP region, SEXP offset);
 SEXP stri_timezone_set(SEXP tz);
-SEXP stri_timezone_info(SEXP tz, SEXP locale);
+SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type);
 
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 

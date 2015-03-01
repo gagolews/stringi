@@ -2125,7 +2125,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
 ##### OPTIONS #################################################################
 
@@ -3512,7 +3512,7 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
 
 fi
@@ -3586,7 +3586,7 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
 
 fi
@@ -3651,7 +3651,7 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** We will build ICU4C from sources"
+      echo "*** ICU4C will be built from sources"
       return 1
 
 fi
