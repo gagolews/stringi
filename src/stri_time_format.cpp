@@ -96,15 +96,20 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
       /* ICU 54.1: Relative time styles are not currently supported.  */
       switch (format_cur / 8) {
          case 0:
-            fmt = DateFormat::createDateInstance(style, Locale::createFromName(locale_val));
+            fmt = DateFormat::createDateInstance(style, 
+               Locale::createFromName(locale_val));
             break;
 
          case 1:
-            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            fmt = DateFormat::createTimeInstance(
+               (DateFormat::EStyle)(style & ~DateFormat::kRelative),
+               Locale::createFromName(locale_val));
             break;
 
          case 2:
-            fmt = DateFormat::createDateTimeInstance(style, (DateFormat::EStyle)(style & ~DateFormat::kRelative), Locale::createFromName(locale_val));
+            fmt = DateFormat::createDateTimeInstance(style,
+               (DateFormat::EStyle)(style & ~DateFormat::kRelative),
+               Locale::createFromName(locale_val));
             break;
 
          default:
