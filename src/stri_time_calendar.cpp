@@ -262,9 +262,10 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-02) tz arg added
  */
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
-   SEXP minute, SEXP second, SEXP /*tz*/, SEXP lenient, SEXP locale)
+   SEXP minute, SEXP second, SEXP tz, SEXP lenient, SEXP locale)
 {
    PROTECT(year = stri_prepare_arg_integer(year, "year"));
    PROTECT(month = stri_prepare_arg_integer(month, "month"));
@@ -274,6 +275,8 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    PROTECT(second = stri_prepare_arg_double(second, "second"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
    bool lenient_val = stri__prepare_arg_logical_1_notNA(lenient, "lenient");
+   if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+   else             PROTECT(tz); /* needed to set tzone attrib */
 
    R_len_t vectorize_length = stri__recycling_rule(true, 6,
       LENGTH(year), LENGTH(month), LENGTH(day),
@@ -288,8 +291,9 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
       return ret;
    }
 
+   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;
-   STRI__ERROR_HANDLER_BEGIN(6)
+   STRI__ERROR_HANDLER_BEGIN(7)
    StriContainerInteger year_cont(year, vectorize_length);
    StriContainerInteger month_cont(month, vectorize_length);
    StriContainerInteger day_cont(day, vectorize_length);
@@ -302,6 +306,9 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    cal->setLenient(lenient_val);
+   
+   cal->adoptTimeZone(tz_val);
+   tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
@@ -326,12 +333,14 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
       if (U_FAILURE(status)) REAL(ret)[i] = NA_REAL;
    }
 
-//   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
+   if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
    stri__set_class_POSIXct(ret);
+   if (tz_val) { delete tz_val; tz_val = NULL; }
    if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
+      if (tz_val) { delete tz_val; tz_val = NULL; }
       if (cal) { delete cal; cal = NULL; }
    })
 }

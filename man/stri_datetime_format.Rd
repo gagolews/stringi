@@ -18,8 +18,9 @@ stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
 \arguments{
 \item{format}{single string, see Details; see also \code{\link{stri_datetime_fstr}}}
 
-\item{tz}{\code{NULL} or \code{""} for default time zone;
-otherwise, a single string with a timezone identifier}
+\item{tz}{\code{NULL} or \code{""} for tbe default time zone
+or a single string with a timezone identifier,
+see \code{\link{stri_timezone_list()}}}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar

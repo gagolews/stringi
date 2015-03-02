@@ -12,6 +12,8 @@ stri_datetime_fields(time, locale = NULL)
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
+
+\item{tz}{??????}
 }
 \value{
 Returns a data frame with the following columns: TO DO...................................
