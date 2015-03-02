@@ -166,7 +166,7 @@ SEXP stri_timezone_set(SEXP tz) {
 SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
    TimeZone* curtz = stri__prepare_arg_timezone(tz, "tz", R_NilValue);
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
-   const char* dtype_str = stri__prepare_arg_locale(display_type, "display_type", false); /* this is R_alloc'ed */
+   const char* dtype_str = stri__prepare_arg_string_1_notNA(display_type, "display_type"); /* this is R_alloc'ed */
    const char* dtype_opts[] = {
       "short", "long", "generic_short", "generic_long", "gmt_short", "gmt_long",
       "common", "generic_location",
@@ -182,8 +182,8 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
       case 4:  dtype = TimeZone::SHORT_GMT; break;
       case 5:  dtype = TimeZone::LONG_GMT; break;
       case 6:  dtype = TimeZone::SHORT_COMMONLY_USED; break;
-      case 7:  
-      default: dtype = TimeZone::GENERIC_LOCATION; break;
+      case 7:  dtype = TimeZone::GENERIC_LOCATION; break;
+      default: Rf_error(MSG__INCORRECT_MATCH_OPTION, "display_type"); break;
    }
 
    const R_len_t infosize = 6;
