@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_calendar.R
 \name{stri_datetime_create}
 \alias{stri_datetime_create}
-\title{Crate a Date-Time Object}
+\title{Create a Date-Time Object}
 \usage{
 stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
   second = 0, tz = NULL, lenient = FALSE, locale = NULL)
@@ -21,7 +21,7 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
 \item{second}{numeric vetor; fractional seconds are allowed}
 
 \item{tz}{\code{NULL} or \code{""} for the default time zone or
-a single string with time zone ID otherwise}
+a single string with time zone identifier, see \code{\link{stri_timezone_list()}}}
 
 \item{lenient}{single logical value; should the operation be lenient?}
 

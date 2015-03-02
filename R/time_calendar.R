@@ -30,6 +30,45 @@
 
 
 #' @title
+#' Create a Date-Time Object
+#'
+#' @description
+#' This function constructs date-time objects from numeric representations.
+#'
+#' @details
+#' Vectorized over \code{year}, \code{month}, \code{hour},
+#' \code{hour}, \code{minute}, and \code{second}.
+#'
+#' @param year iteger vector; 0 is 1BC, -1 is 2BC, etc.
+#' @param month iteger vector; months are 1-based
+#' @param day iteger vector
+#' @param hour iteger vector
+#' @param minute iteger vector
+#' @param second numeric vetor; fractional seconds are allowed
+#' @param tz \code{NULL} or \code{""} for the default time zone or
+#' a single string with time zone identifier, see \code{\link{stri_timezone_list()}}
+#' @param lenient single logical value; should the operation be lenient?
+#' @param locale \code{NULL} or \code{""} for default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
+#'
+#' @return
+#' Returns an object of class \code{\link{POSIXst}}.
+#'
+#' @examples
+#' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
+#' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+#' stri_datetime_create(2015, 02, 29)
+#' stri_datetime_create(2015, 02, 29, lenient=TRUE)
+#'
+#' @family datetime
+#' @export
+stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, lenient=FALSE, locale=NULL) {
+   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, lenient, locale)
+}
+
+
+#' @title
 #' Get Current Date and Time
 #'
 #' @description
@@ -74,6 +113,7 @@ stri_datetime_now <- function() {
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
+#' @param tz ???????
 #'
 #' @return
 #' Both functions return an object of class \code{\link{POSIXst}}.
@@ -120,6 +160,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #'
 #'
 #' @param time a \code{POSIXct} object
+#' @param tz ??????
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
@@ -149,45 +190,6 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' @export
 stri_datetime_fields <- function(time, locale=NULL) {
    as.data.frame(.Call(C_stri_datetime_fields, time, locale))
-}
-
-
-#' @title
-#' Crate a Date-Time Object
-#'
-#' @description
-#' This function constructs date-time objects from numeric representations.
-#'
-#' @details
-#' Vectorized over \code{year}, \code{month}, \code{hour},
-#' \code{hour}, \code{minute}, and \code{second}.
-#'
-#' @param year iteger vector; 0 is 1BC, -1 is 2BC, etc.
-#' @param month iteger vector; months are 1-based
-#' @param day iteger vector
-#' @param hour iteger vector
-#' @param minute iteger vector
-#' @param second numeric vetor; fractional seconds are allowed
-#' @param tz \code{NULL} or \code{""} for the default time zone or
-#' a single string with time zone ID otherwise
-#' @param lenient single logical value; should the operation be lenient?
-#' @param locale \code{NULL} or \code{""} for default locale,
-#' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting \code{@@calendar=name} keyword
-#'
-#' @return
-#' Returns an object of class \code{\link{POSIXst}}.
-#'
-#' @examples
-#' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-#' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
-#' stri_datetime_create(2015, 02, 29)
-#' stri_datetime_create(2015, 02, 29, lenient=TRUE)
-#'
-#' @family datetime
-#' @export
-stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, lenient=FALSE, locale=NULL) {
-   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, lenient, locale)
 }
 
 

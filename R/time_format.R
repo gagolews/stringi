@@ -187,8 +187,9 @@
 #' @param x,time a \code{POSIXct} object
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
-#' @param tz  \code{NULL} or \code{""} for default time zone;
-#' otherwise, a single string with a timezone identifier
+#' @param tz  \code{NULL} or \code{""} for tbe default time zone
+#' or a single string with a timezone identifier,
+#' see \code{\link{stri_timezone_list()}}
 #' @param lenient single logical value; should date/time parsing be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
