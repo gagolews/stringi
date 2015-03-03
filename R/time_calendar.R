@@ -46,7 +46,7 @@
 #' @param minute iteger vector
 #' @param second numeric vetor; fractional seconds are allowed
 #' @param tz \code{NULL} or \code{""} for the default time zone or
-#' a single string with time zone identifier, see \code{\link{stri_timezone_list()}}
+#' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should the operation be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
@@ -113,7 +113,6 @@ stri_datetime_now <- function() {
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
-#' @param tz ???????
 #'
 #' @return
 #' Both functions return an object of class \code{\link{POSIXst}}.
@@ -138,6 +137,7 @@ stri_datetime_now <- function() {
 #' @rdname stri_datetime_add
 #' @export
 stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
+   # param tz ???????
    .Call(C_stri_datetime_add, time, value, units, locale)
 }
 
@@ -145,6 +145,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' @rdname stri_datetime_add
 #' @export
 "stri_datetime_add<-" <- function(time, units="seconds", locale=NULL, value) {
+   # param tz ???????
    .Call(C_stri_datetime_add, time, value, units, locale)
 }
 
@@ -160,7 +161,6 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #'
 #'
 #' @param time a \code{POSIXct} object
-#' @param tz ??????
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
@@ -189,6 +189,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' @family datetime
 #' @export
 stri_datetime_fields <- function(time, locale=NULL) {
+   # param tz ???????
    as.data.frame(.Call(C_stri_datetime_fields, time, locale))
 }
 

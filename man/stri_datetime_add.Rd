@@ -21,8 +21,6 @@ stri_datetime_add(time, units = "seconds", locale = NULL) <- value
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
-
-\item{tz}{???????}
 }
 \value{
 Both functions return an object of class \code{\link{POSIXst}}.

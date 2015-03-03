@@ -58,8 +58,7 @@ stri_timezone_list(region="PL")
 stri_timezone_list(region="US", offset=-10)
 
 # Fetch info on all time zones
-do.call(rbind.data.frame,
-    lapply(stri_timezone_list(), function(id) stri_timezone_info(id)))
+sapply(stri_timezone_list(), function(id) stri_timezone_info(id))
 }
 \references{
 \emph{TimeZone} class -- ICU API Documentation,
