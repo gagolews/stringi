@@ -12,8 +12,8 @@ stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
 \method{format}{POSIXst}(x, format = "uuuu-MM-dd HH:mm:ss", tz = attr(x,
   "tzone"), usetz = FALSE, ...)
 
-stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
-  lenient = FALSE, locale = NULL)
+stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE,
+  tz = NULL, locale = NULL)
 }
 \arguments{
 \item{format}{single string, see Details; see also \code{\link{stri_datetime_fstr}}}
@@ -26,7 +26,7 @@ see \code{\link{stri_timezone_list}}}
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 
-\item{x,time}{a \code{POSIXct} object}
+\item{x,time}{an object of class \code{\link{POSIXst}} or an object coercible to}
 
 \item{usetz}{single logical value; should the time zone be appended
 to the output?}
@@ -48,6 +48,10 @@ to a character vector or conversely.
 }
 \details{
 Vectorized over \code{time} or \code{str}.
+
+By default, \code{stri_datetime_format} (unlike \code{format.POSIXst})
+formats a date/time object using the current default time zone.
+This is for the sake of compatibility with the \code{\link{strftime}} function.
 
 \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},

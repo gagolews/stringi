@@ -38,6 +38,10 @@
 #'
 #' @details
 #' Vectorized over \code{time} or \code{str}.
+#' 
+#' By default, \code{stri_datetime_format} (unlike \code{format.POSIXst})
+#' formats a date/time object using the current default time zone.
+#' This is for the sake of compatibility with the \code{\link{strftime}} function.
 #'
 #' \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
@@ -184,7 +188,7 @@
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
-#' @param x,time a \code{POSIXct} object
+#' @param x,time an object of class \code{\link{POSIXst}} or an object coercible to
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
 #' @param tz  \code{NULL} or \code{""} for tbe default time zone
@@ -225,15 +229,15 @@ stri_datetime_format <- function(time, format="uuuu-MM-dd HH:mm:ss", tz=NULL, lo
 #' @rdname stri_datetime_format
 #' @export
 format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=FALSE, ...) {
-   if (identical(usetz, TRUE)) format <- stri_paste(format, " z")
-   stri_datetime_format(x, format=format, tz=tz) # ignore ... arg
+   if (identical(usetz, TRUE)) format <- stri_paste(format, " z") # this is not too intelligent
+   stri_datetime_format(x, format=format, tz=tz) # ignore ... arg purposedly
 }
 
 
 #' @export
 #' @rdname stri_datetime_format
-stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", tz=NULL, lenient=FALSE, locale=NULL) {
-   .Call(C_stri_datetime_parse, str, format, tz, lenient, locale)
+stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE, tz=NULL, locale=NULL) {
+   .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
 }
 
 

@@ -41,5 +41,5 @@ test_that("stri_timezone_info", {
          "Central European Standard Time", 1, TRUE))
 
    expect_equivalent(stri_timezone_info(tz="Asia/Kathmandu", locale="pl_PL"),
-      list("Asia/Kathmandu", "Nepal", NULL, "Nepal Standard Time", 5.75, FALSE))
+      list("Asia/Kathmandu", "Nepal", NA_character_, "Nepal Standard Time", 5.75, FALSE))
 })

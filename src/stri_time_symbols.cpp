@@ -179,7 +179,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width) {
 //   }
 
 
-   stri__set_names(vals, infosize, "Months", "Weekdays", "Quarters", "AmPm", "Era");
+   stri__set_names(vals, infosize, "Month", "Weekday", "Quarter", "AmPm", "Era");
    UNPROTECT(1);
    return vals;
 }
