@@ -64,7 +64,19 @@ test_that("stri_datetime_add", {
 
 
 test_that("stri_datetime_fields", {
-   stri_datetime_fields(stri_datetime_now())
+   x <- stri_datetime_fields(stri_datetime_create(2015,1,2,13,14,15.5))
+   expect_equivalent(x$Year, 2015)
+   expect_equivalent(x$Month, 1)
+   expect_equivalent(x$Day, 2)
+   expect_equivalent(x$Hour, 13)
+   expect_equivalent(x$Minute, 14)
+   expect_equivalent(x$Second, 15)
+   expect_equivalent(x$Millisecond, 500)
 
-
+   x <- stri_datetime_fields(stri_datetime_create(2015,1,2,19,13,14.5, tz="America/New_York"))
+   expect_equivalent(x$Hour, 19)
+   
+   suppressWarnings(x <- stri_datetime_fields(as.POSIXlt(stri_datetime_create(2015,1,2,19,13,14.5, tz="America/New_York"))))
+   expect_equivalent(x$Hour, 19)
+   
 })

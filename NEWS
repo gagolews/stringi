@@ -46,7 +46,7 @@ TO BE DONE:
 
    * [BUGFIX] #135: long long ICU warnings...
 
-   * #137: date/time formatting/parsing:
+   * #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers
         * `stri_timezone_set()`, `stri_timezone_get()` - manage current default time zone
         * `stri_timezone_info()` - basic information on a given time zone
@@ -58,8 +58,8 @@ TO BE DONE:
         * `stri_datetime_create()` - construct date-time objects
                from numeric representations
         * `stri_datetime_now()` - return current date-time
+        * `stri_datetime_fields()` - get values for date-time fields
         * `stri_datetime_add()` - ...
-        * `stri_datetime_fields()` - ...
 
 -------------------------------------------------------------------------------
 

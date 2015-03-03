@@ -211,13 +211,17 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
       curtz->getDisplayName(true, dtype, Locale::createFromName(qloc), val_name2);
       SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name2));
    }
+   else
+      SET_VECTOR_ELT(vals, curidx, Rf_ScalarString(NA_STRING));
 
    ++curidx;
    UnicodeString val_windows;
    UErrorCode status = U_ZERO_ERROR;
    TimeZone::getWindowsID(val_ID, val_windows, status);
-   if (U_SUCCESS(status)) 
+   if (U_SUCCESS(status) && val_windows.length() > 0) 
       SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_windows));
+   else
+      SET_VECTOR_ELT(vals, curidx, Rf_ScalarString(NA_STRING));
       
    ++curidx;
    SET_VECTOR_ELT(vals, curidx, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));

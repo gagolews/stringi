@@ -5,7 +5,7 @@
 \title{Create a Date-Time Object}
 \usage{
 stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
-  second = 0, tz = NULL, lenient = FALSE, locale = NULL)
+  second = 0, lenient = FALSE, tz = NULL, locale = NULL)
 }
 \arguments{
 \item{year}{iteger vector; 0 is 1BC, -1 is 2BC, etc.}
@@ -20,10 +20,10 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
 
 \item{second}{numeric vetor; fractional seconds are allowed}
 
+\item{lenient}{single logical value; should the operation be lenient?}
+
 \item{tz}{\code{NULL} or \code{""} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
-
-\item{lenient}{single logical value; should the operation be lenient?}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar

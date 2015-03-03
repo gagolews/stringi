@@ -4,31 +4,37 @@
 \alias{stri_datetime_fields}
 \title{Get Values for Date and Time Fields}
 \usage{
-stri_datetime_fields(time, locale = NULL)
+stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 }
 \arguments{
-\item{time}{a \code{POSIXct} object}
+\item{time}{an object of class \code{\link{POSIXst}} or an object coercible to}
 
-\item{locale}{\code{NULL} or \code{""} for default locale,
+\item{tz}{\code{NULL} or \code{""} for the default time zone or
+a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
+
+\item{locale}{\code{NULL} or \code{""} for the current default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns a data frame with the following columns: TO DO...................................
+Returns a data frame with the following columns:
 \enumerate{
-\item Years - 0 is 1BC, -1 is 2BC, etc.
-\item Months ... months are 1-based
-\item Days - ...
-\item Hours - a single integer from 0 to 24,
-\item Minutes - a single integer from 0 to 59
-\item Seconds - a real number from 0 to 60 (fractional parts allowed)
-\item TimeZone - ....
-\item gmt offsett...
-\item is dst...
-\item week number...
-\item day in year... ?
-\item is weekend? ....
-\item TO DO.....
+\item Year (0 is 1BC, -1 is 2BC, etc.)
+\item Month (1-based, i.e. 1 stands for the first month, e.g. January;
+note that the number of months depends on the selected calendar,
+see \code{\link{stri_datetime_symbols}})
+\item Day
+\item Hour (24-h clock)
+\item Minute
+\item Second
+\item Millisecond
+\item WeekOfYear (this is locale-dependent)
+\item WeekOfMonth (this is locale-dependent)
+\item DayOfYear
+\item DayOfWeek (1-based, 1 denotes Sunday; see \code{\link{stri_datetime_symbols}})
+\item Hour12 (12-h clock)
+\item AmPm (see \code{\link{stri_datetime_symbols}})
+\item Era (see \code{\link{stri_datetime_symbols}})
 }
 }
 \description{
@@ -39,6 +45,10 @@ Vectorized over \code{time}.
 }
 \examples{
 stri_datetime_fields(stri_datetime_now())
+stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")
+stri_datetime_symbols(locale="@calendar=hebrew")$Month[
+   stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")$Month
+]
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},

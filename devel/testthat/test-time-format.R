@@ -56,9 +56,17 @@ test_that("stri_datetime_parse, stri_datetime_format, format.POSIXct", {
    expect_equivalent(format(x1), format(x2))
    expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
    
+   x1 <- as.POSIXlt(x1)
+   expect_equivalent(format(x1), format(x2))
+   expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
+   
    # daylight savings time=TRUE
-   x1 <- as.POSIXct(strptime("2015-04-01 12:00:00", "%Y-%m-%d %H:%M:%S", tz="Europe/Warsaw"))
-   x2 <- stri_datetime_parse("2015-04-01 12:00:00", tz="Europe/Warsaw")
+   x1 <- as.POSIXct(strptime(c("2015-04-01 12:00:00", "2015-03-31 23:59:59"), "%Y-%m-%d %H:%M:%S", tz="Europe/Warsaw"))
+   x2 <- stri_datetime_parse(c("2015-04-01 12:00:00", "2015-03-31 23:59:59"), tz="Europe/Warsaw")
+   expect_equivalent(format(x1), format(x2))
+   expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
+   
+   x1 <- as.POSIXlt(x1)
    expect_equivalent(format(x1), format(x2))
    expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
    
@@ -67,11 +75,15 @@ test_that("stri_datetime_parse, stri_datetime_format, format.POSIXct", {
    expect_equivalent(format(x1), format(x2))
    expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
    
+   x1 <- as.POSIXlt(x1)
+   expect_equivalent(format(x1), format(x2))
+   expect_equivalent(format(x1, usetz=TRUE), format(x2, usetz=TRUE))
+   
    
    x1 <- stri_paste("2015-01-01 ", sprintf("%02g", 0: 23), ":59:59")
    x1 <- stri_datetime_parse(x1, tz='CET')
       
    x2 <- stri_paste("2015-01-01 ", sprintf("%02g", 0: 23), ":59:59")
-   x2 <- as.POSIXct(strptime(x2, "%Y-%m-%d %H:%M:%S", tz='CET'))
+   x2 <- strptime(x2, "%Y-%m-%d %H:%M:%S", tz='CET')
    expect_equivalent(format(data.frame(x=x1)), format(data.frame(x=x2)))
 })

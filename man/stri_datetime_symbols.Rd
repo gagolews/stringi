@@ -18,9 +18,9 @@ or a single string with locale identifier.}
 \value{
 Returns a list with the following named components:
 \enumerate{
-\item \code{Months} - month names,
-\item \code{Weekdays} - weekday names,
-\item \code{Quarters} - quarter names,
+\item \code{Month} - month names,
+\item \code{Weekday} - weekday names,
+\item \code{Quarter} - quarter names,
 \item \code{AmPm} - AM/PM names,
 \item \code{Era} - era names.
 }

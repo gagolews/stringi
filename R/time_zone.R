@@ -95,7 +95,8 @@
 #' stri_timezone_list(region="US", offset=-10)
 #' 
 #' # Fetch info on all time zones
-#' sapply(stri_timezone_list(), function(id) stri_timezone_info(id))
+#' do.call(rbind.data.frame, 
+#'    lapply(stri_timezone_list(), function(tz) stri_timezone_info(tz)))
 #' 
 #' @family datetime
 #' @family timezone

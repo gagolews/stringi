@@ -48,8 +48,8 @@
  */
 static const R_CallMethodDef cCallMethods[] = {
 
-//   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE v>0.3
-//   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE v>0.3
+//   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE v>0.5
+//   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE v>0.5
    STRI__MK_CALL("C_stri_cmp_codepoints",             stri_cmp_codepoints,             3),
    STRI__MK_CALL("C_stri_cmp_integer",                stri_cmp_integer,                3),
    STRI__MK_CALL("C_stri_cmp_logical",                stri_cmp_logical,                4),
@@ -59,7 +59,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_count_coll",                 stri_count_coll,                 3),
    STRI__MK_CALL("C_stri_count_regex",                stri_count_regex,                3),
    STRI__MK_CALL("C_stri_datetime_symbols",           stri_datetime_symbols,           3),
-   STRI__MK_CALL("C_stri_datetime_fields",            stri_datetime_fields,            2),
+   STRI__MK_CALL("C_stri_datetime_fields",            stri_datetime_fields,            3),
    STRI__MK_CALL("C_stri_datetime_now",               stri_datetime_now,               0),
    STRI__MK_CALL("C_stri_datetime_create",            stri_datetime_create,            9),
    STRI__MK_CALL("C_stri_datetime_format",            stri_datetime_format,            4),
@@ -105,12 +105,12 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_extract_last_regex",         stri_extract_last_regex,         3),
    STRI__MK_CALL("C_stri_extract_all_regex",          stri_extract_all_regex,          5),
    STRI__MK_CALL("C_stri_flatten_withressep",         stri_flatten_withressep,         2),
-//   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version > 0.3
+//   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version > 0.5
    STRI__MK_CALL("C_stri_info",                       stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                    stri_isempty,                    1),
    STRI__MK_CALL("C_stri_join_withcollapse",          stri_join_withcollapse,          4),
    STRI__MK_CALL("C_stri_join2_nocollapse",           stri_join2_nocollapse,           2),
-//   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version > 0.3
+//   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version > 0.5
    STRI__MK_CALL("C_stri_length",                     stri_length,                     1),
    STRI__MK_CALL("C_stri_list2matrix",                stri_list2matrix,                4),
    STRI__MK_CALL("C_stri_locale_info",                stri_locale_info,                1),
@@ -170,7 +170,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_split_lines",                stri_split_lines,                2),
    STRI__MK_CALL("C_stri_split_lines1",               stri_split_lines1,               1),
    STRI__MK_CALL("C_stri_split_regex",                stri_split_regex,                7),
-//   STRI__MK_CALL("C_stri_split_pos",                stri_split_pos,              3), // TODO: version > 0.3
+//   STRI__MK_CALL("C_stri_split_pos",                stri_split_pos,              3), // TODO: version > 0.5
    STRI__MK_CALL("C_stri_startswith_charclass",       stri_startswith_charclass,       3),
    STRI__MK_CALL("C_stri_startswith_coll",            stri_startswith_coll,            4),
    STRI__MK_CALL("C_stri_startswith_fixed",           stri_startswith_fixed,           4),
@@ -202,8 +202,8 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_unescape_unicode",           stri_unescape_unicode,           1),
    STRI__MK_CALL("C_stri_unique",                     stri_unique,                     2),
    STRI__MK_CALL("C_stri_wrap",                       stri_wrap,                       9),
-//   STRI__MK_CALL("C_stri_trim_double",              stri_trim_double,                3), // TODO: version > 0.3
-//   STRI__MK_CALL("C_stri_width",                    stri_width,                      1), // TODO: version > 0.3
+//   STRI__MK_CALL("C_stri_trim_double",              stri_trim_double,                3), // TODO: version > 0.5
+//   STRI__MK_CALL("C_stri_width",                    stri_width,                      1), // TODO: version > 0.5
 
    // the list must be NULL-terminated:
    {NULL,                           NULL,                  0}

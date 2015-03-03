@@ -10,7 +10,7 @@ stri_datetime_add(time, value = 1L, units = "seconds", locale = NULL)
 stri_datetime_add(time, units = "seconds", locale = NULL) <- value
 }
 \arguments{
-\item{time}{a \code{POSIXct} object}
+\item{time}{an object of class \code{\link{POSIXst}} or an object coercible to}
 
 \item{value}{integer vector; signed number of units to add to a given time}
 

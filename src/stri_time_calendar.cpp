@@ -162,17 +162,22 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
  *
  * @param time
  * @param locale
- *
+ * @param tz
+ * 
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-03) tz arg added
  */
-SEXP stri_datetime_fields(SEXP time, SEXP locale) {
+SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+   if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+   else             PROTECT(tz); /* needed to set tzone attrib */
 
+   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;
-   STRI__ERROR_HANDLER_BEGIN(1)
+   STRI__ERROR_HANDLER_BEGIN(2)
    R_len_t vectorize_length = LENGTH(time);
    StriContainerDouble time_cont(time, vectorize_length);
 
@@ -180,13 +185,11 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-   /* TO DO:
-   void    adoptTimeZone (TimeZone *value)
- 	Sets the calendar's time zone to be the one passed in.
-    */
+   cal->adoptTimeZone(tz_val);
+   tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
    SEXP ret;
-#define STRI__FIELDS_NUM 9
+#define STRI__FIELDS_NUM 14
    STRI__PROTECT(ret = Rf_allocVector(VECSXP, STRI__FIELDS_NUM));
    for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j)
       SET_VECTOR_ELT(ret, j, Rf_allocVector(INTSXP, vectorize_length));
@@ -205,15 +208,20 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
       for (R_len_t j=0; j<STRI__FIELDS_NUM; ++j) {
          UCalendarDateFields units_field;
          switch (j) {
-            case 0: units_field = UCAL_EXTENDED_YEAR;          break;
-            case 1: units_field = UCAL_MONTH;                  break;
-            case 2: units_field = UCAL_WEEK_OF_YEAR;           break;
-            case 3: units_field = UCAL_DAY_OF_MONTH;           break;
-            case 4: units_field = UCAL_HOUR;                   break;
-            case 5: units_field = UCAL_HOUR_OF_DAY;            break;
-            case 6: units_field = UCAL_MINUTE;                 break;
-            case 7: units_field = UCAL_SECOND;                 break;
-            case 8: units_field = UCAL_MILLISECOND;            break;
+            case 0:  units_field = UCAL_EXTENDED_YEAR;          break;
+            case 1:  units_field = UCAL_MONTH;                  break;
+            case 2:  units_field = UCAL_DAY_OF_MONTH;           break;
+            case 3:  units_field = UCAL_HOUR_OF_DAY;            break;
+            case 4:  units_field = UCAL_MINUTE;                 break;
+            case 5:  units_field = UCAL_SECOND;                 break;
+            case 6:  units_field = UCAL_MILLISECOND;            break;
+            case 7:  units_field = UCAL_WEEK_OF_YEAR;           break;
+            case 8:  units_field = UCAL_WEEK_OF_MONTH;          break;
+            case 9:  units_field = UCAL_DAY_OF_YEAR;            break;
+            case 10: units_field = UCAL_DAY_OF_WEEK;            break;
+            case 11: units_field = UCAL_HOUR;                   break;
+            case 12: units_field = UCAL_AM_PM;                  break;
+            case 13: units_field = UCAL_ERA;                    break;
             default: throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
          }
          //UCAL_IS_LEAP_MONTH
@@ -229,17 +237,21 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
          INTEGER(VECTOR_ELT(ret, j))[i] = cal->get(units_field, status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-         if (units_field == UCAL_MONTH) ++INTEGER(VECTOR_ELT(ret, j))[i]; // month + 1
+         if (units_field == UCAL_MONTH)      ++INTEGER(VECTOR_ELT(ret, j))[i]; // month + 1
+         else if (units_field == UCAL_AM_PM) ++INTEGER(VECTOR_ELT(ret, j))[i]; // ampm + 1
+         else if (units_field == UCAL_ERA)   ++INTEGER(VECTOR_ELT(ret, j))[i]; // era + 1
       }
    }
 
    stri__set_names(ret, STRI__FIELDS_NUM,
-      "Years", "Months", "WeeksOfYear", "Days",
-      "Hours12", "Hours24", "Minutes", "Seconds", "Milliseconds");
+      "Year", "Month", "Day", "Hour", "Minute", "Second", "Millisecond",
+      "WeekOfYear", "WeekOfMonth","DayOfYear", "DayOfWeek", "Hour12", "AmPm", "Era");
+   if (tz_val) { delete tz_val; tz_val = NULL; }
    if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
+      if (tz_val) { delete tz_val; tz_val = NULL; }
       if (cal) { delete cal; cal = NULL; }
    })
 }
@@ -265,7 +277,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-03-02) tz arg added
  */
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
-   SEXP minute, SEXP second, SEXP tz, SEXP lenient, SEXP locale)
+   SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale)
 {
    PROTECT(year = stri_prepare_arg_integer(year, "year"));
    PROTECT(month = stri_prepare_arg_integer(month, "month"));

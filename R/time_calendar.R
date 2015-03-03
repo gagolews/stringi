@@ -63,8 +63,8 @@
 #'
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, tz=NULL, lenient=FALSE, locale=NULL) {
-   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, tz, lenient, locale)
+stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, lenient=FALSE, tz=NULL, locale=NULL) {
+   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient, tz, locale)
 }
 
 
@@ -90,6 +90,63 @@ stri_datetime_now <- function() {
 
 
 #' @title
+#' Get Values for Date and Time Fields
+#'
+#' @description
+#' Calculates and returns values for all date and time fields.
+#'
+#' @details
+#' Vectorized over \code{time}.
+#'
+#'
+#' @param time an object of class \code{\link{POSIXst}} or an object coercible to
+#' @param tz \code{NULL} or \code{""} for the default time zone or
+#' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
+#' @param locale \code{NULL} or \code{""} for the current default locale,
+#' or a single string with locale identifier; a non-Gregorian calendar
+#' may be specified by setting \code{@@calendar=name} keyword
+#'
+#' @return
+#' Returns a data frame with the following columns:
+#' \enumerate{
+#' \item Year (0 is 1BC, -1 is 2BC, etc.)
+#' \item Month (1-based, i.e. 1 stands for the first month, e.g. January;
+#' note that the number of months depends on the selected calendar,
+#' see \code{\link{stri_datetime_symbols}})
+#' \item Day
+#' \item Hour (24-h clock)
+#' \item Minute
+#' \item Second
+#' \item Millisecond
+#' \item WeekOfYear (this is locale-dependent)
+#' \item WeekOfMonth (this is locale-dependent)
+#' \item DayOfYear
+#' \item DayOfWeek (1-based, 1 denotes Sunday; see \code{\link{stri_datetime_symbols}})
+#' \item Hour12 (12-h clock)
+#' \item AmPm (see \code{\link{stri_datetime_symbols}})
+#' \item Era (see \code{\link{stri_datetime_symbols}})
+#' }
+#'
+#' @examples
+#' stri_datetime_fields(stri_datetime_now())
+#' stri_datetime_fields(stri_datetime_now(), locale="@@calendar=hebrew")
+#' stri_datetime_symbols(locale="@@calendar=hebrew")$Month[
+#'    stri_datetime_fields(stri_datetime_now(), locale="@@calendar=hebrew")$Month
+#' ]
+#' 
+#' @family datetime
+#' @export
+stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
+   # POSSIBLY @TODO:
+   # TimeZone
+   # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET 
+   # isDST: UBool    inDaylightTime (UErrorCode &status) const =0
+   # isWeekend: virtual UBool    isWeekend (void) const 
+   as.data.frame(.Call(C_stri_datetime_fields, time, tz, locale))
+}
+
+
+#' @title
 #' Date and Time Arithmetic
 #'
 #' @description
@@ -105,7 +162,7 @@ stri_datetime_now <- function() {
 #'
 #' Note that e.g. January, 31 + 1 month = February, 28 or 29. TO DO ...........................
 #'
-#' @param time a \code{POSIXct} object
+#' @param time an object of class \code{\link{POSIXst}} or an object coercible to
 #' @param value integer vector; signed number of units to add to a given time
 #' @param units single string; one of \code{"years"}, \code{"months"},
 #' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
@@ -151,50 +208,6 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 
 
 #' @title
-#' Get Values for Date and Time Fields
-#'
-#' @description
-#' Calculates and returns values for all date and time fields.
-#'
-#' @details
-#' Vectorized over \code{time}.
-#'
-#'
-#' @param time a \code{POSIXct} object
-#' @param locale \code{NULL} or \code{""} for default locale,
-#' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting \code{@@calendar=name} keyword
-#'
-#' @return
-#' Returns a data frame with the following columns: TO DO...................................
-#' \enumerate{
-#' \item Years - 0 is 1BC, -1 is 2BC, etc.
-#' \item Months ... months are 1-based
-#' \item Days - ...
-#' \item Hours - a single integer from 0 to 24,
-#' \item Minutes - a single integer from 0 to 59
-#' \item Seconds - a real number from 0 to 60 (fractional parts allowed)
-#' \item TimeZone - ....
-#' \item gmt offsett...
-#' \item is dst...
-#' \item week number...
-#' \item day in year... ?
-#' \item is weekend? ....
-#' \item TO DO.....
-#' }
-#'
-#' @examples
-#' stri_datetime_fields(stri_datetime_now())
-#'
-#' @family datetime
-#' @export
-stri_datetime_fields <- function(time, locale=NULL) {
-   # param tz ???????
-   as.data.frame(.Call(C_stri_datetime_fields, time, locale))
-}
-
-
-#' @title
 #' Date-Time Objects in \pkg{stringi}
 #'
 #' @description
@@ -217,7 +230,8 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' see \code{\link{format.POSIXst}}.
 #'
 #' @param x ...
-#' @param tz ...
+#' @param tz \code{NULL} or \code{""} for the default time zone or
+#' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param ... further arguments to be passed to or from other methods.
 #'
 #' @return
@@ -227,7 +241,7 @@ stri_datetime_fields <- function(time, locale=NULL) {
 #' @rdname as.POSIXst
 #' @family datetime
 #' @aliases as.POSIXst POSIXst
-as.POSIXst <- function(x, tz="", ...) {
+as.POSIXst <- function(x, tz=attr(time, "tzone"), ...) {
    # UseMethod("as.POSIXct")
    stop("TO DO")
 }
