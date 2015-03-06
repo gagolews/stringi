@@ -261,7 +261,7 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
    STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
    for (R_len_t i=0; i<vectorize_length; ++i) {
       if (str_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
+         REAL(ret)[i] = NA_REAL;
          continue;
       }
 

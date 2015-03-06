@@ -13,8 +13,7 @@ test_that("stri_datetime_fstr", {
    expect_true(stri_datetime_fstr("!%y!") == "'!'yy'!'")
    expect_true(stri_datetime_fstr("%%%y%%") == "'%'yy'%'")
    
-   expect_true(stri_datetime_fstr("%Z") == "z")
-   expect_true(stri_datetime_fstr("%z") == "Z")
+   expect_equivalent(stri_datetime_fstr(c("%Z", "%z")), c("z", "Z"))
    expect_true(stri_datetime_fstr("%Y") == "yyyy")
    expect_true(stri_datetime_fstr("%y") == "yy")
    expect_true(stri_datetime_fstr("%t") == "\t")
@@ -24,6 +23,8 @@ test_that("stri_datetime_fstr", {
    expect_true(stri_datetime_fstr("%S") == "ss")
    expect_true(stri_datetime_fstr("%H") == "HH")
    expect_true(stri_datetime_fstr("%d") == "dd")
+   expect_equivalent(stri_datetime_fstr(character(0)), character(0))
+#    expect_equivalent(stri_datetime_fstr(NA), NA_character_)
 })
 
 
@@ -44,6 +45,12 @@ test_that("stri_datetime_parse, stri_datetime_format, format.POSIXct", {
    t <- stri_datetime_parse("2015-02-25 23:53:01")
    expect_equivalent(attr(t, 'tzone'), NULL)
    expect_equivalent(format(t), "2015-02-25 23:53:01")
+   
+   expect_equivalent(unclass(stri_datetime_parse(NA)), NA_real_)
+   expect_equivalent(unclass(stri_datetime_parse(character(0))), double(0))
+   
+   expect_equivalent(unclass(stri_datetime_format(as.POSIXct(NA))), NA_character_)
+   expect_equivalent(unclass(stri_datetime_format(structure(double(0), class=c("POSIXct", "POSIXt")))), character(0))
    
    t <- stri_datetime_parse("2015-02-25 23:53:01", tz='Europe/Tallinn')
    expect_equivalent(attr(t, 'tzone'), 'Europe/Tallinn')

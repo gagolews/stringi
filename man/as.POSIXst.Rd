@@ -35,7 +35,7 @@ etc. or the \code{sort()} function may be used.
 An object of class \code{\link{POSIXst}} may be equipped with
 an attribute called \code{tzone}. Its value is used for date/time
 formatting (e.g. when objects are printed in the console),
-see \code{\link{format.POSIXst}}.
+see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
 }
 \seealso{
 Other datetime: \code{\link{format.POSIXst}},

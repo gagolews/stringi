@@ -155,21 +155,19 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #' @details
 #' Vectorized over \code{time} and \code{value}.
 #'
-#' These date-time arithmetic operations are performed under the current
-#' default time zone and locale. The \code{tzone} argument of \code{time}
-#' is ignored. TO DO......................................................................
 #'
-#'
-#' Note that e.g. January, 31 + 1 month = February, 28 or 29. TO DO ...........................
+#' Note that e.g. January, 31 + 1 month = February, 28 or 29.
 #'
 #' @param time an object of class \code{\link{POSIXst}} or an object coercible to
-#' @param value integer vector; signed number of units to add to a given time
+#' @param value integer vector; signed number of units to add to \code{time} 
 #' @param units single string; one of \code{"years"}, \code{"months"},
 #' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
 #' \code{"seconds"}, or \code{"milliseconds"}
+#' @param tz  \code{NULL} or \code{""} for the default time zone
+#' or a single string with a timezone identifier,
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting \code{@@calendar=name} keyword
+#' may be specified by setting the \code{@@calendar=name} keyword
 #'
 #' @return
 #' Both functions return an object of class \code{\link{POSIXst}}.
@@ -185,25 +183,25 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #' @examples
 #' x <- stri_datetime_now()
 #' stri_datetime_add(x, units="months") <- 2
-#' x
+#' print(x)
 #' stri_datetime_add(x, -2, units="months")
-#' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years")
-#' stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@@calendar=hebrew")
+#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years")
+#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@@calendar=hebrew")
 #'
+#' stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
+#' 
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
-stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
-   # param tz ???????
-   .Call(C_stri_datetime_add, time, value, units, locale)
+stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=NULL) {
+   .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 
 
 #' @rdname stri_datetime_add
 #' @export
-"stri_datetime_add<-" <- function(time, units="seconds", locale=NULL, value) {
-   # param tz ???????
-   .Call(C_stri_datetime_add, time, value, units, locale)
+"stri_datetime_add<-" <- function(time, units="seconds", tz=NULL, locale=NULL, value) {
+   .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 
 
@@ -227,7 +225,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", locale=NULL) {
 #' An object of class \code{\link{POSIXst}} may be equipped with
 #' an attribute called \code{tzone}. Its value is used for date/time
 #' formatting (e.g. when objects are printed in the console),
-#' see \code{\link{format.POSIXst}}.
+#' see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
 #'
 #' @param x ...
 #' @param tz \code{NULL} or \code{""} for the default time zone or

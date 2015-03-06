@@ -37,6 +37,7 @@
 #include <unicode/calendar.h>
 #include <unicode/gregocal.h>
 
+
 /** Set POSIXct class on a given object
  *
  * @param x R object
@@ -76,33 +77,32 @@ SEXP stri_datetime_now()
  * @param time
  * @param value
  * @param units
+ * @param tz
  * @param locale
  *
- * @return POSIXct
+ * @return POSIXst
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-30)
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-06) tz arg added
  */
-SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
+SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) {
    PROTECT(time = stri_prepare_arg_POSIXct(time, "time"));
    PROTECT(value = stri_prepare_arg_integer(value, "value"));
+   if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
+   else             PROTECT(tz); /* needed to set tzone attrib */
+   
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(value));
-   if (vectorize_length <= 0) {
-      SEXP ret;
-      PROTECT(ret = Rf_allocVector(REALSXP, 0));
-      Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
-      stri__set_class_POSIXct(ret);
-      UNPROTECT(3);
-      return ret;
-   }
 
    const char* units_val = stri__prepare_arg_string_1_notNA(units, "units");
    const char* units_opts[] = {"years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds", NULL};
    int units_cur = stri__match_arg(units_val, units_opts);
 
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
+   
+   TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
 
    Calendar* cal = NULL;
-   STRI__ERROR_HANDLER_BEGIN(2)
+   STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerDouble time_cont(time, vectorize_length);
    StriContainerInteger value_cont(value, vectorize_length);
 
@@ -119,11 +119,12 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
       default: throw StriException(MSG__INCORRECT_MATCH_OPTION, "units");
    }
 
-   // Question: consider tzone?
-
    UErrorCode status = U_ZERO_ERROR;
    cal = Calendar::createInstance(locale_val, status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+   cal->adoptTimeZone(tz_val);
+   tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(REALSXP, vectorize_length));
@@ -146,12 +147,14 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP locale) {
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 
-   Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), Rf_getAttrib(time, Rf_ScalarString(Rf_mkChar("tzone"))));
+   if (!isNull(tz)) Rf_setAttrib(ret, Rf_ScalarString(Rf_mkChar("tzone")), tz);
    stri__set_class_POSIXct(ret);
+   if (tz_val) { delete tz_val; tz_val = NULL; }
    if (cal) { delete cal; cal = NULL; }
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END({
+      if (tz_val) { delete tz_val; tz_val = NULL; }
       if (cal) { delete cal; cal = NULL; }
    })
 }
@@ -293,15 +296,6 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    R_len_t vectorize_length = stri__recycling_rule(true, 6,
       LENGTH(year), LENGTH(month), LENGTH(day),
       LENGTH(hour), LENGTH(minute), LENGTH(second));
-
-   if (vectorize_length <= 0) {
-      SEXP ret;
-      PROTECT(ret = Rf_allocVector(REALSXP, 0));
-      // TO DO: tz
-      stri__set_class_POSIXct(ret);
-      UNPROTECT(7);
-      return ret;
-   }
 
    TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
    Calendar* cal = NULL;

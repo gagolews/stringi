@@ -191,13 +191,13 @@
 #' @param x,time an object of class \code{\link{POSIXst}} or an object coercible to
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
-#' @param tz  \code{NULL} or \code{""} for tbe default time zone
+#' @param tz  \code{NULL} or \code{""} for the default time zone
 #' or a single string with a timezone identifier,
 #' see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should date/time parsing be lenient?
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
-#' may be specified by setting \code{@@calendar=name} keyword
+#' may be specified by setting the \code{@@calendar=name} keyword
 #' @param usetz single logical value; should the time zone be appended
 #' to the output?
 #' @param ... Further arguments to be passed from or to other methods.
