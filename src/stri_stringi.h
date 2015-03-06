@@ -336,7 +336,7 @@ SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 
 SEXP stri_datetime_now();
 void stri__set_class_POSIXct(SEXP x);
-SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP locale);
+SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP tz, SEXP locale);
 SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale);
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale);

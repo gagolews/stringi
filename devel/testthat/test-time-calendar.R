@@ -13,6 +13,9 @@ test_that("stri_datetime_now", {
 
 test_that("stri_datetime_create", {
    
+   expect_equivalent(unclass(stri_datetime_create(NA, 1, 1)), NA_real_)
+   expect_equivalent(unclass(stri_datetime_create(NA, 1:1000, integer(0))), double(0))
+   
    x <- stri_datetime_create(2010:2015, 01, 01)
    expect_equivalent(length(x), 6)
    expect_equivalent(attr(x, 'tzone'), NULL)
@@ -47,23 +50,32 @@ test_that("stri_datetime_add", {
    expect_true(is(stri_datetime_add(x, 1, "seconds"), "POSIXst"))
    expect_true(is(stri_datetime_add(x, 1, "seconds"), "POSIXct"))
    expect_true(is(stri_datetime_add(x, 1, "seconds"), "POSIXt"))
-   attr(x, "tzone") <- "Europe/Warsaw"
-   expect_equal(attr(stri_datetime_add(x, 1, "seconds"), "tzone"), "Europe/Warsaw")
+   expect_equal(attr(stri_datetime_add(x, 1, "seconds", tz="Europe/Warsaw"), "tzone"), "Europe/Warsaw")
+   
+   xold <- x
+   stri_datetime_add(x, "seconds") <- 1
+   expect_equivalent(as.numeric(x), as.numeric(xold)+1)
+   
+   stri_datetime_add(x, "seconds") <- (-5):5
+   expect_equivalent(as.numeric(x), as.numeric(xold)+(-4:6))
 
-   expect_equivalent(unclass(stri_datetime_add(x, numeric(0), "seconds")), numeric(0))
+   expect_equivalent(unclass(stri_datetime_add(stri_datetime_now(), numeric(0), "seconds")), numeric(0))
    expect_equivalent(unclass(stri_datetime_add(structure(numeric(0), class=c("POSIXct", "POSIXt")), 1, "seconds")), numeric(0))
-   expect_equivalent(unclass(stri_datetime_add(x, NA, "seconds")), NA_real_)
+   expect_equivalent(unclass(stri_datetime_add(stri_datetime_now(), NA, "seconds")), NA_real_)
    expect_equivalent(unclass(stri_datetime_add(structure(NA_real_, class=c("POSIXct", "POSIXt")), 1, "seconds")), NA_real_)
 
-   # convert from date...
-
-   # convert from POSIXlt...
-
-   # to do....
+   expect_equivalent(stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months", locale='en_US'),
+      stri_datetime_create(2016, 2, 29))
+   expect_equivalent(stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale='@calendar=hebrew'),
+      stri_datetime_create(2015, 4, 9))
 })
 
 
 test_that("stri_datetime_fields", {
+   
+   expect_true(nrow(stri_datetime_fields(structure(double(0), class=c("POSIXTst", "POSIXct", "POSIXt")))) == 0)
+   expect_true(all(is.na(as.integer(stri_datetime_fields(structure(NA_real_, class=c("POSIXTst", "POSIXct", "POSIXt")))))))
+   
    x <- stri_datetime_fields(stri_datetime_create(2015,1,2,13,14,15.5))
    expect_equivalent(x$Year, 2015)
    expect_equivalent(x$Month, 1)

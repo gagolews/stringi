@@ -59,7 +59,8 @@ TO BE DONE:
                from numeric representations
         * `stri_datetime_now()` - return current date-time
         * `stri_datetime_fields()` - get values for date-time fields
-        * `stri_datetime_add()` - ...
+        * `stri_datetime_add()` - add specific number of date-time units
+               to a date-time object
 
 -------------------------------------------------------------------------------
 

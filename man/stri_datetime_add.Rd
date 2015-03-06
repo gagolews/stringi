@@ -5,22 +5,27 @@
 \alias{stri_datetime_add<-}
 \title{Date and Time Arithmetic}
 \usage{
-stri_datetime_add(time, value = 1L, units = "seconds", locale = NULL)
+stri_datetime_add(time, value = 1L, units = "seconds", tz = NULL,
+  locale = NULL)
 
-stri_datetime_add(time, units = "seconds", locale = NULL) <- value
+stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <-
+  value
 }
 \arguments{
 \item{time}{an object of class \code{\link{POSIXst}} or an object coercible to}
 
-\item{value}{integer vector; signed number of units to add to a given time}
+\item{value}{integer vector; signed number of units to add to \code{time}}
 
 \item{units}{single string; one of \code{"years"}, \code{"months"},
 \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
 \code{"seconds"}, or \code{"milliseconds"}}
 
+\item{tz}{\code{NULL} or \code{""} for the default time zone
+or a single string with a timezone identifier,}
+
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
-may be specified by setting \code{@calendar=name} keyword}
+may be specified by setting the \code{@calendar=name} keyword}
 }
 \value{
 Both functions return an object of class \code{\link{POSIXst}}.
@@ -34,20 +39,18 @@ Modifies a date-time object by adding a specific amount of time units.
 \details{
 Vectorized over \code{time} and \code{value}.
 
-These date-time arithmetic operations are performed under the current
-default time zone and locale. The \code{tzone} argument of \code{time}
-is ignored. TO DO......................................................................
 
-
-Note that e.g. January, 31 + 1 month = February, 28 or 29. TO DO ...........................
+Note that e.g. January, 31 + 1 month = February, 28 or 29.
 }
 \examples{
 x <- stri_datetime_now()
 stri_datetime_add(x, units="months") <- 2
-x
+print(x)
 stri_datetime_add(x, -2, units="months")
-stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years")
-stri_datetime_add(as.POSIXct("2014-04-20 12:00:00"), 1, units="years", locale="@calendar=hebrew")
+stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years")
+stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@calendar=hebrew")
+
+stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
 }
 \references{
 \emph{Calendar Classes} - ICU User Guide,

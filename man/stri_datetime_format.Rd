@@ -18,13 +18,13 @@ stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE,
 \arguments{
 \item{format}{single string, see Details; see also \code{\link{stri_datetime_fstr}}}
 
-\item{tz}{\code{NULL} or \code{""} for tbe default time zone
+\item{tz}{\code{NULL} or \code{""} for the default time zone
 or a single string with a timezone identifier,
 see \code{\link{stri_timezone_list}}}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
-may be specified by setting \code{@calendar=name} keyword}
+may be specified by setting the \code{@calendar=name} keyword}
 
 \item{x,time}{an object of class \code{\link{POSIXst}} or an object coercible to}
 
