@@ -92,3 +92,12 @@ test_that("stri_datetime_fields", {
    expect_equivalent(x$Hour, 19)
    
 })
+
+
+test_that("c.POSIXst", {
+   
+   expect_true(length(c(x1, c(x2, x1), as.POSIXlt(x1), as.POSIXct(x2), as.POSIXct(NA))) == 6)
+   expect_true(is(c(x1, c(x2, x1), as.POSIXlt(x1), as.POSIXct(x2)), "POSIXst"))
+   
+})
+
