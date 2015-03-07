@@ -3,9 +3,12 @@
 \name{as.POSIXst}
 \alias{POSIXst}
 \alias{as.POSIXst}
+\alias{c.POSIXst}
 \title{Date-Time Objects in \pkg{stringi}}
 \usage{
 as.POSIXst(x, tz = attr(time, "tzone"), ...)
+
+\method{c}{POSIXst}(..., recursive = FALSE)
 }
 \arguments{
 \item{x}{...}

@@ -350,3 +350,37 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
       if (cal) { delete cal; cal = NULL; }
    })
 }
+
+
+/** 
+ * @param x list
+ * @return POSIXst
+ * 
+ * @version 0.5-1 (Marek Gagolewski, 2015-03-07)
+ */
+SEXP stri_c_posixst(SEXP x) {
+   if (!Rf_isVectorList(x)) Rf_error(MSG__INTERNAL_ERROR);
+   if (NAMED(x) != 0)  Rf_error(MSG__INTERNAL_ERROR);
+   R_len_t n = LENGTH(x);
+   R_len_t m = 0;
+   for (R_len_t i=0; i<n; ++i) {
+      SET_VECTOR_ELT(x, i, stri_prepare_arg_POSIXct(VECTOR_ELT(x, i), "..."));
+      m += LENGTH(VECTOR_ELT(x, i));
+   }
+   SEXP ret;
+   PROTECT(ret = Rf_allocVector(REALSXP, m));
+   double* ret_val = REAL(ret);
+   R_len_t k = 0;
+   for (R_len_t i=0; i<n; ++i) {
+      R_len_t ni = LENGTH(VECTOR_ELT(x, i));
+      double* xi_val = REAL(VECTOR_ELT(x, i));
+      for (R_len_t j=0; j<ni; ++j)
+         ret_val[k++] = xi_val[j];
+   }
+   
+   // @TODO: tz?
+   stri__set_class_POSIXct(ret);
+   UNPROTECT(1);
+   return ret;
+}
+

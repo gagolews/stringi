@@ -50,7 +50,8 @@ sapply(c("short", "long", "generic_short", "generic_long",
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
+  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
+  \code{\link{format.POSIXst}},
   \code{\link{stri_datetime_format}},
   \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_add}},

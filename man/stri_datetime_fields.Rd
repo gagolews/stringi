@@ -52,7 +52,8 @@ stri_datetime_symbols(locale="@calendar=hebrew")$Month[
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}; \code{\link{format.POSIXst}},
+  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
+  \code{\link{format.POSIXst}},
   \code{\link{stri_datetime_format}},
   \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_add}},

@@ -244,4 +244,12 @@ as.POSIXst <- function(x, tz=attr(time, "tzone"), ...) {
    stop("TO DO")
 }
 
+
+#' @export
+#' @rdname as.POSIXst
+c.POSIXst <- function (..., recursive=FALSE) {
+   stopifnot(identical(recursive, FALSE))
+   .Call(C_stri_c_posixst, list(...))
+}
+
 # TO DO: field difference

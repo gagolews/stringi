@@ -334,6 +334,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type);
 
 SEXP stri_datetime_symbols(SEXP locale, SEXP context, SEXP width);
 
+SEXP stri_c_posixst(SEXP x);
 SEXP stri_datetime_now();
 void stri__set_class_POSIXct(SEXP x);
 SEXP stri_datetime_add(SEXP time, SEXP delta, SEXP units, SEXP tz, SEXP locale);

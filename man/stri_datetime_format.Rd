@@ -209,7 +209,7 @@ stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 }
 \seealso{
 Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}};
+  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
   \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
