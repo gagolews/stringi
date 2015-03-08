@@ -277,7 +277,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 }
 
 
-/** 
+/**
  * POSIXt
  *
  * If the object cannot be coerced, then an error will be generated
@@ -878,7 +878,7 @@ const char* stri__prepare_arg_locale(SEXP loc, const char* argname, bool allowde
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault)
 {
    UnicodeString tz_val("");
-   
+
    if (!isNull(tz)) {
       PROTECT(tz = stri_prepare_arg_string_1(tz, argname));
       if (STRING_ELT(tz, 0) == NA_STRING) {
@@ -898,7 +898,7 @@ TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdef
 //      tz_val.setTo(UnicodeString((const char*)CHAR(STRING_ELT(defaulttz, 0))));
 //      UNPROTECT(1);
 //   }
-   
+
    if (tz_val.length() == 0) {
       if (!allowdefault) Rf_error(MSG__TIMEZONE_INCORRECT_ID);
       return TimeZone::createDefault();

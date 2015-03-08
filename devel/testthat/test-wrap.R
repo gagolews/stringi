@@ -13,7 +13,7 @@ test_that("stri_wrap", {
    expect_identical(stri_wrap("a b c", -100), c("a", "b", "c"))
    expect_identical(stri_wrap("test-all", 0), c("test-", "all"))
    expect_identical(stri_wrap("test-all", 0, whitespace_only = TRUE), c("test-all"))
-   
+
    expect_identical(stri_wrap("test      all", 0), c("test", "all"))
    expect_identical(stri_wrap("test      all", 0, normalize=FALSE), c("test     ", "all"))
 

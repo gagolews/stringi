@@ -93,11 +93,11 @@
 #' stri_timezone_list(offset=5.75)
 #' stri_timezone_list(region="PL")
 #' stri_timezone_list(region="US", offset=-10)
-#' 
+#'
 #' # Fetch info on all time zones
-#' do.call(rbind.data.frame, 
+#' do.call(rbind.data.frame,
 #'    lapply(stri_timezone_list(), function(tz) stri_timezone_info(tz)))
-#' 
+#'
 #' @family datetime
 #' @family timezone
 #' @export
@@ -200,10 +200,10 @@ stri_timezone_set <- function(tz) {
 #' @examples
 #' stri_timezone_info()
 #' stri_timezone_info(locale="sk_SK")
-#' sapply(c("short", "long", "generic_short", "generic_long", 
+#' sapply(c("short", "long", "generic_short", "generic_long",
 #'          "gmt_short", "gmt_long", "common", "generic_location"),
 #'   function(e) stri_timezone_info("Europe/London", display_type=e))
-#' 
+#'
 #' @family datetime
 #' @family timezone
 #' @export

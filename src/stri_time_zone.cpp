@@ -81,7 +81,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
-   
+
 //   SEXP nam;
 //   STRI__PROTECT(nam = Rf_allocVector(STRSXP, n));
 
@@ -92,7 +92,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
       const char* cur = tz_enum->next(&len, status);
       STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(cur, len, CE_UTF8));
-      
+
 //      TimeZone* curtz = TimeZone::createTimeZone(UnicodeString::fromUTF8(cur));
 //      UnicodeString curdn;
 //      curtz->getDisplayName(locale, curdn);
@@ -101,7 +101,7 @@ SEXP stri_timezone_list(SEXP region, SEXP offset)
 //      curdn.toUTF8String(out);
 //      SET_STRING_ELT(nam, i, Rf_mkCharCE(out.c_str(), CE_UTF8));
    }
-   
+
 //   Rf_setAttrib(ret, R_NamesSymbol, nam);
 
    if (tz_enum) { delete tz_enum; tz_enum = NULL; }
@@ -159,7 +159,7 @@ SEXP stri_timezone_set(SEXP tz) {
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-24)
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
  *    new out: WindowsID, NameDaylight, new in: display_type
  */
@@ -172,7 +172,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
       "common", "generic_location",
       NULL};
    int dtype_cur = stri__match_arg(dtype_str, dtype_opts);
-   
+
    TimeZone::EDisplayType dtype;
    switch (dtype_cur) {
       case 0:  dtype = TimeZone::SHORT; break;
@@ -194,7 +194,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
       SET_VECTOR_ELT(vals, i, R_NilValue);
 
    R_len_t curidx = -1;
-   
+
    ++curidx;
    UnicodeString val_ID;
    curtz->getID(val_ID);
@@ -204,7 +204,7 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
    UnicodeString val_name;
    curtz->getDisplayName(false, dtype, Locale::createFromName(qloc), val_name);
    SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_name));
-   
+
    ++curidx;
    if ((bool)curtz->useDaylightTime()) {
       UnicodeString val_name2;
@@ -218,14 +218,14 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
    UnicodeString val_windows;
    UErrorCode status = U_ZERO_ERROR;
    TimeZone::getWindowsID(val_ID, val_windows, status);
-   if (U_SUCCESS(status) && val_windows.length() > 0) 
+   if (U_SUCCESS(status) && val_windows.length() > 0)
       SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_windows));
    else
       SET_VECTOR_ELT(vals, curidx, Rf_ScalarString(NA_STRING));
-      
+
    ++curidx;
    SET_VECTOR_ELT(vals, curidx, Rf_ScalarReal(curtz->getRawOffset()/1000.0/3600.0));
-   
+
    ++curidx;
    SET_VECTOR_ELT(vals, curidx, Rf_ScalarLogical((bool)curtz->useDaylightTime()));
 

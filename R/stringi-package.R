@@ -85,7 +85,7 @@
 #' particular character classes, like ``all whitespaces'' or ``all digits'';
 #' \item \link{stringi-search-boundaries} -- text boundary analysis.
 #' }
-#' 
+#'
 #' \item \code{\link{stri_datetime_format}} for date/time formatting
 #' and parsing. Also refer to the links therein for other date/time/time zone-
 #' related operations.

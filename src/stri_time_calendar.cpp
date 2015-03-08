@@ -90,7 +90,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
    PROTECT(value = stri_prepare_arg_integer(value, "value"));
    if (!isNull(tz)) PROTECT(tz = stri_prepare_arg_string_1(tz, "tz"));
    else             PROTECT(tz); /* needed to set tzone attrib */
-   
+
    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(time), LENGTH(value));
 
    const char* units_val = stri__prepare_arg_string_1_notNA(units, "units");
@@ -98,7 +98,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
    int units_cur = stri__match_arg(units_val, units_opts);
 
    const char* locale_val = stri__prepare_arg_locale(locale, "locale", true);
-   
+
    TimeZone* tz_val = stri__prepare_arg_timezone(tz, "tz", true/*allowdefault*/);
 
    Calendar* cal = NULL;
@@ -166,7 +166,7 @@ SEXP stri_datetime_add(SEXP time, SEXP value, SEXP units, SEXP tz, SEXP locale) 
  * @param time
  * @param locale
  * @param tz
- * 
+ *
  * @return list
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
@@ -312,7 +312,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
    cal->setLenient(lenient_val);
-   
+
    cal->adoptTimeZone(tz_val);
    tz_val = NULL; /* The Calendar takes ownership of the TimeZone. */
 
@@ -352,10 +352,10 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
 }
 
 
-/** 
+/**
  * @param x list
  * @return POSIXst
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-07)
  */
 SEXP stri_c_posixst(SEXP x) {
@@ -377,10 +377,9 @@ SEXP stri_c_posixst(SEXP x) {
       for (R_len_t j=0; j<ni; ++j)
          ret_val[k++] = xi_val[j];
    }
-   
+
    // @TODO: tz?
    stri__set_class_POSIXct(ret);
    UNPROTECT(1);
    return ret;
 }
-

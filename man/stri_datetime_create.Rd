@@ -8,17 +8,17 @@ stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
   second = 0, lenient = FALSE, tz = NULL, locale = NULL)
 }
 \arguments{
-\item{year}{iteger vector; 0 is 1BC, -1 is 2BC, etc.}
+\item{year}{integer vector; 0 is 1BC, -1 is 2BC, etc.}
 
-\item{month}{iteger vector; months are 1-based}
+\item{month}{integer vector; months are 1-based}
 
-\item{day}{iteger vector}
+\item{day}{integer vector}
 
-\item{hour}{iteger vector}
+\item{hour}{integer vector}
 
-\item{minute}{iteger vector}
+\item{minute}{integer vector}
 
-\item{second}{numeric vetor; fractional seconds are allowed}
+\item{second}{numeric vector; fractional seconds are allowed}
 
 \item{lenient}{single logical value; should the operation be lenient?}
 

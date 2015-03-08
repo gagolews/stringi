@@ -42,7 +42,7 @@
  * @param ... variable number of C strings
  *
  * @version 0.1-?? (Marek Gagolewski)
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
  *    assume UTF-8
 */
@@ -70,7 +70,7 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
  * @return character vector
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-03-01)
  *     assume UTF-8
 */

@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Vectorized over \code{time} or \code{str}.
-#' 
+#'
 #' By default, \code{stri_datetime_format} (unlike \code{format.POSIXst})
 #' formats a date/time object using the current default time zone.
 #' This is for the sake of compatibility with the \code{\link{strftime}} function.
@@ -184,7 +184,7 @@
 #' h:mm a \tab 11:59 PM \cr
 #' hh 'o''clock' a, zzzz \tab 11 o'clock PM, GMT+01:00 \cr
 #' K:mm a, z \tab 11:59 PM, GMT+1 \cr
-#' yyyyy.MMMM.dd GGG hh:mm aaa \tab 02015.grudnia.31 n.e. 11:59 PM \cr
+#' yyyyy.MMMM.dd GGG hh:mm aaa \tab 2015.grudnia.31 n.e. 11:59 PM \cr
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
@@ -241,41 +241,40 @@ stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE
 }
 
 
-
-#' @title 
+#' @title
 #' Convert \code{strptime}-style Format Strings
-#' 
+#'
 #' @description
 #' A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style
 #' format strings to \pkg{ICU} format strings that may be used
 #' in \code{\link{stri_datetime_parse}} and \code{\link{stri_datetime_format}}
 #' functions.
-#' 
+#'
 #' @details
 #' For more details on conversion specifiers please refer to
 #' the manual page of \code{\link{strptime}}. Most of the formatters
 #' of the form \code{\%x}, where \code{x} is a letter, are supported.
 #' Moreover, each \code{\%\%} is replaced with \code{\%}.
-#' 
+#'
 #' Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w},
 #' \code{\%g}, \code{\%G}, \code{\%c}, \code{\%U} and \code{\%W}
 #' as in such circumstances either \pkg{ICU} does not
 #' support requested functionality using format-strings API
 #' or there are some inconsistencies between base R and \pkg{ICU}.
-#' 
+#'
 #' @param x character vector consisting of date/time format strings
 #' @return Returns a character vector.
-#' 
+#'
 #' @examples
 #' stri_datetime_fstr("%Y-%m-%d %H:%M:%S")
-#' 
+#'
 #' @family datetime
 #' @export
 stri_datetime_fstr <- function(x) {
    # %U, %W -> %V + warn
    # %x, %X -> warn
    # %u, %w -> warn
-   
+
    # problematic entities:
    warn <- c('%U', '%V', '%x', '%X', '%u', '%w', '%r', '%g', '%G', '%c')
    search <- c('%U', '%W', '%g', '%G')
@@ -283,25 +282,25 @@ stri_datetime_fstr <- function(x) {
 
    search <- c(search, '%a',  '%A',   '%b',  '%B')
    needle <- c(needle, 'ccc', 'cccc', 'LLL', 'LLLL')
-   
+
    search <- c(search, '%c',                       '%d', '%D')
    needle <- c(needle, 'eee LLL d HH:mm:ss yyyy',  'dd', 'MM/dd/yy')
 
    search <- c(search, '%e', '%F',          '%h',  '%H')
    needle <- c(needle, 'd',  'yyyy-MM-dd',  'MMM', 'HH')
-   
+
    search <- c(search, '%I', '%j', '%m', '%M', '%n', '%p')
    needle <- c(needle, 'hh', 'D',  'MM', 'mm', '\n', 'a')
-   
+
    search <- c(search, '%r',       '%R',    '%S', '%t', '%T',       '%u')
    needle <- c(needle, 'hh:mm:ss', 'HH:mm', 'ss', '\t', 'HH:mm:ss', 'c')
-   
+
    search <- c(search, '%V', '%w', '%x',       '%X',       "%y", "%Y",   "%z", "%Z")
    needle <- c(needle, 'ww', 'c',  'yy/MM/dd', 'HH:mm:ss', "yy", "yyyy", "Z",  "z")
-   
+
    x <- stri_replace_all_fixed(x, "'", "\\'")
    x <- stri_replace_all_fixed(x, "%%", "%!") # well, that's not very elegant...
-   x <- stri_replace_all_regex(x, 
+   x <- stri_replace_all_regex(x,
       "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
       "'$1'")
    if (any(stri_detect_regex(x, stri_flatten(warn, collapse="|"))))
@@ -315,7 +314,6 @@ stri_datetime_fstr <- function(x) {
    x <- stri_replace_all_fixed(x, "%!", "%") # well, that's not very elegant...
    x
 }
-
 
 
 # ?DateTimeClasses
