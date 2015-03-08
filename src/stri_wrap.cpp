@@ -227,7 +227,7 @@ struct StriWrapLineStart {
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-19)
  *    #133 allow width <= 0
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-28)
  *    don't trim so many white spaces at the end of each word (normalize arg does that)
  *    #139: allow a "whitespace" break iterator
@@ -312,7 +312,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       deque< R_len_t > occurrences_list; // this could be an R_len_t queue
       R_len_t match = briter->first();
       while (match != BreakIterator::DONE) {
-         
+
          if (!whitespace_only_val)
             occurrences_list.push_back(match);
          else {
@@ -325,7 +325,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
             else
                occurrences_list.push_back(match);
          }
-         
+
          match = briter->next();
       }
 

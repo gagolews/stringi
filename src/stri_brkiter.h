@@ -216,7 +216,7 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
                throw StriException(MSG__INTERNAL_ERROR);
          }
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         
+
 //         UnicodeString s = rbiterator->getRules();
 //         std::string s2;
 //         s.toUTF8String(s2);

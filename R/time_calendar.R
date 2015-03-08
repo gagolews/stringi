@@ -39,12 +39,12 @@
 #' Vectorized over \code{year}, \code{month}, \code{hour},
 #' \code{hour}, \code{minute}, and \code{second}.
 #'
-#' @param year iteger vector; 0 is 1BC, -1 is 2BC, etc.
-#' @param month iteger vector; months are 1-based
-#' @param day iteger vector
-#' @param hour iteger vector
-#' @param minute iteger vector
-#' @param second numeric vetor; fractional seconds are allowed
+#' @param year integer vector; 0 is 1BC, -1 is 2BC, etc.
+#' @param month integer vector; months are 1-based
+#' @param day integer vector
+#' @param hour integer vector
+#' @param minute integer vector
+#' @param second numeric vector; fractional seconds are allowed
 #' @param tz \code{NULL} or \code{""} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should the operation be lenient?
@@ -133,15 +133,15 @@ stri_datetime_now <- function() {
 #' stri_datetime_symbols(locale="@@calendar=hebrew")$Month[
 #'    stri_datetime_fields(stri_datetime_now(), locale="@@calendar=hebrew")$Month
 #' ]
-#' 
+#'
 #' @family datetime
 #' @export
 stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
    # POSSIBLY @TODO:
    # TimeZone
-   # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET 
+   # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET
    # isDST: UBool    inDaylightTime (UErrorCode &status) const =0
-   # isWeekend: virtual UBool    isWeekend (void) const 
+   # isWeekend: virtual UBool    isWeekend (void) const
    as.data.frame(.Call(C_stri_datetime_fields, time, tz, locale))
 }
 
@@ -159,7 +159,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #' Note that e.g. January, 31 + 1 month = February, 28 or 29.
 #'
 #' @param time an object of class \code{\link{POSIXst}} or an object coercible to
-#' @param value integer vector; signed number of units to add to \code{time} 
+#' @param value integer vector; signed number of units to add to \code{time}
 #' @param units single string; one of \code{"years"}, \code{"months"},
 #' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
 #' \code{"seconds"}, or \code{"milliseconds"}
@@ -189,7 +189,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@@calendar=hebrew")
 #'
 #' stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
-#' 
+#'
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
@@ -221,7 +221,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 #'
 #' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
 #' etc. or the \code{sort()} function may be used.
-#' 
+#'
 #' An object of class \code{\link{POSIXst}} may be equipped with
 #' an attribute called \code{tzone}. Its value is used for date/time
 #' formatting (e.g. when objects are printed in the console),

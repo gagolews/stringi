@@ -50,7 +50,7 @@
  * @return character vector
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-01-05)
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-22)
  *    use tz
  */
@@ -96,7 +96,7 @@ SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale) {
       /* ICU 54.1: Relative time styles are not currently supported.  */
       switch (format_cur / 8) {
          case 0:
-            fmt = DateFormat::createDateInstance(style, 
+            fmt = DateFormat::createDateInstance(style,
                Locale::createFromName(locale_val));
             break;
 
@@ -228,13 +228,13 @@ SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP loca
             break;
 
          case 1:
-            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative), 
+            fmt = DateFormat::createTimeInstance((DateFormat::EStyle)(style & ~DateFormat::kRelative),
                Locale::createFromName(locale_val));
             break;
 
          case 2:
-            fmt = DateFormat::createDateTimeInstance(style, 
-               (DateFormat::EStyle)(style & ~DateFormat::kRelative), 
+            fmt = DateFormat::createDateTimeInstance(style,
+               (DateFormat::EStyle)(style & ~DateFormat::kRelative),
                Locale::createFromName(locale_val));
             break;
 

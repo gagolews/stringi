@@ -46,12 +46,12 @@
  *    code taken from StriContainerByteSearch
  */
 class StriByteSearchMatcher {
-   
+
    private:
-   
+
       StriByteSearchMatcher(const StriByteSearchMatcher&); /* no copy-able */
       StriByteSearchMatcher& operator=(const StriByteSearchMatcher&);
-   
+
    protected:
 
       bool m_optOverlap;
@@ -137,9 +137,9 @@ class StriByteSearchMatcher {
 };
 
 class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
-   
+
    private:
-   
+
       StriByteSearchMatcherKMP(const StriByteSearchMatcherKMP&); /* no copy-able */
       StriByteSearchMatcherKMP& operator=(const StriByteSearchMatcherKMP&);
 
@@ -244,9 +244,9 @@ class StriByteSearchMatcherKMP : public StriByteSearchMatcher {
 };
 
 class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
-   
+
    private:
-   
+
       StriByteSearchMatcherKMPci(const StriByteSearchMatcherKMPci&); /* no copy-able */
       StriByteSearchMatcherKMPci& operator=(const StriByteSearchMatcherKMPci&);
 
@@ -384,9 +384,9 @@ class StriByteSearchMatcherKMPci : public StriByteSearchMatcher {
 
 
 class StriByteSearchMatcher1 : public StriByteSearchMatcher {
-   
+
    private:
-   
+
       StriByteSearchMatcher1(const StriByteSearchMatcher1&); /* no copy-able */
       StriByteSearchMatcher1& operator=(const StriByteSearchMatcher1&);
 
@@ -465,9 +465,9 @@ class StriByteSearchMatcher1 : public StriByteSearchMatcher {
 
 
 class StriByteSearchMatcherShort : public StriByteSearchMatcher {
-   
+
    private:
-   
+
       StriByteSearchMatcherShort(const StriByteSearchMatcherShort&); /* no copy-able */
       StriByteSearchMatcherShort& operator=(const StriByteSearchMatcherShort&);
 

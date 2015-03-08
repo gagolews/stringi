@@ -193,7 +193,7 @@ EEE, MMM d, ''yy \tab czw., gru 31, '15 \cr
 h:mm a \tab 11:59 PM \cr
 hh 'o''clock' a, zzzz \tab 11 o'clock PM, GMT+01:00 \cr
 K:mm a, z \tab 11:59 PM, GMT+1 \cr
-yyyyy.MMMM.dd GGG hh:mm aaa \tab 02015.grudnia.31 n.e. 11:59 PM \cr
+yyyyy.MMMM.dd GGG hh:mm aaa \tab 2015.grudnia.31 n.e. 11:59 PM \cr
 uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 }
 }

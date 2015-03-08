@@ -723,7 +723,7 @@ struct Converter8bit {
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-11-13)
  *          allow qloc==NULL in 8bit check
- * 
+ *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-24)
  *          #146 warnings removed
  */
