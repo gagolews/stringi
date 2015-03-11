@@ -142,7 +142,7 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
          }
          else {
             # download icudt
-            if (download.file(paste0(href, fname), outfname, mode="wb") != 0)
+            if (download.file(paste(href, fname, sep=""), outfname, mode="wb") != 0)
                return("download error")
          }
          if (!file.exists(outfname)) return("download error")
