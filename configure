@@ -2331,11 +2331,11 @@ CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 if test "$enable_cxx11" == "yes"; then
    CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_HOME}/bin/R\" CMD config CXX1XSTD`"
    CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX1XFLAGS`
-   STRINGI_CXXSTD=CXX11
+   STRINGI_CXXSTD="CXX_STD=CXX11"
 else
    CXX=`"${R_PATH}" CMD config CXX`
    CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
-   STRINGI_CXXSTD=CXX98
+   STRINGI_CXXSTD=""
 fi
 
 CFLAGS="${CFLAGS} ${with_extra_cflags}"
