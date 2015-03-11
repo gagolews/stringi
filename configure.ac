@@ -19,6 +19,15 @@ AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU d
                        may be copied; either an absolute path or a path relative to <package source dir>/src;
                        defaults to icu52/data.])
 
+AC_ARG_ENABLE([cxx11],
+    AS_HELP_STRING([--disable-cxx11],
+      [Disable use of C++11. If you build ICU4C from source, make sure your C++ compiler supports the long long type.]))
+if test "x$enable_cxx11" != "xno"; then
+   enable_cxx11="yes"
+else
+   enable_cxx11="no"
+fi
+
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
       [Disable pkg-config usage for finding ICU4C-devel; in such a case ICU4C will be compiled from sources.]))
@@ -124,12 +133,20 @@ if test "$enable_gcc_pedantic" == "yes"; then
 fi
 
 CC=`"${R_PATH}" CMD config CC`
-CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+
+if test "$enable_cxx11" == "yes"; then
+   CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_HOME}/bin/R\" CMD config CXX1XSTD`"
+   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX1XFLAGS`
+   STRINGI_CXXSTD=CXX11
+else
+   CXX=`"${R_PATH}" CMD config CXX`
+   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+   STRINGI_CXXSTD=CXX98
+fi
 
 CFLAGS="${CFLAGS} ${with_extra_cflags}"
 CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
@@ -419,7 +436,11 @@ detect_icu_with_pkg_config() {
 ICU_FOUND=0
 
 if test $ICU_FOUND = 0; then
+   OLD_CPPFLAGS=$CPPFLAGS
+   OLD_LDFLAGS=$LDFLAGS
    detect_icu_with_pkg_config
+   CPPFLAGS=$OLD_CPPFLAGS
+   LDFLAGS=$OLD_LDFLAGS
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
@@ -464,14 +485,15 @@ else
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
 fi
-AC_SUBST(STRINGI_OBJECTS)
 
 STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
 STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
 STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
 
+AC_SUBST(STRINGI_OBJECTS)
 
+AC_SUBST(STRINGI_CXXSTD)
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
 AC_SUBST(STRINGI_CFLAGS)
@@ -485,3 +507,23 @@ AC_CONFIG_FILES([src/icu52_found.txt])
 AC_SUBST(ICUDT_DIR)
 AC_CONFIG_FILES([src/install.libs.R])
 AC_OUTPUT
+
+echo ""
+echo "*** stringi configure summary:"
+echo "    ICU_FOUND=${ICU_FOUND}"
+echo "    ICUDT_DIR=${ICUDT_DIR}"
+echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
+echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
+echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
+echo "    STRINGI_CXXFLAGS=${STRINGI_CXXFLAGS}"
+echo "    STRINGI_LDFLAGS=${STRINGI_LDFLAGS}"
+echo ""
+echo "*** compiler settings used:"
+echo "    CC=${CC}"
+echo "    CPP=${CPP}"
+echo "    LD=${LD}"
+echo "    CFLAGS=${CFLAGS}"
+echo "    CPPFLAGS=${CPPFLAGS}"
+echo "    CXX=${CXX}"
+echo "    CXXFLAGS=${CXXFLAGS}"
+echo ""

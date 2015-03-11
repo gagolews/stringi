@@ -1,4 +1,4 @@
-The stringi package depends on the ICU4C >= 50 library.
+The stringi package depends on the ICU4C >= 52 library.
 If you build the package from sources and either:
 
 * these requirements are not met (check out http://site.icu-project.org/download
@@ -11,16 +11,26 @@ or
 
 then the library will be built together with stringi
 (a custom subset of ICU4C 52.1 is shipped with the package).
-In such a case, if you already downloaded an appropriate version of
-`icudt*.zip`, you may wish to install the package by calling:
-`install.packages("stringi", configure.vars="ICUDT_DIR=<dir_to_copy_icudt_from>")`.
-Otherwise, the ICU data library will be downloaded from one of our mirror servers.
+By default, the ICU data library will be downloaded from one of our mirror servers.
+However, if you have already downloaded a version of `icudt*.zip`
+suitable for your platform (big/little endian), you may wish to install
+the package by calling:
+
+    install.packages("stringi", configure.vars="ICUDT_DIR=<dir_to_copy_icudt_from>")
 
 You are encouraged to check whether the ICU data library (`icudt`)
 has been successfully installed by calling:
 
-    > library('stringi')
-    > stri_install_check()
+    library('stringi')
+    stri_install_check()
 
 This is also to ensure that ICU has detected your locale and native
 encoding properly.
+
+Also do note that by default we require C++11 support to build the package
+from sources. This is because ICU4C uses the `long long` type in a few
+functions, and this is not part of the C++98 standard. Yet, if your compiler
+does not support C++11 but you are sure it tolerates the `long long` type
+(which is very common -- this will be checked by the `configure` script anyway),
+you may disable the C++11 usage by passing the `--disable-cxx11` flag to
+the `configure` script.
