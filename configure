@@ -2258,7 +2258,7 @@ $as_echo "$R_PATH" >&6; }
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R >= 3.1.0" >&5
 $as_echo_n "checking for R >= 3.1.0... " >&6; }
-R_GE_31=`R --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
+R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "$R_GE_31" == "yes"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
@@ -2340,16 +2340,16 @@ fi
 CC=`"${R_PATH}" CMD config CC`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+CFLAGS=`"${R_PATH}" CMD config CFLAGS`
+CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 
 if test "$enable_cxx11" == "yes"; then
-   CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_HOME}/bin/R\" CMD config CXX1XSTD`"
-   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX1XFLAGS`
+   CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_PATH}\" CMD config CXX1XSTD`"
+   CXXFLAGS=`"${R_PATH}" CMD config CXX1XFLAGS`
    STRINGI_CXXSTD="CXX_STD=CXX11"
 else
    CXX=`"${R_PATH}" CMD config CXX`
-   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+   CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
    STRINGI_CXXSTD=""
 fi
 
