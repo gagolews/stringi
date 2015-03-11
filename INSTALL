@@ -27,10 +27,10 @@ has been successfully installed by calling:
 This is also to ensure that ICU has detected your locale and native
 encoding properly.
 
-Also do note that by default we require C++11 support to build the package
-from sources. This is because ICU4C uses the `long long` type in a few
-functions, and this is not part of the C++98 standard. Yet, if your compiler
-does not support C++11 but you are sure it tolerates the `long long` type
-(which is very common -- this will be checked by the `configure` script anyway),
-you may disable the C++11 usage by passing the `--disable-cxx11` flag to
-the `configure` script.
+Also do note that for R >= 3.1.0 then by default we require C++11 support
+to build the package from sources. This is because ICU4C uses the `long long`
+type in a few functions, and this is not part of the C++98 standard. Yet, if
+your compiler does not support C++11 but you are sure it tolerates the
+`long long` type (which is very common -- this will be checked by the
+`configure` script anyway), you may disable the C++11 usage by passing
+the `--disable-cxx11` flag to the `configure` script.

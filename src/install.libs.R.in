@@ -1,6 +1,6 @@
 # copy lib:
-libfile <- paste0("stringi", SHLIB_EXT)
-dest <- file.path(R_PACKAGE_DIR, paste0("libs", R_ARCH))
+libfile <- paste("stringi", SHLIB_EXT, sep="")
+dest <- file.path(R_PACKAGE_DIR, paste("libs", R_ARCH, sep=""))
 dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 

@@ -107,6 +107,18 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
+AC_MSG_CHECKING(for R >= 3.1.0)
+R_GE_31=`R --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
+if test "$R_GE_31" == "yes"; then
+   AC_MSG_RESULT([yes])
+else
+   AC_MSG_RESULT([no])
+   if test "$enable_cxx11" == "yes"; then
+      echo "*** disabling C++11 use"
+      enable_cxx11="no"
+   fi
+fi
+
 ##### CHECK FOR CAT ############################################################
 
 # Check for 'cat' and get full path.

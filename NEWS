@@ -38,7 +38,7 @@
    * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package install;
      see the `INSTALL` file for more information.
 
-   * [BUGFIX] #135: C++11 is now required (by default, see `INSTALL`, however)
+   * [BUGFIX] #135: C++11 is now used by default (see the `INSTALL` file, however)
      to build stringi from sources. This is because ICU4C uses the
      `long long` type which is not part of the C++98 standard.
 
