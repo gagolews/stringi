@@ -16,7 +16,7 @@ as.POSIXst(x, tz = attr(time, "tzone"), ...)
 \item{tz}{\code{NULL} or \code{""} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
 
-\item{...}{further arguments to be passed to or from other methods.}
+\item{recursive,...}{further arguments to be passed to or from other methods.}
 }
 \value{
 t.b.d.

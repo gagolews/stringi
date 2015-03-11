@@ -628,6 +628,7 @@ STRINGI_LDFLAGS
 STRINGI_CFLAGS
 STRINGI_CPPFLAGS
 STRINGI_CXXFLAGS
+STRINGI_CXXSTD
 STRINGI_OBJECTS
 STRINGI_ICU_STUBDATA_SOURCES_C
 STRINGI_ICU_STUBDATA_SOURCES_CPP
@@ -694,6 +695,7 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+enable_cxx11
 enable_pkg_config
 enable_gcc_debug
 enable_gcc_pedantic
@@ -1326,6 +1328,9 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --disable-cxx11         Disable use of C++11. If you build ICU4C from
+                          source, make sure your C++ compiler supports the
+                          long long type.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel; in
                           such a case ICU4C will be compiled from sources.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
@@ -2135,6 +2140,17 @@ ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
 
 
+# Check whether --enable-cxx11 was given.
+if test "${enable_cxx11+set}" = set; then :
+  enableval=$enable_cxx11;
+fi
+
+if test "x$enable_cxx11" != "xno"; then
+   enable_cxx11="yes"
+else
+   enable_cxx11="no"
+fi
+
 # Check whether --enable-pkg_config was given.
 if test "${enable_pkg_config+set}" = set; then :
   enableval=$enable_pkg_config;
@@ -2307,12 +2323,20 @@ if test "$enable_gcc_pedantic" == "yes"; then
 fi
 
 CC=`"${R_PATH}" CMD config CC`
-CXX=`"${R_PATH}" CMD config CXX`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+
+if test "$enable_cxx11" == "yes"; then
+   CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_HOME}/bin/R\" CMD config CXX1XSTD`"
+   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXX1XFLAGS`
+   STRINGI_CXXSTD=CXX11
+else
+   CXX=`"${R_PATH}" CMD config CXX`
+   CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
+   STRINGI_CXXSTD=CXX98
+fi
 
 CFLAGS="${CFLAGS} ${with_extra_cflags}"
 CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
@@ -4267,7 +4291,11 @@ rm -f core conftest.err conftest.$ac_objext \
 ICU_FOUND=0
 
 if test $ICU_FOUND = 0; then
+   OLD_CPPFLAGS=$CPPFLAGS
+   OLD_LDFLAGS=$LDFLAGS
    detect_icu_with_pkg_config
+   CPPFLAGS=$OLD_CPPFLAGS
+   LDFLAGS=$OLD_LDFLAGS
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
@@ -4313,11 +4341,12 @@ else
    STRINGI_LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
 fi
 
-
 STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
 STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
 STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
+
+
 
 
 
@@ -5492,3 +5521,23 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
+
+echo ""
+echo "*** stringi configure summary:"
+echo "    ICU_FOUND=${ICU_FOUND}"
+echo "    ICUDT_DIR=${ICUDT_DIR}"
+echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
+echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
+echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
+echo "    STRINGI_CXXFLAGS=${STRINGI_CXXFLAGS}"
+echo "    STRINGI_LDFLAGS=${STRINGI_LDFLAGS}"
+echo ""
+echo "*** compiler settings used:"
+echo "    CC=${CC}"
+echo "    CPP=${CPP}"
+echo "    LD=${LD}"
+echo "    CFLAGS=${CFLAGS}"
+echo "    CPPFLAGS=${CPPFLAGS}"
+echo "    CXX=${CXX}"
+echo "    CXXFLAGS=${CXXFLAGS}"
+echo ""

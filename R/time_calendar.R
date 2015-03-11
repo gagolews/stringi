@@ -107,7 +107,6 @@ stri_datetime_now <- function() {
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
-#' Returns a data frame with the following columns:
 #' \enumerate{
 #' \item Year (0 is 1BC, -1 is 2BC, etc.)
 #' \item Month (1-based, i.e. 1 stands for the first month, e.g. January;
@@ -230,7 +229,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 #' @param x ...
 #' @param tz \code{NULL} or \code{""} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
-#' @param ... further arguments to be passed to or from other methods.
+#' @param recursive,... further arguments to be passed to or from other methods.
 #'
 #' @return
 #' t.b.d.

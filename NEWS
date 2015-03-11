@@ -9,7 +9,7 @@
      http://bugs.icu-project.org/trac/ticket/11554]
 
 
-* 0.5-1 (2015-??-??) **t.b.d.**
+* 0.5-1 (2015-??-??) **t.b.d.** ((WE WAIT FOR R 3.2, mid Apr))
 
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
@@ -38,13 +38,15 @@
    * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package install;
      see the `INSTALL` file for more information.
 
+   * [BUGFIX] #135: C++11 is now required (by default, see `INSTALL`, however)
+     to build stringi from sources. This is because ICU4C uses the
+     `long long` type which is not part of the C++98 standard.
+
 TO BE DONE:
 
-   * #69: ICU 55.1
+   * #69: ICU 55.1 [[[2015-04-01]]]
 
    * #140: more strict tests for icudt
-
-   * [BUGFIX] #135: long long ICU warnings...
 
    * #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers

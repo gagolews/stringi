@@ -1,6 +1,8 @@
 ## `stringi` Makevars.win
 ## Copyright (C) 2013-2015, M. Gagolewski
 
+CXX_STD=CXX11
+
 PKG_CPPFLAGS=-I. -Iicu52/ -Iicu52/unicode -Iicu52/common -Iicu52/i18n \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
 -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
