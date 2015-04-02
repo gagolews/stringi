@@ -1,6 +1,6 @@
 Package: stringi
 Version: 0.5-1
-Date: 2015-03-11
+Date: 2015-04-02
 Title: Character String Processing Facilities
 Description: stringi allows for fast, correct, consistent, portable,
     and convenient character string/text processing in every locale
@@ -23,6 +23,6 @@ Imports:
     tools
 License: file LICENSE
 Author: Marek Gagolewski and Bartek Tartanus (stringi source code);
-    IBM and other contributors (ICU4C 52.1 source code);
+    IBM and other contributors (ICU4C 55.1 source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <gagolews@rexamine.com>

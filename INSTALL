@@ -10,7 +10,7 @@ or
 * R CMD INSTALL is called with `--configure-args='--disable-pkg-config'`,
 
 then the library will be built together with stringi
-(a custom subset of ICU4C 52.1 is shipped with the package).
+(a custom subset of ICU4C 55.1 is shipped with the package).
 By default, the ICU data library will be downloaded from one of our mirror servers.
 However, if you have already downloaded a version of `icudt*.zip`
 suitable for your platform (big/little endian), you may wish to install
@@ -27,7 +27,7 @@ has been successfully installed by calling:
 This is also to ensure that ICU has detected your locale and native
 encoding properly.
 
-Also do note that for R >= 3.1.0 then by default we require C++11 support
+Also do note that for R >= 3.1.0  we require (by default) C++11 support
 to build the package from sources. This is because ICU4C uses the `long long`
 type in a few functions, and this is not part of the C++98 standard. Yet, if
 your compiler does not support C++11 but you are sure it tolerates the

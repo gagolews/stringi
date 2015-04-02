@@ -3,7 +3,7 @@
 
 CXX_STD=CXX11
 
-PKG_CPPFLAGS=-I. -Iicu52/ -Iicu52/unicode -Iicu52/common -Iicu52/i18n \
+PKG_CPPFLAGS=-I. -Iicu55/ -Iicu55/unicode -Iicu55/common -Iicu55/i18n \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
 -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
@@ -16,16 +16,16 @@ PKG_CPPFLAGS=-I. -Iicu52/ -Iicu52/unicode -Iicu52/common -Iicu52/i18n \
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-ICU_COMMON_SOURCES_CPP=$(wildcard icu52/common/*.cpp)
-ICU_COMMON_SOURCES_C=$(wildcard icu52/common/*.c)
+ICU_COMMON_SOURCES_CPP=$(wildcard icu55/common/*.cpp)
+ICU_COMMON_SOURCES_C=$(wildcard icu55/common/*.c)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
 
-ICU_I18N_SOURCES_CPP=$(wildcard icu52/i18n/*.cpp)
-ICU_I18N_SOURCES_C=$(wildcard icu52/i18n/*.c)
+ICU_I18N_SOURCES_CPP=$(wildcard icu55/i18n/*.cpp)
+ICU_I18N_SOURCES_C=$(wildcard icu55/i18n/*.c)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
 
-ICU_STUBDATA_SOURCES_CPP=$(wildcard icu52/stubdata/*.cpp)
-ICU_STUBDATA_SOURCES_C=$(wildcard icu52/stubdata/*.c)
+ICU_STUBDATA_SOURCES_CPP=$(wildcard icu55/stubdata/*.cpp)
+ICU_STUBDATA_SOURCES_C=$(wildcard icu55/stubdata/*.c)
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o) $(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 OBJECTS=$(STRI_OBJECTS)

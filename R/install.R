@@ -115,11 +115,11 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
       outpath <- file.path(path.package("stringi"), "libs")
    stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
 
-   fname <- if (.Platform$endian == 'little') "icudt52l.zip"
-                                         else "icudt52b.zip"
+   fname <- if (.Platform$endian == 'little') "icudt55l.zip"
+                                         else "icudt55b.zip"
 
-   md5ex <- if (.Platform$endian == 'little') "d86d3191818ae58d5703f1ac78b0050c"
-                                         else "91cd9aacaa4e776bd14f20c8839cd9c2"
+   md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
+                                         else "TOBEDONE_TOBEDONE_TOBEDONE_TOBED"
 
    mirrors <- c("http://static.rexamine.com/packages/",
                 "http://www.mini.pw.edu.pl/~gagolews/stringi/",

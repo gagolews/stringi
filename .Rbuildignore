@@ -7,12 +7,8 @@
 ^src-i386
 ^src-x64
 ^src/.*\.o$
-^src/icu52/stubdata/.*\.o$
-^src/icu52/i18n/.*\.o$
-^src/icu52/common/.*\.o$
-^src/icu52/pkgdata
-^src/icu52/data
-^src/icu52/icupkg
+^src/icu52
+^src/icu55/data
 ^src/.*\.a$
 ^src/.*\.so$
 ^src/.*\.dll$

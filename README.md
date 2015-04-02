@@ -18,7 +18,7 @@ package.
 **Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
 [Bartlomiej Tartanus](http://tartanus.rexamine.com/)
 
-This git repository also contains a custom subset of *ICU4C 52.1* source code
+This git repository also contains a custom subset of *ICU4C 55.1* source code
 which is copyrighted by IBM and others. A binary
 version of the Unicode Character Database is included.
 For more details on copyright holders see the `LICENSE` file.
