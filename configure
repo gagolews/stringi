@@ -1361,7 +1361,7 @@ Some influential environment variables:
   ICUDT_DIR   Optional directory from which an already downloaded ICU data
               archive (icudt*.zip) may be copied; either an absolute path or a
               path relative to <package source dir>/src; defaults to
-              icu52/data.
+              icu55/data.
   CAT         the 'cat' command used for generating the list of source files
               to compile
   CC          C compiler command
@@ -2219,7 +2219,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
 $as_echo_n "checking for local ICUDT_DIR... " >&6; }
 if test -z "${ICUDT_DIR}"; then
-   ICUDT_DIR=icu52/data
+   ICUDT_DIR=icu55/data
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
 $as_echo "$ICUDT_DIR" >&6; }
@@ -4318,22 +4318,22 @@ fi
 STRINGI_SOURCES_CPP=`${CAT} src/stri_cpp.txt`
 
 
-STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu52_common_cpp.txt`
+STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu55_common_cpp.txt`
 
 
-STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu52_common_c.txt`
+STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu55_common_c.txt`
 
 
-STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu52_i18n_cpp.txt`
+STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu55_i18n_cpp.txt`
 
 
-STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu52_i18n_c.txt`
+STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu55_i18n_c.txt`
 
 
-STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu52_stubdata_cpp.txt`
+STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu55_stubdata_cpp.txt`
 
 
-STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu52_stubdata_c.txt`
+STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu55_stubdata_c.txt`
 
 
 
@@ -4343,7 +4343,7 @@ if test $ICU_FOUND = 0; then
    # build ICU4C from sources
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
-   STRINGI_CPPFLAGS="-I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION \
+   STRINGI_CPPFLAGS="-I. -Iicu55 -Iicu55/unicode -Iicu55/common -Iicu55/i18n -DU_STATIC_IMPLEMENTATION \
 -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
@@ -4373,7 +4373,7 @@ ac_config_files="$ac_config_files src/Makevars"
 
 
 
-ac_config_files="$ac_config_files src/icu52_found.txt"
+ac_config_files="$ac_config_files src/icu55_found.txt"
 
 
 
@@ -5085,7 +5085,7 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "src/Makevars") CONFIG_FILES="$CONFIG_FILES src/Makevars" ;;
-    "src/icu52_found.txt") CONFIG_FILES="$CONFIG_FILES src/icu52_found.txt" ;;
+    "src/icu55_found.txt") CONFIG_FILES="$CONFIG_FILES src/icu55_found.txt" ;;
     "src/install.libs.R") CONFIG_FILES="$CONFIG_FILES src/install.libs.R" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

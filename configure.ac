@@ -17,7 +17,7 @@ AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/li
 
 AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU data archive (icudt*.zip)
                        may be copied; either an absolute path or a path relative to <package source dir>/src;
-                       defaults to icu52/data.])
+                       defaults to icu55/data.])
 
 AC_ARG_ENABLE([cxx11],
     AS_HELP_STRING([--disable-cxx11],
@@ -77,7 +77,7 @@ AC_ARG_WITH([extra_ldflags],
 # set ICUDT_DIR
 AC_MSG_CHECKING(for local ICUDT_DIR)
 if test -z "${ICUDT_DIR}"; then
-   ICUDT_DIR=icu52/data
+   ICUDT_DIR=icu55/data
 fi
 AC_MSG_RESULT($ICUDT_DIR)
 
@@ -460,22 +460,22 @@ fi
 STRINGI_SOURCES_CPP=`${CAT} src/stri_cpp.txt`
 AC_SUBST(STRINGI_SOURCES_CPP)
 
-STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu52_common_cpp.txt`
+STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu55_common_cpp.txt`
 AC_SUBST(STRINGI_ICU_COMMON_SOURCES_CPP)
 
-STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu52_common_c.txt`
+STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu55_common_c.txt`
 AC_SUBST(STRINGI_ICU_COMMON_SOURCES_C)
 
-STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu52_i18n_cpp.txt`
+STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu55_i18n_cpp.txt`
 AC_SUBST(STRINGI_ICU_I18N_SOURCES_CPP)
 
-STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu52_i18n_c.txt`
+STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu55_i18n_c.txt`
 AC_SUBST(STRINGI_ICU_I18N_SOURCES_C)
 
-STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu52_stubdata_cpp.txt`
+STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu55_stubdata_cpp.txt`
 AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_CPP)
 
-STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu52_stubdata_c.txt`
+STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu55_stubdata_c.txt`
 AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
 
@@ -485,7 +485,7 @@ if test $ICU_FOUND = 0; then
    # build ICU4C from sources
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
-   STRINGI_CPPFLAGS="-I. -Iicu52 -Iicu52/unicode -Iicu52/common -Iicu52/i18n -DU_STATIC_IMPLEMENTATION \
+   STRINGI_CPPFLAGS="-I. -Iicu55 -Iicu55/unicode -Iicu55/common -Iicu55/i18n -DU_STATIC_IMPLEMENTATION \
 -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
@@ -514,7 +514,7 @@ AC_SUBST(STRINGI_LDFLAGS)
 AC_CONFIG_FILES([src/Makevars])
 
 AC_SUBST(ICU_FOUND)
-AC_CONFIG_FILES([src/icu52_found.txt])
+AC_CONFIG_FILES([src/icu55_found.txt])
 
 AC_SUBST(ICUDT_DIR)
 AC_CONFIG_FILES([src/install.libs.R])

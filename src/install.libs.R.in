@@ -6,8 +6,8 @@ file.copy(libfile, dest, overwrite=TRUE)
 
 # copy icudt when building ICU from sources
 copyicudt <- TRUE
-if (file.exists('icu52_found.txt')) {
-   copyicudt <- !as.logical(as.numeric(readChar('icu52_found.txt', 1)))
+if (file.exists('icu55_found.txt')) {
+   copyicudt <- !as.logical(as.numeric(readChar('icu55_found.txt', 1)))
    if (is.na(copyicudt)) copyicudt <- TRUE
 }
 

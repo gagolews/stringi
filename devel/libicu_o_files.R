@@ -57,8 +57,8 @@ listformatter.o")
 
 
 require("stringi")
-obj_i18n  <- stri_split_charclass(obj_i18n, "WHITESPACE")[[1]]
-obj_common  <- stri_split_charclass(obj_common, "WHITESPACE")[[1]]
+obj_i18n  <- stri_split_charclass(obj_i18n, "\\p{WHITESPACE}")[[1]]
+obj_common  <- stri_split_charclass(obj_common, "\\p{WHITESPACE}")[[1]]
 
 getRedundantFiles <- function(objects, d, prefix) {
    objects1 <- stri_replace_all_regex(objects, "\\.o$", "")
@@ -69,5 +69,5 @@ getRedundantFiles <- function(objects, d, prefix) {
 }
 
 
-getRedundantFiles(obj_common, "src/", "icu52_common_")
-getRedundantFiles(obj_i18n, "src/", "icu52_i18n_")
+getRedundantFiles(obj_common, "src/", "icu55_common_")
+getRedundantFiles(obj_i18n, "src/", "icu55_i18n_")
