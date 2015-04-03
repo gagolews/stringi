@@ -186,7 +186,7 @@ AC_LINK_IFELSE([AC_LANG_SOURCE([
       int main() {
         long long x = 1;
         cout << x << endl;
- 
+
         cout << 1LL << 1ULL << endl;
         cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
 
@@ -366,7 +366,7 @@ detect_icu_with_pkg_config() {
           return 12;
 
         UErrorCode status = U_ZERO_ERROR;
-        StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status); 
+        StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
         if (!U_SUCCESS(status)) return 13;
 
         trans_enum->reset(status);
@@ -383,7 +383,7 @@ detect_icu_with_pkg_config() {
    [
       AC_MSG_RESULT([yes])
    ],[
-      AC_MSG_RESULT([no]) 
+      AC_MSG_RESULT([no])
       echo "*** ICU4C will be built from sources"
       return 1
    ])
@@ -436,7 +436,7 @@ detect_icu_with_pkg_config() {
    [
       AC_MSG_RESULT([yes])
    ],[
-      AC_MSG_RESULT([no]) 
+      AC_MSG_RESULT([no])
       echo "*** ICU4C will be built from sources"
       return 1
    ])
@@ -486,7 +486,7 @@ if test $ICU_FOUND = 0; then
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
    STRINGI_CPPFLAGS="-I. -Iicu55 -Iicu55/unicode -Iicu55/common -Iicu55/i18n -DU_STATIC_IMPLEMENTATION \
--DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
+-DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL -DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
 else
