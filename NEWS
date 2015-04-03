@@ -14,6 +14,8 @@
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
 
+   * [NEW FEATURE] #69: `stringi` now comes with ICU4C 55.1.
+
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`).
 
@@ -31,20 +33,18 @@
      (these affect `stri_sub`, `stri_locate` and other string index-based
       operations)
 
-   * [GENERAL] #143: Searching for short fixed patterns (`stri_*_fixed`) now relies
-     on the current `libC`'s implementation of `strchr()` and `strstr()`.
+   * [GENERAL] #143: Searching for short fixed patterns (`stri_*_fixed`) now
+     relies on the current `libC`'s implementation of `strchr()` and `strstr()`.
      This is very fast e.g. on `glibc` utilizing the `SSE2` instruction set.
 
-   * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package install;
-     see the `INSTALL` file for more information.
+   * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package
+     install; see the `INSTALL` file for more information.
 
-   * [BUGFIX] #135: C++11 is now used by default (see the `INSTALL` file, however)
-     to build stringi from sources. This is because ICU4C uses the
+   * [BUGFIX] #135: C++11 is now used by default (see the `INSTALL` file,
+     however) to build stringi from sources. This is because ICU4C uses the
      `long long` type which is not part of the C++98 standard.
 
 TO BE DONE:
-
-   * #69: ICU 55.1 ......... icudt55b....
 
    * #140: more strict tests for icudt
 
