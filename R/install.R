@@ -44,7 +44,7 @@
 #' and dictionaries, and other locale data.
 #'
 #' Without the ICU data library (icudt) many \pkg{stringi} features
-#' will not be available. icudt size is approx. 10-20 MB.
+#' will not be available. icudt size is approx. 10-30 MB.
 #'
 #' \code{stri_install_check()} tests whether some ICU services
 #' are available. If they are not, it is most likely due to
@@ -119,7 +119,7 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
                                          else "icudt55b.zip"
 
    md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
-                                         else "TOBEDONE_TOBEDONE_TOBEDONE_TOBED"
+                                         else "1194f0dd879d3c1c1f189cde5fd90efe"
 
    mirrors <- c("http://static.rexamine.com/packages/",
                 "http://www.mini.pw.edu.pl/~gagolews/stringi/",
