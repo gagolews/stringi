@@ -132,7 +132,8 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search}}
 
-Other transform: \code{\link{stri_trans_general}};
+Other transform: \code{\link{stri_trans_char}};
+  \code{\link{stri_trans_general}};
   \code{\link{stri_trans_isnfc}},
   \code{\link{stri_trans_isnfd}},
   \code{\link{stri_trans_isnfkc}},
