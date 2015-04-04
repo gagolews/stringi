@@ -38,7 +38,7 @@ collation rules, transliteration rules, break iterator rules
 and dictionaries, and other locale data.
 
 Without the ICU data library (icudt) many \pkg{stringi} features
-will not be available. icudt size is approx. 10-20 MB.
+will not be available. icudt size is approx. 10-30 MB.
 
 \code{stri_install_check()} tests whether some ICU services
 are available. If they are not, it is most likely due to

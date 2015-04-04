@@ -5,7 +5,7 @@
 src/symbols.rds
 src/Makevars
 src/install.libs.R
-src/icu52_found.txt
+src/icu??_found.txt
 autom4te.cache
 config.log
 config.status

@@ -46,7 +46,16 @@
 
 TO BE DONE:
 
-   * #140: more strict tests for icudt
+   * [NEW FUNCITON] #46: `stri_trans_char` is a `stringi`-flavoured
+     `chartr` equivalent.
+     
+   * #136
+   
+   * #48
+   
+   * #31
+   
+   * #30
 
    * #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers

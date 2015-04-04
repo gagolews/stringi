@@ -304,6 +304,10 @@ SEXP stri_stats_general(SEXP str);
 SEXP stri_stats_latex(SEXP str);
 
 
+// trans_other.cpp:
+SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement);
+
+
 // trans_casemap.cpp:
 SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale);
 SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter);
