@@ -2,31 +2,33 @@
 % Please edit documentation in R/trans_other.R
 \name{stri_trans_char}
 \alias{stri_trans_char}
-\title{Translate characters}
+\title{Translate Characters}
 \usage{
 stri_trans_char(str, pattern, replacement)
 }
 \arguments{
 \item{str}{character vector}
 
-\item{pattern}{character vector providing characters to be translated}
+\item{pattern}{a single character string providing code points to be translated}
 
-\item{replacement}{character vector providing translated characters}
+\item{replacement}{a single character string giving translated code points}
 }
 \value{
 Returns a character vector.
 }
 \description{
-Translates character in each input string.
+Translates Unicode code points in each input string.
 }
 \details{
-Vectorized over \code{str}, \code{pattern} and \code{replacement}.
+Vectorized over \code{str} and with respect to each code point
+in \code{pattern} and \code{replacement}.
 
-If \code{pattern} and its corresponding \code{replacement} are of different
-lenghts, then the extra characters in the longer of the two are ignored.
+If \code{pattern} and \code{replacement} consist of a different number
+of code points, then the extra code points in the longer of the two are ignored,
+with a warning.
 
-If characters in some \code{pattern} are not unique, last corresponding
-replacement is used.
+If code points in a given \code{pattern} are not unique,
+last corresponding replacement code point is used.
 }
 \examples{
 stri_trans_char("id.123", ".", "_")
