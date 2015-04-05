@@ -44,40 +44,43 @@
  *  @param replacement character vector
  *  @return character vector
  *
- * @version 0.5-1 (Marek Gagolewski, 2015-04-04)
- *    
+ * @version 0.5-1 (Marek Gagolewski, 2015-04-05)
+ *
  *
  */
 SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement) {
    PROTECT(str          = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
-   
+   PROTECT(pattern      = stri_prepare_arg_string_1(pattern, "pattern"));
+   PROTECT(replacement  = stri_prepare_arg_string_1(replacement, "replacement"));
+   R_len_t vectorize_length = LENGTH(str);
+
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
-   StriContainerUTF8 pattern_cont(pattern, vectorize_length);
-   
-   
+   StriContainerUTF8 replacement_cont(replacement, 1);
+   StriContainerUTF8 pattern_cont(pattern, 1);
+
+   if (replacement_cont.isNA(0) || pattern_cont.isNA(0)) {
+      STRI__UNPROTECT_ALL
+      return stri__vector_NA_strings(vectorize_length);
+   }
+
+
+   // @TODO: count the number of code points in pattern and replacement
+   // @TODO: determine if their sizes match
+
+
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
-   
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
+
+   for (R_len_t i=0; i<vectorize_length; ++i)
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);,
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(NULL, 0, CE_UTF8));)
-         
-      if (replacement_cont.isNA(i)) {
+      if (str_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
-      
+
       throw StriException("stri_trans_char: TO DO");
-      
+
    }
    STRI__UNPROTECT_ALL
    return ret;

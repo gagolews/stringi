@@ -29,25 +29,26 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 #' @title
-#' Translate characters
+#' Translate Characters
 #'
 #' @description
-#' Translates character in each input string.
+#' Translates Unicode code points in each input string.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{pattern} and \code{replacement}.
-#' 
-#' If \code{pattern} and its corresponding \code{replacement} are of different
-#' lenghts, then the extra characters in the longer of the two are ignored.
-#' 
-#' If characters in some \code{pattern} are not unique, last corresponding
-#' replacement is used.
+#' Vectorized over \code{str} and with respect to each code point
+#' in \code{pattern} and \code{replacement}.
+#'
+#' If \code{pattern} and \code{replacement} consist of a different number
+#' of code points, then the extra code points in the longer of the two are ignored,
+#' with a warning.
+#'
+#' If code points in a given \code{pattern} are not unique,
+#' last corresponding replacement code point is used.
 #'
 #' @param str character vector
-#' @param pattern character vector providing characters to be translated
-#' @param replacement character vector providing translated characters
+#' @param pattern a single character string providing code points to be translated
+#' @param replacement a single character string giving translated code points
 #'
 #' @return Returns a character vector.
 #'
