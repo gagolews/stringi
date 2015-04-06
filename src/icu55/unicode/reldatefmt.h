@@ -55,7 +55,7 @@ typedef enum UDateRelativeDateTimeFormatterStyle {
    * @draft ICU 54
    */
   UDAT_STYLE_COUNT
-} UDateRelativeDateTimeFormatterStyle; 
+} UDateRelativeDateTimeFormatterStyle;
 
 #endif /* U_HIDE_DRAFT_API */
 
@@ -371,7 +371,7 @@ public:
      * @param style the format style. The UDAT_RELATIVE bit field has no effect.
      * @param capitalizationContext A value from UDisplayContext that pertains to
      * capitalization.
-     * @status Any error is returned here. 
+     * @status Any error is returned here.
      * @draft ICU 54
      */
     RelativeDateTimeFormatter(

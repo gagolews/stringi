@@ -848,7 +848,7 @@ typedef struct DefaultTZInfo {
  * It is currently use to compare two TZ files.
  */
 static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFileName, DefaultTZInfo* tzInfo) {
-    FILE* file; 
+    FILE* file;
     int64_t sizeFile;
     int64_t sizeFileLeft;
     int32_t sizeFileRead;
@@ -1308,7 +1308,7 @@ static void setTimeZoneFilesDir(const char *path, UErrorCode &status) {
 #endif
 }
 
-#define TO_STRING(x) TO_STRING_2(x) 
+#define TO_STRING(x) TO_STRING_2(x)
 #define TO_STRING_2(x) #x
 
 static void U_CALLCONV TimeZoneDataDirInitFn(UErrorCode &status) {
@@ -2046,11 +2046,11 @@ u_getVersion(UVersionInfo versionArray) {
 }
 
 /**
- * icucfg.h dependent code 
+ * icucfg.h dependent code
  */
 
 #if U_ENABLE_DYLOAD
- 
+
 #if HAVE_DLOPEN && !U_PLATFORM_USES_ONLY_WIN32_API
 
 #if HAVE_DLFCN_H
@@ -2137,15 +2137,15 @@ uprv_dlsym_func(void *lib, const char* sym, UErrorCode *status) {
 U_INTERNAL void * U_EXPORT2
 uprv_dl_open(const char *libName, UErrorCode *status) {
   HMODULE lib = NULL;
-  
+
   if(U_FAILURE(*status)) return NULL;
-  
+
   lib = LoadLibraryA(libName);
-  
+
   if(lib==NULL) {
     *status = U_MISSING_RESOURCE_ERROR;
   }
-  
+
   return (void*)lib;
 }
 
@@ -2153,9 +2153,9 @@ U_INTERNAL void U_EXPORT2
 uprv_dl_close(void *lib, UErrorCode *status) {
   HMODULE handle = (HMODULE)lib;
   if(U_FAILURE(*status)) return;
-  
+
   FreeLibrary(handle);
-  
+
   return;
 }
 
@@ -2164,11 +2164,11 @@ U_INTERNAL UVoidFunction* U_EXPORT2
 uprv_dlsym_func(void *lib, const char* sym, UErrorCode *status) {
   HMODULE handle = (HMODULE)lib;
   UVoidFunction* addr = NULL;
-  
+
   if(U_FAILURE(*status) || lib==NULL) return NULL;
-  
+
   addr = (UVoidFunction*)GetProcAddress(handle, sym);
-  
+
   if(addr==NULL) {
     DWORD lastError = GetLastError();
     if(lastError == ERROR_PROC_NOT_FOUND) {
@@ -2177,7 +2177,7 @@ uprv_dlsym_func(void *lib, const char* sym, UErrorCode *status) {
       *status = U_UNSUPPORTED_ERROR; /* other unknown error. */
     }
   }
-  
+
   return addr;
 }
 

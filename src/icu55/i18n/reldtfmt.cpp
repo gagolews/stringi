@@ -80,7 +80,7 @@ RelativeDateFormat::RelativeDateFormat( UDateFormatStyle timeStyle, UDateFormatS
     if(U_FAILURE(status) ) {
         return;
     }
-    
+
     if (timeStyle < UDAT_NONE || timeStyle > UDAT_SHORT) {
         // don't support other time styles (e.g. relative styles), for now
         status = U_ILLEGAL_ARGUMENT_ERROR;
@@ -116,7 +116,7 @@ RelativeDateFormat::RelativeDateFormat( UDateFormatStyle timeStyle, UDateFormatS
         }
         fDateTimeFormatter->toPattern(fTimePattern);
     }
-    
+
     // Initialize the parent fCalendar, so that parse() works correctly.
     initializeCalendar(NULL, locale, status);
     loadDates(status);
@@ -155,11 +155,11 @@ static const UChar APOSTROPHE = (UChar)0x0027;
 UnicodeString& RelativeDateFormat::format(  Calendar& cal,
                                 UnicodeString& appendTo,
                                 FieldPosition& pos) const {
-                                
+
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString relativeDayString;
     UDisplayContext capitalizationContext = getContext(UDISPCTX_TYPE_CAPITALIZATION, status);
-    
+
     // calculate the difference, in days, between 'cal' and now.
     int dayDiff = dayDifference(cal, status);
 
@@ -171,7 +171,7 @@ UnicodeString& RelativeDateFormat::format(  Calendar& cal,
         relativeDayString.setTo(theString, len);
     }
 
-    if ( relativeDayString.length() > 0 && !fDatePattern.isEmpty() && 
+    if ( relativeDayString.length() > 0 && !fDatePattern.isEmpty() &&
          (fTimePattern.isEmpty() || fCombinedFormat == NULL || fCombinedHasDateAtStart)) {
 #if !UCONFIG_NO_BREAK_ITERATION
         // capitalize relativeDayString according to context for relative, set formatter no context
@@ -216,15 +216,15 @@ UnicodeString& RelativeDateFormat::format(  Calendar& cal,
         fDateTimeFormatter->applyPattern(combinedPattern);
         fDateTimeFormatter->format(cal,appendTo,pos);
     }
-    
+
     return appendTo;
 }
 
 
 
 UnicodeString&
-RelativeDateFormat::format(const Formattable& obj, 
-                         UnicodeString& appendTo, 
+RelativeDateFormat::format(const Formattable& obj,
+                         UnicodeString& appendTo,
                          FieldPosition& pos,
                          UErrorCode& status) const
 {
@@ -260,7 +260,7 @@ void RelativeDateFormat::parse( const UnicodeString& text,
                 cal.setTime(Calendar::getNow(),status);
                 cal.add(UCAL_DATE,fDates[n].offset, status);
 
-                if(U_FAILURE(status)) { 
+                if(U_FAILURE(status)) {
                     // failure in setting calendar field, set offset to beginning of rel day string
                     pos.setErrorIndex(startIndex);
                 } else {
@@ -291,7 +291,7 @@ void RelativeDateFormat::parse( const UnicodeString& text,
                 // Set the calendar to now+offset
                 tempCal->setTime(Calendar::getNow(),status);
                 tempCal->add(UCAL_DATE,fDates[n].offset, status);
-                if(U_FAILURE(status)) { 
+                if(U_FAILURE(status)) {
                     pos.setErrorIndex(startIndex);
                     delete tempCal;
                     return;
@@ -354,12 +354,12 @@ const UChar *RelativeDateFormat::getStringForDay(int32_t day, int32_t &len, UErr
     if(U_FAILURE(status)) {
         return NULL;
     }
-    
+
     // Is it outside the resource bundle's range?
     if(day < fDayMin || day > fDayMax) {
         return NULL; // don't have it.
     }
-    
+
     // Linear search the held strings
     for(int n=0;n<fDatesLen;n++) {
         if(fDates[n].offset == day) {
@@ -367,7 +367,7 @@ const UChar *RelativeDateFormat::getStringForDay(int32_t day, int32_t &len, UErr
             return fDates[n].string;
         }
     }
-    
+
     return NULL;  // not found.
 }
 
@@ -477,7 +477,7 @@ static const int32_t patItem1Len = 3;
 
 void RelativeDateFormat::loadDates(UErrorCode &status) {
     CalendarData calData(fLocale, "gregorian", status);
-    
+
     UErrorCode tempStatus = status;
     UResourceBundle *dateTimePatterns = calData.getByKey(DT_DateTimePatternsTag, tempStatus);
     if(U_SUCCESS(tempStatus)) {
@@ -488,26 +488,26 @@ void RelativeDateFormat::loadDates(UErrorCode &status) {
             int32_t glueIndex = kDateTime;
             if (patternsSize >= (DateFormat::kDateTimeOffset + DateFormat::kShort + 1)) {
                 // Get proper date time format
-                switch (fDateStyle) { 
-                case kFullRelative: 
-                case kFull: 
-                    glueIndex = kDateTimeOffset + kFull; 
-                    break; 
-                case kLongRelative: 
-                case kLong: 
-                    glueIndex = kDateTimeOffset + kLong; 
-                    break; 
-                case kMediumRelative: 
-                case kMedium: 
-                    glueIndex = kDateTimeOffset + kMedium; 
-                    break;         
-                case kShortRelative: 
-                case kShort: 
-                    glueIndex = kDateTimeOffset + kShort; 
-                    break; 
-                default: 
-                    break; 
-                } 
+                switch (fDateStyle) {
+                case kFullRelative:
+                case kFull:
+                    glueIndex = kDateTimeOffset + kFull;
+                    break;
+                case kLongRelative:
+                case kLong:
+                    glueIndex = kDateTimeOffset + kLong;
+                    break;
+                case kMediumRelative:
+                case kMedium:
+                    glueIndex = kDateTimeOffset + kMedium;
+                    break;
+                case kShortRelative:
+                case kShort:
+                    glueIndex = kDateTimeOffset + kShort;
+                    break;
+                default:
+                    break;
+                }
             }
 
             const UChar *resStr = ures_getStringByIndex(dateTimePatterns, glueIndex, &resStrLen, &tempStatus);
@@ -522,7 +522,7 @@ void RelativeDateFormat::loadDates(UErrorCode &status) {
     rb = ures_getByKeyWithFallback(rb, "fields", rb, &status);
     rb = ures_getByKeyWithFallback(rb, "day", rb, &status);
     rb = ures_getByKeyWithFallback(rb, "relative", rb, &status);
-    // set up min/max 
+    // set up min/max
     fDayMin=-1;
     fDayMax=1;
 
@@ -539,24 +539,24 @@ void RelativeDateFormat::loadDates(UErrorCode &status) {
     int n = 0;
 
     UResourceBundle *subString = NULL;
-    
+
     while(ures_hasNext(rb) && U_SUCCESS(status)) {  // iterate over items
         subString = ures_getNextResource(rb, subString, &status);
-        
+
         if(U_FAILURE(status) || (subString==NULL)) break;
-        
+
         // key = offset #
         const char *key = ures_getKey(subString);
-        
+
         // load the string and length
         int32_t aLen;
         const UChar* aString = ures_getString(subString, &aLen, &status);
-        
+
         if(U_FAILURE(status) || aString == NULL) break;
 
         // calculate the offset
         int32_t offset = atoi(key);
-        
+
         // set min/max
         if(offset < fDayMin) {
             fDayMin = offset;
@@ -564,17 +564,17 @@ void RelativeDateFormat::loadDates(UErrorCode &status) {
         if(offset > fDayMax) {
             fDayMax = offset;
         }
-        
+
         // copy the string pointer
         fDates[n].offset = offset;
         fDates[n].string = aString;
-        fDates[n].len = aLen; 
+        fDates[n].len = aLen;
 
         n++;
     }
     ures_close(subString);
     ures_close(rb);
-    
+
     // the fDates[] array could be sorted here, for direct access.
 }
 
@@ -603,7 +603,7 @@ int32_t RelativeDateFormat::dayDifference(Calendar &cal, UErrorCode &status) {
     nowCal->setTime(Calendar::getNow(), status);
 
     // For the day difference, we are interested in the difference in the (modified) julian day number
-    // which is midnight to midnight.  Using fieldDifference() is NOT correct here, because 
+    // which is midnight to midnight.  Using fieldDifference() is NOT correct here, because
     // 6pm Jan 4th  to 10am Jan 5th should be considered "tomorrow".
     int32_t dayDiff = cal.get(UCAL_JULIAN_DAY, status) - nowCal->get(UCAL_JULIAN_DAY, status);
 
@@ -614,4 +614,3 @@ int32_t RelativeDateFormat::dayDifference(Calendar &cal, UErrorCode &status) {
 U_NAMESPACE_END
 
 #endif
-

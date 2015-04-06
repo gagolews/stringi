@@ -84,7 +84,7 @@ public:
      * Returns a writable version of ptr.
      * If there is exactly one owner, then ptr itself is returned as a
      *  non-const pointer.
-     * If there are multiple owners, then ptr is replaced with a 
+     * If there are multiple owners, then ptr is replaced with a
      * copy-constructed clone,
      * and that is returned.
      * Returns NULL if cloning failed.
@@ -107,7 +107,7 @@ public:
      * Makes dest an owner of the object pointed to by src while adjusting
      * reference counts and deleting the previous object dest pointed to
      * if necessary. Before this call is made, dest must either be NULL or
-     * be included in the reference count of the object it points to. 
+     * be included in the reference count of the object it points to.
      *
      * T must be a subclass of SharedObject.
      */

@@ -10,7 +10,7 @@
 #include "unicode/utypes.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: RFC2445 VTIMEZONE support
  */
 
@@ -101,7 +101,7 @@ public:
 
     /**
      * Create a <code>VTimeZone</code> instance by RFC2445 VTIMEZONE data
-     * 
+     *
      * @param vtzdata The string including VTIMEZONE data block
      * @param status Output param to filled in with a success or an error.
      * @return A <code>VTimeZone</code> initialized by the VTIMEZONE data or

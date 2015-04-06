@@ -670,20 +670,20 @@ ucol_getKeywordValuesForLocale(const char* /*key*/, const char* locale,
 
                     ures_getNextResource(&collres, &defres, status);
 #if U_CHARSET_FAMILY==U_ASCII_FAMILY
-			/* optimize - use the utf-8 string */
+         /* optimize - use the utf-8 string */
                     ures_getUTF8String(&defres, defcoll, &defcollLength, TRUE, status);
 #else
                     {
                        const UChar* defString = ures_getString(&defres, &defcollLength, status);
                        if(U_SUCCESS(*status)) {
-			   if(defcollLength+1 > ULOC_KEYWORDS_CAPACITY) {
-				*status = U_BUFFER_OVERFLOW_ERROR;
-			   } else {
+            if(defcollLength+1 > ULOC_KEYWORDS_CAPACITY) {
+            *status = U_BUFFER_OVERFLOW_ERROR;
+            } else {
                            	u_UCharsToChars(defString, defcoll, defcollLength+1);
-			   }
+            }
                        }
                     }
-#endif	
+#endif
 
                     ulist_addItemBeginList(results, defcoll, TRUE, status);
                 }

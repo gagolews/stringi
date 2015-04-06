@@ -438,7 +438,7 @@ RegexMatcher &RegexMatcher::appendReplacement(UText *dest,
                         status = U_REGEX_INVALID_CAPTURE_GROUP_NAME;
                     }
                 }
-                        
+
             } else if (u_isdigit(nextChar)) {
                 // $n    Scan for a capture group number
                 int32_t numCaptureGroups = fPattern->fGroupMap->size();
@@ -459,7 +459,7 @@ RegexMatcher &RegexMatcher::appendReplacement(UText *dest,
                         break;
                     }
                     (void)UTEXT_NEXT32(replacement);
-                    groupNum=groupNum*10 + nextDigitVal; 
+                    groupNum=groupNum*10 + nextDigitVal;
                     ++numDigits;
                 }
             } else {
@@ -2187,7 +2187,7 @@ int32_t  RegexMatcher::split(UText *input,
                     break;
                 }
                 i++;
-                dest[i] = utext_extract_replace(fInputText, dest[i], 
+                dest[i] = utext_extract_replace(fInputText, dest[i],
                                                start64(groupNum, status), end64(groupNum, status), &status);
             }
 

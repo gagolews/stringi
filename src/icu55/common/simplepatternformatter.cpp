@@ -100,7 +100,7 @@ private:
 
 SimplePatternFormatterPlaceholderValues::SimplePatternFormatterPlaceholderValues(
         const UnicodeString * const *values,
-        int32_t valuesCount) 
+        int32_t valuesCount)
         : fValues(values),
           fValuesCount(valuesCount),
           fAppendTo(NULL),
@@ -344,7 +344,7 @@ UnicodeString& SimplePatternFormatter::formatAndAppend(
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return appendTo;
     }
-    
+
     // Since we are disallowing parameter values that are the same as
     // appendTo, we have to check all placeholderValues as opposed to
     // the first placeholderCount placeholder values.
@@ -406,7 +406,7 @@ UnicodeString& SimplePatternFormatter::formatAndReplace(
                 result,
                 offsetArray,
                 offsetArrayLength);
-        
+
         // We have to make the offset for the placeholderAtStart
         // placeholder be 0. Otherwise it would be the length of the
         // previous value of result.
@@ -516,5 +516,5 @@ UBool SimplePatternFormatter::addPlaceholder(int32_t id, int32_t offset) {
     }
     return TRUE;
 }
-    
+
 U_NAMESPACE_END

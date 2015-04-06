@@ -1,4 +1,4 @@
-/*  
+/*
 **********************************************************************
 *   Copyright (C) 1999-2015, International Business Machines
 *   Corporation and others.  All Rights Reserved.
@@ -218,10 +218,10 @@ ucasemap_mapUTF8(const UCaseMap *csm,
                  UTF8CaseMapper *stringCaseMapper,
                  UErrorCode *pErrorCode);
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 ustr_hashUCharsN(const UChar *str, int32_t length);
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 ustr_hashCharsN(const char *str, int32_t length);
 
 U_CAPI int32_t U_EXPORT2

@@ -12,7 +12,7 @@
 #include "unicode/locdspnm.h"
 #include "unicode/msgfmt.h"
 #include "unicode/ures.h"
-#include "unicode/udisplaycontext.h" 
+#include "unicode/udisplaycontext.h"
 #include "unicode/brkiter.h"
 
 #include "cmemory.h"
@@ -278,7 +278,7 @@ class LocaleDisplayNamesImpl : public LocaleDisplayNames {
     MessageFormat *format;
     MessageFormat *keyTypeFormat;
     UDisplayContext capitalizationContext;
-    BreakIterator* capitalizationBrkIter; 
+    BreakIterator* capitalizationBrkIter;
     static UMutex  capitalizationBrkIterLock;
     UnicodeString formatOpenParen;
     UnicodeString formatReplaceOpenParen;

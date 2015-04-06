@@ -27,10 +27,10 @@
 #include "unicode/utypes.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: SimpleTimeZone is a concrete subclass of TimeZone.
  */
- 
+
 #if !UCONFIG_NO_FORMATTING
 
 #include "unicode/basictz.h"

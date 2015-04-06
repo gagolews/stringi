@@ -119,7 +119,7 @@ static const UChar * const gLastResortNumberPatterns[UNUM_FORMAT_STYLE_COUNT] = 
     gLastResortIsoCurrencyPat,  // UNUM_CURRENCY_ISO
     gLastResortPluralCurrencyPat,  // UNUM_CURRENCY_PLURAL
     gLastResortAccountingCurrencyPat, // UNUM_CURRENCY_ACCOUNTING
-    gLastResortCurrencyPat,  // UNUM_CASH_CURRENCY 
+    gLastResortCurrencyPat,  // UNUM_CASH_CURRENCY
 };
 
 // Keys used for accessing resource bundles
@@ -428,13 +428,13 @@ NumberFormat::format(int64_t number,
 
 
 // -------------------------------------
-// Decimal Number format() default implementation 
+// Decimal Number format() default implementation
 // Subclasses do not normally override this function, but rather the DigitList
 // formatting functions..
 //   The expected call chain from here is
 //      this function ->
 //      NumberFormat::format(Formattable  ->
-//      DecimalFormat::format(DigitList    
+//      DecimalFormat::format(DigitList
 //
 //   Or, for subclasses of Formattable that do not know about DigitList,
 //       this Function ->
@@ -536,7 +536,7 @@ UnicodeString&
 NumberFormat::format(const DigitList &number,
                      UnicodeString& appendTo,
                      FieldPosition& pos,
-                     UErrorCode &status) const { 
+                     UErrorCode &status) const {
     // DecimalFormat overrides this function, and handles DigitList based big decimals.
     // Other subclasses (ChoiceFormat, RuleBasedNumberFormat) do not (yet) handle DigitLists,
     // so this default implementation falls back to formatting decimal numbers as doubles.
@@ -982,10 +982,10 @@ NumberFormat::registerFactory(NumberFormatFactory* toAdopt, UErrorCode& status)
 {
   ICULocaleService *service = getNumberFormatService();
   if (service) {
-	  NFFactory *tempnnf = new NFFactory(toAdopt);
-	  if (tempnnf != NULL) {
-		  return service->registerFactory(tempnnf, status);
-	  }
+     NFFactory *tempnnf = new NFFactory(toAdopt);
+     if (tempnnf != NULL) {
+        return service->registerFactory(tempnnf, status);
+     }
   }
   status = U_MEMORY_ALLOCATION_ERROR;
   return NULL;
@@ -1046,7 +1046,7 @@ NumberFormat::createInstance(const Locale& loc, UNumberFormatStyle kind, UErrorC
     }
     return result;
 }
-    
+
 
 // -------------------------------------
 // Checks if the thousand/10 thousand grouping is used in the
@@ -1390,7 +1390,7 @@ NumberFormat::makeInstance(const Locale& desiredLocale,
         const UChar *patResStr = ures_getStringByKeyWithFallback(resource, gFormatKeys[style], &patLen, &status);
 
         // Didn't find a pattern specific to the numbering system, so fall back to "latn"
-        if ( status == U_MISSING_RESOURCE_ERROR && uprv_strcmp(gLatn,ns->getName())) {  
+        if ( status == U_MISSING_RESOURCE_ERROR && uprv_strcmp(gLatn,ns->getName())) {
             status = U_ZERO_ERROR;
             resource = ures_getByKeyWithFallback(numElements, gLatn, resource, &status);
             resource = ures_getByKeyWithFallback(resource, gPatterns, resource, &status);
@@ -1405,7 +1405,7 @@ NumberFormat::makeInstance(const Locale& desiredLocale,
     if (U_FAILURE(status)) {
         return NULL;
     }
-    if(style==UNUM_CURRENCY || style == UNUM_CURRENCY_ISO || style == UNUM_CURRENCY_ACCOUNTING 
+    if(style==UNUM_CURRENCY || style == UNUM_CURRENCY_ISO || style == UNUM_CURRENCY_ACCOUNTING
         || style == UNUM_CASH_CURRENCY){
         const UChar* currPattern = symbolsToAdopt->getCurrencyPattern();
         if(currPattern!=NULL){

@@ -7,7 +7,7 @@
 */
 
 #ifndef __SIMPLEPATTERNFORMATTER_H__
-#define __SIMPLEPATTERNFORMATTER_H__ 
+#define __SIMPLEPATTERNFORMATTER_H__
 
 #define EXPECTED_PLACEHOLDER_COUNT 3
 
@@ -30,10 +30,10 @@ struct PlaceholderInfo {
  * Using SimplePatternFormatter is both faster and safer than adhoc replacement.
  * They are faster because they are precompiled; they are safer because they
  * account for curly braces escaped by apostrophe (').
- * 
+ *
  * Placeholders are of the form \{[0-9]+\}. If a curly brace is preceded
  * by a single quote, it becomes a curly brace instead of the start of a
- * placeholder. Two single quotes resolve to one single quote. 
+ * placeholder. Two single quotes resolve to one single quote.
  * <p>
  * Example:
  * <pre>
@@ -106,7 +106,7 @@ public:
             const UnicodeString &args0,
             UnicodeString &appendTo,
             UErrorCode &status) const;
-    
+
     /**
      * Formats given values. Neither arg0 nor arg1 can be appendTo.
      */
@@ -115,7 +115,7 @@ public:
             const UnicodeString &args1,
             UnicodeString &appendTo,
             UErrorCode &status) const;
-    
+
     /**
      * Formats given values. Neither arg0, arg1, nor arg2 can be appendTo.
      */
@@ -125,7 +125,7 @@ public:
             const UnicodeString &args2,
             UnicodeString &appendTo,
             UErrorCode &status) const;
-    
+
     /**
      * Formats given values.
      *
@@ -207,7 +207,7 @@ private:
     // is text or if the placeholder at the beginning of this pattern
     // is used again in the middle of the pattern.
     int32_t getUniquePlaceholderAtStart() const;
-    
+
     // ensureCapacity ensures that the capacity of the placeholders array
     // is desiredCapacity. If ensureCapacity must resize the placeholders
     // array, the first placeholderSize elements stay in the array. Note

@@ -803,7 +803,7 @@ public:
     virtual int32_t getAttribute( UNumberFormatAttribute attr,
                                   UErrorCode &status) const;
 
-    
+
     /**
      * Set whether or not grouping will be used in this format.
      * @param newValue    True, grouping will be used in this format.
@@ -827,7 +827,7 @@ public:
      * @param value The UDisplayContext value to set.
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
-     *               updated with any new status from the function. 
+     *               updated with any new status from the function.
      * @stable ICU 53
      */
     virtual void setContext(UDisplayContext value, UErrorCode& status);
@@ -1642,7 +1642,7 @@ public:
 
     /**
      * Allows you to set the behavior of the pattern decimal mark.
-     * 
+     *
      * if TRUE, the input must have a decimal mark if one was specified in the pattern. When
      * FALSE the decimal mark may be omitted from the input.
      *
@@ -1897,8 +1897,8 @@ public:
     /**
      * Sets the <tt>Currency Context</tt> object used to display currency.
      * This takes effect immediately, if this format is a
-     * currency format.  
-     * @param currencyContext new currency context object to use.  
+     * currency format.
+     * @param currencyContext new currency context object to use.
      * @draft ICU 54
      */
     void setCurrencyUsage(UCurrencyUsage newUsage, UErrorCode* ec);
@@ -2206,11 +2206,11 @@ private:
                               UBool setupForCurrentPattern,
                               UBool setupForPluralPattern,
                               UErrorCode& status);
-	
+
     // get the currency rounding with respect to currency usage
     double getCurrencyRounding(const UChar* currency,
                                UErrorCode* ec) const;
-	
+
     // get the currency fraction with respect to currency usage
     int getCurrencyFractionDigits(const UChar* currency,
                                   UErrorCode* ec) const;
@@ -2404,7 +2404,7 @@ private:
 
     // Decimal Format Static Sets singleton.
     const DecimalFormatStaticSets *fStaticSets;
-	
+
     // Currency Usage(STANDARD vs CASH)
     UCurrencyUsage fCurrencyUsage;
 

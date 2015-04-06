@@ -414,8 +414,8 @@ udat_setLenient(    UDateFormat*    fmt,
 }
 
 U_DRAFT UBool U_EXPORT2
-udat_getBooleanAttribute(const UDateFormat* fmt, 
-                         UDateFormatBooleanAttribute attr, 
+udat_getBooleanAttribute(const UDateFormat* fmt,
+                         UDateFormatBooleanAttribute attr,
                          UErrorCode* status)
 {
     if(U_FAILURE(*status)) return FALSE;
@@ -424,9 +424,9 @@ udat_getBooleanAttribute(const UDateFormat* fmt,
 }
 
 U_DRAFT void U_EXPORT2
-udat_setBooleanAttribute(UDateFormat *fmt, 
-                         UDateFormatBooleanAttribute attr, 
-                         UBool newValue, 
+udat_setBooleanAttribute(UDateFormat *fmt,
+                         UDateFormatBooleanAttribute attr,
+                         UBool newValue,
                          UErrorCode* status)
 {
     if(U_FAILURE(*status)) return;
@@ -446,7 +446,7 @@ udat_setCalendar(UDateFormat*    fmt,
     ((DateFormat*)fmt)->setCalendar(*((Calendar*)calendarToSet));
 }
 
-U_DRAFT const UNumberFormat* U_EXPORT2 
+U_DRAFT const UNumberFormat* U_EXPORT2
 udat_getNumberFormatForField(const UDateFormat* fmt, UChar field)
 {
     UErrorCode status = U_ZERO_ERROR;
@@ -461,7 +461,7 @@ udat_getNumberFormat(const UDateFormat* fmt)
     return (const UNumberFormat*) ((DateFormat*)fmt)->getNumberFormat();
 }
 
-U_DRAFT void U_EXPORT2 
+U_DRAFT void U_EXPORT2
 udat_adoptNumberFormatForFields(           UDateFormat*    fmt,
                                     const  UChar*          fields,
                                            UNumberFormat*  numberFormatToSet,
@@ -469,7 +469,7 @@ udat_adoptNumberFormatForFields(           UDateFormat*    fmt,
 {
     verifyIsSimpleDateFormat(fmt, status);
     if (U_FAILURE(*status)) return;
-    
+
     if (fields!=NULL) {
         UnicodeString overrideFields(fields);
         ((SimpleDateFormat*)fmt)->adoptNumberFormat(overrideFields, (NumberFormat*)numberFormatToSet, *status);
@@ -576,7 +576,7 @@ udat_applyPattern(  UDateFormat     *format,
     if(U_FAILURE(status)) {
         return;
     }
-    
+
     if(localized)
         ((SimpleDateFormat*)format)->applyLocalizedPattern(pat, status);
     else
@@ -1195,7 +1195,7 @@ udat_setSymbols(    UDateFormat             *format,
     default:
         *status = U_UNSUPPORTED_ERROR;
         break;
-        
+
     }
 }
 
@@ -1246,7 +1246,7 @@ static void verifyIsRelativeDateFormat(const UDateFormat* fmt, UErrorCode *statu
 }
 
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 udat_toPatternRelativeDate(const UDateFormat *fmt,
                            UChar             *result,
                            int32_t           resultLength,
@@ -1271,7 +1271,7 @@ udat_toPatternRelativeDate(const UDateFormat *fmt,
     return datePattern.extract(result, resultLength, *status);
 }
 
-U_CAPI int32_t U_EXPORT2 
+U_CAPI int32_t U_EXPORT2
 udat_toPatternRelativeTime(const UDateFormat *fmt,
                            UChar             *result,
                            int32_t           resultLength,
@@ -1296,7 +1296,7 @@ udat_toPatternRelativeTime(const UDateFormat *fmt,
     return timePattern.extract(result, resultLength, *status);
 }
 
-U_CAPI void U_EXPORT2 
+U_CAPI void U_EXPORT2
 udat_applyPatternRelative(UDateFormat *format,
                           const UChar *datePattern,
                           int32_t     datePatternLength,

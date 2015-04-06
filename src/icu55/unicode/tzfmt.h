@@ -240,7 +240,7 @@ typedef enum UTimeZoneFormatParseOption {
       * When parsing a time zone display name in UTZFMT_STYLE_SPECIFIC_SHORT,
       * look for the IANA tz database compatible zone abbreviations in addition
       * to the localized names coming from the {@link TimeZoneNames} currently
-      * used by the {@link TimeZoneFormat}. 
+      * used by the {@link TimeZoneFormat}.
       * @draft ICU 54
       */
     UTZFMT_PARSE_OPTION_TZ_DATABASE_ABBREVIATIONS = 0x02

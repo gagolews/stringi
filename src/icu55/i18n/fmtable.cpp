@@ -102,7 +102,7 @@ void  Formattable::init() {
     fType = kLong;
     fDecimalStr = NULL;
     fDecimalNum = NULL;
-    fBogus.setToBogus(); 
+    fBogus.setToBogus();
 }
 
 // -------------------------------------
@@ -354,7 +354,7 @@ void Formattable::dispose()
 
     delete fDecimalStr;
     fDecimalStr = NULL;
-    
+
     FmtStackData *stackData = (FmtStackData*)fStackData;
     if(fDecimalNum != &(stackData->stackDecimalNum)) {
       delete fDecimalNum;
@@ -370,7 +370,7 @@ Formattable::clone() const {
 }
 
 // -------------------------------------
-// Gets the data type of this Formattable object. 
+// Gets the data type of this Formattable object.
 Formattable::Type
 Formattable::getType() const
 {
@@ -397,9 +397,9 @@ Formattable::getLong(UErrorCode& status) const
     if (U_FAILURE(status)) {
         return 0;
     }
-        
+
     switch (fType) {
-    case Formattable::kLong: 
+    case Formattable::kLong:
         return (int32_t)fValue.fInt64;
     case Formattable::kInt64:
         if (fValue.fInt64 > INT32_MAX) {
@@ -431,7 +431,7 @@ Formattable::getLong(UErrorCode& status) const
             return ((const Measure*) fValue.fObject)->
                 getNumber().getLong(status);
         }
-    default: 
+    default:
         status = U_INVALID_FORMAT_ERROR;
         return 0;
     }
@@ -450,10 +450,10 @@ Formattable::getInt64(UErrorCode& status) const
     if (U_FAILURE(status)) {
         return 0;
     }
-        
+
     switch (fType) {
-    case Formattable::kLong: 
-    case Formattable::kInt64: 
+    case Formattable::kLong:
+    case Formattable::kInt64:
         return fValue.fInt64;
     case Formattable::kDouble:
         if (fValue.fDouble > (double)U_INT64_MAX) {
@@ -472,7 +472,7 @@ Formattable::getInt64(UErrorCode& status) const
             }
         } else {
             return (int64_t)fValue.fDouble;
-        } 
+        }
     case Formattable::kObject:
         if (fValue.fObject == NULL) {
             status = U_MEMORY_ALLOCATION_ERROR;
@@ -482,7 +482,7 @@ Formattable::getInt64(UErrorCode& status) const
             return ((const Measure*) fValue.fObject)->
                 getNumber().getInt64(status);
         }
-    default: 
+    default:
         status = U_INVALID_FORMAT_ERROR;
         return 0;
     }
@@ -495,9 +495,9 @@ Formattable::getDouble(UErrorCode& status) const
     if (U_FAILURE(status)) {
         return 0;
     }
-        
+
     switch (fType) {
-    case Formattable::kLong: 
+    case Formattable::kLong:
     case Formattable::kInt64: // loses precision
         return (double)fValue.fInt64;
     case Formattable::kDouble:
@@ -512,7 +512,7 @@ Formattable::getDouble(UErrorCode& status) const
             return ((const Measure*) fValue.fObject)->
                 getNumber().getDouble(status);
         }
-    default: 
+    default:
         status = U_INVALID_FORMAT_ERROR;
         return 0;
     }
@@ -621,8 +621,8 @@ Formattable::adoptObject(UObject* objectToAdopt) {
 }
 
 // -------------------------------------
-UnicodeString& 
-Formattable::getString(UnicodeString& result, UErrorCode& status) const 
+UnicodeString&
+Formattable::getString(UnicodeString& result, UErrorCode& status) const
 {
     if (fType != kString) {
         setError(status, U_INVALID_FORMAT_ERROR);
@@ -638,8 +638,8 @@ Formattable::getString(UnicodeString& result, UErrorCode& status) const
 }
 
 // -------------------------------------
-const UnicodeString& 
-Formattable::getString(UErrorCode& status) const 
+const UnicodeString&
+Formattable::getString(UErrorCode& status) const
 {
     if (fType != kString) {
         setError(status, U_INVALID_FORMAT_ERROR);
@@ -653,8 +653,8 @@ Formattable::getString(UErrorCode& status) const
 }
 
 // -------------------------------------
-UnicodeString& 
-Formattable::getString(UErrorCode& status) 
+UnicodeString&
+Formattable::getString(UErrorCode& status)
 {
     if (fType != kString) {
         setError(status, U_INVALID_FORMAT_ERROR);
@@ -668,15 +668,15 @@ Formattable::getString(UErrorCode& status)
 }
 
 // -------------------------------------
-const Formattable* 
-Formattable::getArray(int32_t& count, UErrorCode& status) const 
+const Formattable*
+Formattable::getArray(int32_t& count, UErrorCode& status) const
 {
     if (fType != kArray) {
         setError(status, U_INVALID_FORMAT_ERROR);
         count = 0;
         return NULL;
     }
-    count = fValue.fArrayAndCount.fCount; 
+    count = fValue.fArrayAndCount.fCount;
     return fValue.fArrayAndCount.fArray;
 }
 
@@ -684,7 +684,7 @@ Formattable::getArray(int32_t& count, UErrorCode& status) const
 // Gets the bogus string, ensures mondo bogosity.
 
 UnicodeString*
-Formattable::getBogus() const 
+Formattable::getBogus() const
 {
     return (UnicodeString*)&fBogus; /* cast away const :-( */
 }
@@ -849,7 +849,7 @@ FormattableStreamer::streamOut(ostream& stream, const Formattable& obj)
 
     UnicodeString buffer;
     switch(obj.getType()) {
-        case Formattable::kDate : 
+        case Formattable::kDate :
             // Creates a DateFormat instance for formatting the
             // Date instance.
             if (defDateFormat == 0) {

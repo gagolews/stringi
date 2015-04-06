@@ -1,10 +1,10 @@
 /*
 ******************************************************************************
-* Copyright (C) 2014, International Business Machines Corporation and         
-* others. All Rights Reserved.                                                
+* Copyright (C) 2014, International Business Machines Corporation and
+* others. All Rights Reserved.
 ******************************************************************************
-*                                                                             
-* File RELDATEFMT.CPP                                                             
+*
+* File RELDATEFMT.CPP
 ******************************************************************************
 */
 
@@ -70,7 +70,7 @@ RelativeDateTimeCacheData::~RelativeDateTimeCacheData() {
 }
 
 static UBool getStringWithFallback(
-        const UResourceBundle *resource, 
+        const UResourceBundle *resource,
         const char *key,
         UnicodeString &result,
         UErrorCode &status) {
@@ -85,7 +85,7 @@ static UBool getStringWithFallback(
 }
 
 static UBool getOptionalStringWithFallback(
-        const UResourceBundle *resource, 
+        const UResourceBundle *resource,
         const char *key,
         UnicodeString &result,
         UErrorCode &status) {
@@ -108,7 +108,7 @@ static UBool getOptionalStringWithFallback(
 }
 
 static UBool getString(
-        const UResourceBundle *resource, 
+        const UResourceBundle *resource,
         UnicodeString &result,
         UErrorCode &status) {
     int32_t len = 0;
@@ -121,7 +121,7 @@ static UBool getString(
 }
 
 static UBool getStringByIndex(
-        const UResourceBundle *resource, 
+        const UResourceBundle *resource,
         int32_t idx,
         UnicodeString &result,
         UErrorCode &status) {
@@ -141,17 +141,17 @@ static void initAbsoluteUnit(
             UnicodeString *absoluteUnit,
             UErrorCode &status) {
     getStringWithFallback(
-            resource, 
+            resource,
             "-1",
             absoluteUnit[UDAT_DIRECTION_LAST],
             status);
     getStringWithFallback(
-            resource, 
+            resource,
             "0",
             absoluteUnit[UDAT_DIRECTION_THIS],
             status);
     getStringWithFallback(
-            resource, 
+            resource,
             "1",
             absoluteUnit[UDAT_DIRECTION_NEXT],
             status);
@@ -898,4 +898,3 @@ void RelativeDateTimeFormatter::init(
 U_NAMESPACE_END
 
 #endif /* !UCONFIG_NO_FORMATTING */
-

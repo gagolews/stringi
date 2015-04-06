@@ -37,7 +37,7 @@ class U_COMMON_API CacheKeyBase : public UObject {
    /**
     * Copy constructor. Needed to support cloning.
     */
-   CacheKeyBase(const CacheKeyBase &other) 
+   CacheKeyBase(const CacheKeyBase &other)
            : UObject(other), creationStatus(other.creationStatus) { }
    virtual ~CacheKeyBase();
 
@@ -92,7 +92,7 @@ class U_COMMON_API CacheKeyBase : public UObject {
 
 
 /**
- * Templated version of CacheKeyBase. 
+ * Templated version of CacheKeyBase.
  * A key of type LocaleCacheKey<T> maps to a value of type T.
  */
 template<typename T>

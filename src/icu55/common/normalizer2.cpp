@@ -200,8 +200,8 @@ static UBool U_CALLCONV uprv_normalizer2_cleanup() {
     nfcSingleton = NULL;
     delete noopSingleton;
     noopSingleton = NULL;
-    nfcInitOnce.reset(); 
-    noopInitOnce.reset(); 
+    nfcInitOnce.reset();
+    noopInitOnce.reset();
     return TRUE;
 }
 

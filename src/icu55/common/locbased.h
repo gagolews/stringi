@@ -86,7 +86,7 @@ class U_COMMON_API LocaleBased : public UMemory {
  private:
 
     char* valid;
-    
+
     char* actual;
 };
 

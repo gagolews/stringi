@@ -24,7 +24,7 @@
 
 #if !UCONFIG_NO_NORMALIZATION
 
-#if !UCONFIG_NO_REGULAR_EXPRESSIONS 
+#if !UCONFIG_NO_REGULAR_EXPRESSIONS
 
 #include "uspoof_impl.h"
 #include "utrie2.h"
@@ -61,10 +61,10 @@ class BuilderScriptSet: public UMemory {
 
 
 void buildWSConfusableData(SpoofImpl *spImpl, const char * confusablesWS,
-          int32_t confusablesWSLen, UParseError *pe, UErrorCode &status); 
+          int32_t confusablesWSLen, UParseError *pe, UErrorCode &status);
 
 U_NAMESPACE_END
 
-#endif // !UCONFIG_NO_REGULAR_EXPRESSIONS 
-#endif // !UCONFIG_NO_NORMALIZATION 
+#endif // !UCONFIG_NO_REGULAR_EXPRESSIONS
+#endif // !UCONFIG_NO_NORMALIZATION
 #endif

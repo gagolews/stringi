@@ -558,4 +558,3 @@ ulocimp_toLegacyType(const char* key, const char* type, UBool* isKnownKey, UBool
     }
     return NULL;
 }
-

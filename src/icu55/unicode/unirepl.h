@@ -13,7 +13,7 @@
 #include "unicode/utypes.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: UnicodeReplacer
  */
 

@@ -168,7 +168,7 @@ umtx_condWait(UConditionVar *condition, UMutex *mutex) {
 
     condition->fWaitCount++;
     umtx_unlock(mutex);
-    WaitForSingleObject(condition->fEntryGate, INFINITE); 
+    WaitForSingleObject(condition->fEntryGate, INFINITE);
     umtx_lock(mutex);
     condition->fWaitCount--;
     if (condition->fWaitCount == 0) {

@@ -314,7 +314,7 @@ SimpleFilteredBreakIteratorBuilder::~SimpleFilteredBreakIteratorBuilder()
 {
 }
 
-SimpleFilteredBreakIteratorBuilder::SimpleFilteredBreakIteratorBuilder(UErrorCode &status) 
+SimpleFilteredBreakIteratorBuilder::SimpleFilteredBreakIteratorBuilder(UErrorCode &status)
   : fSet(status)
 {
 }
@@ -386,7 +386,7 @@ SimpleFilteredBreakIteratorBuilder::build(BreakIterator* adoptBreakIterator, UEr
   int32_t subCount = fSet.size();
 
   UnicodeString *ustrs_ptr = newUnicodeStringArray(subCount);
-  
+
   LocalArray<UnicodeString> ustrs(ustrs_ptr);
 
   LocalMemory<int> partials;

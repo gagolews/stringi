@@ -54,7 +54,6 @@ void stri__split_codepoints(deque<SEXP>& out, const char* s, int n) {
 }
 
 
-
 /**
  *  Translate characters
  *

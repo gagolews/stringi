@@ -33,7 +33,7 @@
 *   limitations and adds m:n character mappings and other features.
 *   See ucnv_ext.h for details.
 *
-*   Change history: 
+*   Change history:
 *
 *    5/6/2001       Ram       Moved  MBCS_SINGLE_RESULT_FROM_U,MBCS_STAGE_2_FROM_U,
 *                             MBCS_VALUE_2_FROM_STAGE_2, MBCS_VALUE_4_FROM_STAGE_2
@@ -510,7 +510,7 @@ static const UConverterImpl _MBCSImpl={
 
 const UConverterSharedData _MBCSData={
     sizeof(UConverterSharedData), 1,
-    NULL, NULL, NULL, FALSE, &_MBCSImpl, 
+    NULL, NULL, NULL, FALSE, &_MBCSImpl,
     0, UCNV_MBCS_TABLE_INITIALIZER
 };
 

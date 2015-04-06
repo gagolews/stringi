@@ -60,4 +60,3 @@ void ucln_i18n_registerCleanup(ECleanupI18NType type,
     ucln_registerAutomaticCleanup();
 #endif
 }
-

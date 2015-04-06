@@ -826,10 +826,10 @@ static void dumpUS(FILE* f, const UnicodeString& us) {
   int len = us.length();
   char* buf = (char *)uprv_malloc((len+1)*sizeof(char)); //new char[len+1];
   if (buf != NULL) {
-	  us.extract(0, len, buf);
-	  buf[len] = 0;
-	  fprintf(f, "%s", buf);
-	  uprv_free(buf); //delete[] buf;
+     us.extract(0, len, buf);
+     buf[len] = 0;
+     fprintf(f, "%s", buf);
+     uprv_free(buf); //delete[] buf;
   }
 }
 #endif
@@ -1086,7 +1086,7 @@ NFRule::matchToDelimiter(const UnicodeString& text,
                          const NFSubstitution* sub,
                          double upperBound) const
 {
-	UErrorCode status = U_ZERO_ERROR;
+   UErrorCode status = U_ZERO_ERROR;
     // if "delimiter" contains real (i.e., non-ignorable) text, search
     // it for "delimiter" beginning at "start".  If that succeeds, then
     // use "sub"'s doParse() method to match the text before the

@@ -161,8 +161,8 @@ static UBool U_CALLCONV uprv_loaded_normalizer2_cleanup() {
     nfkc_cfSingleton = NULL;
     uhash_close(cache);
     cache=NULL;
-    nfkcInitOnce.reset(); 
-    nfkc_cfInitOnce.reset(); 
+    nfkcInitOnce.reset();
+    nfkc_cfInitOnce.reset();
     return TRUE;
 }
 

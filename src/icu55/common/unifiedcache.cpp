@@ -1,10 +1,10 @@
 /*
 ******************************************************************************
-* Copyright (C) 2014, International Business Machines Corporation and         
-* others. All Rights Reserved.                                                
+* Copyright (C) 2014, International Business Machines Corporation and
+* others. All Rights Reserved.
 ******************************************************************************
-*                                                                             
-* File UNIFIEDCACHE.CPP 
+*
+* File UNIFIEDCACHE.CPP
 ******************************************************************************
 */
 
@@ -160,7 +160,7 @@ void UnifiedCache::_dumpContents() const {
             ++cnt;
             fprintf(
                     stderr,
-                    "Unified Cache: Key '%s', error %d, value %p, total refcount %d, soft refcount %d\n", 
+                    "Unified Cache: Key '%s', error %d, value %p, total refcount %d, soft refcount %d\n",
                     key->writeDescription(buffer, 256),
                     key->creationStatus,
                     sharedObject == gNoValue ? NULL :sharedObject,
@@ -177,7 +177,7 @@ UnifiedCache::~UnifiedCache() {
     flush();
     {
         // Now all that should be left in the cache are entries that refer to
-        // each other and entries with hard references from outside the cache. 
+        // each other and entries with hard references from outside the cache.
         // Nothing we can do about these so proceed to wipe out the cache.
         Mutex lock(&gCacheMutex);
         _flush(TRUE);
@@ -208,11 +208,11 @@ UBool UnifiedCache::_flush(UBool all) const {
 }
 
 // Places a new value and creationStatus in the cache for the given key.
-// On entry, gCacheMutex must be held. key must not exist in the cache. 
+// On entry, gCacheMutex must be held. key must not exist in the cache.
 // On exit, value and creation status placed under key. Soft reference added
 // to value on successful add. On error sets status.
 void UnifiedCache::_putNew(
-        const CacheKeyBase &key, 
+        const CacheKeyBase &key,
         const SharedObject *value,
         const UErrorCode creationStatus,
         UErrorCode &status) const {
@@ -331,7 +331,7 @@ void UnifiedCache::_get(
 // entry. Soft reference removed from previous stored value. Waiting
 // threads notified.
 void UnifiedCache::_put(
-        const UHashElement *element, 
+        const UHashElement *element,
         const SharedObject *value,
         const UErrorCode status) {
     U_ASSERT(_inProgress(element));
@@ -364,7 +364,7 @@ void UnifiedCache::_fetch(
     SharedObject::copyPtr(
             (const SharedObject *) element->value.pointer, value);
 }
-    
+
 // Determine if given hash entry is in progress.
 // On entry, gCacheMutex must be held.
 UBool UnifiedCache::_inProgress(const UHashElement *element) {
