@@ -197,7 +197,7 @@ int32_t StringReplacer::replace(Replaceable& text,
 
         // Delete the old text (the key)
         text.handleReplaceBetween(start + outLen, limit + outLen, UnicodeString());
-    }        
+    }
 
     if (hasCursor) {
         // Adjust the cursor for positions outside the key.  These

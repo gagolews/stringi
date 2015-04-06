@@ -104,4 +104,3 @@ UBool FieldPositionIterator::next(FieldPosition& fp) {
 U_NAMESPACE_END
 
 #endif /* #if !UCONFIG_NO_FORMATTING */
-

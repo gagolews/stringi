@@ -148,7 +148,7 @@ DigitList::operator==(const DigitList& that) const
 }
 
 // -------------------------------------
-//      comparison function.   Returns 
+//      comparison function.   Returns
 //         Not Comparable :  -2
 //                      < :  -1
 //                     == :   0
@@ -213,18 +213,18 @@ formatBase10(int64_t number, char *outputStr) {
 
     const int32_t MAX_IDX = MAX_DIGITS+2;
     int32_t destIdx = MAX_IDX;
-    outputStr[--destIdx] = 0; 
+    outputStr[--destIdx] = 0;
 
     int64_t  n = number;
     if (number < 0) {   // Negative numbers are slightly larger than a postive
         outputStr[--destIdx] = (char)(-(n % 10) + kZero);
         n /= -10;
     }
-    do { 
+    do {
         outputStr[--destIdx] = (char)(n % 10 + kZero);
         n /= 10;
     } while (n > 0);
-    
+
     if (number < 0) {
         outputStr[--destIdx] = '-';
     }
@@ -249,7 +249,7 @@ formatBase10(int64_t number, char *outputStr) {
 //     This mode, inherited from Java, means that numbers that would not format exactly
 //     will return an error when formatting is attempted.
 
-void 
+void
 DigitList::setRoundingMode(DecimalFormat::ERoundingMode m) {
     enum rounding r;
 
@@ -268,16 +268,16 @@ DigitList::setRoundingMode(DecimalFormat::ERoundingMode m) {
          r = uprv_decContextGetRounding(&fContext);
     }
     uprv_decContextSetRounding(&fContext, r);
-  
+
 }
 
 
 // -------------------------------------
 
-void  
+void
 DigitList::setPositive(UBool s) {
     if (s) {
-        fDecNumber->bits &= ~DECNEG; 
+        fDecNumber->bits &= ~DECNEG;
     } else {
         fDecNumber->bits |= DECNEG;
     }
@@ -285,7 +285,7 @@ DigitList::setPositive(UBool s) {
 }
 // -------------------------------------
 
-void     
+void
 DigitList::setDecimalAt(int32_t d) {
     U_ASSERT((fDecNumber->bits & DECSPECIAL) == 0);  // Not Infinity or NaN
     U_ASSERT(d-1>-999999999);
@@ -299,7 +299,7 @@ DigitList::setDecimalAt(int32_t d) {
     internalClear();
 }
 
-int32_t  
+int32_t
 DigitList::getDecimalAt() {
     U_ASSERT((fDecNumber->bits & DECSPECIAL) == 0);  // Not Infinity or NaN
     if (decNumberIsZero(fDecNumber) || ((fDecNumber->bits & DECSPECIAL) != 0)) {
@@ -308,7 +308,7 @@ DigitList::getDecimalAt() {
     return fDecNumber->exponent + fDecNumber->digits;
 }
 
-void     
+void
 DigitList::setCount(int32_t c)  {
     U_ASSERT(c <= fContext.digits);
     if (c == 0) {
@@ -321,7 +321,7 @@ DigitList::setCount(int32_t c)  {
     internalClear();
 }
 
-int32_t  
+int32_t
 DigitList::getCount() const {
     if (decNumberIsZero(fDecNumber) && fDecNumber->exponent==0) {
        // The extra test for exponent==0 is needed because parsing sometimes appends
@@ -331,8 +331,8 @@ DigitList::getCount() const {
        return fDecNumber->digits;
     }
 }
-    
-void     
+
+void
 DigitList::setDigit(int32_t i, char v) {
     int32_t count = fDecNumber->digits;
     U_ASSERT(i<count);
@@ -342,7 +342,7 @@ DigitList::setDigit(int32_t i, char v) {
     internalClear();
 }
 
-char     
+char
 DigitList::getDigit(int32_t i) {
     int32_t count = fDecNumber->digits;
     U_ASSERT(i<count);
@@ -360,7 +360,7 @@ DigitList::getDigitValue(int32_t i) {
 // -------------------------------------
 // Appends the digit to the digit list if it's not out of scope.
 // Ignores the digit, otherwise.
-// 
+//
 // This function is horribly inefficient to implement with decNumber because
 // the digits are stored least significant first, which requires moving all
 // existing digits down one to make space for the new one to be appended.
@@ -444,11 +444,11 @@ DigitList::getDouble() const
         }
         if (!isPositive()) {
             tDouble = -tDouble; //this was incorrectly "-fDouble" originally.
-        } 
+        }
     } else {
         MaybeStackArray<char, MAX_DBL_DIGITS+18> s;
            // Note:  14 is a  magic constant from the decNumber library documentation,
-           //        the max number of extra characters beyond the number of digits 
+           //        the max number of extra characters beyond the number of digits
            //        needed to represent the number in string form.  Add a few more
            //        for the additional digits we retain.
 
@@ -464,7 +464,7 @@ DigitList::getDouble() const
             uprv_decNumberToString(this->fDecNumber, s.getAlias());
         }
         U_ASSERT(uprv_strlen(&s[0]) < MAX_DBL_DIGITS+18);
-        
+
         if (decimalSeparator != '.') {
             char *decimalPt = strchr(s.getAlias(), '.');
             if (decimalPt != NULL) {
@@ -517,7 +517,7 @@ int32_t DigitList::getLong() /*const*/
 int64_t DigitList::getInt64() /*const*/ {
     if(fHave==kInt64) {
       return fUnion.fInt64;
-    } 
+    }
     // Truncate if non-integer.
     // Return 0 if out of range.
     // Range of in64_t is -9223372036854775808 to 9223372036854775807  (19 digits)
@@ -561,7 +561,7 @@ int64_t DigitList::getInt64() /*const*/ {
             svalue = 0;
         }
     }
-        
+
     return svalue;
 }
 
@@ -733,7 +733,7 @@ DigitList::set(const StringPiece &source, UErrorCode &status, uint32_t /*fastpat
         return;
     }
 
-#if 0    
+#if 0
     if(fastpathBits==(kFastpathOk|kNoDecimal)) {
       int32_t size = source.size();
       const char *data = source.data();
@@ -780,7 +780,7 @@ DigitList::set(const StringPiece &source, UErrorCode &status, uint32_t /*fastpat
       }
     }
     internalClear();
-}   
+}
 
 /**
  * Set the digit list to a representation of the given double value.
@@ -921,7 +921,7 @@ DigitList::roundFixedPoint(int32_t maximumFractionDigits) {
     uprv_decNumberZero(&scale);    //    fraction digits.
     scale.exponent = -maximumFractionDigits;
     scale.lsu[0] = 1;
-    
+
     uprv_decNumberQuantize(fDecNumber, fDecNumber, &scale, &fContext);
     trim();
     internalClear();

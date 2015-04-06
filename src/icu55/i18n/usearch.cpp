@@ -3758,7 +3758,7 @@ static UCompareCEsResult compareCE64s(int64_t targCE, int64_t patCE, int16_t com
     if (compareType == 0) {
         return U_CE_NO_MATCH;
     }
-    
+
     int64_t targCEshifted = targCE >> 32;
     int64_t patCEshifted = patCE >> 32;
     int64_t mask;
@@ -3789,7 +3789,7 @@ static UCompareCEsResult compareCE64s(int64_t targCE, int64_t patCE, int16_t com
         return (patLev2 == U_CE_LEVEL2_BASE || (compareType == USEARCH_ANY_BASE_WEIGHT_IS_WILDCARD && targLev2 == U_CE_LEVEL2_BASE) )?
             U_CE_MATCH: U_CE_NO_MATCH;
     }
-    
+
     mask = 0xFFFF0000;
     int32_t targLev3 = (int32_t)(targCE & mask);
     int32_t patLev3 = (int32_t)(patCE & mask);
@@ -3888,7 +3888,7 @@ U_CAPI UBool U_EXPORT2 usearch_search(UStringSearch  *strsrch,
             found = FALSE;
             break;
         }
-        
+
         for (patIx=0; patIx<strsrch->pattern.pcesLength; patIx++) {
             patCE = strsrch->pattern.pces[patIx];
             targetCEI = ceb.get(targetIx+patIx+targetIxOffset);

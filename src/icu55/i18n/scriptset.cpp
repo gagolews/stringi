@@ -38,7 +38,7 @@ ScriptSet::~ScriptSet() {
 ScriptSet::ScriptSet(const ScriptSet &other) {
     *this = other;
 }
-    
+
 
 ScriptSet & ScriptSet::operator =(const ScriptSet &other) {
     for (uint32_t i=0; i<UPRV_LENGTHOF(bits); i++) {
@@ -123,7 +123,7 @@ ScriptSet &ScriptSet::intersect(UScriptCode script, UErrorCode &status) {
     }
     return *this;
 }
-    
+
 UBool ScriptSet::intersects(const ScriptSet &other) const {
     for (uint32_t i=0; i<UPRV_LENGTHOF(bits); i++) {
         if ((bits[i] & other.bits[i]) != 0) {

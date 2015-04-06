@@ -25,7 +25,7 @@
 #if !UCONFIG_NO_FORMATTING
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Format numbers using Windows API.
  */
 

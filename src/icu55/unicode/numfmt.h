@@ -527,7 +527,7 @@ public:
                                   UErrorCode& status) const;
 public:
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
      * to a double and formats that.  Subclasses of NumberFormat that want
@@ -549,7 +549,7 @@ public:
                                   UErrorCode& status) const;
 
     /**
-     * Format a decimal number. 
+     * Format a decimal number.
      * The number is a DigitList wrapper onto a floating point decimal number.
      * The default implementation in NumberFormat converts the decimal number
      * to a double and formats that.  Subclasses of NumberFormat that want
@@ -948,14 +948,14 @@ public:
      * @stable ICU 2.6
      */
     const UChar* getCurrency() const;
-	
+
     /**
      * Set a particular UDisplayContext value in the formatter, such as
      * UDISPCTX_CAPITALIZATION_FOR_STANDALONE.
      * @param value The UDisplayContext value to set.
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
-     *               updated with any new status from the function. 
+     *               updated with any new status from the function.
      * @stable ICU 53
      */
     virtual void setContext(UDisplayContext value, UErrorCode& status);
@@ -966,7 +966,7 @@ public:
      * @param type The UDisplayContextType whose value to return
      * @param status Input/output status. If at entry this indicates a failure
      *               status, the function will do nothing; otherwise this will be
-     *               updated with any new status from the function. 
+     *               updated with any new status from the function.
      * @return The UDisplayContextValue for the specified type.
      * @stable ICU 53
      */
@@ -1064,7 +1064,7 @@ private:
   protected:
     static const int32_t gDefaultMaxIntegerDigits;
     static const int32_t gDefaultMinIntegerDigits;
- 
+
   private:
     UBool      fParseIntegerOnly;
     UBool      fLenient; // TRUE => lenient parse is enabled

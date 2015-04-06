@@ -139,7 +139,7 @@ protected:
      * @internal
      */
     int32_t             fPositionInCache;
-    
+
     /**
      *
      * If present, UStack of LanguageBreakEngine objects that might handle
@@ -148,7 +148,7 @@ protected:
      * @internal
      */
     UStack              *fLanguageBreakEngines;
-    
+
     /**
      *
      * If present, the special LanguageBreakEngine used for handling
@@ -157,14 +157,14 @@ protected:
      * @internal
      */
     UnhandledEngine     *fUnhandledBreakEngine;
-    
+
     /**
      *
      * The type of the break iterator, or -1 if it has not been set.
      * @internal
      */
     int32_t             fBreakType;
-    
+
 protected:
     //=======================================================================
     // constructors
@@ -248,7 +248,7 @@ public:
      * constuction from source rules.
      *
      * Ownership of the storage containing the compiled rules remains with the
-     * caller of this function.  The compiled rules must not be  modified or 
+     * caller of this function.  The compiled rules must not be  modified or
      * deleted during the life of the break iterator.
      *
      * The compiled rules are not compatible across different major versions of ICU.

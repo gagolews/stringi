@@ -555,7 +555,7 @@ DateTimePatternGenerator::addCLDRData(const Locale& locale, UErrorCode& err) {
     UnicodeString defaultItemFormat(TRUE, UDATPG_ItemFormat, UPRV_LENGTHOF(UDATPG_ItemFormat)-1);  // Read-only alias.
 
     err = U_ZERO_ERROR;
-    
+
     fDefaultHourFormatChar = 0;
     for (i=0; i<UDATPG_FIELD_COUNT; ++i ) {
         appendItemNames[i]=CAP_F;
@@ -754,7 +754,7 @@ DateTimePatternGenerator::addCLDRData(const Locale& locale, UErrorCode& err) {
             }
         }
         // Go to the top of the loop to process contents of calTypeBundle
-    }    
+    }
 
     if (hackPattern.length()>0) {
         hackTimes(hackPattern, err);

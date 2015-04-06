@@ -113,9 +113,9 @@ void Grego::dayToFields(double day, int32_t& year, int32_t& month,
     } else {
         ++year;
     }
-    
+
     UBool isLeap = isLeapYear(year);
-    
+
     // Gregorian day zero is a Monday.
     dow = (int32_t) uprv_fmod(day + 1, 7);
     dow += (dow < 0) ? (UCAL_SUNDAY + 7) : UCAL_SUNDAY;
@@ -166,7 +166,7 @@ int32_t Grego::dayOfWeekInMonth(int32_t year, int32_t month, int32_t dom) {
 #define U_CALENDAR_DATA ((char*)0)
 
 
-// CalendarData::CalendarData(const Locale& loc, UErrorCode& status) 
+// CalendarData::CalendarData(const Locale& loc, UErrorCode& status)
 //   : fFillin(NULL), fBundle(NULL), fFallback(NULL) {
 //   initData(loc.getBaseName(), (char*) "???", status);
 // }
@@ -180,16 +180,16 @@ void CalendarData::initData(const char *locale, const char *type, UErrorCode& st
   fOtherFillin = ures_open(U_CALENDAR_DATA, locale, &status);
   fFillin = ures_getByKey(fOtherFillin, U_CALENDAR_KEY, fFillin, &status);
 
-  if((type != NULL) && 
-     (*type != '\0') && 
+  if((type != NULL) &&
+     (*type != '\0') &&
      (uprv_strcmp(type, U_GREGORIAN_KEY)))
   {
     fBundle = ures_getByKeyWithFallback(fFillin, type, NULL, &status);
     fFallback = ures_getByKeyWithFallback(fFillin, U_GREGORIAN_KEY, NULL, &status);
 
 #if defined (U_DEBUG_CALDATA)
-    fprintf(stderr, "%p: CalendarData(%s, %s, %s) -> main(%p, %s)=%s, fallback(%p, %s)=%s\n", 
-            this, locale, type, u_errorName(status), fBundle, type, fBundle?ures_getLocale(fBundle, &status):"", 
+    fprintf(stderr, "%p: CalendarData(%s, %s, %s) -> main(%p, %s)=%s, fallback(%p, %s)=%s\n",
+            this, locale, type, u_errorName(status), fBundle, type, fBundle?ures_getLocale(fBundle, &status):"",
             fFallback, U_GREGORIAN_KEY, fFallback?ures_getLocale(fFallback, &status):"");
 #endif
 
@@ -258,7 +258,7 @@ UResourceBundle* CalendarData::getByKey2(const char *key, const char *subKey, UE
     }
 
 //// handling of 'default' keyword on failure: Commented out for 3.0.
-//   if((status == U_MISSING_RESOURCE_ERROR) && 
+//   if((status == U_MISSING_RESOURCE_ERROR) &&
 //      uprv_strcmp(subKey,U_DEFAULT_KEY)) { // avoid recursion
 // #if defined (U_DEBUG_CALDATA)
 //     fprintf(stderr, "%p: - attempting fallback -\n", this);

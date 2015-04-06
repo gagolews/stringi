@@ -997,7 +997,7 @@ static int32_t binarySearch(
     }
     return -1;
 }
-    
+
 MeasureUnit::MeasureUnit(const MeasureUnit &other)
         : fTypeId(other.fTypeId), fSubTypeId(other.fSubTypeId) {
     uprv_strcpy(fCurrency, other.fCurrency);
@@ -1157,7 +1157,7 @@ void MeasureUnit::initTime(const char *timeId) {
     fTypeId = result;
     result = binarySearch(gSubTypes, gOffsets[fTypeId], gOffsets[fTypeId + 1], timeId);
     U_ASSERT(result != -1);
-    fSubTypeId = result - gOffsets[fTypeId]; 
+    fSubTypeId = result - gOffsets[fTypeId];
 }
 
 void MeasureUnit::initCurrency(const char *isoCurrency) {

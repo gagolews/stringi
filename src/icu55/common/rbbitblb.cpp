@@ -84,11 +84,11 @@ void  RBBITableBuilder::build() {
 #endif
 
     //
-    // If the rules contained any references to {bof} 
+    // If the rules contained any references to {bof}
     //   add a {bof} <cat> <former root of tree> to the
-    //   tree.  Means that all matches must start out with the 
+    //   tree.  Means that all matches must start out with the
     //   {bof} fake character.
-    // 
+    //
     if (fRB->fSetBuilder->sawBOF()) {
         RBBINode *bofTop    = new RBBINode(RBBINode::opCat);
         RBBINode *bofLeaf   = new RBBINode(RBBINode::leafChar);
@@ -510,7 +510,7 @@ void RBBITableBuilder::bofFixup() {
     //  (excluding the fake bofNode)
     //  We want the nodes that can start a match in the
     //     part labeled "rest of tree"
-    // 
+    //
     UVector *matchStartNodes = fTree->fLeftChild->fRightChild->fFirstPosSet;
 
     RBBINode *startNode;
@@ -526,7 +526,7 @@ void RBBITableBuilder::bofFixup() {
             //    explicitly written into a rule.
             //  Add everything from the followPos set of this node to the
             //    followPos set of the fake bofNode at the start of the tree.
-            //  
+            //
             setAdd(bofNode->fFollowPos, startNode->fFollowPos);
         }
     }
@@ -547,7 +547,7 @@ void RBBITableBuilder::buildStateTable() {
     }
     RBBIStateDescriptor *failState;
     // Set it to NULL to avoid uninitialized warning
-    RBBIStateDescriptor *initialState = NULL; 
+    RBBIStateDescriptor *initialState = NULL;
     //
     // Add a dummy state 0 - the stop state.  Not from Aho.
     int      lastInputSymbol = fRB->fSetBuilder->getNumCharCategories() - 1;

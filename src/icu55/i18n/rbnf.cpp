@@ -77,34 +77,34 @@ class LocalizationInfo : public UMemory {
 protected:
     virtual ~LocalizationInfo();
     uint32_t refcount;
-    
+
 public:
     LocalizationInfo() : refcount(0) {}
-    
+
     LocalizationInfo* ref(void) {
         ++refcount;
         return this;
     }
-    
+
     LocalizationInfo* unref(void) {
         if (refcount && --refcount == 0) {
             delete this;
         }
         return NULL;
     }
-    
+
     virtual UBool operator==(const LocalizationInfo* rhs) const;
     inline  UBool operator!=(const LocalizationInfo* rhs) const { return !operator==(rhs); }
-    
+
     virtual int32_t getNumberOfRuleSets(void) const = 0;
     virtual const UChar* getRuleSetName(int32_t index) const = 0;
     virtual int32_t getNumberOfDisplayLocales(void) const = 0;
     virtual const UChar* getLocaleName(int32_t index) const = 0;
     virtual const UChar* getDisplayName(int32_t localeIndex, int32_t ruleIndex) const = 0;
-    
+
     virtual int32_t indexForLocale(const UChar* locale) const;
     virtual int32_t indexForRuleSet(const UChar* ruleset) const;
-    
+
 //    virtual UClassID getDynamicClassID() const = 0;
 //    static UClassID getStaticClassID(void);
 };
@@ -114,7 +114,7 @@ LocalizationInfo::~LocalizationInfo() {}
 //UOBJECT_DEFINE_ABSTRACT_RTTI_IMPLEMENTATION(LocalizationInfo)
 
 // if both strings are NULL, this returns TRUE
-static UBool 
+static UBool
 streq(const UChar* lhs, const UChar* rhs) {
     if (rhs == lhs) {
         return TRUE;
@@ -131,7 +131,7 @@ LocalizationInfo::operator==(const LocalizationInfo* rhs) const {
         if (this == rhs) {
             return TRUE;
         }
-        
+
         int32_t rsc = getNumberOfRuleSets();
         if (rsc == rhs->getNumberOfRuleSets()) {
             for (int i = 0; i < rsc; ++i) {
@@ -193,22 +193,22 @@ class VArray {
     Fn_Deleter deleter;
 public:
     VArray() : buf(NULL), cap(0), size(0), deleter(NULL) {}
-    
+
     VArray(Fn_Deleter del) : buf(NULL), cap(0), size(0), deleter(del) {}
-    
+
     ~VArray() {
         if (deleter) {
             for (int i = 0; i < size; ++i) {
                 (*deleter)(buf[i]);
             }
         }
-        uprv_free(buf); 
+        uprv_free(buf);
     }
-    
+
     int32_t length() {
         return size;
     }
-    
+
     void add(void* elem, UErrorCode& status) {
         if (U_SUCCESS(status)) {
             if (size == cap) {
@@ -236,7 +236,7 @@ public:
             buf[size++] = elem;
         }
     }
-    
+
     void** release(void) {
         void** result = buf;
         buf = NULL;
@@ -260,20 +260,20 @@ friend class LocDataParser;
         : info(i), data(d), numRuleSets(numRS), numLocales(numLocs)
     {
     }
-    
+
 public:
     static StringLocalizationInfo* create(const UnicodeString& info, UParseError& perror, UErrorCode& status);
-    
+
     virtual ~StringLocalizationInfo();
     virtual int32_t getNumberOfRuleSets(void) const { return numRuleSets; }
     virtual const UChar* getRuleSetName(int32_t index) const;
     virtual int32_t getNumberOfDisplayLocales(void) const { return numLocales; }
     virtual const UChar* getLocaleName(int32_t index) const;
     virtual const UChar* getDisplayName(int32_t localeIndex, int32_t ruleIndex) const;
-    
+
 //    virtual UClassID getDynamicClassID() const;
 //    static UClassID getStaticClassID(void);
-    
+
 private:
     void init(UErrorCode& status) const;
 };
@@ -298,20 +298,20 @@ class LocDataParser {
     UChar ch;
     UParseError& pe;
     UErrorCode& ec;
-    
+
 public:
-    LocDataParser(UParseError& parseError, UErrorCode& status) 
+    LocDataParser(UParseError& parseError, UErrorCode& status)
         : data(NULL), e(NULL), p(NULL), ch(0xffff), pe(parseError), ec(status) {}
     ~LocDataParser() {}
-    
+
     /*
     * On a successful parse, return a StringLocalizationInfo*, otherwise delete locData, set perror and status,
     * and return NULL.  The StringLocalizationInfo will adopt locData if it is created.
     */
     StringLocalizationInfo* parse(UChar* data, int32_t len);
-    
+
 private:
-    
+
     void inc(void) { ++p; ch = 0xffff; }
     UBool checkInc(UChar c) { if (p < e && (ch == c || *p == c)) { inc(); return TRUE; } return FALSE; }
     UBool check(UChar c) { return p < e && (ch == c || *p == c); }
@@ -321,9 +321,9 @@ private:
         while (*list && *list != c) ++list; return *list == c;
     }
     void parseError(const char* msg);
-    
+
     StringLocalizationInfo* doParse(void);
-        
+
     UChar** nextArray(int32_t& requiredLength);
     UChar*  nextString(void);
 };
@@ -335,17 +335,17 @@ private:
 #define ERROR(msg) parseError(NULL); return NULL;
 #define EXPLANATION_ARG
 #endif
-        
 
-static const UChar DQUOTE_STOPLIST[] = { 
+
+static const UChar DQUOTE_STOPLIST[] = {
     QUOTE, 0
 };
 
-static const UChar SQUOTE_STOPLIST[] = { 
+static const UChar SQUOTE_STOPLIST[] = {
     TICK, 0
 };
 
-static const UChar NOQUOTE_STOPLIST[] = { 
+static const UChar NOQUOTE_STOPLIST[] = {
     SPACE, COMMA, CLOSE_ANGLE, OPEN_ANGLE, TICK, QUOTE, 0
 };
 
@@ -429,11 +429,11 @@ LocDataParser::doParse(void) {
         if (U_SUCCESS(ec)) {
             int32_t numLocs = array.length() - 2; // subtract first, NULL
             UChar*** result = (UChar***)array.release();
-            
+
             return new StringLocalizationInfo(data, result, requiredLength-2, numLocs); // subtract first, NULL
         }
     }
-  
+
     ERROR("Unknown error");
 }
 
@@ -442,7 +442,7 @@ LocDataParser::nextArray(int32_t& requiredLength) {
     if (U_FAILURE(ec)) {
         return NULL;
     }
-    
+
     skipWhitespace();
     if (!checkInc(OPEN_ANGLE)) {
         ERROR("Missing open angle");
@@ -482,7 +482,7 @@ LocDataParser::nextArray(int32_t& requiredLength) {
             ec = U_ILLEGAL_ARGUMENT_ERROR;
             ERROR("Array not of required length");
         }
-        
+
         return (UChar**)array.release();
     }
     ERROR("Unknown Error");
@@ -491,7 +491,7 @@ LocDataParser::nextArray(int32_t& requiredLength) {
 UChar*
 LocDataParser::nextString() {
     UChar* result = NULL;
-    
+
     skipWhitespace();
     if (p < e) {
         const UChar* terminators;
@@ -508,7 +508,7 @@ LocDataParser::nextString() {
         if (p == e) {
             ERROR("Unexpected end of data");
         }
-        
+
         UChar x = *p;
         if (p > start) {
             ch = x;
@@ -556,7 +556,7 @@ void LocDataParser::parseError(const char* EXPLANATION_ARG)
     u_strncpy(pe.postContext, p, (int32_t)(limit-p));
     pe.postContext[limit-p] = 0;
     pe.offset = (int32_t)(p - data);
-    
+
 #ifdef RBNF_DEBUG
     fprintf(stderr, "%s at or near character %ld: ", EXPLANATION_ARG, p-data);
 
@@ -565,7 +565,7 @@ void LocDataParser::parseError(const char* EXPLANATION_ARG)
     msg.append((UChar)0x002f); /* SOLIDUS/SLASH */
     msg.append(p, limit-p);
     msg.append(UNICODE_STRING_SIMPLE("'"));
-    
+
     char buf[128];
     int32_t len = msg.extract(0, msg.length(), buf, 128);
     if (len >= 128) {
@@ -576,12 +576,12 @@ void LocDataParser::parseError(const char* EXPLANATION_ARG)
     fprintf(stderr, "%s\n", buf);
     fflush(stderr);
 #endif
-    
+
     uprv_free(data);
     data = NULL;
     p = NULL;
     e = NULL;
-    
+
     if (U_SUCCESS(ec)) {
         ec = U_PARSE_ERROR;
     }
@@ -589,17 +589,17 @@ void LocDataParser::parseError(const char* EXPLANATION_ARG)
 
 //UOBJECT_DEFINE_RTTI_IMPLEMENTATION(StringLocalizationInfo)
 
-StringLocalizationInfo* 
+StringLocalizationInfo*
 StringLocalizationInfo::create(const UnicodeString& info, UParseError& perror, UErrorCode& status) {
     if (U_FAILURE(status)) {
         return NULL;
     }
-    
+
     int32_t len = info.length();
     if (len == 0) {
         return NULL; // no error;
     }
-    
+
     UChar* p = (UChar*)uprv_malloc(len * sizeof(UChar));
     if (!p) {
         status = U_MEMORY_ALLOCATION_ERROR;
@@ -609,7 +609,7 @@ StringLocalizationInfo::create(const UnicodeString& info, UParseError& perror, U
     if (!U_FAILURE(status)) {
         status = U_ZERO_ERROR; // clear warning about non-termination
     }
-    
+
     LocDataParser parser(perror, status);
     return parser.parse(p, len);
 }
@@ -651,7 +651,7 @@ StringLocalizationInfo::getDisplayName(int32_t localeIndex, int32_t ruleIndex) c
 
 // ----------
 
-RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description, 
+RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
                                              const UnicodeString& locs,
                                              const Locale& alocale, UParseError& perror, UErrorCode& status)
   : ruleSets(NULL)
@@ -673,7 +673,7 @@ RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
   init(description, locinfo, perror, status);
 }
 
-RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description, 
+RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
                                              const UnicodeString& locs,
                                              UParseError& perror, UErrorCode& status)
   : ruleSets(NULL)
@@ -695,7 +695,7 @@ RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
   init(description, locinfo, perror, status);
 }
 
-RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description, 
+RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
                                              LocalizationInfo* info,
                                              const Locale& alocale, UParseError& perror, UErrorCode& status)
   : ruleSets(NULL)
@@ -716,9 +716,9 @@ RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
   init(description, info, perror, status);
 }
 
-RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description, 
-                         UParseError& perror, 
-                         UErrorCode& status) 
+RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
+                         UParseError& perror,
+                         UErrorCode& status)
   : ruleSets(NULL)
   , ruleSetDescriptions(NULL)
   , numRuleSets(0)
@@ -737,10 +737,10 @@ RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
     init(description, NULL, perror, status);
 }
 
-RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description, 
+RuleBasedNumberFormat::RuleBasedNumberFormat(const UnicodeString& description,
                          const Locale& aLocale,
-                         UParseError& perror, 
-                         UErrorCode& status) 
+                         UParseError& perror,
+                         UErrorCode& status)
   : ruleSets(NULL)
   , ruleSetDescriptions(NULL)
   , numRuleSets(0)
@@ -896,9 +896,9 @@ RuleBasedNumberFormat::operator==(const Format& other) const
         // the info here is just derived from that.
         if (locale == rhs.locale &&
             lenient == rhs.lenient &&
-            (localizations == NULL 
-                ? rhs.localizations == NULL 
-                : (rhs.localizations == NULL 
+            (localizations == NULL
+                ? rhs.localizations == NULL
+                : (rhs.localizations == NULL
                     ? FALSE
                     : *localizations == rhs.localizations))) {
 
@@ -970,7 +970,7 @@ RuleBasedNumberFormat::getNumberOfRuleSetNames() const
     return result;
 }
 
-int32_t 
+int32_t
 RuleBasedNumberFormat::getNumberOfRuleSetDisplayNameLocales(void) const {
     if (localizations) {
         return localizations->getNumberOfDisplayLocales();
@@ -978,7 +978,7 @@ RuleBasedNumberFormat::getNumberOfRuleSetDisplayNameLocales(void) const {
     return 0;
 }
 
-Locale 
+Locale
 RuleBasedNumberFormat::getRuleSetDisplayNameLocale(int32_t index, UErrorCode& status) const {
     if (U_FAILURE(status)) {
         return Locale("");
@@ -1007,10 +1007,10 @@ RuleBasedNumberFormat::getRuleSetDisplayNameLocale(int32_t index, UErrorCode& st
     return retLocale;
 }
 
-UnicodeString 
+UnicodeString
 RuleBasedNumberFormat::getRuleSetDisplayName(int32_t index, const Locale& localeParam) {
     if (localizations && index >= 0 && index < localizations->getNumberOfRuleSets()) {
-        UnicodeString localeName(localeParam.getBaseName(), -1, UnicodeString::kInvariant); 
+        UnicodeString localeName(localeParam.getBaseName(), -1, UnicodeString::kInvariant);
         int32_t len = localeName.length();
         UChar* localeStr = localeName.getBuffer(len + 1);
         while (len >= 0) {
@@ -1020,7 +1020,7 @@ RuleBasedNumberFormat::getRuleSetDisplayName(int32_t index, const Locale& locale
                 UnicodeString name(TRUE, localizations->getDisplayName(ix, index), -1);
                 return name;
             }
-            
+
             // trim trailing portion, skipping over ommitted sections
             do { --len;} while (len > 0 && localeStr[len] != 0x005f); // underscore
             while (len > 0 && localeStr[len-1] == 0x005F) --len;
@@ -1033,7 +1033,7 @@ RuleBasedNumberFormat::getRuleSetDisplayName(int32_t index, const Locale& locale
     return bogus;
 }
 
-UnicodeString 
+UnicodeString
 RuleBasedNumberFormat::getRuleSetDisplayName(const UnicodeString& ruleSetName, const Locale& localeParam) {
     if (localizations) {
         UnicodeString rsn(ruleSetName);
@@ -1271,7 +1271,7 @@ RuleBasedNumberFormat::setLenient(UBool enabled)
 
 #endif
 
-void 
+void
 RuleBasedNumberFormat::setDefaultRuleSet(const UnicodeString& ruleSetName, UErrorCode& status) {
     if (U_SUCCESS(status)) {
         if (ruleSetName.isEmpty()) {
@@ -1303,7 +1303,7 @@ RuleBasedNumberFormat::getDefaultRuleSetName() const {
   return result;
 }
 
-void 
+void
 RuleBasedNumberFormat::initDefaultRuleSet()
 {
     defaultRuleSet = NULL;
@@ -1468,7 +1468,7 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
     // by appending more rule sets to the end)
 
     // {dlf} Initialization of a fraction rule set requires the default rule
-    // set to be known.  For purposes of initialization, this is always the 
+    // set to be known.  For purposes of initialization, this is always the
     // last public rule set, no matter what the localization data says.
     initDefaultRuleSet();
 
@@ -1487,7 +1487,7 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
     // The C code keeps the localization array as is, rather than building
     // a separate array of the public rule set names, so we have less work
     // to do here-- but we still need to check the names.
-    
+
     if (localizationInfos) {
         // confirm the names, if any aren't in the rules, that's an error
         // it is ok if the rules contain public rule sets that are not in this list

@@ -23,6 +23,6 @@ const char *CharsetRecognizer::getLanguage() const
     return "";
 }
 
-U_NAMESPACE_END    
+U_NAMESPACE_END
 
 #endif

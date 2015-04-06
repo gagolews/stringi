@@ -8,7 +8,7 @@
 #define TZTRANS_H
 
 /**
- * \file 
+ * \file
  * \brief C++ API: Time zone transition
  */
 
@@ -33,7 +33,7 @@ public:
     /**
      * Constructs a <code>TimeZoneTransition</code> with the time and the rules before/after
      * the transition.
-     * 
+     *
      * @param time  The time of transition in milliseconds since the base time.
      * @param from  The time zone rule used before the transition.
      * @param to    The time zone rule used after the transition.

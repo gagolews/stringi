@@ -18,14 +18,14 @@
 // *****************************************************************************
 // This file was generated from the java source file FieldPosition.java
 // *****************************************************************************
- 
+
 #ifndef FIELDPOS_H
 #define FIELDPOS_H
 
 #include "unicode/utypes.h"
 
 /**
- * \file 
+ * \file
  * \brief C++ API: FieldPosition identifies the fields in a formatted output.
  */
 
@@ -67,14 +67,14 @@ U_NAMESPACE_BEGIN
  *       double doubleNum[] = {123456789.0, -12345678.9, 1234567.89, -123456.789,
  *                  12345.6789, -1234.56789, 123.456789, -12.3456789, 1.23456789};
  *       int dNumSize = (int)(sizeof(doubleNum)/sizeof(double));
- *       
+ *
  *       UErrorCode status = U_ZERO_ERROR;
  *       DecimalFormat* fmt = (DecimalFormat*) NumberFormat::createInstance(status);
  *       fmt->setDecimalSeparatorAlwaysShown(true);
- *       
+ *
  *       const int tempLen = 20;
  *       char temp[tempLen];
- *       
+ *
  *       for (int i=0; i<dNumSize; i++) {
  *           FieldPosition pos(NumberFormat::INTEGER_FIELD);
  *           UnicodeString buf;
@@ -115,7 +115,7 @@ public:
      * Creates a FieldPosition object with a non-specified field.
      * @stable ICU 2.0
      */
-    FieldPosition() 
+    FieldPosition()
         : UObject(), fField(DONT_CARE), fBeginIndex(0), fEndIndex(0) {}
 
     /**
@@ -129,7 +129,7 @@ public:
      * @see DateFormat#MONTH_FIELD
      * @stable ICU 2.0
      */
-    FieldPosition(int32_t field) 
+    FieldPosition(int32_t field)
         : UObject(), fField(field), fBeginIndex(0), fEndIndex(0) {}
 
     /**
@@ -137,7 +137,7 @@ public:
      * @param copy the object to be copied from.
      * @stable ICU 2.0
      */
-    FieldPosition(const FieldPosition& copy) 
+    FieldPosition(const FieldPosition& copy)
         : UObject(copy), fField(copy.fField), fBeginIndex(copy.fBeginIndex), fEndIndex(copy.fEndIndex) {}
 
     /**
@@ -153,7 +153,7 @@ public:
      */
     FieldPosition&      operator=(const FieldPosition& copy);
 
-    /** 
+    /**
      * Equality operator.
      * @param that    the object to be compared with.
      * @return        TRUE if the two field positions are equal, FALSE otherwise.
@@ -161,7 +161,7 @@ public:
      */
     UBool              operator==(const FieldPosition& that) const;
 
-    /** 
+    /**
      * Equality operator.
      * @param that    the object to be compared with.
      * @return        TRUE if the two field positions are not equal, FALSE otherwise.
@@ -204,7 +204,7 @@ public:
      * @stable ICU 2.0
      */
     int32_t getEndIndex(void) const { return fEndIndex; }
- 
+
     /**
      * Set the field.
      * @param f    the new value of the field.
@@ -225,7 +225,7 @@ public:
      * @stable ICU 2.0
      */
     void setEndIndex(int32_t ei) { fEndIndex = ei; }
-    
+
     /**
      * ICU "poor man's RTTI", returns a UClassID for the actual class.
      *

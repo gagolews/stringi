@@ -641,7 +641,7 @@ UDisplayContext DateFormat::getContext(UDisplayContextType type, UErrorCode& sta
 //----------------------------------------------------------------------
 
 
-DateFormat& 
+DateFormat&
 DateFormat::setBooleanAttribute(UDateFormatBooleanAttribute attr,
     									UBool newValue,
     									UErrorCode &status) {
@@ -656,7 +656,7 @@ DateFormat::setBooleanAttribute(UDateFormatBooleanAttribute attr,
 
 //----------------------------------------------------------------------
 
-UBool 
+UBool
 DateFormat::getBooleanAttribute(UDateFormatBooleanAttribute attr, UErrorCode &/*status*/) const {
 
     return fBoolFlags.get(attr);

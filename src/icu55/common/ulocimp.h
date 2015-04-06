@@ -38,10 +38,10 @@ uloc_getTableStringWithFallback(
 /*returns TRUE if a is an ID separator FALSE otherwise*/
 #define _isIDSeparator(a) (a == '_' || a == '-')
 
-U_CFUNC const char* 
+U_CFUNC const char*
 uloc_getCurrentCountryID(const char* oldID);
 
-U_CFUNC const char* 
+U_CFUNC const char*
 uloc_getCurrentLanguageID(const char* oldID);
 
 U_CFUNC int32_t

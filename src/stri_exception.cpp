@@ -314,7 +314,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
             return "Look-Behind pattern matches must have a bounded maximum length.";
          case U_REGEX_SET_CONTAINS_STRING:
             return "Regexps cannot have UnicodeSets containing strings.";
-//         case U_REGEX_OCTAL_TOO_BIG: //Deprecated ICU 54. This error cannot occur. 
+//         case U_REGEX_OCTAL_TOO_BIG: //Deprecated ICU 54. This error cannot occur.
 //            return "Octal character constants must be <= 0377.";
          case U_REGEX_MISSING_CLOSE_BRACKET:
             return "Missing closing bracket on a bracket expression.";

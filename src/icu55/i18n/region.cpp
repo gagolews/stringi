@@ -159,7 +159,7 @@ void Region::loadRegionData(UErrorCode &status) {
             uhash_put(newRegionAliases.getAlias(),(void *)aliasFromStr.orphan(), (void *)aliasToRegion,&status);
         } else {
             if ( aliasFromRegion == NULL ) { // Deprecated region code not in the master codes list - so need to create a deprecated region for it.
-                LocalPointer<Region> newRgn(new Region, status); 
+                LocalPointer<Region> newRgn(new Region, status);
                 if ( U_SUCCESS(status) ) {
                     aliasFromRegion = newRgn.orphan();
                 } else {
@@ -323,7 +323,7 @@ void Region::loadRegionData(UErrorCode &status) {
         }
         availableRegions[ar->type]->addElement((void *)arString.orphan(),status);
     }
-    
+
     ucln_i18n_registerCleanup(UCLN_I18N_REGION, region_cleanup);
     // copy hashtables
     numericCodeMap = newNumericCodeMap.orphan();

@@ -21,7 +21,7 @@
 
 #if !UCONFIG_NO_NORMALIZATION
 
-#if !UCONFIG_NO_REGULAR_EXPRESSIONS 
+#if !UCONFIG_NO_REGULAR_EXPRESSIONS
 
 #include "uspoof_impl.h"
 
@@ -54,7 +54,7 @@ class SPUStringPool : public UMemory {
   public:
     SPUStringPool(UErrorCode &status);
     ~SPUStringPool();
-    
+
     // Add a string. Return the string from the table.
     // If the input parameter string is already in the table, delete the
     //  input parameter and return the existing string.
@@ -85,8 +85,8 @@ class ConfusabledataBuilder : public UMemory {
     SpoofImpl  *fSpoofImpl;
     UChar      *fInput;
     UHashtable *fSLTable;
-    UHashtable *fSATable; 
-    UHashtable *fMLTable; 
+    UHashtable *fSATable;
+    UHashtable *fMLTable;
     UHashtable *fMATable;
     UnicodeSet *fKeySet;     // A set of all keys (UChar32s) that go into the four mapping tables.
 
@@ -96,7 +96,7 @@ class ConfusabledataBuilder : public UMemory {
     UVector            *fValueVec;
     UnicodeString      *fStringTable;
     UVector            *fStringLengthsTable;
-    
+
     SPUStringPool      *stringPool;
     URegularExpression *fParseLine;
     URegularExpression *fParseHexNum;
@@ -128,5 +128,5 @@ class ConfusabledataBuilder : public UMemory {
 U_NAMESPACE_END
 
 #endif
-#endif  // !UCONFIG_NO_REGULAR_EXPRESSIONS 
+#endif  // !UCONFIG_NO_REGULAR_EXPRESSIONS
 #endif  // __USPOOF_BUILDCONF_H__

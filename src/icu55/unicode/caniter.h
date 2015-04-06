@@ -19,7 +19,7 @@
  * \file
  * \brief C++ API: Canonical Iterator
  */
- 
+
 /** Should permutation skip characters with combining class zero
  *  Should be either TRUE or FALSE. This is a compile time option
  *  @stable ICU 2.4

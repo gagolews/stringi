@@ -572,7 +572,7 @@ u_strspn(const UChar *string, const UChar *matchSet)
 /* ----- Text manipulation functions --- */
 
 U_CAPI UChar* U_EXPORT2
-u_strtok_r(UChar    *src, 
+u_strtok_r(UChar    *src,
      const UChar    *delim,
            UChar   **saveState)
 {
@@ -622,7 +622,7 @@ u_strtok_r(UChar    *src,
 /* Miscellaneous functions -------------------------------------------------- */
 
 U_CAPI UChar* U_EXPORT2
-u_strcat(UChar     *dst, 
+u_strcat(UChar     *dst,
     const UChar     *src)
 {
     UChar *anchor = dst;            /* save a pointer to start of dst */
@@ -637,9 +637,9 @@ u_strcat(UChar     *dst,
 }
 
 U_CAPI UChar*  U_EXPORT2
-u_strncat(UChar     *dst, 
-     const UChar     *src, 
-     int32_t     n ) 
+u_strncat(UChar     *dst,
+     const UChar     *src,
+     int32_t     n )
 {
     if(n > 0) {
         UChar *anchor = dst;            /* save a pointer to start of dst */
@@ -665,8 +665,8 @@ u_strncat(UChar     *dst,
 /* ----- Text property functions --- */
 
 U_CAPI int32_t   U_EXPORT2
-u_strcmp(const UChar *s1, 
-    const UChar *s2) 
+u_strcmp(const UChar *s1,
+    const UChar *s2)
 {
     UChar  c1, c2;
 
@@ -936,9 +936,9 @@ u_strcmpCodePointOrder(const UChar *s1, const UChar *s2) {
 }
 
 U_CAPI int32_t   U_EXPORT2
-u_strncmp(const UChar     *s1, 
-     const UChar     *s2, 
-     int32_t     n) 
+u_strncmp(const UChar     *s1,
+     const UChar     *s2,
+     int32_t     n)
 {
     if(n > 0) {
         int32_t rc;
@@ -961,8 +961,8 @@ u_strncmpCodePointOrder(const UChar *s1, const UChar *s2, int32_t n) {
 }
 
 U_CAPI UChar* U_EXPORT2
-u_strcpy(UChar     *dst, 
-    const UChar     *src) 
+u_strcpy(UChar     *dst,
+    const UChar     *src)
 {
     UChar *anchor = dst;            /* save a pointer to start of dst */
 
@@ -973,9 +973,9 @@ u_strcpy(UChar     *dst,
 }
 
 U_CAPI UChar*  U_EXPORT2
-u_strncpy(UChar     *dst, 
-     const UChar     *src, 
-     int32_t     n) 
+u_strncpy(UChar     *dst,
+     const UChar     *src,
+     int32_t     n)
 {
     UChar *anchor = dst;            /* save a pointer to start of dst */
 
@@ -988,7 +988,7 @@ u_strncpy(UChar     *dst,
 }
 
 U_CAPI int32_t   U_EXPORT2
-u_strlen(const UChar *s) 
+u_strlen(const UChar *s)
 {
 #if U_SIZEOF_WCHAR_T == U_SIZEOF_UCHAR
     return (int32_t)uprv_wcslen(s);
@@ -1218,7 +1218,7 @@ u_unescapeAt(UNESCAPE_CHAR_AT charAt,
     int8_t n = 0;
     int8_t minDig = 0;
     int8_t maxDig = 0;
-    int8_t bitsPerDigit = 4; 
+    int8_t bitsPerDigit = 4;
     int8_t dig;
     int32_t i;
     UBool braces = FALSE;

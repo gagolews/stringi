@@ -260,7 +260,7 @@ protected:
     };
 
     /**
-     * @internal 
+     * @internal
      */
     class ValueNode : public Node {
     public:
@@ -276,8 +276,8 @@ protected:
         int32_t value;
     };
 
-    /** 
-     * @internal 
+    /**
+     * @internal
      */
     class IntermediateValueNode : public ValueNode {
     public:
@@ -291,7 +291,7 @@ protected:
     };
 
     /**
-     * @internal 
+     * @internal
      */
     class LinearMatchNode : public ValueNode {
     public:
@@ -306,7 +306,7 @@ protected:
     };
 
     /**
-     * @internal 
+     * @internal
      */
     class BranchNode : public Node {
     public:
@@ -316,7 +316,7 @@ protected:
     };
 
     /**
-     * @internal 
+     * @internal
      */
     class ListBranchNode : public BranchNode {
     public:
@@ -348,7 +348,7 @@ protected:
     };
 
     /**
-     * @internal 
+     * @internal
      */
     class SplitBranchNode : public BranchNode {
     public:

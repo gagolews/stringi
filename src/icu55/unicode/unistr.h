@@ -22,8 +22,8 @@
 #define UNISTR_H
 
 /**
- * \file 
- * \brief C++ API: Unicode String 
+ * \file
+ * \brief C++ API: Unicode String
  */
 
 #include "unicode/utypes.h"
@@ -186,7 +186,7 @@ class UnicodeStringAppendable;  // unicode/appendable.h
  * <p>In ICU, a Unicode string consists of 16-bit Unicode <em>code units</em>.
  * A Unicode character may be stored with either one code unit
  * (the most common case) or with a matched pair of special code units
- * ("surrogates"). The data type for code units is UChar. 
+ * ("surrogates"). The data type for code units is UChar.
  * For single-character handling, a Unicode character code <em>point</em> is a value
  * in the range 0..0x10ffff. ICU uses the UChar32 type for code points.</p>
  *
@@ -1481,7 +1481,7 @@ public:
               UnicodeString& target) const;
 
   /**
-   * Copy the characters in the range 
+   * Copy the characters in the range
    * [<tt>start</TT>, <tt>start + length</TT>) into an array of characters.
    * All characters must be invariant (see utypes.h).
    * Use US_INV as the last, signature-distinguishing parameter.

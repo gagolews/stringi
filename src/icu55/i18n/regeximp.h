@@ -24,7 +24,7 @@ U_NAMESPACE_BEGIN
 
 // For debugging, define REGEX_DEBUG
 // To define with configure,
-//   CPPFLAGS="-DREGEX_DEBUG" ./runConfigureICU --enable-debug --disable-release Linux 
+//   CPPFLAGS="-DREGEX_DEBUG" ./runConfigureICU --enable-debug --disable-release Linux
 
 #ifdef REGEX_DEBUG
 //
@@ -241,7 +241,7 @@ enum {
         "DOLLAR_MD",           \
         "URX_BACKSLASH_H",     \
         "URX_BACKSLASH_R",     \
-        "URX_BACKSLASH_V" 
+        "URX_BACKSLASH_V"
 
 
 //
@@ -411,4 +411,3 @@ class CaseFoldingUCharIterator: public UMemory {
 
 U_NAMESPACE_END
 #endif
-
