@@ -14,6 +14,9 @@
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
 
+   * [NEW FUNCITON] #46: `stri_trans_char` is a `stringi`-flavoured
+     `chartr` equivalent.
+
    * [NEW FEATURE] #69: `stringi` now comes with ICU4C 55.1.
 
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
@@ -46,15 +49,12 @@
 
 TO BE DONE:
 
-   * [NEW FUNCITON] #46: `stri_trans_char` is a `stringi`-flavoured
-     `chartr` equivalent.
-     
    * #136
-   
+
    * #48
-   
+
    * #31
-   
+
    * #30
 
    * #137: date-time formatting/parsing:
@@ -246,7 +246,7 @@ TO BE DONE:
       ICU USearch has currently very poor performance and in many search tasks
       in fact it is sufficient to do exact pattern matching.
 
-   * [GENERAL] `stri_*_fixed` now use a tweaked Knuth-Morris-Pratt search 
+   * [GENERAL] `stri_*_fixed` now use a tweaked Knuth-Morris-Pratt search
       algorithm, which improves the search performance drastically.
 
 
