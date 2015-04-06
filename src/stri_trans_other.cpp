@@ -33,6 +33,26 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_string8buf.h"
+#include <deque>
+
+
+/**
+ * fill a deque with CHARSXPs == individual code points in s of length n
+ */
+void stri__split_codepoints(deque<SEXP>& out, const char* s, int n) {
+   UChar32 c = 0;
+   R_len_t j = 0; // current pos
+   R_len_t i = 0; // last pos
+   while (j < n) {
+      U8_NEXT(s, j, n, c);
+      out.push_back(Rf_mkCharLenCE(s+i, j-i, CE_UTF8));
+
+      if (c < 0)
+         Rf_warning(MSG__INVALID_UTF8);
+      i = j;
+   }
+}
+
 
 
 /**
@@ -44,7 +64,7 @@
  *  @param replacement character vector
  *  @return character vector
  *
- * @version 0.5-1 (Marek Gagolewski, 2015-04-05)
+ * @version 0.5-1 (Marek Gagolewski, 2015-04-06)
  *
  *
  */
@@ -52,36 +72,55 @@ SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement) {
    PROTECT(str          = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern      = stri_prepare_arg_string_1(pattern, "pattern"));
    PROTECT(replacement  = stri_prepare_arg_string_1(replacement, "replacement"));
-   R_len_t vectorize_length = LENGTH(str);
 
    STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
    StriContainerUTF8 replacement_cont(replacement, 1);
    StriContainerUTF8 pattern_cont(pattern, 1);
 
    if (replacement_cont.isNA(0) || pattern_cont.isNA(0)) {
       STRI__UNPROTECT_ALL
-      return stri__vector_NA_strings(vectorize_length);
+      return stri__vector_NA_strings(LENGTH(str));
+   }
+
+   const String8* s_pat = &pattern_cont.get(0);
+   const String8* s_rep = &replacement_cont.get(0);
+
+   deque<SEXP> d_pat;
+   stri__split_codepoints(d_pat, s_pat->c_str(), s_pat->length());
+
+   deque<SEXP> d_rep;
+   stri__split_codepoints(d_rep, s_rep->c_str(), s_rep->length());
+
+   R_len_t m = std::min(d_rep.size(), d_pat.size());
+   if (d_pat.size() != d_rep.size()) {
+      Rf_warning(MSG__WARN_RECYCLING_RULE);
+   }
+
+   if (m == 0) { // nothing to do
+      StriContainerUTF8 str_cont(str, LENGTH(str));
+      STRI__UNPROTECT_ALL
+      return str_cont.toR(); // assure UTF-8
    }
 
 
-   // @TODO: count the number of code points in pattern and replacement
-   // @TODO: determine if their sizes match
+   SEXP new_pattern;
+   SEXP new_replacement;
+   STRI__PROTECT(new_pattern = Rf_allocVector(STRSXP, m));
+   STRI__PROTECT(new_replacement = Rf_allocVector(STRSXP, m));
+   deque<SEXP>::iterator it1 = d_pat.begin();
+   deque<SEXP>::iterator it2 = d_rep.begin();
+   for (R_len_t i=0; i<m; ++i) {
+      SET_STRING_ELT(new_pattern,     i, *it1++);
+      SET_STRING_ELT(new_replacement, i, *it2++);
+   }
 
 
    SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+   STRI__PROTECT(ret = stri_replace_all_fixed(str, new_pattern, new_replacement,
+      /*vectorize_all*/Rf_ScalarLogical(FALSE), /*opts_fixed*/R_NilValue)
+   )
 
-   for (R_len_t i=0; i<vectorize_length; ++i)
-   {
-      if (str_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
 
-      throw StriException("stri_trans_char: TO DO");
-
-   }
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
