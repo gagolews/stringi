@@ -110,7 +110,6 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
       while(c >= 0 && j < str_cur_n){
         U8_NEXT(str_cur_s, j, str_cur_n, c);
         UEastAsianWidth ea = (UEastAsianWidth) u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
-        std::cout << "ea is" << ea << std::endl;
         if(ea == U_EA_FULLWIDTH || ea == U_EA_WIDE) {
           str_cur_len++;
         }
