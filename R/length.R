@@ -76,7 +76,7 @@ stri_numbytes <- function(str) {
 
 
 #' @title
-#' Count the Number of Characters
+#' Count the Number of Code Points
 #'
 #' @description
 #' This function returns the number of code points
@@ -142,3 +142,58 @@ stri_length <- function(str) {
 stri_isempty <- function(str) {
    .Call(C_stri_isempty, str)
 }
+
+
+# #' @title
+# #' Determine the Width of Code Points
+# #'
+# #' @description
+# #' Approximates the number of text columns the `cat()` function
+# #' should utilize to print a string with a monospaced font.
+# #'
+# #' @details
+# #' The Unicode standard does not formalize the notion of a character
+# #' width. Roughly basing on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
+# #' and the UAX #11 we proceed as follows.
+# #' The following code points are of width 0:
+# #' \itemize{
+# #' \item code points with general category (see \link{stringi-search-charclass})
+# #' \code{Me}, \code{Mn}, and \code{Cf}),
+# #' \item \code{C0} and \code{C1} control codes (general category \code{Cc})
+# #' - for compatibility with the \code{\link{nchar}} function,
+# #' \item Hangul Jamo medial vowels and final consonants
+# #' (code points with enumerable property \code{UCHAR_HANGUL_SYLLABLE_TYPE}
+# #' equal to \code{U_HST_VOWEL_JAMO} or \code{U_HST_TRAILING_JAMO};
+# #' note that applying the NFC normalization with \code{\link{stri_trans_nfc}}
+# #' is encouraged),
+# #' \item ZERO WIDTH SPACE (U+200B),
+# #' }
+# #' Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
+# #' equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are
+# #' of width 2.
+# #' SOFT HYPHEN (U+00AD) (for compatibility with \code{\link{nchar}})
+# #' as well as any other characters have width 1.
+# #'
+# #' @param str character vector or an object coercible to
+# #' @param ambiguous_are_narrow single logical value;
+# #' should ambiguous cases be considered as code points of width 1?
+# #' @return Returns an integer vector of the same length as \code{str}.
+# #'
+# #' @examples
+# #' stri_width(LETTERS[1:5])
+# #' nchar(stri_trans_nfkd("ą"), "width") # provides incorrect information
+# #' stri_width(stri_trans_nfkd("ą"))
+# #' stri_width( # Full-width equivalents of ASCII characters:
+# #'    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
+# #' )
+# #' stri_trans_nfkd("\ubc1f") # includes Hangul Jamo medial vowels and final consonants
+# #' @export
+# #' @family length
+# #'
+# #' @references
+# #' \emph{East Asian Width} -- Unicode Standard Annex #11,
+# #' \url{http://www.unicode.org/reports/tr11/}
+# stri_width <- function(str) {
+#    .Call(C_stri_width, str)
+# }
+
