@@ -103,6 +103,7 @@ SEXP    stri_numbytes(SEXP str);
 SEXP    stri_length(SEXP str);
 SEXP    stri_isempty(SEXP str);
 int     stri__width_char(UChar32 c);
+int     stri__width_string(const char* str_cur_s, int str_cur_n);
 SEXP    stri_width(SEXP str);
 
 

@@ -182,6 +182,9 @@
 #define MSG__NOT_EQ_N_CODEPOINTS \
    "each string in `%s` should consist of exactly %d code points"
 
+#define MSG__NOT_EQ_N_WIDTH \
+   "each string in `%s` should consist of code points of total width %d"
+
 #define MSG__CHARCLASS_INCORRECT_WHICH \
    "unknown charclass `%s`. assuming NA"
 
