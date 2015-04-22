@@ -34,7 +34,7 @@
 #'
 #' @description
 #' This function breaks text paragraphs into lines,
-#' each consisting - if it is possible - of at most \code{width} code points.
+#' of total width - if it is possible - of at most given \code{width}.
 #'
 #' @details
 #' Vectorized over \code{str}.
@@ -46,8 +46,10 @@
 #' Otherwise, the breaks are only at whitespaces.
 #'
 #' Note that Unicode code points may have various widths when
-#' printed on screen. This function acts like each code point
-#' is of width 1. This function should rather be used with
+#' printed on the console and that the function takes that by default
+#' into account. By changing the state of the \code{use_length}
+#' argument, this function starts to act like each code point
+#' was of width 1. This feature should rather be used with
 #' text in Latin script.
 #'
 #' If \code{normalize} is \code{FALSE},
@@ -64,6 +66,7 @@
 #' \code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
 #' before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
 #' and \code{\link{stri_trans_nfc}} is called on the input character vector.
+#' This is not optimal if a string consists of, e.g., ZERO WIDTH SPACEs.
 #'
 #' The greedy algorithm (for \code{cost_exponent} being non-positive)
 #' provides a very simple way for word wrapping.
@@ -99,6 +102,8 @@
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}
+#' @param use_length single logical value; should the number of code
+#' points be used instead of the total code point width (see \code{\link{stri_width}})?
 #'
 #' @return
 #' If \code{simplify} is \code{TRUE}, then a character vector is returned.
@@ -123,7 +128,7 @@
 #' 1981, pp. 1119--1184
 stri_wrap <- function(str, width=floor(0.9*getOption("width")),
    cost_exponent=2.0, simplify=TRUE, normalize=TRUE, indent=0, exdent=0,
-   prefix="", initial=prefix, whitespace_only=FALSE, locale=NULL)
+   prefix="", initial=prefix, whitespace_only=FALSE, use_length=FALSE, locale=NULL)
 {
    simplify <- as.logical(simplify)
 
@@ -135,7 +140,8 @@ stri_wrap <- function(str, width=floor(0.9*getOption("width")),
       str <- stri_trans_nfc(str)
    }
 
-   ret <- .Call(C_stri_wrap, str, width, cost_exponent, indent, exdent, prefix, initial, whitespace_only, locale)
+   ret <- .Call(C_stri_wrap, str, width, cost_exponent,
+      indent, exdent, prefix, initial, whitespace_only, use_length, locale)
 
    if (simplify) # this will give an informative warning or error if sth is wrong
       as.character(unlist(ret))

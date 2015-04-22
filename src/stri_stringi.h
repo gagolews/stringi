@@ -170,7 +170,8 @@ SEXP stri_locale_set(SEXP loc);
 
 // wrap.cpp
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
-   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only, SEXP locale);
+   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only,
+   SEXP use_length, SEXP locale);
 
 // justify.cpp
 // SEXP stri_justify(SEXP str, SEXP width);                                    // TODO [version >= 0.3]
@@ -292,7 +293,7 @@ SEXP stri_trim_right(SEXP str, SEXP pattern);
 
 
 // pad.cpp
-SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad);
+SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length);
 
 
 // random.cpp

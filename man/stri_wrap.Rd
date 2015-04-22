@@ -6,7 +6,8 @@
 \usage{
 stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
   simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0,
-  prefix = "", initial = prefix, whitespace_only = FALSE, locale = NULL)
+  prefix = "", initial = prefix, whitespace_only = FALSE,
+  use_length = FALSE, locale = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to reformat}
@@ -37,6 +38,9 @@ line except the first, for which \code{initial} is utilized}
 if \code{FALSE}, \pkg{ICU}'s line break iterator is used to split text
 into words, which is suitable for natural language processing}
 
+\item{use_length}{single logical value; should the number of code
+points be used instead of the total code point width (see \code{\link{stri_width}})?}
+
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
@@ -47,7 +51,7 @@ Otherwise, you will get a list of \code{length(str)} character vectors.
 }
 \description{
 This function breaks text paragraphs into lines,
-each consisting - if it is possible - of at most \code{width} code points.
+of total width - if it is possible - of at most given \code{width}.
 }
 \details{
 Vectorized over \code{str}.
@@ -59,8 +63,10 @@ This is a locale-dependent operation.
 Otherwise, the breaks are only at whitespaces.
 
 Note that Unicode code points may have various widths when
-printed on screen. This function acts like each code point
-is of width 1. This function should rather be used with
+printed on the console and that the function takes that by default
+into account. By changing the state of the \code{use_length}
+argument, this function starts to act like each code point
+was of width 1. This feature should rather be used with
 text in Latin script.
 
 If \code{normalize} is \code{FALSE},
@@ -77,6 +83,7 @@ all consecutive white space sequences are replaced with single spaces, by callin
 \code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
 before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
 and \code{\link{stri_trans_nfc}} is called on the input character vector.
+This is not optimal if a string consists of, e.g., ZERO WIDTH SPACEs.
 
 The greedy algorithm (for \code{cost_exponent} being non-positive)
 provides a very simple way for word wrapping.

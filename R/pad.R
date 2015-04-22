@@ -34,31 +34,36 @@
 #'
 #' @description
 #' Adds multiple \code{pad} characters at the given \code{side}(s) of each string
-#' so that each output string consists of at least \code{min_length} code points.
+#' so that each output string is of total width of at least \code{width}.
 #' This function may be used to center or left/right-align each string.
 #'
 #' @details
-#' Vectorized over \code{str}, \code{min_length}, and \code{pad}.
-#' Each string in \code{pad} should consist of exactly one code point.
+#' Vectorized over \code{str}, \code{width}, and \code{pad}.
+#' Each string in \code{pad} should consist of exactly one code point
+#' of width 1.
 #'
 #' \code{stri_pad} is a convenience function, which dispatches
 #' control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
 #' it is a little bit slower.
 #'
 #' Note that Unicode code points may have various widths when
-#' printed on screen. This function acts like each code point
-#' is of width 1. This function should rather be used with
+#' printed on the console and that the function takes that by default
+#' into account. By changing the state of the \code{use_length}
+#' argument, this function starts to act like each code point
+#' was of width 1. This feature should rather be used with
 #' text in Latin script.
 #'
 #' See \code{\link{stri_trim_left}} (among others) for reverse operation.
 #' Also check out \code{\link{stri_wrap}} for line wrapping.
 #'
 #' @param str character vector
-#' @param min_length integer vector giving minimal output string lengths
+#' @param width integer vector giving minimal output string lengths
 #' @param side [\code{stri_pad} only] single character string;
 #'    sides on which padding character is added
 #'    (\code{left}, \code{right}, or \code{both})
 #' @param pad character vector giving padding code points
+#' @param use_length single logical value; should the number of code
+#' points be used instead of the total code point width (see \code{\link{stri_width}})?
 #'
 #' @return Returns a character vector.
 #'
@@ -70,36 +75,36 @@
 #' cat(stri_pad_both(c("the", "string", "processing", "package"),
 #'    getOption("width")*0.9), sep='\n')
 #' @export
-stri_pad_both <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call(C_stri_pad, str, min_length, 2L, pad)
+stri_pad_both <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
+   .Call(C_stri_pad, str, width, 2L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_left <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call(C_stri_pad, str, min_length, 0L, pad)
+stri_pad_left <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
+   .Call(C_stri_pad, str, width, 0L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_right <- function(str, min_length=floor(0.9*getOption("width")), pad=" ") {
-   .Call(C_stri_pad, str, min_length, 1L, pad)
+stri_pad_right <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
+   .Call(C_stri_pad, str, width, 1L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad <- function(str, min_length=floor(0.9*getOption("width")),
-   side=c("left", "right", "both"), pad=" ")
+stri_pad <- function(str, width=floor(0.9*getOption("width")),
+   side=c("left", "right", "both"), pad=" ", use_length=FALSE)
 {
    # `left` is the default for compatibility with stringr
    side <- match.arg(side) # this is slow
 
    switch(side,
-          both  =stri_pad_both(str, min_length, pad),
-          left  =stri_pad_left(str, min_length, pad),
-          right =stri_pad_right(str, min_length, pad)
+          both  =stri_pad_both(str, width, pad, use_length),
+          left  =stri_pad_left(str, width, pad, use_length),
+          right =stri_pad_right(str, width, pad, use_length)
    )
 }

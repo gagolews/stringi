@@ -9,7 +9,7 @@
      http://bugs.icu-project.org/trac/ticket/11554]
 
 
-* 0.5-1 (2015-??-??) **t.b.d.** ((WE WAIT FOR R 3.2, mid Apr))
+* 0.5-1 (2015-??-??) **t.b.d.**
 
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
@@ -50,7 +50,13 @@
      however) to build stringi from sources. This is because ICU4C uses the
      `long long` type which is not part of the C++98 standard.
 
+   * [BACKWARD INCOMPABILITY] The second argument to `stri_pad_*()` has
+     been renamed `width`.
+
 TO BE DONE:
+
+   * [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on code point
+     widths instead of the number of code points.
 
    * #136
 

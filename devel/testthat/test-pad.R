@@ -6,9 +6,9 @@ test_that("stri_pad", {
    expect_warning(stri_pad(letters, 1:5))
    expect_identical(stri_pad(letters,20),stri_join(stri_dup(" ",19),letters))
 
-   expect_identical(stri_pad("ala",9, "l"), str_pad("ala",9,"l"))
-   expect_identical(stri_pad("ala",9, "r"), str_pad("ala",9,"r"))
-   expect_identical(stri_pad("ala",9, "b"), str_pad("ala",9,"b"))
+   expect_identical(stri_pad("ala",9, "l"), "      ala")
+   expect_identical(stri_pad("ala",9, "r"), "ala      ")
+   expect_identical(stri_pad("ala",9, "b"), "   ala   ")
 
    expect_identical(stri_pad("ala",6:8), c("   ala","    ala","     ala"))
    expect_identical(stri_pad(c("abc",NA),5),c("  abc",NA))

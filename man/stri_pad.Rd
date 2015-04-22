@@ -7,21 +7,27 @@
 \alias{stri_pad_right}
 \title{Pad (Center/Left/Right Align) a String}
 \usage{
-stri_pad_both(str, min_length = floor(0.9 * getOption("width")), pad = " ")
+stri_pad_both(str, width = floor(0.9 * getOption("width")), pad = " ",
+  use_length = FALSE)
 
-stri_pad_left(str, min_length = floor(0.9 * getOption("width")), pad = " ")
+stri_pad_left(str, width = floor(0.9 * getOption("width")), pad = " ",
+  use_length = FALSE)
 
-stri_pad_right(str, min_length = floor(0.9 * getOption("width")), pad = " ")
+stri_pad_right(str, width = floor(0.9 * getOption("width")), pad = " ",
+  use_length = FALSE)
 
-stri_pad(str, min_length = floor(0.9 * getOption("width")), side = c("left",
-  "right", "both"), pad = " ")
+stri_pad(str, width = floor(0.9 * getOption("width")), side = c("left",
+  "right", "both"), pad = " ", use_length = FALSE)
 }
 \arguments{
 \item{str}{character vector}
 
-\item{min_length}{integer vector giving minimal output string lengths}
+\item{width}{integer vector giving minimal output string lengths}
 
 \item{pad}{character vector giving padding code points}
+
+\item{use_length}{single logical value; should the number of code
+points be used instead of the total code point width (see \code{\link{stri_width}})?}
 
 \item{side}{[\code{stri_pad} only] single character string;
 sides on which padding character is added
@@ -32,20 +38,23 @@ Returns a character vector.
 }
 \description{
 Adds multiple \code{pad} characters at the given \code{side}(s) of each string
-so that each output string consists of at least \code{min_length} code points.
+so that each output string is of total width of at least \code{width}.
 This function may be used to center or left/right-align each string.
 }
 \details{
-Vectorized over \code{str}, \code{min_length}, and \code{pad}.
-Each string in \code{pad} should consist of exactly one code point.
+Vectorized over \code{str}, \code{width}, and \code{pad}.
+Each string in \code{pad} should consist of exactly one code point
+of width 1.
 
 \code{stri_pad} is a convenience function, which dispatches
 control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
 it is a little bit slower.
 
 Note that Unicode code points may have various widths when
-printed on screen. This function acts like each code point
-is of width 1. This function should rather be used with
+printed on the console and that the function takes that by default
+into account. By changing the state of the \code{use_length}
+argument, this function starts to act like each code point
+was of width 1. This feature should rather be used with
 text in Latin script.
 
 See \code{\link{stri_trim_left}} (among others) for reverse operation.
