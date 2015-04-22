@@ -102,7 +102,8 @@ R_len_t stri__numbytes_max(SEXP str);
 SEXP    stri_numbytes(SEXP str);
 SEXP    stri_length(SEXP str);
 SEXP    stri_isempty(SEXP str);
-// SEXP stri_width(SEXP str);                               // ...TODO... [version >= 0.3]
+int     stri__width_char(UChar32 c);
+SEXP    stri_width(SEXP str);
 
 
 // prepare_arg.cpp:

@@ -27,6 +27,6 @@ stri_isempty(character(1))
 }
 \seealso{
 Other length: \code{\link{stri_length}};
-  \code{\link{stri_numbytes}}
+  \code{\link{stri_numbytes}}; \code{\link{stri_width}}
 }
 

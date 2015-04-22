@@ -31,6 +31,7 @@
 
 #include "stri_stringi.h"
 #include "stri_ucnv.h"
+#include "stri_container_utf8.h"
 
 
 /**
@@ -182,7 +183,7 @@ SEXP stri_numbytes(SEXP str)
    STRI__ERROR_HANDLER_BEGIN(1)
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
-   int* retint = LOGICAL(ret);
+   int* retint = INTEGER(ret);
    for (R_len_t i=0; i<str_n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       /* INPUT ENCODING CHECK: this function does not need this. */
@@ -230,33 +231,86 @@ SEXP stri_isempty(SEXP str)
 }
 
 
-///**
-// * Determine the width of the string
-// * e.g. some chinese chars have width > 1.
-// *
-// * Note that ICU permits only strings of length < 2^31.
-// * @param s R character vector
-// * @return integer vector
-// *
-// * @version 0.1 (WHO?) TO BE DONE
-// * @todo THIS FUNCTION HAS NOT YET BEEN IMPLEMENTED
-// */
-//SEXP stri_width(SEXP str)
-//{
-//   str = stri_prepare_arg_string(str, "str");
-//   R_len_t ns = LENGTH(str);
-//
-//
-//   ///< @TODO ------------------------------------------------------------------------------------------------------
-//   error("TODO: the function has not yet been implemented.");
-//
-//   //UChar32 c;
-//   SEXP ret;
-//   STRI__PROTECT(ret = allocVector(INTSXP, ns));
-//   //int* retint = INTEGER(ret);
-//
-//
-//
-//   STRI__UNPROTECT_ALL
-//   return ret;
-//}
+/** Get width of a single character
+ *
+ * inspired by http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
+ *
+ * @param c code point
+ * @return 0, 1, or 2
+ */
+int stri__width_char(UChar32 c) {
+   if (c == (UChar32)0x00AD) return 1; /* SOFT HYPHEN  */
+   if (c == (UChar32)0x200B) return 0; /* ZERO WIDTH SPACE */
+
+   /* GC: Me, Mn, Cf, Cc -> width = 0 */
+   if (U_GET_GC_MASK(c) &
+      (U_GC_MN_MASK | U_GC_ME_MASK | U_GC_CF_MASK | U_GC_CC_MASK))
+         return 0;
+
+   /* Hangul Jamo medial vowels and final consonants have width 0 */
+   int hangul = (int)u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE);
+   if (hangul == U_HST_VOWEL_JAMO || hangul == U_HST_TRAILING_JAMO)
+      return 0;
+
+   /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
+      equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
+   int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
+   if (width == U_EA_FULLWIDTH || width == U_EA_WIDE)
+      return 2;
+
+   /*  any other characters have width 1 */
+   return 1;
+}
+
+
+/**
+  * Determine the width of strings
+  *
+  * @param str character vector
+  * @return integer vector
+  *
+  * @version 0.5-1 (Marek Gagolewski, 2015-04-22)
+  */
+SEXP stri_width(SEXP str)
+{
+   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+
+   STRI__ERROR_HANDLER_BEGIN(1)
+   R_len_t str_n = LENGTH(str);
+   StriContainerUTF8 str_cont(str, str_n);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+   int* retint = INTEGER(ret);
+
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i)) {
+         retint[i] = NA_INTEGER;
+         continue;
+      }
+
+      const char* str_cur_s = str_cont.get(i).c_str();
+      R_len_t     str_cur_n = str_cont.get(i).length();
+
+      int cur_width = 0;
+
+      UChar32 c;
+      R_len_t j = 0;
+      while (j < str_cur_n) {
+         U8_NEXT(str_cur_s, j, str_cur_n, c);
+         if (c < 0)
+            throw StriException(MSG__INVALID_UTF8);
+         else
+            cur_width += stri__width_char(c);
+      }
+
+      retint[i] = cur_width;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
+}
