@@ -103,6 +103,17 @@ SEXP stri_pad(SEXP str, SEXP min_length, SEXP side, SEXP pad)
       R_len_t str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t str_cur_len = str_cont.get(i).countCodePoints();
+      
+      // East Asian wide characters are twice wide
+      UChar32 c = 0;
+      R_len_t j = 0;
+      while(c >= 0 && j < str_cur_n){
+        U8_NEXT(str_cur_s, j, str_cur_n, c);
+        UEastAsianWidth ea = (UEastAsianWidth) u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
+        if(ea == U_EA_FULLWIDTH || ea == U_EA_WIDE) {
+          str_cur_len++;
+        }
+      }
 
       // get the padding code point
       UChar32 pad_cur = 0;
