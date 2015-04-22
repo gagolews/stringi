@@ -209,6 +209,7 @@ struct StriWrapLineStart {
  * @param prefix single string
  * @param initial single string
  * @param locale locale identifier or NULL for default locale
+ * @param use_length single logical value
  *
  * @return list
  *
@@ -231,11 +232,16 @@ struct StriWrapLineStart {
  * @version 0.5-1 (Marek Gagolewski, 2015-02-28)
  *    don't trim so many white spaces at the end of each word (normalize arg does that)
  *    #139: allow a "whitespace" break iterator
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2015-04-22)
+ *    `use_length` arg added
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
-   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only, SEXP locale)
+   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only,
+   SEXP use_length, SEXP locale)
 {
-   double exponent_val = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
+   bool use_length_val      = stri__prepare_arg_logical_1_notNA(use_length, "use_length");
+   double exponent_val      = stri__prepare_arg_double_1_notNA(cost_exponent, "cost_exponent");
    bool whitespace_only_val = stri__prepare_arg_logical_1_notNA(whitespace_only, "whitespace_only");
 
    int width_val = stri__prepare_arg_integer_1_notNA(width, "width");

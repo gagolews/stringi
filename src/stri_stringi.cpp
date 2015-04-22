@@ -137,7 +137,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_match_all_regex",            stri_match_all_regex,            5),
    STRI__MK_CALL("C_stri_numbytes",                   stri_numbytes,                   1),
    STRI__MK_CALL("C_stri_order_or_sort",              stri_order_or_sort,              5),
-   STRI__MK_CALL("C_stri_pad",                        stri_pad,                        4),
+   STRI__MK_CALL("C_stri_pad",                        stri_pad,                        5),
    STRI__MK_CALL("C_stri_prepare_arg_string",         stri_prepare_arg_string,         2),
    STRI__MK_CALL("C_stri_prepare_arg_POSIXct",        stri_prepare_arg_POSIXct,        2),
    STRI__MK_CALL("C_stri_prepare_arg_double",         stri_prepare_arg_double,         2),
@@ -204,7 +204,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_unescape_unicode",           stri_unescape_unicode,           1),
    STRI__MK_CALL("C_stri_unique",                     stri_unique,                     2),
    STRI__MK_CALL("C_stri_width",                      stri_width,                      1),
-   STRI__MK_CALL("C_stri_wrap",                       stri_wrap,                       9),
+   STRI__MK_CALL("C_stri_wrap",                       stri_wrap,                      10),
 //   STRI__MK_CALL("C_stri_trim_double",              stri_trim_double,                3), // TODO: version > 0.5
 
    // the list must be NULL-terminated:
