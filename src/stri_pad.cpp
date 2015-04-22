@@ -108,31 +108,42 @@ SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length)
       // get the current string
       R_len_t str_cur_n = str_cont.get(i).length();
       const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t str_cur_len = str_cont.get(i).countCodePoints();
+      R_len_t str_cur_width;
 
-      // get the padding code point
-      UChar32 pad_cur = 0;
+      // get the width/length of padding code point(s)
       R_len_t pad_cur_n = pad_cont.get(i).length();
       const char* pad_cur_s = pad_cont.get(i).c_str();
-      R_len_t k = 0;
-      U8_NEXT(pad_cur_s, k, pad_cur_n, pad_cur);
-      if (pad_cur <= 0 || k < pad_cur_n)
-         throw StriException(MSG__NOT_EQ_N_CODEPOINTS, "pad", 1);
+      R_len_t pad_cur_width;
+      if (use_length_val) {
+         pad_cur_width = 1;
+         str_cur_width = str_cont.get(i).countCodePoints();
+         R_len_t k = 0;
+         UChar32 pad_cur = 0;
+         U8_NEXT(pad_cur_s, k, pad_cur_n, pad_cur);
+         if (pad_cur <= 0 || k < pad_cur_n)
+            throw StriException(MSG__NOT_EQ_N_CODEPOINTS, "pad", 1);
+      }
+      else {
+         pad_cur_width = stri__width_string(pad_cur_s, pad_cur_n);
+         str_cur_width = stri__width_string(str_cur_s, str_cur_n);
+         if (pad_cur_width != 1)
+            throw StriException(MSG__NOT_EQ_N_WIDTH, "pad", 1);
+      }
 
-      // get the minimal length
-      R_len_t length_cur = width_cont.get(i);
+      // get the minimal width
+      R_len_t width_cur = width_cont.get(i);
 
-
-      if (str_cur_len >= length_cur)  {
+      if (str_cur_width >= width_cur)  {
          // no padding at all
          SET_STRING_ELT(ret, i, str_cont.toR(i));
          continue;
       }
 
-      R_len_t padnum = length_cur-str_cur_len;
+      R_len_t padnum = width_cur-str_cur_width;
       buf.resize(str_cur_n+padnum*pad_cur_n, false);
 
       char* buftmp = buf.data();
+      R_len_t k = 0;
       switch(_side) {
 
          case 0: // left

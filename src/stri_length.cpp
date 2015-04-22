@@ -263,6 +263,28 @@ int stri__width_char(UChar32 c) {
 }
 
 
+/** Get width of a single UTF-8 string
+ *
+ * @param str_cur_s string
+ * @param str_cur_n number of bytes in str_cur_s
+ * @return width
+ */
+int stri__width_string(const char* str_cur_s, int str_cur_n) {
+   int cur_width = 0;
+
+   UChar32 c;
+   R_len_t j = 0;
+   while (j < str_cur_n) {
+      U8_NEXT(str_cur_s, j, str_cur_n, c);
+      if (c < 0)
+         throw StriException(MSG__INVALID_UTF8);
+      else
+         cur_width += stri__width_char(c);
+   }
+
+   return cur_width;
+}
+
 /**
   * Determine the width of strings
   *
@@ -294,20 +316,7 @@ SEXP stri_width(SEXP str)
 
       const char* str_cur_s = str_cont.get(i).c_str();
       R_len_t     str_cur_n = str_cont.get(i).length();
-
-      int cur_width = 0;
-
-      UChar32 c;
-      R_len_t j = 0;
-      while (j < str_cur_n) {
-         U8_NEXT(str_cur_s, j, str_cur_n, c);
-         if (c < 0)
-            throw StriException(MSG__INVALID_UTF8);
-         else
-            cur_width += stri__width_char(c);
-      }
-
-      retint[i] = cur_width;
+      retint[i] = stri__width_string(str_cur_s, str_cur_n);
    }
 
    STRI__UNPROTECT_ALL

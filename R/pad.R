@@ -39,8 +39,8 @@
 #'
 #' @details
 #' Vectorized over \code{str}, \code{width}, and \code{pad}.
-#' Each string in \code{pad} should consist of exactly one code point
-#' of width 1.
+#' Each string in \code{pad} should consist of a code points of total width
+#' equal to 1 or, if \code{use_length} is \code{TRUE}, exactly one code point.
 #'
 #' \code{stri_pad} is a convenience function, which dispatches
 #' control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
@@ -74,6 +74,9 @@
 #' # center on screen:
 #' cat(stri_pad_both(c("the", "string", "processing", "package"),
 #'    getOption("width")*0.9), sep='\n')
+#' cat(stri_pad_both(c("\ud6c8\ubbfc\uc815\uc74c", # takes width into account
+#'    stri_trans_nfkd("\ud6c8\ubbfc\uc815\uc74c"), "abcd"),
+#'    width=10), sep="\n")
 #' @export
 stri_pad_both <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
    .Call(C_stri_pad, str, width, 2L, pad, use_length)
