@@ -58,14 +58,6 @@ TO BE DONE:
    * [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on code point
      widths instead of the number of code points.
 
-   * #136
-
-   * #48
-
-   * #31
-
-   * #30
-
    * #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers
         * `stri_timezone_set()`, `stri_timezone_get()` - manage current default time zone
@@ -81,6 +73,7 @@ TO BE DONE:
         * `stri_datetime_fields()` - get values for date-time fields
         * `stri_datetime_add()` - add specific number of date-time units
                to a date-time object
+
 
 -------------------------------------------------------------------------------
 
