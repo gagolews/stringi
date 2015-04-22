@@ -41,6 +41,18 @@ test_that("stri_isempty", {
 })
 
 
-# test_that("stri_width", {
-#    expect_equivalent(stri_width(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
-# })
+test_that("stri_width", {
+   expect_equivalent(stri_width(c(NA, '', ' ', 'abc', '\u0104B\u0106')), c(NA, 0, 1, 3, 3))
+   expect_equivalent(stri_width(character(0)), integer(0))
+   expect_equivalent(stri_width(LETTERS[1:5]), rep(1L, 5))
+   expect_equivalent(stri_width(stri_trans_nfkd("ą")), 1L)
+   expect_equivalent(stri_width("\u12468"), 2L)
+   expect_equivalent(stri_width("\u200b"), 0L) # ZWSP
+   expect_equivalent(stri_width("\u00ad"), 1L) # SOFT HYPHEN
+   expect_true(all(stri_width( # Full-width equivalents of ASCII characters:
+   stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))) == 2))
+   expect_equivalent(stri_width(stri_trans_nfkd("\ubc1f")), 2L)
+   expect_true(all(stri_width( # Hangul Jamo 0-width stuff
+   stri_enc_fromutf32(as.list(0x1160:0x11ff))) == 0))
+   expect_equivalent(stri_width(stri_trans_nfkd("\ubc1f")), 2L)
+})

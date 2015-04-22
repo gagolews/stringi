@@ -14,8 +14,11 @@
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
 
-   * [NEW FUNCITON] #46: `stri_trans_char` is a `stringi`-flavoured
+   * [NEW FUNCTION] #46: `stri_trans_char` is a `stringi`-flavoured
      `chartr` equivalent.
+
+   * [NEW FUNCTION] #8: `stri_width` approximates the *width* of a string
+     in a more Unicodish fashion than `nchar(..., "width")`
 
    * [NEW FEATURE] #69: `stringi` now comes with ICU4C 55.1.
 
