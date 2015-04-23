@@ -79,11 +79,11 @@ or e.g. substitute line breaks with spaces
 before applying this function.
 
 On the other hand, if \code{normalize} is \code{TRUE}, then
-all consecutive white space sequences are replaced with single spaces, by calling i.a.
-\code{\link{stri_trim}(\link{stri_replace_all_charclass}(str, "\\\\p{WHITE_SPACE}", " ", merge=TRUE))}
+all consecutive white space (ASCII space, horizontal TAB, CR, LF)
+sequences are replaced with single ASCII spaces
 before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
 and \code{\link{stri_trans_nfc}} is called on the input character vector.
-This is not optimal if a string consists of, e.g., ZERO WIDTH SPACEs.
+This is for compatibility with \code{\link{strwrap}}.
 
 The greedy algorithm (for \code{cost_exponent} being non-positive)
 provides a very simple way for word wrapping.
