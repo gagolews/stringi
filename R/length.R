@@ -175,14 +175,12 @@ stri_isempty <- function(str) {
 #' as well as any other characters have width 1.
 #'
 #' @param str character vector or an object coercible to
-#' @param ambiguous_are_narrow single logical value;
-#' should ambiguous cases be considered as code points of width 1?
 #' @return Returns an integer vector of the same length as \code{str}.
 #'
 #' @examples
 #' stri_width(LETTERS[1:5])
-#' nchar(stri_trans_nfkd("ą"), "width") # provides incorrect information
-#' stri_width(stri_trans_nfkd("ą"))
+#' nchar(stri_trans_nfkd("\u0105"), "width") # provides incorrect information
+#' stri_width(stri_trans_nfkd("\u0105"))
 #' stri_width( # Full-width equivalents of ASCII characters:
 #'    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
 #' )

@@ -17,6 +17,23 @@ test_that("stri_wrap", {
    expect_identical(stri_wrap("test      all", 0), c("test", "all"))
    expect_identical(stri_wrap("test      all", 0, normalize=FALSE), c("test     ", "all"))
 
+   expect_identical(stri_wrap("\ud6c8\ud6c8 \ud6c8\ud6c8 abcd", 5, 2.0), c("\ud6c8\ud6c8", "\ud6c8\ud6c8", "abcd"))
+   expect_identical(stri_wrap("\ud6c8\ud6c8 \ud6c8\ud6c8 abcd", 5, 2.0, use_length=TRUE), c("\ud6c8\ud6c8 \ud6c8\ud6c8", "abcd"))
+   expect_identical(stri_wrap("\ud6c8 a", 5, 2.0, prefix="\ud6c8"), c("\ud6c8\ud6c8", "\ud6c8a"))
+   expect_identical(stri_wrap("\ud6c8 a", 5, 2.0, prefix="\ud6c8", use_length=TRUE), c("\ud6c8\ud6c8 a"))
+
+
+   #non breaking spaces....
+   expect_equivalent(stri_wrap("abc def", 5), c("abc", "def"))
+   expect_equivalent(stri_wrap("abc\u00a0def", 5), "abc\u00a0def")
+   expect_equivalent(stri_wrap("abc\u2007def", 5), "abc\u2007def")
+   expect_equivalent(stri_wrap("abc\u202fdef", 5), "abc\u202fdef")
+   expect_equivalent(stri_wrap("abc\u2060def", 5), "abc\u2060def")
+
+   expect_equivalent(stri_wrap("ab\u00adde abc\u00addef", 5), c("ab\u00adde", "abc\u00ad", "def"))
+
+   #soft hyphens....
+
    expect_identical(stri_wrap(stri_paste(rep("\u0105\u0105\u0105\u0105\u0105", 5), collapse=" "), 12),
       c("\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",
          "\u0105\u0105\u0105\u0105\u0105 \u0105\u0105\u0105\u0105\u0105",

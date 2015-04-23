@@ -11,6 +11,8 @@
 
 * 0.5-1 (2015-??-??) **t.b.d.**
 
+   * [GENERAL] #69: `stringi` now comes with ICU4C 55.1.
+
    * [NEW FUNCTIONS] `stri_extract_*_boundaries` extract text between text
      boundaries.
 
@@ -20,7 +22,10 @@
    * [NEW FUNCTION] #8: `stri_width` approximates the *width* of a string
      in a more Unicodish fashion than `nchar(..., "width")`
 
-   * [NEW FEATURE] #69: `stringi` now comes with ICU4C 55.1.
+   * [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on code point
+     widths instead of the number of code points. Moreover, the default
+     behavior of `stri_wrap()` is now such that it does not get rid
+     of non-breaking, zero width, etc. spaces
 
    * [NEW FEATURE] #133: `stri_wrap` silently allows for `width <= 0`
      (for compatibility with `strwrap`).
@@ -54,9 +59,6 @@
      been renamed `width`.
 
 TO BE DONE:
-
-   * [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on code point
-     widths instead of the number of code points.
 
    * #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers

@@ -44,8 +44,8 @@
  * @param wrap_after [out]
  * @param nwords number of "words"
  * @param width_val maximal desired out line width
- * @param counts_orig ith word width original
- * @param counts_trim ith word width trimmed
+ * @param widths_orig ith word width original
+ * @param widths_trim ith word width trimmed
  * @param add_para_1
  * @param add_para_n
  *
@@ -60,18 +60,18 @@
  */
 void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
    R_len_t nwords, int width_val,
-   const std::vector<R_len_t>& counts_orig,
-   const std::vector<R_len_t>& counts_trim,
+   const std::vector<R_len_t>& widths_orig,
+   const std::vector<R_len_t>& widths_trim,
    int add_para_1, int add_para_n)
 {
-   R_len_t cur_len = add_para_1+counts_orig[0];
+   R_len_t cur_len = add_para_1+widths_orig[0];
    for (R_len_t j = 1; j < nwords; ++j) {
-      if (cur_len + counts_trim[j] > width_val) {
-         cur_len = add_para_n+counts_orig[j];
+      if (cur_len + widths_trim[j] > width_val) {
+         cur_len = add_para_n+widths_orig[j];
          wrap_after.push_back(j-1);
       }
       else {
-         cur_len += counts_orig[j];
+         cur_len += widths_orig[j];
       }
    }
 }
@@ -84,8 +84,8 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  * @param nwords number of "words"
  * @param width_val maximal desired out line width
  * @param exponent_val cost function exponent
- * @param counts_orig ith word width original
- * @param counts_trim ith word width trimmed
+ * @param widths_orig ith word width original
+ * @param widths_trim ith word width trimmed
  * @param add_para_1
  * @param add_para_a
  *
@@ -101,8 +101,8 @@ void stri__wrap_greedy(std::deque<R_len_t>& wrap_after,
  */
 void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
    R_len_t nwords, int width_val, double exponent_val,
-   const std::vector<R_len_t>& counts_orig,
-   const std::vector<R_len_t>& counts_trim,
+   const std::vector<R_len_t>& widths_orig,
+   const std::vector<R_len_t>& widths_trim,
    int add_para_1, int add_para_n)
 {
 #define IDX(i,j) (i)*nwords+(j)
@@ -121,11 +121,11 @@ void stri__wrap_dynamic(std::deque<R_len_t>& wrap_after,
                continue;
             }
             else {
-               sum -= counts_trim[j-1];
-               sum += counts_orig[j-1];
+               sum -= widths_trim[j-1];
+               sum += widths_orig[j-1];
             }
          }
-         sum += counts_trim[j];
+         sum += widths_trim[j];
          int ct = width_val - sum;
          if (i == 0) ct -= add_para_1;
          else        ct -= add_para_n;
@@ -189,11 +189,13 @@ struct StriWrapLineStart {
    std::string str;
    R_len_t nbytes;
    R_len_t count;
+   R_len_t width;
 
    StriWrapLineStart(const String8& s, R_len_t v) :
       str(s.c_str()) {
       nbytes  = s.length()+v;
       count   = s.countCodePoints()+v;
+      width   = stri__width_string(s.c_str(), s.length());
       str.append(std::string(v, ' '));
    }
 };
@@ -233,7 +235,7 @@ struct StriWrapLineStart {
  *    don't trim so many white spaces at the end of each word (normalize arg does that)
  *    #139: allow a "whitespace" break iterator
  *
- * @version 0.5-1 (Marek Gagolewski, 2015-04-22)
+ * @version 0.5-1 (Marek Gagolewski, 2015-04-23)
  *    `use_length` arg added
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
@@ -360,10 +362,10 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 
 
       // now:
-      // we'll get the number of code points in each "word"
-      std::vector<R_len_t> counts_orig(nwords);
-      // we'll get the number of code points without trailing whitespaces
-      std::vector<R_len_t> counts_trim(nwords);
+      // we'll get the total widths/number of code points in each "word"
+      std::vector<R_len_t> widths_orig(nwords);
+      // we'll get the total widths/number of code points without trailing whitespaces
+      std::vector<R_len_t> widths_trim(nwords);
       // we'll get the end positions without trailing whitespaces
       std::vector<R_len_t> end_pos_trim(nwords);
       // detect line endings (fail on a match)
@@ -371,6 +373,8 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       UChar32 c = 0;
       R_len_t j = 0;
       R_len_t cur_block = 0;
+      R_len_t cur_width_orig = 0;
+      R_len_t cur_width_trim = 0;
       R_len_t cur_count_orig = 0;
       R_len_t cur_count_trim = 0;
       R_len_t cur_end_pos_trim = 0;
@@ -383,6 +387,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
          if (uset_linebreaks.contains(c))
             throw StriException(MSG__NEWLINE_FOUND);
 
+         cur_width_orig += stri__width_char(c);
          ++cur_count_orig;
          if (uset_whitespaces.contains(c)) {
 // OLD: trim all white spaces from the end:
@@ -390,20 +395,30 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 //           [we have the normalize arg for that]
 
 // NEW: trim just one white space at the end:
+            cur_width_trim = stri__width_char(c);
             cur_count_trim = 1;
             cur_end_pos_trim = jlast;
          }
          else {
+            cur_width_trim = 0;
             cur_count_trim = 0;
             cur_end_pos_trim = j;
          }
 
          if (j >= str_cur_n || end_pos_orig[cur_block] <= j) {
             // we'll start a new block in a moment
-            counts_orig[cur_block] = cur_count_orig;
-            counts_trim[cur_block] = cur_count_orig-cur_count_trim;
+            if (use_length_val) {
+               widths_orig[cur_block] = cur_count_orig;
+               widths_trim[cur_block] = cur_count_orig-cur_count_trim;
+            }
+            else {
+               widths_orig[cur_block] = cur_width_orig;
+               widths_trim[cur_block] = cur_width_orig-cur_width_trim;
+            }
             end_pos_trim[cur_block] = cur_end_pos_trim;
             cur_block++;
+            cur_width_orig = 0;
+            cur_width_trim = 0;
             cur_count_orig = 0;
             cur_count_trim = 0;
             cur_end_pos_trim = j;
@@ -414,11 +429,15 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       std::deque<R_len_t> wrap_after; // wrap line after which word in {0..nwords-1}?
       if (exponent_val <= 0.0) {
          stri__wrap_greedy(wrap_after, nwords, width_val,
-            counts_orig, counts_trim, (i==0)?ii.count:pi.count, pe.count);
+            widths_orig, widths_trim,
+               (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
+               (use_length_val)?pe.count:pe.width);
       }
       else {
          stri__wrap_dynamic(wrap_after, nwords, width_val, exponent_val,
-            counts_orig, counts_trim, (i==0)?ii.count:pi.count, pe.count);
+            widths_orig, widths_trim,
+               (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
+               (use_length_val)?pe.count:pe.width);
       }
 
       // wrap_after.size() line breaks => wrap_after.size()+1 lines
