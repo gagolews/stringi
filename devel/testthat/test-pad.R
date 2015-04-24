@@ -8,7 +8,8 @@ test_that("stri_pad", {
    expect_error(stri_pad_both("ala", 5, pad="\ud6c8"))
    expect_error(stri_pad_both("ala", 5, pad="ab"))
    expect_identical(stri_pad_both("ala", 5, pad="\ud6c8", use_length=TRUE), "\ud6c8ala\ud6c8")
-   expect_identical(stri_pad_both("ala", 5, pad=stri_trans_nfkd("ą")), stri_paste(stri_trans_nfkd("ą"), "ala", stri_trans_nfkd("ą")))
+   expect_identical(stri_pad_both("ala", 5, pad=stri_trans_nfkd("\u0105")),
+      stri_paste(stri_trans_nfkd("\u0105"), "ala", stri_trans_nfkd("\u0105")))
    expect_identical(stri_pad(letters,20),stri_join(stri_dup(" ",19),letters))
 
    expect_identical(stri_pad("ala",9, "l"), "      ala")
