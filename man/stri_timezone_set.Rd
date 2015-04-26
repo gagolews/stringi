@@ -3,7 +3,7 @@
 \name{stri_timezone_get}
 \alias{stri_timezone_get}
 \alias{stri_timezone_set}
-\title{Set or Get Default Time Zone in \pkg{stringi}}
+\title{[DRAFT API] Set or Get Default Time Zone in \pkg{stringi}}
 \usage{
 stri_timezone_get()
 
@@ -22,16 +22,16 @@ with the current default time zone.
 \description{
 \code{stri_timezone_set} changes the current default time zone for all functions
 in the \pkg{stringi} package, i.e. establishes the meaning of the
-``\code{NULL} time zone'' argument of date/time processing functions.
+``\code{NULL} time zone'' argument to date/time processing functions.
 On the other hand, \code{stri_timezone_get} gets the current default time zone.
 
-For more information on time zone representation in \pkg{ICU},
-see \code{\link{stri_timezone_list}}.
+For more information on time zone representation in \pkg{ICU}
+and \pkg{stringi}, refer to \code{\link{stri_timezone_list}}.
 }
 \details{
 Unless the default time zone has already been set using
 \code{stri_timezone_set}, the default time zone is determined
-by querying the OS with methods in ICU's internal platform utilities.
+by querying the OS with methods in \pkg{ICU}'s internal platform utilities.
 }
 \examples{
 \dontrun{

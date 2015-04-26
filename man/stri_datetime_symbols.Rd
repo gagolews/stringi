@@ -2,18 +2,18 @@
 % Please edit documentation in R/time_symbols.R
 \name{stri_datetime_symbols}
 \alias{stri_datetime_symbols}
-\title{List Localizable Date-Time Formatting Data}
+\title{[DRAFT API] List Localizable Date-Time Formatting Data}
 \usage{
 stri_datetime_symbols(locale = NULL, context = "standalone",
   width = "wide")
 }
 \arguments{
 \item{locale}{\code{NULL} or \code{""} for default locale,
-or a single string with locale identifier.}
+or a single string with locale identifier}
 
-\item{context}{single string; one of: \code{"format"}, \code{"standalone"}.}
+\item{context}{single string; one of: \code{"format"}, \code{"standalone"}}
 
-\item{width}{single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}.}
+\item{width}{single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}}
 }
 \value{
 Returns a list with the following named components:
@@ -31,7 +31,7 @@ including month and weekday names, localized AM/PM strings, etc.
 }
 \details{
 \code{context} stands for a selector for date formatting context
-and \code{width} - for  date formatting width.
+and \code{width} - for date formatting width.
 }
 \examples{
 stri_datetime_symbols() # uses the Gregorian calendar in most locales

@@ -4,7 +4,7 @@
 \alias{POSIXst}
 \alias{as.POSIXst}
 \alias{c.POSIXst}
-\title{Date-Time Objects in \pkg{stringi}}
+\title{[DRAFT API] Date-Time Objects in \pkg{stringi}}
 \usage{
 as.POSIXst(x, tz = attr(time, "tzone"), ...)
 
@@ -19,10 +19,11 @@ a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
 \item{recursive,...}{further arguments to be passed to or from other methods.}
 }
 \value{
-t.b.d.
+\code{as.POSIXst} returns an object of class \code{POSIXst}.
 }
 \description{
-t.b.d.
+Date-time objects' representation in \pkg{stringi} may change
+in future versions of the package. This is DRAFT API.
 }
 \details{
 An object of class \code{\link{POSIXst}},

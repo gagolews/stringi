@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Create a Date-Time Object
+#' [DRAFT API] Create a Date-Time Object
 #'
 #' @description
 #' This function constructs date-time objects from numeric representations.
@@ -69,7 +69,7 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 
 
 #' @title
-#' Get Current Date and Time
+#' [DRAFT API] Get Current Date and Time
 #'
 #' @description
 #' Returns current date and time.
@@ -90,7 +90,7 @@ stri_datetime_now <- function() {
 
 
 #' @title
-#' Get Values for Date and Time Fields
+#' [DRAFT API] Get Values for Date and Time Fields
 #'
 #' @description
 #' Calculates and returns values for all date and time fields.
@@ -147,7 +147,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 
 
 #' @title
-#' Date and Time Arithmetic
+#' [DRAFT API] Date and Time Arithmetic
 #'
 #' @description
 #' Modifies a date-time object by adding a specific amount of time units.
@@ -206,10 +206,11 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 
 
 #' @title
-#' Date-Time Objects in \pkg{stringi}
+#' [DRAFT API] Date-Time Objects in \pkg{stringi}
 #'
 #' @description
-#' t.b.d.
+#' Date-time objects' representation in \pkg{stringi} may change
+#' in future versions of the package. This is DRAFT API.
 #'
 #' @details
 #' An object of class \code{\link{POSIXst}},
@@ -233,7 +234,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 #' @param recursive,... further arguments to be passed to or from other methods.
 #'
 #' @return
-#' t.b.d.
+#' \code{as.POSIXst} returns an object of class \code{POSIXst}.
 #'
 #' @export
 #' @rdname as.POSIXst
