@@ -4,7 +4,7 @@
 \alias{format.POSIXst}
 \alias{stri_datetime_format}
 \alias{stri_datetime_parse}
-\title{Date and Time Formatting and Parsing}
+\title{[DRAFT API] Date and Time Formatting and Parsing}
 \usage{
 stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   locale = NULL)

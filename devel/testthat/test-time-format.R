@@ -1,5 +1,5 @@
 require(testthat)
-context("test-time-format")
+context("test-time-format.R")
 
 test_that("stri_datetime_fstr", {
    expect_true(stri_datetime_fstr(" test123") == "' test123'")

@@ -30,7 +30,7 @@
 
 
 #' @title
-#' List Available Time Zone Identifiers
+#' [DRAFT API] List Available Time Zone Identifiers
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
@@ -67,9 +67,11 @@
 #'
 #'
 #' @param offset single numeric value;
-#' a given raw offset from GMT, in hours
+#' a given raw offset from GMT, in hours;
+#' \code{NA} for all offsets
 #' @param region single string;
-#' a ISO 3166 two-letter country code or UN M.49 three-digit area code
+#' a ISO 3166 two-letter country code or UN M.49 three-digit area code;
+#' \code{NA} for all regions
 #'
 #' @return Returns a character vector.
 #'
@@ -107,21 +109,21 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 
 
 #' @title
-#' Set or Get Default Time Zone in \pkg{stringi}
+#' [DRAFT API] Set or Get Default Time Zone in \pkg{stringi}
 #'
 #' @description
 #' \code{stri_timezone_set} changes the current default time zone for all functions
 #' in the \pkg{stringi} package, i.e. establishes the meaning of the
-#' ``\code{NULL} time zone'' argument of date/time processing functions.
+#' ``\code{NULL} time zone'' argument to date/time processing functions.
 #' On the other hand, \code{stri_timezone_get} gets the current default time zone.
 #'
-#' For more information on time zone representation in \pkg{ICU},
-#' see \code{\link{stri_timezone_list}}.
+#' For more information on time zone representation in \pkg{ICU}
+#' and \pkg{stringi}, refer to \code{\link{stri_timezone_list}}.
 #'
 #' @details
 #' Unless the default time zone has already been set using
 #' \code{stri_timezone_set}, the default time zone is determined
-#' by querying the OS with methods in ICU's internal platform utilities.
+#' by querying the OS with methods in \pkg{ICU}'s internal platform utilities.
 #'
 #' @param tz single string; time zone identifier
 #'
@@ -163,7 +165,7 @@ stri_timezone_set <- function(tz) {
 
 
 #' @title
-#' Query Given Time Zone
+#' [DRAFT API] Query a Given Time Zone
 #'
 #' @description
 #' Provides some basic information on a given time zone identifier.
@@ -176,13 +178,13 @@ stri_timezone_set <- function(tz) {
 #' see \code{\link{stri_timezone_list}}.
 #'
 #' @param tz \code{NULL} or \code{""} for default time zone,
-#' or a single string with time zone ID otherwise.
+#' or a single string with time zone ID otherwise
 #' @param display_type single string;
 #' one of \code{"short"}, \code{"long"}, \code{"generic_short"},
 #' \code{"generic_long"}, \code{"gmt_short"}, \code{"gmt_long"},
-#' \code{"common"}, \code{"generic_location"}.
+#' \code{"common"}, \code{"generic_location"}
 #' @param locale \code{NULL} or \code{""} for default locale,
-#' or a single string with locale identifier.
+#' or a single string with locale identifier
 #'
 #' @return
 #' Returns a list with the following named components:
@@ -209,4 +211,5 @@ stri_timezone_set <- function(tz) {
 #' @export
 stri_timezone_info <- function(tz=NULL, locale=NULL, display_type="long") {
    .Call(C_stri_timezone_info, tz, locale, display_type)
+   ### TO DO: when DST starts???
 }

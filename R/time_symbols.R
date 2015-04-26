@@ -30,7 +30,7 @@
 
 
 #' @title
-#' List Localizable Date-Time Formatting Data
+#' [DRAFT API] List Localizable Date-Time Formatting Data
 #'
 #' @description
 #' Returns a list of all localizable date-time formatting data,
@@ -38,13 +38,13 @@
 #'
 #' @details
 #' \code{context} stands for a selector for date formatting context
-#' and \code{width} - for  date formatting width.
+#' and \code{width} - for date formatting width.
 #'
 #'
 #' @param locale \code{NULL} or \code{""} for default locale,
-#' or a single string with locale identifier.
-#' @param context single string; one of: \code{"format"}, \code{"standalone"}.
-#' @param width single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}.
+#' or a single string with locale identifier
+#' @param context single string; one of: \code{"format"}, \code{"standalone"}
+#' @param width single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}
 #'
 #' @return Returns a list with the following named components:
 #' \enumerate{

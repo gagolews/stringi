@@ -2,16 +2,18 @@
 % Please edit documentation in R/time_zone.R
 \name{stri_timezone_list}
 \alias{stri_timezone_list}
-\title{List Available Time Zone Identifiers}
+\title{[DRAFT API] List Available Time Zone Identifiers}
 \usage{
 stri_timezone_list(region = NA_character_, offset = NA_integer_)
 }
 \arguments{
 \item{region}{single string;
-a ISO 3166 two-letter country code or UN M.49 three-digit area code}
+a ISO 3166 two-letter country code or UN M.49 three-digit area code;
+\code{NA} for all regions}
 
 \item{offset}{single numeric value;
-a given raw offset from GMT, in hours}
+a given raw offset from GMT, in hours;
+\code{NA} for all offsets}
 }
 \value{
 Returns a character vector.

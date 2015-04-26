@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Date and Time Formatting and Parsing
+#' [DRAFT API] Date and Time Formatting and Parsing
 #'
 #' @description
 #' These functions convert a given date/time object
@@ -242,7 +242,7 @@ stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE
 
 
 #' @title
-#' Convert \code{strptime}-style Format Strings
+#' [DRAFT API] Convert \code{strptime}-style Format Strings
 #'
 #' @description
 #' A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style

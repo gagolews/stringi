@@ -2,21 +2,21 @@
 % Please edit documentation in R/time_zone.R
 \name{stri_timezone_info}
 \alias{stri_timezone_info}
-\title{Query Given Time Zone}
+\title{[DRAFT API] Query a Given Time Zone}
 \usage{
 stri_timezone_info(tz = NULL, locale = NULL, display_type = "long")
 }
 \arguments{
 \item{tz}{\code{NULL} or \code{""} for default time zone,
-or a single string with time zone ID otherwise.}
+or a single string with time zone ID otherwise}
 
 \item{locale}{\code{NULL} or \code{""} for default locale,
-or a single string with locale identifier.}
+or a single string with locale identifier}
 
 \item{display_type}{single string;
 one of \code{"short"}, \code{"long"}, \code{"generic_short"},
 \code{"generic_long"}, \code{"gmt_short"}, \code{"gmt_long"},
-\code{"common"}, \code{"generic_location"}.}
+\code{"common"}, \code{"generic_location"}}
 }
 \value{
 Returns a list with the following named components:

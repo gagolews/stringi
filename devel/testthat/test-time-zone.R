@@ -26,6 +26,7 @@ test_that("stri_timezone_list", {
 
 
 test_that("stri_timezone_get/set", {
+   expect_error(stri_timezone_set("???"))
    expect_true(stri_length(ctz <- stri_timezone_get()) > 0)
 
    expect_true(ctz == stri_timezone_set("Europe/Tallinn"))
