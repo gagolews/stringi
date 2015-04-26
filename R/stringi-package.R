@@ -33,13 +33,13 @@
 #'
 #' @description
 #' \pkg{stringi} is THE \R package for fast, correct, consistent,
-#' and convenient string/text manipulation in each locale and any
-#' character encoding. We put great effort to create software that
-#' gives predictable results on any platform, in each locale, and any
-#' ``native'' system encoding.
+#' and convenient string/text manipulation.
+#' We put a lot of effort to create a software package that
+#' gives predictable results on every platform, in each locale,
+#' and under any ``native'' character encoding.
 #'
-#' \bold{Keywords}: R, text processing, character strings, internationalization,
-#'     localization, ICU, ICU4C, i18n, l10n, Unicode.
+#' \bold{Keywords}: R, text processing, character strings,
+#' internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
 #'
 #' \bold{Homepage}: \url{http://stringi.rexamine.com}
 #'
@@ -56,15 +56,15 @@
 #'    information on encoding management in \pkg{stringi}, as well as
 #'    on encoding detection and conversion.
 #'
-#' \item \link{stringi-locale} -- locale issues, including i.a. locale
+#' \item \link{stringi-locale} -- locale issues, including  locale
 #'    management and specification in \pkg{stringi}, and the list of
 #'    locale-sensitive operations. In particular, see
 #'    \code{\link{stri_opts_collator}} for a description of the string
 #'    collation algorithm, which is used for string comparing, ordering,
 #'    sorting, case-folding, and searching.
 #'
-#' \item \link{stringi-arguments} -- how \pkg{stringi} deals with its
-#'    functions' arguments.
+#' \item \link{stringi-arguments} -- information on how \pkg{stringi}
+#'    treats its functions' arguments.
 #' }
 #'
 #'
@@ -76,13 +76,13 @@
 #' these include pattern searching, matching, string splitting, and so on.
 #' The following independent search engines are provided:
 #' \itemize{
-#' \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions;
+#' \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions,
 #' \item \link{stringi-search-fixed} -- fast, locale-independent, bytewise pattern
 #'    matching,
 #' \item \link{stringi-search-coll} -- locale-aware pattern matching
-#'    for natural language processing tasks;
+#'    for natural language processing tasks,
 #' \item \link{stringi-search-charclass} -- for finding elements of
-#' particular character classes, like ``all whitespaces'' or ``all digits'';
+#'    particular character classes, like ``all whitespaces'' or ``all digits'',
 #' \item \link{stringi-search-boundaries} -- text boundary analysis.
 #' }
 #'
@@ -100,22 +100,21 @@
 #' and \code{\link{stri_reverse}} for a joyful function
 #' to reverse all code points in a string.
 #'
-#' \item \code{\link{stri_trim}} (among others) for
-#' trimming characters from the beginning or/and end of a string,
-#' see also \link{stringi-search-charclass},
-#' and \code{\link{stri_pad}} for padding strings so that
-#' they have the same minimal number of code points.
-#' Additionally, \code{\link{stri_wrap}} wraps text into lines.
-#'
 #' \item \code{\link{stri_length}} (among others) for determining the number
 #' of code points in a string. See also \code{\link{stri_count_boundaries}}
 #' for counting the number of \code{Unicode characters}
 #' and \code{\link{stri_width}} for approximating the width of a string..
 #'
+#' \item \code{\link{stri_trim}} (among others) for
+#' trimming characters from the beginning or/and end of a string,
+#' see also \link{stringi-search-charclass}, and \code{\link{stri_pad}}
+#' for padding strings so that they are of the same width.
+#' Additionally, \code{\link{stri_wrap}} wraps text into lines.
+#'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
 #' i.e. conversion to lower, UPPER, or Title Case,
 #' \code{\link{stri_trans_nfc}} (i.a.) for Unicode normalization,
-#' \code{\link{stri_trans_char}} for translating single code points,
+#' \code{\link{stri_trans_char}} for translating invidual code points,
 #' and \code{\link{stri_trans_general}} for other very general yet powerful
 #' text transforms, including transliteration.
 #'
@@ -138,12 +137,12 @@
 #' for reading and writing text files.
 #'
 #' \item TO DO [these will appear in future versions
-#' of \pkg{stringi}]: HTML entities,
-#' MIME Base 64 encode/decode,
+#' of \pkg{stringi}]: HTML entities, MIME Base 64 encode/decode,
 #' number formatting, number spellout, and many more.
 #' }
 #'
-#' Note that each man page has many links to other interesting facilities.
+#' Note that each man page provides many further links to other
+#' interesting facilities and topics.
 #'
 #' You are encouraged to call \code{\link{stri_install_check}}
 #' after the package installation or update.

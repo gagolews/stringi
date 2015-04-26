@@ -1328,35 +1328,35 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-cxx11         Disable use of C++11. If you build ICU4C from
-                          source, make sure your C++ compiler supports the
+  --disable-cxx11         Disable use of C++11; if you build ICU4C from
+                          sources, make sure your C++ compiler supports the
                           long long type.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel; in
                           such a case ICU4C will be compiled from sources.
-  --enable-gcc-debug      Enable -UNDEBUG when compiling stringi with gcc/g++
-                          (for stringi developers)
+  --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for stringi
+                          developers)
   --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
-                          stringi with gcc/g++ (for stringi developers)
+                          stringi with gcc/clang (for stringi developers)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-extra-cflags=FLAGS
                           Additional C compiler flags (except for those
-                          indicated by R)
+                          indicated by R CMD config)
   --with-extra-cppflags=FLAGS
                           Additional C/C++ preprocessor flags (except for
-                          those indicated by R)
+                          those indicated by R CMD config)
   --with-extra-cxxflags=FLAGS
                           Additional C++ compiler flags (except for those
-                          indicated by R)
+                          indicated by R CMD config)
   --with-extra-ldflags=FLAGS
                           Additional linker flags (except for those indicated
-                          by R)
+                          by R CMD config)
 
 Some influential environment variables:
   R_HOME      Override default directory with R installation, e.g.
-              /usr/lib64/R. Note that $R_HOME/bin/R should point to R
+              /usr/lib64/R. Note that $R_HOME/bin/R should point to the R
               executable.
   ICUDT_DIR   Optional directory from which an already downloaded ICU data
               archive (icudt*.zip) may be copied; either an absolute path or a
@@ -2229,7 +2229,7 @@ $as_echo "$ICUDT_DIR" >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R_HOME" >&5
 $as_echo_n "checking for R_HOME... " >&6; }
 if test -z "${R_HOME}"; then
-   R_HOME=`R RHOME` # set R_HOME if it isn't already set
+   R_HOME=`R RHOME` # set R_HOME if it has not been set already
 fi
 if test -z "${R_HOME}"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -2259,13 +2259,13 @@ $as_echo "$R_PATH" >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R >= 3.1.0" >&5
 $as_echo_n "checking for R >= 3.1.0... " >&6; }
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
-if test "$R_GE_31" == "yes"; then
+if test "x$R_GE_31" == "xyes"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 else
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-   if test "$enable_cxx11" == "yes"; then
+   if test "x$enable_cxx11" == "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
    fi
@@ -2325,14 +2325,14 @@ fi
 
 ###### SETUP COMPILER FLAGS FOR TESTING ######################################
 
-if test "$enable_gcc_debug" == "yes"; then
+if test "x$enable_gcc_debug" == "xyes"; then
    #  -fsanitize=address -fno-omit-frame-pointer
    with_extra_cppflags="${with_extra_cppflags} -DDEBUG -UNDEBUG"
 else
    with_extra_cppflags="${with_extra_cppflags} -UDEBUG -DNDEBUG"
 fi
 
-if test "$enable_gcc_pedantic" == "yes"; then
+if test "x$enable_gcc_pedantic" == "xyes"; then
    with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
    with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
 fi
@@ -2343,7 +2343,7 @@ LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_PATH}" CMD config CFLAGS`
 CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 
-if test "$enable_cxx11" == "yes"; then
+if test "x$enable_cxx11" == "xyes"; then
    CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_PATH}\" CMD config CXX1XSTD`"
    CXXFLAGS=`"${R_PATH}" CMD config CXX1XFLAGS`
    STRINGI_CXXSTD="CXX_STD=CXX11"
