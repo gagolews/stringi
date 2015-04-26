@@ -11,7 +11,7 @@ words <- stri_split_charclass("ihr naht euch wieder schwankende gestalten
    wie ihr aus dunst und nebel um mich steigt
    mein busen fühlt sich jugendlich erschüttert
    vom zauberhauch der euren zug umwittert
-   
+
    ihr bringt mit euch die bilder froher tage
    und manche liebe schatten steigen auf
    gleich einer alten halbverklungnen sage
@@ -20,7 +20,7 @@ words <- stri_split_charclass("ihr naht euch wieder schwankende gestalten
    des lebens labyrinthisch irren lauf
    und nennt die guten die um schöne stunden
    vom glück getäuscht vor mir hinweggeschwunden
-   
+
    sie hören nicht die folgenden gesänge
    die seelen denen ich die ersten sang
    zerstoben ist das freundliche gedränge
@@ -29,7 +29,7 @@ words <- stri_split_charclass("ihr naht euch wieder schwankende gestalten
    ihr beifall selbst macht meinem herzen bang
    und was sich sonst an meinem lied erfreuet
    wenn es noch lebt irrt in der welt zerstreuet
-   
+
    und mich ergreift ein längst entwöhntes sehnen
    nach jenem stillen ernsten geisterreich
    es schwebet nun in unbestimmten tönen
@@ -38,7 +38,6 @@ words <- stri_split_charclass("ihr naht euch wieder schwankende gestalten
    das strenge herz es fühlt sich mild und weich
    was ich besitze seh ich wie im weiten
    und was verschwand wird mir zu wirklichkeiten", "WHITESPACE", omit_empty=TRUE)[[1]]
-
 
 npars <- 10000
 

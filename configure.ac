@@ -13,7 +13,7 @@ ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
 AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/lib64/R.
-                    Note that $R_HOME/bin/R should point to R executable.])
+                    Note that $R_HOME/bin/R should point to the R executable.])
 
 AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU data archive (icudt*.zip)
                        may be copied; either an absolute path or a path relative to <package source dir>/src;
@@ -21,7 +21,7 @@ AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU d
 
 AC_ARG_ENABLE([cxx11],
     AS_HELP_STRING([--disable-cxx11],
-      [Disable use of C++11. If you build ICU4C from source, make sure your C++ compiler supports the long long type.]))
+      [Disable use of C++11; if you build ICU4C from sources, make sure your C++ compiler supports the long long type.]))
 if test "x$enable_cxx11" != "xno"; then
    enable_cxx11="yes"
 else
@@ -39,7 +39,7 @@ fi
 
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
-      [Enable -UNDEBUG when compiling stringi with gcc/g++ (for stringi developers)]))
+      [Enable -UNDEBUG when compiling stringi (for stringi developers)]))
 if test "x$enable_gcc_debug" == "xyes"; then
    enable_gcc_debug="yes"
 else
@@ -48,7 +48,7 @@ fi
 
 AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
-      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/g++ (for stringi developers)]))
+      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/clang (for stringi developers)]))
 if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else
@@ -57,19 +57,19 @@ fi
 
 AC_ARG_WITH([extra_cflags],
     AS_HELP_STRING([--with-extra-cflags=FLAGS],
-      [Additional C compiler flags (except for those indicated by R)]))
+      [Additional C compiler flags (except for those indicated by R CMD config)]))
 
 AC_ARG_WITH([extra_cppflags],
     AS_HELP_STRING([--with-extra-cppflags=FLAGS],
-      [Additional C/C++ preprocessor flags (except for those indicated by R)]))
+      [Additional C/C++ preprocessor flags (except for those indicated by R CMD config)]))
 
 AC_ARG_WITH([extra_cxxflags],
     AS_HELP_STRING([--with-extra-cxxflags=FLAGS],
-      [Additional C++ compiler flags (except for those indicated by R)]))
+      [Additional C++ compiler flags (except for those indicated by R CMD config)]))
 
 AC_ARG_WITH([extra_ldflags],
     AS_HELP_STRING([--with-extra-ldflags=FLAGS],
-      [Additional linker flags (except for those indicated by R)]))
+      [Additional linker flags (except for those indicated by R CMD config)]))
 
 
 ##### CHECK FOR R #############################################################
@@ -85,7 +85,7 @@ AC_MSG_RESULT($ICUDT_DIR)
 # determine R_HOME directory...
 AC_MSG_CHECKING(for R_HOME)
 if test -z "${R_HOME}"; then
-   R_HOME=`R RHOME` # set R_HOME if it isn't already set
+   R_HOME=`R RHOME` # set R_HOME if it has not been set already
 fi
 if test -z "${R_HOME}"; then
    AC_MSG_RESULT(no)
@@ -109,11 +109,11 @@ AC_MSG_RESULT($R_PATH)
 
 AC_MSG_CHECKING(for R >= 3.1.0)
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
-if test "$R_GE_31" == "yes"; then
+if test "x$R_GE_31" == "xyes"; then
    AC_MSG_RESULT([yes])
 else
    AC_MSG_RESULT([no])
-   if test "$enable_cxx11" == "yes"; then
+   if test "x$enable_cxx11" == "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
    fi
@@ -132,14 +132,14 @@ fi
 
 ###### SETUP COMPILER FLAGS FOR TESTING ######################################
 
-if test "$enable_gcc_debug" == "yes"; then
+if test "x$enable_gcc_debug" == "xyes"; then
    #  -fsanitize=address -fno-omit-frame-pointer
    with_extra_cppflags="${with_extra_cppflags} -DDEBUG -UNDEBUG"
 else
    with_extra_cppflags="${with_extra_cppflags} -UDEBUG -DNDEBUG"
 fi
 
-if test "$enable_gcc_pedantic" == "yes"; then
+if test "x$enable_gcc_pedantic" == "xyes"; then
    with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
    with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
 fi
@@ -150,7 +150,7 @@ LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_PATH}" CMD config CFLAGS`
 CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 
-if test "$enable_cxx11" == "yes"; then
+if test "x$enable_cxx11" == "xyes"; then
    CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_PATH}\" CMD config CXX1XSTD`"
    CXXFLAGS=`"${R_PATH}" CMD config CXX1XFLAGS`
    STRINGI_CXXSTD="CXX_STD=CXX11"
