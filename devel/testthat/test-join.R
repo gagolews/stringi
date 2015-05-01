@@ -24,6 +24,8 @@ test_that("stri_join", {
       stri_c(test, NULL, "a", sep = " ", ignore_null=TRUE),
       equals(c("a a", "b a", "c a")))
 
+   expect_equivalent(stri_flatten(as.Date(ISOdate(2015, 01, 12))), "2015-01-12")
+   expect_equivalent(stri_flatten(as.factor("aaa")), "aaa")
 
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
    expect_identical(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)

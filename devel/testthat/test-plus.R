@@ -16,7 +16,7 @@ test_that("%s+%", {
    expect_equivalent(c("ABC", "A", "B") %s+% c(NA, "B", "C"), c(NA, "AB", "BC"))
    expect_equivalent(c("ABC", "A", "B") %s+% c(NA, NA, "C"), c(NA, NA, "BC"))
 
-   expect_error("a"%s+%list("a"))
+   expect_equivalent("a"%s+%list("a"), "aa")
    expect_warning(letters[1:13]%s+%letters[1:75])
    expect_warning(expect_equivalent(letters[1:3]%s+%letters[1:5],c("aa","bb","cc","ad","be")))
 })

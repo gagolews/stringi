@@ -108,8 +108,9 @@ invisible(NULL)
 # @param x argument to be checked
 #
 # @return
+# If \code{x} is a factor or an object equipped with a \code{class}
+# attribute or a list, then \code{\link{as.character}} is called.
 # If \code{x} is a string, it is returned with no change.
-# If it is a factor, then \code{\link{as.character}} is called.
 # If an atomic vector or a matrix is given, it is coerced to a character vector.
 # If it is a \code{name} object, a character vector of length 1 is generated.
 # Otherwise the function throws an error.
@@ -133,6 +134,8 @@ stri_prepare_arg_string <- function(x) {
 # @return
 # If \code{x} is a factor, \code{\link{as.character}} is called, and the
 # resulting character vector is coerced to numeric.
+# If it is an object equipped with a \code{class} attribute or a list,
+# \code{as.double} is called.
 # If it is a numeric vector, then it is returned with no change.
 # If atomic vector or a matrix is given, it is coerced to a numeric vector.
 # Otherwise the function throws an error.
@@ -156,6 +159,8 @@ stri_prepare_arg_double <- function(x) {
 # @return
 # If \code{x} is a factor, \code{\link{as.character}} is called, and the
 # resulting character vector is coerced to integer.
+# If it is an object equipped with a \code{class} attribute or a list,
+# \code{as.integer} is called.
 # If it is an integer vector, then it is returned with no change.
 # If an atomic vector or a matrix is given, it is coerced to an integer vector.
 # Otherwise the function throws an error.
@@ -178,6 +183,8 @@ stri_prepare_arg_integer <- function(x) {
 #
 # @return
 # If \code{x} is a logical vector, it is returned with no change.
+# If it is an object equipped with a \code{class} attribute or a list,
+# \code{as.logical} is called.
 # If \code{x} is a factor, \code{\link{as.character}} is called, and the
 # resulting character vector is coerced to logical.
 # If atomic vector or a matrix is given, it is coerced to a logical vector.
@@ -200,9 +207,11 @@ stri_prepare_arg_logical <- function(x) {
 # @param x argument to be checked
 #
 # @return
-# If \code{x} is a raw vector, it is returned with no change.
 # If \code{x} is a factor, \code{\link{as.character}} is called, and the
 # resulting character vector is coerced to raw.
+# If it is an object equipped with a \code{class} attribute or a list,
+# \code{as.raw} is called.
+# If \code{x} is a raw vector, it is returned with no change.
 # If atomic vector or a matrix is given, it is coerced to a raw vector.
 # Otherwise the function throws an error.
 #

@@ -55,6 +55,9 @@
      however) to build stringi from sources. This is because ICU4C uses the
      `long long` type which is not part of the C++98 standard.
 
+   * [BUGFIX] #154: Dates and other objects with a custom class attribute
+     were not coerced to the character type correctly.
+
    * [BACKWARD INCOMPABILITY] The second argument to `stri_pad_*()` has
      been renamed `width`.
 
