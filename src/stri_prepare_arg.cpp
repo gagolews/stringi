@@ -220,7 +220,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
       UNPROTECT(2);
       return x;
    }
-   else if (Rf_isVectorList(x) || Rf_getAttrib(x, R_ClassSymbol) != R_NilValue)
+   else if (Rf_isVectorList(x) || isObject(x))
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
@@ -281,7 +281,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (Rf_isVectorList(x) || Rf_getAttrib(x, R_ClassSymbol) != R_NilValue)
+   else if (Rf_isVectorList(x) || isObject(x))
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.double"), x));
@@ -382,7 +382,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (Rf_isVectorList(x) || Rf_getAttrib(x, R_ClassSymbol) != R_NilValue)
+   else if (Rf_isVectorList(x) || isObject(x))
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.integer"), x));
@@ -441,7 +441,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (Rf_isVectorList(x) || Rf_getAttrib(x, R_ClassSymbol) != R_NilValue)
+   else if (Rf_isVectorList(x) || isObject(x))
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
@@ -497,7 +497,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
       UNPROTECT(3);
       return x;
    }
-   else if (Rf_isVectorList(x) || Rf_getAttrib(x, R_ClassSymbol) != R_NilValue)
+   else if (Rf_isVectorList(x) || isObject(x))
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.raw"), x));
