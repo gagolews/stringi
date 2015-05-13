@@ -34,7 +34,7 @@
 #' @description
 #' \pkg{stringi} is THE \R package for fast, correct, consistent,
 #' and convenient string/text manipulation.
-#' We put a lot of effort to create a software package that
+#' We put a lot of effort into creating a software package that
 #' gives predictable results on every platform, in each locale,
 #' and under any ``native'' character encoding.
 #'
@@ -48,9 +48,8 @@
 #' and the UCD license for the Unicode Character Database.
 #' See the COPYRIGHTS and LICENSE file for more details.
 #'
-#'
 #' @details
-#' Manual pages on general topics (must-read):
+#' Manual pages on general topics:
 #' \itemize{
 #' \item \link{stringi-encoding} -- character encoding issues, including
 #'    information on encoding management in \pkg{stringi}, as well as
@@ -149,6 +148,7 @@
 #'
 #' @name stringi-package
 #' @rdname stringi-package
+#' @aliases stringi
 #' @docType package
 #' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
 #' Bartek Tartanus \email{bartektartanus@@rexamine.com},\cr
