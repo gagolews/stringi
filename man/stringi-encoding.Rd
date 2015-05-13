@@ -233,12 +233,12 @@ Other encoding_management: \code{\link{stri_enc_get}},
 
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-locale}};
-  \code{\link{stringi-package}};
   \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}};
-  \code{\link{stringi-search}}
+  \code{\link{stringi-search}}; \code{\link{stringi}},
+  \code{\link{stringi-package}}
 }
 

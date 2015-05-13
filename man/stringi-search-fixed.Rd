@@ -37,11 +37,11 @@ Other search_fixed: \code{\link{stri_opts_fixed}};
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
-  \code{\link{stringi-package}};
   \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-regex}};
-  \code{\link{stringi-search}}
+  \code{\link{stringi-search}}; \code{\link{stringi}},
+  \code{\link{stringi-package}}
 }
 
