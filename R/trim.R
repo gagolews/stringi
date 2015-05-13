@@ -40,9 +40,9 @@
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' \code{stri_trim} is a convenience function, which dispatches
-#' control to \code{stri_trim_*}. Unless you are very lazy, do not use it:
-#' it is a little bit slower.
+#' \code{stri_trim} is a wrapper, which calls \code{stri_trim_left}
+#' or \code{stri_trim_right} as appropriate. It's slightly slower than trim_left or
+#' trim_right, and so shouldn't be used except for convenience.
 #'
 #' Contrary to many other string processing libraries,
 #' our trimming functions are quite general. A character class,
@@ -60,8 +60,8 @@
 #' and general character category `\code{\\p\{Z\}}`,
 #' see \link{stringi-search-charclass}.
 #'
-#' @param str character vector
-#' @param pattern character vector specifying character classes that
+#' @param str a character vector of strings to be trimmed
+#' @param pattern a single regular expression, formatted as a string, specifying character classes that
 #' should be preserved, see \link{stringi-search-charclass},
 #' defaults to `\code{\\P\{Wspace\}}`
 #' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
