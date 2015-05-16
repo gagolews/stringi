@@ -61,7 +61,7 @@
 #' see \link{stringi-search-charclass}.
 #'
 #' @param str a character vector of strings to be trimmed
-#' @param pattern a single ICU regular expression, formatted as a string, specifying character
+#' @param pattern a single pattern, specifying character
 #' classes that should be preserved (see \link{stringi-search-charclass}). Defaults to
 #' `\code{\\P\{Wspace\}}.
 #' @param side character [\code{stri_trim} only]; defaults to \code{"both"}
