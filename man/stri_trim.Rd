@@ -18,9 +18,9 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 \arguments{
 \item{str}{a character vector of strings to be trimmed}
 
-\item{pattern}{a single regular expression, formatted as a string, specifying character classes that
-should be preserved, see \link{stringi-search-charclass},
-defaults to `\code{\\P\{Wspace\}}`}
+\item{pattern}{a single ICU regular expression, formatted as a string, specifying character
+classes that should be preserved (see \link{stringi-search-charclass}). Defaults to
+`\code{\\P\{Wspace\}}.}
 
 \item{side}{character [\code{stri_trim} only]; defaults to \code{"both"}}
 }
