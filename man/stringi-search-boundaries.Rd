@@ -99,12 +99,12 @@ Other locale_sensitive: \code{\link{\%s!==\%}},
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
-  \code{\link{stringi-package}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-coll}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}};
-  \code{\link{stringi-search}}
+  \code{\link{stringi-search}}; \code{\link{stringi}},
+  \code{\link{stringi-package}}
 
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_count_words}};
