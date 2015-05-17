@@ -33,68 +33,67 @@ Some general topics are also covered in the \R manual, see \link{regex}.
 Here is a list of operators provided by the
 ICU User Guide on regexes.
 
-\tabular{ll}{
-\strong{Operator} \tab    \strong{Description}\cr
-\code{|} \tab 	Alternation. A|B matches either A or B.\cr
-\code{*} \tab 	Match 0 or more times. Match as many times as possible.\cr
-\code{+} \tab 	Match 1 or more times. Match as many times as possible.\cr
-\code{?} \tab 	Match zero or one times. Prefer one.\cr
-\code{{n}} \tab 	Match exactly n times.\cr
-\code{{n,}} \tab 	Match at least n times. Match as many times as possible.\cr
-\code{{n,m}} \tab 	Match between n and m times.
-Match as many times as possible, but not more than m.\cr
-\code{*?} \tab 	Match 0 or more times. Match as few times as possible.\cr
-\code{+?} \tab 	Match 1 or more times. Match as few times as possible.\cr
-\code{??} \tab 	Match zero or one times. Prefer zero.\cr
-\code{{n}?} \tab 	Match exactly n times.\cr
-\code{{n,}?} \tab 	Match at least n times, but no more than required
-for an overall pattern match.\cr
-\code{{n,m}?} \tab 	Match between n and m times. Match as few times
-as possible, but not less than n.\cr
-\code{*+} \tab 	Match 0 or more times. Match as many times as possible
+\describe{
+\item{\code{|}}{Alternation. A|B matches either A or B.}
+\item{\code{*}}{Match 0 or more times. Match as many times as possible.}
+\item{\code{+}}{Match 1 or more times. Match as many times as possible.}
+\item{\code{?}}{Match zero or one times. Prefer one.}
+\item{\code{{n}}}{Match exactly n times.}
+\item{\code{{n,}}}{Match at least n times. Match as many times as possible.}
+\item{\code{{n,m}}}{Match between n and m times.
+Match as many times as possible, but not more than m.}
+\item{\code{*?}}{Match 0 or more times. Match as few times as possible.}
+\item{\code{+?}}{Match 1 or more times. Match as few times as possible.}
+\item{\code{??}}{Match zero or one times. Prefer zero.}
+\item{\code{{n}?}}{Match exactly n times.}
+\item{\code{{n,}?}}{Match at least n times, but no more than required
+for an overall pattern match.}
+\item{\code{{n,m}?}}{Match between n and m times. Match as few times
+as possible, but not less than n.}
+\item{\code{*+}}{Match 0 or more times. Match as many times as possible
 when first encountered, do not retry with fewer even if overall match fails
-(Possessive Match).\cr
-\code{++} \tab 	Match 1 or more times. Possessive match.\cr
-\code{?+} \tab 	Match zero or one times. Possessive match.\cr
-\code{{n}+} \tab 	Match exactly n times.\cr
-\code{{n,}+} \tab 	Match at least n times. Possessive Match.\cr
-\code{{n,m}+} \tab 	Match between n and m times. Possessive Match.\cr
-\code{(...)} \tab 	Capturing parentheses. Range of input that matched
+(Possessive Match).}
+\item{\code{++}}{Match 1 or more times. Possessive match.}
+\item{\code{?+}}{Match zero or one times. Possessive match.}
+\item{\code{{n}+}}{Match exactly n times.}
+\item{\code{{n,}+}}{Match at least n times. Possessive Match.}
+\item{\code{{n,m}+}}{Match between n and m times. Possessive Match.}
+\item{\code{(...)}}{Capturing parentheses. Range of input that matched
 the parenthesized subexpression is available after the match,
-see \code{\link{stri_match}}.\cr
-\code{(?:...)} \tab 	Non-capturing parentheses. Groups the included pattern,
+see \code{\link{stri_match}}.}
+\item{\code{(?:...)}}{Non-capturing parentheses. Groups the included pattern,
 but does not provide capturing of matching text. Somewhat more efficient
-than capturing parentheses.\cr
-\code{(?>...)} \tab 	Atomic-match parentheses. First match of the
+than capturing parentheses.}
+\item{\code{(?>...)}}{Atomic-match parentheses. First match of the
 parenthesized subexpression is the only one tried; if it does not lead to
 an overall pattern match, back up the search for a match to a position
-before the \code{(?>}\cr
-\code{(?#...)} \tab 	Free-format comment \code{(?# comment )}.\cr
-\code{(?=...)} \tab 	Look-ahead assertion. True if the parenthesized
+before the \code{(?>}.}
+\item{\code{(?#...)}}{Free-format comment \code{(?# comment )}.}
+\item{\code{(?=...)}}{Look-ahead assertion. True if the parenthesized
 pattern matches at the current input position, but does not advance
-the input position.\cr
-\code{(?!...)} \tab 	Negative look-ahead assertion. True if the
+the input position.}
+\item{\code{(?!...)}}{Negative look-ahead assertion. True if the
 parenthesized pattern does not match at the current input position.
-Does not advance the input position.\cr
-\code{(?<=...)} \tab 	Look-behind assertion. True if the parenthesized
+Does not advance the input position.}
+\item{\code{(?<=...)}}{Look-behind assertion. True if the parenthesized
 pattern matches text preceding the current input position, with the last
 character of the match being the input character just before the current
 position. Does not alter the input position. The length of possible strings
 matched by the look-behind pattern must not be unbounded (no \code{*}
-or \code{+} operators.)\cr
-\code{(?<!...)} \tab 	Negative Look-behind assertion. True if the
+or \code{+} operators.)}
+\item{\code{(?<!...)}}{Negative Look-behind assertion. True if the
 parenthesized pattern does not match text preceding the current input
 position, with the last character of the match being the input character
 just before the current position. Does not alter the input position.
 The length of possible strings matched by the look-behind pattern must
-not be unbounded (no \code{*} or \code{+} operators.)\cr
-\code{(?ismwx-ismwx:...)} \tab 	Flag settings. Evaluate the parenthesized
+not be unbounded (no \code{*} or \code{+} operators.)}
+\item{\code{(?ismwx-ismwx:...)}}{Flag settings. Evaluate the parenthesized
 expression with the specified flags enabled or \code{-}disabled,
-see also \code{\link{stri_opts_regex}}.\cr
-\code{(?ismwx-ismwx)} \tab 	Flag settings. Change the flag settings.
+see also \code{\link{stri_opts_regex}}.}
+\item{\code{(?ismwx-ismwx)}}{Flag settings. Change the flag settings.
 Changes apply to the portion of the pattern following the setting.
 For example, \code{(?i)} changes to a case insensitive match,
-see also \code{\link{stri_opts_regex}}. \cr
+see also \code{\link{stri_opts_regex}}.}
 }
 }
 
@@ -104,68 +103,67 @@ see also \code{\link{stri_opts_regex}}. \cr
 Here is a list of metacharacters provided by the
 ICU User Guide on regexes.
 
-\tabular{ll}{
-\strong{Character}  \tab 	\strong{Description} \cr
-\code{\\a} \tab Match a BELL, \code{\\u0007} \cr
-\code{\\A} \tab Match at the beginning of the input. Differs from \code{^}
-in that \code{\\A} will not match after a new line within the input. \cr
-\code{\\b} \tab Match if the current position is a word boundary.
-Boundaries occur at the transitions between word (\code{\\w}) and non-word
-(\code{\\W}) characters, with combining marks ignored. For better word
-boundaries, see ICU Boundary Analysis, e.g. \code{\link{stri_extract_all_words}} . \cr
-\code{\\B} \tab Match if the current position is not a word boundary. \cr
-\code{\\cX} \tab Match a control-\code{X} character. \cr
-\code{\\d} \tab Match any character with the Unicode General Category of
-Nd (Number, Decimal Digit.) \cr
-\code{\\D} \tab Match any character that is not a decimal digit. \cr
-\code{\\e} \tab Match an ESCAPE, \code{\\u001B}. \cr
-\code{\\E} \tab Terminates a \code{\\Q} ... \code{\\E} quoted sequence. \cr
-\code{\\f} \tab Match a FORM FEED, \code{\\u000C}. \cr
-\code{\\G} \tab Match if the current position is at the end of the
-previous match. \cr
-\code{\\n} \tab Match a LINE FEED, \code{\\u000A}. \cr
-\code{\\N{UNICODE CHARACTER NAME}} \tab Match the named character. \cr
-\code{\\p{UNICODE PROPERTY NAME}} \tab Match any character with the
-specified Unicode Property. \cr
-\code{\\P{UNICODE PROPERTY NAME}} \tab Match any character not having
-the specified Unicode Property. \cr
-\code{\\Q} \tab Quotes all following characters until \code{\\E}. \cr
-\code{\\r} \tab Match a CARRIAGE RETURN, \code{\\u000D}. \cr
-\code{\\s} \tab Match a white space character. White space is defined
-as \code{[\\t\\n\\f\\r\\p{Z}]}. \cr
-\code{\\S} \tab Match a non-white space character. \cr
-\code{\\t} \tab Match a HORIZONTAL TABULATION, \code{\\u0009}. \cr
-\code{\\uhhhh} \tab Match the character with the hex value \code{hhhh}. \cr
-\code{\\Uhhhhhhhh} \tab Match the character with the hex value \code{hhhhhhhh}.
-Exactly eight hex digits must be provided, even though the largest
-Unicode code point is \code{\\U0010ffff}. \cr
-\code{\\w} \tab Match a word character. Word characters are
-\code{[\\p{Alphabetic}\\p{Mark}\\p{Decimal_Number}\\p{Connector_Punctuation}\\u200c\\u200d]}. \cr
-\code{\\W} \tab Match a non-word character. \cr
-\code{\\x{hhhh}} \tab Match the character with hex value hhhh.
-From one to six hex digits may be supplied. \cr
-\code{\\xhh} \tab Match the character with two digit hex value hh \cr
-\code{\\X} \tab Match a Grapheme Cluster. \cr
-\code{\\Z} \tab Match if the current position is at the end of input,
- but before the final line terminator, if one exists. \cr
-\code{\\z} \tab Match if the current position is at the end of input. \cr
-\code{\\n} \tab 	Back Reference. Match whatever the nth capturing
+\describe{
+\item{\code{\\a}}{Match a BELL, \code{\\u0007}.}
+\item{\code{\\A}}{Match at the beginning of the input. Differs from \code{^}.
+   in that \code{\\A} will not match after a new line within the input.}
+\item{\code{\\b}}{Match if the current position is a word boundary.
+   Boundaries occur at the transitions between word (\code{\\w}) and non-word
+   (\code{\\W}) characters, with combining marks ignored. For better word
+   boundaries, see \pkg{ICU} Boundary Analysis, e.g. \code{\link{stri_extract_all_words}}.}
+\item{\code{\\B}}{Match if the current position is not a word boundary.}
+\item{\code{\\cX}}{Match a control-\code{X} character.}
+\item{\code{\\d}}{Match any character with the Unicode General Category of
+   \code{Nd} (Number, Decimal Digit.).}
+\item{\code{\\D}}{Match any character that is not a decimal digit.}
+\item{\code{\\e}}{Match an ESCAPE, \code{\\u001B}.}
+\item{\code{\\E}}{Terminates a \code{\\Q} ... \code{\\E} quoted sequence.}
+\item{\code{\\f}}{Match a FORM FEED, \code{\\u000C}.}
+\item{\code{\\G}}{Match if the current position is at the end of the
+   previous match.}
+\item{\code{\\n}}{Match a LINE FEED, \code{\\u000A}.}
+\item{\code{\\N{UNICODE CHARACTER NAME}}}{Match the named character.}
+\item{\code{\\p{UNICODE PROPERTY NAME}}}{Match any character with the
+   specified Unicode Property.}
+\item{\code{\\P{UNICODE PROPERTY NAME}}}{Match any character not having
+   the specified Unicode Property.}
+\item{\code{\\Q}}{Quotes all following characters until \code{\\E}.}
+\item{\code{\\r}}{Match a CARRIAGE RETURN, \code{\\u000D}.}
+\item{\code{\\s}}{Match a white space character. White space is defined
+   as \code{[\\t\\n\\f\\r\\p{Z}]}.}
+\item{\code{\\S}}{Match a non-white space character.}
+\item{\code{\\t}}{Match a HORIZONTAL TABULATION, \code{\\u0009}.}
+\item{\code{\\uhhhh}}{Match the character with the hex value \code{hhhh}.}
+\item{\code{\\Uhhhhhhhh}}{Match the character with the hex value \code{hhhhhhhh}.
+   Exactly eight hex digits must be provided, even though the largest
+   Unicode code point is \code{\\U0010ffff}.}
+\item{\code{\\w}}{Match a word character. Word characters are
+   \code{[\\p{Alphabetic}\\p{Mark}\\p{Decimal_Number}\\p{Connector_Punctuation}\\u200c\\u200d]}.}
+\item{\code{\\W}}{Match a non-word character.}
+\item{\code{\\x{hhhh}}}{Match the character with hex value hhhh.
+From one to six hex digits may be supplied.}
+\item{\code{\\xhh}}{Match the character with two digit hex value hh }
+\item{\code{\\X}}{Match a Grapheme Cluster.}
+\item{\code{\\Z}}{Match if the current position is at the end of input,
+ but before the final line terminator, if one exists.}
+\item{\code{\\z}}{Match if the current position is at the end of input.}
+\item{\code{\\n}}{Back Reference. Match whatever the nth capturing
 group matched. n must be a number > 1 and < total number of capture
-groups in the pattern. \cr
-\code{\\0ooo} \tab Match an Octal character.  'ooo' is from one to three
+groups in the pattern.}
+\item{\code{\\0ooo}}{Match an Octal character.  \code{'ooo'} is from one to three
 octal digits.  0377 is the largest allowed Octal character.  The leading
-zero is required; it distinguishes Octal constants from back references. \cr
-\code{[pattern]} \tab Match any one character from the set.  \cr
-\code{.} \tab Match any character. \cr
-\code{^} \tab Match at the beginning of a line. \cr
-\code{$} \tab Match at the end of a line. \cr
-\code{\\} \tab [outside of sets] Quotes the following character.
+zero is required; it distinguishes Octal constants from back references.}
+\item{\code{[pattern]}}{Match any one character from the set.}
+\item{\code{.}}{Match any character.}
+\item{\code{^}}{Match at the beginning of a line.}
+\item{\code{$}}{Match at the end of a line.}
+\item{\code{\\}}{[outside of sets] Quotes the following character.
 Characters that must be quoted to be treated as literals are
-\code{* ? + [ ( ) { } ^ $ | \\ .} \cr
-\code{\\} \tab [inside sets] Quotes the following character.
-Characters that must be quoted to be treated as literals are
-\code{[ ] \\}; Characters that may need to be quoted, depending
-on the context are \code{- &} \cr
+   \code{* ? + [ ( ) { } ^ $ | \\ .}.}
+\item{\code{\\}}{[inside sets] Quotes the following character.
+   Characters that must be quoted to be treated as literals are
+   \code{[ ] \\}; Characters that may need to be quoted, depending
+   on the context are \code{- &}.}
 }
 
 For information on how to define character classes
