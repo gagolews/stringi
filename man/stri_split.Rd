@@ -92,9 +92,8 @@ string into individual characters, use e.g.
 
 \code{stri_split} is a convenience function. It calls either
 \code{stri_split_regex}, \code{stri_split_fixed}, \code{stri_split_coll},
-or \code{stri_split_charclass}, depending on the argument used.
-Unless you are a very lazy person, please call the underlying functions
-directly for better performance.
+or \code{stri_split_charclass}, depending on the argument used. Relying
+on one of those underlying functions will make your code run slightly faster.
 }
 \examples{
 stri_split_fixed("a_b_c_d", "_")

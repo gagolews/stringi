@@ -47,9 +47,8 @@
 #' It calls either \code{stri_subset_regex},
 #' \code{stri_subset_fixed}, \code{stri_subset_coll},
 #' or \code{stri_subset_charclass},
-#' depending on the argument used.
-#' Unless you are a very lazy person, please call the underlying functions
-#' directly for better performance.
+#' depending on the argument used. Relying on those underlying
+#' functions will make your code run slightly faster.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;

@@ -78,8 +78,8 @@ position in \code{str}, use \code{\link{stri_detect}}.
 \code{stri_startswith} and \code{stri_endswith} are convenience functions.
 They call either \code{stri_*_fixed}, \code{stri_*_coll},
 or \code{stri_*_charclass}, depending on the argument used.
-Unless you are a very lazy person, please refer to the underlying functions
-directly for better performance.
+Relying on those underlying functions directly will make your code run
+slightly faster.
 
 Note that testing for a pattern match at the start or end of a string
 has not been implemented separately for regex patterns.

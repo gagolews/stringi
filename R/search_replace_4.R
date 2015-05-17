@@ -61,11 +61,11 @@
 #' escape it with a backslash.
 #'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
-#' and \code{stri_replace_last} are convenience functions.
-#' They just call \code{stri_replace_*_*}, depending on arguments used.
-#' Unless you are a very lazy person, please call the underlying functions
-#' directly for better performance.
-#'
+#' and \code{stri_replace_last} are convenience functions; they just call
+#' \code{stri_replace_*_*} variants, depending on the arguments used. Using
+#' the underlying \code{stri_replace} functions will result in code
+#' running slightly faster.
+#' 
 #' If you would like to get rid of e.g. whitespaces from the start or end
 #' of a string, see \code{\link{stri_trim}}.
 #'
