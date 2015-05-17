@@ -8,7 +8,7 @@ In this man page we describe how character classes are
 declared in the \pkg{stringi} package
 so that you may e.g. find their occurrences in your search activities
 or generate random code points with \code{\link{stri_rand_strings}}.
-Moreover, \pkg{ICU} regex engines uses the same
+Moreover, the \pkg{ICU} regex engine uses the same
 scheme for denoting character classes.
 }
 \details{
