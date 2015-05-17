@@ -88,11 +88,11 @@ Other search_coll: \code{\link{stri_opts_collator}};
 Other stringi_general_topics: \code{\link{stringi-arguments}};
   \code{\link{stringi-encoding}};
   \code{\link{stringi-locale}};
-  \code{\link{stringi-package}};
   \code{\link{stringi-search-boundaries}};
   \code{\link{stringi-search-charclass}};
   \code{\link{stringi-search-fixed}};
   \code{\link{stringi-search-regex}};
-  \code{\link{stringi-search}}
+  \code{\link{stringi-search}}; \code{\link{stringi}},
+  \code{\link{stringi-package}}
 }
 

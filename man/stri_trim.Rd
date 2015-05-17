@@ -16,11 +16,11 @@ stri_trim_right(str, pattern = "\\\\P{Wspace}")
 stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 }
 \arguments{
-\item{str}{character vector}
+\item{str}{a character vector of strings to be trimmed}
 
-\item{pattern}{character vector specifying character classes that
-should be preserved, see \link{stringi-search-charclass},
-defaults to `\code{\\P\{Wspace\}}`}
+\item{pattern}{a single pattern, specifying character
+classes that should be preserved (see \link{stringi-search-charclass}). Defaults to
+`\code{\\P\{Wspace\}}.}
 
 \item{side}{character [\code{stri_trim} only]; defaults to \code{"both"}}
 }
@@ -35,9 +35,9 @@ starts at the last \code{pattern} match.
 \details{
 Vectorized over \code{str} and \code{pattern}.
 
-\code{stri_trim} is a convenience function, which dispatches
-control to \code{stri_trim_*}. Unless you are very lazy, do not use it:
-it is a little bit slower.
+\code{stri_trim} is a wrapper, which calls \code{stri_trim_left}
+or \code{stri_trim_right} as appropriate. It's slightly slower than trim_left or
+trim_right, and so shouldn't be used except for convenience.
 
 Contrary to many other string processing libraries,
 our trimming functions are quite general. A character class,
