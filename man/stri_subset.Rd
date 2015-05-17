@@ -56,9 +56,8 @@ of \code{length(str) >= length(pattern)}.
 It calls either \code{stri_subset_regex},
 \code{stri_subset_fixed}, \code{stri_subset_coll},
 or \code{stri_subset_charclass},
-depending on the argument used.
-Unless you are a very lazy person, please call the underlying functions
-directly for better performance.
+depending on the argument used. Relying on those underlying
+functions will make your code run slightly faster.
 }
 \examples{
 stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))

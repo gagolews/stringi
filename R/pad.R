@@ -43,8 +43,8 @@
 #' equal to 1 or, if \code{use_length} is \code{TRUE}, exactly one code point.
 #'
 #' \code{stri_pad} is a convenience function, which dispatches
-#' control to \code{stri_pad_*}. Unless you are very lazy, do not use it:
-#' it is a little bit slower.
+#' control to \code{stri_pad_*}. Relying on one of the underlying
+#' functions will make your code run slightly faster.
 #'
 #' Note that Unicode code points may have various widths when
 #' printed on the console and that the function takes that by default
