@@ -121,9 +121,9 @@ check out \code{\link{stri_match}}.
 
 \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 and \code{stri_extract_last} are convenience functions.
-They just call \code{stri_extract_*_*}, depending on arguments used.
-Unless you are a very lazy person, please call the underlying functions
-directly for better performance.
+They just call \code{stri_extract_*_*}, depending on the arguments used.
+Relying
+on one of those underlying functions will make your code run slightly faster.
 }
 \examples{
 stri_extract_all('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))

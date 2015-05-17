@@ -50,9 +50,8 @@ and a warning is generated.
 \code{stri_count} is a convenience function.
 It calls either \code{stri_count_regex},
 \code{stri_count_fixed}, \code{stri_count_coll},
-or \code{stri_count_charclass}, depending on the argument used.
-Unless you are a very lazy person, please call the underlying functions
-directly for better performance.
+or \code{stri_count_charclass}, depending on the argument used; relying
+on one of those underlying functions will be faster.
 }
 \examples{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
