@@ -7,9 +7,9 @@
 stri_dup(str, times)
 }
 \arguments{
-\item{str}{character vector of strings to be duplicated}
+\item{str}{a character vector of strings to be duplicated}
 
-\item{times}{integer vector with the numbers of times to duplicate each string}
+\item{times}{an integer vector with the numbers of times to duplicate each string}
 }
 \value{
 Returns a character vector of the same length as \code{str}.

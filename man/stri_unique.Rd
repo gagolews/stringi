@@ -7,7 +7,7 @@
 stri_unique(str, ..., opts_collator = NULL)
 }
 \arguments{
-\item{str}{character vector}
+\item{str}{a character vector}
 
 \item{...}{additional settings for \code{opts_collator}}
 

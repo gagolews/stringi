@@ -52,7 +52,7 @@ e1 \%stri===\% e2
 e1 \%stri!==\% e2
 }
 \arguments{
-\item{e1,e2}{character vectors or objects coercible to character vectors}
+\item{e1,}{e2 character vectors or objects coercible to character vectors}
 }
 \value{
 All the functions return a logical vector

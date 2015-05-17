@@ -7,7 +7,7 @@
 stri_enc_toutf32(str)
 }
 \arguments{
-\item{str}{character vector (or an object coercible to such a vector)
+\item{str}{a character vector (or an object coercible to such a vector)
 to be converted}
 }
 \value{

@@ -79,7 +79,7 @@
 #' (see the examples below).
 #'
 #'
-#' @param e1,e2 character vectors or objects coercible to character vectors
+#' @param e1, e2 character vectors or objects coercible to character vectors
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options.
@@ -227,7 +227,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' code point-based comparison.
 #'
 #'
-#' @param e1,e2 character vectors or objects coercible to character vectors
+#' @param e1, e2 character vectors or objects coercible to character vectors
 #'
 #' @return All the functions return a logical vector
 #' indicating the result of a pairwise comparison.
@@ -405,11 +405,11 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' Interestingly, our benchmarks indicate that \code{stri_order}
 #' is most often faster that \R's \code{order}.
 #'
-#' @param str character vector
-#' @param decreasing single logical value; should the sort order
+#' @param str a character vector
+#' @param decreasing a single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
 #'    or nonincreasing (\code{TRUE})?
-#' @param na_last single logical value; controls the treatment of \code{NA}s
+#' @param na_last a single logical value; controls the treatment of \code{NA}s
 #'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 #'    at the end; if \code{FALSE}, they are put at the beginning;
 #'    if \code{NA}, then they are removed from the output.
@@ -469,7 +469,7 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #'
 #' See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 #'
-#' @param str character vector
+#' @param str a character vector
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
@@ -520,8 +520,8 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #'
 #' See also \code{\link{stri_unique}} for extracting unique elements.
 #'
-#' @param str character vector
-#' @param fromLast single logical value;
+#' @param str a character vector
+#' @param fromLast a single logical value;
 #'    indicating whether duplication should be considered from the
 #'    reverse side
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
