@@ -12,13 +12,13 @@ stri_sort(str, decreasing = FALSE, na_last = NA, ...,
   opts_collator = NULL)
 }
 \arguments{
-\item{str}{character vector}
+\item{str}{a character vector}
 
-\item{decreasing}{single logical value; should the sort order
+\item{decreasing}{a single logical value; should the sort order
 be nondecreasing (\code{FALSE}, default)
 or nonincreasing (\code{TRUE})?}
 
-\item{na_last}{single logical value; controls the treatment of \code{NA}s
+\item{na_last}{a single logical value; controls the treatment of \code{NA}s
 in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 at the end; if \code{FALSE}, they are put at the beginning;
 if \code{NA}, then they are removed from the output.}

@@ -10,7 +10,7 @@ stri_encode(str, from = NULL, to = NULL, to_raw = FALSE)
 stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 }
 \arguments{
-\item{str}{character vector, a raw vector, or
+\item{str}{a character vector, a raw vector, or
 a list of \code{raw} vectors to be converted}
 
 \item{from}{input encoding:
@@ -24,7 +24,7 @@ see \code{\link{stri_enc_list}}}
 (see \code{\link{stri_enc_get}}),
 or a single string with encoding name}
 
-\item{to_raw}{single logical value; indicates whether a list of raw vectors
+\item{to_raw}{a single logical value; indicates whether a list of raw vectors
 shall be returned rather than a character vector}
 }
 \value{
