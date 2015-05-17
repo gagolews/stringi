@@ -63,7 +63,10 @@
 
 TO BE DONE:
 
-   * #137: date-time formatting/parsing:
+   * [GENERAL] #157: many overfull hboxes in the package PDF manual has been
+     corrected.
+
+   * [NEW FUNCTIONS] #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers
         * `stri_timezone_set()`, `stri_timezone_get()` - manage current default time zone
         * `stri_timezone_info()` - basic information on a given time zone

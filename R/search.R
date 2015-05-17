@@ -131,68 +131,67 @@ invisible(NULL)
 #' Here is a list of operators provided by the
 #' ICU User Guide on regexes.
 #'
-#' \tabular{ll}{
-#' \strong{Operator} \tab    \strong{Description}\cr
-#' \code{|} \tab 	Alternation. A|B matches either A or B.\cr
-#' \code{*} \tab 	Match 0 or more times. Match as many times as possible.\cr
-#' \code{+} \tab 	Match 1 or more times. Match as many times as possible.\cr
-#' \code{?} \tab 	Match zero or one times. Prefer one.\cr
-#' \code{{n}} \tab 	Match exactly n times.\cr
-#' \code{{n,}} \tab 	Match at least n times. Match as many times as possible.\cr
-#' \code{{n,m}} \tab 	Match between n and m times.
-#' Match as many times as possible, but not more than m.\cr
-#' \code{*?} \tab 	Match 0 or more times. Match as few times as possible.\cr
-#' \code{+?} \tab 	Match 1 or more times. Match as few times as possible.\cr
-#' \code{??} \tab 	Match zero or one times. Prefer zero.\cr
-#' \code{{n}?} \tab 	Match exactly n times.\cr
-#' \code{{n,}?} \tab 	Match at least n times, but no more than required
-#' for an overall pattern match.\cr
-#' \code{{n,m}?} \tab 	Match between n and m times. Match as few times
-#' as possible, but not less than n.\cr
-#' \code{*+} \tab 	Match 0 or more times. Match as many times as possible
+#' \describe{
+#' \item{\code{|}}{Alternation. A|B matches either A or B.}
+#' \item{\code{*}}{Match 0 or more times. Match as many times as possible.}
+#' \item{\code{+}}{Match 1 or more times. Match as many times as possible.}
+#' \item{\code{?}}{Match zero or one times. Prefer one.}
+#' \item{\code{{n}}}{Match exactly n times.}
+#' \item{\code{{n,}}}{Match at least n times. Match as many times as possible.}
+#' \item{\code{{n,m}}}{Match between n and m times.
+#' Match as many times as possible, but not more than m.}
+#' \item{\code{*?}}{Match 0 or more times. Match as few times as possible.}
+#' \item{\code{+?}}{Match 1 or more times. Match as few times as possible.}
+#' \item{\code{??}}{Match zero or one times. Prefer zero.}
+#' \item{\code{{n}?}}{Match exactly n times.}
+#' \item{\code{{n,}?}}{Match at least n times, but no more than required
+#' for an overall pattern match.}
+#' \item{\code{{n,m}?}}{Match between n and m times. Match as few times
+#' as possible, but not less than n.}
+#' \item{\code{*+}}{Match 0 or more times. Match as many times as possible
 #' when first encountered, do not retry with fewer even if overall match fails
-#' (Possessive Match).\cr
-#' \code{++} \tab 	Match 1 or more times. Possessive match.\cr
-#' \code{?+} \tab 	Match zero or one times. Possessive match.\cr
-#' \code{{n}+} \tab 	Match exactly n times.\cr
-#' \code{{n,}+} \tab 	Match at least n times. Possessive Match.\cr
-#' \code{{n,m}+} \tab 	Match between n and m times. Possessive Match.\cr
-#' \code{(...)} \tab 	Capturing parentheses. Range of input that matched
+#' (Possessive Match).}
+#' \item{\code{++}}{Match 1 or more times. Possessive match.}
+#' \item{\code{?+}}{Match zero or one times. Possessive match.}
+#' \item{\code{{n}+}}{Match exactly n times.}
+#' \item{\code{{n,}+}}{Match at least n times. Possessive Match.}
+#' \item{\code{{n,m}+}}{Match between n and m times. Possessive Match.}
+#' \item{\code{(...)}}{Capturing parentheses. Range of input that matched
 #' the parenthesized subexpression is available after the match,
-#' see \code{\link{stri_match}}.\cr
-#' \code{(?:...)} \tab 	Non-capturing parentheses. Groups the included pattern,
+#' see \code{\link{stri_match}}.}
+#' \item{\code{(?:...)}}{Non-capturing parentheses. Groups the included pattern,
 #' but does not provide capturing of matching text. Somewhat more efficient
-#' than capturing parentheses.\cr
-#' \code{(?>...)} \tab 	Atomic-match parentheses. First match of the
+#' than capturing parentheses.}
+#' \item{\code{(?>...)}}{Atomic-match parentheses. First match of the
 #' parenthesized subexpression is the only one tried; if it does not lead to
 #' an overall pattern match, back up the search for a match to a position
-#' before the \code{(?>}\cr
-#' \code{(?#...)} \tab 	Free-format comment \code{(?# comment )}.\cr
-#' \code{(?=...)} \tab 	Look-ahead assertion. True if the parenthesized
+#' before the \code{(?>}.}
+#' \item{\code{(?#...)}}{Free-format comment \code{(?# comment )}.}
+#' \item{\code{(?=...)}}{Look-ahead assertion. True if the parenthesized
 #' pattern matches at the current input position, but does not advance
-#' the input position.\cr
-#' \code{(?!...)} \tab 	Negative look-ahead assertion. True if the
+#' the input position.}
+#' \item{\code{(?!...)}}{Negative look-ahead assertion. True if the
 #' parenthesized pattern does not match at the current input position.
-#' Does not advance the input position.\cr
-#' \code{(?<=...)} \tab 	Look-behind assertion. True if the parenthesized
+#' Does not advance the input position.}
+#' \item{\code{(?<=...)}}{Look-behind assertion. True if the parenthesized
 #' pattern matches text preceding the current input position, with the last
 #' character of the match being the input character just before the current
 #' position. Does not alter the input position. The length of possible strings
 #' matched by the look-behind pattern must not be unbounded (no \code{*}
-#' or \code{+} operators.)\cr
-#' \code{(?<!...)} \tab 	Negative Look-behind assertion. True if the
+#' or \code{+} operators.)}
+#' \item{\code{(?<!...)}}{Negative Look-behind assertion. True if the
 #' parenthesized pattern does not match text preceding the current input
 #' position, with the last character of the match being the input character
 #' just before the current position. Does not alter the input position.
 #' The length of possible strings matched by the look-behind pattern must
-#' not be unbounded (no \code{*} or \code{+} operators.)\cr
-#' \code{(?ismwx-ismwx:...)} \tab 	Flag settings. Evaluate the parenthesized
+#' not be unbounded (no \code{*} or \code{+} operators.)}
+#' \item{\code{(?ismwx-ismwx:...)}}{Flag settings. Evaluate the parenthesized
 #' expression with the specified flags enabled or \code{-}disabled,
-#' see also \code{\link{stri_opts_regex}}.\cr
-#' \code{(?ismwx-ismwx)} \tab 	Flag settings. Change the flag settings.
+#' see also \code{\link{stri_opts_regex}}.}
+#' \item{\code{(?ismwx-ismwx)}}{Flag settings. Change the flag settings.
 #' Changes apply to the portion of the pattern following the setting.
 #' For example, \code{(?i)} changes to a case insensitive match,
-#' see also \code{\link{stri_opts_regex}}. \cr
+#' see also \code{\link{stri_opts_regex}}.}
 #' }
 #'
 #'
@@ -201,68 +200,67 @@ invisible(NULL)
 #' Here is a list of metacharacters provided by the
 #' ICU User Guide on regexes.
 #'
-#' \tabular{ll}{
-#' \strong{Character}  \tab 	\strong{Description} \cr
-#' \code{\\a} \tab Match a BELL, \code{\\u0007} \cr
-#' \code{\\A} \tab Match at the beginning of the input. Differs from \code{^}
-#' in that \code{\\A} will not match after a new line within the input. \cr
-#' \code{\\b} \tab Match if the current position is a word boundary.
-#' Boundaries occur at the transitions between word (\code{\\w}) and non-word
-#' (\code{\\W}) characters, with combining marks ignored. For better word
-#' boundaries, see ICU Boundary Analysis, e.g. \code{\link{stri_extract_all_words}} . \cr
-#' \code{\\B} \tab Match if the current position is not a word boundary. \cr
-#' \code{\\cX} \tab Match a control-\code{X} character. \cr
-#' \code{\\d} \tab Match any character with the Unicode General Category of
-#' Nd (Number, Decimal Digit.) \cr
-#' \code{\\D} \tab Match any character that is not a decimal digit. \cr
-#' \code{\\e} \tab Match an ESCAPE, \code{\\u001B}. \cr
-#' \code{\\E} \tab Terminates a \code{\\Q} ... \code{\\E} quoted sequence. \cr
-#' \code{\\f} \tab Match a FORM FEED, \code{\\u000C}. \cr
-#' \code{\\G} \tab Match if the current position is at the end of the
-#' previous match. \cr
-#' \code{\\n} \tab Match a LINE FEED, \code{\\u000A}. \cr
-#' \code{\\N{UNICODE CHARACTER NAME}} \tab Match the named character. \cr
-#' \code{\\p{UNICODE PROPERTY NAME}} \tab Match any character with the
-#' specified Unicode Property. \cr
-#' \code{\\P{UNICODE PROPERTY NAME}} \tab Match any character not having
-#' the specified Unicode Property. \cr
-#' \code{\\Q} \tab Quotes all following characters until \code{\\E}. \cr
-#' \code{\\r} \tab Match a CARRIAGE RETURN, \code{\\u000D}. \cr
-#' \code{\\s} \tab Match a white space character. White space is defined
-#' as \code{[\\t\\n\\f\\r\\p{Z}]}. \cr
-#' \code{\\S} \tab Match a non-white space character. \cr
-#' \code{\\t} \tab Match a HORIZONTAL TABULATION, \code{\\u0009}. \cr
-#' \code{\\uhhhh} \tab Match the character with the hex value \code{hhhh}. \cr
-#' \code{\\Uhhhhhhhh} \tab Match the character with the hex value \code{hhhhhhhh}.
-#' Exactly eight hex digits must be provided, even though the largest
-#' Unicode code point is \code{\\U0010ffff}. \cr
-#' \code{\\w} \tab Match a word character. Word characters are
-#' \code{[\\p{Alphabetic}\\p{Mark}\\p{Decimal_Number}\\p{Connector_Punctuation}\\u200c\\u200d]}. \cr
-#' \code{\\W} \tab Match a non-word character. \cr
-#' \code{\\x{hhhh}} \tab Match the character with hex value hhhh.
-#' From one to six hex digits may be supplied. \cr
-#' \code{\\xhh} \tab Match the character with two digit hex value hh \cr
-#' \code{\\X} \tab Match a Grapheme Cluster. \cr
-#' \code{\\Z} \tab Match if the current position is at the end of input,
-#'  but before the final line terminator, if one exists. \cr
-#' \code{\\z} \tab Match if the current position is at the end of input. \cr
-#' \code{\\n} \tab 	Back Reference. Match whatever the nth capturing
+#' \describe{
+#' \item{\code{\\a}}{Match a BELL, \code{\\u0007}.}
+#' \item{\code{\\A}}{Match at the beginning of the input. Differs from \code{^}.
+#'    in that \code{\\A} will not match after a new line within the input.}
+#' \item{\code{\\b}}{Match if the current position is a word boundary.
+#'    Boundaries occur at the transitions between word (\code{\\w}) and non-word
+#'    (\code{\\W}) characters, with combining marks ignored. For better word
+#'    boundaries, see \pkg{ICU} Boundary Analysis, e.g. \code{\link{stri_extract_all_words}}.}
+#' \item{\code{\\B}}{Match if the current position is not a word boundary.}
+#' \item{\code{\\cX}}{Match a control-\code{X} character.}
+#' \item{\code{\\d}}{Match any character with the Unicode General Category of
+#'    \code{Nd} (Number, Decimal Digit.).}
+#' \item{\code{\\D}}{Match any character that is not a decimal digit.}
+#' \item{\code{\\e}}{Match an ESCAPE, \code{\\u001B}.}
+#' \item{\code{\\E}}{Terminates a \code{\\Q} ... \code{\\E} quoted sequence.}
+#' \item{\code{\\f}}{Match a FORM FEED, \code{\\u000C}.}
+#' \item{\code{\\G}}{Match if the current position is at the end of the
+#'    previous match.}
+#' \item{\code{\\n}}{Match a LINE FEED, \code{\\u000A}.}
+#' \item{\code{\\N{UNICODE CHARACTER NAME}}}{Match the named character.}
+#' \item{\code{\\p{UNICODE PROPERTY NAME}}}{Match any character with the
+#'    specified Unicode Property.}
+#' \item{\code{\\P{UNICODE PROPERTY NAME}}}{Match any character not having
+#'    the specified Unicode Property.}
+#' \item{\code{\\Q}}{Quotes all following characters until \code{\\E}.}
+#' \item{\code{\\r}}{Match a CARRIAGE RETURN, \code{\\u000D}.}
+#' \item{\code{\\s}}{Match a white space character. White space is defined
+#'    as \code{[\\t\\n\\f\\r\\p{Z}]}.}
+#' \item{\code{\\S}}{Match a non-white space character.}
+#' \item{\code{\\t}}{Match a HORIZONTAL TABULATION, \code{\\u0009}.}
+#' \item{\code{\\uhhhh}}{Match the character with the hex value \code{hhhh}.}
+#' \item{\code{\\Uhhhhhhhh}}{Match the character with the hex value \code{hhhhhhhh}.
+#'    Exactly eight hex digits must be provided, even though the largest
+#'    Unicode code point is \code{\\U0010ffff}.}
+#' \item{\code{\\w}}{Match a word character. Word characters are
+#'    \code{[\\p{Alphabetic}\\p{Mark}\\p{Decimal_Number}\\p{Connector_Punctuation}\\u200c\\u200d]}.}
+#' \item{\code{\\W}}{Match a non-word character.}
+#' \item{\code{\\x{hhhh}}}{Match the character with hex value hhhh.
+#' From one to six hex digits may be supplied.}
+#' \item{\code{\\xhh}}{Match the character with two digit hex value hh }
+#' \item{\code{\\X}}{Match a Grapheme Cluster.}
+#' \item{\code{\\Z}}{Match if the current position is at the end of input,
+#'  but before the final line terminator, if one exists.}
+#' \item{\code{\\z}}{Match if the current position is at the end of input.}
+#' \item{\code{\\n}}{Back Reference. Match whatever the nth capturing
 #' group matched. n must be a number > 1 and < total number of capture
-#' groups in the pattern. \cr
-#' \code{\\0ooo} \tab Match an Octal character.  'ooo' is from one to three
+#' groups in the pattern.}
+#' \item{\code{\\0ooo}}{Match an Octal character.  \code{'ooo'} is from one to three
 #' octal digits.  0377 is the largest allowed Octal character.  The leading
-#' zero is required; it distinguishes Octal constants from back references. \cr
-#' \code{[pattern]} \tab Match any one character from the set.  \cr
-#' \code{.} \tab Match any character. \cr
-#' \code{^} \tab Match at the beginning of a line. \cr
-#' \code{$} \tab Match at the end of a line. \cr
-#' \code{\\} \tab [outside of sets] Quotes the following character.
+#' zero is required; it distinguishes Octal constants from back references.}
+#' \item{\code{[pattern]}}{Match any one character from the set.}
+#' \item{\code{.}}{Match any character.}
+#' \item{\code{^}}{Match at the beginning of a line.}
+#' \item{\code{$}}{Match at the end of a line.}
+#' \item{\code{\\}}{[outside of sets] Quotes the following character.
 #' Characters that must be quoted to be treated as literals are
-#' \code{* ? + [ ( ) { } ^ $ | \\ .} \cr
-#' \code{\\} \tab [inside sets] Quotes the following character.
-#' Characters that must be quoted to be treated as literals are
-#' \code{[ ] \\}; Characters that may need to be quoted, depending
-#' on the context are \code{- &} \cr
+#'    \code{* ? + [ ( ) { } ^ $ | \\ .}.}
+#' \item{\code{\\}}{[inside sets] Quotes the following character.
+#'    Characters that must be quoted to be treated as literals are
+#'    \code{[ ] \\}; Characters that may need to be quoted, depending
+#'    on the context are \code{- &}.}
 #' }
 #'
 #' For information on how to define character classes
@@ -452,28 +450,30 @@ invisible(NULL)
 #' Set expressions at a glance
 #' (according to \url{http://userguide.icu-project.org/strings/regexp}):
 #'
-#' \tabular{ll}{
-#' \strong{Example}  \tab  \strong{Description}\cr
-#' \code{[abc]} 	\tab Match any of the characters a, b or c\cr
-#' \code{[^abc]} 	\tab Negation -- match any character except a, b or c\cr
-#' \code{[A-M]} 	\tab Range -- match any character from A to M. The characters
-#' to include are determined by Unicode code point ordering.\cr
-#' \code{[\\u0000-\\U0010ffff]} 	\tab Range -- match all characters.\cr
-#' \code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]} 	\tab
-#' Characters with Unicode Category = Letter. All forms shown are equivalent.\cr
-#' \code{[\\P{Letter}]} 	\tab Negated property.
-#' (Upper case \code{\\P}) Match everything except Letters.\cr
-#' \code{[\\p{numeric_value=9}]} 	\tab Match all numbers with a numeric value of 9.
-#' Any Unicode Property may be used in set expressions.\cr
-#' \code{[\\p{Letter}&&\\p{script=cyrillic}]} 	\tab Logical AND
-#' or intersection -- match the set of all Cyrillic letters.\cr
-#' \code{[\\p{Letter}--\\p{script=latin}]}  	\tab Subtraction --
-#' match all non-Latin letters.\cr
-#' \code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}  	\tab Implicit Logical
-#' OR or Union of Sets -- the examples match ASCII letters and digits.
-#' The two forms are equivalent.\cr
-#' \code{[:script=Greek:]} \tab Alternate POSIX-like syntax for properties --
-#' equivalent to \code{\\p{script=Greek}}\cr
+#'
+#' Some examples:
+#'
+#' \describe{
+#' \item{\code{[abc]}}{Match any of the characters a, b or c.}
+#' \item{\code{[^abc]}}{Negation -- match any character except a, b or c.}
+#' \item{\code{[A-M]}}{Range -- match any character from A to M. The characters
+#'    to include are determined by Unicode code point ordering.}
+#' \item{\code{[\\u0000-\\U0010ffff]}}{Range -- match all characters.}
+#' \item{\code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]}}{
+#'    Characters with Unicode Category = Letter. All forms shown are equivalent.}
+#' \item{\code{[\\P{Letter}]}}{Negated property.
+#'    (Upper case \code{\\P}) Match everything except Letters.}
+#' \item{\code{[\\p{numeric_value=9}]}}{Match all numbers with a numeric value of 9.
+#'    Any Unicode Property may be used in set expressions.}
+#' \item{\code{[\\p{Letter}&&\\p{script=cyrillic}]}}{Logical AND
+#'    or intersection -- match the set of all Cyrillic letters.}
+#' \item{\code{[\\p{Letter}--\\p{script=latin}]}}{Subtraction --
+#'    match all non-Latin letters.}
+#' \item{\code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}}{Implicit Logical
+#'    OR or Union of Sets -- the examples match ASCII letters and digits.
+#'    The two forms are equivalent.}
+#' \item{\code{[:script=Greek:]}}{Alternate POSIX-like syntax for properties --
+#'    equivalent to \code{\\p{script=Greek}}.}
 #' }
 #'
 #' @section Unicode properties:
@@ -512,45 +512,45 @@ invisible(NULL)
 #' general classification of that code point.
 #' Each code point falls into one and only one Category.
 #'
-#' \tabular{ll}{
-#'  \code{Cc} \tab a C0 or C1 control code\cr
-#'  \code{Cf} \tab a format control character\cr
-#'  \code{Cn} \tab a reserved unassigned code point or a non-character\cr
-#'  \code{Co} \tab a private-use character\cr
-#'  \code{Cs} \tab a surrogate code point\cr
-#'  \code{Lc} \tab the union of Lu, Ll, Lt\cr
-#'  \code{Ll} \tab a lowercase letter\cr
-#'  \code{Lm} \tab a modifier letter\cr
-#'  \code{Lo} \tab other letters, including syllables and ideographs\cr
-#'  \code{Lt} \tab a digraphic character, with first part uppercase\cr
-#'  \code{Lu} \tab an uppercase letter\cr
-#'  \code{Mc} \tab a spacing combining mark (positive advance width)\cr
-#'  \code{Me} \tab an enclosing combining mark\cr
-#'  \code{Mn} \tab a non-spacing combining mark (zero advance width)\cr
-#'  \code{Nd} \tab a decimal digit\cr
-#'  \code{Nl} \tab a letter-like numeric character\cr
-#'  \code{No} \tab a numeric character of other type\cr
-#'  \code{Pd} \tab a dash or hyphen punctuation mark\cr
-#'  \code{Ps} \tab an opening punctuation mark (of a pair)\cr
-#'  \code{Pe} \tab a closing punctuation mark (of a pair)\cr
-#'  \code{Pc} \tab a connecting punctuation mark, like a tie\cr
-#'  \code{Po} \tab a punctuation mark of other type\cr
-#'  \code{Pi} \tab an initial quotation mark\cr
-#'  \code{Pf} \tab a final quotation mark\cr
-#'  \code{Sm} \tab a symbol of mathematical use\cr
-#'  \code{Sc} \tab a currency sign\cr
-#'  \code{Sk} \tab a non-letter-like modifier symbol\cr
-#'  \code{So} \tab a symbol of other type\cr
-#'  \code{Zs} \tab a space character (of non-zero width)\cr
-#'  \code{Zl} \tab U+2028 LINE SEPARATOR only\cr
-#'  \code{Zp} \tab U+2029 PARAGRAPH SEPARATOR only\cr
-#'  \code{C}  \tab the union of Cc, Cf, Cs, Co, Cn\cr
-#'  \code{L}  \tab the union of Lu, Ll, Lt, Lm, Lo\cr
-#'  \code{M}  \tab the union of Mn, Mc, Me\cr
-#'  \code{N}  \tab the union of Nd, Nl, No\cr
-#'  \code{P}  \tab the union of Pc, Pd, Ps, Pe, Pi, Pf, Po\cr
-#'  \code{S}  \tab the union of Sm, Sc, Sk, So\cr
-#'  \code{Z}  \tab the union of Zs, Zl, Zp \cr
+#' \describe{
+#'  \item{\code{Cc}}{a C0 or C1 control code.}
+#'  \item{\code{Cf}}{a format control character.}
+#'  \item{\code{Cn}}{a reserved unassigned code point or a non-character.}
+#'  \item{\code{Co}}{a private-use character.}
+#'  \item{\code{Cs}}{a surrogate code point.}
+#'  \item{\code{Lc}}{the union of Lu, Ll, Lt.}
+#'  \item{\code{Ll}}{a lowercase letter.}
+#'  \item{\code{Lm}}{a modifier letter.}
+#'  \item{\code{Lo}}{other letters, including syllables and ideographs.}
+#'  \item{\code{Lt}}{a digraphic character, with first part uppercase.}
+#'  \item{\code{Lu}}{an uppercase letter.}
+#'  \item{\code{Mc}}{a spacing combining mark (positive advance width).}
+#'  \item{\code{Me}}{an enclosing combining mark.}
+#'  \item{\code{Mn}}{a non-spacing combining mark (zero advance width).}
+#'  \item{\code{Nd}}{a decimal digit.}
+#'  \item{\code{Nl}}{a letter-like numeric character.}
+#'  \item{\code{No}}{a numeric character of other type.}
+#'  \item{\code{Pd}}{a dash or hyphen punctuation mark.}
+#'  \item{\code{Ps}}{an opening punctuation mark (of a pair).}
+#'  \item{\code{Pe}}{a closing punctuation mark (of a pair).}
+#'  \item{\code{Pc}}{a connecting punctuation mark, like a tie.}
+#'  \item{\code{Po}}{a punctuation mark of other type.}
+#'  \item{\code{Pi}}{an initial quotation mark.}
+#'  \item{\code{Pf}}{a final quotation mark.}
+#'  \item{\code{Sm}}{a symbol of mathematical use.}
+#'  \item{\code{Sc}}{a currency sign.}
+#'  \item{\code{Sk}}{a non-letter-like modifier symbol.}
+#'  \item{\code{So}}{a symbol of other type.}
+#'  \item{\code{Zs}}{a space character (of non-zero width).}
+#'  \item{\code{Zl}}{U+2028 LINE SEPARATOR only.}
+#'  \item{\code{Zp}}{U+2029 PARAGRAPH SEPARATOR only.}
+#'  \item{\code{C} }{the union of Cc, Cf, Cs, Co, Cn.}
+#'  \item{\code{L} }{the union of Lu, Ll, Lt, Lm, Lo.}
+#'  \item{\code{M} }{the union of Mn, Mc, Me.}
+#'  \item{\code{N} }{the union of Nd, Nl, No.}
+#'  \item{\code{P} }{the union of Pc, Pd, Ps, Pe, Pi, Pf, Po.}
+#'  \item{\code{S} }{the union of Sm, Sc, Sk, So.}
+#'  \item{\code{Z} }{the union of Zs, Zl, Zp }
 #' }
 #'
 #' @section Unicode Binary Properties:
@@ -559,59 +559,59 @@ invisible(NULL)
 #'
 #' Here is a comprehensive list of supported Binary Properties:
 #'
-#' \tabular{ll}{
-#'   \code{ALPHABETIC}      \tab alphabetic character\cr
-#'   \code{ASCII_HEX_DIGIT} \tab a character matching the \code{[0-9A-Fa-f]} charclass\cr
-#'   \code{BIDI_CONTROL}    \tab a format control which have specific functions
-#'                              in the Bidi (bidirectional text) Algorithm\cr
-#'   \code{BIDI_MIRRORED}   \tab a character that may change display in right-to-left text\cr
-#'   \code{DASH}            \tab a kind of a dash character\cr
-#'   \code{DEFAULT_IGNORABLE_CODE_POINT} \tab characters that are ignorable in most
+#' \describe{
+#'   \item{\code{ALPHABETIC}     }{alphabetic character.}
+#'   \item{\code{ASCII_HEX_DIGIT}}{a character matching the \code{[0-9A-Fa-f]} charclass.}
+#'   \item{\code{BIDI_CONTROL}   }{a format control which have specific functions
+#'                              in the Bidi (bidirectional text) Algorithm.}
+#'   \item{\code{BIDI_MIRRORED}  }{a character that may change display in right-to-left text.}
+#'   \item{\code{DASH}           }{a kind of a dash character.}
+#'   \item{\code{DEFAULT_IGNORABLE_CODE_POINT}}{characters that are ignorable in most
 #'                                text processing activities,
-#'                                e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>\cr
-#'   \code{DEPRECATED}      \tab a deprecated character according
+#'                                e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>.}
+#'   \item{\code{DEPRECATED}     }{a deprecated character according
 #'           to the current Unicode standard (the usage of deprecated characters
-#'           is strongly discouraged)\cr
-#'   \code{DIACRITIC}       \tab a character that linguistically modifies
-#'              the meaning of another character to which it applies\cr
-#'   \code{EXTENDER}        \tab a character that extends the value
+#'           is strongly discouraged).}
+#'   \item{\code{DIACRITIC}      }{a character that linguistically modifies
+#'              the meaning of another character to which it applies.}
+#'   \item{\code{EXTENDER}       }{a character that extends the value
 #'                              or shape of a preceding alphabetic character,
-#'                              e.g. a length and iteration mark.\cr
-#'   \code{HEX_DIGIT}       \tab a character commonly
+#'                              e.g. a length and iteration mark.}
+#'   \item{\code{HEX_DIGIT}      }{a character commonly
 #'                             used for hexadecimal numbers,
-#'                             cf. also \code{ASCII_HEX_DIGIT}\cr
-#'   \code{HYPHEN} \tab a dash used to mark connections between
-#'               pieces of words, plus the Katakana middle dot\cr
-#'   \code{ID_CONTINUE} \tab a character that can continue an identifier,
-#'                      \code{ID_START}+\code{Mn}+\code{Mc}+\code{Nd}+\code{Pc}\cr
-#'   \code{ID_START} \tab a character that can start an identifier,
-#'                  \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl}\cr
-#'   \code{IDEOGRAPHIC} \tab a CJKV (Chinese-Japanese-Korean-Vietnamese)
-#' ideograph\cr
-#'   \code{LOWERCASE} \tab \cr
-#'   \code{MATH} \tab \cr
-#'   \code{NONCHARACTER_CODE_POINT} \tab \cr
-#'   \code{QUOTATION_MARK} \tab \cr
-#'   \code{SOFT_DOTTED} \tab a character with a ``soft dot'', like i or j,
-#' such that an accent placed on this character causes the dot to disappear\cr
-#'   \code{TERMINAL_PUNCTUATION} \tab a punctuation character that generally
-#' marks the end of textual units\cr
-#'   \code{UPPERCASE} \tab \cr
-#'   \code{WHITE_SPACE} \tab a space character or TAB or CR or LF or ZWSP or ZWNBSP\cr
-#'   \code{CASE_SENSITIVE} \tab \cr
-#'   \code{POSIX_ALNUM} \tab \cr
-#'   \code{POSIX_BLANK} \tab \cr
-#'   \code{POSIX_GRAPH} \tab \cr
-#'   \code{POSIX_PRINT} \tab \cr
-#'   \code{POSIX_XDIGIT} \tab \cr
-#'   \code{CASED} \tab \cr
-#'   \code{CASE_IGNORABLE} \tab \cr
-#'   \code{CHANGES_WHEN_LOWERCASED} \tab \cr
-#'   \code{CHANGES_WHEN_UPPERCASED} \tab \cr
-#'   \code{CHANGES_WHEN_TITLECASED} \tab \cr
-#'   \code{CHANGES_WHEN_CASEFOLDED} \tab \cr
-#'   \code{CHANGES_WHEN_CASEMAPPED} \tab \cr
-#'   \code{CHANGES_WHEN_NFKC_CASEFOLDED} \tab \cr
+#'                             cf. also \code{ASCII_HEX_DIGIT}.}
+#'   \item{\code{HYPHEN}}{a dash used to mark connections between
+#'               pieces of words, plus the Katakana middle dot.}
+#'   \item{\code{ID_CONTINUE}}{a character that can continue an identifier,
+#'                      \code{ID_START}+\code{Mn}+\code{Mc}+\code{Nd}+\code{Pc}.}
+#'   \item{\code{ID_START}}{a character that can start an identifier,
+#'                  \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl}.}
+#'   \item{\code{IDEOGRAPHIC}}{a CJKV (Chinese-Japanese-Korean-Vietnamese)
+#'                ideograph.}
+#'   \item{\code{LOWERCASE}}{}
+#'   \item{\code{MATH}}{}
+#'   \item{\code{NONCHARACTER_CODE_POINT}}{}
+#'   \item{\code{QUOTATION_MARK}}{}
+#'   \item{\code{SOFT_DOTTED}}{a character with a ``soft dot'', like i or j,
+#' such that an accent placed on this character causes the dot to disappear.}
+#'   \item{\code{TERMINAL_PUNCTUATION}}{a punctuation character that generally
+#' marks the end of textual units.}
+#'   \item{\code{UPPERCASE}}{}
+#'   \item{\code{WHITE_SPACE}}{a space character or TAB or CR or LF or ZWSP or ZWNBSP.}
+#'   \item{\code{CASE_SENSITIVE}}{}
+#'   \item{\code{POSIX_ALNUM}}{}
+#'   \item{\code{POSIX_BLANK}}{}
+#'   \item{\code{POSIX_GRAPH}}{}
+#'   \item{\code{POSIX_PRINT}}{}
+#'   \item{\code{POSIX_XDIGIT}}{}
+#'   \item{\code{CASED}}{}
+#'   \item{\code{CASE_IGNORABLE}}{}
+#'   \item{\code{CHANGES_WHEN_LOWERCASED}}{}
+#'   \item{\code{CHANGES_WHEN_UPPERCASED}}{}
+#'   \item{\code{CHANGES_WHEN_TITLECASED}}{}
+#'   \item{\code{CHANGES_WHEN_CASEFOLDED}}{}
+#'   \item{\code{CHANGES_WHEN_CASEMAPPED}}{}
+#'   \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{}
 #' }
 #'
 #'
