@@ -79,7 +79,7 @@
 #' (see the examples below).
 #'
 #'
-#' @param e1, e2 character vectors or objects coercible to character vectors
+#' @param e1,e2 character vectors or objects coercible to character vectors
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options.
@@ -227,7 +227,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' code point-based comparison.
 #'
 #'
-#' @param e1, e2 character vectors or objects coercible to character vectors
+#' @param e1,e2 character vectors or objects coercible to character vectors
 #'
 #' @return All the functions return a logical vector
 #' indicating the result of a pairwise comparison.
