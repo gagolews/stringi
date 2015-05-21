@@ -39,8 +39,8 @@
 #' @details
 #' Vectorized over \code{str} and \code{times}.
 #'
-#' @param str character vector of strings to be duplicated
-#' @param times integer vector with the numbers of times to duplicate each string
+#' @param str a character vector of strings to be duplicated
+#' @param times an integer vector with the numbers of times to duplicate each string
 #'
 #' @return Returns a character vector of the same length as \code{str}.
 #'
@@ -72,8 +72,8 @@ stri_dup <- function(str, times) {
 #' the operator is applied.
 #'
 #'
-#' @param e1 character vector or an object coercible to a character vector
-#' @param e2 character vector or an object coercible to a character vector
+#' @param e1 a character vector or an object coercible to a character vector
+#' @param e2 a character vector or an object coercible to a character vector
 #'
 #' @return Returns a character vector.
 #'
@@ -134,10 +134,10 @@ stri_dup <- function(str, times) {
 #'
 #' @param ... character vectors (or objects coercible to character vectors)
 #' which corresponding elements are to be concatenated
-#' @param sep single string; separates terms
-#' @param collapse single string or \code{NULL}; an optional
+#' @param sep a single string; separates terms
+#' @param collapse a single string or \code{NULL}; an optional
 #' results separator
-#' @param ignore_null single logical value; if \code{TRUE}, then empty
+#' @param ignore_null a single logical value; if \code{TRUE}, then empty
 #' vectors on input are silently ignored
 #'
 #' @return Returns a character vector.
@@ -188,8 +188,8 @@ stri_paste <- stri_join
 #' If \code{collapse} has length > 1, then only first string
 #' will be used.
 #'
-#' @param str vector of strings to be coerced to character
-#' @param collapse single string denoting the separator
+#' @param str a vector of strings to be coerced to character
+#' @param collapse a single string denoting the separator
 #'
 #' @return
 #' Returns a single string, i.e. a character
