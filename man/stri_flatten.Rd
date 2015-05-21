@@ -7,9 +7,9 @@
 stri_flatten(str, collapse = "")
 }
 \arguments{
-\item{str}{vector of strings to be coerced to character}
+\item{str}{a vector of strings to be coerced to character}
 
-\item{collapse}{single string denoting the separator}
+\item{collapse}{a single string denoting the separator}
 }
 \value{
 Returns a single string, i.e. a character

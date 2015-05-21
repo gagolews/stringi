@@ -7,11 +7,11 @@
 stri_enc_toutf8(str, is_unknown_8bit = FALSE, validate = FALSE)
 }
 \arguments{
-\item{str}{character vector to be converted}
+\item{str}{a character vector to be converted}
 
-\item{is_unknown_8bit}{single logical value, see Details}
+\item{is_unknown_8bit}{a single logical value, see Details}
 
-\item{validate}{single logical value (can be \code{NA}), see Details}
+\item{validate}{a single logical value (can be \code{NA}), see Details}
 }
 \value{
 Returns a character vector.

@@ -7,7 +7,7 @@
 stri_enc_tonative(str)
 }
 \arguments{
-\item{str}{character vector to be converted}
+\item{str}{a character vector to be converted}
 }
 \value{
 Returns a character vector.

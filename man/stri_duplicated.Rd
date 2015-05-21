@@ -10,9 +10,9 @@ stri_duplicated(str, fromLast = FALSE, ..., opts_collator = NULL)
 stri_duplicated_any(str, fromLast = FALSE, ..., opts_collator = NULL)
 }
 \arguments{
-\item{str}{character vector}
+\item{str}{a character vector}
 
-\item{fromLast}{single logical value;
+\item{fromLast}{a single logical value;
 indicating whether duplication should be considered from the
 reverse side}
 

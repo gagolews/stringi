@@ -82,7 +82,7 @@
 #' substitute character and a warning is generated.
 #'
 #'
-#' @param str character vector, a raw vector, or
+#' @param str a character vector, a raw vector, or
 #' a list of \code{raw} vectors to be converted
 #' @param from input encoding:
 #'       \code{NULL} or \code{""} for default encoding
@@ -93,7 +93,7 @@
 #'       \code{NULL} or \code{""} for default encoding
 #'       (see \code{\link{stri_enc_get}}),
 #'       or a single string with encoding name
-#' @param to_raw single logical value; indicates whether a list of raw vectors
+#' @param to_raw a single logical value; indicates whether a list of raw vectors
 #' shall be returned rather than a character vector
 #'
 #' @return If \code{to_raw} is \code{FALSE},
@@ -142,7 +142,7 @@ stri_conv <- stri_encode
 #' a corresponding element is set to NULL and a warning is given,
 #' see also \code{\link{stri_enc_toutf8}} for a method to deal with such cases.
 #'
-#' @param str character vector (or an object coercible to such a vector)
+#' @param str a character vector (or an object coercible to such a vector)
 #'        to be converted
 #' @return Returns a list of integer vectors.
 #' Missing values are converted to \code{NULL}s.
@@ -180,7 +180,7 @@ stri_enc_toutf32 <- function(str) {
 #' from any given encoding.
 #'
 #'
-#' @param vec list of integer vectors (or objects coercible to such vectors)
+#' @param vec a list of integer vectors (or objects coercible to such vectors)
 #'    or \code{NULL}s. For convenience, a single integer vector can also
 #'    be given.
 #' @return Returns a character vector (in UTF-8).
@@ -230,9 +230,9 @@ stri_enc_fromutf32 <- function(vec) {
 #' in which you want to fix an invalid UTF-8 byte sequence.
 #' For \code{NA}, a bogus string will be replaced with a missing value.
 #'
-#' @param str character vector to be converted
-#' @param is_unknown_8bit single logical value, see Details
-#' @param validate single logical value (can be \code{NA}), see Details
+#' @param str a character vector to be converted
+#' @param is_unknown_8bit a single logical value, see Details
+#' @param validate a single logical value (can be \code{NA}), see Details
 #' @return Returns a character vector.
 #'
 #' @family encoding_conversion
@@ -258,7 +258,7 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit=FALSE, validate=FALSE) {
 #' resulting strings will be marked with \code{UTF-8}
 #' and not \code{native}, see \code{\link{stri_enc_mark}}.
 #'
-#' @param str character vector to be converted
+#' @param str a character vector to be converted
 #' @return Returns a character vector.
 #'
 #' @family encoding_conversion
@@ -290,7 +290,7 @@ stri_enc_tonative <- function(str) {
 #' Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
 #' as ASCII missing value for single characters.
 #'
-#' @param str character vector to be converted
+#' @param str a character vector to be converted
 #' @return Returns a character vector.
 #'
 #' @family encoding_conversion

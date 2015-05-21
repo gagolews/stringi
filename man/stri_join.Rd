@@ -16,12 +16,12 @@ stri_paste(..., sep = "", collapse = NULL, ignore_null = FALSE)
 \item{...}{character vectors (or objects coercible to character vectors)
 which corresponding elements are to be concatenated}
 
-\item{sep}{single string; separates terms}
+\item{sep}{a single string; separates terms}
 
-\item{collapse}{single string or \code{NULL}; an optional
+\item{collapse}{a single string or \code{NULL}; an optional
 results separator}
 
-\item{ignore_null}{single logical value; if \code{TRUE}, then empty
+\item{ignore_null}{a single logical value; if \code{TRUE}, then empty
 vectors on input are silently ignored}
 }
 \value{

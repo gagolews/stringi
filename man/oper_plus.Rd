@@ -10,9 +10,9 @@ e1 \%s+\% e2
 e1 \%stri+\% e2
 }
 \arguments{
-\item{e1}{character vector or an object coercible to a character vector}
+\item{e1}{a character vector or an object coercible to a character vector}
 
-\item{e2}{character vector or an object coercible to a character vector}
+\item{e2}{a character vector or an object coercible to a character vector}
 }
 \value{
 Returns a character vector.
