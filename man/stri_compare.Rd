@@ -34,7 +34,7 @@ stri_cmp_le(e1, e2, ..., opts_collator = NULL)
 stri_cmp_ge(e1, e2, ..., opts_collator = NULL)
 }
 \arguments{
-\item{e1,}{e2 character vectors or objects coercible to character vectors}
+\item{e1,e2}{character vectors or objects coercible to character vectors}
 
 \item{...}{additional settings for \code{opts_collator}}
 
