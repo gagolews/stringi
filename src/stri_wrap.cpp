@@ -237,6 +237,10 @@ struct StriWrapLineStart {
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-04-23)
  *    `use_length` arg added
+ *
+ *
+ * @version 0.5-1 (Marek Gagolewski, 2015-06-09)
+ *    BIGSKIP: no more CHARSXP on out on "" input
  */
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
    SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only,
@@ -339,7 +343,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
 
       R_len_t noccurrences = (R_len_t)occurrences_list.size(); // number of boundaries
       if (noccurrences <= 1) { // no match (1 boundary == 0)
-         SET_VECTOR_ELT(ret, i, str_cont.toR(i));
+         SET_VECTOR_ELT(ret, i, Rf_ScalarString(str_cont.toR(i)));
          continue;
       }
 
