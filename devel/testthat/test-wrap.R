@@ -4,6 +4,11 @@ context("test-wrap.R")
 
 test_that("stri_wrap", {
    expect_error(stri_wrap("what\never", normalize=FALSE))
+   expect_identical(stri_wrap(""), "")
+   expect_identical(stri_wrap("", simplify=FALSE), list(""))
+   expect_identical(stri_wrap("  ", simplify=FALSE), list(""))
+   expect_identical(stri_wrap("  a  ", simplify=FALSE), list("a"))
+
    expect_identical(stri_wrap(c("", "singleword", NA), cost=0.0), c("", "singleword", NA))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 0.0), c("a12345", "b123456", "c1234567"))
    expect_identical(stri_wrap("a12345     b123456 c1234567", 5, 1.0), c("a12345", "b123456", "c1234567"))
