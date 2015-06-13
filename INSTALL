@@ -47,14 +47,12 @@ Auxiliary `./configure` features and options:
   developers)
 * `--enable-gcc-pedantic`: Enable -Wall -Wextra -ansi -pedantic when compiling
   stringi with gcc/clang (for stringi developers)
-* `--with-extra-cflags=FLAGS: Additional C compiler flags (except for those
-  indicated by `R CMD config`)
-* `--with-extra-cppflags=FLAGS: Additional C/C++ preprocessor flags (except for
-  those indicated by `R CMD config`)
-* `--with-extra-cxxflags=FLAGS: Additional C++ compiler flags (except for those
-  indicated by `R CMD config`)
-* `--with-extra-ldflags=FLAGS`: Additional linker flags (except for those
-  indicated by `R CMD config`)
+* `--with-extra-cflags=FLAGS`: Additional C compiler flags
+* `--with-extra-cppflags=FLAGS`: Additional C/C++ preprocessor flags
+* `--with-extra-cxxflags=FLAGS`: Additional C++ compiler flags
+* `--with-extra-ldflags=FLAGS`: Additional linker flags
+* `--with-extra-libs=FLAGS`: Additional libraries to link against
+
 
 Some influential environment variables:
 
