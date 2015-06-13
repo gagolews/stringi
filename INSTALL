@@ -34,3 +34,34 @@ your compiler does not support C++11 but you are sure it tolerates the
 `long long` type (which is very common -- this will be checked by the
 `configure` script anyway), you may disable the C++11 usage by passing
 the `--disable-cxx11` flag to the `configure` script.
+
+
+Auxiliary `./configure` features and options:
+
+* `--disable-cxx11`: Disable use of C++11; if you build ICU4C from
+   sources, make sure your C++ compiler supports the long long type.
+* `--disable-pkg-config`: Disable pkg-config usage for finding ICU4C-devel; in
+  such a case ICU4C will be compiled from sources.
+* `--enable-gcc-debug`: Enable -UNDEBUG when compiling stringi (for stringi
+  developers)
+* `--enable-gcc-pedantic`: Enable -Wall -Wextra -ansi -pedantic when compiling
+  stringi with gcc/clang (for stringi developers)
+* `--with-extra-cflags=FLAGS: Additional C compiler flags (except for those
+  indicated by `R CMD config`)
+* `--with-extra-cppflags=FLAGS: Additional C/C++ preprocessor flags (except for
+  those indicated by `R CMD config`)
+* `--with-extra-cxxflags=FLAGS: Additional C++ compiler flags (except for those
+  indicated by `R CMD config`)
+* `--with-extra-ldflags=FLAGS`: Additional linker flags (except for those
+  indicated by `R CMD config`)
+
+Some influential environment variables:
+
+* `R_HOME`: Override default directory with R installation, e.g.,
+  `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R
+  executable.
+* `ICUDT_DIR`: Optional directory from which an already downloaded ICU data
+  archive (`icudt*.zip`) may be copied; either an absolute path or a
+  path relative to `<package source dir>/src`; defaults to `icu55/data`.
+* `CAT`: the `cat` command used for generating the list of source files
+  to compile
