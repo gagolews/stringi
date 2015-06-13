@@ -696,6 +696,7 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 enable_cxx11
+enable_icu_bundle
 enable_pkg_config
 enable_gcc_debug
 enable_gcc_pedantic
@@ -1331,6 +1332,7 @@ Optional Features:
   --disable-cxx11         Disable use of C++11; if you build ICU4C from
                           sources, make sure your C++ compiler supports the
                           long long type.
+  --disable-icu-bundle    Force the use of the system ICU.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel; in
                           such a case ICU4C will be compiled from sources.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for stringi
@@ -1355,9 +1357,9 @@ Optional Packages:
                           by R CMD config)
 
 Some influential environment variables:
-  R_HOME      Override default directory with R installation, e.g.
-              /usr/lib64/R. Note that $R_HOME/bin/R should point to the R
-              executable.
+  R_HOME      Override the default directory with R installation, e.g.,
+              /usr/lib64/R, where /usr/lib64 is in the search path.. Note that
+              $R_HOME/bin/R should point to the R executable.
   ICUDT_DIR   Optional directory from which an already downloaded ICU data
               archive (icudt*.zip) may be copied; either an absolute path or a
               path relative to <package source dir>/src; defaults to
@@ -2149,6 +2151,17 @@ if test "x$enable_cxx11" != "xno"; then
    enable_cxx11="yes"
 else
    enable_cxx11="no"
+fi
+
+# Check whether --enable-icu_bundle was given.
+if test "${enable_icu_bundle+set}" = set; then :
+  enableval=$enable_icu_bundle;
+fi
+
+if test "x$enable_icu_bundle" != "xno"; then
+   enable_icu_bundle="yes"
+else
+   enable_icu_bundle="no"
 fi
 
 # Check whether --enable-pkg_config was given.
@@ -4340,6 +4353,12 @@ STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu55_stubdata_c.txt`
 ##### SETUP COMPILER 2 ###########################################################
 
 if test $ICU_FOUND = 0; then
+   if test $enable_icu_bundle = "no"; then
+      echo "*** Failed to configure package build with forced system ICU usage"
+      echo "*** Make sure that libicu-dev is properly installed"
+      exit 1
+   fi
+
    # build ICU4C from sources
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""

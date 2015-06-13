@@ -69,6 +69,11 @@ TO BE DONE:
    * [GENERAL] #157: many overfull hboxes in the package PDF manual has been
      corrected.
 
+   * [BUGFIX] #164: libicu-dev usage used to fail on Ubuntu.
+
+   * [NEW FEATURE] #165: the `./configure` option `--disable-icu-bundle`
+     forces the use of system ICU when building the package.
+
    * [NEW FUNCTIONS] #137: date-time formatting/parsing:
         * `stri_timezone_list()` - lists all known time zone identifiers
         * `stri_timezone_set()`, `stri_timezone_get()` - manage current default time zone

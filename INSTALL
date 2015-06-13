@@ -40,6 +40,7 @@ Auxiliary `./configure` features and options:
 
 * `--disable-cxx11`: Disable use of C++11; if you build ICU4C from
    sources, make sure your C++ compiler supports the long long type.
+* `--disable-icu-bundle`: Force the use of the system ICU.
 * `--disable-pkg-config`: Disable pkg-config usage for finding ICU4C-devel; in
   such a case ICU4C will be compiled from sources.
 * `--enable-gcc-debug`: Enable -UNDEBUG when compiling stringi (for stringi

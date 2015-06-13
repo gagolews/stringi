@@ -12,7 +12,8 @@ ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
-AC_ARG_VAR(R_HOME, [Override default directory with R installation, e.g. /usr/lib64/R.
+AC_ARG_VAR(R_HOME, [Override the default directory with R installation, e.g., /usr/lib64/R,
+                    where /usr/lib64 is in the search path..
                     Note that $R_HOME/bin/R should point to the R executable.])
 
 AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU data archive (icudt*.zip)
@@ -26,6 +27,15 @@ if test "x$enable_cxx11" != "xno"; then
    enable_cxx11="yes"
 else
    enable_cxx11="no"
+fi
+
+AC_ARG_ENABLE([icu_bundle],
+    AS_HELP_STRING([--disable-icu-bundle],
+      [Force the use of the system ICU.]))
+if test "x$enable_icu_bundle" != "xno"; then
+   enable_icu_bundle="yes"
+else
+   enable_icu_bundle="no"
 fi
 
 AC_ARG_ENABLE([pkg_config],
@@ -482,6 +492,12 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 ##### SETUP COMPILER 2 ###########################################################
 
 if test $ICU_FOUND = 0; then
+   if test $enable_icu_bundle = "no"; then
+      echo "*** Failed to configure package build with forced system ICU usage"
+      echo "*** Make sure that libicu-dev is properly installed"
+      exit 1
+   fi
+
    # build ICU4C from sources
    STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
