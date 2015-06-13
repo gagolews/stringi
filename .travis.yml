@@ -1,2 +1,4 @@
 language: r
 warnings_are_errors: true
+apt_packages:
+  - libicu-dev
