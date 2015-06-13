@@ -66,6 +66,8 @@
    * [BUGFIX] #154: Dates and other objects with a custom class attribute
      were not coerced to the character type correctly.
 
+   * [BUGFIX] Force ICU `u_init()` call on stringi dynlib load.
+
    * [BACKWARD INCOMPABILITY] The second argument to `stri_pad_*()` has
      been renamed `width`.
 

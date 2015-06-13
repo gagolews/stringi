@@ -33,7 +33,7 @@
 #include "stri_stringi.h"
 #include <cstring>
 #include <cstdlib>
-
+#include <unicode/uclean.h>
 
 #define STRI__MK_CALL(symb, name, args) \
    {symb, (DL_FUNC)&name, args}
@@ -232,8 +232,11 @@ void stri_set_icu_data_directory(const char* libpath)
    }
 
    // idx+5 -> if the string is shorter, as many characters as possible are used
-   dir = dir.substr(0, idx+5); // 5 == strlen("libs/") or strlen("libs\\")
+   dir = dir.substr(0, idx+4); // 4 == strlen("libs")
    u_setDataDirectory(dir.c_str());
+#ifndef NDEBUG
+   fprintf(stderr, "ICU data directory=%s\n", dir.c_str());
+#endif
 
    // anyway, if .dat file will not be found,
    // ICU will use system data (may be stub)
@@ -254,6 +257,21 @@ void stri_set_icu_data_directory(const char* libpath)
  */
 extern "C" void R_init_stringi(DllInfo* dll)
 {
+   stri_set_icu_data_directory((char*)*(char**)(dll) /* dll->path */);
+
+/* BTW: u_init: It is OK to simply use ICU services and functions without
+   first having initialized ICU by calling u_init().
+
+   u_init() will attempt to load some part of ICU's data, and is useful
+   as a test for configuration or installation problems that leave
+   the ICU data inaccessible. A successful invocation of u_init() does not,
+   however, guarantee that all ICU data is accessible.
+*/
+   UErrorCode status = U_ZERO_ERROR;
+   u_init(&status);
+   if (U_FAILURE(status))
+      Rf_error("ICU init failed: %s", u_errorName(status));
+
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
 //   R_useDynamicSymbols(dll, Rboolean(FALSE)); // slower
 
@@ -261,8 +279,6 @@ extern "C" void R_init_stringi(DllInfo* dll)
       /* Rconfig.h states that all R platforms supports that */
       Rf_error("R does not support UTF-8 encoding.");
    }
-
-   stri_set_icu_data_directory((char*)*(char**)(dll) /* dll->path */);
 
 
 #ifndef NDEBUG
@@ -275,13 +291,6 @@ extern "C" void R_init_stringi(DllInfo* dll)
 //    fprintf(stdout, "!NDEBUG: \n");
 //    fprintf(stdout, "!NDEBUG: Have fun testing! :-)\n");
 //    fprintf(stdout, "!NDEBUG: ************************************************\n");
-
-// /* u_init: It is OK to simply use ICU services and functions without
-// first having initialized ICU by calling u_init(). */
-//    UErrorCode status;
-//    u_init(&status);
-//    if (U_FAILURE(status))
-//      error("ICU init failed: %s", u_errorName(status));
 #endif
 }
 
