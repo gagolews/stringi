@@ -67,20 +67,23 @@ fi
 
 AC_ARG_WITH([extra_cflags],
     AS_HELP_STRING([--with-extra-cflags=FLAGS],
-      [Additional C compiler flags (except for those indicated by R CMD config)]))
+      [Additional C compiler flags]))
 
 AC_ARG_WITH([extra_cppflags],
     AS_HELP_STRING([--with-extra-cppflags=FLAGS],
-      [Additional C/C++ preprocessor flags (except for those indicated by R CMD config)]))
+      [Additional C/C++ preprocessor flags]))
 
 AC_ARG_WITH([extra_cxxflags],
     AS_HELP_STRING([--with-extra-cxxflags=FLAGS],
-      [Additional C++ compiler flags (except for those indicated by R CMD config)]))
+      [Additional C++ compiler flags]))
 
 AC_ARG_WITH([extra_ldflags],
     AS_HELP_STRING([--with-extra-ldflags=FLAGS],
-      [Additional linker flags (except for those indicated by R CMD config)]))
+      [Additional linker flags]))
 
+AC_ARG_WITH([extra_libs],
+    AS_HELP_STRING([--with-extra-libs=FLAGS],
+      [Additional libraries to link against]))
 
 ##### CHECK FOR R #############################################################
 
@@ -99,7 +102,7 @@ if test -z "${R_HOME}"; then
 fi
 if test -z "${R_HOME}"; then
    AC_MSG_RESULT(no)
-   echo "*** Could not determine R_HOME. Do you have R installed?"
+   echo "*** Could not determine R_HOME. Did you install R properly?"
    exit 1
 fi
 AC_MSG_RESULT($R_HOME)
@@ -159,6 +162,8 @@ CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
 CFLAGS=`"${R_PATH}" CMD config CFLAGS`
 CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+LIBS=
+LDFLAGS=
 
 if test "x$enable_cxx11" == "xyes"; then
    CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_PATH}\" CMD config CXX1XSTD`"
@@ -174,6 +179,7 @@ CFLAGS="${CFLAGS} ${with_extra_cflags}"
 CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
 CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
 LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
+LIBS="${LIBS} ${with_extra_libs}"
 
 AC_LANG(C)
 AC_PROG_CC
@@ -300,12 +306,12 @@ detect_icu_with_pkg_config() {
    ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
    AC_MSG_RESULT(done)
 
-
    # It has been indicated that icu-config may return 32bit libs
    # when 64bit libs are not available, even if we compile a 64bit version.
    # Thus, let us check if everything works
    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
-   LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS} ${ICU_LIBS}"
+   LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
+   LIBS="${LIBS} ${ICU_LIBS}"
 
    AC_LANG(C++)
 
@@ -460,9 +466,11 @@ ICU_FOUND=0
 if test $ICU_FOUND = 0; then
    OLD_CPPFLAGS=$CPPFLAGS
    OLD_LDFLAGS=$LDFLAGS
+   OLD_LIBS=$LIBS
    detect_icu_with_pkg_config
    CPPFLAGS=$OLD_CPPFLAGS
    LDFLAGS=$OLD_LDFLAGS
+   LIBS=$OLD_LIBS
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
@@ -506,19 +514,22 @@ if test $ICU_FOUND = 0; then
         #-DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
+   STRINGI_LIBS=""
 else
    # use system ICU4C
    STRINGI_OBJECTS="\$(STRI_OBJECTS)"
    STRINGI_CFLAGS=""
    STRINGI_CPPFLAGS="-I. ${ICU_CPPFLAGS}"
    STRINGI_CXXFLAGS=""
-   STRINGI_LDFLAGS="${ICU_LDFLAGS} ${ICU_LIBS}"
+   STRINGI_LDFLAGS="${ICU_LDFLAGS}"
+   STRINGI_LIBS="${ICU_LIBS}"
 fi
 
 STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
 STRINGI_CXXFLAGS="${STRINGI_CXXFLAGS} ${with_extra_cxxflags}"
 STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
+STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
 
 AC_SUBST(STRINGI_OBJECTS)
 
@@ -527,6 +538,7 @@ AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
 AC_SUBST(STRINGI_CFLAGS)
 AC_SUBST(STRINGI_LDFLAGS)
+AC_SUBST(STRINGI_LIBS)
 
 AC_CONFIG_FILES([src/Makevars])
 
@@ -546,6 +558,7 @@ echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
 echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
 echo "    STRINGI_CXXFLAGS=${STRINGI_CXXFLAGS}"
 echo "    STRINGI_LDFLAGS=${STRINGI_LDFLAGS}"
+echo "    STRINGI_LIBS=${STRINGI_LIBS}"
 echo ""
 echo "*** compiler settings used:"
 echo "    CC=${CC}"
@@ -555,4 +568,6 @@ echo "    CFLAGS=${CFLAGS}"
 echo "    CPPFLAGS=${CPPFLAGS}"
 echo "    CXX=${CXX}"
 echo "    CXXFLAGS=${CXXFLAGS}"
+echo "    LDFLAGS=${LDFLAGS}"
+echo "    LIBS=${LIBS}"
 echo ""
