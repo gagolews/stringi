@@ -40,6 +40,9 @@
    * [BUGFIX] #132: incorrect behavior in `stri_locate_regex` for matches
      of zero lengths
 
+   * [BUGFIX] stringr/#73: `stri_wrap` returned `CHARSXP` instead of `STRSXP`
+     on empty string input with `simplify=FALSE` argument.
+
    * [GENERAL] #144: Performance improvements in handling ASCII strings
      (these affect `stri_sub`, `stri_locate` and other string index-based
       operations)
