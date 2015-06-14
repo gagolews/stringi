@@ -42,14 +42,6 @@
 #include "stri_container_utf16.h"
 
 
-// ------------------------------------------------------------------------
-
-// @TODO: SEXP stri_enc_fromutf16(SEXP str);              // ...TODO... be careful: BOMs! [version >=0.3]
-// @TODO: SEXP stri_enc_toutf16(SEXP str);                // ...TODO... -> list with elems of type raw [version >=0.3]
-
-// ------------------------------------------------------------------------
-
-
 // common.cpp
 void    stri__set_names(SEXP object, R_len_t numnames, ...);
 SEXP    stri__make_character_vector_char_ptr(R_len_t numnames, ...);

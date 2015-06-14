@@ -194,4 +194,3 @@ stri_isempty <- function(str) {
 stri_width <- function(str) {
    .Call(C_stri_width, str)
 }
-

@@ -65,7 +65,7 @@
 #' \code{stri_replace_*_*} variants, depending on the arguments used. Using
 #' the underlying \code{stri_replace} functions will result in code
 #' running slightly faster.
-#' 
+#'
 #' If you would like to get rid of e.g. whitespaces from the start or end
 #' of a string, see \code{\link{stri_trim}}.
 #'
