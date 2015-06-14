@@ -49,7 +49,7 @@ Their order is not significant. Unknown keywords are ignored.
 The handling of keywords depends on the specific services that
 utilize them. Currently, the following keywords are recognized:
 \code{calendar}, \code{colation}, \code{currency}, and \code{numbers},
-e.g. \code{fr@collation=phonebook;calendar=islamic-civil} is a valid
+e.g. \code{fr@collation=phonebook;}\code{calendar=islamic-civil} is a valid
 French locale specifier together with keyword arguments. For
 more information, refer to the ICU user guide.
 
