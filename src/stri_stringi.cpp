@@ -234,9 +234,9 @@ void stri_set_icu_data_directory(const char* libpath)
    // idx+5 -> if the string is shorter, as many characters as possible are used
    dir = dir.substr(0, idx+4); // 4 == strlen("libs")
    u_setDataDirectory(dir.c_str());
-#ifndef NDEBUG
-   fprintf(stderr, "ICU data directory=%s\n", dir.c_str());
-#endif
+// #ifndef NDEBUG
+   // fprintf(stderr, "ICU data directory=%s\n", dir.c_str());
+// #endif
 
    // anyway, if .dat file will not be found,
    // ICU will use system data (may be stub)
