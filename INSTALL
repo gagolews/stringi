@@ -1,4 +1,4 @@
-The stringi package depends on the ICU4C >= 52 library.
+The stringi package depends on the ICU4C >= 50 library.
 If you build the package from sources and either:
 * these requirements are not met (check out http://site.icu-project.org/download
    or e.g. the `libicu-devel` rpm package on Fedora or `libicu-dev` on Ubuntu),
@@ -54,10 +54,11 @@ Auxiliary `./configure` features and options:
 Some influential environment variables:
 
 * `R_HOME`: Override default directory with R installation, e.g.,
-  `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R
-  executable.
+  `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R executable.
 * `ICUDT_DIR`: Optional directory from which an already downloaded ICU data
   archive (`icudt*.zip`) may be copied; either an absolute path or a
   path relative to `<package source dir>/src`; defaults to `icu55/data`.
-* `CAT`: the `cat` command used for generating the list of source files
+* `CAT`: The `cat` command used for generating the list of source files
   to compile
+* `PKG_CONFIG_PATH`: An optional list of directories to search for
+  `pkg-config`s `.pc` files.

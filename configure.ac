@@ -6,19 +6,41 @@
 
 AC_INIT(stringi, 0.5, stringi@rexamine.com)
 
-ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
 ##### OPTIONS #################################################################
 
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
-AC_ARG_VAR(R_HOME, [Override the default directory with R installation, e.g., /usr/lib64/R,
-                    where /usr/lib64 is in the search path..
-                    Note that $R_HOME/bin/R should point to the R executable.])
+AC_ARG_VAR(R_HOME, [Override the default directory with R installation,
+   e.g., /usr/lib64/R, where /usr/lib64 is in the search path.
+   Note that $R_HOME/bin/R should point to the R executable.])
 
-AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU data archive (icudt*.zip)
-                       may be copied; either an absolute path or a path relative to <package source dir>/src;
-                       defaults to icu55/data.])
+AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU
+   data archive (icudt*.zip) may be copied; either an absolute path or
+   a path relative to <package source dir>/src; defaults to icu55/data.])
+
+AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
+   pkg-config's .pc files.])
+
+AC_ARG_VAR([CAT], [The 'cat' command used for generating the list
+   of source files to compile.])
+
+AC_ARG_VAR([CC], [Purposedly ignored.])
+
+AC_ARG_VAR([CFLAGS], [Purposedly ignored.])
+
+AC_ARG_VAR([LDFLAGS], [Purposedly ignored.])
+
+AC_ARG_VAR([LIBS], [Purposedly ignored.])
+
+AC_ARG_VAR([CPPFLAGS], [Purposedly ignored.])
+
+AC_ARG_VAR([CXX], [Purposedly ignored.])
+
+AC_ARG_VAR([CXXFLAGS], [Purposedly ignored.])
+
+AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
 
 AC_ARG_ENABLE([cxx11],
     AS_HELP_STRING([--disable-cxx11],
@@ -135,7 +157,6 @@ fi
 ##### CHECK FOR CAT ############################################################
 
 # Check for 'cat' and get full path.
-AC_ARG_VAR([CAT], [the 'cat' command used for generating the list of source files to compile])
 AC_PATH_PROG([CAT],[cat],[])
 if test "x$CAT" = "x"; then
    AC_MSG_NOTICE([==> cat command not found!])

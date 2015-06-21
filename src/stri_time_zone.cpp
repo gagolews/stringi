@@ -217,7 +217,9 @@ SEXP stri_timezone_info(SEXP tz, SEXP locale, SEXP display_type) {
    ++curidx;
    UnicodeString val_windows;
    UErrorCode status = U_ZERO_ERROR;
-   TimeZone::getWindowsID(val_ID, val_windows, status);
+#if U_ICU_VERSION_MAJOR_NUM>=52
+   TimeZone::getWindowsID(val_ID, val_windows, status); // Stable since ICU 52
+#endif
    if (U_SUCCESS(status) && val_windows.length() > 0)
       SET_VECTOR_ELT(vals, curidx, stri__make_character_vector_UnicodeString_ptr(1, &val_windows));
    else

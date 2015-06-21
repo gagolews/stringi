@@ -15,7 +15,7 @@ URL: http://stringi.rexamine.com/
     http://site.icu-project.org/
     http://www.unicode.org/
 BugReports: http://github.com/Rexamine/stringi/issues
-SystemRequirements: ICU4C (>= 52.0, optional)
+SystemRequirements: ICU4C (>= 50, optional)
 Type: Package
 Depends:
     R (>= 2.13.1)

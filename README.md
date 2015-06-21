@@ -50,4 +50,4 @@ For more details on copyright holders see the `LICENSE` file.
 **Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html 
 [for a recent development version]
 
-**System requirements**: *R >= 2.13.1*, *ICU4C >= 52.0* (see the `INSTALL` file)
+**System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (see the `INSTALL` file)
