@@ -61,7 +61,7 @@ of non-breaking, zero width, etc. spaces
 
 * [GENERAL] #143: Searching for short fixed patterns (`stri_*_fixed()`) now
 relies on the current `libC`'s implementation of `strchr()` and `strstr()`.
-This is very fast e.g. on `glibc` utilizing the `SSE2` instruction set.
+This is very fast e.g. on `glibc` utilizing the `SSE2/3/4` instruction set.
 
 * [GENERAL] #141: a local copy of `icudt*.zip` may be used on package
 install; see the `INSTALL` file for more information.

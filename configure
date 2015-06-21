@@ -641,18 +641,19 @@ STRINGI_SOURCES_CPP
 PKG_CONFIG
 EGREP
 GREP
-CXXCPP
 ac_ct_CXX
-CXXFLAGS
-CXX
 OBJEXT
 EXEEXT
 ac_ct_CC
+CXXCPP
+CXXFLAGS
+CXX
 CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
 CAT
+PKG_CONFIG_PATH
 ICUDT_DIR
 R_HOME
 target_alias
@@ -712,6 +713,7 @@ host_alias
 target_alias
 R_HOME
 ICUDT_DIR
+PKG_CONFIG_PATH
 CAT
 CC
 CFLAGS
@@ -720,8 +722,8 @@ LIBS
 CPPFLAGS
 CXX
 CXXFLAGS
-CCC
-CXXCPP'
+CXXCPP
+CCC'
 
 
 # Initialize some variables set by options.
@@ -1357,24 +1359,25 @@ Optional Packages:
 
 Some influential environment variables:
   R_HOME      Override the default directory with R installation, e.g.,
-              /usr/lib64/R, where /usr/lib64 is in the search path.. Note that
+              /usr/lib64/R, where /usr/lib64 is in the search path. Note that
               $R_HOME/bin/R should point to the R executable.
   ICUDT_DIR   Optional directory from which an already downloaded ICU data
               archive (icudt*.zip) may be copied; either an absolute path or a
               path relative to <package source dir>/src; defaults to
               icu55/data.
-  CAT         the 'cat' command used for generating the list of source files
-              to compile
-  CC          C compiler command
-  CFLAGS      C compiler flags
-  LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
-              nonstandard directory <lib dir>
-  LIBS        libraries to pass to the linker, e.g. -l<library>
-  CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
-              you have headers in a nonstandard directory <include dir>
-  CXX         C++ compiler command
-  CXXFLAGS    C++ compiler flags
-  CXXCPP      C++ preprocessor
+  PKG_CONFIG_PATH
+              An optional list of directories to search for pkg-config's .pc
+              files.
+  CAT         The 'cat' command used for generating the list of source files
+              to compile.
+  CC          Purposedly ignored.
+  CFLAGS      Purposedly ignored.
+  LDFLAGS     Purposedly ignored.
+  LIBS        Purposedly ignored.
+  CPPFLAGS    Purposedly ignored.
+  CXX         Purposedly ignored.
+  CXXFLAGS    Purposedly ignored.
+  CXXCPP      Purposedly ignored.
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -2131,12 +2134,32 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
 ##### OPTIONS #################################################################
 
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2292,7 +2315,6 @@ fi
 ##### CHECK FOR CAT ############################################################
 
 # Check for 'cat' and get full path.
-
 # Extract the first word of "cat", so it can be a program name with args.
 set dummy cat; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
