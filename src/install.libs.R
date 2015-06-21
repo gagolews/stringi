@@ -19,9 +19,6 @@ if (copyicudt) {
       if (!stri_install_icudt(FALSE, outdir, "icu55/data"))
          stop("icudt could not be downloaded. check your internet connectivity")
    }
-# Note that if the data file is not found, some features will
-# be unavailable (but the package itself will load properly,
-# and UCD-independent functions will work properly)
 }
 
 # Copy symbols.rds
