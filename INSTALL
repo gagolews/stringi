@@ -8,21 +8,17 @@ or
 
 then the library will be built together with stringi
 (a custom subset of ICU4C 55.1 is shipped with the package).
+
+> To get the most out of stringi, end users are encouraged to rely on our
+> ICU4C package bundle. This guarantees maximum portability of stringi-based
+> scripts.
+
 By default, the ICU data library will be downloaded from one of our mirror servers.
 However, if you have already downloaded a version of `icudt*.zip`
 suitable for your platform (big/little endian), you may wish to install
 the package by calling:
 
-    install.packages("stringi", configure.vars="ICUDT_DIR=<dir_to_copy_icudt_from>")
-
-You are encouraged to check whether the ICU data library (`icudt`)
-has been successfully installed by calling:
-
-    library('stringi')
-    stri_install_check()
-
-This is also to ensure that ICU has detected your locale and native
-encoding properly.
+    install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
 
 Also do note that for R >= 3.1.0  we require (by default) C++11 support
 to build the package from sources. This is because ICU4C uses the `long long`

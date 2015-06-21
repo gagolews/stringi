@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 0.5-2 (2015-??-??) **devel**
+## 0.5-2 (2015-06-21) **CRAN**
 
 * [NEW FUNCTIONS] #137: date-time formatting/parsing:
      * `stri_timezone_list()` - lists all known time zone identifiers
@@ -26,6 +26,8 @@ http://bugs.icu-project.org/trac/ticket/11554]
      * `stri_datetime_fields()` - get values for date-time fields
      * `stri_datetime_add()` - add specific number of date-time units
             to a date-time object
+
+* [BUGFIX] #168: Build now fails if `icudt` is not available.
 
 -------------------------------------------------------------------------------
 
