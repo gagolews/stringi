@@ -1,12 +1,9 @@
 The stringi package depends on the ICU4C >= 52 library.
 If you build the package from sources and either:
-
 * these requirements are not met (check out http://site.icu-project.org/download
    or e.g. the `libicu-devel` rpm package on Fedora or `libicu-dev` on Ubuntu),
-
 * `pkg-config` is not able to find proper build settings for ICU-based projects,
 or
-
 * R CMD INSTALL is called with `--configure-args='--disable-pkg-config'`,
 
 then the library will be built together with stringi

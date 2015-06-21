@@ -7,7 +7,7 @@
 stri_datetime_now()
 }
 \value{
-Returns an object of class \code{\link{POSIXst}}.
+Returns an object of class \code{\link{POSIXct}}.
 }
 \description{
 Returns current date and time.
@@ -18,15 +18,13 @@ number of seconds since 1970-01-01 00:00:00 UTC.
 UTC leap seconds are ignored.
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},

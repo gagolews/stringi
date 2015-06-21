@@ -49,15 +49,13 @@ sapply(c("short", "long", "generic_short", "generic_long",
   function(e) stri_timezone_info("Europe/London", display_type=e))
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};

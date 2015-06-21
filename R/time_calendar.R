@@ -53,7 +53,7 @@
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
 #' @return
-#' Returns an object of class \code{\link{POSIXst}}.
+#' Returns an object of class \code{\link{POSIXct}}.
 #'
 #' @examples
 #' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
@@ -80,7 +80,7 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 #' UTC leap seconds are ignored.
 #'
 #' @return
-#' Returns an object of class \code{\link{POSIXst}}.
+#' Returns an object of class \code{\link{POSIXct}}.
 #'
 #' @family datetime
 #' @export
@@ -99,7 +99,7 @@ stri_datetime_now <- function() {
 #' Vectorized over \code{time}.
 #'
 #'
-#' @param time an object of class \code{\link{POSIXst}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
 #' @param tz \code{NULL} or \code{""} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param locale \code{NULL} or \code{""} for the current default locale,
@@ -158,7 +158,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #'
 #' Note that e.g. January, 31 + 1 month = February, 28 or 29.
 #'
-#' @param time an object of class \code{\link{POSIXst}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
 #' @param value integer vector; signed number of units to add to \code{time}
 #' @param units single string; one of \code{"years"}, \code{"months"},
 #' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
@@ -170,7 +170,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #' may be specified by setting the \code{@@calendar=name} keyword
 #'
 #' @return
-#' Both functions return an object of class \code{\link{POSIXst}}.
+#' Both functions return an object of class \code{\link{POSIXct}}.
 #'
 #' The replacement version of \code{stri_datetime_add} modifies
 #' the state of the \code{time} object.
@@ -205,52 +205,52 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 }
 
 
-#' @title
-#' [DRAFT API] Date-Time Objects in \pkg{stringi}
-#'
-#' @description
-#' Date-time objects' representation in \pkg{stringi} may change
-#' in future versions of the package. This is DRAFT API.
-#'
-#' @details
-#' An object of class \code{\link{POSIXst}},
-#' inherits from (for compatibility with other base R functions)
-#' \code{POSIXct} and \code{POSIX} classes.
-#' In fact, it is a numeric vector representing the (signed) number of seconds
-#' since the UNIX Epoch, i.e. 1970-01-01 00:00:00 UTC.
-#' UTC leap seconds are ignored.
-#'
-#' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
-#' etc. or the \code{sort()} function may be used.
-#'
-#' An object of class \code{\link{POSIXst}} may be equipped with
-#' an attribute called \code{tzone}. Its value is used for date/time
-#' formatting (e.g. when objects are printed in the console),
-#' see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
-#'
-#' @param x ...
-#' @param tz \code{NULL} or \code{""} for the default time zone or
-#' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
-#' @param recursive,... further arguments to be passed to or from other methods.
-#'
-#' @return
-#' \code{as.POSIXst} returns an object of class \code{POSIXst}.
-#'
-#' @export
-#' @rdname as.POSIXst
-#' @family datetime
-#' @aliases as.POSIXst POSIXst
-as.POSIXst <- function(x, tz=attr(time, "tzone"), ...) {
-   # UseMethod("as.POSIXct")
-   stop("TO DO")
-}
+# #' @title
+# #' [DRAFT API] Date-Time Objects in \pkg{stringi}
+# #'
+# #' @description
+# #' Date-time objects' representation in \pkg{stringi} may change
+# #' in future versions of the package. This is DRAFT API.
+# #'
+# #' @details
+# #' An object of class \code{\link{POSIXst}},
+# #' inherits from (for compatibility with other base R functions)
+# #' \code{POSIXct} and \code{POSIX} classes.
+# #' In fact, it is a numeric vector representing the (signed) number of seconds
+# #' since the UNIX Epoch, i.e. 1970-01-01 00:00:00 UTC.
+# #' UTC leap seconds are ignored.
+# #'
+# #' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
+# #' etc. or the \code{sort()} function may be used.
+# #'
+# #' An object of class \code{\link{POSIXst}} may be equipped with
+# #' an attribute called \code{tzone}. Its value is used for date/time
+# #' formatting (e.g. when objects are printed in the console),
+# #' see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
+# #'
+# #' @param x ...
+# #' @param tz \code{NULL} or \code{""} for the default time zone or
+# #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
+# #' @param recursive,... further arguments to be passed to or from other methods.
+# #'
+# #' @return
+# #' \code{as.POSIXst} returns an object of class \code{POSIXst}.
+# #'
+# #' @export
+# #' @rdname as.POSIXst
+# #' @family datetime
+# #' @aliases as.POSIXst POSIXst
+# as.POSIXst <- function(x, tz=attr(time, "tzone"), ...) {
+#    # UseMethod("as.POSIXct")
+#    stop("TO DO")
+# }
 
 
-#' @export
-#' @rdname as.POSIXst
-c.POSIXst <- function (..., recursive=FALSE) {
-   stopifnot(identical(recursive, FALSE))
-   .Call(C_stri_c_posixst, list(...))
-}
+# #' @export
+# #' @rdname as.POSIXst
+# c.POSIXst <- function (..., recursive=FALSE) {
+#    stopifnot(identical(recursive, FALSE))
+#    .Call(C_stri_c_posixst, list(...))
+# }
 
 # TO DO: field difference

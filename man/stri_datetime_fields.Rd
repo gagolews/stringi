@@ -7,7 +7,7 @@
 stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 }
 \arguments{
-\item{time}{an object of class \code{\link{POSIXst}} or an object coercible to}
+\item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
 
 \item{tz}{\code{NULL} or \code{""} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
@@ -51,14 +51,12 @@ stri_datetime_symbols(locale="@calendar=hebrew")$Month[
 ]
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
