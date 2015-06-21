@@ -77,15 +77,13 @@ do.call(rbind.data.frame,
 \url{http://userguide.icu-project.org/datetime}
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};

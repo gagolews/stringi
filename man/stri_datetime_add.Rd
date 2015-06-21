@@ -12,7 +12,7 @@ stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <-
   value
 }
 \arguments{
-\item{time}{an object of class \code{\link{POSIXst}} or an object coercible to}
+\item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
 
 \item{value}{integer vector; signed number of units to add to \code{time}}
 
@@ -28,7 +28,7 @@ or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting the \code{@calendar=name} keyword}
 }
 \value{
-Both functions return an object of class \code{\link{POSIXst}}.
+Both functions return an object of class \code{\link{POSIXct}}.
 
 The replacement version of \code{stri_datetime_add} modifies
 the state of the \code{time} object.
@@ -57,13 +57,11 @@ stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
 \url{http://userguide.icu-project.org/datetime/calendar}
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
+Other datetime: \code{\link{stri_datetime_create}};
+  \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
   \code{\link{stri_datetime_format}},
   \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_create}};
-  \code{\link{stri_datetime_fields}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};

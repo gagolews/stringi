@@ -46,10 +46,10 @@
  */
 void stri__set_class_POSIXct(SEXP x) {
    SEXP cl;
-   PROTECT(cl = Rf_allocVector(STRSXP, 3));
-   SET_STRING_ELT(cl, 0, Rf_mkChar("POSIXst"));
-   SET_STRING_ELT(cl, 1, Rf_mkChar("POSIXct"));
-   SET_STRING_ELT(cl, 2, Rf_mkChar("POSIXt"));
+   PROTECT(cl = Rf_allocVector(STRSXP, 2));
+   // SET_STRING_ELT(cl, 0, Rf_mkChar("POSIXst"));
+   SET_STRING_ELT(cl, 0, Rf_mkChar("POSIXct"));
+   SET_STRING_ELT(cl, 1, Rf_mkChar("POSIXt"));
    Rf_setAttrib(x, R_ClassSymbol, cl);
    UNPROTECT(1);
 }

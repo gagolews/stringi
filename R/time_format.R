@@ -47,7 +47,7 @@
 #' where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
 #' and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
 #' This gives a locale-dependent date and/or time format.
-#' Note that currently ICU does not support \code{relative} \code{time} formats,
+#' Note that currently \pkg{ICU} does not support \code{relative} \code{time} formats,
 #' so this flag is currently ignored in such a context.
 #'
 #' Otherwise, \code{format} is a pattern:
@@ -188,7 +188,7 @@
 #' uuuu-MM-dd'T'HH:mm:ssZ \tab 2015-12-31T23:59:59+0100 (the ISO 8601 guideline) \cr
 #' }
 #'
-#' @param x,time an object of class \code{\link{POSIXst}} or an object coercible to
+#' @param time an object of class \code{\link{POSIXct}} or an object coercible to
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
 #' @param tz  \code{NULL} or \code{""} for the default time zone
@@ -198,14 +198,12 @@
 #' @param locale \code{NULL} or \code{""} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting the \code{@@calendar=name} keyword
-#' @param usetz single logical value; should the time zone be appended
-#' to the output?
 #' @param ... Further arguments to be passed from or to other methods.
 #'
 #' @return
-#' \code{stri_datetime_format} and \code{format.POSIXst} return a character vector.
+#' \code{stri_datetime_format} returns a character vector.
 #'
-#' \code{stri_datetime_parse} returns an object of class \code{\link{POSIXst}}.
+#' \code{stri_datetime_parse} returns an object of class \code{\link{POSIXct}}.
 #'
 #' @references
 #' \emph{Formatting Dates and Times} - ICU User Guide,
@@ -226,16 +224,9 @@ stri_datetime_format <- function(time, format="uuuu-MM-dd HH:mm:ss", tz=NULL, lo
 }
 
 
-#' @rdname stri_datetime_format
-#' @export
-format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=FALSE, ...) {
-   if (identical(usetz, TRUE)) format <- stri_paste(format, " z") # this is not too intelligent
-   stri_datetime_format(x, format=format, tz=tz) # ignore ... arg purposedly
-}
-
-
 #' @export
 #' @rdname stri_datetime_format
+#' @aliases stri_datetime_format
 stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE, tz=NULL, locale=NULL) {
    .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
 }
@@ -334,3 +325,12 @@ stri_datetime_fstr <- function(x) {
 # z + time
 # time - z
 # time1 lop time2
+
+# #' @rdname stri_datetime_format
+# #' @export
+# #' @param usetz single logical value; should the time zone be appended
+# #' to the output?
+# format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=FALSE, ...) {
+#    if (identical(usetz, TRUE)) format <- stri_paste(format, " z") # this is not too intelligent
+#    stri_datetime_format(x, format=format, tz=tz) # ignore ... arg purposedly
+# }

@@ -30,7 +30,7 @@ or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
-Returns an object of class \code{\link{POSIXst}}.
+Returns an object of class \code{\link{POSIXct}}.
 }
 \description{
 This function constructs date-time objects from numeric representations.
@@ -46,14 +46,12 @@ stri_datetime_create(2015, 02, 29)
 stri_datetime_create(2015, 02, 29, lenient=TRUE)
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_fstr}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};

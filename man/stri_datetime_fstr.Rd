@@ -34,15 +34,13 @@ or there are some inconsistencies between base R and \pkg{ICU}.
 stri_datetime_fstr("\%Y-\%m-\%d \%H:\%M:\%S")
 }
 \seealso{
-Other datetime: \code{\link{POSIXst}},
-  \code{\link{as.POSIXst}}, \code{\link{c.POSIXst}};
-  \code{\link{format.POSIXst}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_parse}};
-  \code{\link{stri_datetime_add}},
+Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_datetime_add<-}};
   \code{\link{stri_datetime_create}};
   \code{\link{stri_datetime_fields}};
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_format}},
+  \code{\link{stri_datetime_parse}};
   \code{\link{stri_datetime_now}};
   \code{\link{stri_datetime_symbols}};
   \code{\link{stri_timezone_get}},
