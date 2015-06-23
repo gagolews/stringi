@@ -211,64 +211,93 @@ AC_CHECK_HEADER([elf.h],
             with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
        ])
 
-AC_LANG(C++)
-AC_PROG_CXX
-
 ##### Checking whether the C++ compiler supports the long long type and STL ####
 
-AC_LANG(C++)
-AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
-AC_LINK_IFELSE([AC_LANG_SOURCE([
-      #include <iostream>
-      using namespace std;
 
-      int main() {
-        long long x = 1;
-        cout << x << endl;
+check_cpp() {
+   AC_LANG(C++)
+   AC_PROG_CXX
 
-        cout << 1LL << 1ULL << endl;
-        cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
+   AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
+   AC_LINK_IFELSE([AC_LANG_SOURCE([
+         #include <iostream>
+         using namespace std;
 
-        return 0;
-      }])
-   ],
-   [
-      AC_MSG_RESULT([yes])
-   ],[
-      AC_MSG_RESULT([no])
-      echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
+         int main() {
+           long long x = 1;
+           cout << x << endl;
+
+           cout << 1LL << 1ULL << endl;
+           cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
+
+           return 0;
+         }])
+      ],
+      [
+         AC_MSG_RESULT([yes])
+      ],[
+         AC_MSG_RESULT([no])
+         return 1
+      ])
+
+   AC_CXX_HAVE_STL
+   if test "$ac_cv_cxx_have_stl" = not; then
+      return 1
+   fi
+
+   AC_MSG_CHECKING(whether std::map is available)
+   AC_LINK_IFELSE([AC_LANG_SOURCE([
+         #include <iostream>
+         #include <map>
+         #include <vector>
+         #include <utility>
+
+         int main() {
+            std::map< int, std::vector< int > > curmap;
+            std::vector<int> v1(10);
+            curmap.insert(std::pair< int, std::vector< int > >(100, v1));
+            std::cout << curmap.size() << std::endl;
+           return 0;
+         }])
+      ],
+      [
+         AC_MSG_RESULT([yes])
+      ],[
+         AC_MSG_RESULT([no])
+         return 1
+      ])
+
+
+   CPP_OK=1
+   return 0
+}
+
+CPP_OK=0
+check_cpp
+
+if test $CPP_OK = 0; then
+   if test "x$enable_cxx11" == "xyes"; then
+      echo "*** trying with disabled C++11 compiler"
+      CXX=`"${R_PATH}" CMD config CXX`
+      CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+      STRINGI_CXXSTD=""
+      CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
+
+      # unset cached C++ compiler features:
+      unset ac_cv_cxx_compiler_gnu
+      unset ac_cv_prog_cxx_g
+      unset ac_cv_cxx_namespaces
+      unset ac_cv_cxx_have_stl
+
+      # re-run tests:
+      check_cpp
+   fi
+
+   if test $CPP_OK = 0; then
+      echo "*** verify your C++ compiler's abilities (long long, STL, etc. support)"
       exit 1
-   ])
-
-AC_CXX_HAVE_STL
-if test "$ac_cv_cxx_have_stl" = not; then
-   echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
-   exit 1
+   fi
 fi
-
-AC_MSG_CHECKING(whether std::map is available)
-AC_LINK_IFELSE([AC_LANG_SOURCE([
-      #include <iostream>
-      #include <map>
-      #include <vector>
-      #include <utility>
-
-      int main() {
-         std::map< int, std::vector< int > > curmap;
-         std::vector<int> v1(10);
-         curmap.insert(std::pair< int, std::vector< int > >(100, v1));
-         std::cout << curmap.size() << std::endl;
-        return 0;
-      }])
-   ],
-   [
-      AC_MSG_RESULT([yes])
-   ],[
-      AC_MSG_RESULT([no])
-      echo "*** stringi cannot be built. Upgrade your C++ compiler's settings"
-      exit 1
-   ])
-
 
 ##### CHECK FOR ICU4C ##########################################################
 
