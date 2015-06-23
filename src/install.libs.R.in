@@ -5,11 +5,7 @@ dir.create(dest, recursive=TRUE, showWarnings=FALSE)
 file.copy(libfile, dest, overwrite=TRUE)
 
 # copy icudt when building ICU from sources
-copyicudt <- TRUE
-if (file.exists('icu55_found.txt')) {
-   copyicudt <- !as.logical(as.numeric(readChar('icu55_found.txt', 1)))
-   if (is.na(copyicudt)) copyicudt <- TRUE
-}
+copyicudt <- !as.logical(@ICU_FOUND@)
 
 if (copyicudt) {
    source('../R/install.R')

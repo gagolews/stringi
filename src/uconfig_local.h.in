@@ -33,6 +33,8 @@
 #ifndef uconfig_local_h
 #define uconfig_local_h
 
+#define STRI_ICU_FOUND @ICU_FOUND@
+
 
 /* This caused a serious bug on Solaris, see #94:
    #define U_DISABLE_RENAMING 1 */

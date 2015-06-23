@@ -4,8 +4,8 @@
 # Autoconf
 src/symbols.rds
 src/Makevars
-#src/install.libs.R
-src/icu??_found.txt
+src/install.libs.R
+src/uconfig_local.h
 autom4te.cache
 config.log
 config.status

@@ -1,0 +1,22 @@
+# `stringi` configure.win
+# (C) 2015 Marek Gagolewski
+
+# this is an architecture-independent configure.win  file
+
+"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
+   fin  <- "src/uconfig_local.h.in";
+   fout <- "src/uconfig_local.h";
+   f <- readLines(fin);
+   f <- gsub("@ICU_FOUND@", 0, f, fixed = TRUE);
+   f <- gsub("@ICUDT_DIR@", "icu55/data", f, fixed = TRUE);
+   writeLines(f, fout);
+' `
+
+"${R_HOME}/bin${R_ARCH_BIN}/Rscript.exe" -e '
+   fin  <- "src/install.libs.R.in";
+   fout <- "src/install.libs.R";
+   f <- readLines(fin);
+   f <- gsub("@ICU_FOUND@", 0, f, fixed = TRUE);
+   f <- gsub("@ICUDT_DIR@", "icu55/data", f, fixed = TRUE);
+   writeLines(f, fout);
+' `

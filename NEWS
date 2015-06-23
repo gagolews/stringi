@@ -9,6 +9,13 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
+## 0.5-??? (2015-??-??) **devel**
+
+* [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
+  is not used.
+
+-------------------------------------------------------------------------------
+
 ## 0.5-2 (2015-06-21) **CRAN**
 
 * [NEW FUNCTIONS] #137: date-time formatting/parsing:
@@ -33,7 +40,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 ## 0.5-1 (2015-06-19) **devel**
 
-* [BACKWARD INCOMPABILITY] The second argument to `stri_pad_*()` has
+* [BACKWARD INCOMPATIBILITY] The second argument to `stri_pad_*()` has
 been renamed `width`.
 
 * [GENERAL] #69: `stringi` is now bundled with ICU4C 55.1.

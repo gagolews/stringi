@@ -48,8 +48,8 @@
  */
 static const R_CallMethodDef cCallMethods[] = {
 
-//   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE v>0.5
-//   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE v>0.5
+//   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE >= 0.6
+//   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE >= 0.6
    STRI__MK_CALL("C_stri_c_posixst",                  stri_c_posixst,                  1),
    STRI__MK_CALL("C_stri_cmp_codepoints",             stri_cmp_codepoints,             3),
    STRI__MK_CALL("C_stri_cmp_integer",                stri_cmp_integer,                3),
@@ -106,12 +106,12 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_extract_last_regex",         stri_extract_last_regex,         3),
    STRI__MK_CALL("C_stri_extract_all_regex",          stri_extract_all_regex,          5),
    STRI__MK_CALL("C_stri_flatten_withressep",         stri_flatten_withressep,         2),
-//   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version > 0.5
+//   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_info",                       stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                    stri_isempty,                    1),
    STRI__MK_CALL("C_stri_join_withcollapse",          stri_join_withcollapse,          4),
    STRI__MK_CALL("C_stri_join2_nocollapse",           stri_join2_nocollapse,           2),
-//   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version > 0.5
+//   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_length",                     stri_length,                     1),
    STRI__MK_CALL("C_stri_list2matrix",                stri_list2matrix,                4),
    STRI__MK_CALL("C_stri_locale_info",                stri_locale_info,                1),
@@ -171,7 +171,7 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_split_lines",                stri_split_lines,                2),
    STRI__MK_CALL("C_stri_split_lines1",               stri_split_lines1,               1),
    STRI__MK_CALL("C_stri_split_regex",                stri_split_regex,                7),
-//   STRI__MK_CALL("C_stri_split_pos",                stri_split_pos,              3), // TODO: version > 0.5
+//   STRI__MK_CALL("C_stri_split_pos",                stri_split_pos,              3), // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_startswith_charclass",       stri_startswith_charclass,       3),
    STRI__MK_CALL("C_stri_startswith_coll",            stri_startswith_coll,            4),
    STRI__MK_CALL("C_stri_startswith_fixed",           stri_startswith_fixed,           4),
@@ -205,12 +205,13 @@ static const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_unique",                     stri_unique,                     2),
    STRI__MK_CALL("C_stri_width",                      stri_width,                      1),
    STRI__MK_CALL("C_stri_wrap",                       stri_wrap,                      10),
-//   STRI__MK_CALL("C_stri_trim_double",              stri_trim_double,                3), // TODO: version > 0.5
+//   STRI__MK_CALL("C_stri_trim_double",              stri_trim_double,                3), // TODO: version >= 0.6
 
    // the list must be NULL-terminated:
    {NULL,                           NULL,                  0}
 
 };
+
 
 
 /** Sets ICU data dir
@@ -257,7 +258,9 @@ void stri_set_icu_data_directory(const char* libpath)
  */
 extern "C" void R_init_stringi(DllInfo* dll)
 {
+#if STRI_ICU_FOUND == 0
    stri_set_icu_data_directory((char*)*(char**)(dll) /* dll->path */);
+#endif
 
 /* BTW: u_init: It is OK to simply use ICU services and functions without
    first having initialized ICU by calling u_init().

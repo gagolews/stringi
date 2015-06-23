@@ -112,6 +112,7 @@ AC_ARG_WITH([extra_libs],
 # set ICUDT_DIR
 AC_MSG_CHECKING(for local ICUDT_DIR)
 if test -z "${ICUDT_DIR}"; then
+# Remember also to update the configure.win file
    ICUDT_DIR=icu55/data
 fi
 AC_MSG_RESULT($ICUDT_DIR)
@@ -553,21 +554,20 @@ STRINGI_LDFLAGS="${STRINGI_LDFLAGS} ${with_extra_ldflags}"
 STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
 
 AC_SUBST(STRINGI_OBJECTS)
-
 AC_SUBST(STRINGI_CXXSTD)
 AC_SUBST(STRINGI_CXXFLAGS)
 AC_SUBST(STRINGI_CPPFLAGS)
 AC_SUBST(STRINGI_CFLAGS)
 AC_SUBST(STRINGI_LDFLAGS)
 AC_SUBST(STRINGI_LIBS)
-
-AC_CONFIG_FILES([src/Makevars])
-
 AC_SUBST(ICU_FOUND)
-AC_CONFIG_FILES([src/icu55_found.txt])
-
 AC_SUBST(ICUDT_DIR)
+
+# Remember also to update the configure.win file
+AC_CONFIG_FILES([src/Makevars])
+AC_CONFIG_FILES([src/uconfig_local.h])
 AC_CONFIG_FILES([src/install.libs.R])
+
 AC_OUTPUT
 
 echo ""
