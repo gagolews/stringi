@@ -205,13 +205,14 @@ LIBS="${LIBS} ${with_extra_libs}"
 
 AC_LANG(C)
 AC_PROG_CC
-AC_LANG(C++)
-AC_PROG_CXX
 
 AC_CHECK_HEADER([elf.h],
        [
             with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
        ])
+
+AC_LANG(C++)
+AC_PROG_CXX
 
 ##### Checking whether the C++ compiler supports the long long type and STL ####
 
@@ -390,9 +391,17 @@ detect_icu_with_pkg_config() {
       #include <unicode/uniset.h>
       #include <stdio.h>
       #include <unicode/translit.h>
+      #include <unicode/uclean.h>
       using namespace icu;
 
       int main() {
+         UErrorCode status = U_ZERO_ERROR;
+         u_init(&status);
+         if (U_FAILURE(status)) {
+            printf("ICU init failed: %s", u_errorName(status));
+            return 10;
+         }
+
         // check if we have some converters installed (icudt)
         int c = ucnv_countAvailable();
         if (c <= 0)
@@ -403,7 +412,7 @@ detect_icu_with_pkg_config() {
         if (c <= 0)
           return 12;
 
-        UErrorCode status = U_ZERO_ERROR;
+        status = U_ZERO_ERROR;
         StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
         if (!U_SUCCESS(status)) return 13;
 
