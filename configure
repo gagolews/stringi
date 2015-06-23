@@ -2260,6 +2260,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
 $as_echo_n "checking for local ICUDT_DIR... " >&6; }
 if test -z "${ICUDT_DIR}"; then
+# Remember also to update the configure.win file
    ICUDT_DIR=icu55/data
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
@@ -4425,15 +4426,14 @@ STRINGI_LIBS="${STRINGI_LIBS} ${with_extra_libs}"
 
 
 
+
+# Remember also to update the configure.win file
 ac_config_files="$ac_config_files src/Makevars"
 
-
-
-ac_config_files="$ac_config_files src/icu55_found.txt"
-
-
+ac_config_files="$ac_config_files src/uconfig_local.h"
 
 ac_config_files="$ac_config_files src/install.libs.R"
+
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5141,7 +5141,7 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "src/Makevars") CONFIG_FILES="$CONFIG_FILES src/Makevars" ;;
-    "src/icu55_found.txt") CONFIG_FILES="$CONFIG_FILES src/icu55_found.txt" ;;
+    "src/uconfig_local.h") CONFIG_FILES="$CONFIG_FILES src/uconfig_local.h" ;;
     "src/install.libs.R") CONFIG_FILES="$CONFIG_FILES src/install.libs.R" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

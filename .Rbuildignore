@@ -16,7 +16,9 @@
 ^README.md$
 ^\.git
 ^src/Makevars$
-^src/icu52_found\.txt$
+^src/install\.libs\.R$
+^src/uconfig_local\.h$
+^src/icu.._found\.txt$
 ^autom4te\.cache$
 ^config\.log$
 ^config\.status$
