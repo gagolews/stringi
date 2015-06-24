@@ -21,6 +21,7 @@ Depends:
     R (>= 2.13.1)
 Imports:
     tools
+Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski and Bartek Tartanus (stringi source code);
     IBM and other contributors (ICU4C 55.1 source code);

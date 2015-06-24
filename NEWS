@@ -12,10 +12,14 @@ http://bugs.icu-project.org/trac/ticket/11554]
 ## 0.5-??? (2015-??-??) **devel**
 
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
-  is not used.
+is not used (this used to cause build problems on openSUSE).
  
-* [NEW FEATURE] #169: `./configure` now tries to switch to the "standard"
+* [BUILD TIME] #169: `./configure` now tries to switch to the "standard"
 C++ compiler if a C++11 one is not properly configured.
+
+* [BUILD TIME] `configure.win` (`Biarch: TRUE`) now mimics `autoconf`'s 
+`AC_SUBST` and `AC_CONFIG_FILES` so that the build process is now
+more standardized across platforms.
 
 * [NEW FEATURE] `stri_info()` now also gives information on which ICU4C is
 used (system or bundle).
@@ -72,10 +76,10 @@ of non-breaking, zero width, etc. spaces
 relies on the current `libC`'s implementation of `strchr()` and `strstr()`.
 This is very fast e.g. on `glibc` utilizing the `SSE2/3/4` instruction set.
 
-* [GENERAL] #141: a local copy of `icudt*.zip` may be used on package
+* [BUILD TIME] #141: a local copy of `icudt*.zip` may be used on package
 install; see the `INSTALL` file for more information.
 
-* [GENERAL] #165: the `./configure` option `--disable-icu-bundle`
+* [BUILD TIME] #165: the `./configure` option `--disable-icu-bundle`
 forces the use of system ICU when building the package.
 
 * [BUGFIX] locale specifiers are now normalized in a more intelligent way:
@@ -89,7 +93,8 @@ of zero lengths
 * [BUGFIX] stringr/#73: `stri_wrap()` returned `CHARSXP` instead of `STRSXP`
 on empty string input with `simplify=FALSE` argument.
 
-* [BUGFIX] #164: libicu-dev usage used to fail on Ubuntu.
+* [BUGFIX] #164: libicu-dev usage used to fail on Ubuntu
+(`LIBS` shall be passed after `LDFLAGS` and the list of `.o` files).
 
 * [BUGFIX] #168: Build now fails if `icudt` is not available.
 
