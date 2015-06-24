@@ -17,6 +17,9 @@ http://bugs.icu-project.org/trac/ticket/11554]
 * [NEW FEATURE] #169: `./configure` now tries to switch to the "standard"
 C++ compiler if a C++11 one is not properly configured.
 
+* [NEW FEATURE] `stri_info()` now also gives information on which ICU4C is
+used (system or bundle).
+
 -------------------------------------------------------------------------------
 
 ## 0.5-2 (2015-06-21) **CRAN**
