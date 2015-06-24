@@ -35,6 +35,10 @@
 #include <cstdlib>
 #include <unicode/uclean.h>
 
+#ifndef STRI_ICU_FOUND
+#include "uconfig_local.h"
+#endif
+
 #define STRI__MK_CALL(symb, name, args) \
    {symb, (DL_FUNC)&name, args}
 
