@@ -23,7 +23,9 @@ Otherwise, you a list with the following components is returned:
 as returned by \code{\link{stri_locale_info}};
 \item \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")};
 \item \code{Charset.native} -- information on default encoding,
-as returned by \code{\link{stri_enc_info}}.
+as returned by \code{\link{stri_enc_info}};
+\item \code{ICU.system} -- logical; indicates whether system \pkg{ICU} libs
+are used (\code{TRUE}) or if \pkg{ICU} was built together with \pkg{stringi}.
 }
 }
 \description{

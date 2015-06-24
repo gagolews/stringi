@@ -33,6 +33,10 @@
 #include "stri_stringi.h"
 
 
+#ifndef STRI_ICU_FOUND
+#include "uconfig_local.h"
+#endif
+
 /** Get curent-default ICU locale and charset information
  *
  *  @return an R named list with 4 components:
@@ -52,11 +56,14 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.5-3 (Marek Gagolewski, 2015-06-24)
+ *    new retval field: ICU.system
 */
 SEXP stri_info()
 {
    STRI__ERROR_HANDLER_BEGIN(0)
-   const R_len_t infosize = 5;
+   const R_len_t infosize = 6;
    SEXP vals;
 
    STRI__PROTECT(vals = Rf_allocVector(VECSXP, infosize));
@@ -66,10 +73,11 @@ SEXP stri_info()
    SET_VECTOR_ELT(vals, 3,
       stri__make_character_vector_char_ptr(2, "UTF-8", "UTF-16")); // fixed strings
    SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));  // may call Rf_error
+   SET_VECTOR_ELT(vals, 5, Rf_ScalarLogical(STRI_ICU_FOUND));
 
    stri__set_names(vals, infosize,
       "Unicode.version", "ICU.version", "Locale",
-      "Charset.internal", "Charset.native");
+      "Charset.internal", "Charset.native", "ICU.system");
 
    STRI__UNPROTECT_ALL
    return vals;
