@@ -102,13 +102,15 @@ with installing the package. Also, if you use our ICU4C bundle and you
 have a working internet access, all is expected to lead to a happy ending.
 
 The package is frequently tested on the following OSes (i.a., via Docker):
-* Fedora: 20, 21, latest
-* CentOS: 7
-* OpenSUSE: latest
-* Ubuntu: trusty
-* Debian: testing
-* Windows (via WinBuilder)
-* Solaris 10 (gcc/i386, CC/i386, CC/Sparc)
+* Fedora: 20, 21, latest,
+* CentOS: 7,
+* OpenSUSE: latest,
+* Ubuntu: trusty,
+* Debian: testing,
+* Oracle Linux: 7,
+* Windows (via WinBuilder),
+* Solaris 10 (gcc/i386, CC/i386, CC/Sparc),
+and of course on CRAN machines.
 
 Yet, if you did not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/Rexamine/stringi/issues).
