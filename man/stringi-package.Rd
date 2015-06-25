@@ -116,15 +116,10 @@ number formatting, number spellout, and many more.
 
 Note that each man page provides many further links to other
 interesting facilities and topics.
-
-You are encouraged to call \code{\link{stri_install_check}}
-after the package installation or update.
 }
 \author{
 Marek Gagolewski \email{gagolews@rexamine.com},\cr
-Bartek Tartanus \email{bartektartanus@rexamine.com},\cr
-with some contributions from Marcin Bujarski at the early stage
-of package development.
+with contributions from Bartek Tartanus \email{bartektartanus@rexamine.com}.
 ICU4C was developed by IBM and others.
 The Unicode Character Database is due to Unicode, Inc.;
 see the COPYRIGHTS file for more details.

@@ -30,12 +30,15 @@
 
 
 #' @title
-#' Installation-Related Utilities
+#' Installation-Related Utilities [DEPRECATED]
 #'
 #' @description
 #' These functions are responsible for checking and guaranteeing
 #' that the ICU data library (icudt) is available and that \pkg{stringi}
 #' is ready to use.
+#'
+#' These functions are deprecated and will no longer be available
+#' in future \pkg{stringi} releases.
 #'
 #' @details
 #' ICU makes use of a wide variety of data tables to provide many
@@ -80,6 +83,9 @@
 stri_install_check <- function(silent=FALSE) {
    stopifnot(is.logical(silent), length(silent) == 1)
 
+   warning("THIS FUNCTION IS DEPRECATED")
+   # this function may stay as-is, but should no longer be exported in the future
+
    allok <- tryCatch({
       if (!silent) message(stri_info(TRUE)) # this may also throw an error
 
@@ -110,6 +116,12 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
       message("icudt has been already installed.")
       return(invisible(TRUE))
    }
+
+   if (check) # install.libs.R calls it with check=FALSE
+      warning("THIS FUNCTION IS DEPRECATED")
+   # this function should be removed
+   # remember about importFrom tools md5sum -> stringi-package.R
+   # use this very code in install.libs.R directly
 
    if (is.null(outpath))
       outpath <- file.path(path.package("stringi"), "libs")

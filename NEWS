@@ -11,6 +11,10 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 ## 0.5-??? (2015-??-??) **devel**
 
+* [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
+are now deprecated. From now on they are supposed to be used only
+by the stringi installer.
+
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
 is not used (this used to cause build problems on openSUSE).
 

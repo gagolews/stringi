@@ -3,7 +3,7 @@
 \name{stri_install_check}
 \alias{stri_install_check}
 \alias{stri_install_icudt}
-\title{Installation-Related Utilities}
+\title{Installation-Related Utilities [DEPRECATED]}
 \usage{
 stri_install_check(silent = FALSE)
 
@@ -30,6 +30,9 @@ successfully.
 These functions are responsible for checking and guaranteeing
 that the ICU data library (icudt) is available and that \pkg{stringi}
 is ready to use.
+
+These functions are deprecated and will no longer be available
+in future \pkg{stringi} releases.
 }
 \details{
 ICU makes use of a wide variety of data tables to provide many
