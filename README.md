@@ -19,35 +19,42 @@ package.
 **Package maintainer**: [Marek Gagolewski](http://gagolewski.rexamine.com/)
 
 **Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
-[Bartlomiej Tartanus](http://tartanus.rexamine.com/)
+with contributions from [Bartlomiej Tartanus](http://tartanus.rexamine.com/)
 
 This git repository also contains a custom subset of *ICU4C 55.1* source code
 which is copyrighted by IBM and others. A binary
 version of the Unicode Character Database is included.
-For more details on copyright holders see the `LICENSE` file.
+For more details on copyright holders see the
+[LICENSE](http://raw.githubusercontent.com/Rexamine/stringi/master/LICENSE) file.
 
 **Homepage**: http://stringi.rexamine.com/
 
 **CRAN entry**: http://cran.r-project.org/web/packages/stringi/
 
-**License**: BSD-3-clause, for more details see the `LICENSE` file
+**Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html
+[for a recent development version]
+
+**System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (refer to the
+[INSTALL](http://raw.githubusercontent.com/Rexamine/stringi/master/INSTALL)
+file for more details)
+
+**License**: BSD-3-clause, for more details see the
+[LICENSE](http://raw.githubusercontent.com/Rexamine/stringi/master/LICENSE) file.
 
 > **stringi**'s source code itself is released under the BSD-3-clause license,
-> which is 100% open source compatible. Such a license has been verified as 
+> which is 100% open source compatible. Such a license has been verified as
 > [GPL-compatible](http://en.wikipedia.org/wiki/BSD_licenses)
 > by the Free Software Foundation.
 >
 > The reason for using BSD-3-clause is that we include full source
 > code of the *ICU* library, which has its own license.
-> The *ICU* projects are covered by the 
+> The *ICU* projects are covered by the
 > [ICU license](http://source.icu-project.org/repos/icu/icu/trunk/license.html),
 > a simple, permissive non-copyleft free software license, compatible with
-> the GNU GPL. The *ICU* license is 
+> the GNU GPL. The *ICU* license is
 > [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed-)
-> to allow *ICU* to be included both in free software projects 
+> to allow *ICU* to be included both in free software projects
 > and in proprietary or commercial products.
 
-**Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html 
-[for a recent development version]
-
-**System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (see the `INSTALL` file)
+**Changes**: see the
+[NEWS](http://raw.githubusercontent.com/Rexamine/stringi/master/NEWS) file.

@@ -13,11 +13,11 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
 is not used (this used to cause build problems on openSUSE).
- 
+
 * [BUILD TIME] #169: `./configure` now tries to switch to the "standard"
 C++ compiler if a C++11 one is not properly configured.
 
-* [BUILD TIME] `configure.win` (`Biarch: TRUE`) now mimics `autoconf`'s 
+* [BUILD TIME] `configure.win` (`Biarch: TRUE`) now mimics `autoconf`'s
 `AC_SUBST` and `AC_CONFIG_FILES` so that the build process is now
 more standardized across platforms.
 
@@ -42,7 +42,7 @@ boundaries.
 * [NEW FUNCTION] #8: `stri_width()` approximates the *width* of a string
 in a more Unicodish fashion than `nchar(..., "width")`
 
-* [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on 
+* [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on
 code point widths instead of the number of code points. Moreover, the default
 behavior of `stri_wrap()` is now such that it does not get rid
 of non-breaking, zero width, etc. spaces
@@ -93,7 +93,7 @@ of zero lengths
 * [BUGFIX] stringr/#73: `stri_wrap()` returned `CHARSXP` instead of `STRSXP`
 on empty string input with `simplify=FALSE` argument.
 
-* [BUGFIX] #164: libicu-dev usage used to fail on Ubuntu
+* [BUGFIX] #164: `libicu-dev` usage used to fail on Ubuntu
 (`LIBS` shall be passed after `LDFLAGS` and the list of `.o` files).
 
 * [BUGFIX] #168: Build now fails if `icudt` is not available.
@@ -377,7 +377,7 @@ for `opts_collator=NA`.
 
 ## 0.1-25 (2014-03-12) **CRAN**
 
-* LICENCE tweaks.
+* LICENSE tweaks.
 
 * Initial CRAN release.
 
@@ -447,7 +447,7 @@ for `opts_collator=NA`.
 
 ## 0.1-10 (2013-11-13) **devel**
 
-* Using pkg-config via ./configure to look for ICU4C libs.
+* Using `pkg-config` via `./configure` to look for ICU4C libs.
 
 -------------------------------------------------------------------------------
 
