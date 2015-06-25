@@ -2,7 +2,7 @@ type <- c("common", "i18n")[2]
 indir <- "~/Desktop/"
 outdir <- "~/Projekty/stringi/src/"
 ext <- c(".c", ".cpp")[2]
-prefix <- "icu52_"
+prefix <- "icu55_"
 
 outfile <- paste0(outdir, prefix, type, ext)
 files <- dir(path=paste0(indir, type), pattern=glob2rx(paste0("*", ext)),

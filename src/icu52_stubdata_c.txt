@@ -1,1 +1,0 @@
-icu52/stubdata/stubdata.c

@@ -1,5 +1,0 @@
-icu52/i18n/decContext.c \
-icu52/i18n/decNumber.c \
-icu52/i18n/ucln_in.c \
-icu52/i18n/ulocdata.c \
-icu52/i18n/utmscale.c
