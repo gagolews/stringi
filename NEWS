@@ -13,7 +13,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 * [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
 are now deprecated. From now on they are supposed to be used only
-by the stringi installer.
+by the `stringi` installer.
 
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
 is not used (this used to cause build problems on openSUSE).
@@ -103,13 +103,13 @@ on empty string input with `simplify=FALSE` argument.
 * [BUGFIX] #168: Build now fails if `icudt` is not available.
 
 * [BUGFIX] #135: C++11 is now used by default (see the `INSTALL` file,
-however) to build stringi from sources. This is because ICU4C uses the
+however) to build `stringi` from sources. This is because ICU4C uses the
 `long long` type which is not part of the C++98 standard.
 
 * [BUGFIX] #154: Dates and other objects with a custom class attribute
 were not coerced to the character type correctly.
 
-* [BUGFIX] Force ICU `u_init()` call on stringi dynlib load.
+* [BUGFIX] Force ICU `u_init()` call on `stringi` dynlib load.
 
 * [BUGFIX] #157: many overfull hboxes in the package PDF manual has been
 corrected.
@@ -245,7 +245,7 @@ being garbage collected, which might have caused spontaneous SEGFAULTS.
 * [BUGFIX] Memory leaks causes as detected by
 `valgrind --tool=memcheck --leak-check=full` have been removed.
 
-* [DOCUMENTATION] Significant extensions/clean ups in the stringi manual.
+* [DOCUMENTATION] Significant extensions/clean ups in the `stringi` manual.
 
 -------------------------------------------------------------------------------
 
@@ -334,7 +334,7 @@ of code points in a string.
 `stri_cmp_gt()`, `stri_cmp_ge()`, `%==%`, `%!=%`, `%<%`, `%<=%`, `%>%`, `%>=%`.
 
 * [NEW FUNCTION] `stri_enc_mark()` reads declared encodings of character
-strings as seen by stringi.
+strings as seen by `stringi`.
 
 * [NEW FUNCTION] `stri_enc_tonative(str)` is an alias to
 `stri_encode(str, NULL, NULL)`.
@@ -404,7 +404,7 @@ for `opts_collator=NA`.
 
 * License changed to BSD-3-clause, COPYRIGHTS updated.
 
-* icudt is not shipped with stringi anymore;
+* `icudt` is not shipped with `stringi` anymore;
    it is now downloaded in `install.libs.R` from one of our servers.
 
 * New functions: `stri_install_check()`, `stri_install_icudt()`.
@@ -418,14 +418,14 @@ for `opts_collator=NA`.
   Pass `'--disable-pkg-config'` to `./configure` to force building
   ICU from sources.
 
-* icudt52b (custom subset) is now shipped with stringi
+* `icudt52b` (custom subset) is now shipped with `stringi`
   (for big-endian, ASCII systems).
 
 -------------------------------------------------------------------------------
 
 ## 0.1-21 (2014-02-19) **devel**
 
-* Fixed some Solaris-related issues while preparing stringi
+* Fixed some Solaris-related issues while preparing `stringi`
   for CRAN submission.
 
 -------------------------------------------------------------------------------
@@ -435,7 +435,7 @@ for `opts_collator=NA`.
 * ICU4C 52.1 sources included (common, i18n, stubdata + icu52dt.dat
   loaded dynamically). Compilation via Makevars.
 
-* stringi now does not depend on any external libraries.
+* `stringi` now does not depend on any external libraries.
 
 -------------------------------------------------------------------------------
 
@@ -468,6 +468,6 @@ for `opts_collator=NA`.
 
 ## 0.1-1 (2013-01-05) **devel**
 
-* The stringi project has been established on GitHub.
+* The `stringi` project has been established on GitHub.
 
 -------------------------------------------------------------------------------
