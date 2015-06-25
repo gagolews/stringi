@@ -165,7 +165,7 @@
    "string search failed"
 
 #define MSG__RESOURCE_ERROR_GET \
-   "required resource unavailable; try calling stri_install_check()"
+   "required ICU resource unavailable"
 
 #define MSG__RESOURCE_ERROR_APPLY \
    "error while applying operation"
