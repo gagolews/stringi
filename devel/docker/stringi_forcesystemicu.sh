@@ -1,6 +1,6 @@
 export MAKE="make -j 8"                                                  && \
 cd /tmp                                                                  && \
-git clone https://github.com/Rexamine/stringi.git                        && \
+GIT_SSL_NO_VERIFY=true git clone https://github.com/Rexamine/stringi.git && \
 R CMD build stringi                                                      && \
 R CMD INSTALL stringi_*.tar.gz                                              \
    --configure-args="--disable-icu-bundle" --no-html                     && \
