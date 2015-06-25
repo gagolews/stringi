@@ -7,7 +7,6 @@
 ^src-i386
 ^src-x64
 ^src/.*\.o$
-^src/icu52
 ^src/icu55/data
 ^src/.*\.a$
 ^src/.*\.so$
