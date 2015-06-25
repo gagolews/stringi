@@ -24,7 +24,7 @@ The stringi package depends on the ICU4C >= 50 library.
 If you build the package from sources and either:
 * these requirements are not met (check out http://site.icu-project.org/download,
    the `libicu-devel` rpm on Fedora/CentOS/OpenSUSE,
-   or `libicu-dev` on Ubuntu etc.),
+   or `libicu-dev` on Ubuntu/Debian etc.),
 * `pkg-config` is not able to find proper build settings for ICU-based projects,
 or
 * `R CMD INSTALL` is called with the `--configure-args='--disable-pkg-config'`
@@ -102,10 +102,13 @@ with installing the package. Also, if you use our ICU4C bundle and you
 have a working internet access, all is expected to lead to a happy ending.
 
 The package is frequently tested on the following OSes (i.a., via Docker):
-* Fedora 20, 21, latest (`libicu-devel`)
-* CentOS 7 (`libicu-devel`)
-* OpenSUSE latest (`libicu-devel`)
+* Fedora: 20, 21, latest
+* CentOS: 7
+* OpenSUSE: latest
+* Ubuntu: trusty
+* Debian: testing
 * Windows (via WinBuilder)
+* Solaris 10 (gcc/i386, CC/i386, CC/Sparc)
 
 Yet, if you did not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/Rexamine/stringi/issues).
