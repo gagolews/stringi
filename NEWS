@@ -18,7 +18,7 @@ by the `stringi` installer.
 * [BUGFIX] #176: a patch for `sys/feature_tests.h` no longer included
 (the original file was copyrighted by Sun Microsystems); fixed the *Compiler
 or options invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
-applications* error by forcing `_XPG6` conformance.
+applications* error by forcing (conditionally) `_XPG6` conformance.
 
 * [BUGFIX] #174: `stri_paste()` did not generate any warning when
 the recycling rule is violated and `sep==""`.
