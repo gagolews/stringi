@@ -12,7 +12,7 @@ and the colorful variety of operating systems, their flavors, and particular
 setups, some users may still experience a few issues while the package
 is compiled from sources.
 
-Also, some additional build tweak are possible for those who want a more
+Also, some additional build tweaks are possible to those who want a more
 customized installation.
 
 
@@ -108,9 +108,10 @@ The package is frequently tested on the following OSes (i.a., via Docker):
 * Ubuntu: trusty,
 * Debian: testing,
 * Oracle Linux: 7,
+* Mageia: latest,
 * Windows (via WinBuilder),
 * Solaris 10 (gcc/i386, CC/i386, CC/Sparc),
 and of course on CRAN machines.
 
-Yet, if you did not manage to set up a successful stringi build, do not
+Yet, if you do not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/Rexamine/stringi/issues).
