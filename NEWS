@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 0.5-??? (2015-??-??) **devel**
+## 0.5-3 (2015-??-??) **devel**
 
 * [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
 are now deprecated. From now on they are supposed to be used only
@@ -22,6 +22,9 @@ by the `stringi` installer.
 or options invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
 applications* error by forcing `_XPG6` conformance.
 
+* [BUGFIX] #174: `stri_paste()` did not generate any warning when
+the recycling rule is violated and  `sep==""`.
+
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
 is not used (this used to cause build problems on openSUSE).
 
@@ -30,7 +33,7 @@ C++ compiler if a C++11 one is not properly configured.
 
 * [BUILD TIME] `configure.win` (`Biarch: TRUE`) now mimics `autoconf`'s
 `AC_SUBST` and `AC_CONFIG_FILES` so that the build process is now
-more standardized across platforms.
+more similar across different platforms.
 
 * [NEW FEATURE] `stri_info()` now also gives information on which ICU4C is
 used (system or bundle).

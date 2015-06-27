@@ -191,6 +191,5 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
 
    suppressWarnings(file.remove(outfname))
    message("icudt has been installed successfully")
-   message("restart R to apply changes")
    invisible(TRUE)
 }

@@ -41,6 +41,8 @@
  * vectors and lists of UTF-8 string vectors
  *
  * @version 0.1-?? (Marek Gagolewski, 2013-06-16)
+ * @version 0.5-3 (Marek Gagolewski, 2015-06-27)
+ *      warning on recycling rule, #174
  */
 class StriContainerListUTF8 : public StriContainerBase {
 
