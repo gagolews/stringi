@@ -11,16 +11,17 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 ## 0.5-??? (2015-??-??) **devel**
 
-* [.....] #177
+* [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
+are now deprecated. From now on they are supposed to be used only
+by the `stringi` installer.
 
 * [BUGFIX] #176: a patch for `sys/feature_tests.h` no longer included
 (the original file was copyrighted by Sun Microsystems); fixed the *Compiler
 or options invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
 applications* error by forcing `_XPG6` conformance.
 
-* [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
-are now deprecated. From now on they are supposed to be used only
-by the `stringi` installer.
+* [BUGFIX] #177: resolving #176 made the use of forced `--disable-cxx11`
+no longer needed on Solaris (if the C++11 compiler is configured appropriately).
 
 * [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
 is not used (this used to cause build problems on openSUSE).
