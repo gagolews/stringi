@@ -564,6 +564,30 @@ check_flags_icu_bundle() {
       ])
    ])
 
+   AC_LANG(C++)
+   AC_MSG_CHECKING([whether we may compile src/icu55/common/putil.cpp])
+   AC_COMPILE_IFELSE([
+      AC_LANG_SOURCE([`${CAT} src/icu55/common/putil.cpp`])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no])
+      with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
+      CXXFLAGS="${CXXFLAGS} -D_XPG6"
+      AC_MSG_CHECKING([whether we may compile src/icu55/common/putil.cpp with -D_XPG6])
+      AC_COMPILE_IFELSE([
+         AC_LANG_SOURCE([`${CAT} src/icu55/common/putil.cpp`])
+      ],
+      [
+         AC_MSG_RESULT([yes])
+      ],[
+         AC_MSG_RESULT([no])
+         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+         exit 1
+      ])
+   ])
+
    return 0
 }
 
