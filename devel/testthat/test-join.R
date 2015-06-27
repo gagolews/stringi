@@ -35,8 +35,14 @@ test_that("stri_join", {
    expect_warning(stri_join(LETTERS, LETTERS, sep=LETTERS))
    expect_error(stri_join(LETTERS, LETTERS, sep=mean))
 
-   expect_identical(stri_join(), character(0))
+   expect_identical(stri_paste(1:4, 1:2, 1:4, 1:2, 1:4, 1:2, sep="!"), paste(1:4, 1:2, 1:4, 1:2, 1:4, 1:2, sep="!"))
+   expect_identical(stri_paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep="!"), paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep="!"))
 
+   expect_identical(stri_join(), character(0))
+   expect_warning(stri_paste(1:3, 1:2, sep=""))
+   expect_warning(stri_paste(1:3, 1:2, sep="!"))
+   expect_warning(stri_paste(1:3, 1:2, sep="", collapse=""))
+   expect_warning(stri_paste(1:3, 1:2, sep="!", collapse=""))
    expect_identical(stri_join(character(0), "a", "b"), character(0))
    expect_identical(stri_join("a", "b", character(0)), character(0))
    expect_identical(stri_join("a", character(0)), character(0))

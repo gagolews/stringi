@@ -68,6 +68,14 @@ StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t _nrecycle, bool 
          this->data[i] = NULL; // in case it fails during conversion (this is "NA")
 
       for (R_len_t i=0; i<this->n; ++i) {
+         R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(rvec, i));
+         if (strlist_cur_length % _nrecycle != 0) {
+            Rf_warning(MSG__WARN_RECYCLING_RULE);
+            break;
+         }
+      }
+
+      for (R_len_t i=0; i<this->n; ++i) {
          this->data[i] = new StriContainerUTF8(VECTOR_ELT(rvec, i), _nrecycle, _shallowrecycle);
          if (!this->data[i]) throw StriException(MSG__MEM_ALLOC_ERROR);
       }
