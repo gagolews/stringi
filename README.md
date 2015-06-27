@@ -3,7 +3,7 @@
 ### THE string processing package for *R*
 
 [![Build Status](https://travis-ci.org/Rexamine/stringi.svg?branch=master)](https://travis-ci.org/Rexamine/stringi)
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.18875.svg)](http://dx.doi.org/10.5281/zenodo.18875)
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.19071.svg)](http://dx.doi.org/10.5281/zenodo.19071)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
