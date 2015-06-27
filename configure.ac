@@ -211,13 +211,14 @@ AC_CHECK_HEADER([elf.h],
             with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
        ])
 
+AC_LANG(C++)
+AC_PROG_CXX
+
 ##### Checking whether the C++ compiler supports the long long type and STL ####
 
 
 check_cpp() {
    AC_LANG(C++)
-   AC_PROG_CXX
-
    AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
    AC_LINK_IFELSE([AC_LANG_SOURCE([
          #include <iostream>
@@ -531,6 +532,50 @@ if test $ICU_FOUND = 0; then
    CPPFLAGS=$OLD_CPPFLAGS
    LDFLAGS=$OLD_LDFLAGS
    LIBS=$OLD_LIBS
+fi
+
+
+check_flags_icu_bundle() {
+   CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu55 -Isrc/icu55/unicode \
+      -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
+      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
+
+   AC_LANG(C)
+   AC_MSG_CHECKING([whether we may compile src/icu55/common/umapfile.c])
+   AC_COMPILE_IFELSE([
+      AC_LANG_SOURCE([`${CAT} src/icu55/common/umapfile.c`])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no])
+      with_extra_cflags="${with_extra_cflags} -D_XPG6"
+      CFLAGS="${CFLAGS} -D_XPG6"
+      AC_MSG_CHECKING([whether we may compile src/icu55/common/umapfile.c with -D_XPG6])
+      AC_COMPILE_IFELSE([
+         AC_LANG_SOURCE([`${CAT} src/icu55/common/umapfile.c`])
+      ],
+      [
+         AC_MSG_RESULT([yes])
+      ],[
+         AC_MSG_RESULT([no])
+         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+         exit 1
+      ])
+   ])
+
+   return 0
+}
+
+if test $ICU_FOUND = 0; then
+   OLD_CFLAGS=$CFLAGS
+   OLD_CXXFLAGS=$CXXFLAGS
+   OLD_CPPFLAGS=$CPPFLAGS
+   OLD_LIBS=$LIBS
+   check_flags_icu_bundle
+   CFLAGS=$OLD_CFLAGS
+   CXXFLAGS=$OLD_CXXFLAGS
+   CPPFLAGS=$OLD_CPPFLAGS
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
