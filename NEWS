@@ -14,7 +14,9 @@ http://bugs.icu-project.org/trac/ticket/11554]
 * [.....] #177
 
 * [BUGFIX] #176: a patch for `sys/feature_tests.h` no longer included
-(the original file was copyrighted by Sun Microsystems);
+(the original file was copyrighted by Sun Microsystems); fixed the *Compiler
+or options invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
+applications* error by forcing `_XPG6` conformance.
 
 * [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
 are now deprecated. From now on they are supposed to be used only

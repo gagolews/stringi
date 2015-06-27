@@ -3608,17 +3608,13 @@ fi
 
 
 
-##### Checking whether the C++ compiler supports the long long type and STL ####
-
-
-check_cpp() {
-   ac_ext=cpp
+ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-   ac_ext=cpp
+ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -3875,6 +3871,16 @@ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
+
+##### Checking whether the C++ compiler supports the long long type and STL ####
+
+
+check_cpp() {
+   ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the C++ compiler supports the long long type" >&5
 $as_echo_n "checking whether the C++ compiler supports the long long type... " >&6; }
@@ -4398,6 +4404,77 @@ if test $ICU_FOUND = 0; then
    CPPFLAGS=$OLD_CPPFLAGS
    LDFLAGS=$OLD_LDFLAGS
    LIBS=$OLD_LIBS
+fi
+
+
+check_flags_icu_bundle() {
+   CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu55 -Isrc/icu55/unicode \
+      -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
+      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
+
+   ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu55/common/umapfile.c" >&5
+$as_echo_n "checking whether we may compile src/icu55/common/umapfile.c... " >&6; }
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      `${CAT} src/icu55/common/umapfile.c`
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      with_extra_cflags="${with_extra_cflags} -D_XPG6"
+      CFLAGS="${CFLAGS} -D_XPG6"
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu55/common/umapfile.c with -D_XPG6" >&5
+$as_echo_n "checking whether we may compile src/icu55/common/umapfile.c with -D_XPG6... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         `${CAT} src/icu55/common/umapfile.c`
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+         exit 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+   return 0
+}
+
+if test $ICU_FOUND = 0; then
+   OLD_CFLAGS=$CFLAGS
+   OLD_CXXFLAGS=$CXXFLAGS
+   OLD_CPPFLAGS=$CPPFLAGS
+   OLD_LIBS=$LIBS
+   check_flags_icu_bundle
+   CFLAGS=$OLD_CFLAGS
+   CXXFLAGS=$OLD_CXXFLAGS
+   CPPFLAGS=$OLD_CPPFLAGS
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
