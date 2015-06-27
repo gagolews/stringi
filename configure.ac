@@ -538,7 +538,7 @@ fi
 check_flags_icu_bundle() {
    CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu55 -Isrc/icu55/unicode \
       -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
-      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
+      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION" # don't use uconfig_local yet
 
 # one way for dealing with the *Compiler or options invalid for pre-UNIX 03
 # X/Open applications and pre-2001 POSIX applications* error on Solaris
@@ -581,7 +581,7 @@ check_flags_icu_bundle() {
       AC_MSG_RESULT([no])
       with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
       CXXFLAGS="${CXXFLAGS} -D_XPG6"
-      AC_MSG_CHECKING([whether we may compile src/icu55/common/putil.cpp with -D_XPG6])
+      AC_MSG_CHECKING([whether we may compile icu55/common/putil.cpp with -D_XPG6])
       AC_COMPILE_IFELSE([
          AC_LANG_SOURCE([`${CAT} src/icu55/common/putil.cpp`])
       ],
