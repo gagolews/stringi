@@ -540,6 +540,12 @@ check_flags_icu_bundle() {
       -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
       -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
 
+# one way for dealing with the *Compiler or options invalid for pre-UNIX 03
+# X/Open applications and pre-2001 POSIX applications* error on Solaris
+# is to file a patch for sys/feature_tests.h. Unfortunately, the original
+# file is copyrighted, so we have to cope with this error in another way:
+# addind -D_XPG6 flag conditionally.
+
    AC_LANG(C)
    AC_MSG_CHECKING([whether we may compile src/icu55/common/umapfile.c])
    AC_COMPILE_IFELSE([
