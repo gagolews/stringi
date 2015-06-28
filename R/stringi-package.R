@@ -166,4 +166,10 @@
 #'
 #' @family stringi_general_topics
 #' @useDynLib stringi, .registration = TRUE
+#' @importFrom tools md5sum
+#' @importFrom utils packageVersion
+#' @importFrom utils download.file
+#' @importFrom utils unzip
+#' @importFrom stats runif
+#' @importFrom stats rnorm
 invisible(NULL)

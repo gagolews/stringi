@@ -109,7 +109,6 @@ stri_install_check <- function(silent=FALSE) {
 
 #' @rdname stri_install
 #' @export
-#' @importFrom tools md5sum
 stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
    stopifnot(is.logical(check), length(check) == 1, !is.na(check))
    if (check && stri_install_check(TRUE)) {

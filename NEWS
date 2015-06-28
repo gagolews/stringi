@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 0.5-3 (2015-06-27) **CRAN**
+## 0.5-4 (2015-06-28) **CRAN**
 
 * [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
 are now deprecated. From now on they are supposed to be used only
