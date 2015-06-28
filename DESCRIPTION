@@ -1,6 +1,6 @@
 Package: stringi
-Version: 0.5-3
-Date: 2015-06-27
+Version: 0.5-4
+Date: 2015-06-28
 Title: Character String Processing Facilities
 Description: Allows for fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
@@ -20,7 +20,7 @@ Type: Package
 Depends:
     R (>= 2.13.1)
 Imports:
-    tools
+    tools, utils, stats
 Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski and Bartek Tartanus (stringi source code);
