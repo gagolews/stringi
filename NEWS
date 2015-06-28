@@ -9,9 +9,9 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 0.5-4 (2015-06-28) **CRAN**
+## 0.5-5 (2015-06-28) **CRAN**
 
-* [BACKWARD INCOMPATIBILITY] `stri_install_check` and `stri_install_icudt`
+* [BACKWARD INCOMPATIBILITY] `stri_install_check()` and `stri_install_icudt()`
 are now deprecated. From now on they are supposed to be used only
 by the `stringi` installer.
 
@@ -23,7 +23,7 @@ applications* error by forcing (conditionally) `_XPG6` conformance.
 * [BUGFIX] #174: `stri_paste()` did not generate any warning when
 the recycling rule is violated and `sep==""`.
 
-* [BUGFIX] #170: `setDataDirectory` no longer called if our ICU src bundle
+* [BUGFIX] #170: `icu::setDataDirectory` no longer called if our ICU source bundle
 is not used (this used to cause build problems on openSUSE).
 
 * [BUILD TIME] #169: `./configure` now tries to switch to the "standard"
