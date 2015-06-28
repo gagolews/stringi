@@ -4410,7 +4410,7 @@ fi
 check_flags_icu_bundle() {
    CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu55 -Isrc/icu55/unicode \
       -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
-      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION" # don't use uconfig_local yet
+      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
 
 # one way for dealing with the *Compiler or options invalid for pre-UNIX 03
 # X/Open applications and pre-2001 POSIX applications* error on Solaris
@@ -4494,8 +4494,8 @@ else
 $as_echo "no" >&6; }
       with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
       CXXFLAGS="${CXXFLAGS} -D_XPG6"
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile icu55/common/putil.cpp with -D_XPG6" >&5
-$as_echo_n "checking whether we may compile icu55/common/putil.cpp with -D_XPG6... " >&6; }
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu55/common/putil.cpp with -D_XPG6" >&5
+$as_echo_n "checking whether we may compile src/icu55/common/putil.cpp with -D_XPG6... " >&6; }
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
