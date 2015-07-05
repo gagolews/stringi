@@ -64,8 +64,8 @@ SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator);
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type);
 SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type);
 
-SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
-   SEXP opts_collator, SEXP type);
+SEXP stri_sort(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator);
+SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator);
 
 SEXP stri_unique(SEXP str, SEXP opts_collator);
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator);
