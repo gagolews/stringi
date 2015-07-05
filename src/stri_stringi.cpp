@@ -117,12 +117,12 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_extract_first_regex",        stri_extract_first_regex,        3),
    STRI__MK_CALL("C_stri_extract_last_regex",         stri_extract_last_regex,         3),
    STRI__MK_CALL("C_stri_extract_all_regex",          stri_extract_all_regex,          5),
-   STRI__MK_CALL("C_stri_flatten_withressep",         stri_flatten_withressep,         2),
+   STRI__MK_CALL("C_stri_flatten",                    stri_flatten,         2),
 //   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_info",                       stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                    stri_isempty,                    1),
-   STRI__MK_CALL("C_stri_join_withcollapse",          stri_join_withcollapse,          4),
-   STRI__MK_CALL("C_stri_join2_nocollapse",           stri_join2_nocollapse,           2),
+   STRI__MK_CALL("C_stri_join",                       stri_join,                       4),
+   STRI__MK_CALL("C_stri_join2",                      stri_join2,                      2),
 //   STRI__MK_CALL("C_stri_justify",                  stri_justify,                    2),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_length",                     stri_length,                     1),
    STRI__MK_CALL("C_stri_list2matrix",                stri_list2matrix,                4),

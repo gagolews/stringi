@@ -89,7 +89,7 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 "%s+%" <- function(e1, e2) {
-   .Call(C_stri_join2_nocollapse, e1, e2)
+   .Call(C_stri_join2, e1, e2)
 }
 
 #' @usage
@@ -97,7 +97,7 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%stri+%" <- function(e1, e2) {
-   .Call(C_stri_join2_nocollapse, e1, e2)
+   .Call(C_stri_join2, e1, e2)
 }
 
 
@@ -157,7 +157,7 @@ stri_dup <- function(str, times) {
 #' @family join
 #' @rdname stri_join
 stri_join <- function(..., sep="", collapse=NULL, ignore_null=FALSE) {
-   .Call(C_stri_join_withcollapse, list(...), sep, collapse, ignore_null)
+   .Call(C_stri_join, list(...), sep, collapse, ignore_null)
 }
 
 
@@ -204,5 +204,5 @@ stri_paste <- stri_join
 #' @export
 #' @family join
 stri_flatten <- function(str, collapse="") {
-   .Call(C_stri_flatten_withressep, str, collapse)
+   .Call(C_stri_flatten, str, collapse)
 }
