@@ -2,6 +2,7 @@ require(testthat)
 context("test-join.R")
 
 test_that("stri_join", {
+   warning("testthat completely ignores warnings :( -- if this is turned into an error, we are OK")
 
    # we have many specialized functions for join, e.g.
    # flatten with sep
@@ -11,6 +12,10 @@ test_that("stri_join", {
    # join - general, with collapse
    # join - general, no collapse
 
+   expect_equal(stri_paste(character(0), "a", character(0), ignore_null=FALSE), character(0))
+   expect_equal(stri_paste(character(0), "a", character(0), ignore_null=TRUE), "a")
+   expect_equal(stri_paste(character(0), "a", ignore_null=FALSE), character(0))
+   expect_equal(stri_paste(character(0), "a", ignore_null=TRUE), "a")
 
    #stringr tests:
    test <- c("a", "b", "c")

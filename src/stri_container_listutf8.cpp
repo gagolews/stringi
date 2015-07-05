@@ -69,7 +69,7 @@ StriContainerListUTF8::StriContainerListUTF8(SEXP rvec, R_len_t _nrecycle, bool 
 
       for (R_len_t i=0; i<this->n; ++i) {
          R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(rvec, i));
-         if (strlist_cur_length % _nrecycle != 0) {
+         if (_nrecycle % strlist_cur_length != 0) {
             Rf_warning(MSG__WARN_RECYCLING_RULE);
             break;
          }
