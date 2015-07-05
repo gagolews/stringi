@@ -76,6 +76,28 @@ const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
                                      bool allowdefault);
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault);
 
+// prepare_arg.cpp /* internal, but in namespace: for testing */
+SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
+SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
+SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);
+SEXP        stri_prepare_arg_string(SEXP x,           const char* argname);
+SEXP        stri_prepare_arg_double(SEXP x,           const char* argname);
+SEXP        stri_prepare_arg_POSIXct(SEXP x,          const char* argname);
+SEXP        stri_prepare_arg_integer(SEXP x,          const char* argname);
+SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname);
+SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
+SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
+SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname);
+SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
+SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
+
+// test.cpp /* internal, but in namespace: for testing */
+SEXP stri_test_Rmark(SEXP str);
+SEXP stri_test_UnicodeContainer16(SEXP str);
+SEXP stri_test_UnicodeContainer16b(SEXP str);
+SEXP stri_test_UnicodeContainer8(SEXP str);
+SEXP stri_test_returnasis(SEXP x);
+
 // search
 void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
@@ -86,6 +108,8 @@ SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
 
 // date/time
 void stri__set_class_POSIXct(SEXP x);
+
+
 
 
 // ------------------------------------------------------------------------
