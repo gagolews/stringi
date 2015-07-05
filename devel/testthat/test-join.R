@@ -24,13 +24,15 @@ test_that("stri_join", {
       stri_c(test, NULL, "a", sep = " ", ignore_null=TRUE),
       equals(c("a a", "b a", "c a")))
 
-   expect_equivalent(stri_flatten(as.Date(ISOdate(2015, 01, 12))), "2015-01-12")
-   expect_equivalent(stri_flatten(as.factor("aaa")), "aaa")
+   expect_equal(stri_flatten(as.Date(ISOdate(2015, 01, 12))), "2015-01-12")
+   expect_equal(stri_flatten(as.factor("aaa")), "aaa")
 
-   expect_identical(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
-   expect_identical(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
-   expect_identical(stri_join(LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
-   expect_identical(stri_join(character(0), character(0)), character(0))
+   expect_equal(stri_c("a", c("x", "y"), "b"), c("axb", "ayb"))
+
+   expect_equal(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
+   expect_equal(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
+   expect_equal(stri_join(LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
+   expect_equal(stri_join(character(0), character(0)), character(0))
    expect_error(stri_join(LETTERS, LETTERS, sep=character(0)))
    expect_warning(stri_join(LETTERS, LETTERS, sep=LETTERS))
    expect_error(stri_join(LETTERS, LETTERS, sep=mean))
