@@ -9,6 +9,13 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
+## 0.5-9xxx (under development)
+
+* [BUGFIX] #180: `stri_c()` warned incorrectly (recycling rule) when using more
+than 2 elements.
+
+-------------------------------------------------------------------------------
+
 ## 0.5-5 (2015-06-28) **CRAN**
 
 * [BACKWARD INCOMPATIBILITY] `stri_install_check()` and `stri_install_icudt()`
