@@ -38,8 +38,13 @@
 
 
 // compare.cpp:
-SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator);
-SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type);
+SEXP stri_cmp(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_le(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_lt(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_ge(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_gt(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_equiv(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
+SEXP stri_cmp_nequiv(SEXP e1, SEXP e2, SEXP opts_collator=R_NilValue);
 SEXP stri_cmp_eq(SEXP e1, SEXP e2);
 SEXP stri_cmp_neq(SEXP e1, SEXP e2);
 
