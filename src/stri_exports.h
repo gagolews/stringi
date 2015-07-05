@@ -68,13 +68,12 @@ SEXP stri_escape_unicode(SEXP str);
 SEXP stri_unescape_unicode(SEXP str);
 
 // join.cpp:
+SEXP stri_flatten(SEXP str, SEXP collapse=Rf_mkString(""));
+SEXP stri_join(SEXP strlist, SEXP sep=Rf_mkString(""),
+   SEXP collapse=R_NilValue, SEXP ignore_null=Rf_ScalarLogical(FALSE));
+SEXP stri_join2(SEXP e1, SEXP e2);
 SEXP stri_dup(SEXP str, SEXP times);
-SEXP stri_flatten_noressep(SEXP str);
-SEXP stri_flatten_withressep(SEXP str, SEXP collapse);
-SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null);
-SEXP stri_join_withcollapse(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null);
-SEXP stri_join2_nocollapse(SEXP e1, SEXP e2);
-SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse);
+
 
 
 // length.cpp
