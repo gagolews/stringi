@@ -211,14 +211,13 @@ AC_CHECK_HEADER([elf.h],
             with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
        ])
 
-AC_LANG(C++)
-AC_PROG_CXX
+
 
 ##### Checking whether the C++ compiler supports the long long type and STL ####
 
-
 check_cpp() {
    AC_LANG(C++)
+   AC_PROG_CXX
    AC_MSG_CHECKING(whether the C++ compiler supports the long long type)
    AC_LINK_IFELSE([AC_LANG_SOURCE([
          #include <iostream>
