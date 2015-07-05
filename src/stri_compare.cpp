@@ -192,7 +192,7 @@ SEXP stri_cmp_neq(SEXP e1, SEXP e2) {
 
 
 /**
- * Compare elements in 2 character vectors, with collation
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
  *
  * @param e1 character vector
  * @param e2 character vector
@@ -211,14 +211,10 @@ SEXP stri_cmp_neq(SEXP e1, SEXP e2) {
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
+SEXP stri__cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, int _type, int _negate)
 {
    // we'll perform a collator-based cmp
    // type is an internal arg, check manually, error() allowed here
-   if (!Rf_isInteger(type) || LENGTH(type) != 2)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-   int _type = INTEGER(type)[0];
-   int _negate = INTEGER(type)[1];
    if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
@@ -277,6 +273,108 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
 }
 
 
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_equiv(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, 0, 0);
+}
+
+
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_nequiv(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, 0, 1);
+}
+
+
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_lt(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, -1, 0);
+}
+
+
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_gt(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, 1, 0);
+}
+
+
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_le(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, 1, 1);
+}
+
+
+/**
+ * Compare elements in 2 character vectors, with collation [INTERNAL]
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ * @param opts_collator passed to stri__ucol_open()
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1  (Marek Gagolewski, 2015-07-05)
+ *    use stri__cmp_logical
+ */
+SEXP stri_cmp_ge(SEXP e1, SEXP e2, SEXP opts_collator) {
+   return stri__cmp_logical(e1, e2, opts_collator, -1, 1);
+}
+
+
 /* *************************************************************************
                                   STRI_CMP
    ************************************************************************* */
@@ -311,7 +409,7 @@ SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type)
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator)
+SEXP stri_cmp(SEXP e1, SEXP e2, SEXP opts_collator)
 {
    PROTECT(e1 = stri_prepare_arg_string(e1, "e1"));
    PROTECT(e2 = stri_prepare_arg_string(e2, "e2"));

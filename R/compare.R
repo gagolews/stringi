@@ -134,7 +134,7 @@
 stri_compare <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_integer, e1, e2, opts_collator)
+   .Call(C_stri_cmp, e1, e2, opts_collator)
 }
 
 
@@ -162,7 +162,7 @@ stri_cmp_neq <- function(e1, e2) {
 stri_cmp_equiv <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 0L))
+   .Call(C_stri_cmp_equiv, e1, e2, opts_collator)
 }
 
 
@@ -171,7 +171,7 @@ stri_cmp_equiv <- function(e1, e2, ..., opts_collator=NULL) {
 stri_cmp_nequiv <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(0L, 1L))
+   .Call(C_stri_cmp_nequiv, e1, e2, opts_collator)
 }
 
 #' @export
@@ -179,7 +179,7 @@ stri_cmp_nequiv <- function(e1, e2, ..., opts_collator=NULL) {
 stri_cmp_lt <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 0L))
+   .Call(C_stri_cmp_lt, e1, e2, opts_collator)
 }
 
 
@@ -188,7 +188,7 @@ stri_cmp_lt <- function(e1, e2, ..., opts_collator=NULL) {
 stri_cmp_gt <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 0L))
+   .Call(C_stri_cmp_gt, e1, e2, opts_collator)
 }
 
 #' @export
@@ -196,7 +196,7 @@ stri_cmp_gt <- function(e1, e2, ..., opts_collator=NULL) {
 stri_cmp_le <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(1L, 1L))
+   .Call(C_stri_cmp_le, e1, e2, opts_collator)
 }
 
 
@@ -205,7 +205,7 @@ stri_cmp_le <- function(e1, e2, ..., opts_collator=NULL) {
 stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_logical, e1, e2, opts_collator, c(-1L, 1L))
+   .Call(C_stri_cmp_ge, e1, e2, opts_collator)
 }
 
 
