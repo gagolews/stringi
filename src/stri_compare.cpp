@@ -93,11 +93,11 @@
 
 
 /**
- * Compare elements in 2 character vectors, without collation
+ * Compare elements in 2 character vectors, without collation [INTERNAL]
  *
  * @param e1 character vector
  * @param e2 character vector
- * @param type [internal] integer; 0 or 1 (whether to negate the results)
+ * @param _negate [internal] integer; 0 or 1 (whether to negate the results)
  *
  * @return logical vector
  *
@@ -106,12 +106,9 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  */
-SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
+SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, int _negate)
 {
-   // type is an internal arg, check manually, error() allowed here
-   if (!Rf_isInteger(type) || LENGTH(type) != 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-   int _negate = INTEGER(type)[0];
+   // _negate is an internal arg, check manually, error() allowed here
    if (_negate < 0 || _negate > 1)
       Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
@@ -154,6 +151,38 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type)
    return ret;
 
    STRI__ERROR_HANDLER_END({/* no-op on err */})
+}
+
+
+/**
+ * Test if elements in 2 character vectors are equal, without collation
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
+ *    use stri_cmp_codepoints
+ */
+SEXP stri_cmp_eq(SEXP e1, SEXP e2) {
+   return stri_cmp_codepoints(e1, e2, 0);
+}
+
+
+/**
+ * Test if elements in 2 character vectors are non-equal, without collation
+ *
+ * @param e1 character vector
+ * @param e2 character vector
+ *
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-05)
+ *    use stri_cmp_codepoints
+ */
+SEXP stri_cmp_neq(SEXP e1, SEXP e2) {
+   return stri_cmp_codepoints(e1, e2, 1);
 }
 
 

@@ -62,7 +62,8 @@ UCollator* stri__ucol_open(SEXP opts_collator);
 // compare.cpp:
 SEXP stri_cmp_integer(SEXP e1, SEXP e2, SEXP opts_collator);
 SEXP stri_cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, SEXP type);
-SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, SEXP type);
+SEXP stri_cmp_eq(SEXP e1, SEXP e2);
+SEXP stri_cmp_neq(SEXP e1, SEXP e2);
 
 SEXP stri_sort(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator);
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator);

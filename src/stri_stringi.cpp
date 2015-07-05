@@ -55,7 +55,8 @@ static const R_CallMethodDef cCallMethods[] = {
 //   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE >= 0.6
 //   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE >= 0.6
    STRI__MK_CALL("C_stri_c_posixst",                  stri_c_posixst,                  1),
-   STRI__MK_CALL("C_stri_cmp_codepoints",             stri_cmp_codepoints,             3),
+   STRI__MK_CALL("C_stri_cmp_eq",                     stri_cmp_eq,                     2),
+   STRI__MK_CALL("C_stri_cmp_neq",                    stri_cmp_neq,                    2),
    STRI__MK_CALL("C_stri_cmp_integer",                stri_cmp_integer,                3),
    STRI__MK_CALL("C_stri_cmp_logical",                stri_cmp_logical,                4),
    STRI__MK_CALL("C_stri_count_boundaries",           stri_count_boundaries,           2),

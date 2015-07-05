@@ -146,14 +146,14 @@ stri_cmp <- stri_compare
 #' @export
 #' @rdname stri_compare
 stri_cmp_eq <- function(e1, e2) {
-   .Call(C_stri_cmp_codepoints, e1, e2, 0L)
+   .Call(C_stri_cmp_eq, e1, e2)
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_neq <- function(e1, e2) {
-   .Call(C_stri_cmp_codepoints, e1, e2, 1L)
+   .Call(C_stri_cmp_neq, e1, e2)
 }
 
 
