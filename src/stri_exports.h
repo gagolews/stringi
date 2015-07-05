@@ -74,33 +74,14 @@ SEXP stri_join(SEXP strlist, SEXP sep=Rf_mkString(""),
 SEXP stri_join2(SEXP e1, SEXP e2);
 SEXP stri_dup(SEXP str, SEXP times);
 
-
-
 // length.cpp
 SEXP    stri_numbytes(SEXP str);
 SEXP    stri_length(SEXP str);
 SEXP    stri_isempty(SEXP str);
 SEXP    stri_width(SEXP str);
 
-
-// prepare_arg.cpp:
-SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
-SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
-SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);
-SEXP        stri_prepare_arg_string(SEXP x,           const char* argname);
-SEXP        stri_prepare_arg_double(SEXP x,           const char* argname);
-SEXP        stri_prepare_arg_POSIXct(SEXP x,          const char* argname);
-SEXP        stri_prepare_arg_integer(SEXP x,          const char* argname);
-SEXP        stri_prepare_arg_logical(SEXP x,          const char* argname);
-SEXP        stri_prepare_arg_raw(SEXP x,              const char* argname);
-SEXP        stri_prepare_arg_string_1(SEXP x,         const char* argname);
-SEXP        stri_prepare_arg_double_1(SEXP x,         const char* argname);
-SEXP        stri_prepare_arg_integer_1(SEXP x,        const char* argname);
-SEXP        stri_prepare_arg_logical_1(SEXP x,        const char* argname);
-
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
-
 
 // sub.cpp
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);
@@ -108,9 +89,37 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
 // encoding_management.cpp:
 SEXP stri_enc_list();
-SEXP stri_enc_info(SEXP enc);
-SEXP stri_enc_set(SEXP loc);
+SEXP stri_enc_info(SEXP enc=R_NilValue);
+SEXP stri_enc_set(SEXP enc);
 SEXP stri_enc_mark(SEXP str);
+
+// uloc.cpp:
+SEXP stri_locale_info(SEXP loc=R_NilValue);
+SEXP stri_locale_list();
+SEXP stri_locale_set(SEXP loc);
+
+// trim.cpp:
+SEXP stri_trim_both(SEXP str, SEXP pattern);
+SEXP stri_trim_left(SEXP str, SEXP pattern);
+SEXP stri_trim_right(SEXP str, SEXP pattern);
+
+// random.cpp
+SEXP stri_rand_shuffle(SEXP str);
+SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern=Rf_mkString("[A-Za-z0-9]"));
+
+// stats.cpp
+SEXP stri_stats_general(SEXP str);
+SEXP stri_stats_latex(SEXP str);
+
+// trans_transliterate.cpp:
+SEXP stri_trans_list();
+SEXP stri_trans_general(SEXP str, SEXP id);
+
+// utils.cpp
+SEXP stri_list2matrix(SEXP x, SEXP byrow=Rf_ScalarLogical(FALSE),
+   SEXP fill=Rf_ScalarString(NA_STRING), SEXP n_min=Rf_ScalarInteger(0));
+
+
 
 // encoding_conversion.cpp:
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
@@ -125,12 +134,6 @@ SEXP stri_enc_toascii(SEXP str);
 SEXP stri_enc_detect2(SEXP str, SEXP loc);
 SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);
 SEXP stri_enc_isenc(SEXP str, SEXP type);
-
-
-// uloc.cpp:
-SEXP stri_locale_info(SEXP loc);
-SEXP stri_locale_list();
-SEXP stri_locale_set(SEXP loc);
 
 
 // wrap.cpp
@@ -233,26 +236,8 @@ SEXP stri_split_lines1(SEXP str);
 
 SEXP stri_replace_na(SEXP str, SEXP replacement);
 
-
-// trim.cpp:
-SEXP stri_trim_both(SEXP str, SEXP pattern);
-SEXP stri_trim_left(SEXP str, SEXP pattern);
-SEXP stri_trim_right(SEXP str, SEXP pattern);
-
-
 // pad.cpp
 SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length);
-
-
-// random.cpp
-SEXP stri_rand_shuffle(SEXP str);
-SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern);
-
-
-// stats.cpp
-SEXP stri_stats_general(SEXP str);
-SEXP stri_stats_latex(SEXP str);
-
 
 // trans_other.cpp:
 SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement);
@@ -266,19 +251,6 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter);
 // trans_normalization.cpp:
 SEXP stri_trans_nf(SEXP s, SEXP type);
 SEXP stri_trans_isnf(SEXP s, SEXP type);
-
-
-// trans_transliterate.cpp:
-SEXP stri_trans_list();
-SEXP stri_trans_general(SEXP str, SEXP id);
-
-
-// test.cpp /* internal, but in namespace: for testing */
-SEXP stri_test_Rmark(SEXP str);
-SEXP stri_test_UnicodeContainer16(SEXP str);
-SEXP stri_test_UnicodeContainer16b(SEXP str);
-SEXP stri_test_UnicodeContainer8(SEXP str);
-SEXP stri_test_returnasis(SEXP x);
 
 
 // date/time
@@ -296,9 +268,6 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale);
 SEXP stri_datetime_format(SEXP time, SEXP format, SEXP tz, SEXP locale);
 SEXP stri_datetime_parse(SEXP str, SEXP format, SEXP lenient, SEXP tz, SEXP locale);
-
-// utils.cpp
-SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min);
 
 
 #endif
