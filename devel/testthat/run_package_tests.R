@@ -9,4 +9,3 @@ oldOptions <- options(warn=10)
 test_dir("devel/testthat/", reporter="summary")
 do.call(options, oldOptions)
 rm(oldOptions)
-
