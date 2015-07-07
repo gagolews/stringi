@@ -45,4 +45,7 @@ test_that("stri_detect_regex", {
    expect_equivalent(stri_detect_regex("caacbacab", "(a+b)+"), TRUE)
    expect_equivalent(stri_detect_regex("caacbacacb", "(a+b)+"), FALSE)
 
+   # ICU-bugs (#147)
+   expect_identical(stri_detect_regex("aafoo - ICU BUG TEST", "(?<=aa)foo"), TRUE)
+   expect_identical(stri_detect_regex("aąfoo - ICU BUG TEST", "(?<=aą)foo"), TRUE)
 })

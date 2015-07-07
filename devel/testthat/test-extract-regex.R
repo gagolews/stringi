@@ -31,6 +31,10 @@ test_that("stri_extract_all_regex", {
 
 #    expect_identical(stri_extract_all_regex(c("ababab", NA, "ab", "ba"), "ab"),
 #       str_extract_all(c("ababab", NA, "ab", "ba"), "ab"))
+
+   # ICU-bugs (#147)
+   expect_identical(stri_extract_all_regex("aafoo - ICU BUG TEST", "(?<=aa)foo")[[1]], "foo")
+   expect_identical(stri_extract_all_regex("aąfoo - ICU BUG TEST", "(?<=aą)foo")[[1]], "foo")
 })
 
 
