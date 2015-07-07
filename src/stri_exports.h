@@ -75,10 +75,10 @@ SEXP stri_join2(SEXP e1, SEXP e2);
 SEXP stri_dup(SEXP str, SEXP times);
 
 // length.cpp
-SEXP    stri_numbytes(SEXP str);
-SEXP    stri_length(SEXP str);
-SEXP    stri_isempty(SEXP str);
-SEXP    stri_width(SEXP str);
+SEXP stri_numbytes(SEXP str);
+SEXP stri_length(SEXP str);
+SEXP stri_isempty(SEXP str);
+SEXP stri_width(SEXP str);
 
 // reverse.cpp
 SEXP stri_reverse(SEXP s);
