@@ -21,8 +21,12 @@ test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
       "The    jumped over the lazy .")
    expect_identical(stri_replace_all_regex("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
 
-
-
+   # not a bug, a feature:
+   # expect_identical(stri_replace_all_regex("A", "^(.*)", "ONE($1)"), "ONE(A)")
+   # expect_identical(stri_replace_all_regex("ABC", "(.*)$", "ONE($1)"), "ONE(A)")
+   # expect_identical(stri_replace_all_regex("ABC", "(.*)", "ONE($1)"), "ONE(A)")
+   # expect_identical(stri_replace_all_regex("A", ".*", "ONE($0)"), "ONE(A)")
+   # expect_identical(stri_replace_all_regex("A", "^.*", "ONE($0)"), "ONE(A)")
 })
 
 test_that("stri_replace_all_regex", {

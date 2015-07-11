@@ -435,12 +435,12 @@ double stri__enc_check_utf32le(const char* str_cur_s, R_len_t str_cur_n, bool ge
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    this is internal function now
  */
-SEXP stri_enc_isenc(SEXP str, SEXP type)
+SEXP stri_enc_isenc(SEXP str, int _type)
 {
-   if (!Rf_isInteger(type) || LENGTH(type) != 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually, error() allowed here
-   int _type = INTEGER(type)[0];
    double (*isenc)(const char*, R_len_t, bool) = NULL;
    switch (_type) {
       case 1:  isenc = stri__enc_check_ascii;   break;
@@ -477,6 +477,84 @@ SEXP stri_enc_isenc(SEXP str, SEXP type)
    return ret;
 
    STRI__ERROR_HANDLER_END({ /* no-op on error */ })
+}
+
+
+/** Which string is in ASCII
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isascii(SEXP str) {
+   return stri_enc_isenc(str, 1);
+}
+
+
+/** Which string is in UTF8
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isutf8(SEXP str) {
+   return stri_enc_isenc(str, 2);
+}
+
+
+/** Which string is in UTF-16BE
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isutf16be(SEXP str) {
+   return stri_enc_isenc(str, 3);
+}
+
+
+/** Which string is in UTF16-LE
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isutf16le(SEXP str) {
+   return stri_enc_isenc(str, 4);
+}
+
+
+/** Which string is in UTF-32BE
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isutf32be(SEXP str) {
+   return stri_enc_isenc(str, 5);
+}
+
+
+/** Which string is in UTF32-LE
+ *
+ *  @param str character vector or raw vector or list of raw vectors
+ *  @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_enc_isenc
+ */
+SEXP stri_enc_isutf32le(SEXP str) {
+   return stri_enc_isenc(str, 6);
 }
 
 

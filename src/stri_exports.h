@@ -122,24 +122,32 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow=Rf_ScalarLogical(FALSE),
 
 
 // encoding_conversion.cpp:
-SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw);
-SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
+SEXP stri_encode(SEXP str, SEXP from=R_NilValue, SEXP to=R_NilValue,
+   SEXP to_raw=Rf_ScalarLogical(FALSE));
 SEXP stri_enc_fromutf32(SEXP str);
 SEXP stri_enc_toutf32(SEXP str);
-SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate);
+SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit=Rf_ScalarLogical(FALSE),
+   SEXP validate=Rf_ScalarLogical(FALSE));
 SEXP stri_enc_toascii(SEXP str);
 
 
 // encoding_detection.cpp:
-SEXP stri_enc_detect2(SEXP str, SEXP loc);
-SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets);
-SEXP stri_enc_isenc(SEXP str, SEXP type);
+SEXP stri_enc_detect2(SEXP str, SEXP loc=R_NilValue);
+SEXP stri_enc_detect(SEXP str, SEXP filter_angle_brackets=Rf_ScalarLogical(FALSE));
+SEXP stri_enc_isascii(SEXP str);
+SEXP stri_enc_isutf8(SEXP str);
+SEXP stri_enc_isutf16le(SEXP str);
+SEXP stri_enc_isutf16be(SEXP str);
+SEXP stri_enc_isutf32le(SEXP str);
+SEXP stri_enc_isutf32be(SEXP str);
 
 
 // wrap.cpp
-SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
-   SEXP indent, SEXP exdent, SEXP prefix, SEXP initial, SEXP whitespace_only,
-   SEXP use_length, SEXP locale);
+SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent=Rf_ScalarInteger(2),
+   SEXP indent=Rf_ScalarInteger(0), SEXP exdent=Rf_ScalarInteger(0),
+   SEXP prefix=Rf_mkString(""), SEXP initial=Rf_mkString(""),
+   SEXP whitespace_only=Rf_ScalarLogical(FALSE),
+   SEXP use_length=Rf_ScalarLogical(FALSE), SEXP locale=R_NilValue);
 
 // search
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);

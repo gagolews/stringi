@@ -56,28 +56,28 @@
 #' @family encoding_detection
 #' @export
 stri_enc_isutf16be <- function(str) {
-   .Call(C_stri_enc_isenc, str, 3L)
+   .Call(C_stri_enc_isutf16be, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf16le <- function(str) {
-   .Call(C_stri_enc_isenc, str, 4L)
+   .Call(C_stri_enc_isutf16le, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf32be <- function(str) {
-   .Call(C_stri_enc_isenc, str, 5L)
+   .Call(C_stri_enc_isutf32be, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
 stri_enc_isutf32le <- function(str) {
-   .Call(C_stri_enc_isenc, str, 6L)
+   .Call(C_stri_enc_isutf32le, str)
 }
 
 
@@ -105,7 +105,7 @@ stri_enc_isutf32le <- function(str) {
 #' @family encoding_detection
 #' @export
 stri_enc_isascii <- function(str) {
-   .Call(C_stri_enc_isenc, str, 1L)
+   .Call(C_stri_enc_isascii, str)
 }
 
 
@@ -149,5 +149,5 @@ stri_enc_isascii <- function(str) {
 #' @family encoding_detection
 #' @export
 stri_enc_isutf8 <- function(str) {
-   .Call(C_stri_enc_isenc, str, 2L)
+   .Call(C_stri_enc_isutf8, str)
 }
