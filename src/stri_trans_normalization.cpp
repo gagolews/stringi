@@ -34,6 +34,12 @@
 #include <unicode/normalizer2.h>
 
 
+#define STRI_UNINORM_NFC 10
+#define STRI_UNINORM_NFD 20
+#define STRI_UNINORM_NFKC 11
+#define STRI_UNINORM_NFKD 21
+#define STRI_UNINORM_NFKC_CF 12
+
 /** Get Desired Normalizer2 instance
  *
  * @param type R object, will be tested whether it's an integer vector of length 1
@@ -47,38 +53,33 @@
  * @version 0.2-1  (Marek Gagolewski, 2014-03-23)
  *          getNFCInstance is stable as of ICU 49 and we require ICU >= 50
  */
-const Normalizer2* stri__normalizer_get(SEXP type)
+const Normalizer2* stri__normalizer_get(int _type)
 {
-   // this is an internal arg, check manually, error() allowed here
-   if (!Rf_isInteger(type) || LENGTH(type) != 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-   int _type = INTEGER(type)[0];
-
    UErrorCode status = U_ZERO_ERROR;
    const Normalizer2* normalizer = NULL;
 
    switch (_type) {
-      case 10:
+      case STRI_UNINORM_NFC:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFCInstance(status);
          break;
 
-      case 20:
+      case STRI_UNINORM_NFD:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_DECOMPOSE, status);
          normalizer = Normalizer2::getNFDInstance(status);
          break;
 
-      case 11:
+      case STRI_UNINORM_NFKC:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFKCInstance(status);
          break;
 
-      case 21:
+      case STRI_UNINORM_NFKD:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_DECOMPOSE, status);
          normalizer = Normalizer2::getNFKDInstance(status);
          break;
 
-      case 12:
+      case STRI_UNINORM_NFKC_CF:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc_cf", UNORM2_COMPOSE, status);
          normalizer = Normalizer2::getNFKCCasefoldInstance(status);
          break;
@@ -113,8 +114,11 @@ const Normalizer2* stri__normalizer_get(SEXP type)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    This is now an internal function
  */
-SEXP stri_trans_nf(SEXP str, SEXP type)
+SEXP stri_trans_nf(SEXP str, int type)
 {
    // As of ICU 52.1 (Unicode 6.3.0), the "most expansive" decomposition
    // is 1 UChar -> 18 UChars (data/unidata/norm2/nfkc.txt)
@@ -166,8 +170,11 @@ SEXP stri_trans_nf(SEXP str, SEXP type)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    This is now an internal function
  */
-SEXP stri_trans_isnf(SEXP str, SEXP type)
+SEXP stri_trans_isnf(SEXP str, int type)
 {
    const Normalizer2* normalizer =
       stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
@@ -203,4 +210,145 @@ SEXP stri_trans_isnf(SEXP str, SEXP type)
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+
+/**
+ * Check if String is in NFC
+ *
+ * @param str character vector
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_nf
+ */
+SEXP stri_trans_nfc(SEXP str) {
+   return stri_trans_nf(str, STRI_UNINORM_NFC);
+}
+
+
+/**
+ * Check if String is in NFD
+ *
+ * @param str character vector
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_nf
+ */
+SEXP stri_trans_nfd(SEXP str) {
+   return stri_trans_nf(str, STRI_UNINORM_NFD);
+}
+
+
+/**
+ * Check if String is in NFKD
+ *
+ * @param str character vector
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_nf
+ */
+SEXP stri_trans_nfkd(SEXP str) {
+   return stri_trans_nf(str, STRI_UNINORM_NFKD);
+}
+
+
+/**
+ * Check if String is in NFKC
+ *
+ * @param str character vector
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_nf
+ */
+SEXP stri_trans_nfkc(SEXP str) {
+   return stri_trans_nf(str, STRI_UNINORM_NFKC);
+}
+
+
+/**
+ * Check if String is in NFKC-CASEFOLD
+ *
+ * @param str character vector
+ * @return logical vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_nf
+ */
+SEXP stri_trans_nfkc_casefold(SEXP str) {
+   return stri_trans_nf(str, STRI_UNINORM_NFKC_CF);
+}
+
+
+/**
+ * Convert string to NFC
+ *
+ * @param str character vector
+ * @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_isnf
+ */
+SEXP stri_trans_isnfc(SEXP str) {
+   return stri_trans_isnf(str, STRI_UNINORM_NFC);
+}
+
+
+/**
+ * Convert string to NFD
+ *
+ * @param str character vector
+ * @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_isnf
+ */
+SEXP stri_trans_isnfd(SEXP str) {
+   return stri_trans_isnf(str, STRI_UNINORM_NFD);
+}
+
+
+/**
+ * Convert string to NFKD
+ *
+ * @param str character vector
+ * @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_isnf
+ */
+SEXP stri_trans_isnfkd(SEXP str) {
+   return stri_trans_isnf(str, STRI_UNINORM_NFKD);
+}
+
+
+/**
+ * Convert string to NFKC
+ *
+ * @param str character vector
+ * @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_isnf
+ */
+SEXP stri_trans_isnfkc(SEXP str) {
+   return stri_trans_isnf(str, STRI_UNINORM_NFKC);
+}
+
+
+/**
+ * Convert string to NFKC-CASEFOLD
+ *
+ * @param str character vector
+ * @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_isnf
+ */
+SEXP stri_trans_isnfkc_casefold(SEXP str) {
+   return stri_trans_isnf(str, STRI_UNINORM_NFKC_CF);
 }
