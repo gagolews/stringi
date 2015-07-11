@@ -48,9 +48,7 @@
  * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
  *    separated from stri_trans_casemap;
  *    use StriUBreakIterator
- *
  */
-
 SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
    StriBrkIterOptions opts_brkiter2(opts_brkiter, "word");
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
@@ -130,11 +128,10 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
 
 
 /**
- *  Convert case (TitleCase, lowercase, etc.)
+ *  Convert case (upper, lowercase)
  *
  *
  *  @param str character vector
- *  @param type internal code of case conversion type
  *  @param locale single string identifying
  *         the locale ("" or NULL for default locale)
  *  @return character vector
@@ -166,14 +163,13 @@ SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter) {
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-03)
  *    use StriUBreakIterator
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    now this is an internal function
 */
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
+SEXP stri_trans_casemap(SEXP str, int _type, SEXP locale)
 {
-   if (!Rf_isInteger(type) || LENGTH(type) != 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG); // this is an internal arg, check manually
-   int _type = INTEGER(type)[0];
    if (_type < 1 || _type > 2) Rf_error(MSG__INCORRECT_INTERNAL_ARG);
-
    const char* qloc = stri__prepare_arg_locale(locale, "locale", true); /* this is R_alloc'ed */
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
@@ -242,6 +238,40 @@ SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale)
    STRI__ERROR_HANDLER_END({
       if (ucasemap) { ucasemap_close(ucasemap); ucasemap = NULL; }
    })
+}
+
+
+/**
+ *  Convert to lower case
+ *
+ *
+ *  @param str character vector
+ *  @param locale single string identifying
+ *         the locale ("" or NULL for default locale)
+ *  @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_casemap
+*/
+SEXP stri_trans_tolower(SEXP str, SEXP locale) {
+   return stri_trans_casemap(str, 1, locale);
+}
+
+
+/**
+ *  Convert to lower case
+ *
+ *
+ *  @param str character vector
+ *  @param locale single string identifying
+ *         the locale ("" or NULL for default locale)
+ *  @return character vector
+ *
+ * @version 0.6-1 (Marek Gagolewski, 2015-07-11)
+ *    call stri_trans_casemap
+*/
+SEXP stri_trans_toupper(SEXP str, SEXP locale) {
+   return stri_trans_casemap(str, 2, locale);
 }
 
 

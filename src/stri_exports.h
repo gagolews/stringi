@@ -141,6 +141,9 @@ SEXP stri_enc_isutf16be(SEXP str);
 SEXP stri_enc_isutf32le(SEXP str);
 SEXP stri_enc_isutf32be(SEXP str);
 
+// pad.cpp
+SEXP stri_pad(SEXP str, SEXP width, SEXP side=Rf_mkString("left"),
+   SEXP pad=Rf_mkString(" "), SEXP use_length=Rf_ScalarLogical(FALSE));
 
 // wrap.cpp
 SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent=Rf_ScalarInteger(2),
@@ -149,7 +152,24 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent=Rf_ScalarInteger(2),
    SEXP whitespace_only=Rf_ScalarLogical(FALSE),
    SEXP use_length=Rf_ScalarLogical(FALSE), SEXP locale=R_NilValue);
 
+// trans_other.cpp:
+SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement);
+
+// trans_casemap.cpp:
+SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter=R_NilValue);
+SEXP stri_trans_tolower(SEXP str, SEXP locale=R_NilValue);
+SEXP stri_trans_toupper(SEXP str, SEXP locale=R_NilValue);
+
+// trans_normalization.cpp:
+SEXP stri_trans_nf(SEXP s, SEXP type);
+SEXP stri_trans_isnf(SEXP s, SEXP type);
+
 // search
+SEXP stri_split_lines(SEXP str, SEXP omit_empty);
+SEXP stri_split_lines1(SEXP str);
+
+SEXP stri_replace_na(SEXP str, SEXP replacement);
+
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_locate_all_coll(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_collator);
@@ -238,27 +258,6 @@ SEXP stri_locate_first_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_locate_last_boundaries(SEXP str, SEXP opts_brkiter);
 SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter);
 SEXP stri_count_boundaries(SEXP str, SEXP opts_brkiter);
-
-SEXP stri_split_lines(SEXP str, SEXP omit_empty);
-SEXP stri_split_lines1(SEXP str);
-
-SEXP stri_replace_na(SEXP str, SEXP replacement);
-
-// pad.cpp
-SEXP stri_pad(SEXP str, SEXP width, SEXP side, SEXP pad, SEXP use_length);
-
-// trans_other.cpp:
-SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement);
-
-
-// trans_casemap.cpp:
-SEXP stri_trans_casemap(SEXP str, SEXP type, SEXP locale);
-SEXP stri_trans_totitle(SEXP str, SEXP opts_brkiter);
-
-
-// trans_normalization.cpp:
-SEXP stri_trans_nf(SEXP s, SEXP type);
-SEXP stri_trans_isnf(SEXP s, SEXP type);
 
 
 // date/time
