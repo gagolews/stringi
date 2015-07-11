@@ -102,68 +102,68 @@
 #' @rdname stri_trans_nf
 #' @family transform
 stri_trans_nfc <- function(str) {
-   .Call(C_stri_trans_nf, str, 10L)
+   .Call(C_stri_trans_nfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfd <- function(str) {
-   .Call(C_stri_trans_nf, str, 20L)
+   .Call(C_stri_trans_nfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkd <- function(str) {
-   .Call(C_stri_trans_nf, str, 21L)
+   .Call(C_stri_trans_nfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkc <- function(str) {
-   .Call(C_stri_trans_nf, str, 11L)
+   .Call(C_stri_trans_nfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkc_casefold <- function(str) {
-   .Call(C_stri_trans_nf, str, 12L)
+   .Call(C_stri_trans_nfkc_casefold, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfc <- function(str) {
-   .Call(C_stri_trans_isnf, str, 10L)
+   .Call(C_stri_trans_isnfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfd <- function(str) {
-   .Call(C_stri_trans_isnf, str, 20L)
+   .Call(C_stri_trans_isnfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkd <- function(str) {
-   .Call(C_stri_trans_isnf, str, 21L)
+   .Call(C_stri_trans_isnfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkc <- function(str) {
-   .Call(C_stri_trans_isnf, str, 11L)
+   .Call(C_stri_trans_isnfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkc_casefold <- function(str) {
-   .Call(C_stri_trans_isnf, str, 12L)
+   .Call(C_stri_trans_isnfkc_casefold, str)
 }

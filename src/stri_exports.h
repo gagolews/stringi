@@ -161,14 +161,22 @@ SEXP stri_trans_tolower(SEXP str, SEXP locale=R_NilValue);
 SEXP stri_trans_toupper(SEXP str, SEXP locale=R_NilValue);
 
 // trans_normalization.cpp:
-SEXP stri_trans_nf(SEXP s, SEXP type);
-SEXP stri_trans_isnf(SEXP s, SEXP type);
+SEXP stri_trans_nfc(SEXP s);
+SEXP stri_trans_nfd(SEXP s);
+SEXP stri_trans_nfkc(SEXP s);
+SEXP stri_trans_nfkd(SEXP s);
+SEXP stri_trans_nfkc_casefold(SEXP s);
+SEXP stri_trans_isnfc(SEXP s);
+SEXP stri_trans_isnfd(SEXP s);
+SEXP stri_trans_isnfkc(SEXP s);
+SEXP stri_trans_isnfkd(SEXP s);
+SEXP stri_trans_isnfkc_casefold(SEXP s);
 
 // search
-SEXP stri_split_lines(SEXP str, SEXP omit_empty);
+SEXP stri_split_lines(SEXP str, SEXP omit_empty=Rf_ScalarLogical(FALSE));
 SEXP stri_split_lines1(SEXP str);
 
-SEXP stri_replace_na(SEXP str, SEXP replacement);
+SEXP stri_replace_na(SEXP str, SEXP replacement=Rf_mkString("NA"));
 
 SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator);
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator);

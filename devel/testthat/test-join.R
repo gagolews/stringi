@@ -2,7 +2,7 @@ require(testthat)
 context("test-join.R")
 
 test_that("stri_join", {
-   warning("testthat completely ignores warnings :( -- if this is turned into an error, we are OK")
+   # warning("testthat completely ignores warnings :( -- if this is turned into an error, we are OK")
 
    # we have many specialized functions for join, e.g.
    # flatten with sep
