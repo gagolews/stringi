@@ -33,9 +33,9 @@ test_that("stri_extract_all_regex", {
 #       str_extract_all(c("ababab", NA, "ab", "ba"), "ab"))
 
    # ICU-bugs (#147)
-   expect_identical(stri_extract_all_regex("aafoo - ICU BUG TEST, #147", "(?<=aa)foo"), list("foo"))
-   expect_identical(stri_extract_all_regex("a\u0105foo - ICU BUG TEST, #147", "(?<=a\u0105)foo"), list("foo"))
-   expect_identical(stri_extract_all_regex("a\U00020000foo - ICU BUG TEST, #147", "(?<=a\U00020000)foo"), list("foo"))
+   if (stri_info()$ICU.version >= "55.0") expect_identical(stri_extract_all_regex("aafoo - ICU BUG TEST, #147", "(?<=aa)foo"), list("foo"))
+   if (stri_info()$ICU.version >= "55.0") expect_identical(stri_extract_all_regex("a\u0105foo - ICU BUG TEST, #147", "(?<=a\u0105)foo"), list("foo"))
+   if (stri_info()$ICU.version >= "55.0") expect_identical(stri_extract_all_regex("a\U00020000foo - ICU BUG TEST, #147", "(?<=a\U00020000)foo"), list("foo"))
 })
 
 

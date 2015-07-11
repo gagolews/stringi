@@ -109,8 +109,8 @@ SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
 // date/time
 void stri__set_class_POSIXct(SEXP x);
 
-
-
+// encoding_conversion.cpp:
+SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
 
 // ------------------------------------------------------------------------
 
