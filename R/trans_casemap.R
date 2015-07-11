@@ -91,14 +91,14 @@
 #' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!") # word boundary
 #' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="sentence")
 stri_trans_tolower <- function(str, locale=NULL) {
-   .Call(C_stri_trans_casemap, str, 1L, locale)
+   .Call(C_stri_trans_tolower, str, locale)
 }
 
 
 #' @export
 #' @rdname stri_trans_casemap
 stri_trans_toupper <- function(str, locale=NULL) {
-   .Call(C_stri_trans_casemap, str, 2L, locale)
+   .Call(C_stri_trans_toupper, str, locale)
 }
 
 
