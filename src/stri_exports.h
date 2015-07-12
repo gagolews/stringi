@@ -120,7 +120,6 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow=Rf_ScalarLogical(FALSE),
    SEXP fill=Rf_ScalarString(NA_STRING), SEXP n_min=Rf_ScalarInteger(0));
 
 
-
 // encoding_conversion.cpp:
 SEXP stri_encode(SEXP str, SEXP from=R_NilValue, SEXP to=R_NilValue,
    SEXP to_raw=Rf_ScalarLogical(FALSE));

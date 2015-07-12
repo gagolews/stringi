@@ -554,7 +554,6 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
 }
 
 
-
 /**
  * Concatenate Character Vectors, possibly with collapse
  *
@@ -701,7 +700,6 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
 
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
-
 
 
 /** String vector flatten, with no separator (i.e. empty) between each string
