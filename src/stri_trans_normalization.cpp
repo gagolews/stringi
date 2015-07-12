@@ -213,7 +213,6 @@ SEXP stri_trans_isnf(SEXP str, int type)
 }
 
 
-
 /**
  * Check if String is in NFC
  *

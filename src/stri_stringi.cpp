@@ -40,7 +40,6 @@
 #endif
 
 
-
 #define STRI__MK_CALL(symb, name, args) \
    {symb, (DL_FUNC)&name, args}
 
@@ -237,7 +236,6 @@ const R_CallMethodDef cCallMethods[] = {
    {NULL,                           NULL,                  0}
 
 };
-
 
 
 /** Sets ICU data dir
