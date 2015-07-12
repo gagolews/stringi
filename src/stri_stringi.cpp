@@ -56,7 +56,7 @@ const R_CallMethodDef cCallMethods[] = {
 
 //   STRI__MK_CALL("C_stri_charcategories",           stri_charcategories,             0),  // TO BE >= 0.6
 //   STRI__MK_CALL("C_stri_chartype",                 stri_chartype,                   1),  // TO BE >= 0.6
-   STRI__MK_CALL("C_stri_c_posixst",                  stri_c_posixst,                  1),
+// STRI__MK_CALL("C_stri_c_posixst",                  stri_c_posixst,                  1),  // internal
    STRI__MK_CALL("C_stri_cmp_eq",                     stri_cmp_eq,                     2),
    STRI__MK_CALL("C_stri_cmp_neq",                    stri_cmp_neq,                    2),
    STRI__MK_CALL("C_stri_cmp",                        stri_cmp,                        3),
@@ -102,7 +102,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_enc_toutf8",                 stri_enc_toutf8,                 3),
    STRI__MK_CALL("C_stri_enc_toutf32",                stri_enc_toutf32,                1),
    STRI__MK_CALL("C_stri_encode",                     stri_encode,                     4),
-// STRI__MK_CALL("C_stri_encode_from_marked",         stri_encode_from_marked,         3),
+// STRI__MK_CALL("C_stri_encode_from_marked",         stri_encode_from_marked,         3), // internal
    STRI__MK_CALL("C_stri_endswith_charclass",         stri_endswith_charclass,         3),
    STRI__MK_CALL("C_stri_endswith_coll",              stri_endswith_coll,              4),
    STRI__MK_CALL("C_stri_endswith_fixed",             stri_endswith_fixed,             4),
@@ -122,7 +122,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_extract_first_regex",        stri_extract_first_regex,        3),
    STRI__MK_CALL("C_stri_extract_last_regex",         stri_extract_last_regex,         3),
    STRI__MK_CALL("C_stri_extract_all_regex",          stri_extract_all_regex,          5),
-   STRI__MK_CALL("C_stri_flatten",                    stri_flatten,         2),
+   STRI__MK_CALL("C_stri_flatten",                    stri_flatten,                    2),
 //   STRI__MK_CALL("C_stri_in_fixed",                 stri_in_fixed,                   3),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_info",                       stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                    stri_isempty,                    1),

@@ -112,6 +112,9 @@ void stri__set_class_POSIXct(SEXP x);
 // encoding_conversion.cpp:
 SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw);
 
+// date/time:
+SEXP stri_c_posixst(SEXP x);
+
 // ------------------------------------------------------------------------
 
 #endif
