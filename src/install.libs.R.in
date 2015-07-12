@@ -20,3 +20,68 @@ if (copyicudt) {
 # Copy symbols.rds
 if (file.exists('symbols.rds'))
    file.copy('symbols.rds', dest, overwrite=TRUE)
+
+
+# Create ../include/stringi.h
+dir.create(file.path(R_PACKAGE_DIR, 'include'), showWarnings=FALSE)
+file.copy('stri_exports.h', file.path(R_PACKAGE_DIR, 'include', 'stringi.h'))
+
+# Create ../include/stringi.cpp
+f <- file(file.path(R_PACKAGE_DIR, 'include', 'stringi.cpp'), open='w')
+copyright <- readLines("stri_exports.h")
+i <- which.min(nchar(copyright) > 0)
+writeLines(copyright[1:i], con=f)
+
+writeLines("#include <stringi.h>", con=f)
+writeLines("#include <R_ext/Rdynload.h>", con=f)
+
+match_all_perl <- function(s, p) {
+   stopifnot(is.character(s), is.character(p), length(p) == 1)
+   out <- vector("list", length(s))
+   nna <- which(!is.na(s))
+   m <- gregexpr(enc2utf8(p), enc2utf8(s[nna]), perl=TRUE)
+   for (j in seq_along(m)) {
+      if (any(m[[j]] < 0)) next # no match
+
+      nmatch <- length(m[[j]])
+      ncapt  <- ncol(attr(m[[j]], "capture.start"))
+
+      out[[j]] <- matrix(substring(s[nna[j]], m[[j]],
+         m[[j]]+attr(m[[j]], "match.length")-1),
+         nrow=nmatch, ncol=ncapt+1)
+
+      if (ncapt > 0) {
+         cs <- as.integer(attr(m[[j]], "capture.start"))
+         cl <- as.integer(attr(m[[j]], "capture.length"))
+         out[[j]][,-1] <- substring(s[nna[j]], cs, cs+cl-1)
+      }
+   }
+   out
+}
+
+exported1 <- match_all_perl(readLines("stri_exports.h"), "^SEXP[ ]+([A-Z0-9a-z_]+)\\(")
+exported1 <- t(simplify2array(exported1[!sapply(exported1, is.null)], higher=FALSE))[,-1]
+
+exported2 <- match_all_perl(readLines("stri_stringi.cpp"), "^[ ]*STRI__MK_CALL\\(\"([A-Z0-9a-z_]+)\",[ ]*([A-Z0-9a-z_]+),[ ]*([0-9]+)")
+exported2 <- t(simplify2array(exported2[!sapply(exported2, is.null)], higher=FALSE))[,-1]
+
+i <- match(exported1, exported2[,2])
+
+for (j in i) {
+   narg <- as.integer(exported2[j,3])
+   cat(sprintf('SEXP %s(%s) {
+      static SEXP(*fun)(%s) = NULL;
+      if (!fun)
+         fun = (SEXP(*)(%s)) R_GetCCallable("stringi", "%s");
+      return fun(%s);
+   }\n\n',
+      exported2[j,2],
+      if (narg > 0) paste("SEXP e", seq_len(narg), sep="", collapse=", ") else "",
+      paste(rep("SEXP", narg), collapse=","),
+      paste(rep("SEXP", narg), collapse=","),
+      exported2[j,1],
+      if (narg > 0) paste("e", seq_len(narg), sep="", collapse=", ") else ""
+   ), file=f)
+}
+close(f)
+

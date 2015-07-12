@@ -304,6 +304,12 @@ extern "C" void R_init_stringi(DllInfo* dll)
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
 //   R_useDynamicSymbols(dll, Rboolean(FALSE)); // slower
 
+   const R_CallMethodDef* methods = cCallMethods;
+   while (methods->name) {
+      R_RegisterCCallable("stringi", methods->name, methods->fun);
+      methods++;
+   }
+
    if (!SUPPORT_UTF8) {
       /* Rconfig.h states that all R platforms supports that */
       Rf_error("R does not support UTF-8 encoding.");

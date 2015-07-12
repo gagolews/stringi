@@ -20,3 +20,5 @@ if (testWarnings) {
    rm(oldOptions)
    rm(test_that)
 }
+
+rm(testWarnings)
