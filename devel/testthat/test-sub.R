@@ -9,6 +9,9 @@ test_that("stri_sub", {
    expect_identical(stri_sub("12", 1, 1), "1")
    expect_identical(stri_sub(s, 1:4,3:4), c("ala","la ","a"," "))
    expect_identical(stri_sub(character(0)), character(0))
+   expect_identical(stri_sub("test", from=numeric(0), to=1), character(0))
+   expect_identical(stri_sub("test", to=numeric(0), from=1), character(0))
+   expect_identical(stri_sub("test", length=numeric(0), from=1), character(0))
    expect_identical(stri_sub(c(NA,"ala"), 1:4,length=1), c(NA,"l",NA,""))
    expect_identical(stri_sub(s,c(1,NA),1),c("a",NA))
    expect_identical(stri_sub(s,1:2,NA),c(NA_character_,NA))
@@ -45,12 +48,15 @@ test_that("stri_sub", {
 })
 
 test_that("stri_sub<-", {
-   s <- c("ala ma \u0105 \u00F1 \u0105 kota i kotek ma alicje oraz dwie gruszeczki oraz gruby czarny pies ma kotka ale nie ma alibaby")
-   expect_identical(stri_sub(s)<-"a", "a")
+   expect_identical({s <- "test"; stri_sub(s)<-"a"; s}, "a")
    #s is NA_character, but function returns NA_logical
-   expect_identical(stri_sub(s)<-NA, NA)
+   expect_identical({s <- "test"; stri_sub(s)<-NA_character_; s}, NA_character_)
    #character(0) has priority over NA
-   expect_identical(stri_sub(s)<-character(0), character(0))
+   expect_identical({s <- "test"; stri_sub(s)<-character(0); s}, character(0))
+
+   expect_identical({s <- "test"; stri_sub(s, from=numeric(0), to=1) <- "test"; s}, character(0))
+   expect_identical({s <- "test"; stri_sub(s, to=numeric(0), from=1) <- "test"; s}, character(0))
+   expect_identical({s <- "test"; stri_sub(s, length=numeric(0), from=1) <- "test"; s}, character(0))
 
    s <- "\U0010FFFFa\u0105";  stri_sub(s,1,1) <- "x";   expect_identical(s, "xa\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,2,2) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")

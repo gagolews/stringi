@@ -126,6 +126,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.5-9003 (Marek Gagolewski, 2015-08-05)
+ *    Bugfix #183: floating point exception when to or length is an empty vector
  */
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 {
@@ -141,10 +144,8 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 
    STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
 
-   R_len_t vectorize_len = stri__recycling_rule(true, 4,
-      str_len, from_len,
-      (to_len>0)?to_len:1, (length_len>0)?length_len:1);
-
+   R_len_t vectorize_len = stri__recycling_rule(true, 3,
+      str_len, from_len, (to_len>length_len)?to_len:length_len);
 
    if (vectorize_len <= 0) {
       UNPROTECT(4);
@@ -228,6 +229,9 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 0.5-9003 (Marek Gagolewski, 2015-08-05)
+ *    Bugfix #183: floating point exception when to or length is an empty vector
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 {
@@ -245,10 +249,8 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
 
    STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
 
-   R_len_t vectorize_len = stri__recycling_rule(true, 5,
-      str_len, value_len, from_len,
-      (to_len>0)?to_len:1, (length_len>0)?length_len:1);
-
+   R_len_t vectorize_len = stri__recycling_rule(true, 4,
+      str_len, value_len, from_len, (to_len>length_len)?to_len:length_len);
 
    if (vectorize_len <= 0) {
       UNPROTECT(5);
