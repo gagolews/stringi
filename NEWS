@@ -11,9 +11,11 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 ## 0.5-9xxx (under development)
 
-
 * [GENERAL] #88: C++ API is now available for use in, e.g., Rcpp packages, see
 https://github.com/Rexamine/ExampleRcppStringi for an exemple.
+
+* [BUGFIX] #183: Floating point exception raised in `stri_sub()` and
+`stri_sub<-()` when `to` or `length` was a zero-length numeric vector.
 
 * [BUGFIX] #180: `stri_c()` warned incorrectly (recycling rule) when using more
 than 2 elements.
