@@ -45,6 +45,24 @@ downloaded a version of `icudt*.zip` suitable for your platform
 
     install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
 
+Moreover, if you have absolutely no internet access on the machines
+you build `stringi` on, try fetching the latest development version
+of the package. It already includes the `ICU` data archives.
+
+    wget https://github.com/Rexamine/stringi/archive/master.zip
+    unzip stringi-master.zip
+    R CMD INSTALL stringi-master
+
+You may also prepare your own `.tar.gz`-ipped distribution of  `stringi`
+as follows:
+
+1. File the `git clone https://github.com/Rexamine/stringi.git` command.
+2. Edit the `.Rbuildignore` file and get rid of the `^src/icu55/data` line.
+3. Run `R CMD build stringi_dir_name`.
+4. Install the obtained `.tar.gz` file on your machine(s), e.g.,
+via `install.packages("stringi_xxx.tar.gz")`
+(the source bundle may be propagated via `scp` etc.)
+
 
 C++11 support
 -------------
