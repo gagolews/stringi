@@ -39,10 +39,10 @@ $(SHLIB): $(OBJECTS) libicu_common.a libicu_i18n.a libicu_stubdata.a
 PKG_LIBS=-L. -licu_common -licu_i18n -licu_stubdata
 
 libicu_common.a: $(ICU_COMMON_OBJECTS)
-	ar rcs -o libicu_common.a $(ICU_COMMON_OBJECTS)
+	$(AR) rcs -o libicu_common.a $(ICU_COMMON_OBJECTS)
 
 libicu_i18n.a: $(ICU_I18N_OBJECTS)
-	ar rcs -o libicu_i18n.a $(ICU_I18N_OBJECTS)
+	$(AR) rcs -o libicu_i18n.a $(ICU_I18N_OBJECTS)
 
 libicu_stubdata.a: $(ICU_STUBDATA_OBJECTS)
-	ar rcs -o libicu_stubdata.a $(ICU_STUBDATA_OBJECTS)
+	$(AR) rcs -o libicu_stubdata.a $(ICU_STUBDATA_OBJECTS)
