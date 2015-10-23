@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 0.5-9xxx (under development)
+## 1.0-1 (2015-10-22) **CRAN**
 
 * [GENERAL] #88: C++ API is now available for use in, e.g., Rcpp packages, see
 https://github.com/Rexamine/ExampleRcppStringi for an exemple.
