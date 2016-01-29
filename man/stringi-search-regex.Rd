@@ -5,8 +5,8 @@
 \title{Regular Expressions in \pkg{stringi}}
 \description{
 A regular expression is a pattern describing, possibly in a very
-abstract way, a part of text.
-Thanks to many regex functions in \pkg{stringi},
+abstract way, a text fragment.
+With so many regex functions in \pkg{stringi},
 regular expressions may be a very powerful tool in your hand
 to perform string searching, substring extraction, string splitting, etc.,
 tasks.
@@ -154,7 +154,7 @@ groups in the pattern.}
 octal digits.  0377 is the largest allowed Octal character.  The leading
 zero is required; it distinguishes Octal constants from back references.}
 \item{\code{[pattern]}}{Match any one character from the set.}
-\item{\code{.}}{Match any character.}
+\item{\code{.}}{Match any character except for - by default - newline, compare \code{\link{stri_opts_regex}}.}
 \item{\code{^}}{Match at the beginning of a line.}
 \item{\code{$}}{Match at the end of a line.}
 \item{\code{\\}}{[outside of sets] Quotes the following character.

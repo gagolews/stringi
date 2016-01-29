@@ -59,8 +59,8 @@ C++ compiler if a C++11 one is not properly configured.
 `AC_SUBST` and `AC_CONFIG_FILES` so that the build process is now
 more similar across different platforms.
 
-* [NEW FEATURE] `stri_info()` now also gives information on which ICU4C is
-used (system or bundle).
+* [NEW FEATURE] `stri_info()` now also gives information about which version
+of ICU4C is in use (system or bundle).
 
 -------------------------------------------------------------------------------
 
