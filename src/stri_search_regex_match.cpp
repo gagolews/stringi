@@ -57,6 +57,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex, bool first)
 {
@@ -83,11 +86,8 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         /*do nothing*/;,
-         int pattern_cur_groups = pattern_cont.getMatcher(i)->groupCount();
-         if (occurrences_max < pattern_cur_groups+1) occurrences_max=pattern_cur_groups+1;
-      )
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+         /*do nothing*/;      )
 
       UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
@@ -202,6 +202,9 @@ SEXP stri_match_last_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_re
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-06)
  *    new arg: cg_missing
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_missing, SEXP opts_regex)
 {
@@ -240,10 +243,6 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
 
       if ((str_cont).isNA(i)) {
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, pattern_cur_groups+1));
-         continue;
-      }
-      else if ((str_cont).get(i).length() <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(omit_no_match1?0:1, pattern_cur_groups+1));
          continue;
       }
 

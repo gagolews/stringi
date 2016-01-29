@@ -21,6 +21,9 @@ test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
       "The    jumped over the lazy .")
    expect_identical(stri_replace_all_regex("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
 
+   expect_identical(stri_replace_all_regex("",c("^.*$","h"),c("hey!", "y"), vectorize_all=FALSE),"yey!")
+   expect_identical(stri_replace_all_regex("  ",c("^.*$","h"),c("hey!", "y"), vectorize_all=FALSE),"yey!")
+
    # not a bug, a feature:
    # expect_identical(stri_replace_all_regex("A", "^(.*)", "ONE($1)"), "ONE(A)")
    # expect_identical(stri_replace_all_regex("ABC", "(.*)$", "ONE($1)"), "ONE(A)")
@@ -42,6 +45,9 @@ test_that("stri_replace_all_regex", {
    expect_identical(stri_replace_all_regex("A",NA,NA),NA_character_)
    expect_identical(stri_replace_all_regex(NA,NA,NA),NA_character_)
    expect_warning(stri_replace_all_regex('fasgasgas',c(" ","o"),1:3))
+
+   expect_identical(stri_replace_all_regex("","^.*$","hey!"),"hey!")
+   expect_identical(stri_replace_all_regex("  ","^.*$","hey!"),"hey!")
 
    expect_identical(stri_replace_all_regex("abc!def!ghi","(\\p{L})\\p{L}{2}","$1"),"a!d!g")
    expect_identical(stri_replace_all_regex("abc!def!ghi","(\\p{L}{3})","@$1@"),"@abc@!@def@!@ghi@")
@@ -101,7 +107,8 @@ test_that("stri_replace_first_regex", {
       c("\u0108\u0105\u0106\u0107", "\u0108\u0105\u0107")) # match of zero length
    expect_identical(stri_replace_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
       c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
-
+   expect_identical(stri_replace_first_regex("","^.*$","hey!"),"hey!")
+   expect_identical(stri_replace_first_regex("  ","^.*$","hey!"),"hey!")
 })
 
 
@@ -126,4 +133,6 @@ test_that("stri_replace_last_regex", {
    expect_identical(stri_replace_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)", "\u0108"),
       c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
 
+   expect_identical(stri_replace_last_regex("","^.*$","hey!"),"hey!")
+   expect_identical(stri_replace_last_regex("  ","^.*$","hey!"),"hey!")
 })

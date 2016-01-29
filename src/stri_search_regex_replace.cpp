@@ -57,6 +57,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
@@ -78,9 +81,8 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);,
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE((const char*)NULL, 0, CE_UTF8));)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+         SET_STRING_ELT(ret, i, NA_STRING);)
 
       if (replacement_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);

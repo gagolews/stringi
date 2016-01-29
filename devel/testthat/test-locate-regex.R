@@ -25,6 +25,7 @@ test_that("stri_locate_all_regex", {
                                     c("\U00024B62", "\U00024B63", "\U00024B64")),
             list(matrix(c(2L,2L)), matrix(c(3L,3L)), matrix(c(4L,4L))))
    expect_equivalent(stri_locate_all_regex("aaa", "aa"), list(matrix(c(1,2))))
+   expect_equivalent(stri_locate_all_regex(c("", " "), "^.*$"), list(matrix(c(1,0)), matrix(c(1,1))))
 
    expect_equivalent(stri_locate_all_regex("1a\u0105a", "a.a"), list(matrix(c(2,4))))
    expect_equivalent(stri_locate_all_regex("ala ola ela ula", ".la"), list(matrix(c(1,5,9,13,3,7,11,15),ncol=2)))
@@ -56,6 +57,7 @@ test_that("stri_locate_first_regex", {
    suppressWarnings(expect_equivalent(stri_locate_first_regex("abc", ""), matrix(c(NA_integer_,NA_integer_))))
    suppressWarnings(expect_equivalent(stri_locate_first_regex("", "abc"), matrix(c(NA_integer_,NA_integer_))))
    suppressWarnings(expect_equivalent(stri_locate_first_regex("", ""), matrix(c(NA_integer_,NA_integer_))))
+   expect_equivalent(stri_locate_first_regex(c("", " "), "^.*$"), matrix(c(1,0,1,1), byrow=TRUE, ncol=2))
 
    expect_equivalent(stri_locate_first_regex("X\u0104\u0105\u106X", "\u0105"), matrix(c(3L,3L)))
    expect_equivalent(stri_locate_first_regex("X\u9999\u9998\u9997X", "\u9998"), matrix(c(3L,3L)))
@@ -119,5 +121,5 @@ test_that("stri_locate_last_regex", {
    expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       matrix(ncol=2, c(4,3,3,2))) # match of zero length
    expect_equivalent(stri_locate_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), matrix(ncol=2, c(3, NA, 2, NA))) # match of zero length:
-
+   expect_equivalent(stri_locate_last_regex(c("", " "), "^.*$"), matrix(c(1,0,1,1), byrow=TRUE, ncol=2))
 })

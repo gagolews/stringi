@@ -9,6 +9,7 @@ test_that("stri_split_regex", {
    expect_identical(stri_split_regex("NA","a",NA),list(NA_character_))
    expect_identical(stri_split_regex(" "," "),list(rep("",2)))
    expect_identical(stri_split_regex("","Z"),list(""))
+   expect_identical(stri_split_regex("",".*"),list(""))
    expect_identical(stri_split_regex("","Z", omit_empty=TRUE),list(character(0)))
    expect_identical(stri_split_regex("gas","Z", n=0),list(character(0)))
    expect_identical(stri_split_regex("aa","a"),list(rep("",3)))

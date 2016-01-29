@@ -17,7 +17,8 @@ test_that("stri_subset_regex", {
 
    expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"), c("\u0105\u0106\u0107", "\u0105\u0107")) # match of zero length
    expect_identical(stri_subset_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "(?<=\u0106)"), "\u0105\u0106\u0107") # match of zero length:
-
+   expect_identical(stri_subset_regex(c('', ' ', '  '), '^.*$'), c("", " ", "  "))
+   expect_identical(stri_subset_regex(c('', ' ', '  '), '^.+$'), c(" ", "  "))
    expect_identical(stri_subset_regex('a', c('a', 'b', 'c')), "a")
    expect_identical(stri_subset_regex(c('a', 'b', 'c'), 'a'), "a")
    suppressWarnings(expect_identical(stri_subset_regex(LETTERS[1:2], LETTERS[1:3]), LETTERS[1:2]))

@@ -58,6 +58,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-11-27)
  *    FR #117: omit_no_match arg added
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
 {
@@ -80,9 +83,8 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));,
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
@@ -149,6 +151,9 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
@@ -172,7 +177,7 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
    {
       ret_tab[i]                  = NA_INTEGER;
       ret_tab[i+vectorize_length] = NA_INTEGER;
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, ;/*nothing*/, ;/*nothing*/)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont, ;/*nothing*/)
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
