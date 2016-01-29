@@ -17,7 +17,8 @@ test_that("stri_extract_all_regex", {
    expect_identical(stri_extract_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"),
       "(?<=\u0106)"), list("", NA_character_)) # match of zero length:
 
-
+   expect_identical(stri_extract_all_regex("", "^.*$"), list(""))
+   expect_identical(stri_extract_all_regex("", "^.*$", omit_no_match = TRUE), list(""))
    expect_identical(stri_extract_all_regex("", " "), list(NA_character_))
    expect_identical(stri_extract_all_regex("", " ", omit_no_match = TRUE), list(character(0)))
    expect_identical(stri_extract_all_regex("test", " "), list(NA_character_))
@@ -58,11 +59,14 @@ test_that("stri_extract_first_regex", {
 
    expect_identical(stri_extract_first_regex(c("ababab", NA, "ab", "ba"), "ab"),
       str_extract(c("ababab", NA, "ab", "ba"), "ab"))
+
+   expect_identical(stri_extract_first_regex(c("", " "), "^.*$"), c("", " "))
 })
 
 
 test_that("stri_extract_last_regex", {
 
+   expect_identical(stri_extract_last_regex(c("", " "), "^.*$"), c("", " "))
    expect_identical(stri_extract_last_regex(character(0), "test"), character(0))
    expect_identical(stri_extract_last_regex("test", character(0)), character(0))
    expect_identical(stri_extract_last_regex(character(0), character(0)), character(0))

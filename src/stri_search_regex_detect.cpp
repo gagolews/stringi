@@ -55,6 +55,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
+ *    Issue #214: allow a regex pattern like `.*`  to match an empty string
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
 {
@@ -78,8 +81,8 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont,
-         pattern_cont, ret_tab[i] = NA_LOGICAL, ret_tab[i] = FALSE)
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont,
+         pattern_cont, ret_tab[i] = NA_LOGICAL)
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));

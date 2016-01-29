@@ -4,8 +4,21 @@
 ## Known bugs in ICU
 
 * [REGEX] #147: regex look-behind assertions may fail to find a multibyte
-Unicode search pattern [scheduled for ICU4C 56.1, see
+Unicode search pattern [scheduled for ICU4C 57.1, see
 http://bugs.icu-project.org/trac/ticket/11554]
+
+-------------------------------------------------------------------------------
+
+## 1.0-2 (under development)
+
+* [BUGFIX] #214: allow a regex pattern like `.*`  to match an empty string.
+
+* ... #210: stri_replace_all_fixed(c("1", "NULL"), "NULL", NA) should result in c("1", NA)
+* ... #207
+* ... #199
+* ... #175
+* ... #30
+* ...
 
 -------------------------------------------------------------------------------
 

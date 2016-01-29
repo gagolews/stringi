@@ -12,6 +12,8 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex(c("","ala", "ala", "bbb"),c("ala", "bbb")), c(FALSE, FALSE, TRUE, TRUE))
    expect_identical(stri_detect_regex(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
 
+   expect_identical(stri_detect_regex('', c('.*', '.+', '^.*$')), c(TRUE,FALSE,TRUE))
+
    expect_identical(stri_detect_regex('a', c('a', 'b', 'c')), c(T,F,F))
    expect_identical(stri_detect_regex(c('a', 'b', 'c'), 'a'), c(T,F,F))
    suppressWarnings(expect_identical(stri_detect_regex(LETTERS[1:2], LETTERS[1:3]), c(T,T,F)))
