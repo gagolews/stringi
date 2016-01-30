@@ -13,7 +13,9 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 * [BUGFIX] #214: allow a regex pattern like `.*`  to match an empty string.
 
-* ... #210: stri_replace_all_fixed(c("1", "NULL"), "NULL", NA) should result in c("1", NA)
+* [BUGFIX] #210: `stri_replace_all_fixed(c("1", "NULL"), "NULL", NA)`
+now results in `c("1", NA)`
+
 * ... #207
 * ... #199
 * ... #175

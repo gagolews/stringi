@@ -71,6 +71,9 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
@@ -95,7 +98,7 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)) {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
@@ -111,6 +114,11 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
 
       if (occurrences.size() == 0) {
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
+         continue;
+      }
+
+      if (replacement_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
@@ -150,6 +158,9 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
@@ -191,7 +202,7 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+      if (pattern_cont.isNA(i)) {
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
@@ -207,6 +218,14 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
             str_cur_s, str_cur_n, merge_cur,
             false /* byte-based indices */
          );
+
+         if (occurrences.size() == 0)
+            continue;
+
+         if (replacement_cont.isNA(i)) {
+            str_cont.setNA(j);
+            continue;
+         }
 
          R_len_t     replacement_cur_n = replacement_cont.get(i).length();
          R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
@@ -296,7 +315,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || replacement_cont.isNA(i) || pattern_cont.isNA(i)) {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
@@ -334,6 +353,11 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
 
       if (j == jlast) { // iff not found
          SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
+         continue;
+      }
+
+      if (replacement_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 

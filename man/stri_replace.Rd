@@ -136,6 +136,8 @@ s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_fixed(s, " ", "#")
 stri_replace_all_fixed(s, "o", "0")
 
+stri_replace_all_fixed(c("1", "NULL", "3"), "NULL", NA)
+
 stri_replace_all_regex(s, " .*? ", "#")
 stri_replace_all_regex(s, "(el|s)it", "1234")
 stri_replace_all_regex('abaca', 'a', c('!', '*'))
