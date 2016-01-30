@@ -60,6 +60,9 @@ using namespace std;
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator, int type)
 {
@@ -84,11 +87,6 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
          str_cont.setNA(i);,
          /*just skip on empty str*/;)
 
-      if (replacement_cont.isNA(i)) {
-         str_cont.setNA(i);
-         continue;
-      }
-
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
 
@@ -102,6 +100,11 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
 
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[i] at all
+
+         if (replacement_cont.isNA(i)) {
+            str_cont.setNA(i);
+            continue;
+         }
 
          while (start != USEARCH_DONE) {
             R_len_t mlen = usearch_getMatchedLength(matcher);
@@ -117,6 +120,11 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[i] at all
+
+         if (replacement_cont.isNA(i)) {
+            str_cont.setNA(i);
+            continue;
+         }
          R_len_t mlen = usearch_getMatchedLength(matcher);
          remUChars += mlen;
          occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
@@ -165,6 +173,9 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-06)
  *    Added missing ucol_close
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
 { // version beta
@@ -206,7 +217,7 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+      if (pattern_cont.isNA(i)) {
          if (collator) { ucol_close(collator); collator=NULL; }
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
@@ -232,6 +243,11 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
 
          if (start == USEARCH_DONE) // no match
             continue; // no change in str_cont[j] at all
+
+         if (replacement_cont.isNA(i)) {
+            str_cont.setNA(j);
+            continue;
+         }
 
          while (start != USEARCH_DONE) {
             R_len_t mlen = usearch_getMatchedLength(matcher);

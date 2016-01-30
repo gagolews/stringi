@@ -161,8 +161,10 @@ class String8  {
       /** destructor */
       inline void setNA()
       {
-         if (this->m_str && this->m_memalloc) {
-            delete [] this->m_str;
+         if (this->m_str) {
+            if (this->m_memalloc) {
+               delete [] this->m_str;
+            }
             this->m_str = NULL;
          }
       }

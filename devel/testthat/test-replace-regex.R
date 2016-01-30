@@ -8,7 +8,7 @@ test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
    expect_warning(stri_replace_all_regex("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
    expect_equivalent(stri_replace_all_regex("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
    expect_equivalent(stri_replace_all_regex(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
-   expect_equivalent(stri_replace_all_regex(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, NA_character_))
+   expect_equivalent(stri_replace_all_regex(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, "bbbb"))
    expect_equivalent(stri_replace_all_regex(character(0), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), character(0))
    expect_equivalent(stri_replace_all_regex(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
    expect_equivalent(stri_replace_all_regex(c("abacada", "aaa", "fdsueo"), c("a+", "b"), c("x", "y"), vectorize_all = FALSE),
@@ -19,7 +19,7 @@ test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
    expect_equivalent(stri_replace_all_regex("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
-   expect_identical(stri_replace_all_regex("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_regex(c("X","Y"),c("a", "b", "X"),NA, vectorize_all=FALSE),c(NA, "Y"))
 
    expect_identical(stri_replace_all_regex("",c("^.*$","h"),c("hey!", "y"), vectorize_all=FALSE),"yey!")
    expect_identical(stri_replace_all_regex("  ",c("^.*$","h"),c("hey!", "y"), vectorize_all=FALSE),"yey!")
@@ -30,6 +30,8 @@ test_that("stri_replace_all_regex [vectorize_all=FALSE]", {
    # expect_identical(stri_replace_all_regex("ABC", "(.*)", "ONE($1)"), "ONE(A)")
    # expect_identical(stri_replace_all_regex("A", ".*", "ONE($0)"), "ONE(A)")
    # expect_identical(stri_replace_all_regex("A", "^.*", "ONE($0)"), "ONE(A)")
+
+   expect_identical(stri_replace_all_regex(c("1RR", "NURR", "3"), c("RR", "NULL"), c("LL", NA), vectorize_all=FALSE), c("1LL", NA, "3"))
 })
 
 test_that("stri_replace_all_regex", {
@@ -45,6 +47,8 @@ test_that("stri_replace_all_regex", {
    expect_identical(stri_replace_all_regex("A",NA,NA),NA_character_)
    expect_identical(stri_replace_all_regex(NA,NA,NA),NA_character_)
    expect_warning(stri_replace_all_regex('fasgasgas',c(" ","o"),1:3))
+
+   expect_identical(stri_replace_all_regex(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
 
    expect_identical(stri_replace_all_regex("","^.*$","hey!"),"hey!")
    expect_identical(stri_replace_all_regex("  ","^.*$","hey!"),"hey!")
@@ -109,6 +113,8 @@ test_that("stri_replace_first_regex", {
       c("\u0105\u0106\u0108\u0107", "\u0105\u0107")) # match of zero length:
    expect_identical(stri_replace_first_regex("","^.*$","hey!"),"hey!")
    expect_identical(stri_replace_first_regex("  ","^.*$","hey!"),"hey!")
+
+   expect_identical(stri_replace_first_regex(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
 })
 
 
@@ -135,4 +141,6 @@ test_that("stri_replace_last_regex", {
 
    expect_identical(stri_replace_last_regex("","^.*$","hey!"),"hey!")
    expect_identical(stri_replace_last_regex("  ","^.*$","hey!"),"hey!")
+
+   expect_identical(stri_replace_last_regex(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
 })

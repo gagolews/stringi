@@ -68,6 +68,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed, int type)
 {
@@ -95,11 +98,6 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
          SET_STRING_ELT(ret, i, NA_STRING);,
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(NULL, 0, CE_UTF8));)
 
-      if (replacement_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-
       StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
       matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       R_len_t start;
@@ -111,6 +109,11 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
 
       if (start == USEARCH_DONE) {
          SET_STRING_ELT(ret, i, str_cont.toR(i));
+         continue;
+      }
+
+      if (replacement_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
@@ -240,6 +243,9 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-07)
  *    FR #110, #23: opts_fixed arg added
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 { // version gamma:
@@ -280,7 +286,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+      if (pattern_cont.isNA(i)) {
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
@@ -297,6 +303,11 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          R_len_t start = matcher->findFirst();
          if (start == USEARCH_DONE)  continue;  // nothing to do now
 
+         if (replacement_cont.isNA(i)) {
+            str_cont.setNA(j);
+            continue;
+         }
+
          R_len_t len = matcher->getMatchedLength();
          R_len_t sumbytes = len;
          deque< pair<R_len_t, R_len_t> > occurrences;
@@ -309,7 +320,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
             sumbytes += len;
          }
 
-         R_len_t str_cur_n     = str_cont.get(j).length();
+         R_len_t str_cur_n         = str_cont.get(j).length();
          R_len_t replacement_cur_n = replacement_cont.get(i).length();
          R_len_t buf_need =
             str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;

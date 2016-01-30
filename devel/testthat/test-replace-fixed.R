@@ -8,7 +8,7 @@ test_that("stri_replace_all_fixed", {
    expect_warning(stri_replace_all_fixed("a", c("a", "b", "c"), c("b", "d"), vectorize_all=FALSE))
    expect_equivalent(stri_replace_all_fixed("a", c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_))
    expect_equivalent(stri_replace_all_fixed(c("a", "b"), c("a", NA), c("b", "d"), vectorize_all=FALSE), c(NA_character_, NA_character_))
-   expect_equivalent(stri_replace_all_fixed(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, NA_character_))
+   expect_equivalent(stri_replace_all_fixed(c("aba", "bbbb"), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), c(NA, "bbbb"))
    expect_equivalent(stri_replace_all_fixed(character(0), c("a", "c"), c(NA, "d"), vectorize_all=FALSE), character(0))
    expect_equivalent(stri_replace_all_fixed(c("", "", ""), c("a", "c"), c("e", "d"), vectorize_all=FALSE), c("", "", ""))
    expect_equivalent(stri_replace_all_fixed(c("abacada", "aaa", "fdsueo"), c("a", "b"), c("x", "y"), vectorize_all = FALSE),
@@ -19,7 +19,9 @@ test_that("stri_replace_all_fixed", {
    expect_equivalent(stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
       c("quick", "brown", "fox", "dog"), c(""), vectorize_all = FALSE),
       "The    jumped over the lazy .")
-   expect_identical(stri_replace_all_fixed("X",c("a", "b"),NA, vectorize_all=FALSE),NA_character_)
+   expect_identical(stri_replace_all_fixed(c("Y", "X"),c("a", "b", "X"),NA, vectorize_all=FALSE), c("Y", NA))
+
+   expect_identical(stri_replace_all_fixed(c("1RR", "NURR", "3"), c("RR", "NULL"), c("LL", NA), vectorize_all=FALSE), c("1LL", NA, "3"))
 })
 
 
@@ -38,6 +40,8 @@ test_that("stri_replace_all_fixed", {
    expect_identical(stri_replace_all_fixed(NA,NA,NA),NA_character_)
    expect_warning(stri_replace_all_fixed('fasgasgas',c(" ","o"),1:3))
 
+   expect_identical(stri_replace_all_fixed(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
+
    expect_identical(stri_replace_all_fixed("ALA MA  KOTA",c(" ", "A", NA) ,""), c("ALAMAKOTA", "L M  KOT", NA))
    expect_identical(stri_replace_all_fixed("ALA","BF","HA"),"ALA")
    expect_identical(stri_replace_all_fixed("ALA","ALA", c("","RYBA")), c("", "RYBA"))
@@ -45,6 +49,8 @@ test_that("stri_replace_all_fixed", {
 
 
 test_that("stri_replace_first_fixed", {
+   expect_identical(stri_replace_first_fixed(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
+
    expect_identical(stri_replace_first("abcde", fixed="bcd", replacement=""), "ae")
    expect_identical(stri_replace_first_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_first_fixed("abab123 a","a",1),"1bab123 a")
@@ -69,6 +75,8 @@ test_that("stri_replace_first_fixed", {
 
 
 test_that("stri_replace_last_fixed", {
+   expect_identical(stri_replace_last_fixed(c("1", "NULL", "3"), "NULL", NA), c("1", NA, "3"))
+
    expect_identical(stri_replace_last("abcde", fixed="bcd", replacement=""), "ae")
    expect_identical(stri_replace_last_fixed(character(0),1,2),character(0))
    expect_identical(stri_replace_last_fixed("abab123 a","a",1),"abab123 1")

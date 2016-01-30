@@ -60,6 +60,9 @@
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
@@ -84,13 +87,15 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
       STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
          SET_STRING_ELT(ret, i, NA_STRING);)
 
-      if (replacement_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
+
+      if (replacement_cont.isNA(i)) {
+         if (matcher->find())
+            str_cont.setNA(i);
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+         continue;
+      }
 
       UErrorCode status = U_ZERO_ERROR;
       if (type == 0) { // all
@@ -149,6 +154,9 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
+ *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 { // version beta
@@ -188,7 +196,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
    for (R_len_t i = 0; i<pattern_n; ++i)
    {
-      if (pattern_cont.isNA(i) || replacement_cont.isNA(i)) {
+      if (pattern_cont.isNA(i)) {
          STRI__UNPROTECT_ALL
          return stri__vector_NA_strings(str_n);
       }
@@ -204,6 +212,12 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
          if (str_cont.isNA(j)) continue;
 
          matcher->reset(str_cont.get(j));
+
+         if (replacement_cont.isNA(i)) {
+            if (matcher->find())
+               str_cont.setNA(j);
+            continue;
+         }
 
          UErrorCode status = U_ZERO_ERROR;
          str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
