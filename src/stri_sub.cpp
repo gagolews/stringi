@@ -232,11 +232,15 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 0.5-9003 (Marek Gagolewski, 2015-08-05)
  *    Bugfix #183: floating point exception when to or length is an empty vector
+ *
+ * @version 1.0-2 (Marek Gagolewski, 2016-01-31)
+ *    FR #199: new arg: `omit_na`
  */
-SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
+SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
    PROTECT(str   = stri_prepare_arg_string(str, "str"));
    PROTECT(value = stri_prepare_arg_string(value, "value"));
+   bool omit_na_1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
 
    R_len_t value_len     = LENGTH(value);
    R_len_t str_len       = LENGTH(str);
@@ -270,8 +274,18 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value)
    {
       R_len_t cur_from     = from_tab[i % from_len];
       R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
-      if (str_cont.isNA(i) || cur_from == NA_INTEGER || cur_to == NA_INTEGER || value_cont.isNA(i)) {
+      if (str_cont.isNA(i) || value_cont.isNA(i)) {
          SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      if (cur_from == NA_INTEGER || cur_to == NA_INTEGER) {
+         if (omit_na_1) {
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+         }
+         else {
+            SET_STRING_ELT(ret, i, NA_STRING);
+         }
          continue;
       }
 

@@ -85,7 +85,7 @@ SEXP stri_reverse(SEXP s);
 
 // sub.cpp
 SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length);
-SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP value);
+SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP na_omit, SEXP value);
 
 // encoding_management.cpp:
 SEXP stri_enc_list();

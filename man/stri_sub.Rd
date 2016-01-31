@@ -18,7 +18,10 @@ stri_sub(str, from = 1L, to = -1L, length) <- value
 
 \item{length}{integer vector; mutually exclusive with \code{to} and \code{from} being a matrix}
 
-\item{value}{character vector to be substituted [replacement function]}
+\item{value}{character vector to be substituted; replacement function only}
+
+\item{omit_na;}{single logical value; if \code{TRUE}, missing values in \code{from},
+\code{to}, or \code{length} will result in an unchanged input; replacement function only}
 }
 \value{
 \code{stri_sub} returns a character vector.
@@ -78,6 +81,8 @@ stri_sub(s, -5, length=4)
 (stri_sub(s, -6, length=5) <- ".")
 (stri_sub(s, 1, 1:3) <- 1:2)
 
+x <- c("a;b", "c:d")
+(stri_sub(x, stri_locate_first_fixed(x, ";"), omit_na=TRUE) <- "_")
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_boundaries}},
