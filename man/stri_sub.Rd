@@ -18,10 +18,10 @@ stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
 
 \item{length}{integer vector; mutually exclusive with \code{to} and \code{from} being a matrix}
 
-\item{value}{character vector to be substituted; replacement function only}
-
-\item{omit_na;}{single logical value; if \code{TRUE}, missing values in \code{from},
+\item{omit_na}{single logical value; if \code{TRUE}, missing values in \code{from},
 \code{to}, or \code{length} will result in an unchanged input; replacement function only}
+
+\item{value}{character vector to be substituted; replacement function only}
 }
 \value{
 \code{stri_sub} returns a character vector.
@@ -46,21 +46,20 @@ If \code{from} is a two-column matrix, then the first column is used
 as \code{from} and the second one as \code{to}. In such case arguments
 \code{to} and \code{length} are ignored.
 
-Of course, the indices are code point-based,
-and not byte-based.
+Of course, the indices are code point-based, and not byte-based.
 Note that for some Unicode strings, the extracted substrings may not
 be well-formed, especially if the input is not NFC-normalized
 (see \code{\link{stri_trans_nfc}}),
 includes byte order marks, Bidirectional text marks, and so on.
 Handle with care.
 
-Indices are 1-based, i.e. an index equal to 1 denotes the first character
+Indices are 1-based, i.e., an index equal to 1 denotes the first character
 in a string, which gives a typical \R look-and-feel.
 Argument \code{to} defines the last index of the substring, inclusive.
 
 For negative indices in \code{from} or \code{to},
 counting starts at the end of the string.
-E.g. index -1 denotes the last code point in the string.
+For instance, index -1 denotes the last code point in the string.
 Negative \code{length} means counting backwards.
 
 

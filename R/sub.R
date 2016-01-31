@@ -47,21 +47,20 @@
 #' as \code{from} and the second one as \code{to}. In such case arguments
 #' \code{to} and \code{length} are ignored.
 #'
-#' Of course, the indices are code point-based,
-#' and not byte-based.
+#' Of course, the indices are code point-based, and not byte-based.
 #' Note that for some Unicode strings, the extracted substrings may not
 #' be well-formed, especially if the input is not NFC-normalized
 #' (see \code{\link{stri_trans_nfc}}),
 #' includes byte order marks, Bidirectional text marks, and so on.
 #' Handle with care.
 #'
-#' Indices are 1-based, i.e. an index equal to 1 denotes the first character
+#' Indices are 1-based, i.e., an index equal to 1 denotes the first character
 #' in a string, which gives a typical \R look-and-feel.
 #' Argument \code{to} defines the last index of the substring, inclusive.
 #'
 #' For negative indices in \code{from} or \code{to},
 #' counting starts at the end of the string.
-#' E.g. index -1 denotes the last code point in the string.
+#' For instance, index -1 denotes the last code point in the string.
 #' Negative \code{length} means counting backwards.
 #'
 #'
@@ -75,7 +74,7 @@
 #' @param from integer vector or two-column matrix
 #' @param to integer vector; mutually exclusive with \code{length} and \code{from} being a matrix
 #' @param length integer vector; mutually exclusive with \code{to} and \code{from} being a matrix
-#' @param omit_na; single logical value; if \code{TRUE}, missing values in \code{from},
+#' @param omit_na single logical value; if \code{TRUE}, missing values in \code{from},
 #' \code{to}, or \code{length} will result in an unchanged input; replacement function only
 #' @param value character vector to be substituted; replacement function only
 #'
