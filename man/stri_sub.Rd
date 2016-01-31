@@ -7,7 +7,7 @@
 \usage{
 stri_sub(str, from = 1L, to = -1L, length)
 
-stri_sub(str, from = 1L, to = -1L, length) <- value
+stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
 }
 \arguments{
 \item{str}{character vector}
@@ -67,7 +67,7 @@ Negative \code{length} means counting backwards.
 In \code{stri_sub}, out-of-bound indices are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
 
-In \code{stri_sub<-}, ``strange'' configurations of indices work as
+In \code{stri_sub<-}, some configurations of indices may work as
 string concatenation at the front, back, or middle.
 }
 \examples{

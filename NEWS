@@ -19,12 +19,14 @@ now results in `c("1", NA)`
 * [NEW FEATURE] #199: `stri_sub<-` now allows for ignoring `NA` locations
 (a new `omit_na` argument added)
 
-* [NEW FEATURE] ... #207: `stri_sub<-` now allows for substring insertions
-(`length=0`)
+* [NEW FEATURE] #207: `stri_sub<-` now allows for substring insertions
+(via `length=0`)
 
-* ... #175
-* ... #30
-* ...
+* ... #175 stri_paste accepting lists
+
+* ... #30 stri_sub<- accepting lists...
+
+* ... #124 stri_subset<-
 
 -------------------------------------------------------------------------------
 

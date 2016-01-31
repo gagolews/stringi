@@ -58,7 +58,6 @@ test_that("stri_sub<-", {
    expect_identical({s <- "test"; stri_sub(s, to=numeric(0), from=1) <- "test"; s}, character(0))
    expect_identical({s <- "test"; stri_sub(s, length=numeric(0), from=1) <- "test"; s}, character(0))
 
-   s <- "\U0010FFFFa\u0105";  stri_sub(s,1,1) <- "x";   expect_identical(s, "xa\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,2,2) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,3,3) <- "x";   expect_identical(s, "\U0010FFFFax")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,9,9) <- "x";   expect_identical(s, "\U0010FFFFa\u0105x")
@@ -72,4 +71,24 @@ test_that("stri_sub<-", {
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=FALSE) <- "_"; expect_identical(s, c("a_b", NA))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";")) <- "_"; expect_identical(s, c("a_b", NA))
 
+   s <- "\u0106a\u0105";  stri_sub(s,0,to=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,1,to=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,2,to=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,3,to=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,3,to=2) <- "x"; expect_identical(s, "\u0106ax\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,4,to=0) <- "x"; expect_identical(s, "\u0106a\u0105x")
+
+   s <- "\u0106a\u0105";  stri_sub(s,0,length=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,1,length=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,2,length=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,3,length=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,4,length=0) <- "x"; expect_identical(s, "\u0106a\u0105x")
+
+   s <- "\u0106a\u0105";  stri_sub(s,-3,to=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,-2,to=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,-1,to=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
+
+   s <- "\u0106a\u0105";  stri_sub(s,-3,length=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,-2,length=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
+   s <- "\u0106a\u0105";  stri_sub(s,-1,length=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
 })
