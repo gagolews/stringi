@@ -235,6 +235,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-31)
  *    FR #199: new arg: `omit_na`
+ *    FR #207: allow insertions
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
@@ -291,11 +292,14 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
 
       if (length_tab) {
          if (cur_to <= 0) {
-            SET_STRING_ELT(ret, i, R_BlankString);
-            continue;
+            // SET_STRING_ELT(ret, i, R_BlankString);
+            // continue;
+            cur_to = 0;
          }
-         cur_to = cur_from + cur_to - 1;
-         if (cur_from < 0 && cur_to >= 0) cur_to = -1;
+         else {
+            cur_to = cur_from + cur_to - 1;
+            if (cur_from < 0 && cur_to >= 0) cur_to = -1;
+         }
       }
 
       const char* str_cur_s   = str_cont.get(i).c_str();
@@ -307,6 +311,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
       R_len_t cur_to2;   // UTF-8 byte incices
 
       STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2)
+      if (cur_to2 < cur_from2) cur_to2 = cur_from2;
 
       R_len_t buflen = str_cur_n-(cur_to2-cur_from2)+value_cur_n;
       buf.resize(buflen, false/*destroy contents*/);
