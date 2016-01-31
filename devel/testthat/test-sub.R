@@ -68,4 +68,8 @@ test_that("stri_sub<-", {
    s <- "\U0010FFFFa\u0105";  stri_sub(s,-2,length=1) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,-1,length=1) <- "x";   expect_identical(s, "\U0010FFFFax")
 
+   s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=TRUE) <- "_"; expect_identical(s, c("a_b", "c:d"))
+   s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=FALSE) <- "_"; expect_identical(s, c("a_b", NA))
+   s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";")) <- "_"; expect_identical(s, c("a_b", NA))
+
 })
