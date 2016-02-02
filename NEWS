@@ -9,24 +9,25 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 1.0-2 (under development)
+## 1.0-3 (under development)
 
 * [BUGFIX] #214: allow a regex pattern like `.*`  to match an empty string.
 
 * [BUGFIX] #210: `stri_replace_all_fixed(c("1", "NULL"), "NULL", NA)`
-now results in `c("1", NA)`
+now results in `c("1", NA)`.
 
 * [NEW FEATURE] #199: `stri_sub<-` now allows for ignoring `NA` locations
-(a new `omit_na` argument added)
+(a new `omit_na` argument added).
 
 * [NEW FEATURE] #207: `stri_sub<-` now allows for substring insertions
-(via `length=0`)
+(via `length=0`).
+
+* [NEW FUNCTION] #124: `stri_subset<-` functions added.
 
 * ... #175 stri_paste accepting lists
 
 * ... #30 stri_sub<- accepting lists...
 
-* ... #124 stri_subset<-
 
 -------------------------------------------------------------------------------
 

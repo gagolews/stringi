@@ -108,3 +108,21 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na)
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
+
+
+/**
+ * Substitutes vector elements if a pattern occurs in a string
+ *
+ * @param str character vector
+ * @param pattern character vector
+ * @param value character vector
+ * @return character vector
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ *   FR#124
+ */
+SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP value)
+{
+   Rf_error("TO DO");
+}

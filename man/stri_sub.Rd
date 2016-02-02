@@ -21,11 +21,11 @@ stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
 \item{omit_na}{single logical value; if \code{TRUE}, missing values in \code{from},
 \code{to}, or \code{length} will result in an unchanged input; replacement function only}
 
-\item{value}{character vector to be substituted; replacement function only}
+\item{value}{character vector to be substituted with; replacement function only}
 }
 \value{
 \code{stri_sub} returns a character vector.
-\code{stri_sub<-} changes the \code{value} object.
+\code{stri_sub<-} changes the \code{str} object.
 
 The extract function \code{stri_sub} returns the indicated substrings.
 The replacement function \code{stri_sub<-} is invoked for its
