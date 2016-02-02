@@ -43,6 +43,7 @@
  * @param str character vector
  * @param pattern character vector
  * @param omit_na single logical value
+ * @param opts_fixed list
  * @return character vector
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
@@ -100,3 +101,58 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_fixed)
    return ret;
    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
+
+
+/**
+ * Substitutes vector elements if a pattern occurs in a string
+ *
+ * @param str character vector
+ * @param pattern character vector
+ * @param opts_fixed list
+ * @param value character vector
+ * @return character vector
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ *   FR#124
+ */
+SEXP stri_subset_fixed_replacement(SEXP str, SEXP pattern, SEXP opts_fixed, SEXP value)
+{
+   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+   PROTECT(value = stri_prepare_arg_string(value, "value"));
+
+   int vectorize_length = LENGTH(str);
+   int value_length = LENGTH(value);
+   if (value_length == 0)
+      Rf_error(MSG__REPLACEMENT_ZERO);
+
+   STRI__ERROR_HANDLER_BEGIN(3)
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8 value_cont(value, value_length);
+   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+   R_len_t k = 0;
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+      {SET_STRING_ELT(ret, i, NA_STRING);}, SET_STRING_ELT(ret, i, str_cont.toR(i)); )
+
+      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+      if ((int)(matcher->findFirst() != USEARCH_DONE))
+         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+      else
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+

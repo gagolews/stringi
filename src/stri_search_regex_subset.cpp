@@ -42,6 +42,7 @@
  * @param pattern R character vector containing regular expressions
  * @param omit_na single logical value
  * @param opts_regex list
+ * @return character vector
  *
  * @version 0.3-1 (Bartek Tartanus, 2014-07-25)
  *
@@ -95,4 +96,22 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
    STRI__UNPROTECT_ALL
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+
+/**
+ * Substitutes vector elements if a pattern occurs in a string
+ *
+ * @param str character vector
+ * @param pattern character vector
+ * @param opts_regex list
+ * @param value character vector
+ * @return character vector
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ *   FR#124
+ */
+SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP opts_regex, SEXP value)
+{
+   Rf_error("TO DO");
 }

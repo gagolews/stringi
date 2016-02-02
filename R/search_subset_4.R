@@ -33,21 +33,20 @@
 #' Select Elements that Match a Given Pattern
 #'
 #' @description
-#' These functions return a subvector consisting of
+#' These functions return or modify a subvector consisting of
 #' strings that match a given pattern. In other words, they
 #' are roughly equivalent (but faster and easier to use) to a call to
-#' \code{str[\link{stri_detect}(str, ...)]}.
+#' \code{str[\link{stri_detect}(str, ...)]} or
+#' \code{str[\link{stri_detect}(str, ...)] <- value}.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
-#' Of course, normally you will use that function in case
-#' of \code{length(str) >= length(pattern)}.
+#' Vectorized over \code{str}, and \code{pattern} or \code{value} (replacement version).
 #'
-#' \code{stri_subset} is a convenience function.
-#' It calls either \code{stri_subset_regex},
+#' \code{stri_subset} and \code{stri_subset<-} are convenience functions.
+#' They call either \code{stri_subset_regex},
 #' \code{stri_subset_fixed}, \code{stri_subset_coll},
 #' or \code{stri_subset_charclass},
-#' depending on the argument used. Relying on those underlying
+#' depending on the argument used. Relying on these underlying
 #' functions will make your code run slightly faster.
 #'
 #' @param str character vector with strings to search in
@@ -63,15 +62,18 @@
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
 #' \code{opts_fixed}, and so on
+#' @param value character vector to be substituted with; replacement function only
 #'
-#' @return All the functions return a character vector.
+#' @return The \code{stri_subset} functions return a character vector.
 #' As usual, the output encoding is always UTF-8.
 #'
+#' The \code{stri_subset<-} functions change the \code{str} object.
+#'
 #' @examples
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#' stri_subset_fixed(c("stringi R", "REXAMINE", "123"), 'R')
-#' stri_subset_charclass(c("stRRRingi","REXAMINE","123"),
-#'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
+#' stri_subset_regex(c("stringi R", "123", "ID456", ""), "^[0-9]+$")
+#'
+#' x <- c("stringi R", "123", "ID456", "")
+#' stri_subset_regex(x, "[^0-9]+|^$") <- NA
 #'
 #' @family search_subset
 #' @export
@@ -125,4 +127,60 @@ stri_subset_regex <- function(str, pattern, omit_na=FALSE, ..., opts_regex=NULL)
    if (!missing(...))
        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
    .Call(C_stri_subset_regex, str, pattern, omit_na, opts_regex)
+}
+
+
+#' @export
+#' @rdname stri_subset
+#' @usage stri_subset_fixed(str, pattern, ..., opts_fixed=NULL) <- value
+"stri_subset_fixed<-" <- function(str, pattern, ..., opts_fixed=NULL, value) {
+   if (!missing(...))
+       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+   .Call(C_stri_subset_fixed_replacement, str, pattern, opts_fixed, value)
+}
+
+#' @export
+#' @rdname stri_subset
+#' @usage stri_subset_charclass(str, pattern) <- value
+"stri_subset_charclass<-" <- function(str, pattern, value) {
+   .Call(C_stri_subset_charclass_replacement, str, pattern, value)
+}
+
+#' @export
+#' @rdname stri_subset
+#' @usage stri_subset_regex(str, pattern, ..., opts_regex=NULL) <- value
+"stri_subset_regex<-" <- function(str, pattern, ..., opts_regex=NULL, value) {
+   if (!missing(...))
+       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+   .Call(C_stri_subset_regex_replacement, str, pattern, opts_regex, value)
+}
+
+#' @export
+#' @rdname stri_subset
+#' @usage stri_subset_coll(str, pattern, ..., opts_collator=NULL) <- value
+"stri_subset_coll<-" <- function(str, pattern, ..., opts_collator=NULL, value) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+   .Call(C_stri_subset_coll_replacement, str, pattern, opts_collator, value)
+}
+
+
+#' @export
+#' @rdname stri_subset
+#' @usage stri_subset(str, ..., regex, fixed, coll, charclass) <- value
+"stri_subset<-" <- function(str, ..., regex, fixed, coll, charclass, value) {
+   providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
+                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
+
+   if (sum(providedarg) != 1)
+      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+
+   if (providedarg["regex"])
+      `stri_subset_regex<-`(str, regex, ..., value=value)
+   else if (providedarg["fixed"])
+      `stri_subset_fixed<-`(str, fixed, ..., value=value)
+   else if (providedarg["coll"])
+      `stri_subset_coll<-`(str, coll, ..., value=value)
+   else if (providedarg["charclass"])
+      `stri_subset_charclass<-`(str, charclass, ..., value=value)
 }

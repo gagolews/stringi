@@ -29,4 +29,32 @@ test_that("stri_subset_fixed", {
    suppressWarnings(expect_identical(stri_subset_fixed("","a", omit_na=TRUE), character(0)))
    expect_identical(stri_subset_fixed(c("a","b", NA, "aaa", ""),c("a"), omit_na=TRUE), c("a", "aaa"))
    expect_identical(stri_subset_fixed('a', c('a', 'b', 'c'), omit_na=TRUE), "a")
+
+
+   x <- c("stringi R", "123", "ID456", "")
+   stri_subset_fixed(x, "1") <- c(NA, "8")
+   expect_identical(x, c("stringi R", NA, "ID456", ""))
+
+   x <- c("stringi R", "123", "ID456", "")
+   stri_subset_fixed(x, "1") <- c(NA)
+   expect_identical(x, c("stringi R", NA, "ID456", ""))
+
+   x <- c("stringi R", "123", "ID456", "")
+   stri_subset_fixed(x, "7") <- c("a", "b")
+   expect_identical(x, c("stringi R", "123", "ID456", ""))
+
+   x <- c("stringi R", "123", "ID456", "")
+   stri_subset_fixed(x, "7") <- c("a", "b")
+   expect_identical(x, c("stringi R", "123", "ID456", ""))
+
+   x <- c("stringi R", "173", "ID457", "7")
+   stri_subset_fixed(x, "7") <- c("a", "b")
+   expect_identical(x, c("stringi R", "a", "b", "a"))
+
+   x <- c("stringi R", "173", "ID457", "7")
+   expect_error(stri_subset_fixed(x, "7") <- character(0))
+
+   x <- c("stringi R", "123", "ID456", "")
+   stri_subset(x, fixed="S", case_insensitive=TRUE) <- NA
+   expect_identical(x, c(NA, "123", "ID456", ""))
 })

@@ -76,11 +76,11 @@
 #' @param length integer vector; mutually exclusive with \code{to} and \code{from} being a matrix
 #' @param omit_na single logical value; if \code{TRUE}, missing values in \code{from},
 #' \code{to}, or \code{length} will result in an unchanged input; replacement function only
-#' @param value character vector to be substituted; replacement function only
+#' @param value character vector to be substituted with; replacement function only
 #'
 #'
 #' @return \code{stri_sub} returns a character vector.
-#' \code{stri_sub<-} changes the \code{value} object.
+#' \code{stri_sub<-} changes the \code{str} object.
 #'
 #' The extract function \code{stri_sub} returns the indicated substrings.
 

@@ -106,3 +106,21 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
       if (collator) { ucol_close(collator); collator = NULL; }
    )
 }
+
+
+/**
+ * Substitutes vector elements if a pattern occurs in a string
+ *
+ * @param str character vector
+ * @param pattern character vector
+ * @param value character vector
+ * @param opts_collator list
+ * @return character vector
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ *   FR#124
+ */
+SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP opts_collator, SEXP value)
+{
+   Rf_error("TO DO");
+}
