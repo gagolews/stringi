@@ -108,10 +108,62 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
  * @param value character vector
  * @return character vector
  *
- * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
  */
 SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP opts_regex, SEXP value)
 {
-   Rf_error("TO DO");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+   PROTECT(value = stri_prepare_arg_string(value, "value"));
+
+   int vectorize_length = LENGTH(str);
+   int value_length = LENGTH(value);
+   if (value_length == 0)
+      Rf_error(MSG__REPLACEMENT_ZERO);
+
+   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+   UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
+
+   STRI__ERROR_HANDLER_BEGIN(3)
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8 value_cont(value, value_length);
+   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+   R_len_t k = 0;
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+      {SET_STRING_ELT(ret, i, NA_STRING);})
+
+      UErrorCode status = U_ZERO_ERROR;
+      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      matcher->reset(str_text);
+
+      if ((int)matcher->find())
+         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+      else
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+   }
+
+   if (str_text) {
+      utext_close(str_text);
+      str_text = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END({
+      if (str_text) {
+         utext_close(str_text);
+         str_text = NULL;
+      }
+   })
 }
