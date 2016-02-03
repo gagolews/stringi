@@ -26,16 +26,16 @@ otherwise an error is generated.
 
 Almost all functions are vectorized with respect to all their arguments;
 This may sometimes lead to strange results - we assume you know what
-you are doing. However, thanks to this property you may
-e.g. search for one pattern in each given string,
+you are doing. However, due to this property you may,
+e.g., search for one pattern in each given string,
 or search for each pattern in one given string.
 
 We of course took great care of performance issues:
-e.g. in regular expression searching, regex matchers are reused
+e.g., in regular expression searching, regex matchers are reused
 from iteration to iteration, as long it is possible.
 
 Functions with some non-vectorized arguments are rare:
-e.g. regular expression matcher's settings are established
+e.g., regular expression matcher's settings are established
 once per each call.
 
 Some functions
@@ -43,7 +43,7 @@ assume that a vector with one element is given
 as an argument (like \code{collapse} in \code{\link{stri_join}}).
 In such cases, if an empty vector is given you will get an error
 and for vectors with more than 1 elements - a warning will be
-generator (only the first element will be used).
+generated (only the first element will be used).
 
 You may find details on vectorization behavior in the man pages
 on each particular function of your interest.
@@ -61,12 +61,11 @@ then the corresponding resulting value is also set to \code{NA}.
 
 
 Generally, all our functions drop input objects' attributes
-(e.g. \code{\link{names}}, \code{\link{dim}}, etc.).
-This is generally because
-of advanced vectorization and for efficiency reasons.
+(e.g., \code{\link{names}}, \code{\link{dim}}, etc.).
+This is generally because of advanced vectorization and for efficiency reasons.
 Thus, if arguments' preserving is needed,
 please remember to copy important attributes manually
-or use e.g. the subsetting operation like \code{x[] <- stri_...(x, ...)}.
+or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 }
 \seealso{
 Other stringi_general_topics: \code{\link{stringi-encoding}},

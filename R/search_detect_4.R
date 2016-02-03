@@ -46,17 +46,19 @@
 #' It calls either \code{stri_detect_regex},
 #' \code{stri_detect_fixed}, \code{stri_detect_coll},
 #' or \code{stri_detect_charclass}, depending on the argument used.
-#' Relying on those underlying functions will make your code run slightly
+#' Relying on these underlying functions will make your code run slightly
 #' faster.
 #'
 #' See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
 #' for testing whether a string starts or ends with a given pattern
-#' match, respectively.
+#' match, respectively. Moreover, see \code{\link{stri_subset}}
+#' for a character vector subsetting.
 #'
 #'
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
 #' for more details refer to \link{stringi-search}
+#' @param negate single logical value; whether a no-match is rather of interest
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
 #' a search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
@@ -66,7 +68,7 @@
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
 #' \code{opts_fixed}, and so on
 #'
-#' @return All the functions return a logical vector.
+#' @return Each function returns a logical vector.
 #'
 #' @examples
 #' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
@@ -103,32 +105,32 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
 
 #' @export
 #' @rdname stri_detect
-stri_detect_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
+stri_detect_fixed <- function(str, pattern, negate=FALSE, ..., opts_fixed=NULL) {
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_detect_fixed, str, pattern, opts_fixed)
+   .Call(C_stri_detect_fixed, str, pattern, negate, opts_fixed)
 }
 
 #' @export
 #' @rdname stri_detect
-stri_detect_charclass <- function(str, pattern) {
-   .Call(C_stri_detect_charclass, str, pattern)
+stri_detect_charclass <- function(str, pattern, negate=FALSE) {
+   .Call(C_stri_detect_charclass, str, pattern, negate)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, ..., opts_collator=NULL) {
+stri_detect_coll <- function(str, pattern, negate=FALSE, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_detect_coll, str, pattern, opts_collator)
+   .Call(C_stri_detect_coll, str, pattern, negate, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, ..., opts_regex=NULL) {
+stri_detect_regex <- function(str, pattern, negate=FALSE, ..., opts_regex=NULL) {
    if (!missing(...))
        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_detect_regex, str, pattern, opts_regex)
+   .Call(C_stri_detect_regex, str, pattern, negate, opts_regex)
 }

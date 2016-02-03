@@ -267,6 +267,7 @@ invisible(NULL)
 #' in regexes, refer to \link{stringi-search-charclass}.
 #'
 #' @section Regex Functions in \pkg{stringi}:
+#'
 #' Note that if a given regex \code{pattern} is empty,
 #' then all functions in \pkg{stringi} give \code{NA} in result
 #' and generate a warning.

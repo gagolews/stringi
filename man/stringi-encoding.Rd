@@ -50,7 +50,7 @@ which amounts to a 21-bit code space. Depending on the encoding
 form (UTF-8, UTF-16, or UTF-32), each character will
 then be represented either as a sequence of one to four 8-bit bytes,
 one or two 16-bit code units, or a single 32-bit integer
-(cf. the ICU FAQ).
+(compare the ICU FAQ).
 
 In most cases, Unicode is a superset of the characters
 supported by any given code page.

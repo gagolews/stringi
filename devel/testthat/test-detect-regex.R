@@ -8,7 +8,8 @@ test_that("stri_detect_regex", {
    suppressWarnings(expect_identical(stri_detect_regex("",""), NA))
    suppressWarnings(expect_identical(stri_detect_regex("a",""), NA))
    suppressWarnings(expect_identical(stri_detect_regex("","a"), FALSE))
-   expect_identical(stri_detect_regex(c("","ala"),"ala"), c(FALSE, TRUE))
+   expect_identical(stri_detect_regex(c("","ala", "ola"),"ala"), c(FALSE, TRUE, FALSE))
+   expect_identical(stri_detect(c("","ala", "ola"),regex="ala",negate=TRUE), !c(FALSE, TRUE, FALSE))
    expect_identical(stri_detect_regex(c("","ala", "ala", "bbb"),c("ala", "bbb")), c(FALSE, FALSE, TRUE, TRUE))
    expect_identical(stri_detect_regex(c("ala","", "", "bbb"),c("ala", "bbb")), c(TRUE, FALSE, FALSE, TRUE))
 

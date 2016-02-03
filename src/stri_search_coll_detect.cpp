@@ -58,9 +58,13 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator)
+SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP negate, SEXP opts_collator)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
@@ -84,12 +88,13 @@ SEXP stri_detect_coll(SEXP str, SEXP pattern, SEXP opts_collator)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ret_tab[i] = NA_LOGICAL,
-         ret_tab[i] = FALSE)
+         ret_tab[i] = negate_1)
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       ret_tab[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
+      if (negate_1) ret_tab[i] = !ret_tab[i];
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
 

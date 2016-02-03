@@ -15,23 +15,26 @@
 \usage{
 stri_subset(str, ..., regex, fixed, coll, charclass)
 
-stri_subset_fixed(str, pattern, omit_na = FALSE, ..., opts_fixed = NULL)
-
-stri_subset_charclass(str, pattern, omit_na = FALSE)
-
-stri_subset_coll(str, pattern, omit_na = FALSE, ..., opts_collator = NULL)
-
-stri_subset_regex(str, pattern, omit_na = FALSE, ..., opts_regex = NULL)
-
-stri_subset_fixed(str, pattern, ..., opts_fixed=NULL) <- value
-
-stri_subset_charclass(str, pattern) <- value
-
-stri_subset_regex(str, pattern, ..., opts_regex=NULL) <- value
-
-stri_subset_coll(str, pattern, ..., opts_collator=NULL) <- value
-
 stri_subset(str, ..., regex, fixed, coll, charclass) <- value
+
+stri_subset_fixed(str, pattern, omit_na = FALSE, negate = FALSE, ...,
+  opts_fixed = NULL)
+
+stri_subset_fixed(str, pattern, negate=FALSE, ..., opts_fixed=NULL) <- value
+
+stri_subset_charclass(str, pattern, omit_na = FALSE, negate = FALSE)
+
+stri_subset_charclass(str, pattern, negate=FALSE) <- value
+
+stri_subset_coll(str, pattern, omit_na = FALSE, negate = FALSE, ...,
+  opts_collator = NULL)
+
+stri_subset_coll(str, pattern, negate=FALSE, ..., opts_collator=NULL) <- value
+
+stri_subset_regex(str, pattern, omit_na = FALSE, negate = FALSE, ...,
+  opts_regex = NULL)
+
+stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -40,19 +43,22 @@ stri_subset(str, ..., regex, fixed, coll, charclass) <- value
 including additional settings for \code{opts_collator}, \code{opts_regex},
 \code{opts_fixed}, and so on}
 
+\item{value}{character vector to be substituted with; replacement function only}
+
 \item{pattern, regex, fixed, coll, charclass}{character vector defining search patterns;
-for more details refer to \link{stringi-search}}
+for more details refer to \link{stringi-search}; the replacement functions
+accept only one pattern at a time}
 
 \item{omit_na}{single logical value; should missing values be excluded
 from the result?}
+
+\item{negate}{single logical value; whether a no-match is rather of interest}
 
 \item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
 a search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 for default settings;}
-
-\item{value}{character vector to be substituted with; replacement function only}
 }
 \value{
 The \code{stri_subset} functions return a character vector.
@@ -82,6 +88,11 @@ stri_subset_regex(c("stringi R", "123", "ID456", ""), "^[0-9]+$")
 
 x <- c("stringi R", "123", "ID456", "")
 stri_subset_regex(x, "[^0-9]+|^$") <- NA
+print(x)
+
+x <- c("stringi R", "123", "ID456", "")
+stri_subset_regex(x, "^[0-9]+$", negate=TRUE) <- NA
+print(x)
 
 }
 \seealso{

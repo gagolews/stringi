@@ -24,6 +24,9 @@ now results in `c("1", NA)`.
 
 * [NEW FUNCTION] #124: `stri_subset<-` functions added.
 
+* [NEW FEATURE] #216: `stri_detect`, `stri_subset`, `stri_subset<-` gained
+a `negate` argument.
+
 * ... #175 stri_paste accepting lists
 
 * ... #30 stri_sub<- accepting lists...

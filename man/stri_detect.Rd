@@ -10,13 +10,13 @@
 \usage{
 stri_detect(str, ..., regex, fixed, coll, charclass)
 
-stri_detect_fixed(str, pattern, ..., opts_fixed = NULL)
+stri_detect_fixed(str, pattern, negate = FALSE, ..., opts_fixed = NULL)
 
-stri_detect_charclass(str, pattern)
+stri_detect_charclass(str, pattern, negate = FALSE)
 
-stri_detect_coll(str, pattern, ..., opts_collator = NULL)
+stri_detect_coll(str, pattern, negate = FALSE, ..., opts_collator = NULL)
 
-stri_detect_regex(str, pattern, ..., opts_regex = NULL)
+stri_detect_regex(str, pattern, negate = FALSE, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector with strings to search in}
@@ -28,6 +28,8 @@ including additional settings for \code{opts_collator}, \code{opts_regex},
 \item{pattern, regex, fixed, coll, charclass}{character vector defining search patterns;
 for more details refer to \link{stringi-search}}
 
+\item{negate}{single logical value; whether a no-match is rather of interest}
+
 \item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
 a search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
@@ -35,7 +37,7 @@ and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
 for default settings;}
 }
 \value{
-All the functions return a logical vector.
+Each function returns a logical vector.
 }
 \description{
 These functions determine, for each string in \code{str},
@@ -51,12 +53,13 @@ and a warning is generated.
 It calls either \code{stri_detect_regex},
 \code{stri_detect_fixed}, \code{stri_detect_coll},
 or \code{stri_detect_charclass}, depending on the argument used.
-Relying on those underlying functions will make your code run slightly
+Relying on these underlying functions will make your code run slightly
 faster.
 
 See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
 for testing whether a string starts or ends with a given pattern
-match, respectively.
+match, respectively. Moreover, see \code{\link{stri_subset}}
+for a character vector subsetting.
 }
 \examples{
 stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))

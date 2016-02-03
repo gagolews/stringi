@@ -10,6 +10,11 @@ test_that("stri_subset_charclass", {
    expect_identical(stri_subset_charclass(c("ala","", "", "111"),c("\\p{L}", "\\p{N}")), c("ala",111))
    expect_identical(stri_subset_charclass(c("a","b", NA, "aaa", ""),"[a]"), c("a", NA, "aaa"))
 
+   expect_identical(stri_subset_charclass(c(NA,"","ala","bkb"),"[a]"), c(NA,"ala"))
+   expect_identical(stri_subset_charclass(c(NA,"","ala","bkb"),"[a]",negate=TRUE), c(NA,"", "bkb"))
+   expect_identical(stri_subset_charclass(c(NA,"","ala","bkb"),"[a]",omit_na=TRUE), c("ala"))
+   expect_identical(stri_subset_charclass(c(NA,"","ala","bkb"),"[a]",omit_na=TRUE,negate=TRUE), c("", "bkb"))
+
    expect_identical(stri_subset_charclass(c("a", "ab", "abc", "1234"), "\\p{L}"), c("a", "ab", "abc"))
    expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{L}", "\\p{Ll}", "\\p{Lu}")), rep("a\u0105bc",2))
    expect_identical(stri_subset_charclass("a\u0105bc", c("\\p{l}", "\\p{ll}", "\\p{lu}")), rep("a\u0105bc",2))
@@ -24,9 +29,21 @@ test_that("stri_subset_charclass", {
    expect_identical(stri_subset_charclass(c("a","b", NA, "aaa", ""),c("[a]"), omit_na=TRUE), c("a", "aaa"))
    expect_identical(stri_subset_charclass('a', c('[a]', '[b]', '[c]'), omit_na=TRUE), "a")
 
+   x <- c("", NA, "1")
+   stri_subset_charclass(x, "[2]") <- "e"
+   expect_identical(x, c("", NA, "1"))
+
+   x <- c("2", NA, "2")
+   stri_subset_charclass(x, "[2]", negate=TRUE) <- "e"
+   expect_identical(x, c("2", NA, "2"))
+
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_charclass(x, "[1]") <- c(NA, "8")
    expect_identical(x, c("stringi R", NA, "ID456", "", NA))
+
+   x <- c(NA,"stringi R", "123", "", "ID456")
+   stri_subset_charclass(x, "[1]", negate=TRUE) <- c("a", "b", "c","d")
+   expect_identical(x, c(NA, "a", "123", "b", "c"))
 
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_charclass(x, "[1]") <- c(NA)
