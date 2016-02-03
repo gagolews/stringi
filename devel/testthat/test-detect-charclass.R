@@ -3,10 +3,13 @@ context("test-detect-charclass.R")
 
 test_that("stri_detect_charclass", {
    expect_identical(stri_detect_charclass("a", NA), NA)
+   expect_identical(stri_detect_charclass("a", NA, negate=TRUE), NA)
    expect_identical(stri_detect_charclass(NA, "\\p{Z}"), NA)
    expect_identical(stri_detect_charclass(NA, NA), NA)
    expect_error(stri_detect_charclass("a", "WTF????"))
    expect_identical(stri_detect_charclass(c("","ala"),"\\p{L}"), c(FALSE, TRUE))
+   expect_identical(stri_detect_charclass(c("","ala","123"), negate=TRUE,"\\p{L}"), c(TRUE, FALSE, TRUE))
+   expect_identical(stri_detect(c("","ala","123"), negate=TRUE,charclass="\\p{L}"), c(TRUE, FALSE, TRUE))
    expect_identical(stri_detect_charclass(c("ala","", "", "111"),c("\\p{L}", "\\p{N}")), c(TRUE, FALSE, FALSE, TRUE))
 
    expect_identical(stri_detect_charclass(c("a", "ab", "abc", "1234"), "\\p{L}"), c(T,T,T,F))

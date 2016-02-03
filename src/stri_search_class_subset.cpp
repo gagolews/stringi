@@ -52,9 +52,13 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    FR #122: omit_na arg added
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na)
+SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -96,10 +100,11 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na)
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur->contains(chr)) {
             which[i] = TRUE;
-            result_counter++;
             break;
          }
       }
+      if (negate_1) which[i] = !which[i];
+      if (which[i]) result_counter++;
    }
 
    SEXP ret;
@@ -121,9 +126,13 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na)
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP value)
+SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP value)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
    PROTECT(value = stri_prepare_arg_string(value, "value"));
@@ -167,7 +176,7 @@ SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP value)
          }
       }
 
-      if (found)
+      if ((found && !negate_1) || (!found && negate_1))
          SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
       else
          SET_STRING_ELT(ret, i, str_cont.toR(i));

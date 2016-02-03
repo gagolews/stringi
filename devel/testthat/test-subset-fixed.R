@@ -5,7 +5,12 @@ test_that("stri_subset_fixed", {
    expect_identical(stri_subset_fixed("a", NA), NA_character_)
    expect_identical(stri_subset_fixed(NA, "a"), NA_character_)
    expect_identical(stri_subset_fixed(NA, NA), NA_character_)
-   expect_identical(stri_subset_fixed(c("","ala"),"ala"), "ala")
+
+   expect_identical(stri_subset_fixed(c(NA,"","ala","bkb"),"ala"), c(NA,"ala"))
+   expect_identical(stri_subset_fixed(c(NA,"","ala","bkb"),"ala",negate=TRUE), c(NA,"", "bkb"))
+   expect_identical(stri_subset_fixed(c(NA,"","ala","bkb"),"ala",omit_na=TRUE), c("ala"))
+   expect_identical(stri_subset_fixed(c(NA,"","ala","bkb"),"ala",omit_na=TRUE,negate=TRUE), c("", "bkb"))
+
    expect_identical(stri_subset_fixed(c("ala","", "", "bbb"),c("ala", "bbb")), c("ala", "bbb"))
    expect_identical(stri_subset_fixed("kot lorem1", character(0)), character(0))
    expect_identical(stri_subset_fixed(character(0), "ipsum 1234"), character(0))
@@ -31,6 +36,14 @@ test_that("stri_subset_fixed", {
    expect_identical(stri_subset_fixed('a', c('a', 'b', 'c'), omit_na=TRUE), "a")
 
 
+   x <- c("", NA, "1")
+   stri_subset_fixed(x, "2") <- "e"
+   expect_identical(x, c("", NA, "1"))
+
+   x <- c("2", NA, "2")
+   stri_subset_fixed(x, "2", negate=TRUE) <- "e"
+   expect_identical(x, c("2", NA, "2"))
+
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_fixed(x, "1") <- c(NA, "8")
    expect_identical(x, c("stringi R", NA, "ID456", "", NA))
@@ -38,6 +51,10 @@ test_that("stri_subset_fixed", {
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_fixed(x, "1") <- c(NA)
    expect_identical(x, c("stringi R", NA, "ID456", "", NA))
+
+   x <- c(NA,"stringi R", "123", "", "ID456", NA)
+   stri_subset_fixed(x, "1", negate=TRUE) <- c("A","B","C","D")
+   expect_identical(x, c(NA,"A", "123", "B", "C", NA))
 
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_fixed(x, "7") <- c("a", "b")

@@ -5,7 +5,12 @@ test_that("stri_subset_coll", {
    expect_identical(stri_subset_coll("a", NA), NA_character_)
    expect_identical(stri_subset_coll(NA, "a"), NA_character_)
    expect_identical(stri_subset_coll(NA, NA), NA_character_)
-   expect_identical(stri_subset_coll(c("","ala"),"ala"), "ala")
+
+   expect_identical(stri_subset_coll(c(NA,"","ala","bkb"),"ala"), c(NA,"ala"))
+   expect_identical(stri_subset_coll(c(NA,"","ala","bkb"),"ala",negate=TRUE), c(NA,"", "bkb"))
+   expect_identical(stri_subset_coll(c(NA,"","ala","bkb"),"ala",omit_na=TRUE), c("ala"))
+   expect_identical(stri_subset_coll(c(NA,"","ala","bkb"),"ala",omit_na=TRUE,negate=TRUE), c("", "bkb"))
+
    expect_identical(stri_subset_coll(c("","ala","AlA"),"ala", opts_collator=stri_opts_collator(strength=1)), c("ala", "AlA"))
    expect_identical(stri_subset_coll(c("","ala","AlA"),"ala", strength=1), c("ala", "AlA"))
    expect_identical(stri_subset_coll("kot lorem1", character(0)), character(0))
@@ -33,6 +38,13 @@ test_that("stri_subset_coll", {
    expect_identical(stri_subset_coll('a', c('a', 'b', 'c'), omit_na=TRUE), "a")
 
 
+   x <- c("", NA, "1")
+   stri_subset_coll(x, "2") <- "e"
+   expect_identical(x, c("", NA, "1"))
+
+   x <- c("2", NA, "2")
+   stri_subset_coll(x, "2", negate=TRUE) <- "e"
+   expect_identical(x, c("2", NA, "2"))
 
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_coll(x, "1") <- c(NA, "8")
@@ -41,6 +53,10 @@ test_that("stri_subset_coll", {
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_coll(x, "1") <- c(NA)
    expect_identical(x, c("stringi R", NA, "ID456", "", NA))
+
+   x <- c(NA, "stringi R", "123", "", "ID456")
+   stri_subset_coll(x, "1", negate=TRUE) <- c("A","B","C","D")
+   expect_identical(x, c(NA, "A", "123", "B", "C"))
 
    x <- c("stringi R", "123", "ID456", "", NA)
    stri_subset_coll(x, "7") <- c("a", "b")

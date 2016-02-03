@@ -6,18 +6,18 @@
 \description{
 In this section we explain how we deal with locales in \pkg{stringi}.
 Locale is a fundamental concept in \pkg{ICU}.
-It identifies a specific user community, i.e. a group of users
+It identifies a specific user community, i.e., a group of users
 who have similar culture and language expectations
 for human-computer interaction.
 }
 \details{
-Because a locale is just an identifier for a region,
+Because a locale is just an identifier of a region,
 no validity check is performed when you specify a Locale.
 \pkg{ICU} is implemented as a set of services.
-If you want to see whether particular resources are available
-for the locale you asked for, you must query those resources.
-Note: When you ask for a resource for a particular locale, you get
-back the best available match, not necessarily precisely what you requested.
+If you want to verify whether particular resources are available
+in the locale you asked for, you must query those resources.
+Note: When you ask for a resource for a particular locale, you get back
+the best available match, not necessarily precisely the one you requested.
 }
 \section{Locale Identifiers}{
 
@@ -27,10 +27,10 @@ to deliver culturally correct results.
 Locales are identified by character strings
 of the form \code{Language} code,
 \code{Language_Country} code, or \code{Language_Country_Variant}
-code, e.g. "en_US".
+code, e.g., "en_US".
 
 The two-letter \code{Language} code uses the ISO-639-1 standard,
-e.g. "en" stands for English, "pl" -- Polish, "fr" -- French,
+e.g., "en" stands for English, "pl" -- Polish, "fr" -- French,
 and "de" for German.
 
 \code{Country} is a two-letter code following the ISO-3166 standard.
@@ -40,8 +40,8 @@ for example in US-English ("en_US") and Australian-English ("en_AU").
 Differences may also appear in language conventions used within
 the same country. For example, the Euro currency may be used in several European
 countries while the individual country's currency is still in circulation.
-In such case, ICU \code{Variant} "_EURO" could be used for selecting locales
-that support the Euro currency.
+In such case, \pkg{ICU} \code{Variant} "_EURO" could be used for selecting
+locales that support the Euro currency.
 
 The final (optional) element of a locale is an optional list of
 keywords together with their values. Keywords must be unique.
@@ -49,7 +49,7 @@ Their order is not significant. Unknown keywords are ignored.
 The handling of keywords depends on the specific services that
 utilize them. Currently, the following keywords are recognized:
 \code{calendar}, \code{colation}, \code{currency}, and \code{numbers},
-e.g. \code{fr@collation=phonebook;}\code{calendar=islamic-civil} is a valid
+e.g., \code{fr@collation=phonebook;}\code{calendar=islamic-civil} is a valid
 French locale specifier together with keyword arguments. For
 more information, refer to the ICU user guide.
 
@@ -61,11 +61,11 @@ call \code{\link{stri_locale_list}}.
 
 
 Each locale-sensitive function in \pkg{stringi}
-selects the current default locale if an empty string or \code{NULL} is given as
+selects the current default locale if an empty string or \code{NULL} is provided
 as its \code{locale} argument. Default locales are available to all the functions:
 they are initially set to be the system locale on that platform,
 and may be changed with \code{\link{stri_locale_set}},
-for example if automatic  detection fails to recognize
+for example, if automatic  detection fails to recognize
 your locale properly.
 
 Sometimes it is suggested that your program should avoid changing the default locale:
@@ -73,7 +73,7 @@ it is not a good way to request an international object, especially
 only for a single function call.
 All locale-sensitive functions may request
 any desired locale per-call (by specifying the \code{locale} argument),
-i.e. without referencing to the default locale.
+i.e., without referencing to the default locale.
 During many tests, however, we did not observe any improper
 behavior of \pkg{stringi} while using a modified default locale.
 }
@@ -87,8 +87,8 @@ ordering, sorting, and searching. See \code{\link{stri_opts_collator}}
 for the description on how to tune its settings, and its \code{locale}
 argument in particular.
 
-Other locale-sensitive functions
-include e.g. \code{\link{stri_trans_tolower}} (that does character case mapping).
+Other locale-sensitive functions include, e.g.,
+ \code{\link{stri_trans_tolower}} (that does character case mapping).
 }
 \references{
 \emph{Locale} -- ICU User Guide, \url{http://userguide.icu-project.org/locale}

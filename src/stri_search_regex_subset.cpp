@@ -57,9 +57,13 @@
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
+SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_regex)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -88,6 +92,7 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       which[i] = (int)matcher->find();
+      if (negate_1) which[i] = !which[i];
       if (which[i]) result_counter++;
    }
 
@@ -110,9 +115,13 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_regex)
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP opts_regex, SEXP value)
+SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex, SEXP value)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
    PROTECT(value = stri_prepare_arg_string(value, "value"));
@@ -147,7 +156,8 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP opts_regex, SEXP
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       matcher->reset(str_text);
 
-      if ((int)matcher->find())
+      bool found = matcher->find();
+      if ((found && !negate_1) || (!found && negate_1))
          SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
       else
          SET_STRING_ELT(ret, i, str_cont.toR(i));

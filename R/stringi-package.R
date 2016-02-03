@@ -34,7 +34,7 @@
 #' @description
 #' \pkg{stringi} is THE \R package for fast, correct, consistent,
 #' and convenient string/text manipulation.
-#' We put a lot of effort into creating a software package that
+#' We created an \R extension package that
 #' gives predictable results on every platform, in each locale,
 #' and under any ``native'' character encoding.
 #'
@@ -80,7 +80,7 @@
 #'    matching,
 #' \item \link{stringi-search-coll} -- locale-aware pattern matching
 #'    for natural language processing tasks,
-#' \item \link{stringi-search-charclass} -- for finding elements of
+#' \item \link{stringi-search-charclass} -- seeking elements of
 #'    particular character classes, like ``all whitespaces'' or ``all digits'',
 #' \item \link{stringi-search-boundaries} -- text boundary analysis.
 #' }
@@ -102,7 +102,7 @@
 #' \item \code{\link{stri_length}} (among others) for determining the number
 #' of code points in a string. See also \code{\link{stri_count_boundaries}}
 #' for counting the number of \code{Unicode characters}
-#' and \code{\link{stri_width}} for approximating the width of a string..
+#' and \code{\link{stri_width}} for approximating the width of a string.
 #'
 #' \item \code{\link{stri_trim}} (among others) for
 #' trimming characters from the beginning or/and end of a string,
@@ -111,8 +111,8 @@
 #' Additionally, \code{\link{stri_wrap}} wraps text into lines.
 #'
 #' \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
-#' i.e. conversion to lower, UPPER, or Title Case,
-#' \code{\link{stri_trans_nfc}} (i.a.) for Unicode normalization,
+#' i.e., conversion to lower, UPPER, or Title Case,
+#' \code{\link{stri_trans_nfc}} (among others) for Unicode normalization,
 #' \code{\link{stri_trans_char}} for translating invidual code points,
 #' and \code{\link{stri_trans_general}} for other very general yet powerful
 #' text transforms, including transliteration.
@@ -134,10 +134,6 @@
 #' \item DRAFT API: \code{\link{stri_read_raw}},
 #' \code{\link{stri_read_lines}}, and  \code{\link{stri_write_lines}}
 #' for reading and writing text files.
-#'
-#' \item TO DO [these will appear in future versions
-#' of \pkg{stringi}]: HTML entities, MIME Base 64 encode/decode,
-#' number formatting, number spellout, and many more.
 #' }
 #'
 #' Note that each man page provides many further links to other

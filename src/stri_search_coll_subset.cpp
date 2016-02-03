@@ -58,9 +58,13 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    FR #122: omit_na arg added
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
+SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_collator)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -87,12 +91,13 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} },
-         {which[i] = FALSE; })
+         {which[i] = negate_1; if (which[i]) result_counter++;})
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
       which[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
+      if (negate_1) which[i] = !which[i];
       if (which[i]) result_counter++;
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
    }
@@ -119,9 +124,13 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP opts_collator, SEXP value)
+SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_collator, SEXP value)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
    PROTECT(value = stri_prepare_arg_string(value, "value"));
@@ -150,12 +159,14 @@ SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP opts_collator, SE
          i = str_cont.vectorize_next(i))
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-      {SET_STRING_ELT(ret, i, NA_STRING);}, SET_STRING_ELT(ret, i, str_cont.toR(i)); )
+      {SET_STRING_ELT(ret, i, NA_STRING);},
+      {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));})
 
       UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
       usearch_reset(matcher);
       UErrorCode status = U_ZERO_ERROR;
-      if ((int)usearch_first(matcher, &status) != USEARCH_DONE)
+      if (((int)usearch_first(matcher, &status) != USEARCH_DONE && !negate_1)
+         || (usearch_first(matcher, &status) == USEARCH_DONE && negate_1))
          SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
       else
          SET_STRING_ELT(ret, i, str_cont.toR(i));

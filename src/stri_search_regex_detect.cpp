@@ -58,9 +58,13 @@
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
+SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
@@ -87,6 +91,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
       ret_tab[i] = (int)matcher->find(); // returns UBool
+      if (negate_1) ret_tab[i] = !ret_tab[i];
 
 //      // mbmark-regex-detect1.R: UTF16 0.07171792 s; UText 0.10531605 s
 //      UText* str_text = NULL;

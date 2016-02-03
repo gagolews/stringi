@@ -64,9 +64,13 @@
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use StriByteSearchMatcher
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
+ *    FR #216: `negate` arg added
  */
-SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
+SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP negate, SEXP opts_fixed)
 {
+   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -86,11 +90,12 @@ SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
    {
       STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
          ret_tab[i] = NA_LOGICAL,
-         ret_tab[i] = FALSE)
+         ret_tab[i] = negate_1)
 
       StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
       matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
       ret_tab[i] = (int)(matcher->findFirst() != USEARCH_DONE);
+      if (negate_1) ret_tab[i] = !ret_tab[i];
    }
 
    STRI__UNPROTECT_ALL

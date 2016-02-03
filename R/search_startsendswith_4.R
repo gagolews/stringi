@@ -44,24 +44,24 @@
 #' and a warning is generated.
 #'
 #' Argument \code{start} controls the start position in \code{str}
-#' at which the \code{pattern} is matched.
+#' at which the \code{pattern} is being matched.
 #' On the other hand, \code{to} gives the end position.
 #'
 #' Indices given by \code{from} or \code{to} are 1-based,
-#' i.e. an index equal to 1 denotes the first character
+#' i.e., an index equal to 1 denotes the first character
 #' in a string, which gives a typical R look-and-feel.
 #'
 #' For negative indices in \code{from} or \code{to}, counting starts
-#' at the end of the string. E.g. index -1 denotes the last code point
+#' at the end of the string. For instance, index -1 denotes the last code point
 #' in the string.
 #'
-#' If you would like to test for a pattern match at \emph{any}
+#' If you wish to test for a pattern match at an arbitrary
 #' position in \code{str}, use \code{\link{stri_detect}}.
 #'
 #' \code{stri_startswith} and \code{stri_endswith} are convenience functions.
 #' They call either \code{stri_*_fixed}, \code{stri_*_coll},
 #' or \code{stri_*_charclass}, depending on the argument used.
-#' Relying on those underlying functions directly will make your code run
+#' Relying on these underlying functions directly will make your code run
 #' slightly faster.
 #'
 #' Note that testing for a pattern match at the start or end of a string
@@ -82,7 +82,7 @@
 #' including additional settings for \code{opts_collator}, \code{opts_fixed},
 #' and so on.
 #'
-#' @return All the functions return a logical vector.
+#' @return Each function returns a logical vector.
 #'
 #'
 #' @examples
