@@ -119,10 +119,61 @@ SEXP stri_subset_charclass(SEXP str, SEXP pattern, SEXP omit_na)
  * @param value character vector
  * @return character vector
  *
- * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
  */
 SEXP stri_subset_charclass_replacement(SEXP str, SEXP pattern, SEXP value)
 {
-   Rf_error("TO DO");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+   PROTECT(value = stri_prepare_arg_string(value, "value"));
+
+   int vectorize_length = LENGTH(str);
+   int value_length = LENGTH(value);
+   if (value_length == 0)
+      Rf_error(MSG__REPLACEMENT_ZERO);
+
+   STRI__ERROR_HANDLER_BEGIN(3)
+   StriContainerUTF8 str_cont(str, vectorize_length);
+   StriContainerUTF8 value_cont(value, value_length);
+   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+   R_len_t k = 0;
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+      R_len_t     str_cur_n = str_cont.get(i).length();
+      const char* str_cur_s = str_cont.get(i).c_str();
+
+      UChar32 chr = 0;
+      bool found = false;
+      for (R_len_t j=0; j<str_cur_n; ) {
+         U8_NEXT(str_cur_s, j, str_cur_n, chr);
+         if (chr < 0) // invalid utf-8 sequence
+            throw StriException(MSG__INVALID_UTF8);
+         if (pattern_cur->contains(chr)) {
+            found = true;
+            break;
+         }
+      }
+
+      if (found)
+         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+      else
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

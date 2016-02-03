@@ -117,10 +117,55 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP opts_collator)
  * @param opts_collator list
  * @return character vector
  *
- * @version 1.0-3 (Marek Gagolewski, 2016-02-02)
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *   FR#124
  */
 SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP opts_collator, SEXP value)
 {
-   Rf_error("TO DO");
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+   PROTECT(value = stri_prepare_arg_string(value, "value"));
+
+   int vectorize_length = LENGTH(str);
+   int value_length = LENGTH(value);
+   if (value_length == 0)
+      Rf_error(MSG__REPLACEMENT_ZERO);
+
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* collator = NULL;
+   collator = stri__ucol_open(opts_collator);
+
+   STRI__ERROR_HANDLER_BEGIN(3)
+   StriContainerUTF16 str_cont(str, vectorize_length);
+   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+   StriContainerUTF8 value_cont(value, value_length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+
+   R_len_t k = 0;
+   for (R_len_t i = str_cont.vectorize_init();
+         i != str_cont.vectorize_end();
+         i = str_cont.vectorize_next(i))
+   {
+      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+      {SET_STRING_ELT(ret, i, NA_STRING);}, SET_STRING_ELT(ret, i, str_cont.toR(i)); )
+
+      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+      usearch_reset(matcher);
+      UErrorCode status = U_ZERO_ERROR;
+      if ((int)usearch_first(matcher, &status) != USEARCH_DONE)
+         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+      else
+         SET_STRING_ELT(ret, i, str_cont.toR(i));
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+   }
+
+   if (collator) { ucol_close(collator); collator = NULL; }
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(
+      if (collator) { ucol_close(collator); collator = NULL; }
+   )
 }
