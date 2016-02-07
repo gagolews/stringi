@@ -38,6 +38,7 @@ stri_flatten(stri_dup(letters[1:6],1:3))
 
 }
 \seealso{
-Other join: \code{\link{stri_dup}}, \code{\link{stri_join}}
+Other join: \code{\link{stri_dup}},
+  \code{\link{stri_join_list}}, \code{\link{stri_join}}
 }
 

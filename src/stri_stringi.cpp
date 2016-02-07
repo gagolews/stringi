@@ -126,6 +126,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_info",                         stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                      stri_isempty,                    1),
    STRI__MK_CALL("C_stri_join",                         stri_join,                       4),
+   STRI__MK_CALL("C_stri_join_list",                    stri_join_list,                  3),
    STRI__MK_CALL("C_stri_join2",                        stri_join2,                      2),
 //   STRI__MK_CALL("C_stri_justify",                    stri_justify,                    2),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_length",                       stri_length,                     1),

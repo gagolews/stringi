@@ -1,6 +1,30 @@
 require(testthat)
 context("test-join.R")
 
+
+test_that("stri_join_list", {
+   expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+      "You're gonna get away with this.")), sep=", "),
+      c("Lorem, ipsum, dolor, sit, amet", "You're, gonna, get, away, with, this"))
+   expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+      "You're gonna get away with this.")), sep=", ", collapse=". "),
+      "Lorem, ipsum, dolor, sit, amet. You're, gonna, get, away, with, this")
+   expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), sep=", "),
+      "Lorem, ipsum, dolor, sit, amet")
+   expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), sep=", ", collapse=". "),
+      "Lorem, ipsum, dolor, sit, amet")
+   expect_equal(stri_join_list(list(), sep=", ", collapse=". "), character(0))
+   expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep=", ", collapse=". "), c("a, b. c"))
+   expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep=", ", collapse=NULL), c("a, b", "c"))
+   expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep=", ", collapse=". "), NA_character_)
+   expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep=", ", collapse=NULL), c("a, b", NA, "c"))
+   expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep=", ", collapse=". "), "a, b. . c")
+   expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep=", ", collapse=NULL), c("a, b", "", "c"))
+   expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+"), " "), c("R is OK", NA, "Hey"))
+   expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+", omit_no_match=TRUE), " ", " -- "),
+      c("R is OK -- Hey"))
+})
+
 test_that("stri_join", {
    # warning("testthat completely ignores warnings :( -- if this is turned into an error, we are OK")
 
