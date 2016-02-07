@@ -31,13 +31,12 @@ Returns a character vector.
 These are the \pkg{stringi}'s equivalents of the built-in
 \code{\link{paste}} function.
 \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
-Use whichever you want, they are exactly the same.
 }
 \details{
-Vectorized over each vector in `\code{...}`.
+Vectorized over each atomic vector in `\code{...}`.
 
-If \code{collapse} is not \code{NULL}, then the result will be a single string.
-Otherwise, you will get a character vector of length equal
+Unless \code{collapse} is \code{NULL}, the result will be a single string.
+Otherwise, you get a character vector of length equal
 to the length of the longest argument.
 
 If any of the arguments in `\code{...}` is a vector of length 0
@@ -45,13 +44,13 @@ If any of the arguments in `\code{...}` is a vector of length 0
 and \code{ignore_null=FALSE}, then
 you will get a 0-length character vector in result.
 
-If \code{collapse} or \code{sep} has length > 1, then only first string
-will be used.
+If \code{collapse} or \code{sep} has length greater than 1,
+then only the first string will be used.
 
-In case of any \code{NA} in an input vector,
+In case missing values in any of the input vectors,
 \code{NA} is set to the corresponding element.
 Note that this behavior is different from \code{\link{paste}},
-which treats missing values as ordinary strings \code{"NA"}.
+which treats missing values as ordinary strings like \code{"NA"}.
 Moreover, as usual in \pkg{stringi}, the resulting strings are
 always in UTF-8.
 }
@@ -69,6 +68,6 @@ do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
 }
 \seealso{
 Other join: \code{\link{stri_dup}},
-  \code{\link{stri_flatten}}
+  \code{\link{stri_flatten}}, \code{\link{stri_join_list}}
 }
 

@@ -856,3 +856,51 @@ SEXP stri_flatten(SEXP str, SEXP collapse) // a.k.a. C_stri_flatten_withressep
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
+
+/**
+ * Concatenate strings in a list
+ *
+ * @param x list of character vectors
+ * @param sep single string
+ * @param collapse single string or NULL
+ * @return character vector
+ *
+ * @version 1.0-3 (Marek Gagolewski, 2016-02-07)
+ *    FR#175
+ */
+SEXP stri_join_list(SEXP x, SEXP sep, SEXP collapse)
+{
+   PROTECT(x = stri__prepare_arg_list_ignore_null(
+      stri_prepare_arg_list_string(x, "x"), true
+   ));
+
+   R_len_t strlist_length = LENGTH(x);
+   if (strlist_length <= 0) {
+      UNPROTECT(1);
+      return stri__vector_empty_strings(0);
+   }
+
+   PROTECT(sep = stri_prepare_arg_string_1(sep, "sep"));
+   if (isNull(collapse))
+      PROTECT(collapse);
+   else
+      PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+
+   STRI__ERROR_HANDLER_BEGIN(3)
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, strlist_length));
+   for (R_len_t j=0; j<strlist_length; ++j) {
+      SEXP ret2;
+      STRI__PROTECT(ret2 = stri_flatten(VECTOR_ELT(x, j), sep));
+      SET_STRING_ELT(ret, j, STRING_ELT(ret2, 0));
+      STRI__UNPROTECT(1);
+   }
+   if (!isNull(collapse))
+      STRI__PROTECT(ret = stri_flatten(ret, collapse));
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}

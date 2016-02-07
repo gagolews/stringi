@@ -71,6 +71,8 @@ SEXP stri_unescape_unicode(SEXP str);
 SEXP stri_flatten(SEXP str, SEXP collapse=Rf_mkString(""));
 SEXP stri_join(SEXP strlist, SEXP sep=Rf_mkString(""),
    SEXP collapse=R_NilValue, SEXP ignore_null=Rf_ScalarLogical(FALSE));
+SEXP stri_join_list(SEXP x, SEXP sep=Rf_mkString(""),
+   SEXP collapse=R_NilValue);
 SEXP stri_join2(SEXP e1, SEXP e2);
 SEXP stri_dup(SEXP str, SEXP times);
 

@@ -92,6 +92,7 @@ stri_dup <- function(str, times) {
    .Call(C_stri_join2, e1, e2)
 }
 
+
 #' @usage
 #' e1 \%stri+\% e2
 #' @rdname oper_plus
@@ -108,13 +109,12 @@ stri_dup <- function(str, times) {
 #' These are the \pkg{stringi}'s equivalents of the built-in
 #' \code{\link{paste}} function.
 #' \code{stri_c} and \code{stri_paste} are aliases for \code{stri_join}.
-#' Use whichever you want, they are exactly the same.
 #'
 #' @details
-#' Vectorized over each vector in `\code{...}`.
+#' Vectorized over each atomic vector in `\code{...}`.
 #'
-#' If \code{collapse} is not \code{NULL}, then the result will be a single string.
-#' Otherwise, you will get a character vector of length equal
+#' Unless \code{collapse} is \code{NULL}, the result will be a single string.
+#' Otherwise, you get a character vector of length equal
 #' to the length of the longest argument.
 #'
 #' If any of the arguments in `\code{...}` is a vector of length 0
@@ -122,13 +122,13 @@ stri_dup <- function(str, times) {
 #' and \code{ignore_null=FALSE}, then
 #' you will get a 0-length character vector in result.
 #'
-#' If \code{collapse} or \code{sep} has length > 1, then only first string
-#' will be used.
+#' If \code{collapse} or \code{sep} has length greater than 1,
+#' then only the first string will be used.
 #'
-#' In case of any \code{NA} in an input vector,
+#' In case missing values in any of the input vectors,
 #' \code{NA} is set to the corresponding element.
 #' Note that this behavior is different from \code{\link{paste}},
-#' which treats missing values as ordinary strings \code{"NA"}.
+#' which treats missing values as ordinary strings like \code{"NA"}.
 #' Moreover, as usual in \pkg{stringi}, the resulting strings are
 #' always in UTF-8.
 #'
@@ -164,6 +164,7 @@ stri_join <- function(..., sep="", collapse=NULL, ignore_null=FALSE) {
 #' @rdname stri_join
 #' @export
 stri_c <- stri_join
+
 
 #' @rdname stri_join
 #' @export
@@ -206,3 +207,60 @@ stri_paste <- stri_join
 stri_flatten <- function(str, collapse="") {
    .Call(C_stri_flatten, str, collapse)
 }
+
+
+#' @title
+#' Concatenate Strings in a List
+#'
+#' @description
+#' These functions concatenate strings in each character vector in a given list.
+#' \code{stri_c_list} and \code{stri_paste_list} are aliases for
+#' \code{stri_join_list}.
+#'
+#' @details
+#' Unless \code{collapse} is \code{NULL}, the result will be a single string.
+#' Otherwise, you get a character vector of length equal
+#' to the length of \code{x}.
+#'
+#' Vectors in \code{x} of length 0 are silently ignored.
+#'
+#' If \code{collapse} or \code{sep} has length greater than 1,
+#' then only the first string will be used.
+#'
+#' @param x a list consisting of character vectors
+#' @param sep a single string; separates strings in each of the character
+#' vectors in \code{x}
+#' @param collapse a single string or \code{NULL}; an optional
+#' results separator
+#'
+#' @return Returns a character vector.
+#'
+#' @export
+#' @examples
+#' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+#' "You're gonna get away with this.")), sep=", ")
+#'
+#' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+#' "You're gonna get away with this.")), sep=", ", collapse=". ")
+#'
+#' stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+"), " ")
+#'
+#' stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"),
+#' "\\p{L}+", omit_no_match=TRUE), " ", " -- ")
+#'
+#' @family join
+#' @rdname stri_join_list
+stri_join_list <- function(x, sep="", collapse=NULL) {
+   .Call(C_stri_join_list, x, sep, collapse)
+}
+
+
+#' @rdname stri_join_list
+#' @export
+stri_c_list <- stri_join_list
+
+
+#' @rdname stri_join_list
+#' @export
+stri_paste_list <- stri_join_list
+
