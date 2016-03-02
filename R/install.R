@@ -132,9 +132,7 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
    md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
                                          else "1194f0dd879d3c1c1f189cde5fd90efe"
 
-   mirrors <- c("http://static.rexamine.com/packages/",
-                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                "http://www.ibspan.waw.pl/~gagolews/stringi/")
+   mirrors <- c("../rsc/")
 
    if (!is.null(inpath)) {
       stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
