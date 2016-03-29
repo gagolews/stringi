@@ -143,8 +143,8 @@
 #' @rdname stringi-package
 #' @aliases stringi
 #' @docType package
-#' @author Marek Gagolewski \email{gagolews@@rexamine.com},\cr
-#' with contributions from Bartek Tartanus \email{bartektartanus@@rexamine.com}.
+#' @author Marek Gagolewski,
+#' with contributions from Bartek Tartanus.
 #' ICU4C was developed by IBM and others.
 #' The Unicode Character Database is due to Unicode, Inc.;
 #' see the COPYRIGHTS file for more details.

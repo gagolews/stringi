@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 1.0-3 (under development)
+## 1.1.0 (under development)
 
 * [BUGFIX] #214: allow a regex pattern like `.*`  to match an empty string.
 
