@@ -114,8 +114,8 @@ Note that each man page provides many further links to other
 interesting facilities and topics.
 }
 \author{
-Marek Gagolewski \email{gagolews@rexamine.com},\cr
-with contributions from Bartek Tartanus \email{bartektartanus@rexamine.com}.
+Marek Gagolewski,\cr
+with contributions from Bartek Tartanus.
 ICU4C was developed by IBM and others.
 The Unicode Character Database is due to Unicode, Inc.;
 see the COPYRIGHTS file for more details.
