@@ -4,10 +4,10 @@ citEntry(entry = "Manual",
   title = "R package stringi: Character string processing facilities",
   author = personList(as.person("Marek Gagolewski"), as.person("Bartek Tartanus")),
   year = "2016",
-  url = "http://stringi.rexamine.com/",
+  url = "http://www.gagolewski.com/software/stringi/",
   textVersion =
   paste("Gagolewski M., Tartanus B. (2016).",
         "R package stringi: Character string processing facilities.",
-        "http://stringi.rexamine.com/.",
+        "http://www.gagolewski.com/software/stringi/.",
         "DOI:10.5281/zenodo.32557")
 )
