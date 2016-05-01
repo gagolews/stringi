@@ -2,7 +2,7 @@
 
 ### THE string processing package for *R*
 
-[![Build Status](https://travis-ci.org/Rexamine/stringi.svg?branch=master)](https://travis-ci.org/Rexamine/stringi)
+[![Build Status](https://travis-ci.org/gagolews/stringi.svg?branch=master)](https://travis-ci.org/gagolews/stringi)
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.19071.svg)](http://dx.doi.org/10.5281/zenodo.19071)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
@@ -16,18 +16,18 @@ platform-independent set of functions known to *Java*, *Perl*, *Python*,
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
 package.
 
-**Package maintainer**: [Marek Gagolewski](http://gagolewski.rexamine.com/)
+**Package maintainer**: [Marek Gagolewski](http://www.gagolewski.com/)
 
-**Authors**: [Marek Gagolewski](http://gagolewski.rexamine.com/),
-with contributions from [Bartlomiej Tartanus](http://tartanus.rexamine.com/)
+**Authors**: [Marek Gagolewski](http://www.gagolewski.com/),
+with contributions from Bartlomiej Tartanus.
 
 This git repository also contains a custom subset of *ICU4C 55.1* source code
 which is copyrighted by IBM and others. A binary
 version of the Unicode Character Database is included.
 For more details on copyright holders see the
-[LICENSE](http://raw.githubusercontent.com/Rexamine/stringi/master/LICENSE) file.
+[LICENSE](http://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
 
-**Homepage**: http://stringi.rexamine.com/
+**Homepage**: http://www.gagolewski.com/software/stringi/
 
 **CRAN entry**: http://cran.r-project.org/web/packages/stringi/
 
@@ -35,11 +35,11 @@ For more details on copyright holders see the
 [for a recent development version]
 
 **System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (refer to the
-[INSTALL](http://raw.githubusercontent.com/Rexamine/stringi/master/INSTALL)
+[INSTALL](http://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
 file for more details)
 
 **License**: BSD-3-clause, for more details see the
-[LICENSE](http://raw.githubusercontent.com/Rexamine/stringi/master/LICENSE) file.
+[LICENSE](http://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
 
 > **stringi**'s source code itself is released under the BSD-3-clause license,
 > which is 100% open source compatible. Such a license has been verified as
@@ -57,4 +57,4 @@ file for more details)
 > and in proprietary or commercial products.
 
 **Changes**: see the
-[NEWS](http://raw.githubusercontent.com/Rexamine/stringi/master/NEWS) file.
+[NEWS](http://raw.githubusercontent.com/gagolews/stringi/master/NEWS) file.

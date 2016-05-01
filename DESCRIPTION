@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.1.0
-Date: 2016-02-17
+Date: 2016-05-01
 Title: Character String Processing Facilities
 Description: Allows for fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
@@ -11,10 +11,10 @@ Description: Allows for fast, correct, consistent, portable,
     expressions or the Unicode Collation Algorithm), random string generation,
     case mapping, string transliteration, concatenation,
     Unicode normalization, date-time formatting and parsing, etc.
-URL: http://stringi.rexamine.com/
+URL: http://www.gagolewski.com/software/stringi/
     http://site.icu-project.org/
     http://www.unicode.org/
-BugReports: http://github.com/Rexamine/stringi/issues
+BugReports: http://github.com/gagolews/stringi/issues
 SystemRequirements: ICU4C (>= 50, optional)
 Type: Package
 Depends:
@@ -25,7 +25,7 @@ Imports:
     stats
 Biarch: TRUE
 License: file LICENSE
-Author: Marek Gagolewski and Bartek Tartanus (stringi source code);
+Author: Marek Gagolewski [aut, cre] and Bartek Tartanus [ctb] (stringi source code);
     IBM and other contributors (ICU4C 55.1 source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <gagolews@rexamine.com>
