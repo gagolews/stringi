@@ -31,8 +31,9 @@ For more details on copyright holders see the
 
 **CRAN entry**: http://cran.r-project.org/web/packages/stringi/
 
-**Online manual**: http://docs.rexamine.com/R-man/stringi/stringi-package.html
-[for a recent development version]
+**Online manual**: http://www.gagolewski.com/software/stringi/manual/
+
+[How to access the stringi C API from an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
 
 **System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (refer to the
 [INSTALL](http://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
@@ -49,7 +50,7 @@ file for more details)
 > The reason for using BSD-3-clause is that we include full source
 > code of the *ICU* library, which has its own license.
 > The *ICU* projects are covered by the
-> [ICU license](http://source.icu-project.org/repos/icu/icu/trunk/license.html),
+> [ICU license](http://source.icu-project.org/repos/icu/icu/trunk/LICENSE),
 > a simple, permissive non-copyleft free software license, compatible with
 > the GNU GPL. The *ICU* license is
 > [intended](http://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed-)
