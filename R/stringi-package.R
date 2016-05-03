@@ -34,14 +34,13 @@
 #' @description
 #' \pkg{stringi} is THE \R package for fast, correct, consistent,
 #' and convenient string/text manipulation.
-#' We created an \R extension package that
-#' gives predictable results on every platform, in each locale,
+#' It gives predictable results on every platform, in each locale,
 #' and under any ``native'' character encoding.
 #'
 #' \bold{Keywords}: R, text processing, character strings,
 #' internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
 #'
-#' \bold{Homepage}: \url{http://stringi.rexamine.com}
+#' \bold{Homepage}: \url{http://www.gagolewski.com/software/stringi/}
 #'
 #' \bold{License}: The BSD-3-clause license for the package code,
 #' the ICU license for the accompanying ICU4C distribution,
@@ -149,7 +148,7 @@
 #' The Unicode Character Database is due to Unicode, Inc.;
 #' see the COPYRIGHTS file for more details.
 #' @references
-#' \emph{\pkg{stringi} Package homepage}, \url{http://stringi.rexamine.com}
+#' \emph{\pkg{stringi} Package homepage}, \url{http://www.gagolewski.com/software/stringi/}
 #'
 #' \emph{ICU -- International Components for Unicode}, \url{http://www.icu-project.org/}
 #'
