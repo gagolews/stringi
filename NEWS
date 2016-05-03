@@ -38,8 +38,8 @@ in a list of character vectors. Useful with, e.g., `stri_extract_all_regex`,
 
 ## 1.0-1 (2015-10-22) **CRAN**
 
-* [GENERAL] #88: C++ API is now available for use in, e.g., Rcpp packages, see
-https://github.com/Rexamine/ExampleRcppStringi for an exemple.
+* [GENERAL] #88: C API is now available for use in, e.g., Rcpp packages, see
+https://github.com/gagolews/ExampleRcppStringi for an example.
 
 * [BUGFIX] #183: Floating point exception raised in `stri_sub()` and
 `stri_sub<-()` when `to` or `length` was a zero-length numeric vector.
