@@ -1,10 +1,10 @@
 # autoconf/configure script for stringi
-# Copyright (C) 2013-2015, M. Gagolewski
-# http://stringi.rexamine.com
+# Copyright (C) 2013-2016, M. Gagolewski
+# http://www.gagolewski.com/software/stringi/
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 0.5, stringi@rexamine.com)
+AC_INIT(stringi, 1.1, stringi@rexamine.com)
 
 ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
