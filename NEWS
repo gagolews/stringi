@@ -9,7 +9,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 
 -------------------------------------------------------------------------------
 
-## 1.1.0 (under development)
+## 1.1.1 (2016-05-25)
 
 * [BUGFIX] #214: allow a regex pattern like `.*`  to match an empty string.
 
@@ -30,9 +30,6 @@ a `negate` argument.
 * [NEW FUNCTION] #175: `stri_join_list` concatenates all strings
 in a list of character vectors. Useful with, e.g., `stri_extract_all_regex`,
 `stri_extract_all_words` etc.
-
-* ... #30 stri_sub<- accepting lists...
-
 
 -------------------------------------------------------------------------------
 
