@@ -123,7 +123,7 @@ The package is frequently tested on the following OSes (i.a., via Docker):
 * Fedora: 20, 21, latest,
 * CentOS: 7,
 * OpenSUSE: latest,
-* Ubuntu: trusty,
+* Ubuntu: xenial, trusty,
 * Debian: testing,
 * Oracle Linux: 7,
 * Mageia: latest,
