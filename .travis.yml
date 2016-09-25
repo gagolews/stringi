@@ -1,12 +1,22 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
 language: r
 matrix:
   include:
   - os: linux
     dist: trusty
     r: release
+    apt_packages: libicu-dev
   - os: linux
     dist: trusty
     r: oldrel
+    r_build_args: "--no-manual"
+    r_check_args: "--no-manual"
+    apt_packages: libicu-dev
+  - os: linux
+    dist: trusty
+    r: devel
+    apt_packages: libicu-dev
   - os: linux
     dist: trusty
     r: devel
@@ -17,5 +27,3 @@ matrix:
 
 warnings_are_errors: true
 sudo: required
-apt_packages:
-  - libicu-dev
