@@ -1,4 +1,20 @@
 language: r
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    r: release
+  - os: linux
+    dist: trusty
+    r: oldrel
+  - os: linux
+    dist: trusty
+    r: devel
+  - os: osx
+    r: release
+  - os: osx
+    r: devel
+
 warnings_are_errors: true
 sudo: required
 apt_packages:

@@ -92,3 +92,16 @@ test_that("stri_sub<-", {
    s <- "\u0106a\u0105";  stri_sub(s,-2,length=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
    s <- "\u0106a\u0105";  stri_sub(s,-1,length=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
 })
+
+test_that("stri_sub_issue227", {
+   s <- "tißć„óóþ”µć„"
+   idx <- 1:8
+   expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(6, x)))[2,], stri_sub(s, from = -idx))
+   expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(7, x)))[2,], stri_sub(s, from = -idx))
+   expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(8, x)))[2,], stri_sub(s, from = -idx))
+   expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(9, x)))[2,], stri_sub(s, from = -idx))
+
+   try <- 1:20
+   for (t in try) expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(t, x)))[2,], stri_sub(s, from = -idx))
+})
+

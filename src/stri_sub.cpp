@@ -179,8 +179,8 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
 
       const char* str_cur_s = str_cont.get(i).c_str();
 
-      R_len_t cur_from2; // UTF-8 byte incices
-      R_len_t cur_to2;   // UTF-8 byte incices
+      R_len_t cur_from2; // UTF-8 byte indices
+      R_len_t cur_to2;   // UTF-8 byte indices
 
       STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2)
 
@@ -307,8 +307,8 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
       const char* value_cur_s = value_cont.get(i).c_str();
       R_len_t value_cur_n     = value_cont.get(i).length();
 
-      R_len_t cur_from2; // UTF-8 byte incices
-      R_len_t cur_to2;   // UTF-8 byte incices
+      R_len_t cur_from2; // UTF-8 byte indices
+      R_len_t cur_to2;   // UTF-8 byte indices
 
       STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2)
       if (cur_to2 < cur_from2) cur_to2 = cur_from2;
