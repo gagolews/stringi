@@ -6,39 +6,24 @@ matrix:
   - os: linux
     dist: trusty
     r: release
-    before_install:
-        - sudo apt-get remove -y libicu-dev
   - os: linux
     dist: trusty
     r: oldrel
-    before_install:
-        - sudo apt-get remove -y libicu-dev
   - os: linux
     dist: trusty
     r: devel
-    before_install:
-        - sudo apt-get remove -y libicu-dev
-  - os: linux
-    dist: trusty
-    r: release
-    before_install:
-        - sudo apt-get install -y libicu-dev
-  - os: linux
-    dist: trusty
-    r: oldrel
-    before_install:
-        - sudo apt-get install -y libicu-dev
-  - os: linux
-    dist: trusty
-    r: devel
-    before_install:
-        - sudo apt-get install -y libicu-dev
   - os: osx
     r: release
   - os: osx
     r: devel
 
 warnings_are_errors: true
-sudo: required
 r_build_args: "--no-manual"
 r_check_args: "--no-manual --as-cran"
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libicu-dev
