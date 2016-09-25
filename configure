@@ -2384,18 +2384,26 @@ fi
 CC=`"${R_PATH}" CMD config CC`
 CPP=`"${R_PATH}" CMD config CXXCPP`
 LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-CFLAGS=`"${R_PATH}" CMD config CFLAGS`
+CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
+CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
+CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
 CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 LIBS=
 LDFLAGS=
 
 if test "x$enable_cxx11" == "xyes"; then
-   CXX="`\"${R_PATH}\" CMD config CXX1X` `\"${R_PATH}\" CMD config CXX1XSTD`"
-   CXXFLAGS=`"${R_PATH}" CMD config CXX1XFLAGS`
+   CXX_tmp1=`"${R_PATH}" CMD config CXX1X`
+   CXX_tmp2=`"${R_PATH}" CMD config CXX1XSTD`
+   CXX="${CXX_tmp1} ${CXX_tmp2}"
+   CXXFLAGS_base=`"${R_PATH}" CMD config CXX1XFLAGS`
+   CXXFLAGS_pic=`"${R_PATH}" CMD config CXX1XPICFLAGS`
+   CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
    STRINGI_CXXSTD="CXX_STD=CXX11"
 else
    CXX=`"${R_PATH}" CMD config CXX`
-   CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+   CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
+   CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
+   CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
    STRINGI_CXXSTD=""
 fi
 
@@ -4057,7 +4065,9 @@ if test $CPP_OK = 0; then
    if test "x$enable_cxx11" == "xyes"; then
       echo "*** trying with disabled C++11 compiler"
       CXX=`"${R_PATH}" CMD config CXX`
-      CXXFLAGS=`"${R_PATH}" CMD config CXXFLAGS`
+      CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
+      CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
+      CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
       STRINGI_CXXSTD=""
       CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
 
@@ -4579,6 +4589,9 @@ else
    STRINGI_LDFLAGS="${ICU_LDFLAGS}"
    STRINGI_LIBS="${ICU_LIBS}"
 fi
+
+with_extra_cflags="${with_extra_cflags} ${CFLAGS_pic}"
+with_extra_cxxflags="${with_extra_cxxflags} ${CXXFLAGS_pic}"
 
 STRINGI_CFLAGS="${STRINGI_CFLAGS} ${with_extra_cflags}"
 STRINGI_CPPFLAGS="${STRINGI_CPPFLAGS} ${with_extra_cppflags}"
