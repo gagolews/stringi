@@ -4,13 +4,14 @@ language: r
 matrix:
   include:
   - os: linux
-    dist: trusty
     r: release
+    addons:
+        apt:
+            packages:
+                - libicu-dev
   - os: linux
-    dist: trusty
     r: oldrel
   - os: linux
-    dist: trusty
     r: devel
   - os: osx
     r: release
@@ -21,9 +22,4 @@ warnings_are_errors: true
 r_build_args: "--no-manual"
 r_check_args: "--no-manual --as-cran"
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - libicu-dev
+
