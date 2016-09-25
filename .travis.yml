@@ -6,12 +6,13 @@ matrix:
   - os: linux
     dist: trusty
     r: release
+  - os: linux
+    dist: trusty
+    r: release
     apt_packages: libicu-dev
   - os: linux
     dist: trusty
     r: oldrel
-    r_build_args: "--no-manual"
-    r_check_args: "--no-manual"
     apt_packages: libicu-dev
   - os: linux
     dist: trusty
@@ -27,3 +28,5 @@ matrix:
 
 warnings_are_errors: true
 sudo: required
+r_build_args: "--no-manual"
+r_check_args: "--no-manual --as-cran"
