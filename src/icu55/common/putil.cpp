@@ -1272,7 +1272,14 @@ static void U_CALLCONV dataDirectoryInitFn() {
 # endif
 # if defined(ICU_DATA_DIR_PREFIX_ENV_VAR)
         if (prefix != NULL) {
-            snprintf(datadir_path_buffer, PATH_MAX, "%s%s", prefix, path);
+            // Marek Gagolewski: snprintf is not C++98
+            // snprintf(datadir_path_buffer, PATH_MAX, "%s%s", prefix, path);
+            // /BEGIN
+            strncpy(datadir_path_buffer, prefix, PATH_MAX);
+            datadir_path_buffer[PATH_MAX-1] = '\0';
+            strncat(datadir_path_buffer, path, PATH_MAX-strlen(datadir_path_buffer)-1);
+            // /END
+
             path=datadir_path_buffer;
         }
 # endif
