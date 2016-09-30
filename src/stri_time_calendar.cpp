@@ -278,6 +278,7 @@ SEXP stri_datetime_fields(SEXP time, SEXP tz, SEXP locale) {
  * @version 0.5-1 (Marek Gagolewski, 2015-01-01)
  * @version 0.5-1 (Marek Gagolewski, 2015-01-11) lenient arg added
  * @version 0.5-1 (Marek Gagolewski, 2015-03-02) tz arg added
+ * @version 1.1.2 (Marek Gagolewski, 2016-09-30) round() is not C++98
  */
 SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
    SEXP minute, SEXP second, SEXP lenient, SEXP tz, SEXP locale)
@@ -332,7 +333,7 @@ SEXP stri_datetime_create(SEXP year, SEXP month, SEXP day, SEXP hour,
       cal->set(UCAL_HOUR_OF_DAY, hour_cont.get(i));
       cal->set(UCAL_MINUTE, minute_cont.get(i));
       cal->set(UCAL_SECOND, (int)floor(second_cont.get(i)));
-      cal->set(UCAL_MILLISECOND, (int)round((second_cont.get(i)-floor(second_cont.get(i)))*1000.0));
+      cal->set(UCAL_MILLISECOND, (int)fround((second_cont.get(i)-floor(second_cont.get(i)))*1000.0, 0));
 
       status = U_ZERO_ERROR;
       ret_val[i] = ((double)cal->getTime(status))/1000.0;
