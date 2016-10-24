@@ -67,7 +67,7 @@ via `install.packages("stringi_xxx.tar.gz")`
 C++11 support
 -------------
 
-For R >= 3.1.0  we require (by default) C++11 support to build the package
+For R >= 3.1.0  we suggest (by default) C++11 support to build the package
 from sources. This is because ICU4C uses the `long long` type in a few
 functions, and this is not part of the C++98 standard.
 
@@ -93,10 +93,6 @@ Auxiliary `./configure` features and options:
 * `--with-extra-cxxflags=FLAGS`: Additional C++ compiler flags.
 * `--with-extra-ldflags=FLAGS`: Additional linker flags.
 * `--with-extra-libs=FLAGS`: Additional libraries to link against.
-* `--enable-gcc-debug`: Enable -UNDEBUG when compiling stringi
-  (for stringi developers).
-* `--enable-gcc-pedantic`: Enable `-Wall -Wextra -ansi -pedantic` when compiling
-  stringi with gcc/clang (for stringi developers).
 
 Some influential environment variables:
 
@@ -109,6 +105,17 @@ Some influential environment variables:
   `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R executable.
 * `CAT`: The `cat` command used for generating the list of source files
   to compile.
+* `STRINGI_DISABLE_CXX11`: Disable the use of C++11,
+      see also `--disable-cxx11`.
+* `STRINGI_DISABLE_PKG_CONFIG`: Force the use of the ICU bundle,
+      see also `--disable-pkg-config`.
+* `STRINGI_DISABLE_ICU_BUNDLE`: Force the use of the system ICU,
+      see also `--disable-icu-bundle`.
+* `STRINGI_CFLAGS`: see `--with-extra-cflags`.
+* `STRINGI_CPPFLAGS`: see `--with-extra-cppflags`.
+* `STRINGI_CXXFLAGS`: see `--with-extra-cxxflags`.
+* `STRINGI_LDFLAGS`: see `--with-extra-ldflags`.
+* `STRINGI_LIBS`: see `--with-extra-libs`.
 
 
 Final remarks
@@ -119,9 +126,9 @@ installed system ICU4C distribution, you should have no problems
 with installing the package. Also, if you use our ICU4C bundle and you
 have a working internet access, all is expected to lead to a happy ending.
 
-The package is frequently tested on the following OSes (i.a., via Docker):
-* Fedora: 20, 21, latest,
-* CentOS: 7,
+The package is frequently tested on the following OSes:
+* Fedora: 20, 24, latest,
+* CentOS: latest,
 * OpenSUSE: latest,
 * Ubuntu: xenial, trusty,
 * Debian: testing,
@@ -129,6 +136,11 @@ The package is frequently tested on the following OSes (i.a., via Docker):
 * Mageia: latest,
 * Windows (via WinBuilder),
 * Solaris 10 (gcc/i386, CC/i386, CC/Sparc),
+* Travis CI (os: linux, r: release;
+             os: linux, r: oldrel;
+             os: linux, r: devel,
+             os: osx,   r: release,
+             os: osx,   r: devel),
 and of course on CRAN machines.
 
 Yet, if you do not manage to set up a successful stringi build, do not
