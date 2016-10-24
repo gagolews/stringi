@@ -9,10 +9,36 @@ matrix:
         apt:
             packages:
                 - libicu-dev
+    env:
+        - STRINGI_DISABLE_ICU_BUNDLE="1"
   - os: linux
     r: oldrel
+    addons:
+        apt:
+            packages:
+                - libicu-dev
+    env:
+        - STRINGI_DISABLE_ICU_BUNDLE="1"
   - os: linux
     r: devel
+    addons:
+        apt:
+            packages:
+                - libicu-dev
+    env:
+        - STRINGI_DISABLE_ICU_BUNDLE="1"
+  - os: linux
+    r: release
+    env:
+        - STRINGI_DISABLE_PKG_CONFIG="1"
+  - os: linux
+    r: oldrel
+    env:
+        - STRINGI_DISABLE_PKG_CONFIG="1"
+  - os: linux
+    r: devel
+    env:
+        - STRINGI_DISABLE_PKG_CONFIG="1"
   - os: osx
     r: release
   - os: osx
