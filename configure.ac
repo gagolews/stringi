@@ -30,9 +30,7 @@ AC_ARG_VAR([CC], [Purposedly ignored.])
 
 AC_ARG_VAR([CFLAGS], [Purposedly ignored.])
 
-AC_ARG_VAR([LDFLAGS], [Purposedly ignored.])
-
-AC_ARG_VAR([LIBS], [Purposedly ignored.])
+AC_ARG_VAR([CPP], [Purposedly ignored.])
 
 AC_ARG_VAR([CPPFLAGS], [Purposedly ignored.])
 
@@ -42,28 +40,54 @@ AC_ARG_VAR([CXXFLAGS], [Purposedly ignored.])
 
 AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
 
+AC_ARG_VAR([LDFLAGS], [Purposedly ignored.])
+
+AC_ARG_VAR([LIBS], [Purposedly ignored.])
+
+
+
+
 AC_ARG_ENABLE([cxx11],
     AS_HELP_STRING([--disable-cxx11],
-      [Disable use of C++11; if you build ICU4C from sources, make sure your C++ compiler supports the long long type.]))
-if test "x$enable_cxx11" != "xno"; then
+      [Disable the use of C++11; if you build ICU4C from sources, make sure your C++ compiler supports the long long type.]))
+
+AC_ARG_VAR([STRINGI_DISABLE_CXX11],
+   [Disable the use of C++11, see also --disable-cxx11.])
+
+if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
    enable_cxx11="yes"
 else
    enable_cxx11="no"
 fi
 
+
+
 AC_ARG_ENABLE([icu_bundle],
     AS_HELP_STRING([--disable-icu-bundle],
       [Force the use of the system ICU.]))
-if test "x$enable_icu_bundle" != "xno"; then
+
+AC_ARG_VAR([STRINGI_DISABLE_ICU_BUNDLE],
+   [Force the use of the system ICU, see also --disable-icu-bundle.])
+
+if test "x$enable_icu_bundle" != "xno" -a -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
    enable_icu_bundle="yes"
 else
    enable_icu_bundle="no"
 fi
 
+
+
+
+
+
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
       [Disable pkg-config usage for finding ICU4C-devel; in such a case ICU4C will be compiled from sources.]))
-if test "x$enable_pkg_config" != "xno"; then
+
+AC_ARG_VAR([STRINGI_DISABLE_PKG_CONFIG],
+   [Force the use of the ICU bundle, see also --disable-pkg-config.])
+
+if test "x$enable_pkg_config" != "xno" -a -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
    enable_pkg_config="yes"
 else
    enable_pkg_config="no"
@@ -87,25 +111,48 @@ else
    enable_gcc_pedantic="no"
 fi
 
+
 AC_ARG_WITH([extra_cflags],
     AS_HELP_STRING([--with-extra-cflags=FLAGS],
-      [Additional C compiler flags]))
+      [Additional C compiler flags, see also the STRINGI_CFLAGS environment variable]))
 
 AC_ARG_WITH([extra_cppflags],
     AS_HELP_STRING([--with-extra-cppflags=FLAGS],
-      [Additional C/C++ preprocessor flags]))
+      [Additional C/C++ preprocessor flags, see also the STRINGI_CPPFLAGS environment variable]))
 
 AC_ARG_WITH([extra_cxxflags],
     AS_HELP_STRING([--with-extra-cxxflags=FLAGS],
-      [Additional C++ compiler flags]))
+      [Additional C++ compiler flags, see also the STRINGI_CXXFLAGS environment variable]))
 
 AC_ARG_WITH([extra_ldflags],
     AS_HELP_STRING([--with-extra-ldflags=FLAGS],
-      [Additional linker flags]))
+      [Additional linker flags, see also the STRINGI_LDFLAGS environment variable]))
 
 AC_ARG_WITH([extra_libs],
     AS_HELP_STRING([--with-extra-libs=FLAGS],
-      [Additional libraries to link against]))
+      [Additional libraries to link against, see also the STRINGI_LIBS environment variable]))
+
+AC_ARG_VAR([STRINGI_CFLAGS],
+   [Additional C compiler flags, see also --with-extra-cflags.])
+
+AC_ARG_VAR([STRINGI_CPPFLAGS],
+   [Additional C/C++ preprocessor flags, see also --with-extra-cppflags.])
+
+AC_ARG_VAR([STRINGI_CXXFLAGS],
+   [Additional C++ compiler flags, see also --with-extra-cxxflags.])
+
+AC_ARG_VAR([STRINGI_LDFLAGS],
+   [Additional linker flags, see also --with-extra-ldflags.])
+
+AC_ARG_VAR([STRINGI_LIBS],
+   [Additional libraries to link against, see also --with-extra-libs.])
+
+
+with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
+with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
+with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
+with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
+with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 ##### CHECK FOR R #############################################################
 

@@ -624,11 +624,6 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 ICU_FOUND
-STRINGI_LIBS
-STRINGI_LDFLAGS
-STRINGI_CFLAGS
-STRINGI_CPPFLAGS
-STRINGI_CXXFLAGS
 STRINGI_CXXSTD
 STRINGI_OBJECTS
 STRINGI_ICU_STUBDATA_SOURCES_C
@@ -642,15 +637,23 @@ PKG_CONFIG
 ac_ct_CXX
 EGREP
 GREP
-CPP
 OBJEXT
 EXEEXT
 ac_ct_CC
+STRINGI_LIBS
+STRINGI_LDFLAGS
+STRINGI_CXXFLAGS
+STRINGI_CPPFLAGS
+STRINGI_CFLAGS
+STRINGI_DISABLE_PKG_CONFIG
+STRINGI_DISABLE_ICU_BUNDLE
+STRINGI_DISABLE_CXX11
+LDFLAGS
 CXXCPP
 CXXFLAGS
 CXX
 CPPFLAGS
-LDFLAGS
+CPP
 CFLAGS
 CC
 CAT
@@ -718,13 +721,21 @@ PKG_CONFIG_PATH
 CAT
 CC
 CFLAGS
-LDFLAGS
-LIBS
+CPP
 CPPFLAGS
 CXX
 CXXFLAGS
 CXXCPP
-CPP
+LDFLAGS
+LIBS
+STRINGI_DISABLE_CXX11
+STRINGI_DISABLE_ICU_BUNDLE
+STRINGI_DISABLE_PKG_CONFIG
+STRINGI_CFLAGS
+STRINGI_CPPFLAGS
+STRINGI_CXXFLAGS
+STRINGI_LDFLAGS
+STRINGI_LIBS
 CCC'
 
 
@@ -1335,7 +1346,7 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-cxx11         Disable use of C++11; if you build ICU4C from
+  --disable-cxx11         Disable the use of C++11; if you build ICU4C from
                           sources, make sure your C++ compiler supports the
                           long long type.
   --disable-icu-bundle    Force the use of the system ICU.
@@ -1350,14 +1361,19 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-extra-cflags=FLAGS
-                          Additional C compiler flags
+                          Additional C compiler flags, see also the
+                          STRINGI_CFLAGS environment variable
   --with-extra-cppflags=FLAGS
-                          Additional C/C++ preprocessor flags
+                          Additional C/C++ preprocessor flags, see also the
+                          STRINGI_CPPFLAGS environment variable
   --with-extra-cxxflags=FLAGS
-                          Additional C++ compiler flags
+                          Additional C++ compiler flags, see also the
+                          STRINGI_CXXFLAGS environment variable
   --with-extra-ldflags=FLAGS
-                          Additional linker flags
-  --with-extra-libs=FLAGS Additional libraries to link against
+                          Additional linker flags, see also the
+                          STRINGI_LDFLAGS environment variable
+  --with-extra-libs=FLAGS Additional libraries to link against, see also the
+                          STRINGI_LIBS environment variable
 
 Some influential environment variables:
   R_HOME      Override the default directory with R installation, e.g.,
@@ -1374,13 +1390,31 @@ Some influential environment variables:
               to compile.
   CC          Purposedly ignored.
   CFLAGS      Purposedly ignored.
-  LDFLAGS     Purposedly ignored.
-  LIBS        Purposedly ignored.
+  CPP         Purposedly ignored.
   CPPFLAGS    Purposedly ignored.
   CXX         Purposedly ignored.
   CXXFLAGS    Purposedly ignored.
   CXXCPP      Purposedly ignored.
-  CPP         C preprocessor
+  LDFLAGS     Purposedly ignored.
+  LIBS        Purposedly ignored.
+  STRINGI_DISABLE_CXX11
+              Disable the use of C++11, see also --disable-cxx11.
+  STRINGI_DISABLE_ICU_BUNDLE
+              Force the use of the system ICU, see also --disable-icu-bundle.
+  STRINGI_DISABLE_PKG_CONFIG
+              Force the use of the ICU bundle, see also --disable-pkg-config.
+  STRINGI_CFLAGS
+              Additional C compiler flags, see also --with-extra-cflags.
+  STRINGI_CPPFLAGS
+              Additional C/C++ preprocessor flags, see also
+              --with-extra-cppflags.
+  STRINGI_CXXFLAGS
+              Additional C++ compiler flags, see also --with-extra-cxxflags.
+  STRINGI_LDFLAGS
+              Additional linker flags, see also --with-extra-ldflags.
+  STRINGI_LIBS
+              Additional libraries to link against, see also
+              --with-extra-libs.
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -2167,34 +2201,55 @@ ICU_VERSION_NEEDED="50" # minimal version of ICU4C required to build stringi
 
 
 
+
+
+
+
+
 # Check whether --enable-cxx11 was given.
 if test "${enable_cxx11+set}" = set; then :
   enableval=$enable_cxx11;
 fi
 
-if test "x$enable_cxx11" != "xno"; then
+
+
+
+if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
    enable_cxx11="yes"
 else
    enable_cxx11="no"
 fi
+
+
 
 # Check whether --enable-icu_bundle was given.
 if test "${enable_icu_bundle+set}" = set; then :
   enableval=$enable_icu_bundle;
 fi
 
-if test "x$enable_icu_bundle" != "xno"; then
+
+
+
+if test "x$enable_icu_bundle" != "xno" -a -z "${STRINGI_DISABLE_ICU_BUNDLE}"; then
    enable_icu_bundle="yes"
 else
    enable_icu_bundle="no"
 fi
+
+
+
+
+
 
 # Check whether --enable-pkg_config was given.
 if test "${enable_pkg_config+set}" = set; then :
   enableval=$enable_pkg_config;
 fi
 
-if test "x$enable_pkg_config" != "xno"; then
+
+
+
+if test "x$enable_pkg_config" != "xno" -a -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
    enable_pkg_config="yes"
 else
    enable_pkg_config="no"
@@ -2221,6 +2276,7 @@ if test "x$enable_gcc_pedantic" == "xyes"; then
 else
    enable_gcc_pedantic="no"
 fi
+
 
 
 # Check whether --with-extra_cflags was given.
@@ -2256,6 +2312,23 @@ if test "${with_extra_libs+set}" = set; then :
   withval=$with_extra_libs;
 fi
 
+
+
+
+
+
+
+
+
+
+
+
+
+with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
+with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
+with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
+with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
+with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 ##### CHECK FOR R #############################################################
 
