@@ -29,62 +29,61 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#' @title
-#' Installation-Related Utilities [DEPRECATED]
-#'
-#' @description
-#' These functions are responsible for checking and guaranteeing
-#' that the ICU data library (icudt) is available and that \pkg{stringi}
-#' is ready to use.
-#'
-#' These functions are deprecated and will no longer be available
-#' in future \pkg{stringi} releases.
-#'
-#' @details
-#' ICU makes use of a wide variety of data tables to provide many
-#' of its services. Examples include converter mapping tables,
-#' collation rules, transliteration rules, break iterator rules
-#' and dictionaries, and other locale data.
-#'
-#' Without the ICU data library (icudt) many \pkg{stringi} features
-#' will not be available. icudt size is approx. 10-30 MB.
-#'
-#' \code{stri_install_check()} tests whether some ICU services
-#' are available. If they are not, it is most likely due to
-#' unavailable ICU data library.
-#'
-#' \code{stri_install_icudt()} downloads and installs the ICU data library
-#' specific for your platform (little/big-endian). The downloaded
-#' file will be decompressed into the directory where the package has been
-#' installed, see \code{\link{find.package}}, so make sure
-#' you have sufficient write permissions.
-#'
-#' @param silent suppress diagnostic messages
-#' @param check enable \code{stri_install_check()} tests
-#' @param outpath path to install icudt to. If \code{NULL}, then
-#' \code{file.path(path.package("stringi"), "libs")} will be used.
-#' @param inpath path to search icudt archive in.
-#' If \code{NULL}, then only stringi mirror servers will be used.
-#' Mainly of interest to system admins and software developers.
-#'
-#' @return These functions return a logical value, invisibly.
-#' \code{TRUE} denotes that the requested operation has been completed
-#' successfully.
-#'
-#' @references
-#' \emph{ICU Data} -- ICU User Guide,
-#' \url{http://userguide.icu-project.org/icudata}
-#'
-#' @examples
-#' stri_install_check()
-#'
-#' @rdname stri_install
-#' @export
+# @title
+# Installation-Related Utilities [DEPRECATED]
+#
+# @description
+# These functions are responsible for checking and guaranteeing
+# that the ICU data library (icudt) is available and that \pkg{stringi}
+# is ready to use.
+#
+# These functions are deprecated and will no longer be available
+# in future \pkg{stringi} releases.
+#
+# @details
+# ICU makes use of a wide variety of data tables to provide many
+# of its services. Examples include converter mapping tables,
+# collation rules, transliteration rules, break iterator rules
+# and dictionaries, and other locale data.
+#
+# Without the ICU data library (icudt) many \pkg{stringi} features
+# will not be available. icudt size is approx. 10-30 MB.
+#
+# \code{stri_install_check()} tests whether some ICU services
+# are available. If they are not, it is most likely due to
+# unavailable ICU data library.
+#
+# \code{stri_install_icudt()} downloads and installs the ICU data library
+# specific for your platform (little/big-endian). The downloaded
+# file will be decompressed into the directory where the package has been
+# installed, see \code{\link{find.package}}, so make sure
+# you have sufficient write permissions.
+#
+# @param silent suppress diagnostic messages
+# @param check enable \code{stri_install_check()} tests
+# @param outpath path to install icudt to. If \code{NULL}, then
+# \code{file.path(path.package("stringi"), "libs")} will be used.
+# @param inpath path to search icudt archive in.
+# If \code{NULL}, then only stringi mirror servers will be used.
+# Mainly of interest to system admins and software developers.
+#
+# @return These functions return a logical value, invisibly.
+# \code{TRUE} denotes that the requested operation has been completed
+# successfully.
+#
+# @references
+# \emph{ICU Data} -- ICU User Guide,
+# \url{http://userguide.icu-project.org/icudata}
+#
+# @examples
+# stri_install_check()
+#
+# @rdname stri_install
 stri_install_check <- function(silent=FALSE) {
-   stopifnot(is.logical(silent), length(silent) == 1)
+   # As of v1.1.3, this function is no longer exported.
+   # It was deprecated in 0.5-5.
 
-   warning("THIS FUNCTION IS DEPRECATED")
-   # this function may stay as-is, but should no longer be exported in the future
+   stopifnot(is.logical(silent), length(silent) == 1)
 
    allok <- tryCatch({
       if (!silent) message(stri_info(TRUE)) # this may also throw an error
@@ -107,18 +106,17 @@ stri_install_check <- function(silent=FALSE) {
 }
 
 
-#' @rdname stri_install
-#' @export
+# @rdname stri_install
 stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
+   # As of v1.1.3, this function is no longer exported.
+   # It was deprecated in 0.5-5.
+
    stopifnot(is.logical(check), length(check) == 1, !is.na(check))
    if (check && stri_install_check(TRUE)) {
       message("icudt has been already installed.")
       return(invisible(TRUE))
    }
 
-   if (check) # install.libs.R calls it with check=FALSE
-      warning("THIS FUNCTION IS DEPRECATED")
-   # this function should be removed
    # remember about importFrom tools md5sum -> stringi-package.R
    # use this very code in install.libs.R directly
 
