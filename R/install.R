@@ -105,6 +105,83 @@ stri_install_check <- function(silent=FALSE) {
    invisible(allok)
 }
 
+# @rdname stri_install
+stri_download_icudt <- function(inpath) {
+
+   fname <- if (.Platform$endian == 'little') "icudt55l.zip"
+                                         else "icudt55b.zip"
+
+   md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
+                                         else "1194f0dd879d3c1c1f189cde5fd90efe"
+
+   icudtzipfname <- file.path(inpath, fname) #tempfile(fileext=".zip")
+
+   if (file.exists(icudtzipfname)) {
+      md5ob <- tools::md5sum(icudtzipfname)
+      if (is.na(md5ob)) {
+         message("error checking md5sum for icudt")
+         return(invisible(FALSE))
+      }
+      if (md5ob != md5ex) {
+         message("md5sum mismatch for icudt")
+         return(invisible(FALSE))
+      }
+      message("icudt already downloaded")
+      return(icudtzipfname)
+   }
+
+   mirrors <- c("http://static.rexamine.com/packages/",
+                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
+                "http://www.ibspan.waw.pl/~gagolews/stringi/")
+
+   # if (!is.null(inpath)) {
+   #    stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
+   #    mirrors <- c(inpath, mirrors)
+   # }
+
+   download_from_mirror <- function(href, fname, icudtzipfname) {
+      tryCatch({
+         suppressWarnings(file.remove(icudtzipfname))
+         # download icudt
+         if (download.file(paste(href, fname, sep=""), icudtzipfname, mode="wb") != 0) {
+            return("download error")
+         }
+         if (!file.exists(icudtzipfname)) return("download error")
+         md5ob <- tools::md5sum(icudtzipfname)
+         if (is.na(md5ob)) {
+            return("error checking md5sum")
+         }
+         if (md5ob != md5ex) {
+            return("md5sum mismatch")
+         }
+         TRUE
+      }, error = function(e) as.character(e))
+   }
+
+   message("downloading ICU data library (icudt)")
+   message("output path: ", icudtzipfname)
+   if (!dir.exists(inpath))
+      dir.create(inpath)
+
+   allok <- FALSE
+   for (m in mirrors) {
+      if (identical(status <- download_from_mirror(m, fname, icudtzipfname), TRUE)) {
+         allok <- TRUE
+         break
+      }
+      else message(status)
+   }
+
+   if (!allok || !file.exists(icudtzipfname)) {
+      suppressWarnings(file.remove(icudtzipfname))
+      message("icudt download failed")
+      return(invisible(FALSE))
+   }
+
+   message("icudt fetch successful")
+   return(icudtzipfname)
+}
+
 
 # @rdname stri_install
 stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
@@ -113,80 +190,30 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
 
    stopifnot(is.logical(check), length(check) == 1, !is.na(check))
    if (check && stri_install_check(TRUE)) {
-      message("icudt has been already installed.")
+      message("icudt is already installed.")
       return(invisible(TRUE))
    }
 
    # remember about importFrom tools md5sum -> stringi-package.R
    # use this very code in install.libs.R directly
 
+   icudtzipfname <- stri_download_icudt(inpath)
+   if (identical(icudtzipfname, FALSE) || !file.exists(icudtzipfname)) {
+      return(invisible(FALSE))
+   }
+
    if (is.null(outpath))
       outpath <- file.path(path.package("stringi"), "libs")
+
    stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
 
-   fname <- if (.Platform$endian == 'little') "icudt55l.zip"
-                                         else "icudt55b.zip"
-
-   md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
-                                         else "1194f0dd879d3c1c1f189cde5fd90efe"
-
-   mirrors <- c("http://static.rexamine.com/packages/",
-                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                "http://www.ibspan.waw.pl/~gagolews/stringi/")
-
-   if (!is.null(inpath)) {
-      stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
-      mirrors <- c(inpath, mirrors)
-   }
-
-   outfname <- tempfile(fileext=".zip")
-   download_from_mirror <- function(href, fname, outfname) {
-      tryCatch({
-         suppressWarnings(file.remove(outfname))
-         if (!grepl("^https?://", href)) {
-            # try to copy icudt from a local repo
-            if (!file.exists(file.path(href, fname))) return("no icudt in a local repo")
-            message("icudt has been found in a local repo")
-            file.copy(file.path(href, fname), outfname)
-         }
-         else {
-            # download icudt
-            if (download.file(paste(href, fname, sep=""), outfname, mode="wb") != 0)
-               return("download error")
-         }
-         if (!file.exists(outfname)) return("download error")
-         md5ob <- tools::md5sum(outfname)
-         if (is.na(md5ob)) return("error checking md5sum")
-         if (md5ob != md5ex) return("md5sum mismatch")
-         TRUE
-      }, error = function(e) as.character(e))
-   }
-
-   message("downloading ICU data library (icudt)")
-   message("the files will be extracted to: ", outpath)
-   allok <- FALSE
-   for (m in mirrors) {
-      if (identical(status <- download_from_mirror(m, fname, outfname), TRUE)) {
-         allok <- TRUE
-         break
-      }
-      else message(status)
-   }
-
-   if (!allok) {
-      message("icudt download failed")
-      return(invisible(FALSE))
-   }
-   message("icudt fetch OK")
-
-   message("decompressing downloaded archive")
-   res <- unzip(outfname, exdir=outpath, overwrite=TRUE)
+   message("decompressing icudt archive ", icudtzipfname, " to: ", outpath)
+   res <- unzip(icudtzipfname, exdir=outpath, overwrite=TRUE)
    if (!is.character(res) || length(res) <= 0) {
-      message("error decompressing archive")
+      message("error decompressing icudt archive")
       return(invisible(FALSE))
    }
 
-   suppressWarnings(file.remove(outfname))
    message("icudt has been installed successfully")
    invisible(TRUE)
 }

@@ -662,6 +662,16 @@ if test $ICU_FOUND = 0; then
    CFLAGS=$OLD_CFLAGS
    CXXFLAGS=$OLD_CXXFLAGS
    CPPFLAGS=$OLD_CPPFLAGS
+
+   AC_MSG_CHECKING([whether we can fetch icudt])
+   R --vanilla --slave -e "setwd(\"src/\"); \
+                           source(\"../R/install.R\"); \
+                           if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\"))) \
+                               stop(\"Stopping on error\")"
+   if test $? -ne 0; then
+      echo "*** icudt could not be downloaded. stopping."
+      exit 1
+   fi
 fi
 
 ##### PREPARE LIST OF SOURCE FILES #############################################
