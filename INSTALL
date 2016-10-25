@@ -105,6 +105,8 @@ Some influential environment variables:
   `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R executable.
 * `CAT`: The `cat` command used for generating the list of source files
   to compile.
+* `PKG_CONFIG`:The `pkg-config` command used for getting necessary compiler
+  flags to link to and existing libicu installation.
 * `STRINGI_DISABLE_CXX11`: Disable the use of C++11,
       see also `--disable-cxx11`.
 * `STRINGI_DISABLE_PKG_CONFIG`: Force the use of the ICU bundle,

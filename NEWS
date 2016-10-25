@@ -14,7 +14,7 @@ http://bugs.icu-project.org/trac/ticket/11554]
 * [NEW FEATURE] #231: The `./configure` (*NIX only) script now reads the
 following environment varialbes: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
 `STRINGI_CXXFLAGS`, `STRINGI_LDFLAGS`, `STRINGI_LIBS`, `STRINGI_DISABLE_CXX11`,
-`STRINGI_DISABLE_ICU_BUNDLE`, `STRINGI_DISABLE_PKG_CONFIG`,
+`STRINGI_DISABLE_ICU_BUNDLE`, `STRINGI_DISABLE_PKG_CONFIG`, `PKG_CONFIG`,
 see `INSTALL` for more information.
 
 * [NEW FEATURE] #230: icudt is now being downloaded by
