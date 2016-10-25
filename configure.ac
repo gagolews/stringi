@@ -16,15 +16,18 @@ AC_ARG_VAR(R_HOME, [Override the default directory with R installation,
    e.g., /usr/lib64/R, where /usr/lib64 is in the search path.
    Note that $R_HOME/bin/R should point to the R executable.])
 
+AC_ARG_VAR([CAT], [The 'cat' command used for generating the list
+   of source files to compile.])
+
+AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command used for getting
+   necessary compiler flags to link to and existing libicu installation.])
+
 AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU
    data archive (icudt*.zip) may be copied; either an absolute path or
    a path relative to <package source dir>/src; defaults to icu55/data.])
 
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
    pkg-config's .pc files.])
-
-AC_ARG_VAR([CAT], [The 'cat' command used for generating the list
-   of source files to compile.])
 
 AC_ARG_VAR([CC], [Purposedly ignored.])
 
@@ -376,8 +379,7 @@ detect_icu_with_pkg_config() {
          [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
 
    if test ! -f "${PKG_CONFIG}"; then
-      echo "*** The pkg-config script could not be found"
-      echo "*** Make sure it is installed if you want to use system ICU4C-devel installation"
+      echo "*** pkg-config could not be found"
       return 1 # go back immediately
    fi
 
@@ -386,8 +388,7 @@ detect_icu_with_pkg_config() {
    if ! `"${PKG_CONFIG}" --exists icu-i18n  icu-uc`; then
       # pkg config doesn't know about icu-i18n
       AC_MSG_RESULT(no)
-      echo "*** The pkg-config script did not detect ICU4C-devel libraries installed"
-      echo "*** We will build ICU4C from sources"
+      echo "*** pkg-config did not detect ICU4C-devel libraries installed"
       return 1 # nothing more to do
    fi
 
@@ -403,7 +404,6 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT(no)
       echo "*** ICU4C ${ICU_VERSION} has been detected"
       echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-      echo "*** We will build ICU4C from sources"
       return 1 # you may quit querying pkg-config here
    fi
    AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
@@ -447,7 +447,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no])
-      echo "*** ICU4C will be built from sources"
+      echo "*** System ICU4C cannot be used"
       return 1
    ])
 
@@ -654,6 +654,13 @@ check_flags_icu_bundle() {
 }
 
 if test $ICU_FOUND = 0; then
+   if test $enable_icu_bundle = "no"; then
+      echo "*** Failed to configure package build with forced system ICU usage"
+      echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
+      echo "*** together with pkg-config"
+      exit 1
+   fi
+
    OLD_CFLAGS=$CFLAGS
    OLD_CXXFLAGS=$CXXFLAGS
    OLD_CPPFLAGS=$CPPFLAGS
@@ -703,7 +710,8 @@ AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 if test $ICU_FOUND = 0; then
    if test $enable_icu_bundle = "no"; then
       echo "*** Failed to configure package build with forced system ICU usage"
-      echo "*** Make sure that libicu-dev is properly installed"
+      echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
+      echo "*** together with pkg-config"
       exit 1
    fi
 
