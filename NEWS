@@ -1,13 +1,6 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## Known bugs in ICU
-
-* [REGEX] #147: regex look-behind assertions may fail to find a multibyte
-Unicode search pattern [solved in ICU4C 57m1, see
-http://bugs.icu-project.org/trac/ticket/11554]
-
--------------------------------------------------------------------------------
 
 ## 1.1.3 (2016-XX-XX)
 
