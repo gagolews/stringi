@@ -16,7 +16,7 @@ see `INSTALL` for more information.
 * [REMOVE DEPRECATED] `stri_install_check()` and `stri_install_icudt()`
 marked as deprecated in `stringi` 0.5-5 are no longer being exported.
 
-* [ICU DEPRECATED] #242: `COUNT/LIMIT` constants have been deprecated
+* [ICU-RELATED] #242: `_COUNT/_LIMIT` enum constants have been deprecated
 as of ICU 58.2, stringi code upgraded
 
 -------------------------------------------------------------------------------
