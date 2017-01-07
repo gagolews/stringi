@@ -12,7 +12,7 @@ make                                                                            
 make install                                                                                                                         && \
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/                                                                                     && \
 export LD_LIBRARY_PATH=/usr/local/lib/                                                                                               && \
-export STRINGI_CPPFLAGS='-DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API -DU_HIDE_OBSOLETE_API -DU_HIDE_SYSTEM_API -DU_HIDE_INTERNAL_API' && \
+export STRINGI_CPPFLAGS='-DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API -DU_HIDE_OBSOLETE_API -DU_HIDE_INTERNAL_API'                     && \
 cd /tmp                                                                                                                              && \
 GIT_SSL_NO_VERIFY=true git clone https://github.com/gagolews/stringi.git                                                             && \
 R CMD build stringi                                                                                                                  && \

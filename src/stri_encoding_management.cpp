@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2017, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,6 +66,14 @@ SEXP stri_enc_set(SEXP enc)
    // get "official" encoding name:
    const char* name = ucnv_getName(uconv, &status);
    STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
+   /*
+    DO NOT call this function when ANY ICU function is being used
+    from more than one thread! This function sets the current default
+    converter name. If this function needs to be called, it should be
+    called during application initialization.
+    Do not use unless you know what you are doing.
+    */
    ucnv_setDefaultName(name); // set as default
 
    return R_NilValue;
