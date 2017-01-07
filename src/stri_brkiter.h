@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2017, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,6 +45,8 @@
  * A class to manage a break iterator's options
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
+ *
+ * @version 1.1.3 (Marek Gagolewski, 2017-01-07) UBRK_COUNT deprecated
  */
 class StriBrkIterOptions {
    protected:
@@ -59,7 +61,7 @@ class StriBrkIterOptions {
 
       void setEmptyOpts() {
          locale = NULL;
-         type = UBRK_COUNT;
+         type = UBRK_CHARACTER;
          skip_rules = NULL;
          skip_size = 0;
       }
@@ -90,8 +92,9 @@ class StriBrkIterOptions {
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-30)
  *
- * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
- * separate class
+ * @version 0.4-1 (Marek Gagolewski, 2014-12-02) separate class
+ *
+ * @version 1.1.3 (Marek Gagolewski, 2017-01-07) UBRK_COUNT deprecated
  */
 class StriUBreakIterator : public StriBrkIterOptions {
    private:
@@ -104,10 +107,10 @@ class StriUBreakIterator : public StriBrkIterOptions {
 #endif
          UErrorCode status = U_ZERO_ERROR;
          switch (type) {
-            case UBRK_CHARACTER: // character [this is not documented]
+            case UBRK_CHARACTER: // character
                uiterator = ubrk_open(UBRK_CHARACTER, locale, NULL, 0, &status);
                break;
-            case UBRK_LINE: // line_break [this is not documented]
+            case UBRK_LINE: // line_break
                uiterator = ubrk_open(UBRK_LINE, locale, NULL, 0, &status);
                break;
             case UBRK_SENTENCE: // sentence
@@ -116,7 +119,6 @@ class StriUBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                uiterator = ubrk_open(UBRK_WORD, locale, NULL, 0, &status);
                break;
-            case UBRK_COUNT:
             default:
                throw StriException(MSG__INTERNAL_ERROR);
          }
@@ -211,7 +213,6 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
             case UBRK_WORD: // word
                rbiterator = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
-            case UBRK_COUNT:
             default:
                throw StriException(MSG__INTERNAL_ERROR);
          }

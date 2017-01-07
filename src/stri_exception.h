@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2017, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -87,11 +87,6 @@ using namespace std;
       onerror;                                              \
       throw StriException(status);                          \
    }                                                        \
-   else if (status <= U_ERROR_WARNING_LIMIT && status > U_USING_DEFAULT_WARNING) { \
-      Rf_warning(MSG__ICU_WARNING,                          \
-         StriException::getICUerrorName(status),            \
-         u_errorName(status));                              \
-   }                                                        \
 }
 
 
@@ -99,11 +94,6 @@ using namespace std;
    if (U_FAILURE(status)) {                                 \
       onerror;                                              \
       Rf_error(MSG__ICU_ERROR,                              \
-         StriException::getICUerrorName(status),            \
-         u_errorName(status));                              \
-   }                                                        \
-   else if (status <= U_ERROR_WARNING_LIMIT && status > U_USING_DEFAULT_WARNING) { \
-      Rf_warning(MSG__ICU_WARNING,                          \
          StriException::getICUerrorName(status),            \
          u_errorName(status));                              \
    }                                                        \

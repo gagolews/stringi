@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2017, Marek Gagolewski and Bartek Tartanus
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,10 @@
 #undef U_CHARSET_IS_UTF8
 #endif
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
 //#define U_HIDE_DRAFT_API
-#define U_HIDE_DEPRECATED_API
-#endif
+//#define U_HIDE_DEPRECATED_API
+//#endif
 
 #define  UNISTR_FROM_CHAR_EXPLICIT   explicit
 #define  UNISTR_FROM_STRING_EXPLICIT explicit
