@@ -1,4 +1,5 @@
 // [[Rcpp::depends(stringi)]]
+#define R_NO_REMAP
 #include <stringi.h>
 #include <stringi.cpp>
 #include <Rcpp.h>
