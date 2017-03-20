@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+## Copyright (C) 2013-2017, Marek Gagolewski and Bartek Tartanus
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@
 #' For negative indices in \code{from} or \code{to},
 #' counting starts at the end of the string.
 #' For instance, index -1 denotes the last code point in the string.
-#' Negative \code{length} means counting backwards.
+#' Non-positive \code{length} gives an empty string.
 #'
 #'
 #' In \code{stri_sub}, out-of-bound indices are silently

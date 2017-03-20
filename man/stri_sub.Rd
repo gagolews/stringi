@@ -60,7 +60,7 @@ Argument \code{to} defines the last index of the substring, inclusive.
 For negative indices in \code{from} or \code{to},
 counting starts at the end of the string.
 For instance, index -1 denotes the last code point in the string.
-Negative \code{length} means counting backwards.
+Non-positive \code{length} gives an empty string.
 
 
 In \code{stri_sub}, out-of-bound indices are silently
