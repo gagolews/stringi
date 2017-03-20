@@ -10,6 +10,8 @@ following environment varialbes: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
 `STRINGI_DISABLE_ICU_BUNDLE`, `STRINGI_DISABLE_PKG_CONFIG`, `PKG_CONFIG`,
 see `INSTALL` for more information.
 
+* [NEW FEATURE] #253: call to `R_useDynamicSymbols` added.
+
 * [NEW FEATURE] #230: icudt is now being downloaded by
 `./configure` (*NIX only) *before* building.
 

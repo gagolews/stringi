@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+ * Copyright (C) 2013-2017, Marek Gagolewski.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -305,7 +305,8 @@ extern "C" void R_init_stringi(DllInfo* dll)
       Rf_error("ICU init failed: %s", u_errorName(status));
 
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
-//   R_useDynamicSymbols(dll, Rboolean(FALSE)); // slower
+   R_useDynamicSymbols(dll, FALSE);
+   R_forceSymbols(dll, TRUE);
 
    const R_CallMethodDef* methods = cCallMethods;
    while (methods->name) {
