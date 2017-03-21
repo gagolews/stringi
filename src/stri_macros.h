@@ -107,23 +107,55 @@
    (STRI__GET_INT32_LE(str_cur_s, 0) == 0x0000FEFFUL))
 
 
-// taken from R's Defn.h - sorry, this is needed
-// CHARSXP charset bits
+/* ************************************************************************
+ * based on R's Defn.h
+ * CHARSXP charset bits
+*/
+#ifndef BYTES_MASK
 #define BYTES_MASK (1<<1)
+#endif
+
+#ifndef LATIN1_MASK
 #define LATIN1_MASK (1<<2)
+#endif
+
+#ifndef UTF8_MASK
 #define UTF8_MASK (1<<3)
+#endif
+
+#ifndef ASCII_MASK
 #define ASCII_MASK (1<<6)
+#endif
+
+#ifndef IS_BYTES
 #define IS_BYTES(x) ((x)->sxpinfo.gp & BYTES_MASK)
+#endif
+
+#ifndef IS_LATIN1
 #define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+#endif
+
+#ifndef IS_ASCII
 #define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
+#endif
+
+#ifndef IS_UTF8
 #define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#endif
+
+#ifndef ENC_KNOWN
 #define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
+#endif
 
+#ifndef isRaw
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
+#endif
 
+/* ************************************************************************ */
 
-/// Unicode replacement character
+/* Unicode replacement character */
 #define UCHAR_REPLACEMENT 0xFFFD
+
 #define ASCII_SUBSTITUTE  0x1A
 #define ASCII_MAXCHARCODE 127
 #define UCHAR_REPLACEMENT_UTF8_BYTE1 0xef
