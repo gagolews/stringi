@@ -117,6 +117,9 @@ StriContainerUTF8_indexable& StriContainerUTF8_indexable::operator=(StriContaine
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use String8::isASCII
+ *
+ * @version 1.1.3 (Marek Gagolewski, 2017-03-21)
+ *          Issue#227: buffering bug in stri_sub
  */
 R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh)
 {
@@ -172,7 +175,7 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len
       ++j;
    }
 
-   last_ind_back_codepoint = wh;
+   last_ind_back_codepoint = j; // it's not wh, as we can advance at the end of the string, compare #227
    last_ind_back_utf8 = jres;
 
    return jres;
@@ -201,6 +204,9 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_back(R_len_t i, R_len
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use String8::isASCII
+ *
+ * @version 1.1.3 (Marek Gagolewski, 2017-03-21)
+ *          Issue#227: buffering bug in stri_sub
  */
 R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh)
 {
@@ -257,7 +263,7 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
       ++j;
    }
 
-   last_ind_fwd_codepoint = wh;
+   last_ind_fwd_codepoint = j; // it's not wh, as we can advance at the end of the string, compare #227
    last_ind_fwd_utf8 = jres;
    return jres;
 }

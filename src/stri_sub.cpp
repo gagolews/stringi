@@ -34,66 +34,82 @@
 #include "stri_container_utf8_indexable.h"
 #include "stri_string8buf.h"
 
-
-#define STRI__SUB_PREPARE_FROM_TO_LENGTH                                     \
-   bool from_ismatrix = Rf_isMatrix(from);                                   \
-   if (from_ismatrix) {                                                      \
-      SEXP t = Rf_getAttrib(from, R_DimSymbol);                              \
-      if (INTEGER(t)[1] == 1)                                                \
-         from_ismatrix = false; /* it's a column vector */                   \
-      else if (INTEGER(t)[1] > 2) {                                          \
-         /* error() is allowed here */                                       \
-         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);   \
-      }                                                                      \
-   }                                                                         \
-   PROTECT(from = stri_prepare_arg_integer(from, "from"));                   \
-   /* may remove R_DimSymbol */                                              \
-                                                                             \
-   if (from_ismatrix) {                                                      \
-      from_len      = LENGTH(from)/2;                                        \
-      to_len        = from_len;                                              \
-      from_tab      = INTEGER(from);                                         \
-      to_tab        = from_tab+from_len;                                     \
-      PROTECT(to); /* fake - not to provoke stack imbalance */               \
-      PROTECT(length); /* fake - not to provoke stack imbalance */           \
-   }                                                                         \
-   else if (isNull(length)) {                                                \
-      PROTECT(to    = stri_prepare_arg_integer(to, "to"));                   \
-      from_len      = LENGTH(from);                                          \
-      from_tab      = INTEGER(from);                                         \
-      to_len        = LENGTH(to);                                            \
-      to_tab        = INTEGER(to);                                           \
-      PROTECT(length); /* fake - not to provoke stack imbalance */           \
-   }                                                                         \
-   else {                                                                    \
-      PROTECT(length= stri_prepare_arg_integer(length, "length"));           \
-      from_len      = LENGTH(from);                                          \
-      from_tab      = INTEGER(from);                                         \
-      length_len    = LENGTH(length);                                        \
-      length_tab    = INTEGER(length);                                       \
-      PROTECT(to); /* fake - not to provoke stack imbalance */               \
+/***
+ * used both in stri_sub and stri_sub_replacement
+ *
+ * PROTECTs both `to` and `length`
+ */
+void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
+   R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,
+   int*& from_tab, int*& to_tab, int*& length_tab)
+{
+   bool from_ismatrix = Rf_isMatrix(from);
+   if (from_ismatrix) {
+      SEXP t;
+      PROTECT(t = Rf_getAttrib(from, R_DimSymbol));
+      if (INTEGER(t)[1] == 1)
+         from_ismatrix = false; /* it's a column vector */
+      else if (INTEGER(t)[1] > 2) {
+         /* error() is allowed here */
+         Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);
+      }
+      UNPROTECT(1); // t
    }
+   PROTECT(from = stri_prepare_arg_integer(from, "from"));
+   /* may remove R_DimSymbol */
 
-
-#define STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2) \
-                                                                    \
-   if (cur_from >= 0) {                                             \
-      cur_from--; /* 1-based -> 0-based index */                    \
-      cur_from2 = str_cont.UChar32_to_UTF8_index_fwd(i, cur_from);  \
-   }                                                                \
-   else {                                                           \
-      cur_from  = -cur_from;                                        \
-      cur_from2 = str_cont.UChar32_to_UTF8_index_back(i, cur_from); \
-   }                                                                \
-   if (cur_to >= 0) {                                               \
-      ; /* do nothing with cur_to ; 1-based -> 0-based index */     \
-        /* but +1 as we need the next one (bound) */                \
-      cur_to2 = str_cont.UChar32_to_UTF8_index_fwd(i, cur_to);      \
-   }                                                                \
-   else {                                                           \
-      cur_to  = -cur_to - 1;                                        \
-      cur_to2 = str_cont.UChar32_to_UTF8_index_back(i, cur_to);     \
+   if (from_ismatrix) {
+      from_len      = LENGTH(from)/2;
+      to_len        = from_len;
+      from_tab      = INTEGER(from);
+      to_tab        = from_tab+from_len;
+      PROTECT(to); /* fake - not to provoke stack imbalance */
+      PROTECT(length); /* fake - not to provoke stack imbalance */
    }
+   else if (isNull(length)) {
+      PROTECT(to    = stri_prepare_arg_integer(to, "to"));
+      from_len      = LENGTH(from);
+      from_tab      = INTEGER(from);
+      to_len        = LENGTH(to);
+      to_tab        = INTEGER(to);
+      PROTECT(length); /* fake - not to provoke stack imbalance */
+   }
+   else {
+      PROTECT(length= stri_prepare_arg_integer(length, "length"));
+      from_len      = LENGTH(from);
+      from_tab      = INTEGER(from);
+      length_len    = LENGTH(length);
+      length_tab    = INTEGER(length);
+      PROTECT(to); /* fake - not to provoke stack imbalance */
+   }
+}
+
+
+/***
+ * used both in stri_sub and stri_sub_replacement
+ */
+inline void stri__sub_get_indices(StriContainerUTF8_indexable& str_cont, R_len_t& i,
+                           R_len_t& cur_from,  R_len_t& cur_to,
+                           R_len_t& cur_from2, R_len_t& cur_to2)
+{
+   if (cur_from >= 0) {
+      cur_from--; /* 1-based -> 0-based index */
+      cur_from2 = str_cont.UChar32_to_UTF8_index_fwd(i, cur_from);
+   }
+   else {
+      cur_from  = -cur_from;
+      cur_from2 = str_cont.UChar32_to_UTF8_index_back(i, cur_from);
+   }
+   if (cur_to >= 0) {
+      ; /* do nothing with cur_to ; 1-based -> 0-based index */
+        /* but +1 as we need the next one (bound) */
+      cur_to2 = str_cont.UChar32_to_UTF8_index_fwd(i, cur_to);
+   }
+   else {
+      cur_to  = -cur_to - 1;
+      cur_to2 = str_cont.UChar32_to_UTF8_index_back(i, cur_to);
+   }
+}
 
 
 /**
@@ -142,7 +158,8 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    int* to_tab           = 0;
    int* length_tab       = 0;
 
-   STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
+   stri__sub_prepare_from_to_length(from, to, length,  /* PROTECTs 3 objects */
+      from_len, to_len, length_len, from_tab, to_tab, length_tab);
 
    R_len_t vectorize_len = stri__recycling_rule(true, 3,
       str_len, from_len, (to_len>length_len)?to_len:length_len);
@@ -182,7 +199,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
       R_len_t cur_from2; // UTF-8 byte indices
       R_len_t cur_to2;   // UTF-8 byte indices
 
-      STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2)
+      stri__sub_get_indices(str_cont, i, cur_from, cur_to, cur_from2, cur_to2);
 
       if (cur_to2 > cur_from2) { // just copy
          SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cur_s+cur_from2, cur_to2-cur_from2, CE_UTF8));
@@ -252,7 +269,8 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
    int* to_tab           = 0; // see below
    int* length_tab       = 0; // see below
 
-   STRI__SUB_PREPARE_FROM_TO_LENGTH /* does 3 PROTECTs */
+   stri__sub_prepare_from_to_length(from, to, length,  /* PROTECTs 3 objects */
+      from_len, to_len, length_len, from_tab, to_tab, length_tab);
 
    R_len_t vectorize_len = stri__recycling_rule(true, 4,
       str_len, value_len, from_len, (to_len>length_len)?to_len:length_len);
@@ -310,7 +328,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
       R_len_t cur_from2; // UTF-8 byte indices
       R_len_t cur_to2;   // UTF-8 byte indices
 
-      STRI__SUB_GET_INDICES(cur_from, cur_to, cur_from2, cur_to2)
+      stri__sub_get_indices(str_cont, i, cur_from, cur_to, cur_from2, cur_to2);
       if (cur_to2 < cur_from2) cur_to2 = cur_from2;
 
       R_len_t buflen = str_cur_n-(cur_to2-cur_from2)+value_cur_n;

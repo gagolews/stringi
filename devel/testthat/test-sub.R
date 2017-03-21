@@ -94,6 +94,22 @@ test_that("stri_sub<-", {
 })
 
 test_that("stri_sub_issue227", {
+   expect_equivalent(stri_sub("as", from=-c(1,2,1)), c("s", "as", "s"))
+   expect_equivalent(stri_sub("as", from=-c(1,2,3,2,1)), c("s", "as", "as", "as", "s"))
+   expect_equivalent(stri_sub("ąś", from=-c(1,2,1)), c("ś", "ąś", "ś"))
+   expect_equivalent(stri_sub("ąś", from=-c(1,2,3,2,1)), c("ś", "ąś", "ąś", "ąś", "ś"))
+
+   expect_identical(stri_sub("as", from=c(4,3,2)), c("", "", "s"))
+   expect_identical(stri_sub("ąś", from=c(4,3,2)), c("", "", "ś"))
+
+   expect_equivalent(stri_sub("as", from=-c(1,2,3,4,3,4,3,2,1)), c("s", "as", "as", "as", "as", "as", "as", "as", "s"))
+   expect_equivalent(stri_sub("ąś", from=-c(1,2,3,4,3,4,3,2,1)), c("ś", "ąś", "ąś", "ąś", "ąś", "ąś", "ąś", "ąś", "ś"))
+
+   expect_equivalent({x <- "as"; stri_sub(x, from=-c(1,2,3,2,1)) <- "*"; x}, c("a*", "*", "*", "*", "a*"))
+   expect_equivalent({x <- "ąś"; stri_sub(x, from=-c(1,2,3,2,1)) <- "*"; x}, c("ą*", "*", "*", "*", "ą*"))
+
+   stri_sub("ąś", to=-c(1,2,4,2,1))
+
    s <- "tißć„óóþ”µć„"
    idx <- 1:8
    expect_equivalent(sapply(idx, function(x) stri_sub(s, from = -c(6, x)))[2,], stri_sub(s, from = -idx))
