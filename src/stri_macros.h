@@ -109,6 +109,9 @@
 
 // taken from R's Defn.h - sorry, this is needed
 // CHARSXP charset bits
+
+// only define the macros if they are missing
+#if !defined(IS_BYTES) || !defined(IS_LATIN1) || !defined(IS_ASCII) || !defined(IS_UTF8) || !defined(ENC_KNOWN)
 #define BYTES_MASK (1<<1)
 #define LATIN1_MASK (1<<2)
 #define UTF8_MASK (1<<3)
@@ -118,6 +121,7 @@
 #define IS_ASCII(x) ((x)->sxpinfo.gp & ASCII_MASK)
 #define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 #define ENC_KNOWN(x) ((x)->sxpinfo.gp & (LATIN1_MASK | UTF8_MASK | ASCII_MASK))
+#endif
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
 
