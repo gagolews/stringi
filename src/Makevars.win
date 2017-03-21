@@ -1,5 +1,5 @@
 ## `stringi` Makevars.win
-## Copyright (C) 2013-2015, M. Gagolewski
+## Copyright (c) 2013-2017, M. Gagolewski
 
 CXX_STD=CXX11
 

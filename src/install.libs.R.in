@@ -1,3 +1,7 @@
+## This file is part of the 'stringi' package for R.
+## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## All rights reserved.
+
 # copy lib:
 libfile <- paste("stringi", SHLIB_EXT, sep="")
 dest <- file.path(R_PACKAGE_DIR, paste("libs", R_ARCH, sep=""))

@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (C) 2013-2016, Marek Gagolewski and Bartek Tartanus
+## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -143,7 +143,7 @@
 #' @aliases stringi
 #' @docType package
 #' @author Marek Gagolewski,
-#' with contributions from Bartek Tartanus.
+#' with contributions from Bartek Tartanus and others.
 #' ICU4C was developed by IBM and others.
 #' The Unicode Character Database is due to Unicode, Inc.;
 #' see the COPYRIGHTS file for more details.

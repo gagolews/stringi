@@ -1,4 +1,8 @@
-# Runs all tests for the package:
+# This file is part of the 'stringi' package for R.
+# Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+# All rights reserved.
+
+# Runs all unit tests for the package:
 
 library("testthat")
 library("stringi")
