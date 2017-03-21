@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/gagolews/stringi.svg?branch=master)](https://travis-ci.org/gagolews/stringi)
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.19071.svg)](http://dx.doi.org/10.5281/zenodo.19071)
+![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
@@ -12,14 +13,14 @@
 and convenient string/text processing in each locale and any native
 character encoding. The use of the *ICU* library gives *R* users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
-*PHP* and *Ruby* programmers. The package's API was inspired by
+*PHP*, and *Ruby* programmers. The package's API was inspired by
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
-package.
+package (interestingly, since 2015, *stringr* itself is based on *stringi*).
 
 **Package maintainer**: [Marek Gagolewski](http://www.gagolewski.com/)
 
 **Authors**: [Marek Gagolewski](http://www.gagolewski.com/),
-with contributions from Bartlomiej Tartanus.
+with contributions from Bartlomiej Tartanus and others.
 
 This git repository also contains a custom subset of *ICU4C 55.1* source code
 which is copyrighted by IBM and others. A binary
