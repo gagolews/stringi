@@ -114,7 +114,7 @@ interesting facilities and topics.
 }
 \author{
 Marek Gagolewski,
-with contributions from Bartek Tartanus.
+with contributions from Bartek Tartanus and others.
 ICU4C was developed by IBM and others.
 The Unicode Character Database is due to Unicode, Inc.;
 see the COPYRIGHTS file for more details.
