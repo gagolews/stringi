@@ -64,6 +64,7 @@ using namespace icu;
 #define USE_RINTERNALS
 #define R_NO_REMAP
 #include <R.h>
+#include <Rversion.h>
 #include <Rinternals.h>
 #include <Rmath.h>
 #include <Rdefines.h>
