@@ -671,7 +671,7 @@ if test $ICU_FOUND = 0; then
    CPPFLAGS=$OLD_CPPFLAGS
 
    AC_MSG_CHECKING([whether we can fetch icudt])
-   R --vanilla --slave -e "setwd(\"src/\"); \
+   "${R_HOME}/bin/R" --vanilla --slave -e "setwd(\"src/\"); \
                            source(\"../R/install.R\"); \
                            if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\"))) \
                                stop(\"Stopping on error\")"
