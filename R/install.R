@@ -130,9 +130,9 @@ stri_download_icudt <- function(inpath) {
       return(icudtzipfname)
    }
 
-   mirrors <- c("http://static.rexamine.com/packages/",
-                "http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                "http://www.ibspan.waw.pl/~gagolews/stringi/")
+   mirrors <- c("http://www.mini.pw.edu.pl/~gagolews/stringi/",
+                "http://www.ibspan.waw.pl/~gagolews/stringi/",
+                "http://static.rexamine.com/packages/")
 
    # if (!is.null(inpath)) {
    #    stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))
