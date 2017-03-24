@@ -158,10 +158,10 @@ stri_download_icudt <- function(inpath) {
       }, error = function(e) as.character(e))
    }
 
-   message("downloading ICU data library (icudt)")
+   message("downloading the ICU data library (icudt)")
    message("output path: ", icudtzipfname)
-   if (!dir.exists(inpath))
-      dir.create(inpath)
+   if (!exists("dir.exists") || !dir.exists(inpath)) # dir.exists is R >= 3.2.0
+      suppressWarnings(dir.create(inpath))
 
    allok <- FALSE
    for (m in mirrors) {
