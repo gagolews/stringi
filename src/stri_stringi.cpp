@@ -306,7 +306,9 @@ extern "C" void R_init_stringi(DllInfo* dll)
 
    R_registerRoutines(dll, NULL, cCallMethods, NULL, NULL);
    R_useDynamicSymbols(dll, FALSE);
+#if defined(R_VERSION) && R_VERSION >= R_Version(3, 0, 0)
    R_forceSymbols(dll, TRUE);
+#endif
 
    const R_CallMethodDef* methods = cCallMethods;
    while (methods->name) {
