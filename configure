@@ -4621,7 +4621,7 @@ if test $ICU_FOUND = 0; then
 
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we can fetch icudt" >&5
 $as_echo_n "checking whether we can fetch icudt... " >&6; }
-   R --vanilla --slave -e "setwd(\"src/\"); \
+   "${R_HOME}/bin/R" --vanilla --slave -e "setwd(\"src/\"); \
                            source(\"../R/install.R\"); \
                            if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\"))) \
                                stop(\"Stopping on error\")"
