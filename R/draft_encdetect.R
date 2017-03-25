@@ -169,7 +169,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' The guess is of course imprecise
 #' [\bold{This is DRAFT API - still does not work as expected}],
-#' as it is obtained using statistics.
+#' as it is obtained using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred
 #' bytes of character data that's in a single language.
 #'
