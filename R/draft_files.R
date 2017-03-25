@@ -38,11 +38,11 @@
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
-#' After reading a text file into memory (vast majority of them
-#' will fit into RAM without any problems), you may perform e.g.
+#' After reading a text file into memory (the vast majority of them
+#' will fit into RAM without any problems), you may perform 
 #' encoding detection (cf. \code{\link{stri_enc_detect2}}),
 #' conversion (cf. \code{\link{stri_encode}}),
-#' and e.g. split it into text lines with
+#' and for example split it into text lines with
 #' \code{\link{stri_split_lines1}}.
 #'
 #' @param fname file name
@@ -69,13 +69,13 @@ stri_read_raw <- function(fname) {
 #'
 #' @details
 #' It is a substitute for the system's \code{\link{readLines}} function,
-#' with the ability to auto-detect input encodings (or specify
+#' with the ability to auto-detect input encodings (or to specify
 #' one manually), re-encode input without any strange function calls
 #' or sys options change,
 #' and split the text into lines with \code{\link{stri_split_lines1}}
 #' (which conforms with the Unicode guidelines for newline markers).
 #'
-#' If \code{locale} is \code{NA} and auto-detect of UTF-32/16/8 fails,
+#' If \code{locale} is \code{NA} and auto-detection of UTF-32/16/8 fails,
 #' then \code{fallback_encoding} is used.
 #'
 #' @param fname single string with file name
