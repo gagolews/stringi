@@ -48,7 +48,7 @@
 #' the language can be determined along with the encoding.
 #'
 #' Several different techniques are used for character set detection.
-#' For multi-byte encodings, the sequence of bytes is checked for legal patterns.
+#' For multi-byte encodings, the sequence of bytes is checked for legible patterns.
 #' The detected characters are also checked against a list of frequently
 #' used characters in that encoding. For single byte encodings, the data
 #' is checked against a list of the most commonly occurring three letter groups
@@ -121,7 +121,7 @@
 #'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
-#' The guesses are ordered w.r.t. nonincreasing confidence.
+#' The guesses are ordered by decreasing confidence.
 #'
 #' @examples
 #' \dontrun{
@@ -178,7 +178,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 #' However, it turns out that (empirically) \code{stri_enc_detect2}
 #' works better than the \pkg{ICU}-based one if UTF-* text
-#' is provided. Test yourself.
+#' is provided. Try it yourself.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
@@ -198,7 +198,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
-#' The guesses are ordered w.r.t. nonincreasing confidence.
+#' The guesses are ordered by decreasing confidence.
 #'
 #' @family locale_sensitive
 #' @family encoding_detection
