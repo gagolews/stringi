@@ -75,7 +75,7 @@ stri_enc_list <- function(simplify=FALSE) {
 #' Gets basic information on a character encoding.
 #'
 #' @details
-#' An error is raised if the encoding provided is unknown to \pkg{ICU}
+#' An error is raised if the provided encoding is unknown to \pkg{ICU}
 #' (see \code{\link{stri_enc_list}} for more details)
 #'
 #'
@@ -134,8 +134,8 @@ stri_enc_info <- function(enc=NULL) {
 #' Note that \pkg{ICU} tries to match the encoding part of the \code{LC_CTYPE}
 #' category as given by \code{\link{Sys.getlocale}}.
 #'
-#' If you set a default encoding that is not a superset of ASCII
-#' or it is not an 8-bit encoding, a warning will be generated,
+#' If you set a default encoding that is neither a superset of ASCII,
+#' nor an 8-bit encoding, a warning will be generated,
 #' see \link{stringi-encoding} for discussion.
 #'
 #' @param enc single string; character encoding name,
@@ -208,7 +208,7 @@ stri_enc_get <- function() {
 #' \code{ASCII}, \code{latin1}, \code{bytes}, \code{native},
 #' and \code{UTF-8}. Additionally, missing values are handled properly.
 #'
-#' This is exactly the same information which is used by
+#' This is exactly the same information that is used by
 #' all the functions in \pkg{stringi} to re-encode their inputs.
 #'
 #' @family encoding_management
