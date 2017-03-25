@@ -42,14 +42,14 @@
 #' This is, at best, an imprecise operation using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred
 #' bytes of character data that's mostly in a single language.
-#' However, Because the detection only looks at a limited amount of the input
-#' byte data, some of the returned charsets may fail to handle the
-#' all of input data. Note that in some cases,
+#' However, because the detection only looks at a limited amount of the input
+#' data, some of the returned charsets may fail to handle all of the
+#' input data. Note that in some cases,
 #' the language can be determined along with the encoding.
 #'
 #' Several different techniques are used for character set detection.
 #' For multi-byte encodings, the sequence of bytes is checked for legal patterns.
-#' The detected characters are also check against a list of frequently
+#' The detected characters are also checked against a list of frequently
 #' used characters in that encoding. For single byte encodings, the data
 #' is checked against a list of the most commonly occurring three letter groups
 #' for each language that can be written using that encoding.
@@ -101,7 +101,7 @@
 #' IBM424 \tab Hebrew \cr
 #' }
 #'
-#' If you have some initial guess on language and encoding, try with
+#' If you have some initial guess at language and encoding, try with
 #' \code{\link{stri_enc_detect2}}.
 #'
 #' @param str character vector, a raw vector, or
@@ -164,7 +164,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' of language-specific code points (data provided by the \pkg{ICU} library)
 #' converted to all possible 8-bit encodings
 #' that fully cover the indicated language.
-#' The encoding is selected basing on the greatest number of total
+#' The encoding is selected based on the greatest number of total
 #' byte hits.
 #'
 #' The guess is of course imprecise
