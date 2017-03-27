@@ -52,30 +52,36 @@ These may include:
 }
 }
 \seealso{
-Other search_charclass: \code{\link{stri_trim_both}},
-  \code{\link{stringi-search-charclass}}
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_opts_brkiter}},
+  \code{\link{stri_split_boundaries}},
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_trans_tolower}},
+  \code{\link{stri_wrap}},
+  \code{\link{stringi-search-boundaries}}
 
-Other search_coll: \code{\link{stri_opts_collator}},
-  \code{\link{stringi-search-coll}}
-
-Other search_count: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_count}}
-
-Other search_detect: \code{\link{stri_detect}},
-  \code{\link{stri_startswith}}
-
-Other search_extract: \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_extract_all}},
-  \code{\link{stri_match_all}}
+Other search_regex: \code{\link{stri_opts_regex}},
+  \code{\link{stringi-search-regex}}
 
 Other search_fixed: \code{\link{stri_opts_fixed}},
   \code{\link{stringi-search-fixed}}
 
+Other search_coll: \code{\link{stri_opts_collator}},
+  \code{\link{stringi-search-coll}}
+
+Other search_charclass: \code{\link{stri_trim_both}},
+  \code{\link{stringi-search-charclass}}
+
+Other search_detect: \code{\link{stri_detect}},
+  \code{\link{stri_startswith}}
+
+Other search_count: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_count}}
+
 Other search_locate: \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all}}
-
-Other search_regex: \code{\link{stri_opts_regex}},
-  \code{\link{stringi-search-regex}}
 
 Other search_replace: \code{\link{stri_replace_all}},
   \code{\link{stri_replace_na}},
@@ -86,6 +92,10 @@ Other search_split: \code{\link{stri_split_boundaries}},
 
 Other search_subset: \code{\link{stri_subset}}
 
+Other search_extract: \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_extract_all}},
+  \code{\link{stri_match_all}}
+
 Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-encoding}},
   \code{\link{stringi-locale}},
@@ -95,15 +105,4 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-coll}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search-regex}}
-
-Other text_boundaries: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_brkiter}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}},
-  \code{\link{stringi-search-boundaries}}
 }
-

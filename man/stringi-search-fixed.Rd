@@ -30,6 +30,7 @@ see also \link{stringi-search-coll}.
 Note that the conversion of input data
 to Unicode is done as usual.
 }
+
 \seealso{
 Other search_fixed: \code{\link{stri_opts_fixed}},
   \code{\link{stringi-search}}
@@ -44,4 +45,3 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

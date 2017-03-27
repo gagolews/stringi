@@ -56,4 +56,3 @@ stri_width(stri_trans_nfkd("\\ubc1f")) # includes Hangul Jamo medial vowels and 
 Other length: \code{\link{stri_isempty}},
   \code{\link{stri_length}}, \code{\link{stri_numbytes}}
 }
-

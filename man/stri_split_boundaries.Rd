@@ -74,6 +74,9 @@ So am I, Prof. Smith.", type="sentence", locale="@ss=standard") # ICU >= 56 only
 
 }
 \seealso{
+Other search_split: \code{\link{stri_split_lines}},
+  \code{\link{stri_split}}, \code{\link{stringi-search}}
+
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},
   \code{\link{stri_count_boundaries}},
@@ -89,9 +92,6 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 
-Other search_split: \code{\link{stri_split_lines}},
-  \code{\link{stri_split}}, \code{\link{stringi-search}}
-
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_locate_all_boundaries}},
@@ -102,4 +102,3 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
-

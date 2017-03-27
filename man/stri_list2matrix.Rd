@@ -55,4 +55,3 @@ stri_list2matrix(list("a", c("b", "c")), fill="")
 stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
 
 }
-

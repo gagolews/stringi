@@ -16,7 +16,7 @@ Unlike in \code{\link{Encoding}}, possible encodings are:
 \code{ASCII}, \code{latin1}, \code{bytes}, \code{native},
 and \code{UTF-8}. Additionally, missing values are handled properly.
 
-This is exactly the same information which is used by
+This is exactly the same information that is used by
 all the functions in \pkg{stringi} to re-encode their inputs.
 }
 \description{
@@ -50,4 +50,3 @@ Other encoding_management: \code{\link{stri_enc_info}},
   \code{\link{stri_enc_list}}, \code{\link{stri_enc_set}},
   \code{\link{stringi-encoding}}
 }
-

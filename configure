@@ -2379,8 +2379,8 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $R_PATH" >&5
 $as_echo "$R_PATH" >&6; }
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for R >= 3.1.0" >&5
-$as_echo_n "checking for R >= 3.1.0... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for R >= 3.1.0 /for C++11 use/" >&5
+$as_echo_n "checking for R >= 3.1.0 /for C++11 use/... " >&6; }
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "x$R_GE_31" == "xyes"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5

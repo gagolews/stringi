@@ -32,6 +32,7 @@ often exhibit poor performance. These functions are not intended to
 be fast; they are made to give \emph{correct} in natural
 language processing tasks.
 }
+
 \references{
 \emph{ICU String Search Service} -- ICU User Guide,
  \url{http://userguide.icu-project.org/collation/icu-string-search-service}
@@ -40,6 +41,9 @@ L. Werner, \emph{Efficient Text Searching in Java}, 1999,
 \url{http://icu-project.org/docs/papers/efficient_text_searching_in_java.html}
 }
 \seealso{
+Other search_coll: \code{\link{stri_opts_collator}},
+  \code{\link{stringi-search}}
+
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},
   \code{\link{stri_count_boundaries}},
@@ -55,9 +59,6 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-locale}},
   \code{\link{stringi-search-boundaries}}
 
-Other search_coll: \code{\link{stri_opts_collator}},
-  \code{\link{stringi-search}}
-
 Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-encoding}},
   \code{\link{stringi-locale}},
@@ -68,4 +69,3 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

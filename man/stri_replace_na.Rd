@@ -38,4 +38,3 @@ Other search_replace: \code{\link{stri_replace_all}},
   \code{\link{stri_trim_both}},
   \code{\link{stringi-search}}
 }
-

@@ -8,8 +8,8 @@
 stri_datetime_add(time, value = 1L, units = "seconds", tz = NULL,
   locale = NULL)
 
-stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <-
-  value
+stri_datetime_add(time, units = "seconds", tz = NULL,
+  locale = NULL) <- value
 }
 \arguments{
 \item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
@@ -68,4 +68,3 @@ Other datetime: \code{\link{stri_datetime_create}},
   \code{\link{stri_timezone_info}},
   \code{\link{stri_timezone_list}}
 }
-

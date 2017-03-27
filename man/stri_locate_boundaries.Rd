@@ -2,11 +2,11 @@
 % Please edit documentation in R/search_locate_bound.R
 \name{stri_locate_all_boundaries}
 \alias{stri_locate_all_boundaries}
-\alias{stri_locate_all_words}
-\alias{stri_locate_first_boundaries}
-\alias{stri_locate_first_words}
 \alias{stri_locate_last_boundaries}
+\alias{stri_locate_first_boundaries}
+\alias{stri_locate_all_words}
 \alias{stri_locate_last_words}
+\alias{stri_locate_first_words}
 \title{Locate Specific Text Boundaries}
 \usage{
 stri_locate_all_boundaries(str, omit_no_match = FALSE, ...,
@@ -86,6 +86,9 @@ stri_locate_all_words(test)
 
 }
 \seealso{
+Other search_locate: \code{\link{stri_locate_all}},
+  \code{\link{stringi-search}}
+
 Other indexing: \code{\link{stri_locate_all}},
   \code{\link{stri_sub}}
 
@@ -104,9 +107,6 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 
-Other search_locate: \code{\link{stri_locate_all}},
-  \code{\link{stringi-search}}
-
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_opts_brkiter}},
@@ -117,4 +117,3 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
-

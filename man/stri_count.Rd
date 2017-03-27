@@ -81,4 +81,3 @@ stri_count_regex(c("stringi", "123"), "^(s|1)")
 Other search_count: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search}}
 }
-

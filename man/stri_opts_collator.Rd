@@ -105,4 +105,3 @@ Other locale_sensitive: \code{\link{\%s<\%}},
 Other search_coll: \code{\link{stringi-search-coll}},
   \code{\link{stringi-search}}
 }
-

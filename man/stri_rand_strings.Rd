@@ -53,4 +53,3 @@ stri_rand_shuffle(stri_paste(
 Other random: \code{\link{stri_rand_lipsum}},
   \code{\link{stri_rand_shuffle}}
 }
-

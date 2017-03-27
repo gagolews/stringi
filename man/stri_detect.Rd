@@ -2,9 +2,9 @@
 % Please edit documentation in R/search_detect_4.R
 \name{stri_detect}
 \alias{stri_detect}
+\alias{stri_detect_fixed}
 \alias{stri_detect_charclass}
 \alias{stri_detect_coll}
-\alias{stri_detect_fixed}
 \alias{stri_detect_regex}
 \title{Detect a Pattern Match}
 \usage{
@@ -79,4 +79,3 @@ stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
 Other search_detect: \code{\link{stri_startswith}},
   \code{\link{stringi-search}}
 }
-

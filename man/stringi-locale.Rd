@@ -90,6 +90,7 @@ argument in particular.
 Other locale-sensitive functions include, e.g.,
  \code{\link{stri_trans_tolower}} (that does character case mapping).
 }
+
 \references{
 \emph{Locale} -- ICU User Guide, \url{http://userguide.icu-project.org/locale}
 
@@ -128,4 +129,3 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

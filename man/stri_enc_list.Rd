@@ -36,4 +36,3 @@ Other encoding_management: \code{\link{stri_enc_info}},
   \code{\link{stri_enc_mark}}, \code{\link{stri_enc_set}},
   \code{\link{stringi-encoding}}
 }
-

@@ -197,6 +197,7 @@ sequence is quite rare (statistically speaking).
 Check out \code{\link{stri_enc_detect}} (among others) for a useful
 function in this category.
 }
+
 \references{
 \emph{Unicode Basics} -- ICU User Guide,
 \url{http://userguide.icu-project.org/unicode}
@@ -210,22 +211,6 @@ function in this category.
 \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{http://www.unicode.org/faq/utf_bom.html}
 }
 \seealso{
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_toascii}},
-  \code{\link{stri_enc_tonative}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}}
-
-Other encoding_detection: \code{\link{stri_enc_detect2}},
-  \code{\link{stri_enc_detect}},
-  \code{\link{stri_enc_isascii}},
-  \code{\link{stri_enc_isutf16be}},
-  \code{\link{stri_enc_isutf8}}
-
-Other encoding_management: \code{\link{stri_enc_info}},
-  \code{\link{stri_enc_list}}, \code{\link{stri_enc_mark}},
-  \code{\link{stri_enc_set}}
-
 Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-locale}},
   \code{\link{stringi-package}},
@@ -235,5 +220,20 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
-}
 
+Other encoding_management: \code{\link{stri_enc_info}},
+  \code{\link{stri_enc_list}}, \code{\link{stri_enc_mark}},
+  \code{\link{stri_enc_set}}
+
+Other encoding_detection: \code{\link{stri_enc_detect2}},
+  \code{\link{stri_enc_detect}},
+  \code{\link{stri_enc_isascii}},
+  \code{\link{stri_enc_isutf16be}},
+  \code{\link{stri_enc_isutf8}}
+
+Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
+  \code{\link{stri_enc_toascii}},
+  \code{\link{stri_enc_tonative}},
+  \code{\link{stri_enc_toutf32}},
+  \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}}
+}

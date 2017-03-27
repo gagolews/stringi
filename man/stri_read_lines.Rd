@@ -32,17 +32,16 @@ Reads a text file, re-encodes it, and splits it into text lines.
 }
 \details{
 It is a substitute for the system's \code{\link{readLines}} function,
-with the ability to auto-detect input encodings (or specify
+with the ability to auto-detect input encodings (or to specify
 one manually), re-encode input without any strange function calls
 or sys options change,
 and split the text into lines with \code{\link{stri_split_lines1}}
 (which conforms with the Unicode guidelines for newline markers).
 
-If \code{locale} is \code{NA} and auto-detect of UTF-32/16/8 fails,
+If \code{locale} is \code{NA} and auto-detection of UTF-32/16/8 fails,
 then \code{fallback_encoding} is used.
 }
 \seealso{
 Other files: \code{\link{stri_read_raw}},
   \code{\link{stri_write_lines}}
 }
-

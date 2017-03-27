@@ -26,7 +26,7 @@ Each list element is a list with the following three named components:
    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
    the more confidence there is in the match; \code{NA} on failure.
 }
-The guesses are ordered w.r.t. nonincreasing confidence.
+The guesses are ordered by decreasing confidence.
 }
 \description{
 This function tries to detect character encoding
@@ -49,12 +49,12 @@ the text is checked for the number of occurrences
 of language-specific code points (data provided by the \pkg{ICU} library)
 converted to all possible 8-bit encodings
 that fully cover the indicated language.
-The encoding is selected basing on the greatest number of total
+The encoding is selected based on the greatest number of total
 byte hits.
 
 The guess is of course imprecise
 [\bold{This is DRAFT API - still does not work as expected}],
-as it is obtained using statistics.
+as it is obtained using statistics and heuristics.
 Because of this, detection works best if you supply at least a few hundred
 bytes of character data that's in a single language.
 
@@ -63,15 +63,9 @@ If you have no initial guess on language and encoding, try with
 \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 However, it turns out that (empirically) \code{stri_enc_detect2}
 works better than the \pkg{ICU}-based one if UTF-* text
-is provided. Test yourself.
+is provided. Try it yourself.
 }
 \seealso{
-Other encoding_detection: \code{\link{stri_enc_detect}},
-  \code{\link{stri_enc_isascii}},
-  \code{\link{stri_enc_isutf16be}},
-  \code{\link{stri_enc_isutf8}},
-  \code{\link{stringi-encoding}}
-
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},
   \code{\link{stri_count_boundaries}},
@@ -86,5 +80,10 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-locale}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
-}
 
+Other encoding_detection: \code{\link{stri_enc_detect}},
+  \code{\link{stri_enc_isascii}},
+  \code{\link{stri_enc_isutf16be}},
+  \code{\link{stri_enc_isutf8}},
+  \code{\link{stringi-encoding}}
+}

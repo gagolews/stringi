@@ -31,4 +31,3 @@ are used (\code{TRUE}) or if \pkg{ICU} was built together with \pkg{stringi}.
 \description{
 Presents current default settings used by the \pkg{ICU} library.
 }
-

@@ -68,6 +68,9 @@ stri_numbytes(test2)
 
 }
 \seealso{
+Other search_count: \code{\link{stri_count}},
+  \code{\link{stringi-search}}
+
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},
   \code{\link{stri_duplicated}},
@@ -83,9 +86,6 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 
-Other search_count: \code{\link{stri_count}},
-  \code{\link{stringi-search}}
-
 Other text_boundaries: \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_opts_brkiter}},
@@ -96,4 +96,3 @@ Other text_boundaries: \code{\link{stri_extract_all_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
-

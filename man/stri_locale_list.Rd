@@ -25,4 +25,3 @@ Other locale_management: \code{\link{stri_locale_info}},
   \code{\link{stri_locale_set}},
   \code{\link{stringi-locale}}
 }
-
