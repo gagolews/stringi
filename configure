@@ -4169,17 +4169,12 @@ fi
 
 
 
-##### 1. Get settings from pkg-config
+##### 1. Get settings from pkg-config or system
 # Note that according to http://userguide.icu-project.org/howtouseicu,
 # icu-config is supported, but no longer recommended for production use.
 
 
 detect_icu_with_pkg_config() {
-   if test $enable_pkg_config = "no"; then
-      # Use of pkg-config disabled, nothing to do
-      return 1
-   fi
-
    # Retrieve pkg-config's path
    # Extract the first word of "pkg-config", so it can be a program name with args.
 set dummy pkg-config; ac_word=$2
@@ -4230,9 +4225,9 @@ fi
    fi
 
    # check if pkg-config knows about icu-i18n
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for ICU4C installed" >&5
-$as_echo_n "checking with pkg-config for ICU4C installed... " >&6; }
-   if ! `"${PKG_CONFIG}" --exists icu-i18n  icu-uc`; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for the system ICU4C" >&5
+$as_echo_n "checking with pkg-config for the system ICU4C... " >&6; }
+   if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
       # pkg config doesn't know about icu-i18n
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -4250,19 +4245,19 @@ $as_echo "$ICU_VERSION" >&6; }
 $as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
    #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
    #if test "$VERSION_CHECK" != "1" ; then
-   if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n  icu-uc`; then
+   if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
       echo "*** ICU4C ${ICU_VERSION} has been detected"
-      echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+      echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
       return 1 # you may quit querying pkg-config here
    fi
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; } # detected version of ICU4C is sufficient
 
    export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for proper CPPFLAGS, LDFLAGS, and LIBS" >&5
-$as_echo_n "checking for proper CPPFLAGS, LDFLAGS, and LIBS... " >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for additional required CPPFLAGS, LDFLAGS, and LIBS" >&5
+$as_echo_n "checking for additional required CPPFLAGS, LDFLAGS, and LIBS... " >&6; }
    ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
    ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
    ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
@@ -4271,7 +4266,12 @@ $as_echo "done" >&6; }
 
    # It has been indicated that icu-config may return 32bit libs
    # when 64bit libs are not available, even if we compile a 64bit version.
-   # Thus, let us check if everything works
+   # Thus, we should then check if the current settings are valid anyway.
+
+   return 0
+}
+
+check_icu_with_pkg_config() {
    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
    LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
    LIBS="${LIBS} ${ICU_LIBS}"
@@ -4283,8 +4283,8 @@ ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ex
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build an ICU-based project" >&5
-$as_echo_n "checking whether we may build an ICU-based project... " >&6; }
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build an ICU4C-based project" >&5
+$as_echo_n "checking whether we may build an ICU4C-based project... " >&6; }
    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4315,7 +4315,38 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** System ICU4C cannot be used"
+      echo "*** The available ICU4C cannot be used"
+      return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM" >&5
+$as_echo_n "checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM... " >&6; }
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      #include <unicode/uvernum.h>
+      #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
+      #error "insufficient U_ICU_VERSION_MAJOR_NUM"
+      #endif
+
+      int main() {
+        return 0;
+      }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      echo "*** The available ICU4C cannot be used"
       return 1
 
 fi
@@ -4397,7 +4428,7 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** ICU4C will be built from sources"
+      echo "*** The available ICU4C cannot be used"
       return 1
 
 fi
@@ -4462,7 +4493,7 @@ else
 
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** ICU4C will be built from sources"
+      echo "*** The available ICU4C cannot be used"
       return 1
 
 fi
@@ -4476,13 +4507,25 @@ rm -f core conftest.err conftest.$ac_objext \
 ICU_FOUND=0
 
 if test $ICU_FOUND = 0; then
-   OLD_CPPFLAGS=$CPPFLAGS
-   OLD_LDFLAGS=$LDFLAGS
-   OLD_LIBS=$LIBS
-   detect_icu_with_pkg_config
-   CPPFLAGS=$OLD_CPPFLAGS
-   LDFLAGS=$OLD_LDFLAGS
-   LIBS=$OLD_LIBS
+   if test $enable_pkg_config = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      echo "*** The (possible) use of system ICU4C has been disabled. Skipping."
+   else
+      OLD_CPPFLAGS=$CPPFLAGS
+      OLD_LDFLAGS=$LDFLAGS
+      OLD_LIBS=$LIBS
+      if ! detect_icu_with_pkg_config; then
+         echo "*** Trying with \"standard\" fallback flags"
+         # (#238, #220) trying "standard" fallback flags
+         ICU_CPPFLAGS=""
+         ICU_LDFLAGS=""
+         ICU_LIBS="-licui18n -licuuc -licudata"
+      fi
+      check_icu_with_pkg_config
+      CPPFLAGS=$OLD_CPPFLAGS
+      LDFLAGS=$OLD_LDFLAGS
+      LIBS=$OLD_LIBS
+   fi
 fi
 
 
@@ -4590,7 +4633,7 @@ else
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+         echo "*** The ICU4C bundle could not be build. Upgrade your compiler flags."
          exit 1
 
 fi

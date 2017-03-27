@@ -4,6 +4,9 @@
 
 ## 1.1.4 (XXXX-XX-XX) **@TODO**
 
+* [BUILD TIME] #238, #220: Try "standard" ICU4C build flags if a call
+to `pkg-config` fails.
+
 * t.b.d.
 
 -------------------------------------------------------------------------------

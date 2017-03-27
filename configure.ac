@@ -363,17 +363,12 @@ fi
 
 
 
-##### 1. Get settings from pkg-config
+##### 1. Get settings from pkg-config or system
 # Note that according to http://userguide.icu-project.org/howtouseicu,
 # icu-config is supported, but no longer recommended for production use.
 
 
 detect_icu_with_pkg_config() {
-   if test $enable_pkg_config = "no"; then
-      # Use of pkg-config disabled, nothing to do
-      return 1
-   fi
-
    # Retrieve pkg-config's path
    AC_PATH_PROG(PKG_CONFIG, pkg-config, no,
          [$PATH:/usr/local/bin:/bin:/usr/bin:ext/bin:ext:/sw/bin:/opt/bin]) # auto-detect
@@ -384,8 +379,8 @@ detect_icu_with_pkg_config() {
    fi
 
    # check if pkg-config knows about icu-i18n
-   AC_MSG_CHECKING(with pkg-config for ICU4C installed)
-   if ! `"${PKG_CONFIG}" --exists icu-i18n  icu-uc`; then
+   AC_MSG_CHECKING(with pkg-config for the system ICU4C)
+   if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
       # pkg config doesn't know about icu-i18n
       AC_MSG_RESULT(no)
       echo "*** pkg-config did not detect ICU4C-devel libraries installed"
@@ -400,16 +395,16 @@ detect_icu_with_pkg_config() {
    AC_MSG_CHECKING(for ICU4C >= $ICU_VERSION_NEEDED)
    #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
    #if test "$VERSION_CHECK" != "1" ; then
-   if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n  icu-uc`; then
+   if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
       AC_MSG_RESULT(no)
       echo "*** ICU4C ${ICU_VERSION} has been detected"
-      echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+      echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
       return 1 # you may quit querying pkg-config here
    fi
    AC_MSG_RESULT(yes) # detected version of ICU4C is sufficient
 
    export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
-   AC_MSG_CHECKING([for proper CPPFLAGS, LDFLAGS, and LIBS])
+   AC_MSG_CHECKING([for additional required CPPFLAGS, LDFLAGS, and LIBS])
    ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
    ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
    ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
@@ -417,14 +412,19 @@ detect_icu_with_pkg_config() {
 
    # It has been indicated that icu-config may return 32bit libs
    # when 64bit libs are not available, even if we compile a 64bit version.
-   # Thus, let us check if everything works
+   # Thus, we should then check if the current settings are valid anyway.
+
+   return 0
+}
+
+check_icu_with_pkg_config() {
    CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
    LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
    LIBS="${LIBS} ${ICU_LIBS}"
 
    AC_LANG(C++)
 
-   AC_MSG_CHECKING([whether we may build an ICU-based project])
+   AC_MSG_CHECKING([whether we may build an ICU4C-based project])
    AC_LINK_IFELSE([AC_LANG_SOURCE([
       #include <unicode/unistr.h>
       #include <unicode/uvernum.h>
@@ -447,7 +447,26 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no])
-      echo "*** System ICU4C cannot be used"
+      echo "*** The available ICU4C cannot be used"
+      return 1
+   ])
+
+   AC_MSG_CHECKING([programmatically for sufficient U_ICU_VERSION_MAJOR_NUM])
+   AC_LINK_IFELSE([AC_LANG_SOURCE([
+      #include <unicode/uvernum.h>
+      #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
+      #error "insufficient U_ICU_VERSION_MAJOR_NUM"
+      #endif
+
+      int main() {
+        return 0;
+      }])
+   ],
+   [
+      AC_MSG_RESULT([yes])
+   ],[
+      AC_MSG_RESULT([no])
+      echo "*** The available ICU4C cannot be used"
       return 1
    ])
 
@@ -517,7 +536,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no])
-      echo "*** ICU4C will be built from sources"
+      echo "*** The available ICU4C cannot be used"
       return 1
    ])
 
@@ -570,7 +589,7 @@ detect_icu_with_pkg_config() {
       AC_MSG_RESULT([yes])
    ],[
       AC_MSG_RESULT([no])
-      echo "*** ICU4C will be built from sources"
+      echo "*** The available ICU4C cannot be used"
       return 1
    ])
 
@@ -581,13 +600,25 @@ detect_icu_with_pkg_config() {
 ICU_FOUND=0
 
 if test $ICU_FOUND = 0; then
-   OLD_CPPFLAGS=$CPPFLAGS
-   OLD_LDFLAGS=$LDFLAGS
-   OLD_LIBS=$LIBS
-   detect_icu_with_pkg_config
-   CPPFLAGS=$OLD_CPPFLAGS
-   LDFLAGS=$OLD_LDFLAGS
-   LIBS=$OLD_LIBS
+   if test $enable_pkg_config = "no"; then
+      # Use of pkg-config disabled, nothing to do
+      echo "*** The (possible) use of system ICU4C has been disabled. Skipping."
+   else
+      OLD_CPPFLAGS=$CPPFLAGS
+      OLD_LDFLAGS=$LDFLAGS
+      OLD_LIBS=$LIBS
+      if ! detect_icu_with_pkg_config; then
+         echo "*** Trying with \"standard\" fallback flags"
+         # (#238, #220) trying "standard" fallback flags
+         ICU_CPPFLAGS=""
+         ICU_LDFLAGS=""
+         ICU_LIBS="-licui18n -licuuc -licudata"
+      fi
+      check_icu_with_pkg_config
+      CPPFLAGS=$OLD_CPPFLAGS
+      LDFLAGS=$OLD_LDFLAGS
+      LIBS=$OLD_LIBS
+   fi
 fi
 
 
@@ -645,7 +676,7 @@ check_flags_icu_bundle() {
          AC_MSG_RESULT([yes])
       ],[
          AC_MSG_RESULT([no])
-         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+         echo "*** The ICU4C bundle could not be build. Upgrade your compiler flags."
          exit 1
       ])
    ])
