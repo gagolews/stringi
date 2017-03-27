@@ -75,4 +75,3 @@ stri_detect_regex("ala", "(?i)ALA") # equivalent
 Other search_regex: \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

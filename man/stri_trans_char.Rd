@@ -40,4 +40,3 @@ Other transform: \code{\link{stri_trans_general}},
   \code{\link{stri_trans_nfc}},
   \code{\link{stri_trans_tolower}}
 }
-

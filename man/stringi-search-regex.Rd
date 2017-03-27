@@ -183,6 +183,7 @@ refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
 This allows to do a locale-aware text lookup,
 or a very fast exact-byte search, respectively.
 }
+
 \references{
 \emph{Regular expressions} -- ICU User Guide,
  \url{http://userguide.icu-project.org/strings/regexp}
@@ -209,4 +210,3 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search}}
 }
-

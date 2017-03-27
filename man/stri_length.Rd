@@ -47,4 +47,3 @@ stri_count_boundaries(stri_trans_nfkd('\\u0105'), type="character") # ...and one
 Other length: \code{\link{stri_isempty}},
   \code{\link{stri_numbytes}}, \code{\link{stri_width}}
 }
-

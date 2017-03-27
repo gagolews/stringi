@@ -3,12 +3,12 @@
 \name{stri_subset}
 \alias{stri_subset}
 \alias{stri_subset<-}
+\alias{stri_subset_fixed}
+\alias{stri_subset_fixed<-}
 \alias{stri_subset_charclass}
 \alias{stri_subset_charclass<-}
 \alias{stri_subset_coll}
 \alias{stri_subset_coll<-}
-\alias{stri_subset_fixed}
-\alias{stri_subset_fixed<-}
 \alias{stri_subset_regex}
 \alias{stri_subset_regex<-}
 \title{Select Elements that Match a Given Pattern}
@@ -98,4 +98,3 @@ print(x)
 \seealso{
 Other search_subset: \code{\link{stringi-search}}
 }
-

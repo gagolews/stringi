@@ -30,4 +30,3 @@ stri_dup(c("abc", "pqrst"), c(4, 2))
 Other join: \code{\link{stri_flatten}},
   \code{\link{stri_join_list}}, \code{\link{stri_join}}
 }
-

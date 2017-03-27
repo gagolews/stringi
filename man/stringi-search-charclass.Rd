@@ -257,6 +257,7 @@ to portable code (again, in POSIX-like regex engines).
 So a POSIX flavor of \code{[:punct:]} is more like
 \code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
 }
+
 \references{
 \emph{The Unicode Character Database} -- Unicode Standard Annex #44,
 \url{http://www.unicode.org/reports/tr44/}
@@ -289,4 +290,3 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

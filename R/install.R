@@ -105,14 +105,29 @@ stri_install_check <- function(silent=FALSE) {
    invisible(allok)
 }
 
+
+
+
+icudt_fname <- c("little"="icudt55l.zip",
+                 "big"   ="icudt55b.zip")
+
+icudt_md5ex <- c("little"="ff345529f230cc39bb8d450af0607708",
+                 "big"   ="1194f0dd879d3c1c1f189cde5fd90efe")
+
+icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
+                   "http://www.mini.pw.edu.pl/~gagolews/stringi/",
+                   "http://www.ibspan.waw.pl/~gagolews/stringi/")
+
+
+
 # @rdname stri_install
 stri_download_icudt <- function(inpath) {
 
-   fname <- if (.Platform$endian == 'little') "icudt55l.zip"
-                                         else "icudt55b.zip"
+   fname <- icudt_fname[.Platform$endian]
 
-   md5ex <- if (.Platform$endian == 'little') "ff345529f230cc39bb8d450af0607708"
-                                         else "1194f0dd879d3c1c1f189cde5fd90efe"
+   md5ex <- icudt_md5ex[.Platform$endian]
+
+   mirrors <- icudt_mirrors
 
    icudtzipfname <- file.path(inpath, fname) #tempfile(fileext=".zip")
 
@@ -129,10 +144,6 @@ stri_download_icudt <- function(inpath) {
       message("icudt already downloaded")
       return(icudtzipfname)
    }
-
-   mirrors <- c("http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                "http://www.ibspan.waw.pl/~gagolews/stringi/",
-                "http://static.rexamine.com/packages/")
 
    # if (!is.null(inpath)) {
    #    stopifnot(is.character(inpath), length(inpath) > 0, !is.na(inpath))

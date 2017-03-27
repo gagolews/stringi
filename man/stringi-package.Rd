@@ -2,8 +2,8 @@
 % Please edit documentation in R/stringi-package.R
 \docType{package}
 \name{stringi-package}
-\alias{stringi}
 \alias{stringi-package}
+\alias{stringi}
 \title{THE String Processing Package}
 \description{
 \pkg{stringi} is THE \R package for fast, correct, consistent,
@@ -112,13 +112,7 @@ for reading and writing text files.
 Note that each man page provides many further links to other
 interesting facilities and topics.
 }
-\author{
-Marek Gagolewski,
-with contributions from Bartek Tartanus and others.
-ICU4C was developed by IBM and others.
-The Unicode Character Database is due to Unicode, Inc.;
-see the COPYRIGHTS file for more details.
-}
+
 \references{
 \emph{\pkg{stringi} Package homepage}, \url{http://www.gagolewski.com/software/stringi/}
 
@@ -142,4 +136,10 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-
+\author{
+Marek Gagolewski,
+with contributions from Bartek Tartanus and others.
+ICU4C was developed by IBM and others.
+The Unicode Character Database is due to Unicode, Inc.;
+see the COPYRIGHTS file for more details.
+}

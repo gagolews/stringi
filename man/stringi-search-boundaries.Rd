@@ -69,6 +69,15 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-locale}},
   \code{\link{stringi-search-coll}}
 
+Other text_boundaries: \code{\link{stri_count_boundaries}},
+  \code{\link{stri_extract_all_boundaries}},
+  \code{\link{stri_locate_all_boundaries}},
+  \code{\link{stri_opts_brkiter}},
+  \code{\link{stri_split_boundaries}},
+  \code{\link{stri_split_lines}},
+  \code{\link{stri_trans_tolower}},
+  \code{\link{stri_wrap}}, \code{\link{stringi-search}}
+
 Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-encoding}},
   \code{\link{stringi-locale}},
@@ -78,14 +87,4 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
-
-Other text_boundaries: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_brkiter}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}}, \code{\link{stringi-search}}
 }
-

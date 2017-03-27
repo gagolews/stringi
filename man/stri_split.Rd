@@ -2,10 +2,10 @@
 % Please edit documentation in R/search_split_4.R
 \name{stri_split}
 \alias{stri_split}
-\alias{stri_split_charclass}
-\alias{stri_split_coll}
 \alias{stri_split_fixed}
 \alias{stri_split_regex}
+\alias{stri_split_coll}
+\alias{stri_split_charclass}
 \title{Split a String By Pattern Matches}
 \usage{
 stri_split(str, ..., regex, fixed, coll, charclass)
@@ -130,4 +130,3 @@ Other search_split: \code{\link{stri_split_boundaries}},
   \code{\link{stri_split_lines}},
   \code{\link{stringi-search}}
 }
-

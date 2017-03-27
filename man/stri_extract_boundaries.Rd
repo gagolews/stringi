@@ -2,10 +2,10 @@
 % Please edit documentation in R/search_extract_bound.R
 \name{stri_extract_all_boundaries}
 \alias{stri_extract_all_boundaries}
-\alias{stri_extract_all_words}
-\alias{stri_extract_first_boundaries}
-\alias{stri_extract_first_words}
 \alias{stri_extract_last_boundaries}
+\alias{stri_extract_first_boundaries}
+\alias{stri_extract_all_words}
+\alias{stri_extract_first_words}
 \alias{stri_extract_last_words}
 \title{Extract Text Between Text Boundaries}
 \usage{
@@ -82,6 +82,10 @@ stri_extract_all_words("stringi: THE string processing package 123.48...")
 
 }
 \seealso{
+Other search_extract: \code{\link{stri_extract_all}},
+  \code{\link{stri_match_all}},
+  \code{\link{stringi-search}}
+
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},
   \code{\link{stri_count_boundaries}},
@@ -97,10 +101,6 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 
-Other search_extract: \code{\link{stri_extract_all}},
-  \code{\link{stri_match_all}},
-  \code{\link{stringi-search}}
-
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_opts_brkiter}},
@@ -111,4 +111,3 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
-

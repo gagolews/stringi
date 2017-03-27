@@ -36,4 +36,3 @@ stri_escape_unicode("a\\u0105!")
 \seealso{
 Other escape: \code{\link{stri_unescape_unicode}}
 }
-

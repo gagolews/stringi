@@ -57,4 +57,3 @@ CharsWord CharsCmdEnvir    CharsWhite         Words          Cmds        Envirs
 \seealso{
 Other stats: \code{\link{stri_stats_general}}
 }
-

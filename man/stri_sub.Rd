@@ -87,4 +87,3 @@ x <- c("a;b", "c:d")
 Other indexing: \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all}}
 }
-

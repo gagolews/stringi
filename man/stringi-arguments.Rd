@@ -67,6 +67,7 @@ Thus, if arguments' preserving is needed,
 please remember to copy important attributes manually
 or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 }
+
 \seealso{
 Other stringi_general_topics: \code{\link{stringi-encoding}},
   \code{\link{stringi-locale}},
@@ -78,4 +79,3 @@ Other stringi_general_topics: \code{\link{stringi-encoding}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
-

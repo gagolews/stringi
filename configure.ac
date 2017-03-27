@@ -193,7 +193,7 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
-AC_MSG_CHECKING(for R >= 3.1.0)
+AC_MSG_CHECKING(for R >= 3.1.0 /for C++11 use/)
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "x$R_GE_31" == "xyes"; then
    AC_MSG_RESULT([yes])

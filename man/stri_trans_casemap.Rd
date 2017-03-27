@@ -2,8 +2,8 @@
 % Please edit documentation in R/trans_casemap.R
 \name{stri_trans_tolower}
 \alias{stri_trans_tolower}
-\alias{stri_trans_totitle}
 \alias{stri_trans_toupper}
+\alias{stri_trans_totitle}
 \title{Transform String with Case Mapping}
 \usage{
 stri_trans_tolower(str, locale = NULL)
@@ -85,6 +85,11 @@ Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 
+Other transform: \code{\link{stri_trans_char}},
+  \code{\link{stri_trans_general}},
+  \code{\link{stri_trans_list}},
+  \code{\link{stri_trans_nfc}}
+
 Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_locate_all_boundaries}},
@@ -93,10 +98,4 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stri_split_lines}}, \code{\link{stri_wrap}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
-
-Other transform: \code{\link{stri_trans_char}},
-  \code{\link{stri_trans_general}},
-  \code{\link{stri_trans_list}},
-  \code{\link{stri_trans_nfc}}
 }
-

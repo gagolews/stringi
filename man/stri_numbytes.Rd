@@ -49,4 +49,3 @@ stri_numbytes('\\U7fffffff') # compare stri_length('\\U7fffffff')
 Other length: \code{\link{stri_isempty}},
   \code{\link{stri_length}}, \code{\link{stri_width}}
 }
-
