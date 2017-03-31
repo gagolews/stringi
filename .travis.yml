@@ -41,8 +41,8 @@ matrix:
         - STRINGI_DISABLE_PKG_CONFIG="1"
   - os: osx
     r: release
-#  - os: osx
-#    r: devel
+  - os: osx
+    r: devel
 
 warnings_are_errors: true
 r_build_args: "--no-manual"
