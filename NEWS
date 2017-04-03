@@ -20,7 +20,7 @@ marked as deprecated in `stringi` 0.5-5 are no longer being exported.
 if the empty string was the result.
 
 * [BUILD TIME] #231: The `./configure` (*NIX only) script now reads the
-following environment varialbes: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
+following environment variables: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
 `STRINGI_CXXFLAGS`, `STRINGI_LDFLAGS`, `STRINGI_LIBS`, `STRINGI_DISABLE_CXX11`,
 `STRINGI_DISABLE_ICU_BUNDLE`, `STRINGI_DISABLE_PKG_CONFIG`, `PKG_CONFIG`,
 see `INSTALL` for more information.

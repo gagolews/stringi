@@ -7,7 +7,7 @@ Introductory remark
 
 We are putting great effort so that the package may be installed successfully
 by simply calling `install.packages("stringi")`. However, due to the
-overwhelming complexity of the ICU4C library, on which stringi bases,
+overwhelming complexity of the ICU4C library, on which stringi is based,
 and the colorful variety of operating systems, their flavors, and particular
 setups, some users may still experience a few issues while the package
 is compiled from sources.
@@ -56,7 +56,7 @@ of the package. It already includes the `ICU` data archives.
 You may also prepare your own `.tar.gz`-ipped distribution of `stringi`
 as follows:
 
-1. File the `git clone https://github.com/gagolews/stringi.git` command.
+1. Execute the `git clone https://github.com/gagolews/stringi.git` command.
 2. Edit the `.Rbuildignore` file and get rid of the `^src/icu55/data` line.
 3. Run `R CMD build stringi_dir_name`.
 4. Install the obtained `.tar.gz` file on your machine(s), e.g.,
@@ -74,7 +74,7 @@ functions, and this is not part of the C++98 standard.
 Yet, if your compiler does not support C++11 or it has not been properly
 configured (check out `<R_inst_dir>/etc/Makeconf`) but you are sure it
 tolerates the `long long` type (which is very common -- this is checked by the
-`configure` script anyway), you may disable the C++11 usage by passing
+`configure` script anyway), you may disable the use of C++11 by passing
 the `--disable-cxx11` argument to the `configure` script.
 
 
@@ -126,7 +126,7 @@ Final remarks
 We expect that with a properly configured C++11 compiler and properly
 installed system ICU4C distribution, you should have no problems
 with installing the package. Also, if you use our ICU4C bundle and you
-have a working internet access, all is expected to lead to a happy ending.
+have a working internet access, all is expected to lead to a happy end.
 
 The package is frequently tested on the following OSes:
 * Fedora: 20, 24, latest,
