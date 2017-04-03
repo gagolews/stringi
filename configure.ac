@@ -193,7 +193,7 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
-AC_MSG_CHECKING(for R >= 3.1.0 /for C++11 use/)
+AC_MSG_CHECKING(for R >= 3.1.0 for C++11 use)
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "x$R_GE_31" == "xyes"; then
    AC_MSG_RESULT([yes])
@@ -203,6 +203,16 @@ else
       echo "*** disabling C++11 use"
       enable_cxx11="no"
    fi
+fi
+
+AC_MSG_CHECKING(for R < 3.4.0 for CXX1X flag use)
+R_GE_34=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.4.0")) "yes" else "no")'`
+if test "x$R_GE_34" == "xyes"; then
+   AC_MSG_RESULT([no])
+   STRINGI_CXX1X="CXX11"
+else
+   AC_MSG_RESULT([yes])
+   STRINGI_CXX1X="CXX1X"
 fi
 
 ##### CHECK FOR CAT ############################################################
@@ -240,11 +250,11 @@ LIBS=
 LDFLAGS=
 
 if test "x$enable_cxx11" == "xyes"; then
-   CXX_tmp1=`"${R_PATH}" CMD config CXX1X`
-   CXX_tmp2=`"${R_PATH}" CMD config CXX1XSTD`
+   CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
+   CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
    CXX="${CXX_tmp1} ${CXX_tmp2}"
-   CXXFLAGS_base=`"${R_PATH}" CMD config CXX1XFLAGS`
-   CXXFLAGS_pic=`"${R_PATH}" CMD config CXX1XPICFLAGS`
+   CXXFLAGS_base=`"${R_PATH}" CMD config ${STRINGI_CXX1X}FLAGS`
+   CXXFLAGS_pic=`"${R_PATH}" CMD config ${STRINGI_CXX1X}PICFLAGS`
    CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
    STRINGI_CXXSTD="CXX_STD=CXX11"
 else

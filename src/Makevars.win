@@ -8,9 +8,9 @@ PKG_CPPFLAGS=-I. -Iicu55/ -Iicu55/unicode -Iicu55/common -Iicu55/i18n \
 -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
 
-## There is a Cygwin bug, which reports "mem alloc error" while linking
+## There is a Cygwin bug which reports "mem alloc error" while linking
 ## too much .o files at once (I suppose this is the reason, at least).
-## Thus, below we split the process into 4 parts, using static libs.
+## Thus, below we split the process into a few parts using static libs.
 ## Voila, it's fixed.
 
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)

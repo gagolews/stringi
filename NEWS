@@ -7,7 +7,7 @@
 * [BUILD TIME] #238, #220: Try "standard" ICU4C build flags if a call
 to `pkg-config` fails.
 
-* t.b.d.
+* [BUILD TIME] #258: Use `CXX11` instead of `CXX1X` on R >= 3.4.
 
 -------------------------------------------------------------------------------
 
