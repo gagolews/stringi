@@ -18,7 +18,7 @@ BugReports: http://github.com/gagolews/stringi/issues
 SystemRequirements: ICU4C (>= 50, optional)
 Type: Package
 Depends:
-    R (>= 2.13.1)
+    R (>= 2.14)
 Imports:
     tools,
     utils,
