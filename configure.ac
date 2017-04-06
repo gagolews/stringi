@@ -804,7 +804,9 @@ AC_OUTPUT
 echo ""
 echo "*** stringi configure summary:"
 echo "    ICU_FOUND=${ICU_FOUND}"
-echo "    ICUDT_DIR=${ICUDT_DIR}"
+if test $ICU_FOUND = 0; then
+   echo "    ICUDT_DIR=${ICUDT_DIR}"
+fi
 echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
 echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"
 echo "    STRINGI_CPPFLAGS=${STRINGI_CPPFLAGS}"
