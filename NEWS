@@ -2,12 +2,14 @@
 ===============================================================================
 
 
-## 1.1.4 (XXXX-XX-XX) **@TODO**
+## 1.1.4 (2017-04-06) **CRAN**
 
 * [BUILD TIME] #238, #220: Try "standard" ICU4C build flags if a call
 to `pkg-config` fails.
 
-* [BUILD TIME] #258: Use `CXX11` instead of `CXX1X` on R >= 3.4.
+* [BUILD TIME] #258: Use `CXX11` instead of `CXX1X` on R >= 3.4.0.
+
+* [BUILD TIME, BUGFIX] #254: `dir.exists()` is R >= 3.2.0.
 
 -------------------------------------------------------------------------------
 
