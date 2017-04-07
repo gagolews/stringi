@@ -259,7 +259,7 @@ bool StriRuleBasedBreakIterator::ignoreBoundary() {
 
    if (skip_size <= 0) return false;
 
-   int rule = rbiterator->getRuleStatus();
+   int rule = rbiterator->getRuleStatus();   /* this is ICU 52 */
    for (int i=0; i<skip_size; i += 2) {
       // skip_size is even - that's sure
       if (rule >= skip_rules[i] && rule < skip_rules[i+1])

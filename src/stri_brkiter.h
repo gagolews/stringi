@@ -183,7 +183,7 @@ class StriUBreakIterator : public StriBrkIterOptions {
 class StriRuleBasedBreakIterator : public StriBrkIterOptions {
    private:
 
-      RuleBasedBreakIterator* rbiterator;
+      BreakIterator* rbiterator;
       UText* searchText;
       R_len_t searchPos; // may be BreakIterator::DONE
       const char* searchStr; // owned by caller
@@ -202,16 +202,16 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
          Locale loc = Locale::createFromName(locale);
          switch (type) {
             case UBRK_CHARACTER: // character
-               rbiterator = (RuleBasedBreakIterator*)BreakIterator::createCharacterInstance(loc, status);
+               rbiterator = (BreakIterator*)BreakIterator::createCharacterInstance(loc, status);
                break;
             case UBRK_LINE: // line_break
-               rbiterator = (RuleBasedBreakIterator*)BreakIterator::createLineInstance(loc, status);
+               rbiterator = (BreakIterator*)BreakIterator::createLineInstance(loc, status);
                break;
             case UBRK_SENTENCE: // sentence
-               rbiterator = (RuleBasedBreakIterator*)BreakIterator::createSentenceInstance(loc, status);
+               rbiterator = (BreakIterator*)BreakIterator::createSentenceInstance(loc, status);
                break;
             case UBRK_WORD: // word
-               rbiterator = (RuleBasedBreakIterator*)BreakIterator::createWordInstance(loc, status);
+               rbiterator = (BreakIterator*)BreakIterator::createWordInstance(loc, status);
                break;
             default:
                throw StriException(MSG__INTERNAL_ERROR);

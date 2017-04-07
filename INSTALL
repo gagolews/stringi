@@ -19,7 +19,7 @@ customized installation.
 stringi vs the ICU4C library
 ----------------------------
 
-The stringi package depends on the ICU4C >= 50 library.
+The stringi package depends on the ICU4C >= 52 library.
 
 If you build the package from sources and either:
 * these requirements are not met (check out http://site.icu-project.org/download,
