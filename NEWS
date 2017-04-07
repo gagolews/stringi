@@ -1,20 +1,30 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
+## 1.1.6 (on the way)
+
+* t.b.d.
+
+-------------------------------------------------------------------------------
+
 ## 1.1.5 (2017-04-07) **CRAN**
 
-* [BUGFIX] Fixed errors pointed out by `clang-UBSAN` in `stri_brkiter.h`
+* [GENERAL] `stringi` now requires ICU4C >= 52.
+
+* [BUGFIX] Fixed errors pointed out by `clang-UBSAN` in `stri_brkiter.h`.
 
 -------------------------------------------------------------------------------
 
 ## 1.1.4 (2017-04-06) **devel**
 
+* [GENERAL] `stringi` now requires R >= 2.14.
+
 * [BUILD TIME] #238, #220: Try "standard" ICU4C build flags if a call
 to `pkg-config` fails.
 
-* [BUILD TIME] #258: Use `CXX11` instead of `CXX1X` on R >= 3.4.0.
+* [BUILD TIME] #258: Use `CXX11` instead of `CXX1X` on R >= 3.4.
 
-* [BUILD TIME, BUGFIX] #254: `dir.exists()` is R >= 3.2.0.
+* [BUILD TIME, BUGFIX] #254: `dir.exists()` is R >= 3.2.
 
 -------------------------------------------------------------------------------
 

@@ -1,8 +1,8 @@
 require(testthat)
 context("test-icudt-download.R")
 
-icudt_donwload_test <- FALSE
-if (icudt_donwload_test)
+icudt_donwload_test <- as.logical(Sys.getenv("STRINGI_icudt_donwload_test", FALSE))
+if (identical(icudt_donwload_test, TRUE))
 {
    test_that("icudt_download", {
 
