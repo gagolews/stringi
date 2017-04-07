@@ -1,12 +1,13 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.1.5 (work in progress...)
+## 1.1.5 (2017-04-07) **CRAN**
 
-* ...
+* [BUGFIX] Fixed errors pointed out by `clang-UBSAN` in `stri_brkiter.h`
 
 -------------------------------------------------------------------------------
-## 1.1.4 (2017-04-06) **CRAN**
+
+## 1.1.4 (2017-04-06) **devel**
 
 * [BUILD TIME] #238, #220: Try "standard" ICU4C build flags if a call
 to `pkg-config` fails.

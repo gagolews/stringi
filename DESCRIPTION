@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.1.5
-Date: 2017-04-06
+Date: 2017-04-07
 Title: Character String Processing Facilities
 Description: Allows for fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
@@ -15,7 +15,7 @@ URL: http://www.gagolewski.com/software/stringi/
     http://site.icu-project.org/
     http://www.unicode.org/
 BugReports: http://github.com/gagolews/stringi/issues
-SystemRequirements: ICU4C (>= 50, optional)
+SystemRequirements: ICU4C (>= 52, optional)
 Type: Package
 Depends:
     R (>= 2.14)
