@@ -15,7 +15,7 @@ character encoding. The use of the *ICU* library gives *R* users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
 *PHP*, and *Ruby* programmers. The package's API was inspired by
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
-package (interestingly, since 2015, *stringr* itself is based on *stringi*).
+package (since 2015, *stringr* itself is based on *stringi*).
 
 **Package maintainer**: [Marek Gagolewski](http://www.gagolewski.com/)
 
@@ -36,7 +36,7 @@ For more details on copyright holders see the
 
 [How to access the stringi C API from an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
 
-**System requirements**: *R >= 2.13.1*, *ICU4C >= 50* (refer to the
+**System requirements**: *R >= 2.14*, *ICU4C >= 52* (refer to the
 [INSTALL](http://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
 file for more details)
 
