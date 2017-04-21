@@ -90,6 +90,9 @@
 #' stri_locate_all_boundaries(test, type="character")
 #' stri_locate_all_words(test)
 #'
+#' stri_extract_all_boundaries("Mr. Jones and Mrs. Brown are very happy.
+#' So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
+#'
 #' @export
 #' @family search_locate
 #' @family indexing

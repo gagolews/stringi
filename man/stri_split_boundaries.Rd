@@ -70,7 +70,7 @@ stri_split_boundaries(test, type="character")
 
 # filtered break iterator with the new ICU:
 stri_split_boundaries("Mr. Jones and Mrs. Brown are very happy.
-So am I, Prof. Smith.", type="sentence", locale="@ss=standard") # ICU >= 56 only
+So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
 
 }
 \seealso{
