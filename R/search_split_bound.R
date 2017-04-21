@@ -153,7 +153,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' # filtered break iterator with the new ICU:
 #' stri_split_boundaries("Mr. Jones and Mrs. Brown are very happy.
-#' So am I, Prof. Smith.", type="sentence", locale="@ss=standard") # ICU >= 56 only
+#' So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
 #'
 #' @export
 #' @family search_split
