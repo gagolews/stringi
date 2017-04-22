@@ -185,6 +185,8 @@ invisible(NULL)
 #' just before the current position. Does not alter the input position.
 #' The length of possible strings matched by the look-behind pattern must
 #' not be unbounded (no \code{*} or \code{+} operators.)}
+#' \item{\code{(?<name>...)}}{Named capture group. The \code{<angle brackets>}
+#'  are literal - they appear in the pattern.}
 #' \item{\code{(?ismwx-ismwx:...)}}{Flag settings. Evaluate the parenthesized
 #' expression with the specified flags enabled or \code{-}disabled,
 #' see also \code{\link{stri_opts_regex}}.}
@@ -218,6 +220,12 @@ invisible(NULL)
 #' \item{\code{\\f}}{Match a FORM FEED, \code{\\u000C}.}
 #' \item{\code{\\G}}{Match if the current position is at the end of the
 #'    previous match.}
+#' \item{\code{\\h}}{Match a Horizontal White Space character.
+#'    They are characters with Unicode General Category of Space_Separator plus
+#'    the ASCII tab, \code{\\u0009}. [Since ICU 55]}
+#' \item{\code{\\H}}{Match a non-Horizontal White Space character.
+#'    [Since ICU 55]}
+#' \item{\code{\\k<name>}}{Named Capture Back Reference. [Since ICU 55]}
 #' \item{\code{\\n}}{Match a LINE FEED, \code{\\u000A}.}
 #' \item{\code{\\N{UNICODE CHARACTER NAME}}}{Match the named character.}
 #' \item{\code{\\p{UNICODE PROPERTY NAME}}}{Match any character with the

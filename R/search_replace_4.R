@@ -59,6 +59,7 @@
 #' of the capture group (their numbering starts from 1).
 #' In order to treat the \code{$} character literally,
 #' escape it with a backslash.
+#' Moreover, \code{${name}} are used for named capture groups.
 #'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions; they just call
@@ -110,6 +111,9 @@
 #' stri_replace_all_regex('abaca', 'a', c('!', '*'))
 #' stri_replace_all_regex('123|456|789', '(\\p{N}).(\\p{N})', '$2-$1')
 #' stri_replace_all_regex(c("stringi R", "REXAMINE", "123"), '( R|R.)', ' r ')
+#'
+#' stri_replace_all_regex("words 123 and numbers 456",
+#'    "(?<numbers>[0-9]+)", "!${numbers}!") # named capture groups since ICU 55
 #'
 #' # Compare the results:
 #' stri_replace_all_fixed("The quick brown fox jumped over the lazy dog.",
