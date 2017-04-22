@@ -3,6 +3,11 @@
 
 ## 1.1.6 (on the way)
 
+* @TODO:........[GENERAL] #69: `stringi` is now bundled with ICU4C 59.1.
+update to ICU 59 if c++11, stay ICU 55 on Solaris #193
+
+* @TODO:........[NEW FEATURE] #263: rule-based break iteration...
+
 * t.b.d.
 
 -------------------------------------------------------------------------------
