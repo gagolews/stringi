@@ -134,7 +134,7 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SE
    StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
    STRI__ERROR_HANDLER_BEGIN(2)
-   R_len_t str_length = LENGTH(str);
+      R_len_t str_length = LENGTH(str);
    StriContainerUTF8_indexable str_cont(str, str_length);
    StriRuleBasedBreakIterator brkiter(opts_brkiter2);
 
@@ -169,7 +169,7 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SE
       for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> curo = *iter;
          SET_STRING_ELT(cur_res, j,
-            Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
+                        Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
       }
       SET_VECTOR_ELT(ret, i, cur_res);
       STRI__UNPROTECT(1);
@@ -177,14 +177,14 @@ SEXP stri_extract_all_boundaries(SEXP str, SEXP simplify, SEXP omit_no_match, SE
 
    if (LOGICAL(simplify)[0] == NA_LOGICAL) {
       STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
+                                           stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
    }
    else if (LOGICAL(simplify)[0]) {
       STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
+                                           stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
    }
 
    STRI__UNPROTECT_ALL
-   return ret;
+      return ret;
    STRI__ERROR_HANDLER_END({/* no-op */})
 }

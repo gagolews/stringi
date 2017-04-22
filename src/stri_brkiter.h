@@ -47,14 +47,17 @@
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *
  * @version 1.1.3 (Marek Gagolewski, 2017-01-07) UBRK_COUNT deprecated
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriBrkIterOptions {
    protected:
 
-      const char* locale; // R_alloc'd
+      const char* locale;      // R_alloc'd
+      UnicodeString rules;
       UBreakIteratorType type;
-      int32_t* skip_rules; // R_alloc'd
-      R_len_t  skip_size; // number of elements in skip_rules
+      int32_t* skip_rules;     // R_alloc'd
+      R_len_t  skip_size;      // number of elements in skip_rules
 
 
    private:
@@ -95,6 +98,8 @@ class StriBrkIterOptions {
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02) separate class
  *
  * @version 1.1.3 (Marek Gagolewski, 2017-01-07) UBRK_COUNT deprecated
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriUBreakIterator : public StriBrkIterOptions {
    private:
@@ -106,7 +111,14 @@ class StriUBreakIterator : public StriBrkIterOptions {
          if (uiterator) throw StriException("!NDEBUG: StriUBreakIterator::open()");
 #endif
          UErrorCode status = U_ZERO_ERROR;
-         switch (type) {
+         if (!rules.isEmpty()) {
+            UParseError parseErr;
+            uiterator = ubrk_openRules(rules.getTerminatedBuffer(),
+                                       -1/*null-terminated*/, NULL, 0,
+                                       &parseErr, &status);
+         }
+         else {
+            switch (type) {
             case UBRK_CHARACTER: // character
                uiterator = ubrk_open(UBRK_CHARACTER, locale, NULL, 0, &status);
                break;
@@ -121,6 +133,7 @@ class StriUBreakIterator : public StriBrkIterOptions {
                break;
             default:
                throw StriException(MSG__INTERNAL_ERROR);
+            }
          }
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
@@ -179,6 +192,8 @@ class StriUBreakIterator : public StriBrkIterOptions {
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  * separate class
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriRuleBasedBreakIterator : public StriBrkIterOptions {
    private:
@@ -200,7 +215,14 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
       void open() {
          UErrorCode status = U_ZERO_ERROR;
          Locale loc = Locale::createFromName(locale);
-         switch (type) {
+         if (!rules.isEmpty()) {
+            UParseError parseErr;
+            rbiterator = (BreakIterator*) new RuleBasedBreakIterator(
+               UnicodeString(rules), parseErr, status
+            );
+         }
+         else {
+            switch (type) {
             case UBRK_CHARACTER: // character
                rbiterator = (BreakIterator*)BreakIterator::createCharacterInstance(loc, status);
                break;
@@ -215,13 +237,9 @@ class StriRuleBasedBreakIterator : public StriBrkIterOptions {
                break;
             default:
                throw StriException(MSG__INTERNAL_ERROR);
+            }
          }
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-//         UnicodeString s = rbiterator->getRules();
-//         std::string s2;
-//         s.toUTF8String(s2);
-//         printf("%s\n", s2.c_str());
       }
 
       bool ignoreBoundary();

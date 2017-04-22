@@ -9,8 +9,9 @@ stri_opts_brkiter(type, locale, skip_word_none, skip_word_number,
   skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
 }
 \arguments{
-\item{type}{single string; break iterator type, one of \code{character},
-\code{line_break}, \code{sentence}, or \code{word};
+\item{type}{single string; either the break iterator type, one of \code{character},
+\code{line_break}, \code{sentence}, \code{word};
+or a custom set of ICU break iteration rules.
 see \link{stringi-search-boundaries}}
 
 \item{locale}{single string, \code{NULL} or \code{""} for default locale}
@@ -61,6 +62,11 @@ The \code{skip_*} family of settings may be used to prevent performing
 any special actions on particular types of text boundaries, e.g.
 in case of the \code{\link{stri_locate_all_boundaries}} and
 \code{\link{stri_split_boundaries}} functions.
+
+Note that custom break iterator rules (advanced users only)
+should be specified as a single string.
+For a detailed description of the syntax of RBBI rules, please refer
+to the ICU User Guide on Boundary Analysis.
 }
 \references{
 \emph{\code{ubrk.h} File Reference} -- ICU4C API Documentation,

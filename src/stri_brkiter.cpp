@@ -49,6 +49,9 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-02)
  *     moved to the StriBrkIterOptions class
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-04-22)
+ *     Add support for RBBI
  */
 void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
    const char* type_opts[] = {"character", "line_break", "sentence", "word", NULL};
@@ -68,14 +71,19 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
             Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "type")) {
-            SEXP curval;
-            PROTECT(curval = stri_prepare_arg_string_1(VECTOR_ELT(opts_brkiter, i), "type"));
+            SEXP curval, curval2;
+            PROTECT(curval2 = stri_enc_toutf8(VECTOR_ELT(opts_brkiter, i),
+                                              Rf_ScalarLogical(FALSE),
+                                              Rf_ScalarLogical(FALSE)));
+            PROTECT(curval = stri_prepare_arg_string_1(curval2, "type"));
             if (STRING_ELT(curval, i) == NA_STRING) {
                UNPROTECT(1);
                Rf_error(MSG__INCORRECT_MATCH_OPTION, "type");
             }
-            brkiter_cur = stri__match_arg(CHAR(STRING_ELT(curval, i)), type_opts);
-            UNPROTECT(1);
+            const char* curval3 = CHAR(STRING_ELT(curval, i));
+            this->rules = UnicodeString::fromUTF8(curval3);
+            brkiter_cur = stri__match_arg(curval3, type_opts);
+            UNPROTECT(2);
             break;
          }
       }
@@ -85,21 +93,25 @@ void StriBrkIterOptions::setType(SEXP opts_brkiter, const char* _default) {
    }
 
    switch (brkiter_cur) {
-      case 0: // character
-         this->type = UBRK_CHARACTER;
-         break;
-      case 1: // line_break
-         this->type = UBRK_LINE;
-         break;
-      case 2: // sentence
-         this->type = UBRK_SENTENCE;
-         break;
-      case 3: // word
-         this->type = UBRK_WORD;
-         break;
-      default:
-         Rf_error(MSG__INCORRECT_MATCH_OPTION, "type"); // error() allowed here
-         break;
+   case 0: // character
+      this->type = UBRK_CHARACTER;
+      this->rules = UnicodeString();
+      break;
+   case 1: // line_break
+      this->type = UBRK_LINE;
+      this->rules = UnicodeString();
+      break;
+   case 2: // sentence
+      this->type = UBRK_SENTENCE;
+      this->rules = UnicodeString();
+      break;
+   case 3: // word
+      this->type = UBRK_WORD;
+      this->rules = UnicodeString();
+      break;
+   default:
+      // do nothing - custom rules specified
+      break;
    }
 }
 
@@ -130,7 +142,8 @@ void StriBrkIterOptions::setLocale(SEXP opts_brkiter) {
             Rf_error(MSG__INCORRECT_BRKITER_OPTION_SPEC); // error() allowed here
          const char* curname = CHAR(STRING_ELT(names, i));
          if (!strcmp(curname, "locale")) {
-            this->locale = stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i), "locale", true); /* this is R_alloc'ed */
+            this->locale = stri__prepare_arg_locale(VECTOR_ELT(opts_brkiter, i),
+                      "locale", true); // this is R_alloc'ed
             return;
          }
       }

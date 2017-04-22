@@ -106,9 +106,9 @@
 #' stri_cmp("above mentioned", "above-mentioned")
 #' stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
 stri_opts_collator <- function(locale=NULL, strength=3L,
-   alternate_shifted=FALSE, french=FALSE,
-   uppercase_first=NA, case_level=FALSE,
-   normalization=FALSE, numeric=FALSE, ...)
+                               alternate_shifted=FALSE, french=FALSE,
+                               uppercase_first=NA, case_level=FALSE,
+                               normalization=FALSE, numeric=FALSE, ...)
 {
    opts <- list()
    if (!missing(locale))            opts["locale"]            <- locale
@@ -213,8 +213,14 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' in case of the \code{\link{stri_locate_all_boundaries}} and
 #' \code{\link{stri_split_boundaries}} functions.
 #'
-#' @param type single string; break iterator type, one of \code{character},
-#' \code{line_break}, \code{sentence}, or \code{word};
+#' Note that custom break iterator rules (advanced users only)
+#' should be specified as a single string.
+#' For a detailed description of the syntax of RBBI rules, please refer
+#' to the ICU User Guide on Boundary Analysis.
+#'
+#' @param type single string; either the break iterator type, one of \code{character},
+#' \code{line_break}, \code{sentence}, \code{word};
+#' or a custom set of ICU break iteration rules.
 #' see \link{stringi-search-boundaries}
 #' @param locale single string, \code{NULL} or \code{""} for default locale
 #' @param skip_word_none logical; perform no action for "words" that
