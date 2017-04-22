@@ -233,6 +233,10 @@ marks the end of textual units.}
   \item{\code{CHANGES_WHEN_CASEFOLDED}}{}
   \item{\code{CHANGES_WHEN_CASEMAPPED}}{}
   \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{}
+  \item{\code{EMOJI}}{Since ICU 57}
+  \item{\code{EMOJI_PRESENTATION}}{Since ICU 57}
+  \item{\code{EMOJI_MODIFIER}}{Since ICU 57}
+  \item{\code{EMOJI_MODIFIER_BASE}}{Since ICU 57}
 }
 }
 
