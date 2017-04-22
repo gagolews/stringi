@@ -103,6 +103,8 @@
 #' stri_extract_first_charclass('AaBbCc', '\\p{Ll}')
 #' stri_extract_last_charclass('AaBbCc', '\\p{Ll}')
 #'
+#' stri_extract_all_charclass(stri_enc_fromutf32(32:55200), "\\p{EMOJI}") # emoji support since ICU 57
+#'
 #' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
 #' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
 #' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
