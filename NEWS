@@ -9,6 +9,10 @@ update to ICU 59 if c++11, stay ICU 55 on Solaris #193
 * [NEW FEATURE] #263: Add support for custom rule-based break iteration,
 see `?stri_opts_brkiter`.
 
+* emojis......
+
+* stri_width for emojis....
+
 * t.b.d.
 
 -------------------------------------------------------------------------------
