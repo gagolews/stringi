@@ -18,8 +18,8 @@ stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
 
 \item{length}{integer vector; mutually exclusive with \code{to} and \code{from} being a matrix}
 
-\item{omit_na}{single logical value; if \code{TRUE}, missing values in \code{from},
-\code{to}, or \code{length} will result in an unchanged input; replacement function only}
+\item{omit_na}{single logical value; if \code{TRUE}, missing values in any of the arguments
+provided will result in an unchanged input; replacement function only}
 
 \item{value}{character vector to be substituted with; replacement function only}
 }
