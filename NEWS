@@ -9,6 +9,9 @@ update to ICU 59 if c++11, stay ICU 55 on Solaris #193
 * [NEW FEATURE] #263: Add support for custom rule-based break iteration,
 see `?stri_opts_brkiter`.
 
+* [NEW FEATURE] #267: `omit_na=TRUE` in `stri_sub<-` now ignores missing values
+in any of the arguments provided.
+
 * t.b.d.
 
 -------------------------------------------------------------------------------
