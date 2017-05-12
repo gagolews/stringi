@@ -13,6 +13,9 @@ see `?stri_opts_brkiter`.
 
 * stri_width for emojis....
 
+* [NEW FEATURE] #267: `omit_na=TRUE` in `stri_sub<-` now ignores missing values
+in any of the arguments provided.
+
 * t.b.d.
 
 -------------------------------------------------------------------------------
