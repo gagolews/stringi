@@ -6,6 +6,10 @@
 * @TODO:........[GENERAL] #69: `stringi` is now bundled with ICU4C 59.1.
 update to ICU 59 if c++11, stay ICU 55 on Solaris #193
 
+* [WINDOWS SPECIFIC] #270: Strings marked with `latin1` encoding
+are now converted internally to UTF-8 using the WINDOWS-1252 codec.
+This fixes problems with - among others - displaying the Euro sign.
+
 * [NEW FEATURE] #263: Add support for custom rule-based break iteration,
 see `?stri_opts_brkiter`.
 
