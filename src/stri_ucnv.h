@@ -42,6 +42,9 @@
  * A class to manage an encoding converter
  *
  * @version 0.2-1 (Marek Gagolewski, 2014-03-28)
+ *
+ * @version 1.0.6 (Marek Gagolewski, 2017-05-25)
+ *    #270 latin-1 is windows-1252 on Windows
  */
 class StriUcnv  {
 
@@ -171,7 +174,12 @@ class StriUcnv  {
             m_is8bit = false;
             return CE_UTF8;
          }
+#if defined(_WIN32) || defined(_WIN64)
+         // #270: latin-1 is windows-1252 on Windows
+         else if (!strcmp(ucnv_name, "windows-1252") || !strcmp(ucnv_name, "ibm-5348_P100-1997")) {
+#else
          else if (!strcmp(ucnv_name, "ISO-8859-1")) {
+#endif
             m_is8bit = true;
             m_isutf8 = false;
             return CE_LATIN1;

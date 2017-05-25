@@ -70,6 +70,9 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
  * @param rstr R character vector
  * @param nrecycle extend length [vectorization]
  * @param shallowrecycle will \code{this->str} be ever modified?
+ *
+ * @version 1.0.6 (Marek Gagolewski, 2017-05-25)
+ *    #270 latin-1 is windows-1252 on Windows
  */
 StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
@@ -94,7 +97,12 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
    code to handle several important encodings algorithmically: US-ASCII,
    ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
    StriUcnv ucnvASCII("US-ASCII");
+#if defined(_WIN32) || defined(_WIN64)
+   // #270: latin-1 is windows-1252 on Windows
+   StriUcnv ucnvLatin1("WINDOWS-1252");
+#else
    StriUcnv ucnvLatin1("ISO-8859-1");
+#endif
    StriUcnv ucnvNative(NULL);
 
    for (R_len_t i=0; i<nrstr; ++i) {
