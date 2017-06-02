@@ -90,7 +90,7 @@
 #' for representing Unicode character strings in \R. UTF-8 has ASCII as its
 #' subset (code points 1--127 represent the same characters in both of them).
 #' Code points larger than 127 are represented by multi-byte sequences
-#' (from 2 to 4 bytes: by the way, not all sequences of bytes are valid UTF-8,
+#' (from 2 to 4 bytes: Please note that not all sequences of bytes are valid UTF-8,
 #' cf. \code{\link{stri_enc_isutf8}}).
 #'
 #' Most of the computations in \pkg{stringi} are performed internally
