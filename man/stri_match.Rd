@@ -74,7 +74,7 @@ Vectorized over \code{str} and \code{pattern}.
 If no pattern match is detected and \code{omit_no_match=FALSE},
 then \code{NA}s are included in the resulting matrix (matrices), see Examples.
 
-By the way, \pkg{ICU} regex engine currently does not support named capture groups.
+Please note: \pkg{ICU} regex engine currently does not support named capture groups.
 
 \code{stri_match}, \code{stri_match_all}, \code{stri_match_first},
 and \code{stri_match_last} are convenience functions.
