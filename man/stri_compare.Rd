@@ -69,7 +69,7 @@ to check whether there is any difference between them. These are
 locale-independent operations: for natural language text processing,
 in which the notion of canonical equivalence is more valid, this might
 not be exactly what you are looking for, see Examples.
-By the way, note that \pkg{stringi} always silently removes UTF-8
+Please note that \pkg{stringi} always silently removes UTF-8
 BOMs from input strings, so e.g. \code{stri_cmp_eq} does not take
 BOMs into account while comparing strings.
 
