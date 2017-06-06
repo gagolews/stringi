@@ -116,7 +116,7 @@ Character strings in \R (internally) can be declared to be in:
 \itemize{
 \item \code{UTF-8};
 \item \code{latin1}, i.e., either ISO-8859-1 (Western European on
-Linux, OS X, and other Unixes) or WINDOWS-1252 (Windows);
+Linux, macOS, and other Unixes) or WINDOWS-1252 (Windows);
 \item \code{bytes} -- for strings that
     should be manipulated as sequences of bytes.
 }
@@ -127,7 +127,7 @@ Moreover, there are two other cases:
 \item \code{native} (a.k.a. \code{unknown} in \code{\link{Encoding}};
 quite a misleading name: no explicit encoding mark) -- for
 strings that are assumed to be in your platform's native (default) encoding.
-This can represent UTF-8 if you are an OS X user,
+This can represent UTF-8 if you are an macOS user,
 or some 8-bit Windows code page, for example.
 The native encoding used by \R may be determined by examining
 the LC_CTYPE category, see \code{\link{Sys.getlocale}}.
