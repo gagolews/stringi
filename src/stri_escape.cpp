@@ -48,6 +48,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.1.6 (Steve Grubb, 2017-07-20)
+ *          if ((char)c >= 32 || (char)c <= 126) should be &&
 */
 SEXP stri_escape_unicode(SEXP str)
 {
@@ -83,7 +86,7 @@ SEXP stri_escape_unicode(SEXP str)
          U8_NEXT(str_cur_s, j, str_cur_n, c);
          if (c < 0)
             throw StriException(MSG__INVALID_UTF8);
-         else if ((char)c >= 32 || (char)c <= 126)
+         else if ((char)c >= 32 && (char)c <= 126)
             bufsize += 1;
          else if (c <= 0xff)
             bufsize += 6; // for \a, \n this will be overestimated
@@ -115,7 +118,7 @@ SEXP stri_escape_unicode(SEXP str)
                case 0x27: out.append("\\'"); break;
                case 0x5c: out.append("\\\\"); break;
                default:
-                  if ((char)c >= 32 || (char)c <= 126) // printable characters
+                  if ((char)c >= 32 && (char)c <= 126) // printable characters
                      out.append(1, (char)c);
                   else {
                      sprintf(buf, "\\u%4.4x", (uint16_t)c);
