@@ -71,7 +71,7 @@ stri_dup <- function(str, times) {
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
 #'
-#' %S+% is the safe form. NULLs, NAs, and zero length items are reduced
+#' %S+% is the safe form. NULLs, NAs, and zero length objects are reduced
 #' to empty strings.
 #'
 #' @param e1 a character vector or an object coercible to a character vector
