@@ -72,7 +72,7 @@ stri_dup <- function(str, times) {
 #' the operator is applied.
 #'
 #' %S+% is the safe form. NULLs, NAs, and zero length items are reduced
-#' to empty strings
+#' to empty strings.
 #'
 #' @param e1 a character vector or an object coercible to a character vector
 #' @param e2 a character vector or an object coercible to a character vector
