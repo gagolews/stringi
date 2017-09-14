@@ -86,7 +86,7 @@ stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
 #' Reduces non-meaningful literals
 #'
 #' @description
-#' Reduces NULLs, NAs, and zero length items to empty strings
+#' Reduces NULLs, NAs, and zero length items to empty strings.
 #'
 #' @param x
 #'
