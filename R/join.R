@@ -98,6 +98,10 @@ stri_dup <- function(str, times) {
 "%s+%" <- function(e1, e2) {
    .Call(C_stri_join2, e1, e2)
 }
+
+#' @usage
+#' e1 \%S+\% e2
+#' @rdname oper_plus
 #' @export
 "%S+%" <- function(e1, e2) {
    Safe(e1) %s+% Safe(e2)
