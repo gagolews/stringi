@@ -2,13 +2,21 @@
 % Please edit documentation in R/compare.R
 \name{\%s<\%}
 \alias{\%s<\%}
+\alias{\%S<\%}
 \alias{\%s<=\%}
+\alias{\%S<=\%}
 \alias{\%s>\%}
+\alias{\%S>\%}
 \alias{\%s>=\%}
+\alias{\%S>=\%}
 \alias{\%s==\%}
+\alias{\%S==\%}
 \alias{\%s!=\%}
+\alias{\%S!=\%}
 \alias{\%s===\%}
+\alias{\%S===\%}
 \alias{\%s!==\%}
+\alias{\%S!==\%}
 \alias{\%stri<\%}
 \alias{\%stri<=\%}
 \alias{\%stri>\%}
@@ -20,20 +28,37 @@
 \title{Compare Strings with or without Collation}
 \usage{
 e1 \%s<\% e2
+e1 \%S<\% e2
+
+e1 \%S<\% e2
 
 e1 \%s<=\% e2
 
+e1 \%S<=\% e2
+
 e1 \%s>\% e2
+
+e1 \%S>\% e2
 
 e1 \%s>=\% e2
 
+e1 \%S>=\% e2
+
 e1 \%s==\% e2
+
+e1 \%S==\% e2
 
 e1 \%s!=\% e2
 
+e1 \%S!=\% e2
+
 e1 \%s===\% e2
 
+e1 \%S===\% e2
+
 e1 \%s!==\% e2
+
+e1 \%S!==\% e2
 
 e1 \%stri<\% e2
 
@@ -72,6 +97,9 @@ Thus, they are vectorized over \code{e1} and \code{e2}.
 (see \code{\link{stri_cmp_equiv}}) and is a locale-dependent operation.
 On the other hand, \code{\%stri===\%} performs a locale-independent,
 code point-based comparison.
+
+%S+% is the safe form. NULLs, NAs, and zero length objects are reduced
+to empty strings.
 }
 \examples{
 "a" \%stri<\% "b"
