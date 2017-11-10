@@ -35,6 +35,7 @@ suppressWarnings(test_that("stri_prepare_arg_string", {
    expect_identical(stringi:::stri_prepare_arg_string(list(1, 2, 3)), as.character(list(1, 2, 3)))
    expect_identical(stringi:::stri_prepare_arg_string(data.frame(1, 2, 3)), as.character(data.frame(1, 2, 3)))
 
+
 }))
 
 suppressWarnings(test_that("stri_prepare_arg_double", {
@@ -126,7 +127,7 @@ suppressWarnings(test_that("stri_prepare_arg_double_1", {
    #suppressWarnings(stringi:::stri_prepare_arg_double_1(character(0)))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_double_1(1:5),1))
    suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_double_1(1.5:5),1.5))
-   suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_double_1(as.factor(1:5)),1))
+   suppressWarnings(expect_equivalent(stringi:::stri_prepare_arg_double_1(as.factor(10+1:5)),10+1))
 
 
    suppressWarnings(expect_error(stringi:::stri_prepare_arg_double_1(NULL)))

@@ -61,6 +61,9 @@
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *    #23: add `overlap` option
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
+ *    PROTECT STRING_ELT(names, i)
  */
 UCollator* stri__ucol_open(SEXP opts_collator)
 {
@@ -96,7 +99,7 @@ UCollator* stri__ucol_open(SEXP opts_collator)
       if (STRING_ELT(names, i) == NA_STRING)
          Rf_error(MSG__INCORRECT_COLLATOR_OPTION_SPEC); // error() allowed here
 
-      const char* curname = CHAR(STRING_ELT(names, i));
+      const char* curname = stri__copy_string_Ralloc(STRING_ELT(names, i), "curname");  /* this is R_alloc'ed */
       if (!strcmp(curname, "locale")) {
          opt_LOCALE = stri__prepare_arg_locale(VECTOR_ELT(opts_collator, i), "locale", true); /* this is R_alloc'ed */
       } else if  (!strcmp(curname, "strength")) {

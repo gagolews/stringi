@@ -385,6 +385,9 @@ StriByteSearchMatcher* StriContainerByteSearch::getMatcher(R_len_t i) {
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-08)
  *    add `overlap` option
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
+ *    PROTECT STRING_ELT(names, i)
  */
 uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow_overlap)
 {
@@ -404,8 +407,7 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow
          if (STRING_ELT(names, i) == NA_STRING)
             Rf_error(MSG__FIXED_CONFIG_FAILED); // error() call allowed here
 
-         const char* curname = CHAR(STRING_ELT(names, i));
-
+         const char* curname = stri__copy_string_Ralloc(STRING_ELT(names, i), "curname");  /* this is R_alloc'ed */
          if  (!strcmp(curname, "case_insensitive")) {
             bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "case_insensitive");
             if (val) flags |= BYTESEARCH_CASE_INSENSITIVE;
