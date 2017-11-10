@@ -66,6 +66,7 @@ int     stri__width_char(UChar32 c);
 int     stri__width_string(const char* str_cur_s, int str_cur_n);
 
 // prepare_arg.cpp:
+const char* stri__copy_string_Ralloc(SEXP, const char* argname);
 const char* stri__prepare_arg_string_1_notNA(SEXP x,  const char* argname);
 double      stri__prepare_arg_double_1_notNA(SEXP x,  const char* argname);
 int         stri__prepare_arg_integer_1_notNA(SEXP x, const char* argname);

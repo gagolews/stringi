@@ -216,7 +216,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -224,7 +224,7 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -276,7 +276,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       PROTECT(x = Rf_coerceVector(x, REALSXP));
       UNPROTECT(3);
       return x;
@@ -285,7 +285,7 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.double"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -377,7 +377,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       PROTECT(x = Rf_coerceVector(x, INTSXP));
       UNPROTECT(3);
       return x;
@@ -386,7 +386,7 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.integer"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -436,7 +436,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       PROTECT(x = Rf_coerceVector(x, LGLSXP));
       UNPROTECT(3);
       return x;
@@ -445,7 +445,7 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -492,7 +492,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       PROTECT(x = Rf_coerceVector(x, RAWSXP));
       UNPROTECT(3);
       return x;
@@ -501,7 +501,7 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    {
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.raw"), x));
-      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark it's encoding manually
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
       UNPROTECT(2);
       return x;
    }
@@ -538,11 +538,41 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   PROTECT(x = stri_prepare_arg_string(x, argname));
+   int nprotect = 0;
+   if (Rf_isFactor(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      nprotect = 2;
+   }
+   else if (Rf_isVectorList(x) || isObject(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      nprotect = 2;
+   }
+   else if ((bool)isString(x))
+      nprotect = 0;
+   else if (Rf_isVectorAtomic(x) || isNull(x)) {
+      PROTECT(x = Rf_coerceVector(x, STRSXP));
+      nprotect = 1;
+   }
+   else if ((bool)isSymbol(x)) {
+      PROTECT(x = Rf_ScalarString(PRINTNAME(x)));
+      nprotect = 1;
+   }
+   else {
+      Rf_error(MSG__ARG_EXPECTED_STRING, argname); // allowed here
+      return x; // avoid compiler warning
+   }
+
+
    R_len_t nx = LENGTH(x);
 
    if (nx <= 0) {
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
       // won't come here anyway
       return x; // avoid compiler warning
@@ -551,12 +581,13 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
       Rf_warning(MSG__ARG_EXPECTED_1_STRING, argname);
       SEXP xold = x;
       PROTECT(x = Rf_allocVector(STRSXP, 1));
+      nprotect++;
       SET_STRING_ELT(x, 0, STRING_ELT(xold, 0));
-      UNPROTECT(2);
+      UNPROTECT(nprotect);
       return x;
    }
    else { // if (nx == 1)
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       return x;
    }
 }
@@ -585,11 +616,37 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   PROTECT(x = stri_prepare_arg_double(x, argname));
+   int nprotect = 0;
+   if (Rf_isFactor(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      PROTECT(x = Rf_coerceVector(x, REALSXP));
+      nprotect = 3;
+   }
+   else if (Rf_isVectorList(x) || isObject(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.double"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      nprotect = 2;
+   }
+   else if ((bool)isReal(x))
+      nprotect = 0;
+   else if (Rf_isVectorAtomic(x) || isNull(x)) {
+      PROTECT(x = Rf_coerceVector(x, REALSXP));
+      nprotect = 1;
+   }
+   else {
+      Rf_error(MSG__ARG_EXPECTED_NUMERIC, argname); // allowed here
+      return x; // avoid compiler warning
+   }
+
    R_len_t nx = LENGTH(x);
 
    if (nx <= 0) {
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
       // won't come here anyway
       return x; // avoid compiler warning
@@ -598,12 +655,13 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
       Rf_warning(MSG__ARG_EXPECTED_1_NUMERIC, argname);
       double x0 = REAL(x)[0];
       PROTECT(x = Rf_allocVector(REALSXP, 1));
+      nprotect++;
       REAL(x)[0] = x0;
-      UNPROTECT(2);
+      UNPROTECT(nprotect);
       return x;
    }
    else {// if (nx == 1)
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       return x;
    }
 }
@@ -632,11 +690,37 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   PROTECT(x = stri_prepare_arg_integer(x, argname));
+   int nprotect = 0;
+   if (Rf_isFactor(x)) // factors must be checked first (as they are currently represented as integer vectors)
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      PROTECT(x = Rf_coerceVector(x, INTSXP));
+      nprotect = 3;
+   }
+   else if (Rf_isVectorList(x) || isObject(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.integer"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      nprotect = 2;
+   }
+   else if (Rf_isInteger(x))
+      nprotect = 0;
+   else if (Rf_isVectorAtomic(x) || isNull(x)) {
+      PROTECT(x = Rf_coerceVector(x, INTSXP));
+      nprotect = 1;
+   }
+   else {
+      Rf_error(MSG__ARG_EXPECTED_INTEGER, argname); //allowed here
+      return x; // avoid compiler warning
+   }
+
    R_len_t nx = LENGTH(x);
 
    if (nx <= 0) {
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
       // won't come here anyway
       return x; // avoid compiler warning
@@ -645,12 +729,13 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
       Rf_warning(MSG__ARG_EXPECTED_1_INTEGER, argname);
       int x0 = INTEGER(x)[0];
       PROTECT(x = Rf_allocVector(INTSXP, 1));
+      nprotect++;
       INTEGER(x)[0] = x0;
-      UNPROTECT(2);
+      UNPROTECT(nprotect);
       return x;
    }
    else { // if (nx == 1)
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       return x;
    }
 }
@@ -676,14 +761,43 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  */
 SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 {
+   int nprotect = 0;
+
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
-   PROTECT(x = stri_prepare_arg_logical(x, argname));
+   if (Rf_isFactor(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      PROTECT(x = Rf_coerceVector(x, LGLSXP));
+      nprotect = 3;
+   }
+   else if (Rf_isVectorList(x) || isObject(x))
+   {
+      SEXP call;
+      PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
+      PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
+      nprotect = 2;
+   }
+   else if ((bool)isLogical(x)) {
+      nprotect = 0;
+      // do nothing
+   }
+   else if (Rf_isVectorAtomic(x) || isNull(x)) {
+      PROTECT(x = Rf_coerceVector(x, LGLSXP));
+      nprotect = 1;
+   }
+   else {
+      Rf_error(MSG__ARG_EXPECTED_LOGICAL, argname); // allowed here
+      return x; // avoid compiler warning
+   }
+
    R_len_t nx = LENGTH(x);
 
    if (nx <= 0) {
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, argname); // allowed here
       // won't come here anyway
       return x; // avoid compiler warning
@@ -692,12 +806,13 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
       Rf_warning(MSG__ARG_EXPECTED_1_LOGICAL, argname);
       int x0 = LOGICAL(x)[0];
       PROTECT(x = Rf_allocVector(LGLSXP, 1));
+      nprotect++;
       LOGICAL(x)[0] = x0;
-      UNPROTECT(2);
+      UNPROTECT(nprotect);
       return x;
    }
    else { // if (nx == 1)
-      UNPROTECT(1);
+      UNPROTECT(nprotect);
       return x;
    }
 }
@@ -789,6 +904,36 @@ double stri__prepare_arg_double_1_notNA(SEXP x, const char* argname)
    return (double)xval;
 }
 
+
+/**
+ * This is a helper function to avoid UNPROTECTED var names warning
+ * when playing with CHARSXP directly
+ *
+ * @param x an R STRING object (from STRING_ELT(charactervector, index))
+ * @return an Ralloc'd character string
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
+ */
+const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
+{
+   PROTECT(x);
+   if (x == NA_STRING) {
+      UNPROTECT(1);
+      Rf_error(MSG__ARG_EXPECTED_NOT_NA, argname); // allowed here
+   }
+
+   const char* ret_tmp = (const char*)CHAR(x); // ret may be gc'ed
+   size_t ret_n = strlen(ret_tmp);
+   /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
+   char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+   if (!ret) {
+      UNPROTECT(1);
+      Rf_error(MSG__MEM_ALLOC_ERROR);
+   }
+   memcpy(ret, ret_tmp, ret_n+1);
+   UNPROTECT(1);
+   return ret;
+}
 
 /** Prepare double argument - one value, not NA [no re-encoding done!!!]
  *

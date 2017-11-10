@@ -51,6 +51,7 @@ void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
          from_ismatrix = false; /* it's a column vector */
       else if (INTEGER(t)[1] > 2) {
          /* error() is allowed here */
+         UNPROTECT(1); // t
          Rf_error(MSG__ARG_EXPECTED_MATRIX_WITH_GIVEN_COLUMNS, "from", 2);
       }
       UNPROTECT(1); // t
@@ -293,7 +294,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
    {
       R_len_t cur_from     = from_tab[i % from_len];
       R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
-      
+
       if (str_cont.isNA(i) || value_cont.isNA(i) || cur_from == NA_INTEGER || cur_to == NA_INTEGER) {
          if (omit_na_1) {
             // if str_conf is NA, this will be NA_STRING as well.

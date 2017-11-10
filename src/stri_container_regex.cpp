@@ -140,6 +140,9 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Disallow NA options
+ *
+ * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
+ *    PROTECT STRING_ELT(names, i)
  */
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
@@ -159,8 +162,7 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
          if (STRING_ELT(names, i) == NA_STRING)
             Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
 
-         const char* curname = CHAR(STRING_ELT(names, i));
-
+         const char* curname = stri__copy_string_Ralloc(STRING_ELT(names, i), "curname");  /* this is R_alloc'ed */
          if  (!strcmp(curname, "case_insensitive")) {
             bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_regex, i), "case_insensitive");
             if (val) flags |= UREGEX_CASE_INSENSITIVE;
