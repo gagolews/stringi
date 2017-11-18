@@ -71,6 +71,8 @@ stri_dup <- function(str, times) {
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
 #'
+#' %S+% is the safe form. NULLs, NAs, and zero length objects are reduced
+#' to empty strings.
 #'
 #' @param e1 a character vector or an object coercible to a character vector
 #' @param e2 a character vector or an object coercible to a character vector
@@ -81,17 +83,29 @@ stri_dup <- function(str, times) {
 #' @examples
 #' c('abc', '123', '\u0105\u0104') %stri+% letters[1:6]
 #' 'ID_' %stri+% 1:5
+#' NULL %S+% NULL
+#' NA %S+% NA
+#' integer() %S+% integer()
+#'
 #'
 #' @rdname oper_plus
 #'
 #' @usage
 #' e1 \%s+\% e2
+#' e1 \%S+\% e2
 #'
 #' @export
 "%s+%" <- function(e1, e2) {
    .Call(C_stri_join2, e1, e2)
 }
 
+#' @usage
+#' e1 \%S+\% e2
+#' @rdname oper_plus
+#' @export
+"%S+%" <- function(e1, e2) {
+   Safe(e1) %s+% Safe(e2)
+}
 
 #' @usage
 #' e1 \%stri+\% e2

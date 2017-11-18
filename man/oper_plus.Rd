@@ -2,10 +2,14 @@
 % Please edit documentation in R/join.R
 \name{\%s+\%}
 \alias{\%s+\%}
+\alias{\%S+\%}
 \alias{\%stri+\%}
 \title{Concatenate Two Character Vectors}
 \usage{
 e1 \%s+\% e2
+e1 \%S+\% e2
+
+e1 \%S+\% e2
 
 e1 \%stri+\% e2
 }
@@ -29,9 +33,16 @@ However, note that joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
 is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
 because it creates a new (temporary) result vector each time
 the operator is applied.
+
+%S+% is the safe form. NULLs, NAs, and zero length objects are reduced
+to empty strings.
 }
 \examples{
 c('abc', '123', '\\u0105\\u0104') \%stri+\% letters[1:6]
 'ID_' \%stri+\% 1:5
+NULL \%S+\% NULL
+NA \%S+\% NA
+integer() \%S+\% integer()
+
 
 }

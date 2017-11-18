@@ -81,3 +81,24 @@
 stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
    .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
 }
+
+#' @title
+#' Reduces non-meaningful literals
+#'
+#' @description
+#' Reduces NULLs, NAs, and zero length items to empty strings.
+#'
+#' @param x
+#'
+#' @return
+#' Original string or an empty string ("")
+#'
+#' @examples
+#' 
+#' Safe(NULL)
+#' Safe(NA)
+#' Safe(integer())
+#'
+#' @family utils
+Safe <- function(x) if(!(is.null(x) || is.na(x) || !length(x))) { x } else { x <- "" }
+

@@ -226,6 +226,8 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' On the other hand, \code{\%stri===\%} performs a locale-independent,
 #' code point-based comparison.
 #'
+#' %S+% is the safe form. NULLs, NAs, and zero length objects are reduced
+#' to empty strings.
 #'
 #' @param e1,e2 character vectors or objects coercible to character vectors
 #'
@@ -240,12 +242,22 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #'
 #' @usage
 #' e1 \%s<\% e2
+#' e1 \%S<\% e2
 #'
 #' @family locale_sensitive
 #' @rdname oper_comparison
 #' @export
 "%s<%" <- function(e1, e2) {
    stri_cmp_lt(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%S<\% e2
+#' @rdname oper_comparison
+#' @export
+"%S<%" <- function(e1, e2) {
+   Safe(e1) %s<% Safe(e2)
 }
 
 
@@ -259,11 +271,29 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 
 
 #' @usage
+#' e1 \%S<=\% e2
+#' @rdname oper_comparison
+#' @export
+"%S<=%" <- function(e1, e2) {
+   Safe(e1) %s<=% Safe(e2)
+}
+
+
+#' @usage
 #' e1 \%s>\% e2
 #' @rdname oper_comparison
 #' @export
 "%s>%" <- function(e1, e2) {
    stri_cmp_gt(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%S>\% e2
+#' @rdname oper_comparison
+#' @export
+"%S>%" <- function(e1, e2) {
+   Safe(e1) %s>% Safe(e2)
 }
 
 
@@ -277,11 +307,29 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 
 
 #' @usage
+#' e1 \%S>=\% e2
+#' @rdname oper_comparison
+#' @export
+"%S>=%" <- function(e1, e2) {
+   Safe(e1) %s>=% Safe(e2)
+}
+
+
+#' @usage
 #' e1 \%s==\% e2
 #' @rdname oper_comparison
 #' @export
 "%s==%" <- function(e1, e2) {
    stri_cmp_equiv(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%S==\% e2
+#' @rdname oper_comparison
+#' @export
+"%S==%" <- function(e1, e2) {
+   Safe(e1) %s==% Safe(e2)
 }
 
 
@@ -295,6 +343,15 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 
 
 #' @usage
+#' e1 \%S!=\% e2
+#' @rdname oper_comparison
+#' @export
+"%S!=%" <- function(e1, e2) {
+   Safe(e1) %s!=% Safe(e2)
+}
+
+
+#' @usage
 #' e1 \%s===\% e2
 #' @rdname oper_comparison
 #' @export
@@ -304,11 +361,29 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 
 
 #' @usage
+#' e1 \%S===\% e2
+#' @rdname oper_comparison
+#' @export
+"%S===%" <- function(e1, e2) {
+   Safe(e1) %s===% Safe(e2)
+}
+
+
+#' @usage
 #' e1 \%s!==\% e2
 #' @rdname oper_comparison
 #' @export
 "%s!==%" <- function(e1, e2) {
    stri_cmp_neq(e1, e2)
+}
+
+
+#' @usage
+#' e1 \%S!==\% e2
+#' @rdname oper_comparison
+#' @export
+"%S!==%" <- function(e1, e2) {
+   Safe(e1) %s!==% Safe(e2)
 }
 
 
