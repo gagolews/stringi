@@ -1407,10 +1407,6 @@ U_CAPI decNumber * U_EXPORT2 uprv_decNumberLogB(decNumber *res, const decNumber 
 /* fastpath in decLnOp.  The final division is done to the requested  */
 /* precision.                                                         */
 /* ------------------------------------------------------------------ */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#endif
 U_CAPI decNumber * U_EXPORT2 uprv_decNumberLog10(decNumber *res, const decNumber *rhs,
                           decContext *set) {
   uInt status=0, ignore=0;         /* status accumulators  */
@@ -1546,9 +1542,6 @@ U_CAPI decNumber * U_EXPORT2 uprv_decNumberLog10(decNumber *res, const decNumber
   #endif
   return res;
   } /* decNumberLog10  */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic pop
-#endif
 
 /* ------------------------------------------------------------------ */
 /* decNumberMax -- compare two Numbers and return the maximum         */
@@ -2822,10 +2815,6 @@ U_CAPI decNumber * U_EXPORT2 uprv_decNumberShift(decNumber *res, const decNumber
 /* result setexp(approx, e div 2)  % fix exponent                     */
 /* end sqrt                                                           */
 /* ------------------------------------------------------------------ */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#endif
 U_CAPI decNumber * U_EXPORT2 uprv_decNumberSquareRoot(decNumber *res, const decNumber *rhs,
                                 decContext *set) {
   decContext workset, approxset;   /* work contexts  */
@@ -3155,9 +3144,6 @@ U_CAPI decNumber * U_EXPORT2 uprv_decNumberSquareRoot(decNumber *res, const decN
   #endif
   return res;
   } /* decNumberSquareRoot  */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic pop
-#endif
 
 /* ------------------------------------------------------------------ */
 /* decNumberSubtract -- subtract two Numbers                          */
