@@ -136,7 +136,7 @@ static void freeCurrencyFormat(CURRENCYFMTW *fmt)
 }
 
 Win32NumberFormat::Win32NumberFormat(const Locale &locale, UBool currency, UErrorCode &status)
-  : NumberFormat(), fCurrency(currency), fFractionDigitsSet(FALSE), fFormatInfo(NULL)
+  : NumberFormat(), fCurrency(currency), fFormatInfo(NULL), fFractionDigitsSet(FALSE)
 {
     if (!U_FAILURE(status)) {
         fLCID = locale.getLCID();

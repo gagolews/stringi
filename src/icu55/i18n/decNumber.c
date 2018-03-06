@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------ */
 
 /* Modified version, for use from within ICU.
- *    Renamed public functions, to avoid an unwanted export of the 
+ *    Renamed public functions, to avoid an unwanted export of the
  *    standard names from the ICU library.
  *
  *    Use ICU's uprv_malloc() and uprv_free()
@@ -5619,10 +5619,6 @@ static const uShort LNnn[90]={9016,  8652,  8316,  8008,  7724,  7456,  7208,
 /* 5. The static buffers are larger than might be expected to allow   */
 /*    for calls from decNumberPower.                                  */
 /* ------------------------------------------------------------------ */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#endif
 decNumber * decLnOp(decNumber *res, const decNumber *rhs,
                     decContext *set, uInt *status) {
   uInt ignore=0;                   /* working status accumulator  */
@@ -5844,9 +5840,7 @@ decNumber * decLnOp(decNumber *res, const decNumber *rhs,
   /* [status is handled by caller]  */
   return res;
   } /* decLnOp  */
-#if defined(__clang__) || U_GCC_MAJOR_MINOR >= 406
-#pragma GCC diagnostic pop
-#endif
+
 
 /* ------------------------------------------------------------------ */
 /* decQuantizeOp  -- force exponent to requested value                */
