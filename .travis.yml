@@ -3,6 +3,8 @@
 dist: trusty
 sudo: required
 language: r
+r_packages:
+  - devtools
 matrix:
   include:
   - os: linux
