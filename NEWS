@@ -1,24 +1,11 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.1.7 (work ongoing)
+## 1.1.7 (2018-03-06) **CRAN**
 
-TODO:
-
-* @TODO:........[GENERAL] #69: `stringi` is now bundled with ICU4C 59.1.
-update to ICU 59 if c++11, stay ICU 55 on Solaris #193
-
-* @TODO:emojis......
-
-* @TODO:stri_width for emojis....
-
-* @TODO:stri_match doesn't return correct number of columns when input is empty (#288)
-
-* @TODO:%S+% and other 'Safe' concatenation and comparison operators (#284)
-
-* @TODO:stri_count_regex gives wrong answer when handed a list (#285)
-
-* @TODO:Should str_c etc have na.rm = TRUE? (#289)
+* [BUGFIX] Fixed ICU55 code leading to some "significant warnings"
+(`icu55/i18n/winnmfmt.cpp`) and "suppressing important diagnostics"
+(`src/icu55/i18n/decNumber.c`).
 
 -------------------------------------------------------------------------------
 

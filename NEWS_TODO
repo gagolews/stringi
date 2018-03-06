@@ -1,0 +1,15 @@
+
+TODO:
+
+* @TODO:........[GENERAL] #69: `stringi` is now bundled with ICU4C 59.1.
+update to ICU 59 if c++11, stay ICU 55 on Solaris #193
+
+* @TODO:emojis......
+
+* @TODO:stri_width for emojis....
+
+* @TODO:stri_match doesn't return correct number of columns when input is empty (#288)
+
+* @TODO:stri_count_regex gives wrong answer when handed a list (#285)
+
+* @TODO:Should str_c etc have na.rm = TRUE? (#289)
