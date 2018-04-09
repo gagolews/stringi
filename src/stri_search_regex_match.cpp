@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,6 +60,10 @@ using namespace std;
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.1.8 (Marek Gagolewski, 2018-04-09)
+ *    #288: stri_match did not return correct number of columns
+ *    when input was empty
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex, bool first)
 {
@@ -74,7 +78,6 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
    STRI__ERROR_HANDLER_BEGIN(3)
    StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
    StriContainerUTF8 cg_missing_cont(cg_missing, 1);
    STRI__PROTECT(cg_missing = STRING_ELT(cg_missing, 0));
 
@@ -82,40 +85,70 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
    vector< vector< pair<const char*, const char*> > > occurrences(vectorize_length);
    R_len_t occurrences_max = 1;
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-         /*do nothing*/;      )
-
-      UErrorCode status = U_ZERO_ERROR;
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      int pattern_cur_groups = matcher->groupCount();
-      if (occurrences_max < pattern_cur_groups+1) occurrences_max=pattern_cur_groups+1;
-      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      const char* str_cur_s = str_cont.get(i).c_str();
-
-      occurrences[i] = vector< pair<const char*, const char*> >(pattern_cur_groups+1);
-      matcher->reset(str_text);
-      while ((int)matcher->find()) {
-         occurrences[i][0].first  = str_cur_s+(int)matcher->start(status);
-         occurrences[i][0].second = str_cur_s+(int)matcher->end(status);
-         for (R_len_t j=1; j<=pattern_cur_groups; ++j) {
-            int m_start = (int)matcher->start(j, status);
-            int m_end = (int)matcher->end(j, status);
-            if (m_start < 0 || m_end < 0) {
-               occurrences[i][j].first  = NULL;
-               occurrences[i][j].second = NULL;
-            }
-            else {
-               occurrences[i][j].first  = str_cur_s+m_start;
-               occurrences[i][j].second = str_cur_s+m_end;
-            }
+   if (LENGTH(str) == 0 && LENGTH(pattern) > 0) {
+      // we need to determine the number of capture groups anyway
+      StriContainerRegexPattern pattern_cont(pattern, LENGTH(pattern), pattern_flags);
+      for (R_len_t i = pattern_cont.vectorize_init();
+           i != pattern_cont.vectorize_end();
+           i = pattern_cont.vectorize_next(i))
+      {
+         if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
+            if (!(pattern_cont).isNA(i))
+               Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            continue;
          }
+
+         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+         int pattern_cur_groups = matcher->groupCount();
+         if (occurrences_max < pattern_cur_groups+1) occurrences_max=pattern_cur_groups+1;
+      }
+   }
+   else
+   {
+      StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+      for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+      {
+         if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
+            if (!(pattern_cont).isNA(i))
+               Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            continue;
+         }
+
+         UErrorCode status = U_ZERO_ERROR;
+         RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+         int pattern_cur_groups = matcher->groupCount();
+         if (occurrences_max < pattern_cur_groups+1) occurrences_max=pattern_cur_groups+1;
+
+         if ((str_cont).isNA(i)) {
+            continue;
+         }
+
+         str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         if (first) break;
+         const char* str_cur_s = str_cont.get(i).c_str();
+
+         occurrences[i] = vector< pair<const char*, const char*> >(pattern_cur_groups+1);
+         matcher->reset(str_text);
+         while ((int)matcher->find()) {
+            occurrences[i][0].first  = str_cur_s+(int)matcher->start(status);
+            occurrences[i][0].second = str_cur_s+(int)matcher->end(status);
+            for (R_len_t j=1; j<=pattern_cur_groups; ++j) {
+               int m_start = (int)matcher->start(j, status);
+               int m_end = (int)matcher->end(j, status);
+               if (m_start < 0 || m_end < 0) {
+                  occurrences[i][j].first  = NULL;
+                  occurrences[i][j].second = NULL;
+               }
+               else {
+                  occurrences[i][j].first  = str_cur_s+m_start;
+                  occurrences[i][j].second = str_cur_s+m_end;
+               }
+            }
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (first) break;
+         }
       }
    }
 
@@ -233,7 +266,7 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
       if ((pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) {
          if (!(pattern_cont).isNA(i))
             Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1));                                                                                  \
+         SET_VECTOR_ELT(ret, i, stri__matrix_NA_STRING(1, 1));
          continue;
       }
 
