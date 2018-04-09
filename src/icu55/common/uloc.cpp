@@ -555,7 +555,7 @@ static int32_t getShortestSubtagLength(const char *localeID) {
 U_CAPI const char * U_EXPORT2
 locale_getKeywordsStart(const char *localeID) {
     const char *result = NULL;
-    if((result = uprv_strchr(localeID, '@')) != NULL) {
+    if((result = (uprv_strchr(localeID, '@'))) != NULL) {
         return result;
     }
 #if (U_CHARSET_FAMILY == U_EBCDIC_FAMILY)
