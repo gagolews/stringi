@@ -34,9 +34,20 @@ test_that("stri_match_all_regex", {
    expect_equivalent(stri_match_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       list(matrix(ncol=1, c("", "\u0106", "", "")), matrix(ncol=1, c("", "", "")))) # match of zero length
    expect_equivalent(stri_match_all_regex(c("\u0105\u0106\u0107", "\u0105\u0107"),
-      "(?<=\u0106)"), list(matrix(ncol=1, ""), matrix(ncol=1, NA_character_))) # match of zero length:
+      "(?<=\u0106)"), list(matrix(ncol=1, ""), matrix(ncol=1, NA_character_))) # match of zero length
+
+   expect_identical(stringi::stri_match_all_regex(character(0), "(.)"), list())
+   expect_identical(stringi::stri_match_all_regex(character(0), "(.)(.)"), list())
+   expect_identical(sapply(stringi::stri_match_all_regex(c(NA), "(.)"), ncol), 2L)
+   expect_identical(sapply(stringi::stri_match_all_regex(c("a", "ab", NA), "(.)"), ncol), rep(2L,3))
+   expect_identical(sapply(stringi::stri_match_all_regex(c(NA), "(.)(.)"), ncol), 3L)
+   expect_identical(sapply(stringi::stri_match_all_regex(c("a", "ab", NA), "(.)(.)"), ncol), rep(3L,3))
+
 
 })
+
+
+
 
 
 test_that("stri_match_first_regex", {
@@ -70,7 +81,17 @@ test_that("stri_match_first_regex", {
    expect_identical(stri_match_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       matrix(ncol=1, c("", ""))) # match of zero length
    expect_identical(stri_match_first_regex(c("\u0105\u0106\u0107", "\u0105\u0107"),
-      "(?<=\u0106)"), matrix(ncol=1, c("", NA_character_))) # match of zero length:
+      "(?<=\u0106)"), matrix(ncol=1, c("", NA_character_))) # match of zero length
+
+   # Issue 288
+   expect_identical(dim(stringi::stri_match_first_regex(character(0), "(.)")), c(0L, 2L))
+   expect_identical(dim(stringi::stri_match_first_regex(character(0), "(.)(.)")), c(0L, 3L))
+   expect_identical(dim(stringi::stri_match_first_regex(c(NA), "(.)")), c(1L, 2L))
+   expect_identical(dim(stringi::stri_match_first_regex(c(NA), "(.)(.)")), c(1L, 3L))
+   expect_identical(dim(stringi::stri_match_first_regex(c("a", "ab", NA), "(.)")), c(3L, 2L))
+   expect_identical(dim(stringi::stri_match_first_regex(c("a", "ab", NA), "(.)(.)")), c(3L, 3L))
+
+
 
 })
 
@@ -106,5 +127,12 @@ test_that("stri_match_last_regex", {
    expect_identical(stri_match_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"), "\u0106*"),
       matrix(ncol=1, c("", ""))) # match of zero length
    expect_identical(stri_match_last_regex(c("\u0105\u0106\u0107", "\u0105\u0107"),
-      "(?<=\u0106)"), matrix(ncol=1, c("", NA_character_))) # match of zero length:
+      "(?<=\u0106)"), matrix(ncol=1, c("", NA_character_))) # match of zero length
+
+   expect_identical(dim(stringi::stri_match_last_regex(character(0), "(.)")), c(0L, 2L))
+   expect_identical(dim(stringi::stri_match_last_regex(character(0), "(.)(.)")), c(0L, 3L))
+   expect_identical(dim(stringi::stri_match_last_regex(c(NA), "(.)")), c(1L, 2L))
+   expect_identical(dim(stringi::stri_match_last_regex(c(NA), "(.)(.)")), c(1L, 3L))
+   expect_identical(dim(stringi::stri_match_last_regex(c("a", "ab", NA), "(.)")), c(3L, 2L))
+   expect_identical(dim(stringi::stri_match_last_regex(c("a", "ab", NA), "(.)(.)")), c(3L, 3L))
 })

@@ -40,8 +40,8 @@ test_that("stri_datetime_create", {
    expect_equivalent(stri_datetime_format(stri_datetime_create(0, 1, 1), "Y"), "0")
    expect_equivalent(stri_datetime_format(stri_datetime_create(-1, 1, 1), "Y"), "-1")
 
-   expect_equivalent(format(stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew")),
-      "5775-08-01 12:00:00")
+   expect_equivalent(strftime(stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew"), "%Y-%m-%d"),
+      "5775-08-01")
    expect_true(is.na(stri_datetime_create(2015, 02, 29)))
    expect_equivalent(format(stri_datetime_create(2015, 02, 29, lenient=TRUE)),
       "2015-03-01 12:00:00")
