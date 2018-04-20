@@ -23,4 +23,12 @@ test_that("stri_flatten", {
    expect_identical(stri_flatten(letters, collapse="#$"),paste(letters, collapse="#$"))
    expect_identical(stri_flatten(letters, collapse="\u0105\u0104"),paste(letters, collapse="\u0105\u0104"))
 
+   expect_identical(stri_flatten(c("A", "", "B", NA, "C"), na_empty=TRUE), "ABC")
+   expect_identical(stri_flatten(c("A", "", "B", NA, "C"), collapse=",", na_empty=TRUE), "A,,B,,C")
+   expect_identical(stri_flatten(c("A", "", "B", NA, "C"), na_empty=TRUE, omit_empty=TRUE), "ABC")
+   expect_identical(stri_flatten(c("A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE), "A,B,C")
+   expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), na_empty=TRUE), "ABC")
+   expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE), ",,A,,B,,C")
+   expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), na_empty=TRUE, omit_empty=TRUE), "ABC")
+   expect_identical(stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE), "A,B,C")
 })

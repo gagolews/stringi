@@ -121,7 +121,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_extract_first_regex",          stri_extract_first_regex,        3),
    STRI__MK_CALL("C_stri_extract_last_regex",           stri_extract_last_regex,         3),
    STRI__MK_CALL("C_stri_extract_all_regex",            stri_extract_all_regex,          5),
-   STRI__MK_CALL("C_stri_flatten",                      stri_flatten,                    2),
+   STRI__MK_CALL("C_stri_flatten",                      stri_flatten,                    4),
 //   STRI__MK_CALL("C_stri_in_fixed",                   stri_in_fixed,                   3),  // TODO: version >= 0.6
    STRI__MK_CALL("C_stri_info",                         stri_info,                       0),
    STRI__MK_CALL("C_stri_isempty",                      stri_isempty,                    1),

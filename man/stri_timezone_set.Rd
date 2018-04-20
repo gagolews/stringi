@@ -3,7 +3,7 @@
 \name{stri_timezone_get}
 \alias{stri_timezone_get}
 \alias{stri_timezone_set}
-\title{[DRAFT API] Set or Get Default Time Zone in \pkg{stringi}}
+\title{Set or Get Default Time Zone in \pkg{stringi}}
 \usage{
 stri_timezone_get()
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_symbols.R
 \name{stri_datetime_symbols}
 \alias{stri_datetime_symbols}
-\title{[DRAFT API] List Localizable Date-Time Formatting Data}
+\title{List Localizable Date-Time Formatting Data}
 \usage{
 stri_datetime_symbols(locale = NULL, context = "standalone",
   width = "wide")

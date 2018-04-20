@@ -191,9 +191,13 @@ stri_paste <- stri_join
 #'
 #' @param str a vector of strings to be coerced to character
 #' @param collapse a single string denoting the separator
+#' @param na_empty single logical value; should missing values
+#' in \code{str} be treated as empty strings?
+#' @param omit_empty single logical value; should missing values
+#' in \code{str} be omitted?
 #'
 #' @return
-#' Returns a single string, i.e. a character
+#' Returns a single string, i.e., a character
 #' vector of length 1.
 #'
 #' @examples
@@ -201,11 +205,12 @@ stri_paste <- stri_join
 #' stri_flatten(LETTERS, collapse=",")
 #' stri_flatten(c('abc', '123', '\u0105\u0104'))
 #' stri_flatten(stri_dup(letters[1:6],1:3))
+#' stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
 #'
 #' @export
 #' @family join
-stri_flatten <- function(str, collapse="") {
-   .Call(C_stri_flatten, str, collapse)
+stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
+   .Call(C_stri_flatten, str, collapse, na_empty, omit_empty)
 }
 
 

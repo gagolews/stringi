@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_format.R
 \name{stri_datetime_fstr}
 \alias{stri_datetime_fstr}
-\title{[DRAFT API] Convert \code{strptime}-style Format Strings}
+\title{Convert \code{strptime}-style Format Strings}
 \usage{
 stri_datetime_fstr(x)
 }

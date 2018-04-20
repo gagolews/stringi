@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_calendar.R
 \name{stri_datetime_create}
 \alias{stri_datetime_create}
-\title{[DRAFT API] Create a Date-Time Object}
+\title{Create a Date-Time Object}
 \usage{
 stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
   second = 0, lenient = FALSE, tz = NULL, locale = NULL)
