@@ -1,5 +1,5 @@
 ## `stringi` Makevars
-## Copyright (c) 2013-2017, M. Gagolewski
+## Copyright (c) 2013-2018, M. Gagolewski
 ## All rights reserved.
 
 @STRINGI_CXXSTD@

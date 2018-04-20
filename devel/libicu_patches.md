@@ -71,7 +71,10 @@ cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx(
 Build ICU data:
 
 ```R
-
+./runConfigureICU Linux/gcc --with-data-packaging=archive  --prefix=/tmp/icuinst
+make
+make install
+# /tmp/icuinst/share/icu/61.1/ ...
 ```
 
 
