@@ -8,7 +8,9 @@
    fout <- "src/uconfig_local.h";
    f <- readLines(fin);
    f <- gsub("@ICU_FOUND@", 0, f, fixed = TRUE);
-   f <- gsub("@ICUDT_DIR@", "icu55/data", f, fixed = TRUE);
+   f <- gsub("@ICUDT_DIR@", "icu61/data", f, fixed = TRUE);
+   f <- gsub("@ICU_BUNDLE_VERSION@", "61", f, fixed = TRUE);
+   f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
    writeLines(f, fout);
 ' `
 
@@ -17,6 +19,8 @@
    fout <- "src/install.libs.R";
    f <- readLines(fin);
    f <- gsub("@ICU_FOUND@", 0, f, fixed = TRUE);
-   f <- gsub("@ICUDT_DIR@", "icu55/data", f, fixed = TRUE);
+   f <- gsub("@ICUDT_DIR@", "icu61/data", f, fixed = TRUE);
+   f <- gsub("@ICU_BUNDLE_VERSION@", "61", f, fixed = TRUE);
+   f <- gsub("@ICUDT_ENDIANNESS@", .Platform$endian, f, fixed = TRUE);
    writeLines(f, fout);
 ' `

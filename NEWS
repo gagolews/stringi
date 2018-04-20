@@ -1,7 +1,7 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.1.8 (ongoing)
+## 1.2.1 (ongoing)
 
 * [GENERAL] #193: `stringi` is now bundled with ICU4C 61.1,
 which is used on Windows and OS X builds. Solaris systems shall still rely

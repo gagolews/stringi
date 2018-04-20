@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 
 # copy lib:
@@ -16,7 +16,7 @@ if (copyicudt) {
    outdir <- file.path(R_PACKAGE_DIR, "libs")
    if (length(dir(outdir, pattern=glob2rx("*.dat"))) == 0) {
       # avoids multiple download attempts while multiarch building
-      if (!stri_install_icudt(FALSE, outdir, "@ICUDT_DIR@"))
+      if (!stri_install_icudt(FALSE, outdir, "@ICUDT_DIR@", @ICU_BUNDLE_VERSION@))
          stop("icudt could not be downloaded. check your internet connectivity")
    }
 }
@@ -88,4 +88,3 @@ for (j in i) {
    ), file=f)
 }
 close(f)
-

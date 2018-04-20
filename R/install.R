@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -108,24 +108,33 @@ stri_install_check <- function(silent=FALSE) {
 
 
 
-icudt_fname <- c("little"="icudt55l.zip",
-                 "big"   ="icudt55b.zip")
+icudt_fname <- c("little55"="icudt55l.zip",
+                 "big55"   ="icudt55b.zip",
+                 "little61"="icudt61l.zip",
+                 "big61"   =NA
+                 )
 
-icudt_md5ex <- c("little"="ff345529f230cc39bb8d450af0607708",
-                 "big"   ="1194f0dd879d3c1c1f189cde5fd90efe")
+icudt_md5ex <- c("little55"="ff345529f230cc39bb8d450af0607708",
+                 "big55"   ="1194f0dd879d3c1c1f189cde5fd90efe",
+                 "little61"="6d14e059b26606f08bad3b41eb3b5c93",
+                 "big61"   =NA
+                 )
 
-icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
+icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
+                   "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
+                   "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
+                   "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
                    "http://www.mini.pw.edu.pl/~gagolews/stringi/",
                    "http://www.ibspan.waw.pl/~gagolews/stringi/")
 
 
 
 # @rdname stri_install
-stri_download_icudt <- function(inpath) {
+stri_download_icudt <- function(inpath, icu_bundle_version) {
 
-   fname <- icudt_fname[.Platform$endian]
+   fname <- icudt_fname[paste0(.Platform$endian, icu_bundle_version)]
 
-   md5ex <- icudt_md5ex[.Platform$endian]
+   md5ex <- icudt_md5ex[paste0(.Platform$endian, icu_bundle_version)]
 
    mirrors <- icudt_mirrors
 
@@ -195,7 +204,7 @@ stri_download_icudt <- function(inpath) {
 
 
 # @rdname stri_install
-stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
+stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL, icu_bundle_version=NULL) {
    # As of v1.1.3, this function is no longer exported.
    # It was deprecated in 0.5-5.
 
@@ -208,7 +217,7 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL) {
    # remember about importFrom tools md5sum -> stringi-package.R
    # use this very code in install.libs.R directly
 
-   icudtzipfname <- stri_download_icudt(inpath)
+   icudtzipfname <- stri_download_icudt(inpath, icu_bundle_version)
    if (identical(icudtzipfname, FALSE) || !file.exists(icudtzipfname)) {
       return(invisible(FALSE))
    }

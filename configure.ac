@@ -1,10 +1,10 @@
 # autoconf/configure script for stringi
-# Copyright (C) 2013-2017, M. Gagolewski
+# Copyright (C) 2013-2018, M. Gagolewski
 # http://www.gagolewski.com/software/stringi/
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 1.1, stringi@rexamine.com)
+AC_INIT(stringi, 1.1, gagolews@rexamine.com)
 
 ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
@@ -24,7 +24,8 @@ AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command used for getting
 
 AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU
    data archive (icudt*.zip) may be copied; either an absolute path or
-   a path relative to <package source dir>/src; defaults to icu55/data.])
+   a path relative to <package source dir>/src;
+   defaults to either icu55/data or icu61/data, depending on the version set up.])
 
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
    pkg-config's .pc files.])
@@ -52,15 +53,19 @@ AC_ARG_VAR([LIBS], [Purposedly ignored.])
 
 AC_ARG_ENABLE([cxx11],
     AS_HELP_STRING([--disable-cxx11],
-      [Disable the use of C++11; if you build ICU4C from sources, make sure your C++ compiler supports the long long type.]))
+      [Disable the use of C++11; if you build ICU4C from sources,
+      make sure your C++ compiler supports the long long type.
+      If C++11 is disabled, the older ICU4C 55.1 bundle will be used.]))
 
 AC_ARG_VAR([STRINGI_DISABLE_CXX11],
    [Disable the use of C++11, see also --disable-cxx11.])
 
 if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
    enable_cxx11="yes"
+   ICU_BUNDLE_VERSION="61"
 else
    enable_cxx11="no"
+   ICU_BUNDLE_VERSION="55"
 fi
 
 
@@ -159,14 +164,6 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
 ##### CHECK FOR R #############################################################
 
-# set ICUDT_DIR
-AC_MSG_CHECKING(for local ICUDT_DIR)
-if test -z "${ICUDT_DIR}"; then
-# Remember also to update the configure.win file
-   ICUDT_DIR=icu55/data
-fi
-AC_MSG_RESULT($ICUDT_DIR)
-
 # this is inspired by the "Writing R Extensions" manual:
 # determine R_HOME directory...
 AC_MSG_CHECKING(for R_HOME)
@@ -193,6 +190,16 @@ if test ! -e "${R_PATH}"; then
 fi
 AC_MSG_RESULT($R_PATH)
 
+AC_MSG_CHECKING([for endianness])
+"${R_PATH}" --vanilla --slave -e "if (.Platform\$endian!=\"little\") q(\"no\", 1, FALSE)"
+if test $? -ne 0; then
+   ICUDT_ENDIANNESS="big"
+   AC_MSG_RESULT(big)
+else
+   ICUDT_ENDIANNESS="little"
+   AC_MSG_RESULT(little)
+fi
+
 AC_MSG_CHECKING(for R >= 3.1.0 for C++11 use)
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
 if test "x$R_GE_31" == "xyes"; then
@@ -202,6 +209,7 @@ else
    if test "x$enable_cxx11" == "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
+      ICU_BUNDLE_VERSION="55"
    fi
 fi
 
@@ -214,6 +222,17 @@ else
    AC_MSG_RESULT([yes])
    STRINGI_CXX1X="CXX1X"
 fi
+
+
+
+# set ICUDT_DIR
+AC_MSG_CHECKING(for local ICUDT_DIR)
+if test -z "${ICUDT_DIR}"; then
+# Remember to update the configure.win file too
+   ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
+fi
+AC_MSG_RESULT($ICUDT_DIR)
+
 
 ##### CHECK FOR CAT ############################################################
 
@@ -612,7 +631,7 @@ ICU_FOUND=0
 if test $ICU_FOUND = 0; then
    if test $enable_pkg_config = "no"; then
       # Use of pkg-config disabled, nothing to do
-      echo "*** The (possible) use of system ICU4C has been disabled. Skipping."
+      echo "*** The use of system ICU4C has been disabled."
    else
       OLD_CPPFLAGS=$CPPFLAGS
       OLD_LDFLAGS=$LDFLAGS
@@ -633,44 +652,47 @@ fi
 
 
 check_flags_icu_bundle() {
-   CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu55 -Isrc/icu55/unicode \
-      -Isrc/icu55/common -Isrc/icu55/i18n -DU_STATIC_IMPLEMENTATION \
+   CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
+      -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
       -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
 
 # one way for dealing with the *Compiler or options invalid for pre-UNIX 03
 # X/Open applications and pre-2001 POSIX applications* error on Solaris
 # is to file a patch for sys/feature_tests.h. Unfortunately, the original
 # file is copyrighted, so we have to cope with this error in another way:
-# addind -D_XPG6 flag conditionally.
+# adding -D_XPG6 flag conditionally.
 
-   AC_LANG(C)
-   AC_MSG_CHECKING([whether we may compile src/icu55/common/umapfile.c])
-   AC_COMPILE_IFELSE([
-      AC_LANG_SOURCE([`${CAT} src/icu55/common/umapfile.c`])
-   ],
-   [
-      AC_MSG_RESULT([yes])
-   ],[
-      AC_MSG_RESULT([no])
-      with_extra_cflags="${with_extra_cflags} -D_XPG6"
-      CFLAGS="${CFLAGS} -D_XPG6"
-      AC_MSG_CHECKING([whether we may compile src/icu55/common/umapfile.c with -D_XPG6])
+   if test ${ICU_BUNDLE_VERSION} = 55; then
+      # ICU 61 doesn't provide any .c files anymore
+      AC_LANG(C)
+      AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c])
       AC_COMPILE_IFELSE([
-         AC_LANG_SOURCE([`${CAT} src/icu55/common/umapfile.c`])
+         AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`])
       ],
       [
          AC_MSG_RESULT([yes])
       ],[
          AC_MSG_RESULT([no])
-         echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
-         exit 1
+         with_extra_cflags="${with_extra_cflags} -D_XPG6"
+         CFLAGS="${CFLAGS} -D_XPG6"
+         AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6])
+         AC_COMPILE_IFELSE([
+            AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`])
+         ],
+         [
+            AC_MSG_RESULT([yes])
+         ],[
+            AC_MSG_RESULT([no])
+            echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+            exit 1
+         ])
       ])
-   ])
+   fi
 
    AC_LANG(C++)
-   AC_MSG_CHECKING([whether we may compile src/icu55/common/putil.cpp])
+   AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp])
    AC_COMPILE_IFELSE([
-      AC_LANG_SOURCE([`${CAT} src/icu55/common/putil.cpp`])
+      AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
    ],
    [
       AC_MSG_RESULT([yes])
@@ -678,9 +700,9 @@ check_flags_icu_bundle() {
       AC_MSG_RESULT([no])
       with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
       CXXFLAGS="${CXXFLAGS} -D_XPG6"
-      AC_MSG_CHECKING([whether we may compile src/icu55/common/putil.cpp with -D_XPG6])
+      AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6])
       AC_COMPILE_IFELSE([
-         AC_LANG_SOURCE([`${CAT} src/icu55/common/putil.cpp`])
+         AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`])
       ],
       [
          AC_MSG_RESULT([yes])
@@ -714,10 +736,10 @@ if test $ICU_FOUND = 0; then
    AC_MSG_CHECKING([whether we can fetch icudt])
    "${R_PATH}" --vanilla --slave -e "setwd(\"src/\"); \
                            source(\"../R/install.R\"); \
-                           if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\"))) \
+                           if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
                                stop(\"Stopping on error\")"
    if test $? -ne 0; then
-      echo "*** icudt could not be downloaded. stopping."
+      echo "*** icudt download failed. stopping."
       exit 1
    fi
 fi
@@ -727,22 +749,22 @@ fi
 STRINGI_SOURCES_CPP=`${CAT} src/stri_cpp.txt`
 AC_SUBST(STRINGI_SOURCES_CPP)
 
-STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu55_common_cpp.txt`
+STRINGI_ICU_COMMON_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_common_cpp.txt`
 AC_SUBST(STRINGI_ICU_COMMON_SOURCES_CPP)
 
-STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu55_common_c.txt`
+STRINGI_ICU_COMMON_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_common_c.txt`
 AC_SUBST(STRINGI_ICU_COMMON_SOURCES_C)
 
-STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu55_i18n_cpp.txt`
+STRINGI_ICU_I18N_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_i18n_cpp.txt`
 AC_SUBST(STRINGI_ICU_I18N_SOURCES_CPP)
 
-STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu55_i18n_c.txt`
+STRINGI_ICU_I18N_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_i18n_c.txt`
 AC_SUBST(STRINGI_ICU_I18N_SOURCES_C)
 
-STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu55_stubdata_cpp.txt`
+STRINGI_ICU_STUBDATA_SOURCES_CPP=`${CAT} src/icu${ICU_BUNDLE_VERSION}_stubdata_cpp.txt`
 AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_CPP)
 
-STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu55_stubdata_c.txt`
+STRINGI_ICU_STUBDATA_SOURCES_C=`${CAT} src/icu${ICU_BUNDLE_VERSION}_stubdata_c.txt`
 AC_SUBST(STRINGI_ICU_STUBDATA_SOURCES_C)
 
 
@@ -757,10 +779,13 @@ if test $ICU_FOUND = 0; then
    fi
 
    # build ICU4C from sources
-   STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
+   STRINGI_OBJECTS="\$(STRI_OBJECTS) \$(ICU_COMMON_OBJECTS) \
+      \$(ICU_I18N_OBJECTS) \$(ICU_STUBDATA_OBJECTS)"
    STRINGI_CFLAGS=""
-   STRINGI_CPPFLAGS="-I. -Iicu55 -Iicu55/unicode -Iicu55/common -Iicu55/i18n -DU_STATIC_IMPLEMENTATION \
--DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
+   STRINGI_CPPFLAGS="-I. -Iicu${ICU_BUNDLE_VERSION} \
+      -Iicu${ICU_BUNDLE_VERSION}/unicode -Iicu${ICU_BUNDLE_VERSION}/common \
+      -Iicu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
+      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL"
         #-DU_HIDE_DRAFT_API -DU_HIDE_DEPRECATED_API"
    STRINGI_CXXFLAGS=""
    STRINGI_LDFLAGS=""
@@ -793,6 +818,8 @@ AC_SUBST(STRINGI_LDFLAGS)
 AC_SUBST(STRINGI_LIBS)
 AC_SUBST(ICU_FOUND)
 AC_SUBST(ICUDT_DIR)
+AC_SUBST(ICU_BUNDLE_VERSION)
+AC_SUBST(ICUDT_ENDIANNESS)
 
 # Remember also to update the configure.win file
 AC_CONFIG_FILES([src/Makevars])
@@ -806,6 +833,8 @@ echo "*** stringi configure summary:"
 echo "    ICU_FOUND=${ICU_FOUND}"
 if test $ICU_FOUND = 0; then
    echo "    ICUDT_DIR=${ICUDT_DIR}"
+   echo "    ICU_BUNDLE_VERSION=${ICU_BUNDLE_VERSION}"
+   echo "    ICUDT_ENDIANNESS=${ICUDT_ENDIANNESS}"
 fi
 echo "    STRINGI_CXXSTD=${STRINGI_CXXSTD}"
 echo "    STRINGI_CFLAGS=${STRINGI_CFLAGS}"

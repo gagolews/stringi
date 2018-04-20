@@ -1,31 +1,31 @@
 ## `stringi` Makevars.win
-## Copyright (c) 2013-2017, M. Gagolewski
+## Copyright (c) 2013-2018, M. Gagolewski
 
 CXX_STD=CXX11
 
-PKG_CPPFLAGS=-I. -Iicu55/ -Iicu55/unicode -Iicu55/common -Iicu55/i18n \
+PKG_CPPFLAGS=-I. -Iicu61/ -Iicu61/unicode -Iicu61/common -Iicu61/i18n \
 -DU_STATIC_IMPLEMENTATION -DU_COMMON_IMPLEMENTATION \
 -DU_I18N_IMPLEMENTATION -DUCONFIG_USE_LOCAL \
 -DU_TOOLUTIL_IMPLEMENTATION -DNDEBUG
 
 ## There is a Cygwin bug which reports "mem alloc error" while linking
-## too much .o files at once (I suppose this is the reason, at least).
-## Thus, below we split the process into a few parts using static libs.
+## too many .o files at once (I suppose this is the reason, at least).
+## Thus, below we split the build process into a few parts using static libs.
 ## Voila, it's fixed.
 
 STRI_SOURCES_CPP=$(wildcard stri_*.cpp)
 STRI_OBJECTS=$(STRI_SOURCES_CPP:.cpp=.o)
 
-ICU_COMMON_SOURCES_CPP=$(wildcard icu55/common/*.cpp)
-ICU_COMMON_SOURCES_C=$(wildcard icu55/common/*.c)
+ICU_COMMON_SOURCES_CPP=$(wildcard icu61/common/*.cpp)
+ICU_COMMON_SOURCES_C=$(wildcard icu61/common/*.c)
 ICU_COMMON_OBJECTS=$(ICU_COMMON_SOURCES_CPP:.cpp=.o) $(ICU_COMMON_SOURCES_C:.c=.o)
 
-ICU_I18N_SOURCES_CPP=$(wildcard icu55/i18n/*.cpp)
-ICU_I18N_SOURCES_C=$(wildcard icu55/i18n/*.c)
+ICU_I18N_SOURCES_CPP=$(wildcard icu61/i18n/*.cpp)
+ICU_I18N_SOURCES_C=$(wildcard icu61/i18n/*.c)
 ICU_I18N_OBJECTS=$(ICU_I18N_SOURCES_CPP:.cpp=.o) $(ICU_I18N_SOURCES_C:.c=.o)
 
-ICU_STUBDATA_SOURCES_CPP=$(wildcard icu55/stubdata/*.cpp)
-ICU_STUBDATA_SOURCES_C=$(wildcard icu55/stubdata/*.c)
+ICU_STUBDATA_SOURCES_CPP=$(wildcard icu61/stubdata/*.cpp)
+ICU_STUBDATA_SOURCES_C=$(wildcard icu61/stubdata/*.c)
 ICU_STUBDATA_OBJECTS=$(ICU_STUBDATA_SOURCES_CPP:.cpp=.o) $(ICU_STUBDATA_SOURCES_C:.c=.o)
 
 OBJECTS=$(STRI_OBJECTS)
