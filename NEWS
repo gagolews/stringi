@@ -15,6 +15,8 @@ when input was empty.
 
 * [NEW FEATURE] #289: `stri_flatten` gained `na_empty` `omit_empty` arguments.
 
+* [NEW FEATURE] New functions: `stri_remove_empty`, `stri_na2empty`
+
 * [WARN] Removed `-Wparentheses` warnings in `icu55/common/cstring.h:38:63`
 and `icu55/i18n/windtfmt.cpp` in the ICU4C 55.1 bundle.
 
