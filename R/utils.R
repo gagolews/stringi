@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -80,4 +80,53 @@
 #' @export
 stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
    .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
+}
+
+
+#' @title
+#' Replace NAs with empty strings
+#'
+#' @description
+#' This function replaces all missing values with empty strings
+#'
+#' @param x a character vector
+#'
+#' @return
+#' Always returns a character vector.
+#'
+#' @examples
+#' stri_na2empty(c("a", NA, "", "b"))
+#'
+#' @family utils
+#' @export
+stri_na2empty <- function(x) {
+   x <- stri_enc_toutf8(x)
+   x[is.na(x)] <- ""
+   x
+}
+
+#' @title
+#' Remove all empty strings from a character vector
+#'
+#' @description
+#' This function removes all empty strings from a character vector.
+#'
+#' @param x a character vector
+#' @param na_empty should missing values be treated as empty strings?
+#'
+#' @return
+#' Always returns a character vector.
+#'
+#' @examples
+#' stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
+#' stri_remove_empty(c("a", NA, "", "b"))
+#' stri_remove_empty(c("a", NA, "", "b"), TRUE)
+#'
+#' @family utils
+#' @export
+stri_remove_empty <- function(x, na_empty=FALSE) {
+   x <- stri_enc_toutf8(x)
+   if (identical(na_empty, TRUE))
+      x[is.na(x)] <- ""
+   x[!stri_isempty(x)]
 }
