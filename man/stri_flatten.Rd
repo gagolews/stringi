@@ -4,15 +4,21 @@
 \alias{stri_flatten}
 \title{Flatten a String}
 \usage{
-stri_flatten(str, collapse = "")
+stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 }
 \arguments{
 \item{str}{a vector of strings to be coerced to character}
 
 \item{collapse}{a single string denoting the separator}
+
+\item{na_empty}{single logical value; should missing values
+in \code{str} be treated as empty strings?}
+
+\item{omit_empty}{single logical value; should missing values
+in \code{str} be omitted?}
 }
 \value{
-Returns a single string, i.e. a character
+Returns a single string, i.e., a character
 vector of length 1.
 }
 \description{
@@ -35,6 +41,7 @@ stri_flatten(LETTERS)
 stri_flatten(LETTERS, collapse=",")
 stri_flatten(c('abc', '123', '\\u0105\\u0104'))
 stri_flatten(stri_dup(letters[1:6],1:3))
+stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
 
 }
 \seealso{

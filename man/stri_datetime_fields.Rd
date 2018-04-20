@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_calendar.R
 \name{stri_datetime_fields}
 \alias{stri_datetime_fields}
-\title{[DRAFT API] Get Values for Date and Time Fields}
+\title{Get Values for Date and Time Fields}
 \usage{
 stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 }

@@ -11,7 +11,9 @@ stringi will be built against ICU4C 55.1.
 * [BUGFIX] #288: stri_match did not return the correct number of columns
 when input was empty.
 
-* #188: `stri_enc_detect` now returns a list of data frames.
+* [NEW FEATURE] #188: `stri_enc_detect` now returns a list of data frames.
+
+* [NEW FEATURE] #289: `stri_flatten` gained `na_empty` `omit_empty` arguments.
 
 * [WARN] Removed `-Wparentheses` warnings in `icu55/common/cstring.h:38:63`
 and `icu55/i18n/windtfmt.cpp` in the ICU4C 55.1 bundle.

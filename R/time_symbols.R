@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 
 #' @title
-#' [DRAFT API] List Localizable Date-Time Formatting Data
+#' List Localizable Date-Time Formatting Data
 #'
 #' @description
 #' Returns a list of all localizable date-time formatting data,

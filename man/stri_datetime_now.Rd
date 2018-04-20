@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_calendar.R
 \name{stri_datetime_now}
 \alias{stri_datetime_now}
-\title{[DRAFT API] Get Current Date and Time}
+\title{Get Current Date and Time}
 \usage{
 stri_datetime_now()
 }

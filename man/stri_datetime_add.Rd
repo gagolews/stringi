@@ -3,7 +3,7 @@
 \name{stri_datetime_add}
 \alias{stri_datetime_add}
 \alias{stri_datetime_add<-}
-\title{[DRAFT API] Date and Time Arithmetic}
+\title{Date and Time Arithmetic}
 \usage{
 stri_datetime_add(time, value = 1L, units = "seconds", tz = NULL,
   locale = NULL)

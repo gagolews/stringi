@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 
 #' @title
-#' [DRAFT API] List Available Time Zone Identifiers
+#' List Available Time Zone Identifiers
 #'
 #' @description
 #' Returns a list of available time zone identifiers.
@@ -109,7 +109,7 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 
 
 #' @title
-#' [DRAFT API] Set or Get Default Time Zone in \pkg{stringi}
+#' Set or Get Default Time Zone in \pkg{stringi}
 #'
 #' @description
 #' \code{stri_timezone_set} changes the current default time zone for all functions
@@ -165,7 +165,7 @@ stri_timezone_set <- function(tz) {
 
 
 #' @title
-#' [DRAFT API] Query a Given Time Zone
+#' Query a Given Time Zone
 #'
 #' @description
 #' Provides some basic information on a given time zone identifier.

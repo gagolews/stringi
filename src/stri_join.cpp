@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -477,7 +477,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
    // * special case *
    if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
       // sep==empty string and 2 vectors --
-      // an often occuring case - we have some specialized functions for this :-)
+      // an often occurring case - we have some specialized functions for this :-)
       SEXP ret;
       PROTECT(ret = stri_join2(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1))); // a.k.a. stri_join2_nocollapse
       UNPROTECT(3);
@@ -597,7 +597,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
       return stri__vector_empty_strings(0);
    }
    else if (strlist_length == 1) {
-      // one vector + collapse string -- another frequently occuring case
+      // one vector + collapse string -- another frequently occurring case
       // sep is ignored here
       SEXP ret;
       PROTECT(ret = stri_flatten(VECTOR_ELT(strlist, 0), collapse)); // a.k.a. stri_flatten_withressep
@@ -613,7 +613,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
    }
    else if (LENGTH(STRING_ELT(sep, 0)) == 0 && strlist_length == 2) {
       // sep==empty string and 2 vectors --
-      // an often occuring case - we have some specialized functions for this :-)
+      // an often occurring case - we have some specialized functions for this :-)
       SEXP ret;
       PROTECT(ret = stri_join2_withcollapse(VECTOR_ELT(strlist, 0), VECTOR_ELT(strlist, 1), collapse));
       UNPROTECT(4);
@@ -724,8 +724,11 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
+ *    na_empty arg added
  */
-SEXP stri_flatten_noressep(SEXP str)
+SEXP stri_flatten_noressep(SEXP str, bool na_empty)
 {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    R_len_t str_length = LENGTH(str);
@@ -741,8 +744,13 @@ SEXP stri_flatten_noressep(SEXP str)
    R_len_t nchar = 0;
    for (int i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) {
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(1); // at least 1 NA => return NA
+         if (na_empty) {
+            nchar += 0; // ignore
+         }
+         else {
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(1); // at least 1 NA => return NA
+         }
       }
       nchar += str_cont.get(i).length();
    }
@@ -751,9 +759,11 @@ SEXP stri_flatten_noressep(SEXP str)
    String8buf buf(nchar);
    R_len_t cur = 0;
    for (int i=0; i<str_length; ++i) {
-      R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
-      cur += ncur;
+      if (!str_cont.isNA(i)) {
+         R_len_t ncur = str_cont.get(i).length();
+         memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
+         cur += ncur;
+      }
    }
 
 
@@ -792,10 +802,15 @@ SEXP stri_flatten_noressep(SEXP str)
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
  *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
+ *    na_empty, omit_empty arg added
+ *
  */
-SEXP stri_flatten(SEXP str, SEXP collapse) // a.k.a. C_stri_flatten_withressep
+SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.k.a. C_stri_flatten_withressep
 {
    PROTECT(collapse = stri_prepare_arg_string_1(collapse, "collapse"));
+   bool na_empty_1 = stri__prepare_arg_logical_1_notNA(na_empty, "na_empty");
+   bool omit_empty_1 = stri__prepare_arg_logical_1_notNA(omit_empty, "omit_empty");
 
    if (STRING_ELT(collapse, 0) == NA_STRING) {
       UNPROTECT(1);
@@ -806,7 +821,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse) // a.k.a. C_stri_flatten_withressep
    // specialized function:
    if (LENGTH(STRING_ELT(collapse, 0)) == 0) {
       UNPROTECT(1);
-      return stri_flatten_noressep(str);
+      return stri_flatten_noressep(str, na_empty_1);
    }
 
    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
@@ -823,27 +838,45 @@ SEXP stri_flatten(SEXP str, SEXP collapse) // a.k.a. C_stri_flatten_withressep
    const char* collapse_s = collapse_cont.get(0).c_str();
 
 
-   // 1. Get required buffer size
+   // 1. Get required minimal buffer size
    R_len_t nbytes = 0;
    for (int i=0; i<str_length; ++i) {
       if (str_cont.isNA(i)) {
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(1); // at least 1 NA => return NA
+         if (na_empty_1) {
+            nbytes += ((i>0 && !omit_empty_1)?collapse_nbytes:0);
+         }
+         else {
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(1); // at least 1 NA => return NA
+         }
       }
-      nbytes += str_cont.get(i).length() + ((i>0)?collapse_nbytes:0);
+      else {
+         nbytes += str_cont.get(i).length() + ((i>0)?collapse_nbytes:0);
+      }
    }
 
 
    // 2. Fill the buf!
    String8buf buf(nbytes);
    R_len_t cur = 0;
+   bool already_started = false;
    for (int i=0; i<str_length; ++i) {
-      R_len_t ncur = str_cont.get(i).length();
-      memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
-      cur += ncur;
-      if (collapse_nbytes > 0 && i < str_length-1) {
-         memcpy(buf.data()+cur, collapse_s, (size_t)collapse_nbytes);
-         cur += collapse_nbytes;
+      if (omit_empty_1 && (str_cont.isNA(i) || str_cont.get(i).length() == 0))
+         continue;
+
+      if (already_started) {
+         if (collapse_nbytes > 0) {
+            memcpy(buf.data()+cur, collapse_s, (size_t)collapse_nbytes);
+            cur += collapse_nbytes;
+         }
+      }
+      else
+         already_started = true;
+
+      if (!str_cont.isNA(i)) {
+         R_len_t ncur = str_cont.get(i).length();
+         memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
+         cur += ncur;
       }
    }
 

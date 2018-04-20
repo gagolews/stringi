@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_zone.R
 \name{stri_timezone_list}
 \alias{stri_timezone_list}
-\title{[DRAFT API] List Available Time Zone Identifiers}
+\title{List Available Time Zone Identifiers}
 \usage{
 stri_timezone_list(region = NA_character_, offset = NA_integer_)
 }

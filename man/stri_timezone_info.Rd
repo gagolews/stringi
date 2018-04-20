@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_zone.R
 \name{stri_timezone_info}
 \alias{stri_timezone_info}
-\title{[DRAFT API] Query a Given Time Zone}
+\title{Query a Given Time Zone}
 \usage{
 stri_timezone_info(tz = NULL, locale = NULL, display_type = "long")
 }

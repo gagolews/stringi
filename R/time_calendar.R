@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 
 #' @title
-#' [DRAFT API] Create a Date-Time Object
+#' Create a Date-Time Object
 #'
 #' @description
 #' This function constructs date-time objects from numeric representations.
@@ -69,7 +69,7 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 
 
 #' @title
-#' [DRAFT API] Get Current Date and Time
+#' Get Current Date and Time
 #'
 #' @description
 #' Returns current date and time.
@@ -90,7 +90,7 @@ stri_datetime_now <- function() {
 
 
 #' @title
-#' [DRAFT API] Get Values for Date and Time Fields
+#' Get Values for Date and Time Fields
 #'
 #' @description
 #' Calculates and returns values for all date and time fields.
@@ -147,7 +147,7 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 
 
 #' @title
-#' [DRAFT API] Date and Time Arithmetic
+#' Date and Time Arithmetic
 #'
 #' @description
 #' Modifies a date-time object by adding a specific amount of time units.
@@ -206,7 +206,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 
 
 # #' @title
-# #' [DRAFT API] Date-Time Objects in \pkg{stringi}
+# #' Date-Time Objects in \pkg{stringi}
 # #'
 # #' @description
 # #' Date-time objects' representation in \pkg{stringi} may change
