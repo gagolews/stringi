@@ -35,8 +35,8 @@ IBM and the contributors.
 
 for more details see:
 http://source.icu-project.org/repos/icu/icuhtml/trunk/legal/contributions/code_contributions.html
-as well as the source files in the package's src/icu55/ directory
-and http://site.icu-project.org/ for general information on the ICU project.
+as well as the source files in the package's src/icu55/ and src/icu61/ directories.
+See also http://site.icu-project.org/ for general information on the ICU project.
 
 
 ** Unicode Character Database **

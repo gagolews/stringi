@@ -3,6 +3,11 @@
 
 ## 1.1.8 (ongoing)
 
+* [GENERAL] #193: `stringi` is now bundled with ICU4C 61.1,
+which is used on Windows and OS X builds. Solaris systems shall still rely
+on the ICU4C 55.1 bundle, as there is still an issue with C++11 support
+out there.
+
 * [BUGFIX] #288: stri_match did not return correct number of columns
 when input was empty
 
