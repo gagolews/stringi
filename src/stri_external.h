@@ -34,9 +34,10 @@
 #define __stri_external_h
 
 
-#ifdef U_CHARSET_IS_UTF8
+#ifdef  U_CHARSET_IS_UTF8
 // do not enable this (must be unset before including ICU headers):
-#undef U_CHARSET_IS_UTF8
+#undef  U_CHARSET_IS_UTF8
+#define U_CHARSET_IS_UTF8 0
 #endif
 
 //#ifndef NDEBUG

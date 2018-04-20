@@ -156,9 +156,9 @@ AC_ARG_VAR([STRINGI_LIBS],
    [Additional libraries to link against, see also --with-extra-libs.])
 
 
-with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
-with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
-with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
+with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS} -DU_CHARSET_IS_UTF8=0"
+with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS} -DU_CHARSET_IS_UTF8=0"
+with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS} -DU_CHARSET_IS_UTF8=0"
 with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
 with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 

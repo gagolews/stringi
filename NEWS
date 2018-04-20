@@ -4,22 +4,22 @@
 ## 1.2.1 (ongoing)
 
 * [GENERAL] #193: `stringi` is now bundled with ICU4C 61.1,
-which is used on Windows and OS X builds. Solaris systems shall still rely
-on the ICU4C 55.1 bundle, as there is still an issue with C++11 support
-out there.
+which is used on most Windows and OS X builds as well as on *nix systems
+not equipped with ICU. However, if the C++11 support is disabled,
+stringi will be built against ICU4C 55.1.
 
-* [BUGFIX] #288: stri_match did not return correct number of columns
-when input was empty
+* [BUGFIX] #288: stri_match did not return the correct number of columns
+when input was empty.
 
 * [WARN] Removed `-Wparentheses` warnings in `icu55/common/cstring.h:38:63`
-and `icu55/i18n/windtfmt.cpp`.
+and `icu55/i18n/windtfmt.cpp` in the ICU4C 55.1 bundle.
 
 -------------------------------------------------------------------------------
 
 
 ## 1.1.7 (2018-03-06) **CRAN**
 
-* [BUGFIX] Fixed ICU55 code leading to some "significant warnings"
+* [BUGFIX] Fixed ICU4C 55.1 code leading to some "significant warnings"
 (`icu55/i18n/winnmfmt.cpp`) and "suppressing important diagnostics"
 (`src/icu55/i18n/decNumber.c`).
 

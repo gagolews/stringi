@@ -58,23 +58,25 @@ sort(setdiff(d2, d1))
 ```R
 path <- "~/R/stringi/src/"
 base <- "icu61/i18n/"
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_i18n_cpp.txt"), sep="\n")
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_i18n_c.txt"))
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_i18n_cpp.txt"), sep="\n")
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_i18n_c.txt"))
 base <- "icu61/common/"
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_common_cpp.txt"), sep="\n")
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_common_c.txt"))
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_common_cpp.txt"), sep="\n")
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_common_c.txt"))
 base <- "icu61/stubdata/"
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_stubdata_cpp.txt"), sep="\n")
-cat(stri_paste(collapse="\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_stubdata_c.txt"))
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.cpp"))), file=stri_paste(path, "icu61_stubdata_cpp.txt"), sep="\n")
+cat(stri_paste(collapse=" \\\n", base, dir(stri_paste(path, base), pattern=glob2rx("*.c"))), file=stri_paste(path, "icu61_stubdata_c.txt"))
 ```
 
 Build ICU data:
 
 ```R
+# download icu data zip archive.... replace source/data with the new one
 ./runConfigureICU Linux/gcc --with-data-packaging=archive  --prefix=/tmp/icuinst
 make
 make install
 # /tmp/icuinst/share/icu/61.1/ ...
+
 ```
 
 
