@@ -235,6 +235,11 @@ SEXP stri_isempty(SEXP str)
  *
  * inspired by http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
  *
+ * @version ?? init
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-20)
+ *    add Variation Selectors support (width 0)
+ *
  * @param c code point
  * @return 0, 1, or 2
  */
@@ -250,6 +255,10 @@ int stri__width_char(UChar32 c) {
    /* Hangul Jamo medial vowels and final consonants have width 0 */
    int hangul = (int)u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE);
    if (hangul == U_HST_VOWEL_JAMO || hangul == U_HST_TRAILING_JAMO)
+      return 0;
+
+   /* Variation Selectors */
+   if (c >= (UChar32)0xFE00 && c <= (UChar32)0xFE0F)
       return 0;
 
    /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
