@@ -32,7 +32,7 @@ argument or `install.packages("stringi", configure.args="--disable-pkg-config")`
 is executed,
 
 then the library will be built together with stringi
-(a custom subset of ICU4C 55.1 is shipped with the package).
+(a custom subset of ICU4C 55.1 and 61.1 is shipped with the package).
 
 > To get the most out of stringi, end users are encouraged to rely on our
 > ICU4C package bundle. This guarantees maximum portability of stringi-based
@@ -57,7 +57,7 @@ You may also prepare your own `.tar.gz`-ipped distribution of `stringi`
 as follows:
 
 1. Execute the `git clone https://github.com/gagolews/stringi.git` command.
-2. Edit the `.Rbuildignore` file and get rid of the `^src/icu55/data` line.
+2. Edit the `.Rbuildignore` file and get rid of the `^src/icu??/data` line.
 3. Run `R CMD build stringi_dir_name`.
 4. Install the obtained `.tar.gz` file on your machine(s), e.g.,
 via `install.packages("stringi_xxx.tar.gz")`
@@ -145,5 +145,5 @@ The package is frequently tested on the following OSes:
              os: osx,   r: devel),
 and of course on CRAN machines.
 
-Yet, if you do not manage to set up a successful stringi build, do not
+If you do not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/gagolews/stringi/issues).

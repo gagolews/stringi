@@ -27,7 +27,7 @@ Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski [aut, cre], Bartek Tartanus [ctb],
     and other contributors (stringi source code);
-    IBM and other contributors (ICU4C 55.1 source code);
+    IBM and other contributors (ICU4C source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <gagolews@rexamine.com>
 RoxygenNote: 6.0.1

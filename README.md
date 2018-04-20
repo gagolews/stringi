@@ -15,16 +15,16 @@ character encoding. The use of the *ICU* library gives *R* users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
 *PHP*, and *Ruby* programmers. The package's API was inspired by
 Hadley Wickham's [stringr](http://cran.r-project.org/web/packages/stringr)
-package (since 2015, *stringr* itself is based on *stringi*).
+package (and since 2015 *stringr* is based on *stringi*).
 
 **Package maintainer**: [Marek Gagolewski](http://www.gagolewski.com/)
 
 **Authors**: [Marek Gagolewski](http://www.gagolewski.com/),
 with contributions from Bartlomiej Tartanus and others.
 
-This git repository also contains a custom subset of *ICU4C 55.1* source code
-which is copyrighted by IBM and others. A binary
-version of the Unicode Character Database is included.
+This git repository also contains a custom subset of *ICU4C 55.1*
+and *ICU4C 61.1* source code which is copyrighted by Unicode and others.
+A binary version of the Unicode Character Database is included.
 For more details on copyright holders see the
 [LICENSE](http://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
 
