@@ -124,8 +124,7 @@ icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/sr
                    "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
                    "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
                    "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
-                   "http://www.mini.pw.edu.pl/~gagolews/stringi/",
-                   "http://www.ibspan.waw.pl/~gagolews/stringi/")
+                   "http://www.gagolewski.com/software/stringi/")
 
 
 
