@@ -37,6 +37,8 @@
 #ifndef DOUBLE_CONVERSION_UTILS_H_
 #define DOUBLE_CONVERSION_UTILS_H_
 
+
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -44,8 +46,18 @@
 #include "uassert.h"
 #define ASSERT U_ASSERT
 
+// stringi patch - Marek Gagolewskim
+#define USE_RINTERNALS
+#define R_NO_REMAP
+#include <R.h>
+#include <Rversion.h>
+#include <Rinternals.h>
+#include <Rmath.h>
+#include <Rdefines.h>
+#include <R_ext/Rdynload.h>
+
 #ifndef UNIMPLEMENTED
-#define UNIMPLEMENTED() (abort())
+#define UNIMPLEMENTED() (Rf_error("error"))
 #endif
 #ifndef DOUBLE_CONVERSION_NO_RETURN
 #ifdef _MSC_VER
@@ -57,10 +69,10 @@
 #ifndef UNREACHABLE
 #ifdef _MSC_VER
 void DOUBLE_CONVERSION_NO_RETURN abort_noreturn();
-inline void abort_noreturn() { abort(); }
+inline void abort_noreturn() { Rf_error("error"); }
 #define UNREACHABLE()   (abort_noreturn())
 #else
-#define UNREACHABLE()   (abort())
+#define UNREACHABLE()   (Rf_error("error"))
 #endif
 #endif
 
