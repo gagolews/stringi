@@ -7,6 +7,13 @@ r_packages:
   - devtools
 matrix:
   include:
+  - os: osx
+    osx_image: xcode9.2
+  - os: osx
+    osx_image: xcode9.2
+    brew_packages: icu4c
+    env:
+        - STRINGI_DISABLE_ICU_BUNDLE="1"    
   - os: linux
     r: release
     addons:
