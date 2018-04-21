@@ -24,8 +24,6 @@ stri_remove_empty(c("a", NA, "", "b"), TRUE)
 
 }
 \seealso{
-stri_isempty
-
 Other utils: \code{\link{stri_list2matrix}},
   \code{\link{stri_na2empty}}
 }
