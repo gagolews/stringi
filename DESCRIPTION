@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.2.1
-Date: 2018-04-20
+Date: 2018-04-21
 Title: Character String Processing Facilities
 Description: Allows for fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
@@ -10,7 +10,7 @@ Description: Allows for fast, correct, consistent, portable,
     features include: pattern searching (e.g., with ICU Java-like regular
     expressions or the Unicode Collation Algorithm), random string generation,
     case mapping, string transliteration, concatenation,
-    Unicode normalization, date-time formatting and parsing, etc.
+    Unicode normalization, date-time formatting and parsing, and many more.
 URL: http://www.gagolewski.com/software/stringi/
     http://site.icu-project.org/
     http://www.unicode.org/
