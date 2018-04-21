@@ -1735,7 +1735,7 @@ The leftmost codepage (.xxx) wins.
     // icu61/common/putil.cpp: In function 'const char* uprv_getDefaultLocaleID_61()':
     // icu61/common/putil.cpp:1746:86: error: 'GetUserDefaultLocaleName' was not declared in this scope
     /* ================================================================== */
-
+/*
     UErrorCode status = U_ZERO_ERROR;
     char *correctedPOSIXLocale = 0;
 
@@ -1759,127 +1759,127 @@ The leftmost codepage (.xxx) wins.
     if (gCorrectedPOSIXLocale == NULL) {
         return "en_US";
     }
-    return gCorrectedPOSIXLocale;
+    return gCorrectedPOSIXLocale;*/
 
     /* ================================================================== */
 
-//     UErrorCode status = U_ZERO_ERROR;
-//     char *correctedPOSIXLocale = 0;
-//
-//     // If we have already figured this out just use the cached value
-//     if (gCorrectedPOSIXLocale != NULL) {
-//         return gCorrectedPOSIXLocale;
-//     }
-//
-//     // No cached value, need to determine the current value
-//     static WCHAR windowsLocale[LOCALE_NAME_MAX_LENGTH];
-// #if U_PLATFORM_HAS_WINUWP_API == 0
-//     // If not a Universal Windows App, we'll need user default language.
-//     // Vista and above should use Locale Names instead of LCIDs
-//     int length = GetUserDefaultLocaleName(windowsLocale, UPRV_LENGTHOF(windowsLocale));
-// #else
-//     // In a UWP app, we want the top language that the application and user agreed upon
-//     ComPtr<ABI::Windows::Foundation::Collections::IVectorView<HSTRING>> languageList;
-//
-//     ComPtr<ABI::Windows::Globalization::IApplicationLanguagesStatics> applicationLanguagesStatics;
-//     HRESULT hr = GetActivationFactory(
-//         HStringReference(RuntimeClass_Windows_Globalization_ApplicationLanguages).Get(),
-//         &applicationLanguagesStatics);
-//     if (SUCCEEDED(hr))
-//     {
-//         hr = applicationLanguagesStatics->get_Languages(&languageList);
-//     }
-//
-//     if (FAILED(hr))
-//     {
-//         // If there is no application context, then use the top language from the user language profile
-//         ComPtr<ABI::Windows::System::UserProfile::IGlobalizationPreferencesStatics> globalizationPreferencesStatics;
-//         hr = GetActivationFactory(
-//             HStringReference(RuntimeClass_Windows_System_UserProfile_GlobalizationPreferences).Get(),
-//             &globalizationPreferencesStatics);
-//         if (SUCCEEDED(hr))
-//         {
-//             hr = globalizationPreferencesStatics->get_Languages(&languageList);
-//         }
-//     }
-//
-//     // We have a list of languages, ICU knows one, so use the top one for our locale
-//     HString topLanguage;
-//     if (SUCCEEDED(hr))
-//     {
-//         hr = languageList->GetAt(0, topLanguage.GetAddressOf());
-//     }
-//
-//     if (FAILED(hr))
-//     {
-//         // Unexpected, use en-US by default
-//         if (gCorrectedPOSIXLocale == NULL) {
-//             gCorrectedPOSIXLocale = "en_US";
-//         }
-//
-//         return gCorrectedPOSIXLocale;
-//     }
-//
-//     // ResolveLocaleName will get a likely subtags form consistent with Windows behavior.
-//     int length = ResolveLocaleName(topLanguage.GetRawBuffer(NULL), windowsLocale, UPRV_LENGTHOF(windowsLocale));
-// #endif
-//     // Now we should have a Windows locale name that needs converted to the POSIX style,
-//     if (length > 0)
-//     {
-//         // First we need to go from UTF-16 to char (and also convert from _ to - while we're at it.)
-//         char modifiedWindowsLocale[LOCALE_NAME_MAX_LENGTH];
-//
-//         int32_t i;
-//         for (i = 0; i < UPRV_LENGTHOF(modifiedWindowsLocale); i++)
-//         {
-//             if (windowsLocale[i] == '_')
-//             {
-//                 modifiedWindowsLocale[i] = '-';
-//             }
-//             else
-//             {
-//                 modifiedWindowsLocale[i] = static_cast<char>(windowsLocale[i]);
-//             }
-//
-//             if (modifiedWindowsLocale[i] == '\0')
-//             {
-//                 break;
-//             }
-//         }
-//
-//         if (i >= UPRV_LENGTHOF(modifiedWindowsLocale))
-//         {
-//             // Ran out of room, can't really happen, maybe we'll be lucky about a matching
-//             // locale when tags are dropped
-//             modifiedWindowsLocale[UPRV_LENGTHOF(modifiedWindowsLocale) - 1] = '\0';
-//         }
-//
-//         // Now normalize the resulting name
-//         correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
-//         /* TODO: Should we just exit on memory allocation failure? */
-//         if (correctedPOSIXLocale)
-//         {
-//             int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
-//             if (U_SUCCESS(status))
-//             {
-//                 *(correctedPOSIXLocale + posixLen) = 0;
-//                 gCorrectedPOSIXLocale = correctedPOSIXLocale;
-//                 gCorrectedPOSIXLocaleHeapAllocated = true;
-//                 ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
-//             }
-//             else
-//             {
-//                 uprv_free(correctedPOSIXLocale);
-//             }
-//         }
-//     }
-//
-//     // If unable to find a locale we can agree upon, use en-US by default
-//     if (gCorrectedPOSIXLocale == NULL) {
-//         gCorrectedPOSIXLocale = "en_US";
-//     }
-//     return gCorrectedPOSIXLocale;
-//
+    UErrorCode status = U_ZERO_ERROR;
+    char *correctedPOSIXLocale = 0;
+
+    // If we have already figured this out just use the cached value
+    if (gCorrectedPOSIXLocale != NULL) {
+        return gCorrectedPOSIXLocale;
+    }
+
+    // No cached value, need to determine the current value
+    static WCHAR windowsLocale[LOCALE_NAME_MAX_LENGTH];
+#if U_PLATFORM_HAS_WINUWP_API == 0
+    // If not a Universal Windows App, we'll need user default language.
+    // Vista and above should use Locale Names instead of LCIDs
+    int length = GetUserDefaultLocaleName(windowsLocale, UPRV_LENGTHOF(windowsLocale));
+#else
+    // In a UWP app, we want the top language that the application and user agreed upon
+    ComPtr<ABI::Windows::Foundation::Collections::IVectorView<HSTRING>> languageList;
+
+    ComPtr<ABI::Windows::Globalization::IApplicationLanguagesStatics> applicationLanguagesStatics;
+    HRESULT hr = GetActivationFactory(
+        HStringReference(RuntimeClass_Windows_Globalization_ApplicationLanguages).Get(),
+        &applicationLanguagesStatics);
+    if (SUCCEEDED(hr))
+    {
+        hr = applicationLanguagesStatics->get_Languages(&languageList);
+    }
+
+    if (FAILED(hr))
+    {
+        // If there is no application context, then use the top language from the user language profile
+        ComPtr<ABI::Windows::System::UserProfile::IGlobalizationPreferencesStatics> globalizationPreferencesStatics;
+        hr = GetActivationFactory(
+            HStringReference(RuntimeClass_Windows_System_UserProfile_GlobalizationPreferences).Get(),
+            &globalizationPreferencesStatics);
+        if (SUCCEEDED(hr))
+        {
+            hr = globalizationPreferencesStatics->get_Languages(&languageList);
+        }
+    }
+
+    // We have a list of languages, ICU knows one, so use the top one for our locale
+    HString topLanguage;
+    if (SUCCEEDED(hr))
+    {
+        hr = languageList->GetAt(0, topLanguage.GetAddressOf());
+    }
+
+    if (FAILED(hr))
+    {
+        // Unexpected, use en-US by default
+        if (gCorrectedPOSIXLocale == NULL) {
+            gCorrectedPOSIXLocale = "en_US";
+        }
+
+        return gCorrectedPOSIXLocale;
+    }
+
+    // ResolveLocaleName will get a likely subtags form consistent with Windows behavior.
+    int length = ResolveLocaleName(topLanguage.GetRawBuffer(NULL), windowsLocale, UPRV_LENGTHOF(windowsLocale));
+#endif
+    // Now we should have a Windows locale name that needs converted to the POSIX style,
+    if (length > 0)
+    {
+        // First we need to go from UTF-16 to char (and also convert from _ to - while we're at it.)
+        char modifiedWindowsLocale[LOCALE_NAME_MAX_LENGTH];
+
+        int32_t i;
+        for (i = 0; i < UPRV_LENGTHOF(modifiedWindowsLocale); i++)
+        {
+            if (windowsLocale[i] == '_')
+            {
+                modifiedWindowsLocale[i] = '-';
+            }
+            else
+            {
+                modifiedWindowsLocale[i] = static_cast<char>(windowsLocale[i]);
+            }
+
+            if (modifiedWindowsLocale[i] == '\0')
+            {
+                break;
+            }
+        }
+
+        if (i >= UPRV_LENGTHOF(modifiedWindowsLocale))
+        {
+            // Ran out of room, can't really happen, maybe we'll be lucky about a matching
+            // locale when tags are dropped
+            modifiedWindowsLocale[UPRV_LENGTHOF(modifiedWindowsLocale) - 1] = '\0';
+        }
+
+        // Now normalize the resulting name
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
+        /* TODO: Should we just exit on memory allocation failure? */
+        if (correctedPOSIXLocale)
+        {
+            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
+            if (U_SUCCESS(status))
+            {
+                *(correctedPOSIXLocale + posixLen) = 0;
+                gCorrectedPOSIXLocale = correctedPOSIXLocale;
+                gCorrectedPOSIXLocaleHeapAllocated = true;
+                ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
+            }
+            else
+            {
+                uprv_free(correctedPOSIXLocale);
+            }
+        }
+    }
+
+    // If unable to find a locale we can agree upon, use en-US by default
+    if (gCorrectedPOSIXLocale == NULL) {
+        gCorrectedPOSIXLocale = "en_US";
+    }
+    return gCorrectedPOSIXLocale;
+
 #elif U_PLATFORM == U_PF_OS400
     /* locales are process scoped and are by definition thread safe */
     static char correctedLocale[64];
