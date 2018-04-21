@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,34 +41,34 @@
    "incorrect option for `%s`"
 
 #define MSG__INCORRECT_COLLATOR_OPTION \
-   "incorrect opts_collator setting: `%s`. ignoring"
+   "incorrect opts_collator setting: `%s`; ignoring"
 
 #define MSG__INCORRECT_COLLATOR_OPTION_SPEC \
-   "incorrect collator option specifier. see ?stri_opts_collator"
+   "incorrect collator option specifier, see ?stri_opts_collator"
 
 #define MSG__INCORRECT_BRKITER_OPTION_SPEC \
-   "incorrect break iterator option specifier. see ?stri_opts_brkiter"
+   "incorrect break iterator option specifier, see ?stri_opts_brkiter"
 
 #define MSG__INCORRECT_FIXED_OPTION \
-   "incorrect opts_fixed setting: `%s`. ignoring"
+   "incorrect opts_fixed setting: `%s`; ignoring"
 
 #define MSG__INCORRECT_REGEX_OPTION \
-   "incorrect opts_regex setting: `%s`. ignoring"
+   "incorrect opts_regex setting: `%s`; ignoring"
 
 #define MSG__INVALID_CODE_POINT \
    "invalid Unicode codepoint \\U%08.8x"
 
 #define MSG__INVALID_CODE_POINT_FIXING \
-   "invalid UTF-8 codepoint definition. fixing"
+   "invalid UTF-8 codepoint definition; fixing"
 
 #define MSG__INVALID_CODE_POINT_REPLNA \
-   "invalid UTF-8 codepoint definition. setting string to NA. see also stri_enc_toutf8()"
+   "invalid UTF-8 codepoint definition; setting string to NA, see also stri_enc_toutf8()"
 
 #define MSG__INVALID_UTF8 \
-   "invalid UTF-8 byte sequence detected. perhaps you should try calling stri_enc_toutf8()"
+   "invalid UTF-8 byte sequence detected; perhaps you should try calling stri_enc_toutf8()"
 
 #define MSG__INVALID_ESCAPE \
-   "invalid escape sequence detected. Setting NA"              \
+   "invalid escape sequence detected; setting NA"              \
 
 #define MSG__REPLACEMENT_ZERO \
    "replacement has length zero"
@@ -90,6 +90,9 @@
 
 #define MSG__UNCONVERTABLE_BINARY_n \
    "some input data in current source encoding could not be converted to Unicode"
+
+#define MSG__WARN_LIST_COERCION \
+   "argument is not an atomic vector; coercing"
 
 /// warning when applying recycling rule to not fully recycled args
 #define MSG__WARN_RECYCLING_RULE \
@@ -189,7 +192,7 @@
    "each string in `%s` should consist of code points of total width %d"
 
 #define MSG__CHARCLASS_INCORRECT_WHICH \
-   "unknown charclass `%s`. assuming NA"
+   "unknown charclass `%s`; assuming NA"
 
 #define MSG__CHARCLASS_INCORRECT \
    "unknown charclass"
