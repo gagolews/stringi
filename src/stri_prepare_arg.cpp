@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -206,6 +206,9 @@ SEXP stri_prepare_arg_list_string(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-05-01)
  *        #154 - the class attribute set fires up an as.xxxx call
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_string(SEXP x, const char* argname)
 {
@@ -222,6 +225,16 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -266,6 +279,9 @@ SEXP stri_prepare_arg_string(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-05-01)
  *        #154 - the class attribute set fires up an as.xxxx call
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_double(SEXP x, const char* argname)
 {
@@ -283,6 +299,16 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.double"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -367,6 +393,9 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-05-01)
  *        #154 - the class attribute set fires up an as.xxxx call
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
 {
@@ -384,6 +413,16 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.integer"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -426,6 +465,9 @@ SEXP stri_prepare_arg_integer(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-05-01)
  *        #154 - the class attribute set fires up an as.xxxx call
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
 {
@@ -443,6 +485,16 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -482,6 +534,9 @@ SEXP stri_prepare_arg_logical(SEXP x, const char* argname)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-05-01)
  *        #154 - the class attribute set fires up an as.xxxx call
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
 {
@@ -499,6 +554,16 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.raw"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -532,6 +597,9 @@ SEXP stri_prepare_arg_raw(SEXP x, const char* argname)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
 {
@@ -548,6 +616,16 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.character"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -610,6 +688,9 @@ SEXP stri_prepare_arg_string_1(SEXP x, const char* argname)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
 {
@@ -627,6 +708,16 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.double"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -684,6 +775,9 @@ SEXP stri_prepare_arg_double_1(SEXP x, const char* argname)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
 {
@@ -701,6 +795,16 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.integer"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually
@@ -758,6 +862,9 @@ SEXP stri_prepare_arg_integer_1(SEXP x, const char* argname)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-05)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.1 (Marek Gagolewski, 2018-04-21)
+ *    #285: warn if coercing from a non-trivial list
  */
 SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
 {
@@ -776,6 +883,16 @@ SEXP stri_prepare_arg_logical_1(SEXP x, const char* argname)
    }
    else if (Rf_isVectorList(x) || isObject(x))
    {
+      if (Rf_isVectorList(x)) {
+         R_len_t nv = LENGTH(x);
+         for (R_len_t i=0; i<nv; ++i) {
+            SEXP cur = VECTOR_ELT(x, i);
+            if (!(Rf_isVectorAtomic(cur) && LENGTH(cur) == 1)) {
+               Rf_warning(MSG__WARN_LIST_COERCION);
+               break;
+            }
+         }
+      }
       SEXP call;
       PROTECT(call = Rf_lang2(Rf_install("as.logical"), x));
       PROTECT(x = Rf_eval(call, R_GlobalEnv)); // this will mark its encoding manually

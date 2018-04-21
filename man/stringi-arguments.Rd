@@ -4,7 +4,7 @@
 \alias{stringi-arguments}
 \title{Passing Arguments to Functions in \pkg{stringi}}
 \description{
-Below we explain how \pkg{stringi} deals (in almost all the possible cases)
+Below we explain how \pkg{stringi} deals (in most of the cases)
 with its functions' arguments.
 }
 \section{Coercion of Arguments}{
@@ -14,6 +14,8 @@ When a character vector argument is expected, factors and other vectors
 coercible to characters vectors
 are silently converted with \code{\link{as.character}},
 otherwise an error is generated.
+Coercion from a list of non-atomic vectors each of length 1
+issues a warning.
 
 When a logical, numeric or integer vector argument is expected,
 factors are converted with \code{as.*(\link{as.character}(...))},

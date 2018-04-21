@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -137,7 +137,7 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
             // calculate max string length
             R_len_t maxlen = LENGTH(curs);
             for (R_len_t z=i+1; z<nrstr; ++z) {
-               // start from the current string (this no need to re-encode for < i)
+               // start from the current string (there's no need to re-encode for < i)
                SEXP tmps = STRING_ELT(rstr, z);
                if ((tmps != NA_STRING)
                      && !(IS_ASCII(tmps) || IS_UTF8(tmps) || IS_BYTES(tmps))

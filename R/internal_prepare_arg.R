@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@
 #' Passing Arguments to Functions in \pkg{stringi}
 #'
 #' @description
-#' Below we explain how \pkg{stringi} deals (in almost all the possible cases)
+#' Below we explain how \pkg{stringi} deals (in most of the cases)
 #' with its functions' arguments.
 #'
 #' @section Coercion of Arguments:
@@ -42,6 +42,8 @@
 #' coercible to characters vectors
 #' are silently converted with \code{\link{as.character}},
 #' otherwise an error is generated.
+#' Coercion from a list of non-atomic vectors each of length 1
+#' issues a warning.
 #'
 #' When a logical, numeric or integer vector argument is expected,
 #' factors are converted with \code{as.*(\link{as.character}(...))},
