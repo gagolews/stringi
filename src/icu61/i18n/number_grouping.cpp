@@ -48,6 +48,7 @@ Grouper Grouper::forStrategy(UGroupingStrategy grouping) {
         return {3, 3, 1};
     default:
         U_ASSERT(FALSE);
+        return {-1, -1, -1};
     }
 }
 
