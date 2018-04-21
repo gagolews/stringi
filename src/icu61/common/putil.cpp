@@ -1731,7 +1731,7 @@ The leftmost codepage (.xxx) wins.
 #elif U_PLATFORM_USES_ONLY_WIN32_API
 #define POSIX_LOCALE_CAPACITY 64
     /* ================================================================== */
-    // string 1.1.2 patch -- ICU 55.1 patch
+    // stringi 1.1.2 patch -- ICU 55.1
     // icu61/common/putil.cpp: In function 'const char* uprv_getDefaultLocaleID_61()':
     // icu61/common/putil.cpp:1746:86: error: 'GetUserDefaultLocaleName' was not declared in this scope
     /* ================================================================== */
@@ -1822,64 +1822,64 @@ The leftmost codepage (.xxx) wins.
 //
 //     // ResolveLocaleName will get a likely subtags form consistent with Windows behavior.
 //     int length = ResolveLocaleName(topLanguage.GetRawBuffer(NULL), windowsLocale, UPRV_LENGTHOF(windowsLocale));
-#endif
-    // Now we should have a Windows locale name that needs converted to the POSIX style,
-    if (length > 0)
-    {
-        // First we need to go from UTF-16 to char (and also convert from _ to - while we're at it.)
-        char modifiedWindowsLocale[LOCALE_NAME_MAX_LENGTH];
-
-        int32_t i;
-        for (i = 0; i < UPRV_LENGTHOF(modifiedWindowsLocale); i++)
-        {
-            if (windowsLocale[i] == '_')
-            {
-                modifiedWindowsLocale[i] = '-';
-            }
-            else
-            {
-                modifiedWindowsLocale[i] = static_cast<char>(windowsLocale[i]);
-            }
-
-            if (modifiedWindowsLocale[i] == '\0')
-            {
-                break;
-            }
-        }
-
-        if (i >= UPRV_LENGTHOF(modifiedWindowsLocale))
-        {
-            // Ran out of room, can't really happen, maybe we'll be lucky about a matching
-            // locale when tags are dropped
-            modifiedWindowsLocale[UPRV_LENGTHOF(modifiedWindowsLocale) - 1] = '\0';
-        }
-
-        // Now normalize the resulting name
-        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
-        /* TODO: Should we just exit on memory allocation failure? */
-        if (correctedPOSIXLocale)
-        {
-            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
-            if (U_SUCCESS(status))
-            {
-                *(correctedPOSIXLocale + posixLen) = 0;
-                gCorrectedPOSIXLocale = correctedPOSIXLocale;
-                gCorrectedPOSIXLocaleHeapAllocated = true;
-                ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
-            }
-            else
-            {
-                uprv_free(correctedPOSIXLocale);
-            }
-        }
-    }
-
-    // If unable to find a locale we can agree upon, use en-US by default
-    if (gCorrectedPOSIXLocale == NULL) {
-        gCorrectedPOSIXLocale = "en_US";
-    }
-    return gCorrectedPOSIXLocale;
-
+// #endif
+//     // Now we should have a Windows locale name that needs converted to the POSIX style,
+//     if (length > 0)
+//     {
+//         // First we need to go from UTF-16 to char (and also convert from _ to - while we're at it.)
+//         char modifiedWindowsLocale[LOCALE_NAME_MAX_LENGTH];
+//
+//         int32_t i;
+//         for (i = 0; i < UPRV_LENGTHOF(modifiedWindowsLocale); i++)
+//         {
+//             if (windowsLocale[i] == '_')
+//             {
+//                 modifiedWindowsLocale[i] = '-';
+//             }
+//             else
+//             {
+//                 modifiedWindowsLocale[i] = static_cast<char>(windowsLocale[i]);
+//             }
+//
+//             if (modifiedWindowsLocale[i] == '\0')
+//             {
+//                 break;
+//             }
+//         }
+//
+//         if (i >= UPRV_LENGTHOF(modifiedWindowsLocale))
+//         {
+//             // Ran out of room, can't really happen, maybe we'll be lucky about a matching
+//             // locale when tags are dropped
+//             modifiedWindowsLocale[UPRV_LENGTHOF(modifiedWindowsLocale) - 1] = '\0';
+//         }
+//
+//         // Now normalize the resulting name
+//         correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
+//         /* TODO: Should we just exit on memory allocation failure? */
+//         if (correctedPOSIXLocale)
+//         {
+//             int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
+//             if (U_SUCCESS(status))
+//             {
+//                 *(correctedPOSIXLocale + posixLen) = 0;
+//                 gCorrectedPOSIXLocale = correctedPOSIXLocale;
+//                 gCorrectedPOSIXLocaleHeapAllocated = true;
+//                 ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
+//             }
+//             else
+//             {
+//                 uprv_free(correctedPOSIXLocale);
+//             }
+//         }
+//     }
+//
+//     // If unable to find a locale we can agree upon, use en-US by default
+//     if (gCorrectedPOSIXLocale == NULL) {
+//         gCorrectedPOSIXLocale = "en_US";
+//     }
+//     return gCorrectedPOSIXLocale;
+//
 #elif U_PLATFORM == U_PF_OS400
     /* locales are process scoped and are by definition thread safe */
     static char correctedLocale[64];
