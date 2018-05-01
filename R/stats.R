@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -102,22 +102,6 @@ stri_stats_general <- function(str) {
 #'        "\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
 #'        "")
 #' stri_stats_latex(s)
-#'
-#' \dontrun{
-#' # Stats for the preprint version of M. Gagolewski's book
-#' # "Programowanie w jezyku R", Wydawnictwo Naukowe PWN, 2014.
-#' # see http://rksiazka.rexamine.com
-#' apply(
-#'    sapply(
-#'       list.files(path="~/Publikacje/ProgramowanieR/rozdzialy/",
-#'          pattern=glob2rx("*.tex"), recursive=TRUE, full.names=TRUE),
-#'       function(x)
-#'       stri_stats_latex(readLines(x))
-#'    ), 1, sum)
-#'
-#' CharsWord CharsCmdEnvir    CharsWhite         Words          Cmds        Envirs
-#'    718755        458403        281989        120202         37055          6119
-#' }
 #'
 #' @family stats
 #' @export
