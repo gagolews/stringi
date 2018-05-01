@@ -37,22 +37,6 @@ s <- c("Lorem \\\\textbf{ipsum} dolor sit \\\\textit{amet}, consectetur adipisic
        "")
 stri_stats_latex(s)
 
-\dontrun{
-# Stats for the preprint version of M. Gagolewski's book
-# "Programowanie w jezyku R", Wydawnictwo Naukowe PWN, 2014.
-# see http://rksiazka.rexamine.com
-apply(
-   sapply(
-      list.files(path="~/Publikacje/ProgramowanieR/rozdzialy/",
-         pattern=glob2rx("*.tex"), recursive=TRUE, full.names=TRUE),
-      function(x)
-      stri_stats_latex(readLines(x))
-   ), 1, sum)
-
-CharsWord CharsCmdEnvir    CharsWhite         Words          Cmds        Envirs
-   718755        458403        281989        120202         37055          6119
-}
-
 }
 \seealso{
 Other stats: \code{\link{stri_stats_general}}
