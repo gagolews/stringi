@@ -120,11 +120,14 @@ icudt_md5ex <- c("little55"="ff345529f230cc39bb8d450af0607708",
                  "big61"   =NA
                  )
 
-icudt_mirrors <- c("https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
+icudt_mirrors <- c(
+                   "http://www.ibspan.waw.pl/~gagolews/stringi/",
+                   "http://www.gagolewski.com/software/stringi/",
+                   "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
                    "https://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
                    "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu61/data/",
-                   "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/",
-                   "http://www.gagolewski.com/software/stringi/")
+                   "http://raw.githubusercontent.com/gagolews/stringi/master/src/icu55/data/"
+                   )
 
 
 
