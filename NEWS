@@ -1,6 +1,13 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
+## 1.2.3 (...)
+
+* Fix CentOS....
+
+* Fix broken Windows build...
+
+
 ## 1.2.2 (2018-05-01) **CRAN**
 
 * [GENERAL] #193: `stringi` is now bundled with ICU4C 61.1,
