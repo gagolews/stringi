@@ -6,11 +6,11 @@ R CMD INSTALL stringi_*.tar.gz                                               \
    --configure-args="--disable-icu-bundle" --no-html                      && \
 Rscript --vanilla -e "install.packages(c('Rcpp', 'stringr', 'testthat'),     \
    repos='http://cran.rstudio.com/', quiet=TRUE)"                         && \
-STRINGI_icudt_donwload_test="TRUE" LC_ALL="en_US.UTF-8" Rscript --vanilla -e \
+STRINGI_icudt_download_test="TRUE" LC_ALL="en_US.UTF-8" Rscript --vanilla -e \
    "setwd('stringi'); source('devel/testthat/run_package_tests.R')"       && \
 R CMD INSTALL stringi_*.tar.gz                                               \
    --configure-args="--disable-pkg-config" --no-html                      && \
-STRINGI_icudt_donwload_test="TRUE" LC_ALL="en_US.UTF-8" Rscript --vanilla -e \
+STRINGI_icudt_download_test="TRUE" LC_ALL="en_US.UTF-8" Rscript --vanilla -e \
    "setwd('stringi'); source('devel/testthat/run_package_tests.R')"       && \
 R CMD check stringi_*.tar.gz                                                 \
 

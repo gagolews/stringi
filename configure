@@ -2222,12 +2222,13 @@ fi
 
 
 
+
+# ICU >= 60 requires full C++11 support
+
 if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
    enable_cxx11="yes"
-   ICU_BUNDLE_VERSION="61"
 else
    enable_cxx11="no"
-   ICU_BUNDLE_VERSION="55"
 fi
 
 
@@ -2399,7 +2400,6 @@ $as_echo "no" >&6; }
    if test "x$enable_cxx11" == "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
-      ICU_BUNDLE_VERSION="55"
    fi
 fi
 
@@ -2417,16 +2417,6 @@ $as_echo "yes" >&6; }
 fi
 
 
-
-# set ICUDT_DIR
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
-$as_echo_n "checking for local ICUDT_DIR... " >&6; }
-if test -z "${ICUDT_DIR}"; then
-# Remember to update the configure.win file too
-   ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
-$as_echo "$ICUDT_DIR" >&6; }
 
 
 ##### CHECK FOR CAT ############################################################
@@ -2504,35 +2494,64 @@ CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 LIBS=
 LDFLAGS=
 
-if test "x$enable_cxx11" == "xyes"; then
-   CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
-   CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
-   CXX="${CXX_tmp1} ${CXX_tmp2}"
-   CXXFLAGS_base=`"${R_PATH}" CMD config ${STRINGI_CXX1X}FLAGS`
-   CXXFLAGS_pic=`"${R_PATH}" CMD config ${STRINGI_CXX1X}PICFLAGS`
-   CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
-   STRINGI_CXXSTD="CXX_STD=CXX11"
-else
-   CXX=`"${R_PATH}" CMD config CXX`
-   CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
-   CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
-   CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
-   STRINGI_CXXSTD=""
-fi
+disable_cxx11() {
+   echo "*** trying with disabled C++11 compiler"
+   enable_cxx11="no"
+   # unset cached C++ compiler features:
+   unset ac_cv_cxx_compiler_gnu
+   unset ac_cv_prog_cxx_g
+   unset ac_cv_cxx_namespaces
+   unset ac_cv_cxx_have_stl
+}
 
-CFLAGS="${CFLAGS} ${with_extra_cflags}"
-CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
-CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
-LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
-LIBS="${LIBS} ${with_extra_libs}"
+while true; do
+   # if C++11 support is enabled, we'll try it first;
+   # if it fails, we'll switch to C++98
+   # if this fails again, we'll pass
 
-ac_ext=c
+   if test "x$enable_cxx11" == "xyes"; then
+      CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
+      CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
+      CXX="${CXX_tmp1} ${CXX_tmp2}"
+      CXXFLAGS_base=`"${R_PATH}" CMD config ${STRINGI_CXX1X}FLAGS`
+      CXXFLAGS_pic=`"${R_PATH}" CMD config ${STRINGI_CXX1X}PICFLAGS`
+      CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
+      STRINGI_CXXSTD="CXX_STD=CXX11"
+      ICU_BUNDLE_VERSION="61"
+   else
+      CXX=`"${R_PATH}" CMD config CXX`
+      CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
+      CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
+      CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
+      STRINGI_CXXSTD=""
+      ICU_BUNDLE_VERSION="55"
+   fi
+
+   CFLAGS="${CFLAGS} ${with_extra_cflags}"
+   CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
+   CPPFLAGS="${CPPFLAGS} ${with_extra_cppflags}"
+   LDFLAGS="${LDFLAGS} ${with_extra_ldflags}"
+   LIBS="${LIBS} ${with_extra_libs}"
+
+
+   # set ICUDT_DIR
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
+$as_echo_n "checking for local ICUDT_DIR... " >&6; }
+   if test -z "${ICUDT_DIR}"; then
+   # Remember to update the configure.win file too
+      ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
+   fi
+   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICUDT_DIR" >&5
+$as_echo "$ICUDT_DIR" >&6; }
+
+
+   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-ac_ext=c
+   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -3723,7 +3742,7 @@ done
 ac_fn_c_check_header_mongrel "$LINENO" "elf.h" "ac_cv_header_elf_h" "$ac_includes_default"
 if test "x$ac_cv_header_elf_h" = xyes; then :
 
-            with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
+               with_extra_cppflags="${with_extra_cppflags} -DU_HAVE_ELF_H"
 
 fi
 
@@ -3731,16 +3750,16 @@ fi
 
 
 
-##### Checking whether the C++ compiler supports the long long type and STL ####
+   ##### Checking whether the C++ compiler supports the long long type and STL ####
 
-check_cpp() {
-   ac_ext=cpp
+   check_cpp() {
+      ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-   ac_ext=cpp
+      ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
@@ -3997,42 +4016,42 @@ ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the C++ compiler supports the long long type" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the C++ compiler supports the long long type" >&5
 $as_echo_n "checking whether the C++ compiler supports the long long type... " >&6; }
 
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-         #include <iostream>
-         using namespace std;
+            #include <iostream>
+            using namespace std;
 
-         int main() {
-           long long x = 1;
-           cout << x << endl;
+            int main() {
+              long long x = 1;
+              cout << x << endl;
 
-           cout << 1LL << 1ULL << endl;
-           cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
+              cout << 1LL << 1ULL << endl;
+              cout << 9223372036854775807LL << 18446744073709551615ULL << endl;
 
-           return 0;
-         }
+              return 0;
+            }
 
 _ACEOF
 if ac_fn_cxx_try_link "$LINENO"; then :
 
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
 else
 
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         return 1
+            return 1
 
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the compiler implements namespaces" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the compiler implements namespaces" >&5
 $as_echo_n "checking whether the compiler implements namespaces... " >&6; }
 if ${ac_cv_cxx_namespaces+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -4128,90 +4147,73 @@ $as_echo "#define HAVE_STL /**/" >>confdefs.h
 
 fi
 
-   if test "$ac_cv_cxx_have_stl" = not; then
-      return 1
-   fi
+      if test "$ac_cv_cxx_have_stl" = not; then
+         return 1
+      fi
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether std::map is available" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether std::map is available" >&5
 $as_echo_n "checking whether std::map is available... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-         #include <iostream>
-         #include <map>
-         #include <vector>
-         #include <utility>
+            #include <iostream>
+            #include <map>
+            #include <vector>
+            #include <utility>
 
-         int main() {
-            std::map< int, std::vector< int > > curmap;
-            std::vector<int> v1(10);
-            curmap.insert(std::pair< int, std::vector< int > >(100, v1));
-            std::cout << curmap.size() << std::endl;
-           return 0;
-         }
+            int main() {
+               std::map< int, std::vector< int > > curmap;
+               std::vector<int> v1(10);
+               curmap.insert(std::pair< int, std::vector< int > >(100, v1));
+               std::cout << curmap.size() << std::endl;
+              return 0;
+            }
 
 _ACEOF
 if ac_fn_cxx_try_link "$LINENO"; then :
 
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 
 else
 
-         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         return 1
+            return 1
 
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 
 
-   CPP_OK=1
-   return 0
-}
+      CPP_OK=1
+      return 0
+   }
 
-CPP_OK=0
-check_cpp
-
-if test $CPP_OK = 0; then
-   if test "x$enable_cxx11" == "xyes"; then
-      echo "*** trying with disabled C++11 compiler"
-      CXX=`"${R_PATH}" CMD config CXX`
-      CXXFLAGS_base=`"${R_PATH}" CMD config CXXFLAGS`
-      CXXFLAGS_pic=`"${R_PATH}" CMD config CXXPICFLAGS`
-      CXXFLAGS="${CXXFLAGS_base} ${CXXFLAGS_pic}"
-      STRINGI_CXXSTD=""
-      CXXFLAGS="${CXXFLAGS} ${with_extra_cxxflags}"
-
-      # unset cached C++ compiler features:
-      unset ac_cv_cxx_compiler_gnu
-      unset ac_cv_prog_cxx_g
-      unset ac_cv_cxx_namespaces
-      unset ac_cv_cxx_have_stl
-
-      # re-run tests:
-      check_cpp
-   fi
+   CPP_OK=0
+   check_cpp
 
    if test $CPP_OK = 0; then
-      echo "*** verify your C++ compiler's abilities (long long, STL, etc. support)"
-      exit 1
+      if test "x$enable_cxx11" == "xyes"; then
+         disable_cxx11
+         continue
+      else
+         echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+         echo "*** also, verify your C++ compiler's abilities (long long, STL, etc. support)"
+         exit 1
+      fi
    fi
-fi
 
-##### CHECK FOR ICU4C ##########################################################
+   ##### CHECK FOR ICU4C ##########################################################
 
-
-
-##### 1. Get settings from pkg-config or system
-# Note that according to http://userguide.icu-project.org/howtouseicu,
-# icu-config is supported, but no longer recommended for production use.
+   ##### 1. Get settings from pkg-config or system
+   # Note that according to http://userguide.icu-project.org/howtouseicu,
+   # icu-config is supported, but no longer recommended for production use.
 
 
-detect_icu_with_pkg_config() {
-   # Retrieve pkg-config's path
-   # Extract the first word of "pkg-config", so it can be a program name with args.
+   detect_icu_with_pkg_config() {
+      # Retrieve pkg-config's path
+      # Extract the first word of "pkg-config", so it can be a program name with args.
 set dummy pkg-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -4254,344 +4256,94 @@ fi
 
  # auto-detect
 
-   if test ! -f "${PKG_CONFIG}"; then
-      echo "*** pkg-config could not be found"
-      return 1 # go back immediately
-   fi
+      if test ! -f "${PKG_CONFIG}"; then
+         echo "*** pkg-config could not be found"
+         return 1 # go back immediately
+      fi
 
-   # check if pkg-config knows about icu-i18n
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for the system ICU4C" >&5
+      # check if pkg-config knows about icu-i18n
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking with pkg-config for the system ICU4C" >&5
 $as_echo_n "checking with pkg-config for the system ICU4C... " >&6; }
-   if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
-      # pkg config doesn't know about icu-i18n
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      if ! `"${PKG_CONFIG}" --exists icu-i18n icu-uc`; then
+         # pkg config doesn't know about icu-i18n
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** pkg-config did not detect ICU4C-devel libraries installed"
-      return 1 # nothing more to do
-   fi
+         echo "*** pkg-config did not detect ICU4C-devel libraries installed"
+         return 1 # nothing more to do
+      fi
 
-   # check which version of ICU4C is installed
-   ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-i18n`
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
+      # check which version of ICU4C is installed
+      ICU_VERSION=`"${PKG_CONFIG}" --modversion icu-i18n`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ICU_VERSION" >&5
 $as_echo "$ICU_VERSION" >&6; }
 
-   # check for a suitable version
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
+      # check for a suitable version
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ICU4C >= $ICU_VERSION_NEEDED" >&5
 $as_echo_n "checking for ICU4C >= $ICU_VERSION_NEEDED... " >&6; }
-   #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
-   #if test "$VERSION_CHECK" != "1" ; then
-   if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      #VERSION_CHECK=`expr $ICU_VERSION ">=" $ICU_VERSION_NEEDED`
+      #if test "$VERSION_CHECK" != "1" ; then
+      if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n icu-uc`; then
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-      echo "*** ICU4C ${ICU_VERSION} has been detected"
-      echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
-      return 1 # you may quit querying pkg-config here
-   fi
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+         echo "*** ICU4C ${ICU_VERSION} has been detected"
+         echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+         return 1 # you may quit querying pkg-config here
+      fi
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; } # detected version of ICU4C is sufficient
 
-   export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for additional required CPPFLAGS, LDFLAGS, and LIBS" >&5
+      export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 # always provide system -L
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for additional required CPPFLAGS, LDFLAGS, and LIBS" >&5
 $as_echo_n "checking for additional required CPPFLAGS, LDFLAGS, and LIBS... " >&6; }
-   ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
-   ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
-   ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
-   { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
+      ICU_CPPFLAGS=`"${PKG_CONFIG}" --cflags icu-uc icu-i18n`
+      ICU_LDFLAGS=`"${PKG_CONFIG}" --libs-only-L icu-uc icu-i18n`
+      ICU_LIBS=`"${PKG_CONFIG}" --libs-only-l icu-uc icu-i18n`
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: done" >&5
 $as_echo "done" >&6; }
 
-   # It has been indicated that icu-config may return 32bit libs
-   # when 64bit libs are not available, even if we compile a 64bit version.
-   # Thus, we should then check if the current settings are valid anyway.
+      # It has been indicated that icu-config may return 32bit libs
+      # when 64bit libs are not available, even if we compile a 64bit version.
+      # Thus, we should then check if the current settings are valid anyway.
 
-   return 0
-}
+      return 0
+   }
 
-check_icu_with_pkg_config() {
-   CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
-   LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
-   LIBS="${LIBS} ${ICU_LIBS}"
+   check_icu_with_pkg_config() {
+      CPPFLAGS="${CPPFLAGS} ${ICU_CPPFLAGS}"
+      LDFLAGS="${LDFLAGS} ${ICU_LDFLAGS}"
+      LIBS="${LIBS} ${ICU_LIBS}"
 
-   ac_ext=cpp
+      ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build an ICU4C-based project" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may build an ICU4C-based project" >&5
 $as_echo_n "checking whether we may build an ICU4C-based project... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      #include <unicode/unistr.h>
-      #include <unicode/uvernum.h>
-      #include <unicode/ptypes.h>
-      #include <unicode/uchar.h>
-      #include <unicode/utypes.h>
-      #include <stdio.h>
-      using namespace icu;
-
-      int main() {
-        // base tests
-        UnicodeString x("abc");
-        x = x+x;
-        printf(U_ICU_VERSION);
-
-        return 0;
-      }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-      echo "*** The available ICU4C cannot be used"
-      return 1
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM" >&5
-$as_echo_n "checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      #include <unicode/uvernum.h>
-      #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
-      #error "insufficient U_ICU_VERSION_MAJOR_NUM"
-      #endif
-
-      int main() {
-        return 0;
-      }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-      echo "*** The available ICU4C cannot be used"
-      return 1
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucnv, uloc, utrans)" >&5
-$as_echo_n "checking for available ICU data library (ucnv, uloc, utrans)... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      #include <unicode/unistr.h>
-      #include <unicode/uvernum.h>
-      #include <unicode/ptypes.h>
-      #include <unicode/uchar.h>
-      #include <unicode/utypes.h>
-      #include <unicode/ucnv.h>
-      #include <unicode/ustring.h>
-      #include <unicode/stringpiece.h>
-      #include <unicode/utf8.h>
-      #include <unicode/utf16.h>
-      #include <unicode/normalizer2.h>
-      #include <unicode/locid.h>
-      #include <unicode/uloc.h>
-      #include <unicode/regex.h>
-      #include <unicode/brkiter.h>
-      #include <unicode/coll.h>
-      #include <unicode/ucol.h>
-      #include <unicode/ucsdet.h>
-      #include <unicode/stsearch.h>
-      #include <unicode/ulocdata.h>
-      #include <unicode/usearch.h>
-      #include <unicode/uniset.h>
-      #include <stdio.h>
-      #include <unicode/translit.h>
-      #include <unicode/uclean.h>
-      using namespace icu;
-
-      int main() {
-         UErrorCode status = U_ZERO_ERROR;
-         u_init(&status);
-         if (U_FAILURE(status)) {
-            printf("ICU init failed: %s", u_errorName(status));
-            return 10;
-         }
-
-        // check if we have some converters installed (icudt)
-        int c = ucnv_countAvailable();
-        if (c <= 0)
-          return 11;
-
-        // check if we have some locales defined (icudt)
-        c = uloc_countAvailable();
-        if (c <= 0)
-          return 12;
-
-        status = U_ZERO_ERROR;
-        StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
-        if (!U_SUCCESS(status)) return 13;
-
-        trans_enum->reset(status);
-        if (!U_SUCCESS(status)) return 14;
-
-        c = trans_enum->count(status);
-        if (!U_SUCCESS(status)) return 15;
-        if (c <= 0) return 16;
-
-        delete trans_enum;
-        return 0;
-      }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-      echo "*** The available ICU4C cannot be used"
-      return 1
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucol)" >&5
-$as_echo_n "checking for available ICU data library (ucol)... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      #include <unicode/unistr.h>
-      #include <unicode/uvernum.h>
-      #include <unicode/ptypes.h>
-      #include <unicode/uchar.h>
-      #include <unicode/utypes.h>
-      #include <unicode/ucnv.h>
-      #include <unicode/ustring.h>
-      #include <unicode/stringpiece.h>
-      #include <unicode/utf8.h>
-      #include <unicode/utf16.h>
-      #include <unicode/normalizer2.h>
-      #include <unicode/locid.h>
-      #include <unicode/uloc.h>
-      #include <unicode/regex.h>
-      #include <unicode/brkiter.h>
-      #include <unicode/coll.h>
-      #include <unicode/ucol.h>
-      #include <unicode/ucsdet.h>
-      #include <unicode/stsearch.h>
-      #include <unicode/ulocdata.h>
-      #include <unicode/usearch.h>
-      #include <unicode/uniset.h>
-      #include <stdio.h>
-      using namespace icu;
-
-      int main() {
-        UnicodeString a = UnicodeString::fromUTF8("hladny");
-        UnicodeString b = UnicodeString::fromUTF8("chladny");
-
-        UErrorCode status = U_ZERO_ERROR;
-        Locale l = Locale::createFromName("sk_SK");
-        Collator* c = Collator::createInstance(l, status);
-        if (!U_SUCCESS(status)) return 1;
-
-        status = U_ZERO_ERROR;
-        if (UCOL_GREATER != c->compare(a, b, status))
-           return 2;
-        if (!U_SUCCESS(status)) return 3;
-
-        delete c;
-        return 0;
-      }
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-      echo "*** The available ICU4C cannot be used"
-      return 1
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
-   ICU_FOUND=1 # DONE
-   return 0
-}
-
-ICU_FOUND=0
-
-if test $ICU_FOUND = 0; then
-   if test $enable_pkg_config = "no"; then
-      # Use of pkg-config disabled, nothing to do
-      echo "*** The use of system ICU4C has been disabled."
-   else
-      OLD_CPPFLAGS=$CPPFLAGS
-      OLD_LDFLAGS=$LDFLAGS
-      OLD_LIBS=$LIBS
-      if ! detect_icu_with_pkg_config; then
-         echo "*** Trying with \"standard\" fallback flags"
-         # (#238, #220) trying "standard" fallback flags
-         ICU_CPPFLAGS=""
-         ICU_LDFLAGS=""
-         ICU_LIBS="-licui18n -licuuc -licudata"
-      fi
-      check_icu_with_pkg_config
-      CPPFLAGS=$OLD_CPPFLAGS
-      LDFLAGS=$OLD_LDFLAGS
-      LIBS=$OLD_LIBS
-   fi
-fi
-
-
-check_flags_icu_bundle() {
-   CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
-      -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
-      -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
-
-# one way for dealing with the *Compiler or options invalid for pre-UNIX 03
-# X/Open applications and pre-2001 POSIX applications* error on Solaris
-# is to file a patch for sys/feature_tests.h. Unfortunately, the original
-# file is copyrighted, so we have to cope with this error in another way:
-# adding -D_XPG6 flag conditionally.
-
-   if test ${ICU_BUNDLE_VERSION} = 55; then
-      # ICU 61 doesn't provide any .c files anymore
-      ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c" >&5
-$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c... " >&6; }
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-         `${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <unicode/ptypes.h>
+         #include <unicode/uchar.h>
+         #include <unicode/utypes.h>
+         #include <stdio.h>
+         using namespace icu;
+
+         int main() {
+           // base tests
+           UnicodeString x("abc");
+           x = x+x;
+           printf(U_ICU_VERSION);
+
+           return 0;
+         }
 
 _ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
+if ac_fn_cxx_try_link "$LINENO"; then :
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
@@ -4600,10 +4352,241 @@ else
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         with_extra_cflags="${with_extra_cflags} -D_XPG6"
-         CFLAGS="${CFLAGS} -D_XPG6"
-         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6" >&5
-$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6... " >&6; }
+         echo "*** The available ICU4C cannot be used"
+         return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM" >&5
+$as_echo_n "checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/uvernum.h>
+         #if U_ICU_VERSION_MAJOR_NUM < ${ICU_VERSION_NEEDED}
+         #error "insufficient U_ICU_VERSION_MAJOR_NUM"
+         #endif
+
+         int main() {
+           return 0;
+         }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+         echo "*** The available ICU4C cannot be used"
+         return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucnv, uloc, utrans)" >&5
+$as_echo_n "checking for available ICU data library (ucnv, uloc, utrans)... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <unicode/ptypes.h>
+         #include <unicode/uchar.h>
+         #include <unicode/utypes.h>
+         #include <unicode/ucnv.h>
+         #include <unicode/ustring.h>
+         #include <unicode/stringpiece.h>
+         #include <unicode/utf8.h>
+         #include <unicode/utf16.h>
+         #include <unicode/normalizer2.h>
+         #include <unicode/locid.h>
+         #include <unicode/uloc.h>
+         #include <unicode/regex.h>
+         #include <unicode/brkiter.h>
+         #include <unicode/coll.h>
+         #include <unicode/ucol.h>
+         #include <unicode/ucsdet.h>
+         #include <unicode/stsearch.h>
+         #include <unicode/ulocdata.h>
+         #include <unicode/usearch.h>
+         #include <unicode/uniset.h>
+         #include <stdio.h>
+         #include <unicode/translit.h>
+         #include <unicode/uclean.h>
+         using namespace icu;
+
+         int main() {
+            UErrorCode status = U_ZERO_ERROR;
+            u_init(&status);
+            if (U_FAILURE(status)) {
+               printf("ICU init failed: %s", u_errorName(status));
+               return 10;
+            }
+
+           // check if we have some converters installed (icudt)
+           int c = ucnv_countAvailable();
+           if (c <= 0)
+             return 11;
+
+           // check if we have some locales defined (icudt)
+           c = uloc_countAvailable();
+           if (c <= 0)
+             return 12;
+
+           status = U_ZERO_ERROR;
+           StringEnumeration* trans_enum = Transliterator::getAvailableIDs(status);
+           if (!U_SUCCESS(status)) return 13;
+
+           trans_enum->reset(status);
+           if (!U_SUCCESS(status)) return 14;
+
+           c = trans_enum->count(status);
+           if (!U_SUCCESS(status)) return 15;
+           if (c <= 0) return 16;
+
+           delete trans_enum;
+           return 0;
+         }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+         echo "*** The available ICU4C cannot be used"
+         return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for available ICU data library (ucol)" >&5
+$as_echo_n "checking for available ICU data library (ucol)... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <unicode/ptypes.h>
+         #include <unicode/uchar.h>
+         #include <unicode/utypes.h>
+         #include <unicode/ucnv.h>
+         #include <unicode/ustring.h>
+         #include <unicode/stringpiece.h>
+         #include <unicode/utf8.h>
+         #include <unicode/utf16.h>
+         #include <unicode/normalizer2.h>
+         #include <unicode/locid.h>
+         #include <unicode/uloc.h>
+         #include <unicode/regex.h>
+         #include <unicode/brkiter.h>
+         #include <unicode/coll.h>
+         #include <unicode/ucol.h>
+         #include <unicode/ucsdet.h>
+         #include <unicode/stsearch.h>
+         #include <unicode/ulocdata.h>
+         #include <unicode/usearch.h>
+         #include <unicode/uniset.h>
+         #include <stdio.h>
+         using namespace icu;
+
+         int main() {
+           UnicodeString a = UnicodeString::fromUTF8("hladny");
+           UnicodeString b = UnicodeString::fromUTF8("chladny");
+
+           UErrorCode status = U_ZERO_ERROR;
+           Locale l = Locale::createFromName("sk_SK");
+           Collator* c = Collator::createInstance(l, status);
+           if (!U_SUCCESS(status)) return 1;
+
+           status = U_ZERO_ERROR;
+           if (UCOL_GREATER != c->compare(a, b, status))
+              return 2;
+           if (!U_SUCCESS(status)) return 3;
+
+           delete c;
+           return 0;
+         }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+         echo "*** The available ICU4C cannot be used"
+         return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+      ICU_FOUND=1 # DONE
+      return 0
+   }
+
+   ICU_FOUND=0
+
+   if test $ICU_FOUND = 0; then
+      if test $enable_pkg_config = "no"; then
+         # Use of pkg-config disabled, nothing to do
+         echo "*** The use of system ICU4C has been disabled."
+      else
+         OLD_CPPFLAGS=$CPPFLAGS
+         OLD_LDFLAGS=$LDFLAGS
+         OLD_LIBS=$LIBS
+         if ! detect_icu_with_pkg_config; then
+            echo "*** Trying with \"standard\" fallback flags"
+            # (#238, #220) trying "standard" fallback flags
+            ICU_CPPFLAGS=""
+            ICU_LDFLAGS=""
+            ICU_LIBS="-licui18n -licuuc -licudata"
+         fi
+         check_icu_with_pkg_config
+         CPPFLAGS=$OLD_CPPFLAGS
+         LDFLAGS=$OLD_LDFLAGS
+         LIBS=$OLD_LIBS
+      fi
+   fi
+
+
+   check_flags_icu_bundle() {
+      CPPFLAGS="${CPPFLAGS} -Isrc/ -Isrc/icu${ICU_BUNDLE_VERSION} -Isrc/icu${ICU_BUNDLE_VERSION}/unicode \
+         -Isrc/icu${ICU_BUNDLE_VERSION}/common -Isrc/icu${ICU_BUNDLE_VERSION}/i18n -DU_STATIC_IMPLEMENTATION \
+         -DU_COMMON_IMPLEMENTATION -DU_I18N_IMPLEMENTATION -D_REENTRANT" # don't use uconfig_local yet
+
+   # one way for dealing with the *Compiler or options invalid for pre-UNIX 03
+   # X/Open applications and pre-2001 POSIX applications* error on Solaris
+   # is to file a patch for sys/feature_tests.h. Unfortunately, the original
+   # file is copyrighted, so we have to cope with this error in another way:
+   # adding -D_XPG6 flag conditionally.
+
+      if test ${ICU_BUNDLE_VERSION} = 55; then
+         # ICU 61 doesn't provide any .c files anymore
+         ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c" >&5
+$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c... " >&6; }
          cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4619,43 +4602,49 @@ else
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-            echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
-            exit 1
+            with_extra_cflags="${with_extra_cflags} -D_XPG6"
+            CFLAGS="${CFLAGS} -D_XPG6"
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6" >&5
+$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c with -D_XPG6... " >&6; }
+            cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+               `${CAT} src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c`
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+               { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+               { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+               echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+               if test "x$enable_cxx11" == "xyes"; then
+                  disable_cxx11
+                  continue
+               else
+                  echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+                  exit 1
+               fi
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-   fi
+      fi
 
-   ac_ext=cpp
+      ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp" >&5
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp" >&5
 $as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp... " >&6; }
-   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-      `${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-else
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-      with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
-      CXXFLAGS="${CXXFLAGS} -D_XPG6"
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6" >&5
-$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6... " >&6; }
       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4671,8 +4660,33 @@ else
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         echo "*** The ICU4C bundle could not be build. Upgrade your compiler flags."
-         exit 1
+         with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
+         CXXFLAGS="${CXXFLAGS} -D_XPG6"
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6" >&5
+$as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6... " >&6; }
+         cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+            `${CAT} src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp`
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+            echo "*** The ICU4C bundle could not be build. Upgrade your compiler flags."
+            if test "x$enable_cxx11" == "xyes"; then
+               disable_cxx11
+               continue
+            else
+               echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+               exit 1
+            fi
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
@@ -4680,32 +4694,45 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-   return 0
-}
+      return 0
+   }
 
-if test $ICU_FOUND = 0; then
-   if test $enable_icu_bundle = "no"; then
-      echo "*** Failed to configure package build with forced system ICU usage"
-      echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
-      echo "*** together with pkg-config"
-      exit 1
+   if test $ICU_FOUND = 0; then
+      if test $enable_icu_bundle = "no"; then
+         echo "*** Failed to configure package build with forced system ICU usage"
+         echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
+         echo "*** together with pkg-config"
+         if test "x$enable_cxx11" == "xyes"; then
+            disable_cxx11
+            continue
+         else
+            echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+            exit 1
+         fi
+      fi
+
+      OLD_CFLAGS=$CFLAGS
+      OLD_CXXFLAGS=$CXXFLAGS
+      OLD_CPPFLAGS=$CPPFLAGS
+      OLD_LIBS=$LIBS
+      check_flags_icu_bundle
+      CFLAGS=$OLD_CFLAGS
+      CXXFLAGS=$OLD_CXXFLAGS
+      CPPFLAGS=$OLD_CPPFLAGS
    fi
 
-   OLD_CFLAGS=$CFLAGS
-   OLD_CXXFLAGS=$CXXFLAGS
-   OLD_CPPFLAGS=$CPPFLAGS
-   OLD_LIBS=$LIBS
-   check_flags_icu_bundle
-   CFLAGS=$OLD_CFLAGS
-   CXXFLAGS=$OLD_CXXFLAGS
-   CPPFLAGS=$OLD_CPPFLAGS
+   break # once we're here, we're good to go
+done # end while
 
+###### DOWNLOAD ICUDT (IF NEEDED) ##############################################
+
+if test $ICU_FOUND = 0; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we can fetch icudt" >&5
 $as_echo_n "checking whether we can fetch icudt... " >&6; }
    "${R_PATH}" --vanilla --slave -e "setwd(\"src/\"); \
-                           source(\"../R/install.R\"); \
-                           if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
-                               stop(\"Stopping on error\")"
+            source(\"../R/install.R\"); \
+            if (identical(FALSE,stri_download_icudt(\"${ICUDT_DIR}\",${ICU_BUNDLE_VERSION}))) \
+                stop(\"Stopping on error\")"
    if test $? -ne 0; then
       echo "*** icudt download failed. stopping."
       exit 1

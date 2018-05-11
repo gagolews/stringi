@@ -1,11 +1,11 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.2.3 (...)
+## 1.2.3 (2018-05-11) **CRAN**
 
-* Fix CentOS....
+* [BUGFIX] #296: Fixed the behavior of the `./configure` script on CentOS 6.
 
-* Fix broken Windows build...
+* [BUGFIX] Fixed broken Windows build by updating the icudt mirror list.
 
 
 ## 1.2.2 (2018-05-01) **CRAN**
