@@ -2498,18 +2498,17 @@ disable_cxx11() {
    unset ac_cv_cxx_compiler_gnu
    unset ac_cv_c_compiler_gnu
    unset ac_cv_prog_cxx_g
+   unset ac_cv_prog_cc_g
    unset ac_cv_prog_cc_c89
    unset ac_cv_prog_CPP
-   unset ac_cv_header_stdc
    unset ac_cv_prog_CXX
-   unset ac_cv_prog_ac_ct_CXX
-   unset ac_cv_cxx_namespaces
-   unset ac_cv_cxx_have_stl
    unset ac_cv_prog_CC
-   unset ac_cv_objext
+   unset ac_cv_header_stdc
+   unset ac_cv_prog_ac_ct_CXX
    unset ac_cv_prog_ac_ct_CC
    unset ac_cv_cxx_namespaces
    unset ac_cv_cxx_have_stl
+   unset ac_cv_objext
 }
 
 while true; do
