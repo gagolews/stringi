@@ -260,6 +260,12 @@ CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
 LIBS=
 LDFLAGS=
 
+if test -z "${ICUDT_DIR}"; then
+   ICUDT_DIR_FORCE="yes"
+else
+   ICUDT_DIR_FORCE="no"
+fi
+
 disable_cxx11() {
    echo "*** trying with disabled C++11 compiler"
    enable_cxx11="no"
@@ -302,7 +308,7 @@ while true; do
 
    # set ICUDT_DIR
    AC_MSG_CHECKING(for local ICUDT_DIR)
-   if test -z "${ICUDT_DIR}"; then
+   if test "x$ICUDT_DIR_FORCE" == "xyes"; then
    # Remember to update the configure.win file too
       ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
    fi
