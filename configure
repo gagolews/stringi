@@ -2484,15 +2484,6 @@ if test "x$enable_gcc_pedantic" == "xyes"; then
    with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
 fi
 
-CC=`"${R_PATH}" CMD config CC`
-CPP=`"${R_PATH}" CMD config CXXCPP`
-LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
-CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
-CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
-CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
-CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
-LIBS=
-LDFLAGS=
 
 if test -z "${ICUDT_DIR}"; then
    ICUDT_DIR_FORCE="yes"
@@ -2505,7 +2496,18 @@ disable_cxx11() {
    enable_cxx11="no"
    # unset cached C++ compiler features:
    unset ac_cv_cxx_compiler_gnu
+   unset ac_cv_c_compiler_gnu
    unset ac_cv_prog_cxx_g
+   unset ac_cv_prog_cc_c89
+   unset ac_cv_prog_CPP
+   unset ac_cv_header_stdc
+   unset ac_cv_prog_CXX
+   unset ac_cv_prog_ac_ct_CXX
+   unset ac_cv_cxx_namespaces
+   unset ac_cv_cxx_have_stl
+   unset ac_cv_prog_CC
+   unset ac_cv_objext
+   unset ac_cv_prog_ac_ct_CC
    unset ac_cv_cxx_namespaces
    unset ac_cv_cxx_have_stl
 }
@@ -2514,6 +2516,16 @@ while true; do
    # if C++11 support is enabled, we'll try it first;
    # if it fails, we'll switch to C++98
    # if this fails again, we'll pass
+
+   CC=`"${R_PATH}" CMD config CC`
+   CPP=`"${R_PATH}" CMD config CXXCPP`
+   LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
+   CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
+   CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
+   CFLAGS="${CFLAGS_base} ${CFLAGS_pic}"
+   CPPFLAGS=`"${R_PATH}" CMD config CPPFLAGS`
+   LIBS=
+   LDFLAGS=
 
    if test "x$enable_cxx11" == "xyes"; then
       CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
