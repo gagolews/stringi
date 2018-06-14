@@ -17,8 +17,7 @@ This is the fastest way to find out
 whether the elements of a character vector are empty strings.
 }
 \details{
-Missing values are handled properly,
-as opposed to the built-in \code{\link{nzchar}} function.
+Missing values are handled properly.
 }
 \examples{
 stri_isempty(letters[1:3])

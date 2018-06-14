@@ -26,8 +26,7 @@ than the number of code points, as UTF-8 is not a fixed-byte encoding:
 one code point may be encoded by 1-4 bytes
 (according to the current Unicode standard).
 
-Missing values are handled properly,
-as opposed to the built-in \code{\link{nchar}(str, "bytes")} function call.
+Missing values are handled properly.
 
 The strings do not need to be re-encoded to perform this operation.
 

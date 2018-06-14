@@ -46,8 +46,7 @@
 #' one code point may be encoded by 1-4 bytes
 #' (according to the current Unicode standard).
 #'
-#' Missing values are handled properly,
-#' as opposed to the built-in \code{\link{nchar}(str, "bytes")} function call.
+#' Missing values are handled properly.
 #'
 #' The strings do not need to be re-encoded to perform this operation.
 #'
@@ -85,7 +84,7 @@ stri_numbytes <- function(str) {
 #' @details
 #' Note that the number of code points is
 #' not the same as the `width` of the string when
-#' printed on the screen.
+#' printed on the console
 #'
 #' If a given string is in UTF-8 and  has not been properly normalized
 #' (e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
@@ -95,8 +94,7 @@ stri_numbytes <- function(str) {
 #' is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
 #' to deal with such cases.
 #'
-#' Missing values are handled properly,
-#' as opposed to the built-in \code{\link{nchar}} function.
+#' Missing values are handled properly.
 #' For `byte` encodings we get, as usual, an error.
 #'
 #' @param str character vector or an object coercible to
@@ -126,8 +124,7 @@ stri_length <- function(str) {
 #' whether the elements of a character vector are empty strings.
 #'
 #' @details
-#' Missing values are handled properly,
-#' as opposed to the built-in \code{\link{nzchar}} function.
+#' Missing values are handled properly.
 #'
 #' @param str character vector or an object coercible to
 #' @return Returns a logical vector of the same length as \code{str}.
@@ -179,7 +176,6 @@ stri_isempty <- function(str) {
 #'
 #' @examples
 #' stri_width(LETTERS[1:5])
-#' nchar(stri_trans_nfkd("\u0105"), "width") # provides incorrect information
 #' stri_width(stri_trans_nfkd("\u0105"))
 #' stri_width( # Full-width equivalents of ASCII characters:
 #'    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))

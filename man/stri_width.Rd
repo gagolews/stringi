@@ -41,7 +41,6 @@ as well as any other characters have width 1.
 }
 \examples{
 stri_width(LETTERS[1:5])
-nchar(stri_trans_nfkd("\\u0105"), "width") # provides incorrect information
 stri_width(stri_trans_nfkd("\\u0105"))
 stri_width( # Full-width equivalents of ASCII characters:
    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))

@@ -19,7 +19,7 @@ in each string.
 \details{
 Note that the number of code points is
 not the same as the `width` of the string when
-printed on the screen.
+printed on the console
 
 If a given string is in UTF-8 and  has not been properly normalized
 (e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
@@ -29,8 +29,7 @@ then a warning is generated and the corresponding output element
 is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
 to deal with such cases.
 
-Missing values are handled properly,
-as opposed to the built-in \code{\link{nchar}} function.
+Missing values are handled properly.
 For `byte` encodings we get, as usual, an error.
 }
 \examples{

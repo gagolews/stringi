@@ -1,6 +1,11 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
+## 1.2.4 (ongoing)
+
+* ...
+
+
 ## 1.2.3 (2018-05-16) **CRAN**
 
 * [BUGFIX] #296: Fixed the behavior of the `./configure` script on CentOS 6.
