@@ -280,7 +280,7 @@ disable_cxx11() {
 while true; do
    # if C++11 support is enabled, we'll try it first;
    # if it fails, we'll switch to C++98
-   # if this fails again, we'll pass
+   # if this fails again, we'll stop right there
 
    CC=`"${R_PATH}" CMD config CC`
    CPP=`"${R_PATH}" CMD config CXXCPP`
@@ -508,6 +508,41 @@ while true; do
 
          int main() {
            return 0;
+         }])
+      ],
+      [
+         AC_MSG_RESULT([yes])
+      ],[
+         AC_MSG_RESULT([no])
+         echo "*** The available ICU4C cannot be used"
+         return 1
+      ])
+
+      AC_MSG_CHECKING([programmatically for U_CHARSET_IS_UTF8==0])
+      AC_LINK_IFELSE([AC_LANG_SOURCE([
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <unicode/ptypes.h>
+         #include <unicode/uchar.h>
+         #include <unicode/utypes.h>
+         #include <unicode/utf8.h>
+         #include <unicode/utf16.h>
+         #include <unicode/ucnv.h>
+
+         int main() {
+           /* instead of testing U_CHARSET_IS_UTF8,
+           we verify if ucnv_setDefaultName() has no effect */
+           ucnv_setDefaultName("ISO-8859-2");
+           const char* val = ucnv_getDefaultName();
+           if (val[0]=="U" &&
+               val[1]=="T" &&
+               val[2]=="F" &&
+               val[3]=="-" &&
+               val[4]=="8"
+               )
+               return 1; /*   :(   */
+            else
+               return 0; /*   :)   */
          }])
       ],
       [

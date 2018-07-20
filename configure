@@ -2514,7 +2514,7 @@ disable_cxx11() {
 while true; do
    # if C++11 support is enabled, we'll try it first;
    # if it fails, we'll switch to C++98
-   # if this fails again, we'll pass
+   # if this fails again, we'll stop right there
 
    CC=`"${R_PATH}" CMD config CC`
    CPP=`"${R_PATH}" CMD config CXXCPP`
@@ -4388,6 +4388,53 @@ $as_echo_n "checking programmatically for sufficient U_ICU_VERSION_MAJOR_NUM... 
 
          int main() {
            return 0;
+         }
+
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+else
+
+         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+         echo "*** The available ICU4C cannot be used"
+         return 1
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking programmatically for U_CHARSET_IS_UTF8==0" >&5
+$as_echo_n "checking programmatically for U_CHARSET_IS_UTF8==0... " >&6; }
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+         #include <unicode/unistr.h>
+         #include <unicode/uvernum.h>
+         #include <unicode/ptypes.h>
+         #include <unicode/uchar.h>
+         #include <unicode/utypes.h>
+         #include <unicode/utf8.h>
+         #include <unicode/utf16.h>
+         #include <unicode/ucnv.h>
+
+         int main() {
+           /* instead of testing U_CHARSET_IS_UTF8,
+           we verify if ucnv_setDefaultName() has no effect */
+           ucnv_setDefaultName("ISO-8859-2");
+           const char* val = ucnv_getDefaultName();
+           if (val0=="U" &&
+               val1=="T" &&
+               val2=="F" &&
+               val3=="-" &&
+               val4=="8"
+               )
+               return 1; /*   :(   */
+            else
+               return 0; /*   :)   */
          }
 
 _ACEOF
