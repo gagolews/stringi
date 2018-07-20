@@ -19,7 +19,8 @@ customized installation.
 stringi vs the ICU4C library
 ----------------------------
 
-The stringi package depends on the ICU4C >= 52 library.
+The stringi package depends on the ICU4C >= 52 library
+with `U_CHARSET_IS_UTF8` flag disabled.
 
 If you build the package from sources and either:
 * these requirements are not met (check out http://site.icu-project.org/download,
@@ -126,24 +127,10 @@ Final remarks
 We expect that with a properly configured C++11 compiler and properly
 installed system ICU4C distribution, you should have no problems
 with installing the package. Also, if you use our ICU4C bundle and you
-have a working internet access, all is expected to lead to a happy end.
-
-The package is frequently tested on the following OSes:
-* Fedora: 20, 24, latest,
-* CentOS: latest,
-* OpenSUSE: latest,
-* Ubuntu: xenial, trusty,
-* Debian: testing,
-* Oracle Linux: 7,
-* Mageia: latest,
-* Windows (via WinBuilder),
-* Solaris 10 (gcc/i386, CC/i386, CC/Sparc),
-* Travis CI (os: linux, r: release;
-             os: linux, r: oldrel;
-             os: linux, r: devel,
-             os: osx,   r: release,
-             os: osx,   r: devel),
-and of course on CRAN machines.
+have a working internet access, all is expected to lead to a happy ending.
 
 If you do not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/gagolews/stringi/issues).
+However, please check the already-closed issues for similar problems
+experienced by other users - it is very likely they have already been
+succesfully resolved.
