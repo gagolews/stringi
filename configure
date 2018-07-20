@@ -4426,11 +4426,11 @@ $as_echo_n "checking programmatically for U_CHARSET_IS_UTF8==0... " >&6; }
            we verify if ucnv_setDefaultName() has no effect */
            ucnv_setDefaultName("ISO-8859-2");
            const char* val = ucnv_getDefaultName();
-           if (val0=="U" &&
-               val1=="T" &&
-               val2=="F" &&
-               val3=="-" &&
-               val4=="8"
+           if (val0=='U' &&
+               val1=='T' &&
+               val2=='F' &&
+               val3=='-' &&
+               val4=='8'
                )
                return 1; /*   :(   */
             else
