@@ -157,9 +157,9 @@ AC_ARG_VAR([STRINGI_LIBS],
    [Additional libraries to link against, see also --with-extra-libs.])
 
 
-with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS} -DU_CHARSET_IS_UTF8=0"
-with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS} -DU_CHARSET_IS_UTF8=0"
-with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS} -DU_CHARSET_IS_UTF8=0"
+with_extra_cflags="${with_extra_cflags} ${STRINGI_CFLAGS}"
+with_extra_cppflags="${with_extra_cppflags} ${STRINGI_CPPFLAGS}"
+with_extra_cxxflags="${with_extra_cxxflags} ${STRINGI_CXXFLAGS}"
 with_extra_ldflags="${with_extra_ldflags} ${STRINGI_LDFLAGS}"
 with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 
@@ -530,15 +530,21 @@ while true; do
          #include <unicode/ucnv.h>
 
          int main() {
-           /* instead of testing U_CHARSET_IS_UTF8,
-           we verify if ucnv_setDefaultName() has no effect */
+#ifdef U_CHARSET_IS_UTF8
+#if U_CHARSET_IS_UTF8
+#error "U_CHARSET_IS_UTF8==1"
+return 10;
+#endif
+#endif
+
+           /* we additionally verify if ucnv_setDefaultName() has no effect */
            ucnv_setDefaultName("ISO-8859-2");
            const char* val = ucnv_getDefaultName();
-           if (val[0]=='U' &&
-               val[1]=='T' &&
-               val[2]=='F' &&
-               val[3]=='-' &&
-               val[4]=='8'
+           if (*(val+0)=='U' &&
+               *(val+1)=='T' &&
+               *(val+2)=='F' &&
+               *(val+3)=='-' &&
+               *(val+4)=='8'
                )
                return 1; /*   :(   */
             else
