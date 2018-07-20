@@ -5,8 +5,9 @@
 
 * [BUGFIX] #314: test U_CHARSET_IS_UTF8 in configure when using pkg-build
 
-* [BUGFIX] #317: Remove icudt61l.zip from .Rbuildignore to solve the frequent `icudt download failed` error (also on CRAN's windows-release and windows-oldrel).
-
+* [BUGFIX] #317: include icudt61l.zip in the source bundle to solve the
+frequent `icudt download failed` error (also on CRAN's windows-release
+and windows-oldrel).
 
 
 ## 1.2.3 (2018-05-16) **CRAN**
