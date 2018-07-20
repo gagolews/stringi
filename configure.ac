@@ -534,11 +534,11 @@ while true; do
            we verify if ucnv_setDefaultName() has no effect */
            ucnv_setDefaultName("ISO-8859-2");
            const char* val = ucnv_getDefaultName();
-           if (val[0]=="U" &&
-               val[1]=="T" &&
-               val[2]=="F" &&
-               val[3]=="-" &&
-               val[4]=="8"
+           if (val[0]=='U' &&
+               val[1]=='T' &&
+               val[2]=='F' &&
+               val[3]=='-' &&
+               val[4]=='8'
                )
                return 1; /*   :(   */
             else
