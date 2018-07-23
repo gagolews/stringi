@@ -1,9 +1,14 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
+## 1.2.5 (2018-xx-xx) **devel**
+
+* [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
+
+
 ## 1.2.4 (2018-07-20) **CRAN**
 
-* [BUGFIX] #314: test U_CHARSET_IS_UTF8 in configure when using pkg-build
+* [BUGFIX] #314: test `U_CHARSET_IS_UTF8` in configure when using pkg-build.
 
 * [BUGFIX] #317: include icudt61l.zip in the source bundle to solve the
 frequent `icudt download failed` error (also on CRAN's windows-release

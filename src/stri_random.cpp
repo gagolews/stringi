@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,6 +47,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.2.5 (Marek Gagolewski, 2019-07-23)
+ *    #319: Fixed overflow in `stri_rand_shuffle()`.
  */
 SEXP stri_rand_shuffle(SEXP str)
 {
@@ -93,11 +96,11 @@ SEXP stri_rand_shuffle(SEXP str)
          continue;
       }
 
-      // do shuffle buf1 at pos 0..k-1: (Fischer-Yates shuffle)
+      // do shuffle buf1 at pos 0..k-1: (Fisher-Yates shuffle)
       R_len_t cur_n = k;
       for (j=0; j<cur_n-1; ++j) {
          // rand from i to cur_n-1
-         R_len_t r = (R_len_t)floor(unif_rand()*(double)(cur_n-i)+(double)i);
+         R_len_t r = (R_len_t)floor(unif_rand()*(double)(cur_n-j)+(double)j);
          UChar32 tmp = buf1[r];
          buf1[r] = buf1[j];
          buf1[j] = tmp;
