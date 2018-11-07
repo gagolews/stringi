@@ -36,7 +36,7 @@
 #' This function constructs date-time objects from numeric representations.
 #'
 #' @details
-#' Vectorized over \code{year}, \code{month}, \code{hour},
+#' Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},
 #' \code{hour}, \code{minute}, and \code{second}.
 #'
 #' @param year integer vector; 0 is 1BC, -1 is 2BC, etc.
