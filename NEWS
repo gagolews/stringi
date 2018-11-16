@@ -3,6 +3,9 @@
 
 ## 1.2.5 (2018-xx-xx) **devel**
 
+* [NEW FEATURE] #334: Added missing icudt61b.dat to support big-endian
+platforms. Thanks to Dimitri John Ledkov (@xnox).
+
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
 
 
