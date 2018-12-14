@@ -29,7 +29,11 @@ with a warning.
 
 If code points in a given \code{pattern} are not unique,
 last corresponding replacement code point is used.
-}
+
+Unlike chartr, the translation happens as if sequentially performed. For example, stri_trans_char("A","AB","BA") turns "A" into "A",
+as if "A" if first turned into "B" following the first code point in \code{pattern} and \code{replacement}, and then into "A"
+following the second code point. However, chartr("AB","BA","A") would turn "A" into "B", as if each code point in \code{str} is first
+located in \code{pattern} and then replaced by the code point in the same position within \code{replacement}. }
 \examples{
 stri_trans_char("id.123", ".", "_")
 stri_trans_char("babaab", "ab", "01")
