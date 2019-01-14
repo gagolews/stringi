@@ -122,7 +122,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
-"stri_sub<-" <- function(str, from = 1L, to = -1L, length, omit_na=FALSE, value) {
+stri_sub_replace <- function(str, from = 1L, to = -1L, length, omit_na=FALSE, value) {
    if (missing(length)) {
       if (is.matrix(from) && !missing(to))
          warning("argument `to` is ignored in the current context")
@@ -136,3 +136,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
       .Call(C_stri_sub_replacement, str, from, NULL, length, omit_na, value)
    }
 }
+
+#' @rdname stri_sub
+#' @export
+"stri_sub<-" <- stri_sub_replace
