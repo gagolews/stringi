@@ -1,7 +1,10 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.2.5 (2018-xx-xx) **devel**
+## 1.2.5 (2019-xx-xx) **devel**
+
+* [NEW FEATURE] #338: `stri_sub_replace` is now an alias for `stri_sub<-`
+(@yutannihilation, @BastienFR), which makes it much more easily pipable.
 
 * [NEW FEATURE] #334: Added missing icudt61b.dat to support big-endian
 platforms. Thanks to Dimitri John Ledkov (@xnox).

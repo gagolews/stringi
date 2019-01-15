@@ -3,11 +3,14 @@
 \name{stri_sub}
 \alias{stri_sub}
 \alias{stri_sub<-}
+\alias{stri_sub_replace}
 \title{Extract a Substring From or Replace a Substring In a Character Vector}
 \usage{
 stri_sub(str, from = 1L, to = -1L, length)
 
 stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
+
+stri_sub_replace(str, from = 1L, to = -1L, length, omit_na=FALSE, value)
 }
 \arguments{
 \item{str}{character vector}
@@ -34,7 +37,8 @@ side effect: after a call, \code{str} is modified.
 \description{
 The first function extracts substrings under code point-based
 index ranges provided. The second one allows to substitute parts of
-a string with given strings.
+a string with given strings. The third one is a magrittr's pipe-operator-
+friendly version of the second.
 }
 \details{
 Vectorized over \code{str}, [\code{value}], \code{from} and
@@ -82,6 +86,8 @@ stri_sub(s, -5, length=4)
 
 x <- c("a;b", "c:d")
 (stri_sub(x, stri_locate_first_fixed(x, ";"), omit_na=TRUE) <- "_")
+
+\dontrun{x \%>\% stri_sub_replace(1, 5, value="new_substring")}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_boundaries}},
