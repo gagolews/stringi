@@ -73,7 +73,7 @@ If \code{normalize} is \code{FALSE},
 then multiple white spaces between the word boundaries are
 preserved within each wrapped line.
 In such a case, none of the strings can contain \code{\\r}, \code{\\n},
-or other new line characters, otherwise you will get at error.
+or other new line characters, otherwise you will get an error.
 You should split the input text into lines
 or e.g. substitute line breaks with spaces
 before applying this function.

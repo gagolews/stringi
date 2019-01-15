@@ -36,7 +36,7 @@ Returns an object of class \code{\link{POSIXct}}.
 This function constructs date-time objects from numeric representations.
 }
 \details{
-Vectorized over \code{year}, \code{month}, \code{hour},
+Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},
 \code{hour}, \code{minute}, and \code{second}.
 }
 \examples{

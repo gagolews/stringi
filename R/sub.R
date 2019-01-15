@@ -35,7 +35,8 @@
 #' @description
 #' The first function extracts substrings under code point-based
 #' index ranges provided. The second one allows to substitute parts of
-#' a string with given strings.
+#' a string with given strings. The third one is a magrittr's pipe-operator-
+#' friendly version of the second.
 #'
 #' @details
 #' Vectorized over \code{str}, [\code{value}], \code{from} and
@@ -100,6 +101,8 @@
 #'
 #' x <- c("a;b", "c:d")
 #' (stri_sub(x, stri_locate_first_fixed(x, ";"), omit_na=TRUE) <- "_")
+#'
+#' \dontrun{x %>% stri_sub_replace(1, 5, value="new_substring")}
 #' @family indexing
 #' @rdname stri_sub
 #' @export
@@ -136,3 +139,9 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
       .Call(C_stri_sub_replacement, str, from, NULL, length, omit_na, value)
    }
 }
+
+
+#' @rdname stri_sub
+#' @export
+#' @usage stri_sub_replace(str, from = 1L, to = -1L, length, omit_na=FALSE, value)
+stri_sub_replace <- `stri_sub<-`
