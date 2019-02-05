@@ -1,7 +1,17 @@
                    stringi package NEWS and CHANGELOG
 ===============================================================================
 
-## 1.2.5 (2019-xx-xx) **devel**
+## 1.3.1 (2019-xx-xx) **devel**
+
+* TODO #335
+
+* TODO #318
+
+* TODO #337
+
+* TODO WARNs
+
+* TODO UBSAN
 
 * [NEW FEATURE] #338: `stri_sub_replace` is now an alias for `stri_sub<-`
 (@yutannihilation, @BastienFR), which makes it much more easily pipable.
