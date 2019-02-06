@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,9 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *          getMatcher() now also accepts UChar*
+ *
+ * @version 1.2.0 (Marek Gagolewski, 2019-02-06)
+ *          #337: warn on empty search pattern here
  */
 class StriContainerUStringSearch : public StriContainerUTF16 {
 

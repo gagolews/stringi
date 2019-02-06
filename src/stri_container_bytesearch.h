@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,6 +64,9 @@
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use StriByteSearchMatcher
+ *
+ * @version 1.2.0 (Marek Gagolewski, 2019-02-06)
+ *          #337: warn on empty search pattern here
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
