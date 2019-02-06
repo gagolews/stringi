@@ -22,9 +22,9 @@ encoding.
 }
 \description{
 \code{stri_enc_set} sets the encoding used to re-encode strings
-internally (i.e. by \R) declared to be in native encoding,
+internally (i.e., by \R) declared to be in native encoding,
 see \link{stringi-encoding} and \code{\link{stri_enc_mark}}.
-\code{stri_enc_get} returns currently used default encoding.
+\code{stri_enc_get} returns the currently used default encoding.
 }
 \details{
 \code{stri_enc_get} is the same as
@@ -41,6 +41,10 @@ category as given by \code{\link{Sys.getlocale}}.
 If you set a default encoding that is neither a superset of ASCII,
 nor an 8-bit encoding, a warning will be generated,
 see \link{stringi-encoding} for discussion.
+
+\code{stri_enc_set} has no effect if the system ICU assumes that
+the default charset is always UTF-8 (i.e., where the internal
+\code{U_CHARSET_IS_UTF8} is defined and set to 1).
 }
 \seealso{
 Other encoding_management: \code{\link{stri_enc_info}},

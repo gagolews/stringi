@@ -18,9 +18,11 @@ test_that("stri_read/write_lines", {
    expect_identical(text, stri_read_lines(fname, 'auto'))
    expect_identical(text, stri_read_lines(fname, 'utf32'))
 
-   stri_write_lines(text, fname, 'latin2')
-   suppressMessages(oldCS <- stri_enc_set("latin2"))
-   expect_identical(text, stri_read_lines(fname, 'auto'))
-   suppressMessages(stri_enc_set(oldCS))
-   expect_identical(text, stri_read_lines(fname, 'latin2'))
+   if (!stri_info()$ICU.UTF8) {
+      stri_write_lines(text, fname, 'latin2')
+      suppressMessages(oldCS <- stri_enc_set("latin2"))
+      expect_identical(text, stri_read_lines(fname, 'auto'))
+      suppressMessages(stri_enc_set(oldCS))
+      expect_identical(text, stri_read_lines(fname, 'latin2'))
+   }
 })

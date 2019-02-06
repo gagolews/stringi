@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,13 +48,24 @@
  *          use StriUcnv; make StriException-friendly
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
- *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *    #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
+ *    #335: if system ICU uses U_CHARSET_IS_UTF8=1, the function has no effect
  */
 SEXP stri_enc_set(SEXP enc)
 {
    // here, the default encoding may not be requested:
    const char* selected_enc
       = stri__prepare_arg_enc(enc, "enc", false/*no default*/); /* this is R_alloc'ed */
+
+#ifdef U_CHARSET_IS_UTF8
+#if U_CHARSET_IS_UTF8
+   // #335: if system ICU uses U_CHARSET_IS_UTF8=1, the function has no effect
+   Rf_warning(MSG__U_CHARSET_IS_UTF8);
+   return R_NilValue;
+#endif
+#endif
 
    STRI__ERROR_HANDLER_BEGIN(0)
 

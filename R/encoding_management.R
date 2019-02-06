@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,10 @@
 #' Gives the list of encodings that are supported by \pkg{ICU}.
 #'
 #' @details
-#' Please note that apart from given encoding identifiers and their aliases,
-#' some other specifiers will be available in your conversion tasks.
+#' Apart from given encoding identifiers and their aliases,
+#' some other specifiers might be additionally available.
 #' This is due to the fact that \pkg{ICU} tries to normalize
-#' converter names. E.g. \code{"UTF8"} is also valid,
+#' converter names. For instance, \code{"UTF8"} is also valid,
 #' see \link{stringi-encoding} for more information.
 #'
 #' @param simplify single logical value; return a character vector or a
@@ -76,19 +76,19 @@ stri_enc_list <- function(simplify=FALSE) {
 #'
 #' @details
 #' An error is raised if the provided encoding is unknown to \pkg{ICU}
-#' (see \code{\link{stri_enc_list}} for more details)
+#' (see \code{\link{stri_enc_list}} for more details).
 #'
 #'
-#' @param enc \code{NULL} or \code{""} for default encoding,
+#' @param enc \code{NULL} or \code{""} for the default encoding,
 #' or a single string with encoding name
 #'
 #' @return
 #' Returns a list with the following components:
 #' \itemize{
-#' \item \code{Name.friendly} -- Friendly encoding name:
+#' \item \code{Name.friendly} -- friendly encoding name:
 #'     MIME Name or JAVA Name or \pkg{ICU} Canonical Name
 #'    (the first of provided ones is selected, see below);
-#' \item \code{Name.ICU} -- Encoding name as identified by \pkg{ICU};
+#' \item \code{Name.ICU} -- encoding name as identified by \pkg{ICU};
 #' \item \code{Name.*} -- other standardized encoding names,
 #' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some of them
@@ -97,12 +97,12 @@ stri_enc_list <- function(simplify=FALSE) {
 #' \item \code{Unicode.1to1} -- for 8-bit encodings only: are all characters
 #' translated to exactly one Unicode code point and is the translation
 #' scheme reversible?;
-#' \item \code{CharSize.8bit} -- is this an 8-bit encoding, i.e. do we have
+#' \item \code{CharSize.8bit} -- is this an 8-bit encoding, i.e., do we have
 #'    \code{CharSize.min == CharSize.max} and \code{CharSize.min == 1}?;
 #' \item \code{CharSize.min} -- minimal number of bytes used
-#'    to represent an UChar (in UTF-16, this is not the same as UChar32)
+#'    to represent a UChar (in UTF-16, this is not the same as UChar32)
 #' \item \code{CharSize.max} -- maximal number of bytes used
-#'    to represent an UChar (in UTF-16, this is not the same as UChar32,
+#'    to represent a UChar (in UTF-16, this is not the same as UChar32,
 #'    i.e. does not reflect the maximal code point representation size)
 #' }
 #'
@@ -118,9 +118,9 @@ stri_enc_info <- function(enc=NULL) {
 #'
 #' @description
 #' \code{stri_enc_set} sets the encoding used to re-encode strings
-#' internally (i.e. by \R) declared to be in native encoding,
+#' internally (i.e., by \R) declared to be in native encoding,
 #' see \link{stringi-encoding} and \code{\link{stri_enc_mark}}.
-#' \code{stri_enc_get} returns currently used default encoding.
+#' \code{stri_enc_get} returns the currently used default encoding.
 #'
 #' @details
 #' \code{stri_enc_get} is the same as
@@ -137,6 +137,10 @@ stri_enc_info <- function(enc=NULL) {
 #' If you set a default encoding that is neither a superset of ASCII,
 #' nor an 8-bit encoding, a warning will be generated,
 #' see \link{stringi-encoding} for discussion.
+#'
+#' \code{stri_enc_set} has no effect if the system ICU assumes that
+#' the default charset is always UTF-8 (i.e., where the internal
+#' \code{U_CHARSET_IS_UTF8} is defined and set to 1).
 #'
 #' @param enc single string; character encoding name,
 #' see \code{\link{stri_enc_list}} for the list of supported encodings.
@@ -157,7 +161,7 @@ stri_enc_set <- function(enc) {
    # We call stri_info, because it generates some warnings,
    # in case any problems are found:
    .Call(C_stri_enc_set, enc)
-   message(stri_paste('You are now working with ', stri_info(short=TRUE)))
+   message(stri_paste('New settings: ', stri_info(short=TRUE)))
    invisible(previous)
 }
 
@@ -182,7 +186,7 @@ stri_enc_get <- function() {
 #' strings can be declared to be in \code{latin1},
 #' \code{UTF-8} or \code{bytes}.
 #'
-#' Moreover, via the C API we may check whether
+#' Moreover, we may check (via the R/C API) whether
 #' a string is in ASCII (\R assumes that this holds if and only if
 #' all bytes in a string are not greater than 127,
 #' so there is an implicit assumption that your platform uses
@@ -191,7 +195,7 @@ stri_enc_get <- function() {
 #' encoding.
 #'
 #' Intuitively, the default encoding should be equivalent to
-#' the one you use when inputting data via keyboard.
+#' the one you use on stdin (e.g., your "keyboard").
 #' In \code{stringi} we assume that such an encoding
 #' is equivalent to the one returned by \code{\link{stri_enc_get}}.
 #' It is automatically detected by \pkg{ICU}
@@ -204,11 +208,11 @@ stri_enc_get <- function() {
 #' or an object coercible to a character vector
 #'
 #' @return Returns a character vector of the same length as \code{str}.
-#' Unlike in \code{\link{Encoding}}, possible encodings are:
+#' Unlike in the \code{\link{Encoding}} function, here the possible encodings are:
 #' \code{ASCII}, \code{latin1}, \code{bytes}, \code{native},
 #' and \code{UTF-8}. Additionally, missing values are handled properly.
 #'
-#' This is exactly the same information that is used by
+#' This gives exactly the same data that is used by
 #' all the functions in \pkg{stringi} to re-encode their inputs.
 #'
 #' @family encoding_management

@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,22 +35,32 @@
 
 #define STRI_ICU_FOUND @ICU_FOUND@
 
+
+/* This caused a serious bug on Solaris, see #94:
+ //  #define U_DISABLE_RENAMING 1
+ // do not turn on!
+*/
+
+
+
+
+#if !STRI_ICU_FOUND
+// if compiling ICU from sources, use:
+
+/* fixes #335 (and parts of #314 that were not reverted by #335) */
+#define U_LIB_SUFFIX_C_NAME _stringi
+
 #ifdef U_CHARSET_IS_UTF8
 #undef U_CHARSET_IS_UTF8
 #endif
 
 #define U_CHARSET_IS_UTF8 0
 
-
-
-
-/* This caused a serious bug on Solaris, see #94:
-   #define U_DISABLE_RENAMING 1 */
-
-#if !STRI_ICU_FOUND
-/* fixes #314 */
-#define U_LIB_SUFFIX_C_NAME _stringi
 #endif
+
+
+
+
 
 /* localtime_r is not a C++98 nor C99 function: it is POSIX.  Solaris has
    it, but only for C (thanks to Kurt Hornik for pointing this out) */

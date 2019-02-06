@@ -63,6 +63,8 @@ AC_ARG_VAR([STRINGI_DISABLE_CXX11],
 
 # ICU >= 60 requires full C++11 support
 
+# ICU >= 61 has U_CHARSET_IS_UTF8=1 set by default
+
 if test "x$enable_cxx11" != "xno" -a -z "${STRINGI_DISABLE_CXX11}"; then
    enable_cxx11="yes"
 else
@@ -554,11 +556,19 @@ return 10;
       [
          # U_CHARSET_IS_UTF8 is not defined
          AC_MSG_RESULT([no])
+         U_CHARSET_IS_UTF8=0
       ],[
          # U_CHARSET_IS_UTF8 is defined
          AC_MSG_RESULT([yes])
-         echo "*** The available ICU4C cannot be used"
-         return 1
+
+         ## issue#314: fail now:
+         #echo "*** The available ICU4C cannot be used"
+         #return 1
+
+         # issue#335: revert#314; allow U_CHARSET_IS_UTF8=1;
+         # but warn in stri_enc_set()
+         U_CHARSET_IS_UTF8=1
+         # => continue
       ])
 
       AC_MSG_CHECKING([for available ICU data library (ucnv, uloc, utrans)])

@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,13 +62,13 @@
    "invalid UTF-8 codepoint definition; fixing"
 
 #define MSG__INVALID_CODE_POINT_REPLNA \
-   "invalid UTF-8 codepoint definition; setting string to NA, see also stri_enc_toutf8()"
+   "invalid UTF-8 codepoint definition; setting string to NA, see also ?stri_enc_toutf8"
 
 #define MSG__INVALID_UTF8 \
-   "invalid UTF-8 byte sequence detected; perhaps you should try calling stri_enc_toutf8()"
+   "invalid UTF-8 byte sequence detected; perhaps you should try calling ?stri_enc_toutf8"
 
 #define MSG__INVALID_ESCAPE \
-   "invalid escape sequence detected; setting NA"              \
+   "invalid escape sequence detected; setting NA"
 
 #define MSG__REPLACEMENT_ZERO \
    "replacement has length zero"
@@ -282,5 +282,10 @@
 
 #define MSG__MEM_ALLOC_ERROR \
    "memory allocation error"
+
+
+#define MSG__U_CHARSET_IS_UTF8 \
+   "system ICU assumes that the default charset is always UTF-8, and hence this function has no effect"
+
 
 #endif

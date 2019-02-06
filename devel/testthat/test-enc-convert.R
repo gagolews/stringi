@@ -43,15 +43,19 @@ test_that("stri_encode", {
       c("\u0105abc\u0104",    NA,         "\032\032")))
 
    #### mixed encoding marks:
-   suppressMessages(defenc <- stri_enc_set("iso-8859-2"))
-   expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", "UTF-8"), c("a", "\u0105", NA, "\u0105"))
-   expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", ""), c("a", "\xb1", NA, "\xb1"))
-   suppressMessages(stri_enc_set(defenc))
+   if (!stri_info()$ICU.UTF8) {
+      suppressMessages(defenc <- stri_enc_set("iso-8859-2"))
+      expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+      expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", ""), c("a", "\xb1", NA, "\xb1"))
+      suppressMessages(stri_enc_set(defenc))
+   }
 
-   suppressMessages(defenc <- stri_enc_set("cp-1250"))
-   expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105"), NULL, "UTF-8"), c("a", "\u0105", NA, "\u0105"))
-   expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105")), c("a", "\xb9", NA, "\xb9"))
-   suppressMessages(stri_enc_set(defenc))
+   if (!stri_info()$ICU.UTF8) {
+      suppressMessages(defenc <- stri_enc_set("cp-1250"))
+      expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105"), NULL, "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+      expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105")), c("a", "\xb9", NA, "\xb9"))
+      suppressMessages(stri_enc_set(defenc))
+   }
 })
 
 
@@ -122,8 +126,10 @@ test_that("stri_enc_toascii", {
    expect_identical(stri_enc_toascii(LETTERS), LETTERS)
    expect_identical(stri_enc_toascii(c('sgajhgaoi', NA, '\u0105fds\u5432\u0104')), c('sgajhgaoi', NA, '\x1afds\x1a\x1a'))
 
-   s <- c('\xa3\xb1ka')
-   suppressMessages(enc <- stri_enc_set('latin-2'))
-   expect_identical(stri_enc_toascii(s), "\x1a\x1aka")
-   suppressMessages(stri_enc_set(enc))
+   if (!stri_info()$ICU.UTF8) {
+      s <- c('\xa3\xb1ka')
+      suppressMessages(enc <- stri_enc_set('latin-2'))
+      expect_identical(stri_enc_toascii(s), "\x1a\x1aka")
+      suppressMessages(stri_enc_set(enc))
+   }
 })

@@ -29,7 +29,7 @@ as returned by \code{\link{stri_enc_info}};
 the system \pkg{ICU} libs are used, otherwise \pkg{ICU} was built together
 with \pkg{stringi};
 \item \code{ICU.UTF8} -- logical; \code{TRUE} if the internal
-\code{U_CHARSET_IS_UTF8} flag is defined.
+\code{U_CHARSET_IS_UTF8} flag is defined and set.
 }
 }
 \description{
