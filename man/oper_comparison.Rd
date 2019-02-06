@@ -94,3 +94,4 @@ Other locale_sensitive: \code{\link{stri_compare}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search-coll}}
 }
+\concept{locale_sensitive}

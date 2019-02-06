@@ -11,6 +11,12 @@
 
 * TODO UBSAN
 
+* [NEW FEATURE] #335: a fix to #314 (by design) prevented the use of
+system ICU if it was compiled with `U_CHARSET_IS_UTF8` defined. However,
+this is the default setting in libicu>=61. From now on, in such cases system
+ICU is used more eagerly, but `stri_enc_set()` issues a warning stating that
+the default (UTF-8) encoding cannot be changed.
+
 * [NEW FEATURE] #338: `stri_sub_replace` is now an alias for `stri_sub<-`
 (@yutannihilation, @BastienFR), which makes it much more easily pipable.
 

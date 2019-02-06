@@ -59,3 +59,4 @@ stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
 Other utils: \code{\link{stri_na2empty}},
   \code{\link{stri_remove_empty}}
 }
+\concept{utils}

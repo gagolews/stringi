@@ -3,14 +3,13 @@
 \name{stri_datetime_format}
 \alias{stri_datetime_format}
 \alias{stri_datetime_parse}
-\alias{stri_datetime_format}
 \title{Date and Time Formatting and Parsing}
 \usage{
 stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
   locale = NULL)
 
-stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE,
-  tz = NULL, locale = NULL)
+stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss",
+  lenient = FALSE, tz = NULL, locale = NULL)
 }
 \arguments{
 \item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
@@ -213,3 +212,4 @@ Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_timezone_info}},
   \code{\link{stri_timezone_list}}
 }
+\concept{datetime}

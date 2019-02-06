@@ -294,3 +294,5 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
+\concept{search_charclass}
+\concept{stringi_general_topics}

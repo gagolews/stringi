@@ -41,3 +41,4 @@ stri_stats_latex(s)
 \seealso{
 Other stats: \code{\link{stri_stats_general}}
 }
+\concept{stats}

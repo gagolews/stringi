@@ -69,3 +69,6 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{search_coll}
+\concept{stringi_general_topics}

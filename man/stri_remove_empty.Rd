@@ -27,3 +27,4 @@ stri_remove_empty(c("a", NA, "", "b"), TRUE)
 Other utils: \code{\link{stri_list2matrix}},
   \code{\link{stri_na2empty}}
 }
+\concept{utils}

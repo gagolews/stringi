@@ -84,3 +84,5 @@ Other encoding_detection: \code{\link{stri_enc_detect}},
   \code{\link{stri_enc_isutf8}},
   \code{\link{stringi-encoding}}
 }
+\concept{encoding_detection}
+\concept{locale_sensitive}

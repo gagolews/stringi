@@ -107,3 +107,4 @@ Other transform: \code{\link{stri_trans_char}},
   \code{\link{stri_trans_list}},
   \code{\link{stri_trans_tolower}}
 }
+\concept{transform}

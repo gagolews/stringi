@@ -143,3 +143,4 @@ ICU4C was developed by IBM and others.
 The Unicode Character Database is due to Unicode, Inc.;
 see the COPYRIGHTS file for more details.
 }
+\concept{stringi_general_topics}

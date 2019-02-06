@@ -25,18 +25,18 @@ stri_extract_first(str, ..., regex, fixed, coll, charclass)
 
 stri_extract_last(str, ..., regex, fixed, coll, charclass)
 
-stri_extract(str, ..., regex, fixed, coll, charclass, mode = c("first", "all",
-  "last"))
+stri_extract(str, ..., regex, fixed, coll, charclass, mode = c("first",
+  "all", "last"))
 
-stri_extract_all_charclass(str, pattern, merge = TRUE, simplify = FALSE,
-  omit_no_match = FALSE)
+stri_extract_all_charclass(str, pattern, merge = TRUE,
+  simplify = FALSE, omit_no_match = FALSE)
 
 stri_extract_first_charclass(str, pattern)
 
 stri_extract_last_charclass(str, pattern)
 
-stri_extract_all_coll(str, pattern, simplify = FALSE, omit_no_match = FALSE,
-  ..., opts_collator = NULL)
+stri_extract_all_coll(str, pattern, simplify = FALSE,
+  omit_no_match = FALSE, ..., opts_collator = NULL)
 
 stri_extract_first_coll(str, pattern, ..., opts_collator = NULL)
 
@@ -161,3 +161,4 @@ Other search_extract: \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_match_all}},
   \code{\link{stringi-search}}
 }
+\concept{search_extract}

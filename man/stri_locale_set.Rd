@@ -49,3 +49,4 @@ Other locale_management: \code{\link{stri_locale_info}},
   \code{\link{stri_locale_list}},
   \code{\link{stringi-locale}}
 }
+\concept{locale_management}

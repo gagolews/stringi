@@ -88,3 +88,6 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{stringi_general_topics}
+\concept{text_boundaries}

@@ -50,3 +50,4 @@ Other encoding_detection: \code{\link{stri_enc_detect2}},
   \code{\link{stri_enc_isutf16be}},
   \code{\link{stringi-encoding}}
 }
+\concept{encoding_detection}

@@ -9,8 +9,8 @@
 \alias{stri_extract_last_words}
 \title{Extract Text Between Text Boundaries}
 \usage{
-stri_extract_all_boundaries(str, simplify = FALSE, omit_no_match = FALSE,
-  ..., opts_brkiter = NULL)
+stri_extract_all_boundaries(str, simplify = FALSE,
+  omit_no_match = FALSE, ..., opts_brkiter = NULL)
 
 stri_extract_last_boundaries(str, ..., opts_brkiter = NULL)
 
@@ -111,3 +111,6 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{search_extract}
+\concept{text_boundaries}

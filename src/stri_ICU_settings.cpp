@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,12 +39,14 @@
 
 /** Get curent-default ICU locale and charset information
  *
- *  @return an R named list with 4 components:
+ *  @return an R named list with 7 components:
  *  \code{Unicode.version} == ICU Unicode version,
  *  \code{ICU.version} == U_ICU_VERSION
  *  \code{Locale} == \code{stri_locale_info()},
  *  \code{Charset.internal} == \code{"UTF-8", "UTF-16"},
  *  \code{Charset.native} == \code{stri_enc_info()})
+ *  \code{ICU.system} == is system ICU used?
+ *  \code{ICU.UTF8} == is U_CHARSET_IS_UTF8 set?
  *
  *  @version 0.1-?? (Marek Gagolewski)
  *
@@ -59,11 +61,14 @@
  *
  * @version 0.5-3 (Marek Gagolewski, 2015-06-24)
  *    new retval field: ICU.system
+ *
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
+ *    new retval field: ICU.UTF8
 */
 SEXP stri_info()
 {
    STRI__ERROR_HANDLER_BEGIN(0)
-   const R_len_t infosize = 6;
+   const R_len_t infosize = 7;
    SEXP vals;
 
    STRI__PROTECT(vals = Rf_allocVector(VECSXP, infosize));
@@ -75,9 +80,16 @@ SEXP stri_info()
    SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));  // may call Rf_error
    SET_VECTOR_ELT(vals, 5, Rf_ScalarLogical(STRI_ICU_FOUND));
 
+   SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(0));
+#ifdef U_CHARSET_IS_UTF8
+#if U_CHARSET_IS_UTF8
+   SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(1));
+#endif
+#endif
+
    stri__set_names(vals, infosize,
       "Unicode.version", "ICU.version", "Locale",
-      "Charset.internal", "Charset.native", "ICU.system");
+      "Charset.internal", "Charset.native", "ICU.system", "ICU.UTF8");
 
    STRI__UNPROTECT_ALL
    return vals;

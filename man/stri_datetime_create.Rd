@@ -57,3 +57,4 @@ Other datetime: \code{\link{stri_datetime_add}},
   \code{\link{stri_timezone_info}},
   \code{\link{stri_timezone_list}}
 }
+\concept{datetime}

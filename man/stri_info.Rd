@@ -11,23 +11,28 @@ stri_info(short = FALSE)
 in a concise form; defaults to \code{TRUE}}
 }
 \value{
-If \code{short=TRUE}, then a single string containing
-information on default character encoding, locale, and Unicode
+If \code{short==TRUE}, then a single string providing
+information on the default character encoding, locale, and Unicode
 as well as \pkg{ICU} version is returned.
 
-Otherwise, you a list with the following components is returned:
+Otherwise, a list with the following components is returned:
 \itemize{
-\item \code{Unicode.version} -- version of Unicode supported by the \pkg{ICU} library;
+\item \code{Unicode.version} -- version of Unicode supported
+by the \pkg{ICU} library;
 \item \code{ICU.version} -- \pkg{ICU} library version used;
 \item \code{Locale} -- contains information on default locale,
 as returned by \code{\link{stri_locale_info}};
-\item \code{Charset.internal} -- always \code{c("UTF-8", "UTF-16")};
-\item \code{Charset.native} -- information on default encoding,
+\item \code{Charset.internal} -- fixed at \code{c("UTF-8", "UTF-16")};
+\item \code{Charset.native} -- information on the default encoding,
 as returned by \code{\link{stri_enc_info}};
-\item \code{ICU.system} -- logical; indicates whether system \pkg{ICU} libs
-are used (\code{TRUE}) or if \pkg{ICU} was built together with \pkg{stringi}.
+\item \code{ICU.system} -- logical; \code{TRUE} indicates that
+the system \pkg{ICU} libs are used, otherwise \pkg{ICU} was built together
+with \pkg{stringi};
+\item \code{ICU.UTF8} -- logical; \code{TRUE} if the internal
+\code{U_CHARSET_IS_UTF8} flag is defined.
 }
 }
 \description{
-Presents current default settings used by the \pkg{ICU} library.
+Gives the current default settings used by the \pkg{ICU} library.
 }
+\concept{locale, encoding}

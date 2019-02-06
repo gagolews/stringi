@@ -24,3 +24,4 @@ Other transform: \code{\link{stri_trans_char}},
   \code{\link{stri_trans_nfc}},
   \code{\link{stri_trans_tolower}}
 }
+\concept{transform}

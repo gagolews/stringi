@@ -41,3 +41,4 @@ cat(stri_rand_lipsum(10), sep="\\n\\n")
 Other random: \code{\link{stri_rand_shuffle}},
   \code{\link{stri_rand_strings}}
 }
+\concept{random}

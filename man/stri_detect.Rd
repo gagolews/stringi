@@ -14,7 +14,8 @@ stri_detect_fixed(str, pattern, negate = FALSE, ..., opts_fixed = NULL)
 
 stri_detect_charclass(str, pattern, negate = FALSE)
 
-stri_detect_coll(str, pattern, negate = FALSE, ..., opts_collator = NULL)
+stri_detect_coll(str, pattern, negate = FALSE, ...,
+  opts_collator = NULL)
 
 stri_detect_regex(str, pattern, negate = FALSE, ..., opts_regex = NULL)
 }
@@ -79,3 +80,4 @@ stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
 Other search_detect: \code{\link{stri_startswith}},
   \code{\link{stringi-search}}
 }
+\concept{search_detect}

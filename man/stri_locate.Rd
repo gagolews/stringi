@@ -25,10 +25,11 @@ stri_locate_first(str, ..., regex, fixed, coll, charclass)
 
 stri_locate_last(str, ..., regex, fixed, coll, charclass)
 
-stri_locate(str, ..., regex, fixed, coll, charclass, mode = c("first", "all",
-  "last"))
+stri_locate(str, ..., regex, fixed, coll, charclass, mode = c("first",
+  "all", "last"))
 
-stri_locate_all_charclass(str, pattern, merge = TRUE, omit_no_match = FALSE)
+stri_locate_all_charclass(str, pattern, merge = TRUE,
+  omit_no_match = FALSE)
 
 stri_locate_first_charclass(str, pattern)
 
@@ -173,3 +174,5 @@ Other search_locate: \code{\link{stri_locate_all_boundaries}},
 Other indexing: \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_sub}}
 }
+\concept{indexing}
+\concept{search_locate}

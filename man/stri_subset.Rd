@@ -98,3 +98,4 @@ print(x)
 \seealso{
 Other search_subset: \code{\link{stringi-search}}
 }
+\concept{search_subset}

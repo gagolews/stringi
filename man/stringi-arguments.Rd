@@ -81,3 +81,5 @@ Other stringi_general_topics: \code{\link{stringi-encoding}},
   \code{\link{stringi-search-regex}},
   \code{\link{stringi-search}}
 }
+\concept{prepare_arg}
+\concept{stringi_general_topics}

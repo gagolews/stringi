@@ -50,3 +50,4 @@ Other encoding_management: \code{\link{stri_enc_info}},
   \code{\link{stri_enc_list}}, \code{\link{stri_enc_set}},
   \code{\link{stringi-encoding}}
 }
+\concept{encoding_management}
