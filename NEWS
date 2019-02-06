@@ -7,8 +7,6 @@
 
 * TODO #318
 
-* TODO #337
-
 * TODO WARNs
 
 * TODO UBSAN
@@ -20,6 +18,10 @@
 platforms. Thanks to Dimitri John Ledkov (@xnox).
 
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
+
+* [BUGFIX] #337: empty search patters in search functions (e.g.,
+`stri_split_regex` and `stri_count_fixed`) used to raise too many warnings
+on empty search patters.
 
 
 ## 1.2.4 (2018-07-20) **CRAN**

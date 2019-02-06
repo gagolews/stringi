@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,6 +59,13 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
    this->lastMatcherIndex = -1;
    this->lastMatcher = NULL;
    this->flags = _flags;
+
+   R_len_t n = get_n();
+   for (R_len_t i=0; i<n; ++i) {
+      if (!isNA(i) && get(i).length() <= 0) {
+         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+      }
+   }
 }
 
 

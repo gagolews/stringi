@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,9 +41,6 @@
 
 #define STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont, naset)                     \
       if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
-         if ((!(pattern_cont).isNA(i)) && (pattern_cont).get(i).length() <= 0) {                 \
-            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                   \
-         }                                                                                       \
          naset;                                                                                  \
          continue;                                                                               \
       }                                                                                          \
@@ -51,9 +48,6 @@
 
 #define STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont, naset, zeroset)        \
       if ((str_cont).isNA(i) || (pattern_cont).isNA(i) || (pattern_cont).get(i).length() <= 0) { \
-         if ((!(pattern_cont).isNA(i)) && (pattern_cont).get(i).length() <= 0) {                 \
-            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);                                   \
-         }                                                                                       \
          naset;                                                                                  \
          continue;                                                                               \
       }                                                                                          \
