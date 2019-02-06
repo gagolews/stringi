@@ -25,10 +25,10 @@ removed duplicated entries.
 Gives the list of encodings that are supported by \pkg{ICU}.
 }
 \details{
-Please note that apart from given encoding identifiers and their aliases,
-some other specifiers will be available in your conversion tasks.
+Apart from given encoding identifiers and their aliases,
+some other specifiers might be additionally available.
 This is due to the fact that \pkg{ICU} tries to normalize
-converter names. E.g. \code{"UTF8"} is also valid,
+converter names. For instance, \code{"UTF8"} is also valid,
 see \link{stringi-encoding} for more information.
 }
 \seealso{

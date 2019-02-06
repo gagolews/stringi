@@ -36,12 +36,16 @@ test_that("stri_dup", {
 
 
    # Other 8-bit encodings
-   suppressMessages(oldenc <- stri_enc_set('latin2'))
-   expect_identical(stri_dup('\xa1\xb1', 2), '\u0104\u0105\u0104\u0105')
-   suppressMessages(stri_enc_set(oldenc))
+   if (!stri_info()$ICU.UTF8) {
+      suppressMessages(oldenc <- stri_enc_set('latin2'))
+      expect_identical(stri_dup('\xa1\xb1', 2), '\u0104\u0105\u0104\u0105')
+      suppressMessages(stri_enc_set(oldenc))
+   }
 
-   suppressMessages(oldenc <- stri_enc_set('cp1250'))
-   expect_identical(stri_dup('\xa5\xb9', 2), '\u0104\u0105\u0104\u0105')
-   suppressMessages(stri_enc_set(oldenc))
+   if (!stri_info()$ICU.UTF8) {
+      suppressMessages(oldenc <- stri_enc_set('cp1250'))
+      expect_identical(stri_dup('\xa5\xb9', 2), '\u0104\u0105\u0104\u0105')
+      suppressMessages(stri_enc_set(oldenc))
    #expect_warning(stri_dup('\xa5\xb9', 2)) #only in utf-8
+   }
 })
