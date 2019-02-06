@@ -23,7 +23,8 @@ stri_startswith_charclass(str, pattern, from = 1L)
 
 stri_endswith_charclass(str, pattern, to = -1L)
 
-stri_startswith_coll(str, pattern, from = 1L, ..., opts_collator = NULL)
+stri_startswith_coll(str, pattern, from = 1L, ...,
+  opts_collator = NULL)
 
 stri_endswith_coll(str, pattern, to = -1L, ..., opts_collator = NULL)
 }
@@ -102,3 +103,4 @@ stri_endswith_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat, strength=1)
 Other search_detect: \code{\link{stri_detect}},
   \code{\link{stringi-search}}
 }
+\concept{search_detect}

@@ -5,7 +5,6 @@
 \alias{stri_trim}
 \alias{stri_trim_left}
 \alias{stri_trim_right}
-\alias{stri_trim}
 \title{Trim Characters from the Left and/or Right Side of a String}
 \usage{
 stri_trim_both(str, pattern = "\\\\P{Wspace}")
@@ -14,7 +13,8 @@ stri_trim_left(str, pattern = "\\\\P{Wspace}")
 
 stri_trim_right(str, pattern = "\\\\P{Wspace}")
 
-stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
+stri_trim(str, side = c("both", "left", "right"),
+  pattern = "\\\\P{Wspace}")
 }
 \arguments{
 \item{str}{a character vector of strings to be trimmed}
@@ -71,3 +71,5 @@ Other search_replace: \code{\link{stri_replace_all}},
 Other search_charclass: \code{\link{stringi-search-charclass}},
   \code{\link{stringi-search}}
 }
+\concept{search_charclass}
+\concept{search_replace}

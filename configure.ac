@@ -1,10 +1,10 @@
 # autoconf/configure script for stringi
-# Copyright (C) 2013-2018, M. Gagolewski
+# Copyright (C) 2013-2019, M. Gagolewski
 # http://www.gagolewski.com/software/stringi/
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 1.2, gagolews@rexamine.com)
+AC_INIT(stringi, 1.3, marek@gagolewski.com)
 
 ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
 
@@ -518,7 +518,7 @@ while true; do
          return 1
       ])
 
-      AC_MSG_CHECKING([programmatically for U_CHARSET_IS_UTF8==0])
+      AC_MSG_CHECKING([programmatically if U_CHARSET_IS_UTF8 is defined and set])
       AC_LINK_IFELSE([AC_LANG_SOURCE([
          #include <unicode/unistr.h>
          #include <unicode/uvernum.h>
@@ -532,7 +532,7 @@ while true; do
          int main() {
 #ifdef U_CHARSET_IS_UTF8
 #if U_CHARSET_IS_UTF8
-#error "U_CHARSET_IS_UTF8==1"
+#error "U_CHARSET_IS_UTF8 is defined and set"
 return 10;
 #endif
 #endif
@@ -552,9 +552,11 @@ return 10;
          }])
       ],
       [
-         AC_MSG_RESULT([yes])
-      ],[
+         # U_CHARSET_IS_UTF8 is not defined
          AC_MSG_RESULT([no])
+      ],[
+         # U_CHARSET_IS_UTF8 is defined
+         AC_MSG_RESULT([yes])
          echo "*** The available ICU4C cannot be used"
          return 1
       ])

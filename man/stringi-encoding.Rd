@@ -238,3 +238,7 @@ Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
   \code{\link{stri_enc_toutf32}},
   \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}}
 }
+\concept{encoding_conversion}
+\concept{encoding_detection}
+\concept{encoding_management}
+\concept{stringi_general_topics}

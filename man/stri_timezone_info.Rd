@@ -63,3 +63,5 @@ Other datetime: \code{\link{stri_datetime_add}},
 Other timezone: \code{\link{stri_timezone_get}},
   \code{\link{stri_timezone_list}}
 }
+\concept{datetime}
+\concept{timezone}

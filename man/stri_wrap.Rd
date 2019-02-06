@@ -4,10 +4,10 @@
 \alias{stri_wrap}
 \title{Word Wrap Text to Format Paragraphs}
 \usage{
-stri_wrap(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
-  simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0,
-  prefix = "", initial = prefix, whitespace_only = FALSE,
-  use_length = FALSE, locale = NULL)
+stri_wrap(str, width = floor(0.9 * getOption("width")),
+  cost_exponent = 2, simplify = TRUE, normalize = TRUE, indent = 0,
+  exdent = 0, prefix = "", initial = prefix,
+  whitespace_only = FALSE, use_length = FALSE, locale = NULL)
 }
 \arguments{
 \item{str}{character vector of strings to reformat}
@@ -138,3 +138,5 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{text_boundaries}

@@ -2,9 +2,10 @@ Package: stringi
 Version: 1.3.1
 Date: 2019-02-06
 Title: Character String Processing Facilities
-Description: Allows for fast, correct, consistent, portable,
+Description: Fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
-    and any native encoding. Owing to the use of the 'ICU' library,
+    and any native encoding. Owing to the use of the 'ICU' 
+    (International Components for Unicode) library,
     the package provides 'R' users with platform-independent functions
     known to 'Java', 'Perl', 'Python', 'PHP', and 'Ruby' programmers. Available
     features include: pattern searching (e.g., with 'Java'-like regular
@@ -29,5 +30,6 @@ Author: Marek Gagolewski [aut, cre], Bartek Tartanus [ctb],
     and other contributors (stringi source code);
     IBM and other contributors (ICU4C source code);
     Unicode, Inc. (Unicode Character Database)
-Maintainer: Marek Gagolewski <gagolews@rexamine.com>
-RoxygenNote: 6.0.1
+Maintainer: Marek Gagolewski <marek@gagolewski.com>
+RoxygenNote: 6.1.1
+Encoding: UTF-8

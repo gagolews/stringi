@@ -130,3 +130,4 @@ Other search_split: \code{\link{stri_split_boundaries}},
   \code{\link{stri_split_lines}},
   \code{\link{stringi-search}}
 }
+\concept{search_split}

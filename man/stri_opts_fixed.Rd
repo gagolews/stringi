@@ -45,3 +45,4 @@ stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
 Other search_fixed: \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search}}
 }
+\concept{search_fixed}

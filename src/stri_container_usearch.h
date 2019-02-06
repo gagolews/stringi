@@ -53,7 +53,7 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  *          getMatcher() now also accepts UChar*
  *
- * @version 1.2.0 (Marek Gagolewski, 2019-02-06)
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
  *          #337: warn on empty search pattern here
  */
 class StriContainerUStringSearch : public StriContainerUTF16 {

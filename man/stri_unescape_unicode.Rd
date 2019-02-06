@@ -44,3 +44,4 @@ stri_unescape_unicode("a\\\\u0105!\\\\u0032\\\\n")
 \seealso{
 Other escape: \code{\link{stri_escape_unicode}}
 }
+\concept{escape}

@@ -96,3 +96,6 @@ Other text_boundaries: \code{\link{stri_extract_all_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{search_count}
+\concept{text_boundaries}

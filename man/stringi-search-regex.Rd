@@ -218,3 +218,5 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search}}
 }
+\concept{search_regex}
+\concept{stringi_general_topics}

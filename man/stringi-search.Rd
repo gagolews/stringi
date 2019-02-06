@@ -106,3 +106,17 @@ Other stringi_general_topics: \code{\link{stringi-arguments}},
   \code{\link{stringi-search-fixed}},
   \code{\link{stringi-search-regex}}
 }
+\concept{search_charclass}
+\concept{search_coll}
+\concept{search_count}
+\concept{search_detect}
+\concept{search_extract}
+\concept{search_fixed}
+\concept{search_in}
+\concept{search_locate}
+\concept{search_regex}
+\concept{search_replace}
+\concept{search_split}
+\concept{search_subset}
+\concept{stringi_general_topics}
+\concept{text_boundaries}

@@ -65,7 +65,7 @@
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *          use StriByteSearchMatcher
  *
- * @version 1.2.0 (Marek Gagolewski, 2019-02-06)
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-06)
  *          #337: warn on empty search pattern here
  */
 class StriContainerByteSearch : public StriContainerUTF8 {

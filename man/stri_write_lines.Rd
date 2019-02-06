@@ -37,3 +37,4 @@ thus, it is the default one for the output.
 Other files: \code{\link{stri_read_lines}},
   \code{\link{stri_read_raw}}
 }
+\concept{files}

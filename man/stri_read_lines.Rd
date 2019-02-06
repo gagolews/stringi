@@ -45,3 +45,4 @@ then \code{fallback_encoding} is used.
 Other files: \code{\link{stri_read_raw}},
   \code{\link{stri_write_lines}}
 }
+\concept{files}

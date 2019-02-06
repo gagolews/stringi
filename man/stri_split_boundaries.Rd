@@ -4,8 +4,8 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Specific Text Boundaries}
 \usage{
-stri_split_boundaries(str, n = -1L, tokens_only = FALSE, simplify = FALSE,
-  ..., opts_brkiter = NULL)
+stri_split_boundaries(str, n = -1L, tokens_only = FALSE,
+  simplify = FALSE, ..., opts_brkiter = NULL)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
@@ -102,3 +102,6 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
+\concept{locale_sensitive}
+\concept{search_split}
+\concept{text_boundaries}

@@ -111,3 +111,4 @@ Other search_extract: \code{\link{stri_extract_all_boundaries}},
   \code{\link{stri_extract_all}},
   \code{\link{stringi-search}}
 }
+\concept{search_extract}

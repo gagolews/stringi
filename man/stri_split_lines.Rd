@@ -3,7 +3,6 @@
 \name{stri_split_lines}
 \alias{stri_split_lines}
 \alias{stri_split_lines1}
-\alias{stri_split_lines1}
 \title{Split a String Into Text Lines}
 \usage{
 stri_split_lines(str, omit_empty = FALSE)
@@ -71,3 +70,5 @@ Other text_boundaries: \code{\link{stri_count_boundaries}},
   \code{\link{stringi-search-boundaries}},
   \code{\link{stringi-search}}
 }
+\concept{search_split}
+\concept{text_boundaries}

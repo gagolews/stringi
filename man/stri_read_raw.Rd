@@ -29,3 +29,4 @@ and for example split it into text lines with
 Other files: \code{\link{stri_read_lines}},
   \code{\link{stri_write_lines}}
 }
+\concept{files}

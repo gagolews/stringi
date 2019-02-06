@@ -29,3 +29,4 @@ stri_isempty(character(1))
 Other length: \code{\link{stri_length}},
   \code{\link{stri_numbytes}}, \code{\link{stri_width}}
 }
+\concept{length}
