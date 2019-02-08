@@ -13,10 +13,13 @@ the default (UTF-8) encoding cannot be changed.
 
 * TODO UBSAN..............................
 
+* [NEW FEATURE] #232: all `stri_detect_*` functions now have the `max_count`
+argument that allows for, e.g., stopping at first pattern occurrence.
+
 * [NEW FEATURE] #338: `stri_sub_replace` is now an alias for `stri_sub<-`
 (@yutannihilation, @BastienFR), which makes it much more easily pipable.
 
-* [NEW FEATURE] #334: Added missing icudt61b.dat to support big-endian
+* [NEW FEATURE] #334: Added missing `icudt61b.dat` to support big-endian
 platforms. Thanks to Dimitri John Ledkov (@xnox).
 
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
@@ -30,7 +33,7 @@ on empty search patters.
 
 * [BUGFIX] #314: test `U_CHARSET_IS_UTF8` in configure when using pkg-build.
 
-* [BUGFIX] #317: include icudt61l.zip in the source bundle to solve the
+* [BUGFIX] #317: include `icudt61l.zip` in the source bundle to solve the
 frequent `icudt download failed` error (also on CRAN's windows-release
 and windows-oldrel).
 
@@ -39,25 +42,26 @@ and windows-oldrel).
 
 * [BUGFIX] #296: Fixed the behavior of the `./configure` script on CentOS 6.
 
-* [BUGFIX] Fixed broken Windows build by updating the icudt mirror list.
+* [BUGFIX] Fixed broken Windows build by updating the `icudt` mirror list.
 
 
 ## 1.2.2 (2018-05-01) **CRAN**
 
-* [GENERAL] #193: `stringi` is now bundled with ICU4C 61.1,
+* [GENERAL] #193: stringi is now bundled with ICU4C 61.1,
 which is used on most Windows and OS X builds as well as on *nix systems
 not equipped with ICU. However, if the C++11 support is disabled,
 stringi will be built against ICU4C 55.1. The update to ICU brings
 Unicode 10.0 support, including new emoji characters.
 
-* [BUGFIX] #288: stri_match did not return the correct number of columns
+* [BUGFIX] #288: `stri_match()` did not return the correct number of columns
 when input was empty.
 
-* [NEW FEATURE] #188: `stri_enc_detect` now returns a list of data frames.
+* [NEW FEATURE] #188: `stri_enc_detect()` now returns a list of data frames.
 
-* [NEW FEATURE] #289: `stri_flatten` gained `na_empty` `omit_empty` arguments.
+* [NEW FEATURE] #289: `stri_flatten()` how has
+`na_empty` `omit_empty` arguments.
 
-* [NEW FEATURE] New functions: `stri_remove_empty`, `stri_na2empty`
+* [NEW FEATURE] New functions: `stri_remove_empty()`, `stri_na2empty()`
 
 * [NEW FEATURE] #285: Coercion from a non-trivial list (one that consists
 of atomic vectors, each of length 1) to an atomic vector now issues a warning.
@@ -85,11 +89,11 @@ This fixes problems with - among others - displaying the Euro sign.
 * [NEW FEATURE] #263: Add support for custom rule-based break iteration,
 see `?stri_opts_brkiter`.
 
-* [NEW FEATURE] #267: `omit_na=TRUE` in `stri_sub<-` now ignores missing values
+* [NEW FEATURE] #267: `omit_na=TRUE` in `stri_sub<-()` now ignores missing values
 in any of the arguments provided.
 
 * [BUGFIX] fixed unPROTECTed variable names and stack imbalances
-as reported by rchk
+as reported by `rchk`.
 
 -------------------------------------------------------------------------------
 
@@ -128,9 +132,9 @@ following environment variables: `STRINGI_CFLAGS`, `STRINGI_CPPFLAGS`,
 `STRINGI_DISABLE_ICU_BUNDLE`, `STRINGI_DISABLE_PKG_CONFIG`, `PKG_CONFIG`,
 see `INSTALL` for more information.
 
-* [BUILD TIME] #253: call to `R_useDynamicSymbols` added.
+* [BUILD TIME] #253: call to `R_useDynamicSymbols()` added.
 
-* [BUILD TIME] #230: icudt is now being downloaded by
+* [BUILD TIME] #230: `icudt` is now being downloaded by
 `./configure` (*NIX only) *before* building.
 
 * [BUILD TIME] #242: `_COUNT/_LIMIT` enum constants have been deprecated
@@ -140,7 +144,7 @@ as of ICU 58.2, stringi code has been upgraded accordingly.
 
 ## 1.1.2 (2016-09-30) **CRAN**
 
-* [BUGFIX] round(), snprintf() is not C++98
+* [BUGFIX] `round()`, `snprintf()` is not C++98.
 
 -------------------------------------------------------------------------------
 
@@ -151,20 +155,20 @@ as of ICU 58.2, stringi code has been upgraded accordingly.
 * [BUGFIX] #210: `stri_replace_all_fixed(c("1", "NULL"), "NULL", NA)`
 now results in `c("1", NA)`.
 
-* [NEW FEATURE] #199: `stri_sub<-` now allows for ignoring `NA` locations
+* [NEW FEATURE] #199: `stri_sub<-()` now allows for ignoring `NA` locations
 (a new `omit_na` argument added).
 
-* [NEW FEATURE] #207: `stri_sub<-` now allows for substring insertions
+* [NEW FEATURE] #207: `stri_sub<-()` now allows for substring insertions
 (via `length=0`).
 
-* [NEW FUNCTION] #124: `stri_subset<-` functions added.
+* [NEW FUNCTION] #124: `stri_subset<-()` functions added.
 
-* [NEW FEATURE] #216: `stri_detect`, `stri_subset`, `stri_subset<-` gained
-a `negate` argument.
+* [NEW FEATURE] #216: `stri_detect()`, `stri_subset()`, `stri_subset<-()`
+now all have the `negate` argument.
 
-* [NEW FUNCTION] #175: `stri_join_list` concatenates all strings
-in a list of character vectors. Useful with, e.g., `stri_extract_all_regex`,
-`stri_extract_all_words` etc.
+* [NEW FUNCTION] #175: `stri_join_list()` concatenates all strings
+in a list of character vectors. Useful with, e.g., `stri_extract_all_regex()`,
+`stri_extract_all_words()`, etc.
 
 -------------------------------------------------------------------------------
 
@@ -224,7 +228,7 @@ boundaries.
 `chartr()` equivalent.
 
 * [NEW FUNCTION] #8: `stri_width()` approximates the *width* of a string
-in a more Unicodish fashion than `nchar(..., "width")`
+in a more Unicode-ish fashion than `nchar(..., "width")`
 
 * [NEW FEATURE] #149: `stri_pad()` and `stri_wrap()` now by default bases on
 code point widths instead of the number of code points. Moreover, the default

@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -45,8 +45,7 @@
 #' \code{stri_count} is a convenience function.
 #' It calls either \code{stri_count_regex},
 #' \code{stri_count_fixed}, \code{stri_count_coll},
-#' or \code{stri_count_charclass}, depending on the argument used; relying
-#' on one of those underlying functions will be faster.
+#' or \code{stri_count_charclass}, depending on the argument used.
 #'
 #' @param str character vector with strings to search in
 #' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;

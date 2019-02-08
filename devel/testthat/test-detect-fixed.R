@@ -23,4 +23,14 @@ test_that("stri_detect_fixed", {
    suppressWarnings(expect_identical(stri_detect_fixed("",""), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("a",""), NA))
    suppressWarnings(expect_identical(stri_detect_fixed("","a"), FALSE))
+
+   expect_identical(stri_detect_fixed(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+     max_count=1),                    c(TRUE,  NA,    NA,   NA,   NA,     NA,    NA))
+   expect_identical(stri_detect_fixed(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "XXX", "ghi", "456", "789", "jkl"),
+     max_count=3),                    c(TRUE,  TRUE,  FALSE,  TRUE,   NA,     NA,    NA))
+   expect_identical(stri_detect_fixed(c("",    "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "XXX", "ghi", "456", "789", "jkl"),
+     negate=TRUE, max_count=2),       c(TRUE,  FALSE, TRUE,  NA,   NA,   NA,    NA))
 })

@@ -48,3 +48,5 @@ devel/benchmarks/figure
 devel/benchmarks/report-*.md
 devel/benchmarks/report-*.html
 devel/benchmarks/test1.csv.gz
+
+.vscode
