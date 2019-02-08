@@ -19,15 +19,14 @@ customized installation.
 stringi vs the ICU4C library
 ----------------------------
 
-The stringi package depends on the ICU4C >= 52 library
-with `U_CHARSET_IS_UTF8` flag disabled.
+The stringi package depends on the ICU4C >= 52 library.
 
 If you build the package from sources and either:
-* these requirements are not met (check out http://site.icu-project.org/download,
+* this requirement is not met (check out http://site.icu-project.org/download,
    the `libicu-devel` rpm on Fedora/CentOS/OpenSUSE,
-   or `libicu-dev` on Ubuntu/Debian etc.),
-* `pkg-config` is not able to find proper build settings for ICU-based projects,
-or
+   or `libicu-dev` on Ubuntu/Debian, etc.),
+* `pkg-config` is not able to find appropriate build settings
+   for ICU-based projects, or
 * `R CMD INSTALL` is called with the `--configure-args='--disable-pkg-config'`
 argument or `install.packages("stringi", configure.args="--disable-pkg-config")`
 is executed,
@@ -54,7 +53,7 @@ of the package. It already includes the `ICU` data archives.
     unzip stringi-master.zip
     R CMD INSTALL stringi-master
 
-You may also prepare your own `.tar.gz`-ipped distribution of `stringi`
+You can also prepare your own `.tar.gz`-ipped distribution of `stringi`
 as follows:
 
 1. Execute the `git clone https://github.com/gagolews/stringi.git` command.
@@ -69,10 +68,11 @@ C++11 support
 -------------
 
 For R >= 3.1.0  we suggest (by default) C++11 support to build the package
-from sources. This is because ICU4C uses the `long long` type in a few
-functions, and this is not part of the C++98 standard.
+from sources. This is because older releases of ICU4C use the `long long`
+type in a few functions, and this is not part of the C++98 standard. Moreover,
+it has become required by newer versions of ICU4C.
 
-Yet, if your compiler does not support C++11 or it has not been properly
+However, if your compiler does not support C++11 or it has not been properly
 configured (check out `<R_inst_dir>/etc/Makeconf`) but you are sure it
 tolerates the `long long` type (which is very common -- this is checked by the
 `configure` script anyway), you may disable the use of C++11 by passing
@@ -131,6 +131,6 @@ have a working internet access, all is expected to lead to a happy ending.
 
 If you do not manage to set up a successful stringi build, do not
 hesitate to [file a bug report](https://github.com/gagolews/stringi/issues).
-However, please check the already-closed issues for similar problems
-experienced by other users - it is very likely they have already been
-succesfully resolved.
+However, please check the archived (closed) issues for similar problems
+experienced by other users -- it is very likely they have already been
+successfully resolved.

@@ -66,11 +66,12 @@ and so on}
 \item{mode}{single string;
 one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
 
-\item{pattern, regex, fixed, coll, charclass}{character vector defining search patterns;
-for more details refer to \link{stringi-search}}
+\item{pattern, regex, fixed, coll, charclass}{character vector defining
+search patterns; for more details refer to \link{stringi-search}}
 
-\item{merge}{single logical value;
-should consecutive matches be merged into one string;  \code{stri_extract_all_charclass} only}
+\item{merge}{single logical value; indicates whether consecutive pattern
+matches will be merged into one string;
+\code{stri_extract_all_charclass} only}
 
 \item{simplify}{single logical value;
 if \code{TRUE} or \code{NA}, then a character matrix is returned;
@@ -81,49 +82,46 @@ otherwise (the default), a list of character vectors is given, see Value;
 then a missing value will indicate that there was no match;
 \code{stri_extract_all_*} only}
 
-\item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
+\item{opts_collator, opts_fixed, opts_regex}{a named list to tune up
 a search engine's settings; see \code{\link{stri_opts_collator}},
 \code{\link{stri_opts_fixed}}, and \code{\link{stri_opts_regex}},
-respectively; \code{NULL} for default settings;}
+respectively; \code{NULL} for default settings}
 }
 \value{
 For \code{stri_extract_all*}, if \code{simplify=FALSE} (the default), then
 a list of character vectors is returned. Each list element
-represents the results of a separate search scenario.
+represents the results of a unique search scenario.
 If a pattern is not found and \code{omit_no_match=FALSE},
-then a character vector of length 1,
+then a character vector of length 1
 with single \code{NA} value will be generated.
-Otherwise, i.e. if \code{simplify} is not \code{FALSE},
+Otherwise, i.e., if \code{simplify} is not \code{FALSE},
 then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 is called on the resulting object.
-In such a case, a character matrix with an appropriate number of rows
-(according to the length of \code{str}, \code{pattern}, etc.)
-is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
-to an empty string and \code{NA},
-for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
+In such a case, the function yields a character matrix with an appropriate
+number of rows (according to the length of \code{str}, \code{pattern}, etc.).
+Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
+either to an empty string or \code{NA}, depending on
+whether \code{simplify} is equal to \code{TRUE} or \code{NA}, respectively.
 
-\code{stri_extract_first*} and \code{stri_extract_last*},
-on the other hand, return a character vector.
-A \code{NA} element indicates no match.
+\code{stri_extract_first*} and \code{stri_extract_last*}
+return a character vector. A \code{NA} element indicates no match.
 }
 \description{
 These functions extract all substrings matching a given pattern.
 
 \code{stri_extract_all_*} extracts all the matches.
-On the other hand, \code{stri_extract_first_*} and \code{stri_extract_last_*}
-provide the first or the last matches, respectively.
+\code{stri_extract_first_*} and \code{stri_extract_last_*}
+yield the first or the last matches, respectively.
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
 
-If you would like to extract regex capture groups individually,
-check out \code{\link{stri_match}}.
+Check out \code{\link{stri_match}} for the extraction of matches
+to individual regex capture groups.
 
 \code{stri_extract}, \code{stri_extract_all}, \code{stri_extract_first},
 and \code{stri_extract_last} are convenience functions.
 They just call \code{stri_extract_*_*}, depending on the arguments used.
-Relying
-on one of those underlying functions will make your code run slightly faster.
 }
 \examples{
 stri_extract_all('XaaaaX', regex=c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))

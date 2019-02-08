@@ -52,4 +52,22 @@ test_that("stri_detect_regex", {
    expect_identical(stri_detect_regex("***aafoo*** - ICU BUG TEST", "(?<=aa)foo"), TRUE)
    expect_identical(stri_detect_regex("***a\u0105foo*** - ICU BUG TEST", "(?<=a\u0105)foo"), TRUE)
    expect_identical(stri_detect_regex("***a\U00020000foo*** - ICU BUG TEST", "(?<=a\U00020000)foo"), TRUE)
+
+
+   expect_identical(stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+       "^[0-9]+$", max_count=1),      c(FALSE, FALSE, TRUE,   NA,   NA,     NA,    NA))
+   expect_identical(stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+       "^[0-9]+$", max_count=2),      c(FALSE, FALSE, TRUE,   FALSE,TRUE,     NA,    NA))
+   expect_identical(stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+       "^[0-9]+$", negate=TRUE, max_count=3),
+                                      c(TRUE, TRUE, FALSE,   TRUE,   NA,     NA,    NA))
+   expect_identical(stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+     max_count=1),                    c(TRUE,  NA,    NA,   NA,   NA,     NA,    NA))
+   expect_identical(stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "XXX", "ghi", "456", "789", "jkl"),
+     max_count=3),                    c(TRUE,  TRUE,  FALSE,  TRUE,   NA,     NA,    NA))
+   expect_identical(stri_detect_regex(c("",    "def", "123", "ghi", "456", "789", "jkl"),
+                                      c("abc", "def", "XXX", "ghi", "456", "789", "jkl"),
+     negate=TRUE, max_count=2),       c(TRUE,  FALSE, TRUE,  NA,   NA,   NA,    NA))
 })

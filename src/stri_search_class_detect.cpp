@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,8 @@
  *
  * @param str character vector
  * @param pattern character vector
+ * @param negate single bool
+ * @param max_count single int
  * @return logical vector
  *
  * @version 0.1-?? (Bartek Tartanus)
@@ -64,10 +66,15 @@
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *    FR #216: `negate` arg added
+ *
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-08)
+ *    #232: `max_count` arg added
  */
-SEXP stri_detect_charclass(SEXP str, SEXP pattern, SEXP negate)
+SEXP stri_detect_charclass(SEXP str, SEXP pattern,
+    SEXP negate, SEXP max_count)
 {
    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+   int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
@@ -85,7 +92,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern, SEXP negate)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+      if (max_count_1 == 0 || str_cont.isNA(i) || pattern_cont.isNA(i)) {
          ret_tab[i] = NA_LOGICAL;
          continue;
       }
@@ -98,7 +105,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern, SEXP negate)
       ret_tab[i] = FALSE;
       for (R_len_t j=0; j<str_cur_n; ) {
          U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (chr < 0) // invalid utf-8 sequence
+         if (chr < 0) // invalid UTF-8 sequence
             throw StriException(MSG__INVALID_UTF8);
          if (pattern_cur->contains(chr)) {
             ret_tab[i] = TRUE;
@@ -106,6 +113,7 @@ SEXP stri_detect_charclass(SEXP str, SEXP pattern, SEXP negate)
          }
       }
       if (negate_1) ret_tab[i] = !ret_tab[i];
+      if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
    }
 
    STRI__UNPROTECT_ALL

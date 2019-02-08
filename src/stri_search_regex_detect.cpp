@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,8 @@
  *
  * @param str R character vector
  * @param pattern R character vector containing regular expressions
+ * @param negate single bool
+ * @param max_count single int
  * @param opts_regex list
  *
  * @version 0.1-?? (Marcin Bujarski)
@@ -61,10 +63,15 @@
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *    FR #216: `negate` arg added
+ *
+ * @version 1.3.1 (Marek Gagolewski, 2019-02-08)
+ *    #232: `max_count` arg added
  */
-SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex)
+SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
+    SEXP max_count, SEXP opts_regex)
 {
    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+   int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
    PROTECT(str = stri_prepare_arg_string(str, "str"));
    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
    R_len_t vectorize_length =
@@ -85,6 +92,11 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex)
          i != pattern_cont.vectorize_end();
          i = pattern_cont.vectorize_next(i))
    {
+      if (max_count_1 == 0) {
+          ret_tab[i] = NA_LOGICAL;
+          continue;
+      }
+
       STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont,
          pattern_cont, ret_tab[i] = NA_LOGICAL)
 
@@ -92,6 +104,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex)
       matcher->reset(str_cont.get(i));
       ret_tab[i] = (int)matcher->find(); // returns UBool
       if (negate_1) ret_tab[i] = !ret_tab[i];
+      if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
 
 //      // mbmark-regex-detect1.R: UTF16 0.07171792 s; UText 0.10531605 s
 //      UText* str_text = NULL;

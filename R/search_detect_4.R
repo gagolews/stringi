@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -46,19 +46,26 @@
 #' It calls either \code{stri_detect_regex},
 #' \code{stri_detect_fixed}, \code{stri_detect_coll},
 #' or \code{stri_detect_charclass}, depending on the argument used.
-#' Relying on these underlying functions will make your code run slightly
-#' faster.
 #'
 #' See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
-#' for testing whether a string starts or ends with a given pattern
-#' match, respectively. Moreover, see \code{\link{stri_subset}}
-#' for a character vector subsetting.
+#' for testing whether a string starts or ends with a match to a given pattern.
+#' Moreover, see \code{\link{stri_subset}} for a character vector subsetting.
+#'
+#' If \code{max_count} is negative, then stings are examined
+#' search for a given pattern. Otherwise, the search stops
+#' once \code{max_count} matches (or, if \code{negate} is \code{TRUE},
+#' no-matches) are detected. The uninspected cases are marked
+#' as missing in the return vector. Be aware that, unless \code{pattern} is a
+#' singleton, the elements in \code{str} might be inspected in a
+#' non-consecutive order.
 #'
 #'
 #' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
-#' for more details refer to \link{stringi-search}
+#' @param pattern,regex,fixed,coll,charclass character vector
+#' defining search patterns; for more details refer to \link{stringi-search}
 #' @param negate single logical value; whether a no-match is rather of interest
+#' @param max_count single integer; stops searching once a given
+#' number of occurrences is detected; \code{-1} (the default) inspects all
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
 #' a search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
@@ -71,17 +78,24 @@
 #' @return Each function returns a logical vector.
 #'
 #' @examples
-#' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), c('i', 'R', '0'))
-#' stri_detect_fixed(c("stringi R", "REXAMINE", "123"), 'R')
+#' stri_detect_fixed(c("stringi R", "R STRINGI", "123"), c('i', 'R', '0'))
+#' stri_detect_fixed(c("stringi R", "R STRINGI", "123"), 'R')
 #'
-#' stri_detect_charclass(c("stRRRingi","REXAMINE", "123"),
+#' stri_detect_charclass(c("stRRRingi","R STRINGI", "123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #'
-#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), 'R.')
-#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[[:alpha:]]*?')
-#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '[a-zC1]')
-#' stri_detect_regex(c("stringi R", "REXAMINE", "123"), '( R|RE)')
+#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), 'R.')
+#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '[[:alpha:]]*?')
+#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '[a-zC1]')
+#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '( R|RE)')
 #' stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
+#'
+#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+#'    "^[0-9]+$", max_count=1)
+#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+#'    "^[0-9]+$", max_count=2)
+#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
+#'    "^[0-9]+$", negate=TRUE, max_count=3)
 #'
 #' @family search_detect
 #' @export
@@ -91,7 +105,7 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
                     "coll" =!missing(coll),  "charclass"=!missing(charclass))
 
    if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+      stop("you have to specify one of: `regex`, `fixed`, `coll`, or `charclass`")
 
    if (providedarg["regex"])
       stri_detect_regex(str, regex, ...)
@@ -105,32 +119,39 @@ stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
 
 #' @export
 #' @rdname stri_detect
-stri_detect_fixed <- function(str, pattern, negate=FALSE, ..., opts_fixed=NULL) {
+stri_detect_fixed <- function(str, pattern, negate=FALSE, max_count=-1,
+        ..., opts_fixed=NULL)
+{
    if (!missing(...))
        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_detect_fixed, str, pattern, negate, opts_fixed)
+   .Call(C_stri_detect_fixed, str, pattern, negate, max_count, opts_fixed)
 }
 
 #' @export
 #' @rdname stri_detect
-stri_detect_charclass <- function(str, pattern, negate=FALSE) {
-   .Call(C_stri_detect_charclass, str, pattern, negate)
+stri_detect_charclass <- function(str, pattern, negate=FALSE, max_count=-1)
+{
+   .Call(C_stri_detect_charclass, str, pattern, negate, max_count)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, negate=FALSE, ..., opts_collator=NULL) {
+stri_detect_coll <- function(str, pattern, negate=FALSE, max_count=-1,
+        ..., opts_collator=NULL)
+{
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_detect_coll, str, pattern, negate, opts_collator)
+   .Call(C_stri_detect_coll, str, pattern, negate, max_count, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, negate=FALSE, ..., opts_regex=NULL) {
+stri_detect_regex <- function(str, pattern, negate=FALSE, max_count=-1,
+        ..., opts_regex=NULL)
+{
    if (!missing(...))
        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_detect_regex, str, pattern, negate, opts_regex)
+   .Call(C_stri_detect_regex, str, pattern, negate, max_count, opts_regex)
 }

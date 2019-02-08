@@ -93,7 +93,8 @@ fi
 
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
-      [Disable pkg-config usage for finding ICU4C-devel; in such a case ICU4C will be compiled from sources.]))
+      [Disable pkg-config usage for finding ICU4C-devel;
+      in such a case ICU4C will be compiled from sources.]))
 
 AC_ARG_VAR([STRINGI_DISABLE_PKG_CONFIG],
    [Force the use of the ICU bundle, see also --disable-pkg-config.])
@@ -106,7 +107,7 @@ fi
 
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
-      [Enable -UNDEBUG when compiling stringi (for stringi developers)]))
+      [Enable -UNDEBUG when compiling stringi (for developers of stringi)]))
 if test "x$enable_gcc_debug" == "xyes"; then
    enable_gcc_debug="yes"
 else
@@ -115,7 +116,8 @@ fi
 
 AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
-      [Enable -Wall -Wextra -ansi -pedantic when compiling stringi with gcc/clang (for stringi developers)]))
+      [Enable -Wall -Wextra -ansi -pedantic when compiling
+      stringi with gcc/clang (for developers of stringi)]))
 if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
 else

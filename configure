@@ -1368,10 +1368,10 @@ Optional Features:
   --disable-icu-bundle    Force the use of the system ICU.
   --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel; in
                           such a case ICU4C will be compiled from sources.
-  --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for stringi
-                          developers)
+  --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for
+                          developers of stringi)
   --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
-                          stringi with gcc/clang (for stringi developers)
+                          stringi with gcc/clang (for developers of stringi)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
