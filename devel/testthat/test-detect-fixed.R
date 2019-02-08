@@ -33,4 +33,9 @@ test_that("stri_detect_fixed", {
    expect_identical(stri_detect_fixed(c("",    "def", "123", "ghi", "456", "789", "jkl"),
                                       c("abc", "def", "XXX", "ghi", "456", "789", "jkl"),
      negate=TRUE, max_count=2),       c(TRUE,  FALSE, TRUE,  NA,   NA,   NA,    NA))
+
+   expect_identical(stri_detect_regex(c("aaa", "bbb", "ccc"), "bbb", max_count=1),
+                    c(FALSE,  TRUE,    NA))
+   expect_identical(stri_detect_regex(c("aaa", "bbb", "ccc"), "ddd", max_count=1),
+                    c(FALSE, FALSE, FALSE))
 })
