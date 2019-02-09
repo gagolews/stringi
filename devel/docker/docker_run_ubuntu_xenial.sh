@@ -7,6 +7,7 @@ locale-gen en_US.utf8                                                           
 echo 'deb http://cran.rstudio.com/bin/linux/ubuntu/ xenial/' >> /etc/apt/sources.list   && \
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9               && \
 apt-get -y -qq update                                                                   && \
-apt-get -y -qq install git libicu-dev g++ r-base-dev pkg-config texlive                 && \
+apt-get -y -qq upgrade                                                                  && \
+apt-get -y -qq install git libicu-dev g++ r-base-dev pkg-config                         && \
 `cat stringi_forcesystemicu.sh`                                                            \
 "
