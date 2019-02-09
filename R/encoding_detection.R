@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -39,12 +39,12 @@
 #' @details
 #' These functions are independent of the way \R marks encodings in
 #' character strings (see \link{Encoding} and \link{stringi-encoding}).
-#' Anyway, most often, you will provide input data as raw vectors here.
+#' Most often, these functions act on raw vectors.
 #'
-#' Negative answer means that a string is surely not in valid UTF-16 or UTF-32.
-#' Positive result does not mean that we should be absolutely sure.
+#' A result of \code{FALSE} means that a string is surely not valid UTF-16
+#' or UTF-32. However, false positives are possible.
 #'
-#' Also, note that sometimes a data stream may be classified
+#' Also note that a data stream may be sometimes classified
 #' as both valid UTF-16LE and UTF-16BE.
 #'
 #' @param str character vector, a raw vector, or
@@ -85,7 +85,7 @@ stri_enc_isutf32le <- function(str) {
 #' Check If a Data Stream Is Possibly in ASCII
 #'
 #' @description
-#' The function checks whether all bytes in a string are in the set {1,2,...,127}.
+#' The function checks whether all bytes in a string are <= 127.
 #'
 #' @details
 #' This function is independent of the way \R marks encodings in
@@ -95,7 +95,7 @@ stri_enc_isutf32le <- function(str) {
 #' a list of \code{raw} vectors
 #'
 #' @return Returns a logical vector.
-#' Its i-th element indicates whether the i-th string
+#' The i-th element indicates whether the i-th string
 #' corresponds to a valid ASCII byte sequence.
 #'
 #' @examples
@@ -117,17 +117,16 @@ stri_enc_isascii <- function(str) {
 #' a proper UTF-8 string.
 #'
 #' @details
-#' Negative answer means that a string is surely not valid UTF-8.
-#' Positive result does not mean that we should be absolutely sure.
-#'  E.g. \code{(c4,85)} properly
-#' represents ("Polish a with ogonek") in UTF-8
+#' \code{FALSE} means that a string is certainly not valid UTF-8.
+#' However, false positives are possible. For instance,
+#' \code{(c4,85)} represents ("Polish a with ogonek") in UTF-8
 #' as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
-#' Also note that UTF-8, as well as most 8-bit encodings,
-#' have ASCII as their subsets
-#' (note that \code{\link{stri_enc_isascii}} => \code{\link{stri_enc_isutf8}}).
+#' Also note that UTF-8, as well as most 8-bit encodings, extend ASCII
+#' (note that \code{\link{stri_enc_isascii}} implies that
+#' \code{\link{stri_enc_isutf8}}).
 #'
 #' However, the longer the sequence,
-#' the bigger the possibility that the result
+#' the greater the possibility that the result
 #' is indeed in UTF-8 -- this is because not all sequences of bytes
 #' are valid UTF-8.
 #'
@@ -166,18 +165,18 @@ stri_enc_isutf8 <- function(str) {
 #'
 #' This is, at best, an imprecise operation using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred
-#' bytes of character data that's mostly in a single language.
+#' bytes of character data that is mostly in a single language.
 #' However, because the detection only looks at a limited amount of the input
-#' data, some of the returned charsets may fail to handle all of the
+#' data, some of the returned character sets may fail to handle all of the
 #' input data. Note that in some cases,
 #' the language can be determined along with the encoding.
 #'
 #' Several different techniques are used for character set detection.
-#' For multi-byte encodings, the sequence of bytes is checked for legible patterns.
-#' The detected characters are also checked against a list of frequently
-#' used characters in that encoding. For single byte encodings, the data
-#' is checked against a list of the most commonly occurring three letter groups
-#' for each language that can be written using that encoding.
+#' For multi-byte encodings, the sequence of bytes is checked for legible
+#' patterns. The detected characters are also checked against a list of
+#' frequently used characters in that encoding. For single byte encodings,
+#' the data is checked against a list of the most commonly occurring three
+#' letter groups for each language that can be written using that encoding.
 #'
 #' The detection process can be configured to optionally ignore
 #' HTML or XML style markup (using \pkg{ICU}'s internal facilities),
@@ -238,11 +237,11 @@ stri_enc_isutf8 <- function(str) {
 #'
 #' @return Returns a list of length equal to the length of \code{str}.
 #' Each list element is a data frame with the following three named vectors
-#' representing all guesses:
+#' representing all the guesses:
 #' \itemize{
 #'    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure,
 #'    \item \code{Language} -- string; guessed languages; \code{NA} if the language could
-#'    not be determined (e.g. in case of UTF-8),
+#'    not be determined (e.g., in case of UTF-8),
 #'    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
 #'    the more confidence there is in the match; \code{NA} on failure.
 #' }
@@ -280,8 +279,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' First, the text is checked whether it is valid
 #' UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8
 #' (as in \code{\link{stri_enc_detect}},
-#' this slightly bases on \pkg{ICU}'s \code{i18n/csrucode.cpp},
-#' but we do it in our own way, however) or ASCII.
+#' this is roughly inspired by \pkg{ICU}'s \code{i18n/csrucode.cpp}) or ASCII.
 #'
 #'
 #' If \code{locale} is not \code{NA} and the above fails,
@@ -295,10 +293,10 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #' The guess is of course imprecise,
 #' as it is obtained using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred
-#' bytes of character data that's in a single language.
+#' bytes of character data that is in a single language.
 #'
 #'
-#' If you have no initial guess on language and encoding, try with
+#' If you have no initial guess on the language and encoding, try with
 #' \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 #' However, it turns out that (empirically) \code{stri_enc_detect2}
 #' works better than the \pkg{ICU}-based one if UTF-* text

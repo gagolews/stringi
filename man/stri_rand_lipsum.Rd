@@ -23,10 +23,10 @@ of a given number of text paragraphs.
 \emph{Lorem ipsum} is a dummy text often used as a source
 of data for string processing and displaying/layouting exercises.
 
-Current implementation is very simple:
+The current implementation is very simple:
 words are selected randomly from a Zipf distribution
-(we base on a set of ca. 190 predefined Latin words).
-Number of words per sentence and sentences per paragraph
+(based on a set of ca. 190 predefined Latin words).
+The number of words per sentence and sentences per paragraph
 follows a discretized, truncated normal distribution.
 No Markov chain modeling, just i.i.d. word selection.
 }

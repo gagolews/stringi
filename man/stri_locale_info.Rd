@@ -22,14 +22,14 @@ Provides some basic information on a given locale identifier.
 With this function you may obtain some basic information
 on any provided locale identifier,
 even if it is unsupported by \pkg{ICU} or if you pass a malformed locale
-identifier (the one that is not e.g. of the form Language_Country).
+identifier (the one that is not, e.g., of the form Language_Country).
 See \link{stringi-locale} for discussion.
 
-This function does nothing complicated. In many
+This function does not do anything really complicated. In many
 cases it is similar to a call to
 \code{\link{as.list}(\link{stri_split_fixed}(locale, "_", 3L)[[1]])},
 with \code{locale} case mapped.
-It may be used, however, to get insight on how ICU understands a provided
+It may be used, however, to get insight on how ICU understands a given
 locale identifier.
 }
 \examples{

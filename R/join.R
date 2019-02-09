@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ stri_dup <- function(str, times) {
 #' Vectorized over \code{e1} and \code{e2}.
 #'
 #' These operators act like a call to \code{\link{stri_join}(e1, e2, sep="")}.
-#' However, note that joining 3 vectors, e.g. \code{e1 \%+\% e2 \%+\% e3}
+#' However, note that joining 3 vectors, e.g., \code{e1 \%+\% e2 \%+\% e3}
 #' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
@@ -125,7 +125,7 @@ stri_dup <- function(str, times) {
 #' If \code{collapse} or \code{sep} has length greater than 1,
 #' then only the first string will be used.
 #'
-#' In case missing values in any of the input vectors,
+#' In case where there are missing values in any of the input vectors,
 #' \code{NA} is set to the corresponding element.
 #' Note that this behavior is different from \code{\link{paste}},
 #' which treats missing values as ordinary strings like \code{"NA"}.
@@ -181,7 +181,7 @@ stri_paste <- stri_join
 #' The \code{stri_flatten(str, collapse='XXX')} call
 #' is equivalent to \code{\link{paste}(str, collapse='XXX', sep="")}.
 #'
-#' If you wish to use some more fancy (e.g. differing)
+#' If you wish to use some more fancy (e.g., differing)
 #' separators between flattened strings,
 #' call \code{\link{stri_join}(str, separators, collapse='')}.
 #'
@@ -218,7 +218,8 @@ stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
 #' Concatenate Strings in a List
 #'
 #' @description
-#' These functions concatenate strings in each character vector in a given list.
+#' These functions concatenate all the strings in each character vector
+#' in a given list.
 #' \code{stri_c_list} and \code{stri_paste_list} are aliases for
 #' \code{stri_join_list}.
 #'
@@ -243,10 +244,10 @@ stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
 #' @export
 #' @examples
 #' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#' "You're gonna get away with this.")), sep=", ")
+#' "Get a life.")), sep=", ")
 #'
 #' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#' "You're gonna get away with this.")), sep=", ", collapse=". ")
+#' "Get a life.")), sep=", ", collapse=". ")
 #'
 #' stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+"), " ")
 #'
@@ -268,4 +269,3 @@ stri_c_list <- stri_join_list
 #' @rdname stri_join_list
 #' @export
 stri_paste_list <- stri_join_list
-

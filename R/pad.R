@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 #' Pad (Center/Left/Right Align) a String
 #'
 #' @description
-#' Adds multiple \code{pad} characters at the given \code{side}(s) of each string
+#' Add multiple \code{pad} characters at the given \code{side}(s) of each string
 #' so that each output string is of total width of at least \code{width}.
-#' This function may be used to center or left/right-align each string.
+#' These functions may be used to center or left/right-align each string.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{width}, and \code{pad}.
@@ -43,13 +43,12 @@
 #' equal to 1 or, if \code{use_length} is \code{TRUE}, exactly one code point.
 #'
 #' \code{stri_pad} is a convenience function, which dispatches
-#' control to \code{stri_pad_*}. Relying on one of the underlying
-#' functions will make your code run slightly faster.
+#' to \code{stri_pad_*}.
 #'
 #' Note that Unicode code points may have various widths when
-#' printed on the console and that the function takes that by default
+#' printed on the console and that, by default, the function takes that
 #' into account. By changing the state of the \code{use_length}
-#' argument, this function starts to act like each code point
+#' argument, this function starts acting like each code point
 #' was of width 1. This feature should rather be used with
 #' text in Latin script.
 #'
@@ -63,7 +62,8 @@
 #'    (\code{left}, \code{right}, or \code{both})
 #' @param pad character vector giving padding code points
 #' @param use_length single logical value; should the number of code
-#' points be used instead of the total code point width (see \code{\link{stri_width}})?
+#' points be used instead of the total code point width
+#'  (see \code{\link{stri_width}})?
 #'
 #' @return Returns a character vector.
 #'

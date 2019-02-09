@@ -20,8 +20,8 @@ stri_trim(str, side = c("both", "left", "right"),
 \item{str}{a character vector of strings to be trimmed}
 
 \item{pattern}{a single pattern, specifying character
-classes that should be preserved (see \link{stringi-search-charclass}). Defaults to
-`\code{\\P\{Wspace\}}.}
+classes that should be preserved (see \link{stringi-search-charclass}).
+ Defaults to `\code{\\P\{Wspace\}}.}
 
 \item{side}{character [\code{stri_trim} only]; defaults to \code{"both"}}
 }
@@ -29,30 +29,31 @@ classes that should be preserved (see \link{stringi-search-charclass}). Defaults
 All these functions return a character vector.
 }
 \description{
-These functions may be used e.g. to get rid of unnecessary
+These functions may be used, e.g., to get rid of unnecessary
 whitespaces from strings. Trimming ends at the first or
 starts at the last \code{pattern} match.
 }
 \details{
 Vectorized over \code{str} and \code{pattern}.
 
-\code{stri_trim} is a wrapper, which calls \code{stri_trim_left}
-or \code{stri_trim_right} as appropriate. It's slightly slower than trim_left or
-trim_right, and so shouldn't be used except for convenience.
+\code{stri_trim} is a convenience wrapper over \code{stri_trim_left}
+and \code{stri_trim_right}.
 
 Contrary to many other string processing libraries,
-our trimming functions are quite general. A character class,
+our trimming functions are quite generic. A character class,
 given by \code{pattern},
 may be adjusted to suit your needs (most often you will use the default
-value). On the other hand, for replacing pattern matches with
+value).
+
+For replacing pattern matches with
 arbitrary replacement string, see \code{\link{stri_replace}}.
 
-Interestingly, with these functions you may sometimes extract data, which
-in some cases require using regular expressions. E.g. you may get
+Trimming can also be used where you would normally rely on
+regular expressions. For instance, you may get
 \code{"23.5"} out of \code{"total of 23.5 bitcoins"}.
 
 For trimming whitespaces, please note the difference
-between Unicode binary property `\code{\\p\{Wspace\}}` (more general)
+between Unicode binary property `\code{\\p\{Wspace\}}` (more universal)
 and general character category `\code{\\p\{Z\}}`,
 see \link{stringi-search-charclass}.
 }

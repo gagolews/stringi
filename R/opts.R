@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 #'
 #' @description
 #' A convenience function to tune the \pkg{ICU} Collator's behavior,
-#' e.g. in \code{\link{stri_compare}}, \code{\link{stri_order}},
+#' e.g., in \code{\link{stri_compare}}, \code{\link{stri_order}},
 #' \code{\link{stri_unique}}, \code{\link{stri_duplicated}},
 #' as well as \code{\link{stri_detect_coll}}
 #' and other \link{stringi-search-coll} functions.
@@ -127,19 +127,19 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' Generate a List with Regex Matcher Settings
 #'
 #' @description
-#' A convenience function to tune the \pkg{ICU} regular expressions matcher's behavior,
-#' e.g. in \code{\link{stri_count_regex}}
+#' A convenience function to tune the \pkg{ICU} regular expressions
+#' matcher's behavior, e.g., in \code{\link{stri_count_regex}}
 #' and other \link{stringi-search-regex} functions.
 #'
 #' @details
 #' Note that some regex settings may be changed using ICU regex flags
-#' inside regexes. For example, \code{"(?i)pattern"} does
+#' inside regexes. For example, \code{"(?i)pattern"} performs
 #' a case-insensitive match of a given pattern,
 #' see the \pkg{ICU} User Guide entry on Regular Expressions
 #' in the References section or \link{stringi-search-regex}.
 #'
-#' @param case_insensitive logical; enable case insensitive matching [regex flag \code{(?i)}]
-#' @param comments logical; allow white space and comments within patterns [regex flag \code{(?x)}]
+#' @param case_insensitive logical; enables case insensitive matching [regex flag \code{(?i)}]
+#' @param comments logical; allows white space and comments within patterns [regex flag \code{(?x)}]
 #' @param dotall logical;  if set, `\code{.}` matches line terminators,
 #'  otherwise matching of `\code{.}`  stops at a line end [regex flag \code{(?s)}]
 #' @param literal logical; if set, treat the entire pattern as a literal string:
@@ -149,11 +149,11 @@ stri_opts_collator <- function(locale=NULL, strength=3L,
 #' @param multiline logical; controls the behavior of `\code{$}` and `\code{^}`.
 #' If set, recognize line terminators within a string, otherwise,
 #'  match only at start and end of input string [regex flag \code{(?m)}]
-#' @param unix_lines logical; Unix-only line endings.
-#' When this mode is enabled, only \code{U+000a} is recognized as a
+#' @param unix_lines logical; Unix-only line endings;
+#' when enabled, only \code{U+000a} is recognized as a
 #' line ending by `\code{.}`, `\code{$}`, and `\code{^}`.
-#' @param uword logical; Unicode word boundaries.
-#' If set, uses the Unicode TR 29 definition of word boundaries;
+#' @param uword logical; Unicode word boundaries;
+#' if set, uses the Unicode TR 29 definition of word boundaries;
 #' warning: Unicode word boundaries are quite different from traditional
 #' regex word boundaries. [regex flag \code{(?w)}]
 #' See \url{http://unicode.org/reports/tr29/#Word_Boundaries}
@@ -209,7 +209,7 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #'
 #' @details
 #' The \code{skip_*} family of settings may be used to prevent performing
-#' any special actions on particular types of text boundaries, e.g.
+#' any special actions on particular types of text boundaries, e.g.,
 #' in case of the \code{\link{stri_locate_all_boundaries}} and
 #' \code{\link{stri_split_boundaries}} functions.
 #'
@@ -286,23 +286,23 @@ stri_opts_brkiter <- function(type, locale, skip_word_none,
 #' Generate a List with Fixed Pattern Search Engine's Settings
 #'
 #' @description
-#' A convenience function used to tune up the \code{stri_*_fixed} functions'
-#' behavior, see \link{stringi-search-fixed}.
+#' A convenience function used to tune up the behavior of \code{stri_*_fixed}
+#' functions, see \link{stringi-search-fixed}.
 #'
 #' @details
 #' Case-insensitive matching uses a simple, single-code point case mapping
 #' (via ICU's \code{u_toupper()} function).
 #' Full case mappings should be used whenever possible because they produce
 #' better results by working on whole strings. They take into account
-#' the string context and the language and can map to a result string with
-#' a different length as appropriate, see \link{stringi-search-coll}.
+#' the string context and the language. Also, they can map to a result
+#' string with a different length as appropriate, see \link{stringi-search-coll}.
 #'
-#' Searching for overlapping pattern matches works in case of the
+#' Searching for overlapping pattern matches is available in
 #' \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
 #' and \code{\link{stri_count_fixed}} functions.
 #'
 #' @param case_insensitive logical; enable simple case insensitive matching
-#' @param overlap logical; enable overlapping matches detection in certain functions
+#' @param overlap logical; enable overlapping matches detection
 #' @param ... any other arguments to this function are purposely ignored
 #'
 #' @return

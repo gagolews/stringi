@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-209, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -50,11 +50,11 @@
 # will not be available. icudt size is approx. 10-30 MB.
 #
 # \code{stri_install_check()} tests whether some ICU services
-# are available. If they are not, it is most likely due to
+# are available. If this is not the case, it is most likely due to
 # unavailable ICU data library.
 #
 # \code{stri_install_icudt()} downloads and installs the ICU data library
-# specific for your platform (little/big-endian). The downloaded
+# specific to your platform (little/big-endian). The downloaded
 # file will be decompressed into the directory where the package has been
 # installed, see \code{\link{find.package}}, so make sure
 # you have sufficient write permissions.

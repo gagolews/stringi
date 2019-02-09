@@ -14,11 +14,11 @@ Returns an integer vector of the same length as \code{str}.
 }
 \description{
 Counts the number of bytes needed to store
-each string in computer's memory.
+each string in the computer's memory.
 }
 \details{
-This is often not the function you would normally use
-in your string processing activities. See rather \code{\link{stri_length}}.
+Often, this is not the function you would normally use
+in your string processing activities. See \code{\link{stri_length}} instead.
 
 For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
 For UTF-8 strings, the returned values may be greater
@@ -30,7 +30,7 @@ Missing values are handled properly.
 
 The strings do not need to be re-encoded to perform this operation.
 
-The returned values does not of course include the trailing NUL bytes,
+The returned values do not include the trailing NUL bytes,
 which are used internally to mark the end of string data (in C).
 }
 \examples{

@@ -37,7 +37,7 @@
 /***
  * used both in stri_sub and stri_sub_replacement
  *
- * PROTECTs both `to` and `length`
+ * @return number of objects PROTECTEd
  */
 R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
    R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,

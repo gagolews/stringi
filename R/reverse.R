@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,11 +33,11 @@
 #' Reverse Each String
 #'
 #' @description
-#' Reverses code points in every string.
+#' Reverses the order of the code points in every string.
 #'
 #' @details
 #' Note that this operation may result in non-Unicode-normalized
-#' strings and may give strange output for bidirectional strings.
+#' strings and may give peculiar outputs for bidirectional strings.
 #'
 #' See also \code{\link{stri_rand_shuffle}} for a random permutation
 #' of code points.

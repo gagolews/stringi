@@ -10,7 +10,7 @@ stri_read_raw(fname)
 \item{fname}{file name}
 }
 \value{
-Returns a raw vector.
+Returns a \code{raw}-type vector.
 }
 \description{
 Reads a text file as-is, with no conversion or text line splitting.
@@ -18,12 +18,11 @@ Reads a text file as-is, with no conversion or text line splitting.
 \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 }
 \details{
-After reading a text file into memory (the vast majority of them
-will fit into RAM without any problems), you may perform 
-encoding detection (cf. \code{\link{stri_enc_detect2}}),
-conversion (cf. \code{\link{stri_encode}}),
-and for example split it into text lines with
-\code{\link{stri_split_lines1}}.
+Once a text file is read into memory,
+encoding detection (see \code{\link{stri_enc_detect2}}),
+conversion (see \code{\link{stri_encode}}),
+text lines split (see \code{\link{stri_split_lines1}})
+can be performed.
 }
 \seealso{
 Other files: \code{\link{stri_read_lines}},

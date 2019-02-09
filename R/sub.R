@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,10 +33,10 @@
 #' Extract a Substring From or Replace a Substring In a Character Vector
 #'
 #' @description
-#' The first function extracts substrings under code point-based
-#' index ranges provided. The second one allows to substitute parts of
-#' a string with given strings. The third one is a magrittr's pipe-operator-
-#' friendly version of the second.
+#' \code{stri_sub} extracts substrings under code point-based
+#' index ranges provided. Its replacement version allows to substitute parts of
+#' a string with given strings. \code{stri_sub_replace} is its magrittr's
+#' pipe-operator- friendly version.
 #'
 #' @details
 #' Vectorized over \code{str}, [\code{value}], \code{from} and
@@ -86,7 +86,7 @@
 #' The extract function \code{stri_sub} returns the indicated substrings.
 
 #' The replacement function \code{stri_sub<-} is invoked for its
-#' side effect: after a call, \code{str} is modified.
+#' side effect: once it is called, \code{str} is modified.
 #'
 #' @examples
 #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."

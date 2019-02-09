@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -34,11 +34,11 @@
 #'
 #' @description
 #' Counts the number of bytes needed to store
-#' each string in computer's memory.
+#' each string in the computer's memory.
 #'
 #' @details
-#' This is often not the function you would normally use
-#' in your string processing activities. See rather \code{\link{stri_length}}.
+#' Often, this is not the function you would normally use
+#' in your string processing activities. See \code{\link{stri_length}} instead.
 #'
 #' For 8-bit encoded strings, this is the same as \code{\link{stri_length}}.
 #' For UTF-8 strings, the returned values may be greater
@@ -50,7 +50,7 @@
 #'
 #' The strings do not need to be re-encoded to perform this operation.
 #'
-#' The returned values does not of course include the trailing NUL bytes,
+#' The returned values do not include the trailing NUL bytes,
 #' which are used internally to mark the end of string data (in C).
 #'
 #' @param str character vector or an object coercible to
@@ -84,13 +84,13 @@ stri_numbytes <- function(str) {
 #' @details
 #' Note that the number of code points is
 #' not the same as the `width` of the string when
-#' printed on the console
+#' printed on the console.
 #'
-#' If a given string is in UTF-8 and  has not been properly normalized
-#' (e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
+#' If a given string is in UTF-8 and has not been properly normalized
+#' (e.g., by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
 #' misleading. See \code{\link{stri_count_boundaries}} for a method to count
-#' \emph{Unicode characters}. Moreover, if an incorrect UTF-8 byte sequence is detected,
-#' then a warning is generated and the corresponding output element
+#' \emph{Unicode characters}. Moreover, if an incorrect UTF-8 byte sequence
+#' is detected, then a warning is generated and the corresponding output element
 #' is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
 #' to deal with such cases.
 #'
@@ -146,11 +146,11 @@ stri_isempty <- function(str) {
 #'
 #' @description
 #' Approximates the number of text columns the `cat()` function
-#' should utilize to print a string with a monospaced font.
+#' should use to print a string with a mono-spaced font.
 #'
 #' @details
 #' The Unicode standard does not formalize the notion of a character
-#' width. Roughly basing on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
+#' width. Roughly based on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
 #' and the UAX #11 we proceed as follows.
 #' The following code points are of width 0:
 #' \itemize{

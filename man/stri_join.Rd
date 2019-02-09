@@ -47,7 +47,7 @@ you will get a 0-length character vector in result.
 If \code{collapse} or \code{sep} has length greater than 1,
 then only the first string will be used.
 
-In case missing values in any of the input vectors,
+In case where there are missing values in any of the input vectors,
 \code{NA} is set to the corresponding element.
 Note that this behavior is different from \code{\link{paste}},
 which treats missing values as ordinary strings like \code{"NA"}.

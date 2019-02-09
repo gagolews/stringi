@@ -37,19 +37,19 @@ may be specified by setting the \code{@calendar=name} keyword}
 }
 \description{
 These functions convert a given date/time object
-to a character vector or conversely.
+to a character vector, or conversely.
 }
 \details{
 Vectorized over \code{time} or \code{str}.
 
-By default, \code{stri_datetime_format} (unlike \code{format.POSIXst})
+By default, \code{stri_datetime_format} (for the sake of compatibility
+with the \code{\link{strftime}} function, but unlike \code{format.POSIXst})
 formats a date/time object using the current default time zone.
-This is for the sake of compatibility with the \code{\link{strftime}} function.
 
 \code{format} may be one of \code{DT_STYLE} or \code{DT_relative_STYLE},
 where \code{DT} is equal to \code{date}, \code{time}, or \code{datetime},
-and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium}, or \code{short}.
-This gives a locale-dependent date and/or time format.
+and \code{STYLE} is equal to \code{full}, \code{long}, \code{medium},
+or \code{short}. This gives a locale-dependent date and/or time format.
 Note that currently \pkg{ICU} does not support \code{relative} \code{time} formats,
 so this flag is currently ignored in such a context.
 
@@ -58,11 +58,11 @@ a string, where specific sequences of characters are replaced
 with date and time data from a calendar when formatting or used
 to generate data for a calendar when parsing.
 For example, \code{y} stands for the year. Characters
-may be used multiple times. For instance, if \code{y} is used for the year,
-\code{yy} might produce \code{99}, whereas \code{yyyy} produces \code{1999}.
-For most numerical fields, the number of characters specifies
+may be used multiple times:
+\code{yy} might produce \code{99}, whereas \code{yyyy} yields \code{1999}.
+For most of the numerical fields, the number of characters specifies
 the field width. For example, if \code{h} is the hour, \code{h} might
-produce \code{5}, but \code{hh} produces \code{05}.
+produce \code{5}, but \code{hh} yields \code{05}.
 For some characters, the count specifies whether an abbreviated
 or full form should be used, but may have other choices, as given below.
 
@@ -73,7 +73,7 @@ Otherwise all ASCII letter from \code{a} to \code{z} and \code{A} to \code{Z}
 are reserved as syntax characters, and require quoting if
 they are to represent literal characters. In addition, certain
 ASCII punctuation characters may become variable in the future
-(eg \code{:} being interpreted as the time separator and \code{/}
+(e.g., \code{:} being interpreted as the time separator and \code{/}
 as a date separator, and replaced by respective
 locale-sensitive characters in display).
 
@@ -173,7 +173,7 @@ Note that any characters in the pattern that are not in the ranges
 of \code{[a-z]} and \code{[A-Z]} will be treated as quoted text.
 For instance, characters like \code{:}, \code{.}, \code{ } (a space),
 \code{#} and \code{@} will appear in the resulting time text
-even they are not enclosed within single quotes. The single quote is used
+even if they are not enclosed within single quotes. The single quote is used
 to ``escape'' letters. Two single quotes in a row,
 inside or outside a quoted sequence, represent a ``real'' single quote.
 

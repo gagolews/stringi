@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@
 #' If \code{byrow} is \code{TRUE}, then the resulting matrix is
 #' a transposition of the above-described one.
 #'
-#' This function may be useful e.g. in connection with \code{\link{stri_split}}
+#' This function may be useful, e.g., in connection with \code{\link{stri_split}}
 #' and \code{\link{stri_extract_all}}.
 #'
 #' @param x a list of atomic vectors
@@ -87,7 +87,7 @@ stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
 #' Replace NAs with empty strings
 #'
 #' @description
-#' This function replaces all missing values with empty strings
+#' This function replaces all missing values with empty strings.
 #'
 #' @param x a character vector
 #'

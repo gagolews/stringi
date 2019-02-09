@@ -17,7 +17,7 @@ otherwise an error is generated.
 Coercion from a list of non-atomic vectors each of length 1
 issues a warning.
 
-When a logical, numeric or integer vector argument is expected,
+When a logical, numeric, or integer vector argument is expected,
 factors are converted with \code{as.*(\link{as.character}(...))},
 and other coercible vectors are converted with \code{as.*},
 otherwise an error is generated.
@@ -27,7 +27,7 @@ otherwise an error is generated.
 
 
 Almost all functions are vectorized with respect to all their arguments;
-This may sometimes lead to strange results - we assume you know what
+This may sometimes lead to peculiar results - we assume you know what
 you are doing. However, due to this property you may,
 e.g., search for one pattern in each given string,
 or search for each pattern in one given string.

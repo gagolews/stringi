@@ -19,13 +19,13 @@ in each string.
 \details{
 Note that the number of code points is
 not the same as the `width` of the string when
-printed on the console
+printed on the console.
 
-If a given string is in UTF-8 and  has not been properly normalized
-(e.g. by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
+If a given string is in UTF-8 and has not been properly normalized
+(e.g., by \code{\link{stri_trans_nfc}}), the returned counts may sometimes be
 misleading. See \code{\link{stri_count_boundaries}} for a method to count
-\emph{Unicode characters}. Moreover, if an incorrect UTF-8 byte sequence is detected,
-then a warning is generated and the corresponding output element
+\emph{Unicode characters}. Moreover, if an incorrect UTF-8 byte sequence
+is detected, then a warning is generated and the corresponding output element
 is set to \code{NA}, see also \code{\link{stri_enc_toutf8}} for a method
 to deal with such cases.
 

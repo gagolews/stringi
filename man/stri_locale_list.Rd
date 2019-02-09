@@ -14,8 +14,8 @@ that are known to \pkg{ICU}.
 Creates a character vector with all known locale identifies.
 }
 \details{
-Note that not all services may be available for all locales.
-Queries for locale-specific services are always performed
+Note that some of the services may be unavailable in some locales.
+Querying for locale-specific services is always performed
 during the resource request.
 
 See \link{stringi-locale} for more information.

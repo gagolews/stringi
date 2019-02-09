@@ -17,11 +17,11 @@ which will remove most HTML or XML markup.}
 \value{
 Returns a list of length equal to the length of \code{str}.
 Each list element is a data frame with the following three named vectors
-representing all guesses:
+representing all the guesses:
 \itemize{
    \item \code{Encoding} -- string; guessed encodings; \code{NA} on failure,
    \item \code{Language} -- string; guessed languages; \code{NA} if the language could
-   not be determined (e.g. in case of UTF-8),
+   not be determined (e.g., in case of UTF-8),
    \item \code{Confidence} -- numeric in [0,1]; the higher the value,
    the more confidence there is in the match; \code{NA} on failure.
 }
@@ -36,18 +36,18 @@ Vectorized over \code{str} and \code{filter_angle_brackets}.
 
 This is, at best, an imprecise operation using statistics and heuristics.
 Because of this, detection works best if you supply at least a few hundred
-bytes of character data that's mostly in a single language.
+bytes of character data that is mostly in a single language.
 However, because the detection only looks at a limited amount of the input
-data, some of the returned charsets may fail to handle all of the
+data, some of the returned character sets may fail to handle all of the
 input data. Note that in some cases,
 the language can be determined along with the encoding.
 
 Several different techniques are used for character set detection.
-For multi-byte encodings, the sequence of bytes is checked for legible patterns.
-The detected characters are also checked against a list of frequently
-used characters in that encoding. For single byte encodings, the data
-is checked against a list of the most commonly occurring three letter groups
-for each language that can be written using that encoding.
+For multi-byte encodings, the sequence of bytes is checked for legible
+patterns. The detected characters are also checked against a list of
+frequently used characters in that encoding. For single byte encodings,
+the data is checked against a list of the most commonly occurring three
+letter groups for each language that can be written using that encoding.
 
 The detection process can be configured to optionally ignore
 HTML or XML style markup (using \pkg{ICU}'s internal facilities),

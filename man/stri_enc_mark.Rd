@@ -20,7 +20,7 @@ This gives exactly the same data that is used by
 all the functions in \pkg{stringi} to re-encode their inputs.
 }
 \description{
-Gets declared encodings for each string in a character vector
+Reads declared encodings for each string in a character vector
 as seen by \pkg{stringi}.
 }
 \details{
@@ -33,7 +33,7 @@ Moreover, we may check (via the R/C API) whether
 a string is in ASCII (\R assumes that this holds if and only if
 all bytes in a string are not greater than 127,
 so there is an implicit assumption that your platform uses
-an encoding which is an ASCII superset)
+an encoding that extends ASCII)
 or in the system's default (a.k.a. \code{unknown} in \code{\link{Encoding}})
 encoding.
 

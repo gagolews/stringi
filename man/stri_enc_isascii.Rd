@@ -12,11 +12,11 @@ a list of \code{raw} vectors}
 }
 \value{
 Returns a logical vector.
-Its i-th element indicates whether the i-th string
+The i-th element indicates whether the i-th string
 corresponds to a valid ASCII byte sequence.
 }
 \description{
-The function checks whether all bytes in a string are in the set {1,2,...,127}.
+The function checks whether all bytes in a string are <= 127.
 }
 \details{
 This function is independent of the way \R marks encodings in

@@ -7,7 +7,7 @@
 stri_enc_toutf32(str)
 }
 \arguments{
-\item{str}{a character vector (or an object coercible to such a vector)
+\item{str}{a character vector (or an object coercible to)
 to be converted}
 }
 \value{
@@ -15,23 +15,23 @@ Returns a list of integer vectors.
 Missing values are converted to \code{NULL}s.
 }
 \description{
-UTF-32 is a 32bit encoding in which each Unicode code point
+UTF-32 is a 32-bit encoding where each Unicode code point
 corresponds to exactly one integer value.
 This function converts a character vector to a list
-of integer vectors so that e.g.
-individual code points may easily be accessed, changed, etc.
+of integer vectors so that, e.g.,
+individual code points may be easily accessed, changed, etc.
 }
 \details{
 See \code{\link{stri_enc_fromutf32}} for a dual operation.
 
 This function is roughly equivalent to a vectorized call
 to \code{\link{utf8ToInt}(enc2utf8(str))}.
-If you want a list of raw vector on output,
+If you want a list of raw vectors on output,
 use \code{\link{stri_encode}}.
 
-Unlike \code{utf8ToInt}, if improper UTF-8 byte sequences are detected,
-a corresponding element is set to NULL and a warning is given,
-see also \code{\link{stri_enc_toutf8}} for a method to deal with such cases.
+Unlike \code{utf8ToInt}, if ill-formed UTF-8 byte sequences are detected,
+a corresponding element is set to NULL and a warning is generated.
+To deal with such issues, use, e.g., \code{\link{stri_enc_toutf8}}.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_enc_fromutf32}},

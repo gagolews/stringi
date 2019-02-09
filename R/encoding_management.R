@@ -140,7 +140,8 @@ stri_enc_info <- function(enc=NULL) {
 #'
 #' \code{stri_enc_set} has no effect if the system ICU assumes that
 #' the default charset is always UTF-8 (i.e., where the internal
-#' \code{U_CHARSET_IS_UTF8} is defined and set to 1).
+#' \code{U_CHARSET_IS_UTF8} is defined and set to 1), see
+#' \code{\link{stri_info}}.
 #'
 #' @param enc single string; character encoding name,
 #' see \code{\link{stri_enc_list}} for the list of supported encodings.
@@ -177,7 +178,7 @@ stri_enc_get <- function() {
 #' Get Declared Encodings of Each String
 #'
 #' @description
-#' Gets declared encodings for each string in a character vector
+#' Reads declared encodings for each string in a character vector
 #' as seen by \pkg{stringi}.
 #'
 #' @details
@@ -190,7 +191,7 @@ stri_enc_get <- function() {
 #' a string is in ASCII (\R assumes that this holds if and only if
 #' all bytes in a string are not greater than 127,
 #' so there is an implicit assumption that your platform uses
-#' an encoding which is an ASCII superset)
+#' an encoding that extends ASCII)
 #' or in the system's default (a.k.a. \code{unknown} in \code{\link{Encoding}})
 #' encoding.
 #'

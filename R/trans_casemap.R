@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Transform String with Case Mapping
+#' Transform Strings with Case Mapping
 #'
 #' @description
 #' These functions transform strings either to lower case,

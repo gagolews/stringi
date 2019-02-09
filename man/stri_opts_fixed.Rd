@@ -9,7 +9,7 @@ stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 \arguments{
 \item{case_insensitive}{logical; enable simple case insensitive matching}
 
-\item{overlap}{logical; enable overlapping matches detection in certain functions}
+\item{overlap}{logical; enable overlapping matches detection}
 
 \item{...}{any other arguments to this function are purposely ignored}
 }
@@ -17,18 +17,18 @@ stri_opts_fixed(case_insensitive = FALSE, overlap = FALSE, ...)
 Returns a named list object.
 }
 \description{
-A convenience function used to tune up the \code{stri_*_fixed} functions'
-behavior, see \link{stringi-search-fixed}.
+A convenience function used to tune up the behavior of \code{stri_*_fixed}
+functions, see \link{stringi-search-fixed}.
 }
 \details{
 Case-insensitive matching uses a simple, single-code point case mapping
 (via ICU's \code{u_toupper()} function).
 Full case mappings should be used whenever possible because they produce
 better results by working on whole strings. They take into account
-the string context and the language and can map to a result string with
-a different length as appropriate, see \link{stringi-search-coll}.
+the string context and the language. Also, they can map to a result
+string with a different length as appropriate, see \link{stringi-search-coll}.
 
-Searching for overlapping pattern matches works in case of the
+Searching for overlapping pattern matches is available in
 \code{\link{stri_extract_all_fixed}}, \code{\link{stri_locate_all_fixed}},
 and \code{\link{stri_count_fixed}} functions.
 }

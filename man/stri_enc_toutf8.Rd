@@ -26,28 +26,28 @@ then R encoding marks are used, see \code{\link{stri_enc_mark}}.
 Bytes-marked strings will cause the function to fail.
 
 If a string is in UTF-8 and has a byte order mark (BOM),
-then BOM will be silently removed from the output string.
+then the BOM will be silently removed from the output string.
 
-If default encoding is UTF-8, see \code{\link{stri_enc_get}},
+If the default encoding is UTF-8, see \code{\link{stri_enc_get}},
 then strings marked with \code{native} are -- for efficiency reasons --
-returned as-is, i.e. with unchanged markings.
+returned as-is, i.e., with unchanged markings.
 A similar behavior is observed when calling \code{\link{enc2utf8}}.
 
-For \code{is_unknown_8bit=TRUE}, if a string is declared to be neither in ASCII
-nor in UTF-8, then all byte codes > 127 are replaced with
+For \code{is_unknown_8bit=TRUE}, if a string is declared to be neither
+in ASCII nor in UTF-8, then all byte codes > 127 are replaced with
 the Unicode REPLACEMENT CHARACTER (\\Ufffd).
 Note that the REPLACEMENT CHARACTER may be interpreted as Unicode
 missing value for single characters.
-Here, a \code{bytes}-marked string is assumed to be encoded
-by an 8-bit encoding such that it has ASCII as its subset.
+Here a \code{bytes}-marked string is assumed to use an 8-bit encoding
+that extends the ASCII map.
 
-What is more, in both cases setting \code{validate} to \code{TRUE}
-or \code{NA} validates the resulting UTF-8 byte stream.
+What is more, setting \code{validate} to \code{TRUE}
+or \code{NA} in both cases validates the resulting UTF-8 byte stream.
 If \code{validate=TRUE}, then
 in case of any incorrect byte sequences, they will be
-replaced with REPLACEMENT CHARACTER.
-This option may be used in a (very rare in practice) case
-in which you want to fix an invalid UTF-8 byte sequence.
+replaced with the REPLACEMENT CHARACTER.
+This option may be used in a case
+where you want to fix an invalid UTF-8 byte sequence.
 For \code{NA}, a bogus string will be replaced with a missing value.
 }
 \seealso{

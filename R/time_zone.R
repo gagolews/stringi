@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
 #' Returns a list of available time zone identifiers.
 #'
 #' @details
-#' If  \code{offset} and \code{region} are \code{NA} (the default), then
+#' If \code{offset} and \code{region} are \code{NA} (the default), then
 #' all time zones are returned. Otherwise,
 #' only time zone identifiers with a given raw offset from GMT
 #' and/or time zones corresponding to a given region are provided.
@@ -50,17 +50,17 @@
 #' The offset might vary throughout the year, if daylight savings time (DST)
 #' is used, or might be the same all year long.
 #' Typically, regions closer to the equator do not use DST.
-#' If DST is in use, then specific rules define the point at which
+#' If DST is in use, then specific rules define the point where
 #' the offset changes and the amount by which it changes.
 #'
 #' If DST is observed, then three additional bits of information are needed:
 #' \enumerate{
 #' \item The precise date and time during the year when DST begins.
-#' In the first half of the year it's in the northern hemisphere,
-#' and in the second half of the year it's in the southern hemisphere.
+#' In the first half of the year it is in the northern hemisphere,
+#' and in the second half of the year it is in the southern hemisphere.
 #' \item The precise date and time during the year when DST ends.
-#' In the first half of the year it's in the southern hemisphere,
-#' and in the second half of the year it's in the northern hemisphere.
+#' In the first half of the year it is in the southern hemisphere,
+#' and in the second half of the year it is in the northern hemisphere.
 #' \item The amount by which the GMT offset changes when DST is in effect.
 #' This is almost always one hour.
 #' }
@@ -113,9 +113,10 @@ stri_timezone_list <- function(region=NA_character_, offset=NA_integer_) {
 #'
 #' @description
 #' \code{stri_timezone_set} changes the current default time zone for all functions
-#' in the \pkg{stringi} package, i.e. establishes the meaning of the
+#' in the \pkg{stringi} package, i.e., establishes the meaning of the
 #' ``\code{NULL} time zone'' argument to date/time processing functions.
-#' On the other hand, \code{stri_timezone_get} gets the current default time zone.
+#'
+#' \code{stri_timezone_get} gets the current default time zone.
 #'
 #' For more information on time zone representation in \pkg{ICU}
 #' and \pkg{stringi}, refer to \code{\link{stri_timezone_list}}.
@@ -171,7 +172,7 @@ stri_timezone_set <- function(tz) {
 #' Provides some basic information on a given time zone identifier.
 #'
 #' @details
-#' With this function you may fetch some basic information
+#' Used to fetch basic information
 #' on any supported time zone.
 #'
 #' For more information on time zone representation in \pkg{ICU},

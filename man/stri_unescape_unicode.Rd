@@ -2,7 +2,7 @@
 % Please edit documentation in R/escape.R
 \name{stri_unescape_unicode}
 \alias{stri_unescape_unicode}
-\title{Unescape All Escape Sequences}
+\title{Un-escape All Escape Sequences}
 \usage{
 stri_unescape_unicode(str)
 }
@@ -15,10 +15,10 @@ If an escape sequence is ill-formed,
 result will be \code{NA} and a warning will be given.
 }
 \description{
-Unescapes all known escape sequences
+Un-escapes all known escape sequences
 }
 \details{
-Uses \pkg{ICU} facilities to unescape Unicode character sequences.
+Uses \pkg{ICU} facilities to un-escape Unicode character sequences.
 
 The following ASCII standard escapes are recognized:
 \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
@@ -31,7 +31,7 @@ Moreover, the function understands the following ones:
 \code{\\xXX} (1-2 hex digits),
 \code{\\ooo} (1-3 octal digits),
 \code{\\cX} (control-X; X is masked with 0x1F).
-For \code{\\xXX} and \code{\\ooo} beware of non-valid UTF8 byte sequences.
+For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF8 byte sequences.
 
 Note that some versions of \R on Windows cannot handle
 characters defined with  {\\UXXXXXXXX}.

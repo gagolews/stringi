@@ -8,9 +8,9 @@ stri_opts_regex(case_insensitive, comments, dotall, literal, multiline,
   unix_lines, uword, error_on_unknown_escapes, ...)
 }
 \arguments{
-\item{case_insensitive}{logical; enable case insensitive matching [regex flag \code{(?i)}]}
+\item{case_insensitive}{logical; enables case insensitive matching [regex flag \code{(?i)}]}
 
-\item{comments}{logical; allow white space and comments within patterns [regex flag \code{(?x)}]}
+\item{comments}{logical; allows white space and comments within patterns [regex flag \code{(?x)}]}
 
 \item{dotall}{logical;  if set, `\code{.}` matches line terminators,
 otherwise matching of `\code{.}`  stops at a line end [regex flag \code{(?s)}]}
@@ -24,12 +24,12 @@ facilities in this case}
 If set, recognize line terminators within a string, otherwise,
  match only at start and end of input string [regex flag \code{(?m)}]}
 
-\item{unix_lines}{logical; Unix-only line endings.
-When this mode is enabled, only \code{U+000a} is recognized as a
+\item{unix_lines}{logical; Unix-only line endings;
+when enabled, only \code{U+000a} is recognized as a
 line ending by `\code{.}`, `\code{$}`, and `\code{^}`.}
 
-\item{uword}{logical; Unicode word boundaries.
-If set, uses the Unicode TR 29 definition of word boundaries;
+\item{uword}{logical; Unicode word boundaries;
+if set, uses the Unicode TR 29 definition of word boundaries;
 warning: Unicode word boundaries are quite different from traditional
 regex word boundaries. [regex flag \code{(?w)}]
 See \url{http://unicode.org/reports/tr29/#Word_Boundaries}}
@@ -46,13 +46,13 @@ otherwise, these escaped letters represent themselves}
 Returns a named list object; missing settings are left with default values.
 }
 \description{
-A convenience function to tune the \pkg{ICU} regular expressions matcher's behavior,
-e.g. in \code{\link{stri_count_regex}}
+A convenience function to tune the \pkg{ICU} regular expressions
+matcher's behavior, e.g., in \code{\link{stri_count_regex}}
 and other \link{stringi-search-regex} functions.
 }
 \details{
 Note that some regex settings may be changed using ICU regex flags
-inside regexes. For example, \code{"(?i)pattern"} does
+inside regexes. For example, \code{"(?i)pattern"} performs
 a case-insensitive match of a given pattern,
 see the \pkg{ICU} User Guide entry on Regular Expressions
 in the References section or \link{stringi-search-regex}.
