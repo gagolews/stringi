@@ -16,8 +16,8 @@ Also, some additional build tweaks are possible to those who want a more
 customized installation.
 
 
-stringi vs the ICU4C library
-----------------------------
+stringi and the ICU4C library
+-----------------------------
 
 The stringi package depends on the ICU4C >= 52 library.
 
@@ -38,30 +38,39 @@ then the library will be built together with stringi
 > ICU4C package bundle. This guarantees maximum portability of stringi-based
 > scripts.
 
-If you decide to use our ICU4C bundle then, by default, the ICU data library
+
+
+If you decide to use our ICU4C bundle, then, by default, the ICU data library
 will be downloaded from one of our mirror servers. However, if you have already
 downloaded a version of `icudt*.zip` suitable for your platform
 (big/little endian), you may wish to install the package by calling:
 
     install.packages("stringi", configure.vars="ICUDT_DIR=<icudt_dir>")
 
-Moreover, if you have absolutely no internet access on the machines
-you build `stringi` on, try fetching the latest development version
+Moreover, if you have **absolutely no internet access** on the machines
+you try to install `stringi` on, try fetching the latest development version
 of the package. It already includes the `ICU` data archives.
+You can build a distributable source package that includes all the required
+ICU data files (for off-line use) by omitting some relevant lines in
+the `.Rbuildignore` file. The following command sequence should do the trick:
 
-    wget https://github.com/gagolews/stringi/archive/master.zip
-    unzip stringi-master.zip
-    R CMD INSTALL stringi-master
+    wget https://github.com/gagolews/stringi/archive/master.zip -O stringi.zip
+    unzip stringi.zip
+    sed -i '/\/icu..\/data/d' stringi-master/.Rbuildignore
+    R CMD build stringi-master
 
-You can also prepare your own `.tar.gz`-ipped distribution of `stringi`
-as follows:
+Assuming the most recent development version is 1.3.1,
+a file named `stringi_1.3.1.tar.gz` is created in the current working directory.
+The package can now be installed (the source bundle may be propagated via
+`scp` etc.) by executing:
 
-1. Execute the `git clone https://github.com/gagolews/stringi.git` command.
-2. Edit the `.Rbuildignore` file and get rid of the `^src/icu??/data` line.
-3. Run `R CMD build stringi_dir_name`.
-4. Install the obtained `.tar.gz` file on your machine(s), e.g.,
-via `install.packages("stringi_xxx.tar.gz")`
-(the source bundle may be propagated via `scp` etc.)
+   R CMD INSTALL stringi_1.3.1.tar.gz
+
+or by calling `install.packages("stringi_1.3.1.tar.gz", repos=NULL)`,
+from within an R session.
+
+
+
 
 
 C++11 support

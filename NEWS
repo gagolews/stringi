@@ -18,10 +18,11 @@ which makes it much more easily pipable (@yutannihilation, @BastienFR).
 * [NEW FEATURE] #334: Added missing `icudt61b.dat` to support big-endian
 platforms (thanks to Dimitri John Ledkov @xnox).
 
-* [BUGFIX] #296: Out-of-the box build used to fail on CentOS 6.....@TODO........
-
 * [BUGFIX] #318: Fixed possible stack imbalances and unprotected variables
 as reported by CRAN's UBSAN. .....@TODO.........................................
+
+* [BUGFIX] #296: Out-of-the box build used to fail on CentOS 6, upgraded
+`./configure` to `--disable-cxx11` more eagerly at an early stage.
 
 * [BUGFIX] #341: Fixed possible buffer overflows when calling `strncpy()`
 from within ICU4C 61.
@@ -79,7 +80,7 @@ and `icu55/i18n/windtfmt.cpp` in the ICU4C 55.1 bundle.
 
 ## 1.1.7 (2018-03-06) **CRAN**
 
-* [BUGFIX] Fixed ICU4C 55.1 code leading to some "significant warnings"
+* [BUGFIX] Fixed ICU4C 55.1 generating some "significant warnings"
 (`icu55/i18n/winnmfmt.cpp`) and "suppressing important diagnostics"
 (`src/icu55/i18n/decNumber.c`).
 
