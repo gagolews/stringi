@@ -1370,7 +1370,7 @@ Optional Features:
                           such a case ICU4C will be compiled from sources.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for
                           developers of stringi)
-  --enable-gcc-pedantic   Enable -Wall -Wextra -ansi -pedantic when compiling
+  --enable-gcc-pedantic   Enable -Wall -Wextra -pedantic when compiling
                           stringi with gcc/clang (for developers of stringi)
 
 Optional Packages:
@@ -2494,8 +2494,8 @@ else
 fi
 
 if test "x$enable_gcc_pedantic" == "xyes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
 
 
@@ -4754,7 +4754,7 @@ else
 
          { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-         with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
+         with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
          CXXFLAGS="${CXXFLAGS} -D_XPG6"
          { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6" >&5
 $as_echo_n "checking whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6... " >&6; }

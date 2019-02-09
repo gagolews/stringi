@@ -116,7 +116,7 @@ fi
 
 AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
-      [Enable -Wall -Wextra -ansi -pedantic when compiling
+      [Enable -Wall -Wextra -pedantic when compiling
       stringi with gcc/clang (for developers of stringi)]))
 if test "x$enable_gcc_pedantic" == "xyes"; then
    enable_gcc_pedantic="yes"
@@ -250,8 +250,8 @@ else
 fi
 
 if test "x$enable_gcc_pedantic" == "xyes"; then
-   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -ansi -pedantic -std=c99"
-   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -ansi -pedantic -std=c++98 -Wlong-long"
+   with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
+   with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
 
 
@@ -778,7 +778,7 @@ return 10;
          AC_MSG_RESULT([yes])
       ],[
          AC_MSG_RESULT([no])
-         with_extra_cxxflags="${with_extra_cXXflags} -D_XPG6"
+         with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
          CXXFLAGS="${CXXFLAGS} -D_XPG6"
          AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/putil.cpp with -D_XPG6])
          AC_COMPILE_IFELSE([
