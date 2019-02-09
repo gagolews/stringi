@@ -407,7 +407,7 @@ while true; do
          disable_cxx11
          continue
       else
-         echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+         echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
          echo "*** also, verify your C++ compiler's abilities (long long, STL, etc. support)"
          exit 1
       fi
@@ -736,7 +736,7 @@ return 10;
    # file is copyrighted, so we have to cope with this error in another way:
    # adding -D_XPG6 flag conditionally.
 
-      if test ${ICU_BUNDLE_VERSION} = 55; then
+      if test ${ICU_BUNDLE_VERSION} -le 60; then
          # ICU 61 doesn't provide any .c files anymore
          AC_LANG(C)
          AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/common/umapfile.c])
@@ -757,12 +757,12 @@ return 10;
                AC_MSG_RESULT([yes])
             ],[
                AC_MSG_RESULT([no])
-               echo "*** The ICU bundle cannot be build. Upgrade your compiler flags."
+               echo "*** The ICU bundle cannot be built. Upgrade your compiler flags."
                if test "x$enable_cxx11" == "xyes"; then
                   disable_cxx11
                   continue
                else
-                  echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+                  echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
                   exit 1
                fi
             ])
@@ -788,16 +788,48 @@ return 10;
             AC_MSG_RESULT([yes])
          ],[
             AC_MSG_RESULT([no])
-            echo "*** The ICU4C bundle could not be build. Upgrade your compiler flags."
+            echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
             if test "x$enable_cxx11" == "xyes"; then
                disable_cxx11
                continue
             else
-               echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+               echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
                exit 1
             fi
          ])
       ])
+
+      if test ${ICU_BUNDLE_VERSION} -gt 60; then
+         AC_LANG(C++)
+         AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp])
+         AC_COMPILE_IFELSE([
+             AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
+         ],
+         [
+             AC_MSG_RESULT([yes])
+         ],[
+             AC_MSG_RESULT([no])
+             with_extra_cxxflags="${with_extra_cxxflags} -D_XPG6"
+             CXXFLAGS="${CXXFLAGS} -D_XPG6"
+             AC_MSG_CHECKING([whether we may compile src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp with -D_XPG6])
+             AC_COMPILE_IFELSE([
+                 AC_LANG_SOURCE([`${CAT} src/icu${ICU_BUNDLE_VERSION}/i18n/number_affixutils.cpp`])
+             ],
+             [
+                 AC_MSG_RESULT([yes])
+             ],[
+                 AC_MSG_RESULT([no])
+                 echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
+                 if test "x$enable_cxx11" == "xyes"; then
+                 disable_cxx11
+                 continue
+                 else
+                 echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
+                 exit 1
+                 fi
+             ])
+         ])
+      fi
 
       return 0
    }
@@ -811,7 +843,7 @@ return 10;
             disable_cxx11
             continue
          else
-            echo "*** stringi cannot be build. Check your compiler flags (Makeconf, Makevars, etc.)."
+            echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
             exit 1
          fi
       fi
