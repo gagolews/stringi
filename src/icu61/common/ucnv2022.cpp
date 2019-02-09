@@ -478,7 +478,7 @@ setInitialStateFromUnicodeKR(UConverter* converter,UConverterDataISO2022 *myConv
 static void U_CALLCONV
 _ISO2022Open(UConverter *cnv, UConverterLoadArgs *pArgs, UErrorCode *errorCode){
 
-    char myLocale[7]={' ',' ',' ',' ',' ',' ',' '};
+    char myLocale[7]={' ', ' ', ' ', ' ', ' ', ' ', '\0'};
 
     cnv->extraInfo = uprv_malloc (sizeof (UConverterDataISO2022));
     if(cnv->extraInfo != NULL) {
