@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,10 +39,11 @@
  *
  * PROTECTs both `to` and `length`
  */
-void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
+R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
    R_len_t& from_len, R_len_t& to_len, R_len_t& length_len,
    int*& from_tab, int*& to_tab, int*& length_tab)
 {
+   R_len_t sub_protected = 0;
    bool from_ismatrix = Rf_isMatrix(from);
    if (from_ismatrix) {
       SEXP t;
@@ -56,6 +57,8 @@ void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
       }
       UNPROTECT(1); // t
    }
+
+   sub_protected++;
    PROTECT(from = stri_prepare_arg_integer(from, "from"));
    /* may remove R_DimSymbol */
 
@@ -64,25 +67,28 @@ void stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
       to_len        = from_len;
       from_tab      = INTEGER(from);
       to_tab        = from_tab+from_len;
-      PROTECT(to); /* fake - not to provoke stack imbalance */
-      PROTECT(length); /* fake - not to provoke stack imbalance */
+      //PROTECT(to); /* fake - not to provoke stack imbalance */
+      //PROTECT(length); /* fake - not to provoke stack imbalance */
    }
    else if (isNull(length)) {
+      sub_protected++;
       PROTECT(to    = stri_prepare_arg_integer(to, "to"));
       from_len      = LENGTH(from);
       from_tab      = INTEGER(from);
       to_len        = LENGTH(to);
       to_tab        = INTEGER(to);
-      PROTECT(length); /* fake - not to provoke stack imbalance */
+      //PROTECT(length); /* fake - not to provoke stack imbalance */
    }
    else {
+      sub_protected++;
       PROTECT(length= stri_prepare_arg_integer(length, "length"));
       from_len      = LENGTH(from);
       from_tab      = INTEGER(from);
       length_len    = LENGTH(length);
       length_tab    = INTEGER(length);
-      PROTECT(to); /* fake - not to provoke stack imbalance */
+      //PROTECT(to); /* fake - not to provoke stack imbalance */
    }
+   return sub_protected;
 }
 
 
@@ -159,18 +165,19 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
    int* to_tab           = 0;
    int* length_tab       = 0;
 
-   stri__sub_prepare_from_to_length(from, to, length,  /* PROTECTs 3 objects */
+   R_len_t sub_protected =  /* how many objects to PROTECT on ret? */
+      stri__sub_prepare_from_to_length(from, to, length,
       from_len, to_len, length_len, from_tab, to_tab, length_tab);
 
    R_len_t vectorize_len = stri__recycling_rule(true, 3,
       str_len, from_len, (to_len>length_len)?to_len:length_len);
 
    if (vectorize_len <= 0) {
-      UNPROTECT(4);
+      UNPROTECT(1+sub_protected);
       return Rf_allocVector(STRSXP, 0);
    }
 
-   STRI__ERROR_HANDLER_BEGIN(4)
+   STRI__ERROR_HANDLER_BEGIN(1+sub_protected)
    StriContainerUTF8_indexable str_cont(str, vectorize_len);
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_len));
@@ -270,18 +277,19 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
    int* to_tab           = 0; // see below
    int* length_tab       = 0; // see below
 
-   stri__sub_prepare_from_to_length(from, to, length,  /* PROTECTs 3 objects */
+   R_len_t sub_protected =  /* how many objects to PROTECT on ret? */
+      stri__sub_prepare_from_to_length(from, to, length,
       from_len, to_len, length_len, from_tab, to_tab, length_tab);
 
    R_len_t vectorize_len = stri__recycling_rule(true, 4,
       str_len, value_len, from_len, (to_len>length_len)?to_len:length_len);
 
    if (vectorize_len <= 0) {
-      UNPROTECT(5);
+      UNPROTECT(2+sub_protected);
       return Rf_allocVector(STRSXP, 0);
    }
 
-   STRI__ERROR_HANDLER_BEGIN(5)
+   STRI__ERROR_HANDLER_BEGIN(2+sub_protected)
    StriContainerUTF8_indexable str_cont(str, vectorize_len);
    StriContainerUTF8 value_cont(value, vectorize_len);
    SEXP ret;
