@@ -27,6 +27,9 @@ as reported by CRAN's UBSAN. .....@TODO.........................................
 * [BUGFIX] #341: Fixed possible buffer overflows when calling `strncpy()`
 from within ICU4C 61.
 
+* [BUGFIX] #325: Made `./configure` more portable so that it works
+under `/bin/dash` now.
+
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
 
 * [BUGFIX] #337: Empty search patters in search functions (e.g.,

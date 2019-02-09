@@ -2285,7 +2285,7 @@ if test "${enable_gcc_debug+set}" = set; then :
   enableval=$enable_gcc_debug;
 fi
 
-if test "x$enable_gcc_debug" == "xyes"; then
+if test "x$enable_gcc_debug" = "xyes"; then
    enable_gcc_debug="yes"
 else
    enable_gcc_debug="no"
@@ -2296,7 +2296,7 @@ if test "${enable_gcc_pedantic+set}" = set; then :
   enableval=$enable_gcc_pedantic;
 fi
 
-if test "x$enable_gcc_pedantic" == "xyes"; then
+if test "x$enable_gcc_pedantic" = "xyes"; then
    enable_gcc_pedantic="yes"
 else
    enable_gcc_pedantic="no"
@@ -2405,13 +2405,13 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R >= 3.1.0 for C++11 use" >&5
 $as_echo_n "checking for R >= 3.1.0 for C++11 use... " >&6; }
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
-if test "x$R_GE_31" == "xyes"; then
+if test "x$R_GE_31" = "xyes"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 else
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-   if test "x$enable_cxx11" == "xyes"; then
+   if test "x$enable_cxx11" = "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
    fi
@@ -2420,7 +2420,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R < 3.4.0 for CXX1X flag use" >&5
 $as_echo_n "checking for R < 3.4.0 for CXX1X flag use... " >&6; }
 R_GE_34=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.4.0")) "yes" else "no")'`
-if test "x$R_GE_34" == "xyes"; then
+if test "x$R_GE_34" = "xyes"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
    STRINGI_CXX1X="CXX11"
@@ -2486,14 +2486,14 @@ fi
 
 ###### SETUP COMPILER FLAGS FOR TESTING ######################################
 
-if test "x$enable_gcc_debug" == "xyes"; then
+if test "x$enable_gcc_debug" = "xyes"; then
    #  -fsanitize=address -fno-omit-frame-pointer
    with_extra_cppflags="${with_extra_cppflags} -DDEBUG -UNDEBUG"
 else
    with_extra_cppflags="${with_extra_cppflags} -UDEBUG -DNDEBUG"
 fi
 
-if test "x$enable_gcc_pedantic" == "xyes"; then
+if test "x$enable_gcc_pedantic" = "xyes"; then
    with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
    with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
@@ -2540,7 +2540,7 @@ while true; do
    LIBS=
    LDFLAGS=
 
-   if test "x$enable_cxx11" == "xyes"; then
+   if test "x$enable_cxx11" = "xyes"; then
       CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
       CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
       CXX="${CXX_tmp1} ${CXX_tmp2}"
@@ -2568,7 +2568,7 @@ while true; do
    # set ICUDT_DIR
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for local ICUDT_DIR" >&5
 $as_echo_n "checking for local ICUDT_DIR... " >&6; }
-   if test "x$ICUDT_DIR_FORCE" == "xyes"; then
+   if test "x$ICUDT_DIR_FORCE" = "xyes"; then
    # Remember to update the configure.win file too
       ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
    fi
@@ -4225,7 +4225,7 @@ rm -f core conftest.err conftest.$ac_objext \
    check_cpp
 
    if test $CPP_OK = 0; then
-      if test "x$enable_cxx11" == "xyes"; then
+      if test "x$enable_cxx11" = "xyes"; then
          disable_cxx11
          continue
       else
@@ -4716,7 +4716,7 @@ else
                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
                echo "*** The ICU bundle cannot be built. Upgrade your compiler flags."
-               if test "x$enable_cxx11" == "xyes"; then
+               if test "x$enable_cxx11" = "xyes"; then
                   disable_cxx11
                   continue
                else
@@ -4774,7 +4774,7 @@ else
             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
             echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
-            if test "x$enable_cxx11" == "xyes"; then
+            if test "x$enable_cxx11" = "xyes"; then
                disable_cxx11
                continue
             else
@@ -4832,7 +4832,7 @@ else
                  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
                  echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
-                 if test "x$enable_cxx11" == "xyes"; then
+                 if test "x$enable_cxx11" = "xyes"; then
                  disable_cxx11
                  continue
                  else
@@ -4855,7 +4855,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
          echo "*** Failed to configure package build with forced system ICU usage"
          echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
          echo "*** together with pkg-config"
-         if test "x$enable_cxx11" == "xyes"; then
+         if test "x$enable_cxx11" = "xyes"; then
             disable_cxx11
             continue
          else

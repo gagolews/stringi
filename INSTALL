@@ -64,7 +64,7 @@ a file named `stringi_1.3.1.tar.gz` is created in the current working directory.
 The package can now be installed (the source bundle may be propagated via
 `scp` etc.) by executing:
 
-   R CMD INSTALL stringi_1.3.1.tar.gz
+    R CMD INSTALL stringi_1.3.1.tar.gz
 
 or by calling `install.packages("stringi_1.3.1.tar.gz", repos=NULL)`,
 from within an R session.
