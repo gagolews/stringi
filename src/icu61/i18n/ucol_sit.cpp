@@ -140,7 +140,7 @@ ucol_sit_letterToAttributeValue(char letter, UErrorCode *status) {
     *status = U_ILLEGAL_ARGUMENT_ERROR;
 #ifdef UCOL_TRACE_SIT
     fprintf(stderr, "%s:%d: unknown letter %c: %s\n", __FILE__, __LINE__, letter, u_errorName(*status));
-#endif    
+#endif
     return UCOL_DEFAULT;
 }
 
@@ -201,7 +201,7 @@ _processCollatorOption(CollatorSpec *spec, uint32_t option, const char* string,
     if((*(++string) != '_' && *string) || U_FAILURE(*status)) {
 #ifdef UCOL_TRACE_SIT
     fprintf(stderr, "%s:%d: unknown collator option at '%s': %s\n", __FILE__, __LINE__, string, u_errorName(*status));
-#endif    
+#endif
         *status = U_ILLEGAL_ARGUMENT_ERROR;
     }
     return string;
@@ -227,7 +227,7 @@ readHexCodeUnit(const char **string, UErrorCode *status)
             *status = U_ILLEGAL_ARGUMENT_ERROR;
 #ifdef UCOL_TRACE_SIT
             fprintf(stderr, "%s:%d: Bad hex char at '%s': %s\n", __FILE__, __LINE__, *string, u_errorName(*status));
-#endif    
+#endif
             return 0;
         }
         result = (result << 4) | (UChar)value;
@@ -239,7 +239,7 @@ readHexCodeUnit(const char **string, UErrorCode *status)
         *status = U_ILLEGAL_ARGUMENT_ERROR;
 #ifdef UCOL_TRACE_SIT
         fprintf(stderr, "%s:%d: Short (only %d digits, wanted 4) at '%s': %s\n", __FILE__, __LINE__, noDigits,*string, u_errorName(*status));
-#endif    
+#endif
     }
     return result;
 }
@@ -392,35 +392,35 @@ ucol_sit_calculateWholeLocale(CollatorSpec *s) {
     // locale
     if(s->locale[0] == 0) {
         // first the language
-        uprv_strcat(s->locale, s->locElements[UCOL_SIT_LANGUAGE]);
+        uprv_strncat(s->locale, s->locElements[UCOL_SIT_LANGUAGE], loc3066Capacity);
         // then the script, if present
         if(*(s->locElements[UCOL_SIT_SCRIPT])) {
-            uprv_strcat(s->locale, "_");
-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_SCRIPT]);
+            uprv_strncat(s->locale, "_", loc3066Capacity);
+            uprv_strncat(s->locale, s->locElements[UCOL_SIT_SCRIPT], loc3066Capacity);
         }
         // then the region, if present
         if(*(s->locElements[UCOL_SIT_REGION])) {
-            uprv_strcat(s->locale, "_");
-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_REGION]);
+            uprv_strncat(s->locale, "_", loc3066Capacity);
+            uprv_strncat(s->locale, s->locElements[UCOL_SIT_REGION], loc3066Capacity);
         } else if(*(s->locElements[UCOL_SIT_VARIANT])) { // if there is a variant, we need an underscore
-            uprv_strcat(s->locale, "_");
+            uprv_strncat(s->locale, "_", loc3066Capacity);
         }
         // add variant, if there
         if(*(s->locElements[UCOL_SIT_VARIANT])) {
-            uprv_strcat(s->locale, "_");
-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_VARIANT]);
+            uprv_strncat(s->locale, "_", loc3066Capacity);
+            uprv_strncat(s->locale, s->locElements[UCOL_SIT_VARIANT], loc3066Capacity);
         }
 
         // if there is a collation keyword, add that too
         if(*(s->locElements[UCOL_SIT_KEYWORD])) {
-            uprv_strcat(s->locale, collationKeyword);
-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_KEYWORD]);
+            uprv_strncat(s->locale, collationKeyword, loc3066Capacity);
+            uprv_strncat(s->locale, s->locElements[UCOL_SIT_KEYWORD], loc3066Capacity);
         }
 
         // if there is a provider keyword, add that too
         if(*(s->locElements[UCOL_SIT_PROVIDER])) {
-            uprv_strcat(s->locale, providerKeyword);
-            uprv_strcat(s->locale, s->locElements[UCOL_SIT_PROVIDER]);
+            uprv_strncat(s->locale, providerKeyword, loc3066Capacity);
+            uprv_strncat(s->locale, s->locElements[UCOL_SIT_PROVIDER], loc3066Capacity);
         }
     }
 }
