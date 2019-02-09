@@ -108,7 +108,7 @@ fi
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
       [Enable -UNDEBUG when compiling stringi (for developers of stringi)]))
-if test "x$enable_gcc_debug" == "xyes"; then
+if test "x$enable_gcc_debug" = "xyes"; then
    enable_gcc_debug="yes"
 else
    enable_gcc_debug="no"
@@ -118,7 +118,7 @@ AC_ARG_ENABLE([gcc_pedantic],
     AS_HELP_STRING([--enable-gcc-pedantic],
       [Enable -Wall -Wextra -pedantic when compiling
       stringi with gcc/clang (for developers of stringi)]))
-if test "x$enable_gcc_pedantic" == "xyes"; then
+if test "x$enable_gcc_pedantic" = "xyes"; then
    enable_gcc_pedantic="yes"
 else
    enable_gcc_pedantic="no"
@@ -207,11 +207,11 @@ fi
 
 AC_MSG_CHECKING(for R >= 3.1.0 for C++11 use)
 R_GE_31=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.1.0")) "yes" else "no")'`
-if test "x$R_GE_31" == "xyes"; then
+if test "x$R_GE_31" = "xyes"; then
    AC_MSG_RESULT([yes])
 else
    AC_MSG_RESULT([no])
-   if test "x$enable_cxx11" == "xyes"; then
+   if test "x$enable_cxx11" = "xyes"; then
       echo "*** disabling C++11 use"
       enable_cxx11="no"
    fi
@@ -219,7 +219,7 @@ fi
 
 AC_MSG_CHECKING(for R < 3.4.0 for CXX1X flag use)
 R_GE_34=`"${R_PATH}" --vanilla --slave -e 'cat(if (getRversion() >= numeric_version("3.4.0")) "yes" else "no")'`
-if test "x$R_GE_34" == "xyes"; then
+if test "x$R_GE_34" = "xyes"; then
    AC_MSG_RESULT([no])
    STRINGI_CXX1X="CXX11"
 else
@@ -242,14 +242,14 @@ fi
 
 ###### SETUP COMPILER FLAGS FOR TESTING ######################################
 
-if test "x$enable_gcc_debug" == "xyes"; then
+if test "x$enable_gcc_debug" = "xyes"; then
    #  -fsanitize=address -fno-omit-frame-pointer
    with_extra_cppflags="${with_extra_cppflags} -DDEBUG -UNDEBUG"
 else
    with_extra_cppflags="${with_extra_cppflags} -UDEBUG -DNDEBUG"
 fi
 
-if test "x$enable_gcc_pedantic" == "xyes"; then
+if test "x$enable_gcc_pedantic" = "xyes"; then
    with_extra_cflags="${with_extra_cflags} -Wall -Wextra -pedantic"
    with_extra_cxxflags="${with_extra_cxxflags} -Wall -Wextra -pedantic"
 fi
@@ -296,7 +296,7 @@ while true; do
    LIBS=
    LDFLAGS=
 
-   if test "x$enable_cxx11" == "xyes"; then
+   if test "x$enable_cxx11" = "xyes"; then
       CXX_tmp1=`"${R_PATH}" CMD config ${STRINGI_CXX1X}`
       CXX_tmp2=`"${R_PATH}" CMD config ${STRINGI_CXX1X}STD`
       CXX="${CXX_tmp1} ${CXX_tmp2}"
@@ -323,7 +323,7 @@ while true; do
 
    # set ICUDT_DIR
    AC_MSG_CHECKING(for local ICUDT_DIR)
-   if test "x$ICUDT_DIR_FORCE" == "xyes"; then
+   if test "x$ICUDT_DIR_FORCE" = "xyes"; then
    # Remember to update the configure.win file too
       ICUDT_DIR="icu${ICU_BUNDLE_VERSION}/data"
    fi
@@ -403,7 +403,7 @@ while true; do
    check_cpp
 
    if test $CPP_OK = 0; then
-      if test "x$enable_cxx11" == "xyes"; then
+      if test "x$enable_cxx11" = "xyes"; then
          disable_cxx11
          continue
       else
@@ -758,7 +758,7 @@ return 10;
             ],[
                AC_MSG_RESULT([no])
                echo "*** The ICU bundle cannot be built. Upgrade your compiler flags."
-               if test "x$enable_cxx11" == "xyes"; then
+               if test "x$enable_cxx11" = "xyes"; then
                   disable_cxx11
                   continue
                else
@@ -789,7 +789,7 @@ return 10;
          ],[
             AC_MSG_RESULT([no])
             echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
-            if test "x$enable_cxx11" == "xyes"; then
+            if test "x$enable_cxx11" = "xyes"; then
                disable_cxx11
                continue
             else
@@ -820,7 +820,7 @@ return 10;
              ],[
                  AC_MSG_RESULT([no])
                  echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
-                 if test "x$enable_cxx11" == "xyes"; then
+                 if test "x$enable_cxx11" = "xyes"; then
                  disable_cxx11
                  continue
                  else
@@ -839,7 +839,7 @@ return 10;
          echo "*** Failed to configure package build with forced system ICU usage"
          echo "*** Consider installing, e.g., libicu-devel (RHEL, Fedora) or libicu-dev (Debian, Ubuntu)"
          echo "*** together with pkg-config"
-         if test "x$enable_cxx11" == "xyes"; then
+         if test "x$enable_cxx11" = "xyes"; then
             disable_cxx11
             continue
          else
