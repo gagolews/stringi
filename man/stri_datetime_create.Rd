@@ -33,7 +33,7 @@ may be specified by setting \code{@calendar=name} keyword}
 Returns an object of class \code{\link{POSIXct}}.
 }
 \description{
-This function constructs date-time objects from numeric representations.
+Constructs date-time objects from numeric representations.
 }
 \details{
 Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},

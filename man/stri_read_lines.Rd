@@ -22,8 +22,8 @@ and \code{NULL} or \code{""} for the current default encoding.}
 defaults to the current default encoding, see \code{\link{stri_enc_get}}}
 }
 \value{
-Returns a character vector, with each line of text
-being a single string. The output is always in UTF-8.
+Returns a character vector, each text line is a separate string.
+The output is always in UTF-8.
 }
 \description{
 Reads a text file, re-encodes it, and splits it into text lines.
@@ -31,7 +31,7 @@ Reads a text file, re-encodes it, and splits it into text lines.
 \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 }
 \details{
-It is a substitute for the system's \code{\link{readLines}} function,
+This aims to be a substitute for the \code{\link{readLines}} function,
 with the ability to auto-detect input encodings (or to specify
 one manually), re-encode input without any strange function calls
 or sys options change,

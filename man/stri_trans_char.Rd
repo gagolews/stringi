@@ -27,7 +27,7 @@ If \code{pattern} and \code{replacement} consist of a different number
 of code points, then the extra code points in the longer of the two are ignored,
 with a warning.
 
-If code points in a given \code{pattern} are not unique,
+If code points in a given \code{pattern} are not unique, the
 last corresponding replacement code point is used.
 }
 \examples{

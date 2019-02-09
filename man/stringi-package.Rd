@@ -28,7 +28,7 @@ Manual pages on general topics:
    information on encoding management in \pkg{stringi}, as well as
    on encoding detection and conversion.
 
-\item \link{stringi-locale} -- locale issues, including  locale
+\item \link{stringi-locale} -- locale issues, including locale
    management and specification in \pkg{stringi}, and the list of
    locale-sensitive operations. In particular, see
    \code{\link{stri_opts_collator}} for a description of the string
@@ -86,8 +86,8 @@ Additionally, \code{\link{stri_wrap}} wraps text into lines.
 \item \code{\link{stri_trans_tolower}} (among others) for case mapping,
 i.e., conversion to lower, UPPER, or Title Case,
 \code{\link{stri_trans_nfc}} (among others) for Unicode normalization,
-\code{\link{stri_trans_char}} for translating invidual code points,
-and \code{\link{stri_trans_general}} for other very general yet powerful
+\code{\link{stri_trans_char}} for translating individual code points,
+and \code{\link{stri_trans_general}} for other universal yet powerful
 text transforms, including transliteration.
 
 \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
@@ -99,7 +99,7 @@ locale-aware operations, see also \link{stringi-locale}.
 to split a string into text lines.
 
 \item \code{\link{stri_escape_unicode}} (among others) for escaping
-certain code points.
+some code points.
 
 \item \code{\link{stri_rand_strings}}, \code{\link{stri_rand_shuffle}},
 and \code{\link{stri_rand_lipsum}} for generating (pseudo)random strings.

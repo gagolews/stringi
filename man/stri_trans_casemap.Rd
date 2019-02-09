@@ -4,7 +4,7 @@
 \alias{stri_trans_tolower}
 \alias{stri_trans_toupper}
 \alias{stri_trans_totitle}
-\title{Transform String with Case Mapping}
+\title{Transform Strings with Case Mapping}
 \usage{
 stri_trans_tolower(str, locale = NULL)
 

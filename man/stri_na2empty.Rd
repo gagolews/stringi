@@ -13,7 +13,7 @@ stri_na2empty(x)
 Always returns a character vector.
 }
 \description{
-This function replaces all missing values with empty strings
+This function replaces all missing values with empty strings.
 }
 \examples{
 stri_na2empty(c("a", NA, "", "b"))

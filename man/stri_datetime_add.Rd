@@ -40,7 +40,7 @@ Modifies a date-time object by adding a specific amount of time units.
 Vectorized over \code{time} and \code{value}.
 
 
-Note that e.g. January, 31 + 1 month = February, 28 or 29.
+Note that, e.g., January, 31 + 1 month = February, 28 or 29.
 }
 \examples{
 x <- stri_datetime_now()

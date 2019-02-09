@@ -27,7 +27,7 @@ Moreover, each \code{\%\%} is replaced with \code{\%}.
 Warnings are given in case of \code{\%x}, \code{\%X}, \code{\%u}, \code{\%w},
 \code{\%g}, \code{\%G}, \code{\%c}, \code{\%U} and \code{\%W}
 as in such circumstances either \pkg{ICU} does not
-support requested functionality using format-strings API
+support the  functionality requested using the format-strings API
 or there are some inconsistencies between base R and \pkg{ICU}.
 }
 \examples{

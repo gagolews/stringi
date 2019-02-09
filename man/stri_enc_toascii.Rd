@@ -14,22 +14,21 @@ Returns a character vector.
 }
 \description{
 This function converts input strings to ASCII,
-i.e. to character strings consisting of bytes not greater than 127.
+i.e., to character strings consisting of bytes not greater than 127.
 }
 \details{
-All code points greater than 127 are replaced with ASCII SUBSTITUTE
+All code points greater than 127 are replaced with the ASCII SUBSTITUTE
 CHARACTER (0x1A).
 \R encoding declarations are always used to determine
 which encoding is assumed for each input, see \code{\link{stri_enc_mark}}.
-In incorrect byte sequences are found in UTF-8 byte
+If ill-formed byte sequences are found in UTF-8 byte
 streams, a warning is generated.
 
-A \code{bytes}-marked string is assumed to be represented
-by a 8-bit encoding such that it has ASCII as its subset
-(a common assumption in R itself).
+A \code{bytes}-marked string is assumed to be in an 8-bit encoding
+extending the ASCII map (a common assumption in \R itself).
 
 Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
-as ASCII missing value for single characters.
+as the ASCII missing value for single characters.
 }
 \seealso{
 Other encoding_conversion: \code{\link{stri_enc_fromutf32}},

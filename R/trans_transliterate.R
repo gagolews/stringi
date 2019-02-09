@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 #' General Text Transforms, Including Transliteration
 #'
 #' @description
-#' \pkg{ICU} General transforms provide a general-purpose package
-#' for processing Unicode text. They are a powerful and flexible mechanism
-#' for handling a variety of different tasks, including:
+#' \pkg{ICU} General transforms provide different ways
+#' for processing Unicode text. They are useful in handling a variety
+#' of different tasks, including:
 #' \itemize{
 #' \item    Upper Case, Lower Case, Title Case, Full/Halfwidth conversions,
 #' \item    Normalization,
@@ -48,8 +48,8 @@
 #' \pkg{ICU} Transforms were mainly designed to transliterate characters
 #' from one script to another (for example, from Greek to Latin,
 #' or Japanese Katakana to Latin).
-#' However, the services performed here represent a much more
-#' general mechanism capable of handling a much broader range of tasks.
+#' However, these services are also capable of handling a much
+#' broader range of tasks.
 #' In particular, the Transforms include pre-built transformations
 #' for case conversions, for normalization conversions, for the removal
 #' of given characters, and also for a variety of language and script

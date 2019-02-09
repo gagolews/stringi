@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,15 +33,14 @@
 #' Randomly Shuffle Code Points in Each String
 #'
 #' @description
-#' Generates a (pseudo)random permutation of code points
+#' Generates a (pseudo)random permutation of the code points
 #' in each string.
 #'
 #' @details
 #' This operation may result in non-Unicode-normalized
-#' strings and may give strange output for bidirectional strings.
+#' strings and may give peculiar outputs in case of bidirectional strings.
 #'
-#' See also \code{\link{stri_reverse}} for a reverse permutation
-#' of code points.
+#' See also \code{\link{stri_reverse}} for reversing the order of code points.
 #'
 #' @param str character vector
 #'
@@ -72,7 +71,7 @@ stri_rand_shuffle <- function(str) {
 #' these vectors are recycled if necessary.
 #'
 #' This operation may result in non-Unicode-normalized
-#' strings and may give strange output for bidirectional strings.
+#' strings and may give peculiar outputs for bidirectional strings.
 #'
 #' Sampling of code points from the set specified by \code{pattern}
 #' is always done with replacement and each code point appears with equal
@@ -118,10 +117,10 @@ stri_rand_strings <- function(n, length, pattern="[A-Za-z0-9]") {
 #' \emph{Lorem ipsum} is a dummy text often used as a source
 #' of data for string processing and displaying/layouting exercises.
 #'
-#' Current implementation is very simple:
+#' The current implementation is very simple:
 #' words are selected randomly from a Zipf distribution
-#' (we base on a set of ca. 190 predefined Latin words).
-#' Number of words per sentence and sentences per paragraph
+#' (based on a set of ca. 190 predefined Latin words).
+#' The number of words per sentence and sentences per paragraph
 #' follows a discretized, truncated normal distribution.
 #' No Markov chain modeling, just i.i.d. word selection.
 #'

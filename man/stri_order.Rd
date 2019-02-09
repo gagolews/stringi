@@ -34,10 +34,10 @@ For \code{stri_order}, an integer vector that gives the sort order
 is returned.
 
 For \code{stri_order}, you get a sorted version of \code{str},
-i.e. a character vector.
+i.e., a character vector.
 }
 \description{
-\link{stri_order} determines a permutation which rearranges
+\link{stri_order} finds a permutation which rearranges
 strings into an ascending or descending order.
 \link{stri_sort} sorts the vector according to a lexicographic order.
 }
@@ -45,7 +45,7 @@ strings into an ascending or descending order.
 For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
-These functions use a stable sort algorithm (\pkg{STL}'s stable_sort),
+These functions use a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 which performs up to \eqn{N*log^2(N)} element comparisons,
 where \eqn{N} is the length of \code{str}.
 

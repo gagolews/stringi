@@ -25,7 +25,8 @@ results separator}
 Returns a character vector.
 }
 \description{
-These functions concatenate strings in each character vector in a given list.
+These functions concatenate all the strings in each character vector
+in a given list.
 \code{stri_c_list} and \code{stri_paste_list} are aliases for
 \code{stri_join_list}.
 }
@@ -41,10 +42,10 @@ then only the first string will be used.
 }
 \examples{
 stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-"You're gonna get away with this.")), sep=", ")
+"Get a life.")), sep=", ")
 
 stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-"You're gonna get away with this.")), sep=", ", collapse=". ")
+"Get a life.")), sep=", ", collapse=". ")
 
 stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\\\p{L}+"), " ")
 

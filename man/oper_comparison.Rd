@@ -65,12 +65,13 @@ two character vectors, with a typical \R look-and-feel.
 }
 \details{
 These functions call \code{\link{stri_cmp_le}} or its
-friends, using default collator options.
-Thus, they are vectorized over \code{e1} and \code{e2}.
+friends, using the default collator options.
+As a consequence, they are vectorized over \code{e1} and \code{e2}.
 
 \code{\%stri==\%} tests for canonical equivalence of strings
 (see \code{\link{stri_cmp_equiv}}) and is a locale-dependent operation.
-On the other hand, \code{\%stri===\%} performs a locale-independent,
+
+\code{\%stri===\%} performs a locale-independent,
 code point-based comparison.
 }
 \examples{

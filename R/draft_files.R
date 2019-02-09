@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -38,17 +38,16 @@
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
-#' After reading a text file into memory (the vast majority of them
-#' will fit into RAM without any problems), you may perform 
-#' encoding detection (cf. \code{\link{stri_enc_detect2}}),
-#' conversion (cf. \code{\link{stri_encode}}),
-#' and for example split it into text lines with
-#' \code{\link{stri_split_lines1}}.
+#' Once a text file is read into memory,
+#' encoding detection (see \code{\link{stri_enc_detect2}}),
+#' conversion (see \code{\link{stri_encode}}),
+#' text lines split (see \code{\link{stri_split_lines1}})
+#' can be performed.
 #'
 #' @param fname file name
 #'
 #' @return
-#' Returns a raw vector.
+#' Returns a \code{raw}-type vector.
 #'
 #' @family files
 #' @export
@@ -68,7 +67,7 @@ stri_read_raw <- function(fname) {
 #' \bold{[THIS IS AN EXPERIMENTAL FUNCTION]}
 #'
 #' @details
-#' It is a substitute for the system's \code{\link{readLines}} function,
+#' This aims to be a substitute for the \code{\link{readLines}} function,
 #' with the ability to auto-detect input encodings (or to specify
 #' one manually), re-encode input without any strange function calls
 #' or sys options change,
@@ -89,8 +88,8 @@ stri_read_raw <- function(fname) {
 #' defaults to the current default encoding, see \code{\link{stri_enc_get}}
 #'
 #' @return
-#' Returns a character vector, with each line of text
-#' being a single string. The output is always in UTF-8.
+#' Returns a character vector, each text line is a separate string.
+#' The output is always in UTF-8.
 #'
 #' @family files
 #' @export
@@ -134,7 +133,7 @@ stri_read_lines <- function(fname, encoding='auto', locale=NA, fallback_encoding
 #' @param sep newline separator
 #'
 #' @return
-#' This function does not return anything interesting
+#' This function returns nothing noteworthy.
 #'
 #' @family files
 #' @export

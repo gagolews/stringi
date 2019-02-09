@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@
 #' \pkg{ICU} is implemented as a set of services.
 #' If you want to verify whether particular resources are available
 #' in the locale you asked for, you must query those resources.
-#' Note: When you ask for a resource for a particular locale, you get back
+#' Note: when you ask for a resource for a particular locale, you get back
 #' the best available match, not necessarily precisely the one you requested.
 #'
 #' @section Locale Identifiers:
@@ -69,10 +69,10 @@
 #' Differences may also appear in language conventions used within
 #' the same country. For example, the Euro currency may be used in several European
 #' countries while the individual country's currency is still in circulation.
-#' In such case, \pkg{ICU} \code{Variant} "_EURO" could be used for selecting
+#' In such a case, \pkg{ICU} \code{Variant} "_EURO" could be used for selecting
 #' locales that support the Euro currency.
 #'
-#' The final (optional) element of a locale is an optional list of
+#' The final (optional) element of a locale is a list of
 #' keywords together with their values. Keywords must be unique.
 #' Their order is not significant. Unknown keywords are ignored.
 #' The handling of keywords depends on the specific services that
@@ -89,16 +89,16 @@
 #' @section A Note on Default Locales:
 #'
 #' Each locale-sensitive function in \pkg{stringi}
-#' selects the current default locale if an empty string or \code{NULL} is provided
-#' as its \code{locale} argument. Default locales are available to all the functions:
+#' selects the current default locale if an empty string or \code{NULL}
+#' is provided as its \code{locale} argument. Default locales are available
+#' to all the functions:
 #' they are initially set to be the system locale on that platform,
 #' and may be changed with \code{\link{stri_locale_set}},
 #' for example, if automatic  detection fails to recognize
 #' your locale properly.
 #'
-#' Sometimes it is suggested that your program should avoid changing the default locale:
-#' it is not a good way to request an international object, especially
-#' only for a single function call.
+#' It is suggested that your program should avoid changing
+#' the default locale.
 #' All locale-sensitive functions may request
 #' any desired locale per-call (by specifying the \code{locale} argument),
 #' i.e., without referencing to the default locale.

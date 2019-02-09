@@ -20,16 +20,16 @@ This function converts integer vectors,
 representing sequences of UTF-32 code points, to UTF-8 strings.
 }
 \details{
-UTF-32 is a 32bit encoding in which each Unicode code point
+UTF-32 is a 32-bit encoding where each Unicode code point
 corresponds to exactly one integer value.
 
-This function roughly acts like a vectorized version of
+This function is a vectorized version of
 \code{\link{intToUtf8}}. As usual in \pkg{stringi},
 it returns character strings in UTF-8.
 See \code{\link{stri_enc_toutf32}} for a dual operation.
 
-If an incorrect code point is given, a warning is generated
-and a string is set to \code{NA}.
+If an ill-defined code point is given, a warning is generated
+and the corresponding string is set to \code{NA}.
 Note that \code{0}s are not allowed in \code{vec}, as they are used
 internally to mark the end of a string (in the C API).
 

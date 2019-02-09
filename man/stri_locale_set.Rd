@@ -11,26 +11,27 @@ stri_locale_get()
 }
 \arguments{
 \item{locale}{single string of the form \code{Language},
-\code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US",
-see \code{\link{stri_locale_list}}}
+\code{Language_Country}, or \code{Language_Country_Variant}, e.g.,
+\code{"en_US"}, see \code{\link{stri_locale_list}}.}
 }
 \value{
 \code{stri_locale_set} returns a string with
 previously used locale, invisibly.
 
 \code{stri_locale_get} returns a string of the form \code{Language},
-\code{Language_Country}, or \code{Language_Country_Variant}, e.g. "en_US".
+\code{Language_Country}, or \code{Language_Country_Variant},
+e.g., \code{"en_US"}.
 }
 \description{
-\code{stri_locale_set} changes default locale for all  functions
+\code{stri_locale_set} changes the default locale for all the functions
 in the \pkg{stringi} package,
-i.e. establishes the meaning of the ``\code{NULL} locale'' argument
+i.e., establishes the meaning of the ``\code{NULL} locale'' argument
 of locale-sensitive functions. On the other hand, \code{stri_locale_get}
-gets current default locale.
+gets the current default locale.
 }
 \details{
 See \link{stringi-locale} for more information on the effect of
-changing default locale.
+changing the default locale.
 
 \code{stri_locale_get} is the same as \code{\link{stri_locale_info}(NULL)$Name}.
 }
@@ -39,9 +40,9 @@ changing default locale.
 oldloc <- stri_locale_set("pt_BR")
 # ... some locale-dependent operations
 # ... note that you may always modify a locale per-call
-# ... changing default locale is convinient if you perform
+# ... changing the default locale is convenient if you perform
 # ... many operations
-stri_locale_set(oldloc) # restore previous default locale
+stri_locale_set(oldloc) # restore the previous default locale
 }
 }
 \seealso{

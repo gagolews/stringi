@@ -14,8 +14,8 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 a list of \code{raw} vectors to be converted}
 
 \item{from}{input encoding:
-\code{NULL} or \code{""} for default encoding
-or internal encoding marks usage (see Details);
+\code{NULL} or \code{""} for the default encoding
+or internal encoding marks' usage (see Details);
 otherwise, a single string with encoding name,
 see \code{\link{stri_enc_list}}}
 
@@ -25,23 +25,22 @@ see \code{\link{stri_enc_list}}}
 or a single string with encoding name}
 
 \item{to_raw}{a single logical value; indicates whether a list of raw vectors
-shall be returned rather than a character vector}
+rather than a character vector should be returned}
 }
 \value{
 If \code{to_raw} is \code{FALSE},
-then a character vector with encoded strings (and sensible
+then a character vector with encoded strings (and appropriate
 encoding marks) is returned.
 Otherwise, a list of raw vectors is produced.
 }
 \description{
-These functions convert a character vector between encodings.
+These functions convert strings between encodings.
+They aim to replace \R's \code{\link{iconv}}.
+They are not only faster, but also much more portable - they
+work in the same manner on all platforms.
 }
 \details{
 \code{stri_conv} is an alias for \code{stri_encode}.
-
-These two functions aim to replace \R's \code{\link{iconv}}.
-It is not only faster, but also
-works in the same manner on all platforms.
 
 
 Please refer to \code{\link{stri_enc_list}} for the list
@@ -54,9 +53,9 @@ then the declared encodings are used
 (see \code{\link{stri_enc_mark}}) -- in such a case \code{bytes}-declared
 strings are disallowed.
 Otherwise, the internal encoding declarations are ignored and
-a converter selected with \code{from} is used.
+a converter selected via \code{from} is used.
 
-On the other hand, for \code{str} being a raw vector
+If \code{str} is a \code{raw}-type vector
 or a list of raw vectors,
 we assume that the input encoding is the current default encoding
 as given by \code{\link{stri_enc_get}}.
@@ -68,19 +67,19 @@ used (as specified by \code{to}) and the current default Encoding
 or \code{bytes} in all other cases).
 
 
-Note that problems may occur if \code{to} indicates e.g UTF-16 or UTF-32,
-as the output strings may have embedded NULs.
-In such cases use \code{to_raw=TRUE} and consider
+Note that some issues might occur if \code{to} indicates, e.g,
+UTF-16 or UTF-32, as the output strings may have embedded NULs.
+In such cases, please use \code{to_raw=TRUE} and consider
 specifying a byte order marker (BOM) for portability reasons
-(e.g. set \code{UTF-16} or \code{UTF-32} which automatically
-adds BOMs).
+(e.g., set \code{UTF-16} or \code{UTF-32} which automatically
+adds the BOMs).
 
 Note that \code{stri_encode(as.raw(data), "encodingname")}
-is a wise substitute for \code{\link{rawToChar}}.
+is a clever substitute for \code{\link{rawToChar}}.
 
 In the current version of \pkg{stringi}, if an incorrect code point is found
 on input, it is replaced by the default (for that target encoding)
-substitute character and a warning is generated.
+substitute character. Also, in such a case a warning is generated.
 }
 \references{
 \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}

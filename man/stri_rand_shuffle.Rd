@@ -13,15 +13,14 @@ stri_rand_shuffle(str)
 Returns a character vector.
 }
 \description{
-Generates a (pseudo)random permutation of code points
+Generates a (pseudo)random permutation of the code points
 in each string.
 }
 \details{
 This operation may result in non-Unicode-normalized
-strings and may give strange output for bidirectional strings.
+strings and may give peculiar outputs in case of bidirectional strings.
 
-See also \code{\link{stri_reverse}} for a reverse permutation
-of code points.
+See also \code{\link{stri_reverse}} for reversing the order of code points.
 }
 \examples{
 stri_rand_shuffle(c("abcdefghi", "0123456789"))

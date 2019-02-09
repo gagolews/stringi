@@ -29,7 +29,7 @@ Joins the elements of a character vector into one string.
 The \code{stri_flatten(str, collapse='XXX')} call
 is equivalent to \code{\link{paste}(str, collapse='XXX', sep="")}.
 
-If you wish to use some more fancy (e.g. differing)
+If you wish to use some more fancy (e.g., differing)
 separators between flattened strings,
 call \code{\link{stri_join}(str, separators, collapse='')}.
 

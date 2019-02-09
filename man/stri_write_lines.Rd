@@ -18,7 +18,7 @@ the current default one}
 \item{sep}{newline separator}
 }
 \value{
-This function does not return anything interesting
+This function returns nothing noteworthy.
 }
 \description{
 Writes a text file such that each element of a given

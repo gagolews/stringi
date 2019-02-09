@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -34,12 +34,12 @@
 #'
 #' @description
 #' This function gives general statistics for a character vector,
-#' e.g. obtained by loading a text file with the
+#' e.g., obtained by loading a text file with the
 #' \code{\link{readLines}} or \code{\link{stri_read_lines}} function,
 #' where each text line' is represented by a separate string.
 #'
 #' @details
-#' Any of the strings must not contain \code{\\r} or \code{\\n} characters,
+#' None of the strings may contain \code{\\r} or \code{\\n} characters,
 #' otherwise you will get at error.
 #'
 #' Below by `white space` we mean the Unicode binary property
@@ -76,7 +76,7 @@ stri_stats_general <- function(str) {
 #'
 #' @description
 #' This function gives LaTeX-oriented statistics for a character vector,
-#' e.g. obtained by loading a text file with the
+#' e.g., obtained by loading a text file with the
 #' \code{\link{readLines}} function, where each text line
 #' is represented by a separate string.
 #'

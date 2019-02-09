@@ -13,14 +13,14 @@ stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
 
 \item{locale}{\code{NULL} or \code{""} for the current default locale,
-or a single string with locale identifier; a non-Gregorian calendar
+or a single string with a locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
 \value{
 Returns a data frame with the following columns:
 \enumerate{
 \item Year (0 is 1BC, -1 is 2BC, etc.)
-\item Month (1-based, i.e. 1 stands for the first month, e.g. January;
+\item Month (1-based, i.e., 1 stands for the first month, e.g., January;
 note that the number of months depends on the selected calendar,
 see \code{\link{stri_datetime_symbols}})
 \item Day
@@ -38,7 +38,7 @@ see \code{\link{stri_datetime_symbols}})
 }
 }
 \description{
-Calculates and returns values for all date and time fields.
+Computes and returns values for all date and time fields.
 }
 \details{
 Vectorized over \code{time}.

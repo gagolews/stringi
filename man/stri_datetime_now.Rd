@@ -10,7 +10,7 @@ stri_datetime_now()
 Returns an object of class \code{\link{POSIXct}}.
 }
 \description{
-Returns current date and time.
+Returns the current date and time.
 }
 \details{
 The current date and time in \pkg{stringi} is represented as the (signed)

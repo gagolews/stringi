@@ -14,11 +14,11 @@ Returns an integer vector of the same length as \code{str}.
 }
 \description{
 Approximates the number of text columns the `cat()` function
-should utilize to print a string with a monospaced font.
+should use to print a string with a mono-spaced font.
 }
 \details{
 The Unicode standard does not formalize the notion of a character
-width. Roughly basing on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
+width. Roughly based on \url{http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c}
 and the UAX #11 we proceed as follows.
 The following code points are of width 0:
 \itemize{

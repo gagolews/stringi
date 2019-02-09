@@ -13,11 +13,11 @@ stri_reverse(str)
 Returns a character vector.
 }
 \description{
-Reverses code points in every string.
+Reverses the order of the code points in every string.
 }
 \details{
 Note that this operation may result in non-Unicode-normalized
-strings and may give strange output for bidirectional strings.
+strings and may give peculiar outputs for bidirectional strings.
 
 See also \code{\link{stri_rand_shuffle}} for a random permutation
 of code points.

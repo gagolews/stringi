@@ -20,17 +20,16 @@ The function checks whether given sequences of bytes forms
 a proper UTF-8 string.
 }
 \details{
-Negative answer means that a string is surely not valid UTF-8.
-Positive result does not mean that we should be absolutely sure.
- E.g. \code{(c4,85)} properly
-represents ("Polish a with ogonek") in UTF-8
+\code{FALSE} means that a string is certainly not valid UTF-8.
+However, false positives are possible. For instance,
+\code{(c4,85)} represents ("Polish a with ogonek") in UTF-8
 as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
-Also note that UTF-8, as well as most 8-bit encodings,
-have ASCII as their subsets
-(note that \code{\link{stri_enc_isascii}} => \code{\link{stri_enc_isutf8}}).
+Also note that UTF-8, as well as most 8-bit encodings, extend ASCII
+(note that \code{\link{stri_enc_isascii}} implies that
+\code{\link{stri_enc_isutf8}}).
 
 However, the longer the sequence,
-the bigger the possibility that the result
+the greater the possibility that the result
 is indeed in UTF-8 -- this is because not all sequences of bytes
 are valid UTF-8.
 

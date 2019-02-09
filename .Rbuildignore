@@ -28,3 +28,5 @@
 ^configure\.ac$
 ^\.gitignore$
 ^\.travis\.yml$
+^\.vscode
+

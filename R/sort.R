@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 #'
 #'
 #' @description
-#' \link{stri_order} determines a permutation which rearranges
+#' \link{stri_order} finds a permutation which rearranges
 #' strings into an ascending or descending order.
 #' \link{stri_sort} sorts the vector according to a lexicographic order.
 #'
@@ -43,7 +43,7 @@
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
-#' These functions use a stable sort algorithm (\pkg{STL}'s stable_sort),
+#' These functions use a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 #' which performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #'
@@ -67,7 +67,7 @@
 #' is returned.
 #'
 #' For \code{stri_order}, you get a sorted version of \code{str},
-#' i.e. a character vector.
+#' i.e., a character vector.
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
@@ -161,14 +161,14 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' Such operations are locale-dependent.
 #' Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
 #' are significantly slower (but much better suited for natural language
-#' processing) than their base R counterpart.
+#' processing) than their base R counterparts.
 #'
 #' See also \code{\link{stri_unique}} for extracting unique elements.
 #'
 #' @param str a character vector
 #' @param fromLast a single logical value;
 #'    indicating whether duplication should be considered from the
-#'    reverse side
+#'    end side
 #' @param opts_collator a named list with \pkg{ICU} Collator's options
 #' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options

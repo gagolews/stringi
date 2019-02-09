@@ -38,8 +38,7 @@ Vectorized over \code{str}.
 First, the text is checked whether it is valid
 UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8
 (as in \code{\link{stri_enc_detect}},
-this slightly bases on \pkg{ICU}'s \code{i18n/csrucode.cpp},
-but we do it in our own way, however) or ASCII.
+this is roughly inspired by \pkg{ICU}'s \code{i18n/csrucode.cpp}) or ASCII.
 
 
 If \code{locale} is not \code{NA} and the above fails,
@@ -53,10 +52,10 @@ byte hits.
 The guess is of course imprecise,
 as it is obtained using statistics and heuristics.
 Because of this, detection works best if you supply at least a few hundred
-bytes of character data that's in a single language.
+bytes of character data that is in a single language.
 
 
-If you have no initial guess on language and encoding, try with
+If you have no initial guess on the language and encoding, try with
 \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
 However, it turns out that (empirically) \code{stri_enc_detect2}
 works better than the \pkg{ICU}-based one if UTF-* text

@@ -44,7 +44,8 @@ see \link{stringi-encoding} for discussion.
 
 \code{stri_enc_set} has no effect if the system ICU assumes that
 the default charset is always UTF-8 (i.e., where the internal
-\code{U_CHARSET_IS_UTF8} is defined and set to 1).
+\code{U_CHARSET_IS_UTF8} is defined and set to 1), see
+\code{\link{stri_info}}.
 }
 \seealso{
 Other encoding_management: \code{\link{stri_enc_info}},

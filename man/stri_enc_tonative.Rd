@@ -14,11 +14,11 @@ Returns a character vector.
 }
 \description{
 Converts character strings with declared encodings
-to Native encoding.
+to the current native encoding.
 }
 \details{
 This function just calls \code{\link{stri_encode}(str, NULL, NULL)}.
-Current native encoding can be read with \code{\link{stri_enc_get}}.
+The current native encoding can be read with \code{\link{stri_enc_get}}.
 Character strings declared to be in \code{bytes} encoding will fail here.
 
 Note that if working in a UTF-8 environment,

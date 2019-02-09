@@ -14,7 +14,7 @@ stri_duplicated_any(str, fromLast = FALSE, ..., opts_collator = NULL)
 
 \item{fromLast}{a single logical value;
 indicating whether duplication should be considered from the
-reverse side}
+end side}
 
 \item{...}{additional settings for \code{opts_collator}}
 
@@ -47,7 +47,7 @@ these functions test for canonical equivalence of strings
 Such operations are locale-dependent.
 Hence, \code{stri_duplicated} and \code{stri_duplicated_any}
 are significantly slower (but much better suited for natural language
-processing) than their base R counterpart.
+processing) than their base R counterparts.
 
 See also \code{\link{stri_unique}} for extracting unique elements.
 }

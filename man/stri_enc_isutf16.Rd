@@ -29,12 +29,12 @@ valid UTF-16LE, UTF-16BE, UTF-32LE, or UTF-32BE.
 \details{
 These functions are independent of the way \R marks encodings in
 character strings (see \link{Encoding} and \link{stringi-encoding}).
-Anyway, most often, you will provide input data as raw vectors here.
+Most often, these functions act on raw vectors.
 
-Negative answer means that a string is surely not in valid UTF-16 or UTF-32.
-Positive result does not mean that we should be absolutely sure.
+A result of \code{FALSE} means that a string is surely not valid UTF-16
+or UTF-32. However, false positives are possible.
 
-Also, note that sometimes a data stream may be classified
+Also note that a data stream may be sometimes classified
 as both valid UTF-16LE and UTF-16BE.
 }
 \seealso{

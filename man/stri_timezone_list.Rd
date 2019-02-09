@@ -22,7 +22,7 @@ Returns a character vector.
 Returns a list of available time zone identifiers.
 }
 \details{
-If  \code{offset} and \code{region} are \code{NA} (the default), then
+If \code{offset} and \code{region} are \code{NA} (the default), then
 all time zones are returned. Otherwise,
 only time zone identifiers with a given raw offset from GMT
 and/or time zones corresponding to a given region are provided.
@@ -36,17 +36,17 @@ either leap seconds or historical behavior).
 The offset might vary throughout the year, if daylight savings time (DST)
 is used, or might be the same all year long.
 Typically, regions closer to the equator do not use DST.
-If DST is in use, then specific rules define the point at which
+If DST is in use, then specific rules define the point where
 the offset changes and the amount by which it changes.
 
 If DST is observed, then three additional bits of information are needed:
 \enumerate{
 \item The precise date and time during the year when DST begins.
-In the first half of the year it's in the northern hemisphere,
-and in the second half of the year it's in the southern hemisphere.
+In the first half of the year it is in the northern hemisphere,
+and in the second half of the year it is in the southern hemisphere.
 \item The precise date and time during the year when DST ends.
-In the first half of the year it's in the southern hemisphere,
-and in the second half of the year it's in the northern hemisphere.
+In the first half of the year it is in the southern hemisphere,
+and in the second half of the year it is in the northern hemisphere.
 \item The amount by which the GMT offset changes when DST is in effect.
 This is almost always one hour.
 }

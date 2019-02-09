@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@
 #' of code points, then the extra code points in the longer of the two are ignored,
 #' with a warning.
 #'
-#' If code points in a given \code{pattern} are not unique,
+#' If code points in a given \code{pattern} are not unique, the
 #' last corresponding replacement code point is used.
 #'
 #' @param str character vector

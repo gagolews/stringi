@@ -48,7 +48,7 @@ Unicode Normalization Form or check whether strings are normalized.
 }
 \details{
 Unicode Normalization Forms are formally defined normalizations of Unicode
-strings which e.g. make possible to determine whether any two
+strings which, e.g., make possible to determine whether any two
 strings are equivalent.
 Essentially, the Unicode Normalization Algorithm puts all combining
 marks in a specified order, and uses rules for decomposition

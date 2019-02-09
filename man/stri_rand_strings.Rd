@@ -27,7 +27,7 @@ then redundant elements are ignored. Otherwise,
 these vectors are recycled if necessary.
 
 This operation may result in non-Unicode-normalized
-strings and may give strange output for bidirectional strings.
+strings and may give peculiar outputs for bidirectional strings.
 
 Sampling of code points from the set specified by \code{pattern}
 is always done with replacement and each code point appears with equal

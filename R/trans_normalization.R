@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
 #'
 #' @details
 #' Unicode Normalization Forms are formally defined normalizations of Unicode
-#' strings which e.g. make possible to determine whether any two
+#' strings which, e.g., make possible to determine whether any two
 #' strings are equivalent.
 #' Essentially, the Unicode Normalization Algorithm puts all combining
 #' marks in a specified order, and uses rules for decomposition

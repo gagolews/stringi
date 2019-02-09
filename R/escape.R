@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -65,13 +65,13 @@ stri_escape_unicode <- function(str) {
 
 
 #' @title
-#' Unescape All Escape Sequences
+#' Un-escape All Escape Sequences
 #'
 #' @description
-#' Unescapes all known escape sequences
+#' Un-escapes all known escape sequences
 #'
 #' @details
-#' Uses \pkg{ICU} facilities to unescape Unicode character sequences.
+#' Uses \pkg{ICU} facilities to un-escape Unicode character sequences.
 #'
 #' The following ASCII standard escapes are recognized:
 #' \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
@@ -84,7 +84,7 @@ stri_escape_unicode <- function(str) {
 #' \code{\\xXX} (1-2 hex digits),
 #' \code{\\ooo} (1-3 octal digits),
 #' \code{\\cX} (control-X; X is masked with 0x1F).
-#' For \code{\\xXX} and \code{\\ooo} beware of non-valid UTF8 byte sequences.
+#' For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF8 byte sequences.
 #'
 #' Note that some versions of \R on Windows cannot handle
 #' characters defined with  {\\UXXXXXXXX}.
