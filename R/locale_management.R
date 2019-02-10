@@ -60,8 +60,10 @@ stri_locale_list <- function() {
 #' \code{stri_locale_set} changes the default locale for all the functions
 #' in the \pkg{stringi} package,
 #' i.e., establishes the meaning of the ``\code{NULL} locale'' argument
-#' of locale-sensitive functions. On the other hand, \code{stri_locale_get}
-#' gets the current default locale.
+#' of locale-sensitive functions.
+
+#' \code{stri_locale_get}
+#' gives the current default locale.
 #'
 #' @details
 #' See \link{stringi-locale} for more information on the effect of

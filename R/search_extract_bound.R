@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,22 @@
 
 
 #' @title
-#' Extract Text Between Text Boundaries
+#' Extract Data Between Text Boundaries
 #'
 #' @description
-#' These functions extract text between specific text boundaries.
+#' These functions extract data between text boundaries.
 #'
 #' @details
 #' Vectorized over \code{str}.
 #'
-#' For more information on the text boundary analysis
+#' For more information on text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
 #'
 #' In case of \code{stri_extract_*_words},
-#' Just like in \code{\link{stri_count_words}},
+#' just like in \code{\link{stri_count_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
-#' to locate word boundaries, and all non-word characters
+#' to locate the word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #'
 #'
@@ -55,13 +55,13 @@
 #' @param simplify single logical value;
 #' if \code{TRUE} or \code{NA}, then a character matrix is returned;
 #' otherwise (the default), a list of character vectors is given, see Value
-#' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
-#' as generated with \code{\link{stri_opts_brkiter}};
-#' \code{NULL} for default break iterator, i.e. \code{line_break}
+#' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings,
+#' see \code{\link{stri_opts_brkiter}};
+#' \code{NULL} for the default break iterator, i.e., \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
-#' locale identifier, see \link{stringi-locale}.
+#' locale identifier, see \link{stringi-locale}
 #'
 #' @return
 #' For \code{stri_extract_all_*},
@@ -70,16 +70,17 @@
 #' a separate word. In case of \code{omit_no_match=FALSE} and
 #' if there are no words or if a string is missing,
 #' a single \code{NA} is provided on output.
+#'
 #' Otherwise, \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 #' is called on the resulting object.
 #' In such a case, a character matrix with \code{length(str)} rows
 #' is returned. Note that \code{\link{stri_list2matrix}}'s \code{fill} argument
 #' is set to an empty string and \code{NA},
-#' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
+#' for \code{simplify} \code{TRUE} and \code{NA}, respectively.
 #'
 #' For \code{stri_extract_first_*} and \code{stri_extract_last_*},
 #' a character vector is returned.
-#' A \code{NA} element indicates no match.
+#' A \code{NA} element indicates a no-match.
 #'
 #' @examples
 #' stri_extract_all_words("stringi: THE string processing package 123.48...")

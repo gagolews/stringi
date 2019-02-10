@@ -337,7 +337,7 @@ SEXP stri_join2(SEXP e1, SEXP e2) // a.k.a. stri_join2_nocollapse
 SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
 {
    if (isNull(collapse)) {
-      // no collapse - used e.g. by %s+% operator
+      // no collapse - used, e.g., by the %s+% operator
       return stri_join2(e1, e2); // a.k.a. stri_join2_nocollapse
    }
 
@@ -455,7 +455,7 @@ SEXP stri_join_nocollapse(SEXP strlist, SEXP sep, SEXP ignore_null)
       return stri__vector_empty_strings(0);
    }
 
-   // get length of the longest character vector on the list, i.e. vectorize_length
+   // get length of the longest character vector on the list, i.e., vectorize_length
    R_len_t vectorize_length = 0;
    for (R_len_t i=0; i<strlist_length; ++i) {
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
@@ -620,7 +620,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
       return ret;
    }
 
-   // get length of the longest character vector on the list, i.e. vectorize_length
+   // get length of the longest character vector on the list, i.e., vectorize_length
    R_len_t vectorize_length = 0;
    for (R_len_t i=0; i<strlist_length; ++i) {
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
@@ -702,7 +702,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
 }
 
 
-/** String vector flatten, with no separator (i.e. empty) between each string
+/** String vector flatten, with no separator (i.e., empty) between each string
  *
  *  if any of s is NA, the result will be NA_character_
  *

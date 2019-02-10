@@ -217,15 +217,15 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 # #' inherits from (for compatibility with other base R functions)
 # #' \code{POSIXct} and \code{POSIX} classes.
 # #' In fact, it is a numeric vector representing the (signed) number of seconds
-# #' since the UNIX Epoch, i.e. 1970-01-01 00:00:00 UTC.
+# #' since the UNIX Epoch, i.e., 1970-01-01 00:00:00 UTC.
 # #' UTC leap seconds are ignored.
 # #'
-# #' Thanks to this property, standard comparison operators, e.g. \code{<}, \code{==},
+# #' Thanks to this property, standard comparison operators, e.g., \code{<}, \code{==},
 # #' etc. or the \code{sort()} function may be used.
 # #'
 # #' An object of class \code{\link{POSIXst}} may be equipped with
 # #' an attribute called \code{tzone}. Its value is used for date/time
-# #' formatting (e.g. when objects are printed in the console),
+# #' formatting (e.g., when objects are printed in the console),
 # #' see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
 # #'
 # #' @param x ...

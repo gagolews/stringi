@@ -22,25 +22,27 @@ stri_detect_regex(str, pattern, negate = FALSE, max_count = -1, ...,
   opts_regex = NULL)
 }
 \arguments{
-\item{str}{character vector with strings to search in}
+\item{str}{character vector; strings to search in}
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
 \code{opts_fixed}, and so on}
 
-\item{pattern, regex, fixed, coll, charclass}{character vector
-defining search patterns; for more details refer to \link{stringi-search}}
+\item{pattern, regex, fixed, coll, charclass}{character vector;
+search patterns; for more details refer to \link{stringi-search}}
 
-\item{negate}{single logical value; whether a no-match is rather of interest}
+\item{negate}{single logical value; whether a no-match to a pattern
+is rather of interest}
 
-\item{max_count}{single integer; stops searching once a given
-number of occurrences is detected; \code{-1} (the default) inspects all}
+\item{max_count}{single integer; allows to stop searching once a given
+number of occurrences is detected; \code{-1} (the default) inspects all
+elements}
 
 \item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
-a search engine's settings; see
+the search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-for default settings;}
+for the defaults}
 }
 \value{
 Each function returns a logical vector.
@@ -64,10 +66,10 @@ See also \code{\link{stri_startswith}} and \code{\link{stri_endswith}}
 for testing whether a string starts or ends with a match to a given pattern.
 Moreover, see \code{\link{stri_subset}} for a character vector subsetting.
 
-If \code{max_count} is negative, then stings are examined
-search for a given pattern. Otherwise, the search stops
+If \code{max_count} is negative, then all stings are examined.
+Otherwise, searching terminates
 once \code{max_count} matches (or, if \code{negate} is \code{TRUE},
-no-matches) are detected. The uninspected cases are marked
+no-matches) are detected. The un-inspected cases are marked
 as missing in the return vector. Be aware that, unless \code{pattern} is a
 singleton, the elements in \code{str} might be inspected in a
 non-consecutive order.

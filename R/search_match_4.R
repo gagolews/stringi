@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 #' Extract Regex Pattern Matches, Together with Capture Groups
 #'
 #' @description
-#' These functions extract substrings of \code{str} that
+#' These functions extract substrings in \code{str} that
 #' match a given regex \code{pattern}. Additionally, they extract matches
-#' to every \emph{capture group}, i.e. to all the subpatterns given
+#' to every \emph{capture group}, i.e., to all the sub-patterns given
 #' in round parentheses.
 #'
 #' @details
@@ -44,20 +44,21 @@
 #' If no pattern match is detected and \code{omit_no_match=FALSE},
 #' then \code{NA}s are included in the resulting matrix (matrices), see Examples.
 #'
-#' Please note: \pkg{ICU} regex engine currently does not support named capture groups.
+#' Please note: \pkg{ICU} regex engine currently does not fully support
+#' named capture groups.
 #'
 #' \code{stri_match}, \code{stri_match_all}, \code{stri_match_first},
 #' and \code{stri_match_last} are convenience functions.
-#' They just call \code{stri_match_*_regex} -- they have been
+#' They just call \code{stri_match_*_regex}  and were
 #' provided for consistency with other string searching functions' wrappers,
-#' cf. e.g. \code{\link{stri_extract}}.
+#' see, among others, \code{\link{stri_extract}}.
 #'
-#' @param str character vector with strings to search in
-#' @param pattern,regex character vector defining regex patterns to search for;
-#' for more details refer to \link{stringi-search-regex}
-#' @param opts_regex a named list with \pkg{ICU} Regex settings
-#' as generated with \code{\link{stri_opts_regex}}; \code{NULL}
-#' for default settings;
+#' @param str character vector; strings to search in
+#' @param pattern,regex character vector;
+#'     search patterns; for more details refer to \link{stringi-search}
+#' @param opts_regex a named list with \pkg{ICU} Regex settings,
+#' see \code{\link{stri_opts_regex}}; \code{NULL}
+#' for default settings
 #' @param omit_no_match single logical value; if \code{FALSE},
 #' then a row with missing values will indicate that there was no match;
 #' \code{stri_match_all_*} only
@@ -71,11 +72,11 @@
 #' @return
 #' For \code{stri_match_all*},
 #' a list of character matrices is returned. Each list element
-#' represents the results of a separate search scenario.
+#' represents the results of a different search scenario.
 #'
-#' For \code{stri_match_first*} and \code{stri_match_last*},
-#' on the other hand, a character matrix is returned.
-#' Here the search results are provided as separate rows.
+#' For \code{stri_match_first*} and \code{stri_match_last*}
+#' a character matrix is returned.
+#' Each row corresponds to a different search result.
 #'
 #' The first matrix column gives the whole match. The second one corresponds to
 #' the first capture group, the third -- the second capture group, and so on.

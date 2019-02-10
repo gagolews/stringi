@@ -210,7 +210,7 @@ SEXP stri_locate_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP omit_no_
       StriContainerCharClass::locateAll(
          occurrences, &pattern_cont.get(i),
          str_cont.get(i).c_str(), str_cont.get(i).length(), merge_cur,
-         true /* code point-based indices */
+         true /* code point-based indexes */
       );
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

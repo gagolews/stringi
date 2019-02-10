@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -30,26 +30,26 @@
 
 
 #' @title
-#' Locate Specific Text Boundaries
+#' Locate Text Boundaries
 #'
 #' @description
-#' These functions locate specific text boundaries
+#' These functions locate text boundaries
 #' (like character, word, line, or sentence boundaries).
-#' \code{stri_locate_all_*} locate all the matches.
-#' On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
+#' Use \code{stri_locate_all_*} to locate all the matches.
+#' \code{stri_locate_first_*} and \code{stri_locate_last_*}
 #' give the first or the last matches, respectively.
 #'
 #' @details
 #' Vectorized over \code{str}.
 #'
-#' For more information on the text boundary analysis
+#' For more information on text boundary analysis
 #' performed by \pkg{ICU}'s \code{BreakIterator}, see
 #' \link{stringi-search-boundaries}.
 #'
 #' In case of \code{stri_locate_*_words},
 #' just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_words}},
 #' \pkg{ICU}'s word \code{BreakIterator} iterator is used
-#' to locate word boundaries, and all non-word characters
+#' to locate the word boundaries, and all non-word characters
 #' (\code{UBRK_WORD_NONE} rule status) are ignored.
 #' This is function is equivalent to a call to
 #' \code{stri_locate_*_boundaries(str, type="word", skip_word_none=TRUE, locale=locale)}
@@ -58,9 +58,9 @@
 #' @param str character vector or an object coercible to
 #' @param omit_no_match single logical value; if \code{FALSE},
 #' then 2 missing values will indicate that there are no text boundaries
-#' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings
-#' as generated with \code{\link{stri_opts_brkiter}};
-#' \code{NULL} for default break iterator, i.e. \code{line_break}
+#' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings,
+#' see \code{\link{stri_opts_brkiter}};
+#' \code{NULL} for default break iterator, i.e., \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
@@ -70,20 +70,19 @@
 #' For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices
 #' is returned. The first column gives the start positions
 #' of substrings between located boundaries, and the second column gives
-#' the end positions. The indices are code point-based, thus
-#' they may be passed e.g. to the \code{\link{stri_sub}} function.
-#' Moreover, you may get two \code{NA}s in one row
-#' for no match (if \code{omit_no_match} is \code{FALSE})
-#' or \code{NA} arguments.
+#' the end positions. The indexes are code point-based, thus
+#' they may be passed, e.g., to the \code{\link{stri_sub}} function.
+#' Note that you get two \code{NA}s in one row
+#' if there is no match (and \code{omit_no_match} is \code{FALSE})
+#' or there are missing data in the input vector.
 #'
 #' \code{stri_locate_first_*} and \code{stri_locate_last_*},
-#' on the other hand, return an integer matrix with
+#' return an integer matrix with
 #' two columns, giving the start and end positions of the first
-#' or the last matches, respectively, and two \code{NA}s if and
-#' only if they are not found.
+#' or the last matches, respectively, and two \code{NA}s if there is no match.
 #'
 #' @examples
-#' test <- "The\u00a0above-mentioned    features are very useful. Warm thanks to their developers."
+#' test <- "The\u00a0above-mentioned    features are very useful. Kudos to their developers."
 #' stri_locate_all_boundaries(test, type="line")
 #' stri_locate_all_boundaries(test, type="word")
 #' stri_locate_all_boundaries(test, type="sentence")

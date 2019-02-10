@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,38 +33,36 @@
 #' Locate Occurrences of a Pattern
 #'
 #' @description
-#' These functions may be used e.g. to find the indices (positions), at which
-#' a given pattern is matched.
-#' \code{stri_locate_all_*} locate all the matches.
-#' On the other hand, \code{stri_locate_first_*} and \code{stri_locate_last_*}
+#' These functions may be used, e.g., to find the indexes (positions) where
+#' there is a match to some pattern.
+#' The functions \code{stri_locate_all_*} locate all the matches.
+#' \code{stri_locate_first_*} and \code{stri_locate_last_*}
 #' give the first or the last matches, respectively.
 #'
 #' @details
 #' Vectorized over \code{str} and \code{pattern}.
 #'
-#' The matched string(s) may be extracted by calling
+#' The matches may be extracted by calling
 #' the \code{\link{stri_sub}} function.
 #' Alternatively, you may call \code{\link{stri_extract}} directly.
 #'
 #' \code{stri_locate}, \code{stri_locate_all}, \code{stri_locate_first},
 #' and \code{stri_locate_last} are convenience functions.
-#' They just call \code{stri_locate_*_*}, depending on arguments used.
-#' Unless you are a very lazy person, please call the underlying functions
-#' directly for better performance.
+#' They just call \code{stri_locate_*_*}, depending on the arguments used.
 #'
-#' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
-#' for more details refer to \link{stringi-search}
+#' @param str character vector; strings to search in
+#' @param pattern,regex,fixed,coll,charclass character vector;
+#'     search patterns; for more details refer to \link{stringi-search}
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see
+#' the search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-#' for default settings;
+#' for the defaults
 #' @param merge single logical value;
-#' indicates whether consecutive sequences of indices in the resulting
-#' matrix shall be merged;  \code{stri_locate_all_charclass} only
+#' indicates whether consecutive sequences of indexes in the resulting
+#' matrix should be merged; \code{stri_locate_all_charclass} only
 #' @param omit_no_match single logical value; if \code{FALSE},
-#' then 2 missing values will indicate that there was no match;
+#' then two missing values will indicate that there was no match;
 #' \code{stri_locate_all_*} only
 #' @param mode single string;
 #' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
@@ -77,18 +75,18 @@
 #' a list of integer matrices is returned. Each list element
 #' represents the results of a separate search scenario.
 #' The first column gives the start positions
-#' of matches, and the second column gives the end positions.
+#' of the matches, and the second column gives the end positions.
 #' Moreover, you may get two \code{NA}s in one row
 #' for no match (if \code{omit_no_match} is \code{FALSE})
 #' or \code{NA} arguments.
 #'
-#' \code{stri_locate_first_*} and \code{stri_locate_last_*},
-#' on the other hand, return an integer matrix with
+#' \code{stri_locate_first_*} and \code{stri_locate_last_*}
+#' return an integer matrix with
 #' two columns, giving the start and end positions of the first
 #' or the last matches, respectively, and two \code{NA}s if and
 #' only if they are not found.
 #'
-#' For \code{stri_locate_*_regex}, if the match is of length 0,
+#' For \code{stri_locate_*_regex}, if the match is of zero length,
 #' \code{end} will be one character less than \code{start}.
 #'
 #' @examples

@@ -78,9 +78,9 @@
 #'
 #'
 #' @param e1,e2 character vectors or objects coercible to character vectors
-#' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-#' for default collation options.
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
+#' for the default collation options.
 #' @param ... additional settings for \code{opts_collator}
 #'
 #' @return The \code{stri_cmp} and \code{stri_compare} functions

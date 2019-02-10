@@ -65,7 +65,7 @@
 #'
 #' As usual in \pkg{stringi},
 #' if the input character vector is in the native encoding,
-#' it will be converted to UTF-8 automatically.
+#' it will be automatically converted to UTF-8.
 #'
 #' For more general text transforms refer to \code{\link{stri_trans_general}}.
 #'
@@ -75,7 +75,7 @@
 #' @return The \code{stri_trans_nf*} functions return a character vector
 #' of the same length as input (the output is always in UTF-8).
 #'
-#' On the other hand, \code{stri_trans_isnf*} return a logical vector.
+#' \code{stri_trans_isnf*} return a logical vector.
 #'
 #' @references
 #' \emph{Unicode Normalization Forms} -- Unicode Standard Annex #15,

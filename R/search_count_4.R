@@ -47,14 +47,14 @@
 #' \code{stri_count_fixed}, \code{stri_count_coll},
 #' or \code{stri_count_charclass}, depending on the argument used.
 #'
-#' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
-#' for more details refer to \link{stringi-search}
+#' @param str character vector; strings to search in
+#' @param pattern,regex,fixed,coll,charclass character vector;
+#'     search patterns; for more details refer to \link{stringi-search}
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see
+#' the search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-#' for default settings;
+#' for the defaults
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_regex},
 #' \code{opts_fixed}, and so on
@@ -76,7 +76,7 @@
 #' stri_count_charclass(c("stRRRingi", "STrrrINGI", "123"),
 #'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
 #' stri_count_charclass(" \t\n", "\\p{WHITE_SPACE}") # white space - binary property
-#' stri_count_charclass(" \t\n", "\\p{Z}") # whitespace - general category (note the difference)
+#' stri_count_charclass(" \t\n", "\\p{Z}") # white-space - general category (note the difference)
 #'
 #' stri_count_regex(s, "(s|el)it")
 #' stri_count_regex(s, "i.i")

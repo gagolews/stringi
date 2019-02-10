@@ -38,9 +38,9 @@ stri_cmp_ge(e1, e2, ..., opts_collator = NULL)
 
 \item{...}{additional settings for \code{opts_collator}}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
-for default collation options.}
+\item{opts_collator}{a named list with \pkg{ICU} Collator's options,
+see \code{\link{stri_opts_collator}}, \code{NULL}
+for the default collation options.}
 }
 \value{
 The \code{stri_cmp} and \code{stri_compare} functions

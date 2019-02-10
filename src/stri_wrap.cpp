@@ -320,7 +320,7 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
       briter->setText(str_text, status);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-      // all right, first let's generate a list of places at which we may do line breaks
+      // first generate a list of positions of line breaks
       deque< R_len_t > occurrences_list; // this could be an R_len_t queue
       R_len_t match = briter->first();
       while (match != BreakIterator::DONE) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/search_split_bound.R
 \name{stri_split_boundaries}
 \alias{stri_split_boundaries}
-\title{Split a String at Specific Text Boundaries}
+\title{Split a String at Text Boundaries}
 \usage{
 stri_split_boundaries(str, n = -1L, tokens_only = FALSE,
   simplify = FALSE, ..., opts_brkiter = NULL)
@@ -21,9 +21,9 @@ character vectors is given, see Value}
 
 \item{...}{additional settings for \code{opts_brkiter}}
 
-\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
-as generated with \code{\link{stri_opts_brkiter}}; \code{NULL} for the
-default break iterator, i.e. \code{line_break}}
+\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings,
+see \code{\link{stri_opts_brkiter}}; \code{NULL} for the
+default break iterator, i.e., \code{line_break}}
 }
 \value{
 If \code{simplify=FALSE} (the default),
@@ -37,28 +37,29 @@ argument is set to an empty string and \code{NA},
 for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 }
 \description{
-This function locates specific text boundaries
+This function locates text boundaries
 (like character, word, line, or sentence boundaries)
 and splits strings at the indicated positions.
 }
 \details{
 Vectorized over \code{str} and \code{n}.
 
-If \code{n} is negative (default), then all pieces are extracted.
+If \code{n} is negative (the default), then all text pieces are extracted.
+
 Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,
 for compatibility with the \pkg{stringr} package), then \code{n-1}
-tokes are extracted (if possible) and the \code{n}-th string
+tokens are extracted (if possible) and the \code{n}-th string
 gives the (non-split) remainder (see Examples).
 On the other hand, if \code{tokens_only} is \code{TRUE},
 then only full tokens (up to \code{n} pieces) are extracted.
 
-For more information on the text boundary analysis
+For more information on text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
 \link{stringi-search-boundaries}.
 }
 \examples{
 test <- "The\\u00a0above-mentioned    features are very useful. " \%s+\%
-   "Warm thanks to their developers. 123 456 789"
+   "Kudos to their developers. 123 456 789"
 stri_split_boundaries(test, type="line")
 stri_split_boundaries(test, type="word")
 stri_split_boundaries(test, type="word", skip_word_none=TRUE)
@@ -68,7 +69,7 @@ stri_split_boundaries(test, type="sentence")
 stri_split_boundaries(test, type="sentence", skip_sentence_sep=TRUE)
 stri_split_boundaries(test, type="character")
 
-# filtered break iterator with the new ICU:
+# a filtered break iterator with the new ICU:
 stri_split_boundaries("Mr. Jones and Mrs. Brown are very happy.
 So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
 

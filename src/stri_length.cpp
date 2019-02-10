@@ -138,7 +138,7 @@ SEXP stri_length(SEXP str)
 
          UConverter* uconv = ucnvNative.getConverter();
 
-         // native encoding which is neither 8-bit, nor UTF-8 (e.g. 'Big5')
+         // native encoding which is neither 8-bit, nor UTF-8 (e.g., 'Big5')
          // this is weird, but we'll face it
          UErrorCode status = U_ZERO_ERROR;
          const char* source = CHAR(curs);

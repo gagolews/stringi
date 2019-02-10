@@ -2383,7 +2383,7 @@ if test ! -e "${R_PATH}"; then
    # if it was determined by calling `R RHOME`, then this is likely a bug
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-   echo "*** Could not find R at R_HOME/bin/R, i.e. ${R_HOME}/bin/R"
+   echo "*** Could not find R at R_HOME/bin/R, i.e., ${R_HOME}/bin/R"
    exit 1
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $R_PATH" >&5

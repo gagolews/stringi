@@ -4,17 +4,17 @@
 \alias{stringi-search-coll}
 \title{Locale-Sensitive Text Searching in \pkg{stringi}}
 \description{
-String searching facilities described in this very man page
+String searching facilities described here
 provide a way to locate a specific piece of
-text. Note that locale-sensitive searching, especially
+text. Interestingly, locale-sensitive searching, especially
 on a non-English text, is a much more complex process
 than it seems at the first glance.
 }
 \section{Locale-Aware String Search Engine}{
 
 
-All \code{stri_*_coll} functions in \pkg{stringi} utilize
-\pkg{ICU}'s \code{StringSearch} engine --
+All \code{stri_*_coll} functions in \pkg{stringi} use
+\pkg{ICU}'s \code{StringSearch} engine,
 which implements a locale-sensitive string search algorithm.
 The matches are defined by using the notion of ``canonical equivalence''
 between strings.
@@ -28,9 +28,7 @@ and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 Please note that \pkg{ICU}'s \code{StringSearch}-based functions
-often exhibit poor performance. These functions are not intended to
-be fast; they are made to give \emph{correct} in natural
-language processing tasks.
+are  often much slower that those to perform fixed pattern searches.
 }
 
 \references{

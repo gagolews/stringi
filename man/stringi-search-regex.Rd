@@ -7,15 +7,15 @@
 A regular expression is a pattern describing, possibly in a very
 abstract way, a text fragment.
 With so many regex functions in \pkg{stringi},
-regular expressions may be a very powerful tool in your hand
+regular expressions may be a very powerful tool
 to perform string searching, substring extraction, string splitting, etc.,
 tasks.
 }
 \details{
 All \code{stri_*_regex} functions in \pkg{stringi} use
 the \pkg{ICU} regex engine. Its settings may be tuned up (for example
-to perform case-insensitive search), see the
-\code{\link{stri_opts_regex}} function for more details.
+to perform case-insensitive search) via the
+\code{\link{stri_opts_regex}} function.
 
 
 Regular expression patterns in \pkg{ICU} are quite similar in form and
@@ -59,13 +59,13 @@ when first encountered, do not retry with fewer even if overall match fails
 \item{\code{{n,}+}}{Match at least n times. Possessive Match.}
 \item{\code{{n,m}+}}{Match between n and m times. Possessive Match.}
 \item{\code{(...)}}{Capturing parentheses. Range of input that matched
-the parenthesized subexpression is available after the match,
+the parenthesized sub-expression is available after the match,
 see \code{\link{stri_match}}.}
 \item{\code{(?:...)}}{Non-capturing parentheses. Groups the included pattern,
 but does not provide capturing of matching text. Somewhat more efficient
 than capturing parentheses.}
 \item{\code{(?>...)}}{Atomic-match parentheses. First match of the
-parenthesized subexpression is the only one tried; if it does not lead to
+parenthesized sub-expression is the only one tried; if it does not lead to
 an overall pattern match, back up the search for a match to a position
 before the \code{(?>}.}
 \item{\code{(?#...)}}{Free-format comment \code{(?# comment )}.}
@@ -99,10 +99,10 @@ see also \code{\link{stri_opts_regex}}.}
 }
 }
 
-\section{\pkg{ICU} Regex Metacharacters at a Glance}{
+\section{\pkg{ICU} Regex Meta-characters at a Glance}{
 
 
-Here is a list of metacharacters provided by the
+Here is a list of meta-characters provided by the
 ICU User Guide on regexes.
 
 \describe{
@@ -112,7 +112,7 @@ ICU User Guide on regexes.
 \item{\code{\\b}}{Match if the current position is a word boundary.
    Boundaries occur at the transitions between word (\code{\\w}) and non-word
    (\code{\\W}) characters, with combining marks ignored. For better word
-   boundaries, see \pkg{ICU} Boundary Analysis, e.g. \code{\link{stri_extract_all_words}}.}
+   boundaries, see \pkg{ICU} Boundary Analysis, e.g., \code{\link{stri_extract_all_words}}.}
 \item{\code{\\B}}{Match if the current position is not a word boundary.}
 \item{\code{\\cX}}{Match a control-\code{X} character.}
 \item{\code{\\d}}{Match any character with the Unicode General Category of
@@ -182,13 +182,13 @@ in regexes, refer to \link{stringi-search-charclass}.
 
 
 Note that if a given regex \code{pattern} is empty,
-then all functions in \pkg{stringi} give \code{NA} in result
+then all the functions in \pkg{stringi} give \code{NA} in result
 and generate a warning.
 On a syntax error, a quite informative failure message is shown.
 
-If you would like to search for a fixed pattern,
+If you wish to search for a fixed pattern,
 refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
-This allows to do a locale-aware text lookup,
+They allow to perform a locale-aware text lookup,
 or a very fast exact-byte search, respectively.
 }
 

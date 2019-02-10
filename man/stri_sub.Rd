@@ -50,27 +50,27 @@ If \code{from} is a two-column matrix, then the first column is used
 as \code{from} and the second one as \code{to}. In such case arguments
 \code{to} and \code{length} are ignored.
 
-Of course, the indices are code point-based, and not byte-based.
+Naturally, the indexes are code point-based, and not byte-based.
 Note that for some Unicode strings, the extracted substrings may not
 be well-formed, especially if the input is not NFC-normalized
 (see \code{\link{stri_trans_nfc}}),
 includes byte order marks, Bidirectional text marks, and so on.
 Handle with care.
 
-Indices are 1-based, i.e., an index equal to 1 denotes the first character
+Indexes are 1-based, i.e., an index equal to 1 denotes the first character
 in a string, which gives a typical \R look-and-feel.
 Argument \code{to} defines the last index of the substring, inclusive.
 
-For negative indices in \code{from} or \code{to},
+For negative indexes in \code{from} or \code{to},
 counting starts at the end of the string.
 For instance, index -1 denotes the last code point in the string.
 Non-positive \code{length} gives an empty string.
 
 
-In \code{stri_sub}, out-of-bound indices are silently
+In \code{stri_sub}, out-of-bound indexes are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
 
-In \code{stri_sub<-}, some configurations of indices may work as
+In \code{stri_sub<-}, some configurations of indexes may work as
 string concatenation at the front, back, or middle.
 }
 \examples{

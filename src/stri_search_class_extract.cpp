@@ -225,7 +225,7 @@ SEXP stri_extract_all_charclass(SEXP str, SEXP pattern, SEXP merge, SEXP simplif
       StriContainerCharClass::locateAll(
          occurrences, &pattern_cont.get(i),
          str_cur_s, str_cur_n, merge_cur,
-         false /* byte-based indices */
+         false /* byte-based indexes */
       );
 
       R_len_t noccurrences = (R_len_t)occurrences.size();

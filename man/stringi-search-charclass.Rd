@@ -4,18 +4,16 @@
 \alias{stringi-search-charclass}
 \title{Character Classes in \pkg{stringi}}
 \description{
-In this man page we describe how character classes are
-declared in the \pkg{stringi} package
-so that you may e.g. find their occurrences in your search activities
-or generate random code points with \code{\link{stri_rand_strings}}.
-Moreover, the \pkg{ICU} regex engine uses the same
-scheme for denoting character classes.
+Here we describe how character classes (sets) can be specified
+in the \pkg{stringi} package. These are useful for defining
+search patterns (note that the \pkg{ICU} regex engine uses the same
+scheme for denoting character classes) or, e.g.,
+generating random code points with \code{\link{stri_rand_strings}}.
 }
 \details{
 All \code{stri_*_charclass} functions in \pkg{stringi} perform
-a single character (i.e. Unicode code point) search-based operations.
-Since stringi_0.2-1 you may obtain
-roughly the same results using \link{stringi-search-regex}.
+a single character (i.e., Unicode code point) search-based operations.
+You may obtain the same results using \link{stringi-search-regex}.
 However, these very functions aim to be faster.
 
 Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
@@ -30,9 +28,10 @@ A \code{UnicodeSet} represents a subset of Unicode code points
 to Unicode automatically). Legal code points are U+0000 to U+10FFFF,
 inclusive.
 
-Patterns either consist of series of characters either bounded by square brackets
+Patterns either consist of series of characters  bounded by
+square brackets
 (such patterns follow a syntax similar to that employed
-by version 8 regular expression character classes)
+by regular expression character classes)
 or of Perl-like Unicode property set specifiers.
 
 \code{[]} denotes an empty set, \code{[a]} --
@@ -44,22 +43,22 @@ and \code{[abc]} -- a set with ``a'', ``b'', and ``c''.
 ``a'' through ``z'' inclusively, in Unicode code point order.
 
 Some set-theoretic operations are available.
-\code{^} denotes the complement, e.g. \code{[^a-z]} contains
+\code{^} denotes the complement, e.g., \code{[^a-z]} contains
 all characters but ``a'' through ``z''.
-On the other hand, \code{[[pat1][pat2]]},
+Moreover, \code{[[pat1][pat2]]},
 \code{[[pat1]\&[pat2]]}, and \code{[[pat1]-[pat2]]}
 denote union, intersection, and asymmetric difference of sets
 specified by \code{pat1} and \code{pat2}, respectively.
 
-Note that all white spaces are ignored unless they are quoted or backslashed
+Note that all white-spaces are ignored unless they are quoted or back-slashed
 (white spaces can be freely used for clarity, as \code{[a c d-f m]}
 means the same as \code{[acd-fm]}).
-\pkg{stringi} does not allow for including so-called multicharacter strings
+\pkg{stringi} does not allow including multi-character strings
 (see \code{UnicodeSet} API documentation).
 Also, empty string patterns are disallowed.
 
 Any character may be preceded by
-a backslash in order to remove any special meaning.
+a backslash in order to remove its special meaning.
 
 A malformed pattern always results in an error.
 
@@ -97,30 +96,30 @@ Some examples:
 
 
 Unicode property sets are specified with a POSIX-like syntax,
-e.g. \code{[:Letter:]},
-or with a (extended) Perl-style syntax, e.g. \code{\\p{L}}.
+e.g., \code{[:Letter:]},
+or with a (extended) Perl-style syntax, e.g., \code{\\p{L}}.
 The complements of the above sets are
 \code{[:^Letter:]} and \code{\\P{L}}, respectively.
 
-The properties' names are normalized before matching
+The names are normalized before matching
 (for example, the match is case-insensitive).
 Moreover, many names have short aliases.
 
-Among predefined Unicode properties we find e.g.
+Among predefined Unicode properties we find, e.g.:
 \itemize{
-\item Unicode General Categories, e.g. \code{Lu} for uppercase letters,
-\item Unicode Binary Properties, e.g. \code{WHITE_SPACE},
+\item Unicode General Categories, e.g., \code{Lu} for uppercase letters,
+\item Unicode Binary Properties, e.g., \code{WHITE_SPACE},
 }
 and many more (including Unicode scripts).
 
 Each property provides access to the large and comprehensive
 Unicode Character Database.
 Generally, the list of properties available in \pkg{ICU}
-is not perfectly documented. Please refer to the References section
+is not well-documented. Please refer to the References section
 for some links.
 
-Please note that some classes may seem to overlap.
-However, e.g. General Category \code{Z} (some space) and Binary Property
+Please note that some classes might overlap.
+However, e.g., General Category \code{Z} (some space) and Binary Property
 \code{WHITE_SPACE} matches different character sets.
 }
 
@@ -189,7 +188,7 @@ Here is a comprehensive list of supported Binary Properties:
   \item{\code{DASH}           }{a kind of a dash character.}
   \item{\code{DEFAULT_IGNORABLE_CODE_POINT}}{characters that are ignorable in most
                                text processing activities,
-                               e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>.}
+                               e.g., <2060..206F, FFF0..FFFB, E0000..E0FFF>.}
   \item{\code{DEPRECATED}     }{a deprecated character according
           to the current Unicode standard (the usage of deprecated characters
           is strongly discouraged).}
@@ -197,7 +196,7 @@ Here is a comprehensive list of supported Binary Properties:
              the meaning of another character to which it applies.}
   \item{\code{EXTENDER}       }{a character that extends the value
                              or shape of a preceding alphabetic character,
-                             e.g. a length and iteration mark.}
+                             e.g., a length and iteration mark.}
   \item{\code{HEX_DIGIT}      }{a character commonly
                             used for hexadecimal numbers,
                             cf. also \code{ASCII_HEX_DIGIT}.}
@@ -243,9 +242,9 @@ marks the end of textual units.}
 \section{POSIX Character Classes}{
 
 
-Beware of using POSIX character classes,
-e.g. \code{[:punct:]}. ICU User Guide (see below)
-states that in general they are not well-defined, so may end up
+Avoid using POSIX character classes,
+e.g., \code{[:punct:]}. The ICU User Guide (see below)
+states that in general they are not well-defined, so you may end up
 with something different than you expect.
 
 In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
@@ -256,9 +255,9 @@ tests for any printing character except for space or a character
 for which \code{isalnum()} is true. However, in a POSIX setting,
 the details of what characters belong into which class depend
 on the current locale. So the \code{[:punct:]} class does not lead
-to portable code (again, in POSIX-like regex engines).
+to a portable code (again, in POSIX-like regex engines).
 
-So a POSIX flavor of \code{[:punct:]} is more like
+ Therefore, a POSIX flavor of \code{[:punct:]} is more like
 \code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
 }
 
