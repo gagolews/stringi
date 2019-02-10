@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.3.1
-Date: 2019-02-09
+Date: 2019-02-10
 Title: Character String Processing Facilities
 Description: Fast, correct, consistent, portable,
     as well as convenient character string/text processing in every locale
@@ -28,7 +28,7 @@ Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski [aut, cre], Bartek Tartanus [ctb],
     and other contributors (stringi source code);
-    IBM and other contributors (ICU4C source code);
+    IBM, Unicode, Inc., and other contributors (ICU4C source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
 RoxygenNote: 6.1.1
