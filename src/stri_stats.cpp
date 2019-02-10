@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -114,8 +114,12 @@ SEXP stri_stats_general(SEXP str)
 /**
  * LaTeX, Kile-like statistics for a character vector
  *
- * We use a modified LaTeX Word Count algorithm.
- * Original version from Kile 2.1.3, see http://kile.sourceforge.net/team.php
+ * We use a modified Kile 2.1.3 LaTeX Word Count algorithm
+ * (source file: `Kile/src/documentinfo.cpp`,
+ * method: `void Info::count(const QString& line, long *stat)`).
+ * (C) 2013-2019 by the Kile Team (Holger Danielsson, Michel Ludwig,
+ * Jeroen Wijnhout, and others). https://kile.sourceforge.io/.
+ * Licensed under the GNU General Public License Version 2.
  *
  * @param str a character vector
  * @return integer vector, see R man for details
@@ -142,8 +146,12 @@ SEXP stri_stats_latex(SEXP str)
    STRI__ERROR_HANDLER_BEGIN(1)
    StriContainerUTF8 str_cont(str, str_length);
 
-   // We use a modified Kile 2.1.3 LaTeX Word Count algorithm;
-   // see http://kile.sourceforge.net/team.php
+   // We use a modified Kile 2.1.3 LaTeX Word Count algorithm
+   // (source file: `Kile/src/documentinfo.cpp`,
+   // method: `void Info::count(const QString& line, long *stat)`).
+   // (C) 2013-2019 by the Kile Team (Holger Danielsson, Michel Ludwig,
+   // Jeroen Wijnhout, and others). https://kile.sourceforge.io/.
+   // Licensed under the GNU General Public License Version 2.
    enum State {
       stStandard = 0, stComment = 1, stControlSequence = 3,
       stControlSymbol = 4, stCommand = 5, stEnvironment = 6
