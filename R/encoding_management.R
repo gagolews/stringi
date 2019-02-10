@@ -90,7 +90,7 @@ stri_enc_list <- function(simplify=FALSE) {
 #'    (the first of provided ones is selected, see below);
 #' \item \code{Name.ICU} -- encoding name as identified by \pkg{ICU};
 #' \item \code{Name.*} -- other standardized encoding names,
-#' e.g. \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
+#' e.g., \code{Name.UTR22}, \code{Name.IBM}, \code{Name.WINDOWS},
 #' \code{Name.JAVA}, \code{Name.IANA}, \code{Name.MIME} (some of them
 #' may be unavailable for all the encodings);
 #' \item \code{ASCII.subset} -- is ASCII a subset of the given encoding?;
@@ -103,7 +103,7 @@ stri_enc_list <- function(simplify=FALSE) {
 #'    to represent a UChar (in UTF-16, this is not the same as UChar32)
 #' \item \code{CharSize.max} -- maximal number of bytes used
 #'    to represent a UChar (in UTF-16, this is not the same as UChar32,
-#'    i.e. does not reflect the maximal code point representation size)
+#'    i.e., does not reflect the maximal code point representation size)
 #' }
 #'
 #' @family encoding_management

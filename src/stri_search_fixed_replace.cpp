@@ -407,7 +407,7 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 //      if (str_cont.isNA(j))
 //         which_NA[j] = true;
 //
-//   // get indices at which we have a pattern match
+//   // get indices where we have a pattern match
 //   // for each pattern, for each search string
 //
 //   // THIS IS THE SLOWEST FOR LOOP IN THIS FUNCTION

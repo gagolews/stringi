@@ -49,12 +49,12 @@ these include pattern searching, matching, string splitting, and so on.
 The following independent search engines are provided:
 \itemize{
 \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions,
-\item \link{stringi-search-fixed} -- fast, locale-independent, bytewise pattern
+\item \link{stringi-search-fixed} -- fast, locale-independent, byte-wise pattern
    matching,
 \item \link{stringi-search-coll} -- locale-aware pattern matching
    for natural language processing tasks,
 \item \link{stringi-search-charclass} -- seeking elements of
-   particular character classes, like ``all whitespaces'' or ``all digits'',
+   particular character classes, like ``all whites-paces'' or ``all digits'',
 \item \link{stringi-search-boundaries} -- text boundary analysis.
 }
 

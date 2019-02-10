@@ -29,8 +29,8 @@ classes that should be preserved (see \link{stringi-search-charclass}).
 All these functions return a character vector.
 }
 \description{
-These functions may be used, e.g., to get rid of unnecessary
-whitespaces from strings. Trimming ends at the first or
+These functions may be used, e.g., to remove unnecessary
+white-spaces from strings. Trimming ends at the first or
 starts at the last \code{pattern} match.
 }
 \details{
@@ -40,10 +40,9 @@ Vectorized over \code{str} and \code{pattern}.
 and \code{stri_trim_right}.
 
 Contrary to many other string processing libraries,
-our trimming functions are quite generic. A character class,
-given by \code{pattern},
-may be adjusted to suit your needs (most often you will use the default
-value).
+our trimming functions are universal. A character class,
+given by \code{pattern}, may be adjusted to suit your needs
+(yet, most often you stick to the default value).
 
 For replacing pattern matches with
 arbitrary replacement string, see \code{\link{stri_replace}}.
@@ -52,7 +51,7 @@ Trimming can also be used where you would normally rely on
 regular expressions. For instance, you may get
 \code{"23.5"} out of \code{"total of 23.5 bitcoins"}.
 
-For trimming whitespaces, please note the difference
+For trimming white-spaces, please note the difference
 between Unicode binary property `\code{\\p\{Wspace\}}` (more universal)
 and general character category `\code{\\p\{Z\}}`,
 see \link{stringi-search-charclass}.

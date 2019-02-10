@@ -8,16 +8,16 @@ Text boundary analysis is the process of locating linguistic boundaries
 while formatting and handling text.
 }
 \details{
-Examples of the boundary analysis process process include:
+Examples of the boundary analysis process include:
 
 \itemize{
-\item Locating appropriate points to word-wrap text to fit
+\item Locating positions to word-wrap text to fit
 within specific margins while displaying or printing,
 see \code{\link{stri_wrap}} and \code{\link{stri_split_boundaries}}.
 \item Counting characters, words, sentences, or paragraphs,
 see \code{\link{stri_count_boundaries}}.
 \item Making a list of the unique words in a document,
-cf. \code{\link{stri_extract_all_words}} and then \code{\link{stri_unique}}.
+see \code{\link{stri_extract_all_words}} and then \code{\link{stri_unique}}.
 \item Capitalizing the first letter of each word
 or sentence, see also \code{\link{stri_trans_totitle}}.
 \item Locating a particular unit of the text (for example,
@@ -41,8 +41,8 @@ for a language -- which may be more than just a single Unicode code point.
 \item The \code{word} boundary iterator locates the boundaries
 of words, for purposes such as ``Find whole words'' operations.
 \item The \code{line_break} iterator locates positions that would
-be appropriate points to wrap lines when displaying the text.
-\item On the other hand, a break iterator of type \code{sentence}
+be appropriate to wrap lines when displaying the text.
+\item The break iterator of type \code{sentence}
 locates sentence boundaries.
 }
 

@@ -4,51 +4,51 @@
 \alias{stringi-search}
 \title{String Searching}
 \description{
-This man page instructs how to perform string search-based
+This man page explains how to perform string search-based
 operations in \pkg{stringi}.
 }
 \details{
-The following independent string searching ``engines'' are available
+The following independent string searching engines are available
 in \pkg{stringi}.
 \itemize{
-   \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
+   \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions (regexes),
         see \link{stringi-search-regex},
-   \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
+   \item \code{stri_*_fixed} -- locale-independent byte-wise pattern matching,
        see \link{stringi-search-fixed},
    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
        locale-sensitive, Collator-based pattern search,
        useful for natural language processing tasks,
        see \link{stringi-search-coll},
    \item \code{stri_*_charclass} -- character classes search,
-      e.g. Unicode General Categories or Binary Properties,
+      e.g., Unicode General Categories or Binary Properties,
        see \link{stringi-search-charclass},
    \item \code{stri_*_boundaries} -- text boundary analysis,
       see \link{stringi-search-boundaries}
 }
 
-Each ``engine'' is able to perform many search-based operations.
+Each search engine is able to perform many search-based operations.
 These may include:
 \itemize{
    \item \code{stri_detect_*} - detect if a pattern occurs in a string,
-   see e.g. \code{\link{stri_detect}},
+   see, e.g., \code{\link{stri_detect}},
    \item \code{stri_count_*} - count the number of pattern occurrences,
-   see e.g. \code{\link{stri_count}},
+   see, e.g., \code{\link{stri_count}},
    \item \code{stri_locate_*} - locate all, first, or last occurrences
-   of a pattern, see e.g. \code{\link{stri_locate}},
+   of a pattern, see, e.g., \code{\link{stri_locate}},
    \item \code{stri_extract_*} - extract all, first, or last occurrences
-   of a pattern, see e.g. \code{\link{stri_extract}}
+   of a pattern, see, e.g., \code{\link{stri_extract}}
    and, in case of regexes, \code{\link{stri_match}},
    \item \code{stri_replace_*} - replace all, first, or last occurrences
-   of a pattern, see e.g. \code{\link{stri_replace}}
+   of a pattern, see, e.g., \code{\link{stri_replace}}
    and also \code{\link{stri_trim}},
    \item \code{stri_split_*} - split a string into chunks indicated
    by occurrences of a pattern,
-   see e.g. \code{\link{stri_split}},
+   see, e.g., \code{\link{stri_split}},
    \item \code{stri_startswith_*} and \code{stri_endswith_*} detect
-   if a string starts or ends with a pattern match, see
-   e.g. \code{\link{stri_startswith}},
+   if a string starts or ends with a pattern match, see,
+   e.g., \code{\link{stri_startswith}},
    \item \code{stri_subset_*} - return a subset of a character vector
-   with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
+   with strings that match a given pattern, see, e.g., \code{\link{stri_subset}}.
 }
 }
 \seealso{

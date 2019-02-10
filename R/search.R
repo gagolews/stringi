@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -32,51 +32,51 @@
 #' @title String Searching
 #'
 #' @description
-#' This man page instructs how to perform string search-based
+#' This man page explains how to perform string search-based
 #' operations in \pkg{stringi}.
 #'
 #' @details
-#' The following independent string searching ``engines'' are available
+#' The following independent string searching engines are available
 #' in \pkg{stringi}.
 #' \itemize{
-#'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions,
+#'    \item \code{stri_*_regex} -- \pkg{ICU}'s regular expressions (regexes),
 #'         see \link{stringi-search-regex},
-#'    \item \code{stri_*_fixed} -- locale-independent bytewise pattern matching,
+#'    \item \code{stri_*_fixed} -- locale-independent byte-wise pattern matching,
 #'        see \link{stringi-search-fixed},
 #'    \item \code{stri_*_coll} -- \pkg{ICU}'s \code{StringSearch},
 #'        locale-sensitive, Collator-based pattern search,
 #'        useful for natural language processing tasks,
 #'        see \link{stringi-search-coll},
 #'    \item \code{stri_*_charclass} -- character classes search,
-#'       e.g. Unicode General Categories or Binary Properties,
+#'       e.g., Unicode General Categories or Binary Properties,
 #'        see \link{stringi-search-charclass},
 #'    \item \code{stri_*_boundaries} -- text boundary analysis,
 #'       see \link{stringi-search-boundaries}
 #' }
 #'
-#' Each ``engine'' is able to perform many search-based operations.
+#' Each search engine is able to perform many search-based operations.
 #' These may include:
 #' \itemize{
 #'    \item \code{stri_detect_*} - detect if a pattern occurs in a string,
-#'    see e.g. \code{\link{stri_detect}},
+#'    see, e.g., \code{\link{stri_detect}},
 #'    \item \code{stri_count_*} - count the number of pattern occurrences,
-#'    see e.g. \code{\link{stri_count}},
+#'    see, e.g., \code{\link{stri_count}},
 #'    \item \code{stri_locate_*} - locate all, first, or last occurrences
-#'    of a pattern, see e.g. \code{\link{stri_locate}},
+#'    of a pattern, see, e.g., \code{\link{stri_locate}},
 #'    \item \code{stri_extract_*} - extract all, first, or last occurrences
-#'    of a pattern, see e.g. \code{\link{stri_extract}}
+#'    of a pattern, see, e.g., \code{\link{stri_extract}}
 #'    and, in case of regexes, \code{\link{stri_match}},
 #'    \item \code{stri_replace_*} - replace all, first, or last occurrences
-#'    of a pattern, see e.g. \code{\link{stri_replace}}
+#'    of a pattern, see, e.g., \code{\link{stri_replace}}
 #'    and also \code{\link{stri_trim}},
 #'    \item \code{stri_split_*} - split a string into chunks indicated
 #'    by occurrences of a pattern,
-#'    see e.g. \code{\link{stri_split}},
+#'    see, e.g., \code{\link{stri_split}},
 #'    \item \code{stri_startswith_*} and \code{stri_endswith_*} detect
-#'    if a string starts or ends with a pattern match, see
-#'    e.g. \code{\link{stri_startswith}},
+#'    if a string starts or ends with a pattern match, see,
+#'    e.g., \code{\link{stri_startswith}},
 #'    \item \code{stri_subset_*} - return a subset of a character vector
-#'    with strings that match a given pattern, see e.g. \code{\link{stri_subset}}.
+#'    with strings that match a given pattern, see, e.g., \code{\link{stri_subset}}.
 #' }
 #'
 #' @name stringi-search
@@ -105,7 +105,7 @@ invisible(NULL)
 #' A regular expression is a pattern describing, possibly in a very
 #' abstract way, a text fragment.
 #' With so many regex functions in \pkg{stringi},
-#' regular expressions may be a very powerful tool in your hand
+#' regular expressions may be a very powerful tool
 #' to perform string searching, substring extraction, string splitting, etc.,
 #' tasks.
 #'
@@ -113,8 +113,8 @@ invisible(NULL)
 #' @details
 #' All \code{stri_*_regex} functions in \pkg{stringi} use
 #' the \pkg{ICU} regex engine. Its settings may be tuned up (for example
-#' to perform case-insensitive search), see the
-#' \code{\link{stri_opts_regex}} function for more details.
+#' to perform case-insensitive search) via the
+#' \code{\link{stri_opts_regex}} function.
 #'
 #'
 #' Regular expression patterns in \pkg{ICU} are quite similar in form and
@@ -157,13 +157,13 @@ invisible(NULL)
 #' \item{\code{{n,}+}}{Match at least n times. Possessive Match.}
 #' \item{\code{{n,m}+}}{Match between n and m times. Possessive Match.}
 #' \item{\code{(...)}}{Capturing parentheses. Range of input that matched
-#' the parenthesized subexpression is available after the match,
+#' the parenthesized sub-expression is available after the match,
 #' see \code{\link{stri_match}}.}
 #' \item{\code{(?:...)}}{Non-capturing parentheses. Groups the included pattern,
 #' but does not provide capturing of matching text. Somewhat more efficient
 #' than capturing parentheses.}
 #' \item{\code{(?>...)}}{Atomic-match parentheses. First match of the
-#' parenthesized subexpression is the only one tried; if it does not lead to
+#' parenthesized sub-expression is the only one tried; if it does not lead to
 #' an overall pattern match, back up the search for a match to a position
 #' before the \code{(?>}.}
 #' \item{\code{(?#...)}}{Free-format comment \code{(?# comment )}.}
@@ -197,9 +197,9 @@ invisible(NULL)
 #' }
 #'
 #'
-#' @section \pkg{ICU} Regex Metacharacters at a Glance:
+#' @section \pkg{ICU} Regex Meta-characters at a Glance:
 #'
-#' Here is a list of metacharacters provided by the
+#' Here is a list of meta-characters provided by the
 #' ICU User Guide on regexes.
 #'
 #' \describe{
@@ -209,7 +209,7 @@ invisible(NULL)
 #' \item{\code{\\b}}{Match if the current position is a word boundary.
 #'    Boundaries occur at the transitions between word (\code{\\w}) and non-word
 #'    (\code{\\W}) characters, with combining marks ignored. For better word
-#'    boundaries, see \pkg{ICU} Boundary Analysis, e.g. \code{\link{stri_extract_all_words}}.}
+#'    boundaries, see \pkg{ICU} Boundary Analysis, e.g., \code{\link{stri_extract_all_words}}.}
 #' \item{\code{\\B}}{Match if the current position is not a word boundary.}
 #' \item{\code{\\cX}}{Match a control-\code{X} character.}
 #' \item{\code{\\d}}{Match any character with the Unicode General Category of
@@ -277,13 +277,13 @@ invisible(NULL)
 #' @section Regex Functions in \pkg{stringi}:
 #'
 #' Note that if a given regex \code{pattern} is empty,
-#' then all functions in \pkg{stringi} give \code{NA} in result
+#' then all the functions in \pkg{stringi} give \code{NA} in result
 #' and generate a warning.
 #' On a syntax error, a quite informative failure message is shown.
 #'
-#' If you would like to search for a fixed pattern,
+#' If you wish to search for a fixed pattern,
 #' refer to \link{stringi-search-coll} or \link{stringi-search-fixed}.
-#' This allows to do a locale-aware text lookup,
+#' They allow to perform a locale-aware text lookup,
 #' or a very fast exact-byte search, respectively.
 #'
 #'
@@ -311,20 +311,22 @@ invisible(NULL)
 #' Locale-Insensitive Fixed Pattern Matching in \pkg{stringi}
 #'
 #' @description
-#' String searching facilities described in this very man page
+#' String searching facilities described here
 #' provide a way to locate a specific sequence of bytes in a string.
-#' Fixed pattern search engine's settings may be tuned up (for example
-#' to perform case-insensitive search), see the
-#' \code{\link{stri_opts_fixed}} function for more details.
+#' The search engine's settings may be tuned up (for example
+#' to perform case-insensitive search) via a call to the
+#' \code{\link{stri_opts_fixed}} function.
 #'
 #'
 #' @section Byte Compare:
 #'
-#' The Knuth-Morris-Pratt search algorithm, with worst time complexity of
+#' The fast Knuth-Morris-Pratt search algorithm, with worst time complexity of
 #' O(n+p) (\code{n == length(str)}, \code{p == length(pattern)})
-#' is utilized (with some tweaks for very short search patterns).
-#' For natural language processing, however, this is not what
-#' you probably want. It is because a bitwise match will
+#' is implemented (with some tweaks for very short search patterns).
+#'
+#' Be aware that, for natural language processing,
+#' fixed pattern searching might not be what
+#' you actually require. It is because a bitwise match will
 #' not give correct results in cases of:
 #' \enumerate{
 #' \item accented letters;
@@ -348,9 +350,9 @@ invisible(NULL)
 #' Locale-Sensitive Text Searching in \pkg{stringi}
 #'
 #' @description
-#' String searching facilities described in this very man page
+#' String searching facilities described here
 #' provide a way to locate a specific piece of
-#' text. Note that locale-sensitive searching, especially
+#' text. Interestingly, locale-sensitive searching, especially
 #' on a non-English text, is a much more complex process
 #' than it seems at the first glance.
 #'
@@ -358,8 +360,8 @@ invisible(NULL)
 #'
 #' @section Locale-Aware String Search Engine:
 #'
-#' All \code{stri_*_coll} functions in \pkg{stringi} utilize
-#' \pkg{ICU}'s \code{StringSearch} engine --
+#' All \code{stri_*_coll} functions in \pkg{stringi} use
+#' \pkg{ICU}'s \code{StringSearch} engine,
 #' which implements a locale-sensitive string search algorithm.
 #' The matches are defined by using the notion of ``canonical equivalence''
 #' between strings.
@@ -373,9 +375,7 @@ invisible(NULL)
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
 #' Please note that \pkg{ICU}'s \code{StringSearch}-based functions
-#' often exhibit poor performance. These functions are not intended to
-#' be fast; they are made to give \emph{correct} in natural
-#' language processing tasks.
+#' are  often much slower that those to perform fixed pattern searches.
 #'
 #'
 #' @references
@@ -396,19 +396,17 @@ invisible(NULL)
 #' @title Character Classes in \pkg{stringi}
 #'
 #' @description
-#' In this man page we describe how character classes are
-#' declared in the \pkg{stringi} package
-#' so that you may e.g. find their occurrences in your search activities
-#' or generate random code points with \code{\link{stri_rand_strings}}.
-#' Moreover, the \pkg{ICU} regex engine uses the same
-#' scheme for denoting character classes.
+#' Here we describe how character classes (sets) can be specified
+#' in the \pkg{stringi} package. These are useful for defining
+#' search patterns (note that the \pkg{ICU} regex engine uses the same
+#' scheme for denoting character classes) or, e.g.,
+#' generating random code points with \code{\link{stri_rand_strings}}.
 #'
 #'
 #' @details
 #' All \code{stri_*_charclass} functions in \pkg{stringi} perform
-#' a single character (i.e. Unicode code point) search-based operations.
-#' Since stringi_0.2-1 you may obtain
-#' roughly the same results using \link{stringi-search-regex}.
+#' a single character (i.e., Unicode code point) search-based operations.
+#' You may obtain the same results using \link{stringi-search-regex}.
 #' However, these very functions aim to be faster.
 #'
 #' Character classes are defined using \pkg{ICU}'s \code{UnicodeSet}
@@ -423,9 +421,10 @@ invisible(NULL)
 #' to Unicode automatically). Legal code points are U+0000 to U+10FFFF,
 #' inclusive.
 #'
-#' Patterns either consist of series of characters either bounded by square brackets
+#' Patterns either consist of series of characters  bounded by
+#' square brackets
 #' (such patterns follow a syntax similar to that employed
-#' by version 8 regular expression character classes)
+#' by regular expression character classes)
 #' or of Perl-like Unicode property set specifiers.
 #'
 #' \code{[]} denotes an empty set, \code{[a]} --
@@ -437,22 +436,22 @@ invisible(NULL)
 #' ``a'' through ``z'' inclusively, in Unicode code point order.
 #'
 #' Some set-theoretic operations are available.
-#' \code{^} denotes the complement, e.g. \code{[^a-z]} contains
+#' \code{^} denotes the complement, e.g., \code{[^a-z]} contains
 #' all characters but ``a'' through ``z''.
-#' On the other hand, \code{[[pat1][pat2]]},
+#' Moreover, \code{[[pat1][pat2]]},
 #' \code{[[pat1]\&[pat2]]}, and \code{[[pat1]-[pat2]]}
 #' denote union, intersection, and asymmetric difference of sets
 #' specified by \code{pat1} and \code{pat2}, respectively.
 #'
-#' Note that all white spaces are ignored unless they are quoted or backslashed
+#' Note that all white-spaces are ignored unless they are quoted or back-slashed
 #' (white spaces can be freely used for clarity, as \code{[a c d-f m]}
 #' means the same as \code{[acd-fm]}).
-#' \pkg{stringi} does not allow for including so-called multicharacter strings
+#' \pkg{stringi} does not allow including multi-character strings
 #' (see \code{UnicodeSet} API documentation).
 #' Also, empty string patterns are disallowed.
 #'
 #' Any character may be preceded by
-#' a backslash in order to remove any special meaning.
+#' a backslash in order to remove its special meaning.
 #'
 #' A malformed pattern always results in an error.
 #'
@@ -488,30 +487,30 @@ invisible(NULL)
 #' @section Unicode properties:
 #'
 #' Unicode property sets are specified with a POSIX-like syntax,
-#' e.g. \code{[:Letter:]},
-#' or with a (extended) Perl-style syntax, e.g. \code{\\p{L}}.
+#' e.g., \code{[:Letter:]},
+#' or with a (extended) Perl-style syntax, e.g., \code{\\p{L}}.
 #' The complements of the above sets are
 #' \code{[:^Letter:]} and \code{\\P{L}}, respectively.
 #'
-#' The properties' names are normalized before matching
+#' The names are normalized before matching
 #' (for example, the match is case-insensitive).
 #' Moreover, many names have short aliases.
 #'
-#' Among predefined Unicode properties we find e.g.
+#' Among predefined Unicode properties we find, e.g.:
 #' \itemize{
-#' \item Unicode General Categories, e.g. \code{Lu} for uppercase letters,
-#' \item Unicode Binary Properties, e.g. \code{WHITE_SPACE},
+#' \item Unicode General Categories, e.g., \code{Lu} for uppercase letters,
+#' \item Unicode Binary Properties, e.g., \code{WHITE_SPACE},
 #' }
 #' and many more (including Unicode scripts).
 #'
 #' Each property provides access to the large and comprehensive
 #' Unicode Character Database.
 #' Generally, the list of properties available in \pkg{ICU}
-#' is not perfectly documented. Please refer to the References section
+#' is not well-documented. Please refer to the References section
 #' for some links.
 #'
-#' Please note that some classes may seem to overlap.
-#' However, e.g. General Category \code{Z} (some space) and Binary Property
+#' Please note that some classes might overlap.
+#' However, e.g., General Category \code{Z} (some space) and Binary Property
 #' \code{WHITE_SPACE} matches different character sets.
 #'
 #'
@@ -577,7 +576,7 @@ invisible(NULL)
 #'   \item{\code{DASH}           }{a kind of a dash character.}
 #'   \item{\code{DEFAULT_IGNORABLE_CODE_POINT}}{characters that are ignorable in most
 #'                                text processing activities,
-#'                                e.g. <2060..206F, FFF0..FFFB, E0000..E0FFF>.}
+#'                                e.g., <2060..206F, FFF0..FFFB, E0000..E0FFF>.}
 #'   \item{\code{DEPRECATED}     }{a deprecated character according
 #'           to the current Unicode standard (the usage of deprecated characters
 #'           is strongly discouraged).}
@@ -585,7 +584,7 @@ invisible(NULL)
 #'              the meaning of another character to which it applies.}
 #'   \item{\code{EXTENDER}       }{a character that extends the value
 #'                              or shape of a preceding alphabetic character,
-#'                              e.g. a length and iteration mark.}
+#'                              e.g., a length and iteration mark.}
 #'   \item{\code{HEX_DIGIT}      }{a character commonly
 #'                             used for hexadecimal numbers,
 #'                             cf. also \code{ASCII_HEX_DIGIT}.}
@@ -630,9 +629,9 @@ invisible(NULL)
 #'
 #' @section POSIX Character Classes:
 #'
-#' Beware of using POSIX character classes,
-#' e.g. \code{[:punct:]}. ICU User Guide (see below)
-#' states that in general they are not well-defined, so may end up
+#' Avoid using POSIX character classes,
+#' e.g., \code{[:punct:]}. The ICU User Guide (see below)
+#' states that in general they are not well-defined, so you may end up
 #' with something different than you expect.
 #'
 #' In particular, in POSIX-like regex engines, \code{[:punct:]} stands for
@@ -643,9 +642,9 @@ invisible(NULL)
 #' for which \code{isalnum()} is true. However, in a POSIX setting,
 #' the details of what characters belong into which class depend
 #' on the current locale. So the \code{[:punct:]} class does not lead
-#' to portable code (again, in POSIX-like regex engines).
+#' to a portable code (again, in POSIX-like regex engines).
 #'
-#' So a POSIX flavor of \code{[:punct:]} is more like
+#'  Therefore, a POSIX flavor of \code{[:punct:]} is more like
 #' \code{[\\p{P}\\p{S}]} in \pkg{ICU}. You have been warned.
 #'
 #'
@@ -682,16 +681,16 @@ invisible(NULL)
 #' while formatting and handling text.
 #'
 #' @details
-#' Examples of the boundary analysis process process include:
+#' Examples of the boundary analysis process include:
 #'
 #' \itemize{
-#' \item Locating appropriate points to word-wrap text to fit
+#' \item Locating positions to word-wrap text to fit
 #' within specific margins while displaying or printing,
 #' see \code{\link{stri_wrap}} and \code{\link{stri_split_boundaries}}.
 #' \item Counting characters, words, sentences, or paragraphs,
 #' see \code{\link{stri_count_boundaries}}.
 #' \item Making a list of the unique words in a document,
-#' cf. \code{\link{stri_extract_all_words}} and then \code{\link{stri_unique}}.
+#' see \code{\link{stri_extract_all_words}} and then \code{\link{stri_unique}}.
 #' \item Capitalizing the first letter of each word
 #' or sentence, see also \code{\link{stri_trans_totitle}}.
 #' \item Locating a particular unit of the text (for example,
@@ -715,8 +714,8 @@ invisible(NULL)
 #' \item The \code{word} boundary iterator locates the boundaries
 #' of words, for purposes such as ``Find whole words'' operations.
 #' \item The \code{line_break} iterator locates positions that would
-#' be appropriate points to wrap lines when displaying the text.
-#' \item On the other hand, a break iterator of type \code{sentence}
+#' be appropriate to wrap lines when displaying the text.
+#' \item The break iterator of type \code{sentence}
 #' locates sentence boundaries.
 #' }
 #'

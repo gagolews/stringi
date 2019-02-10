@@ -34,16 +34,16 @@
 #'
 #' @description
 #' This function breaks text paragraphs into lines,
-#' of total width - if it is possible - of at most given \code{width}.
+#' of total width (if it is possible) at most given \code{width}.
 #'
 #' @details
 #' Vectorized over \code{str}.
 #'
 #' If \code{whitespace_only} is \code{FALSE},
 #' then \pkg{ICU}'s line-\code{BreakIterator} is used to determine
-#' text boundaries at which a line break is possible.
+#' text boundaries where a line break is possible.
 #' This is a locale-dependent operation.
-#' Otherwise, the breaks are only at whitespaces.
+#' Otherwise, the breaks are only at white-spaces.
 #'
 #' Note that Unicode code points may have various widths when
 #' printed on the console and that the function takes that by default
@@ -58,10 +58,10 @@
 #' In such a case, none of the strings can contain \code{\\r}, \code{\\n},
 #' or other new line characters, otherwise you will get an error.
 #' You should split the input text into lines
-#' or e.g. substitute line breaks with spaces
+#' or, for example, substitute line breaks with spaces
 #' before applying this function.
 #'
-#' On the other hand, if \code{normalize} is \code{TRUE}, then
+#' If \code{normalize} is \code{TRUE}, then
 #' all consecutive white space (ASCII space, horizontal TAB, CR, LF)
 #' sequences are replaced with single ASCII spaces
 #' before actual string wrapping. Moreover, \code{\link{stri_split_lines}}
@@ -96,7 +96,7 @@
 #' of subsequent lines in paragraphs
 #' @param prefix,initial single strings; \code{prefix} is used as prefix for each
 #' line except the first, for which \code{initial} is utilized
-#' @param whitespace_only single logical value; allow breaks only at whitespaces?
+#' @param whitespace_only single logical value; allow breaks only at white-spaces?
 #' if \code{FALSE}, \pkg{ICU}'s line break iterator is used to split text
 #' into words, which is suitable for natural language processing
 #' @param locale \code{NULL} or \code{""} for text boundary analysis following

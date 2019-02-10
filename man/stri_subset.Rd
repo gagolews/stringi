@@ -37,7 +37,7 @@ stri_subset_regex(str, pattern, omit_na = FALSE, negate = FALSE, ...,
 stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 }
 \arguments{
-\item{str}{character vector with strings to search in}
+\item{str}{character vector; strings to search in}
 
 \item{...}{supplementary arguments passed to the underlying functions,
 including additional settings for \code{opts_collator}, \code{opts_regex},
@@ -45,9 +45,9 @@ including additional settings for \code{opts_collator}, \code{opts_regex},
 
 \item{value}{character vector to be substituted with; replacement function only}
 
-\item{pattern, regex, fixed, coll, charclass}{character vector defining search patterns;
-for more details refer to \link{stringi-search}; the replacement functions
-accept only one pattern at a time}
+\item{pattern, regex, fixed, coll, charclass}{character vector;
+search patterns; for more details refer to \link{stringi-search};
+the replacement functions accept only one pattern at a time}
 
 \item{omit_na}{single logical value; should missing values be excluded
 from the result?}
@@ -55,33 +55,34 @@ from the result?}
 \item{negate}{single logical value; whether a no-match is rather of interest}
 
 \item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
-a search engine's settings; see
+the search engine's settings; see
 \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-for default settings;}
+for the defaults}
 }
 \value{
 The \code{stri_subset} functions return a character vector.
 As usual, the output encoding is always UTF-8.
 
-The \code{stri_subset<-} functions change the \code{str} object.
+The \code{stri_subset<-} function modifies the \code{str} object
+``in-place''.
 }
 \description{
-These functions return or modify a subvector consisting of
-strings that match a given pattern. In other words, they
+These functions return or modify a sub-vector where there is a match
+a given pattern. In other words, they
 are roughly equivalent (but faster and easier to use) to a call to
 \code{str[\link{stri_detect}(str, ...)]} or
 \code{str[\link{stri_detect}(str, ...)] <- value}.
 }
 \details{
-Vectorized over \code{str}, and \code{pattern} or \code{value} (replacement version).
+Vectorized over \code{str}, and \code{pattern} or \code{value}
+(replacement version).
 
 \code{stri_subset} and \code{stri_subset<-} are convenience functions.
 They call either \code{stri_subset_regex},
 \code{stri_subset_fixed}, \code{stri_subset_coll},
 or \code{stri_subset_charclass},
-depending on the argument used. Relying on these underlying
-functions will make your code run slightly faster.
+depending on the argument used.
 }
 \examples{
 stri_subset_regex(c("stringi R", "123", "ID456", ""), "^[0-9]+$")

@@ -190,7 +190,7 @@ R_PATH="${R_HOME}/bin/R" # see "Writing R Extensions"
 if test ! -e "${R_PATH}"; then
    # if it was determined by calling `R RHOME`, then this is likely a bug
    AC_MSG_RESULT(no)
-   echo "*** Could not find R at R_HOME/bin/R, i.e. ${R_HOME}/bin/R"
+   echo "*** Could not find R at R_HOME/bin/R, i.e., ${R_HOME}/bin/R"
    exit 1
 fi
 AC_MSG_RESULT($R_PATH)

@@ -21,12 +21,12 @@ or nonincreasing (\code{TRUE})?}
 \item{na_last}{a single logical value; controls the treatment of \code{NA}s
 in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 at the end; if \code{FALSE}, they are put at the beginning;
-if \code{NA}, then they are removed from the output.}
+if \code{NA}, then they are removed from the output}
 
 \item{...}{additional settings for \code{opts_collator}}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+\item{opts_collator}{a named list with \pkg{ICU} Collator's options,
+see \code{\link{stri_opts_collator}}, \code{NULL}
 for default collation options}
 }
 \value{
@@ -48,9 +48,6 @@ in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 These functions use a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 which performs up to \eqn{N*log^2(N)} element comparisons,
 where \eqn{N} is the length of \code{str}.
-
-Interestingly, our benchmarks indicate that \code{stri_order}
-is most often faster that \R's \code{order}.
 }
 \examples{
 stri_sort(c("hladny", "chladny"), locale="pl_PL")

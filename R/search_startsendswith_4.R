@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,9 @@
 #' Determine if the Start or End of a String Matches a Pattern
 #'
 #' @description
-#' These functions check if a string starts or ends with a
-#' pattern occurrence.
+#' These functions check if a string starts or ends with a match
+#' to a given pattern. Also, it is possible to check if there is a match
+#' at a specific position.
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern},
@@ -44,14 +45,14 @@
 #' and a warning is generated.
 #'
 #' Argument \code{start} controls the start position in \code{str}
-#' at which the \code{pattern} is being matched.
-#' On the other hand, \code{to} gives the end position.
+#' where there is a match to a \code{pattern}.
+#' \code{to} gives the end position.
 #'
-#' Indices given by \code{from} or \code{to} are 1-based,
-#' i.e., an index equal to 1 denotes the first character
-#' in a string, which gives a typical R look-and-feel.
+#' Indexes given by \code{from} or \code{to} are of course 1-based,
+#' i.e., an index 1 denotes the first character
+#' in a string. This gives a typical R look-and-feel.
 #'
-#' For negative indices in \code{from} or \code{to}, counting starts
+#' For negative indexes in \code{from} or \code{to}, counting starts
 #' at the end of the string. For instance, index -1 denotes the last code point
 #' in the string.
 #'
@@ -66,7 +67,7 @@
 #'
 #' Note that testing for a pattern match at the start or end of a string
 #' has not been implemented separately for regex patterns.
-#' For that you may use the "\code{^}" and "\code{$}" metacharacters,
+#' For that you may use the "\code{^}" and "\code{$}" meta-characters,
 #' see \link{stringi-search-regex}.
 #'
 #' @param str character vector
@@ -75,9 +76,9 @@
 #' @param from integer vector
 #' @param to integer vector
 #' @param opts_collator,opts_fixed a named list used to tune up
-#' a search engine's settings; see \code{\link{stri_opts_collator}}
+#' the search engine's settings; see \code{\link{stri_opts_collator}}
 #' and \code{\link{stri_opts_fixed}}, respectively; \code{NULL}
-#' for default settings;
+#' for the defaults
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_collator}, \code{opts_fixed},
 #' and so on.

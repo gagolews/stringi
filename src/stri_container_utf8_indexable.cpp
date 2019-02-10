@@ -269,13 +269,13 @@ R_len_t StriContainerUTF8_indexable::UChar32_to_UTF8_index_fwd(R_len_t i, R_len_
 }
 
 
- /** Convert UTF8-byte indices to Unicode32 (code points)
+ /** Convert UTF8-byte indexes to Unicode32 (code points)
  *
  * \code{i1} and \code{i2} must be sorted increasingly
  *
  * @param i element index
- * @param i1 indices, 1-based [in/out]
- * @param i2 indices, 1-based [in/out]
+ * @param i1 indexes, 1-based [in/out]
+ * @param i2 indexes, 1-based [in/out]
  * @param ni size of \code{i1} and \code{i2}
  * @param adj1 adjust for \code{i1}
  * @param adj2 adjust for \code{i2}

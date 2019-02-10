@@ -14,9 +14,9 @@ stri_count_words(str, locale = NULL)
 
 \item{...}{additional settings for \code{opts_brkiter}}
 
-\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings
-as generated with \code{\link{stri_opts_brkiter}};
-\code{NULL} for default break iterator, i.e. \code{line_break}}
+\item{opts_brkiter}{a named list with \pkg{ICU} BreakIterator's settings,
+see \code{\link{stri_opts_brkiter}};
+\code{NULL} for the default break iterator, i.e., \code{line_break}}
 
 \item{locale}{\code{NULL} or \code{""} for text boundary analysis following
 the conventions of the default locale, or a single string with
@@ -26,13 +26,13 @@ locale identifier, see \link{stringi-locale}}
 Both functions return an integer vector.
 }
 \description{
-These functions determine the number of specific text boundaries
+These functions determine the number of text boundaries
 (like character, word, line, or sentence boundaries) in a string.
 }
 \details{
 Vectorized over \code{str}.
 
-For more information on the text boundary analysis
+For more information on text boundary analysis
 performed by \pkg{ICU}'s \code{BreakIterator}, see
 \link{stringi-search-boundaries}.
 
@@ -40,18 +40,19 @@ In case of \code{stri_count_words},
 just like in \code{\link{stri_extract_all_words}} and
 \code{\link{stri_locate_all_words}},
 \pkg{ICU}'s word \code{BreakIterator} iterator is used
-to locate word boundaries, and all non-word characters
+to locate the word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
-This is function is equivalent to a call to
+This function is equivalent to a call to
 \code{\link{stri_count_boundaries}(str, type="word", skip_word_none=TRUE, locale=locale)}.
 
 Note that a \code{BreakIterator} of type \code{character}
 may be used to count the number of \emph{Unicode characters} in a string.
-This may report different results than \code{\link{stri_length}},
-which aims to count the number of \emph{Unicode code points}.
+The \code{\link{stri_length}} function,
+which aims to count the number of \emph{Unicode code points},
+might report different results.
 
 Moreover, a \code{BreakIterator} of type \code{sentence}
-may be used to count the number of sentences in a piece of text.
+may be used to count the number of sentences in a text piece.
 }
 \examples{
 test <- "The\\u00a0above-mentioned    features are very useful. Kudos to their developers."

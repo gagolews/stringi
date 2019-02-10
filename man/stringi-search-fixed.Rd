@@ -4,20 +4,22 @@
 \alias{stringi-search-fixed}
 \title{Locale-Insensitive Fixed Pattern Matching in \pkg{stringi}}
 \description{
-String searching facilities described in this very man page
+String searching facilities described here
 provide a way to locate a specific sequence of bytes in a string.
-Fixed pattern search engine's settings may be tuned up (for example
-to perform case-insensitive search), see the
-\code{\link{stri_opts_fixed}} function for more details.
+The search engine's settings may be tuned up (for example
+to perform case-insensitive search) via a call to the
+\code{\link{stri_opts_fixed}} function.
 }
 \section{Byte Compare}{
 
 
-The Knuth-Morris-Pratt search algorithm, with worst time complexity of
+The fast Knuth-Morris-Pratt search algorithm, with worst time complexity of
 O(n+p) (\code{n == length(str)}, \code{p == length(pattern)})
-is utilized (with some tweaks for very short search patterns).
-For natural language processing, however, this is not what
-you probably want. It is because a bitwise match will
+is implemented (with some tweaks for very short search patterns).
+
+Be aware that, for natural language processing,
+fixed pattern searching might not be what
+you actually require. It is because a bitwise match will
 not give correct results in cases of:
 \enumerate{
 \item accented letters;

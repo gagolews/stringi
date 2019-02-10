@@ -13,13 +13,13 @@ stri_duplicated_any(str, fromLast = FALSE, ..., opts_collator = NULL)
 \item{str}{a character vector}
 
 \item{fromLast}{a single logical value;
-indicating whether duplication should be considered from the
-end side}
+indicates whether search should be performed from the last to the
+first string}
 
 \item{...}{additional settings for \code{opts_collator}}
 
-\item{opts_collator}{a named list with \pkg{ICU} Collator's options
-as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+\item{opts_collator}{a named list with \pkg{ICU} Collator's options,
+see \code{\link{stri_opts_collator}}, \code{NULL}
 for default collation options}
 }
 \value{

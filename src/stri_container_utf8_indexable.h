@@ -39,7 +39,7 @@
 /**
  * A class to handle conversion between R character
  * vectors and UTF-8 string vectors,
- * with UChar32 to UTF-8 indices translation
+ * with UChar32 to UTF-8 indexes translation
  *
  *
  * @version 0.2-1  (Marek Gagolewski, 2014-03-20)

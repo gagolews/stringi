@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,13 +33,12 @@
 #' Replace Occurrences of a Pattern
 #'
 #' @description
-#' These functions replace with the given replacement string every/first/last
+#' These functions replace, with the given replacement string, every/first/last
 #' substring of the input that matches the specified \code{pattern}.
 #'
 #' @details
 #' By default, all the functions are vectorized over
-#' \code{str}, \code{pattern}, \code{replacement}. Then
-#' these functions scan the input string for matches of the pattern.
+#' \code{str}, \code{pattern}, \code{replacement}.
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
 #'
@@ -56,29 +55,27 @@
 #' the replacement string may contain references to capture groups
 #' (in round parentheses).
 #' References are of the form \code{$n}, where \code{n} is the number
-#' of the capture group (their numbering starts from 1).
-#' In order to treat the \code{$} character literally,
+#' of the capture group (\code{$1} denotes the first group).
+#' For the literal \code{$},
 #' escape it with a backslash.
 #' Moreover, \code{${name}} are used for named capture groups.
 #'
 #' \code{stri_replace}, \code{stri_replace_all}, \code{stri_replace_first},
 #' and \code{stri_replace_last} are convenience functions; they just call
-#' \code{stri_replace_*_*} variants, depending on the arguments used. Using
-#' the underlying \code{stri_replace} functions will result in code
-#' running slightly faster.
+#' \code{stri_replace_*_*} variants, depending on the arguments used.
 #'
-#' If you would like to get rid of e.g. whitespaces from the start or end
+#' If you wish to remove white-spaces from the start or end
 #' of a string, see \code{\link{stri_trim}}.
 #'
-#' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining search patterns;
-#' for more details refer to \link{stringi-search}
+#' @param str character vector; strings to search in
+#' @param pattern,regex,fixed,coll,charclass character vector;
+#'     search patterns; for more details refer to \link{stringi-search}
 #' @param replacement character vector with replacements for matched patterns
 #' @param opts_collator,opts_fixed,opts_regex a named list used to tune up
-#' a search engine's settings; see
+#' the search engine's settings; see
 #' \code{\link{stri_opts_collator}}, \code{\link{stri_opts_fixed}},
 #' and \code{\link{stri_opts_regex}}, respectively; \code{NULL}
-#' for default settings;
+#' for the defaults
 #' @param merge single logical value;
 #' should consecutive matches be merged into one string;
 #' \code{stri_replace_all_charclass} only

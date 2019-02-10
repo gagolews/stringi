@@ -107,7 +107,7 @@ double stri__enc_check_8bit(const char* str_cur_s, R_len_t str_cur_n, bool get_c
 double stri__enc_check_ascii(const char* str_cur_s, R_len_t str_cur_n, bool get_confidence) {
    R_len_t warnchars = 0;
    for (R_len_t j=0; j < str_cur_n; ++j) {
-      if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) // i.e. 0 < c <= 127
+      if (!U8_IS_SINGLE(str_cur_s[j]) || str_cur_s[j] == 0) // i.e., 0 < c <= 127
          return 0.0;
       if (get_confidence && (str_cur_s[j] <= 31 || str_cur_s[j] == 127)) {
          switch (str_cur_s[j]) {
@@ -879,7 +879,7 @@ struct EncGuess {
       if (is8bit != 0.0) {
          // may be an 8-bit encoding
          double isascii = stri__enc_check_ascii(str_cur_s, str_cur_n, true);
-         if (isascii >= 0.25) // i.e. equal to 1.0 => nothing more to check
+         if (isascii >= 0.25) // i.e., equal to 1.0 => nothing more to check
             guesses.push_back(EncGuess("US-ASCII", "US-ASCII", isascii));
          else {
             // not ascii

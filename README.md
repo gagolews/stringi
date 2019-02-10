@@ -34,7 +34,7 @@ For more details on copyright holders see the
 
 **Online manual**: http://www.gagolewski.com/software/stringi/manual/
 
-[How to access the stringi C API from an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
+[How to access the stringi C API from within an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
 
 **System requirements**: *R >= 2.14*, *ICU4C >= 52* (refer to the
 [INSTALL](http://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)

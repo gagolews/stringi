@@ -2,7 +2,7 @@
 
 -------------------------------------------------------------------------------
 
-## 1.3.1 (2019-02-09) **CRAN**
+## 1.3.1 (2019-02-10) **CRAN**
 
 * [BACKWARD INCOMPATIBILITY] #335: A fix to #314 (by design) prevented the use
   of the system ICU if the library had been compiled with `U_CHARSET_IS_UTF8=1`.
@@ -31,8 +31,8 @@
 * [BUGFIX] #319: Fixed overflow in `stri_rand_shuffle()`.
 
 * [BUGFIX] #337: Empty search patters in search functions (e.g.,
-  `stri_split_regex()` and `stri_count_fixed()`) used to raise too many warnings
-  on empty search patters.
+  `stri_split_regex()` and `stri_count_fixed()`) used to raise
+  too many warnings on empty search patters.
 
 -------------------------------------------------------------------------------
 

@@ -234,7 +234,7 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal,
 #' @param skip_word_ideo logical; perform no action for words
 #' containing ideographic characters
 #' @param skip_line_soft logical; perform no action for soft line breaks,
-#' i.e. positions at which a line break is acceptable but not required
+#' i.e., positions where a line break is acceptable but not required
 #' @param skip_line_hard logical; perform no action for hard,
 #' or mandatory line breaks
 #' @param skip_sentence_term logical; perform no action for sentences

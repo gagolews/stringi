@@ -32,7 +32,7 @@ containing kana characters}
 containing ideographic characters}
 
 \item{skip_line_soft}{logical; perform no action for soft line breaks,
-i.e. positions at which a line break is acceptable but not required}
+i.e., positions where a line break is acceptable but not required}
 
 \item{skip_line_hard}{logical; perform no action for hard,
 or mandatory line breaks}

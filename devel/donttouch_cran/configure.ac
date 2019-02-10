@@ -81,7 +81,7 @@ R_PATH="${R_HOME}/bin/R" # see "Writing R Extensions"
 if test ! -e "${R_PATH}"; then
    # if it was determined by calling `R RHOME`, then this is likely a bug
    AC_MSG_RESULT(no)
-   echo "*** Could not find R at R_HOME/bin/R, i.e. ${R_HOME}/bin/R"
+   echo "*** Could not find R at R_HOME/bin/R, i.e., ${R_HOME}/bin/R"
    exit 1
 fi
 AC_MSG_RESULT($R_PATH)
@@ -155,7 +155,7 @@ detect_icu_with_pkg_config() {
    if ! `"${PKG_CONFIG}" --atleast-version=${ICU_VERSION_NEEDED} icu-i18n  icu-uc`; then
       AC_MSG_RESULT(no)
       echo "*** ICU4C ${ICU_VERSION} has been detected"
-      echo "*** Minimal requirements, i.e. ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
+      echo "*** Minimal requirements, i.e., ICU4C >= ${ICU_VERSION_NEEDED}, are not met"
       echo "*** We will build ICU4C from sources"
       return 1 # you may quit querying pkg-config here
    fi

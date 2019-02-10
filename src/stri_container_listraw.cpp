@@ -77,7 +77,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
          if (!isNull(cur))
             this->data[i].initialize((const char*)RAW(cur), LENGTH(cur),
                false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
-         // else leave as-is, i.e. NA
+         // else leave as-is, i.e., NA
       }
    }
    else { // it's surely a character vector (args have been checked)
@@ -90,7 +90,7 @@ StriContainerListRaw::StriContainerListRaw(SEXP rstr)
          if (cur != NA_STRING)
             this->data[i].initialize(CHAR(cur), LENGTH(cur),
                false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
-         // else leave as-is, i.e. NA
+         // else leave as-is, i.e., NA
       }
    }
 }

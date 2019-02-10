@@ -47,9 +47,6 @@
 #' which performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #'
-#' Interestingly, our benchmarks indicate that \code{stri_order}
-#' is most often faster that \R's \code{order}.
-#'
 #' @param str a character vector
 #' @param decreasing a single logical value; should the sort order
 #'    be nondecreasing (\code{FALSE}, default)
@@ -57,9 +54,9 @@
 #' @param na_last a single logical value; controls the treatment of \code{NA}s
 #'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
 #'    at the end; if \code{FALSE}, they are put at the beginning;
-#'    if \code{NA}, then they are removed from the output.
-#' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#'    if \code{NA}, then they are removed from the output
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
 #' @param ... additional settings for \code{opts_collator}
 #'
@@ -115,8 +112,8 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #' See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 #'
 #' @param str a character vector
-#' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
 #' @param ... additional settings for \code{opts_collator}
 #'
@@ -167,10 +164,10 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #'
 #' @param str a character vector
 #' @param fromLast a single logical value;
-#'    indicating whether duplication should be considered from the
-#'    end side
-#' @param opts_collator a named list with \pkg{ICU} Collator's options
-#' as generated with \code{\link{stri_opts_collator}}, \code{NULL}
+#'    indicates whether search should be performed from the last to the
+#'    first string
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
 #' @param ... additional settings for \code{opts_collator}
 #'

@@ -49,13 +49,13 @@
 #' and \code{stri_extract_last} are convenience functions.
 #' They just call \code{stri_extract_*_*}, depending on the arguments used.
 #'
-#' @param str character vector with strings to search in
-#' @param pattern,regex,fixed,coll,charclass character vector defining
+#' @param str character vector; strings to search in
+#' @param pattern,regex,fixed,coll,charclass character vector;
 #'     search patterns; for more details refer to \link{stringi-search}
 #' @param opts_collator,opts_fixed,opts_regex a named list to tune up
-#'     a search engine's settings; see \code{\link{stri_opts_collator}},
+#'     the search engine's settings; see \code{\link{stri_opts_collator}},
 #'     \code{\link{stri_opts_fixed}}, and \code{\link{stri_opts_regex}},
-#'     respectively; \code{NULL} for default settings
+#'     respectively; \code{NULL} for the defaults
 #' @param merge single logical value; indicates whether consecutive pattern
 #'     matches will be merged into one string;
 #'     \code{stri_extract_all_charclass} only
@@ -75,10 +75,11 @@
 #' @return
 #' For \code{stri_extract_all*}, if \code{simplify=FALSE} (the default), then
 #' a list of character vectors is returned. Each list element
-#' represents the results of a unique search scenario.
+#' represents the results of a different search scenario.
 #' If a pattern is not found and \code{omit_no_match=FALSE},
 #' then a character vector of length 1
 #' with single \code{NA} value will be generated.
+#'
 #' Otherwise, i.e., if \code{simplify} is not \code{FALSE},
 #' then \code{\link{stri_list2matrix}} with \code{byrow=TRUE} argument
 #' is called on the resulting object.
@@ -86,15 +87,15 @@
 #' number of rows (according to the length of \code{str}, \code{pattern}, etc.).
 #' Note that \code{\link{stri_list2matrix}}'s \code{fill} argument is set
 #' either to an empty string or \code{NA}, depending on
-#' whether \code{simplify} is equal to \code{TRUE} or \code{NA}, respectively.
+#' whether \code{simplify} is \code{TRUE} or \code{NA}, respectively.
 #'
 #' \code{stri_extract_first*} and \code{stri_extract_last*}
-#' return a character vector. A \code{NA} element indicates no match.
+#' return a character vector. A \code{NA} element indicates a no-match.
 #'
 #' @examples
 #' stri_extract_all('XaaaaX', regex=c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_all('Bartolini', coll='i')
-#' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all whitespaces
+#' stri_extract_all('stringi is so good!', charclass='\\p{Zs}') # all white-spaces
 #'
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}')
 #' stri_extract_all_charclass(c('AbcdeFgHijK', 'abc', 'ABC'), '\\p{Ll}', merge=FALSE)

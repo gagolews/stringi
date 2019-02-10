@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -33,15 +33,15 @@
 #' Replace Missing Values in a Character Vector
 #'
 #' @description
-#' This function offers a convenient way to replace each \code{NA}
-#' in a character vector with a given string.
+#' This function gives a convenient way to replace each missing (\code{NA})
+#' value with a given string.
 #'
 #' @details
 #' This function is roughly equivalent to
 #' \code{str2 <- stri_enc_toutf8(str);
 #' str2[is.na(str2)] <- stri_enc_toutf8(replacement);
 #' str2}.
-#' It may be used e.g. wherever ``plain \R'' \code{NA} handling is
+#' It may be used, e.g., wherever the ``plain \R'' \code{NA} handling is
 #' desired, see Examples.
 #'
 #' @param str character vector or an object coercible to

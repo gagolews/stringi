@@ -160,7 +160,7 @@ void StriBrkIterOptions::setLocale(SEXP opts_brkiter) {
 /** Get Break Iterator's skip rule status
  *
  * @param opts_brkiter named list
- * @return vector of indices [even, odd) -- ids to skip
+ * @return vector of indexes [even, odd) -- IDs to skip
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-10-29)
  *
@@ -255,7 +255,7 @@ void StriRuleBasedBreakIterator::setupMatcher(const char* _searchStr, R_len_t _s
 
 /** Should a boundary be ignored by a Break Iterator
  *
- * @param brkskip vector of indices [even, odd) -- ids to skip
+ * @param brkskip vector of indexes [even, odd) -- IDs to skip
  * @param rule current rule
  * @return logical value
  *

@@ -24,30 +24,33 @@ is a single \code{NA} string.
 
 \code{stri_split_lines1(str)} is equivalent to
 \code{stri_split_lines(str[1])[[1]]} (with default parameters),
-thus it returns a character vector. Moreover, if the input string ends at
-a newline sequence, the last empty string is omitted from the result.
-Therefore, this function may be handy if you wish to split a loaded text
-file into text lines.
+therefore it returns a character vector. Moreover, if the input string
+ends with a newline sequence, the last empty string is omitted from the
+file's contents into text lines.
 }
 \description{
-These functions split each character string into text lines.
+These functions split each character string in a given vector
+into text lines.
 }
 \details{
 Vectorized over \code{str} and \code{omit_empty}.
 
-\code{omit_empty} is applied during splitting. If it is set to \code{TRUE},
+\code{omit_empty} is applied when splitting. If set to \code{TRUE},
 then empty strings will never appear in the resulting vector.
 
-Newlines are represented on different platforms e.g. by carriage return
-(CR, 0x0D), line feed (LF, 0x0A), CRLF, or next line (NEL, 0x85).
+Newlines are represented with the Carriage Return
+(CR, 0x0D), Line Feed (LF, 0x0A), CRLF, or Next Line (NEL, 0x85) characters,
+depending on the platform.
 Moreover, the Unicode Standard defines two unambiguous separator characters,
-Paragraph Separator (PS, 0x2029) and Line Separator (LS, 0x2028).
-Sometimes also vertical tab (VT, 0x0B) and form feed (FF, 0x0C)
-are used. These functions follow UTR#18 rules, where a newline sequence
+the Paragraph Separator (PS, 0x2029) and the Line Separator (LS, 0x2028).
+Sometimes also the Vertical Tab (VT, 0x0B) and the Form Feed (FF, 0x0C)
+are used for this purpose.
+
+These \pkg{stringi} functions follow UTR#18 rules,
+where a newline sequence
 corresponds to the following regular expression:
 \code{(?:\\u\{D A\}|(?!\\u\{D A\})[\\u\{A\}-\\u\{D\}\\u\{85\}\\u\{2028\}\\u\{2029\}]}.
-Each match is used to split a text line. For efficiency reasons, the search
-here is not performed by the regex engine, however.
+Each match serves as a text line separator.
 }
 \references{
 \emph{Unicode Newline Guidelines} -- Unicode Technical Report #13,
