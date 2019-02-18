@@ -76,7 +76,8 @@ are roughly equivalent (but faster and easier to use) to a call to
 }
 \details{
 Vectorized over \code{str}, and \code{pattern} or \code{value}
-(replacement version).
+(replacement version) (with recycling
+of the elements in the shorter vector if necessary).
 
 \code{stri_subset} and \code{stri_subset<-} are convenience functions.
 They call either \code{stri_subset_regex},

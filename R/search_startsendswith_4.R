@@ -39,7 +39,8 @@
 #'
 #' @details
 #' Vectorized over \code{str}, \code{pattern},
-#' and \code{from} or \code{to}.
+#' and \code{from} or \code{to} (with recycling
+#' of the elements in the shorter vector if necessary).
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.

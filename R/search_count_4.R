@@ -37,7 +37,11 @@
 #' of a pattern in a string.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{pattern}.
+#' Vectorized over \code{str} and \code{pattern} (with recycling
+#' of the elements in the shorter vector if necessary). This allows to,
+#' for instance, search for one pattern in each given string,
+#' search for each pattern in one given string,
+#' and search for the i-th pattern within the i-th string.
 #'
 #' If \code{pattern} is empty, then the result is \code{NA}
 #' and a warning is generated.

@@ -17,7 +17,7 @@
   a warning stating that the default (UTF-8) encoding cannot be changed.
 
 * [NEW FEATURE] #232: All `stri_detect_*` functions now have the `max_count`
-  argument that allows for, e.g., stopping at first pattern occurrence.
+  argument that allows for, e.g., stopping at the first pattern occurrence.
 
 * [NEW FEATURE] #338: `stri_sub_replace()` is now an alias for `stri_sub<-()`
   which makes it much more easily pipable (@yutannihilation, @BastienFR).

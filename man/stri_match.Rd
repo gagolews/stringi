@@ -69,7 +69,11 @@ to every \emph{capture group}, i.e., to all the sub-patterns given
 in round parentheses.
 }
 \details{
-Vectorized over \code{str} and \code{pattern}.
+Vectorized over \code{str} and \code{pattern} (with recycling
+of the elements in the shorter vector if necessary). This allows to,
+for instance, search for one pattern in each given string,
+search for each pattern in one given string,
+and search for the i-th pattern within the i-th string.
 
 If no pattern match is detected and \code{omit_no_match=FALSE},
 then \code{NA}s are included in the resulting matrix (matrices), see Examples.
