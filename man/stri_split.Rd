@@ -70,7 +70,8 @@ These functions split each element in \code{str} into substrings.
 The input data between the matches become the fields themselves.
 }
 \details{
-Vectorized over \code{str}, \code{pattern}, \code{n}, and \code{omit_empty}.
+Vectorized over \code{str}, \code{pattern}, \code{n}, and \code{omit_empty}
+(with recycling of the elements in the shorter vector if necessary).
 
 If \code{n} is negative, then all pieces are extracted.
 Otherwise, if \code{tokens_only} is \code{FALSE} (this is the default,

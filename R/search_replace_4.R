@@ -38,7 +38,8 @@
 #'
 #' @details
 #' By default, all the functions are vectorized over
-#' \code{str}, \code{pattern}, \code{replacement}.
+#' \code{str}, \code{pattern}, \code{replacement} (with recycling
+#' of the elements in the shorter vector if necessary).
 #' Input that is not part of any match is left unchanged;
 #' each match is replaced in the result by the replacement string.
 #'
