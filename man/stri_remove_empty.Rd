@@ -2,9 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{stri_remove_empty}
 \alias{stri_remove_empty}
-\title{Remove all empty strings from a character vector}
+\alias{stri_omit_empty}
+\alias{stri_remove_empty_na}
+\alias{stri_omit_empty_na}
+\title{Remove All Empty Strings from a Character Vector}
 \usage{
 stri_remove_empty(x, na_empty = FALSE)
+
+stri_omit_empty(x, na_empty = FALSE)
+
+stri_remove_empty_na(x)
+
+stri_omit_empty_na(x)
 }
 \arguments{
 \item{x}{a character vector}
@@ -12,15 +21,23 @@ stri_remove_empty(x, na_empty = FALSE)
 \item{na_empty}{should missing values be treated as empty strings?}
 }
 \value{
-Always returns a character vector.
+Returns a character vector.
 }
 \description{
-This function removes all empty strings from a character vector.
+\code{stri_remove_empty} (alias \code{stri_omit_empty})
+removes all empty strings from a character vector,
+and, if \code{na_empty} is \code{TRUE}, also gets rid of all missing
+values.
+
+\code{stri_remove_empty_na} (alias \code{stri_omit_empty_na})
+removes both empty strings and missing values.
 }
 \examples{
 stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
 stri_remove_empty(c("a", NA, "", "b"))
 stri_remove_empty(c("a", NA, "", "b"), TRUE)
+
+stri_omit_empty_na(c("a", NA, "", "b"))
 
 }
 \seealso{

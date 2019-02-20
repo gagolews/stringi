@@ -67,7 +67,7 @@ do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
 
 }
 \seealso{
-Other join: \code{\link{stri_dup}},
+Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
   \code{\link{stri_flatten}}, \code{\link{stri_join_list}}
 }
 \concept{join}
