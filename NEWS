@@ -4,7 +4,8 @@
 
 ## 1.3.2 (????) **devel**
 
-* ....
+* [BUGFIX] #343: `stri_trans_char()` did not yield correct results
+  for overlapping pattern and replacement strings.
 
 -------------------------------------------------------------------------------
 

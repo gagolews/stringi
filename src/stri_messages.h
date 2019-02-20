@@ -204,16 +204,16 @@
    "argument `%s` should be a non-empty vector"
 
 #define MSG__ARG_EXPECTED_1_STRING \
-   "argument `%s` should be one character string; taking the first one"
+   "argument `%s` should be a single character string; only the first element will be used"
 
 #define MSG__ARG_EXPECTED_1_LOGICAL \
-   "argument `%s` should be one logical value; taking the first one"
+   "argument `%s` should be a single logical value; only the first element will be used"
 
 #define MSG__ARG_EXPECTED_1_INTEGER \
-   "argument `%s` should be one integer value; taking the first one"
+   "argument `%s` should be a single integer value; only the first element will be used"
 
 #define MSG__ARG_EXPECTED_1_NUMERIC \
-   "argument `%s` should be one numeric value; taking the first one"
+   "argument `%s` should be a single numeric value; only the first element will be used"
 
 #define MSG__ARG_EXPECTED_STRING \
    "argument `%s` should be a character vector (or an object coercible to)"

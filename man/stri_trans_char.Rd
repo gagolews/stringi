@@ -19,20 +19,10 @@ Returns a character vector.
 \description{
 Translates Unicode code points in each input string.
 }
-\details{
-Vectorized over \code{str} and with respect to each code point
-in \code{pattern} and \code{replacement}.
-
-If \code{pattern} and \code{replacement} consist of a different number
-of code points, then the extra code points in the longer of the two are ignored,
-with a warning.
-
-If code points in a given \code{pattern} are not unique, the
-last corresponding replacement code point is used.
-}
 \examples{
 stri_trans_char("id.123", ".", "_")
 stri_trans_char("babaab", "ab", "01")
+stri_trans_char("accctggaaactg", "actg", "tgac")
 }
 \seealso{
 Other transform: \code{\link{stri_trans_general}},
