@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@ StriContainerListUTF8::StriContainerListUTF8()
 
 
 /**
- * Construct String Container from R character vector
+ * Construct the Container from an  R list
  * @param rvec R list vector
  * @param nrecycle extend length of each character vector stored [vectorization]
  * @param shallowrecycle will stored character vectors be ever modified?

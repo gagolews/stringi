@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -141,7 +141,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
 
 
    // TO DO: collation-based cmp: think of using sort keys...
-   // however, now it's already very fast.
+   // however,  it's  very fast already now.
 
    StriSortComparer comp(&str_cont, col, decr);
    std::stable_sort(order.begin(), order.end(), comp);
