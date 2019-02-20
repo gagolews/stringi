@@ -40,11 +40,14 @@
 #' in \code{pattern} and \code{replacement}.
 #'
 #' If \code{pattern} and \code{replacement} consist of a different number
-#' of code points, then the extra code points in the longer of the two are ignored,
-#' with a warning.
+#' of code points, then the extra code points in the longer of the two
+#' are ignored, with a warning.
 #'
 #' If code points in a given \code{pattern} are not unique, the
 #' last corresponding replacement code point is used.
+#'
+#' Time complexity for each string in \code{str} is
+#' O(\code{stri_length(str)*\code{stri_length(pattern)}).
 #'
 #' @param str character vector
 #' @param pattern a single character string providing code points to be translated
@@ -57,6 +60,7 @@
 #' @examples
 #' stri_trans_char("id.123", ".", "_")
 #' stri_trans_char("babaab", "ab", "01")
+#' stri_trans_char("GCUACGGAGCUUCGGAGCUAG", "ACGT", "TGCA")
 stri_trans_char <- function(str, pattern, replacement) {
    .Call(C_stri_trans_char, str, pattern, replacement)
 }
