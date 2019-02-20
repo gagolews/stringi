@@ -30,20 +30,86 @@
 
 
 #' @title
-#' Ordering Permutation and Sorting
+#' Sorting
 #'
 #'
 #' @description
-#' \link{stri_order} finds a permutation which rearranges
-#' strings into an ascending or descending order.
-#' \link{stri_sort} sorts the vector according to a lexicographic order.
+#' The function sorts a character vector according to the locale-dependent
+#' lexicographic order.
 #'
 #'
 #' @details
 #' For more information on \pkg{ICU}'s Collator and how to tune it up
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
-#' These functions use a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
+#' As usual in \pkg{stringi}, non-character inputs are coerced to strings,
+#' see an example below for a perhaps non-intitive behavior of lexicographic
+#' sorting on numeric inputs.
+#'
+#' This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
+#' which performs up to \eqn{N*log^2(N)} element comparisons,
+#' where \eqn{N} is the length of \code{str}.
+#'
+#' @param str a character vector
+#' @param decreasing a single logical value; should the sort order
+#'    be nondecreasing (\code{FALSE}, default, i.e., weakly increasing)
+#'    or nonincreasing (\code{TRUE})?
+#' @param na_last a single logical value; controls the treatment of \code{NA}s
+#'    in \code{str}. If \code{TRUE}, then missing values in \code{str} are put
+#'    at the end; if \code{FALSE}, they are put at the beginning;
+#'    if \code{NA}, then they are removed from the output
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options
+#' @param ... additional settings for \code{opts_collator}
+#'
+#' @return
+#' The result is a sorted version of \code{str},
+#' i.e., a character vector.
+#'
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
+#'
+#' @family locale_sensitive
+#' @export
+#' @rdname stri_sort
+#'
+#' @examples
+#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
+#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
+#' stri_sort(sample(LETTERS))
+#' stri_sort(c(1, 100, 2, 101, 11, 10))
+#' stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
+stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NULL) {
+   if (!missing(...))
+       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+   .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
+}
+
+
+#' @title
+#' Ordering Permutation
+#'
+#'
+#' @description
+#' This functions finds a permutation which rearranges the
+#' strings in a given character vector into the ascending or descending
+#'  locale-dependent lexicographic order.
+#'
+#'
+#' @details
+#' For more information on \pkg{ICU}'s Collator and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#'
+#' As usual in \pkg{stringi}, non-character inputs are coerced to strings,
+#' see an example below for a perhaps non-intitive behavior of lexicographic
+#' sorting on numeric inputs.
+#'
+#'
+#'
+#'
+#' This function uses a stable sort algorithm (\pkg{STL}'s \code{stable_sort}),
 #' which performs up to \eqn{N*log^2(N)} element comparisons,
 #' where \eqn{N} is the length of \code{str}.
 #'
@@ -60,11 +126,7 @@
 #' for default collation options
 #' @param ... additional settings for \code{opts_collator}
 #'
-#' @return For \code{stri_order}, an integer vector that gives the sort order
-#' is returned.
-#'
-#' For \code{stri_order}, you get a sorted version of \code{str},
-#' i.e., a character vector.
+#' @return The function yields an integer vector that gives the sort order.
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
@@ -75,22 +137,15 @@
 #' @rdname stri_order
 #'
 #' @examples
-#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
+#' stri_order(c("hladny", "chladny"), locale="pl_PL")
+#' stri_order(c("hladny", "chladny"), locale="sk_SK")
 #'
-#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
+#' stri_order(c(1, 100, 2, 101, 11, 10))
+#' stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
 stri_order <- function(str, decreasing=FALSE, na_last=TRUE, ..., opts_collator=NULL) {
    if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_order, str, decreasing, na_last, opts_collator)
-}
-
-
-#' @export
-#' @rdname stri_order
-stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
 }
 
 

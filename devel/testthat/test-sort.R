@@ -21,7 +21,13 @@ test_that("stri_order", {
    expect_equivalent(stri_order(c("hladny", "chladny"), F, opts_collator=stri_opts_collator(locale="sk_SK")),1:2)
 
    expect_equivalent(stri_order(c('c', NA, 'a', NA, 'b', NA)), c(3, 5, 1, 2, 4, 6))
+
+
+   expect_equivalent(stri_order(factor(c("z", "a", "z"), c("z", "a"), ordered=TRUE)), c(2,1,3))
+   expect_equivalent(stri_order(c(1, 100, 2, 101, 11, 10)), c(1,6,2,4,5,3))
+   expect_equivalent(stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE), c(1,3,6,5,2,4))
 })
+
 
 
 # test_that("stri_order [codepoints]", {
@@ -54,6 +60,11 @@ test_that("stri_sort", {
       expect_equivalent(stri_sort(c(NA,"abc","aab",NA,"ab","aba",NA), na_last=TRUE),c("aab","ab","aba","abc",NA,NA,NA))
    expect_equivalent(stri_sort(c(NA,"abc","aab",NA,"ab","aba",NA), na_last=NA),c("aab","ab","aba","abc"))
    expect_equivalent(stri_sort(c(NA,"abc","aab",NA,"ab","aba",NA), na_last=FALSE),c(NA,NA,NA,"aab","ab","aba","abc"))
+
+   expect_equivalent(stri_sort(factor(c("z", "a", "z"), c("z", "a"), ordered=TRUE)), c("a", "z", "z"))
+   expect_equivalent(stri_sort(sample(LETTERS)), LETTERS)
+   expect_equivalent(stri_sort(c(1, 100, 2, 101, 11, 10)), c("1" ,  "10",  "100", "101", "11",  "2"))
+   expect_equivalent(stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE), c("1" , "2", "10", "11", "100", "101"))
 })
 
 

@@ -47,7 +47,7 @@
 #' last corresponding replacement code point is used.
 #'
 #' Time complexity for each string in \code{str} is
-#' O(\code{stri_length(str)*\code{stri_length(pattern)}).
+#' O(\code{stri_length(str)*stri_length(pattern)}).
 #'
 #' @param str character vector
 #' @param pattern a single character string providing code points to be translated
