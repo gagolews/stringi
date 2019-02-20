@@ -46,7 +46,7 @@ stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit
 
 }
 \seealso{
-Other join: \code{\link{stri_dup}},
+Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
   \code{\link{stri_join_list}}, \code{\link{stri_join}}
 }
 \concept{join}

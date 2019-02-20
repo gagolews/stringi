@@ -54,7 +54,7 @@ stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"),
 
 }
 \seealso{
-Other join: \code{\link{stri_dup}},
+Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
   \code{\link{stri_flatten}}, \code{\link{stri_join}}
 }
 \concept{join}

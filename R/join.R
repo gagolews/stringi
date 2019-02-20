@@ -83,6 +83,7 @@ stri_dup <- function(str, times) {
 #' 'ID_' %stri+% 1:5
 #'
 #' @rdname oper_plus
+#' @family join
 #'
 #' @usage
 #' e1 \%s+\% e2

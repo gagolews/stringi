@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{stri_na2empty}
 \alias{stri_na2empty}
-\title{Replace NAs with empty strings}
+\title{Replace NAs with Empty Strings}
 \usage{
 stri_na2empty(x)
 }

@@ -84,7 +84,7 @@ stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
 
 
 #' @title
-#' Replace NAs with empty strings
+#' Replace NAs with Empty Strings
 #'
 #' @description
 #' This function replaces all missing values with empty strings.
@@ -106,27 +106,49 @@ stri_na2empty <- function(x) {
 }
 
 #' @title
-#' Remove all empty strings from a character vector
+#' Remove All Empty Strings from a Character Vector
 #'
 #' @description
-#' This function removes all empty strings from a character vector.
+#' \code{stri_remove_empty} (alias \code{stri_omit_empty})
+#' removes all empty strings from a character vector,
+#' and, if \code{na_empty} is \code{TRUE}, also gets rid of all missing
+#' values.
+#'
+#' \code{stri_remove_empty_na} (alias \code{stri_omit_empty_na})
+#' removes both empty strings and missing values.
 #'
 #' @param x a character vector
 #' @param na_empty should missing values be treated as empty strings?
 #'
 #' @return
-#' Always returns a character vector.
+#' Returns a character vector.
 #'
 #' @examples
 #' stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
 #' stri_remove_empty(c("a", NA, "", "b"))
 #' stri_remove_empty(c("a", NA, "", "b"), TRUE)
 #'
+#' stri_omit_empty_na(c("a", NA, "", "b"))
+#'
 #' @family utils
+#' @rdname stri_remove_empty
 #' @export
 stri_remove_empty <- function(x, na_empty=FALSE) {
    x <- stri_enc_toutf8(x)
    if (identical(na_empty, TRUE))
-      x[is.na(x)] <- ""
-   x[!stri_isempty(x)]
+      x[!is.na(x) & !stri_isempty(x)]
+   else
+      x[!stri_isempty(x)]
 }
+
+#' @rdname stri_remove_empty
+#' @export
+stri_omit_empty <- stri_remove_empty
+
+#' @rdname stri_remove_empty
+#' @export
+stri_remove_empty_na <- function(x) stri_remove_empty(x, TRUE)
+
+#' @rdname stri_remove_empty
+#' @export
+stri_omit_empty_na <- stri_remove_empty_na
