@@ -33,6 +33,26 @@
 #include "stri_stringi.h"
 #include <unicode/uloc.h>
 
+/**
+ * Prepare list argument
+ *
+ * @param x a list or NULL
+ * @param argname argument name (message formatting)
+ * @return a list
+ *
+ * @version 1.3.2 (Marek Gagolewski, 2019-02-21)
+ */
+SEXP stri_prepare_arg_list(SEXP x, const char* argname)
+{
+   if ((SEXP*)argname == (SEXP*)R_NilValue)
+      argname = "<noname>";
+
+   if (!isNull(x) && !Rf_isVectorList(x))
+      Rf_error(MSG__ARG_EXPECTED_LIST, argname); // error() allowed here
+
+   return x;
+}
+
 
 /**
  * Prepare list of raw vectors argument, single raw vector,

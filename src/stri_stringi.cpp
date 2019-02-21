@@ -195,6 +195,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_stats_general",                stri_stats_general,              1),
    STRI__MK_CALL("C_stri_stats_latex",                  stri_stats_latex,                1),
    STRI__MK_CALL("C_stri_sub",                          stri_sub,                        4),
+   STRI__MK_CALL("C_stri_sub_list",                     stri_sub_list,                   4),
    STRI__MK_CALL("C_stri_sub_replacement",              stri_sub_replacement,            6),
    STRI__MK_CALL("C_stri_subset_charclass",             stri_subset_charclass,           4),
    STRI__MK_CALL("C_stri_subset_coll",                  stri_subset_coll,                5),
