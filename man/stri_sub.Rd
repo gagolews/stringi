@@ -13,65 +13,67 @@ stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
 stri_sub_replace(str, from = 1L, to = -1L, length, omit_na=FALSE, value)
 }
 \arguments{
-\item{str}{character vector}
+\item{str}{a character vector}
 
-\item{from}{integer vector or two-column matrix}
+\item{from}{an integer vector giving the start indexes or a two-column matrix
+of type \code{cbind(from, to)}}
 
-\item{to}{integer vector; mutually exclusive with \code{length} and \code{from} being a matrix}
+\item{to}{an integer vector giving the end indexes; mutually exclusive with
+\code{length} and \code{from} being a matrix}
 
-\item{length}{integer vector; mutually exclusive with \code{to} and \code{from} being a matrix}
+\item{length}{an integer vector giving the substring lengths;
+mutually exclusive with \code{to} and \code{from} being a matrix}
 
-\item{omit_na}{single logical value; if \code{TRUE}, missing values in any of the arguments
-provided will result in an unchanged input; replacement function only}
+\item{omit_na}{a single logical value; indicates whether missing values
+in any of the arguments provided leave the corresponding input string
+unchanged [replacement function only]}
 
-\item{value}{character vector to be substituted with; replacement function only}
+\item{value}{a character vector defining the replacement strings
+[replacement function only]}
 }
 \value{
-\code{stri_sub} returns a character vector.
-\code{stri_sub<-} changes the \code{str} object.
-
-The extract function \code{stri_sub} returns the indicated substrings.
-The replacement function \code{stri_sub<-} is invoked for its
-side effect: once it is called, \code{str} is modified.
+\code{stri_sub} and \code{stri_sub_replace} return a character vector.
+\code{stri_sub<-} changes the \code{str} object in-place.
 }
 \description{
-\code{stri_sub} extracts substrings under code point-based
+\code{stri_sub} extracts substrings at code point-based
 index ranges provided. Its replacement version allows to substitute parts of
-a string with given strings. \code{stri_sub_replace} is its magrittr's
-pipe-operator- friendly version.
+a string with given strings. \code{stri_sub_replace} is its \pkg{magrittr}'s
+pipe-operator-friendly version.
 }
 \details{
 Vectorized over \code{str}, [\code{value}], \code{from} and
-(\code{to} or \code{length}).
+(\code{to} or \code{length}). Parameters
 \code{to} and \code{length} are mutually exclusive.
 
-\code{to} has priority over \code{length}.
-If \code{from} is a two-column matrix, then the first column is used
-as \code{from} and the second one as \code{to}. In such case arguments
-\code{to} and \code{length} are ignored.
-
-Naturally, the indexes are code point-based, and not byte-based.
-Note that for some Unicode strings, the extracted substrings may not
-be well-formed, especially if the input is not NFC-normalized
-(see \code{\link{stri_trans_nfc}}),
-includes byte order marks, Bidirectional text marks, and so on.
-Handle with care.
-
-Indexes are 1-based, i.e., an index equal to 1 denotes the first character
-in a string, which gives a typical \R look-and-feel.
+Indexes are 1-based, i.e., the start of a string is at index 1.
+Argument \code{from} gives the start of a substring to extract.
 Argument \code{to} defines the last index of the substring, inclusive.
+Alternatively, the substring's \code{length} can be provided.
 
 For negative indexes in \code{from} or \code{to},
 counting starts at the end of the string.
 For instance, index -1 denotes the last code point in the string.
 Non-positive \code{length} gives an empty string.
 
-
 In \code{stri_sub}, out-of-bound indexes are silently
 corrected. If \code{from} > \code{to}, then an empty string is returned.
 
 In \code{stri_sub<-}, some configurations of indexes may work as
-string concatenation at the front, back, or middle.
+substring "injection" at the front, back, or in middle.
+
+If \code{from} is a two-column matrix, then these two columns are
+used as \code{from} and \code{to}, respectively, and anything passed
+explicitly as \code{from} or \code{to} is ignored.
+
+If both \code{to} and \code{length} are provided,
+\code{length} has priority over \code{to}.
+
+Note that for some Unicode strings, the extracted substrings might not
+be well-formed, especially if input strings are not NFC-normalized
+(see \code{\link{stri_trans_nfc}}),
+include byte order marks, Bidirectional text marks, and so on.
+Handle with care.
 }
 \examples{
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."

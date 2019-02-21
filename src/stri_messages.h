@@ -265,13 +265,13 @@
    "argument `%s` should be a matrix with %d columns"
 
 #define MSG__ARG_EXPECTED_NOT_MATRIX \
-   "argument `%s` is a matrix, which is not supported in given context"
+   "argument `%s` is a matrix, which is not supported in this context"
 
 #define MSG__ARG_IGNORING \
-   "ignoring argument `%s` in given context"
+   "ignoring argument `%s` in this context"
 
 #define MSG__ARG_EXCLUSIVE \
-   "arguments `%s` and `%s` are mutually exclusive in given context"
+   "arguments `%s` and `%s` are mutually exclusive in this context"
 
 
 #define MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED \

@@ -34,14 +34,13 @@ separators between flattened strings,
 call \code{\link{stri_join}(str, separators, collapse='')}.
 
 If \code{str} is not empty, then a single string is returned.
-If \code{collapse} has length > 1, then only first string
+If \code{collapse} has length > 1, then only the first string
 will be used.
 }
 \examples{
 stri_flatten(LETTERS)
 stri_flatten(LETTERS, collapse=",")
-stri_flatten(c('abc', '123', '\\u0105\\u0104'))
-stri_flatten(stri_dup(letters[1:6],1:3))
+stri_flatten(stri_dup(letters[1:6], 1:3))
 stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
 
 }

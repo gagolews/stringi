@@ -79,8 +79,8 @@ stri_dup <- function(str, times) {
 #'
 #'
 #' @examples
-#' c('abc', '123', '\u0105\u0104') %stri+% letters[1:6]
-#' 'ID_' %stri+% 1:5
+#' c('abc', '123', 'xy') %s+% letters[1:6]
+#' 'ID_' %s+% 1:5
 #'
 #' @rdname oper_plus
 #' @family join
@@ -139,21 +139,18 @@ stri_dup <- function(str, times) {
 #' @param collapse a single string or \code{NULL}; an optional
 #' results separator
 #' @param ignore_null a single logical value; if \code{TRUE}, then empty
-#' vectors on input are silently ignored
+#' vectors provided via \code{...} are silently ignored
 #'
 #' @return Returns a character vector.
 #'
 #' @export
 #' @examples
 #' stri_join(1:13, letters)
-#' stri_join(1:13, letters, sep='!')
-#' stri_join(1:13, letters, collapse='?')
-#' stri_join(1:13, letters, sep='!', collapse='?')
-#' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...')
-#' stri_join(c('abc', '123', '\u0105\u0104'),'###', 1:5, sep='...', collapse='?')
-#'
-#' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!'))
-#' do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
+#' stri_join(1:13, letters, sep=',')
+#' stri_join(1:13, letters, collapse='; ')
+#' stri_join(1:13, letters, sep=',', collapse='; ')
+#' stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
+#' stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
 #'
 #' @family join
 #' @rdname stri_join
@@ -187,7 +184,7 @@ stri_paste <- stri_join
 #' call \code{\link{stri_join}(str, separators, collapse='')}.
 #'
 #' If \code{str} is not empty, then a single string is returned.
-#' If \code{collapse} has length > 1, then only first string
+#' If \code{collapse} has length > 1, then only the first string
 #' will be used.
 #'
 #' @param str a vector of strings to be coerced to character
@@ -204,8 +201,7 @@ stri_paste <- stri_join
 #' @examples
 #' stri_flatten(LETTERS)
 #' stri_flatten(LETTERS, collapse=",")
-#' stri_flatten(c('abc', '123', '\u0105\u0104'))
-#' stri_flatten(stri_dup(letters[1:6],1:3))
+#' stri_flatten(stri_dup(letters[1:6], 1:3))
 #' stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
 #'
 #' @export
@@ -244,16 +240,28 @@ stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
 #'
 #' @export
 #' @examples
-#' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#' "Get a life.")), sep=", ")
+#' stri_join_list(
+#'    stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+#'    "Spam spam bacon sausage and spam.")),
+#' sep=", ")
 #'
-#' stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#' "Get a life.")), sep=", ", collapse=". ")
+#' stri_join_list(
+#'    stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
+#'    "Spam spam bacon sausage and spam.")),
+#' sep=", ", collapse=". ")
 #'
-#' stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+"), " ")
+#' stri_join_list(
+#'    stri_extract_all_regex(
+#'       c("spam spam bacon", "123 456", "spam 789 sausage"), "\\p{L}+"
+#'    ),
+#' sep=",")
 #'
-#' stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"),
-#' "\\p{L}+", omit_no_match=TRUE), " ", " -- ")
+#' stri_join_list(
+#'    stri_extract_all_regex(
+#'       c("spam spam bacon", "123 456", "spam 789 sausage"), "\\p{L}+",
+#'       omit_no_match=TRUE
+#'    ),
+#' sep=",", collapse="; ")
 #'
 #' @family join
 #' @rdname stri_join_list
