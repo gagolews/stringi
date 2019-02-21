@@ -74,7 +74,7 @@ test_that("stri_sub<-", {
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=TRUE) <- c("_", NA); expect_identical(s, c("a_b", "c:d"))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=FALSE) <- c("_", NA); expect_identical(s, c("a_b", NA))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";")) <- c("_", NA); expect_identical(s, c("a_b", NA))
-   
+
    s <- "\u0106a\u0105";  stri_sub(s,0,to=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
    s <- "\u0106a\u0105";  stri_sub(s,1,to=0) <- "x"; expect_identical(s, "x\u0106a\u0105")
    s <- "\u0106a\u0105";  stri_sub(s,2,to=0) <- "x"; expect_identical(s, "\u0106xa\u0105")

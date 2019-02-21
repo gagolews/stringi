@@ -22,7 +22,7 @@ which corresponding elements are to be concatenated}
 results separator}
 
 \item{ignore_null}{a single logical value; if \code{TRUE}, then empty
-vectors on input are silently ignored}
+vectors provided via \code{...} are silently ignored}
 }
 \value{
 Returns a character vector.
@@ -56,14 +56,11 @@ always in UTF-8.
 }
 \examples{
 stri_join(1:13, letters)
-stri_join(1:13, letters, sep='!')
-stri_join(1:13, letters, collapse='?')
-stri_join(1:13, letters, sep='!', collapse='?')
-stri_join(c('abc', '123', '\\u0105\\u0104'),'###', 1:5, sep='...')
-stri_join(c('abc', '123', '\\u0105\\u0104'),'###', 1:5, sep='...', collapse='?')
-
-do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!'))
-do.call(stri_c, list(c("a", "b", "c"), c("1", "2"), sep='!', collapse='$'))
+stri_join(1:13, letters, sep=',')
+stri_join(1:13, letters, collapse='; ')
+stri_join(1:13, letters, sep=',', collapse='; ')
+stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',')
+stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
 
 }
 \seealso{
