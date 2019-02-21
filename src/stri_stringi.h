@@ -78,6 +78,7 @@ const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault);
 
 // prepare_arg.cpp /* internal, but in namespace: for testing */
+SEXP        stri_prepare_arg_list(SEXP x,             const char* argname);
 SEXP        stri_prepare_arg_list_string(SEXP x,      const char* argname);
 SEXP        stri_prepare_arg_list_integer(SEXP x,     const char* argname);
 SEXP        stri_prepare_arg_list_raw(SEXP x,         const char* argname);

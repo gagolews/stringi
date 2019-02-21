@@ -4,7 +4,11 @@
 
 ## 1.3.2 (????) **devel**
 
-* [NEW FEATURE]: new convenience functions based on `stri_remove_empty()`:
+* [NEW FEATURE] #30: new function `stri_sub_list()` - a version of
+  `stri_sub()` accepting list `from`/`to`/`length` arguments for extracting
+  multiple substrings from each string in a character vector.
+
+* [NEW FEATURE] new convenience functions based on `stri_remove_empty()`:
   `stri_omit_empty_na()`, `stri_remove_empty_na()`, `stri_omit_empty()`.
 
 * [BUGFIX] #343: `stri_trans_char()` did not yield correct results

@@ -232,6 +232,7 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * @param from integer vector (possibly with negative indices)
  * @param to integer vector (possibly with negative indices) or NULL
  * @param length integer vector or NULL
+ * @param omit_na logical scalar
  * @param value character vector replacement
  * @return character vector
  *
@@ -349,3 +350,80 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
    return ret;
    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
+
+
+
+/**
+ * Get substring
+ *
+ *
+ * @param str character vector
+ * @param from list
+ * @param to list
+ * @param length list
+ * @return list of character vectors
+ *
+ * @version 1.3.2 (Marek Gagolewski, 2019-02-21)
+ *    #30: new function
+ */
+SEXP stri_sub_list(SEXP str, SEXP from, SEXP to, SEXP length)
+{
+   PROTECT(str    = stri_prepare_arg_string(str, "str"));
+   PROTECT(from   = stri_prepare_arg_list(from, "from"));
+   PROTECT(to     = stri_prepare_arg_list(to, "to"));
+   PROTECT(length = stri_prepare_arg_list(length, "length"));
+
+   R_len_t str_len       = LENGTH(str);
+   R_len_t from_len      = LENGTH(from);
+   R_len_t to_len        = LENGTH(to);
+   R_len_t length_len    = LENGTH(length);
+
+
+   R_len_t vectorize_len;
+   if (!isNull(to))
+      vectorize_len = stri__recycling_rule(true, 3,
+         str_len, from_len, LENGTH(to));
+   else if (!isNull(length))
+      vectorize_len = stri__recycling_rule(true, 3,
+        str_len, from_len, LENGTH(length));
+   else
+      vectorize_len = stri__recycling_rule(true, 2, str_len, from_len);
+
+   if (vectorize_len <= 0) {
+      UNPROTECT(4);
+      return Rf_allocVector(VECSXP, 0);
+   }
+
+   STRI__ERROR_HANDLER_BEGIN(4)
+   SEXP ret, str_tmp, tmp;
+   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_len));
+   STRI__PROTECT(str_tmp = Rf_allocVector(STRSXP, 1));
+
+   for (R_len_t i = 0; i<vectorize_len; ++i)
+   {
+      STRI__PROTECT(tmp = STRING_ELT(str, i%str_len));
+      SET_STRING_ELT(str_tmp, 0, tmp);
+      STRI__UNPROTECT(1);
+
+      if (!isNull(to)) {
+         STRI__PROTECT(tmp = stri_sub(str_tmp,
+              VECTOR_ELT(from, i%from_len), VECTOR_ELT(to, i%LENGTH(to)), R_NilValue));
+      }
+      else if (!isNull(length)) {
+         STRI__PROTECT(tmp = stri_sub(str_tmp,
+              VECTOR_ELT(from, i%from_len), R_NilValue, VECTOR_ELT(length, i%LENGTH(length))));
+      }
+      else {
+         STRI__PROTECT(tmp = stri_sub(str_tmp,
+              VECTOR_ELT(from, i%from_len), R_NilValue, R_NilValue));
+      }
+
+      SET_VECTOR_ELT(ret, i, tmp);
+      STRI__UNPROTECT(1);
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
