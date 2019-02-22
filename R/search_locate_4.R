@@ -47,7 +47,7 @@
 #' and search for the i-th pattern within the i-th string.
 #'
 #' The matches may be extracted by calling
-#' \code{\link{stri_sub}} or \code{\link{stri_sub_list}}.
+#' \code{\link{stri_sub}} or \code{\link{stri_sub_all}}.
 #' Alternatively, you may call \code{\link{stri_extract}} directly.
 #'
 #' \code{stri_locate}, \code{stri_locate_all}, \code{stri_locate_first},

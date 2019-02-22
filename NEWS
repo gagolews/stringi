@@ -4,7 +4,7 @@
 
 ## 1.3.2 (????) **devel**
 
-* [NEW FEATURE] #30: new function `stri_sub_list()` - a version of
+* [NEW FEATURE] #30: new function `stri_sub_all()` - a version of
   `stri_sub()` accepting list `from`/`to`/`length` arguments for extracting
   multiple substrings from each string in a character vector.
 

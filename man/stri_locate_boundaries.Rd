@@ -43,7 +43,7 @@ For \code{stri_locate_all_*}, a list of \code{length(str)} integer matrices
 is returned. The first column gives the start positions
 of substrings between located boundaries, and the second column gives
 the end positions. The indexes are code point-based, thus
-they may be passed, e.g., to \code{\link{stri_sub}} or \code{\link{stri_sub_list}}.
+they may be passed, e.g., to \code{\link{stri_sub}} or \code{\link{stri_sub_all}}.
 Note that you get two \code{NA}s in one row
 if there is no match (and \code{omit_no_match} is \code{FALSE})
 or there are missing data in the input vector.
@@ -92,7 +92,7 @@ Other search_locate: \code{\link{stri_locate_all}},
   \code{\link{stringi-search}}
 
 Other indexing: \code{\link{stri_locate_all}},
-  \code{\link{stri_sub_list}}, \code{\link{stri_sub}}
+  \code{\link{stri_sub_all}}, \code{\link{stri_sub}}
 
 Other locale_sensitive: \code{\link{\%s<\%}},
   \code{\link{stri_compare}},

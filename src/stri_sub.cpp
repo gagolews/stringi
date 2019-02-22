@@ -354,7 +354,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
 
 
 /**
- * Get substring
+ * Extract multiple substrings
  *
  *
  * @param str character vector
@@ -366,7 +366,7 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
  * @version 1.3.2 (Marek Gagolewski, 2019-02-21)
  *    #30: new function
  */
-SEXP stri_sub_list(SEXP str, SEXP from, SEXP to, SEXP length)
+SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
 {
    PROTECT(str    = stri_prepare_arg_string(str, "str"));
    PROTECT(from   = stri_prepare_arg_list(from, "from"));
@@ -375,8 +375,8 @@ SEXP stri_sub_list(SEXP str, SEXP from, SEXP to, SEXP length)
 
    R_len_t str_len       = LENGTH(str);
    R_len_t from_len      = LENGTH(from);
-   R_len_t to_len        = LENGTH(to);
-   R_len_t length_len    = LENGTH(length);
+   // R_len_t to_len        = LENGTH(to);
+   // R_len_t length_len    = LENGTH(length);
 
 
    R_len_t vectorize_len;

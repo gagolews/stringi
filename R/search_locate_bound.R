@@ -71,7 +71,7 @@
 #' is returned. The first column gives the start positions
 #' of substrings between located boundaries, and the second column gives
 #' the end positions. The indexes are code point-based, thus
-#' they may be passed, e.g., to \code{\link{stri_sub}} or \code{\link{stri_sub_list}}.
+#' they may be passed, e.g., to \code{\link{stri_sub}} or \code{\link{stri_sub_all}}.
 #' Note that you get two \code{NA}s in one row
 #' if there is no match (and \code{omit_no_match} is \code{FALSE})
 #' or there are missing data in the input vector.
