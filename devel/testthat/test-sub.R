@@ -126,31 +126,31 @@ test_that("stri_sub_issue227", {
 })
 
 
-test_that("stri_sub_list", {
-   expect_identical(stri_sub_list(character(0)), list())
-   expect_identical(stri_sub_list("abc"), list("abc"))
-   expect_identical(stri_sub_list(c("abc", NA, "def", "")), as.list(c("abc", NA, "def", "")))
+test_that("stri_sub_all", {
+   expect_identical(stri_sub_all(character(0)), list())
+   expect_identical(stri_sub_all("abc"), list("abc"))
+   expect_identical(stri_sub_all(c("abc", NA, "def", "")), as.list(c("abc", NA, "def", "")))
 
-   expect_identical(stri_sub_list("abc", list(1:3)), list(c("abc", "bc", "c")))
-   expect_identical(stri_sub_list("abc", list(1:3), list(1:3)), list(c("a", "b", "c")))
-   expect_identical(stri_sub_list("abc", list(1:3), 3), list(c("abc", "bc", "c")))
-   expect_identical(stri_sub_list("abc", 1, rep(3,3)), list(c("abc", "abc", "abc")))
-   expect_identical(stri_sub_list("abc", 1, 3), list(c("abc")))
-   expect_warning(stri_sub_list("abc", 1:2, 1:3))
-   expect_identical(suppressWarnings(stri_sub_list("abc", 1:2, 1:3)), list(c("a", "b", "abc")))
-   expect_identical(stri_sub_list("abc", 1, 1:3), list(c("a", "ab", "abc")))
-   expect_identical(stri_sub_list("abc", list(1:3), length=list(3:1)), list(c("abc", "bc", "c")))
+   expect_identical(stri_sub_all("abc", list(1:3)), list(c("abc", "bc", "c")))
+   expect_identical(stri_sub_all("abc", list(1:3), list(1:3)), list(c("a", "b", "c")))
+   expect_identical(stri_sub_all("abc", list(1:3), 3), list(c("abc", "bc", "c")))
+   expect_identical(stri_sub_all("abc", 1, rep(3,3)), list(c("abc", "abc", "abc")))
+   expect_identical(stri_sub_all("abc", 1, 3), list(c("abc")))
+   expect_warning(stri_sub_all("abc", 1:2, 1:3))
+   expect_identical(suppressWarnings(stri_sub_all("abc", 1:2, 1:3)), list(c("a", "b", "abc")))
+   expect_identical(stri_sub_all("abc", 1, 1:3), list(c("a", "ab", "abc")))
+   expect_identical(stri_sub_all("abc", list(1:3), length=list(3:1)), list(c("abc", "bc", "c")))
 
    x <- c("123 45 htf 789754754745", "abc", "667", "", NA)
    from <- stri_locate_all_regex(x, "[0-9]+")
-   expect_identical(stri_sub_list(x, from), stri_extract_all_regex(x, "[0-9]+"))
-   expect_identical(stri_sub_list(x, lapply(from, function(from) from[,1]), lapply(from, function(from) from[,2])),
+   expect_identical(stri_sub_all(x, from), stri_extract_all_regex(x, "[0-9]+"))
+   expect_identical(stri_sub_all(x, lapply(from, function(from) from[,1]), lapply(from, function(from) from[,2])),
       stri_extract_all_regex(x, "[0-9]+"))
-   expect_identical(stri_sub_list(x, lapply(from, function(from) from[,1]),
+   expect_identical(stri_sub_all(x, lapply(from, function(from) from[,1]),
                                   length=lapply(from, function(from) from[,2]-from[,1]+1)),
      stri_extract_all_regex(x, "[0-9]+"))
 
-   expect_identical(stri_sub_list(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)),
+   expect_identical(stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)),
                     stri_extract_all_regex(x, "[0-9]+", omit_no_match=TRUE))
 })
 
