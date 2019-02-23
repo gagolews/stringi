@@ -8,9 +8,9 @@
 \usage{
 stri_sub(str, from = 1L, to = -1L, length)
 
-stri_sub(str, from = 1L, to = -1L, length, omit_na=FALSE) <- value
+stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
 
-stri_sub_replace(str, from = 1L, to = -1L, length, omit_na=FALSE, value)
+stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, value)
 }
 \arguments{
 \item{str}{a character vector}
@@ -25,7 +25,7 @@ of type \code{cbind(from, to)}}
 mutually exclusive with \code{to} and \code{from} being a matrix}
 
 \item{omit_na}{a single logical value; indicates whether missing values
-in any of the arguments provided leave the corresponding input string
+in any of the indexes leave the corresponding input string
 unchanged [replacement function only]}
 
 \item{value}{a character vector defining the replacement strings
@@ -41,7 +41,7 @@ index ranges provided. Its replacement version allows to substitute parts of
 a string with given replacement strings. \code{stri_sub_replace}
 is its \pkg{magrittr}'s pipe-operator-friendly version.
 
-For extracting multiple substrings from each string, see
+For extracting/replacing multiple substrings from/within each string, see
 \code{\link{stri_sub_all}}.
 }
 \details{
@@ -98,8 +98,13 @@ x <- c("12 3456 789", "abc", "", NA, "667")
 stri_sub(x, stri_locate_first_regex(x, "[0-9]+")) # see stri_extract_first
 stri_sub(x, stri_locate_last_regex(x, "[0-9]+"))  # see stri_extract_last
 
-x <- c("a;b", "c:d")
-(stri_sub(x, stri_locate_first_fixed(x, ";"), omit_na=TRUE) <- "_")
+stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"),
+    omit_na=TRUE, value="***") # see stri_replace_first
+stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"),
+    omit_na=TRUE, value="***") # see stri_replace_last
+
+stri_sub(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE) <- "***"
+print(x)
 
 \dontrun{x \%>\% stri_sub_replace(1, 5, value="new_substring")}
 }

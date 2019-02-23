@@ -65,7 +65,7 @@
    "invalid UTF-8 codepoint definition; setting string to NA, see also ?stri_enc_toutf8"
 
 #define MSG__INVALID_UTF8 \
-   "invalid UTF-8 byte sequence detected; perhaps you should try calling ?stri_enc_toutf8"
+   "invalid UTF-8 byte sequence detected; try calling stri_enc_toutf8()"
 
 #define MSG__INVALID_ESCAPE \
    "invalid escape sequence detected; setting NA"
@@ -77,19 +77,19 @@
    "the Unicode codepoint \\U%08.8x cannot be converted to destination encoding"
 
 #define MSG__UNCONVERTABLE_BINARY_1 \
-   "input data \\x%02.2x in current source encoding could not be converted to Unicode"
+   "input data \\x%02.2x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_2 \
-   "input data \\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
+   "input data \\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_3 \
-   "input data \\x%02.2x\\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
+   "input data \\x%02.2x\\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_4 \
-   "input data \\x%02.2x\\x%02.2x\\x%02.2x\\x%02.2x in current source encoding could not be converted to Unicode"
+   "input data \\x%02.2x\\x%02.2x\\x%02.2x\\x%02.2x in the current source encoding could not be converted to Unicode"
 
 #define MSG__UNCONVERTABLE_BINARY_n \
-   "some input data in current source encoding could not be converted to Unicode"
+   "some input data in the current source encoding could not be converted to Unicode"
 
 #define MSG__WARN_LIST_COERCION \
    "argument is not an atomic vector; coercing"
@@ -129,16 +129,16 @@
    "incorrect time zone identifier"
 
 #define MSG__LOCALE_ERROR_SET \
-   "could not set or select given locale"
+   "locale could not be set or selected"
 
 #define MSG__ENC_ERROR_GETNAME \
-   "could not fetch name of the character encoding from the ICU converter"
+   "character encoding name could not be fetched by the ICU converter"
 
 #define MSG__ENC_ERROR_SET \
-   "could not set, query or select given character encoding"
+   "character encoding could not be set, queried, or selected"
 
 #define MSG__ENC_ERROR_CONVERT \
-   "could not convert string encoding"
+   "encoding could not be converted"
 
 #define MSG__LOCALE_INCORRECT_ID \
    "incorrect locale identifier"
@@ -171,7 +171,7 @@
    "string search failed"
 
 #define MSG__RESOURCE_ERROR_GET \
-   "required ICU resource unavailable"
+   "requested ICU resource is unavailable"
 
 #define MSG__RESOURCE_ERROR_APPLY \
    "error while applying operation"
@@ -204,16 +204,16 @@
    "argument `%s` should be a non-empty vector"
 
 #define MSG__ARG_EXPECTED_1_STRING \
-   "argument `%s` should be a single character string; only the first element will be used"
+   "argument `%s` should be a single character string; only the first element is used"
 
 #define MSG__ARG_EXPECTED_1_LOGICAL \
-   "argument `%s` should be a single logical value; only the first element will be used"
+   "argument `%s` should be a single logical value; only the first element is used"
 
 #define MSG__ARG_EXPECTED_1_INTEGER \
-   "argument `%s` should be a single integer value; only the first element will be used"
+   "argument `%s` should be a single integer value; only the first element is used"
 
 #define MSG__ARG_EXPECTED_1_NUMERIC \
-   "argument `%s` should be a single numeric value; only the first element will be used"
+   "argument `%s` should be a single numeric value; only the first element is used"
 
 #define MSG__ARG_EXPECTED_STRING \
    "argument `%s` should be a character vector (or an object coercible to)"
@@ -279,6 +279,9 @@
 
 #define MSG__OVERLAPPING_PATTERN_UNSUPPORTED \
    "overlapping pattern matches are not supported"
+
+#define MSG__OVERLAPPING_OR_UNSORTED_INDEXES \
+   "index ranges must be sorted and mutually disjoint"
 
 #define MSG__MEM_ALLOC_ERROR \
    "memory allocation error"
