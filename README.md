@@ -9,7 +9,7 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
-**stringi** is THE *R* package for very fast, correct, consistent,
+**stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R* package for very fast, portable, correct, consistent,
 and convenient string/text processing in each locale and any native
 character encoding. The use of the *ICU* library gives *R* users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
