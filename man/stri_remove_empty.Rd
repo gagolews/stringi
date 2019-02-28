@@ -5,6 +5,8 @@
 \alias{stri_omit_empty}
 \alias{stri_remove_empty_na}
 \alias{stri_omit_empty_na}
+\alias{stri_remove_na}
+\alias{stri_omit_na}
 \title{Remove All Empty Strings from a Character Vector}
 \usage{
 stri_remove_empty(x, na_empty = FALSE)
@@ -14,6 +16,10 @@ stri_omit_empty(x, na_empty = FALSE)
 stri_remove_empty_na(x)
 
 stri_omit_empty_na(x)
+
+stri_remove_na(x)
+
+stri_omit_na(x)
 }
 \arguments{
 \item{x}{a character vector}
@@ -31,6 +37,9 @@ values.
 
 \code{stri_remove_empty_na} (alias \code{stri_omit_empty_na})
 removes both empty strings and missing values.
+
+\code{stri_remove_na} (alias \code{stri_omit_na})
+returns a version of \code{x} with missing values removed.
 }
 \examples{
 stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
@@ -42,6 +51,7 @@ stri_omit_empty_na(c("a", NA, "", "b"))
 }
 \seealso{
 Other utils: \code{\link{stri_list2matrix}},
-  \code{\link{stri_na2empty}}
+  \code{\link{stri_na2empty}},
+  \code{\link{stri_replace_na}}
 }
 \concept{utils}

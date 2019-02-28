@@ -55,7 +55,6 @@ stri_search_fixed_split.cpp \
 stri_search_fixed_subset.cpp \
 stri_search_fixed_startsendswith.cpp \
 stri_search_in.cpp \
-stri_search_other_replace.cpp \
 stri_search_other_split.cpp \
 stri_search_regex_count.cpp \
 stri_search_regex_detect.cpp \

@@ -10,10 +10,11 @@ stri_na2empty(x)
 \item{x}{a character vector}
 }
 \value{
-Always returns a character vector.
+Returns a character vector.
 }
 \description{
 This function replaces all missing values with empty strings.
+See \code{\link{stri_replace_na}} for a generalization.
 }
 \examples{
 stri_na2empty(c("a", NA, "", "b"))
@@ -21,6 +22,7 @@ stri_na2empty(c("a", NA, "", "b"))
 }
 \seealso{
 Other utils: \code{\link{stri_list2matrix}},
-  \code{\link{stri_remove_empty}}
+  \code{\link{stri_remove_empty}},
+  \code{\link{stri_replace_na}}
 }
 \concept{utils}

@@ -169,8 +169,7 @@ stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
 
 }
 \seealso{
-Other search_replace: \code{\link{stri_replace_na}},
-  \code{\link{stri_trim_both}},
+Other search_replace: \code{\link{stri_trim_both}},
   \code{\link{stringi-search}}
 }
 \concept{search_replace}

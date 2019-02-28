@@ -9,16 +9,16 @@ stri_list2matrix(x, byrow = FALSE, fill = NA_character_, n_min = 0)
 \arguments{
 \item{x}{a list of atomic vectors}
 
-\item{byrow}{single logical value; should the resulting matrix be
+\item{byrow}{a single logical value; should the resulting matrix be
 transposed?}
 
-\item{fill}{single string, see Details}
+\item{fill}{a single string, see Details}
 
-\item{n_min}{single integer value; minimal number of rows (\code{byrow==FALSE})
+\item{n_min}{a single integer value; minimal number of rows (\code{byrow==FALSE})
 or columns (otherwise) in the resulting matrix}
 }
 \value{
-Always returns a character matrix.
+Returns a character matrix.
 }
 \description{
 This function converts a given list of atomic vectors to
@@ -57,6 +57,7 @@ stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
 }
 \seealso{
 Other utils: \code{\link{stri_na2empty}},
-  \code{\link{stri_remove_empty}}
+  \code{\link{stri_remove_empty}},
+  \code{\link{stri_replace_na}}
 }
 \concept{utils}
