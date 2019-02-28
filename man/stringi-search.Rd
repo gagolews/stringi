@@ -84,7 +84,6 @@ Other search_locate: \code{\link{stri_locate_all_boundaries}},
   \code{\link{stri_locate_all}}
 
 Other search_replace: \code{\link{stri_replace_all}},
-  \code{\link{stri_replace_na}},
   \code{\link{stri_trim_both}}
 
 Other search_split: \code{\link{stri_split_boundaries}},

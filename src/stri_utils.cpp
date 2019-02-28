@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -99,3 +99,51 @@ SEXP stri_list2matrix(SEXP x, SEXP byrow, SEXP fill, SEXP n_min)
 
    STRI__ERROR_HANDLER_END({/* no-op on err */})
 }
+
+
+
+
+/**
+* Replace NAs with a given string
+*
+*
+* @param str character vector
+* @param replacement single string
+* @return character vector
+*
+* @version 0.2-1 (Bartek Tartanus, 2014-03-15)
+*
+* @version 0.2-1 (Marek Gagolewski, 2014-04-02)
+*          Use StriContainerUTF8 for replacement
+*
+* @version 0.3-1 (Marek Gagolewski, 2014-11-05)
+*    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+*/
+SEXP stri_replace_na(SEXP str, SEXP replacement) {
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+   PROTECT(replacement = stri_prepare_arg_string_1(replacement, "replacement"));
+   R_len_t str_len = LENGTH(str);
+
+   // @TODO: stri_replace_na(str, character(0)) returns a char vect with no NAs
+
+   STRI__ERROR_HANDLER_BEGIN(2)
+      StriContainerUTF8 str_cont(str, str_len);
+   StriContainerUTF8 replacement_cont(replacement, 1);
+
+   SEXP ret;
+   STRI__PROTECT(ret = str_cont.toR()); // to UTF-8
+
+   SEXP na;
+   STRI__PROTECT(na = replacement_cont.toR(0));
+
+   for (R_len_t i=0; i<str_len; ++i) {
+      if (STRING_ELT(ret, i) == NA_STRING)
+         SET_STRING_ELT(ret, i, na);
+   }
+
+   STRI__UNPROTECT_ALL
+      return ret;
+   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+}
+
+

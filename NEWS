@@ -13,7 +13,8 @@
   with corresponding replacement strings.
 
 * [NEW FEATURE] new convenience functions based on `stri_remove_empty()`:
-  `stri_omit_empty_na()`, `stri_remove_empty_na()`, `stri_omit_empty()`.
+  `stri_omit_empty_na()`, `stri_remove_empty_na()`, `stri_omit_empty()`,
+  and also `stri_remove_na()`, `stri_omit_na()`.
 
 * [BUGFIX] #343: `stri_trans_char()` did not yield correct results
   for overlapping pattern and replacement strings.

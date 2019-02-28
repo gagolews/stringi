@@ -65,7 +65,6 @@ stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 }
 \seealso{
 Other search_replace: \code{\link{stri_replace_all}},
-  \code{\link{stri_replace_na}},
   \code{\link{stringi-search}}
 
 Other search_charclass: \code{\link{stringi-search-charclass}},
