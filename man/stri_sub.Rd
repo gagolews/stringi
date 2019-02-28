@@ -10,7 +10,7 @@ stri_sub(str, from = 1L, to = -1L, length)
 
 stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
 
-stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_replace(..., replacement, value = replacement)
 }
 \arguments{
 \item{str}{a character vector}
@@ -30,6 +30,8 @@ unchanged [replacement function only]}
 
 \item{value}{a character vector defining the replacement strings
 [replacement function only]}
+
+\item{...}{arguments to be passed to \code{stri_sub<-}}
 
 \item{replacement}{alias of \code{value} [wherever applicable]}
 }
