@@ -11,9 +11,9 @@ stri_sub_all(str, from = list(1L), to = list(-1L), length)
 
 stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
 
-stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_replace_all(..., replacement, value = replacement)
 
-stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_all_replace(..., replacement, value = replacement)
 }
 \arguments{
 \item{str}{a character vector}
@@ -31,6 +31,8 @@ unchanged [replacement function only]}
 
 \item{value}{a list of character vectors defining the replacement strings
 [replacement function only]}
+
+\item{...}{arguments to be passed to \code{stri_sub_all<-}}
 
 \item{replacement}{alias of \code{value} [wherever applicable]}
 }

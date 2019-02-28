@@ -98,7 +98,7 @@
 #' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a character vector defining the replacement strings
 #'   [replacement function only]
-#'
+#' @param ... arguments to be passed to \code{stri_sub<-}
 #'
 #' @return \code{stri_sub} and \code{stri_sub_replace} return a character vector.
 #' \code{stri_sub<-} changes the \code{str} object in-place.
@@ -175,7 +175,6 @@ stri_sub <- function(str, from=1L, to=-1L, length) {
 
 #' @rdname stri_sub
 #' @export
-#' @usage stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, replacement, value=replacement)
 stri_sub_replace <- function(..., replacement, value=replacement)
    `stri_sub<-`(..., value=value)
 
@@ -232,6 +231,7 @@ stri_sub_replace <- function(..., replacement, value=replacement)
 #' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a list of character vectors defining the replacement strings
 #'   [replacement function only]
+#' @param ... arguments to be passed to \code{stri_sub_all<-}
 #'
 #' @return
 #' \code{stri_sub_all} returns a list of character vectors.
@@ -303,12 +303,10 @@ stri_sub_all <- function(str, from=list(1L), to=list(-1L), length) {
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
 stri_sub_replace_all <- function(..., replacement, value=replacement)
    `stri_sub_all<-`(..., value=value)
 
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
 stri_sub_all_replace <- stri_sub_replace_all
