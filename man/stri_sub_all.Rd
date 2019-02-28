@@ -11,9 +11,9 @@ stri_sub_all(str, from = list(1L), to = list(-1L), length)
 
 stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
 
-stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value)
+stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
 
-stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value)
+stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
 }
 \arguments{
 \item{str}{a character vector}
@@ -31,6 +31,8 @@ unchanged [replacement function only]}
 
 \item{value}{a list of character vectors defining the replacement strings
 [replacement function only]}
+
+\item{replacement}{alias of \code{value} [wherever applicable]}
 }
 \value{
 \code{stri_sub_all} returns a list of character vectors.
@@ -38,11 +40,11 @@ Its replacement versions return a character vector.
 }
 \description{
 \code{stri_sub_all} extracts multiple substrings from each string.
-Its replacement version substitutes multiple substrings with the
+Its replacement version substitutes (in-place) multiple substrings with the
 corresponding replacement strings.
-\code{stri_sub_replace_all} (alias \code{stri_sub_replace_all})
-is its \pkg{magrittr}'s pipe-operator-friendly
-version.
+\code{stri_sub_replace_all} (alias \code{stri_sub_all_replace})
+is \pkg{magrittr}'s pipe-operator-friendly variant, returning
+a copy of the input vector.
 
 For extracting/replacing single substrings from/within each string, see
 \code{\link{stri_sub}}.
@@ -80,7 +82,7 @@ stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE))
 stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
 print(x)
 
-stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), value=c("A", "B", "C"))
+stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), replacement=c("A", "B", "C"))
 
 
 }

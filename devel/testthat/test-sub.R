@@ -99,9 +99,10 @@ test_that("stri_sub<-", {
    s <- "\u0106a\u0105";  stri_sub(s,-1,length=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
 
    expect_identical(stri_sub_replace("abc", omit_na=TRUE, value=c("def", "", NA)), c("def", "", NA))
+   expect_identical(stri_sub_replace("abc", omit_na=TRUE, replacement=c("def", "", NA)), c("def", "", NA))
    expect_identical(stri_sub_replace("abc", omit_na=FALSE, value=c("def", "", NA)), c("def", "", NA))
 
-   expect_identical(stri_sub_replace("abcdef", c(5,3,1), length=1, value=c("E","C","A")), c("abcdEf", "abCdef", "Abcdef"))
+   expect_identical(stri_sub_replace("abcdef", c(5,3,1), length=1, replacement=c("E","C","A")), c("abcdEf", "abCdef", "Abcdef"))
 
    x <- c("123 45 htf 789754754745", "abc", "667", "", NA)
    expect_identical(stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE, value="***"),
@@ -274,6 +275,7 @@ test_that("stri_sub_all<-", {
 
    x <- c("123 45 htf 789754754745", "abc", "667", "", NA)
    stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, value="***")
+   stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, replacement="***")
    stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
                         value=list("1", "whatever", "3", "whatever", "whatever"))
    stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
