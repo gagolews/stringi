@@ -10,7 +10,7 @@ stri_sub(str, from = 1L, to = -1L, length)
 
 stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
 
-stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, value)
+stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, replacement, value=replacement)
 }
 \arguments{
 \item{str}{a character vector}
@@ -30,6 +30,8 @@ unchanged [replacement function only]}
 
 \item{value}{a character vector defining the replacement strings
 [replacement function only]}
+
+\item{replacement}{alias of \code{value} [wherever applicable]}
 }
 \value{
 \code{stri_sub} and \code{stri_sub_replace} return a character vector.
@@ -37,9 +39,11 @@ unchanged [replacement function only]}
 }
 \description{
 \code{stri_sub} extracts particular substrings at code point-based
-index ranges provided. Its replacement version allows to substitute parts of
+index ranges provided. Its replacement version allows to substitute
+(in-place) parts of
 a string with given replacement strings. \code{stri_sub_replace}
-is its \pkg{magrittr}'s pipe-operator-friendly version.
+is its \pkg{magrittr}'s pipe-operator-friendly variant that returns
+a copy of the input vector.
 
 For extracting/replacing multiple substrings from/within each string, see
 \code{\link{stri_sub_all}}.
@@ -99,14 +103,14 @@ stri_sub(x, stri_locate_first_regex(x, "[0-9]+")) # see stri_extract_first
 stri_sub(x, stri_locate_last_regex(x, "[0-9]+"))  # see stri_extract_last
 
 stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"),
-    omit_na=TRUE, value="***") # see stri_replace_first
+    omit_na=TRUE, replacement="***") # see stri_replace_first
 stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"),
-    omit_na=TRUE, value="***") # see stri_replace_last
+    omit_na=TRUE, replacement="***") # see stri_replace_last
 
 stri_sub(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE) <- "***"
 print(x)
 
-\dontrun{x \%>\% stri_sub_replace(1, 5, value="new_substring")}
+\dontrun{x \%>\% stri_sub_replace(1, 5, replacement="new_substring")}
 }
 \seealso{
 Other indexing: \code{\link{stri_locate_all_boundaries}},

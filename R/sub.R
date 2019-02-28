@@ -34,9 +34,11 @@
 #'
 #' @description
 #' \code{stri_sub} extracts particular substrings at code point-based
-#' index ranges provided. Its replacement version allows to substitute parts of
+#' index ranges provided. Its replacement version allows to substitute
+#' (in-place) parts of
 #' a string with given replacement strings. \code{stri_sub_replace}
-#' is its \pkg{magrittr}'s pipe-operator-friendly version.
+#' is its \pkg{magrittr}'s pipe-operator-friendly variant that returns
+#' a copy of the input vector.
 #'
 #' For extracting/replacing multiple substrings from/within each string, see
 #' \code{\link{stri_sub_all}}.
@@ -93,6 +95,7 @@
 #' @param omit_na a single logical value; indicates whether missing values
 #'   in any of the indexes leave the corresponding input string
 #'   unchanged [replacement function only]
+#' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a character vector defining the replacement strings
 #'   [replacement function only]
 #'
@@ -116,14 +119,14 @@
 #' stri_sub(x, stri_locate_last_regex(x, "[0-9]+"))  # see stri_extract_last
 #'
 #' stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"),
-#'     omit_na=TRUE, value="***") # see stri_replace_first
+#'     omit_na=TRUE, replacement="***") # see stri_replace_first
 #' stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"),
-#'     omit_na=TRUE, value="***") # see stri_replace_last
+#'     omit_na=TRUE, replacement="***") # see stri_replace_last
 #'
 #' stri_sub(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE) <- "***"
 #' print(x)
 #'
-#' \dontrun{x %>% stri_sub_replace(1, 5, value="new_substring")}
+#' \dontrun{x %>% stri_sub_replace(1, 5, replacement="new_substring")}
 #' @family indexing
 #' @rdname stri_sub
 #' @export
@@ -150,7 +153,7 @@ stri_sub <- function(str, from=1L, to=-1L, length) {
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
-"stri_sub<-" <- function(str, from=1L, to=-1L, length, omit_na=FALSE, value) {
+`stri_sub<-` <- function(str, from=1L, to=-1L, length, omit_na=FALSE, value) {
    if (missing(length)) {
       if (is.matrix(from) && !missing(to)) {
          warning("argument `to` is ignored in this context")
@@ -172,8 +175,9 @@ stri_sub <- function(str, from=1L, to=-1L, length) {
 
 #' @rdname stri_sub
 #' @export
-#' @usage stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, value)
-stri_sub_replace <- `stri_sub<-`
+#' @usage stri_sub_replace(str, from=1L, to=-1L, length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_replace <- function(..., replacement, value=replacement)
+   `stri_sub<-`(..., value=value)
 
 
 
@@ -182,11 +186,11 @@ stri_sub_replace <- `stri_sub<-`
 #'
 #' @description
 #' \code{stri_sub_all} extracts multiple substrings from each string.
-#' Its replacement version substitutes multiple substrings with the
+#' Its replacement version substitutes (in-place) multiple substrings with the
 #' corresponding replacement strings.
-#' \code{stri_sub_replace_all} (alias \code{stri_sub_replace_all})
-#' is its \pkg{magrittr}'s pipe-operator-friendly
-#' version.
+#' \code{stri_sub_replace_all} (alias \code{stri_sub_all_replace})
+#' is \pkg{magrittr}'s pipe-operator-friendly variant, returning
+#' a copy of the input vector.
 #'
 #' For extracting/replacing single substrings from/within each string, see
 #' \code{\link{stri_sub}}.
@@ -225,6 +229,7 @@ stri_sub_replace <- `stri_sub<-`
 #' @param omit_na a single logical value; indicates whether missing values
 #'   in any of the indexes leave the corresponding input string
 #'   unchanged [replacement function only]
+#' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a list of character vectors defining the replacement strings
 #'   [replacement function only]
 #'
@@ -240,7 +245,7 @@ stri_sub_replace <- `stri_sub<-`
 #' stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
 #' print(x)
 #'
-#' stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), value=c("A", "B", "C"))
+#' stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), replacement=c("A", "B", "C"))
 #'
 #'
 #' @family indexing
@@ -272,7 +277,7 @@ stri_sub_all <- function(str, from=list(1L), to=list(-1L), length) {
 #' @rdname stri_sub_all
 #' @export
 #' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
-"stri_sub_all<-" <- function(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value) {
+`stri_sub_all<-` <- function(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value) {
    if (!is.list(from))  from <- list(from)
    if (!is.list(value)) value <- list(value)
 
@@ -298,10 +303,12 @@ stri_sub_all <- function(str, from=list(1L), to=list(-1L), length) {
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value)
-stri_sub_replace_all <- `stri_sub_all<-`
+#' @usage stri_sub_replace_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_replace_all <- function(..., replacement, value=replacement)
+   `stri_sub_all<-`(..., value=value)
+
 
 #' @rdname stri_sub_all
 #' @export
-#' @usage stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value)
-stri_sub_all_replace <- `stri_sub_all<-`
+#' @usage stri_sub_all_replace(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, replacement, value=replacement)
+stri_sub_all_replace <- stri_sub_replace_all
