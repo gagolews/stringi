@@ -22,6 +22,8 @@
 * [BUGFIX] #343: `stri_trans_char()` did not yield correct results
   for overlapping pattern and replacement strings.
 
+* [WARNFIX] #205: `configure.ac` is now included in the source bundle.
+
 -------------------------------------------------------------------------------
 
 ## 1.3.1 (2019-02-10) **CRAN**
