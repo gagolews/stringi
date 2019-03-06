@@ -13,7 +13,7 @@ cat(stri_info(short=TRUE), "\n")
 testWarnings <- TRUE
 
 if (testWarnings) {
-   test_dir("devel/testthat/", reporter="summary")
+   test_dir("devel/testthat/")#, reporter="summary")
 } else {
    oldOptions <- options(warn=10)
    test_that <- function(x, e) {
