@@ -69,11 +69,18 @@ test_that("stri_sub<-", {
    s <- "\U0010FFFFa\u0105";  stri_sub(s,-2,length=1) <- "x";   expect_identical(s, "\U0010FFFFx\u0105")
    s <- "\U0010FFFFa\u0105";  stri_sub(s,-1,length=1) <- "x";   expect_identical(s, "\U0010FFFFax")
 
+
+   # from stringr - sanity check:
+   x <- "BBCDEF"
+   stri_sub(x, NA, omit_na = TRUE) <- "A"
+   stri_sub(x, 1, 1, omit_na = TRUE) <- NA
+   expect_equal(x, "BBCDEF")
+
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=TRUE) <- "_"; expect_identical(s, c("a_b", "c:d"))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=FALSE) <- "_"; expect_identical(s, c("a_b", NA))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";")) <- "_"; expect_identical(s, c("a_b", NA))
 
-   s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=TRUE) <- c("_", NA); expect_identical(s, c("a_b", NA))
+   s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=TRUE) <- c("_", NA); expect_identical(s, c("a_b", "c:d"))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";"), omit_na=FALSE) <- c("_", NA); expect_identical(s, c("a_b", NA))
    s <- c("a;b", "c:d"); stri_sub(s, stri_locate_first_fixed(s, ";")) <- c("_", NA); expect_identical(s, c("a_b", NA))
 
@@ -98,8 +105,8 @@ test_that("stri_sub<-", {
    s <- "\u0106a\u0105";  stri_sub(s,-2,length=0) <- "x"; expect_identical(s, "\u0106xa\u0105")
    s <- "\u0106a\u0105";  stri_sub(s,-1,length=0) <- "x"; expect_identical(s, "\u0106ax\u0105")
 
-   expect_identical(stri_sub_replace("abc", omit_na=TRUE, value=c("def", "", NA)), c("def", "", NA))
-   expect_identical(stri_sub_replace("abc", omit_na=TRUE, replacement=c("def", "", NA)), c("def", "", NA))
+   expect_identical(stri_sub_replace("abc", omit_na=TRUE, value=c("def", "", NA)), c("def", "", "abc"))
+   expect_identical(stri_sub_replace("abc", omit_na=TRUE, replacement=c("def", "", NA)), c("def", "", "abc"))
    expect_identical(stri_sub_replace("abc", omit_na=FALSE, value=c("def", "", NA)), c("def", "", NA))
 
    expect_identical(stri_sub_replace("abcdef", c(5,3,1), length=1, replacement=c("E","C","A")), c("abcdEf", "abCdef", "Abcdef"))
@@ -274,16 +281,37 @@ test_that("stri_sub_all<-", {
 
 
    x <- c("123 45 htf 789754754745", "abc", "667", "", NA)
-   stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, value="***")
-   stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, replacement="***")
-   stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
-                        value=list("1", "whatever", "3", "whatever", "whatever"))
-   stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
-                        value=list(c("1", "2", "3"), "whatever", "4", "whatever", "whatever"))
+   expect_identical(
+      stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, value="***"),
+      stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE, replacement="***")
+   )
+   expect_identical(
+      stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
+                        value=list("1", "whatever", "3", "whatever", "whatever")),
+      stri_replace_all_regex(x, "[0-9]+", c("1", "whatever", "3", "whatever", "whatever"))
+   )
+   expect_identical(
+      stri_sub_replace_all(x, stri_locate_all_regex(x, "[0-9]+"), omit_na=TRUE,
+                        value=list(c("1", "2", "3"), "whatever", "4", "whatever", "whatever")),
+      c("1 2 htf 3", "abc", "4", "", NA)
+   )
+
+   expect_identical(stri_sub_replace_all(x[1], rbind(c(1, 3), c(NA, NA), c(7, -1)), omit_na=TRUE, value="***"), "*** 45***")
+   expect_identical(stri_sub_replace_all(x[1], rbind(c(NA, NA), c(NA, NA), c(1, 3),
+                                                     c(NA, NA), c(NA, NA), c(7, -1), c(NA, NA)), omit_na=TRUE, value="***"),
+                    "*** 45***")
+   expect_identical(stri_sub_replace_all(x[1], 1, 3, omit_na=TRUE, value=NA), x[1])
+   expect_identical(stri_sub_replace_all(x[1], rbind(c(1, 3), c(NA, NA), c(7, -1)), omit_na=TRUE, value=NA), x[1])
 
    x <- c("a b c")
    stri_sub_all(x, c(1, 3, 5), c(1, 3, 5)) <- c("A", "B", "C")
    expect_identical(x, "A B C")
+
+   x <- "BBCDEF"
+   stri_sub_all(x, NA, omit_na = TRUE) <- "A"
+   stri_sub_all(x, 1, 1, omit_na = TRUE) <- NA
+   expect_equal(x, "BBCDEF")
+
 
 })
 

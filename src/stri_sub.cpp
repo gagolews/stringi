@@ -263,6 +263,10 @@ SEXP stri_sub(SEXP str, SEXP from, SEXP to, SEXP length)
  * @version 1.0-2 (Marek Gagolewski, 2016-01-31)
  *    FR #199: new arg: `omit_na`
  *    FR #207: allow insertions
+ *
+ *
+ * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
+ *    #346: na_omit for `value`
  */
 SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {
@@ -305,11 +309,11 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
       R_len_t cur_from     = from_tab[i % from_len];
       R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
 
-      if (str_cont.isNA(i) || value_cont.isNA(i)) {
+      if (str_cont.isNA(i)) {
           SET_STRING_ELT(ret, i, NA_STRING);
           continue;
       }
-      if (cur_from == NA_INTEGER || cur_to == NA_INTEGER) {
+      if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || value_cont.isNA(i)) {
          if (omit_na_1) {
             SET_STRING_ELT(ret, i, str_cont.toR(i));
          }
@@ -437,6 +441,9 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
  * can raise Rf_error
  *
  *  @version 1.3.2 (Marek Gagolewski, 2019-02-23)
+ *
+ * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
+ *    #346: na_omit for `value`
  */
 SEXP stri__sub_replacement_all_single(SEXP curs,
     SEXP from, SEXP to, SEXP length, bool omit_na_1, SEXP value)
@@ -479,21 +486,23 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
     R_len_t curs_n = LENGTH(curs);
 
     // first check for NAs....
-    for (R_len_t i=0; i<vectorize_len; ++i) {
-        R_len_t cur_from     = from_tab[i % from_len];
-        R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
-        if (cur_from == NA_INTEGER || cur_to == NA_INTEGER) {
-            UNPROTECT(sub_protected);
-            if (omit_na_1) return curs;
-            else return NA_STRING;
-        }
-    }
+    if (!omit_na_1) {
+       for (R_len_t i=0; i<vectorize_len; ++i) {
+           R_len_t cur_from     = from_tab[i % from_len];
+           R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
+           if (cur_from == NA_INTEGER || cur_to == NA_INTEGER) {
+               UNPROTECT(sub_protected);
+               if (omit_na_1) return curs;
+               else return NA_STRING;
+           }
+       }
 
-    for (R_len_t i=0; i<vectorize_len; ++i) {
-        if (STRING_ELT(value, i%value_len) == NA_STRING) {
-            UNPROTECT(sub_protected);
-            return NA_STRING;
-        }
+       for (R_len_t i=0; i<vectorize_len; ++i) {
+           if (STRING_ELT(value, i%value_len) == NA_STRING) {
+               UNPROTECT(sub_protected);
+               return NA_STRING;
+           }
+       }
     }
 
     // get the number of code points in curs, if required (for negative indexes)
@@ -517,6 +526,10 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
     for (R_len_t i=0; i<vectorize_len; ++i) {
         R_len_t cur_from     = from_tab[i % from_len];
         R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
+
+        if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || STRING_ELT(value, i%value_len) == NA_STRING) {
+           continue;
+        }
 
         if (cur_from < 0) cur_from = curs_m+cur_from+1;
         if (cur_from <= 0) cur_from = 1;
@@ -598,6 +611,10 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
  *
  * @version 1.3.2 (Marek Gagolewski, 2019-02-22)
  *    #30: new function
+ *
+ *
+ * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
+ *    #346: na_omit for `value`
  */
 SEXP stri_sub_replacement_all(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_na, SEXP value)
 {

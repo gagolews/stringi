@@ -93,7 +93,7 @@
 #' @param length an integer vector giving the substring lengths;
 #'   mutually exclusive with \code{to} and \code{from} being a matrix
 #' @param omit_na a single logical value; indicates whether missing values
-#'   in any of the indexes leave the corresponding input string
+#'   in any of the indexes or in \code{value} leave the corresponding input string
 #'   unchanged [replacement function only]
 #' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a character vector defining the replacement strings
@@ -226,7 +226,8 @@ stri_sub_replace <- function(..., replacement, value=replacement)
 #' @param to a list of integer vectors giving the end indexes
 #' @param length a list of integer vectors giving the substring lengths
 #' @param omit_na a single logical value; indicates whether missing values
-#'   in any of the indexes leave the corresponding input string
+#'   in any of the indexes or in \code{value} leave the part of the
+#'   corresponding input string
 #'   unchanged [replacement function only]
 #' @param replacement alias of \code{value} [wherever applicable]
 #' @param value a list of character vectors defining the replacement strings
