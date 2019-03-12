@@ -26,7 +26,8 @@ list of two-column matrices, each of type \code{cbind(from, to)}}
 \item{length}{a list of integer vectors giving the substring lengths}
 
 \item{omit_na}{a single logical value; indicates whether missing values
-in any of the indexes leave the corresponding input string
+in any of the indexes or in \code{value} leave the part of the
+corresponding input string
 unchanged [replacement function only]}
 
 \item{value}{a list of character vectors defining the replacement strings

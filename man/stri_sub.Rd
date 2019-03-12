@@ -25,7 +25,7 @@ of type \code{cbind(from, to)}}
 mutually exclusive with \code{to} and \code{from} being a matrix}
 
 \item{omit_na}{a single logical value; indicates whether missing values
-in any of the indexes leave the corresponding input string
+in any of the indexes or in \code{value} leave the corresponding input string
 unchanged [replacement function only]}
 
 \item{value}{a character vector defining the replacement strings
