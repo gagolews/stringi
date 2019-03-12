@@ -4,9 +4,16 @@
 
 ##### INIT ####################################################################
 
-AC_INIT(stringi, 1.3, marek@gagolewski.com)
+AC_INIT(stringi, 1.4, marek@gagolewski.com)
 
 ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
+
+m4_ifndef([AC_CONFIG_MACRO_DIRS],
+    [m4_defun([_AM_CONFIG_MACRO_DIRS], [])m4_defun([AC_CONFIG_MACRO_DIRS],
+    [_AM_CONFIG_MACRO_DIRS($@)])])
+m4_include([tools/AC_CXX_HAVE_STL.m4])
+m4_include([tools/AC_CXX_NAMESPACES.m4])
+
 
 ##### OPTIONS #################################################################
 
