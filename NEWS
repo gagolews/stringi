@@ -2,7 +2,7 @@
 
 -------------------------------------------------------------------------------
 
-## 1.4.1 (2019-03-11) **CRAN**
+## 1.4.2 (2019-03-12) **CRAN**
 
 * [NEW FEATURE] #30: New function `stri_sub_all()` - a version of
   `stri_sub()` accepting list `from`/`to`/`length` arguments for extracting
