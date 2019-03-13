@@ -348,9 +348,12 @@ SEXP stri_sub_replacement(SEXP str, SEXP from, SEXP to, SEXP length, SEXP omit_n
 
       R_len_t buflen = str_cur_n-(cur_to2-cur_from2)+value_cur_n;
       buf.resize(buflen, false/*destroy contents*/);
-      memcpy(buf.data(), str_cur_s, (size_t)cur_from2);
-      memcpy(buf.data()+cur_from2, value_cur_s, (size_t)value_cur_n);
-      memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, (size_t)str_cur_n-cur_to2);
+      if (cur_from2 > 0)
+         memcpy(buf.data(), str_cur_s, (size_t)cur_from2);
+      if (value_cur_n > 0)
+         memcpy(buf.data()+cur_from2, value_cur_s, (size_t)value_cur_n);
+      if (str_cur_n-cur_to2 > 0)
+         memcpy(buf.data()+cur_from2+value_cur_n, str_cur_s+cur_to2, (size_t)str_cur_n-cur_to2);
       SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buflen, CE_UTF8));
    }
 
@@ -444,6 +447,10 @@ SEXP stri_sub_all(SEXP str, SEXP from, SEXP to, SEXP length)
  *
  * @version 1.4.3 (Marek Gagolewski, 2019-03-12)
  *    #346: na_omit for `value`
+ *
+ * @version 1.4.4 (Marek Gagolewski, 2019-03-13)-
+ *    #348: UBSAN runtime error: null pointer passed as argument 1,
+ *     which is declared to never be null
  */
 SEXP stri__sub_replacement_all_single(SEXP curs,
     SEXP from, SEXP to, SEXP length, bool omit_na_1, SEXP value)
@@ -520,14 +527,14 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
     STRI__ERROR_HANDLER_BEGIN(sub_protected)
     std::vector<char> buf; // convenience >> speed
 
-    R_len_t buf_size;
     R_len_t last_pos = 0;
-    R_len_t byte_pos = 0, byte_pos_last;
+    R_len_t byte_pos = 0;
     for (R_len_t i=0; i<vectorize_len; ++i) {
         R_len_t cur_from     = from_tab[i % from_len];
         R_len_t cur_to       = (to_tab)?to_tab[i % to_len]:length_tab[i % length_len];
 
         if (cur_from == NA_INTEGER || cur_to == NA_INTEGER || STRING_ELT(value, i%value_len) == NA_STRING) {
+           // omit_na is true
            continue;
         }
 
@@ -556,23 +563,31 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
             throw StriException(MSG__OVERLAPPING_OR_UNSORTED_INDEXES);
 
         // first, copy [last_pos, cur_from)
-        byte_pos_last = byte_pos;
+        R_len_t byte_pos_last = byte_pos;
         while (last_pos < cur_from) {
             U8_FWD_1_UNSAFE(curs_s, byte_pos);
             ++last_pos;
         }
-        buf_size = buf.size();
-        buf.resize(buf_size+byte_pos-byte_pos_last);
-        memcpy(buf.data()+buf_size, curs_s+byte_pos_last, byte_pos-byte_pos_last);
+
+        if (byte_pos-byte_pos_last > 0) {
+           R_len_t buf_size = buf.size();
+           buf.resize(buf_size+byte_pos-byte_pos_last);
+           if (!buf.data() || !curs_s)
+              throw StriException(MSG__MEM_ALLOC_ERROR);
+           memcpy(buf.data()+buf_size, curs_s+byte_pos_last, byte_pos-byte_pos_last);
+        }
 
         // then, copy the corresponding replacement string
         SEXP value_cur = STRING_ELT(value, i%value_len);
         const char* value_s = CHAR(value_cur);
         R_len_t value_n = LENGTH(value_cur);
-        buf_size = buf.size();
-        buf.resize(buf_size+value_n);
-        memcpy(buf.data()+buf_size, value_s, value_n);
-
+        if (value_n > 0) {
+           R_len_t buf_size = buf.size();
+           buf.resize(buf_size+value_n);
+           if (!buf.data() || !value_s)
+              throw StriException(MSG__MEM_ALLOC_ERROR);
+           memcpy(buf.data()+buf_size, value_s, value_n);
+        }
 
 
         // lastly, update last_pos
@@ -581,13 +596,16 @@ SEXP stri__sub_replacement_all_single(SEXP curs,
             U8_FWD_1_UNSAFE(curs_s, byte_pos);
             ++last_pos;
         }
-      }
+    }
 
-      // finally, copy [last_pos, curs_m)
-    // Rprintf("orig [%d,%d)\n", last_pos, curs_m);
-    buf_size = buf.size();
-    buf.resize(buf_size+curs_n-byte_pos);
-    memcpy(buf.data()+buf_size, curs_s+byte_pos, curs_n-byte_pos);
+    // finally, copy [last_pos, curs_m)
+    if (curs_n-byte_pos > 0) {
+       R_len_t buf_size = buf.size();
+       buf.resize(buf_size+curs_n-byte_pos);
+       if (!buf.data() || !curs_s)
+          throw StriException(MSG__MEM_ALLOC_ERROR);
+       memcpy(buf.data()+buf_size, curs_s+byte_pos, curs_n-byte_pos);
+    }
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8));

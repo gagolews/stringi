@@ -284,7 +284,7 @@
    "index ranges must be sorted and mutually disjoint"
 
 #define MSG__MEM_ALLOC_ERROR \
-   "memory allocation error"
+   "memory allocation or access error"
 
 
 #define MSG__U_CHARSET_IS_UTF8 \
