@@ -296,6 +296,8 @@ test_that("stri_sub_all<-", {
       c("1 2 htf 3", "abc", "4", "", NA)
    )
 
+
+
    expect_identical(stri_sub_replace_all(x[1], rbind(c(1, 3), c(NA, NA), c(7, -1)), omit_na=TRUE, value="***"), "*** 45***")
    expect_identical(stri_sub_replace_all(x[1], rbind(c(NA, NA), c(NA, NA), c(1, 3),
                                                      c(NA, NA), c(NA, NA), c(7, -1), c(NA, NA)), omit_na=TRUE, value="***"),
@@ -313,6 +315,10 @@ test_that("stri_sub_all<-", {
    expect_equal(x, "BBCDEF")
 
 
+   # UBSAN: Issue with `stri_sub_all` #348
+   x <- c("12 3456 789", "abc", "", NA, "667")
+   stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
+   expect_identical(x, c("*** *** ***", "abc",         "",            NA,            "***" ))
 })
 
 
