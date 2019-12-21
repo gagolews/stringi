@@ -406,7 +406,7 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow
 
    if (narg > 0) {
 
-      SEXP names = Rf_getAttrib(opts_fixed, R_NamesSymbol);
+      SEXP names = PROTECT(Rf_getAttrib(opts_fixed, R_NamesSymbol));
       if (names == R_NilValue || LENGTH(names) != narg)
          Rf_error(MSG__FIXED_CONFIG_FAILED); // error() call allowed here
 
@@ -414,17 +414,24 @@ uint32_t StriContainerByteSearch::getByteSearchFlags(SEXP opts_fixed, bool allow
          if (STRING_ELT(names, i) == NA_STRING)
             Rf_error(MSG__FIXED_CONFIG_FAILED); // error() call allowed here
 
-         const char* curname = stri__copy_string_Ralloc(STRING_ELT(names, i), "curname");  /* this is R_alloc'ed */
+         SEXP tmp_arg;
+         PROTECT(tmp_arg = STRING_ELT(names, i));
+         const char* curname = stri__copy_string_Ralloc(tmp_arg, "curname");  /* this is R_alloc'ed */
+         UNPROTECT(1);
+
+         PROTECT(tmp_arg = VECTOR_ELT(opts_fixed, i));
          if  (!strcmp(curname, "case_insensitive")) {
-            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "case_insensitive");
+            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "case_insensitive");
             if (val) flags |= BYTESEARCH_CASE_INSENSITIVE;
          } else if  (!strcmp(curname, "overlap") && allow_overlap) {
-            bool val = stri__prepare_arg_logical_1_notNA(VECTOR_ELT(opts_fixed, i), "overlap");
+            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "overlap");
             if (val) flags |= BYTESEARCH_OVERLAP;
          } else {
             Rf_warning(MSG__INCORRECT_FIXED_OPTION, curname);
          }
+         UNPROTECT(1);
       }
+      UNPROTECT(1); /* names */
    }
 
    return flags;
