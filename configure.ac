@@ -49,7 +49,7 @@ AC_ARG_VAR([CXX], [Purposedly ignored.])
 
 AC_ARG_VAR([CXXFLAGS], [Purposedly ignored.])
 
-AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
+# AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
 
 AC_ARG_VAR([LDFLAGS], [Purposedly ignored.])
 
@@ -294,7 +294,7 @@ while true; do
    # if this fails again, we'll stop right there
 
    CC=`"${R_PATH}" CMD config CC`
-   CPP=`"${R_PATH}" CMD config CXXCPP`
+   #CPP=`"${R_PATH}" CMD config CXXCPP`
    LD=`"${R_PATH}" CMD config SHLIB_CXXLD`
    CFLAGS_base=`"${R_PATH}" CMD config CFLAGS`
    CFLAGS_pic=`"${R_PATH}" CMD config CPICFLAGS`
@@ -983,7 +983,7 @@ echo "    STRINGI_LIBS=${STRINGI_LIBS}"
 echo ""
 echo "*** compiler settings used:"
 echo "    CC=${CC}"
-echo "    CPP=${CPP}"
+#echo "    CPP=${CPP}"
 echo "    LD=${LD}"
 echo "    CFLAGS=${CFLAGS}"
 echo "    CPPFLAGS=${CPPFLAGS}"
