@@ -2,9 +2,16 @@
 
 -------------------------------------------------------------------------------
 
-## 1.4.4 (2019-??-??) **devel**
+## 1.4.4 (2019-12-21) **CRAN**
 
 * [BUGFIX] #348: Avoid copying 0 bytes to a nil-buffer in `stri_sub_all()`.
+
+* [BUGFIX] #362: Removed `configure` variable `CXXCPP` as it is now deprecated.
+
+* [BUGFIX] #344: @TODO Removed a compiler warning for icu61/common/cstring.h:43:70.
+
+* [BUGFIX] #318: @TODO PROTECTing objects from gcing as reported by rchk.
+
 
 -------------------------------------------------------------------------------
 
