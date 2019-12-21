@@ -25,14 +25,14 @@ matrix:
                 - libicu-dev
     env:
         - STRINGI_DISABLE_ICU_BUNDLE="1"
-  - os: linux
-    r: devel
-    addons:
-        apt:
-            packages:
-                - libicu-dev
-    env:
-        - STRINGI_DISABLE_ICU_BUNDLE="1"
+#  - os: linux
+#    r: devel
+#    addons:
+#        apt:
+#            packages:
+#                - libicu-dev
+#    env:
+#        - STRINGI_DISABLE_ICU_BUNDLE="1"
   - os: linux
     r: release
     env:

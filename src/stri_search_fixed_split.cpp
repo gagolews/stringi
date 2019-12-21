@@ -194,10 +194,15 @@ SEXP stri_split_fixed(SEXP str, SEXP pattern, SEXP n,
          if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
             n_min = n_tab[i];
       }
-      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         (LOGICAL(simplify)[0] == NA_LOGICAL)?stri__vector_NA_strings(1)
-                                             :stri__vector_empty_strings(1),
-         Rf_ScalarInteger(n_min)))
+      SEXP robj_TRUE, robj_n_min, robj_na_strings, robj_empty_strings;
+      STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
+      STRI__PROTECT(robj_n_min = Rf_ScalarInteger(n_min));
+      STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
+      STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
+      STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
+                                           (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
+                                              :robj_empty_strings,
+                                               robj_n_min))
    }
 
    STRI__UNPROTECT_ALL

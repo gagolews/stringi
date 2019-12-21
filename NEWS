@@ -8,10 +8,9 @@
 
 * [BUGFIX] #362: Removed `configure` variable `CXXCPP` as it is now deprecated.
 
+* [BUGFIX] #318: PROTECTing objects from gcing as reported by rchk.
+
 * [BUGFIX] #344: @TODO Removed a compiler warning for icu61/common/cstring.h:43:70.
-
-* [BUGFIX] #318: @TODO PROTECTing objects from gcing as reported by rchk.
-
 
 -------------------------------------------------------------------------------
 
