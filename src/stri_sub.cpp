@@ -90,6 +90,12 @@ R_len_t stri__sub_prepare_from_to_length(SEXP& from, SEXP& to, SEXP& length,
       //PROTECT(to); /* fake - not to provoke stack imbalance */
    }
    return sub_protected;
+
+   /* rchk reports that this function
+    * [PB] has possible protection stack imbalance
+    *
+    * well, of course it does!! -> this is by design, UPROTECTing somewhere else.
+    */
 }
 
 

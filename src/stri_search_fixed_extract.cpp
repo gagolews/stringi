@@ -215,13 +215,16 @@ SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
       STRI__UNPROTECT(1);
    }
 
-   if (LOGICAL(simplify)[0] == NA_LOGICAL) {
-      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_NA_strings(1), Rf_ScalarInteger(0)))
-   }
-   else if (LOGICAL(simplify)[0]) {
-      STRI__PROTECT(ret = stri_list2matrix(ret, Rf_ScalarLogical(TRUE),
-         stri__vector_empty_strings(1), Rf_ScalarInteger(0)))
+   if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
+      SEXP robj_TRUE, robj_zero, robj_na_strings, robj_empty_strings;
+      STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
+      STRI__PROTECT(robj_zero = Rf_ScalarInteger(0));
+      STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
+      STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
+      STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
+                                           (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
+                                              :robj_empty_strings,
+                                               robj_zero));
    }
 
    STRI__UNPROTECT_ALL

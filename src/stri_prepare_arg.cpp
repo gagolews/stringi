@@ -376,13 +376,15 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
       Rf_error(MSG__ARG_EXPECTED_POSIXct, argname);
    }
 
-   SEXP attrib_class, attrib_tzone;
-   PROTECT(attrib_class = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("class"))));
-   PROTECT(attrib_tzone = Rf_getAttrib(x, Rf_ScalarString(Rf_mkChar("tzone"))));
+   SEXP attrib_class, attrib_tzone, robj_class, robj_tzone;
+   PROTECT(robj_class = Rf_ScalarString(Rf_mkChar("class")));
+   PROTECT(robj_tzone = Rf_ScalarString(Rf_mkChar("tzone")));
+   PROTECT(attrib_class = Rf_getAttrib(x, robj_class));
+   PROTECT(attrib_tzone = Rf_getAttrib(x, robj_tzone));
    PROTECT(x = stri_prepare_arg_double(x, argname));
-   Rf_setAttrib(x, Rf_ScalarString(Rf_mkChar("class")), attrib_class);
-   Rf_setAttrib(x, Rf_ScalarString(Rf_mkChar("tzone")), attrib_tzone);
-   UNPROTECT(4);
+   Rf_setAttrib(x, robj_class, attrib_class);
+   Rf_setAttrib(x, robj_tzone, attrib_tzone);
+   UNPROTECT(6);
    return x;
 }
 
