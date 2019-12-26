@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -85,8 +85,11 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
 
       int m_start = -1;
       int m_end = -1;
+      int m_res;
       matcher->reset(str_text);
-      if ((int)matcher->find()) { // find first match
+      m_res = (int)matcher->find(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      if (m_res) { // find first match
          m_start = (int)matcher->start(status); // The **native** position in the input string :-)
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          m_end   = (int)matcher->end(status);
@@ -98,7 +101,10 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
       }
 
       if (!first) { // continue searching
-         while ((int)matcher->find()) {
+         while (1) {
+            m_res = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
             m_start = (int)matcher->start(status);
             m_end   = (int)matcher->end(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -209,7 +215,12 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
       matcher->reset(str_text);
 
       deque< pair<R_len_t, R_len_t> > occurrences;
-      while ((int)matcher->find()) {
+      int m_res;
+      while (1) {
+         m_res = (int)matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         if (!m_res) break;
+
          occurrences.push_back(pair<R_len_t, R_len_t>(
             (R_len_t)matcher->start(status), (R_len_t)matcher->end(status)
          ));

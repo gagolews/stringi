@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -131,12 +131,17 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
 
          occurrences[i] = vector< pair<const char*, const char*> >(pattern_cur_groups+1);
          matcher->reset(str_text);
-         while ((int)matcher->find()) {
+         while (1) {
+            int m_res = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
             occurrences[i][0].first  = str_cur_s+(int)matcher->start(status);
             occurrences[i][0].second = str_cur_s+(int)matcher->end(status);
             for (R_len_t j=1; j<=pattern_cur_groups; ++j) {
                int m_start = (int)matcher->start(j, status);
+               STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
                int m_end = (int)matcher->end(j, status);
+               STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
                if (m_start < 0 || m_end < 0) {
                   occurrences[i][j].first  = NULL;
                   occurrences[i][j].second = NULL;
@@ -146,7 +151,6 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
                   occurrences[i][j].second = str_cur_s+m_end;
                }
             }
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             if (first) break;
          }
       }
@@ -285,8 +289,13 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
       matcher->reset(str_text);
 
       deque< pair<R_len_t, R_len_t> > occurrences;
-      while ((int)matcher->find()) {
+      while (1) {
+         int m_res = (int)matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         if (!m_res) break;
+
          occurrences.push_back(pair<R_len_t, R_len_t>((R_len_t)matcher->start(status), (R_len_t)matcher->end(status)));
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          for (R_len_t j=0; j<pattern_cur_groups; ++j)
             occurrences.push_back(pair<R_len_t, R_len_t>((R_len_t)matcher->start(j+1, status), (R_len_t)matcher->end(j+1, status)));
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})

@@ -146,8 +146,13 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
       deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
       fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
-      for (k=1; k < n_cur && (int)matcher->find(); ) {
+      for (k=1; k < n_cur; ) {
+         int m_res = (int)matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         if (!m_res) break;
+
          R_len_t s1 = (R_len_t)matcher->start(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          R_len_t s2 = (R_len_t)matcher->end(status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
