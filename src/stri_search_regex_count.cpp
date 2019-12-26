@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -86,9 +86,15 @@ SEXP stri_count_regex(SEXP str, SEXP pattern, SEXP opts_regex)
       // see search_regex_detect for UText implementation (often slower)
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
+      UErrorCode status = U_ZERO_ERROR;
       int count = 0;
-      while ((bool)matcher->find())
+      while (1) {
+         int m_res = (bool)matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         if (!m_res) break;
+
          ++count;
+      }
       ret_tab[i] = count;
    }
 

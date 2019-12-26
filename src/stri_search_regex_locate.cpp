@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -86,9 +86,11 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
       STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(1, 2));)
 
+      UErrorCode status = U_ZERO_ERROR;
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
-      int found = (int)matcher->find();
+      int found = (int)matcher->find(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       if (!found) {
          SET_VECTOR_ELT(ret, i, stri__matrix_NA_INTEGER(omit_no_match1?0:1, 2));
          continue;
@@ -102,7 +104,8 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
          occurrences.push_back(pair<R_len_t, R_len_t>(start, end));
-         found = (int)matcher->find();
+         found = (int)matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       } while (found);
 
       R_len_t noccurrences = (R_len_t)occurrences.size();
@@ -112,7 +115,7 @@ SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts
       deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
       for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
          pair<R_len_t, R_len_t> match = *iter;
-         ans_tab[j]             = match.first;
+         ans_tab[j]              = match.first;
          ans_tab[j+noccurrences] = match.second;
       }
 
@@ -182,8 +185,10 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
 
-      if ((int)matcher->find()) { //find first matches
-         UErrorCode status = U_ZERO_ERROR;
+      UErrorCode status = U_ZERO_ERROR;
+      int m_res = (int)matcher->find(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      if (m_res) { //find first matches
          ret_tab[i] = (int)matcher->start(status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
          ret_tab[i+vectorize_length] = (int)matcher->end(status);
@@ -193,8 +198,12 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
          continue; // no match
 
       if (!first) { // continue searching
-         while ((int)matcher->find()) {
+         while (1) {
             UErrorCode status = U_ZERO_ERROR;
+            m_res = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
+
             ret_tab[i]                  = (int)matcher->start(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             ret_tab[i+vectorize_length] = (int)matcher->end(status);

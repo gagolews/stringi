@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -91,7 +91,9 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
-      which[i] = (int)matcher->find();
+      UErrorCode status = U_ZERO_ERROR;
+      which[i] = (int)matcher->find(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       if (negate_1) which[i] = !which[i];
       if (which[i]) result_counter++;
    }
@@ -156,7 +158,8 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       matcher->reset(str_text);
 
-      bool found = matcher->find();
+      bool found = matcher->find(status);
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       if ((found && !negate_1) || (!found && negate_1))
          SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
       else

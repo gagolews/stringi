@@ -102,7 +102,11 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
-      ret_tab[i] = (int)matcher->find(); // returns UBool
+
+      UErrorCode status = U_ZERO_ERROR;
+      ret_tab[i] = (int)matcher->find(status); // returns UBool
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+
       if (negate_1) ret_tab[i] = !ret_tab[i];
       if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
 
@@ -113,7 +117,7 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
 //      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
 //      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 //      matcher->reset(str_text);
-//      ret_tab[i] = (int)matcher->find(); // returns UBool
+//      ret_tab[i] = (int)matcher->find(status); // returns UBool
 //      utext_close(str_text);
    }
 

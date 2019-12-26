@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2017, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -90,14 +90,16 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
       RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
       matcher->reset(str_cont.get(i));
 
+      UErrorCode status = U_ZERO_ERROR;
       if (replacement_cont.isNA(i)) {
-         if (matcher->find())
+         int m_res = matcher->find(status);
+         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         if (m_res)
             str_cont.setNA(i);
          SET_STRING_ELT(ret, i, str_cont.toR(i));
          continue;
       }
 
-      UErrorCode status = U_ZERO_ERROR;
       if (type == 0) { // all
          str_cont.set(i, matcher->replaceAll(replacement_cont.get(i), status));
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -109,7 +111,10 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
       else if (type == -1) { // end
          int start = -1;
          int end = -1;
-         while (matcher->find()) { // find last match
+         while (1) { // find last match
+            int m_res = matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
             start = matcher->start(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
             end = matcher->end(status);
@@ -213,13 +218,17 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
          matcher->reset(str_cont.get(j));
 
+         UErrorCode status = U_ZERO_ERROR;
+
          if (replacement_cont.isNA(i)) {
-            if (matcher->find())
+            int m_res = matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (m_res)
                str_cont.setNA(j);
             continue;
          }
 
-         UErrorCode status = U_ZERO_ERROR;
+
          str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
