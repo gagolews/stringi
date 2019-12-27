@@ -35,4 +35,5 @@ with \pkg{stringi};
 \description{
 Gives the current default settings used by the \pkg{ICU} library.
 }
-\concept{locale, encoding}
+\concept{encoding}
+\concept{locale}

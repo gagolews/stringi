@@ -1,17 +1,16 @@
 Package: stringi
 Version: 1.4.4
-Date: 2019-12-26
+Date: 2019-12-27
 Title: Character String Processing Facilities
-Description: Fast, correct, consistent, portable,
-    as well as convenient character string/text processing in every locale
-    and any native encoding. Owing to the use of the 'ICU'
-    (International Components for Unicode) library,
-    the package provides 'R' users with platform-independent functions
-    known to 'Java', 'Perl', 'Python', 'PHP', and 'Ruby' programmers. Available
+Description: Fast, correct, consistent, portable and convenient character
+    string/text processing in every locale and any native encoding. 
+    Owing to the use of the 'ICU' (International Components for Unicode) 
+    library, the package provides 'R' users with platform-independent functions
+    known to 'Java', 'Perl', 'Python', 'PHP' and 'Ruby' programmers. Available
     features include: pattern searching (e.g., with 'Java'-like regular
     expressions or the 'Unicode' collation algorithm), random string generation,
     case mapping, string transliteration, concatenation,
-    Unicode normalization, date-time formatting and parsing, and many more.
+    Unicode normalization, date-time formatting and parsing and many more.
 URL: http://www.gagolewski.com/software/stringi/
     http://site.icu-project.org/
     http://www.unicode.org/
@@ -27,9 +26,9 @@ Imports:
 Biarch: TRUE
 License: file LICENSE
 Author: Marek Gagolewski [aut, cre] (<https://orcid.org/0000-0003-0637-6028>),
-    Bartek Tartanus [ctb],
+    Bartek Tartanus [ctb]
     and other contributors (stringi source code);
-    IBM, Unicode, Inc., and other contributors (ICU4C source code);
+    IBM, Unicode, Inc. and other contributors (ICU4C source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
 RoxygenNote: 6.1.1
