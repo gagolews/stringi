@@ -60,7 +60,8 @@
 #' }
 #'
 #' @export
-#' @family locale, encoding
+#' @family locale
+#' @family encoding
 stri_info <- function(short=FALSE) {
    stopifnot(is.logical(short), length(short) == 1)
 
