@@ -1738,7 +1738,7 @@ _canonicalize(const char* localeID,
         len = (int32_t)uprv_strlen(d);
 
         if (name != NULL) {
-            uprv_strncpy(name, d, len+1); // Marek/stringi WAS: len, not len+1
+            uprv_strncpy(name, d, nameCapacity); //len+1); // Marek/stringi WAS: len, not len+1
         }
     } else if(_isIDSeparator(*tmpLocaleID)) {
         const char *scriptID;
