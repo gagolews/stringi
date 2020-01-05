@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.4.4
-Date: 2019-12-27
+Date: 2020-01-06
 Title: Character String Processing Facilities
 Description: Fast, correct, consistent, portable and convenient character
     string/text processing in every locale and any native encoding. 
