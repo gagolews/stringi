@@ -2186,7 +2186,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
 
 
 
