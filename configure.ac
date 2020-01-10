@@ -6,7 +6,7 @@
 
 AC_INIT(stringi, 1.4, marek@gagolewski.com)
 
-ICU_VERSION_NEEDED="52" # minimal version of ICU4C required to build stringi
+ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
 
 m4_ifndef([AC_CONFIG_MACRO_DIRS],
     [m4_defun([_AM_CONFIG_MACRO_DIRS], [])m4_defun([AC_CONFIG_MACRO_DIRS],
