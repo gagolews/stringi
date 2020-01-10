@@ -19,7 +19,7 @@ customized installation.
 stringi and the ICU4C library
 -----------------------------
 
-The stringi package depends on the ICU4C >= 52 library.
+The stringi package depends on the ICU4C >= 55 library.
 
 If you build the package from sources and either:
 * this requirement is not met (check out http://site.icu-project.org/download,
@@ -94,7 +94,7 @@ Customizing the build process
 Auxiliary `./configure` features and options:
 
 * `--disable-cxx11`: Disable use of C++11; if you build ICU4C from
-   sources, make sure your C++ compiler supports the long long type.
+   sources, make sure your C++ compiler supports the `long long` type.
 * `--disable-icu-bundle`: Force the use of the system ICU.
 * `--disable-pkg-config`: Disable `pkg-config` usage for finding ICU4C-devel;
   in such a case ICU4C will be compiled from sources.
@@ -112,11 +112,11 @@ Some influential environment variables:
 * `PKG_CONFIG_PATH`: An optional list of directories to search for
   `pkg-config`s `.pc` files.
 * `R_HOME`: Override default directory with R installation, e.g.,
-  `/usr/lib64/R`. Note that `$R_HOME/bin/R` should point to the R executable.
-* `CAT`: The `cat` command used for generating the list of source files
+  `/usr/lib64/R`. Note that `$R_HOME/bin/R` should refer to the R executable.
+* `CAT`: The `cat` command used to generate the list of source files
   to compile.
-* `PKG_CONFIG`:The `pkg-config` command used for getting necessary compiler
-  flags to link to and existing libicu installation.
+* `PKG_CONFIG`:The `pkg-config` command used to fetch the necessary compiler
+  flags to link to and existing `libicu` installation.
 * `STRINGI_DISABLE_CXX11`: Disable the use of C++11,
       see also `--disable-cxx11`.
 * `STRINGI_DISABLE_PKG_CONFIG`: Force the use of the ICU bundle,
