@@ -1,5 +1,5 @@
 # autoconf/configure script for stringi
-# Copyright (C) 2013-2019, M. Gagolewski
+# Copyright (C) 2013-2020, M. Gagolewski
 # http://www.gagolewski.com/software/stringi/
 
 ##### INIT ####################################################################
