@@ -4,9 +4,14 @@
 
 ## 1.4.6 (2020-xx-yy) **devel*
 
-* ... #370
+* [@TODO@] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
+reported by rchk.
 
-* ... #369
+* [@TODO@] #369: `stri_c()` now returns an empty string
+when input is empty and `collapse` is set.
+
+* [@TODO@] #372: documented arguments not in `\usage` in
+documentation object `stri_datetime_format`: `...`
 
 -----------------------------------------------------------------------------
 
