@@ -2,9 +2,9 @@
 
 -------------------------------------------------------------------------------
 
-## 1.4.6 (2020-xx-yy) **devel*
+## 1.4.6 (2020-02-17) **devel*
 
-* [@TODO@] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
+* [BUGFIX] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
 reported by rchk.
 
 * [@TODO@] #369: `stri_c()` now returns an empty string
