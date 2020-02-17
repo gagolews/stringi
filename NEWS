@@ -1,8 +1,15 @@
 # stringi package NEWS and CHANGELOG
 
+
 -------------------------------------------------------------------------------
 
-## 1.4.6 (2020-02-17) **devel*
+## 1.4.7 (2020-XX-XX) **devel*
+
+* t.b.d. ...
+
+-------------------------------------------------------------------------------
+
+## 1.4.6 (2020-02-17) **CRAN*
 
 * [NEW FEATURE] #369: `stri_c()` now returns an empty string
 when input is empty and `collapse` is set.
