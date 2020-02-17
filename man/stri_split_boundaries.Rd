@@ -4,8 +4,14 @@
 \alias{stri_split_boundaries}
 \title{Split a String at Text Boundaries}
 \usage{
-stri_split_boundaries(str, n = -1L, tokens_only = FALSE,
-  simplify = FALSE, ..., opts_brkiter = NULL)
+stri_split_boundaries(
+  str,
+  n = -1L,
+  tokens_only = FALSE,
+  simplify = FALSE,
+  ...,
+  opts_brkiter = NULL
+)
 }
 \arguments{
 \item{str}{character vector or an object coercible to}
@@ -58,7 +64,7 @@ performed by \pkg{ICU}'s \code{BreakIterator}, see
 \link{stringi-search-boundaries}.
 }
 \examples{
-test <- "The\\u00a0above-mentioned    features are very useful. " \%s+\%
+test <- "The\u00a0above-mentioned    features are very useful. " \%s+\%
    "Kudos to their developers. 123 456 789"
 stri_split_boundaries(test, type="line")
 stri_split_boundaries(test, type="word")
@@ -75,33 +81,39 @@ So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56
 
 }
 \seealso{
-Other search_split: \code{\link{stri_split_lines}},
-  \code{\link{stri_split}}, \code{\link{stringi-search}}
+Other search_split: 
+\code{\link{stri_split_lines}()},
+\code{\link{stri_split}()},
+\code{\link{stringi-search}}
 
-Other locale_sensitive: \code{\link{\%s<\%}},
-  \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_collator}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_unique}}, \code{\link{stri_wrap}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{\%s<\%}()},
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_collator}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_unique}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-locale}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 
-Other text_boundaries: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_brkiter}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search}}
+Other text_boundaries: 
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_brkiter}()},
+\code{\link{stri_split_lines}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search}}
 }
 \concept{locale_sensitive}
 \concept{search_split}

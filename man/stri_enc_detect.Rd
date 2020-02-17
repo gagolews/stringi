@@ -111,10 +111,11 @@ stri_enc_detect(f)
 \url{http://userguide.icu-project.org/conversion/detection}
 }
 \seealso{
-Other encoding_detection: \code{\link{stri_enc_detect2}},
-  \code{\link{stri_enc_isascii}},
-  \code{\link{stri_enc_isutf16be}},
-  \code{\link{stri_enc_isutf8}},
-  \code{\link{stringi-encoding}}
+Other encoding_detection: 
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_enc_isascii}()},
+\code{\link{stri_enc_isutf16be}()},
+\code{\link{stri_enc_isutf8}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_detection}

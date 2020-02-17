@@ -35,14 +35,15 @@ stri_datetime_fstr("\%Y-\%m-\%d \%H:\%M:\%S")
 
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
-  \code{\link{stri_datetime_create}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_datetime_symbols}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}},
-  \code{\link{stri_timezone_list}}
+Other datetime: 
+\code{\link{stri_datetime_add}()},
+\code{\link{stri_datetime_create}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_format}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_datetime_symbols}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()},
+\code{\link{stri_timezone_list}()}
 }
 \concept{datetime}

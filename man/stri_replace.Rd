@@ -25,42 +25,67 @@ stri_replace_first(str, replacement, ..., regex, fixed, coll, charclass)
 
 stri_replace_last(str, replacement, ..., regex, fixed, coll, charclass)
 
-stri_replace(str, replacement, ..., regex, fixed, coll, charclass,
-  mode = c("first", "all", "last"))
+stri_replace(
+  str,
+  replacement,
+  ...,
+  regex,
+  fixed,
+  coll,
+  charclass,
+  mode = c("first", "all", "last")
+)
 
-stri_replace_all_charclass(str, pattern, replacement, merge = FALSE,
-  vectorize_all = TRUE)
+stri_replace_all_charclass(
+  str,
+  pattern,
+  replacement,
+  merge = FALSE,
+  vectorize_all = TRUE
+)
 
 stri_replace_first_charclass(str, pattern, replacement)
 
 stri_replace_last_charclass(str, pattern, replacement)
 
-stri_replace_all_coll(str, pattern, replacement, vectorize_all = TRUE,
-  ..., opts_collator = NULL)
+stri_replace_all_coll(
+  str,
+  pattern,
+  replacement,
+  vectorize_all = TRUE,
+  ...,
+  opts_collator = NULL
+)
 
-stri_replace_first_coll(str, pattern, replacement, ...,
-  opts_collator = NULL)
+stri_replace_first_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
-stri_replace_last_coll(str, pattern, replacement, ...,
-  opts_collator = NULL)
+stri_replace_last_coll(str, pattern, replacement, ..., opts_collator = NULL)
 
-stri_replace_all_fixed(str, pattern, replacement, vectorize_all = TRUE,
-  ..., opts_fixed = NULL)
+stri_replace_all_fixed(
+  str,
+  pattern,
+  replacement,
+  vectorize_all = TRUE,
+  ...,
+  opts_fixed = NULL
+)
 
-stri_replace_first_fixed(str, pattern, replacement, ...,
-  opts_fixed = NULL)
+stri_replace_first_fixed(str, pattern, replacement, ..., opts_fixed = NULL)
 
-stri_replace_last_fixed(str, pattern, replacement, ...,
-  opts_fixed = NULL)
+stri_replace_last_fixed(str, pattern, replacement, ..., opts_fixed = NULL)
 
-stri_replace_all_regex(str, pattern, replacement, vectorize_all = TRUE,
-  ..., opts_regex = NULL)
+stri_replace_all_regex(
+  str,
+  pattern,
+  replacement,
+  vectorize_all = TRUE,
+  ...,
+  opts_regex = NULL
+)
 
-stri_replace_first_regex(str, pattern, replacement, ...,
-  opts_regex = NULL)
+stri_replace_first_regex(str, pattern, replacement, ..., opts_regex = NULL)
 
-stri_replace_last_regex(str, pattern, replacement, ...,
-  opts_regex = NULL)
+stri_replace_last_regex(str, pattern, replacement, ..., opts_regex = NULL)
 }
 \arguments{
 \item{str}{character vector; strings to search in}
@@ -134,8 +159,8 @@ of a string, see \code{\link{stri_trim}}.
 \examples{
 stri_replace_all_charclass("aaaa", "[a]", "b", merge=c(TRUE, FALSE))
 
-stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ")
-stri_replace_all_charclass("a\\nb\\tc   d", "\\\\p{WHITE_SPACE}", " ", merge=TRUE)
+stri_replace_all_charclass("a\nb\tc   d", "\\\\p{WHITE_SPACE}", " ")
+stri_replace_all_charclass("a\nb\tc   d", "\\\\p{WHITE_SPACE}", " ", merge=TRUE)
 
 s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
 stri_replace_all_fixed(s, " ", "#")
@@ -169,7 +194,8 @@ stri_replace_all_regex("The quicker brown fox jumped over the lazy dog.",
 
 }
 \seealso{
-Other search_replace: \code{\link{stri_trim_both}},
-  \code{\link{stringi-search}}
+Other search_replace: 
+\code{\link{stri_trim_both}()},
+\code{\link{stringi-search}}
 }
 \concept{search_replace}

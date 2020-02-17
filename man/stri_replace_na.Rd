@@ -34,8 +34,9 @@ stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
 
 }
 \seealso{
-Other utils: \code{\link{stri_list2matrix}},
-  \code{\link{stri_na2empty}},
-  \code{\link{stri_remove_empty}}
+Other utils: 
+\code{\link{stri_list2matrix}()},
+\code{\link{stri_na2empty}()},
+\code{\link{stri_remove_empty}()}
 }
 \concept{utils}

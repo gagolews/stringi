@@ -280,18 +280,20 @@ to a portable code (again, in POSIX-like regex engines).
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1UnicodeSet.html}
 }
 \seealso{
-Other search_charclass: \code{\link{stri_trim_both}},
-  \code{\link{stringi-search}}
+Other search_charclass: 
+\code{\link{stri_trim_both}()},
+\code{\link{stringi-search}}
 
-Other stringi_general_topics: \code{\link{stringi-arguments}},
-  \code{\link{stringi-encoding}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-arguments}},
+\code{\link{stringi-encoding}},
+\code{\link{stringi-locale}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 }
 \concept{search_charclass}
 \concept{stringi_general_topics}

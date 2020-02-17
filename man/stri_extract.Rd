@@ -25,32 +25,62 @@ stri_extract_first(str, ..., regex, fixed, coll, charclass)
 
 stri_extract_last(str, ..., regex, fixed, coll, charclass)
 
-stri_extract(str, ..., regex, fixed, coll, charclass, mode = c("first",
-  "all", "last"))
+stri_extract(
+  str,
+  ...,
+  regex,
+  fixed,
+  coll,
+  charclass,
+  mode = c("first", "all", "last")
+)
 
-stri_extract_all_charclass(str, pattern, merge = TRUE,
-  simplify = FALSE, omit_no_match = FALSE)
+stri_extract_all_charclass(
+  str,
+  pattern,
+  merge = TRUE,
+  simplify = FALSE,
+  omit_no_match = FALSE
+)
 
 stri_extract_first_charclass(str, pattern)
 
 stri_extract_last_charclass(str, pattern)
 
-stri_extract_all_coll(str, pattern, simplify = FALSE,
-  omit_no_match = FALSE, ..., opts_collator = NULL)
+stri_extract_all_coll(
+  str,
+  pattern,
+  simplify = FALSE,
+  omit_no_match = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
 stri_extract_first_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_extract_last_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_extract_all_regex(str, pattern, simplify = FALSE,
-  omit_no_match = FALSE, ..., opts_regex = NULL)
+stri_extract_all_regex(
+  str,
+  pattern,
+  simplify = FALSE,
+  omit_no_match = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
 stri_extract_first_regex(str, pattern, ..., opts_regex = NULL)
 
 stri_extract_last_regex(str, pattern, ..., opts_regex = NULL)
 
-stri_extract_all_fixed(str, pattern, simplify = FALSE,
-  omit_no_match = FALSE, ..., opts_fixed = NULL)
+stri_extract_all_fixed(
+  str,
+  pattern,
+  simplify = FALSE,
+  omit_no_match = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
 stri_extract_first_fixed(str, pattern, ..., opts_fixed = NULL)
 
@@ -144,8 +174,8 @@ stri_extract_all_charclass(stri_enc_fromutf32(32:55200), "\\\\p{EMOJI}")
 }
 
 stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-stri_extract_first_coll(c('Yy\\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-stri_extract_last_coll(c('Yy\\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
+stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
+stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
 
 stri_extract_all_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 stri_extract_first_regex('XaaaaX', c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
@@ -160,8 +190,9 @@ stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE)
 
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_match_all}},
-  \code{\link{stringi-search}}
+Other search_extract: 
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_match_all}()},
+\code{\link{stringi-search}}
 }
 \concept{search_extract}

@@ -115,7 +115,9 @@ print(x)
 \dontrun{x \%>\% stri_sub_replace(1, 5, replacement="new_substring")}
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all}}, \code{\link{stri_sub_all}}
+Other indexing: 
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_locate_all}()},
+\code{\link{stri_sub_all}()}
 }
 \concept{indexing}

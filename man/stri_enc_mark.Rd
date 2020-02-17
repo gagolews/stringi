@@ -46,8 +46,10 @@ to match -- by default -- the encoding part of the \code{LC_CTYPE} category
 as given by \code{\link{Sys.getlocale}}.
 }
 \seealso{
-Other encoding_management: \code{\link{stri_enc_info}},
-  \code{\link{stri_enc_list}}, \code{\link{stri_enc_set}},
-  \code{\link{stringi-encoding}}
+Other encoding_management: 
+\code{\link{stri_enc_info}()},
+\code{\link{stri_enc_list}()},
+\code{\link{stri_enc_set}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_management}

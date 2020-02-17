@@ -38,8 +38,9 @@ stri_locale_info("Pl_pL") # the same result
 
 }
 \seealso{
-Other locale_management: \code{\link{stri_locale_list}},
-  \code{\link{stri_locale_set}},
-  \code{\link{stringi-locale}}
+Other locale_management: 
+\code{\link{stri_locale_list}()},
+\code{\link{stri_locale_set}()},
+\code{\link{stringi-locale}}
 }
 \concept{locale_management}

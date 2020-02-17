@@ -21,8 +21,9 @@ during the resource request.
 See \link{stringi-locale} for more information.
 }
 \seealso{
-Other locale_management: \code{\link{stri_locale_info}},
-  \code{\link{stri_locale_set}},
-  \code{\link{stringi-locale}}
+Other locale_management: 
+\code{\link{stri_locale_info}()},
+\code{\link{stri_locale_set}()},
+\code{\link{stringi-locale}}
 }
 \concept{locale_management}

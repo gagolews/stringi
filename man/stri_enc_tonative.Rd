@@ -26,10 +26,12 @@ resulting strings will be marked with \code{UTF-8}
 and not \code{native}, see \code{\link{stri_enc_mark}}.
 }
 \seealso{
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_toascii}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}},
-  \code{\link{stringi-encoding}}
+Other encoding_conversion: 
+\code{\link{stri_enc_fromutf32}()},
+\code{\link{stri_enc_toascii}()},
+\code{\link{stri_enc_toutf32}()},
+\code{\link{stri_enc_toutf8}()},
+\code{\link{stri_encode}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_conversion}

@@ -90,7 +90,9 @@ stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), replacement=c("A", "B", "C
 
 }
 \seealso{
-Other indexing: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_locate_all}}, \code{\link{stri_sub}}
+Other indexing: 
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_locate_all}()},
+\code{\link{stri_sub}()}
 }
 \concept{indexing}

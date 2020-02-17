@@ -4,8 +4,17 @@
 \alias{stri_datetime_create}
 \title{Create a Date-Time Object}
 \usage{
-stri_datetime_create(year, month, day, hour = 12L, minute = 0L,
-  second = 0, lenient = FALSE, tz = NULL, locale = NULL)
+stri_datetime_create(
+  year,
+  month,
+  day,
+  hour = 12L,
+  minute = 0L,
+  second = 0,
+  lenient = FALSE,
+  tz = NULL,
+  locale = NULL
+)
 }
 \arguments{
 \item{year}{integer vector; 0 is 1BC, -1 is 2BC, etc.}
@@ -47,14 +56,15 @@ stri_datetime_create(2015, 02, 29, lenient=TRUE)
 
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_fstr}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_datetime_symbols}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}},
-  \code{\link{stri_timezone_list}}
+Other datetime: 
+\code{\link{stri_datetime_add}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_format}()},
+\code{\link{stri_datetime_fstr}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_datetime_symbols}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()},
+\code{\link{stri_timezone_list}()}
 }
 \concept{datetime}

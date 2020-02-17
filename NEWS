@@ -4,13 +4,13 @@
 
 ## 1.4.6 (2020-02-17) **devel*
 
+* [NEW FEATURE] #369: `stri_c()` now returns an empty string
+when input is empty and `collapse` is set.
+
 * [BUGFIX] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
 reported by rchk.
 
-* [@TODO@] #369: `stri_c()` now returns an empty string
-when input is empty and `collapse` is set.
-
-* [@TODO@] #372: documented arguments not in `\usage` in
+* [BUGFIX] #372: documented arguments not in `\usage` in
 documentation object `stri_datetime_format`: `...`
 
 -----------------------------------------------------------------------------

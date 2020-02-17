@@ -23,8 +23,7 @@ stri_startswith_charclass(str, pattern, from = 1L)
 
 stri_endswith_charclass(str, pattern, to = -1L)
 
-stri_startswith_coll(str, pattern, from = 1L, ...,
-  opts_collator = NULL)
+stri_startswith_coll(str, pattern, from = 1L, ..., opts_collator = NULL)
 
 stri_endswith_coll(str, pattern, to = -1L, ..., opts_collator = NULL)
 }
@@ -96,13 +95,14 @@ stri_detect_regex(c("a1", "a2", "b3", "a4", "c5"), "^a")
 stri_startswith_fixed("ababa", "ba")
 stri_startswith_fixed("ababa", "ba", from=2)
 stri_startswith_coll(c("a1", "A2", "b3", "A4", "C5"), "a", strength=1)
-pat <- stri_paste("\\u0635\\u0644\\u0649 \\u0627\\u0644\\u0644\\u0647 ",
-                  "\\u0639\\u0644\\u064a\\u0647 \\u0648\\u0633\\u0644\\u0645XYZ")
-stri_endswith_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat, strength=1)
+pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
+stri_endswith_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength=1)
 
 }
 \seealso{
-Other search_detect: \code{\link{stri_detect}},
-  \code{\link{stringi-search}}
+Other search_detect: 
+\code{\link{stri_detect}()},
+\code{\link{stringi-search}}
 }
 \concept{search_detect}

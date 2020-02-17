@@ -4,8 +4,7 @@
 \alias{stri_flatten}
 \title{Flatten a String}
 \usage{
-stri_flatten(str, collapse = "", na_empty = FALSE,
-  omit_empty = FALSE)
+stri_flatten(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
 }
 \arguments{
 \item{str}{a vector of strings to be coerced to character}
@@ -45,7 +44,10 @@ stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit
 
 }
 \seealso{
-Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
-  \code{\link{stri_join_list}}, \code{\link{stri_join}}
+Other join: 
+\code{\link{\%s+\%}()},
+\code{\link{stri_dup}()},
+\code{\link{stri_join_list}()},
+\code{\link{stri_join}()}
 }
 \concept{join}

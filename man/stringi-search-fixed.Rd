@@ -34,18 +34,20 @@ to Unicode is done as usual.
 }
 
 \seealso{
-Other search_fixed: \code{\link{stri_opts_fixed}},
-  \code{\link{stringi-search}}
+Other search_fixed: 
+\code{\link{stri_opts_fixed}()},
+\code{\link{stringi-search}}
 
-Other stringi_general_topics: \code{\link{stringi-arguments}},
-  \code{\link{stringi-encoding}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-arguments}},
+\code{\link{stringi-encoding}},
+\code{\link{stringi-locale}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 }
 \concept{search_fixed}
 \concept{stringi_general_topics}

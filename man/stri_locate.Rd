@@ -25,32 +25,53 @@ stri_locate_first(str, ..., regex, fixed, coll, charclass)
 
 stri_locate_last(str, ..., regex, fixed, coll, charclass)
 
-stri_locate(str, ..., regex, fixed, coll, charclass, mode = c("first",
-  "all", "last"))
+stri_locate(
+  str,
+  ...,
+  regex,
+  fixed,
+  coll,
+  charclass,
+  mode = c("first", "all", "last")
+)
 
-stri_locate_all_charclass(str, pattern, merge = TRUE,
-  omit_no_match = FALSE)
+stri_locate_all_charclass(str, pattern, merge = TRUE, omit_no_match = FALSE)
 
 stri_locate_first_charclass(str, pattern)
 
 stri_locate_last_charclass(str, pattern)
 
-stri_locate_all_coll(str, pattern, omit_no_match = FALSE, ...,
-  opts_collator = NULL)
+stri_locate_all_coll(
+  str,
+  pattern,
+  omit_no_match = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
 stri_locate_first_coll(str, pattern, ..., opts_collator = NULL)
 
 stri_locate_last_coll(str, pattern, ..., opts_collator = NULL)
 
-stri_locate_all_regex(str, pattern, omit_no_match = FALSE, ...,
-  opts_regex = NULL)
+stri_locate_all_regex(
+  str,
+  pattern,
+  omit_no_match = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
 stri_locate_first_regex(str, pattern, ..., opts_regex = NULL)
 
 stri_locate_last_regex(str, pattern, ..., opts_regex = NULL)
 
-stri_locate_all_fixed(str, pattern, omit_no_match = FALSE, ...,
-  opts_fixed = NULL)
+stri_locate_all_fixed(
+  str,
+  pattern,
+  omit_no_match = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
 stri_locate_first_fixed(str, pattern, ..., opts_fixed = NULL)
 
@@ -136,12 +157,12 @@ stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
 stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
 
 stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-stri_locate_first_coll(c('Yy\\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-stri_locate_last_coll(c('Yy\\u00FD', 'AAA'), 'y', strength=1, locale="sk_SK")
+stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
+stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale="sk_SK")
 
-pat <- stri_paste("\\u0635\\u0644\\u0649 \\u0627\\u0644\\u0644\\u0647 ",
-                  "\\u0639\\u0644\\u064a\\u0647 \\u0648\\u0633\\u0644\\u0645XYZ")
-stri_locate_last_coll("\\ufdfa\\ufdfa\\ufdfaXYZ", pat, strength = 1)
+pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
+                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
+stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength = 1)
 
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
@@ -170,11 +191,14 @@ stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
 
 }
 \seealso{
-Other search_locate: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stringi-search}}
+Other search_locate: 
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stringi-search}}
 
-Other indexing: \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_sub_all}}, \code{\link{stri_sub}}
+Other indexing: 
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_sub_all}()},
+\code{\link{stri_sub}()}
 }
 \concept{indexing}
 \concept{search_locate}

@@ -25,7 +25,8 @@ text lines split (see \code{\link{stri_split_lines1}})
 can be performed.
 }
 \seealso{
-Other files: \code{\link{stri_read_lines}},
-  \code{\link{stri_write_lines}}
+Other files: 
+\code{\link{stri_read_lines}()},
+\code{\link{stri_write_lines}()}
 }
 \concept{files}

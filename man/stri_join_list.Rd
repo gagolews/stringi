@@ -66,7 +66,10 @@ sep=",", collapse="; ")
 
 }
 \seealso{
-Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
-  \code{\link{stri_flatten}}, \code{\link{stri_join}}
+Other join: 
+\code{\link{\%s+\%}()},
+\code{\link{stri_dup}()},
+\code{\link{stri_flatten}()},
+\code{\link{stri_join}()}
 }
 \concept{join}
