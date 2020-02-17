@@ -1,5 +1,5 @@
 /* This file is part of the 'stringi' package for R.
- * Copyright (c) 2013-2018, Marek Gagolewski and other contributors.
+ * Copyright (c) 2013-2020, Marek Gagolewski and other contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -353,13 +353,9 @@ SEXP stri_join2_withcollapse(SEXP e1, SEXP e2, SEXP collapse)
    R_len_t e2_length = LENGTH(e2);
    R_len_t vectorize_length = stri__recycling_rule(true, 2, e1_length, e2_length);
 
-   if (e1_length <= 0) {
+   if (e1_length <= 0 || e2_length <= 0) {
       UNPROTECT(3);
-      return e1;
-   }
-   if (e2_length <= 0) {
-      UNPROTECT(3);
-      return e2;
+      return stri__vector_empty_strings(1);
    }
 
    STRI__ERROR_HANDLER_BEGIN(3)
@@ -594,7 +590,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
    R_len_t strlist_length = LENGTH(strlist);
    if (strlist_length <= 0) {
       UNPROTECT(1);
-      return stri__vector_empty_strings(0);
+      return stri__vector_empty_strings(1);
    }
    else if (strlist_length == 1) {
       // one vector + collapse string -- another frequently occurring case
@@ -626,7 +622,7 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
       R_len_t strlist_cur_length = LENGTH(VECTOR_ELT(strlist, i));
       if (strlist_cur_length <= 0) {
          UNPROTECT(3);
-         return stri__vector_empty_strings(0);
+         return stri__vector_empty_strings(1);
       }
       if (strlist_cur_length > vectorize_length)
          vectorize_length = strlist_cur_length;
@@ -734,7 +730,7 @@ SEXP stri_flatten_noressep(SEXP str, bool na_empty)
    R_len_t str_length = LENGTH(str);
    if (str_length <= 0) {
       UNPROTECT(1);
-      return str;
+      return stri__vector_empty_strings(1);
    }
 
    STRI__ERROR_HANDLER_BEGIN(1)
@@ -828,7 +824,7 @@ SEXP stri_flatten(SEXP str, SEXP collapse, SEXP na_empty, SEXP omit_empty) // a.
    R_len_t str_length = LENGTH(str);
    if (str_length <= 0) {
       UNPROTECT(2);
-      return stri__vector_empty_strings(0);
+      return stri__vector_empty_strings(1);
    }
 
    STRI__ERROR_HANDLER_BEGIN(2)

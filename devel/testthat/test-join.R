@@ -41,6 +41,19 @@ test_that("stri_join", {
    expect_equal(stri_paste(character(0), "a", ignore_null=FALSE), character(0))
    expect_equal(stri_paste(character(0), "a", ignore_null=TRUE), "a")
 
+   expect_equal(stri_join(character(0), sep="", collapse="", ignore_null=TRUE), "")
+   expect_equal(stri_join(character(0), sep="", collapse="!", ignore_null=TRUE), "")
+   expect_equal(stri_join(character(0), sep="", collapse="", ignore_null=FALSE), "")
+   expect_equal(stri_join(character(0), sep="", collapse="!", ignore_null=FALSE), "")
+   expect_equal(stri_join(character(0), "aa", sep="", collapse="", ignore_null=TRUE), "aa")
+   expect_equal(stri_join(character(0), "aa", sep="", collapse="!", ignore_null=TRUE), "aa")
+   expect_equal(stri_join(character(0), "aa", sep="", collapse="", ignore_null=FALSE), "")
+   expect_equal(stri_join(character(0), "aa", sep="", collapse="!", ignore_null=FALSE), "")
+   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="", ignore_null=TRUE), "bbaa")
+   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="!", ignore_null=TRUE), "bbaa")
+   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="", ignore_null=FALSE), "")
+   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="!", ignore_null=FALSE), "")
+
    #stringr tests:
    test <- c("a", "b", "c")
    expect_that(stri_c(test, ignore_null=TRUE), equals(test))
@@ -81,8 +94,8 @@ test_that("stri_join", {
    expect_identical(stri_join(character(0)), character(0))
    expect_identical(stri_join(NULL), character(0))
    expect_identical(stri_join("a", "b", NULL), character(0))
-   expect_identical(stri_join(character(0), "a", "b", collapse=""), character(0))
-   expect_identical(stri_join(character(0), rep("a", 2), collapse=""), character(0))
+   expect_identical(stri_join(character(0), "a", "b", collapse=""), "")
+   expect_identical(stri_join(character(0), rep("a", 2), collapse=""), "")
 
    expect_identical(stri_join(character(0), "a", "b", ignore_null=TRUE), "ab")
    expect_identical(stri_join(character(0), "a", rep("b",2), ignore_null=TRUE), c("ab", "ab"))
