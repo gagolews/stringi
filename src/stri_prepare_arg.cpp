@@ -359,18 +359,21 @@ SEXP stri_prepare_arg_double(SEXP x, const char* argname)
  * @return numeric vector
  *
  * @version 0.5-1 (Marek Gagolewski, 2014-12-30)
+ * @version 1.1.6 (Marek Gagolewski, 2020-02-17) bugfix #370
  *
  */
 SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
 {
+   int num_protect = 0;
    if ((SEXP*)argname == (SEXP*)R_NilValue)
       argname = "<noname>";
 
    if (Rf_inherits(x, "POSIXlt") || Rf_inherits(x, "Date")) {
-      PROTECT(x = Rf_eval(Rf_lang2(Rf_install("as.POSIXct"), x), R_GlobalEnv));
+      SEXP tmp1;
+      PROTECT(tmp1 = Rf_lang2(Rf_install("as.POSIXct"), x));
+      PROTECT(x = Rf_eval(tmp1, R_GlobalEnv));
+      num_protect += 2;
    }
-   else
-      PROTECT(x);
 
    if (!Rf_inherits(x, "POSIXct")) {
       Rf_error(MSG__ARG_EXPECTED_POSIXct, argname);
@@ -384,7 +387,7 @@ SEXP stri_prepare_arg_POSIXct(SEXP x, const char* argname)
    PROTECT(x = stri_prepare_arg_double(x, argname));
    Rf_setAttrib(x, robj_class, attrib_class);
    Rf_setAttrib(x, robj_tzone, attrib_tzone);
-   UNPROTECT(6);
+   UNPROTECT(num_protect+5);
    return x;
 }
 
