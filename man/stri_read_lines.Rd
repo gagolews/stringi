@@ -4,8 +4,12 @@
 \alias{stri_read_lines}
 \title{[DRAFT API] Read Text Lines from a Text File}
 \usage{
-stri_read_lines(fname, encoding = "auto", locale = NA,
-  fallback_encoding = stri_enc_get())
+stri_read_lines(
+  fname,
+  encoding = "auto",
+  locale = NA,
+  fallback_encoding = stri_enc_get()
+)
 }
 \arguments{
 \item{fname}{single string with file name}
@@ -42,7 +46,8 @@ If \code{locale} is \code{NA} and auto-detection of UTF-32/16/8 fails,
 then \code{fallback_encoding} is used.
 }
 \seealso{
-Other files: \code{\link{stri_read_raw}},
-  \code{\link{stri_write_lines}}
+Other files: 
+\code{\link{stri_read_raw}()},
+\code{\link{stri_write_lines}()}
 }
 \concept{files}

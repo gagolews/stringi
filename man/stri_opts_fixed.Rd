@@ -42,7 +42,8 @@ stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
 \url{http://userguide.icu-project.org/posix#case_mappings}
 }
 \seealso{
-Other search_fixed: \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search}}
+Other search_fixed: 
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search}}
 }
 \concept{search_fixed}

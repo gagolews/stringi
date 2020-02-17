@@ -36,8 +36,10 @@ c('abc', '123', 'xy') \%s+\% letters[1:6]
 
 }
 \seealso{
-Other join: \code{\link{stri_dup}},
-  \code{\link{stri_flatten}}, \code{\link{stri_join_list}},
-  \code{\link{stri_join}}
+Other join: 
+\code{\link{stri_dup}()},
+\code{\link{stri_flatten}()},
+\code{\link{stri_join_list}()},
+\code{\link{stri_join}()}
 }
 \concept{join}

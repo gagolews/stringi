@@ -33,12 +33,13 @@ No Markov chain modeling, just i.i.d. word selection.
 \examples{
 cat(sapply(
    stri_wrap(stri_rand_lipsum(10), 80, simplify=FALSE),
-   stri_flatten, collapse="\\n"), sep="\\n\\n")
-cat(stri_rand_lipsum(10), sep="\\n\\n")
+   stri_flatten, collapse="\n"), sep="\n\n")
+cat(stri_rand_lipsum(10), sep="\n\n")
 
 }
 \seealso{
-Other random: \code{\link{stri_rand_shuffle}},
-  \code{\link{stri_rand_strings}}
+Other random: 
+\code{\link{stri_rand_shuffle}()},
+\code{\link{stri_rand_strings}()}
 }
 \concept{random}

@@ -78,18 +78,20 @@ do.call(rbind.data.frame,
 \url{http://userguide.icu-project.org/datetime}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
-  \code{\link{stri_datetime_create}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_fstr}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_datetime_symbols}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}}
+Other datetime: 
+\code{\link{stri_datetime_add}()},
+\code{\link{stri_datetime_create}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_format}()},
+\code{\link{stri_datetime_fstr}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_datetime_symbols}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()}
 
-Other timezone: \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}}
+Other timezone: 
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()}
 }
 \concept{datetime}
 \concept{timezone}

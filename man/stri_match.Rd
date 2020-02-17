@@ -18,14 +18,30 @@ stri_match_last(str, ..., regex)
 
 stri_match(str, ..., regex, mode = c("first", "all", "last"))
 
-stri_match_all_regex(str, pattern, omit_no_match = FALSE,
-  cg_missing = NA_character_, ..., opts_regex = NULL)
+stri_match_all_regex(
+  str,
+  pattern,
+  omit_no_match = FALSE,
+  cg_missing = NA_character_,
+  ...,
+  opts_regex = NULL
+)
 
-stri_match_first_regex(str, pattern, cg_missing = NA_character_, ...,
-  opts_regex = NULL)
+stri_match_first_regex(
+  str,
+  pattern,
+  cg_missing = NA_character_,
+  ...,
+  opts_regex = NULL
+)
 
-stri_match_last_regex(str, pattern, cg_missing = NA_character_, ...,
-  opts_regex = NULL)
+stri_match_last_regex(
+  str,
+  pattern,
+  cg_missing = NA_character_,
+  ...,
+  opts_regex = NULL
+)
 }
 \arguments{
 \item{str}{character vector; strings to search in}
@@ -112,8 +128,9 @@ stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\\\1")
 
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_extract_all}},
-  \code{\link{stringi-search}}
+Other search_extract: 
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_extract_all}()},
+\code{\link{stringi-search}}
 }
 \concept{search_extract}

@@ -5,11 +5,20 @@
 \alias{stri_datetime_parse}
 \title{Date and Time Formatting and Parsing}
 \usage{
-stri_datetime_format(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
-  locale = NULL)
+stri_datetime_format(
+  time,
+  format = "uuuu-MM-dd HH:mm:ss",
+  tz = NULL,
+  locale = NULL
+)
 
-stri_datetime_parse(str, format = "uuuu-MM-dd HH:mm:ss",
-  lenient = FALSE, tz = NULL, locale = NULL)
+stri_datetime_parse(
+  str,
+  format = "uuuu-MM-dd HH:mm:ss",
+  lenient = FALSE,
+  tz = NULL,
+  locale = NULL
+)
 }
 \arguments{
 \item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
@@ -27,8 +36,6 @@ may be specified by setting the \code{@calendar=name} keyword}
 \item{str}{character vector}
 
 \item{lenient}{single logical value; should date/time parsing be lenient?}
-
-\item{...}{Further arguments to be passed from or to other methods.}
 }
 \value{
 \code{stri_datetime_format} returns a character vector.
@@ -202,14 +209,15 @@ stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
 \url{http://userguide.icu-project.org/formatparse/datetime}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
-  \code{\link{stri_datetime_create}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_fstr}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_datetime_symbols}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}},
-  \code{\link{stri_timezone_list}}
+Other datetime: 
+\code{\link{stri_datetime_add}()},
+\code{\link{stri_datetime_create}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_fstr}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_datetime_symbols}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()},
+\code{\link{stri_timezone_list}()}
 }
 \concept{datetime}

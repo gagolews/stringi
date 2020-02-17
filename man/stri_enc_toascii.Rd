@@ -31,10 +31,12 @@ Note that the SUBSTITUTE CHARACTER (\code{\\x1a == \\032}) may be interpreted
 as the ASCII missing value for single characters.
 }
 \seealso{
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_tonative}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}},
-  \code{\link{stringi-encoding}}
+Other encoding_conversion: 
+\code{\link{stri_enc_fromutf32}()},
+\code{\link{stri_enc_tonative}()},
+\code{\link{stri_enc_toutf32}()},
+\code{\link{stri_enc_toutf8}()},
+\code{\link{stri_encode}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_conversion}

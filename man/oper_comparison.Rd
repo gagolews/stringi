@@ -80,19 +80,22 @@ c("a", "b", "c") \%stri>=\% "b"
 
 }
 \seealso{
-Other locale_sensitive: \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_collator}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_unique}}, \code{\link{stri_wrap}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_collator}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_unique}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-locale}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 }
 \concept{locale_sensitive}

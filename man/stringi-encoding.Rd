@@ -211,31 +211,37 @@ function in this category.
 \emph{UTF-8, UTF-16, UTF-32 & BOM} -- ICU FAQ, \url{http://www.unicode.org/faq/utf_bom.html}
 }
 \seealso{
-Other stringi_general_topics: \code{\link{stringi-arguments}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-arguments}},
+\code{\link{stringi-locale}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 
-Other encoding_management: \code{\link{stri_enc_info}},
-  \code{\link{stri_enc_list}}, \code{\link{stri_enc_mark}},
-  \code{\link{stri_enc_set}}
+Other encoding_management: 
+\code{\link{stri_enc_info}()},
+\code{\link{stri_enc_list}()},
+\code{\link{stri_enc_mark}()},
+\code{\link{stri_enc_set}()}
 
-Other encoding_detection: \code{\link{stri_enc_detect2}},
-  \code{\link{stri_enc_detect}},
-  \code{\link{stri_enc_isascii}},
-  \code{\link{stri_enc_isutf16be}},
-  \code{\link{stri_enc_isutf8}}
+Other encoding_detection: 
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_enc_detect}()},
+\code{\link{stri_enc_isascii}()},
+\code{\link{stri_enc_isutf16be}()},
+\code{\link{stri_enc_isutf8}()}
 
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_toascii}},
-  \code{\link{stri_enc_tonative}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_enc_toutf8}}, \code{\link{stri_encode}}
+Other encoding_conversion: 
+\code{\link{stri_enc_fromutf32}()},
+\code{\link{stri_enc_toascii}()},
+\code{\link{stri_enc_tonative}()},
+\code{\link{stri_enc_toutf32}()},
+\code{\link{stri_enc_toutf8}()},
+\code{\link{stri_encode}()}
 }
 \concept{encoding_conversion}
 \concept{encoding_detection}

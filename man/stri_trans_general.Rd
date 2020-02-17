@@ -53,24 +53,25 @@ To achieve this, a compound transform can be specified as follows:
 \code{NFKD; Lower; Latin-Katakana;}
 }
 \examples{
-stri_trans_general("gro\\u00df", "latin-ascii")
+stri_trans_general("gro\u00df", "latin-ascii")
 stri_trans_general("stringi", "latin-greek")
 stri_trans_general("stringi", "latin-cyrillic")
 stri_trans_general("stringi", "upper") # see stri_trans_toupper
-stri_trans_general("\\u0104", "nfd; lower") # compound id; see stri_trans_nfd
+stri_trans_general("\u0104", "nfd; lower") # compound id; see stri_trans_nfd
 stri_trans_general("tato nie wraca ranki wieczory", "pl-pl_FONIPA")
-stri_trans_general("\\u2620", "any-name") # character name
+stri_trans_general("\u2620", "any-name") # character name
 stri_trans_general("\\\\N{latin small letter a}", "name-any") # decode name
-stri_trans_general("\\u2620", "hex") # to hex
+stri_trans_general("\u2620", "hex") # to hex
 }
 \references{
 \emph{General Transforms} -- ICU User Guide,
 \url{http://userguide.icu-project.org/transforms/general}
 }
 \seealso{
-Other transform: \code{\link{stri_trans_char}},
-  \code{\link{stri_trans_list}},
-  \code{\link{stri_trans_nfc}},
-  \code{\link{stri_trans_tolower}}
+Other transform: 
+\code{\link{stri_trans_char}()},
+\code{\link{stri_trans_list}()},
+\code{\link{stri_trans_nfc}()},
+\code{\link{stri_trans_tolower}()}
 }
 \concept{transform}

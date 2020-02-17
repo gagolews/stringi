@@ -38,15 +38,16 @@ character strings (see \link{Encoding} and \link{stringi-encoding}).
 }
 \examples{
 stri_enc_isutf8(letters[1:3])
-stri_enc_isutf8("\\u0105\\u0104")
-stri_enc_isutf8("\\u1234\\u0222")
+stri_enc_isutf8("\u0105\u0104")
+stri_enc_isutf8("\u1234\u0222")
 
 }
 \seealso{
-Other encoding_detection: \code{\link{stri_enc_detect2}},
-  \code{\link{stri_enc_detect}},
-  \code{\link{stri_enc_isascii}},
-  \code{\link{stri_enc_isutf16be}},
-  \code{\link{stringi-encoding}}
+Other encoding_detection: 
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_enc_detect}()},
+\code{\link{stri_enc_isascii}()},
+\code{\link{stri_enc_isutf16be}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_detection}

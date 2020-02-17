@@ -50,8 +50,9 @@ stri_omit_empty_na(c("a", NA, "", "b"))
 
 }
 \seealso{
-Other utils: \code{\link{stri_list2matrix}},
-  \code{\link{stri_na2empty}},
-  \code{\link{stri_replace_na}}
+Other utils: 
+\code{\link{stri_list2matrix}()},
+\code{\link{stri_na2empty}()},
+\code{\link{stri_replace_na}()}
 }
 \concept{utils}

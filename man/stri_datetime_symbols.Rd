@@ -4,8 +4,7 @@
 \alias{stri_datetime_symbols}
 \title{List Localizable Date-Time Formatting Data}
 \usage{
-stri_datetime_symbols(locale = NULL, context = "standalone",
-  width = "wide")
+stri_datetime_symbols(locale = NULL, context = "standalone", width = "wide")
 }
 \arguments{
 \item{locale}{\code{NULL} or \code{""} for default locale,
@@ -65,14 +64,15 @@ stri_datetime_symbols(width="narrow")
 \url{http://userguide.icu-project.org/formatparse/datetime}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_add}},
-  \code{\link{stri_datetime_create}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_fstr}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}},
-  \code{\link{stri_timezone_list}}
+Other datetime: 
+\code{\link{stri_datetime_add}()},
+\code{\link{stri_datetime_create}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_format}()},
+\code{\link{stri_datetime_fstr}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()},
+\code{\link{stri_timezone_list}()}
 }
 \concept{datetime}

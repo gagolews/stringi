@@ -4,8 +4,12 @@
 \alias{stri_write_lines}
 \title{[DRAFT API] Write Text Lines to a Text File}
 \usage{
-stri_write_lines(str, fname, encoding = "UTF-8",
-  sep = ifelse(.Platform$OS.type == "windows", "\\r\\n", "\\n"))
+stri_write_lines(
+  str,
+  fname,
+  encoding = "UTF-8",
+  sep = ifelse(.Platform$OS.type == "windows", "\\r\\n", "\\n")
+)
 }
 \arguments{
 \item{str}{character vector}
@@ -34,7 +38,8 @@ Note that we suggest using the UTF-8 encoding for all text files:
 thus, it is the default one for the output.
 }
 \seealso{
-Other files: \code{\link{stri_read_lines}},
-  \code{\link{stri_read_raw}}
+Other files: 
+\code{\link{stri_read_lines}()},
+\code{\link{stri_read_raw}()}
 }
 \concept{files}

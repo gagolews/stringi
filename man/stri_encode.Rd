@@ -88,11 +88,12 @@ substitute character. Also, in such a case a warning is generated.
 \url{http://userguide.icu-project.org/conversion/converters}  (technical details)
 }
 \seealso{
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_toascii}},
-  \code{\link{stri_enc_tonative}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_enc_toutf8}},
-  \code{\link{stringi-encoding}}
+Other encoding_conversion: 
+\code{\link{stri_enc_fromutf32}()},
+\code{\link{stri_enc_toascii}()},
+\code{\link{stri_enc_tonative}()},
+\code{\link{stri_enc_toutf32}()},
+\code{\link{stri_enc_toutf8}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_conversion}

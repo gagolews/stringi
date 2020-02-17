@@ -32,8 +32,10 @@ converter names. For instance, \code{"UTF8"} is also valid,
 see \link{stringi-encoding} for more information.
 }
 \seealso{
-Other encoding_management: \code{\link{stri_enc_info}},
-  \code{\link{stri_enc_mark}}, \code{\link{stri_enc_set}},
-  \code{\link{stringi-encoding}}
+Other encoding_management: 
+\code{\link{stri_enc_info}()},
+\code{\link{stri_enc_mark}()},
+\code{\link{stri_enc_set}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_management}

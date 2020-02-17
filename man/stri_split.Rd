@@ -10,17 +10,47 @@
 \usage{
 stri_split(str, ..., regex, fixed, coll, charclass)
 
-stri_split_fixed(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE, ..., opts_fixed = NULL)
+stri_split_fixed(
+  str,
+  pattern,
+  n = -1L,
+  omit_empty = FALSE,
+  tokens_only = FALSE,
+  simplify = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
-stri_split_regex(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE, ..., opts_regex = NULL)
+stri_split_regex(
+  str,
+  pattern,
+  n = -1L,
+  omit_empty = FALSE,
+  tokens_only = FALSE,
+  simplify = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
-stri_split_coll(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE, ..., opts_collator = NULL)
+stri_split_coll(
+  str,
+  pattern,
+  n = -1L,
+  omit_empty = FALSE,
+  tokens_only = FALSE,
+  simplify = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
-stri_split_charclass(str, pattern, n = -1L, omit_empty = FALSE,
-  tokens_only = FALSE, simplify = FALSE)
+stri_split_charclass(
+  str,
+  pattern,
+  n = -1L,
+  omit_empty = FALSE,
+  tokens_only = FALSE,
+  simplify = FALSE
+)
 }
 \arguments{
 \item{str}{character vector; strings to search in}
@@ -126,8 +156,9 @@ stri_split_regex("Lorem ipsum dolor sit amet",
 
 }
 \seealso{
-Other search_split: \code{\link{stri_split_boundaries}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stringi-search}}
+Other search_split: 
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_split_lines}()},
+\code{\link{stringi-search}}
 }
 \concept{search_split}

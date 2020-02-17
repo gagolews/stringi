@@ -48,8 +48,10 @@ the default charset is always UTF-8 (i.e., where the internal
 \code{\link{stri_info}}.
 }
 \seealso{
-Other encoding_management: \code{\link{stri_enc_info}},
-  \code{\link{stri_enc_list}}, \code{\link{stri_enc_mark}},
-  \code{\link{stringi-encoding}}
+Other encoding_management: 
+\code{\link{stri_enc_info}()},
+\code{\link{stri_enc_list}()},
+\code{\link{stri_enc_mark}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_management}

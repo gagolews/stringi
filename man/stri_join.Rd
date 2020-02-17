@@ -64,7 +64,10 @@ stri_join(c('abc', '123', 'xyz'),'###', 1:6, sep=',', collapse='; ')
 
 }
 \seealso{
-Other join: \code{\link{\%s+\%}}, \code{\link{stri_dup}},
-  \code{\link{stri_flatten}}, \code{\link{stri_join_list}}
+Other join: 
+\code{\link{\%s+\%}()},
+\code{\link{stri_dup}()},
+\code{\link{stri_flatten}()},
+\code{\link{stri_join_list}()}
 }
 \concept{join}

@@ -74,15 +74,16 @@ or use, e.g., the subsetting operation like \code{x[] <- stri_...(x, ...)}.
 }
 
 \seealso{
-Other stringi_general_topics: \code{\link{stringi-encoding}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-encoding}},
+\code{\link{stringi-locale}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 }
 \concept{prepare_arg}
 \concept{stringi_general_topics}

@@ -4,9 +4,20 @@
 \alias{stri_opts_brkiter}
 \title{Generate a List with BreakIterator Settings}
 \usage{
-stri_opts_brkiter(type, locale, skip_word_none, skip_word_number,
-  skip_word_letter, skip_word_kana, skip_word_ideo, skip_line_soft,
-  skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
+stri_opts_brkiter(
+  type,
+  locale,
+  skip_word_none,
+  skip_word_number,
+  skip_word_letter,
+  skip_word_kana,
+  skip_word_ideo,
+  skip_line_soft,
+  skip_line_hard,
+  skip_sentence_term,
+  skip_sentence_sep,
+  ...
+)
 }
 \arguments{
 \item{type}{single string; either the break iterator type, one of \code{character},
@@ -76,14 +87,15 @@ to the ICU User Guide on Boundary Analysis.
 \url{http://userguide.icu-project.org/boundaryanalysis}
 }
 \seealso{
-Other text_boundaries: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search}}
+Other text_boundaries: 
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_split_lines}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search}}
 }
 \concept{text_boundaries}

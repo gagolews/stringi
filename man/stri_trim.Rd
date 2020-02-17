@@ -13,8 +13,7 @@ stri_trim_left(str, pattern = "\\\\P{Wspace}")
 
 stri_trim_right(str, pattern = "\\\\P{Wspace}")
 
-stri_trim(str, side = c("both", "left", "right"),
-  pattern = "\\\\P{Wspace}")
+stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 }
 \arguments{
 \item{str}{a character vector of strings to be trimmed}
@@ -64,11 +63,13 @@ stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
 
 }
 \seealso{
-Other search_replace: \code{\link{stri_replace_all}},
-  \code{\link{stringi-search}}
+Other search_replace: 
+\code{\link{stri_replace_all}()},
+\code{\link{stringi-search}}
 
-Other search_charclass: \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search}}
+Other search_charclass: 
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search}}
 }
 \concept{search_charclass}
 \concept{search_replace}

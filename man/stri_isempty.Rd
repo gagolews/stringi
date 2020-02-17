@@ -21,12 +21,14 @@ Missing values are handled properly.
 }
 \examples{
 stri_isempty(letters[1:3])
-stri_isempty(c(',', '', 'abc', '123', '\\u0105\\u0104'))
+stri_isempty(c(',', '', 'abc', '123', '\u0105\u0104'))
 stri_isempty(character(1))
 
 }
 \seealso{
-Other length: \code{\link{stri_length}},
-  \code{\link{stri_numbytes}}, \code{\link{stri_width}}
+Other length: 
+\code{\link{stri_length}()},
+\code{\link{stri_numbytes}()},
+\code{\link{stri_width}()}
 }
 \concept{length}

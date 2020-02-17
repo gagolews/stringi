@@ -100,34 +100,39 @@ Other locale-sensitive functions include, e.g.,
 \emph{ISO 3166: Country Codes}, \url{http://www.iso.org/iso/country_codes}
 }
 \seealso{
-Other locale_management: \code{\link{stri_locale_info}},
-  \code{\link{stri_locale_list}},
-  \code{\link{stri_locale_set}}
+Other locale_management: 
+\code{\link{stri_locale_info}()},
+\code{\link{stri_locale_list}()},
+\code{\link{stri_locale_set}()}
 
-Other locale_sensitive: \code{\link{\%s<\%}},
-  \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_collator}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_unique}}, \code{\link{stri_wrap}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{\%s<\%}()},
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_collator}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_unique}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 
-Other stringi_general_topics: \code{\link{stringi-arguments}},
-  \code{\link{stringi-encoding}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-arguments}},
+\code{\link{stringi-encoding}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 }
 \concept{locale_management}
 \concept{locale_sensitive}

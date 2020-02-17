@@ -70,8 +70,8 @@ stri_count_fixed(c("stringi", "123"), "string")
 
 stri_count_charclass(c("stRRRingi", "STrrrINGI", "123"),
    c("\\\\p{Ll}", "\\\\p{Lu}", "\\\\p{Zs}"))
-stri_count_charclass(" \\t\\n", "\\\\p{WHITE_SPACE}") # white space - binary property
-stri_count_charclass(" \\t\\n", "\\\\p{Z}") # white-space - general category (note the difference)
+stri_count_charclass(" \t\n", "\\\\p{WHITE_SPACE}") # white space - binary property
+stri_count_charclass(" \t\n", "\\\\p{Z}") # white-space - general category (note the difference)
 
 stri_count_regex(s, "(s|el)it")
 stri_count_regex(s, "i.i")
@@ -81,7 +81,8 @@ stri_count_regex(c("stringi", "123"), "^(s|1)")
 
 }
 \seealso{
-Other search_count: \code{\link{stri_count_boundaries}},
-  \code{\link{stringi-search}}
+Other search_count: 
+\code{\link{stri_count_boundaries}()},
+\code{\link{stringi-search}}
 }
 \concept{search_count}

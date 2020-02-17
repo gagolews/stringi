@@ -29,7 +29,8 @@ stri_rand_shuffle(rep(stri_paste(letters, collapse=''), 10))
 
 }
 \seealso{
-Other random: \code{\link{stri_rand_lipsum}},
-  \code{\link{stri_rand_strings}}
+Other random: 
+\code{\link{stri_rand_lipsum}()},
+\code{\link{stri_rand_strings}()}
 }
 \concept{random}

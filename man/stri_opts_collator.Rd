@@ -4,9 +4,17 @@
 \alias{stri_opts_collator}
 \title{Generate a List with Collator Settings}
 \usage{
-stri_opts_collator(locale = NULL, strength = 3L,
-  alternate_shifted = FALSE, french = FALSE, uppercase_first = NA,
-  case_level = FALSE, normalization = FALSE, numeric = FALSE, ...)
+stri_opts_collator(
+  locale = NULL,
+  strength = 3L,
+  alternate_shifted = FALSE,
+  french = FALSE,
+  uppercase_first = NA,
+  case_level = FALSE,
+  normalization = FALSE,
+  numeric = FALSE,
+  ...
+)
 }
 \arguments{
 \item{locale}{single string, \code{NULL} or
@@ -87,23 +95,27 @@ stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
 \url{http://www.icu-project.org/apiref/icu4c/classicu_1_1Collator.html}
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%s<\%}},
-  \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_unique}}, \code{\link{stri_wrap}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{\%s<\%}()},
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_unique}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-locale}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 
-Other search_coll: \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search}}
+Other search_coll: 
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search}}
 }
 \concept{locale_sensitive}
 \concept{search_coll}

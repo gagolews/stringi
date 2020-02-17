@@ -17,8 +17,14 @@ stri_subset(str, ..., regex, fixed, coll, charclass)
 
 stri_subset(str, ..., regex, fixed, coll, charclass) <- value
 
-stri_subset_fixed(str, pattern, omit_na = FALSE, negate = FALSE, ...,
-  opts_fixed = NULL)
+stri_subset_fixed(
+  str,
+  pattern,
+  omit_na = FALSE,
+  negate = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
 stri_subset_fixed(str, pattern, negate=FALSE, ..., opts_fixed=NULL) <- value
 
@@ -26,13 +32,25 @@ stri_subset_charclass(str, pattern, omit_na = FALSE, negate = FALSE)
 
 stri_subset_charclass(str, pattern, negate=FALSE) <- value
 
-stri_subset_coll(str, pattern, omit_na = FALSE, negate = FALSE, ...,
-  opts_collator = NULL)
+stri_subset_coll(
+  str,
+  pattern,
+  omit_na = FALSE,
+  negate = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
 stri_subset_coll(str, pattern, negate=FALSE, ..., opts_collator=NULL) <- value
 
-stri_subset_regex(str, pattern, omit_na = FALSE, negate = FALSE, ...,
-  opts_regex = NULL)
+stri_subset_regex(
+  str,
+  pattern,
+  omit_na = FALSE,
+  negate = FALSE,
+  ...,
+  opts_regex = NULL
+)
 
 stri_subset_regex(str, pattern, negate=FALSE, ..., opts_regex=NULL) <- value
 }
@@ -98,6 +116,7 @@ print(x)
 
 }
 \seealso{
-Other search_subset: \code{\link{stringi-search}}
+Other search_subset: 
+\code{\link{stringi-search}}
 }
 \concept{search_subset}

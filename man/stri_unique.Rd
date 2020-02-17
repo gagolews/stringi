@@ -35,10 +35,10 @@ See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 }
 \examples{
 # normalized and non-Unicode-normalized version of the same code point:
-stri_unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
-unique(c("\\u0105", stri_trans_nfkd("\\u0105")))
+stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
+unique(c("\u0105", stri_trans_nfkd("\u0105")))
 
-stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
+stri_unique(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
 
 }
 \references{
@@ -46,19 +46,22 @@ stri_unique(c("gro\\u00df", "GROSS", "Gro\\u00df", "Gross"), strength=1)
 \url{http://userguide.icu-project.org/collation}
 }
 \seealso{
-Other locale_sensitive: \code{\link{\%s<\%}},
-  \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_extract_all_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_collator}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}}, \code{\link{stringi-locale}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{\%s<\%}()},
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_extract_all_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_collator}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-locale}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 }
 \concept{locale_sensitive}

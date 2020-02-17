@@ -4,8 +4,17 @@
 \alias{stri_opts_regex}
 \title{Generate a List with Regex Matcher Settings}
 \usage{
-stri_opts_regex(case_insensitive, comments, dotall, literal, multiline,
-  unix_lines, uword, error_on_unknown_escapes, ...)
+stri_opts_regex(
+  case_insensitive,
+  comments,
+  dotall,
+  literal,
+  multiline,
+  unix_lines,
+  uword,
+  error_on_unknown_escapes,
+  ...
+)
 }
 \arguments{
 \item{case_insensitive}{logical; enables case insensitive matching [regex flag \code{(?i)}]}
@@ -72,7 +81,8 @@ stri_detect_regex("ala", "(?i)ALA") # equivalent
 \url{http://userguide.icu-project.org/strings/regexp}
 }
 \seealso{
-Other search_regex: \code{\link{stringi-search-regex}},
-  \code{\link{stringi-search}}
+Other search_regex: 
+\code{\link{stringi-search-regex}},
+\code{\link{stringi-search}}
 }
 \concept{search_regex}

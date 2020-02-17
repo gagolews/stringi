@@ -205,18 +205,20 @@ J.E.F. Friedl, \emph{Mastering Regular Expressions}, O'Reilly, 2002
 \url{http://www.regular-expressions.info/unicode.html}
 }
 \seealso{
-Other search_regex: \code{\link{stri_opts_regex}},
-  \code{\link{stringi-search}}
+Other search_regex: 
+\code{\link{stri_opts_regex}()},
+\code{\link{stringi-search}}
 
-Other stringi_general_topics: \code{\link{stringi-arguments}},
-  \code{\link{stringi-encoding}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-package}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-charclass}},
-  \code{\link{stringi-search-coll}},
-  \code{\link{stringi-search-fixed}},
-  \code{\link{stringi-search}}
+Other stringi_general_topics: 
+\code{\link{stringi-arguments}},
+\code{\link{stringi-encoding}},
+\code{\link{stringi-locale}},
+\code{\link{stringi-package}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-charclass}},
+\code{\link{stringi-search-coll}},
+\code{\link{stringi-search-fixed}},
+\code{\link{stringi-search}}
 }
 \concept{search_regex}
 \concept{stringi_general_topics}

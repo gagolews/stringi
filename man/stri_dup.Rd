@@ -27,8 +27,10 @@ stri_dup(c("a", NA, "ba"), 4)
 stri_dup(c("abc", "pqrst"), c(4, 2))
 }
 \seealso{
-Other join: \code{\link{\%s+\%}},
-  \code{\link{stri_flatten}}, \code{\link{stri_join_list}},
-  \code{\link{stri_join}}
+Other join: 
+\code{\link{\%s+\%}()},
+\code{\link{stri_flatten}()},
+\code{\link{stri_join_list}()},
+\code{\link{stri_join}()}
 }
 \concept{join}

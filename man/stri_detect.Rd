@@ -10,16 +10,34 @@
 \usage{
 stri_detect(str, ..., regex, fixed, coll, charclass)
 
-stri_detect_fixed(str, pattern, negate = FALSE, max_count = -1, ...,
-  opts_fixed = NULL)
+stri_detect_fixed(
+  str,
+  pattern,
+  negate = FALSE,
+  max_count = -1,
+  ...,
+  opts_fixed = NULL
+)
 
 stri_detect_charclass(str, pattern, negate = FALSE, max_count = -1)
 
-stri_detect_coll(str, pattern, negate = FALSE, max_count = -1, ...,
-  opts_collator = NULL)
+stri_detect_coll(
+  str,
+  pattern,
+  negate = FALSE,
+  max_count = -1,
+  ...,
+  opts_collator = NULL
+)
 
-stri_detect_regex(str, pattern, negate = FALSE, max_count = -1, ...,
-  opts_regex = NULL)
+stri_detect_regex(
+  str,
+  pattern,
+  negate = FALSE,
+  max_count = -1,
+  ...,
+  opts_regex = NULL
+)
 }
 \arguments{
 \item{str}{character vector; strings to search in}
@@ -100,7 +118,8 @@ stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
 
 }
 \seealso{
-Other search_detect: \code{\link{stri_startswith}},
-  \code{\link{stringi-search}}
+Other search_detect: 
+\code{\link{stri_startswith}()},
+\code{\link{stringi-search}}
 }
 \concept{search_detect}

@@ -51,10 +51,12 @@ where you want to fix an invalid UTF-8 byte sequence.
 For \code{NA}, a bogus string will be replaced with a missing value.
 }
 \seealso{
-Other encoding_conversion: \code{\link{stri_enc_fromutf32}},
-  \code{\link{stri_enc_toascii}},
-  \code{\link{stri_enc_tonative}},
-  \code{\link{stri_enc_toutf32}},
-  \code{\link{stri_encode}}, \code{\link{stringi-encoding}}
+Other encoding_conversion: 
+\code{\link{stri_enc_fromutf32}()},
+\code{\link{stri_enc_toascii}()},
+\code{\link{stri_enc_tonative}()},
+\code{\link{stri_enc_toutf32}()},
+\code{\link{stri_encode}()},
+\code{\link{stringi-encoding}}
 }
 \concept{encoding_conversion}

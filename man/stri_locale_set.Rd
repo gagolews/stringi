@@ -47,8 +47,9 @@ stri_locale_set(oldloc) # restore the previous default locale
 }
 }
 \seealso{
-Other locale_management: \code{\link{stri_locale_info}},
-  \code{\link{stri_locale_list}},
-  \code{\link{stringi-locale}}
+Other locale_management: 
+\code{\link{stri_locale_info}()},
+\code{\link{stri_locale_list}()},
+\code{\link{stringi-locale}}
 }
 \concept{locale_management}

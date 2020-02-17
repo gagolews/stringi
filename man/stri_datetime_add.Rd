@@ -5,11 +5,15 @@
 \alias{stri_datetime_add<-}
 \title{Date and Time Arithmetic}
 \usage{
-stri_datetime_add(time, value = 1L, units = "seconds", tz = NULL,
-  locale = NULL)
+stri_datetime_add(
+  time,
+  value = 1L,
+  units = "seconds",
+  tz = NULL,
+  locale = NULL
+)
 
-stri_datetime_add(time, units = "seconds", tz = NULL,
-  locale = NULL) <- value
+stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <- value
 }
 \arguments{
 \item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
@@ -58,14 +62,15 @@ stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
 \url{http://userguide.icu-project.org/datetime/calendar}
 }
 \seealso{
-Other datetime: \code{\link{stri_datetime_create}},
-  \code{\link{stri_datetime_fields}},
-  \code{\link{stri_datetime_format}},
-  \code{\link{stri_datetime_fstr}},
-  \code{\link{stri_datetime_now}},
-  \code{\link{stri_datetime_symbols}},
-  \code{\link{stri_timezone_get}},
-  \code{\link{stri_timezone_info}},
-  \code{\link{stri_timezone_list}}
+Other datetime: 
+\code{\link{stri_datetime_create}()},
+\code{\link{stri_datetime_fields}()},
+\code{\link{stri_datetime_format}()},
+\code{\link{stri_datetime_fstr}()},
+\code{\link{stri_datetime_now}()},
+\code{\link{stri_datetime_symbols}()},
+\code{\link{stri_timezone_get}()},
+\code{\link{stri_timezone_info}()},
+\code{\link{stri_timezone_list}()}
 }
 \concept{datetime}

@@ -9,15 +9,24 @@
 \alias{stri_extract_last_words}
 \title{Extract Data Between Text Boundaries}
 \usage{
-stri_extract_all_boundaries(str, simplify = FALSE,
-  omit_no_match = FALSE, ..., opts_brkiter = NULL)
+stri_extract_all_boundaries(
+  str,
+  simplify = FALSE,
+  omit_no_match = FALSE,
+  ...,
+  opts_brkiter = NULL
+)
 
 stri_extract_last_boundaries(str, ..., opts_brkiter = NULL)
 
 stri_extract_first_boundaries(str, ..., opts_brkiter = NULL)
 
-stri_extract_all_words(str, simplify = FALSE, omit_no_match = FALSE,
-  locale = NULL)
+stri_extract_all_words(
+  str,
+  simplify = FALSE,
+  omit_no_match = FALSE,
+  locale = NULL
+)
 
 stri_extract_first_words(str, locale = NULL)
 
@@ -83,34 +92,39 @@ stri_extract_all_words("stringi: THE string processing package 123.48...")
 
 }
 \seealso{
-Other search_extract: \code{\link{stri_extract_all}},
-  \code{\link{stri_match_all}},
-  \code{\link{stringi-search}}
+Other search_extract: 
+\code{\link{stri_extract_all}()},
+\code{\link{stri_match_all}()},
+\code{\link{stringi-search}}
 
-Other locale_sensitive: \code{\link{\%s<\%}},
-  \code{\link{stri_compare}},
-  \code{\link{stri_count_boundaries}},
-  \code{\link{stri_duplicated}},
-  \code{\link{stri_enc_detect2}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_collator}},
-  \code{\link{stri_order}}, \code{\link{stri_sort}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_unique}}, \code{\link{stri_wrap}},
-  \code{\link{stringi-locale}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search-coll}}
+Other locale_sensitive: 
+\code{\link{\%s<\%}()},
+\code{\link{stri_compare}()},
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_duplicated}()},
+\code{\link{stri_enc_detect2}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_collator}()},
+\code{\link{stri_order}()},
+\code{\link{stri_sort}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_unique}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-locale}},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search-coll}}
 
-Other text_boundaries: \code{\link{stri_count_boundaries}},
-  \code{\link{stri_locate_all_boundaries}},
-  \code{\link{stri_opts_brkiter}},
-  \code{\link{stri_split_boundaries}},
-  \code{\link{stri_split_lines}},
-  \code{\link{stri_trans_tolower}},
-  \code{\link{stri_wrap}},
-  \code{\link{stringi-search-boundaries}},
-  \code{\link{stringi-search}}
+Other text_boundaries: 
+\code{\link{stri_count_boundaries}()},
+\code{\link{stri_locate_all_boundaries}()},
+\code{\link{stri_opts_brkiter}()},
+\code{\link{stri_split_boundaries}()},
+\code{\link{stri_split_lines}()},
+\code{\link{stri_trans_tolower}()},
+\code{\link{stri_wrap}()},
+\code{\link{stringi-search-boundaries}},
+\code{\link{stringi-search}}
 }
 \concept{locale_sensitive}
 \concept{search_extract}
