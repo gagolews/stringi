@@ -11,7 +11,7 @@
 
 ## 1.4.6 (2020-02-17) **CRAN*
 
-* [NEW FEATURE] #369: `stri_c()` now returns an empty string
+* [BACKWARD INCOMPATIBILITY] #369: `stri_c()` now returns an empty string
 when input is empty and `collapse` is set.
 
 * [BUGFIX] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
