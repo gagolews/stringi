@@ -34,6 +34,7 @@
 #include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
 #include <unicode/ucol.h>
+#include <unicode/sortkey.h>
 #include <vector>
 #include <deque>
 #include <algorithm>
@@ -188,6 +189,108 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
             SET_STRING_ELT(ret, j, NA_STRING);
       }
    }
+
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
+}
+
+SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* col = NULL;
+   col = stri__ucol_open(opts_collator);
+
+   STRI__ERROR_HANDLER_BEGIN(1)
+
+   R_len_t length = LENGTH(str);
+   StriContainerUTF8 str_cont(str, length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
+   SEXP* p_ret = STRING_PTR(ret);
+
+   UErrorCode status = U_ZERO_ERROR;
+
+   uint32_t key_size = 0;
+
+   // Allocate temporary buffer to hold the current string as a UChar
+   uint32_t uchar_buffer_size = 100;
+   UChar* uchar_buffer = (UChar*) malloc(uchar_buffer_size * sizeof(UChar));
+
+   if (uchar_buffer == NULL) {
+      status = U_MEMORY_ALLOCATION_ERROR;
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+         // Should never get here?
+         return R_NilValue;
+   }
+
+   // Allocate temporary buffer to hold the current sort key
+   uint32_t buffer_size = 16384;
+   uint8_t* buffer = (uint8_t*) malloc(buffer_size * sizeof(uint8_t));
+
+   if (buffer == NULL) {
+      status = U_MEMORY_ALLOCATION_ERROR;
+      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+      // Should never get here?
+      return R_NilValue;
+   }
+
+   for (R_len_t i = 0; i < length; ++i) {
+      if (str_cont.isNA(i)) {
+         p_ret[i] = NA_STRING;
+         continue;
+      }
+
+      const String8& str_current = str_cont.get(i);
+      R_len_t str_current_length = str_current.length();
+
+      // + 1 for null terminator that `u_uastrcpy()` will add
+      if (str_current_length + 1 > uchar_buffer_size) {
+         uchar_buffer_size = str_current_length + 1;
+         uchar_buffer = (UChar*) realloc(uchar_buffer, uchar_buffer_size * sizeof(UChar));
+      }
+
+      // Copy from a `const char*` to a `UChar*` for `ucol_getSortKey()`
+      // Adds a null terminator onto the end of the string, which
+      // `ucol_getSortKey()` will use when the destination length is set to `-1`
+      u_uastrcpy(uchar_buffer, str_current.c_str());
+
+      key_size = ucol_getSortKey(col, uchar_buffer, -1, buffer, buffer_size);
+
+      if (key_size > buffer_size) {
+         buffer_size = key_size;
+         buffer = (uint8_t*) realloc(buffer, buffer_size * sizeof(uint8_t));
+
+         if (buffer == NULL) {
+            status = U_MEMORY_ALLOCATION_ERROR;
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            // Should never get here?
+            return R_NilValue;
+         }
+
+         // Try again
+         key_size = ucol_getSortKey(col, uchar_buffer, -1, buffer, buffer_size);
+      }
+
+      // `key_size` includes null terminator
+      R_len_t char_size = key_size - 1;
+
+      p_ret[i] = Rf_mkCharLenCE((char*) buffer, char_size, CE_UTF8);
+   }
+
+   free(buffer);
+   free(uchar_buffer);
 
    if (col) {
       ucol_close(col);

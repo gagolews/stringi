@@ -155,6 +155,7 @@ const R_CallMethodDef cCallMethods[] = {
    STRI__MK_CALL("C_stri_numbytes",                     stri_numbytes,                   1),
    STRI__MK_CALL("C_stri_order",                        stri_order,                      4),
    STRI__MK_CALL("C_stri_sort",                         stri_sort,                       4),
+   STRI__MK_CALL("C_stri_sort_key",                     stri_sort_key,                   2),
    STRI__MK_CALL("C_stri_pad",                          stri_pad,                        5),
    STRI__MK_CALL("C_stri_prepare_arg_string",           stri_prepare_arg_string,         2),
    STRI__MK_CALL("C_stri_prepare_arg_POSIXct",          stri_prepare_arg_POSIXct,        2),

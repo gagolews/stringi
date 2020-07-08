@@ -53,6 +53,7 @@ SEXP stri_sort(SEXP str, SEXP decreasing=Rf_ScalarLogical(FALSE),
    SEXP na_last=Rf_ScalarLogical(NA_LOGICAL), SEXP opts_collator=R_NilValue);
 SEXP stri_order(SEXP str, SEXP decreasing=Rf_ScalarLogical(FALSE),
    SEXP na_last=Rf_ScalarLogical(TRUE), SEXP opts_collator=R_NilValue);
+SEXP stri_sort_key(SEXP str, SEXP opts_collator=R_NilValue);
 
 SEXP stri_unique(SEXP str, SEXP opts_collator=R_NilValue);
 SEXP stri_duplicated(SEXP str, SEXP fromLast=Rf_ScalarLogical(FALSE),
