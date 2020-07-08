@@ -87,6 +87,12 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
    .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
 }
 
+stri_sort_key <- function(str, ..., opts_collator=NULL) {
+   if (!missing(...))
+      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+   .Call(C_stri_sort_key, str, opts_collator)
+}
+
 
 #' @title
 #' Ordering Permutation
