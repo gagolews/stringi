@@ -227,8 +227,6 @@ stri_install_icudt <- function(check=TRUE, outpath=NULL, inpath=NULL, icu_bundle
    if (is.null(outpath))
       outpath <- file.path(path.package("stringi"), "libs")
 
-   outpath <- "/Users/davis/Desktop/r/packages/stringi/src/icu61/data/libs"
-
    stopifnot(is.character(outpath), length(outpath) == 1, file.exists(outpath))
 
    message("decompressing icudt archive ", icudtzipfname, " to: ", outpath)

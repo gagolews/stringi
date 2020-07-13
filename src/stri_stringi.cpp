@@ -256,11 +256,7 @@ void stri_set_icu_data_directory(const char* libpath)
    // libpath == "...../libs/i386" -> "...../libs"
    // libpath == "...../libs/x64"  -> "...../libs"
 
-   string dir("/Users/davis/Desktop/r/packages/stringi/src/icu61/data/libs/");
-   u_setDataDirectory(dir.c_str());
-   return;
-
-   //string dir(libpath);
+   string dir(libpath);
    size_t idx = dir.rfind("libs");
    if (idx == string::npos) {
       // this shouldn't happen
