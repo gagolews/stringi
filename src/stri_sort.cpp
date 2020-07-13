@@ -203,6 +203,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
    })
 }
 
+
 /** Return an ordering permutation
  *
  * @param str character vector
