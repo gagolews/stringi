@@ -489,7 +489,7 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
  * @param opts_collator passed to stri__ucol_open()
  * @return character vector
  *
- * @version 1.4.8 (Davis Vaughan, 2020-07-10)
+ * @version 1.4.7 (Davis Vaughan, 2020-07-15)
  */
 SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
    PROTECT(str = stri_prepare_arg_string(str, "str"));
