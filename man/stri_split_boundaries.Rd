@@ -96,6 +96,7 @@ Other locale_sensitive:
 \code{\link{stri_locate_all_boundaries}()},
 \code{\link{stri_opts_collator}()},
 \code{\link{stri_order}()},
+\code{\link{stri_sort_key}()},
 \code{\link{stri_sort}()},
 \code{\link{stri_trans_tolower}()},
 \code{\link{stri_unique}()},
