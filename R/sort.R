@@ -87,12 +87,6 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
    .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
 }
 
-stri_sort_key <- function(str, ..., opts_collator=NULL) {
-   if (!missing(...))
-      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_sort_key, str, opts_collator)
-}
-
 
 #' @title
 #' Ordering Permutation
@@ -276,4 +270,48 @@ stri_duplicated_any <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
    .Call(C_stri_duplicated_any, str, fromLast, opts_collator)
+}
+
+
+#' @title
+#' Sort Keys
+#'
+#'
+#' @description
+#' This function computes a locale-dependent "sort key", which is an alternative
+#' character representation of the string that, when ordered in the C locale
+#' (which orders using bytes directly), will give an equivalent ordering to the
+#' original string. It is useful for enhancing algorithms that sort only in the
+#' C locale with the ability to be locale-aware.
+#'
+#'
+#' @details
+#' For more information on \pkg{ICU}'s Collator and how to tune it up
+#' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
+#'
+#' @param str a character vector
+#' @param opts_collator a named list with \pkg{ICU} Collator's options,
+#' see \code{\link{stri_opts_collator}}, \code{NULL}
+#' for default collation options
+#' @param ... additional settings for \code{opts_collator}
+#'
+#' @return
+#' The result is a character vector with the same length as \code{str} that
+#' contains the sort keys.
+#'
+#' @references
+#' \emph{Collation} - ICU User Guide,
+#' \url{http://userguide.icu-project.org/collation}
+#'
+#' @family locale_sensitive
+#' @export
+#' @rdname stri_sort_key
+#'
+#' @examples
+#' stri_sort_key(c("hladny", "chladny"), locale="pl_PL")
+#' stri_sort_key(c("hladny", "chladny"), locale="sk_SK")
+stri_sort_key <- function(str, ..., opts_collator=NULL) {
+   if (!missing(...))
+      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+   .Call(C_stri_sort_key, str, opts_collator)
 }
