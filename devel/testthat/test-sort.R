@@ -137,3 +137,31 @@ test_that("stri_duplicated_any", {
    expect_equivalent(stri_duplicated_any(c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107","a\u0105b"),TRUE,
       opts_collator=list(locale="pl_PL")), 3)
 })
+
+test_that("stri_sort_key", {
+   skip_if_not(getRversion() > "3.3.0", message = "radix ordering not available")
+
+   radix_order <- function(x) order(x, method = "radix")
+
+   expect_equivalent(stri_sort_key(character()), character())
+   expect_equivalent(stri_sort_key(NA), NA_character_)
+
+   # C locale would order capital letters before lower case
+   x <- c("a", "A")
+   expect_equivalent(
+      radix_order(stri_sort_key(x, locale = "en_US")),
+      stri_order(x, locale = "en_US")
+   )
+
+   x <- c("abc", "aab", "a\u0105b", "\u0105bc", "ab\u0107")
+   expect_equivalent(
+      radix_order(stri_sort_key(x, locale = "pl_PL")),
+      stri_order(x, locale = "pl_PL")
+   )
+
+   x <- c("1", "100", "2")
+   expect_equivalent(
+      radix_order(stri_sort_key(x, numeric = TRUE)),
+      stri_order(x, numeric = TRUE)
+   )
+})
