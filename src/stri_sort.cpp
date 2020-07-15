@@ -505,7 +505,6 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
 
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
-   SEXP* p_ret = STRING_PTR(ret);
 
    UErrorCode status = U_ZERO_ERROR;
 
@@ -516,7 +515,7 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
 
    for (R_len_t i = 0; i < length; ++i) {
       if (str_cont.isNA(i)) {
-         p_ret[i] = NA_STRING;
+         SET_STRING_ELT(ret, i, NA_STRING);
          continue;
       }
 
@@ -542,7 +541,7 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
       // which we don't want to copy into the R CHARSXP
       R_len_t key_char_size = key_size - 1;
 
-      p_ret[i] = Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8);
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8));
    }
 
    if (col) {
