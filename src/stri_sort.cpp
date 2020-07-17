@@ -33,7 +33,9 @@
 #include "stri_stringi.h"
 #include "stri_container_utf8.h"
 #include "stri_container_utf16.h"
+#include "stri_string8buf.h"
 #include <unicode/ucol.h>
+#include <unicode/sortkey.h>
 #include <vector>
 #include <deque>
 #include <algorithm>
@@ -467,6 +469,80 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
       }
    }
 
+
+   if (col) {
+      ucol_close(col);
+      col = NULL;
+   }
+
+   STRI__UNPROTECT_ALL
+   return ret;
+
+   STRI__ERROR_HANDLER_END({
+      if (col) { ucol_close(col); col = NULL; }
+   })
+}
+
+/** Compute a character sort key
+ *
+ * @param str character vector
+ * @param opts_collator passed to stri__ucol_open()
+ * @return character vector
+ *
+ * @version 1.4.7 (Davis Vaughan, 2020-07-15)
+ */
+SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
+   PROTECT(str = stri_prepare_arg_string(str, "str"));
+
+   // call stri__ucol_open after prepare_arg:
+   // if prepare_arg had failed, we would have a mem leak
+   UCollator* col = stri__ucol_open(opts_collator);
+
+   STRI__ERROR_HANDLER_BEGIN(1)
+
+   R_len_t length = LENGTH(str);
+   StriContainerUTF16 str_cont(str, length);
+
+   SEXP ret;
+   STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
+
+   UErrorCode status = U_ZERO_ERROR;
+
+   // Allocate temporary buffer to hold the current sort key
+   int32_t key_buffer_size = 10000;
+   String8buf key_buffer(key_buffer_size);
+   uint8_t* p_key_buffer_u8 = (uint8_t*) key_buffer.data();
+
+   for (R_len_t i = 0; i < length; ++i) {
+      if (str_cont.isNA(i)) {
+         SET_STRING_ELT(ret, i, NA_STRING);
+         continue;
+      }
+
+      const UnicodeString* p_str_cur_data = &(str_cont.get(i));
+      const UChar* p_str_cur = p_str_cur_data->getBuffer();
+      const int str_cur_length = p_str_cur_data->length();
+
+      int32_t key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
+
+      // Reallocate a larger buffer and retry as required
+      if (key_size > key_buffer_size) {
+         const int32_t key_padding = 100;
+         key_buffer_size = key_size + key_padding;
+
+         key_buffer.resize(key_buffer_size, false);
+         p_key_buffer_u8 = (uint8_t*) key_buffer.data();
+
+         // Try again
+         key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
+      }
+
+      // `key_size` includes null terminator,
+      // which we don't want to copy into the R CHARSXP
+      R_len_t key_char_size = key_size - 1;
+
+      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8));
+   }
 
    if (col) {
       ucol_close(col);

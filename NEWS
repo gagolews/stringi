@@ -5,7 +5,9 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
-* t.b.d. ...
+* [NEW FEATURE] #386: New function `stri_sort_key()` for generating
+  locale-dependent sort keys which can be ordered at the byte level and
+  return an equivalent ordering to the original string (@DavisVaughan).
 
 -------------------------------------------------------------------------------
 
