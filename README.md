@@ -20,7 +20,7 @@ package (and since 2015 *stringr* is based on *stringi*).
 **Package maintainer**: [Marek Gagolewski](http://www.gagolewski.com/)
 
 **Authors**: [Marek Gagolewski](http://www.gagolewski.com/),
-with contributions from Bartlomiej Tartanus and others.
+with contributions from Bartlomiej Tartanus and many others.
 
 This git repository also contains a custom subset of *ICU4C 55.1*
 and *ICU4C 61.1* source code which is copyrighted by Unicode and others.
