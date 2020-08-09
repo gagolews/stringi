@@ -1,7 +1,11 @@
+# https://r-hub.github.io/rhub/reference/check_shortcuts.html !!!!!!
+
+
+
 R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/gcc4/lib:/opt/csw/lib" \
 CXX="CC -library=stlport4" CXXFLAGS=-O \
 FCLIBS="-lfai -lfsu"  CFLAGS="-O -xlibmieee" FFLAGS=-O FCFLAGS=$FFLAGS F77="f95" FC="f95" CC="cc-5.0" \
-./configure --with-readline=no --prefix='/home5/gagolews/tmp/R-solaris-sparc-cc' \
+./configure --with-readline=no --prefix='/home5/gagolews/tmp/R4-solaris-sparc-cc' \
  --with-tcltk=no --disable-openmp --with-x=no \
 --with-libpng=no --with-jpeglib=no --enable-R-profiling=no --with-libtiff=no
 
