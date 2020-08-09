@@ -1,9 +1,9 @@
 Package: stringi
 Version: 1.4.7
-Date: 2020-07-24
+Date: 2020-08-09
 Title: Character String Processing Facilities
-Description: Fast, correct, consistent, portable, and convenient character
-    string/text processing in every locale and any native encoding.
+Description: Fast, portable, consistent, correct, and convenient character
+    string/text/natural language processing in every locale and any native encoding.
     Owing to the use of the 'ICU' (International Components for Unicode)
     library, the package provides 'R' users with platform-independent functions
     known to 'Java', 'Perl', 'Python', 'PHP', and 'Ruby' programmers. Available
@@ -25,11 +25,11 @@ Imports:
     stats
 Biarch: TRUE
 License: file LICENSE
-Author: Marek Gagolewski [aut, cre] (<https://orcid.org/0000-0003-0637-6028>),
+Author: Marek Gagolewski [aut, cre, cph] (<https://orcid.org/0000-0003-0637-6028>),
     Bartek Tartanus [ctb]
     and other contributors (stringi source code);
     IBM, Unicode, Inc. and other contributors (ICU4C source code);
     Unicode, Inc. (Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
