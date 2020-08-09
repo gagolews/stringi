@@ -1,6 +1,6 @@
 # (C) 2020 Marek Gagolewski, https://www.gagolewski.com
 
-#VPATH="/home/gagolews/Python/genieclust"
+#VPATH="/home/gagolews/R/stringi"
 
 
 .PHONY:  r r-check r-build clean
