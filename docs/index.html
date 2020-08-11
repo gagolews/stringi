@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <!--<link rel="stylesheet" href="/lib/bootstrap-4.0.0/css/bootstrap.min.css">
+    <script src="/lib/jquery-3.3.1.min.js"></script>
+    <script src="/lib/popper-1.12.9.min.js"></script>
+    <script src="/lib/bootstrap-4.0.0/js/bootstrap.min.js"></script>-->
+
+    <link rel="stylesheet" href="https://www.gagolewski.com/lib/bootstrap-3.3.6/css/bootstrap.min.css">
+    <script src="https://www.gagolewski.com/lib/jquery-1.12.3.min.js"></script>
+    <script src="https://www.gagolewski.com/lib/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://www.gagolewski.com/lib/fontawesome-free-5.0.6/js/fontawesome-all.min.js"></script>
+
+    <link href="https://www.gagolewski.com/lib/style.css" rel="stylesheet" type="text/css" media="all" />
+
+    <title>stringi Package for R</title>
+
+    <meta name="Keywords" content="R, stringi, ICU" />
+    <meta name="Description" content="stringi package for R" />
+    <meta name="Robots" content="index, follow" />
+    <meta name="Author" content="Marek Gagolewski" />
+
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+    <noscript>
+        <div class="alert alert-danger">
+            This page requires JavaScript to run properly. Please enable it to get a satisfying user-experience.
+        </div>
+    </noscript>
+
+    <!--<div class="page-header">-->
+<div class="row">
+    <div class="col-sm-12">
+
+        <h1><code>stringi</code></h1>
+        <p class="lead">R package</p>
+    </div>
+</div>
+<!--</div>-->
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>About</h2>
+
+        <p><code>stringi</code> (pronounced &#8220;stringy&#8221;,
+        IPA <abbr title='stri_trans_general("stringi", "pl-pl_FONIPA")'>[strinɡi]</abbr>)
+        is THE R package for <strong><span class='text-danger'>fast,
+        correct, consistent, portable, as well as convenient</span>
+        <span class='text-info'>string/text processing</span> in
+        <span class='text-info'>every</span> locale and
+        <span class='text-info'>any</span> native character encoding</strong>.
+        The use of the <a href='https://www.icu-project.org'>ICU</a> library gives
+        R users a platform-independent set of functions known to Java, Perl,
+        Python, PHP, and Ruby programmers.</p>
+
+        <p>Among available features there are: pattern searching
+        (e.g., with ICU Java-like regular expressions or the
+        Unicode Collation Algorithm), random string generation,
+        case mapping, string transliteration, concatenation,
+        Unicode normalisation, date-time formatting and parsing, etc.</p>
+
+        <p class="text-warning"><code>stringi</code> is among the
+        <a href='https://www.r-pkg.org/downloaded'>most often downloaded</a>
+        packages on <a href='https://cran.r-project.org'>CRAN</a>.
+        <img style='float: right' src='https://cranlogs.r-pkg.org/badges/grand-total/stringi' alt='RStudio CRAN mirror downloads' />
+        <img style='float: right' src='https://cranlogs.r-pkg.org/badges/last-month/stringi' alt='RStudio CRAN mirror downloads' />
+        <img style='float: right' src='https://cranlogs.r-pkg.org/badges/last-day/stringi' alt='RStudio CRAN mirror downloads' />
+        </p>
+
+
+        <h2>Metadata</h2>
+        <table class="table table-striped">
+        <tr><th>Type:</th><td><code>R</code> package <a style='float: right' href="https://travis-ci.org/gagolews/stringi">
+                            <img alt="Travis CI" src="https://travis-ci.org/gagolews/stringi.svg?branch=master" />
+                        </a></td></tr>
+        <tr><th>Authors:</th><td><a href="https://www.gagolewski.com">Marek Gagolewski</a>,
+        with contributions from Bartłomiej Tartanus and others (stringi source code);<br />
+        IBM and other contributors (ICU4C 55.1 source code);<br />
+        Unicode, Inc. (Unicode Character Database)
+        </td></tr>
+        <tr><th>Maintainer:</th><td><a href="https://www.gagolewski.com">Marek Gagolewski</a></td></tr>
+        <tr><th>CRAN entry:</th><td><a href="https://cran.r-project.org/web/packages/stringi/">https://cran.r-project.org/web/packages/stringi/</a></td></tr>
+        <tr><th>Source code:</th><td><a href="https://github.com/gagolews/stringi">https://github.com/gagolews/stringi</a></td></tr>
+        <tr><th>Issues and feature requests:</th><td><a href="https://github.com/gagolews/stringi/issues">https://github.com/gagolews/stringi/issues</a></td></tr>
+        <tr><th>License:</th><td>The BSD 3-Clause License
+        (see the <a href='https://raw.github.com/gagolews/stringi/master/LICENSE'>LICENSE</a> file for details)</td></tr>
+        <tr><th>Installation in <code>R</code>:</th><td><code>install.packages("stringi")</code></td></tr>
+        <tr><th>Changelog:</th><td>See the <a href='https://raw.github.com/gagolews/stringi/master/NEWS'>NEWS</a> file</td></tr>
+        <tr><th>System requirements:</th><td>R (≥ 2.14), ICU4C (>= 52, optional), see the <a href='https://raw.githubusercontent.com/gagolews/stringi/master/INSTALL'>INSTALL</a> file for more details</td></tr>
+        <tr><th>Documentation:</th><td>
+        <a href="https://www.gagolewski.com/software/stringi/manual/">Browse the online manual</a><br />
+        <a href="https://github.com/gagolews/ExampleRcppStringi">How to access the stringi C API from an Rcpp-based R package</a><br />
+        <a href="http://site.icu-project.org/">ICU</a><br />
+        <a href="http://www.unicode.org/">Unicode</a>
+        </td></tr>
+        </table>
+
+        <h2>Acknowledgments</h2>
+        <p>The contributions of Marcin Bujarski at the early stage of the package development as
+        well as the help of Giovanni Mazzocco in building the first OS X version of <code>stringi</code> is much appreciated.</p>
+        <p>The package&#8217;s API was inspired by Hadley Wickham&#8217;s <a href='https://cran.r-project.org/web/packages/stringr/index.html'><code>stringr</code></a> package and now stands for its basis. Moreover, Hadley suggested many new cool package features. Thanks!</p>
+        <p>The author also wishes to thank his colleagues and students (Warsaw University of Technology)
+        for valuable comments on and extensive testing of the package facilities.</p>
+
+        <h2>License &ndash; Disclaimer</h2>
+
+        <p>The package follows the BSD-3-clause license, for more details see the
+        <a href='https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE'>LICENSE</a> file.</p>
+
+        <p>More precisely, the sole <code>stringi</code>'s source code itself is released under
+        the BSD-3-clause license, which is 100% open source compatible.
+        Such a license has been verified as <a href='https://en.wikipedia.org/wiki/BSD_licenses'>GPL-compatible</a>
+        by the Free Software Foundation.</p>
+
+        <p>The reason for using BSD-3-clause is that we include full source
+        code of the ICU library, which has its own license. The ICU projects are
+        covered by the <a href='https://source.icu-project.org/repos/icu/icu/trunk/LICENSE'>ICU license</a>,
+        a simple, permissive non-copyleft free software license, compatible with
+        the GNU GPL. The ICU license is
+        <a href='https://userguide.icu-project.org/icufaq#TOC-How-is-the-ICU-licensed-'>intended</a>
+        to allow ICU to be included both in free software projects
+        and in proprietary or commercial products.</p>
+
+    </div>
+</div>
+
+<!-- ********************************************************************* -->
+
+
+
+</div>
+
+</body>
+</html>

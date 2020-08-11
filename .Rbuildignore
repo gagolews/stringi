@@ -16,6 +16,7 @@
 ^src/symbols\.rds$
 ^README.md$
 ^\.git
+^docs
 ^src/Makevars$
 ^src/install\.libs\.R$
 ^src/uconfig_local\.h$
@@ -28,5 +29,4 @@
 ^\.gitignore$
 ^\.travis\.yml$
 ^\.vscode
-
 ^stringi\.Rproj$

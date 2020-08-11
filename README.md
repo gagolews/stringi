@@ -9,7 +9,8 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
-**stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R* package for very fast, portable, correct, consistent,
+**stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
+package for very fast, portable, correct, consistent,
 and convenient string/text processing in each locale and any native
 character encoding. The use of the *ICU* library gives *R* users a
 platform-independent set of functions known to *Java*, *Perl*, *Python*,
@@ -28,7 +29,7 @@ A binary version of the Unicode Character Database is included.
 For more details on copyright holders see the
 [LICENSE](http://raw.githubusercontent.com/gagolews/stringi/master/LICENSE) file.
 
-**Homepage**: http://www.gagolewski.com/software/stringi/
+**Homepage**: http://stringi.gagolewski.com/
 
 **CRAN entry**: http://cran.r-project.org/web/packages/stringi/
 

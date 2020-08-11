@@ -1,6 +1,6 @@
 Package: stringi
 Version: 1.4.7
-Date: 2020-08-09
+Date: 2020-08-11
 Title: Character String Processing Facilities
 Description: Fast, portable, consistent, correct, and convenient character
     string/text/natural language processing in every locale and any native encoding.
@@ -11,7 +11,7 @@ Description: Fast, portable, consistent, correct, and convenient character
     expressions or the 'Unicode' collation algorithm), random string generation,
     case mapping, string transliteration, concatenation,
     Unicode normalisation, date-time formatting and parsing, and many more.
-URL: http://www.gagolewski.com/software/stringi/
+URL: http://stringi.gagolewski.com/
     http://site.icu-project.org/
     http://www.unicode.org/
 BugReports: http://github.com/gagolews/stringi/issues
