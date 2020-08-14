@@ -17,6 +17,7 @@
 ^README.md$
 ^\.git
 ^docs
+^datasets
 ^src/Makevars$
 ^src/install\.libs\.R$
 ^src/uconfig_local\.h$
