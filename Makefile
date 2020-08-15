@@ -11,10 +11,11 @@ all: r
 #LDFLAGS="-fopenmp"
 
 r:
-	Rscript -e 'Rcpp::compileAttributes()'
-	R CMD INSTALL .
+	#Rscript -e 'Rcpp::compileAttributes()'
+	#R CMD INSTALL .
 	# AVOID ADDING THE -O0 flag!!!
-	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
+	#Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
+	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"))'
 	R CMD INSTALL .
 
 r-check: r
@@ -25,7 +26,7 @@ r-test: r
 
 
 r-build:
-	Rscript -e 'Rcpp::compileAttributes()'
+	#Rscript -e 'Rcpp::compileAttributes()'
 	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"))'
 	R CMD INSTALL . --preclean
 	R CMD build .
