@@ -8,7 +8,6 @@
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.19071.svg)](http://dx.doi.org/10.5281/zenodo.19071)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
-![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-week/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
