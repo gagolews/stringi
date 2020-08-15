@@ -1,0 +1,23 @@
+name: stringi for R
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get -y upgrade
+        sudo apt-get -y install libcurl4-openssl-dev r-base-dev
+        sudo Rscript -e "install.packages(c('testthat'))"
+    - name: Test and check R
+      run: |
+        sudo make r-test
+        sudo make r-check

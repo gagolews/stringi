@@ -2,7 +2,9 @@
 
 ### THE string processing package for *R*
 
-[![Build Status](https://travis-ci.org/gagolews/stringi.svg?branch=master)](https://travis-ci.org/gagolews/stringi)
+
+
+![Build Status](https://github.com/gagolews/stringi/workflows/stringi%20for%20R/badge.svg)
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.19071.svg)](http://dx.doi.org/10.5281/zenodo.19071)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
