@@ -15,7 +15,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get -y upgrade
-        sudo apt-get -y install libcurl4-openssl-dev r-base-dev
+        sudo apt-get -y install libcurl4-openssl-dev r-base-dev devscripts
         sudo Rscript -e "install.packages(c('testthat', 'devtools'))"
     - name: Test and check R
       run: |
