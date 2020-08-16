@@ -3,7 +3,7 @@
 #VPATH="/home/gagolews/R/stringi"
 
 
-.PHONY:  r r-check r-build clean
+.PHONY:  r r-check r-build clean sphinx weave
 
 all: r
 
@@ -11,12 +11,8 @@ all: r
 #LDFLAGS="-fopenmp"
 
 r:
-	#Rscript -e 'Rcpp::compileAttributes()'
-	#R CMD INSTALL .
-	# AVOID ADDING THE -O0 flag!!!
-	#Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
-	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"))'
-	R CMD INSTALL .
+	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
+	R CMD INSTALL . --configure-args='--disable-pkg-config'
 
 r-check: r
 	Rscript -e 'devtools::check()'
@@ -31,6 +27,17 @@ r-build:
 	R CMD INSTALL . --preclean
 	R CMD build .
 
+weave:
+	cd devel/sphinx/weave && make && cd ../../../
+
+sphinx: r weave
+	rm -rf devel/sphinx/_build/
+	cd devel/sphinx && make html && cd ../../
+	rm -rf docs/
+	mkdir docs/
+	cp -rf devel/sphinx/_build/html/* docs/
+	cp devel/CNAME.tpl docs/CNAME
+	touch docs/.nojekyll
 
 clean:
 	rm -f src/*.o src/*.so
