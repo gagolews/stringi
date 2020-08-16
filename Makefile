@@ -12,7 +12,7 @@ all: r
 
 r:
 	Rscript -e 'roxygen2::roxygenise(roclets=c("rd", "collate", "namespace", "vignette"), load_code=roxygen2::load_installed)'
-	R CMD INSTALL . --configure-args='--disable-pkg-config'
+	R CMD INSTALL . --configure-args='--disable-pkg-config' --html
 
 r-check: r
 	Rscript -e 'devtools::check()'

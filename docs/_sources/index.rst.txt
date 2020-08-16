@@ -3,7 +3,7 @@ stringi: THE String Processing Package for R
 
     **stringi (pronounced “stringy”, IPA [strinɡi]) is THE R package
     for very fast, portable, correct, consistent, and convenient string/text
-    processing in each locale and any native character encoding.**
+    processing in any locale or character encoding.**
 
     -- by `Marek Gagolewski <https://www.gagolewski.com/>`_
 
@@ -25,9 +25,10 @@ It gives you a multitude of functions for:
 
 and many more.
 
-`stringi` is among the most often downloaded R packages. |downloads1| |downloads2|
+`stringi` is among the most often downloaded `R <https://r-project.org/>`_
+packages. |downloads1| |downloads2|
 
-You can fetch it from `CRAN <https://cran.r-project.org/web/packages/stringi/>`_
+You can obtain it from `CRAN <https://cran.r-project.org/web/packages/stringi/>`_
 by calling:
 
 .. code-block:: r
@@ -37,7 +38,7 @@ by calling:
 
 
 
-`stringi`'s source code is hosted at `GitHub <https://github.com/gagolews/stringi>`_.
+`stringi`'s source code is hosted on `GitHub <https://github.com/gagolews/stringi>`_.
 It has been released under the open source BSD-3-clause
 `license <https://raw.githubusercontent.com/gagolews/stringi/master/LICENSE>`_.
 
@@ -45,8 +46,7 @@ The package's API was inspired by Hadley Wickham's
 `stringr <https://cran.r-project.org/web/packages/stringr/>`_ package
 (and since 2015 `stringr` is based on `stringi`).
 Moreover, Hadley suggested many new cool package features. Thanks!
-The contributions from Bartlomiej Tartanus,
-Marcin Bujarski, Davis Vaughan, Katrin Leinweber, and
+The contributions from Bartlomiej Tartanus and
 `many others <https://github.com/gagolews/stringi/graphs/contributors>`_
 is greatly appreciated.
 
