@@ -93,6 +93,15 @@ pygments_style = 'sphinx'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_show_sourcelink = False
 
+
+html_theme_options = {
+    'canonical_url': 'https://stringi.gagolewski.com',
+    'prev_next_buttons_location': 'both',
+    #'style_nav_header_background': '#ff704d',
+    #'display_github': True,
+    #'github_url': github_project_url,
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
