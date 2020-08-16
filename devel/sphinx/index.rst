@@ -52,6 +52,13 @@ is greatly appreciated.
 
 
 
+.. toctree::
+    :maxdepth: 2
+    :caption: API Documentation
+
+    rapi.rst
+
+
 
 .. toctree::
     :maxdepth: 2
@@ -60,14 +67,6 @@ is greatly appreciated.
     Source code (GitHub) <https://github.com/gagolews/stringi>
     Bug Tracker and Feature Proposals <https://github.com/gagolews/stringi/issues>
     CRAN <https://cran.r-project.org/web/packages/stringi/>
-
-
-Indices and Tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 
 

@@ -42,11 +42,11 @@ github_project_url = "https://github.com/gagolews/stringi/"
 # ones.
 extensions = [
     #'matplotlib.sphinxext.plot_directive',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
+    #'sphinx.ext.autodoc',
+    #'sphinx.ext.autosummary',
     #'sphinx.ext.inheritance_diagram',
     #'sphinx.ext.doctest',
-    'sphinx.ext.todo',
+    #'sphinx.ext.todo',
     #'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinxcontrib.bibtex',

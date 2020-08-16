@@ -30,7 +30,10 @@ r-build:
 weave:
 	cd devel/sphinx/weave && make && cd ../../../
 
-sphinx: r weave
+rd2rst:
+	cd devel/sphinx && ./Rd2rst.R stringi && cd ../../
+
+sphinx: r weave rd2rst
 	rm -rf devel/sphinx/_build/
 	cd devel/sphinx && make html && cd ../../
 	rm -rf docs/
