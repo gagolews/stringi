@@ -10,6 +10,11 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-month/stringi)
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
+
+> The package documentation is available at http://stringi.gagolewski.com/.
+
+
+
 **stringi**  (pronounced “stringy”, IPA [strinɡi]) is THE *R*
 package for very fast, portable, correct, consistent,
 and convenient string/text processing in each locale and any native
@@ -34,9 +39,7 @@ For more details on copyright holders see the
 
 **CRAN entry**: http://cran.r-project.org/web/packages/stringi/
 
-**Online manual**: http://www.gagolewski.com/software/stringi/manual/
-
-[How to access the stringi C API from within an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
+[How to access the stringi C++ API from within an Rcpp-based R package](https://github.com/gagolews/ExampleRcppStringi)
 
 **System requirements**: *R >= 2.14*, *ICU4C >= 52* (refer to the
 [INSTALL](http://raw.githubusercontent.com/gagolews/stringi/master/INSTALL)
