@@ -31,7 +31,8 @@ weave:
 	cd devel/sphinx/weave && make && cd ../../../
 
 rd2rst:
-	cd devel/sphinx && ./Rd2rst.R stringi && cd ../../
+	#devtools::install_github('gagolews/Rd2rst')
+	cd devel/sphinx && Rscript -e "Rd2rst::Rd2rst('stringi')" && cd ../../
 
 sphinx: r weave rd2rst
 	rm -rf devel/sphinx/_build/
