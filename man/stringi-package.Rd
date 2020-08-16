@@ -14,7 +14,7 @@ and under any ``native'' character encoding.
 \bold{Keywords}: R, text processing, character strings,
 internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
 
-\bold{Homepage}: \url{http://www.gagolewski.com/software/stringi/}
+\bold{Homepage}: \url{https://stringi.gagolewski.com/}
 
 \bold{License}: The BSD-3-clause license for the package code,
 the ICU license for the accompanying ICU4C distribution,
@@ -114,7 +114,7 @@ interesting facilities and topics.
 }
 
 \references{
-\emph{\pkg{stringi} Package homepage}, \url{http://www.gagolewski.com/software/stringi/}
+\emph{\pkg{stringi} Package homepage}, \url{https://stringi.gagolewski.com/}
 
 \emph{ICU -- International Components for Unicode}, \url{http://www.icu-project.org/}
 

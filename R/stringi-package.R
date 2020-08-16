@@ -1,5 +1,5 @@
 ## This file is part of the 'stringi' package for R.
-## Copyright (c) 2013-2019, Marek Gagolewski and other contributors.
+## Copyright (C) 2013-2020, Marek Gagolewski <https://www.gagolewski.com>
 ## All rights reserved.
 ##
 ## Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 #' \bold{Keywords}: R, text processing, character strings,
 #' internationalization, localization, ICU, ICU4C, i18n, l10n, Unicode.
 #'
-#' \bold{Homepage}: \url{http://www.gagolewski.com/software/stringi/}
+#' \bold{Homepage}: \url{https://stringi.gagolewski.com/}
 #'
 #' \bold{License}: The BSD-3-clause license for the package code,
 #' the ICU license for the accompanying ICU4C distribution,
@@ -148,7 +148,7 @@
 #' The Unicode Character Database is due to Unicode, Inc.;
 #' see the COPYRIGHTS file for more details.
 #' @references
-#' \emph{\pkg{stringi} Package homepage}, \url{http://www.gagolewski.com/software/stringi/}
+#' \emph{\pkg{stringi} Package homepage}, \url{https://stringi.gagolewski.com/}
 #'
 #' \emph{ICU -- International Components for Unicode}, \url{http://www.icu-project.org/}
 #'
