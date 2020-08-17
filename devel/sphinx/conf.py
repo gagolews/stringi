@@ -17,7 +17,6 @@
 import sys
 import os
 import sphinx_rtd_theme
-import genieclust
 import sphinx
 import matplotlib.sphinxext
 import IPython.sphinxext
@@ -69,14 +68,6 @@ todo_include_todos = True
 
 source_suffix = ['.rst']
 
-#plot_include_source = True
-#plot_html_show_source_link = False
-#plot_pre_code = """
-#import numpy as np
-#import genieclust
-#import matplotlib.pyplot as plt
-#np.random.seed(123)
-#"""
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autosummary.html
 autosummary_imported_members = True
@@ -88,14 +79,13 @@ autosummary_generate = True
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-pygments_style = 'sphinx'
 
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_show_sourcelink = False
 
 
 html_theme_options = {
-    'canonical_url': 'https://stringi.gagolewski.com',
+    'canonical_url': 'https://stringi.gagolewski.com/',
     'prev_next_buttons_location': 'both',
     #'style_nav_header_background': '#ff704d',
     #'display_github': True,
@@ -106,7 +96,9 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['css/custom.css']
 
 #numpydoc_use_plots = True
 #doctest_global_setup = plot_pre_code
 
+pygments_style = 'colorful'

@@ -1,0 +1,7 @@
+table.docutils p {
+    white-space: normal;
+}
+
+.rst-content table.docutils td, .rst-content table.field-list td, .wy-table td {
+    vertical-align: top;
+}
