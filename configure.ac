@@ -1,6 +1,6 @@
 # autoconf/configure script for stringi
-# Copyright (C) 2013-2020, M. Gagolewski
-# http://www.gagolewski.com/software/stringi/
+# Copyright (c) 2013-2020, Marek Gagolewski <https://www.gagolewski.com>
+# https://stringi.gagolewski.com/
 
 ##### INIT ####################################################################
 
@@ -19,17 +19,17 @@ m4_include([tools/AC_CXX_NAMESPACES.m4])
 
 # shell variables/arguments accepted:
 # R_HOME - R's home dir
-AC_ARG_VAR(R_HOME, [Override the default directory with R installation,
+AC_ARG_VAR(R_HOME, [Override the default directory of the R installation,
    e.g., /usr/lib64/R, where /usr/lib64 is in the search path.
    Note that $R_HOME/bin/R should point to the R executable.])
 
 AC_ARG_VAR([CAT], [The 'cat' command used for generating the list
    of source files to compile.])
 
-AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command used for getting
+AC_ARG_VAR([PKG_CONFIG], [The 'pkg-config' command used for fetching the
    necessary compiler flags to link to and existing libicu installation.])
 
-AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU
+AC_ARG_VAR(ICUDT_DIR, [Optional directory from where an already downloaded ICU
    data archive (icudt*.zip) may be copied; either an absolute path or
    a path relative to <package source dir>/src;
    defaults to either icu55/data or icu61/data, depending on the version set up.])
@@ -37,23 +37,23 @@ AC_ARG_VAR(ICUDT_DIR, [Optional directory from which an already downloaded ICU
 AC_ARG_VAR(PKG_CONFIG_PATH, [An optional list of directories to search for
    pkg-config's .pc files.])
 
-AC_ARG_VAR([CC], [Purposedly ignored.])
+AC_ARG_VAR([CC], [Purposely ignored.])
 
-AC_ARG_VAR([CFLAGS], [Purposedly ignored.])
+AC_ARG_VAR([CFLAGS], [Purposely ignored.])
 
-AC_ARG_VAR([CPP], [Purposedly ignored.])
+AC_ARG_VAR([CPP], [Purposely ignored.])
 
-AC_ARG_VAR([CPPFLAGS], [Purposedly ignored.])
+AC_ARG_VAR([CPPFLAGS], [Purposely ignored.])
 
-AC_ARG_VAR([CXX], [Purposedly ignored.])
+AC_ARG_VAR([CXX], [Purposely ignored.])
 
-AC_ARG_VAR([CXXFLAGS], [Purposedly ignored.])
+AC_ARG_VAR([CXXFLAGS], [Purposely ignored.])
 
-# AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
+# AC_ARG_VAR([CXXCPP], [Purposely ignored.])
 
-AC_ARG_VAR([LDFLAGS], [Purposedly ignored.])
+AC_ARG_VAR([LDFLAGS], [Purposely ignored.])
 
-AC_ARG_VAR([LIBS], [Purposedly ignored.])
+AC_ARG_VAR([LIBS], [Purposely ignored.])
 
 
 
@@ -100,11 +100,11 @@ fi
 
 AC_ARG_ENABLE([pkg_config],
     AS_HELP_STRING([--disable-pkg-config],
-      [Disable pkg-config usage for finding ICU4C-devel;
-      in such a case ICU4C will be compiled from sources.]))
+      [Disable the use of pkg-config for locating the system ICU4C;
+      ICU4C will be compiled from sources.]))
 
 AC_ARG_VAR([STRINGI_DISABLE_PKG_CONFIG],
-   [Force the use of the ICU bundle, see also --disable-pkg-config.])
+   [Force the use of our source ICU bundle, see also --disable-pkg-config.])
 
 if test "x$enable_pkg_config" != "xno" -a -z "${STRINGI_DISABLE_PKG_CONFIG}"; then
    enable_pkg_config="yes"
@@ -114,7 +114,7 @@ fi
 
 AC_ARG_ENABLE([gcc_debug],
     AS_HELP_STRING([--enable-gcc-debug],
-      [Enable -UNDEBUG when compiling stringi (for developers of stringi)]))
+      [Enable -UNDEBUG when compiling stringi (for developers of stringi)]))
 if test "x$enable_gcc_debug" = "xyes"; then
    enable_gcc_debug="yes"
 else
@@ -180,11 +180,11 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 # determine R_HOME directory...
 AC_MSG_CHECKING(for R_HOME)
 if test -z "${R_HOME}"; then
-   R_HOME=`R RHOME` # set R_HOME if it has not been set already
+   R_HOME=`R RHOME` # set R_HOME if it has not already been set
 fi
 if test -z "${R_HOME}"; then
    AC_MSG_RESULT(no)
-   echo "*** Could not determine R_HOME. Did you install R properly?"
+   echo "*** Could not determine R_HOME. Is R installed?"
    exit 1
 fi
 AC_MSG_RESULT($R_HOME)
@@ -269,7 +269,7 @@ else
 fi
 
 disable_cxx11() {
-   echo "*** trying with disabled C++11 compiler"
+   echo "*** trying with C++11 compiler disabled"
    enable_cxx11="no"
    # unset cached C++ compiler features:
    unset ac_cv_cxx_compiler_gnu
@@ -764,12 +764,12 @@ return 10;
                AC_MSG_RESULT([yes])
             ],[
                AC_MSG_RESULT([no])
-               echo "*** The ICU bundle cannot be built. Upgrade your compiler flags."
+               echo "*** The ICU bundle cannot be built. Modify your compiler's flags."
                if test "x$enable_cxx11" = "xyes"; then
                   disable_cxx11
                   continue
                else
-                  echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
+                  echo "*** stringi cannot be built. Check your compiler's flags (Makeconf, Makevars, etc.)."
                   exit 1
                fi
             ])
@@ -795,12 +795,12 @@ return 10;
             AC_MSG_RESULT([yes])
          ],[
             AC_MSG_RESULT([no])
-            echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
+            echo "*** The ICU4C bundle could not be built. Modify your compiler's flags."
             if test "x$enable_cxx11" = "xyes"; then
                disable_cxx11
                continue
             else
-               echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
+               echo "*** stringi cannot be built. Check your compiler's flags (Makeconf, Makevars, etc.)."
                exit 1
             fi
          ])

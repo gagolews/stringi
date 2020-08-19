@@ -1364,10 +1364,10 @@ Optional Features:
                           long long type. If C++11 is disabled, the older
                           ICU4C 55.1 bundle will be used.
   --disable-icu-bundle    Force the use of the system ICU.
-  --disable-pkg-config    Disable pkg-config usage for finding ICU4C-devel; in
-                          such a case ICU4C will be compiled from sources.
+  --disable-pkg-config    Disable the use of pkg-config for locating the
+                          system ICU4C; ICU4C will be compiled from sources.
   --enable-gcc-debug      Enable -UNDEBUG when compiling stringi (for
-                          developers of stringi)
+                          developers of stringi)
   --enable-gcc-pedantic   Enable -Wall -Wextra -pedantic when compiling
                           stringi with gcc/clang (for developers of stringi)
 
@@ -1390,34 +1390,35 @@ Optional Packages:
                           STRINGI_LIBS environment variable
 
 Some influential environment variables:
-  R_HOME      Override the default directory with R installation, e.g.,
+  R_HOME      Override the default directory of the R installation, e.g.,
               /usr/lib64/R, where /usr/lib64 is in the search path. Note that
               $R_HOME/bin/R should point to the R executable.
   CAT         The 'cat' command used for generating the list of source files
               to compile.
-  PKG_CONFIG  The 'pkg-config' command used for getting necessary compiler
-              flags to link to and existing libicu installation.
-  ICUDT_DIR   Optional directory from which an already downloaded ICU data
+  PKG_CONFIG  The 'pkg-config' command used for fetching the necessary
+              compiler flags to link to and existing libicu installation.
+  ICUDT_DIR   Optional directory from where an already downloaded ICU data
               archive (icudt*.zip) may be copied; either an absolute path or a
               path relative to <package source dir>/src; defaults to either
               icu55/data or icu61/data, depending on the version set up.
   PKG_CONFIG_PATH
               An optional list of directories to search for pkg-config's .pc
               files.
-  CC          Purposedly ignored.
-  CFLAGS      Purposedly ignored.
-  CPP         Purposedly ignored.
-  CPPFLAGS    Purposedly ignored.
-  CXX         Purposedly ignored.
-  CXXFLAGS    Purposedly ignored.
-  LDFLAGS     Purposedly ignored.
-  LIBS        Purposedly ignored.
+  CC          Purposely ignored.
+  CFLAGS      Purposely ignored.
+  CPP         Purposely ignored.
+  CPPFLAGS    Purposely ignored.
+  CXX         Purposely ignored.
+  CXXFLAGS    Purposely ignored.
+  LDFLAGS     Purposely ignored.
+  LIBS        Purposely ignored.
   STRINGI_DISABLE_CXX11
               Disable the use of C++11, see also --disable-cxx11.
   STRINGI_DISABLE_ICU_BUNDLE
               Force the use of the system ICU, see also --disable-icu-bundle.
   STRINGI_DISABLE_PKG_CONFIG
-              Force the use of the ICU bundle, see also --disable-pkg-config.
+              Force the use of our source ICU bundle, see also
+              --disable-pkg-config.
   STRINGI_CFLAGS
               Additional C compiler flags, see also --with-extra-cflags.
   STRINGI_CPPFLAGS
@@ -2223,7 +2224,7 @@ ICU_VERSION_NEEDED="55" # minimal version of ICU4C required to build stringi
 
 
 
-# AC_ARG_VAR([CXXCPP], [Purposedly ignored.])
+# AC_ARG_VAR([CXXCPP], [Purposely ignored.])
 
 
 
@@ -2368,12 +2369,12 @@ with_extra_libs="${with_extra_libs} ${STRINGI_LIBS}"
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for R_HOME" >&5
 $as_echo_n "checking for R_HOME... " >&6; }
 if test -z "${R_HOME}"; then
-   R_HOME=`R RHOME` # set R_HOME if it has not been set already
+   R_HOME=`R RHOME` # set R_HOME if it has not already been set
 fi
 if test -z "${R_HOME}"; then
    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-   echo "*** Could not determine R_HOME. Did you install R properly?"
+   echo "*** Could not determine R_HOME. Is R installed?"
    exit 1
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $R_HOME" >&5
@@ -2512,7 +2513,7 @@ else
 fi
 
 disable_cxx11() {
-   echo "*** trying with disabled C++11 compiler"
+   echo "*** trying with C++11 compiler disabled"
    enable_cxx11="no"
    # unset cached C++ compiler features:
    unset ac_cv_cxx_compiler_gnu
@@ -4721,12 +4722,12 @@ else
 
                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-               echo "*** The ICU bundle cannot be built. Upgrade your compiler flags."
+               echo "*** The ICU bundle cannot be built. Modify your compiler's flags."
                if test "x$enable_cxx11" = "xyes"; then
                   disable_cxx11
                   continue
                else
-                  echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
+                  echo "*** stringi cannot be built. Check your compiler's flags (Makeconf, Makevars, etc.)."
                   exit 1
                fi
 
@@ -4779,12 +4780,12 @@ else
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-            echo "*** The ICU4C bundle could not be built. Upgrade your compiler flags."
+            echo "*** The ICU4C bundle could not be built. Modify your compiler's flags."
             if test "x$enable_cxx11" = "xyes"; then
                disable_cxx11
                continue
             else
-               echo "*** stringi cannot be built. Check your compiler flags (Makeconf, Makevars, etc.)."
+               echo "*** stringi cannot be built. Check your compiler's flags (Makeconf, Makevars, etc.)."
                exit 1
             fi
 
