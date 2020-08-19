@@ -13,9 +13,21 @@ Usage
 
 .. code-block:: r
 
-   stri_duplicated(str, fromLast = FALSE, ..., opts_collator = NULL)
+   stri_duplicated(
+     str,
+     from_last = FALSE,
+     fromLast = from_last,
+     ...,
+     opts_collator = NULL
+   )
 
-   stri_duplicated_any(str, fromLast = FALSE, ..., opts_collator = NULL)
+   stri_duplicated_any(
+     str,
+     from_last = FALSE,
+     fromLast = from_last,
+     ...,
+     opts_collator = NULL
+   )
 
 Arguments
 ~~~~~~~~~
@@ -23,7 +35,9 @@ Arguments
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``           | a character vector                                                                                                                     |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------+
-| ``fromLast``      | a single logical value; indicates whether search should be performed from the last to the first string                                 |
+| ``from_last``     | a single logical value; indicates whether search should be performed from the last to the first string                                 |
++-------------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| ``fromLast``      | deprecated alias of ``from_last``                                                                                                      |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``           | additional settings for ``opts_collator``                                                                                              |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------+
@@ -56,8 +70,6 @@ See Also
 
 Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
 
-Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
-
 Examples
 ~~~~~~~~
 
@@ -66,7 +78,7 @@ Examples
    # In the following examples, we have 3 duplicated values,
    # "a" - 2 times, NA - 1 time
    stri_duplicated(c("a", "b", "a", NA, "a", NA))
-   stri_duplicated(c("a", "b", "a", NA, "a", NA), fromLast=TRUE)
+   stri_duplicated(c("a", "b", "a", NA, "a", NA), from_last=TRUE)
    stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
 
    # compare the results:

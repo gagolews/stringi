@@ -1,5 +1,5 @@
-stri_datetime_fstr: Convert ``strptime``-style Format Strings
-=============================================================
+stri_datetime_fstr: Convert strptime-Style Format Strings
+=========================================================
 
 Description
 ~~~~~~~~~~~

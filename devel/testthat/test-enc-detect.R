@@ -166,10 +166,12 @@ test_that("stri_enc_detect", {
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32LE", to_raw=TRUE))[[1]]$Encoding, "UTF-32LE")
    expect_equivalent(stri_enc_detect2(stri_encode(text, "UTF-8", "UTF-32BE", to_raw=TRUE))[[1]]$Encoding, "UTF-32BE")
 
-   if (file.exists('devel/examples/CS_utf8.txt'))
-      path <- 'devel/examples'
-   else
-      path <- '../examples'
+   if (file.exists('datasets/CS_utf8.txt'))
+      path <- 'datasets'
+   else if (file.exists('../datasets/CS_utf8.txt'))
+      path <- '../datasets'
+   else if (file.exists('../../datasets/CS_utf8.txt'))
+      path <- '../../datasets'
 
    fnames <- c(file.path(path, 'CS_utf8.txt'),
                file.path(path, 'DE_utf8.txt'),

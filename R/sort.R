@@ -34,7 +34,7 @@
 #'
 #'
 #' @description
-#' The function sorts a character vector according to the locale-dependent
+#' This function sorts a character vector according to the locale-dependent
 #' lexicographic order.
 #'
 #'
@@ -93,9 +93,9 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #'
 #'
 #' @description
-#' This functions finds a permutation which rearranges the
+#' This function finds a permutation which rearranges the
 #' strings in a given character vector into the ascending or descending
-#'  locale-dependent lexicographic order.
+#' locale-dependent lexicographic order.
 #'
 #'
 #' @details
@@ -218,9 +218,10 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' See also \code{\link{stri_unique}} for extracting unique elements.
 #'
 #' @param str a character vector
-#' @param fromLast a single logical value;
+#' @param from_last a single logical value;
 #'    indicates whether search should be performed from the last to the
 #'    first string
+#' @param fromLast deprecated alias of \code{from_last}
 #' @param opts_collator a named list with \pkg{ICU} Collator's options,
 #' see \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
@@ -243,7 +244,7 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' # In the following examples, we have 3 duplicated values,
 #' # "a" - 2 times, NA - 1 time
 #' stri_duplicated(c("a", "b", "a", NA, "a", NA))
-#' stri_duplicated(c("a", "b", "a", NA, "a", NA), fromLast=TRUE)
+#' stri_duplicated(c("a", "b", "a", NA, "a", NA), from_last=TRUE)
 #' stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
 #'
 #' # compare the results:
@@ -256,20 +257,27 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
-   if (!missing(...))
+stri_duplicated <- function(str, from_last=FALSE,
+        fromLast=from_last, ..., opts_collator=NULL)
+{
+    if (!missing(fromLast) && missing(from_last))
+        from_last <- fromLast
+    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_duplicated, str, fromLast, opts_collator)
+    .Call(C_stri_duplicated, str, from_last, opts_collator)
 }
 
 
 #' @rdname stri_duplicated
-#' @family locale_sensitive
 #' @export
-stri_duplicated_any <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
-   if (!missing(...))
+stri_duplicated_any <- function(str, from_last=FALSE,
+        fromLast=from_last, ..., opts_collator=NULL)
+{
+    if (!missing(fromLast) && missing(from_last))
+        from_last <- fromLast
+    if (!missing(...))
        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_duplicated_any, str, fromLast, opts_collator)
+    .Call(C_stri_duplicated_any, str, from_last, opts_collator)
 }
 
 
@@ -310,8 +318,9 @@ stri_duplicated_any <-  function(str, fromLast=FALSE, ..., opts_collator=NULL) {
 #' @examples
 #' stri_sort_key(c("hladny", "chladny"), locale="pl_PL")
 #' stri_sort_key(c("hladny", "chladny"), locale="sk_SK")
-stri_sort_key <- function(str, ..., opts_collator=NULL) {
-   if (!missing(...))
-      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_sort_key, str, opts_collator)
+stri_sort_key <- function(str, ..., opts_collator=NULL)
+{
+    if (!missing(...))
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_sort_key, str, opts_collator)
 }

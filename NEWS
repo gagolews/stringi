@@ -9,6 +9,10 @@
   locale-dependent sort keys which can be ordered at the byte level and
   return an equivalent ordering to the original string (@DavisVaughan).
 
+* [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
+  has been renamed `from_last`. `fromLast` is now its alias scheduled
+  for removal in one of the future versions of the package.
+
 -------------------------------------------------------------------------------
 
 ## 1.4.6 (2020-02-17) **CRAN*
