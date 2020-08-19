@@ -4,7 +4,7 @@ stri_sort: Sorting
 Description
 ~~~~~~~~~~~
 
-The function sorts a character vector according to the locale-dependent lexicographic order.
+This function sorts a character vector according to the locale-dependent lexicographic order.
 
 Usage
 ~~~~~

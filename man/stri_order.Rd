@@ -28,9 +28,9 @@ for default collation options}
 The function yields an integer vector that gives the sort order.
 }
 \description{
-This functions finds a permutation which rearranges the
+This function finds a permutation which rearranges the
 strings in a given character vector into the ascending or descending
- locale-dependent lexicographic order.
+locale-dependent lexicographic order.
 }
 \details{
 For more information on \pkg{ICU}'s Collator and how to tune it up

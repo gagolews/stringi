@@ -4,7 +4,7 @@ stri_order: Ordering Permutation
 Description
 ~~~~~~~~~~~
 
-This functions finds a permutation which rearranges the strings in a given character vector into the ascending or descending locale-dependent lexicographic order.
+This function finds a permutation which rearranges the strings in a given character vector into the ascending or descending locale-dependent lexicographic order.
 
 Usage
 ~~~~~

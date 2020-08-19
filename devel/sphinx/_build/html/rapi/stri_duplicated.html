@@ -101,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_create.html">stri_datetime_create: Create a Date-Time Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_fields.html">stri_datetime_fields: Get Values for Date and Time Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_format.html">stri_datetime_format: Date and Time Formatting and Parsing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert <code class="docutils literal notranslate"><span class="pre">strptime</span></code>-style Format Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_datetime_fstr.html">stri_datetime_fstr: Convert strptime-Style Format Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_now.html">stri_datetime_now: Get Current Date and Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_datetime_symbols.html">stri_datetime_symbols: List Localizable Date-Time Formatting Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_detect.html">stri_detect: Detect a Pattern Match</a></li>
@@ -291,9 +291,21 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_duplicated</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">fromLast</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_duplicated</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">from_last</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="n">fromLast</span> <span class="o">=</span> <span class="n">from_last</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 
-<span class="nf">stri_duplicated_any</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">fromLast</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<span class="nf">stri_duplicated_any</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">from_last</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="n">fromLast</span> <span class="o">=</span> <span class="n">from_last</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -308,13 +320,16 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
 <td><p>a character vector</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fromLast</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">from_last</span></code></p></td>
 <td><p>a single logical value; indicates whether search should be performed from the last to the first string</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fromLast</span></code></p></td>
+<td><p>deprecated alias of <code class="docutils literal notranslate"><span class="pre">from_last</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
 <td><p>additional settings for <code class="docutils literal notranslate"><span class="pre">opts_collator</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator</span></code></p></td>
 <td><p>a named list with ICU Collator’s options, see <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for default collation options</p></td>
 </tr>
 </tbody>
@@ -338,14 +353,13 @@
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
 <p>Other locale_sensitive: <a class="reference external" href="oper_comparison.html">%s&lt;%()</a>, <a class="reference external" href="stri_compare.html">stri_compare()</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_sort.html">stri_sort()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a>, <a class="reference external" href="stringi-locale.html">stringi-locale</a>, <a class="reference external" href="stringi-search-boundaries.html">stringi-search-boundaries</a>, <a class="reference external" href="stringi-search-coll.html">stringi-search-coll</a></p>
-<p>Other locale_sensitive: <a class="reference external" href="oper_comparison.html">%s&lt;%()</a>, <a class="reference external" href="stri_compare.html">stri_compare()</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_sort.html">stri_sort()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a>, <a class="reference external" href="stringi-locale.html">stringi-locale</a>, <a class="reference external" href="stringi-search-boundaries.html">stringi-search-boundaries</a>, <a class="reference external" href="stringi-search-coll.html">stringi-search-coll</a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># In the following examples, we have 3 duplicated values,</span>
 <span class="c1"># &quot;a&quot; - 2 times, NA - 1 time</span>
 <span class="nf">stri_duplicated</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
-<span class="nf">stri_duplicated</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">fromLast</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_duplicated</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">),</span> <span class="n">from_last</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 <span class="nf">stri_duplicated_any</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">))</span>
 
 <span class="c1"># compare the results:</span>

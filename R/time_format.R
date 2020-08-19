@@ -232,7 +232,7 @@ stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE
 
 
 #' @title
-#' Convert \code{strptime}-style Format Strings
+#' Convert strptime-Style Format Strings
 #'
 #' @description
 #' A function to convert \code{\link{strptime}}/\code{\link{strftime}}-style

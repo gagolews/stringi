@@ -29,7 +29,7 @@ The result is a sorted version of \code{str},
 i.e., a character vector.
 }
 \description{
-The function sorts a character vector according to the locale-dependent
+This function sorts a character vector according to the locale-dependent
 lexicographic order.
 }
 \details{
