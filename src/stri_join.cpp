@@ -726,50 +726,52 @@ SEXP stri_join(SEXP strlist, SEXP sep, SEXP collapse, SEXP ignore_null)
  */
 SEXP stri_flatten_noressep(SEXP str, bool na_empty)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   R_len_t str_length = LENGTH(str);
-   if (str_length <= 0) {
-      UNPROTECT(1);
-      return stri__vector_empty_strings(1);
-   }
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    R_len_t str_length = LENGTH(str);
+    if (str_length <= 0) {
+        UNPROTECT(1);
+        return stri__vector_empty_strings(1);
+    }
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF8 str_cont(str, str_length);
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 str_cont(str, str_length);
 
-   // 1. Get required buffer size
-   R_len_t nchar = 0;
-   for (int i=0; i<str_length; ++i) {
-      if (str_cont.isNA(i)) {
-         if (na_empty) {
-            nchar += 0; // ignore
-         }
-         else {
-            STRI__UNPROTECT_ALL
-            return stri__vector_NA_strings(1); // at least 1 NA => return NA
-         }
-      }
-      nchar += str_cont.get(i).length();
-   }
+    // 1. Get required buffer size
+    R_len_t nchar = 0;
+    for (int i=0; i<str_length; ++i) {
+        if (str_cont.isNA(i)) {
+            if (na_empty) {
+                nchar += 0; // ignore
+            }
+            else {
+                STRI__UNPROTECT_ALL
+                return stri__vector_NA_strings(1); // at least 1 NA => return NA
+            }
+        }
+        else {
+            nchar += str_cont.get(i).length();
+        }
+    }
 
-   // 2. Fill the buf!
-   String8buf buf(nchar);
-   R_len_t cur = 0;
-   for (int i=0; i<str_length; ++i) {
-      if (!str_cont.isNA(i)) {
-         R_len_t ncur = str_cont.get(i).length();
-         memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
-         cur += ncur;
-      }
-   }
+    // 2. Fill the buf!
+    String8buf buf(nchar);
+    R_len_t cur = 0;
+    for (int i=0; i<str_length; ++i) {
+        if (!str_cont.isNA(i)) {
+            R_len_t ncur = str_cont.get(i).length();
+            memcpy(buf.data()+cur, str_cont.get(i).c_str(), (size_t)ncur);
+            cur += ncur;
+        }
+    }
 
 
-   // 3. Get ret val & good bye
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1));
-   SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), cur, CE_UTF8));
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    // 3. Get ret val & good bye
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, 1));
+    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf.data(), cur, CE_UTF8));
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
