@@ -111,7 +111,8 @@ class String8  {
             this->m_n = n-3;
             this->m_isASCII = isASCII;
             this->m_str = new char[this->m_n+1];
-            if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+            if (!this->m_str)
+                throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, this->m_n+1);
             memcpy(this->m_str, str+3, (size_t)this->m_n);
             this->m_str[this->m_n] = '\0';
          }
@@ -121,7 +122,8 @@ class String8  {
             this->m_isASCII = isASCII;
             if (memalloc) {
                this->m_str = new char[this->m_n+1];
-               if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+               if (!this->m_str)
+                   throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, this->m_n+1);
                // memcpy may be very fast in some libc implementations
                memcpy(this->m_str, str, (size_t)this->m_n);
                this->m_str[this->m_n] = '\0';
@@ -178,7 +180,8 @@ class String8  {
          this->m_isASCII = s.m_isASCII;
          if (s.m_memalloc) {
             this->m_str = new char[this->m_n+1];
-            if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+            if (!this->m_str)
+                throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, this->m_n+1);
             memcpy(this->m_str, s.m_str, (size_t)this->m_n);
             this->m_str[this->m_n] = '\0';
          }
@@ -198,7 +201,8 @@ class String8  {
          this->m_isASCII = s.m_isASCII;
          if (s.m_memalloc) {
             this->m_str = new char[this->m_n+1];
-            if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+            if (!this->m_str)
+                throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, this->m_n+1);
             memcpy(this->m_str, s.m_str, (size_t)this->m_n);
             this->m_str[this->m_n] = '\0';
          }

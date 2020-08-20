@@ -63,7 +63,8 @@ class String8buf  {
       String8buf(R_len_t size=0) {
          this->m_size = size+1;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
-         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+         if (!this->m_str)
+             throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          this->m_str[0] = '\0';
       }
 
@@ -82,7 +83,8 @@ class String8buf  {
       {
          this->m_size = s.m_size;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
-         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+         if (!this->m_str)
+             throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
       }
 
@@ -94,7 +96,8 @@ class String8buf  {
 
          this->m_size = s.m_size;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
-         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+         if (!this->m_str)
+             throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
 
          return *this;
@@ -128,7 +131,8 @@ class String8buf  {
          char* old_str = this->m_str;
          this->m_size = size+1;
          this->m_str = (char*)realloc(this->m_str, sizeof(char)*this->m_size);
-         if (!this->m_str) throw StriException(MSG__MEM_ALLOC_ERROR);
+         if (!this->m_str)
+             throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          if (!old_str || !copy) {
             this->m_str[0] = 0;
          }

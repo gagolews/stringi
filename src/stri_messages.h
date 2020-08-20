@@ -35,7 +35,7 @@
 
 /// inccorect uchar class id, see stri_char_getpropertyid and stri_char_getcategoryid
 #define MSG__INCORRECT_UCHAR_CLASS_ID \
-   "incorrect class identifier"
+   "incorrect character class identifier"
 
 #define MSG__INCORRECT_MATCH_OPTION \
    "incorrect option for `%s`"
@@ -56,13 +56,13 @@
    "incorrect opts_regex setting: `%s`; ignoring"
 
 #define MSG__INVALID_CODE_POINT \
-   "invalid Unicode codepoint \\U%08.8x"
+   "invalid Unicode code point \\U%08.8x"
 
 #define MSG__INVALID_CODE_POINT_FIXING \
-   "invalid UTF-8 codepoint definition; fixing"
+   "invalid UTF-8 code point definition; fixing"
 
 #define MSG__INVALID_CODE_POINT_REPLNA \
-   "invalid UTF-8 codepoint definition; setting string to NA, see also ?stri_enc_toutf8"
+   "invalid UTF-8 code point definition; setting string to NA, see also ?stri_enc_toutf8"
 
 #define MSG__INVALID_UTF8 \
    "invalid UTF-8 byte sequence detected; try calling stri_enc_toutf8()"
@@ -74,7 +74,7 @@
    "replacement has length zero"
 
 #define MSG__UNCONVERTABLE_CODE_POINT \
-   "the Unicode codepoint \\U%08.8x cannot be converted to destination encoding"
+   "the Unicode code point \\U%08.8x cannot be converted to destination encoding"
 
 #define MSG__UNCONVERTABLE_BINARY_1 \
    "input data \\x%02.2x in the current source encoding could not be converted to Unicode"
@@ -156,16 +156,16 @@
    "bytes encoding is not supported by this function"
 
 #define MSG__REGEXP_FAILED \
-   "regexp search failed"
+   "regex search failed"
 
 #define MSG__REGEXP_CONFIG_FAILED \
-   "regexp engine config failed"
+   "regex engine configuration failed"
 
 #define MSG__FIXED_CONFIG_FAILED \
-   "fixed search engine config failed"
+   "fixed search engine configuration failed"
 
 #define MSG__REGEXP_FAILED_DETAILS \
-   "regexp search failed: %s"
+   "regex search failed: %s"
 
 #define MSG__STRSEARCH_FAILED \
    "string search failed"
@@ -192,10 +192,10 @@
    "each string in `%s` should consist of code points of total width %d"
 
 #define MSG__CHARCLASS_INCORRECT_WHICH \
-   "unknown charclass `%s`; assuming NA"
+   "unknown character class `%s`; assuming NA"
 
 #define MSG__CHARCLASS_INCORRECT \
-   "unknown charclass"
+   "unknown character class"
 
 #define MSG__ARG_EXPECTED_NOT_NA \
    "missing value in argument `%s` is not supported"
@@ -286,9 +286,11 @@
 #define MSG__MEM_ALLOC_ERROR \
    "memory allocation or access error"
 
+#define MSG__MEM_ALLOC_ERROR_WITH_SIZE \
+   "memory allocation error: failed to allocate %d bytes"
 
 #define MSG__U_CHARSET_IS_UTF8 \
-   "system ICU assumes that the default charset is always UTF-8, and hence this function has no effect"
+   "system ICU assumes that the default character set is always UTF-8, and hence this function has no effect"
 
 
 #endif
