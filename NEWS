@@ -5,13 +5,26 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
+* [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
+  has been renamed `from_last`. `fromLast` is now its alias scheduled
+  for removal in a future version of the package.
+
+* [DEPRECATION WARNING] `stri_enc_detect2()`
+  is scheduled for removal in a future version of the package.
+  Use `stri_enc_detect()` or the more targeted `stri_enc_isutf8()`,
+  `stri_enc_isascii()`, etc., instead.
+
+* [NEW FEATURE] #393: `stri_read_bin()`, `stri_read_lines()`,
+  `stri_write_lines()` are no longer marked as draft API.
+  `stri_read_lines()` does not support `encoding="auto"` anymore.
+
+* [NEW FEATURE] #187: `stri_read_bin()`, `stri_read_lines()`,
+  `stri_write_lines()` now support connection objects as well.
+
 * [NEW FEATURE] #386: New function `stri_sort_key()` for generating
   locale-dependent sort keys which can be ordered at the byte level and
   return an equivalent ordering to the original string (@DavisVaughan).
 
-* [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
-  has been renamed `from_last`. `fromLast` is now its alias scheduled
-  for removal in one of the future versions of the package.
 
 -------------------------------------------------------------------------------
 
@@ -23,7 +36,7 @@ when input is empty and `collapse` is set.
 * [BUGFIX] #370: fixed an issue in `stri_prepare_arg_POSIXct()`
 reported by rchk.
 
-* [BUGFIX] #372: documented arguments not in `\usage` in
+* [DOCUMENTATION] #372: documented arguments not in `\usage` in
 documentation object `stri_datetime_format`: `...`
 
 -----------------------------------------------------------------------------

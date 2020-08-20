@@ -95,9 +95,6 @@ KOI8-R \tab Russian \cr
 IBM420 \tab Arabic \cr
 IBM424 \tab Hebrew \cr
 }
-
-If you have some initial guess at language and encoding, try with
-\code{\link{stri_enc_detect2}}.
 }
 \examples{
 \dontrun{

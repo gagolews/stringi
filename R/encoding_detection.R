@@ -225,8 +225,6 @@ stri_enc_isutf8 <- function(str) {
 #' IBM424 \tab Hebrew \cr
 #' }
 #'
-#' If you have some initial guess at language and encoding, try with
-#' \code{\link{stri_enc_detect2}}.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors
@@ -266,7 +264,7 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 
 
 #' @title
-#' Detect Locale-Sensitive Character Encoding
+#' [DEPRECATED] Detect Locale-Sensitive Character Encoding
 #'
 #' @description
 #' This function tries to detect character encoding
@@ -298,9 +296,6 @@ stri_enc_detect <- function(str, filter_angle_brackets=FALSE) {
 #'
 #' If you have no initial guess on the language and encoding, try with
 #' \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
-#' However, it turns out that (empirically) \code{stri_enc_detect2}
-#' works better than the \pkg{ICU}-based one if UTF-* text
-#' is provided. Try it yourself.
 #'
 #' @param str character vector, a raw vector, or
 #' a list of \code{raw} vectors

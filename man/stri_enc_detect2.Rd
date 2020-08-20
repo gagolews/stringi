@@ -2,7 +2,7 @@
 % Please edit documentation in R/encoding_detection.R
 \name{stri_enc_detect2}
 \alias{stri_enc_detect2}
-\title{Detect Locale-Sensitive Character Encoding}
+\title{[DEPRECATED] Detect Locale-Sensitive Character Encoding}
 \usage{
 stri_enc_detect2(str, locale = NULL)
 }
@@ -57,9 +57,6 @@ bytes of character data that is in a single language.
 
 If you have no initial guess on the language and encoding, try with
 \code{\link{stri_enc_detect}} (uses \pkg{ICU} facilities).
-However, it turns out that (empirically) \code{stri_enc_detect2}
-works better than the \pkg{ICU}-based one if UTF-* text
-is provided. Try it yourself.
 }
 \seealso{
 Other locale_sensitive: 
