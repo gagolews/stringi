@@ -14,11 +14,11 @@
   Use `stri_enc_detect()` or the more targeted `stri_enc_isutf8()`,
   `stri_enc_isascii()`, etc., instead.
 
-* [NEW FEATURE] #393: `stri_read_bin()`, `stri_read_lines()`,
+* [NEW FEATURE] #393: `stri_read_bin()`, `stri_read_lines()`, and
   `stri_write_lines()` are no longer marked as draft API.
   `stri_read_lines()` does not support `encoding="auto"` anymore.
 
-* [NEW FEATURE] #187: `stri_read_bin()`, `stri_read_lines()`,
+* [NEW FEATURE] #187: `stri_read_bin()`, `stri_read_lines()`, and
   `stri_write_lines()` now support connection objects as well.
 
 * [NEW FEATURE] #386: New function `stri_sort_key()` for generating

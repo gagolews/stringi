@@ -30,7 +30,7 @@
 
 
 #' @title
-#' Check If a Data Stream Is Possibly in UTF16 or UTF32
+#' Check If a Data Stream Is Possibly in UTF-16 or UTF-32
 #'
 #' @description
 #' These functions detect whether a given byte stream is
@@ -162,6 +162,11 @@ stri_enc_isutf8 <- function(str) {
 #'
 #' @details
 #' Vectorized over \code{str} and \code{filter_angle_brackets}.
+#'
+#' For a character vector input, merging all text lines
+#' via \code{\link{str_flatten}(str, collapse="\n")}
+#' might be needed if \code{str} has been obtained via a call to
+#' \code{readLines} and in fact represents an image of a single text file.
 #'
 #' This is, at best, an imprecise operation using statistics and heuristics.
 #' Because of this, detection works best if you supply at least a few hundred
