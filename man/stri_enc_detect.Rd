@@ -34,6 +34,11 @@ or encoding, of character data in an unknown format.
 \details{
 Vectorized over \code{str} and \code{filter_angle_brackets}.
 
+For a character vector input, merging all text lines
+via \code{\link{str_flatten}(str, collapse="\n")}
+might be needed if \code{str} has been obtained via a call to
+\code{readLines} and in fact represents an image of a single text file.
+
 This is, at best, an imprecise operation using statistics and heuristics.
 Because of this, detection works best if you supply at least a few hundred
 bytes of character data that is mostly in a single language.

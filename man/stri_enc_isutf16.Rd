@@ -5,7 +5,7 @@
 \alias{stri_enc_isutf16le}
 \alias{stri_enc_isutf32be}
 \alias{stri_enc_isutf32le}
-\title{Check If a Data Stream Is Possibly in UTF16 or UTF32}
+\title{Check If a Data Stream Is Possibly in UTF-16 or UTF-32}
 \usage{
 stri_enc_isutf16be(str)
 
