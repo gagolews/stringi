@@ -13,6 +13,8 @@
 
 * TODO: #345
 
+* TODO? #138?
+
 * [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
   has been renamed `from_last`. `fromLast` is now its alias scheduled
   for removal in a future version of the package.
