@@ -16,6 +16,7 @@ r:
 
 r-check: r
 	Rscript -e 'devtools::check()'
+	make clean
 
 r-test: r
 	Rscript -e 'options(width=120); source("devel/testthat/run_package_tests.R")'

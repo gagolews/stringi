@@ -5,6 +5,14 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
+* TODO: #382
+
+* TODO: #347
+
+* TODO: #355
+
+* TODO: #345
+
 * [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
   has been renamed `from_last`. `fromLast` is now its alias scheduled
   for removal in a future version of the package.

@@ -56,14 +56,16 @@ stri_read_raw <- function(con) {
         on.exit(close(con))
     }
 
-    bufsize <- 65536
-    data <- raw(0)
+    bufsize <- 4194304L
+    data <- list()
+    n <- 1L
     repeat {
-        buf <- readBin(con, what="raw", size=1, n=bufsize)
-        data <- c(data, buf)
+        buf <- readBin(con, what="raw", size=1L, n=bufsize)
+        data[[n]] <- buf
+        n <- n + 1L
         if (length(buf) < bufsize) break
     }
-    data
+    do.call(c, data)
 }
 
 
