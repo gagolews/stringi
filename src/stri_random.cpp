@@ -179,9 +179,9 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 
    // get max required bufsize
    int*    length_tab = INTEGER(length);
-   R_len_t bufsize = 0;
+   size_t bufsize = 0;
    for (R_len_t i=0; i<length_len; ++i) {
-      if (length_tab[i] != NA_INTEGER && length_tab[i] > bufsize)
+      if (length_tab[i] != NA_INTEGER && (size_t)length_tab[i] > bufsize)
          bufsize = length_tab[i];
    }
    bufsize *= 4;  // 1 UChar32 -> max. 4 UTF-8 bytes
@@ -197,14 +197,14 @@ SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
          continue;
       }
 
-      int length_cur = length_cont.get(i);
+      R_len_t length_cur = length_cont.get(i);
       if (length_cur < 0) length_cur = 0;
 
       const UnicodeSet* uset = &(pattern_cont.get(i));
       int32_t uset_size = uset->size();
 
       // generate string:
-      R_len_t j = 0;
+      size_t j = 0;
       UBool err = FALSE;
       for (R_len_t k=0; k<length_cur; ++k) {
          int32_t idx = (int32_t)floor(unif_rand()*(double)uset_size); /* 0..uset_size-1 */

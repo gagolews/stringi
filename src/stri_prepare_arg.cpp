@@ -1068,6 +1068,7 @@ const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
    size_t ret_n = strlen(ret_tmp);
    /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
    char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+   STRI_ASSERT(ret);
    if (!ret) {
       UNPROTECT(1);
       Rf_error(MSG__MEM_ALLOC_ERROR);
@@ -1076,6 +1077,8 @@ const char* stri__copy_string_Ralloc(SEXP x, const char* argname)
    UNPROTECT(1);
    return ret;
 }
+
+
 
 /** Prepare double argument - one value, not NA [no re-encoding done!!!]
  *
@@ -1101,6 +1104,7 @@ const char* stri__prepare_arg_string_1_notNA(SEXP x, const char* argname)
    size_t ret_n = strlen(ret_tmp);
    /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
    char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+   STRI_ASSERT(ret);
    if (!ret) {
       UNPROTECT(1);
       Rf_error(MSG__MEM_ALLOC_ERROR);
@@ -1313,6 +1317,7 @@ const char* stri__prepare_arg_enc(SEXP enc, const char* argname, bool allowdefau
          size_t ret_n = strlen(ret_tmp);
          /* R_alloc ==  Here R will reclaim the memory at the end of the call to .Call */
          char* ret = R_alloc(ret_n+1, (int)sizeof(char));
+         STRI_ASSERT(ret);
          if (!ret) {
             UNPROTECT(1);
             Rf_error(MSG__MEM_ALLOC_ERROR);

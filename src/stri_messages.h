@@ -287,7 +287,10 @@
    "memory allocation or access error"
 
 #define MSG__MEM_ALLOC_ERROR_WITH_SIZE \
-   "memory allocation error: failed to allocate %d bytes"
+   "memory allocation error: failed to allocate %zu bytes"
+
+#define MSG__BUF_SIZE_EXCEEDED \
+   "internal error: required buffer size is beyond the permitted limit"
 
 #define MSG__U_CHARSET_IS_UTF8 \
    "system ICU assumes that the default character set is always UTF-8, and hence this function has no effect"

@@ -40,6 +40,9 @@
 #include <vector>
 
 
+#define BUF_MAX_LENGTH 2147483647
+
+
 /** Convert from UTF-32
  *
  * @param vec integer vector or list with integer vectors
@@ -145,6 +148,7 @@ SEXP stri_enc_toutf32(SEXP str)
    }
 
    UChar32* buf = (UChar32*)R_alloc((size_t)bufsize, (int)sizeof(UChar32)); // at most bufsize UChars32 (bufsize/4 min.)
+   STRI_ASSERT(buf);
    if (!buf) throw StriException(MSG__MEM_ALLOC_ERROR);
    // deque<UChar32> was slower than using a common, over-sized buf
 
@@ -232,13 +236,13 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
    }
    else {
       // get buf size
-      R_len_t bufsize = 0;
+      size_t bufsize = 0;
       for (R_len_t i=0; i<n; ++i) {
          SEXP curs = STRING_ELT(str, i);
          if (curs == NA_STRING || IS_ASCII(curs) || IS_UTF8(curs))
             continue;
 
-         R_len_t ni = LENGTH(curs);
+         size_t ni = LENGTH(curs);
          if (ni > bufsize) bufsize = ni;
       }
       String8buf buf(bufsize*3); // either 1 byte < 127 or U+FFFD == 3 bytes UTF-8
@@ -308,12 +312,12 @@ SEXP stri_enc_toutf8(SEXP str, SEXP is_unknown_8bit, SEXP validate)
             SET_STRING_ELT(ret, i, NA_STRING);
          }
          else {
-            int bufsize = sn*3; // maximum: 1 byte -> U+FFFD (3 bytes)
+            size_t bufsize = sn*3; // maximum: 1 byte -> U+FFFD (3 bytes)
             String8buf buf(bufsize); // maximum: 1 byte -> U+FFFD (3 bytes)
             char* bufdata = buf.data();
 
             j = 0;
-            R_len_t k = 0;
+            size_t k = 0;
             UBool err = FALSE;
             while (!err && j < sn) {
                U8_NEXT(s, j, sn, c);
@@ -366,13 +370,13 @@ SEXP stri_enc_toascii(SEXP str)
    STRI__ERROR_HANDLER_BEGIN(1)
 
    // get buf size
-   R_len_t bufsize = 0;
+   size_t bufsize = 0;
    for (R_len_t i=0; i<n; ++i) {
       SEXP curs = STRING_ELT(str, i);
       if (curs == NA_STRING)
          continue;
 
-      R_len_t ni = LENGTH(curs);
+      size_t ni = LENGTH(curs);
       if (ni > bufsize) bufsize = ni;
    }
    String8buf buf(bufsize); // no more bytes than this needed
@@ -474,13 +478,15 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
    STRI__PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
    // calculate required buf size
-   R_len_t bufsize = 0;
+   size_t bufsize = 0;
    for (R_len_t i=0; i<str_n; ++i) {
-      if (!str_cont.isNA(i) && str_cont.get(i).length() > bufsize)
+      if (!str_cont.isNA(i) && (size_t)str_cont.get(i).length() > bufsize)
          bufsize = str_cont.get(i).length();
    }
    bufsize = UCNV_GET_MAX_BYTES_FOR_STRING(bufsize, ucnv_getMaxCharSize(uconv_to));
    // "The calculated size is guaranteed to be sufficient for this conversion."
+   if (bufsize > BUF_MAX_LENGTH)
+        bufsize = BUF_MAX_LENGTH;
    String8buf buf(bufsize);
 
    for (R_len_t i=0; i<str_n; ++i) {
@@ -497,14 +503,17 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 
       UErrorCode status = U_ZERO_ERROR;
       ucnv_resetFromUnicode(uconv_to);
-      R_len_t bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
+      size_t bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
             curs_tmp, curn_tmp, &status);
       if (bufneed <= buf.size()) {
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
-      else {// larger buffer needed [this shouldn't happen?]
+      else {// larger buffer needed
+         if (bufneed > BUF_MAX_LENGTH)
+             throw StriException(MSG__BUF_SIZE_EXCEEDED);
          buf.resize(bufneed, false/*destroy contents*/);
          status = U_ZERO_ERROR;
+         ucnv_resetFromUnicode(uconv_to);
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(),
                curs_tmp, curn_tmp, &status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
@@ -597,14 +606,16 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
    STRI__PROTECT(ret = Rf_allocVector(to_raw_logical?VECSXP:STRSXP, str_n));
 
 
-   // estimate required buf size
-   R_len_t bufsize = 0;
-   for (R_len_t i=0; i<str_n; ++i) {
-      if (!str_cont.isNA(i) && str_cont.get(i).length() > bufsize)
-         bufsize = str_cont.get(i).length();
-   }
-   bufsize = bufsize*4; // this is just an estimate (for 8bit->utf8 conversions)
-   String8buf buf(bufsize);
+//   // estimate required buf size
+//    size_t bufsize = 0;
+//    for (R_len_t i=0; i<str_n; ++i) {
+//       if (!str_cont.isNA(i) && (size_t)str_cont.get(i).length() > bufsize)
+//          bufsize = str_cont.get(i).length();
+//    }
+//    bufsize = bufsize*4; // this is just an estimate (for 8bit->utf8 conversions)
+//    String8buf buf(bufsize);
+   String8buf buf(0);
+
 
    for (R_len_t i=0; i<str_n; ++i) {
       if (str_cont.isNA(i)) {
@@ -626,22 +637,25 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
          throw StriException(MSG__INTERNAL_ERROR);
       }
 
-      R_len_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
+      size_t bufneed = UCNV_GET_MAX_BYTES_FOR_STRING(curn_tmp, ucnv_getMaxCharSize(uconv_to));
       // "The calculated size is guaranteed to be sufficient for this conversion."
-      buf.resize(bufneed, false/*destroy contents*/); // grows or stays as it was
+      if (bufneed > BUF_MAX_LENGTH)
+          bufneed = BUF_MAX_LENGTH;
+      buf.resize(bufneed, false/*destroy contents*/); // grows or stays as-is
 
       status = U_ZERO_ERROR;
-//      bufneed = encs.extract(buf.data(), buf.size(), uconv_to, status); // UTF-16 -> TO
       ucnv_resetFromUnicode(uconv_to);
       bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
          curn_tmp, &status);
       if (bufneed <= buf.size()) {
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
       }
-      else {// larger buffer needed [this shouldn't happen?]
-//         warning("buf extending");
+      else {// larger buffer needed
+         if (bufneed > BUF_MAX_LENGTH)
+             throw StriException(MSG__BUF_SIZE_EXCEEDED);
          buf.resize(bufneed, false/*destroy contents*/);
          status = U_ZERO_ERROR;
+         ucnv_resetFromUnicode(uconv_to);
          bufneed = ucnv_fromUChars(uconv_to, buf.data(), buf.size(), curs_tmp,
             curn_tmp, &status);
          STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})

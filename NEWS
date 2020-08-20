@@ -13,8 +13,6 @@
 
 * TODO: #345
 
-* TODO? #138?
-
 * [DEPRECATION WARNING] `stri_duplicated()`'s `fromLast` argument
   has been renamed `from_last`. `fromLast` is now its alias scheduled
   for removal in a future version of the package.
@@ -35,6 +33,8 @@
   locale-dependent sort keys which can be ordered at the byte level and
   return an equivalent ordering to the original string (@DavisVaughan).
 
+* [BUGFIX] #138: `stri_encode()` and `stri_rand_strings()`
+  now can generate strings of much larger lengths.
 
 -------------------------------------------------------------------------------
 
