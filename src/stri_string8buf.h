@@ -50,7 +50,7 @@ class String8buf  {
    private:
 
       char* m_str;
-      R_len_t m_size;   ///< buffer size in bytes
+      size_t m_size;   ///< buffer size in bytes
 
 
    public:
@@ -60,9 +60,10 @@ class String8buf  {
        *
        * @param size buffer length-1
        */
-      String8buf(R_len_t size=0) {
+      String8buf(size_t size=0) {
          this->m_size = size+1;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         STRI_ASSERT(this->m_str);
          if (!this->m_str)
              throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          this->m_str[0] = '\0';
@@ -83,6 +84,7 @@ class String8buf  {
       {
          this->m_size = s.m_size;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         STRI_ASSERT(this->m_str);
          if (!this->m_str)
              throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
@@ -96,6 +98,7 @@ class String8buf  {
 
          this->m_size = s.m_size;
          this->m_str = (char*)malloc(sizeof(char)*this->m_size);
+         STRI_ASSERT(this->m_str);
          if (!this->m_str)
              throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          memcpy(this->m_str, s.m_str, (size_t)this->m_size);
@@ -112,7 +115,7 @@ class String8buf  {
 
 
       /** buffer size in bytes */
-      inline R_len_t size() const
+      inline size_t size() const
       {
          return this->m_size;
       }
@@ -123,7 +126,7 @@ class String8buf  {
        * @param size new size-1
        * @param copy should the existing buffer content be retained?
        */
-      inline void resize(R_len_t size, bool copy=true)
+      inline void resize(size_t size, bool copy=true)
       {
          if (this->m_size > size)
             return; // do nothing (the requested buffer size is available)
@@ -131,6 +134,7 @@ class String8buf  {
          char* old_str = this->m_str;
          this->m_size = size+1;
          this->m_str = (char*)realloc(this->m_str, sizeof(char)*this->m_size);
+         STRI_ASSERT(this->m_str);
          if (!this->m_str)
              throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE, sizeof(char)*this->m_size);
          if (!old_str || !copy) {
@@ -144,12 +148,12 @@ class String8buf  {
        *
        * @version 0.3-1 (Marek Gagolewski, 2014-11-02)
        */
-      int replaceAllAtPos(const char* str_cur_s, R_len_t str_cur_n,
-         const char* replacement_cur_s, R_len_t replacement_cur_n,
+      size_t replaceAllAtPos(const char* str_cur_s, size_t str_cur_n,
+         const char* replacement_cur_s, size_t replacement_cur_n,
          std::deque< std::pair<R_len_t, R_len_t> >& occurrences)
       {
-         R_len_t buf_used = 0;
-         R_len_t jlast = 0;
+         size_t buf_used = 0;
+         size_t jlast = 0;
 
          std::deque< std::pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
          for (; iter != occurrences.end(); ++iter) {

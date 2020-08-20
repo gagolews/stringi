@@ -506,10 +506,10 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
    SEXP ret;
    STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
 
-   UErrorCode status = U_ZERO_ERROR;
+//    UErrorCode status = U_ZERO_ERROR;
 
    // Allocate temporary buffer to hold the current sort key
-   int32_t key_buffer_size = 10000;
+   size_t key_buffer_size = 16384;
    String8buf key_buffer(key_buffer_size);
    uint8_t* p_key_buffer_u8 = (uint8_t*) key_buffer.data();
 
@@ -526,7 +526,7 @@ SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
       int32_t key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
 
       // Reallocate a larger buffer and retry as required
-      if (key_size > key_buffer_size) {
+      if ((size_t)key_size > key_buffer_size) {
          const int32_t key_padding = 100;
          key_buffer_size = key_size + key_padding;
 

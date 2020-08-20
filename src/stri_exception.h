@@ -100,6 +100,24 @@ using namespace std;
 }
 
 
+
+#ifndef STRI_ASSERT
+
+#ifndef NDEBUG
+#define __STRI_ASSERT_STR(x) #x
+#define STRI_ASSERT_STR(x) __STRI_ASSERT_STR(x)
+
+#define STRI_ASSERT(EXPR) { if (!(EXPR)) \
+    REprintf( "stringi: Assertion " #EXPR " failed in "\
+        __FILE__ ":" STRI_ASSERT_STR(__LINE__) ); }
+
+#else
+#define STRI_ASSERT(EXPR) { ; }
+#endif
+
+#endif
+
+
 /**
  * A class representing exceptions
  *
