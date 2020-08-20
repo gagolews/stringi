@@ -164,7 +164,7 @@ stri_enc_isutf8 <- function(str) {
 #' Vectorized over \code{str} and \code{filter_angle_brackets}.
 #'
 #' For a character vector input, merging all text lines
-#' via \code{\link{str_flatten}(str, collapse="\n")}
+#' via \code{\link{stri_flatten}(str, collapse="\n")}
 #' might be needed if \code{str} has been obtained via a call to
 #' \code{readLines} and in fact represents an image of a single text file.
 #'
