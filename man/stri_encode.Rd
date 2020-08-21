@@ -35,33 +35,31 @@ Otherwise, a list of raw vectors is produced.
 }
 \description{
 These functions convert strings between encodings.
-They aim to replace \R's \code{\link{iconv}}.
-They are not only faster, but also much more portable - they
-work in the same manner on all platforms.
+They aim to serve as a more portable and faster replacement
+for \R's own \code{\link{iconv}}.
 }
 \details{
 \code{stri_conv} is an alias for \code{stri_encode}.
 
-
-Please refer to \code{\link{stri_enc_list}} for the list
+Refer to \code{\link{stri_enc_list}} for the list
 of supported encodings and \link{stringi-encoding}
 for a general discussion.
 
-If \code{str} is a character vector
-and \code{from} is either missing, \code{""}, or \code{NULL},
-then the declared encodings are used
+If \code{from} is either missing, \code{""}, or \code{NULL},
+and if \code{str} is a character vector
+then the marked encodings are used
 (see \code{\link{stri_enc_mark}}) -- in such a case \code{bytes}-declared
 strings are disallowed.
-Otherwise, the internal encoding declarations are ignored and
-a converter selected via \code{from} is used.
-
-If \code{str} is a \code{raw}-type vector
+Otherwise, i.e., if \code{str} is a \code{raw}-type vector
 or a list of raw vectors,
 we assume that the input encoding is the current default encoding
 as given by \code{\link{stri_enc_get}}.
 
+However, if \code{from} is given explicitly,
+the internal encoding declarations are always ignored.
+
 For \code{to_raw=FALSE}, the output
-strings have always marked encodings according to the target converter
+strings always have the encodings marked according to the target converter
 used (as specified by \code{to}) and the current default Encoding
 (\code{ASCII}, \code{latin1}, \code{UTF-8}, \code{native},
 or \code{bytes} in all other cases).
@@ -79,7 +77,11 @@ is a clever substitute for \code{\link{rawToChar}}.
 
 In the current version of \pkg{stringi}, if an incorrect code point is found
 on input, it is replaced by the default (for that target encoding)
-substitute character. Also, in such a case a warning is generated.
+"missing/erroneous" character (with a warning), e.g.,
+the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD).
+Occurrences thereof can be located in the output string to diagnose
+the problematic sequences, e.g., by calling:
+\code{stri_locate_all_regex(converted_string, "[\\ufffd\\u001a]"}.
 }
 \references{
 \emph{Conversion} -- ICU User Guide, \url{http://userguide.icu-project.org/conversion}
