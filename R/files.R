@@ -85,6 +85,9 @@ stri_read_raw <- function(con) {
 #' \code{\link{stri_encode}}, and \code{\link{stri_split_lines1}},
 #' in this order.
 #'
+#' Because of the way this function is currently implemented,
+#' maximal file size cannot exceed ~0.67 GB.
+#'
 #' @param con name of the output file or a connection object
 #'        (opened in the binary mode)
 #' @param encoding single string; input encoding;

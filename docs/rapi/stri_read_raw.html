@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_read_raw: [DRAFT API] Read Whole Text File as Raw &mdash; stringi 1.4.7 documentation</title>
+  <title>stri_read_raw: Read Text File as Raw &mdash; stringi 1.4.7 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="stri_remove_empty: Remove All Empty Strings from a Character Vector" href="stri_remove_empty.html" />
-    <link rel="prev" title="stri_read_lines: [DRAFT API] Read Text Lines from a Text File" href="stri_read_lines.html" /> 
+    <link rel="prev" title="stri_read_lines: Read Text Lines from a Text File" href="stri_read_lines.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -108,11 +108,11 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_dup.html">stri_dup: Duplicate Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_duplicated.html">stri_duplicated: Determine Duplicated Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_detect.html">stri_enc_detect: Detect Character Set and Language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: Detect Locale-Sensitive Character Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_fromutf32.html">stri_enc_fromutf32: Convert From UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_info.html">stri_enc_info: Query a Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isascii.html">stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
@@ -149,8 +149,8 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: [DRAFT API] Read Text Lines from a Text File</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_read_raw: [DRAFT API] Read Whole Text File as Raw</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_read_raw: Read Text File as Raw</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -187,7 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_unique.html">stri_unique: Extract Unique Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: [DRAFT API] Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
@@ -254,7 +254,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>stri_read_raw: [DRAFT API] Read Whole Text File as Raw</li>
+      <li>stri_read_raw: Read Text File as Raw</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -271,7 +271,7 @@
         <a href="stri_remove_empty.html" class="btn btn-neutral float-right" title="stri_remove_empty: Remove All Empty Strings from a Character Vector" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="stri_read_lines.html" class="btn btn-neutral float-left" title="stri_read_lines: [DRAFT API] Read Text Lines from a Text File" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stri_read_lines.html" class="btn btn-neutral float-left" title="stri_read_lines: Read Text Lines from a Text File" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -280,16 +280,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stri-read-raw-draft-api-read-whole-text-file-as-raw">
-<h1>stri_read_raw: [DRAFT API] Read Whole Text File as Raw<a class="headerlink" href="#stri-read-raw-draft-api-read-whole-text-file-as-raw" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stri-read-raw-read-text-file-as-raw">
+<h1>stri_read_raw: Read Text File as Raw<a class="headerlink" href="#stri-read-raw-read-text-file-as-raw" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>Reads a text file as-is, with no conversion or text line splitting.</p>
-<p><strong>[THIS IS AN EXPERIMENTAL FUNCTION]</strong></p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_raw</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_raw</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -297,23 +296,23 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 11%" />
+<col style="width: 89%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
-<td><p>file name</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
+<td><p>name of the output file or a connection object (opened in the binary mode)</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Once a text file is read into memory, encoding detection (see <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2</a>), conversion (see <a class="reference external" href="stri_encode.html">stri_encode</a>), text lines split (see <a class="reference external" href="stri_split_lines.html">stri_split_lines1</a>) can be performed.</p>
+<p>Once a text file is read into memory, encoding detection (see <a class="reference external" href="stri_enc_detect.html">stri_enc_detect</a>), conversion (see <a class="reference external" href="stri_encode.html">stri_encode</a>), and/or splitting of text into lines (see <a class="reference external" href="stri_split_lines.html">stri_split_lines1</a>) can be performed.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>Returns a <code class="docutils literal notranslate"><span class="pre">raw</span></code>-type vector.</p>
+<p>Returns a vector of type <code class="docutils literal notranslate"><span class="pre">raw</span></code>.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -332,7 +331,7 @@
         <a href="stri_remove_empty.html" class="btn btn-neutral float-right" title="stri_remove_empty: Remove All Empty Strings from a Character Vector" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="stri_read_lines.html" class="btn btn-neutral float-left" title="stri_read_lines: [DRAFT API] Read Text Lines from a Text File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stri_read_lines.html" class="btn btn-neutral float-left" title="stri_read_lines: Read Text Lines from a Text File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

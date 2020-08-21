@@ -1,12 +1,10 @@
-stri_write_lines: [DRAFT API] Write Text Lines to a Text File
-=============================================================
+stri_write_lines: Write Text Lines to a Text File
+=================================================
 
 Description
 ~~~~~~~~~~~
 
-Writes a text file such that each element of a given character vector becomes a separate text line.
-
-**[THIS IS AN EXPERIMENTAL FUNCTION]**
+Writes a text file is such a way that each element of a given character vector becomes a separate text line.
 
 Usage
 ~~~~~
@@ -15,7 +13,7 @@ Usage
 
    stri_write_lines(
      str,
-     fname,
+     con,
      encoding = "UTF-8",
      sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n")
    )
@@ -23,22 +21,22 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+--------------+-----------------------------------------------------------------+
-| ``str``      | character vector                                                |
-+--------------+-----------------------------------------------------------------+
-| ``fname``    | file name                                                       |
-+--------------+-----------------------------------------------------------------+
-| ``encoding`` | output encoding, ``NULL`` or ``""`` for the current default one |
-+--------------+-----------------------------------------------------------------+
-| ``sep``      | newline separator                                               |
-+--------------+-----------------------------------------------------------------+
++--------------+----------------------------------------------------------------------------+
+| ``str``      | character vector with data to write                                        |
++--------------+----------------------------------------------------------------------------+
+| ``con``      | name of the output file or a connection object (opened in the binary mode) |
++--------------+----------------------------------------------------------------------------+
+| ``encoding`` | output encoding, ``NULL`` or ``""`` for the current default one            |
++--------------+----------------------------------------------------------------------------+
+| ``sep``      | newline separator                                                          |
++--------------+----------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
-It is a substitute for the R ``writeLines`` function, with the ability to re-encode output without any strange function calls.
+It is a substitute for the R ``writeLines`` function, with the ability to easily re-encode the output.
 
-Note that we suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.
+We suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.
 
 Value
 ~~~~~

@@ -1,5 +1,5 @@
-stri_enc_detect2: Detect Locale-Sensitive Character Encoding
-============================================================
+stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding
+=========================================================================
 
 Description
 ~~~~~~~~~~~
@@ -33,7 +33,7 @@ If ``locale`` is not ``NA`` and the above fails, the text is checked for the num
 
 The guess is of course imprecise, as it is obtained using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is in a single language.
 
-If you have no initial guess on the language and encoding, try with `stri_enc_detect <stri_enc_detect.html>`__ (uses ICU facilities). However, it turns out that (empirically) ``stri_enc_detect2`` works better than the ICU-based one if UTF-\* text is provided. Try it yourself.
+If you have no initial guess on the language and encoding, try with `stri_enc_detect <stri_enc_detect.html>`__ (uses ICU facilities).
 
 Value
 ~~~~~

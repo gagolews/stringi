@@ -27,6 +27,8 @@ Details
 
 Vectorized over ``str`` and ``filter_angle_brackets``.
 
+For a character vector input, merging all text lines via `stri_flatten(str, collapse="\n") <stri_flatten.html>`__ might be needed if ``str`` has been obtained via a call to ``readLines`` and in fact represents an image of a single text file.
+
 This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.
 
 Several different techniques are used for character set detection. For multi-byte encodings, the sequence of bytes is checked for legible patterns. The detected characters are also checked against a list of frequently used characters in that encoding. For single byte encodings, the data is checked against a list of the most commonly occurring three letter groups for each language that can be written using that encoding.
@@ -71,8 +73,6 @@ IBM420            Arabic
 IBM424            Hebrew
 \                
 ================= ===============================================================================
-
-If you have some initial guess at language and encoding, try with `stri_enc_detect2 <stri_enc_detect2.html>`__.
 
 Value
 ~~~~~
