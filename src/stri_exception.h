@@ -37,7 +37,7 @@
 using namespace std;
 
 
-#define StriException_BUFSIZE 1024
+#define StriException_BUFSIZE 4096
 
 
 #define STRI__ERROR_HANDLER_BEGIN(nprotect)                 \
@@ -94,29 +94,88 @@ using namespace std;
    if (U_FAILURE(status)) {                                 \
       onerror;                                              \
       Rf_error(MSG__ICU_ERROR,                              \
-         StriException::getICUerrorName(status),            \
+         ICUError::getICUerrorName(status),            \
          u_errorName(status));                              \
    }                                                        \
 }
 
 
 
-#ifndef STRI_ASSERT
+/** Translates ICU error code to an informative message.
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-21)
+ * make independent from StriException
+ */
+class ICUError {
+public:
+    static const char* getICUerrorName(UErrorCode status);
+};
+
+
+
 
 #ifndef NDEBUG
+/* *************** !NDEBUG *************************************************** */
+
+#ifndef STRI_ASSERT
 #define __STRI_ASSERT_STR(x) #x
 #define STRI_ASSERT_STR(x) __STRI_ASSERT_STR(x)
 
 #define STRI_ASSERT(EXPR) { if (!(EXPR)) \
     REprintf( "stringi: Assertion " #EXPR " failed in "\
         __FILE__ ":" STRI_ASSERT_STR(__LINE__) ); }
+#endif
 
+
+#define StriException(...) __StriException(__FILE__, __LINE__, __VA_ARGS__)
+
+/**
+ * A class representing exceptions for !NDEBUG
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-21)
+ *          Improve !NDEBUG diagnostics
+ */
+class __StriException {
+
+private:
+
+    char msg[StriException_BUFSIZE]; ///< message to be passed to error()
+
+public:
+
+    __StriException(const char* file, int line, const char* format, ...) {
+        sprintf(msg, "[!NDEBUG] Error in %s:%d: ", file, line);
+        va_list args;
+        va_start(args, format);
+        vsprintf(msg+strlen(msg), format, args);
+        va_end(args);
+    }
+
+    __StriException(const char* file, int line, UErrorCode status) {
+        sprintf(msg, "[!NDEBUG] Error in %s:%d: ", file, line);
+        sprintf(msg+strlen(msg),
+            MSG__ICU_ERROR, ICUError::getICUerrorName(status), u_errorName(status));
+    }
+
+
+    void throwRerror() {
+        Rf_error(msg);
+    }
+
+    const char* getMessage() const {
+        return msg;
+    }
+};
+
+typedef __StriException StriException;
+
+
+/* *************** !NDEBUG *************************************************** */
 #else
+/* *************** NDEBUG *************************************************** */
+#ifndef STRI_ASSERT
 #define STRI_ASSERT(EXPR) { ; }
 #endif
-
-#endif
-
 
 /**
  * A class representing exceptions
@@ -130,31 +189,35 @@ class StriException {
 
 private:
 
-   char msg[StriException_BUFSIZE]; ///< message to be passed to error()
+    char msg[StriException_BUFSIZE]; ///< message to be passed to error()
 
 public:
 
-   StriException(const char* format, ...) {
-      va_list args;
-      va_start(args, format);
-      vsprintf(msg, format, args);
-      va_end(args);
-   }
+    StriException(const char* format, ...) {
+        va_list args;
+        va_start(args, format);
+        vsprintf(msg, format, args);
+        va_end(args);
+    }
 
-   StriException(UErrorCode status) {
-      sprintf(msg, MSG__ICU_ERROR, getICUerrorName(status), u_errorName(status));
-   }
+    StriException(UErrorCode status) {
+        sprintf(msg, MSG__ICU_ERROR,
+            ICUError::getICUerrorName(status), u_errorName(status));
+    }
 
 
-   void throwRerror() {
-      Rf_error(msg);
-   }
+    void throwRerror() {
+        Rf_error(msg);
+    }
 
-   const char* getMessage() const {
-      return msg;
-   }
-
-   static const char* getICUerrorName(UErrorCode status);
+    const char* getMessage() const {
+        return msg;
+    }
 };
+
+/* *************** NDEBUG *************************************************** */
+#endif
+
+
 
 #endif
