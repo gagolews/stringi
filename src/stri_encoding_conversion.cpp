@@ -437,7 +437,7 @@ SEXP stri_enc_toascii(SEXP str)
 /**
  * Convert character vector between marked encodings and the encoding provided
  *
- * @param str     input character vector or list of raw vectors
+ * @param str     input character vector
  * @param to    target encoding, \code{NULL} or \code{""} for default enc
  * @param to_raw single logical, should list of raw vectors be returned?
  * @return a converted character vector or list of raw vectors
@@ -574,7 +574,7 @@ SEXP stri_encode_from_marked(SEXP str, SEXP to, SEXP to_raw)
 SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 {
    const char* selected_from = stri__prepare_arg_enc(from, "from", true); /* this is R_alloc'ed */
-   if (!selected_from && Rf_isVectorAtomic(str))
+   if (!selected_from && Rf_isVectorAtomic(str) && !isRaw(str))
       return stri_encode_from_marked(str, to, to_raw);
    const char* selected_to   = stri__prepare_arg_enc(to, "to", true); /* this is R_alloc'ed */
    bool to_raw_logical = stri__prepare_arg_logical_1_notNA(to_raw, "to_raw");
@@ -629,6 +629,8 @@ SEXP stri_encode(SEXP str, SEXP from, SEXP to, SEXP to_raw)
 
       UErrorCode status = U_ZERO_ERROR;
       UnicodeString encs(curs, curn, uconv_from, status); // FROM -> UTF-16 [this is the slow part]
+      if (status == U_ILLEGAL_ARGUMENT_ERROR)
+          throw StriException(MSG__MEM_ALLOC_ERROR);
       STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
       R_len_t curn_tmp = encs.length();

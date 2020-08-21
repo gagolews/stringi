@@ -3,59 +3,68 @@ context("test-enc-convert.R")
 
 test_that("stri_encode", {
 
-   expect_error(stri_encode("", "blahblahblah", "nosuchencoding"))
+    expect_error(stri_encode("", "blahblahblah", "nosuchencoding"))
 
-   expect_equivalent(stri_encode("", "", ""), "")
-   expect_equivalent(stri_encode(NA_character_, "", ""), NA_character_)
-   expect_equivalent(stri_encode(LETTERS, "", ""), LETTERS)
+    expect_equivalent(stri_encode("", "", ""), "")
+    expect_equivalent(stri_encode(NA_character_, "", ""), NA_character_)
+    expect_equivalent(stri_encode(LETTERS, "", ""), LETTERS)
 
-   expect_equivalent(stri_encode(LETTERS, "US-ASCII", "latin1"), LETTERS)
-   expect_equivalent(stri_encode(letters, "latin1",   "UTF-8"),  letters)
+    expect_equivalent(stri_encode(LETTERS, "US-ASCII", "latin1"), LETTERS)
+    expect_equivalent(stri_encode(letters, "latin1",   "UTF-8"),  letters)
 
-   expect_equivalent(charToRaw(stri_encode("\u0105a", "", "cp1250")), as.raw(c(0xb9, 0x61)))
-   expect_equivalent(stri_encode(NULL, "cp-1250", ""), NA_character_)
-   expect_equivalent(stri_encode(as.raw(165), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
-   expect_equivalent(stri_encode(list(as.raw(165)), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
-   expect_error(stri_encode(list("shouldberaw"), "", ""))
+    expect_equivalent(charToRaw(stri_encode("\u0105a", "", "cp1250")), as.raw(c(0xb9, 0x61)))
+    expect_equivalent(stri_encode(NULL, "cp-1250", ""), NA_character_)
+    expect_equivalent(stri_encode(as.raw(165), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
+    expect_equivalent(stri_encode(list(as.raw(165)), "cp-1250", "iso-8859-2", to_raw=TRUE)[[1]], as.raw(161))
+    expect_error(stri_encode(list("shouldberaw"), "", ""))
 
-   .polish_chars_latin2  <- rawToChar(as.raw(c(161, 198, 202, 163, 209,
-      211, 166, 172, 175, 177, 230, 234, 179, 241, 243, 182, 188, 191)))
-   Encoding(.polish_chars_latin2) <- "bytes"
+    .polish_chars_latin2  <- rawToChar(as.raw(c(161, 198, 202, 163, 209,
+        211, 166, 172, 175, 177, 230, 234, 179, 241, 243, 182, 188, 191)))
+    Encoding(.polish_chars_latin2) <- "bytes"
 
-   .polish_chars_cp1250  <- rawToChar(as.raw(c(165, 198, 202, 163, 209,
-      211, 140, 143, 175, 185, 230, 234, 179, 241, 243, 156, 159, 191)))
-   Encoding(.polish_chars_cp1250) <- "bytes"
+    .polish_chars_cp1250  <- rawToChar(as.raw(c(165, 198, 202, 163, 209,
+        211, 140, 143, 175, 185, 230, 234, 179, 241, 243, 156, 159, 191)))
+    Encoding(.polish_chars_cp1250) <- "bytes"
 
-   .polish_chars_utf8    <- intToUtf8(      (c(260, 262, 280, 321, 323,
-      211, 346, 377, 379, 261, 263, 281, 322, 324, 243, 347, 378, 380)))
-   Encoding(.polish_chars_utf8) <- "bytes"
+    .polish_chars_utf8    <- intToUtf8(      (c(260, 262, 280, 321, 323,
+        211, 346, 377, 379, 261, 263, 281, 322, 324, 243, 347, 378, 380)))
+    Encoding(.polish_chars_utf8) <- "bytes"
 
-   expect_equivalent(
-      charToRaw(stri_encode(.polish_chars_latin2, "latin2", "cp1250")),
-      charToRaw(.polish_chars_cp1250))
-   expect_equivalent(
-      charToRaw(stri_encode(.polish_chars_cp1250, "cp1250", "utf8")),
-      charToRaw(.polish_chars_utf8))
+    expect_equivalent(
+        charToRaw(stri_encode(.polish_chars_latin2, "latin2", "cp1250")),
+        charToRaw(.polish_chars_cp1250))
+    expect_equivalent(
+        charToRaw(stri_encode(.polish_chars_cp1250, "cp1250", "utf8")),
+        charToRaw(.polish_chars_utf8))
 
-   expect_warning(expect_equivalent(
-      stri_encode(stri_encode(c("\u0105abc\u0104", NA, "\ufffd\u5432"),
-         "UTF-8", "latin2", to_raw=TRUE), "latin2", "UTF-8"),
-      c("\u0105abc\u0104",    NA,         "\032\032")))
+    expect_warning(expect_equivalent(
+        stri_encode(stri_encode(c("\u0105abc\u0104", NA, "\ufffd\u5432"),
+            "UTF-8", "latin2", to_raw=TRUE), "latin2", "UTF-8"),
+        c("\u0105abc\u0104",    NA,         "\032\032")))
 
-   #### mixed encoding marks:
-   if (!stri_info()$ICU.UTF8) {
-      suppressMessages(defenc <- stri_enc_set("iso-8859-2"))
-      expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", "UTF-8"), c("a", "\u0105", NA, "\u0105"))
-      expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", ""), c("a", "\xb1", NA, "\xb1"))
-      suppressMessages(stri_enc_set(defenc))
-   }
+    #### mixed encoding marks:
+    if (!stri_info()$ICU.UTF8) {
+        suppressMessages(defenc <- stri_enc_set("iso-8859-2"))
+        expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+        expect_equivalent(stri_encode(c("a", "\xb1", NA, "\u0105"), "", ""), c("a", "\xb1", NA, "\xb1"))
+        suppressMessages(stri_enc_set(defenc))
+    }
 
-   if (!stri_info()$ICU.UTF8) {
-      suppressMessages(defenc <- stri_enc_set("cp-1250"))
-      expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105"), NULL, "UTF-8"), c("a", "\u0105", NA, "\u0105"))
-      expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105")), c("a", "\xb9", NA, "\xb9"))
-      suppressMessages(stri_enc_set(defenc))
-   }
+    if (!stri_info()$ICU.UTF8) {
+        suppressMessages(defenc <- stri_enc_set("cp-1250"))
+        expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105"), NULL, "UTF-8"), c("a", "\u0105", NA, "\u0105"))
+        expect_equivalent(stri_encode(c("a", "\xb9", NA, "\u0105")), c("a", "\xb9", NA, "\xb9"))
+        suppressMessages(stri_enc_set(defenc))
+    }
+
+
+    x <- charToRaw(stringi::stri_dup("a", 2**3))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(rawToChar(x), NULL, "utf-8"))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(rawToChar(x), "utf-8", "utf-8"))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(list(x), NULL, "utf-8"))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(list(x), "utf-8", "utf-8"))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(x, NULL, "utf-8"))
+    expect_equivalent(rawToChar(x), stringi::stri_encode(x, "utf-8", "utf-8"))
 })
 
 
