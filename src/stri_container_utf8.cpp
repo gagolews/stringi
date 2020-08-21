@@ -72,7 +72,9 @@ StriContainerUTF8::StriContainerUTF8(SEXP rstr, R_len_t _nrecycle, bool _shallow
 
 
    this->str = new String8[this->n];
-   if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
+   STRI_ASSERT(this->str);
+   if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+       this->n*sizeof(String8));
 
    /* Important: ICU provides full internationalization functionality
    without any conversion table data. The common library contains
@@ -228,7 +230,9 @@ StriContainerUTF8::StriContainerUTF8(StriContainerUTF8& container)
 {
    if (container.str) {
       this->str = new String8[this->n];
-      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
+      STRI_ASSERT(this->str);
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+          this->n*sizeof(String8));
       for (int i=0; i<this->n; ++i) {
          this->str[i] = container.str[i];
       }
@@ -246,7 +250,9 @@ StriContainerUTF8& StriContainerUTF8::operator=(StriContainerUTF8& container)
 
    if (container.str) {
       this->str = new String8[this->n];
-      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
+      STRI_ASSERT(this->str);
+      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+          this->n*sizeof(String8));
       for (int i=0; i<this->n; ++i) {
          this->str[i] = container.str[i];
       }
