@@ -4,7 +4,7 @@ stri_encode: Convert Strings Between Given Encodings
 Description
 ~~~~~~~~~~~
 
-These functions convert strings between encodings. They aim to replace R's ``iconv``. They are not only faster, but also much more portable - they work in the same manner on all platforms.
+These functions convert strings between encodings. They aim to serve as a more portable and faster replacement for R's own ``iconv``.
 
 Usage
 ~~~~~
@@ -33,19 +33,21 @@ Details
 
 ``stri_conv`` is an alias for ``stri_encode``.
 
-Please refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <stringi-encoding.html>`__ for a general discussion.
+Refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <stringi-encoding.html>`__ for a general discussion.
 
-If ``str`` is a character vector and ``from`` is either missing, ``""``, or ``NULL``, then the declared encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, the internal encoding declarations are ignored and a converter selected via ``from`` is used.
+If ``from`` is either missing, ``""``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
 
-If ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
+However, if ``from`` is given explicitly, the internal encoding declarations are always ignored.
 
-For ``to_raw=FALSE``, the output strings have always marked encodings according to the target converter used (as specified by ``to``) and the current default Encoding (``ASCII``, ``latin1``, ``UTF-8``, ``native``, or ``bytes`` in all other cases).
+For ``to_raw=FALSE``, the output strings always have the encodings marked according to the target converter used (as specified by ``to``) and the current default Encoding (``ASCII``, ``latin1``, ``UTF-8``, ``native``, or ``bytes`` in all other cases).
 
 Note that some issues might occur if ``to`` indicates, e.g, UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use ``to_raw=TRUE`` and consider specifying a byte order marker (BOM) for portability reasons (e.g., set ``UTF-16`` or ``UTF-32`` which automatically adds the BOMs).
 
 Note that ``stri_encode(as.raw(data), "encodingname")`` is a clever substitute for ``rawToChar``.
 
-In the current version of stringi, if an incorrect code point is found on input, it is replaced by the default (for that target encoding) substitute character. Also, in such a case a warning is generated.
+In the current version of stringi, if an incorrect code point is found on input, it is replaced with the default (for that target encoding) "missing/erroneous" character (with a warning), e.g., the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD). Occurrences thereof can be located in the output string to diagnose the problematic sequences, e.g., by calling: ``stri_locate_all_regex(converted_string, "[\ufffd\u001a]"``.
+
+Because of the way this function is currently implemented, maximal size of a single string to be converted cannot exceed ~0.67 GB.
 
 Value
 ~~~~~

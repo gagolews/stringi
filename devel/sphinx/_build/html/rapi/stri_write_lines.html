@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_write_lines: [DRAFT API] Write Text Lines to a Text File &mdash; stringi 1.4.7 documentation</title>
+  <title>stri_write_lines: Write Text Lines to a Text File &mdash; stringi 1.4.7 documentation</title>
   
 
   
@@ -108,11 +108,11 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_dup.html">stri_dup: Duplicate Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_duplicated.html">stri_duplicated: Determine Duplicated Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_detect.html">stri_enc_detect: Detect Character Set and Language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: Detect Locale-Sensitive Character Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_fromutf32.html">stri_enc_fromutf32: Convert From UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_info.html">stri_enc_info: Query a Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isascii.html">stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
@@ -149,8 +149,8 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: [DRAFT API] Read Text Lines from a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: [DRAFT API] Read Whole Text File as Raw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace_na.html">stri_replace_na: Replace Missing Values in a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Occurrences of a Pattern</a></li>
@@ -179,7 +179,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_unique.html">stri_unique: Extract Unique Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_write_lines: [DRAFT API] Write Text Lines to a Text File</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_write_lines: Write Text Lines to a Text File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -254,7 +254,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>stri_write_lines: [DRAFT API] Write Text Lines to a Text File</li>
+      <li>stri_write_lines: Write Text Lines to a Text File</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -280,18 +280,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stri-write-lines-draft-api-write-text-lines-to-a-text-file">
-<h1>stri_write_lines: [DRAFT API] Write Text Lines to a Text File<a class="headerlink" href="#stri-write-lines-draft-api-write-text-lines-to-a-text-file" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stri-write-lines-write-text-lines-to-a-text-file">
+<h1>stri_write_lines: Write Text Lines to a Text File<a class="headerlink" href="#stri-write-lines-write-text-lines-to-a-text-file" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>Writes a text file such that each element of a given character vector becomes a separate text line.</p>
-<p><strong>[THIS IS AN EXPERIMENTAL FUNCTION]</strong></p>
+<p>Writes a text file is such a way that each element of a given character vector becomes a separate text line.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_write_lines</span><span class="p">(</span>
   <span class="n">str</span><span class="p">,</span>
-  <span class="n">fname</span><span class="p">,</span>
+  <span class="n">con</span><span class="p">,</span>
   <span class="n">encoding</span> <span class="o">=</span> <span class="s">&quot;UTF-8&quot;</span><span class="p">,</span>
   <span class="n">sep</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">.Platform</span><span class="o">$</span><span class="n">OS.type</span> <span class="o">==</span> <span class="s">&quot;windows&quot;</span><span class="p">,</span> <span class="s">&quot;\r\n&quot;</span><span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="p">)</span>
@@ -302,15 +301,15 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 18%" />
-<col style="width: 82%" />
+<col style="width: 16%" />
+<col style="width: 84%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
-<td><p>character vector</p></td>
+<td><p>character vector with data to write</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
-<td><p>file name</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
+<td><p>name of the output file or a connection object (opened in the binary mode)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">encoding</span></code></p></td>
 <td><p>output encoding, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the current default one</p></td>
@@ -323,8 +322,8 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>It is a substitute for the R <code class="docutils literal notranslate"><span class="pre">writeLines</span></code> function, with the ability to re-encode output without any strange function calls.</p>
-<p>Note that we suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.</p>
+<p>It is a substitute for the R <code class="docutils literal notranslate"><span class="pre">writeLines</span></code> function, with the ability to easily re-encode the output.</p>
+<p>We suggest using the UTF-8 encoding for all text files: thus, it is the default one for the output.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>

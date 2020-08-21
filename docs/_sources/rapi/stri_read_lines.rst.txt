@@ -1,49 +1,40 @@
-stri_read_lines: [DRAFT API] Read Text Lines from a Text File
-=============================================================
+stri_read_lines: Read Text Lines from a Text File
+=================================================
 
 Description
 ~~~~~~~~~~~
 
-Reads a text file, re-encodes it, and splits it into text lines.
-
-**[THIS IS AN EXPERIMENTAL FUNCTION]**
+Reads a text file in ins entirety, re-encodes it, and splits it into text lines.
 
 Usage
 ~~~~~
 
 .. code-block:: r
 
-   stri_read_lines(
-     fname,
-     encoding = "auto",
-     locale = NA,
-     fallback_encoding = stri_enc_get()
-   )
+   stri_read_lines(con, encoding = NULL)
 
 Arguments
 ~~~~~~~~~
 
-+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``fname``             | single string with file name                                                                                                                                                  |
-+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``encoding``          | single string; input encoding, ``"auto"`` for automatic detection with `stri_enc_detect2 <stri_enc_detect2.html>`__, and ``NULL`` or ``""`` for the current default encoding. |
-+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``            | single string passed to `stri_enc_detect2 <stri_enc_detect2.html>`__; ``NULL`` or ``""`` for default locale, ``NA`` for checking just UTF-\* family                           |
-+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``fallback_encoding`` | single string; encoding to be used if encoding detection fails; defaults to the current default encoding, see `stri_enc_get <stri_enc_set.html>`__                            |
-+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------------------------+
+| ``con``      | name of the output file or a connection object (opened in the binary mode)          |
++--------------+-------------------------------------------------------------------------------------+
+| ``encoding`` | single string; input encoding; ``NULL`` or ``""`` for the current default encoding. |
++--------------+-------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
-This aims to be a substitute for the ``readLines`` function, with the ability to auto-detect input encodings (or to specify one manually), re-encode input without any strange function calls or sys options change, and split the text into lines with `stri_split_lines1 <stri_split_lines.html>`__ (which conforms with the Unicode guidelines for newline markers).
+This aims to be a substitute for the ``readLines`` function, with the ability to re-encode the input file in a much more robust way, and split the text into lines with `stri_split_lines1 <stri_split_lines.html>`__ (which conforms with the Unicode guidelines for newline markers).
 
-If ``locale`` is ``NA`` and auto-detection of UTF-32/16/8 fails, then ``fallback_encoding`` is used.
+The function calls `stri_read_raw <stri_read_raw.html>`__, `stri_encode <stri_encode.html>`__, and `stri_split_lines1 <stri_split_lines.html>`__, in this order.
+
+Because of the way this function is currently implemented, maximal file size cannot exceed ~0.67 GB.
 
 Value
 ~~~~~
 
-Returns a character vector, each text line is a separate string. The output is always in UTF-8.
+Returns a character vector, each text line is a separate string. The output is always marked as UTF-8.
 
 See Also
 ~~~~~~~~

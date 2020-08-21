@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="stri_enc_detect2: Detect Locale-Sensitive Character Encoding" href="stri_enc_detect2.html" />
+    <link rel="next" title="stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding" href="stri_enc_detect2.html" />
     <link rel="prev" title="stri_duplicated: Determine Duplicated Elements" href="stri_duplicated.html" /> 
 </head>
 
@@ -118,11 +118,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: Detect Locale-Sensitive Character Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_fromutf32.html">stri_enc_fromutf32: Convert From UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_info.html">stri_enc_info: Query a Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isascii.html">stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
@@ -159,8 +159,8 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: [DRAFT API] Read Text Lines from a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: [DRAFT API] Read Whole Text File as Raw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace_na.html">stri_replace_na: Replace Missing Values in a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Occurrences of a Pattern</a></li>
@@ -189,7 +189,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_unique.html">stri_unique: Extract Unique Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: [DRAFT API] Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
@@ -270,7 +270,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="stri_enc_detect2.html" class="btn btn-neutral float-right" title="stri_enc_detect2: Detect Locale-Sensitive Character Encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_enc_detect2.html" class="btn btn-neutral float-right" title="stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="stri_duplicated.html" class="btn btn-neutral float-left" title="stri_duplicated: Determine Duplicated Elements" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -314,6 +314,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">filter_angle_brackets</span></code>.</p>
+<p>For a character vector input, merging all text lines via <a class="reference external" href="stri_flatten.html">stri_flatten(str, collapse=”n”)</a> might be needed if <code class="docutils literal notranslate"><span class="pre">str</span></code> has been obtained via a call to <code class="docutils literal notranslate"><span class="pre">readLines</span></code> and in fact represents an image of a single text file.</p>
 <p>This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.</p>
 <p>Several different techniques are used for character set detection. For multi-byte encodings, the sequence of bytes is checked for legible patterns. The detected characters are also checked against a list of frequently used characters in that encoding. For single byte encodings, the data is checked against a list of the most commonly occurring three letter groups for each language that can be written using that encoding.</p>
 <p>The detection process can be configured to optionally ignore HTML or XML style markup (using ICU’s internal facilities), which can interfere with the detection process by changing the statistics.</p>
@@ -423,7 +424,6 @@
 </tr>
 </tbody>
 </table>
-<p>If you have some initial guess at language and encoding, try with <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2</a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -463,7 +463,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="stri_enc_detect2.html" class="btn btn-neutral float-right" title="stri_enc_detect2: Detect Locale-Sensitive Character Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_enc_detect2.html" class="btn btn-neutral float-right" title="stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="stri_duplicated.html" class="btn btn-neutral float-left" title="stri_duplicated: Determine Duplicated Elements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

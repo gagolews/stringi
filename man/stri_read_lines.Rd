@@ -29,6 +29,9 @@ and split the text into lines with \code{\link{stri_split_lines1}}
 The function calls \code{\link{stri_read_raw}},
 \code{\link{stri_encode}}, and \code{\link{stri_split_lines1}},
 in this order.
+
+Because of the way this function is currently implemented,
+maximal file size cannot exceed ~0.67 GB.
 }
 \seealso{
 Other files: 

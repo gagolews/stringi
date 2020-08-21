@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_read_lines: [DRAFT API] Read Text Lines from a Text File &mdash; stringi 1.4.7 documentation</title>
+  <title>stri_read_lines: Read Text Lines from a Text File &mdash; stringi 1.4.7 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="stri_read_raw: [DRAFT API] Read Whole Text File as Raw" href="stri_read_raw.html" />
+    <link rel="next" title="stri_read_raw: Read Text File as Raw" href="stri_read_raw.html" />
     <link rel="prev" title="stri_rand_strings: Generate Random Strings" href="stri_rand_strings.html" /> 
 </head>
 
@@ -108,11 +108,11 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_dup.html">stri_dup: Duplicate Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_duplicated.html">stri_duplicated: Determine Duplicated Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_detect.html">stri_enc_detect: Detect Character Set and Language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: Detect Locale-Sensitive Character Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_detect2.html">stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_fromutf32.html">stri_enc_fromutf32: Convert From UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_info.html">stri_enc_info: Query a Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isascii.html">stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
@@ -149,7 +149,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_read_lines: [DRAFT API] Read Text Lines from a Text File</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_read_lines: Read Text Lines from a Text File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -158,7 +158,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: [DRAFT API] Read Whole Text File as Raw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace_na.html">stri_replace_na: Replace Missing Values in a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Occurrences of a Pattern</a></li>
@@ -187,7 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_unique.html">stri_unique: Extract Unique Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: [DRAFT API] Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
@@ -254,7 +254,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>stri_read_lines: [DRAFT API] Read Text Lines from a Text File</li>
+      <li>stri_read_lines: Read Text Lines from a Text File</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -268,7 +268,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="stri_read_raw.html" class="btn btn-neutral float-right" title="stri_read_raw: [DRAFT API] Read Whole Text File as Raw" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_read_raw.html" class="btn btn-neutral float-right" title="stri_read_raw: Read Text File as Raw" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="stri_rand_strings.html" class="btn btn-neutral float-left" title="stri_rand_strings: Generate Random Strings" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -280,21 +280,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stri-read-lines-draft-api-read-text-lines-from-a-text-file">
-<h1>stri_read_lines: [DRAFT API] Read Text Lines from a Text File<a class="headerlink" href="#stri-read-lines-draft-api-read-text-lines-from-a-text-file" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stri-read-lines-read-text-lines-from-a-text-file">
+<h1>stri_read_lines: Read Text Lines from a Text File<a class="headerlink" href="#stri-read-lines-read-text-lines-from-a-text-file" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>Reads a text file, re-encodes it, and splits it into text lines.</p>
-<p><strong>[THIS IS AN EXPERIMENTAL FUNCTION]</strong></p>
+<p>Reads a text file in ins entirety, re-encodes it, and splits it into text lines.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_lines</span><span class="p">(</span>
-  <span class="n">fname</span><span class="p">,</span>
-  <span class="n">encoding</span> <span class="o">=</span> <span class="s">&quot;auto&quot;</span><span class="p">,</span>
-  <span class="n">locale</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span>
-  <span class="n">fallback_encoding</span> <span class="o">=</span> <span class="nf">stri_enc_get</span><span class="p">()</span>
-<span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_read_lines</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -302,33 +296,28 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 12%" />
-<col style="width: 88%" />
+<col style="width: 14%" />
+<col style="width: 86%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fname</span></code></p></td>
-<td><p>single string with file name</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">con</span></code></p></td>
+<td><p>name of the output file or a connection object (opened in the binary mode)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">encoding</span></code></p></td>
-<td><p>single string; input encoding, <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> for automatic detection with <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2</a>, and <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the current default encoding.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p>single string passed to <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2</a>; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale, <code class="docutils literal notranslate"><span class="pre">NA</span></code> for checking just UTF-* family</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fallback_encoding</span></code></p></td>
-<td><p>single string; encoding to be used if encoding detection fails; defaults to the current default encoding, see <a class="reference external" href="stri_enc_set.html">stri_enc_get</a></p></td>
+<td><p>single string; input encoding; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the current default encoding.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>This aims to be a substitute for the <code class="docutils literal notranslate"><span class="pre">readLines</span></code> function, with the ability to auto-detect input encodings (or to specify one manually), re-encode input without any strange function calls or sys options change, and split the text into lines with <a class="reference external" href="stri_split_lines.html">stri_split_lines1</a> (which conforms with the Unicode guidelines for newline markers).</p>
-<p>If <code class="docutils literal notranslate"><span class="pre">locale</span></code> is <code class="docutils literal notranslate"><span class="pre">NA</span></code> and auto-detection of UTF-32/16/8 fails, then <code class="docutils literal notranslate"><span class="pre">fallback_encoding</span></code> is used.</p>
+<p>This aims to be a substitute for the <code class="docutils literal notranslate"><span class="pre">readLines</span></code> function, with the ability to re-encode the input file in a much more robust way, and split the text into lines with <a class="reference external" href="stri_split_lines.html">stri_split_lines1</a> (which conforms with the Unicode guidelines for newline markers).</p>
+<p>The function calls <a class="reference external" href="stri_read_raw.html">stri_read_raw</a>, <a class="reference external" href="stri_encode.html">stri_encode</a>, and <a class="reference external" href="stri_split_lines.html">stri_split_lines1</a>, in this order.</p>
+<p>Because of the way this function is currently implemented, maximal file size cannot exceed ~0.67 GB.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
-<p>Returns a character vector, each text line is a separate string. The output is always in UTF-8.</p>
+<p>Returns a character vector, each text line is a separate string. The output is always marked as UTF-8.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -344,7 +333,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="stri_read_raw.html" class="btn btn-neutral float-right" title="stri_read_raw: [DRAFT API] Read Whole Text File as Raw" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="stri_read_raw.html" class="btn btn-neutral float-right" title="stri_read_raw: Read Text File as Raw" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="stri_rand_strings.html" class="btn btn-neutral float-left" title="stri_rand_strings: Generate Random Strings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

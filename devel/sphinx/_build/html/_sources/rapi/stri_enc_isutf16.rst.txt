@@ -1,5 +1,5 @@
-stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32
-======================================================================
+stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32
+========================================================================
 
 Description
 ~~~~~~~~~~~

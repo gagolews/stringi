@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>stri_enc_detect2: Detect Locale-Sensitive Character Encoding &mdash; stringi 1.4.7 documentation</title>
+  <title>stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding &mdash; stringi 1.4.7 documentation</title>
   
 
   
@@ -108,7 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_dup.html">stri_dup: Duplicate Strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_duplicated.html">stri_duplicated: Determine Duplicated Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_detect.html">stri_enc_detect: Detect Character Set and Language</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_enc_detect2: Detect Locale-Sensitive Character Encoding</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a></li>
@@ -120,7 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_fromutf32.html">stri_enc_fromutf32: Convert From UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_info.html">stri_enc_info: Query a Character Encoding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isascii.html">stri_enc_isascii: Check If a Data Stream Is Possibly in ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF16 or UTF32</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf16.html">stri_enc_isutf16: Check If a Data Stream Is Possibly in UTF-16 or UTF-32</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_isutf8.html">stri_enc_isutf8: Check If a Data Stream Is Possibly in UTF-8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_list.html">stri_enc_list: List Known Character Encodings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_enc_mark.html">stri_enc_mark: Get Declared Encodings of Each String</a></li>
@@ -157,8 +157,8 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_lipsum.html">stri_rand_lipsum: A Lorem Ipsum Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_shuffle.html">stri_rand_shuffle: Randomly Shuffle Code Points in Each String</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_rand_strings.html">stri_rand_strings: Generate Random Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: [DRAFT API] Read Text Lines from a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: [DRAFT API] Read Whole Text File as Raw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_lines.html">stri_read_lines: Read Text Lines from a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_read_raw.html">stri_read_raw: Read Text File as Raw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_remove_empty.html">stri_remove_empty: Remove All Empty Strings from a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace_na.html">stri_replace_na: Replace Missing Values in a Character Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_replace.html">stri_replace: Replace Occurrences of a Pattern</a></li>
@@ -187,7 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_unique.html">stri_unique: Extract Unique Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: [DRAFT API] Write Text Lines to a Text File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
@@ -254,7 +254,7 @@
         
           <li><a href="../rapi.html">R Package <em>stringi</em> Reference</a> &raquo;</li>
         
-      <li>stri_enc_detect2: Detect Locale-Sensitive Character Encoding</li>
+      <li>stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -280,8 +280,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stri-enc-detect2-detect-locale-sensitive-character-encoding">
-<h1>stri_enc_detect2: Detect Locale-Sensitive Character Encoding<a class="headerlink" href="#stri-enc-detect2-detect-locale-sensitive-character-encoding" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stri-enc-detect2-deprecated-detect-locale-sensitive-character-encoding">
+<h1>stri_enc_detect2: [DEPRECATED] Detect Locale-Sensitive Character Encoding<a class="headerlink" href="#stri-enc-detect2-deprecated-detect-locale-sensitive-character-encoding" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This function tries to detect character encoding in case the language of text is known.</p>
@@ -315,7 +315,7 @@
 <p>First, the text is checked whether it is valid UTF-32BE, UTF-32LE, UTF-16BE, UTF-16LE, UTF-8 (as in <a class="reference external" href="stri_enc_detect.html">stri_enc_detect</a>, this is roughly inspired by ICU’s <code class="docutils literal notranslate"><span class="pre">i18n/csrucode.cpp</span></code>) or ASCII.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">locale</span></code> is not <code class="docutils literal notranslate"><span class="pre">NA</span></code> and the above fails, the text is checked for the number of occurrences of language-specific code points (data provided by the ICU library) converted to all possible 8-bit encodings that fully cover the indicated language. The encoding is selected based on the greatest number of total byte hits.</p>
 <p>The guess is of course imprecise, as it is obtained using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is in a single language.</p>
-<p>If you have no initial guess on the language and encoding, try with <a class="reference external" href="stri_enc_detect.html">stri_enc_detect</a> (uses ICU facilities). However, it turns out that (empirically) <code class="docutils literal notranslate"><span class="pre">stri_enc_detect2</span></code> works better than the ICU-based one if UTF-* text is provided. Try it yourself.</p>
+<p>If you have no initial guess on the language and encoding, try with <a class="reference external" href="stri_enc_detect.html">stri_enc_detect</a> (uses ICU facilities).</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>

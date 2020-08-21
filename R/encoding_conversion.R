@@ -75,12 +75,15 @@
 #' is a clever substitute for \code{\link{rawToChar}}.
 #'
 #' In the current version of \pkg{stringi}, if an incorrect code point is found
-#' on input, it is replaced by the default (for that target encoding)
+#' on input, it is replaced with the default (for that target encoding)
 #' "missing/erroneous" character (with a warning), e.g.,
 #' the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD).
 #' Occurrences thereof can be located in the output string to diagnose
 #' the problematic sequences, e.g., by calling:
 #' \code{stri_locate_all_regex(converted_string, "[\\ufffd\\u001a]"}.
+#'
+#' Because of the way this function is currently implemented,
+#' maximal size of a single string to be converted cannot exceed ~0.67 GB.
 #'
 #'
 #' @param str a character vector, a raw vector, or
