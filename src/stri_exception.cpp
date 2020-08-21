@@ -44,8 +44,11 @@
  *    ICU warning info added
  *
  * @version 1.1.2 (Marek Gagolewski, 2017-01-07) _LIMIT, _COUNT deprecated
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-21) Rename class, make
+ * independent from StriException
  */
-const char* StriException::getICUerrorName(UErrorCode status)
+const char* ICUError::getICUerrorName(UErrorCode status)
 {
    switch(status) {
       case U_USING_FALLBACK_WARNING:
@@ -103,7 +106,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_RESOURCE_TYPE_MISMATCH:
          return "An operation is requested over a resource that does not support it";
       case U_ILLEGAL_ESCAPE_SEQUENCE:
-         return "ISO-2022 illlegal escape sequence.";
+         return "ISO-2022 illegal escape sequence.";
       case U_UNSUPPORTED_ESCAPE_SEQUENCE:
          return "ISO-2022 unsupported escape sequence.";
       case U_NO_SPACE_AVAILABLE:
@@ -115,7 +118,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_STATE_TOO_OLD_ERROR:
          return "ICU cannot construct a service from this state, as it is no longer supported.";
       case U_TOO_MANY_ALIASES_ERROR:
-         return "There are too many aliases in the path to the requested resource. It is very possible that a circular alias definition has occured";
+         return "There are too many aliases in the path to the requested resource. It is very possible that a circular alias definition has occurred";
       case U_ENUM_OUT_OF_SYNC_ERROR:
          return "UEnumeration out of sync with underlying collection.";
       case U_INVARIANT_CONVERSION_ERROR:
@@ -274,7 +277,7 @@ const char* StriException::getICUerrorName(UErrorCode status)
       case U_BRK_UNRECOGNIZED_OPTION:
          return "!!option in RBBI rules not recognized.";
       case U_BRK_MALFORMED_RULE_TAG:
-         return "The {nnn} tag on a rule is mal formed.";
+         return "The {nnn} tag on a rule is malformed.";
       // case U_BRK_ERROR_LIMIT:
       //    return "This must always be the last value to indicate the limit for Break Iterator failures.";
       case U_REGEX_INTERNAL_ERROR:
