@@ -16,18 +16,18 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+----------------------+------------------------------------------------------------+
-| ``case_insensitive`` | logical; enable simple case insensitive matching           |
-+----------------------+------------------------------------------------------------+
-| ``overlap``          | logical; enable overlapping matches detection              |
-+----------------------+------------------------------------------------------------+
-| ``...``              | any other arguments to this function are purposely ignored |
-+----------------------+------------------------------------------------------------+
++----------------------+--------------------------------------------------------------------------------------------------------------------------+
+| ``case_insensitive`` | logical; enable simple case insensitive matching                                                                         |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+
+| ``overlap``          | logical; enable overlapping matches' detection                                                                           |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+
+| ``...``              | [DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
-Case-insensitive matching uses a simple, single-code point case mapping (via ICU's ``u_toupper()`` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They take into account the string context and the language. Also, they can map to a result string with a different length as appropriate, see `stringi-search-coll <stringi-search-coll.html>`__.
+Case-insensitive matching uses a simple, single-code point case mapping (via ICU's ``u_toupper()`` function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see `stringi-search-coll <stringi-search-coll.html>`__.
 
 Searching for overlapping pattern matches is available in `stri_extract_all_fixed <stri_extract.html>`__, `stri_locate_all_fixed <stri_locate.html>`__, and `stri_count_fixed <stri_count.html>`__ functions.
 

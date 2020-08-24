@@ -25,7 +25,8 @@ Available features include:
 
 * string concatenation, padding, wrapping,
 * substring extraction,
-* pattern searching (e.g., with 'Java'-like regular expressions or the Unicode collation algorithm),
+* pattern searching (e.g., with Java-like regular expressions),
+* collation and sorting,
 * random string generation,
 * case mapping,
 * string transliteration,
