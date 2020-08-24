@@ -21,7 +21,7 @@ see also \R man page \link{Quotes})
 ASCII characters the following
 (also recognized in \R) convention is used.
 We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
-\code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
+\code{\\f}, \code{\\r}, \code{\'}, \code{\'}, \code{\\\\}
 or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)
 otherwise.
 
@@ -30,7 +30,7 @@ As usual, any input string is converted to Unicode
 before executing the escape process.
 }
 \examples{
-stri_escape_unicode("a\u0105!")
+stri_escape_unicode('a\u0105!')
 
 }
 \seealso{

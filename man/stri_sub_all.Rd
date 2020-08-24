@@ -78,14 +78,14 @@ In the replacement function, the index ranges must be sorted
 with respect to \code{from} are must be mutually disjoint.
 }
 \examples{
-x <- c("12 3456 789", "abc", "", NA, "667")
-stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+")) # see stri_extract_all
-stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE))
+x <- c('12 3456 789', 'abc', '', NA, '667')
+stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+')) # see stri_extract_all
+stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+', omit_no_match=TRUE))
 
-stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
+stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+', omit_no_match=TRUE)) <- '***'
 print(x)
 
-stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), replacement=c("A", "B", "C"))
+stri_sub_replace_all('a b c', c(1, 3, 5), c(1, 3, 5), replacement=c('A', 'B', 'C'))
 
 
 }

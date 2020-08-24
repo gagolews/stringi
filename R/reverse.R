@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -49,11 +49,11 @@
 #' @return Returns a character vector.
 #'
 #' @examples
-#' stri_reverse(c("123", "abc d e f"))
-#' stri_reverse("ZXY (\u0105\u0104123$^).")
+#' stri_reverse(c('123', 'abc d e f'))
+#' stri_reverse('ZXY (\u0105\u0104123$^).')
 #' stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
 #'
 #' @export
 stri_reverse <- function(str) {
-   .Call(C_stri_reverse, str)
+    .Call(C_stri_reverse, str)
 }

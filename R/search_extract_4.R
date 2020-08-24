@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -73,7 +73,7 @@
 #'     then a missing value will indicate that there was no match;
 #'     \code{stri_extract_all_*} only
 #' @param mode single string;
-#'     one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
+#'     one of: \code{'first'} (the default), \code{'all'}, \code{'last'}
 #' @param ... supplementary arguments passed to the underlying functions,
 #'     including additional settings for \code{opts_collator}, \code{opts_regex},
 #'     and so on
@@ -110,12 +110,12 @@
 #'
 #' \dontrun{
 #' # emoji support available since ICU 57
-#' stri_extract_all_charclass(stri_enc_fromutf32(32:55200), "\\p{EMOJI}")
+#' stri_extract_all_charclass(stri_enc_fromutf32(32:55200), '\\p{EMOJI}')
 #' }
 #'
 #' stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-#' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-#' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
+#' stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
+#' stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale='sk_SK')
 #'
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 #' stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
@@ -125,183 +125,177 @@
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
 #' stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 #'
-#' stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE)
-#' stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE)
+#' stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
+#' stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
 #'
 #' @family search_extract
 #'
 #' @export
 #' @rdname stri_extract
 stri_extract_all <- function(str, ..., regex, fixed, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
-                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
-
-   if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-
-   if (providedarg["regex"])
-      stri_extract_all_regex(str, regex, ...)
-   else if (providedarg["fixed"])
-      stri_extract_all_fixed(str, fixed, ...)
-   else if (providedarg["coll"])
-      stri_extract_all_coll(str, coll, ...)
-   else if (providedarg["charclass"])
-      stri_extract_all_charclass(str, charclass, ...)
+    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+        charclass = !missing(charclass))
+    
+    if (sum(providedarg) != 1) 
+        stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+    
+    if (providedarg["regex"]) 
+        stri_extract_all_regex(str, regex, ...) else if (providedarg["fixed"]) 
+        stri_extract_all_fixed(str, fixed, ...) else if (providedarg["coll"]) 
+        stri_extract_all_coll(str, coll, ...) else if (providedarg["charclass"]) 
+        stri_extract_all_charclass(str, charclass, ...)
 }
 
 
 #' @export
 #' @rdname stri_extract
 stri_extract_first <- function(str, ..., regex, fixed, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
-                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
-
-   if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-
-   if (providedarg["regex"])
-      stri_extract_first_regex(str, regex, ...)
-   else if (providedarg["fixed"])
-      stri_extract_first_fixed(str, fixed, ...)
-   else if (providedarg["coll"])
-      stri_extract_first_coll(str, coll, ...)
-   else if (providedarg["charclass"])
-      stri_extract_first_charclass(str, charclass, ...)
+    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+        charclass = !missing(charclass))
+    
+    if (sum(providedarg) != 1) 
+        stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+    
+    if (providedarg["regex"]) 
+        stri_extract_first_regex(str, regex, ...) else if (providedarg["fixed"]) 
+        stri_extract_first_fixed(str, fixed, ...) else if (providedarg["coll"]) 
+        stri_extract_first_coll(str, coll, ...) else if (providedarg["charclass"]) 
+        stri_extract_first_charclass(str, charclass, ...)
 }
 
 
 #' @export
 #' @rdname stri_extract
 stri_extract_last <- function(str, ..., regex, fixed, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex), "fixed"=!missing(fixed),
-                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
-
-   if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-
-   if (providedarg["regex"])
-      stri_extract_last_regex(str, regex, ...)
-   else if (providedarg["fixed"])
-      stri_extract_last_fixed(str, fixed, ...)
-   else if (providedarg["coll"])
-      stri_extract_last_coll(str, coll, ...)
-   else if (providedarg["charclass"])
-      stri_extract_last_charclass(str, charclass, ...)
+    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+        charclass = !missing(charclass))
+    
+    if (sum(providedarg) != 1) 
+        stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+    
+    if (providedarg["regex"]) 
+        stri_extract_last_regex(str, regex, ...) else if (providedarg["fixed"]) 
+        stri_extract_last_fixed(str, fixed, ...) else if (providedarg["coll"]) 
+        stri_extract_last_coll(str, coll, ...) else if (providedarg["charclass"]) 
+        stri_extract_last_charclass(str, charclass, ...)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract <- function(str, ..., regex, fixed, coll, charclass,
-                        mode=c("first", "all", "last")) {
-   # `first` is default for compatibility with stringr
-   mode <- match.arg(mode) # this is slow
-
-   switch(mode,
-          first=stri_extract_first(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass),
-          last =stri_extract_last(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass),
-          all  =stri_extract_all(str, ..., regex=regex, fixed=fixed, coll=coll, charclass=charclass)
-   )
+stri_extract <- function(str, ..., regex, fixed, coll, charclass, mode = c("first", 
+    "all", "last")) {
+    # `first` is default for compatibility with stringr
+    mode <- match.arg(mode)  # this is slow
+    
+    switch(mode, first = stri_extract_first(str, ..., regex = regex, fixed = fixed, 
+        coll = coll, charclass = charclass), last = stri_extract_last(str, ..., regex = regex, 
+        fixed = fixed, coll = coll, charclass = charclass), all = stri_extract_all(str, 
+        ..., regex = regex, fixed = fixed, coll = coll, charclass = charclass))
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_charclass <- function(str, pattern, merge=TRUE, simplify=FALSE, omit_no_match=FALSE) {
-   .Call(C_stri_extract_all_charclass, str, pattern, merge, simplify, omit_no_match)
+stri_extract_all_charclass <- function(str, pattern, merge = TRUE, simplify = FALSE, 
+    omit_no_match = FALSE) {
+    .Call(C_stri_extract_all_charclass, str, pattern, merge, simplify, omit_no_match)
 }
 
 
 #' @export
 #' @rdname stri_extract
 stri_extract_first_charclass <- function(str, pattern) {
-   .Call(C_stri_extract_first_charclass, str, pattern)
+    .Call(C_stri_extract_first_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_extract
 stri_extract_last_charclass <- function(str, pattern) {
-   .Call(C_stri_extract_last_charclass, str, pattern)
+    .Call(C_stri_extract_last_charclass, str, pattern)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_coll <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_extract_all_coll, str, pattern, simplify, omit_no_match, opts_collator)
+stri_extract_all_coll <- function(str, pattern, simplify = FALSE, omit_no_match = FALSE, 
+    ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_extract_all_coll, str, pattern, simplify, omit_no_match, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first_coll <- function(str, pattern, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_extract_first_coll, str, pattern, opts_collator)
+stri_extract_first_coll <- function(str, pattern, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_extract_first_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last_coll <- function(str, pattern, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_extract_last_coll, str, pattern, opts_collator)
+stri_extract_last_coll <- function(str, pattern, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_extract_last_coll, str, pattern, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_regex <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_extract_all_regex, str, pattern, simplify, omit_no_match, opts_regex)
+stri_extract_all_regex <- function(str, pattern, simplify = FALSE, omit_no_match = FALSE, 
+    ..., opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_extract_all_regex, str, pattern, simplify, omit_no_match, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first_regex <- function(str, pattern, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_extract_first_regex, str, pattern, opts_regex)
+stri_extract_first_regex <- function(str, pattern, ..., opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_extract_first_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last_regex <- function(str, pattern, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_extract_last_regex, str, pattern, opts_regex)
+stri_extract_last_regex <- function(str, pattern, ..., opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_extract_last_regex, str, pattern, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_all_fixed <- function(str, pattern, simplify=FALSE, omit_no_match=FALSE, ..., opts_fixed=NULL) {
-   if (!missing(...))
-       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_extract_all_fixed, str, pattern, simplify, omit_no_match, opts_fixed)
+stri_extract_all_fixed <- function(str, pattern, simplify = FALSE, omit_no_match = FALSE, 
+    ..., opts_fixed = NULL) {
+    if (!missing(...)) 
+        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+    .Call(C_stri_extract_all_fixed, str, pattern, simplify, omit_no_match, opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_first_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
-   if (!missing(...))
-       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_extract_first_fixed, str, pattern, opts_fixed)
+stri_extract_first_fixed <- function(str, pattern, ..., opts_fixed = NULL) {
+    if (!missing(...)) 
+        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+    .Call(C_stri_extract_first_fixed, str, pattern, opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_extract
-stri_extract_last_fixed <- function(str, pattern, ..., opts_fixed=NULL) {
-   if (!missing(...))
-       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_extract_last_fixed, str, pattern, opts_fixed)
+stri_extract_last_fixed <- function(str, pattern, ..., opts_fixed = NULL) {
+    if (!missing(...)) 
+        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+    .Call(C_stri_extract_last_fixed, str, pattern, opts_fixed)
 }

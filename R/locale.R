@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -58,20 +58,20 @@
 #' Locales are identified by character strings
 #' of the form \code{Language} code,
 #' \code{Language_Country} code, or \code{Language_Country_Variant}
-#' code, e.g., "en_US".
+#' code, e.g., 'en_US'.
 #'
 #' The two-letter \code{Language} code uses the ISO-639-1 standard,
-#' e.g., "en" stands for English, "pl" -- Polish, "fr" -- French,
-#' and "de" for German.
+#' e.g., 'en' stands for English, 'pl' -- Polish, 'fr' -- French,
+#' and 'de' for German.
 #'
 #' \code{Country} is a two-letter code following the ISO-3166 standard.
 #' This is to reflect different language conventions within the same language,
-#' for example in US-English ("en_US") and Australian-English ("en_AU").
+#' for example in US-English ('en_US') and Australian-English ('en_AU').
 #'
 #' Differences may also appear in language conventions used within
 #' the same country. For example, the Euro currency may be used in several European
 #' countries while the individual country's currency is still in circulation.
-#' In such a case, \pkg{ICU} \code{Variant} "_EURO" could be used for selecting
+#' In such a case, \pkg{ICU} \code{Variant} '_EURO' could be used for selecting
 #' locales that support the Euro currency.
 #'
 #' The final (optional) element of a locale is a list of

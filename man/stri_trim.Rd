@@ -22,7 +22,7 @@ stri_trim(str, side = c("both", "left", "right"), pattern = "\\\\P{Wspace}")
 classes that should be preserved (see \link{stringi-search-charclass}).
  Defaults to `\code{\\P\{Wspace\}}.}
 
-\item{side}{character [\code{stri_trim} only]; defaults to \code{"both"}}
+\item{side}{character [\code{stri_trim} only]; defaults to \code{'both'}}
 }
 \value{
 All these functions return a character vector.
@@ -48,7 +48,7 @@ arbitrary replacement string, see \code{\link{stri_replace}}.
 
 Trimming can also be used where you would normally rely on
 regular expressions. For instance, you may get
-\code{"23.5"} out of \code{"total of 23.5 bitcoins"}.
+\code{'23.5'} out of \code{'total of 23.5 bitcoins'}.
 
 For trimming white-spaces, please note the difference
 between Unicode binary property `\code{\\p\{Wspace\}}` (more universal)
@@ -56,10 +56,10 @@ and general character category `\code{\\p\{Z\}}`,
 see \link{stringi-search-charclass}.
 }
 \examples{
-stri_trim_left("               aaa")
-stri_trim_right("rexamine.com/", "\\\\p{P}")
-stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{N}")
-stri_trim_both(" Total of 23.5 bitcoins. ", "\\\\p{L}")
+stri_trim_left('               aaa')
+stri_trim_right('rexamine.com/', '\\\\p{P}')
+stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\p{N}')
+stri_trim_both(' Total of 23.5 bitcoins. ', '\\\\p{L}')
 
 }
 \seealso{

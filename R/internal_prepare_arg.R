@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -123,7 +123,7 @@ invisible(NULL)
 #
 # @family prepare_arg
 stri_prepare_arg_string <- function(x) {
-   .Call(C_stri_prepare_arg_string, x, NULL)
+    .Call(C_stri_prepare_arg_string, x, NULL)
 }
 
 
@@ -148,7 +148,7 @@ stri_prepare_arg_string <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_double <- function(x) {
-   .Call(C_stri_prepare_arg_double, x, NULL)
+    .Call(C_stri_prepare_arg_double, x, NULL)
 }
 
 
@@ -173,7 +173,7 @@ stri_prepare_arg_double <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_integer <- function(x) {
-   .Call(C_stri_prepare_arg_integer, x, NULL)
+    .Call(C_stri_prepare_arg_integer, x, NULL)
 }
 
 
@@ -198,7 +198,7 @@ stri_prepare_arg_integer <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_logical <- function(x) {
-   .Call(C_stri_prepare_arg_logical, x, NULL)
+    .Call(C_stri_prepare_arg_logical, x, NULL)
 }
 
 
@@ -223,7 +223,7 @@ stri_prepare_arg_logical <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_raw <- function(x) {
-   .Call(C_stri_prepare_arg_raw, x, NULL)
+    .Call(C_stri_prepare_arg_raw, x, NULL)
 }
 
 
@@ -244,7 +244,7 @@ stri_prepare_arg_raw <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_string_1 <- function(x) {
-   .Call(C_stri_prepare_arg_string_1, x, NULL)
+    .Call(C_stri_prepare_arg_string_1, x, NULL)
 }
 
 
@@ -265,7 +265,7 @@ stri_prepare_arg_string_1 <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_double_1 <- function(x) {
-   .Call(C_stri_prepare_arg_double_1, x, NULL)
+    .Call(C_stri_prepare_arg_double_1, x, NULL)
 }
 
 
@@ -286,7 +286,7 @@ stri_prepare_arg_double_1 <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_integer_1 <- function(x) {
-   .Call(C_stri_prepare_arg_integer_1, x, NULL)
+    .Call(C_stri_prepare_arg_integer_1, x, NULL)
 }
 
 
@@ -307,5 +307,5 @@ stri_prepare_arg_integer_1 <- function(x) {
 #
 # @family prepare_arg
 stri_prepare_arg_logical_1 <- function(x) {
-   .Call(C_stri_prepare_arg_logical_1, x, NULL)
+    .Call(C_stri_prepare_arg_logical_1, x, NULL)
 }

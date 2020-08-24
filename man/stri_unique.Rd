@@ -35,10 +35,10 @@ See also \code{\link{stri_duplicated}} for indicating non-unique elements.
 }
 \examples{
 # normalized and non-Unicode-normalized version of the same code point:
-stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
-unique(c("\u0105", stri_trans_nfkd("\u0105")))
+stri_unique(c('\u0105', stri_trans_nfkd('\u0105')))
+unique(c('\u0105', stri_trans_nfkd('\u0105')))
 
-stri_unique(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
+stri_unique(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'), strength=1)
 
 }
 \references{

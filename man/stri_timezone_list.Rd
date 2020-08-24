@@ -56,8 +56,8 @@ stri_timezone_list()
 stri_timezone_list(offset=1)
 stri_timezone_list(offset=5.5)
 stri_timezone_list(offset=5.75)
-stri_timezone_list(region="PL")
-stri_timezone_list(region="US", offset=-10)
+stri_timezone_list(region='PL')
+stri_timezone_list(region='US', offset=-10)
 
 # Fetch info on all time zones
 do.call(rbind.data.frame,

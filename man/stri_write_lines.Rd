@@ -17,7 +17,7 @@ stri_write_lines(
 \item{con}{name of the output file or a connection object
 (opened in the binary mode)}
 
-\item{encoding}{output encoding, \code{NULL} or \code{""} for
+\item{encoding}{output encoding, \code{NULL} or \code{''} for
 the current default one}
 
 \item{sep}{newline separator}

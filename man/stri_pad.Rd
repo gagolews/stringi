@@ -78,12 +78,12 @@ See \code{\link{stri_trim_left}} (among others) for reverse operation.
 Also check out \code{\link{stri_wrap}} for line wrapping.
 }
 \examples{
-stri_pad_left("stringi", 10, pad="#")
-stri_pad_both("stringi", 8:12, pad="*")
+stri_pad_left('stringi', 10, pad='#')
+stri_pad_both('stringi', 8:12, pad='*')
 # center on screen:
-cat(stri_pad_both(c("the", "string", "processing", "package"),
-   getOption("width")*0.9), sep='\n')
-cat(stri_pad_both(c("\ud6c8\ubbfc\uc815\uc74c", # takes width into account
-   stri_trans_nfkd("\ud6c8\ubbfc\uc815\uc74c"), "abcd"),
-   width=10), sep="\n")
+cat(stri_pad_both(c('the', 'string', 'processing', 'package'),
+   getOption('width')*0.9), sep='\n')
+cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
+   stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
+   width=10), sep='\n')
 }

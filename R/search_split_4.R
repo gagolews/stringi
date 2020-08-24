@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -59,7 +59,7 @@
 #'
 #' Empty search patterns are not supported. If you wish to split a
 #' string into individual characters, use, e.g.,
-#' \code{\link{stri_split_boundaries}(str, type="character")} for THE Unicode way.
+#' \code{\link{stri_split_boundaries}(str, type='character')} for THE Unicode way.
 #'
 #' \code{stri_split} is a convenience function. It calls either
 #' \code{stri_split_regex}, \code{stri_split_fixed}, \code{stri_split_coll},
@@ -99,101 +99,97 @@
 #' \code{TRUE} and \code{NA}, respectively.
 #'
 #' @examples
-#' stri_split_fixed("a_b_c_d", "_")
-#' stri_split_fixed("a_b_c__d", "_")
-#' stri_split_fixed("a_b_c__d", "_", omit_empty=TRUE)
-#' stri_split_fixed("a_b_c__d", "_", n=2, tokens_only=FALSE) # "a" & remainder
-#' stri_split_fixed("a_b_c__d", "_", n=2, tokens_only=TRUE) # "a" & "b" only
-#' stri_split_fixed("a_b_c__d", "_", n=4, omit_empty=TRUE, tokens_only=TRUE)
-#' stri_split_fixed("a_b_c__d", "_", n=4, omit_empty=FALSE, tokens_only=TRUE)
-#' stri_split_fixed("a_b_c__d", "_", omit_empty=NA)
-#' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n=1, tokens_only=TRUE, omit_empty=TRUE)
-#' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n=2, tokens_only=TRUE, omit_empty=TRUE)
-#' stri_split_fixed(c("ab_c", "d_ef_g", "h", ""), "_", n=3, tokens_only=TRUE, omit_empty=TRUE)
+#' stri_split_fixed('a_b_c_d', '_')
+#' stri_split_fixed('a_b_c__d', '_')
+#' stri_split_fixed('a_b_c__d', '_', omit_empty=TRUE)
+#' stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=FALSE) # 'a' & remainder
+#' stri_split_fixed('a_b_c__d', '_', n=2, tokens_only=TRUE) # 'a' & 'b' only
+#' stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=TRUE, tokens_only=TRUE)
+#' stri_split_fixed('a_b_c__d', '_', n=4, omit_empty=FALSE, tokens_only=TRUE)
+#' stri_split_fixed('a_b_c__d', '_', omit_empty=NA)
+#' stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=1, tokens_only=TRUE, omit_empty=TRUE)
+#' stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=2, tokens_only=TRUE, omit_empty=TRUE)
+#' stri_split_fixed(c('ab_c', 'd_ef_g', 'h', ''), '_', n=3, tokens_only=TRUE, omit_empty=TRUE)
 #'
-#' stri_list2matrix(stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE))
-#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=FALSE, simplify=TRUE)
-#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=TRUE)
-#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=TRUE, simplify=TRUE)
-#' stri_split_fixed(c("ab,c", "d,ef,g", ",h", ""), ",", omit_empty=NA, simplify=NA)
+#' stri_list2matrix(stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=TRUE))
+#' stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=FALSE, simplify=TRUE)
+#' stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=TRUE)
+#' stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=TRUE, simplify=TRUE)
+#' stri_split_fixed(c('ab,c', 'd,ef,g', ',h', ''), ',', omit_empty=NA, simplify=NA)
 #'
-#' stri_split_regex(c("ab,c", "d,ef  ,  g", ",  h", ""),
-#'    "\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*", omit_empty=NA, simplify=TRUE)
+#' stri_split_regex(c('ab,c', 'd,ef  ,  g', ',  h', ''),
+#'    '\\p{WHITE_SPACE}*,\\p{WHITE_SPACE}*', omit_empty=NA, simplify=TRUE)
 #'
-#' stri_split_charclass("Lorem ipsum dolor sit amet", "\\p{WHITE_SPACE}")
-#' stri_split_charclass(" Lorem  ipsum dolor", "\\p{WHITE_SPACE}", n=3,
+#' stri_split_charclass('Lorem ipsum dolor sit amet', '\\p{WHITE_SPACE}')
+#' stri_split_charclass(' Lorem  ipsum dolor', '\\p{WHITE_SPACE}', n=3,
 #'    omit_empty=c(FALSE, TRUE))
 #'
-#' stri_split_regex("Lorem ipsum dolor sit amet",
-#'    "\\p{Z}+") # see also stri_split_charclass
+#' stri_split_regex('Lorem ipsum dolor sit amet',
+#'    '\\p{Z}+') # see also stri_split_charclass
 #'
 #' @export
 #' @rdname stri_split
 #' @family search_split
 #' @export
 stri_split <- function(str, ..., regex, fixed, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
-                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
-
-   if (sum(providedarg) != 1)
-      stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-
-   if (providedarg["regex"])
-      stri_split_regex(str, regex, ...)
-   else if (providedarg["fixed"])
-      stri_split_fixed(str, fixed, ...)
-   else if (providedarg["coll"])
-      stri_split_coll(str, coll, ...)
-   else if (providedarg["charclass"])
-      stri_split_charclass(str, charclass, ...)
+    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+        charclass = !missing(charclass))
+    
+    if (sum(providedarg) != 1) 
+        stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
+    
+    if (providedarg["regex"]) 
+        stri_split_regex(str, regex, ...) else if (providedarg["fixed"]) 
+        stri_split_fixed(str, fixed, ...) else if (providedarg["coll"]) 
+        stri_split_coll(str, coll, ...) else if (providedarg["charclass"]) 
+        stri_split_charclass(str, charclass, ...)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_fixed <- function(str, pattern, n=-1L,
-      omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE, ..., opts_fixed=NULL) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   # tokens_only defaults to FALSE for compatibility with the stringr package
-   if (!missing(...))
-       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_split_fixed, str, pattern,
-      n, omit_empty, tokens_only, simplify, opts_fixed)
+stri_split_fixed <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
+    simplify = FALSE, ..., opts_fixed = NULL) {
+    # omit_empty defaults to FALSE for compatibility with the stringr package
+    # tokens_only defaults to FALSE for compatibility with the stringr package
+    if (!missing(...)) 
+        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+    .Call(C_stri_split_fixed, str, pattern, n, omit_empty, tokens_only, simplify, 
+        opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_regex <- function(str, pattern, n=-1L, omit_empty=FALSE,
-      tokens_only=FALSE, simplify=FALSE, ..., opts_regex=NULL)  {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   # tokens_only defaults to FALSE for compatibility with the stringr package
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_split_regex, str, pattern,
-      n, omit_empty, tokens_only, simplify, opts_regex)
+stri_split_regex <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
+    simplify = FALSE, ..., opts_regex = NULL) {
+    # omit_empty defaults to FALSE for compatibility with the stringr package
+    # tokens_only defaults to FALSE for compatibility with the stringr package
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_split_regex, str, pattern, n, omit_empty, tokens_only, simplify, 
+        opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_coll <- function(str, pattern, n=-1L, omit_empty=FALSE,
-      tokens_only=FALSE, simplify=FALSE, ..., opts_collator=NULL) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   # tokens_only defaults to FALSE for compatibility with the stringr package
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_split_coll, str, pattern,
-      n, omit_empty, tokens_only, simplify, opts_collator)
+stri_split_coll <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
+    simplify = FALSE, ..., opts_collator = NULL) {
+    # omit_empty defaults to FALSE for compatibility with the stringr package
+    # tokens_only defaults to FALSE for compatibility with the stringr package
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_split_coll, str, pattern, n, omit_empty, tokens_only, simplify, 
+        opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_charclass <- function(str, pattern, n=-1L,
-                  omit_empty=FALSE, tokens_only=FALSE, simplify=FALSE) {
-   # omit_empty defaults to FALSE for compatibility with the stringr package
-   # tokens_only defaults to FALSE for compatibility with the stringr package
-   .Call(C_stri_split_charclass, str, pattern,
-      n, omit_empty, tokens_only, simplify)
+stri_split_charclass <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
+    simplify = FALSE) {
+    # omit_empty defaults to FALSE for compatibility with the stringr package
+    # tokens_only defaults to FALSE for compatibility with the stringr package
+    .Call(C_stri_split_charclass, str, pattern, n, omit_empty, tokens_only, simplify)
 }

@@ -3,143 +3,188 @@ context("test-join.R")
 
 
 test_that("stri_join_list", {
-   expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-      "You're gonna get away with this.")), sep=", "),
-      c("Lorem, ipsum, dolor, sit, amet", "You're, gonna, get, away, with, this"))
-   expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-      "You're gonna get away with this.")), sep=", ", collapse=". "),
-      "Lorem, ipsum, dolor, sit, amet. You're, gonna, get, away, with, this")
-   expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), sep=", "),
-      "Lorem, ipsum, dolor, sit, amet")
-   expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), sep=", ", collapse=". "),
-      "Lorem, ipsum, dolor, sit, amet")
-   expect_equal(stri_join_list(list(), sep=", ", collapse=". "), character(0))
-   expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep=", ", collapse=". "), c("a, b. c"))
-   expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep=", ", collapse=NULL), c("a, b", "c"))
-   expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep=", ", collapse=". "), NA_character_)
-   expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep=", ", collapse=NULL), c("a, b", NA, "c"))
-   expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep=", ", collapse=". "), "a, b. . c")
-   expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep=", ", collapse=NULL), c("a, b", "", "c"))
-   expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+"), " "), c("R is OK", NA, "Hey"))
-   expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), "\\p{L}+", omit_no_match=TRUE), " ", " -- "),
-      c("R is OK -- Hey"))
+    expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.", 
+        "You're gonna get away with this.")), sep = ", "), c("Lorem, ipsum, dolor, sit, amet", 
+        "You're, gonna, get, away, with, this"))
+    expect_equal(stri_join_list(stri_extract_all_words(c("Lorem ipsum dolor sit amet.", 
+        "You're gonna get away with this.")), sep = ", ", collapse = ". "), "Lorem, ipsum, dolor, sit, amet. You're, gonna, get, away, with, this")
+    expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), 
+        sep = ", "), "Lorem, ipsum, dolor, sit, amet")
+    expect_equal(stri_join_list(stri_extract_all_words("Lorem ipsum dolor sit amet."), 
+        sep = ", ", collapse = ". "), "Lorem, ipsum, dolor, sit, amet")
+    expect_equal(stri_join_list(list(), sep = ", ", collapse = ". "), character(0))
+    expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep = ", ", 
+        collapse = ". "), c("a, b. c"))
+    expect_equal(stri_join_list(list(c("a", "b"), character(0), "c"), sep = ", ", 
+        collapse = NULL), c("a, b", "c"))
+    expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep = ", ", collapse = ". "), 
+        NA_character_)
+    expect_equal(stri_join_list(list(c("a", "b"), NA, "c"), sep = ", ", collapse = NULL), 
+        c("a, b", NA, "c"))
+    expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep = ", ", collapse = ". "), 
+        "a, b. . c")
+    expect_equal(stri_join_list(list(c("a", "b"), "", "c"), sep = ", ", collapse = NULL), 
+        c("a, b", "", "c"))
+    expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), 
+        "\\p{L}+"), " "), c("R is OK", NA, "Hey"))
+    expect_equal(stri_join_list(stri_extract_all_regex(c("R is OK.", "123 456", "Hey!"), 
+        "\\p{L}+", omit_no_match = TRUE), " ", " -- "), c("R is OK -- Hey"))
 })
 
 test_that("stri_join", {
-   # warning("testthat completely ignores warnings :( -- if this is turned into an error, we are OK")
-
-   # we have many specialized functions for join, e.g.
-   # flatten with sep
-   # flatten with no sep
-   # join2 with sep and no collapse
-   # join2 with sep and collapse
-   # join - general, with collapse
-   # join - general, no collapse
-
-   expect_equal(stri_paste(character(0), "a", character(0), ignore_null=FALSE), character(0))
-   expect_equal(stri_paste(character(0), "a", character(0), ignore_null=TRUE), "a")
-   expect_equal(stri_paste(character(0), "a", ignore_null=FALSE), character(0))
-   expect_equal(stri_paste(character(0), "a", ignore_null=TRUE), "a")
-
-   expect_equal(stri_join(character(0), sep="", collapse="", ignore_null=TRUE), "")
-   expect_equal(stri_join(character(0), sep="", collapse="!", ignore_null=TRUE), "")
-   expect_equal(stri_join(character(0), sep="", collapse="", ignore_null=FALSE), "")
-   expect_equal(stri_join(character(0), sep="", collapse="!", ignore_null=FALSE), "")
-   expect_equal(stri_join(character(0), "aa", sep="", collapse="", ignore_null=TRUE), "aa")
-   expect_equal(stri_join(character(0), "aa", sep="", collapse="!", ignore_null=TRUE), "aa")
-   expect_equal(stri_join(character(0), "aa", sep="", collapse="", ignore_null=FALSE), "")
-   expect_equal(stri_join(character(0), "aa", sep="", collapse="!", ignore_null=FALSE), "")
-   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="", ignore_null=TRUE), "bbaa")
-   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="!", ignore_null=TRUE), "bbaa")
-   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="", ignore_null=FALSE), "")
-   expect_equal(stri_join("bb", character(0), "aa", sep="", collapse="!", ignore_null=FALSE), "")
-
-   #stringr tests:
-   test <- c("a", "b", "c")
-   expect_that(stri_c(test, ignore_null=TRUE), equals(test))
-   expect_that(stri_c(test, sep = " ", ignore_null=TRUE), equals(test))
-   expect_that(stri_c(test, collapse = "", ignore_null=TRUE), equals("abc"))
-   test <- letters[1:3]
-   expect_that(stri_c(test, c(), ignore_null=TRUE), equals(test))
-   expect_that(stri_c(test, NULL, ignore_null=TRUE), equals(test))
-   expect_that(
-      stri_c(test, NULL, "a", sep = " ", ignore_null=TRUE),
-      equals(c("a a", "b a", "c a")))
-
-   expect_equal(stri_flatten(as.Date(ISOdate(2015, 01, 12))), "2015-01-12")
-   expect_equal(stri_flatten(as.factor("aaa")), "aaa")
-
-   expect_equal(stri_c("a", c("x", "y"), "b"), c("axb", "ayb"))
-
-   expect_equal(stri_join(LETTERS, LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
-   expect_equal(stri_join(LETTERS, LETTERS, sep=NA, collapse=NA), NA_character_)
-   expect_equal(stri_join(LETTERS, sep=NA), rep(NA_character_, length(LETTERS)))
-   expect_equal(stri_join(character(0), character(0)), character(0))
-   expect_error(stri_join(LETTERS, LETTERS, sep=character(0)))
-   expect_warning(stri_join(LETTERS, LETTERS, sep=LETTERS))
-   expect_error(stri_join(LETTERS, LETTERS, sep=mean))
-
-   expect_identical(stri_paste(1:4, 1:2, 1:4, 1:2, 1:4, 1:2, sep="!"), paste(1:4, 1:2, 1:4, 1:2, 1:4, 1:2, sep="!"))
-   expect_identical(stri_paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep="!"), paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep="!"))
-
-   expect_identical(stri_join(), character(0))
-   expect_warning(stri_paste(1:3, 1:2, sep=""))
-   expect_warning(stri_paste(1:3, 1:2, sep="!"))
-   expect_warning(stri_paste(1:3, 1:2, sep="", collapse=""))
-   expect_warning(stri_paste(1:3, 1:2, sep="!", collapse=""))
-   expect_identical(stri_join(character(0), "a", "b"), character(0))
-   expect_identical(stri_join("a", "b", character(0)), character(0))
-   expect_identical(stri_join("a", character(0)), character(0))
-   expect_identical(stri_join(character(0), "a"), character(0))
-   expect_identical(stri_join(character(0)), character(0))
-   expect_identical(stri_join(NULL), character(0))
-   expect_identical(stri_join("a", "b", NULL), character(0))
-   expect_identical(stri_join(character(0), "a", "b", collapse=""), "")
-   expect_identical(stri_join(character(0), rep("a", 2), collapse=""), "")
-
-   expect_identical(stri_join(character(0), "a", "b", ignore_null=TRUE), "ab")
-   expect_identical(stri_join(character(0), "a", rep("b",2), ignore_null=TRUE), c("ab", "ab"))
-   expect_identical(stri_join("a", "b", character(0), ignore_null=TRUE), "ab")
-   expect_identical(stri_join("a", character(0), ignore_null=TRUE), "a")
-   expect_identical(stri_join(character(0), "a", ignore_null=TRUE), "a")
-   expect_identical(stri_join(character(0), ignore_null=TRUE), character(0))
-   expect_identical(stri_join(NULL, ignore_null=TRUE), character(0))
-   expect_identical(stri_join("a", "b", NULL, ignore_null=TRUE), "ab")
-   expect_identical(stri_join(character(0), rep("a", 2), "b", collapse="", ignore_null=TRUE), "abab")
-   expect_identical(stri_join(character(0), rep("a", 2), collapse="", ignore_null=TRUE), "aa")
-
-   expect_identical(stri_paste(NULL, c("a", "b"), sep=" ", ignore_null = TRUE), paste(c("a", "b")))
-
-   expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
-   expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
-   expect_identical(stri_join(c('\u0105', '\u0104')), c('\u0105', '\u0104'))
-   expect_identical(stri_join(c('\u0105', '\u0104'), collapse=''), c('\u0105\u0104'))
-   expect_identical(stri_join(c('\u0105', '\u0104'), collapse='!!!!!'), c('\u0105!!!!!\u0104'))
-   expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), c('\u0105', '\u0104'))
-   expect_identical(stri_join(enc2native(c('\u0105', '\u0104'))), enc2native(c('\u0105', '\u0104')))
-   expect_identical(stri_join(LETTERS, letters, collapse=''), paste(LETTERS, letters, sep='', collapse=''))
-   expect_identical(stri_join(LETTERS, letters, collapse='!'), paste(LETTERS, letters, sep='', collapse='!'))
-   expect_identical(stri_join(LETTERS, letters, LETTERS), paste(LETTERS, letters, LETTERS, sep=''))
-   expect_identical(stri_join(LETTERS, letters, LETTERS, collapse=''), paste(LETTERS, letters, LETTERS, sep='', collapse=''))
-   expect_identical(stri_join(LETTERS, letters, LETTERS, collapse='!'), paste(LETTERS, letters, LETTERS, sep='', collapse='!'))
-   expect_identical(stri_join(LETTERS, letters, LETTERS, letters[1]), paste(LETTERS, letters, LETTERS, letters[1], sep=''))
-   expect_identical(stri_join(LETTERS, letters, '???'), paste(LETTERS, letters, '???', sep=''))
-   expect_identical(stri_join(LETTERS, letters, sep='!'), paste(LETTERS, letters, sep='!'))
-   expect_identical(stri_join(LETTERS, letters, '???', sep='!'), paste(LETTERS, letters, '???', sep='!'))
-   expect_identical(stri_join(LETTERS, letters, "a", sep='!', collapse='???'), paste(LETTERS, letters, "a", sep='!', collapse='???'))
-   expect_identical(stri_join(LETTERS, letters, sep='!', collapse='???'), paste(LETTERS, letters, sep='!', collapse='???'))
-   expect_identical(stri_paste(stri_dup("aaaa",1000),"kot",NA), NA_character_)
-   expect_identical(stri_paste(stri_dup("aaaa",1000),NA), NA_character_)
-   expect_identical(stri_join(stri_dup(LETTERS, 1000), stri_dup(letters, 1000), stri_dup(LETTERS,100), NA),
-      rep(NA_character_, 26))
-
-   expect_identical(stri_paste(letters[1:3],1:6,collapse = " "), paste(letters[1:3],1:6,collapse = " ", sep=""))
-   expect_identical(stri_paste(letters[1:3],1:6,collapse = ""), stri_paste(letters[1:3],1:6,"",collapse = ""))
-   expect_identical(stri_paste(1:6,letters[1:3],collapse = " "), paste(1:6,letters[1:3],collapse = " ", sep=""))
-   expect_identical(stri_paste(1:6,letters[1:3],collapse = ""), paste(1:6,letters[1:3],collapse = "", sep=""))
-   expect_identical(stri_paste(letters[1:3],1:6,collapse = " ",sep=" "), paste(letters[1:3],1:6,collapse = " ", sep=" "))
-   expect_identical(stri_paste(letters[1:3],1:6,collapse = NULL), paste(letters[1:3],1:6,collapse = NULL, sep=""))
-   expect_identical(stri_paste(letters[1:3],1:6,"a",collapse = " "), paste(letters[1:3],1:6,"a", collapse = " ", sep=""))
-   expect_identical(stri_paste(letters[1:3],1:6,"a",collapse = " "), paste(letters[1:3],1:6,"a",collapse = " ", sep=""))
-   expect_identical(stri_paste(letters[1:3],1:6,LETTERS[1:2],collapse = " "), paste(letters[1:3],1:6,LETTERS[1:2],collapse = " ", sep=""))
+    # warning('testthat completely ignores warnings :( -- if this is turned into an error, we are OK')
+    
+    # we have many specialized functions for join, e.g.
+    # flatten with sep
+    # flatten with no sep
+    # join2 with sep and no collapse
+    # join2 with sep and collapse
+    # join - general, with collapse
+    # join - general, no collapse
+    
+    expect_equal(stri_paste(character(0), "a", character(0), ignore_null = FALSE), 
+        character(0))
+    expect_equal(stri_paste(character(0), "a", character(0), ignore_null = TRUE), 
+        "a")
+    expect_equal(stri_paste(character(0), "a", ignore_null = FALSE), character(0))
+    expect_equal(stri_paste(character(0), "a", ignore_null = TRUE), "a")
+    
+    expect_equal(stri_join(character(0), sep = "", collapse = "", ignore_null = TRUE), 
+        "")
+    expect_equal(stri_join(character(0), sep = "", collapse = "!", ignore_null = TRUE), 
+        "")
+    expect_equal(stri_join(character(0), sep = "", collapse = "", ignore_null = FALSE), 
+        "")
+    expect_equal(stri_join(character(0), sep = "", collapse = "!", ignore_null = FALSE), 
+        "")
+    expect_equal(stri_join(character(0), "aa", sep = "", collapse = "", ignore_null = TRUE), 
+        "aa")
+    expect_equal(stri_join(character(0), "aa", sep = "", collapse = "!", ignore_null = TRUE), 
+        "aa")
+    expect_equal(stri_join(character(0), "aa", sep = "", collapse = "", ignore_null = FALSE), 
+        "")
+    expect_equal(stri_join(character(0), "aa", sep = "", collapse = "!", ignore_null = FALSE), 
+        "")
+    expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "", ignore_null = TRUE), 
+        "bbaa")
+    expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "!", ignore_null = TRUE), 
+        "bbaa")
+    expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "", ignore_null = FALSE), 
+        "")
+    expect_equal(stri_join("bb", character(0), "aa", sep = "", collapse = "!", ignore_null = FALSE), 
+        "")
+    
+    #stringr tests:
+    test <- c("a", "b", "c")
+    expect_that(stri_c(test, ignore_null = TRUE), equals(test))
+    expect_that(stri_c(test, sep = " ", ignore_null = TRUE), equals(test))
+    expect_that(stri_c(test, collapse = "", ignore_null = TRUE), equals("abc"))
+    test <- letters[1:3]
+    expect_that(stri_c(test, c(), ignore_null = TRUE), equals(test))
+    expect_that(stri_c(test, NULL, ignore_null = TRUE), equals(test))
+    expect_that(stri_c(test, NULL, "a", sep = " ", ignore_null = TRUE), equals(c("a a", 
+        "b a", "c a")))
+    
+    expect_equal(stri_flatten(as.Date(ISOdate(2015, 1, 12))), "2015-01-12")
+    expect_equal(stri_flatten(as.factor("aaa")), "aaa")
+    
+    expect_equal(stri_c("a", c("x", "y"), "b"), c("axb", "ayb"))
+    
+    expect_equal(stri_join(LETTERS, LETTERS, sep = NA), rep(NA_character_, length(LETTERS)))
+    expect_equal(stri_join(LETTERS, LETTERS, sep = NA, collapse = NA), NA_character_)
+    expect_equal(stri_join(LETTERS, sep = NA), rep(NA_character_, length(LETTERS)))
+    expect_equal(stri_join(character(0), character(0)), character(0))
+    expect_error(stri_join(LETTERS, LETTERS, sep = character(0)))
+    expect_warning(stri_join(LETTERS, LETTERS, sep = LETTERS))
+    expect_error(stri_join(LETTERS, LETTERS, sep = mean))
+    
+    expect_identical(stri_paste(1:4, 1:2, 1:4, 1:2, 1:4, 1:2, sep = "!"), paste(1:4, 
+        1:2, 1:4, 1:2, 1:4, 1:2, sep = "!"))
+    expect_identical(stri_paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep = "!"), 
+        paste(1:4, 11:12, 21:24, 31:32, 41:44, 51:52, 61, 71, sep = "!"))
+    
+    expect_identical(stri_join(), character(0))
+    expect_warning(stri_paste(1:3, 1:2, sep = ""))
+    expect_warning(stri_paste(1:3, 1:2, sep = "!"))
+    expect_warning(stri_paste(1:3, 1:2, sep = "", collapse = ""))
+    expect_warning(stri_paste(1:3, 1:2, sep = "!", collapse = ""))
+    expect_identical(stri_join(character(0), "a", "b"), character(0))
+    expect_identical(stri_join("a", "b", character(0)), character(0))
+    expect_identical(stri_join("a", character(0)), character(0))
+    expect_identical(stri_join(character(0), "a"), character(0))
+    expect_identical(stri_join(character(0)), character(0))
+    expect_identical(stri_join(NULL), character(0))
+    expect_identical(stri_join("a", "b", NULL), character(0))
+    expect_identical(stri_join(character(0), "a", "b", collapse = ""), "")
+    expect_identical(stri_join(character(0), rep("a", 2), collapse = ""), "")
+    
+    expect_identical(stri_join(character(0), "a", "b", ignore_null = TRUE), "ab")
+    expect_identical(stri_join(character(0), "a", rep("b", 2), ignore_null = TRUE), 
+        c("ab", "ab"))
+    expect_identical(stri_join("a", "b", character(0), ignore_null = TRUE), "ab")
+    expect_identical(stri_join("a", character(0), ignore_null = TRUE), "a")
+    expect_identical(stri_join(character(0), "a", ignore_null = TRUE), "a")
+    expect_identical(stri_join(character(0), ignore_null = TRUE), character(0))
+    expect_identical(stri_join(NULL, ignore_null = TRUE), character(0))
+    expect_identical(stri_join("a", "b", NULL, ignore_null = TRUE), "ab")
+    expect_identical(stri_join(character(0), rep("a", 2), "b", collapse = "", ignore_null = TRUE), 
+        "abab")
+    expect_identical(stri_join(character(0), rep("a", 2), collapse = "", ignore_null = TRUE), 
+        "aa")
+    
+    expect_identical(stri_paste(NULL, c("a", "b"), sep = " ", ignore_null = TRUE), 
+        paste(c("a", "b")))
+    
+    expect_identical(stri_join(NA_character_, LETTERS), rep(NA_character_, length(LETTERS)))
+    expect_identical(stri_join(LETTERS, NA_character_), rep(NA_character_, length(LETTERS)))
+    expect_identical(stri_join(c("ą", "Ą")), c("ą", "Ą"))
+    expect_identical(stri_join(c("ą", "Ą"), collapse = ""), c("ąĄ"))
+    expect_identical(stri_join(c("ą", "Ą"), collapse = "!!!!!"), c("ą!!!!!Ą"))
+    expect_identical(stri_join(enc2native(c("ą", "Ą"))), c("ą", "Ą"))
+    expect_identical(stri_join(enc2native(c("ą", "Ą"))), enc2native(c("ą", "Ą")))
+    expect_identical(stri_join(LETTERS, letters, collapse = ""), paste(LETTERS, letters, 
+        sep = "", collapse = ""))
+    expect_identical(stri_join(LETTERS, letters, collapse = "!"), paste(LETTERS, 
+        letters, sep = "", collapse = "!"))
+    expect_identical(stri_join(LETTERS, letters, LETTERS), paste(LETTERS, letters, 
+        LETTERS, sep = ""))
+    expect_identical(stri_join(LETTERS, letters, LETTERS, collapse = ""), paste(LETTERS, 
+        letters, LETTERS, sep = "", collapse = ""))
+    expect_identical(stri_join(LETTERS, letters, LETTERS, collapse = "!"), paste(LETTERS, 
+        letters, LETTERS, sep = "", collapse = "!"))
+    expect_identical(stri_join(LETTERS, letters, LETTERS, letters[1]), paste(LETTERS, 
+        letters, LETTERS, letters[1], sep = ""))
+    expect_identical(stri_join(LETTERS, letters, "???"), paste(LETTERS, letters, 
+        "???", sep = ""))
+    expect_identical(stri_join(LETTERS, letters, sep = "!"), paste(LETTERS, letters, 
+        sep = "!"))
+    expect_identical(stri_join(LETTERS, letters, "???", sep = "!"), paste(LETTERS, 
+        letters, "???", sep = "!"))
+    expect_identical(stri_join(LETTERS, letters, "a", sep = "!", collapse = "???"), 
+        paste(LETTERS, letters, "a", sep = "!", collapse = "???"))
+    expect_identical(stri_join(LETTERS, letters, sep = "!", collapse = "???"), paste(LETTERS, 
+        letters, sep = "!", collapse = "???"))
+    expect_identical(stri_paste(stri_dup("aaaa", 1000), "kot", NA), NA_character_)
+    expect_identical(stri_paste(stri_dup("aaaa", 1000), NA), NA_character_)
+    expect_identical(stri_join(stri_dup(LETTERS, 1000), stri_dup(letters, 1000), 
+        stri_dup(LETTERS, 100), NA), rep(NA_character_, 26))
+    
+    expect_identical(stri_paste(letters[1:3], 1:6, collapse = " "), paste(letters[1:3], 
+        1:6, collapse = " ", sep = ""))
+    expect_identical(stri_paste(letters[1:3], 1:6, collapse = ""), stri_paste(letters[1:3], 
+        1:6, "", collapse = ""))
+    expect_identical(stri_paste(1:6, letters[1:3], collapse = " "), paste(1:6, letters[1:3], 
+        collapse = " ", sep = ""))
+    expect_identical(stri_paste(1:6, letters[1:3], collapse = ""), paste(1:6, letters[1:3], 
+        collapse = "", sep = ""))
+    expect_identical(stri_paste(letters[1:3], 1:6, collapse = " ", sep = " "), paste(letters[1:3], 
+        1:6, collapse = " ", sep = " "))
+    expect_identical(stri_paste(letters[1:3], 1:6, collapse = NULL), paste(letters[1:3], 
+        1:6, collapse = NULL, sep = ""))
+    expect_identical(stri_paste(letters[1:3], 1:6, "a", collapse = " "), paste(letters[1:3], 
+        1:6, "a", collapse = " ", sep = ""))
+    expect_identical(stri_paste(letters[1:3], 1:6, "a", collapse = " "), paste(letters[1:3], 
+        1:6, "a", collapse = " ", sep = ""))
+    expect_identical(stri_paste(letters[1:3], 1:6, LETTERS[1:2], collapse = " "), 
+        paste(letters[1:3], 1:6, LETTERS[1:2], collapse = " ", sep = ""))
 })

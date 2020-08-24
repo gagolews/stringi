@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -72,7 +72,7 @@
 #' @export
 #' @family length
 stri_numbytes <- function(str) {
-   .Call(C_stri_numbytes, str)
+    .Call(C_stri_numbytes, str)
 }
 
 
@@ -109,12 +109,12 @@ stri_numbytes <- function(str) {
 #' stri_numbytes('\u0105') # 2 bytes are used
 #' stri_numbytes(stri_trans_nfkd('\u0105')) # 3 bytes here but...
 #' stri_length(stri_trans_nfkd('\u0105')) # ...two code points (!)
-#' stri_count_boundaries(stri_trans_nfkd('\u0105'), type="character") # ...and one Unicode character
+#' stri_count_boundaries(stri_trans_nfkd('\u0105'), type='character') # ...and one Unicode character
 #'
 #' @export
 #' @family length
 stri_length <- function(str) {
-   .Call(C_stri_length, str)
+    .Call(C_stri_length, str)
 }
 
 
@@ -139,7 +139,7 @@ stri_length <- function(str) {
 #' @export
 #' @family length
 stri_isempty <- function(str) {
-   .Call(C_stri_isempty, str)
+    .Call(C_stri_isempty, str)
 }
 
 
@@ -178,11 +178,11 @@ stri_isempty <- function(str) {
 #'
 #' @examples
 #' stri_width(LETTERS[1:5])
-#' stri_width(stri_trans_nfkd("\u0105"))
+#' stri_width(stri_trans_nfkd('\u0105'))
 #' stri_width( # Full-width equivalents of ASCII characters:
 #'    stri_enc_fromutf32(as.list(c(0x3000, 0xFF01:0xFF5E)))
 #' )
-#' stri_width(stri_trans_nfkd("\ubc1f")) # includes Hangul Jamo medial vowels and final consonants
+#' stri_width(stri_trans_nfkd('\ubc1f')) # includes Hangul Jamo medial vowels and final consonants
 #' @export
 #' @family length
 #'
@@ -190,5 +190,5 @@ stri_isempty <- function(str) {
 #' \emph{East Asian Width} -- Unicode Standard Annex #11,
 #' \url{http://www.unicode.org/reports/tr11/}
 stri_width <- function(str) {
-   .Call(C_stri_width, str)
+    .Call(C_stri_width, str)
 }

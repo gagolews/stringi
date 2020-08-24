@@ -104,14 +104,14 @@ or \code{stri_subset_charclass},
 depending on the argument used.
 }
 \examples{
-stri_subset_regex(c("stringi R", "123", "ID456", ""), "^[0-9]+$")
+stri_subset_regex(c('stringi R', '123', 'ID456', ''), '^[0-9]+$')
 
-x <- c("stringi R", "123", "ID456", "")
-stri_subset_regex(x, "[^0-9]+|^$") <- NA
+x <- c('stringi R', '123', 'ID456', '')
+stri_subset_regex(x, '[^0-9]+|^$') <- NA
 print(x)
 
-x <- c("stringi R", "123", "ID456", "")
-stri_subset_regex(x, "^[0-9]+$", negate=TRUE) <- NA
+x <- c('stringi R', '123', 'ID456', '')
+stri_subset_regex(x, '^[0-9]+$', negate=TRUE) <- NA
 print(x)
 
 }

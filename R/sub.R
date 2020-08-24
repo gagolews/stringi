@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -72,7 +72,7 @@
 #' corrected. If \code{from} > \code{to}, then an empty string is returned.
 #'
 #' In \code{stri_sub<-}, some configurations of indexes may work as
-#' substring "injection" at the front, back, or in middle.
+#' substring 'injection' at the front, back, or in middle.
 #'
 #'
 #' If both \code{to} and \code{length} are provided,
@@ -106,79 +106,77 @@
 #' \code{stri_sub<-} changes the \code{str} object in-place.
 #'
 #' @examples
-#' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+#' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 #' stri_sub(s, from=1:3*6, to=21)
 #' stri_sub(s, from=c(1,7,13), length=5)
 #' stri_sub(s, from=1, length=1:3)
 #' stri_sub(s, -17, -7)
 #' stri_sub(s, -5, length=4)
-#' (stri_sub(s, 1, 5) <- "stringi")
-#' (stri_sub(s, -6, length=5) <- ".")
+#' (stri_sub(s, 1, 5) <- 'stringi')
+#' (stri_sub(s, -6, length=5) <- '.')
 #' (stri_sub(s, 1, 1:3) <- 1:2)
 #'
-#' x <- c("12 3456 789", "abc", "", NA, "667")
-#' stri_sub(x, stri_locate_first_regex(x, "[0-9]+")) # see stri_extract_first
-#' stri_sub(x, stri_locate_last_regex(x, "[0-9]+"))  # see stri_extract_last
+#' x <- c('12 3456 789', 'abc', '', NA, '667')
+#' stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
+#' stri_sub(x, stri_locate_last_regex(x, '[0-9]+'))  # see stri_extract_last
 #'
-#' stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"),
-#'     omit_na=TRUE, replacement="***") # see stri_replace_first
-#' stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"),
-#'     omit_na=TRUE, replacement="***") # see stri_replace_last
+#' stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
+#'     omit_na=TRUE, replacement='***') # see stri_replace_first
+#' stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
+#'     omit_na=TRUE, replacement='***') # see stri_replace_last
 #'
-#' stri_sub(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE) <- "***"
+#' stri_sub(x, stri_locate_first_regex(x, '[0-9]+'), omit_na=TRUE) <- '***'
 #' print(x)
 #'
-#' \dontrun{x %>% stri_sub_replace(1, 5, replacement="new_substring")}
+#' \dontrun{x %>% stri_sub_replace(1, 5, replacement='new_substring')}
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from=1L, to=-1L, length) {
-   if (missing(length)) {
-      if (is.matrix(from) && !missing(to)) {
-         warning("argument `to` is ignored in the current context")
-         to <- NULL
-      }
-      .Call(C_stri_sub, str, from, to, NULL)
-   }
-   else {
-      if (!missing(to))
-         warning("argument `to` is ignored in the current context")
-      if (is.matrix(from)) {
-         warning("argument `length` is ignored in the current context")
-         length <- NULL
-      }
-      .Call(C_stri_sub, str, from, NULL, length)
-   }
+stri_sub <- function(str, from = 1L, to = -1L, length) {
+    if (missing(length)) {
+        if (is.matrix(from) && !missing(to)) {
+            warning("argument `to` is ignored in the current context")
+            to <- NULL
+        }
+        .Call(C_stri_sub, str, from, to, NULL)
+    } else {
+        if (!missing(to)) 
+            warning("argument `to` is ignored in the current context")
+        if (is.matrix(from)) {
+            warning("argument `length` is ignored in the current context")
+            length <- NULL
+        }
+        .Call(C_stri_sub, str, from, NULL, length)
+    }
 }
 
 
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
-`stri_sub<-` <- function(str, from=1L, to=-1L, length, omit_na=FALSE, value) {
-   if (missing(length)) {
-      if (is.matrix(from) && !missing(to)) {
-         warning("argument `to` is ignored in this context")
-         to <- NULL
-      }
-      .Call(C_stri_sub_replacement, str, from, to, NULL, omit_na, value)
-   }
-   else {
-      if (!missing(to))
-         warning("argument `to` is ignored in this context")
-      if (is.matrix(from)) {
-         warning("argument `length` is ignored in this context")
-         length <- NULL
-      }
-      .Call(C_stri_sub_replacement, str, from, NULL, length, omit_na, value)
-   }
+`stri_sub<-` <- function(str, from = 1L, to = -1L, length, omit_na = FALSE, value) {
+    if (missing(length)) {
+        if (is.matrix(from) && !missing(to)) {
+            warning("argument `to` is ignored in this context")
+            to <- NULL
+        }
+        .Call(C_stri_sub_replacement, str, from, to, NULL, omit_na, value)
+    } else {
+        if (!missing(to)) 
+            warning("argument `to` is ignored in this context")
+        if (is.matrix(from)) {
+            warning("argument `length` is ignored in this context")
+            length <- NULL
+        }
+        .Call(C_stri_sub_replacement, str, from, NULL, length, omit_na, value)
+    }
 }
 
 
 #' @rdname stri_sub
 #' @export
-stri_sub_replace <- function(..., replacement, value=replacement)
-   `stri_sub<-`(..., value=value)
+stri_sub_replace <- function(..., replacement, value = replacement) `stri_sub<-`(..., 
+    value = value)
 
 
 
@@ -241,73 +239,75 @@ stri_sub_replace <- function(..., replacement, value=replacement)
 #' Its replacement versions return a character vector.
 #'
 #' @examples
-#' x <- c("12 3456 789", "abc", "", NA, "667")
-#' stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+")) # see stri_extract_all
-#' stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE))
+#' x <- c('12 3456 789', 'abc', '', NA, '667')
+#' stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+')) # see stri_extract_all
+#' stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+', omit_no_match=TRUE))
 #'
-#' stri_sub_all(x, stri_locate_all_regex(x, "[0-9]+", omit_no_match=TRUE)) <- "***"
+#' stri_sub_all(x, stri_locate_all_regex(x, '[0-9]+', omit_no_match=TRUE)) <- '***'
 #' print(x)
 #'
-#' stri_sub_replace_all("a b c", c(1, 3, 5), c(1, 3, 5), replacement=c("A", "B", "C"))
+#' stri_sub_replace_all('a b c', c(1, 3, 5), c(1, 3, 5), replacement=c('A', 'B', 'C'))
 #'
 #'
 #' @family indexing
 #' @rdname stri_sub_all
 #' @export
-stri_sub_all <- function(str, from=list(1L), to=list(-1L), length) {
-   if (!is.list(from)) from <- list(from)
-
-   if (missing(length)) {
-      if (!missing(to) && !is.list(to)) {
-         to <- list(to)
-      }
-
-      .Call(C_stri_sub_all, str, from, to, NULL)
-   }
-   else {
-      if (!missing(to))
-         warning("argument `to` is ignored in this context")
-
-      if (!is.list(length)) {
-         length <- list(length)
-      }
-
-      .Call(C_stri_sub_all, str, from, NULL, length)
-   }
+stri_sub_all <- function(str, from = list(1L), to = list(-1L), length) {
+    if (!is.list(from)) 
+        from <- list(from)
+    
+    if (missing(length)) {
+        if (!missing(to) && !is.list(to)) {
+            to <- list(to)
+        }
+        
+        .Call(C_stri_sub_all, str, from, to, NULL)
+    } else {
+        if (!missing(to)) 
+            warning("argument `to` is ignored in this context")
+        
+        if (!is.list(length)) {
+            length <- list(length)
+        }
+        
+        .Call(C_stri_sub_all, str, from, NULL, length)
+    }
 }
 
 
 #' @rdname stri_sub_all
 #' @export
 #' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
-`stri_sub_all<-` <- function(str, from=list(1L), to=list(-1L), length, omit_na=FALSE, value) {
-   if (!is.list(from))  from <- list(from)
-   if (!is.list(value)) value <- list(value)
-
-   if (missing(length)) {
-      if (!missing(to) && !is.list(to)) {
-         to <- list(to)
-      }
-
-      .Call(C_stri_sub_replacement_all, str, from, to, NULL, omit_na, value)
-   }
-   else {
-      if (!missing(to))
-         warning("argument `to` is ignored in this context")
-
-      if (!is.list(length)) {
-         length <- list(length)
-      }
-
-      .Call(C_stri_sub_replacement_all, str, from, NULL, length, omit_na, value)
-   }
+`stri_sub_all<-` <- function(str, from = list(1L), to = list(-1L), length, omit_na = FALSE, 
+    value) {
+    if (!is.list(from)) 
+        from <- list(from)
+    if (!is.list(value)) 
+        value <- list(value)
+    
+    if (missing(length)) {
+        if (!missing(to) && !is.list(to)) {
+            to <- list(to)
+        }
+        
+        .Call(C_stri_sub_replacement_all, str, from, to, NULL, omit_na, value)
+    } else {
+        if (!missing(to)) 
+            warning("argument `to` is ignored in this context")
+        
+        if (!is.list(length)) {
+            length <- list(length)
+        }
+        
+        .Call(C_stri_sub_replacement_all, str, from, NULL, length, omit_na, value)
+    }
 }
 
 
 #' @rdname stri_sub_all
 #' @export
-stri_sub_replace_all <- function(..., replacement, value=replacement)
-   `stri_sub_all<-`(..., value=value)
+stri_sub_replace_all <- function(..., replacement, value = replacement) `stri_sub_all<-`(..., 
+    value = value)
 
 
 #' @rdname stri_sub_all

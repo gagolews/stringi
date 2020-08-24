@@ -38,7 +38,7 @@ or in the system's default (a.k.a. \code{unknown} in \code{\link{Encoding}})
 encoding.
 
 Intuitively, the default encoding should be equivalent to
-the one you use on stdin (e.g., your "keyboard").
+the one you use on stdin (e.g., your 'keyboard').
 In \code{stringi} we assume that such an encoding
 is equivalent to the one returned by \code{\link{stri_enc_get}}.
 It is automatically detected by \pkg{ICU}

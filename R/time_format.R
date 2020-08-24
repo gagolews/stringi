@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -83,7 +83,7 @@
 #'  \tab  \tab GGGGG \tab A \cr
 #' y \tab year \tab yy \tab 96 \cr
 #'  \tab  \tab y or yyyy \tab 1996 \cr
-# Y \tab year of "Week of Year" \tab Y \tab 1997 \cr
+# Y \tab year of 'Week of Year' \tab Y \tab 1997 \cr
 #' u \tab extended year \tab u \tab 4601 \cr
 #' U \tab cyclic year name, as in Chinese lunar calendar \tab U \tab \cr
 #' r \tab related Gregorian year \tab r \tab 1996 \cr
@@ -193,11 +193,11 @@
 #' @param time an object of class \code{\link{POSIXct}} or an object coercible to
 #' @param format single string, see Details; see also \code{\link{stri_datetime_fstr}}
 #' @param str character vector
-#' @param tz  \code{NULL} or \code{""} for the default time zone
+#' @param tz  \code{NULL} or \code{''} for the default time zone
 #' or a single string with a timezone identifier,
 #' see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should date/time parsing be lenient?
-#' @param locale \code{NULL} or \code{""} for default locale,
+#' @param locale \code{NULL} or \code{''} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting the \code{@@calendar=name} keyword
 #'
@@ -212,24 +212,26 @@
 #'
 #'
 #' @examples
-#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
-#' stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd", lenient=TRUE)
-#' stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
-#' stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
+#' stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
+#' stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
+#' stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
+#' stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 #'
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format="uuuu-MM-dd HH:mm:ss", tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_format, time, format, tz, locale)
+stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL, 
+    locale = NULL) {
+    .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
 
 #' @export
 #' @rdname stri_datetime_format
 #' @aliases stri_datetime_format
-stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE, tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
+stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE, 
+    tz = NULL, locale = NULL) {
+    .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
 }
 
 
@@ -258,53 +260,52 @@ stri_datetime_parse <- function(str, format="uuuu-MM-dd HH:mm:ss", lenient=FALSE
 #' @return Returns a character vector.
 #'
 #' @examples
-#' stri_datetime_fstr("%Y-%m-%d %H:%M:%S")
+#' stri_datetime_fstr('%Y-%m-%d %H:%M:%S')
 #'
 #' @family datetime
 #' @export
 stri_datetime_fstr <- function(x) {
-   # %U, %W -> %V + warn
-   # %x, %X -> warn
-   # %u, %w -> warn
-
-   # problematic entities:
-   warn <- c('%U', '%V', '%x', '%X', '%u', '%w', '%r', '%g', '%G', '%c')
-   search <- c('%U', '%W', '%g', '%G')
-   needle <- c('ww', 'ww', 'yy', 'Y')
-
-   search <- c(search, '%a',  '%A',   '%b',  '%B')
-   needle <- c(needle, 'ccc', 'cccc', 'LLL', 'LLLL')
-
-   search <- c(search, '%c',                       '%d', '%D')
-   needle <- c(needle, 'eee LLL d HH:mm:ss yyyy',  'dd', 'MM/dd/yy')
-
-   search <- c(search, '%e', '%F',          '%h',  '%H')
-   needle <- c(needle, 'd',  'yyyy-MM-dd',  'MMM', 'HH')
-
-   search <- c(search, '%I', '%j', '%m', '%M', '%n', '%p')
-   needle <- c(needle, 'hh', 'D',  'MM', 'mm', '\n', 'a')
-
-   search <- c(search, '%r',       '%R',    '%S', '%t', '%T',       '%u')
-   needle <- c(needle, 'hh:mm:ss', 'HH:mm', 'ss', '\t', 'HH:mm:ss', 'c')
-
-   search <- c(search, '%V', '%w', '%x',       '%X',       "%y", "%Y",   "%z", "%Z")
-   needle <- c(needle, 'ww', 'c',  'yy/MM/dd', 'HH:mm:ss', "yy", "yyyy", "Z",  "z")
-
-   x <- stri_replace_all_fixed(x, "'", "\\'")
-   x <- stri_replace_all_fixed(x, "%%", "%!") # well, that's not very elegant...
-   x <- stri_replace_all_regex(x,
-      "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
-      "'$1'")
-   if (any(stri_detect_regex(x, stri_flatten(warn, collapse="|"))))
-      warning(sprintf("Formatters %s might not be 100%% compatible with ICU",
-         stri_flatten(warn, collapse=', ')))
-   x <- stri_replace_all_fixed(x, search, needle, vectorize_all=FALSE)
-   if (any(stri_detect_regex(x, "%[A-Za-z]"))) {
-      warning("Unsupported date/time format specifier. Ignoring")
-      x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?") # unsupported formatter
-   }
-   x <- stri_replace_all_fixed(x, "%!", "%") # well, that's not very elegant...
-   x
+    # %U, %W -> %V + warn
+    # %x, %X -> warn
+    # %u, %w -> warn
+    
+    # problematic entities:
+    warn <- c("%U", "%V", "%x", "%X", "%u", "%w", "%r", "%g", "%G", "%c")
+    search <- c("%U", "%W", "%g", "%G")
+    needle <- c("ww", "ww", "yy", "Y")
+    
+    search <- c(search, "%a", "%A", "%b", "%B")
+    needle <- c(needle, "ccc", "cccc", "LLL", "LLLL")
+    
+    search <- c(search, "%c", "%d", "%D")
+    needle <- c(needle, "eee LLL d HH:mm:ss yyyy", "dd", "MM/dd/yy")
+    
+    search <- c(search, "%e", "%F", "%h", "%H")
+    needle <- c(needle, "d", "yyyy-MM-dd", "MMM", "HH")
+    
+    search <- c(search, "%I", "%j", "%m", "%M", "%n", "%p")
+    needle <- c(needle, "hh", "D", "MM", "mm", "\n", "a")
+    
+    search <- c(search, "%r", "%R", "%S", "%t", "%T", "%u")
+    needle <- c(needle, "hh:mm:ss", "HH:mm", "ss", "\t", "HH:mm:ss", "c")
+    
+    search <- c(search, "%V", "%w", "%x", "%X", "%y", "%Y", "%z", "%Z")
+    needle <- c(needle, "ww", "c", "yy/MM/dd", "HH:mm:ss", "yy", "yyyy", "Z", "z")
+    
+    x <- stri_replace_all_fixed(x, "'", "\\'")
+    x <- stri_replace_all_fixed(x, "%%", "%!")  # well, that's not very elegant...
+    x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))", 
+        "'$1'")
+    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|")))) 
+        warning(sprintf("Formatters %s might not be 100%% compatible with ICU", stri_flatten(warn, 
+            collapse = ", ")))
+    x <- stri_replace_all_fixed(x, search, needle, vectorize_all = FALSE)
+    if (any(stri_detect_regex(x, "%[A-Za-z]"))) {
+        warning("Unsupported date/time format specifier. Ignoring")
+        x <- stri_replace_all_regex(x, "%[A-Za-z]", "%?")  # unsupported formatter
+    }
+    x <- stri_replace_all_fixed(x, "%!", "%")  # well, that's not very elegant...
+    x
 }
 
 
@@ -331,7 +332,7 @@ stri_datetime_fstr <- function(x) {
 # #' @export
 # #' @param usetz single logical value; should the time zone be appended
 # #' to the output?
-# format.POSIXst <- function(x, format="uuuu-MM-dd HH:mm:ss", tz=attr(x, "tzone"), usetz=FALSE, ...) {
-#    if (identical(usetz, TRUE)) format <- stri_paste(format, " z") # this is not too intelligent
+# format.POSIXst <- function(x, format='uuuu-MM-dd HH:mm:ss', tz=attr(x, 'tzone'), usetz=FALSE, ...) {
+#    if (identical(usetz, TRUE)) format <- stri_paste(format, ' z') # this is not too intelligent
 #    stri_datetime_format(x, format=format, tz=tz) # ignore ... arg purposedly
 # }

@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -69,19 +69,19 @@
 #' Returns a character matrix.
 #'
 #' @examples
-#' simplify2array(list(c("a", "b"), c("c", "d"), c("e", "f")))
-#' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")))
-#' stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")), byrow=TRUE)
+#' simplify2array(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
+#' stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
+#' stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')), byrow=TRUE)
 #'
-#' simplify2array(list("a", c("b", "c")))
-#' stri_list2matrix(list("a", c("b", "c")))
-#' stri_list2matrix(list("a", c("b", "c")), fill="")
-#' stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
+#' simplify2array(list('a', c('b', 'c')))
+#' stri_list2matrix(list('a', c('b', 'c')))
+#' stri_list2matrix(list('a', c('b', 'c')), fill='')
+#' stri_list2matrix(list('a', c('b', 'c')), fill='', n_min=5)
 #'
 #' @family utils
 #' @export
-stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
-   .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
+stri_list2matrix <- function(x, byrow = FALSE, fill = NA_character_, n_min = 0) {
+    .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
 }
 
 
@@ -98,14 +98,14 @@ stri_list2matrix <- function(x, byrow=FALSE, fill=NA_character_, n_min=0) {
 #' Returns a character vector.
 #'
 #' @examples
-#' stri_na2empty(c("a", NA, "", "b"))
+#' stri_na2empty(c('a', NA, '', 'b'))
 #'
 #' @family utils
 #' @export
 stri_na2empty <- function(x) {
-   x <- stri_enc_toutf8(x)
-   x[is.na(x)] <- ""
-   x
+    x <- stri_enc_toutf8(x)
+    x[is.na(x)] <- ""
+    x
 }
 
 #' @title
@@ -130,21 +130,19 @@ stri_na2empty <- function(x) {
 #' Returns a character vector.
 #'
 #' @examples
-#' stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
-#' stri_remove_empty(c("a", NA, "", "b"))
-#' stri_remove_empty(c("a", NA, "", "b"), TRUE)
+#' stri_remove_empty(stri_na2empty(c('a', NA, '', 'b')))
+#' stri_remove_empty(c('a', NA, '', 'b'))
+#' stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 #'
-#' stri_omit_empty_na(c("a", NA, "", "b"))
+#' stri_omit_empty_na(c('a', NA, '', 'b'))
 #'
 #' @family utils
 #' @rdname stri_remove_empty
 #' @export
-stri_remove_empty <- function(x, na_empty=FALSE) {
-   x <- stri_enc_toutf8(x)
-   if (identical(na_empty, TRUE))
-      x[!is.na(x) & !stri_isempty(x)]
-   else
-      x[!stri_isempty(x)]
+stri_remove_empty <- function(x, na_empty = FALSE) {
+    x <- stri_enc_toutf8(x)
+    if (identical(na_empty, TRUE)) 
+        x[!is.na(x) & !stri_isempty(x)] else x[!stri_isempty(x)]
 }
 
 #' @rdname stri_remove_empty
@@ -162,8 +160,8 @@ stri_omit_empty_na <- stri_remove_empty_na
 #' @rdname stri_remove_empty
 #' @export
 stri_remove_na <- function(x) {
-   x <- stri_enc_toutf8(x)
-   x[!is.na(x)]
+    x <- stri_enc_toutf8(x)
+    x[!is.na(x)]
 }
 
 #' @rdname stri_remove_empty
@@ -193,13 +191,13 @@ stri_omit_na <- stri_remove_na
 #'
 #' @examples
 #' x <- c('test', NA)
-#' stri_paste(x, 1:2)                           # "test1" NA
-#' paste(x, 1:2)                                # "test 1" "NA 2"
-#' stri_paste(stri_replace_na(x), 1:2, sep=' ') # "test 1" "NA 2"
+#' stri_paste(x, 1:2)                           # 'test1' NA
+#' paste(x, 1:2)                                # 'test 1' 'NA 2'
+#' stri_paste(stri_replace_na(x), 1:2, sep=' ') # 'test 1' 'NA 2'
 #'
 #' @export
 #' @family utils
-stri_replace_na <- function(str, replacement="NA"){
-   .Call(C_stri_replace_na, str, replacement)
+stri_replace_na <- function(str, replacement = "NA") {
+    .Call(C_stri_replace_na, str, replacement)
 }
 

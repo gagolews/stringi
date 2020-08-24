@@ -45,14 +45,14 @@ This function may be useful, e.g., in connection with \code{\link{stri_split}}
 and \code{\link{stri_extract_all}}.
 }
 \examples{
-simplify2array(list(c("a", "b"), c("c", "d"), c("e", "f")))
-stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")))
-stri_list2matrix(list(c("a", "b"), c("c", "d"), c("e", "f")), byrow=TRUE)
+simplify2array(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
+stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')))
+stri_list2matrix(list(c('a', 'b'), c('c', 'd'), c('e', 'f')), byrow=TRUE)
 
-simplify2array(list("a", c("b", "c")))
-stri_list2matrix(list("a", c("b", "c")))
-stri_list2matrix(list("a", c("b", "c")), fill="")
-stri_list2matrix(list("a", c("b", "c")), fill="", n_min=5)
+simplify2array(list('a', c('b', 'c')))
+stri_list2matrix(list('a', c('b', 'c')))
+stri_list2matrix(list('a', c('b', 'c')), fill='')
+stri_list2matrix(list('a', c('b', 'c')), fill='', n_min=5)
 
 }
 \seealso{

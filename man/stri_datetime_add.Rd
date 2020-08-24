@@ -20,14 +20,14 @@ stri_datetime_add(time, units = "seconds", tz = NULL, locale = NULL) <- value
 
 \item{value}{integer vector; signed number of units to add to \code{time}}
 
-\item{units}{single string; one of \code{"years"}, \code{"months"},
-\code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
-\code{"seconds"}, or \code{"milliseconds"}}
+\item{units}{single string; one of \code{'years'}, \code{'months'},
+\code{'weeks'}, \code{'days'}, \code{'hours'}, \code{'minutes'},
+\code{'seconds'}, or \code{'milliseconds'}}
 
-\item{tz}{\code{NULL} or \code{""} for the default time zone
+\item{tz}{\code{NULL} or \code{''} for the default time zone
 or a single string with a timezone identifier,}
 
-\item{locale}{\code{NULL} or \code{""} for default locale,
+\item{locale}{\code{NULL} or \code{''} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting the \code{@calendar=name} keyword}
 }
@@ -48,13 +48,13 @@ Note that, e.g., January, 31 + 1 month = February, 28 or 29.
 }
 \examples{
 x <- stri_datetime_now()
-stri_datetime_add(x, units="months") <- 2
+stri_datetime_add(x, units='months') <- 2
 print(x)
-stri_datetime_add(x, -2, units="months")
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years")
-stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@calendar=hebrew")
+stri_datetime_add(x, -2, units='months')
+stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
+stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
 
-stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
+stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
 
 }
 \references{

@@ -31,10 +31,10 @@ stri_datetime_create(
 
 \item{lenient}{single logical value; should the operation be lenient?}
 
-\item{tz}{\code{NULL} or \code{""} for the default time zone or
+\item{tz}{\code{NULL} or \code{''} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
 
-\item{locale}{\code{NULL} or \code{""} for default locale,
+\item{locale}{\code{NULL} or \code{''} for default locale,
 or a single string with locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
@@ -50,7 +50,7 @@ Vectorized over \code{year}, \code{month}, \code{day}, \code{hour},
 }
 \examples{
 stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-stri_datetime_create(5775, 8, 1, locale="@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
 stri_datetime_create(2015, 02, 29)
 stri_datetime_create(2015, 02, 29, lenient=TRUE)
 

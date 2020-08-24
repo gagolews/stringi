@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -101,7 +101,7 @@
 #' @param whitespace_only single logical value; allow breaks only at white-spaces?
 #' if \code{FALSE}, \pkg{ICU}'s line break iterator is used to split text
 #' into words, which is suitable for natural language processing
-#' @param locale \code{NULL} or \code{""} for text boundary analysis following
+#' @param locale \code{NULL} or \code{''} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}
 #' @param use_length single logical value; should the number of code
@@ -116,37 +116,38 @@
 #' @family text_boundaries
 #' @examples
 #' s <- stri_paste(
-#'    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
-#'    "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
-#'    "lorem. Etiam pellentesque aliquet tellus.")
-#' cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
-#' cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
-#' cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
+#'    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ',
+#'    'nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ',
+#'    'lorem. Etiam pellentesque aliquet tellus.')
+#' cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
+#' cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
+#' cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 #'
 #' @export
 #' @references
 #' D.E. Knuth, M.F. Plass,
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
-stri_wrap <- function(str, width=floor(0.9*getOption("width")),
-   cost_exponent=2.0, simplify=TRUE, normalize=TRUE, indent=0, exdent=0,
-   prefix="", initial=prefix, whitespace_only=FALSE, use_length=FALSE, locale=NULL)
-{
-   simplify <- as.logical(simplify)
-
-   normalize <- as.logical(normalize)
-   if (normalize)  # this will give an informative warning or error if sth is wrong
-   {
-      str <- sapply(stri_split_lines(str), function(s) stri_flatten(s, collapse=' '))
-      str <- stri_trim(stri_replace_all_charclass(str, "[\\u0020\\r\\n\\t]", " ", merge=TRUE))
-      str <- stri_trans_nfc(str)
-   }
-
-   ret <- .Call(C_stri_wrap, str, width, cost_exponent,
-      indent, exdent, prefix, initial, whitespace_only, use_length, locale)
-
-   if (simplify) # this will give an informative warning or error if sth is wrong
-      as.character(unlist(ret))
-   else
-      ret
+stri_wrap <- function(str, width = floor(0.9 * getOption("width")), cost_exponent = 2, 
+    simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0, prefix = "", initial = prefix, 
+    whitespace_only = FALSE, use_length = FALSE, locale = NULL) {
+    simplify <- as.logical(simplify)
+    
+    normalize <- as.logical(normalize)
+    if (normalize) {
+        # this will give an informative warning or error if sth is wrong
+        str <- sapply(stri_split_lines(str), function(s) stri_flatten(s, collapse = " "))
+        str <- stri_trim(stri_replace_all_charclass(str, "[\\u0020\\r\\n\\t]", " ", 
+            merge = TRUE))
+        str <- stri_trans_nfc(str)
+    }
+    
+    ret <- .Call(C_stri_wrap, str, width, cost_exponent, indent, exdent, prefix, 
+        initial, whitespace_only, use_length, locale)
+    
+    if (simplify) {
+        # this will give an informative warning or error if sth is wrong
+        as.character(unlist(ret))
+    } else ret
+    
 }

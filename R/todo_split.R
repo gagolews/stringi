@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL) # TO DO, version >= 0.3
+invisible(NULL)  # TO DO, version >= 0.3
 
 
 # @TODO: ADD stri_split_chars - split into chars
@@ -50,14 +50,14 @@ invisible(NULL) # TO DO, version >= 0.3
 # #' of list contains splitted str[i] character vectors
 # #'
 # #' @examples
-# #' s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+# #' s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
 # #' stri_split_pos(s,c(1,4),c(3,6))
 # #'
 # #' @export
 # stri_split_pos <- function(str, from, to) {
 # #    if(is.matrix(from) && ncol(from) == 2){
 # #       if(!missing(to))
-# #          warning("'from' is matrix, so 'to' is ignored")
+# #          warning(''from' is matrix, so 'to' is ignored')
 # #       to   <- from[ , 2]
 # #       from <- from[ , 1]
 # #    }

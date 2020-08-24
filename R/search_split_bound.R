@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -88,15 +88,15 @@
 #' @export
 #' @rdname stri_split_lines
 #' @aliases stri_split_lines stri_split_lines1
-stri_split_lines <- function(str, omit_empty=FALSE) {
-   .Call(C_stri_split_lines, str, omit_empty)
+stri_split_lines <- function(str, omit_empty = FALSE) {
+    .Call(C_stri_split_lines, str, omit_empty)
 }
 
 
 #' @rdname stri_split_lines
 #' @export
 stri_split_lines1 <- function(str) {
-   .Call(C_stri_split_lines1, str)
+    .Call(C_stri_split_lines1, str)
 }
 
 
@@ -147,28 +147,28 @@ stri_split_lines1 <- function(str) {
 #' for \code{simplify} equal to \code{TRUE} and \code{NA}, respectively.
 #'
 #' @examples
-#' test <- "The\u00a0above-mentioned    features are very useful. " %s+%
-#'    "Kudos to their developers. 123 456 789"
-#' stri_split_boundaries(test, type="line")
-#' stri_split_boundaries(test, type="word")
-#' stri_split_boundaries(test, type="word", skip_word_none=TRUE)
-#' stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_letter=TRUE)
-#' stri_split_boundaries(test, type="word", skip_word_none=TRUE, skip_word_number=TRUE)
-#' stri_split_boundaries(test, type="sentence")
-#' stri_split_boundaries(test, type="sentence", skip_sentence_sep=TRUE)
-#' stri_split_boundaries(test, type="character")
+#' test <- 'The\u00a0above-mentioned    features are very useful. ' %s+%
+#'    'Kudos to their developers. 123 456 789'
+#' stri_split_boundaries(test, type='line')
+#' stri_split_boundaries(test, type='word')
+#' stri_split_boundaries(test, type='word', skip_word_none=TRUE)
+#' stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_letter=TRUE)
+#' stri_split_boundaries(test, type='word', skip_word_none=TRUE, skip_word_number=TRUE)
+#' stri_split_boundaries(test, type='sentence')
+#' stri_split_boundaries(test, type='sentence', skip_sentence_sep=TRUE)
+#' stri_split_boundaries(test, type='character')
 #'
 #' # a filtered break iterator with the new ICU:
-#' stri_split_boundaries("Mr. Jones and Mrs. Brown are very happy.
-#' So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
+#' stri_split_boundaries('Mr. Jones and Mrs. Brown are very happy.
+#' So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56 only
 #'
 #' @export
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_split_boundaries <- function(str, n=-1L,
-      tokens_only=FALSE, simplify=FALSE, ..., opts_brkiter=NULL) {
-   if (!missing(...))
-       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
-   .Call(C_stri_split_boundaries, str, n, tokens_only, simplify, opts_brkiter)
+stri_split_boundaries <- function(str, n = -1L, tokens_only = FALSE, simplify = FALSE, 
+    ..., opts_brkiter = NULL) {
+    if (!missing(...)) 
+        opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+    .Call(C_stri_split_boundaries, str, n, tokens_only, simplify, opts_brkiter)
 }

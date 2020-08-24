@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -47,10 +47,10 @@
 #' @param hour integer vector
 #' @param minute integer vector
 #' @param second numeric vector; fractional seconds are allowed
-#' @param tz \code{NULL} or \code{""} for the default time zone or
+#' @param tz \code{NULL} or \code{''} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 #' @param lenient single logical value; should the operation be lenient?
-#' @param locale \code{NULL} or \code{""} for default locale,
+#' @param locale \code{NULL} or \code{''} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
@@ -59,14 +59,16 @@
 #'
 #' @examples
 #' stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-#' stri_datetime_create(5775, 8, 1, locale="@@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+#' stri_datetime_create(5775, 8, 1, locale='@@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
 #' stri_datetime_create(2015, 02, 29)
 #' stri_datetime_create(2015, 02, 29, lenient=TRUE)
 #'
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0.0, lenient=FALSE, tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient, tz, locale)
+stri_datetime_create <- function(year, month, day, hour = 12L, minute = 0L, second = 0, 
+    lenient = FALSE, tz = NULL, locale = NULL) {
+    .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient, 
+        tz, locale)
 }
 
 
@@ -87,7 +89,7 @@ stri_datetime_create <- function(year, month, day, hour=12L, minute=0L, second=0
 #' @family datetime
 #' @export
 stri_datetime_now <- function() {
-   .Call(C_stri_datetime_now)
+    .Call(C_stri_datetime_now)
 }
 
 
@@ -102,9 +104,9 @@ stri_datetime_now <- function() {
 #'
 #'
 #' @param time an object of class \code{\link{POSIXct}} or an object coercible to
-#' @param tz \code{NULL} or \code{""} for the default time zone or
+#' @param tz \code{NULL} or \code{''} for the default time zone or
 #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
-#' @param locale \code{NULL} or \code{""} for the current default locale,
+#' @param locale \code{NULL} or \code{''} for the current default locale,
 #' or a single string with a locale identifier; a non-Gregorian calendar
 #' may be specified by setting \code{@@calendar=name} keyword
 #'
@@ -131,20 +133,20 @@ stri_datetime_now <- function() {
 #'
 #' @examples
 #' stri_datetime_fields(stri_datetime_now())
-#' stri_datetime_fields(stri_datetime_now(), locale="@@calendar=hebrew")
-#' stri_datetime_symbols(locale="@@calendar=hebrew")$Month[
-#'    stri_datetime_fields(stri_datetime_now(), locale="@@calendar=hebrew")$Month
+#' stri_datetime_fields(stri_datetime_now(), locale='@@calendar=hebrew')
+#' stri_datetime_symbols(locale='@@calendar=hebrew')$Month[
+#'    stri_datetime_fields(stri_datetime_now(), locale='@@calendar=hebrew')$Month
 #' ]
 #'
 #' @family datetime
 #' @export
-stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
-   # POSSIBLY @TODO:
-   # TimeZone
-   # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET
-   # isDST: UBool    inDaylightTime (UErrorCode &status) const =0
-   # isWeekend: virtual UBool    isWeekend (void) const
-   as.data.frame(.Call(C_stri_datetime_fields, time, tz, locale))
+stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL) {
+    # POSSIBLY @TODO:
+    # TimeZone
+    # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET
+    # isDST: UBool    inDaylightTime (UErrorCode &status) const =0
+    # isWeekend: virtual UBool    isWeekend (void) const
+    as.data.frame(.Call(C_stri_datetime_fields, time, tz, locale))
 }
 
 
@@ -162,12 +164,12 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #'
 #' @param time an object of class \code{\link{POSIXct}} or an object coercible to
 #' @param value integer vector; signed number of units to add to \code{time}
-#' @param units single string; one of \code{"years"}, \code{"months"},
-#' \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"},
-#' \code{"seconds"}, or \code{"milliseconds"}
-#' @param tz  \code{NULL} or \code{""} for the default time zone
+#' @param units single string; one of \code{'years'}, \code{'months'},
+#' \code{'weeks'}, \code{'days'}, \code{'hours'}, \code{'minutes'},
+#' \code{'seconds'}, or \code{'milliseconds'}
+#' @param tz  \code{NULL} or \code{''} for the default time zone
 #' or a single string with a timezone identifier,
-#' @param locale \code{NULL} or \code{""} for default locale,
+#' @param locale \code{NULL} or \code{''} for default locale,
 #' or a single string with locale identifier; a non-Gregorian calendar
 #' may be specified by setting the \code{@@calendar=name} keyword
 #'
@@ -184,26 +186,27 @@ stri_datetime_fields <- function(time, tz=attr(time, "tzone"), locale=NULL) {
 #'
 #' @examples
 #' x <- stri_datetime_now()
-#' stri_datetime_add(x, units="months") <- 2
+#' stri_datetime_add(x, units='months') <- 2
 #' print(x)
-#' stri_datetime_add(x, -2, units="months")
-#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years")
-#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@@calendar=hebrew")
+#' stri_datetime_add(x, -2, units='months')
+#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
+#' stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@@calendar=hebrew')
 #'
-#' stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
+#' stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
 #'
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
-stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=NULL) {
-   .Call(C_stri_datetime_add, time, value, units, tz, locale)
+stri_datetime_add <- function(time, value = 1L, units = "seconds", tz = NULL, locale = NULL) {
+    .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 
 
 #' @rdname stri_datetime_add
 #' @export
-"stri_datetime_add<-" <- function(time, units="seconds", tz=NULL, locale=NULL, value) {
-   .Call(C_stri_datetime_add, time, value, units, tz, locale)
+"stri_datetime_add<-" <- function(time, units = "seconds", tz = NULL, locale = NULL, 
+    value) {
+    .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 
 
@@ -231,7 +234,7 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 # #' see \code{\link{format.POSIXst}} and \code{\link{stri_datetime_fields}}.
 # #'
 # #' @param x ...
-# #' @param tz \code{NULL} or \code{""} for the default time zone or
+# #' @param tz \code{NULL} or \code{''} for the default time zone or
 # #' a single string with time zone identifier, see \code{\link{stri_timezone_list}}
 # #' @param recursive,... further arguments to be passed to or from other methods.
 # #'
@@ -242,9 +245,9 @@ stri_datetime_add <- function(time, value=1L, units="seconds", tz=NULL, locale=N
 # #' @rdname as.POSIXst
 # #' @family datetime
 # #' @aliases as.POSIXst POSIXst
-# as.POSIXst <- function(x, tz=attr(time, "tzone"), ...) {
-#    # UseMethod("as.POSIXct")
-#    stop("TO DO")
+# as.POSIXst <- function(x, tz=attr(time, 'tzone'), ...) {
+#    # UseMethod('as.POSIXct')
+#    stop('TO DO')
 # }
 
 

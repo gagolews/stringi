@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -86,80 +86,72 @@
 #' @return Each function returns a logical vector.
 #'
 #' @examples
-#' stri_detect_fixed(c("stringi R", "R STRINGI", "123"), c('i', 'R', '0'))
-#' stri_detect_fixed(c("stringi R", "R STRINGI", "123"), 'R')
+#' stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), c('i', 'R', '0'))
+#' stri_detect_fixed(c('stringi R', 'R STRINGI', '123'), 'R')
 #'
-#' stri_detect_charclass(c("stRRRingi","R STRINGI", "123"),
-#'    c("\\p{Ll}", "\\p{Lu}", "\\p{Zs}"))
+#' stri_detect_charclass(c('stRRRingi','R STRINGI', '123'),
+#'    c('\\p{Ll}', '\\p{Lu}', '\\p{Zs}'))
 #'
-#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), 'R.')
-#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '[[:alpha:]]*?')
-#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '[a-zC1]')
-#' stri_detect_regex(c("stringi R", "R STRINGI", "123"), '( R|RE)')
-#' stri_detect_regex("stringi", "STRING.", case_insensitive=TRUE)
+#' stri_detect_regex(c('stringi R', 'R STRINGI', '123'), 'R.')
+#' stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[[:alpha:]]*?')
+#' stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '[a-zC1]')
+#' stri_detect_regex(c('stringi R', 'R STRINGI', '123'), '( R|RE)')
+#' stri_detect_regex('stringi', 'STRING.', case_insensitive=TRUE)
 #'
-#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
-#'    "^[0-9]+$", max_count=1)
-#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
-#'    "^[0-9]+$", max_count=2)
-#' stri_detect_regex(c("abc", "def", "123", "ghi", "456", "789", "jkl"),
-#'    "^[0-9]+$", negate=TRUE, max_count=3)
+#' stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
+#'    '^[0-9]+$', max_count=1)
+#' stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
+#'    '^[0-9]+$', max_count=2)
+#' stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
+#'    '^[0-9]+$', negate=TRUE, max_count=3)
 #'
 #' @family search_detect
 #' @export
 #' @rdname stri_detect
 stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
-   providedarg <- c("regex"=!missing(regex), "fixed"    =!missing(fixed),
-                    "coll" =!missing(coll),  "charclass"=!missing(charclass))
-
-   if (sum(providedarg) != 1)
-      stop("you have to specify one of: `regex`, `fixed`, `coll`, or `charclass`")
-
-   if (providedarg["regex"])
-      stri_detect_regex(str, regex, ...)
-   else if (providedarg["fixed"])
-      stri_detect_fixed(str, fixed, ...)
-   else if (providedarg["coll"])
-      stri_detect_coll(str, coll, ...)
-   else if (providedarg["charclass"])
-      stri_detect_charclass(str, charclass, ...)
+    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+        charclass = !missing(charclass))
+    
+    if (sum(providedarg) != 1) 
+        stop("you have to specify one of: `regex`, `fixed`, `coll`, or `charclass`")
+    
+    if (providedarg["regex"]) 
+        stri_detect_regex(str, regex, ...) else if (providedarg["fixed"]) 
+        stri_detect_fixed(str, fixed, ...) else if (providedarg["coll"]) 
+        stri_detect_coll(str, coll, ...) else if (providedarg["charclass"]) 
+        stri_detect_charclass(str, charclass, ...)
 }
 
 #' @export
 #' @rdname stri_detect
-stri_detect_fixed <- function(str, pattern, negate=FALSE, max_count=-1,
-        ..., opts_fixed=NULL)
-{
-   if (!missing(...))
-       opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-   .Call(C_stri_detect_fixed, str, pattern, negate, max_count, opts_fixed)
+stri_detect_fixed <- function(str, pattern, negate = FALSE, max_count = -1, ..., 
+    opts_fixed = NULL) {
+    if (!missing(...)) 
+        opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
+    .Call(C_stri_detect_fixed, str, pattern, negate, max_count, opts_fixed)
 }
 
 #' @export
 #' @rdname stri_detect
-stri_detect_charclass <- function(str, pattern, negate=FALSE, max_count=-1)
-{
-   .Call(C_stri_detect_charclass, str, pattern, negate, max_count)
+stri_detect_charclass <- function(str, pattern, negate = FALSE, max_count = -1) {
+    .Call(C_stri_detect_charclass, str, pattern, negate, max_count)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, negate=FALSE, max_count=-1,
-        ..., opts_collator=NULL)
-{
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_detect_coll, str, pattern, negate, max_count, opts_collator)
+stri_detect_coll <- function(str, pattern, negate = FALSE, max_count = -1, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_detect_coll, str, pattern, negate, max_count, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, negate=FALSE, max_count=-1,
-        ..., opts_regex=NULL)
-{
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_detect_regex, str, pattern, negate, max_count, opts_regex)
+stri_detect_regex <- function(str, pattern, negate = FALSE, max_count = -1, ..., 
+    opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_detect_regex, str, pattern, negate, max_count, opts_regex)
 }

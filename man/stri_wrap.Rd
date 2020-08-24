@@ -51,7 +51,7 @@ into words, which is suitable for natural language processing}
 \item{use_length}{single logical value; should the number of code
 points be used instead of the total code point width (see \code{\link{stri_width}})?}
 
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
+\item{locale}{\code{NULL} or \code{''} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
 }
@@ -109,12 +109,12 @@ Note that the cost of printing the last line is always zero.
 }
 \examples{
 s <- stri_paste(
-   "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
-   "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
-   "lorem. Etiam pellentesque aliquet tellus.")
-cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
-cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
-cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
+   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ',
+   'nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ',
+   'lorem. Etiam pellentesque aliquet tellus.')
+cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
+cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
+cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 
 }
 \references{

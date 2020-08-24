@@ -22,8 +22,8 @@ a proper UTF-8 string.
 \details{
 \code{FALSE} means that a string is certainly not valid UTF-8.
 However, false positives are possible. For instance,
-\code{(c4,85)} represents ("Polish a with ogonek") in UTF-8
-as well as ("A umlaut", "Ellipsis") in WINDOWS-1250.
+\code{(c4,85)} represents ('Polish a with ogonek') in UTF-8
+as well as ('A umlaut', 'Ellipsis') in WINDOWS-1250.
 Also note that UTF-8, as well as most 8-bit encodings, extend ASCII
 (note that \code{\link{stri_enc_isascii}} implies that
 \code{\link{stri_enc_isutf8}}).
@@ -38,8 +38,8 @@ character strings (see \link{Encoding} and \link{stringi-encoding}).
 }
 \examples{
 stri_enc_isutf8(letters[1:3])
-stri_enc_isutf8("\u0105\u0104")
-stri_enc_isutf8("\u1234\u0222")
+stri_enc_isutf8('\u0105\u0104')
+stri_enc_isutf8('\u1234\u0222')
 
 }
 \seealso{

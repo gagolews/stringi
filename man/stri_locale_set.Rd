@@ -12,7 +12,7 @@ stri_locale_get()
 \arguments{
 \item{locale}{single string of the form \code{Language},
 \code{Language_Country}, or \code{Language_Country_Variant}, e.g.,
-\code{"en_US"}, see \code{\link{stri_locale_list}}.}
+\code{'en_US'}, see \code{\link{stri_locale_list}}.}
 }
 \value{
 \code{stri_locale_set} returns a string with
@@ -20,7 +20,7 @@ previously used locale, invisibly.
 
 \code{stri_locale_get} returns a string of the form \code{Language},
 \code{Language_Country}, or \code{Language_Country_Variant},
-e.g., \code{"en_US"}.
+e.g., \code{'en_US'}.
 }
 \description{
 \code{stri_locale_set} changes the default locale for all the functions
@@ -38,7 +38,7 @@ changing the default locale.
 }
 \examples{
 \dontrun{
-oldloc <- stri_locale_set("pt_BR")
+oldloc <- stri_locale_set('pt_BR')
 # ... some locale-dependent operations
 # ... note that you may always modify a locale per-call
 # ... changing the default locale is convenient if you perform

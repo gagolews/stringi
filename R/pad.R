@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -71,45 +71,44 @@
 #'
 #' @rdname stri_pad
 #' @examples
-#' stri_pad_left("stringi", 10, pad="#")
-#' stri_pad_both("stringi", 8:12, pad="*")
+#' stri_pad_left('stringi', 10, pad='#')
+#' stri_pad_both('stringi', 8:12, pad='*')
 #' # center on screen:
-#' cat(stri_pad_both(c("the", "string", "processing", "package"),
-#'    getOption("width")*0.9), sep='\n')
-#' cat(stri_pad_both(c("\ud6c8\ubbfc\uc815\uc74c", # takes width into account
-#'    stri_trans_nfkd("\ud6c8\ubbfc\uc815\uc74c"), "abcd"),
-#'    width=10), sep="\n")
+#' cat(stri_pad_both(c('the', 'string', 'processing', 'package'),
+#'    getOption('width')*0.9), sep='\n')
+#' cat(stri_pad_both(c('\ud6c8\ubbfc\uc815\uc74c', # takes width into account
+#'    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
+#'    width=10), sep='\n')
 #' @export
-stri_pad_both <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
-   .Call(C_stri_pad, str, width, 2L, pad, use_length)
+stri_pad_both <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
+    use_length = FALSE) {
+    .Call(C_stri_pad, str, width, 2L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_left <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
-   .Call(C_stri_pad, str, width, 0L, pad, use_length)
+stri_pad_left <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
+    use_length = FALSE) {
+    .Call(C_stri_pad, str, width, 0L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_right <- function(str, width=floor(0.9*getOption("width")), pad=" ", use_length=FALSE) {
-   .Call(C_stri_pad, str, width, 1L, pad, use_length)
+stri_pad_right <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
+    use_length = FALSE) {
+    .Call(C_stri_pad, str, width, 1L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad <- function(str, width=floor(0.9*getOption("width")),
-   side=c("left", "right", "both"), pad=" ", use_length=FALSE)
-{
-   # `left` is the default for compatibility with stringr
-   side <- match.arg(side) # this is slow
-
-   switch(side,
-          both  =stri_pad_both(str, width, pad, use_length),
-          left  =stri_pad_left(str, width, pad, use_length),
-          right =stri_pad_right(str, width, pad, use_length)
-   )
+stri_pad <- function(str, width = floor(0.9 * getOption("width")), side = c("left", 
+    "right", "both"), pad = " ", use_length = FALSE) {
+    # `left` is the default for compatibility with stringr
+    side <- match.arg(side)  # this is slow
+    
+    switch(side, both = stri_pad_both(str, width, pad, use_length), left = stri_pad_left(str, 
+        width, pad, use_length), right = stri_pad_right(str, width, pad, use_length))
 }
