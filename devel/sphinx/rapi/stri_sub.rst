@@ -53,7 +53,7 @@ If ``from`` is a two-column matrix, then these two columns are used as ``from`` 
 
 In ``stri_sub``, out-of-bound indexes are silently corrected. If ``from`` > ``to``, then an empty string is returned.
 
-In ``stri_sub<-``, some configurations of indexes may work as substring "injection" at the front, back, or in middle.
+In ``stri_sub<-``, some configurations of indexes may work as substring 'injection' at the front, back, or in middle.
 
 If both ``to`` and ``length`` are provided, ``length`` has priority over ``to``.
 
@@ -74,26 +74,26 @@ Examples
 
 .. code-block:: r
 
-   s <- "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+   s <- 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
    stri_sub(s, from=1:3*6, to=21)
    stri_sub(s, from=c(1,7,13), length=5)
    stri_sub(s, from=1, length=1:3)
    stri_sub(s, -17, -7)
    stri_sub(s, -5, length=4)
-   (stri_sub(s, 1, 5) <- "stringi")
-   (stri_sub(s, -6, length=5) <- ".")
+   (stri_sub(s, 1, 5) <- 'stringi')
+   (stri_sub(s, -6, length=5) <- '.')
    (stri_sub(s, 1, 1:3) <- 1:2)
 
-   x <- c("12 3456 789", "abc", "", NA, "667")
-   stri_sub(x, stri_locate_first_regex(x, "[0-9]+")) # see stri_extract_first
-   stri_sub(x, stri_locate_last_regex(x, "[0-9]+"))  # see stri_extract_last
+   x <- c('12 3456 789', 'abc', '', NA, '667')
+   stri_sub(x, stri_locate_first_regex(x, '[0-9]+')) # see stri_extract_first
+   stri_sub(x, stri_locate_last_regex(x, '[0-9]+'))  # see stri_extract_last
 
-   stri_sub_replace(x, stri_locate_first_regex(x, "[0-9]+"),
-       omit_na=TRUE, replacement="***") # see stri_replace_first
-   stri_sub_replace(x, stri_locate_last_regex(x, "[0-9]+"),
-       omit_na=TRUE, replacement="***") # see stri_replace_last
+   stri_sub_replace(x, stri_locate_first_regex(x, '[0-9]+'),
+       omit_na=TRUE, replacement='***') # see stri_replace_first
+   stri_sub_replace(x, stri_locate_last_regex(x, '[0-9]+'),
+       omit_na=TRUE, replacement='***') # see stri_replace_last
 
-   stri_sub(x, stri_locate_first_regex(x, "[0-9]+"), omit_na=TRUE) <- "***"
+   stri_sub(x, stri_locate_first_regex(x, '[0-9]+'), omit_na=TRUE) <- '***'
    print(x)
 
-   ## Not run: x %>% stri_sub_replace(1, 5, replacement="new_substring")
+   ## Not run: x %>% stri_sub_replace(1, 5, replacement='new_substring')

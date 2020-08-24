@@ -29,7 +29,7 @@ Arguments
 Details
 ~~~~~~~
 
-The ``stri_flatten(str, collapse='XXX')`` call is equivalent to ``paste(str, collapse='XXX', sep="")``.
+The ``stri_flatten(str, collapse='XXX')`` call is equivalent to ``paste(str, collapse='XXX', sep='')``.
 
 If you wish to use some more fancy (e.g., differing) separators between flattened strings, call `stri_join(str, separators, collapse='') <stri_join.html>`__.
 
@@ -51,7 +51,7 @@ Examples
 .. code-block:: r
 
    stri_flatten(LETTERS)
-   stri_flatten(LETTERS, collapse=",")
+   stri_flatten(LETTERS, collapse=',')
    stri_flatten(stri_dup(letters[1:6], 1:3))
-   stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
+   stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
 

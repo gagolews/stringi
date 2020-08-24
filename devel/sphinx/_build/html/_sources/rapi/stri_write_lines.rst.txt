@@ -26,7 +26,7 @@ Arguments
 +--------------+----------------------------------------------------------------------------+
 | ``con``      | name of the output file or a connection object (opened in the binary mode) |
 +--------------+----------------------------------------------------------------------------+
-| ``encoding`` | output encoding, ``NULL`` or ``""`` for the current default one            |
+| ``encoding`` | output encoding, ``NULL`` or ``''`` for the current default one            |
 +--------------+----------------------------------------------------------------------------+
 | ``sep``      | newline separator                                                          |
 +--------------+----------------------------------------------------------------------------+

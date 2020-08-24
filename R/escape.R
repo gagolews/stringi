@@ -43,7 +43,7 @@
 #' ASCII characters the following
 #' (also recognized in \R) convention is used.
 #' We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
-#' \code{\\f}, \code{\\r}, \code{\'}, \code{\'}, \code{\\\\}
+#' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
 #' or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)
 #' otherwise.
 #'
@@ -78,7 +78,7 @@ stri_escape_unicode <- function(str) {
 #' The following ASCII standard escapes are recognized:
 #' \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
 #' \code{\\e},
-#' \code{\\f}, \code{\\r}, \code{\'}, \code{\'}, \code{\\\\}.
+#' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
 #'
 #' Moreover, the function understands the following ones:
 #' \code{\\uXXXX} (4 hex digits),

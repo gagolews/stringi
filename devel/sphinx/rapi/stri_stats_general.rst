@@ -52,9 +52,9 @@ Examples
 
 .. code-block:: r
 
-   s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-          "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
-          "Cras vel lorem. Etiam pellentesque aliquet tellus.",
-          "")
+   s <- c('Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+          'nibh augue, suscipit a, scelerisque sed, lacinia in, mi.',
+          'Cras vel lorem. Etiam pellentesque aliquet tellus.',
+          '')
    stri_stats_general(s)
 

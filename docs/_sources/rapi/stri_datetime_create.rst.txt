@@ -41,9 +41,9 @@ Arguments
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``lenient`` | single logical value; should the operation be lenient?                                                                                                            |
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``      | ``NULL`` or ``""`` for the default time zone or a single string with time zone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                   |
+| ``tz``      | ``NULL`` or ``''`` for the default time zone or a single string with time zone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                   |
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``  | ``NULL`` or ``""`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting ``@calendar=name`` keyword |
+| ``locale``  | ``NULL`` or ``''`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting ``@calendar=name`` keyword |
 +-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -67,7 +67,7 @@ Examples
 .. code-block:: r
 
    stri_datetime_create(2015, 12, 31, 23, 59, 59.999)
-   stri_datetime_create(5775, 8, 1, locale="@calendar=hebrew") # 1 Nisan 5775 -> 2015-03-21
+   stri_datetime_create(5775, 8, 1, locale='@calendar=hebrew') # 1 Nisan 5775 -> 2015-03-21
    stri_datetime_create(2015, 02, 29)
    stri_datetime_create(2015, 02, 29, lenient=TRUE)
 

@@ -41,11 +41,12 @@ orders upper and lower case letters in accordance to their tertiary weights,
 \item{case_level}{single logical value;
 controls whether an extra case level (positioned before the third level) is generated or not}
 
-\item{normalization}{(synonym: \code{normalisation})
-single logical value; if \code{TRUE},
+\item{normalization}{single logical value; if \code{TRUE},
 then incremental check is performed to see whether the input data is in
 the FCD form. If the data is not in the FCD form, incremental NFD
 normalization is performed}
+
+\item{normalisation}{alias of \code{normalization}}
 
 \item{numeric}{single logical value;
 when turned on, this attribute generates a collation key for

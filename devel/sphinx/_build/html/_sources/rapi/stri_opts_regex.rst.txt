@@ -49,7 +49,7 @@ Arguments
 Details
 ~~~~~~~
 
-Note that some regex settings may be changed using ICU regex flags inside regexes. For example, ``"(?i)pattern"`` performs a case-insensitive match of a given pattern, see the ICU User Guide entry on Regular Expressions in the References section or `stringi-search-regex <stringi-search-regex.html>`__.
+Note that some regex settings may be changed using ICU regex flags inside regexes. For example, ``'(?i)pattern'`` performs a case-insensitive match of a given pattern, see the ICU User Guide entry on Regular Expressions in the References section or `stringi-search-regex <stringi-search-regex.html>`__.
 
 Value
 ~~~~~
@@ -73,7 +73,7 @@ Examples
 
 .. code-block:: r
 
-   stri_detect_regex("ala", "ALA") # case-sensitive by default
-   stri_detect_regex("ala", "ALA", opts_regex=stri_opts_regex(case_insensitive=TRUE))
-   stri_detect_regex("ala", "ALA", case_insensitive=TRUE) # equivalent
-   stri_detect_regex("ala", "(?i)ALA") # equivalent
+   stri_detect_regex('ala', 'ALA') # case-sensitive by default
+   stri_detect_regex('ala', 'ALA', opts_regex=stri_opts_regex(case_insensitive=TRUE))
+   stri_detect_regex('ala', 'ALA', case_insensitive=TRUE) # equivalent
+   stri_detect_regex('ala', '(?i)ALA') # equivalent

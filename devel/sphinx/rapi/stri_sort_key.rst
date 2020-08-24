@@ -4,7 +4,7 @@ stri_sort_key: Sort Keys
 Description
 ~~~~~~~~~~~
 
-This function computes a locale-dependent "sort key", which is an alternative character representation of the string that, when ordered in the C locale (which orders using bytes directly), will give an equivalent ordering to the original string. It is useful for enhancing algorithms that sort only in the C locale with the ability to be locale-aware.
+This function computes a locale-dependent 'sort key', which is an alternative character representation of the string that, when ordered in the C locale (which orders using bytes directly), will give an equivalent ordering to the original string. It is useful for enhancing algorithms that sort only in the C locale with the ability to be locale-aware.
 
 Usage
 ~~~~~
@@ -49,5 +49,5 @@ Examples
 
 .. code-block:: r
 
-   stri_sort_key(c("hladny", "chladny"), locale="pl_PL")
-   stri_sort_key(c("hladny", "chladny"), locale="sk_SK")
+   stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
+   stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')

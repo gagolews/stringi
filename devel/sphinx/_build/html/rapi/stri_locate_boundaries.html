@@ -329,7 +329,7 @@
 <td><p>a named list with ICU BreakIterator’s settings, see <a class="reference external" href="stri_opts_brkiter.html">stri_opts_brkiter</a>; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for default break iterator, i.e., <code class="docutils literal notranslate"><span class="pre">line_break</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -338,7 +338,7 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
 <p>For more information on text boundary analysis performed by ICU’s <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code>, see <a class="reference external" href="stringi-search-boundaries.html">stringi-search-boundaries</a>.</p>
-<p>In case of <code class="docutils literal notranslate"><span class="pre">stri_locate_*_words</span></code>, just like in <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_words</a> and <a class="reference external" href="stri_count_boundaries.html">stri_count_words</a>, ICU’s word <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code> iterator is used to locate the word boundaries, and all non-word characters (<code class="docutils literal notranslate"><span class="pre">UBRK_WORD_NONE</span></code> rule status) are ignored. This is function is equivalent to a call to <code class="docutils literal notranslate"><span class="pre">stri_locate_*_boundaries(str,</span> <span class="pre">type=&quot;word&quot;,</span> <span class="pre">skip_word_none=TRUE,</span> <span class="pre">locale=locale)</span></code></p>
+<p>In case of <code class="docutils literal notranslate"><span class="pre">stri_locate_*_words</span></code>, just like in <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_words</a> and <a class="reference external" href="stri_count_boundaries.html">stri_count_words</a>, ICU’s word <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code> iterator is used to locate the word boundaries, and all non-word characters (<code class="docutils literal notranslate"><span class="pre">UBRK_WORD_NONE</span></code> rule status) are ignored. This is function is equivalent to a call to <code class="docutils literal notranslate"><span class="pre">stri_locate_*_boundaries(str,</span> <span class="pre">type='word',</span> <span class="pre">skip_word_none=TRUE,</span> <span class="pre">locale=locale)</span></code></p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -354,15 +354,15 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">&lt;-</span> <span class="s">&quot;The\u00a0above-mentioned    features are very useful. Kudos to their developers.&quot;</span>
-<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;line&quot;</span><span class="p">)</span>
-<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">)</span>
-<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">)</span>
-<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;character&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">&lt;-</span> <span class="s">&#39;The\u00a0above-mentioned    features are very useful. Kudos to their developers.&#39;</span>
+<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;line&#39;</span><span class="p">)</span>
+<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;word&#39;</span><span class="p">)</span>
+<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;sentence&#39;</span><span class="p">)</span>
+<span class="nf">stri_locate_all_boundaries</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;character&#39;</span><span class="p">)</span>
 <span class="nf">stri_locate_all_words</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 
-<span class="nf">stri_extract_all_boundaries</span><span class="p">(</span><span class="s">&quot;Mr. Jones and Mrs. Brown are very happy.</span>
-<span class="s">So am I, Prof. Smith.&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;en_US@ss=standard&quot;</span><span class="p">)</span> <span class="c1"># ICU &gt;= 56 only</span>
+<span class="nf">stri_extract_all_boundaries</span><span class="p">(</span><span class="s">&#39;Mr. Jones and Mrs. Brown are very happy.</span>
+<span class="s">So am I, Prof. Smith.&#39;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;sentence&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;en_US@ss=standard&#39;</span><span class="p">)</span> <span class="c1"># ICU &gt;= 56 only</span>
 </pre></div>
 </div>
 </div>

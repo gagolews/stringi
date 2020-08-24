@@ -74,6 +74,6 @@ Examples
 
 .. code-block:: r
 
-   "a" %stri<% "b"
-   c("a", "b", "c") %stri>=% "b"
+   'a' %stri<% 'b'
+   c('a', 'b', 'c') %stri>=% 'b'
 

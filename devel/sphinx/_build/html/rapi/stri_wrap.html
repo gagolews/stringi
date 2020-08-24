@@ -346,7 +346,7 @@
 <td><p>single logical value; should the number of code points be used instead of the total code point width (see <a class="reference external" href="stri_width.html">stri_width</a>)?</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -376,12 +376,12 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">&lt;-</span> <span class="nf">stri_paste</span><span class="p">(</span>
-   <span class="s">&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin &quot;</span><span class="p">,</span>
-   <span class="s">&quot;nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel &quot;</span><span class="p">,</span>
-   <span class="s">&quot;lorem. Etiam pellentesque aliquet tellus.&quot;</span><span class="p">)</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">0.0</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span> <span class="c1"># greedy</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">2.0</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span> <span class="c1"># dynamic</span>
-<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_pad</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">side</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+   <span class="s">&#39;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin &#39;</span><span class="p">,</span>
+   <span class="s">&#39;nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel &#39;</span><span class="p">,</span>
+   <span class="s">&#39;lorem. Etiam pellentesque aliquet tellus.&#39;</span><span class="p">)</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">0.0</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n&#39;</span><span class="p">)</span> <span class="c1"># greedy</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">2.0</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n&#39;</span><span class="p">)</span> <span class="c1"># dynamic</span>
+<span class="nf">cat</span><span class="p">(</span><span class="nf">stri_pad</span><span class="p">(</span><span class="nf">stri_wrap</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">side</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\n&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

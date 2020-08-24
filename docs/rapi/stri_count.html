@@ -340,27 +340,27 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">&lt;-</span> <span class="s">&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&quot;</span>
-<span class="nf">stri_count</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="s">&quot;dolor&quot;</span><span class="p">)</span>
-<span class="nf">stri_count</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="s">&quot;\\p{L}+&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">&lt;-</span> <span class="s">&#39;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&#39;</span>
+<span class="nf">stri_count</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="s">&#39;dolor&#39;</span><span class="p">)</span>
+<span class="nf">stri_count</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="s">&#39;\\p{L}+&#39;</span><span class="p">)</span>
 
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;o&quot;</span><span class="p">)</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;it&quot;</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;it&#39;</span><span class="p">)</span>
 <span class="nf">stri_count_fixed</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="kc">letters</span><span class="p">)</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&quot;babab&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
-<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">),</span> <span class="s">&quot;string&quot;</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="s">&#39;babab&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="nf">stri_count_fixed</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;stringi&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">),</span> <span class="s">&#39;string&#39;</span><span class="p">)</span>
 
-<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;stRRRingi&quot;</span><span class="p">,</span> <span class="s">&quot;STrrrINGI&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">),</span>
-   <span class="nf">c</span><span class="p">(</span><span class="s">&quot;\\p{Ll}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Lu}&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Zs}&quot;</span><span class="p">))</span>
-<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="s">&quot; \t\n&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{WHITE_SPACE}&quot;</span><span class="p">)</span> <span class="c1"># white space - binary property</span>
-<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="s">&quot; \t\n&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{Z}&quot;</span><span class="p">)</span> <span class="c1"># white-space - general category (note the difference)</span>
+<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;stRRRingi&#39;</span><span class="p">,</span> <span class="s">&#39;STrrrINGI&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">),</span>
+   <span class="nf">c</span><span class="p">(</span><span class="s">&#39;\\p{Ll}&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{Lu}&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{Zs}&#39;</span><span class="p">))</span>
+<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="s">&#39; \t\n&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{WHITE_SPACE}&#39;</span><span class="p">)</span> <span class="c1"># white space - binary property</span>
+<span class="nf">stri_count_charclass</span><span class="p">(</span><span class="s">&#39; \t\n&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{Z}&#39;</span><span class="p">)</span> <span class="c1"># white-space - general category (note the difference)</span>
 
-<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;(s|el)it&quot;</span><span class="p">)</span>
-<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;i.i&quot;</span><span class="p">)</span>
-<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&quot;.it&quot;</span><span class="p">)</span>
-<span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&quot;bab baab baaab&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;b.*?b&quot;</span><span class="p">,</span> <span class="s">&quot;b.b&quot;</span><span class="p">))</span>
-<span class="nf">stri_count_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;stringi&quot;</span><span class="p">,</span> <span class="s">&quot;123&quot;</span><span class="p">),</span> <span class="s">&quot;^(s|1)&quot;</span><span class="p">)</span>
+<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;(s|el)it&#39;</span><span class="p">)</span>
+<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;i.i&#39;</span><span class="p">)</span>
+<span class="nf">stri_count_regex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">&#39;.it&#39;</span><span class="p">)</span>
+<span class="nf">stri_count_regex</span><span class="p">(</span><span class="s">&#39;bab baab baaab&#39;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;b.*?b&#39;</span><span class="p">,</span> <span class="s">&#39;b.b&#39;</span><span class="p">))</span>
+<span class="nf">stri_count_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;stringi&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">),</span> <span class="s">&#39;^(s|1)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

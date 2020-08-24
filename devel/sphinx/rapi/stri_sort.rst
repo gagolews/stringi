@@ -57,8 +57,8 @@ Examples
 
 .. code-block:: r
 
-   stri_sort(c("hladny", "chladny"), locale="pl_PL")
-   stri_sort(c("hladny", "chladny"), locale="sk_SK")
+   stri_sort(c('hladny', 'chladny'), locale='pl_PL')
+   stri_sort(c('hladny', 'chladny'), locale='sk_SK')
    stri_sort(sample(LETTERS))
    stri_sort(c(1, 100, 2, 101, 11, 10))
    stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)

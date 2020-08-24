@@ -334,11 +334,11 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_width</span><span class="p">(</span><span class="kc">LETTERS</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span>
-<span class="nf">stri_width</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&quot;\u0105&quot;</span><span class="p">))</span>
+<span class="nf">stri_width</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">))</span>
 <span class="nf">stri_width</span><span class="p">(</span> <span class="c1"># Full-width equivalents of ASCII characters:</span>
    <span class="nf">stri_enc_fromutf32</span><span class="p">(</span><span class="nf">as.list</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="mh">0x3000</span><span class="p">,</span> <span class="mh">0xFF01</span><span class="o">:</span><span class="mh">0xFF5E</span><span class="p">)))</span>
 <span class="p">)</span>
-<span class="nf">stri_width</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&quot;\ubc1f&quot;</span><span class="p">))</span> <span class="c1"># includes Hangul Jamo medial vowels and final consonants</span>
+<span class="nf">stri_width</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\ubc1f&#39;</span><span class="p">))</span> <span class="c1"># includes Hangul Jamo medial vowels and final consonants</span>
 </pre></div>
 </div>
 </div>

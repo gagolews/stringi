@@ -314,7 +314,7 @@
 <td><p>a single pattern, specifying character classes that should be preserved (see <a class="reference external" href="stringi-search-charclass.html">stringi-search-charclass</a>). Defaults to ‘<code class="docutils literal notranslate"><span class="pre">\P{Wspace}</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">side</span></code></p></td>
-<td><p>character [<code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> only]; defaults to <code class="docutils literal notranslate"><span class="pre">&quot;both&quot;</span></code></p></td>
+<td><p>character [<code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> only]; defaults to <code class="docutils literal notranslate"><span class="pre">'both'</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -325,7 +325,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">stri_trim</span></code> is a convenience wrapper over <code class="docutils literal notranslate"><span class="pre">stri_trim_left</span></code> and <code class="docutils literal notranslate"><span class="pre">stri_trim_right</span></code>.</p>
 <p>Contrary to many other string processing libraries, our trimming functions are universal. A character class, given by <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, may be adjusted to suit your needs (yet, most often you stick to the default value).</p>
 <p>For replacing pattern matches with arbitrary replacement string, see <a class="reference external" href="stri_replace.html">stri_replace</a>.</p>
-<p>Trimming can also be used where you would normally rely on regular expressions. For instance, you may get <code class="docutils literal notranslate"><span class="pre">&quot;23.5&quot;</span></code> out of <code class="docutils literal notranslate"><span class="pre">&quot;total</span> <span class="pre">of</span> <span class="pre">23.5</span> <span class="pre">bitcoins&quot;</span></code>.</p>
+<p>Trimming can also be used where you would normally rely on regular expressions. For instance, you may get <code class="docutils literal notranslate"><span class="pre">'23.5'</span></code> out of <code class="docutils literal notranslate"><span class="pre">'total</span> <span class="pre">of</span> <span class="pre">23.5</span> <span class="pre">bitcoins'</span></code>.</p>
 <p>For trimming white-spaces, please note the difference between Unicode binary property ‘<code class="docutils literal notranslate"><span class="pre">\p{Wspace}</span></code>’ (more universal) and general character category ‘<code class="docutils literal notranslate"><span class="pre">\p{Z}</span></code>’, see <a class="reference external" href="stringi-search-charclass.html">stringi-search-charclass</a>.</p>
 </div>
 <div class="section" id="value">
@@ -339,10 +339,10 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trim_left</span><span class="p">(</span><span class="s">&quot;               aaa&quot;</span><span class="p">)</span>
-<span class="nf">stri_trim_right</span><span class="p">(</span><span class="s">&quot;rexamine.com/&quot;</span><span class="p">,</span> <span class="s">&quot;\\p{P}&quot;</span><span class="p">)</span>
-<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&quot; Total of 23.5 bitcoins. &quot;</span><span class="p">,</span> <span class="s">&quot;\\p{N}&quot;</span><span class="p">)</span>
-<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&quot; Total of 23.5 bitcoins. &quot;</span><span class="p">,</span> <span class="s">&quot;\\p{L}&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trim_left</span><span class="p">(</span><span class="s">&#39;               aaa&#39;</span><span class="p">)</span>
+<span class="nf">stri_trim_right</span><span class="p">(</span><span class="s">&#39;rexamine.com/&#39;</span><span class="p">,</span> <span class="s">&#39;\\p{P}&#39;</span><span class="p">)</span>
+<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&#39; Total of 23.5 bitcoins. &#39;</span><span class="p">,</span> <span class="s">&#39;\\p{N}&#39;</span><span class="p">)</span>
+<span class="nf">stri_trim_both</span><span class="p">(</span><span class="s">&#39; Total of 23.5 bitcoins. &#39;</span><span class="p">,</span> <span class="s">&#39;\\p{L}&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -27,7 +27,7 @@ According to ``Encoding``, R has a simple encoding marking mechanism: strings ca
 
 Moreover, we may check (via the R/C API) whether a string is in ASCII (R assumes that this holds if and only if all bytes in a string are not greater than 127, so there is an implicit assumption that your platform uses an encoding that extends ASCII) or in the system's default (a.k.a. ``unknown`` in ``Encoding``) encoding.
 
-Intuitively, the default encoding should be equivalent to the one you use on stdin (e.g., your "keyboard"). In ``stringi`` we assume that such an encoding is equivalent to the one returned by `stri_enc_get <stri_enc_set.html>`__. It is automatically detected by ICU to match – by default – the encoding part of the ``LC_CTYPE`` category as given by ``Sys.getlocale``.
+Intuitively, the default encoding should be equivalent to the one you use on stdin (e.g., your 'keyboard'). In ``stringi`` we assume that such an encoding is equivalent to the one returned by `stri_enc_get <stri_enc_set.html>`__. It is automatically detected by ICU to match – by default – the encoding part of the ``LC_CTYPE`` category as given by ``Sys.getlocale``.
 
 Value
 ~~~~~

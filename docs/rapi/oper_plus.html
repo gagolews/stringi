@@ -315,7 +315,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
-<p>These operators act like a call to <a class="reference external" href="stri_join.html">stri_join(e1, e2, sep=””)</a>. However, note that joining 3 vectors, e.g., <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%+%</span> <span class="pre">e2</span> <span class="pre">%+%</span> <span class="pre">e3</span></code> is slower than <a class="reference external" href="stri_join.html">stri_join(e1, e2, e3, sep=””)</a>, because it creates a new (temporary) result vector each time the operator is applied.</p>
+<p>These operators act like a call to <a class="reference external" href="stri_join.html">stri_join(e1, e2, sep=’’)</a>. However, note that joining 3 vectors, e.g., <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%+%</span> <span class="pre">e2</span> <span class="pre">%+%</span> <span class="pre">e3</span></code> is slower than <a class="reference external" href="stri_join.html">stri_join(e1, e2, e3, sep=’’)</a>, because it creates a new (temporary) result vector each time the operator is applied.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>

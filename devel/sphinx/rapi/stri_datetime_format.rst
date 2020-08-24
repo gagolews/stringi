@@ -34,9 +34,9 @@ Arguments
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``format``  | single string, see Details; see also `stri_datetime_fstr <stri_datetime_fstr.html>`__                                                                                 |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``      | ``NULL`` or ``""`` for the default time zone or a single string with a timezone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                      |
+| ``tz``      | ``NULL`` or ``''`` for the default time zone or a single string with a timezone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                      |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``  | ``NULL`` or ``""`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the ``@calendar=name`` keyword |
+| ``locale``  | ``NULL`` or ``''`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the ``@calendar=name`` keyword |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``     | character vector                                                                                                                                                      |
 +-------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -186,8 +186,8 @@ Examples
 
 .. code-block:: r
 
-   stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd")
-   stri_datetime_parse(c("2015-02-28", "2015-02-29"), "yyyy-MM-dd", lenient=TRUE)
-   stri_datetime_parse("19 lipca 2015", "date_long", locale="pl_PL")
-   stri_datetime_format(stri_datetime_now(), "datetime_relative_medium")
+   stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd')
+   stri_datetime_parse(c('2015-02-28', '2015-02-29'), 'yyyy-MM-dd', lenient=TRUE)
+   stri_datetime_parse('19 lipca 2015', 'date_long', locale='pl_PL')
+   stri_datetime_format(stri_datetime_now(), 'datetime_relative_medium')
 

@@ -29,7 +29,7 @@ Details
 
 Vectorized over ``e1`` and ``e2``.
 
-These operators act like a call to `stri_join(e1, e2, sep="") <stri_join.html>`__. However, note that joining 3 vectors, e.g., ``e1 %+% e2 %+% e3`` is slower than `stri_join(e1, e2, e3, sep="") <stri_join.html>`__, because it creates a new (temporary) result vector each time the operator is applied.
+These operators act like a call to `stri_join(e1, e2, sep='') <stri_join.html>`__. However, note that joining 3 vectors, e.g., ``e1 %+% e2 %+% e3`` is slower than `stri_join(e1, e2, e3, sep='') <stri_join.html>`__, because it creates a new (temporary) result vector each time the operator is applied.
 
 Value
 ~~~~~

@@ -35,5 +35,5 @@ Examples
 
 .. code-block:: r
 
-   stri_na2empty(c("a", NA, "", "b"))
+   stri_na2empty(c('a', NA, '', 'b'))
 

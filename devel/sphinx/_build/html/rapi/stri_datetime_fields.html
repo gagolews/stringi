@@ -305,10 +305,10 @@
 <td><p>an object of class <code class="docutils literal notranslate"><span class="pre">POSIXct</span></code> or an object coercible to</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tz</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the default time zone or a single string with time zone identifier, see <a class="reference external" href="stri_timezone_list.html">stri_timezone_list</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with time zone identifier, see <a class="reference external" href="stri_timezone_list.html">stri_timezone_list</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
 </tr>
 </tbody>
 </table>
@@ -344,9 +344,9 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">())</span>
-<span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
-   <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
+<span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span><span class="p">[</span>
+   <span class="nf">stri_datetime_fields</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span><span class="o">$</span><span class="n">Month</span>
 <span class="p">]</span>
 </pre></div>
 </div>

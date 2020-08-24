@@ -42,5 +42,5 @@ Examples
 
 .. code-block:: r
 
-   stri_escape_unicode("a\u0105!")
+   stri_escape_unicode('a\u0105!')
 

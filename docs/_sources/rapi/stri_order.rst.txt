@@ -57,8 +57,8 @@ Examples
 
 .. code-block:: r
 
-   stri_order(c("hladny", "chladny"), locale="pl_PL")
-   stri_order(c("hladny", "chladny"), locale="sk_SK")
+   stri_order(c('hladny', 'chladny'), locale='pl_PL')
+   stri_order(c('hladny', 'chladny'), locale='sk_SK')
 
    stri_order(c(1, 100, 2, 101, 11, 10))
    stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)

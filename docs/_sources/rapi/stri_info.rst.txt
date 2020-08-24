@@ -33,7 +33,7 @@ Otherwise, a list with the following components is returned:
 
 -  ``Locale`` – contains information on default locale, as returned by `stri_locale_info <stri_locale_info.html>`__;
 
--  ``Charset.internal`` – fixed at ``c("UTF-8", "UTF-16")``;
+-  ``Charset.internal`` – fixed at ``c('UTF-8', 'UTF-16')``;
 
 -  ``Charset.native`` – information on the default encoding, as returned by `stri_enc_info <stri_enc_info.html>`__;
 

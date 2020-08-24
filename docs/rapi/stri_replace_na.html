@@ -325,9 +325,9 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-<span class="nf">stri_paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>                           <span class="c1"># &quot;test1&quot; NA</span>
-<span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>                                <span class="c1"># &quot;test 1&quot; &quot;NA 2&quot;</span>
-<span class="nf">stri_paste</span><span class="p">(</span><span class="nf">stri_replace_na</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span> <span class="c1"># &quot;test 1&quot; &quot;NA 2&quot;</span>
+<span class="nf">stri_paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>                           <span class="c1"># &#39;test1&#39; NA</span>
+<span class="nf">paste</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span>                                <span class="c1"># &#39;test 1&#39; &#39;NA 2&#39;</span>
+<span class="nf">stri_paste</span><span class="p">(</span><span class="nf">stri_replace_na</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span> <span class="c1"># &#39;test 1&#39; &#39;NA 2&#39;</span>
 </pre></div>
 </div>
 </div>

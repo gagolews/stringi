@@ -52,7 +52,7 @@ Arguments
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``            | supplementary arguments passed to the underlying functions, including additional settings for ``opts_regex``                        |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
-| ``mode``           | single string; one of: ``"first"`` (the default), ``"all"``, ``"last"``                                                             |
+| ``mode``           | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                             |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | ``pattern, regex`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                               |
 +--------------------+-------------------------------------------------------------------------------------------------------------------------------------+
@@ -93,25 +93,25 @@ Examples
 
 .. code-block:: r
 
-   stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
-      "(\\w+)=(\\w+)")
-   stri_match_all_regex(c("breakfast=eggs", "lunch=pizza", "no food here"),
-      "(\\w+)=(\\w+)")
-   stri_match_all_regex(c("breakfast=eggs;lunch=pizza",
-      "breakfast=bacon;lunch=spaghetti", "no food here"),
-      "(\\w+)=(\\w+)")
-   stri_match_first_regex(c("breakfast=eggs;lunch=pizza",
-      "breakfast=bacon;lunch=spaghetti", "no food here"),
-      "(\\w+)=(\\w+)")
-   stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
-      "breakfast=bacon;lunch=spaghetti", "no food here"),
-      "(\\w+)=(\\w+)")
+   stri_match_all_regex('breakfast=eggs, lunch=pizza, dessert=icecream',
+      '(\\w+)=(\\w+)')
+   stri_match_all_regex(c('breakfast=eggs', 'lunch=pizza', 'no food here'),
+      '(\\w+)=(\\w+)')
+   stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
+      'breakfast=bacon;lunch=spaghetti', 'no food here'),
+      '(\\w+)=(\\w+)')
+   stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
+      'breakfast=bacon;lunch=spaghetti', 'no food here'),
+      '(\\w+)=(\\w+)')
+   stri_match_last_regex(c('breakfast=eggs;lunch=pizza',
+      'breakfast=bacon;lunch=spaghetti', 'no food here'),
+      '(\\w+)=(\\w+)')
 
-   stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$")
-   stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$", cg_missing="")
+   stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$')
+   stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$', cg_missing='')
 
    # Match all the pattern of the form XYX, including overlapping matches:
-   stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\2))")[[1]][,2]
+   stri_match_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=(([ACGT])[ACGT]\\2))')[[1]][,2]
    # Compare the above to:
-   stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\1")
+   stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\1')
 

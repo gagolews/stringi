@@ -42,5 +42,5 @@ Examples
 
 .. code-block:: r
 
-   stri_datetime_fstr("%Y-%m-%d %H:%M:%S")
+   stri_datetime_fstr('%Y-%m-%d %H:%M:%S')
 

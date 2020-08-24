@@ -19,7 +19,7 @@ Arguments
 +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``                   | character vector, a raw vector, or a list of ``raw`` vectors                                                                                            |
 +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``filter_angle_brackets`` | logical; If filtering is enabled, text within angle brackets ("<" and ">") will be removed before detection, which will remove most HTML or XML markup. |
+| ``filter_angle_brackets`` | logical; If filtering is enabled, text within angle brackets ('<' and '>') will be removed before detection, which will remove most HTML or XML markup. |
 +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -27,7 +27,7 @@ Details
 
 Vectorized over ``str`` and ``filter_angle_brackets``.
 
-For a character vector input, merging all text lines via `stri_flatten(str, collapse="\n") <stri_flatten.html>`__ might be needed if ``str`` has been obtained via a call to ``readLines`` and in fact represents an image of a single text file.
+For a character vector input, merging all text lines via `stri_flatten(str, collapse='\n') <stri_flatten.html>`__ might be needed if ``str`` has been obtained via a call to ``readLines`` and in fact represents an image of a single text file.
 
 This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.
 
@@ -103,7 +103,7 @@ Examples
 .. code-block:: r
 
    ## Not run: 
-   f <- rawToChar(readBin("test.txt", "raw", 100000))
+   f <- rawToChar(readBin('test.txt', 'raw', 100000))
    stri_enc_detect(f)
 
    ## End(Not run)

@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-Apart from given encoding identifiers and their aliases, some other specifiers might be additionally available. This is due to the fact that ICU tries to normalize converter names. For instance, ``"UTF8"`` is also valid, see `stringi-encoding <stringi-encoding.html>`__ for more information.
+Apart from given encoding identifiers and their aliases, some other specifiers might be additionally available. This is due to the fact that ICU tries to normalize converter names. For instance, ``'UTF8'`` is also valid, see `stringi-encoding <stringi-encoding.html>`__ for more information.
 
 Value
 ~~~~~

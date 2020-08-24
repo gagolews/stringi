@@ -23,7 +23,7 @@ Arguments
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``          | character vector                                                                                                                                                                     |
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``       | ``NULL`` or ``""`` for case mapping following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__.        |
+| ``locale``       | ``NULL`` or ``''`` for case mapping following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__.        |
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``          | additional settings for ``opts_brkiter``                                                                                                                                             |
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -43,7 +43,7 @@ ICU implements full Unicode string case mappings. It is worth noting that, gener
 
 -  is context-sensitive (a character in the input string may map differently depending on surrounding characters).
 
-With ``stri_trans_totitle``, if ``word`` ``BreakIterator`` is used (the default), then the first letter of each word will be capitalized and the rest will be transformed to lower case. With the break iterator of type ``sentence``, the first letter of each sentence will be capitalized only. Note that according the ICU User Guide, the string ``"one. two. three."`` consists of one sentence.
+With ``stri_trans_totitle``, if ``word`` ``BreakIterator`` is used (the default), then the first letter of each word will be capitalized and the rest will be transformed to lower case. With the break iterator of type ``sentence``, the first letter of each sentence will be capitalized only. Note that according the ICU User Guide, the string ``'one. two. three.'`` consists of one sentence.
 
 For more general (but not locale dependent) text transforms refer to `stri_trans_general <stri_trans_general.html>`__.
 
@@ -71,10 +71,10 @@ Examples
 
 .. code-block:: r
 
-   stri_trans_toupper("\u00DF", "de_DE") # small German Eszett / scharfes S
-   stri_cmp_eq(stri_trans_toupper("i", "en_US"), stri_trans_toupper("i", "tr_TR"))
+   stri_trans_toupper('\u00DF', 'de_DE') # small German Eszett / scharfes S
+   stri_cmp_eq(stri_trans_toupper('i', 'en_US'), stri_trans_toupper('i', 'tr_TR'))
    stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
    stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
    stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
-   stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!") # word boundary
-   stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="sentence")
+   stri_trans_totitle('GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!') # word boundary
+   stri_trans_totitle('GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!', type='sentence')

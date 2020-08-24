@@ -77,7 +77,7 @@ Arguments
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``                                    | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_regex``, ``opts_fixed``, and so on                                                                                           |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``mode``                                   | single string; one of: ``"first"`` (the default), ``"all"``, ``"last"``                                                                                                                                                                              |
+| ``mode``                                   | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                                                                                                                                              |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                                                                                |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -129,12 +129,12 @@ Examples
    stri_locate_last_charclass('AaBbCc', '\\p{Ll}')
 
    stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-   stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-   stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale="sk_SK")
+   stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
+   stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale='sk_SK')
 
-   pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
-                     "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
-   stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength = 1)
+   pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
+                     '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
+   stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength = 1)
 
    stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
    stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
@@ -157,7 +157,7 @@ Examples
       c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
 
    # Use regex positive-lookahead to locate overlapping pattern matches:
-   stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
+   stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
    # note that start > end here (match of 0 length)
 
 

@@ -322,10 +322,10 @@
 <td><p>single string, see Details; see also <a class="reference external" href="stri_datetime_fstr.html">stri_datetime_fstr</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tz</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for the default time zone or a single string with a timezone identifier, see <a class="reference external" href="stri_timezone_list.html">stri_timezone_list</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for the default time zone or a single string with a timezone identifier, see <a class="reference external" href="stri_timezone_list.html">stri_timezone_list</a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the <code class="docutils literal notranslate"><span class="pre">&#64;calendar=name</span></code> keyword</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
 <td><p>character vector</p></td>
@@ -851,10 +851,10 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;2015-02-28&quot;</span><span class="p">,</span> <span class="s">&quot;2015-02-29&quot;</span><span class="p">),</span> <span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;2015-02-28&quot;</span><span class="p">,</span> <span class="s">&quot;2015-02-29&quot;</span><span class="p">),</span> <span class="s">&quot;yyyy-MM-dd&quot;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&quot;19 lipca 2015&quot;</span><span class="p">,</span> <span class="s">&quot;date_long&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&quot;datetime_relative_medium&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;2015-02-28&#39;</span><span class="p">,</span> <span class="s">&#39;2015-02-29&#39;</span><span class="p">),</span> <span class="s">&#39;yyyy-MM-dd&#39;</span><span class="p">,</span> <span class="n">lenient</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">stri_datetime_parse</span><span class="p">(</span><span class="s">&#39;19 lipca 2015&#39;</span><span class="p">,</span> <span class="s">&#39;date_long&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_format</span><span class="p">(</span><span class="nf">stri_datetime_now</span><span class="p">(),</span> <span class="s">&#39;datetime_relative_medium&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

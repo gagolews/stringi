@@ -68,11 +68,12 @@
 #' \code{FALSE} does the opposite
 #' @param case_level single logical value;
 #' controls whether an extra case level (positioned before the third level) is generated or not
-#' @param normalization (synonym: \code{normalisation})
+#' @param normalization
 #' single logical value; if \code{TRUE},
 #' then incremental check is performed to see whether the input data is in
 #' the FCD form. If the data is not in the FCD form, incremental NFD
 #' normalization is performed
+#' @param normalisation alias of \code{normalization}
 #' @param numeric single logical value;
 #' when turned on, this attribute generates a collation key for
 #' the numeric value of substrings of digits;
@@ -103,32 +104,32 @@
 #' stri_cmp('number100', 'number2', numeric=TRUE) # equivalent
 #' stri_cmp('above mentioned', 'above-mentioned')
 #' stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
-stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted = FALSE, 
-    french = FALSE, uppercase_first = NA, case_level = FALSE, normalization = FALSE, 
+stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted = FALSE,
+    french = FALSE, uppercase_first = NA, case_level = FALSE, normalization = FALSE,
     normalisation = normalization, numeric = FALSE, ...) {
-    if (!missing(...)) 
+    if (!missing(...))
         warning("Unknown option to `stri_opts_collator`.")
-    
+
     opts <- list()
-    if (!missing(locale)) 
+    if (!missing(locale))
         opts["locale"] <- locale
-    if (!missing(strength)) 
+    if (!missing(strength))
         opts["strength"] <- strength
-    if (!missing(alternate_shifted)) 
+    if (!missing(alternate_shifted))
         opts["alternate_shifted"] <- alternate_shifted
-    if (!missing(french)) 
+    if (!missing(french))
         opts["french"] <- french
-    if (!missing(uppercase_first)) 
+    if (!missing(uppercase_first))
         opts["uppercase_first"] <- uppercase_first
-    if (!missing(case_level)) 
+    if (!missing(case_level))
         opts["case_level"] <- case_level
-    if (!missing(numeric)) 
+    if (!missing(numeric))
         opts["numeric"] <- numeric
-    
-    if (!missing(normalization)) 
-        opts["normalization"] <- normalization else if (!missing(normalisation)) 
+
+    if (!missing(normalization))
+        opts["normalization"] <- normalization else if (!missing(normalisation))
         opts["normalization"] <- normalisation
-    
+
     opts
 }
 
@@ -194,27 +195,27 @@ stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted =
 #' stri_detect_regex('ala', 'ALA', opts_regex=stri_opts_regex(case_insensitive=TRUE))
 #' stri_detect_regex('ala', 'ALA', case_insensitive=TRUE) # equivalent
 #' stri_detect_regex('ala', '(?i)ALA') # equivalent
-stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multiline, 
+stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multiline,
     unix_lines, uword, error_on_unknown_escapes, ...) {
-    if (!missing(...)) 
+    if (!missing(...))
         warning("Unknown option to `stri_opts_regex`.")
-    
+
     opts <- list()
-    if (!missing(case_insensitive)) 
+    if (!missing(case_insensitive))
         opts["case_insensitive"] <- case_insensitive
-    if (!missing(comments)) 
+    if (!missing(comments))
         opts["comments"] <- comments
-    if (!missing(dotall)) 
+    if (!missing(dotall))
         opts["dotall"] <- dotall
-    if (!missing(literal)) 
+    if (!missing(literal))
         opts["literal"] <- literal
-    if (!missing(multiline)) 
+    if (!missing(multiline))
         opts["multiline"] <- multiline
-    if (!missing(unix_lines)) 
+    if (!missing(unix_lines))
         opts["unix_lines"] <- unix_lines
-    if (!missing(uword)) 
+    if (!missing(uword))
         opts["uword"] <- uword
-    if (!missing(error_on_unknown_escapes)) 
+    if (!missing(error_on_unknown_escapes))
         opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
     opts
 }
@@ -281,34 +282,34 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multili
 #'
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
-stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number, skip_word_letter, 
-    skip_word_kana, skip_word_ideo, skip_line_soft, skip_line_hard, skip_sentence_term, 
+stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number, skip_word_letter,
+    skip_word_kana, skip_word_ideo, skip_line_soft, skip_line_hard, skip_sentence_term,
     skip_sentence_sep, ...) {
-    if (!missing(...)) 
+    if (!missing(...))
         warning("Unknown option to `stri_opts_brkiter`.")
-    
+
     opts <- list()
-    if (!missing(type)) 
+    if (!missing(type))
         opts["type"] <- type
-    if (!missing(locale)) 
+    if (!missing(locale))
         opts["locale"] <- locale
-    if (!missing(skip_word_none)) 
+    if (!missing(skip_word_none))
         opts["skip_word_none"] <- skip_word_none
-    if (!missing(skip_word_number)) 
+    if (!missing(skip_word_number))
         opts["skip_word_number"] <- skip_word_number
-    if (!missing(skip_word_letter)) 
+    if (!missing(skip_word_letter))
         opts["skip_word_letter"] <- skip_word_letter
-    if (!missing(skip_word_kana)) 
+    if (!missing(skip_word_kana))
         opts["skip_word_kana"] <- skip_word_kana
-    if (!missing(skip_word_ideo)) 
+    if (!missing(skip_word_ideo))
         opts["skip_word_ideo"] <- skip_word_ideo
-    if (!missing(skip_line_soft)) 
+    if (!missing(skip_line_soft))
         opts["skip_line_soft"] <- skip_line_soft
-    if (!missing(skip_line_hard)) 
+    if (!missing(skip_line_hard))
         opts["skip_line_hard"] <- skip_line_hard
-    if (!missing(skip_sentence_term)) 
+    if (!missing(skip_sentence_term))
         opts["skip_sentence_term"] <- skip_sentence_term
-    if (!missing(skip_sentence_sep)) 
+    if (!missing(skip_sentence_sep))
         opts["skip_sentence_sep"] <- skip_sentence_sep
     opts
 }
@@ -352,13 +353,13 @@ stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number, sk
 #' stri_detect_fixed('ala', 'ALA', opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
 #' stri_detect_fixed('ala', 'ALA', case_insensitive=TRUE) # equivalent
 stri_opts_fixed <- function(case_insensitive = FALSE, overlap = FALSE, ...) {
-    if (!missing(...)) 
+    if (!missing(...))
         warning("Unknown option to `stri_opts_fixed`.")
-    
+
     opts <- list()
-    if (!missing(case_insensitive)) 
+    if (!missing(case_insensitive))
         opts["case_insensitive"] <- case_insensitive
-    if (!missing(overlap)) 
+    if (!missing(overlap))
         opts["overlap"] <- overlap
     opts
 }

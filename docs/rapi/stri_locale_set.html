@@ -304,7 +304,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p>single string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">&quot;en_US&quot;</span></code>, see <a class="reference external" href="stri_locale_list.html">stri_locale_list</a>.</p></td>
+<td><p>single string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">'en_US'</span></code>, see <a class="reference external" href="stri_locale_list.html">stri_locale_list</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -317,7 +317,7 @@
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">stri_locale_set</span></code> returns a string with previously used locale, invisibly.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_locale_get</span></code> returns a string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">&quot;en_US&quot;</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_locale_get</span></code> returns a string of the form <code class="docutils literal notranslate"><span class="pre">Language</span></code>, <code class="docutils literal notranslate"><span class="pre">Language_Country</span></code>, or <code class="docutils literal notranslate"><span class="pre">Language_Country_Variant</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">'en_US'</span></code>.</p>
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
@@ -326,7 +326,7 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## Not run:</span>
-<span class="n">oldloc</span> <span class="o">&lt;-</span> <span class="nf">stri_locale_set</span><span class="p">(</span><span class="s">&quot;pt_BR&quot;</span><span class="p">)</span>
+<span class="n">oldloc</span> <span class="o">&lt;-</span> <span class="nf">stri_locale_set</span><span class="p">(</span><span class="s">&#39;pt_BR&#39;</span><span class="p">)</span>
 <span class="c1"># ... some locale-dependent operations</span>
 <span class="c1"># ... note that you may always modify a locale per-call</span>
 <span class="c1"># ... changing the default locale is convenient if you perform</span>

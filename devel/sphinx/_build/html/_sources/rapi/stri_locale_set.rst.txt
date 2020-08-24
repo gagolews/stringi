@@ -19,7 +19,7 @@ Arguments
 ~~~~~~~~~
 
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale`` | single string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``"en_US"``, see `stri_locale_list <stri_locale_list.html>`__. |
+| ``locale`` | single string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``'en_US'``, see `stri_locale_list <stri_locale_list.html>`__. |
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -34,7 +34,7 @@ Value
 
 ``stri_locale_set`` returns a string with previously used locale, invisibly.
 
-``stri_locale_get`` returns a string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``"en_US"``.
+``stri_locale_get`` returns a string of the form ``Language``, ``Language_Country``, or ``Language_Country_Variant``, e.g., ``'en_US'``.
 
 See Also
 ~~~~~~~~
@@ -47,7 +47,7 @@ Examples
 .. code-block:: r
 
    ## Not run: 
-   oldloc <- stri_locale_set("pt_BR")
+   oldloc <- stri_locale_set('pt_BR')
    # ... some locale-dependent operations
    # ... note that you may always modify a locale per-call
    # ... changing the default locale is convenient if you perform

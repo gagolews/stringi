@@ -40,7 +40,7 @@ Arguments
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``opts_brkiter``  | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for default break iterator, i.e., ``line_break``                          |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``        | ``NULL`` or ``""`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
+| ``locale``        | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -50,7 +50,7 @@ Vectorized over ``str``.
 
 For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <stringi-search-boundaries.html>`__.
 
-In case of ``stri_locate_*_words``, just like in `stri_extract_all_words <stri_extract_boundaries.html>`__ and `stri_count_words <stri_count_boundaries.html>`__, ICU's word ``BreakIterator`` iterator is used to locate the word boundaries, and all non-word characters (``UBRK_WORD_NONE`` rule status) are ignored. This is function is equivalent to a call to ``stri_locate_*_boundaries(str, type="word", skip_word_none=TRUE, locale=locale)``
+In case of ``stri_locate_*_words``, just like in `stri_extract_all_words <stri_extract_boundaries.html>`__ and `stri_count_words <stri_count_boundaries.html>`__, ICU's word ``BreakIterator`` iterator is used to locate the word boundaries, and all non-word characters (``UBRK_WORD_NONE`` rule status) are ignored. This is function is equivalent to a call to ``stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)``
 
 Value
 ~~~~~
@@ -75,13 +75,13 @@ Examples
 
 .. code-block:: r
 
-   test <- "The\u00a0above-mentioned    features are very useful. Kudos to their developers."
-   stri_locate_all_boundaries(test, type="line")
-   stri_locate_all_boundaries(test, type="word")
-   stri_locate_all_boundaries(test, type="sentence")
-   stri_locate_all_boundaries(test, type="character")
+   test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+   stri_locate_all_boundaries(test, type='line')
+   stri_locate_all_boundaries(test, type='word')
+   stri_locate_all_boundaries(test, type='sentence')
+   stri_locate_all_boundaries(test, type='character')
    stri_locate_all_words(test)
 
-   stri_extract_all_boundaries("Mr. Jones and Mrs. Brown are very happy.
-   So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
+   stri_extract_all_boundaries('Mr. Jones and Mrs. Brown are very happy.
+   So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56 only
 
