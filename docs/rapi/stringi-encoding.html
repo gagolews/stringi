@@ -287,7 +287,7 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>This manual page explains how stringi deals with character strings in various encodings.</p>
-<p>In particular you should note that:</p>
+<p>In particular we should note that:</p>
 <ul class="simple">
 <li><p>R lets strings in ASCII, UTF-8, and your platform’s native encoding coexist. A character vector printed on the console by calling <code class="docutils literal notranslate"><span class="pre">print</span></code> or <code class="docutils literal notranslate"><span class="pre">cat</span></code> is silently re-encoded to the native encoding.</p></li>
 <li><p>Functions in stringi process each string internally in Unicode, the most universal character encoding ever. Even if a string is given in the native encoding, i.e., your platform’s default one, it will be converted to Unicode (precisely: UTF-8 or UTF-16).</p></li>
@@ -316,13 +316,13 @@
 <p>Character strings in R (internally) can be declared to be in:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">UTF-8</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">latin1</span></code>, i.e., either ISO-8859-1 (Western European on Linux, macOS, and other Unixes) or WINDOWS-1252 (Windows);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">latin1</span></code>, i.e., either ISO-8859-1 (Western European on Linux, OS X, and other Unixes) or WINDOWS-1252 (Windows);</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code> – for strings that should be manipulated as sequences of bytes.</p></li>
 </ul>
 <p>Moreover, there are two other cases:</p>
 <ul class="simple">
 <li><p>ASCII – for strings consisting only of byte codes not greater than 127;-</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">native</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">unknown</span></code> in <code class="docutils literal notranslate"><span class="pre">Encoding</span></code>; quite a misleading name: no explicit encoding mark) – for strings that are assumed to be in your platform’s native (default) encoding. This can represent UTF-8 if you are an macOS user, or some 8-bit Windows code page, for example. The native encoding used by R may be determined by examining the LC_CTYPE category, see <code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">native</span></code> (a.k.a. <code class="docutils literal notranslate"><span class="pre">unknown</span></code> in <code class="docutils literal notranslate"><span class="pre">Encoding</span></code>; quite a misleading name: no explicit encoding mark) – for strings that are assumed to be in your platform’s native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by R may be determined by examining the LC_CTYPE category, see <code class="docutils literal notranslate"><span class="pre">Sys.getlocale</span></code>.</p></li>
 </ul>
 <p>Intuitively, “native” strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides R with some data.</p>
 <p>Each time when a stringi function encounters a string declared in native encoding, it assumes that the input data should be translated from the default encoding, i.e., the one returned by <a class="reference external" href="stri_enc_set.html">stri_enc_get</a> (unless you know what you are doing, the default encoding should only be changed if the automatic encoding detection process fails on stringi load).</p>

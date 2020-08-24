@@ -33,7 +33,7 @@ Details
 
 For more information on ICU's Collator and how to tune it up in stringi, refer to `stri_opts_collator <stri_opts_collator.html>`__.
 
-As usual in stringi, non-character inputs are coerced to strings, see an example below for a perhaps non-intitive behavior of lexicographic sorting on numeric inputs.
+As usual in stringi, non-character inputs are coerced to strings, see an example below for a perhaps non-intuitive behavior of lexicographic sorting on numeric inputs.
 
 This function uses a stable sort algorithm (STL's ``stable_sort``), which performs up to *N*log^2(N)* element comparisons, where *N* is the length of ``str``.
 

@@ -70,7 +70,7 @@ If ``pattern`` is empty, then the result is ``NA`` and a warning is generated.
 
 See also `stri_startswith <stri_startsendswith.html>`__ and `stri_endswith <stri_startsendswith.html>`__ for testing whether a string starts or ends with a match to a given pattern. Moreover, see `stri_subset <stri_subset.html>`__ for a character vector subsetting.
 
-If ``max_count`` is negative, then all stings are examined. Otherwise, searching terminates once ``max_count`` matches (or, if ``negate`` is ``TRUE``, no-matches) are detected. The un-inspected cases are marked as missing in the return vector. Be aware that, unless ``pattern`` is a singleton, the elements in ``str`` might be inspected in a non-consecutive order.
+If ``max_count`` is negative, then all stings are examined. Otherwise, searching terminates once ``max_count`` matches (or, if ``negate`` is ``TRUE``, no-matches) are detected. The uninspected cases are marked as missing in the return vector. Be aware that, unless ``pattern`` is a singleton, the elements in ``str`` might be inspected in a non-consecutive order.
 
 Value
 ~~~~~

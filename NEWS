@@ -5,11 +5,12 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
-* TODO: #382
 
 * TODO: #355
 
 * TODO: #345
+
+* [NEW FEATURE] #382: Incorrect regexes are now reported to ease debugging.
 
 * [DEPRECATION WARNING] #347: Any unknown option passed to `stri_opts_fixed()`,
   `stri_opts_regex()`, `stri_opts_coll()`, and `stri_opts_brkiter()` now

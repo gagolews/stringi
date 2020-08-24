@@ -4,7 +4,7 @@ stringi-locale: Locales and stringi
 Description
 ~~~~~~~~~~~
 
-In this section we explain how we deal with locales in stringi. Locale is a fundamental concept in ICU. It identifies a specific user community, i.e., a group of users who have similar culture and language expectations for human-computer interaction.
+In this section we explain how we specify locales in stringi. Locale is a fundamental concept in ICU. It identifies a specific user community, i.e., a group of users who have similar culture and language expectations for human-computer interaction.
 
 Details
 ~~~~~~~
@@ -22,7 +22,7 @@ The two-letter ``Language`` code uses the ISO-639-1 standard, e.g., 'en' stands 
 
 Differences may also appear in language conventions used within the same country. For example, the Euro currency may be used in several European countries while the individual country's currency is still in circulation. In such a case, ICU ``Variant`` '_EURO' could be used for selecting locales that support the Euro currency.
 
-The final (optional) element of a locale is a list of keywords together with their values. Keywords must be unique. Their order is not significant. Unknown keywords are ignored. The handling of keywords depends on the specific services that utilize them. Currently, the following keywords are recognized: ``calendar``, ``colation``, ``currency``, and ``numbers``, e.g., ``fr@collation=phonebook;``\ ``calendar=islamic-civil`` is a valid French locale specifier together with keyword arguments. For more information, refer to the ICU user guide.
+The final (optional) element of a locale is a list of keywords together with their values. Keywords must be unique. Their order is not significant. Unknown keywords are ignored. The handling of keywords depends on the specific services that utilize them. Currently, the following keywords are recognized: ``calendar``, ``collation``, ``currency``, and ``numbers``, e.g., ``fr@collation=phonebook;``\ ``calendar=islamic-civil`` is a valid French locale specifier together with keyword arguments. For more information, refer to the ICU user guide.
 
 For a list of locales that are recognized by ICU, call `stri_locale_list <stri_locale_list.html>`__.
 

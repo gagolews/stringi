@@ -34,7 +34,7 @@ Arguments
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``           | character vector or an object coercible to                                                                                                                                             |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``omit_no_match`` | single logical value; if ``FALSE``, then 2 missing values will indicate that there are no text boundaries                                                                              |
+| ``omit_no_match`` | single logical value; if ``FALSE``, then two missing values will indicate that there are no text boundaries                                                                            |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``           | additional settings for ``opts_brkiter``                                                                                                                                               |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -75,7 +75,7 @@ Examples
 
 .. code-block:: r
 
-   test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+   test <- 'The\u00a0above-mentioned    features are very useful. Spam, spam, eggs, bacon, and spam.'
    stri_locate_all_boundaries(test, type='line')
    stri_locate_all_boundaries(test, type='word')
    stri_locate_all_boundaries(test, type='sentence')

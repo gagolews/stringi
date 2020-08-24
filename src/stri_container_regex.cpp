@@ -104,7 +104,7 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
 }
 
 
-/** the returned matcher shall not be deleted by the user
+/** The returned matcher shall not be deleted by the user
  *
  * it is assumed that \code{vectorize_next()} is used:
  * for \code{i >= this->n} the last matcher is returned
@@ -125,8 +125,24 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 
     UErrorCode status = U_ZERO_ERROR;
     lastMatcher = new RegexMatcher(this->get(i), flags, status);
-    STRI__CHECKICUSTATUS_THROW(status, {if (lastMatcher) delete lastMatcher; lastMatcher = NULL;})
-        if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
+
+    if (U_FAILURE(status)) {
+        if (lastMatcher) delete lastMatcher;
+        lastMatcher = NULL;
+
+        const char* context; // to ease debugging, #382
+        std::string s;
+        if (str[i%n].isBogus())
+            context = NULL;
+        else {
+            str[i%n].toUTF8String(s);
+            context = s.c_str();
+        }
+
+        throw StriException(status, context);
+    }
+
+    if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
     this->lastMatcherIndex = (i % n);
 
     return lastMatcher;

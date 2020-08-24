@@ -23,7 +23,7 @@ Arguments
 Value
 ~~~~~
 
-If ``short==TRUE``, then a single string providing information on the default character encoding, locale, and Unicode as well as ICU version is returned.
+If ``short`` is ``TRUE``, then a single string providing information on the default character encoding, locale, and Unicode as well as ICU version is returned.
 
 Otherwise, a list with the following components is returned:
 

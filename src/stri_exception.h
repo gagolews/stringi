@@ -151,10 +151,17 @@ public:
         va_end(args);
     }
 
-    __StriException(const char* file, int line, UErrorCode status) {
-        sprintf(msg, "[!NDEBUG] Error in %s:%d: ", file, line);
-        sprintf(msg+strlen(msg),
+    __StriException(const char* file, int line, UErrorCode status, const char* context = NULL) {
+        sprintf(msg, "[!NDEBUG: Error in %s:%d] ", file, line);
+        if (context) {
+            sprintf(msg+strlen(msg),
+                MSG__ICU_ERROR_WITH_CONTEXT, ICUError::getICUerrorName(status),
+                    u_errorName(status), context);
+        }
+        else {
+            sprintf(msg+strlen(msg),
                 MSG__ICU_ERROR, ICUError::getICUerrorName(status), u_errorName(status));
+        }
     }
 
 
@@ -200,9 +207,15 @@ public:
         va_end(args);
     }
 
-    StriException(UErrorCode status) {
-        sprintf(msg, MSG__ICU_ERROR,
+    StriException(UErrorCode status, const char* context = NULL) {
+        if (context) {
+            sprintf(msg, MSG__ICU_ERROR_WITH_CONTEXT,
+                ICUError::getICUerrorName(status), u_errorName(status), context);
+        }
+        else {
+            sprintf(msg, MSG__ICU_ERROR,
                 ICUError::getICUerrorName(status), u_errorName(status));
+        }
     }
 
 

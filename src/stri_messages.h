@@ -110,6 +110,9 @@
 #define MSG__ICU_ERROR \
    "%s (%s)"
 
+#define MSG__ICU_ERROR_WITH_CONTEXT \
+   "%s (%s, context=`%s`)"
+
 #define MSG__ICU_WARNING \
    "%s (%s)"
 

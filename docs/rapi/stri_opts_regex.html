@@ -294,8 +294,10 @@
   <span class="n">case_insensitive</span><span class="p">,</span>
   <span class="n">comments</span><span class="p">,</span>
   <span class="n">dotall</span><span class="p">,</span>
+  <span class="n">dot_all</span> <span class="o">=</span> <span class="n">dotall</span><span class="p">,</span>
   <span class="n">literal</span><span class="p">,</span>
   <span class="n">multiline</span><span class="p">,</span>
+  <span class="n">multi_line</span> <span class="o">=</span> <span class="n">multiline</span><span class="p">,</span>
   <span class="n">unix_lines</span><span class="p">,</span>
   <span class="n">uword</span><span class="p">,</span>
   <span class="n">error_on_unknown_escapes</span><span class="p">,</span>
@@ -321,11 +323,17 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dotall</span></code></p></td>
 <td><p>logical; if set, ‘<code class="docutils literal notranslate"><span class="pre">.</span></code>’ matches line terminators, otherwise matching of ‘<code class="docutils literal notranslate"><span class="pre">.</span></code>’ stops at a line end [regex flag <code class="docutils literal notranslate"><span class="pre">(?s)</span></code>]</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">literal</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dot_all</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">dotall</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">literal</span></code></p></td>
 <td><p>logical; if set, treat the entire pattern as a literal string: metacharacters or escape sequences in the input sequence will be given no special meaning; note that in most cases you would rather use the <a class="reference external" href="stringi-search-fixed.html">stringi-search-fixed</a> facilities in this case</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">multiline</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">multiline</span></code></p></td>
 <td><p>logical; controls the behavior of ‘<code class="docutils literal notranslate"><span class="pre">$</span></code>’ and ‘<code class="docutils literal notranslate"><span class="pre">^</span></code>’. If set, recognize line terminators within a string, otherwise, match only at start and end of input string [regex flag <code class="docutils literal notranslate"><span class="pre">(?m)</span></code>]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">multi_line</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">multiline</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">unix_lines</span></code></p></td>
 <td><p>logical; Unix-only line endings; when enabled, only <code class="docutils literal notranslate"><span class="pre">U+000a</span></code> is recognized as a line ending by ‘<code class="docutils literal notranslate"><span class="pre">.</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">$</span></code>’, and ‘<code class="docutils literal notranslate"><span class="pre">^</span></code>’.</p></td>

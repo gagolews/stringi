@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-``FALSE`` means that a string is certainly not valid UTF-8. However, false positives are possible. For instance, ``(c4,85)`` represents ('Polish a with ogonek') in UTF-8 as well as ('A umlaut', 'Ellipsis') in WINDOWS-1250. Also note that UTF-8, as well as most 8-bit encodings, extend ASCII (note that `stri_enc_isascii <stri_enc_isascii.html>`__ implies that `stri_enc_isutf8 <stri_enc_isutf8.html>`__).
+``FALSE`` means that a string is certainly not valid UTF-8. However, false positives are possible. For instance, ``(c4,85)`` represents ('a with ogonek') in UTF-8 as well as ('A umlaut', 'Ellipsis') in WINDOWS-1250. Also note that UTF-8, as well as most 8-bit encodings, extend ASCII (note that `stri_enc_isascii <stri_enc_isascii.html>`__ implies that `stri_enc_isutf8 <stri_enc_isutf8.html>`__).
 
 However, the longer the sequence, the greater the possibility that the result is indeed in UTF-8 – this is because not all sequences of bytes are valid UTF-8.
 
