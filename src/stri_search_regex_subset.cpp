@@ -60,6 +60,9 @@
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *    FR #216: `negate` arg added
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_regex)
 {
@@ -70,11 +73,12 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
     R_len_t vectorize_length =
         stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF16 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     // BT: this cannot be done with deque, because pattern is reused so i does not
     // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
@@ -124,6 +128,9 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
  *    FR #216: `negate` arg added
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex, SEXP value)
 {
@@ -137,13 +144,14 @@ SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opt
     if (value_length == 0)
         Rf_error(MSG__REPLACEMENT_ZERO);
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
 
     STRI__ERROR_HANDLER_BEGIN(3)
     StriContainerUTF8 str_cont(str, vectorize_length);
     StriContainerUTF8 value_cont(value, value_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));

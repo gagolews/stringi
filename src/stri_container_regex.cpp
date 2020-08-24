@@ -43,7 +43,7 @@ StriContainerRegexPattern::StriContainerRegexPattern()
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
-    this->flags =0;
+    //this->opts = 0;
 }
 
 
@@ -53,12 +53,12 @@ StriContainerRegexPattern::StriContainerRegexPattern()
  * @param nrecycle extend length [vectorization]
  * @param flags regexp flags
  */
-StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycle, uint32_t _flags)
+StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycle, StriRegexMatcherOptions _opts)
     : StriContainerUTF16(rstr, _nrecycle, true)
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
-    this->flags = _flags;
+    this->opts = _opts;
 
     R_len_t n = get_n();
     for (R_len_t i=0; i<n; ++i) {
@@ -77,7 +77,7 @@ StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& 
 {
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
-    this->flags = container.flags;
+    this->opts = container.opts;
 }
 
 
@@ -87,7 +87,7 @@ StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerReg
     (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
     this->lastMatcherIndex = -1;
     this->lastMatcher = NULL;
-    this->flags = container.flags;
+    this->opts = container.opts;
     return *this;
 }
 
@@ -124,7 +124,7 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
     }
 
     UErrorCode status = U_ZERO_ERROR;
-    lastMatcher = new RegexMatcher(this->get(i), flags, status);
+    lastMatcher = new RegexMatcher(this->get(i), opts.flags, status);
 
     if (U_FAILURE(status)) {
         if (lastMatcher) delete lastMatcher;
@@ -143,6 +143,18 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
     }
 
     if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
+
+    if (opts.stack_limit > 0) {
+        lastMatcher->setStackLimit(opts.stack_limit, status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
+
+    if (opts.time_limit > 0) {
+        lastMatcher->setTimeLimit(opts.time_limit, status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
+
+
     this->lastMatcherIndex = (i % n);
 
     return lastMatcher;
@@ -166,9 +178,14 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  *
  * @version 1.1.6 (Marek Gagolewski, 2017-11-10)
  *    PROTECT STRING_ELT(names, i)
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    add time_limit and stack_limit
  */
-uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
+StriRegexMatcherOptions StriContainerRegexPattern::getRegexOptions(SEXP opts_regex)
 {
+    int32_t stack_limit = 0;
+    int32_t time_limit = 0;
     uint32_t flags = 0;
     if (!isNull(opts_regex) && !Rf_isVectorList(opts_regex))
         Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
@@ -215,6 +232,10 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
             } else if  (!strcmp(curname, "error_on_unknown_escapes")) {
                 bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "error_on_unknown_escapes");
                 if (val) flags |= UREGEX_ERROR_ON_UNKNOWN_ESCAPES;
+            } else if  (!strcmp(curname, "stack_limit")) {
+                stack_limit = stri__prepare_arg_integer_1_notNA(tmp_arg, "stack_limit");
+            } else if  (!strcmp(curname, "time_limit")) {
+                time_limit = stri__prepare_arg_integer_1_notNA(tmp_arg, "time_limit");
             } else {
                 Rf_warning(MSG__INCORRECT_REGEX_OPTION, curname);
             }
@@ -223,5 +244,9 @@ uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
         UNPROTECT(1); /* names */
     }
 
-    return flags;
+    StriRegexMatcherOptions opts;
+    opts.flags = flags;
+    opts.time_limit = time_limit;
+    opts.stack_limit = stack_limit;
+    return opts;
 }
