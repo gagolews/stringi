@@ -83,7 +83,7 @@ Value
 
 The ``stri_subset`` functions return a character vector. As usual, the output encoding is always UTF-8.
 
-The ``stri_subset<-`` function modifies the ``str`` object “in-place”.
+The ``stri_subset<-`` function modifies the ``str`` object 'in-place'.
 
 See Also
 ~~~~~~~~

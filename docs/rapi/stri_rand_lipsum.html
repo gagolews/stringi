@@ -289,7 +289,7 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">nparagraphs</span><span class="p">,</span> <span class="n">start_lipsum</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_rand_lipsum</span><span class="p">(</span><span class="n">n_paragraphs</span><span class="p">,</span> <span class="n">start_lipsum</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -301,7 +301,7 @@
 <col style="width: 83%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nparagraphs</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_paragraphs</span></code></p></td>
 <td><p>single integer, number of paragraphs to generate</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">start_lipsum</span></code></p></td>
@@ -312,7 +312,7 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p><em>Lorem ipsum</em> is a dummy text often used as a source of data for string processing and displaying/layouting exercises.</p>
+<p><em>Lorem ipsum</em> is a dummy text often used as a source of data for string processing and displaying/lay-outing exercises.</p>
 <p>The current implementation is very simple: words are selected randomly from a Zipf distribution (based on a set of ca. 190 predefined Latin words). The number of words per sentence and sentences per paragraph follows a discretized, truncated normal distribution. No Markov chain modeling, just i.i.d. word selection.</p>
 </div>
 <div class="section" id="value">

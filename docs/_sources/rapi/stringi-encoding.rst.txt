@@ -6,7 +6,7 @@ Description
 
 This manual page explains how stringi deals with character strings in various encodings.
 
-In particular you should note that:
+In particular we should note that:
 
 -  R lets strings in ASCII, UTF-8, and your platform's native encoding coexist. A character vector printed on the console by calling ``print`` or ``cat`` is silently re-encoded to the native encoding.
 
@@ -49,7 +49,7 @@ Character strings in R (internally) can be declared to be in:
 
 -  ``UTF-8``;
 
--  ``latin1``, i.e., either ISO-8859-1 (Western European on Linux, macOS, and other Unixes) or WINDOWS-1252 (Windows);
+-  ``latin1``, i.e., either ISO-8859-1 (Western European on Linux, OS X, and other Unixes) or WINDOWS-1252 (Windows);
 
 -  ``bytes`` – for strings that should be manipulated as sequences of bytes.
 
@@ -57,7 +57,7 @@ Moreover, there are two other cases:
 
 -  ASCII – for strings consisting only of byte codes not greater than 127;-
 
--  ``native`` (a.k.a. ``unknown`` in ``Encoding``; quite a misleading name: no explicit encoding mark) – for strings that are assumed to be in your platform's native (default) encoding. This can represent UTF-8 if you are an macOS user, or some 8-bit Windows code page, for example. The native encoding used by R may be determined by examining the LC_CTYPE category, see ``Sys.getlocale``.
+-  ``native`` (a.k.a. ``unknown`` in ``Encoding``; quite a misleading name: no explicit encoding mark) – for strings that are assumed to be in your platform's native (default) encoding. This can represent UTF-8 if you are an OS X user, or some 8-bit Windows code page, for example. The native encoding used by R may be determined by examining the LC_CTYPE category, see ``Sys.getlocale``.
 
 Intuitively, “native” strings result from reading a string from stdin (e.g., keyboard input). This makes sense: your operating system works in some encoding and provides R with some data.
 

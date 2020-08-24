@@ -4,7 +4,7 @@ stri_locale_list: List Available Locales
 Description
 ~~~~~~~~~~~
 
-Creates a character vector with all known locale identifies.
+Creates a character vector with all available locale identifies.
 
 Usage
 ~~~~~

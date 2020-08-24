@@ -289,7 +289,13 @@
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_list2matrix</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">byrow</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="kc">NA_character_</span><span class="p">,</span> <span class="n">n_min</span> <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_list2matrix</span><span class="p">(</span>
+  <span class="n">x</span><span class="p">,</span>
+  <span class="n">byrow</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="n">fill</span> <span class="o">=</span> <span class="kc">NA_character_</span><span class="p">,</span>
+  <span class="n">n_min</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span>
+  <span class="n">by_row</span> <span class="o">=</span> <span class="n">byrow</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -297,8 +303,8 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 9%" />
-<col style="width: 91%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
@@ -312,6 +318,9 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_min</span></code></p></td>
 <td><p>a single integer value; minimal number of rows (<code class="docutils literal notranslate"><span class="pre">byrow==FALSE</span></code>) or columns (otherwise) in the resulting matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">by_row</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">byrow</span></code></p></td>
 </tr>
 </tbody>
 </table>

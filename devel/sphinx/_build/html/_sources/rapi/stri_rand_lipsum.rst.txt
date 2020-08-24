@@ -11,13 +11,13 @@ Usage
 
 .. code-block:: r
 
-   stri_rand_lipsum(nparagraphs, start_lipsum = TRUE)
+   stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE)
 
 Arguments
 ~~~~~~~~~
 
 +------------------+------------------------------------------------------------------------------------------+
-| ``nparagraphs``  | single integer, number of paragraphs to generate                                         |
+| ``n_paragraphs`` | single integer, number of paragraphs to generate                                         |
 +------------------+------------------------------------------------------------------------------------------+
 | ``start_lipsum`` | single logical value; should the resulting text start with *Lorem ipsum dolor sit amet*? |
 +------------------+------------------------------------------------------------------------------------------+
@@ -25,7 +25,7 @@ Arguments
 Details
 ~~~~~~~
 
-*Lorem ipsum* is a dummy text often used as a source of data for string processing and displaying/layouting exercises.
+*Lorem ipsum* is a dummy text often used as a source of data for string processing and displaying/lay-outing exercises.
 
 The current implementation is very simple: words are selected randomly from a Zipf distribution (based on a set of ca. 190 predefined Latin words). The number of words per sentence and sentences per paragraph follows a discretized, truncated normal distribution. No Markov chain modeling, just i.i.d. word selection.
 

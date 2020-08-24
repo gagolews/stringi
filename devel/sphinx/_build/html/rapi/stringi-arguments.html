@@ -293,7 +293,7 @@
 </div>
 <div class="section" id="vectorization">
 <h2>Vectorization<a class="headerlink" href="#vectorization" title="Permalink to this headline">¶</a></h2>
-<p>Almost all functions are vectorized with respect to all their arguments and the recycling rule is applied whenever necessary. Due to this property you may, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string. This behaviod sometimes leads to peculiar results - we assume you know what you are doing.</p>
+<p>Almost all functions are vectorized with respect to all their arguments and the recycling rule is applied whenever necessary. Due to this property you may, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string. This behavior sometimes leads to peculiar results - we assume you know what you are doing.</p>
 <p>We of course took great care of performance issues: e.g., in regular expression searching, regex matchers are reused from iteration to iteration, as long it is possible.</p>
 <p>Functions with some non-vectorized arguments are rare: e.g., regular expression matcher’s settings are established once per each call.</p>
 <p>Some functions assume that a vector with one element is given as an argument (like <code class="docutils literal notranslate"><span class="pre">collapse</span></code> in <a class="reference external" href="stri_join.html">stri_join</a>). In such cases, if an empty vector is given you will get an error and for vectors with more than 1 elements - a warning will be generated (only the first element will be used).</p>

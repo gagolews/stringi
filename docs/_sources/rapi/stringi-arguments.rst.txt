@@ -16,7 +16,7 @@ When a logical, numeric, or integer vector argument is expected, factors are con
 Vectorization
 ~~~~~~~~~~~~~
 
-Almost all functions are vectorized with respect to all their arguments and the recycling rule is applied whenever necessary. Due to this property you may, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string. This behaviod sometimes leads to peculiar results - we assume you know what you are doing.
+Almost all functions are vectorized with respect to all their arguments and the recycling rule is applied whenever necessary. Due to this property you may, for instance, search for one pattern in each given string, search for each pattern in one given string, and search for the i-th pattern within the i-th string. This behavior sometimes leads to peculiar results - we assume you know what you are doing.
 
 We of course took great care of performance issues: e.g., in regular expression searching, regex matchers are reused from iteration to iteration, as long it is possible.
 

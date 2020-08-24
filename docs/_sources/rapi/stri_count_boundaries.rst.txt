@@ -60,7 +60,7 @@ Examples
 
 .. code-block:: r
 
-   test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+   test <- 'The\u00a0above-mentioned    features are very useful. Spam, spam, eggs, bacon, and spam.'
    stri_count_boundaries(test, type='word')
    stri_count_boundaries(test, type='sentence')
    stri_count_boundaries(test, type='character')
