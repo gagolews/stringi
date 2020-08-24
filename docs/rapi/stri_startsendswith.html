@@ -293,17 +293,45 @@
 
 <span class="nf">stri_endswith</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">coll</span><span class="p">,</span> <span class="n">charclass</span><span class="p">)</span>
 
-<span class="nf">stri_startswith_fixed</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_fixed</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<span class="nf">stri_startswith_fixed</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">pattern</span><span class="p">,</span>
+  <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">,</span>
+  <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_fixed</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 
-<span class="nf">stri_endswith_fixed</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_fixed</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<span class="nf">stri_endswith_fixed</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">pattern</span><span class="p">,</span>
+  <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">,</span>
+  <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_fixed</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 
-<span class="nf">stri_startswith_charclass</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">)</span>
+<span class="nf">stri_startswith_charclass</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">,</span> <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="nf">stri_endswith_charclass</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">)</span>
+<span class="nf">stri_endswith_charclass</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">,</span> <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="nf">stri_startswith_coll</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<span class="nf">stri_startswith_coll</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">pattern</span><span class="p">,</span>
+  <span class="n">from</span> <span class="o">=</span> <span class="m">1L</span><span class="p">,</span>
+  <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 
-<span class="nf">stri_endswith_coll</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+<span class="nf">stri_endswith_coll</span><span class="p">(</span>
+  <span class="n">str</span><span class="p">,</span>
+  <span class="n">pattern</span><span class="p">,</span>
+  <span class="n">to</span> <span class="o">=</span> <span class="m">-1L</span><span class="p">,</span>
+  <span class="n">negate</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="kc">...</span><span class="p">,</span>
+  <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -327,10 +355,13 @@
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">from</span></code></p></td>
 <td><p>integer vector</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">to</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">negate</span></code></p></td>
+<td><p>single logical value; whether a no-match to a pattern is rather of interest</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">to</span></code></p></td>
 <td><p>integer vector</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator,</span> <span class="pre">opts_fixed</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator,</span> <span class="pre">opts_fixed</span></code></p></td>
 <td><p>a named list used to tune up the search engine’s settings; see <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a> and <a class="reference external" href="stri_opts_fixed.html">stri_opts_fixed</a>, respectively; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the defaults</p></td>
 </tr>
 </tbody>

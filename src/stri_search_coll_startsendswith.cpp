@@ -49,9 +49,13 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
+SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP negate, SEXP opts_collator)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
     PROTECT(from = stri_prepare_arg_integer(from, "from"));
@@ -76,7 +80,7 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
                 ret_tab[i] = NA_LOGICAL,
-                ret_tab[i] = FALSE)
+                ret_tab[i] = negate_1)
 
         if (from_cont.isNA(i)) {
             ret_tab[i] = NA_LOGICAL;
@@ -102,7 +106,7 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
         }
         // now surely from_cur >= 0 && from_cur <= str_cur_n
 
-        ret_tab[i] = FALSE;
+        ret_tab[i] = negate_1;
         if (from_cur >= str_cur_n) continue; // no match
 
         UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s+from_cur, str_cur_n-from_cur);
@@ -111,7 +115,7 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
         int start = usearch_first(matcher, &status);
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-        if (start != USEARCH_DONE && start == 0) ret_tab[i] = TRUE;
+        if (start != USEARCH_DONE && start == 0) ret_tab[i] = !negate_1;
     }
 
     if (collator) {
@@ -139,9 +143,13 @@ SEXP stri_startswith_coll(SEXP str, SEXP pattern, SEXP from, SEXP opts_collator)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
+SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP negate, SEXP opts_collator)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
     PROTECT(to = stri_prepare_arg_integer(to, "to"));
@@ -166,7 +174,7 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
                 ret_tab[i] = NA_LOGICAL,
-                ret_tab[i] = FALSE)
+                ret_tab[i] = negate_1)
 
         if (to_cont.isNA(i)) {
             ret_tab[i] = NA_LOGICAL;
@@ -192,7 +200,7 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
         }
         // now surely to_cur >= 0 && to_cur <= str_cur_n
 
-        ret_tab[i] = FALSE;
+        ret_tab[i] = negate_1;
         if (to_cur <= 0) continue; // no match
 
         UStringSearch *matcher = pattern_cont.getMatcher(i, str_cur_s, to_cur);
@@ -202,7 +210,7 @@ SEXP stri_endswith_coll(SEXP str, SEXP pattern, SEXP to, SEXP opts_collator)
         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
         if (start != USEARCH_DONE && start+usearch_getMatchedLength(matcher) == to_cur)
-            ret_tab[i] = TRUE;
+            ret_tab[i] = !negate_1;
     }
 
     if (collator) {

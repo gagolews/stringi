@@ -48,9 +48,13 @@
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
+SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from, SEXP negate)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
     PROTECT(from = stri_prepare_arg_integer(from, "from"));
@@ -89,13 +93,16 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
         const UnicodeSet* pattern_cur = &pattern_cont.get(i);
 
         if (from_cur > str_cur_n)
-            ret_tab[i] = FALSE;
+            ret_tab[i] = negate_1;
         else {
             UChar32 chr = 0;
             U8_NEXT(str_cur_s, from_cur, str_cur_n, chr);
             if (chr < 0) // invalid utf-8 sequence
                 throw StriException(MSG__INVALID_UTF8);
             ret_tab[i] = pattern_cur->contains(chr);
+
+            if (negate_1)
+                ret_tab[i] = !ret_tab[i];
         }
     }
 
@@ -117,9 +124,13 @@ SEXP stri_startswith_charclass(SEXP str, SEXP pattern, SEXP from)
  *
  * @version 0.3-1 (Marek Gagolewski, 2014-11-04)
  *    Issue #112: str_prepare_arg* retvals were not PROTECTed from gc
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to)
+SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to, SEXP negate)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
     PROTECT(to = stri_prepare_arg_integer(to, "to"));
@@ -158,13 +169,16 @@ SEXP stri_endswith_charclass(SEXP str, SEXP pattern, SEXP to)
         // now surely to_cur >= 0 && to_cur <= cur_n
 
         if (to_cur <= 0)
-            ret_tab[i] = FALSE;
+            ret_tab[i] = negate_1;
         else {
             UChar32 chr = 0;
             U8_PREV(str_cur_s, 0, to_cur, chr);
             if (chr < 0) // invalid utf-8 sequence
                 throw StriException(MSG__INVALID_UTF8);
             ret_tab[i] = pattern_cur->contains(chr);
+
+            if (negate_1)
+                ret_tab[i] = !ret_tab[i];
         }
     }
 

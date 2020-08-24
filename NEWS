@@ -8,7 +8,8 @@
 
 * TODO: #355
 
-* TODO: #345
+* [NEW FEATURE] #345: `stri_startswith()` and `stri_endswith()` now are equipped
+  with the `negate` parameter.
 
 * [NEW FEATURE] #382: Incorrect regexes are now reported to ease debugging.
 
