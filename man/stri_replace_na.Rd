@@ -23,7 +23,7 @@ This function is roughly equivalent to
 \code{str2 <- stri_enc_toutf8(str);
 str2[is.na(str2)] <- stri_enc_toutf8(replacement);
 str2}.
-It may be used, e.g., wherever the ``plain \R'' \code{NA} handling is
+It may be used, e.g., wherever the 'plain R' \code{NA} handling is
 desired, see Examples.
 }
 \examples{

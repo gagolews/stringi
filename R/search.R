@@ -138,9 +138,9 @@ invisible(NULL)
 #' \item{\code{*}}{Match 0 or more times. Match as many times as possible.}
 #' \item{\code{+}}{Match 1 or more times. Match as many times as possible.}
 #' \item{\code{?}}{Match zero or one times. Prefer one.}
-#' \item{\code{{n}}}{Match exactly n times.}
-#' \item{\code{{n,}}}{Match at least n times. Match as many times as possible.}
-#' \item{\code{{n,m}}}{Match between n and m times.
+#' \item{\code{{n}} }{Match exactly n times.}
+#' \item{\code{{n,}} }{Match at least n times. Match as many times as possible.}
+#' \item{\code{{n,m}} }{Match between n and m times.
 #' Match as many times as possible, but not more than m.}
 #' \item{\code{*?}}{Match 0 or more times. Match as few times as possible.}
 #' \item{\code{+?}}{Match 1 or more times. Match as few times as possible.}
@@ -229,10 +229,10 @@ invisible(NULL)
 #'    [Since ICU 55]}
 #' \item{\code{\\k<name>}}{Named Capture Back Reference. [Since ICU 55]}
 #' \item{\code{\\n}}{Match a LINE FEED, \code{\\u000A}.}
-#' \item{\code{\\N{UNICODE CHARACTER NAME}}}{Match the named character.}
-#' \item{\code{\\p{UNICODE PROPERTY NAME}}}{Match any character with the
+#' \item{\code{\\N{UNICODE CHARACTER NAME}} }{Match the named character.}
+#' \item{\code{\\p{UNICODE PROPERTY NAME}} }{Match any character with the
 #'    specified Unicode Property.}
-#' \item{\code{\\P{UNICODE PROPERTY NAME}}}{Match any character not having
+#' \item{\code{\\P{UNICODE PROPERTY NAME}} }{Match any character not having
 #'    the specified Unicode Property.}
 #' \item{\code{\\Q}}{Quotes all following characters until \code{\\E}.}
 #' \item{\code{\\r}}{Match a CARRIAGE RETURN, \code{\\u000D}.}
@@ -247,7 +247,7 @@ invisible(NULL)
 #' \item{\code{\\w}}{Match a word character. Word characters are
 #'    \code{[\\p{Alphabetic}\\p{Mark}\\p{Decimal_Number}\\p{Connector_Punctuation}\\u200c\\u200d]}.}
 #' \item{\code{\\W}}{Match a non-word character.}
-#' \item{\code{\\x{hhhh}}}{Match the character with hex value hhhh.
+#' \item{\code{\\x{hhhh}} }{Match the character with hex value hhhh.
 #' From one to six hex digits may be supplied.}
 #' \item{\code{\\xhh}}{Match the character with two digit hex value hh }
 #' \item{\code{\\X}}{Match a Grapheme Cluster.}
@@ -589,7 +589,7 @@ invisible(NULL)
 #'                              e.g., a length and iteration mark.}
 #'   \item{\code{HEX_DIGIT}      }{a character commonly
 #'                             used for hexadecimal numbers,
-#'                             cf. also \code{ASCII_HEX_DIGIT}.}
+#'                             see also \code{ASCII_HEX_DIGIT}.}
 #'   \item{\code{HYPHEN}}{a dash used to mark connections between
 #'               pieces of words, plus the Katakana middle dot.}
 #'   \item{\code{ID_CONTINUE}}{a character that can continue an identifier,
@@ -598,30 +598,30 @@ invisible(NULL)
 #'                  \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl}.}
 #'   \item{\code{IDEOGRAPHIC}}{a CJKV (Chinese-Japanese-Korean-Vietnamese)
 #'                ideograph.}
-#'   \item{\code{LOWERCASE}}{}
-#'   \item{\code{MATH}}{}
-#'   \item{\code{NONCHARACTER_CODE_POINT}}{}
-#'   \item{\code{QUOTATION_MARK}}{}
+#'   \item{\code{LOWERCASE}}{...}
+#'   \item{\code{MATH}}{...}
+#'   \item{\code{NONCHARACTER_CODE_POINT}}{...}
+#'   \item{\code{QUOTATION_MARK}}{...}
 #'   \item{\code{SOFT_DOTTED}}{a character with a ``soft dot'', like i or j,
 #' such that an accent placed on this character causes the dot to disappear.}
 #'   \item{\code{TERMINAL_PUNCTUATION}}{a punctuation character that generally
 #' marks the end of textual units.}
-#'   \item{\code{UPPERCASE}}{}
+#'   \item{\code{UPPERCASE}}{...}
 #'   \item{\code{WHITE_SPACE}}{a space character or TAB or CR or LF or ZWSP or ZWNBSP.}
-#'   \item{\code{CASE_SENSITIVE}}{}
-#'   \item{\code{POSIX_ALNUM}}{}
-#'   \item{\code{POSIX_BLANK}}{}
-#'   \item{\code{POSIX_GRAPH}}{}
-#'   \item{\code{POSIX_PRINT}}{}
-#'   \item{\code{POSIX_XDIGIT}}{}
-#'   \item{\code{CASED}}{}
-#'   \item{\code{CASE_IGNORABLE}}{}
-#'   \item{\code{CHANGES_WHEN_LOWERCASED}}{}
-#'   \item{\code{CHANGES_WHEN_UPPERCASED}}{}
-#'   \item{\code{CHANGES_WHEN_TITLECASED}}{}
-#'   \item{\code{CHANGES_WHEN_CASEFOLDED}}{}
-#'   \item{\code{CHANGES_WHEN_CASEMAPPED}}{}
-#'   \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{}
+#'   \item{\code{CASE_SENSITIVE}}{...}
+#'   \item{\code{POSIX_ALNUM}}{...}
+#'   \item{\code{POSIX_BLANK}}{...}
+#'   \item{\code{POSIX_GRAPH}}{...}
+#'   \item{\code{POSIX_PRINT}}{...}
+#'   \item{\code{POSIX_XDIGIT}}{...}
+#'   \item{\code{CASED}}{...}
+#'   \item{\code{CASE_IGNORABLE}}{...}
+#'   \item{\code{CHANGES_WHEN_LOWERCASED}}{...}
+#'   \item{\code{CHANGES_WHEN_UPPERCASED}}{...}
+#'   \item{\code{CHANGES_WHEN_TITLECASED}}{...}
+#'   \item{\code{CHANGES_WHEN_CASEFOLDED}}{...}
+#'   \item{\code{CHANGES_WHEN_CASEMAPPED}}{...}
+#'   \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{...}
 #'   \item{\code{EMOJI}}{Since ICU 57}
 #'   \item{\code{EMOJI_PRESENTATION}}{Since ICU 57}
 #'   \item{\code{EMOJI_MODIFIER}}{Since ICU 57}

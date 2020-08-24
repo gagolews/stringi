@@ -68,7 +68,8 @@
 #'
 #' @family stats
 #' @export
-stri_stats_general <- function(str) {
+stri_stats_general <- function(str)
+{
     .Call(C_stri_stats_general, str)
 }
 
@@ -107,6 +108,7 @@ stri_stats_general <- function(str) {
 #'
 #' @family stats
 #' @export
-stri_stats_latex <- function(str) {
+stri_stats_latex <- function(str)
+{
     .Call(C_stri_stats_latex, str)
 }

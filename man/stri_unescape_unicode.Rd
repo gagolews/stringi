@@ -31,9 +31,9 @@ Moreover, the function understands the following ones:
 \code{\\xXX} (1-2 hex digits),
 \code{\\ooo} (1-3 octal digits),
 \code{\\cX} (control-X; X is masked with 0x1F).
-For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF8 byte sequences.
+For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF-8 byte sequences.
 
-Note that some versions of \R on Windows cannot handle
+Note that some versions of R on Windows cannot handle
 characters defined with  {\\UXXXXXXXX}.
 We are working on that.
 }

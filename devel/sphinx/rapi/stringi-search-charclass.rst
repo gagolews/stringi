@@ -242,7 +242,7 @@ Here is a comprehensive list of supported Binary Properties:
    a character that extends the value or shape of a preceding alphabetic character, e.g., a length and iteration mark.
 
 ``HEX_DIGIT`` 
-   a character commonly used for hexadecimal numbers, cf. also ``ASCII_HEX_DIGIT``.
+   a character commonly used for hexadecimal numbers, see also ``ASCII_HEX_DIGIT``.
 
 ``HYPHEN``
    a dash used to mark connections between pieces of words, plus the Katakana middle dot.
@@ -257,9 +257,17 @@ Here is a comprehensive list of supported Binary Properties:
    a CJKV (Chinese-Japanese-Korean-Vietnamese) ideograph.
 
 ``LOWERCASE``
+   ...
+
 ``MATH``
+   ...
+
 ``NONCHARACTER_CODE_POINT``
+   ...
+
 ``QUOTATION_MARK``
+   ...
+
 ``SOFT_DOTTED``
    a character with a “soft dot”, like i or j, such that an accent placed on this character causes the dot to disappear.
 
@@ -267,23 +275,53 @@ Here is a comprehensive list of supported Binary Properties:
    a punctuation character that generally marks the end of textual units.
 
 ``UPPERCASE``
+   ...
+
 ``WHITE_SPACE``
    a space character or TAB or CR or LF or ZWSP or ZWNBSP.
 
 ``CASE_SENSITIVE``
+   ...
+
 ``POSIX_ALNUM``
+   ...
+
 ``POSIX_BLANK``
+   ...
+
 ``POSIX_GRAPH``
+   ...
+
 ``POSIX_PRINT``
+   ...
+
 ``POSIX_XDIGIT``
+   ...
+
 ``CASED``
+   ...
+
 ``CASE_IGNORABLE``
+   ...
+
 ``CHANGES_WHEN_LOWERCASED``
+   ...
+
 ``CHANGES_WHEN_UPPERCASED``
+   ...
+
 ``CHANGES_WHEN_TITLECASED``
+   ...
+
 ``CHANGES_WHEN_CASEFOLDED``
+   ...
+
 ``CHANGES_WHEN_CASEMAPPED``
+   ...
+
 ``CHANGES_WHEN_NFKC_CASEFOLDED``
+   ...
+
 ``EMOJI``
    Since ICU 57
 

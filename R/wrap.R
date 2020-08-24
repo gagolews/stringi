@@ -92,6 +92,7 @@
 #'        (values in [2, 3] are recommended)
 #' @param simplify single logical value, see Value
 #' @param normalize single logical value, see Details
+#' @param normalise alias of \code{normalize}
 #' @param indent single non-negative integer; gives the indentation of the
 #'  first line in each paragraph
 #' @param exdent single non-negative integer; specifies the indentation
@@ -128,26 +129,29 @@
 #' D.E. Knuth, M.F. Plass,
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
-stri_wrap <- function(str, width = floor(0.9 * getOption("width")), cost_exponent = 2, 
-    simplify = TRUE, normalize = TRUE, indent = 0, exdent = 0, prefix = "", initial = prefix, 
-    whitespace_only = FALSE, use_length = FALSE, locale = NULL) {
+stri_wrap <- function(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
+    simplify = TRUE, normalize = TRUE, normalise = normalize,
+    indent = 0, exdent = 0, prefix = "", initial = prefix,
+    whitespace_only = FALSE, use_length = FALSE, locale = NULL)
+{
     simplify <- as.logical(simplify)
-    
+
+    if (!missing(normalise))
+        normalize <- normalise
     normalize <- as.logical(normalize)
     if (normalize) {
         # this will give an informative warning or error if sth is wrong
         str <- sapply(stri_split_lines(str), function(s) stri_flatten(s, collapse = " "))
-        str <- stri_trim(stri_replace_all_charclass(str, "[\\u0020\\r\\n\\t]", " ", 
+        str <- stri_trim(stri_replace_all_charclass(str, "[\\u0020\\r\\n\\t]", " ",
             merge = TRUE))
         str <- stri_trans_nfc(str)
     }
-    
-    ret <- .Call(C_stri_wrap, str, width, cost_exponent, indent, exdent, prefix, 
+
+    ret <- .Call(C_stri_wrap, str, width, cost_exponent, indent, exdent, prefix,
         initial, whitespace_only, use_length, locale)
-    
+
     if (simplify) {
         # this will give an informative warning or error if sth is wrong
         as.character(unlist(ret))
     } else ret
-    
 }

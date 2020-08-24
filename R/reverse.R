@@ -54,6 +54,7 @@
 #' stri_reverse(stri_trans_nfd('\u0105')) == stri_trans_nfd('\u0105') # A, ogonek -> agonek, A
 #'
 #' @export
-stri_reverse <- function(str) {
+stri_reverse <- function(str)
+{
     .Call(C_stri_reverse, str)
 }

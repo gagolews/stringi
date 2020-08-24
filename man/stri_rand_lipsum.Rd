@@ -4,10 +4,10 @@
 \alias{stri_rand_lipsum}
 \title{A Lorem Ipsum Generator}
 \usage{
-stri_rand_lipsum(nparagraphs, start_lipsum = TRUE)
+stri_rand_lipsum(n_paragraphs, start_lipsum = TRUE)
 }
 \arguments{
-\item{nparagraphs}{single integer, number of paragraphs to generate}
+\item{n_paragraphs}{single integer, number of paragraphs to generate}
 
 \item{start_lipsum}{single logical value; should the resulting
 text start with \emph{Lorem ipsum dolor sit amet}?}
@@ -21,7 +21,7 @@ of a given number of text paragraphs.
 }
 \details{
 \emph{Lorem ipsum} is a dummy text often used as a source
-of data for string processing and displaying/layouting exercises.
+of data for string processing and displaying/lay-outing exercises.
 
 The current implementation is very simple:
 words are selected randomly from a Zipf distribution

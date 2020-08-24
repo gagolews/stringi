@@ -89,7 +89,8 @@
 #'
 #' @family datetime
 #' @export
-stri_datetime_symbols <- function(locale = NULL, context = "standalone", width = "wide") {
+stri_datetime_symbols <- function(locale = NULL, context = "standalone", width = "wide")
+{
     # Possibly @TODO:
     # get first day of week
     .Call(C_stri_datetime_symbols, locale, context, width)

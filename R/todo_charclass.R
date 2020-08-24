@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)  # TO BE DONE, version >= 0.3
+invisible(NULL)  # TO BE DONE
 
 
 # #' Get character types (general character category identifier)

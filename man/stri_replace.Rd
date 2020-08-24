@@ -41,7 +41,8 @@ stri_replace_all_charclass(
   pattern,
   replacement,
   merge = FALSE,
-  vectorize_all = TRUE
+  vectorize_all = TRUE,
+  vectorise_all = vectorize_all
 )
 
 stri_replace_first_charclass(str, pattern, replacement)
@@ -53,6 +54,7 @@ stri_replace_all_coll(
   pattern,
   replacement,
   vectorize_all = TRUE,
+  vectorise_all = vectorize_all,
   ...,
   opts_collator = NULL
 )
@@ -66,6 +68,7 @@ stri_replace_all_fixed(
   pattern,
   replacement,
   vectorize_all = TRUE,
+  vectorise_all = vectorize_all,
   ...,
   opts_fixed = NULL
 )
@@ -79,6 +82,7 @@ stri_replace_all_regex(
   pattern,
   replacement,
   vectorize_all = TRUE,
+  vectorise_all = vectorize_all,
   ...,
   opts_regex = NULL
 )
@@ -110,6 +114,8 @@ should consecutive matches be merged into one string;
 should each occurrence of a pattern in every string
 be replaced by a corresponding replacement string?;
 \code{stri_replace_all_*} only}
+
+\item{vectorise_all}{alias of \code{vectorize_all}}
 
 \item{opts_collator, opts_fixed, opts_regex}{a named list used to tune up
 the search engine's settings; see

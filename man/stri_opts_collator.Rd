@@ -2,9 +2,23 @@
 % Please edit documentation in R/opts.R
 \name{stri_opts_collator}
 \alias{stri_opts_collator}
+\alias{stri_coll}
 \title{Generate a List with Collator Settings}
 \usage{
 stri_opts_collator(
+  locale = NULL,
+  strength = 3L,
+  alternate_shifted = FALSE,
+  french = FALSE,
+  uppercase_first = NA,
+  case_level = FALSE,
+  normalization = FALSE,
+  normalisation = normalization,
+  numeric = FALSE,
+  ...
+)
+
+stri_coll(
   locale = NULL,
   strength = 3L,
   alternate_shifted = FALSE,

@@ -59,7 +59,8 @@
 #'
 #' @family encoding_management
 #' @export
-stri_enc_list <- function(simplify = FALSE) {
+stri_enc_list <- function(simplify = FALSE)
+{
     simplify <- !identical(simplify, FALSE)
 
     ret <- .Call(C_stri_enc_list)
@@ -110,7 +111,8 @@ stri_enc_list <- function(simplify = FALSE) {
 #'
 #' @family encoding_management
 #' @export
-stri_enc_info <- function(enc = NULL) {
+stri_enc_info <- function(enc = NULL)
+{
     .Call(C_stri_enc_info, enc)
 }
 
@@ -158,7 +160,8 @@ stri_enc_info <- function(enc = NULL) {
 #' @family encoding_management
 #' @rdname stri_enc_set
 #' @export
-stri_enc_set <- function(enc) {
+stri_enc_set <- function(enc)
+{
     previous <- stri_enc_get()
 
     # We call stri_info, because it generates some warnings,
@@ -198,8 +201,8 @@ stri_enc_get <- function() {
 #' encoding.
 #'
 #' Intuitively, the default encoding should be equivalent to
-#' the one you use on stdin (e.g., your 'keyboard').
-#' In \code{stringi} we assume that such an encoding
+#' the one you use on \code{stdin} (e.g., your 'keyboard').
+#' In \pkg{stringi} we assume that such an encoding
 #' is equivalent to the one returned by \code{\link{stri_enc_get}}.
 #' It is automatically detected by \pkg{ICU}
 #' to match -- by default -- the encoding part of the \code{LC_CTYPE} category
@@ -220,6 +223,7 @@ stri_enc_get <- function() {
 #'
 #' @family encoding_management
 #' @export
-stri_enc_mark <- function(str) {
+stri_enc_mark <- function(str)
+{
     .Call(C_stri_enc_mark, str)
 }

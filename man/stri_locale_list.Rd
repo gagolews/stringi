@@ -11,7 +11,7 @@ Returns a character vector with locale identifiers
 that are known to \pkg{ICU}.
 }
 \description{
-Creates a character vector with all known locale identifies.
+Creates a character vector with all available locale identifies.
 }
 \details{
 Note that some of the services may be unavailable in some locales.

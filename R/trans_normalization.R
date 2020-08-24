@@ -97,75 +97,85 @@
 #' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @examples
-#' stri_trans_nfd('\u0105') # Polish a with ogonek -> a, ogonek
+#' stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
 #' stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
 #'
 #' @export
 #' @rdname stri_trans_nf
 #' @family transform
-stri_trans_nfc <- function(str) {
+stri_trans_nfc <- function(str)
+{
     .Call(C_stri_trans_nfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_nfd <- function(str) {
+stri_trans_nfd <- function(str)
+{
     .Call(C_stri_trans_nfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_nfkd <- function(str) {
+stri_trans_nfkd <- function(str)
+{
     .Call(C_stri_trans_nfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_nfkc <- function(str) {
+stri_trans_nfkc <- function(str)
+{
     .Call(C_stri_trans_nfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_nfkc_casefold <- function(str) {
+stri_trans_nfkc_casefold <- function(str)
+{
     .Call(C_stri_trans_nfkc_casefold, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_isnfc <- function(str) {
+stri_trans_isnfc <- function(str)
+{
     .Call(C_stri_trans_isnfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_isnfd <- function(str) {
+stri_trans_isnfd <- function(str)
+{
     .Call(C_stri_trans_isnfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_isnfkd <- function(str) {
+stri_trans_isnfkd <- function(str)
+{
     .Call(C_stri_trans_isnfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_isnfkc <- function(str) {
+stri_trans_isnfkc <- function(str)
+{
     .Call(C_stri_trans_isnfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
-stri_trans_isnfkc_casefold <- function(str) {
+stri_trans_isnfkc_casefold <- function(str)
+{
     .Call(C_stri_trans_isnfkc_casefold, str)
 }

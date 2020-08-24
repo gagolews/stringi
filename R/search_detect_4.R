@@ -60,7 +60,7 @@
 #' If \code{max_count} is negative, then all stings are examined.
 #' Otherwise, searching terminates
 #' once \code{max_count} matches (or, if \code{negate} is \code{TRUE},
-#' no-matches) are detected. The un-inspected cases are marked
+#' no-matches) are detected. The uninspected cases are marked
 #' as missing in the return vector. Be aware that, unless \code{pattern} is a
 #' singleton, the elements in \code{str} might be inspected in a
 #' non-consecutive order.
@@ -108,40 +108,49 @@
 #' @family search_detect
 #' @export
 #' @rdname stri_detect
-stri_detect <- function(str, ..., regex, fixed, coll, charclass) {
-    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+stri_detect <- function(str, ..., regex, fixed, coll, charclass)
+{
+    providedarg <- c(
+        regex = !missing(regex),
+        fixed = !missing(fixed),
+        coll = !missing(coll),
         charclass = !missing(charclass))
-    
-    if (sum(providedarg) != 1) 
+
+    if (sum(providedarg) != 1)
         stop("you have to specify one of: `regex`, `fixed`, `coll`, or `charclass`")
-    
-    if (providedarg["regex"]) 
-        stri_detect_regex(str, regex, ...) else if (providedarg["fixed"]) 
-        stri_detect_fixed(str, fixed, ...) else if (providedarg["coll"]) 
-        stri_detect_coll(str, coll, ...) else if (providedarg["charclass"]) 
+
+    if (providedarg["regex"])
+        stri_detect_regex(str, regex, ...) else if (providedarg["fixed"])
+        stri_detect_fixed(str, fixed, ...) else if (providedarg["coll"])
+        stri_detect_coll(str, coll, ...) else if (providedarg["charclass"])
         stri_detect_charclass(str, charclass, ...)
 }
 
+
 #' @export
 #' @rdname stri_detect
-stri_detect_fixed <- function(str, pattern, negate = FALSE, max_count = -1, ..., 
-    opts_fixed = NULL) {
-    if (!missing(...)) 
+stri_detect_fixed <- function(str, pattern, negate = FALSE, max_count = -1, ...,
+    opts_fixed = NULL)
+{
+    if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
     .Call(C_stri_detect_fixed, str, pattern, negate, max_count, opts_fixed)
 }
 
 #' @export
 #' @rdname stri_detect
-stri_detect_charclass <- function(str, pattern, negate = FALSE, max_count = -1) {
+stri_detect_charclass <- function(str, pattern, negate = FALSE, max_count = -1)
+{
     .Call(C_stri_detect_charclass, str, pattern, negate, max_count)
 }
 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_coll <- function(str, pattern, negate = FALSE, max_count = -1, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_detect_coll <- function(str, pattern, negate = FALSE,
+    max_count = -1, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_detect_coll, str, pattern, negate, max_count, opts_collator)
 }
@@ -149,9 +158,11 @@ stri_detect_coll <- function(str, pattern, negate = FALSE, max_count = -1, ..., 
 
 #' @export
 #' @rdname stri_detect
-stri_detect_regex <- function(str, pattern, negate = FALSE, max_count = -1, ..., 
-    opts_regex = NULL) {
-    if (!missing(...)) 
+stri_detect_regex <- function(str, pattern, negate = FALSE,
+    max_count = -1, ...,
+    opts_regex = NULL)
+{
+    if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_detect_regex, str, pattern, negate, max_count, opts_regex)
 }

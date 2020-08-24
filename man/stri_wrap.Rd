@@ -10,6 +10,7 @@ stri_wrap(
   cost_exponent = 2,
   simplify = TRUE,
   normalize = TRUE,
+  normalise = normalize,
   indent = 0,
   exdent = 0,
   prefix = "",
@@ -34,6 +35,8 @@ of a (more aesthetic) dynamic programming-based algorithm
 \item{simplify}{single logical value, see Value}
 
 \item{normalize}{single logical value, see Details}
+
+\item{normalise}{alias of \code{normalize}}
 
 \item{indent}{single non-negative integer; gives the indentation of the
 first line in each paragraph}

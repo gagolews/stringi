@@ -37,7 +37,7 @@ For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 
 As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-see an example below for a perhaps non-intitive behavior of lexicographic
+see an example below for a perhaps non-intuitive behavior of lexicographic
 sorting on numeric inputs.
 
 

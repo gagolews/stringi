@@ -17,9 +17,9 @@ Escapes all Unicode (not ASCII-printable) code points.
 }
 \details{
 For non-printable and certain special (well-known,
-see also \R man page \link{Quotes})
+see also R man page \link{Quotes})
 ASCII characters the following
-(also recognized in \R) convention is used.
+(also recognized in R) convention is used.
 We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
 \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
 or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)

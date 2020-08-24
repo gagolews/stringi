@@ -88,6 +88,9 @@
 #' @family locale_sensitive
 #' @family search_coll
 #'
+#'
+#' @rdname stri_opts_collator
+#'
 #' @references
 #' \emph{Collation} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/collation}
@@ -127,11 +130,17 @@ stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted =
         opts["numeric"] <- numeric
 
     if (!missing(normalization))
-        opts["normalization"] <- normalization else if (!missing(normalisation))
+        opts["normalization"] <- normalization
+    else if (!missing(normalisation))
         opts["normalization"] <- normalisation
 
     opts
 }
+
+
+#' @rdname stri_opts_collator
+#' @export
+stri_coll <- stri_opts_collator
 
 
 #' @title
@@ -153,6 +162,7 @@ stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted =
 #' @param comments logical; allows white space and comments within patterns [regex flag \code{(?x)}]
 #' @param dotall logical;  if set, `\code{.}` matches line terminators,
 #'  otherwise matching of `\code{.}`  stops at a line end [regex flag \code{(?s)}]
+#' @param dot_all alias of \code{dotall}
 #' @param literal logical; if set, treat the entire pattern as a literal string:
 #' metacharacters or escape sequences in the input sequence will be given no special meaning;
 #' note that in most cases you would rather use the \link{stringi-search-fixed}
@@ -160,6 +170,7 @@ stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted =
 #' @param multiline logical; controls the behavior of `\code{$}` and `\code{^}`.
 #' If set, recognize line terminators within a string, otherwise,
 #'  match only at start and end of input string [regex flag \code{(?m)}]
+#' @param multi_line alias of \code{multiline}
 #' @param unix_lines logical; Unix-only line endings;
 #' when enabled, only \code{U+000a} is recognized as a
 #' line ending by `\code{.}`, `\code{$}`, and `\code{^}`.
@@ -195,8 +206,12 @@ stri_opts_collator <- function(locale = NULL, strength = 3L, alternate_shifted =
 #' stri_detect_regex('ala', 'ALA', opts_regex=stri_opts_regex(case_insensitive=TRUE))
 #' stri_detect_regex('ala', 'ALA', case_insensitive=TRUE) # equivalent
 #' stri_detect_regex('ala', '(?i)ALA') # equivalent
-stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multiline,
-    unix_lines, uword, error_on_unknown_escapes, ...) {
+stri_opts_regex <- function(case_insensitive, comments,
+    dotall, dot_all = dotall,
+    literal,
+    multiline, multi_line = multiline,
+    unix_lines, uword, error_on_unknown_escapes, ...)
+{
     if (!missing(...))
         warning("Unknown option to `stri_opts_regex`.")
 
@@ -205,18 +220,25 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multili
         opts["case_insensitive"] <- case_insensitive
     if (!missing(comments))
         opts["comments"] <- comments
-    if (!missing(dotall))
-        opts["dotall"] <- dotall
     if (!missing(literal))
         opts["literal"] <- literal
-    if (!missing(multiline))
-        opts["multiline"] <- multiline
     if (!missing(unix_lines))
         opts["unix_lines"] <- unix_lines
     if (!missing(uword))
         opts["uword"] <- uword
     if (!missing(error_on_unknown_escapes))
         opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
+
+    if (!missing(dotall))
+        opts["dotall"] <- dotall
+    else if (!missing(dot_all))
+        opts["dotall"] <- dot_all
+
+    if (!missing(multiline))
+        opts["multiline"] <- multiline
+    else if (!missing(multi_line))
+        opts["multiline"] <- multi_line
+
     opts
 }
 
@@ -282,9 +304,10 @@ stri_opts_regex <- function(case_insensitive, comments, dotall, literal, multili
 #'
 #' \emph{Boundary Analysis} -- ICU User Guide,
 #' \url{http://userguide.icu-project.org/boundaryanalysis}
-stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number, skip_word_letter,
-    skip_word_kana, skip_word_ideo, skip_line_soft, skip_line_hard, skip_sentence_term,
-    skip_sentence_sep, ...) {
+stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number,
+    skip_word_letter, skip_word_kana, skip_word_ideo, skip_line_soft,
+    skip_line_hard, skip_sentence_term, skip_sentence_sep, ...)
+{
     if (!missing(...))
         warning("Unknown option to `stri_opts_brkiter`.")
 
@@ -352,7 +375,8 @@ stri_opts_brkiter <- function(type, locale, skip_word_none, skip_word_number, sk
 #' stri_detect_fixed('ala', 'ALA') # case-sensitive by default
 #' stri_detect_fixed('ala', 'ALA', opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
 #' stri_detect_fixed('ala', 'ALA', case_insensitive=TRUE) # equivalent
-stri_opts_fixed <- function(case_insensitive = FALSE, overlap = FALSE, ...) {
+stri_opts_fixed <- function(case_insensitive = FALSE, overlap = FALSE, ...)
+{
     if (!missing(...))
         warning("Unknown option to `stri_opts_fixed`.")
 

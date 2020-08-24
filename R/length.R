@@ -113,7 +113,8 @@ stri_numbytes <- function(str) {
 #'
 #' @export
 #' @family length
-stri_length <- function(str) {
+stri_length <- function(str)
+{
     .Call(C_stri_length, str)
 }
 
@@ -138,7 +139,8 @@ stri_length <- function(str) {
 #'
 #' @export
 #' @family length
-stri_isempty <- function(str) {
+stri_isempty <- function(str)
+{
     .Call(C_stri_isempty, str)
 }
 
@@ -189,6 +191,7 @@ stri_isempty <- function(str) {
 #' @references
 #' \emph{East Asian Width} -- Unicode Standard Annex #11,
 #' \url{http://www.unicode.org/reports/tr11/}
-stri_width <- function(str) {
+stri_width <- function(str)
+{
     .Call(C_stri_width, str)
 }

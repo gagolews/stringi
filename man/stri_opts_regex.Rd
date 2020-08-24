@@ -8,8 +8,10 @@ stri_opts_regex(
   case_insensitive,
   comments,
   dotall,
+  dot_all = dotall,
   literal,
   multiline,
+  multi_line = multiline,
   unix_lines,
   uword,
   error_on_unknown_escapes,
@@ -24,6 +26,8 @@ stri_opts_regex(
 \item{dotall}{logical;  if set, `\code{.}` matches line terminators,
 otherwise matching of `\code{.}`  stops at a line end [regex flag \code{(?s)}]}
 
+\item{dot_all}{alias of \code{dotall}}
+
 \item{literal}{logical; if set, treat the entire pattern as a literal string:
 metacharacters or escape sequences in the input sequence will be given no special meaning;
 note that in most cases you would rather use the \link{stringi-search-fixed}
@@ -32,6 +36,8 @@ facilities in this case}
 \item{multiline}{logical; controls the behavior of `\code{$}` and `\code{^}`.
 If set, recognize line terminators within a string, otherwise,
  match only at start and end of input string [regex flag \code{(?m)}]}
+
+\item{multi_line}{alias of \code{multiline}}
 
 \item{unix_lines}{logical; Unix-only line endings;
 when enabled, only \code{U+000a} is recognized as a

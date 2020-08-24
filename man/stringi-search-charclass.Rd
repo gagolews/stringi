@@ -199,7 +199,7 @@ Here is a comprehensive list of supported Binary Properties:
                              e.g., a length and iteration mark.}
   \item{\code{HEX_DIGIT}      }{a character commonly
                             used for hexadecimal numbers,
-                            cf. also \code{ASCII_HEX_DIGIT}.}
+                            see also \code{ASCII_HEX_DIGIT}.}
   \item{\code{HYPHEN}}{a dash used to mark connections between
               pieces of words, plus the Katakana middle dot.}
   \item{\code{ID_CONTINUE}}{a character that can continue an identifier,
@@ -208,30 +208,30 @@ Here is a comprehensive list of supported Binary Properties:
                  \code{Lu}+\code{Ll}+\code{Lt}+\code{Lm}+\code{Lo}+\code{Nl}.}
   \item{\code{IDEOGRAPHIC}}{a CJKV (Chinese-Japanese-Korean-Vietnamese)
                ideograph.}
-  \item{\code{LOWERCASE}}{}
-  \item{\code{MATH}}{}
-  \item{\code{NONCHARACTER_CODE_POINT}}{}
-  \item{\code{QUOTATION_MARK}}{}
+  \item{\code{LOWERCASE}}{...}
+  \item{\code{MATH}}{...}
+  \item{\code{NONCHARACTER_CODE_POINT}}{...}
+  \item{\code{QUOTATION_MARK}}{...}
   \item{\code{SOFT_DOTTED}}{a character with a ``soft dot'', like i or j,
 such that an accent placed on this character causes the dot to disappear.}
   \item{\code{TERMINAL_PUNCTUATION}}{a punctuation character that generally
 marks the end of textual units.}
-  \item{\code{UPPERCASE}}{}
+  \item{\code{UPPERCASE}}{...}
   \item{\code{WHITE_SPACE}}{a space character or TAB or CR or LF or ZWSP or ZWNBSP.}
-  \item{\code{CASE_SENSITIVE}}{}
-  \item{\code{POSIX_ALNUM}}{}
-  \item{\code{POSIX_BLANK}}{}
-  \item{\code{POSIX_GRAPH}}{}
-  \item{\code{POSIX_PRINT}}{}
-  \item{\code{POSIX_XDIGIT}}{}
-  \item{\code{CASED}}{}
-  \item{\code{CASE_IGNORABLE}}{}
-  \item{\code{CHANGES_WHEN_LOWERCASED}}{}
-  \item{\code{CHANGES_WHEN_UPPERCASED}}{}
-  \item{\code{CHANGES_WHEN_TITLECASED}}{}
-  \item{\code{CHANGES_WHEN_CASEFOLDED}}{}
-  \item{\code{CHANGES_WHEN_CASEMAPPED}}{}
-  \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{}
+  \item{\code{CASE_SENSITIVE}}{...}
+  \item{\code{POSIX_ALNUM}}{...}
+  \item{\code{POSIX_BLANK}}{...}
+  \item{\code{POSIX_GRAPH}}{...}
+  \item{\code{POSIX_PRINT}}{...}
+  \item{\code{POSIX_XDIGIT}}{...}
+  \item{\code{CASED}}{...}
+  \item{\code{CASE_IGNORABLE}}{...}
+  \item{\code{CHANGES_WHEN_LOWERCASED}}{...}
+  \item{\code{CHANGES_WHEN_UPPERCASED}}{...}
+  \item{\code{CHANGES_WHEN_TITLECASED}}{...}
+  \item{\code{CHANGES_WHEN_CASEFOLDED}}{...}
+  \item{\code{CHANGES_WHEN_CASEMAPPED}}{...}
+  \item{\code{CHANGES_WHEN_NFKC_CASEFOLDED}}{...}
   \item{\code{EMOJI}}{Since ICU 57}
   \item{\code{EMOJI_PRESENTATION}}{Since ICU 57}
   \item{\code{EMOJI_MODIFIER}}{Since ICU 57}

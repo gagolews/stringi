@@ -4,7 +4,13 @@
 \alias{stri_list2matrix}
 \title{Convert a List to a Character Matrix}
 \usage{
-stri_list2matrix(x, byrow = FALSE, fill = NA_character_, n_min = 0)
+stri_list2matrix(
+  x,
+  byrow = FALSE,
+  fill = NA_character_,
+  n_min = 0,
+  by_row = byrow
+)
 }
 \arguments{
 \item{x}{a list of atomic vectors}
@@ -16,6 +22,8 @@ transposed?}
 
 \item{n_min}{a single integer value; minimal number of rows (\code{byrow==FALSE})
 or columns (otherwise) in the resulting matrix}
+
+\item{by_row}{alias of \code{byrow}}
 }
 \value{
 Returns a character matrix.

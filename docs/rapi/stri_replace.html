@@ -311,7 +311,8 @@
   <span class="n">pattern</span><span class="p">,</span>
   <span class="n">replacement</span><span class="p">,</span>
   <span class="n">merge</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-  <span class="n">vectorize_all</span> <span class="o">=</span> <span class="kc">TRUE</span>
+  <span class="n">vectorize_all</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+  <span class="n">vectorise_all</span> <span class="o">=</span> <span class="n">vectorize_all</span>
 <span class="p">)</span>
 
 <span class="nf">stri_replace_first_charclass</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">replacement</span><span class="p">)</span>
@@ -323,6 +324,7 @@
   <span class="n">pattern</span><span class="p">,</span>
   <span class="n">replacement</span><span class="p">,</span>
   <span class="n">vectorize_all</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+  <span class="n">vectorise_all</span> <span class="o">=</span> <span class="n">vectorize_all</span><span class="p">,</span>
   <span class="kc">...</span><span class="p">,</span>
   <span class="n">opts_collator</span> <span class="o">=</span> <span class="kc">NULL</span>
 <span class="p">)</span>
@@ -336,6 +338,7 @@
   <span class="n">pattern</span><span class="p">,</span>
   <span class="n">replacement</span><span class="p">,</span>
   <span class="n">vectorize_all</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+  <span class="n">vectorise_all</span> <span class="o">=</span> <span class="n">vectorize_all</span><span class="p">,</span>
   <span class="kc">...</span><span class="p">,</span>
   <span class="n">opts_fixed</span> <span class="o">=</span> <span class="kc">NULL</span>
 <span class="p">)</span>
@@ -349,6 +352,7 @@
   <span class="n">pattern</span><span class="p">,</span>
   <span class="n">replacement</span><span class="p">,</span>
   <span class="n">vectorize_all</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+  <span class="n">vectorise_all</span> <span class="o">=</span> <span class="n">vectorize_all</span><span class="p">,</span>
   <span class="kc">...</span><span class="p">,</span>
   <span class="n">opts_regex</span> <span class="o">=</span> <span class="kc">NULL</span>
 <span class="p">)</span>
@@ -388,7 +392,10 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vectorize_all</span></code></p></td>
 <td><p>single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; <code class="docutils literal notranslate"><span class="pre">stri_replace_all_*</span></code> only</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator,</span> <span class="pre">opts_fixed,</span> <span class="pre">opts_regex</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vectorise_all</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">vectorize_all</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opts_collator,</span> <span class="pre">opts_fixed,</span> <span class="pre">opts_regex</span></code></p></td>
 <td><p>a named list used to tune up the search engine’s settings; see <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a>, <a class="reference external" href="stri_opts_fixed.html">stri_opts_fixed</a>, and <a class="reference external" href="stri_opts_regex.html">stri_opts_regex</a>, respectively; <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for the defaults</p></td>
 </tr>
 </tbody>
