@@ -78,6 +78,8 @@
 #' for more details refer to \link{stringi-search}
 #' @param from integer vector
 #' @param to integer vector
+#' @param negate single logical value; whether a no-match to a pattern
+#'     is rather of interest
 #' @param opts_collator,opts_fixed a named list used to tune up
 #' the search engine's settings; see \code{\link{stri_opts_collator}}
 #' and \code{\link{stri_opts_fixed}}, respectively; \code{NULL}
@@ -145,55 +147,59 @@ stri_endswith <- function(str, ..., fixed, coll, charclass)
 
 #' @export
 #' @rdname stri_startsendswith
-stri_startswith_fixed <- function(str, pattern, from = 1L, ..., opts_fixed = NULL)
+stri_startswith_fixed <- function(str, pattern, from = 1L,
+    negate = FALSE, ..., opts_fixed = NULL)
 {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-    .Call(C_stri_startswith_fixed, str, pattern, from, opts_fixed)
+    .Call(C_stri_startswith_fixed, str, pattern, from, negate, opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
-stri_endswith_fixed <- function(str, pattern, to = -1L, ..., opts_fixed = NULL)
+stri_endswith_fixed <- function(str, pattern, to = -1L,
+    negate = FALSE, ..., opts_fixed = NULL)
 {
     if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-    .Call(C_stri_endswith_fixed, str, pattern, to, opts_fixed)
+    .Call(C_stri_endswith_fixed, str, pattern, to, negate, opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
-stri_startswith_charclass <- function(str, pattern, from = 1L)
+stri_startswith_charclass <- function(str, pattern, from = 1L, negate = FALSE)
 {
-    .Call(C_stri_startswith_charclass, str, pattern, from)
+    .Call(C_stri_startswith_charclass, str, pattern, from, negate)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
-stri_endswith_charclass <- function(str, pattern, to = -1L)
+stri_endswith_charclass <- function(str, pattern, to = -1L, negate = FALSE)
 {
-    .Call(C_stri_endswith_charclass, str, pattern, to)
+    .Call(C_stri_endswith_charclass, str, pattern, to, negate)
 }
 
 
 #' @export
 #' @rdname stri_startsendswith
-stri_startswith_coll <- function(str, pattern, from = 1L, ..., opts_collator = NULL)
-{
-    if (!missing(...))
-        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-    .Call(C_stri_startswith_coll, str, pattern, from, opts_collator)
-}
-
-
-#' @export
-#' @rdname stri_startsendswith
-stri_endswith_coll <- function(str, pattern, to = -1L, ..., opts_collator = NULL)
+stri_startswith_coll <- function(str, pattern, from = 1L,
+    negate = FALSE, ..., opts_collator = NULL)
 {
     if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-    .Call(C_stri_endswith_coll, str, pattern, to, opts_collator)
+    .Call(C_stri_startswith_coll, str, pattern, from, negate, opts_collator)
+}
+
+
+#' @export
+#' @rdname stri_startsendswith
+stri_endswith_coll <- function(str, pattern, to = -1L,
+    negate = FALSE, ..., opts_collator = NULL)
+{
+    if (!missing(...))
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_endswith_coll, str, pattern, to, negate, opts_collator)
 }

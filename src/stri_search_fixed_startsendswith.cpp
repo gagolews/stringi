@@ -55,9 +55,13 @@
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use String8::startsWith() and endsWith()
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
+SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP negate, SEXP opts_fixed)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -80,7 +84,7 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
                 ret_tab[i] = NA_LOGICAL,
-                ret_tab[i] = FALSE)
+                ret_tab[i] = negate_1)
 
         if (from_cont.isNA(i)) {
             ret_tab[i] = NA_LOGICAL;
@@ -99,6 +103,9 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
         ret_tab[i] = (int)(str_cont.get(i).startsWith(from_cur,
                            pattern_cont.get(i).c_str(), pattern_cont.get(i).length(),
                            pattern_cont.isCaseInsensitive()));
+
+        if (negate_1)
+            ret_tab[i] = !ret_tab[i];
     }
 
     STRI__UNPROTECT_ALL
@@ -125,9 +132,13 @@ SEXP stri_startswith_fixed(SEXP str, SEXP pattern, SEXP from, SEXP opts_fixed)
  *
  * @version 0.5-1 (Marek Gagolewski, 2015-02-14)
  *    use String8::startsWith() and endsWith()
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    #345: `negate` arg added
  */
-SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
+SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP negate, SEXP opts_fixed)
 {
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
     uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
@@ -150,7 +161,7 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
     {
         STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
                 ret_tab[i] = NA_LOGICAL,
-                ret_tab[i] = FALSE)
+                ret_tab[i] = negate_1)
 
         if (to_cont.isNA(i)) {
             ret_tab[i] = NA_LOGICAL;
@@ -169,6 +180,8 @@ SEXP stri_endswith_fixed(SEXP str, SEXP pattern, SEXP to, SEXP opts_fixed)
         ret_tab[i] = (int)(str_cont.get(i).endsWith(to_cur,
                            pattern_cont.get(i).c_str(), pattern_cont.get(i).length(),
                            pattern_cont.isCaseInsensitive()));
+        if (negate_1)
+            ret_tab[i] = !ret_tab[i];
     }
 
     STRI__UNPROTECT_ALL

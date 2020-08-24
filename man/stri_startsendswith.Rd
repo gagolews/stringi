@@ -15,17 +15,45 @@ stri_startswith(str, ..., fixed, coll, charclass)
 
 stri_endswith(str, ..., fixed, coll, charclass)
 
-stri_startswith_fixed(str, pattern, from = 1L, ..., opts_fixed = NULL)
+stri_startswith_fixed(
+  str,
+  pattern,
+  from = 1L,
+  negate = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
-stri_endswith_fixed(str, pattern, to = -1L, ..., opts_fixed = NULL)
+stri_endswith_fixed(
+  str,
+  pattern,
+  to = -1L,
+  negate = FALSE,
+  ...,
+  opts_fixed = NULL
+)
 
-stri_startswith_charclass(str, pattern, from = 1L)
+stri_startswith_charclass(str, pattern, from = 1L, negate = FALSE)
 
-stri_endswith_charclass(str, pattern, to = -1L)
+stri_endswith_charclass(str, pattern, to = -1L, negate = FALSE)
 
-stri_startswith_coll(str, pattern, from = 1L, ..., opts_collator = NULL)
+stri_startswith_coll(
+  str,
+  pattern,
+  from = 1L,
+  negate = FALSE,
+  ...,
+  opts_collator = NULL
+)
 
-stri_endswith_coll(str, pattern, to = -1L, ..., opts_collator = NULL)
+stri_endswith_coll(
+  str,
+  pattern,
+  to = -1L,
+  negate = FALSE,
+  ...,
+  opts_collator = NULL
+)
 }
 \arguments{
 \item{str}{character vector}
@@ -38,6 +66,9 @@ and so on.}
 for more details refer to \link{stringi-search}}
 
 \item{from}{integer vector}
+
+\item{negate}{single logical value; whether a no-match to a pattern
+is rather of interest}
 
 \item{to}{integer vector}
 

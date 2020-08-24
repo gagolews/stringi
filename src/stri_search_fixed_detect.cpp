@@ -68,7 +68,7 @@
  *    use StriByteSearchMatcher
  *
  * @version 1.0-3 (Marek Gagolewski, 2016-02-03)
- *    FR #216: `negate` arg added
+ *    #216: `negate` arg added
  *
  * @version 1.3.1 (Marek Gagolewski, 2019-02-08)
  *    #232: `max_count` arg added
