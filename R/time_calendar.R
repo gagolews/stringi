@@ -65,9 +65,11 @@
 #'
 #' @family datetime
 #' @export
-stri_datetime_create <- function(year, month, day, hour = 12L, minute = 0L, second = 0, 
-    lenient = FALSE, tz = NULL, locale = NULL) {
-    .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient, 
+stri_datetime_create <- function(year, month, day,
+    hour = 12L, minute = 0L, second = 0,
+    lenient = FALSE, tz = NULL, locale = NULL)
+{
+    .Call(C_stri_datetime_create, year, month, day, hour, minute, second, lenient,
         tz, locale)
 }
 
@@ -88,7 +90,8 @@ stri_datetime_create <- function(year, month, day, hour = 12L, minute = 0L, seco
 #'
 #' @family datetime
 #' @export
-stri_datetime_now <- function() {
+stri_datetime_now <- function()
+{
     .Call(C_stri_datetime_now)
 }
 
@@ -140,7 +143,8 @@ stri_datetime_now <- function() {
 #'
 #' @family datetime
 #' @export
-stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL) {
+stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL)
+{
     # POSSIBLY @TODO:
     # TimeZone
     # GMT Offset CAL_ZONE_OFFSET + UCAL_DST_OFFSET
@@ -197,15 +201,19 @@ stri_datetime_fields <- function(time, tz = attr(time, "tzone"), locale = NULL) 
 #' @family datetime
 #' @rdname stri_datetime_add
 #' @export
-stri_datetime_add <- function(time, value = 1L, units = "seconds", tz = NULL, locale = NULL) {
+stri_datetime_add <- function(time, value = 1L, units = "seconds",
+    tz = NULL, locale = NULL)
+{
     .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 
 
 #' @rdname stri_datetime_add
 #' @export
-"stri_datetime_add<-" <- function(time, units = "seconds", tz = NULL, locale = NULL, 
-    value) {
+`stri_datetime_add<-` <- function(time, units = "seconds",
+    tz = NULL, locale = NULL,
+    value)
+{
     .Call(C_stri_datetime_add, time, value, units, tz, locale)
 }
 

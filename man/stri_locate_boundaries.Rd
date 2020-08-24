@@ -30,7 +30,7 @@ stri_locate_first_words(str, locale = NULL)
 \item{str}{character vector or an object coercible to}
 
 \item{omit_no_match}{single logical value; if \code{FALSE},
-then 2 missing values will indicate that there are no text boundaries}
+then two missing values will indicate that there are no text boundaries}
 
 \item{...}{additional settings for \code{opts_brkiter}}
 
@@ -80,7 +80,7 @@ This is function is equivalent to a call to
 \code{stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)}
 }
 \examples{
-test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+test <- 'The\u00a0above-mentioned    features are very useful. Spam, spam, eggs, bacon, and spam.'
 stri_locate_all_boundaries(test, type='line')
 stri_locate_all_boundaries(test, type='word')
 stri_locate_all_boundaries(test, type='sentence')

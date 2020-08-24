@@ -57,28 +57,32 @@
 #' @rdname stri_enc_isutf16
 #' @family encoding_detection
 #' @export
-stri_enc_isutf16be <- function(str) {
+stri_enc_isutf16be <- function(str)
+{
     .Call(C_stri_enc_isutf16be, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
-stri_enc_isutf16le <- function(str) {
+stri_enc_isutf16le <- function(str)
+{
     .Call(C_stri_enc_isutf16le, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
-stri_enc_isutf32be <- function(str) {
+stri_enc_isutf32be <- function(str)
+{
     .Call(C_stri_enc_isutf32be, str)
 }
 
 
 #' @rdname stri_enc_isutf16
 #' @export
-stri_enc_isutf32le <- function(str) {
+stri_enc_isutf32le <- function(str)
+{
     .Call(C_stri_enc_isutf32le, str)
 }
 
@@ -106,7 +110,8 @@ stri_enc_isutf32le <- function(str) {
 #'
 #' @family encoding_detection
 #' @export
-stri_enc_isascii <- function(str) {
+stri_enc_isascii <- function(str)
+{
     .Call(C_stri_enc_isascii, str)
 }
 
@@ -121,7 +126,7 @@ stri_enc_isascii <- function(str) {
 #' @details
 #' \code{FALSE} means that a string is certainly not valid UTF-8.
 #' However, false positives are possible. For instance,
-#' \code{(c4,85)} represents ('Polish a with ogonek') in UTF-8
+#' \code{(c4,85)} represents ('a with ogonek') in UTF-8
 #' as well as ('A umlaut', 'Ellipsis') in WINDOWS-1250.
 #' Also note that UTF-8, as well as most 8-bit encodings, extend ASCII
 #' (note that \code{\link{stri_enc_isascii}} implies that
@@ -149,7 +154,8 @@ stri_enc_isascii <- function(str) {
 #'
 #' @family encoding_detection
 #' @export
-stri_enc_isutf8 <- function(str) {
+stri_enc_isutf8 <- function(str)
+{
     .Call(C_stri_enc_isutf8, str)
 }
 
@@ -264,8 +270,10 @@ stri_enc_isutf8 <- function(str) {
 #'
 #' @family encoding_detection
 #' @export
-stri_enc_detect <- function(str, filter_angle_brackets = FALSE) {
-    lapply(.Call(C_stri_enc_detect, str, filter_angle_brackets), as.data.frame, stringsAsFactors = FALSE)
+stri_enc_detect <- function(str, filter_angle_brackets = FALSE)
+{
+    lapply(.Call(C_stri_enc_detect, str, filter_angle_brackets),
+        as.data.frame, stringsAsFactors = FALSE)
 }
 
 
@@ -326,7 +334,8 @@ stri_enc_detect <- function(str, filter_angle_brackets = FALSE) {
 #' @family locale_sensitive
 #' @family encoding_detection
 #' @export
-stri_enc_detect2 <- function(str, locale = NULL) {
-    suppressWarnings(lapply(.Call(C_stri_enc_detect2, str, locale), as.data.frame, 
+stri_enc_detect2 <- function(str, locale = NULL)
+{
+    suppressWarnings(lapply(.Call(C_stri_enc_detect2, str, locale), as.data.frame,
         stringsAsFactors = FALSE))
 }

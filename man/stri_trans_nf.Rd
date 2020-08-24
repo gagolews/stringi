@@ -80,7 +80,7 @@ it will be automatically converted to UTF-8.
 For more general text transforms refer to \code{\link{stri_trans_general}}.
 }
 \examples{
-stri_trans_nfd('\u0105') # Polish a with ogonek -> a, ogonek
+stri_trans_nfd('\u0105') # a with ogonek -> a, ogonek
 stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
 
 }

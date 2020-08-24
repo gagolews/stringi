@@ -4,7 +4,7 @@
 \alias{stringi-locale}
 \title{Locales and \pkg{stringi}}
 \description{
-In this section we explain how we deal with locales in \pkg{stringi}.
+In this section we explain how we specify locales in \pkg{stringi}.
 Locale is a fundamental concept in \pkg{ICU}.
 It identifies a specific user community, i.e., a group of users
 who have similar culture and language expectations
@@ -48,7 +48,7 @@ keywords together with their values. Keywords must be unique.
 Their order is not significant. Unknown keywords are ignored.
 The handling of keywords depends on the specific services that
 utilize them. Currently, the following keywords are recognized:
-\code{calendar}, \code{colation}, \code{currency}, and \code{numbers},
+\code{calendar}, \code{collation}, \code{currency}, and \code{numbers},
 e.g., \code{fr@collation=phonebook;}\code{calendar=islamic-civil} is a valid
 French locale specifier together with keyword arguments. For
 more information, refer to the ICU user guide.

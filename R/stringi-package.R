@@ -34,7 +34,7 @@
 #' @title THE String Processing Package
 #'
 #' @description
-#' \pkg{stringi} is THE \R package for fast, correct, consistent,
+#' \pkg{stringi} is THE R package for fast, correct, consistent,
 #' and convenient string/text manipulation.
 #' It gives predictable results on every platform, in each locale,
 #' and under any ``native'' character encoding.

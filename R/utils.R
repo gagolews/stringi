@@ -64,6 +64,7 @@
 #' @param fill a single string, see Details
 #' @param n_min a single integer value; minimal number of rows (\code{byrow==FALSE})
 #' or columns (otherwise) in the resulting matrix
+#' @param by_row alias of \code{byrow}
 #'
 #' @return
 #' Returns a character matrix.
@@ -80,7 +81,12 @@
 #'
 #' @family utils
 #' @export
-stri_list2matrix <- function(x, byrow = FALSE, fill = NA_character_, n_min = 0) {
+stri_list2matrix <- function(x,
+    byrow = FALSE, fill = NA_character_, n_min = 0, by_row = byrow)
+{
+    if (!missing(by_row))
+        byrow <- by_row
+
     .Call(C_stri_list2matrix, x, byrow, stri_enc_toutf8(fill), n_min)
 }
 
@@ -102,7 +108,8 @@ stri_list2matrix <- function(x, byrow = FALSE, fill = NA_character_, n_min = 0) 
 #'
 #' @family utils
 #' @export
-stri_na2empty <- function(x) {
+stri_na2empty <- function(x)
+{
     x <- stri_enc_toutf8(x)
     x[is.na(x)] <- ""
     x
@@ -139,30 +146,42 @@ stri_na2empty <- function(x) {
 #' @family utils
 #' @rdname stri_remove_empty
 #' @export
-stri_remove_empty <- function(x, na_empty = FALSE) {
+stri_remove_empty <- function(x, na_empty = FALSE)
+{
     x <- stri_enc_toutf8(x)
-    if (identical(na_empty, TRUE)) 
-        x[!is.na(x) & !stri_isempty(x)] else x[!stri_isempty(x)]
+    if (identical(na_empty, TRUE))
+        x[!is.na(x) & !stri_isempty(x)]
+    else
+        x[!stri_isempty(x)]
 }
+
 
 #' @rdname stri_remove_empty
 #' @export
 stri_omit_empty <- stri_remove_empty
 
+
 #' @rdname stri_remove_empty
 #' @export
-stri_remove_empty_na <- function(x) stri_remove_empty(x, TRUE)
+stri_remove_empty_na <- function(x)
+{
+    stri_remove_empty(x, TRUE)
+}
+
 
 #' @rdname stri_remove_empty
 #' @export
 stri_omit_empty_na <- stri_remove_empty_na
 
+
 #' @rdname stri_remove_empty
 #' @export
-stri_remove_na <- function(x) {
+stri_remove_na <- function(x)
+{
     x <- stri_enc_toutf8(x)
     x[!is.na(x)]
 }
+
 
 #' @rdname stri_remove_empty
 #' @export
@@ -181,7 +200,7 @@ stri_omit_na <- stri_remove_na
 #' \code{str2 <- stri_enc_toutf8(str);
 #' str2[is.na(str2)] <- stri_enc_toutf8(replacement);
 #' str2}.
-#' It may be used, e.g., wherever the ``plain \R'' \code{NA} handling is
+#' It may be used, e.g., wherever the 'plain R' \code{NA} handling is
 #' desired, see Examples.
 #'
 #' @param str character vector or an object coercible to
@@ -197,7 +216,8 @@ stri_omit_na <- stri_remove_na
 #'
 #' @export
 #' @family utils
-stri_replace_na <- function(str, replacement = "NA") {
+stri_replace_na <- function(str, replacement = "NA")
+{
     .Call(C_stri_replace_na, str, replacement)
 }
 

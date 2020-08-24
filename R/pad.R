@@ -80,35 +80,41 @@
 #'    stri_trans_nfkd('\ud6c8\ubbfc\uc815\uc74c'), 'abcd'),
 #'    width=10), sep='\n')
 #' @export
-stri_pad_both <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
-    use_length = FALSE) {
+stri_pad_both <- function(str, width = floor(0.9 * getOption("width")), pad = " ",
+    use_length = FALSE)
+{
     .Call(C_stri_pad, str, width, 2L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_left <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
-    use_length = FALSE) {
+stri_pad_left <- function(str, width = floor(0.9 * getOption("width")), pad = " ",
+    use_length = FALSE)
+{
     .Call(C_stri_pad, str, width, 0L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad_right <- function(str, width = floor(0.9 * getOption("width")), pad = " ", 
-    use_length = FALSE) {
+stri_pad_right <- function(str, width = floor(0.9 * getOption("width")), pad = " ",
+    use_length = FALSE)
+{
     .Call(C_stri_pad, str, width, 1L, pad, use_length)
 }
 
 
 #' @rdname stri_pad
 #' @export
-stri_pad <- function(str, width = floor(0.9 * getOption("width")), side = c("left", 
-    "right", "both"), pad = " ", use_length = FALSE) {
+stri_pad <- function(str, width = floor(0.9 * getOption("width")), side = c("left",
+    "right", "both"), pad = " ", use_length = FALSE)
+{
     # `left` is the default for compatibility with stringr
     side <- match.arg(side)  # this is slow
-    
-    switch(side, both = stri_pad_both(str, width, pad, use_length), left = stri_pad_left(str, 
-        width, pad, use_length), right = stri_pad_right(str, width, pad, use_length))
+
+    switch(side,
+        both = stri_pad_both(str, width, pad, use_length),
+        left = stri_pad_left(str, width, pad, use_length),
+        right = stri_pad_right(str, width, pad, use_length))
 }

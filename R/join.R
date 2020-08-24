@@ -52,7 +52,8 @@
 #' stri_dup('a', 1:5)
 #' stri_dup(c('a', NA, 'ba'), 4)
 #' stri_dup(c('abc', 'pqrst'), c(4, 2))
-stri_dup <- function(str, times) {
+stri_dup <- function(str, times)
+{
     .Call(C_stri_dup, str, times)
 }
 
@@ -91,7 +92,8 @@ stri_dup <- function(str, times) {
 #' e1 \%s+\% e2
 #'
 #' @export
-"%s+%" <- function(e1, e2) {
+"%s+%" <- function(e1, e2)
+{
     .Call(C_stri_join2, e1, e2)
 }
 
@@ -100,7 +102,8 @@ stri_dup <- function(str, times) {
 #' e1 \%stri+\% e2
 #' @rdname oper_plus
 #' @export
-"%stri+%" <- function(e1, e2) {
+"%stri+%" <- function(e1, e2)
+{
     .Call(C_stri_join2, e1, e2)
 }
 
@@ -156,7 +159,8 @@ stri_dup <- function(str, times) {
 #'
 #' @family join
 #' @rdname stri_join
-stri_join <- function(..., sep = "", collapse = NULL, ignore_null = FALSE) {
+stri_join <- function(..., sep = "", collapse = NULL, ignore_null = FALSE)
+{
     .Call(C_stri_join, list(...), sep, collapse, ignore_null)
 }
 
@@ -208,7 +212,8 @@ stri_paste <- stri_join
 #'
 #' @export
 #' @family join
-stri_flatten <- function(str, collapse = "", na_empty = FALSE, omit_empty = FALSE) {
+stri_flatten <- function(str, collapse = "", na_empty = FALSE, omit_empty = FALSE)
+{
     .Call(C_stri_flatten, str, collapse, na_empty, omit_empty)
 }
 
@@ -267,7 +272,8 @@ stri_flatten <- function(str, collapse = "", na_empty = FALSE, omit_empty = FALS
 #'
 #' @family join
 #' @rdname stri_join_list
-stri_join_list <- function(x, sep = "", collapse = NULL) {
+stri_join_list <- function(x, sep = "", collapse = NULL)
+{
     .Call(C_stri_join_list, x, sep, collapse)
 }
 

@@ -86,6 +86,7 @@
 #' should each occurrence of a pattern in every string
 #' be replaced by a corresponding replacement string?;
 #' \code{stri_replace_all_*} only
+#' @param vectorise_all alias of \code{vectorize_all}
 #' @param mode single string;
 #' one of: \code{'first'} (the default), \code{'all'}, \code{'last'}
 #' @param ... supplementary arguments passed to the underlying functions,
@@ -133,97 +134,130 @@
 #' @family search_replace
 #' @export
 #' @rdname stri_replace
-stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclass) {
-    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+stri_replace_all <- function(str, replacement, ..., regex, fixed, coll, charclass)
+{
+    providedarg <- c(
+        regex = !missing(regex),
+        fixed = !missing(fixed),
+        coll = !missing(coll),
         charclass = !missing(charclass))
-    
-    if (sum(providedarg) != 1) 
+
+    if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-    
-    if (providedarg["regex"]) 
-        stri_replace_all_regex(str, regex, replacement, ...) else if (providedarg["fixed"]) 
-        stri_replace_all_fixed(str, fixed, replacement, ...) else if (providedarg["coll"]) 
-        stri_replace_all_coll(str, coll, replacement, ...) else if (providedarg["charclass"]) 
+
+    if (providedarg["regex"])
+        stri_replace_all_regex(str, regex, replacement, ...)
+    else if (providedarg["fixed"])
+        stri_replace_all_fixed(str, fixed, replacement, ...)
+    else if (providedarg["coll"])
+        stri_replace_all_coll(str, coll, replacement, ...)
+    else if (providedarg["charclass"])
         stri_replace_all_charclass(str, charclass, replacement, ...)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charclass) {
-    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+stri_replace_first <- function(str, replacement, ..., regex, fixed, coll, charclass)
+{
+    providedarg <- c(
+        regex = !missing(regex),
+        fixed = !missing(fixed),
+        coll = !missing(coll),
         charclass = !missing(charclass))
-    
-    if (sum(providedarg) != 1) 
+
+    if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-    
-    if (providedarg["regex"]) 
-        stri_replace_first_regex(str, regex, replacement, ...) else if (providedarg["fixed"]) 
-        stri_replace_first_fixed(str, fixed, replacement, ...) else if (providedarg["coll"]) 
-        stri_replace_first_coll(str, coll, replacement, ...) else if (providedarg["charclass"]) 
+
+    if (providedarg["regex"])
+        stri_replace_first_regex(str, regex, replacement, ...)
+    else if (providedarg["fixed"])
+        stri_replace_first_fixed(str, fixed, replacement, ...)
+    else if (providedarg["coll"])
+        stri_replace_first_coll(str, coll, replacement, ...)
+    else if (providedarg["charclass"])
         stri_replace_first_charclass(str, charclass, replacement, ...)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last <- function(str, replacement, ..., regex, fixed, coll, charclass) {
-    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+stri_replace_last <- function(str, replacement, ..., regex, fixed, coll, charclass)
+{
+    providedarg <- c(
+        regex = !missing(regex),
+        fixed = !missing(fixed),
+        coll = !missing(coll),
         charclass = !missing(charclass))
-    
-    if (sum(providedarg) != 1) 
+
+    if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-    
-    if (providedarg["regex"]) 
-        stri_replace_last_regex(str, regex, replacement, ...) else if (providedarg["fixed"]) 
-        stri_replace_last_fixed(str, fixed, replacement, ...) else if (providedarg["coll"]) 
-        stri_replace_last_coll(str, coll, replacement, ...) else if (providedarg["charclass"]) 
+
+    if (providedarg["regex"])
+        stri_replace_last_regex(str, regex, replacement, ...)
+    else if (providedarg["fixed"])
+        stri_replace_last_fixed(str, fixed, replacement, ...)
+    else if (providedarg["coll"])
+        stri_replace_last_coll(str, coll, replacement, ...)
+    else if (providedarg["charclass"])
         stri_replace_last_charclass(str, charclass, replacement, ...)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace <- function(str, replacement, ..., regex, fixed, coll, charclass, mode = c("first", 
-    "all", "last")) {
+stri_replace <- function(str, replacement, ..., regex, fixed, coll, charclass,
+    mode = c("first", "all", "last"))
+{
     # `first` is default for compatibility with stringr
     mode <- match.arg(mode)  # this is slow
-    
-    switch(mode, first = stri_replace_first(str, replacement, ..., regex = regex, 
-        fixed = fixed, coll = coll, charclass = charclass), last = stri_replace_last(str, 
-        replacement, ..., regex = regex, fixed = fixed, coll = coll, charclass = charclass), 
-        all = stri_replace_all(str, replacement, ..., regex = regex, fixed = fixed, 
-            coll = coll, charclass = charclass))
+
+    switch(mode,
+        first = stri_replace_first(str, replacement, ..., regex = regex,
+            fixed = fixed, coll = coll, charclass = charclass),
+        last = stri_replace_last(str, replacement, ..., regex = regex,
+            fixed = fixed, coll = coll, charclass = charclass),
+        all = stri_replace_all(str, replacement, ..., regex = regex,
+            fixed = fixed, coll = coll, charclass = charclass))
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_charclass <- function(str, pattern, replacement, merge = FALSE, 
-    vectorize_all = TRUE) {
+stri_replace_all_charclass <- function(str, pattern, replacement, merge = FALSE,
+    vectorize_all = TRUE, vectorise_all = vectorize_all)
+{
+    if (!missing(vectorise_all))
+        vectorize_all <- vectorise_all
+
     .Call(C_stri_replace_all_charclass, str, pattern, replacement, merge, vectorize_all)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_charclass <- function(str, pattern, replacement) {
+stri_replace_first_charclass <- function(str, pattern, replacement)
+{
     .Call(C_stri_replace_first_charclass, str, pattern, replacement)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_charclass <- function(str, pattern, replacement) {
+stri_replace_last_charclass <- function(str, pattern, replacement)
+{
     .Call(C_stri_replace_last_charclass, str, pattern, replacement)
 }
 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_coll <- function(str, pattern, replacement, vectorize_all = TRUE, 
-    ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_replace_all_coll <- function(str, pattern, replacement,
+    vectorize_all = TRUE, vectorise_all = vectorize_all, ..., opts_collator = NULL)
+{
+    if (!missing(vectorise_all))
+        vectorize_all <- vectorise_all
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_replace_all_coll, str, pattern, replacement, vectorize_all, opts_collator)
 }
@@ -231,8 +265,9 @@ stri_replace_all_coll <- function(str, pattern, replacement, vectorize_all = TRU
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_coll <- function(str, pattern, replacement, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_replace_first_coll <- function(str, pattern, replacement, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_replace_first_coll, str, pattern, replacement, opts_collator)
 }
@@ -240,8 +275,9 @@ stri_replace_first_coll <- function(str, pattern, replacement, ..., opts_collato
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_replace_last_coll, str, pattern, replacement, opts_collator)
 }
@@ -249,9 +285,12 @@ stri_replace_last_coll <- function(str, pattern, replacement, ..., opts_collator
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all = TRUE, 
-    ..., opts_fixed = NULL) {
-    if (!missing(...)) 
+stri_replace_all_fixed <- function(str, pattern, replacement,
+    vectorize_all = TRUE, vectorise_all = vectorize_all, ..., opts_fixed = NULL)
+{
+    if (!missing(vectorise_all))
+        vectorize_all <- vectorise_all
+    if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
     .Call(C_stri_replace_all_fixed, str, pattern, replacement, vectorize_all, opts_fixed)
 }
@@ -259,8 +298,9 @@ stri_replace_all_fixed <- function(str, pattern, replacement, vectorize_all = TR
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed = NULL) {
-    if (!missing(...)) 
+stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed = NULL)
+{
+    if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
     .Call(C_stri_replace_first_fixed, str, pattern, replacement, opts_fixed)
 }
@@ -268,8 +308,9 @@ stri_replace_first_fixed <- function(str, pattern, replacement, ..., opts_fixed 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_fixed <- function(str, pattern, replacement, ..., opts_fixed = NULL) {
-    if (!missing(...)) 
+stri_replace_last_fixed <- function(str, pattern, replacement, ..., opts_fixed = NULL)
+{
+    if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
     .Call(C_stri_replace_last_fixed, str, pattern, replacement, opts_fixed)
 }
@@ -277,9 +318,12 @@ stri_replace_last_fixed <- function(str, pattern, replacement, ..., opts_fixed =
 
 #' @export
 #' @rdname stri_replace
-stri_replace_all_regex <- function(str, pattern, replacement, vectorize_all = TRUE, 
-    ..., opts_regex = NULL) {
-    if (!missing(...)) 
+stri_replace_all_regex <- function(str, pattern, replacement,
+    vectorize_all = TRUE, vectorise_all = vectorize_all, ..., opts_regex = NULL)
+{
+    if (!missing(vectorise_all))
+        vectorize_all <- vectorise_all
+    if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_replace_all_regex, str, pattern, replacement, vectorize_all, opts_regex)
 }
@@ -287,8 +331,9 @@ stri_replace_all_regex <- function(str, pattern, replacement, vectorize_all = TR
 
 #' @export
 #' @rdname stri_replace
-stri_replace_first_regex <- function(str, pattern, replacement, ..., opts_regex = NULL) {
-    if (!missing(...)) 
+stri_replace_first_regex <- function(str, pattern, replacement, ..., opts_regex = NULL)
+{
+    if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_replace_first_regex, str, pattern, replacement, opts_regex)
 }
@@ -296,8 +341,9 @@ stri_replace_first_regex <- function(str, pattern, replacement, ..., opts_regex 
 
 #' @export
 #' @rdname stri_replace
-stri_replace_last_regex <- function(str, pattern, replacement, ..., opts_regex = NULL) {
-    if (!missing(...)) 
+stri_replace_last_regex <- function(str, pattern, replacement, ..., opts_regex = NULL)
+{
+    if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
     .Call(C_stri_replace_last_regex, str, pattern, replacement, opts_regex)
 }

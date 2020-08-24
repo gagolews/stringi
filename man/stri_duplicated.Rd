@@ -28,7 +28,7 @@ stri_duplicated_any(
 indicates whether search should be performed from the last to the
 first string}
 
-\item{fromLast}{deprecated alias of \code{from_last}}
+\item{fromLast}{[DEPRECATED] alias of \code{from_last}}
 
 \item{...}{additional settings for \code{opts_collator}}
 

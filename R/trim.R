@@ -72,7 +72,7 @@
 #'
 #' @examples
 #' stri_trim_left('               aaa')
-#' stri_trim_right('rexamine.com/', '\\p{P}')
+#' stri_trim_right('r-project.org/', '\\p{P}')
 #' stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
 #' stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{L}')
 #'
@@ -81,31 +81,38 @@
 #' @family search_charclass
 #' @rdname stri_trim
 #' @export
-stri_trim_both <- function(str, pattern = "\\P{Wspace}") {
+stri_trim_both <- function(str, pattern = "\\P{Wspace}")
+{
     .Call(C_stri_trim_both, str, pattern)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim_left <- function(str, pattern = "\\P{Wspace}") {
+stri_trim_left <- function(str, pattern = "\\P{Wspace}")
+{
     .Call(C_stri_trim_left, str, pattern)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim_right <- function(str, pattern = "\\P{Wspace}") {
+stri_trim_right <- function(str, pattern = "\\P{Wspace}")
+{
     .Call(C_stri_trim_right, str, pattern)
 }
 
 
 #' @rdname stri_trim
 #' @export
-stri_trim <- function(str, side = c("both", "left", "right"), pattern = "\\P{Wspace}") {
+stri_trim <- function(str, side = c("both", "left", "right"), pattern = "\\P{Wspace}")
+{
     # `both` is default for compatibility with stringr
     side <- match.arg(side)  # this is slow
-    
-    switch(side, both = stri_trim_both(str, pattern), left = stri_trim_left(str, 
-        pattern), right = stri_trim_right(str, pattern))
+
+    switch(side,
+        both = stri_trim_both(str, pattern),
+        left = stri_trim_left(str, pattern),
+        right = stri_trim_right(str, pattern)
+    )
 }

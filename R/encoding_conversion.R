@@ -155,7 +155,8 @@ stri_conv <- stri_encode
 #'
 #' @family encoding_conversion
 #' @export
-stri_enc_toutf32 <- function(str) {
+stri_enc_toutf32 <- function(str)
+{
     .Call(C_stri_enc_toutf32, str)
 }
 
@@ -194,7 +195,8 @@ stri_enc_toutf32 <- function(str) {
 #'
 #' @family encoding_conversion
 #' @export
-stri_enc_fromutf32 <- function(vec) {
+stri_enc_fromutf32 <- function(vec)
+{
     .Call(C_stri_enc_fromutf32, vec)
 }
 
@@ -243,7 +245,8 @@ stri_enc_fromutf32 <- function(vec) {
 #'
 #' @family encoding_conversion
 #' @export
-stri_enc_toutf8 <- function(str, is_unknown_8bit = FALSE, validate = FALSE) {
+stri_enc_toutf8 <- function(str, is_unknown_8bit = FALSE, validate = FALSE)
+{
     .Call(C_stri_enc_toutf8, str, is_unknown_8bit, validate)
 }
 
@@ -269,7 +272,8 @@ stri_enc_toutf8 <- function(str, is_unknown_8bit = FALSE, validate = FALSE) {
 #'
 #' @family encoding_conversion
 #' @export
-stri_enc_tonative <- function(str) {
+stri_enc_tonative <- function(str)
+{
     stri_encode(str, NULL, NULL)
 }
 
@@ -300,6 +304,7 @@ stri_enc_tonative <- function(str) {
 #'
 #' @family encoding_conversion
 #' @export
-stri_enc_toascii <- function(str) {
+stri_enc_toascii <- function(str)
+{
     .Call(C_stri_enc_toascii, str)
 }

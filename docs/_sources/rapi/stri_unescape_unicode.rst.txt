@@ -27,7 +27,7 @@ Uses ICU facilities to un-escape Unicode character sequences.
 
 The following ASCII standard escapes are recognized: ``\a``, ``\b``, ``\t``, ``\n``, ``\v``, ``\?``, ``\e``, ``\f``, ``\r``, ``\"``, ``\'``, ``\\``.
 
-Moreover, the function understands the following ones: ``\uXXXX`` (4 hex digits), ``\UXXXXXXXX`` (8 hex digits), ``\xXX`` (1-2 hex digits), ``\ooo`` (1-3 octal digits), ``\cX`` (control-X; X is masked with 0x1F). For ``\xXX`` and ``\ooo``, beware of non-valid UTF8 byte sequences.
+Moreover, the function understands the following ones: ``\uXXXX`` (4 hex digits), ``\UXXXXXXXX`` (8 hex digits), ``\xXX`` (1-2 hex digits), ``\ooo`` (1-3 octal digits), ``\cX`` (control-X; X is masked with 0x1F). For ``\xXX`` and ``\ooo``, beware of non-valid UTF-8 byte sequences.
 
 Note that some versions of R on Windows cannot handle characters defined with \\UXXXXXXXX. We are working on that.
 

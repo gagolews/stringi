@@ -44,7 +44,7 @@ may be specified by setting the \code{@calendar=name} keyword}
 }
 \description{
 These functions convert a given date/time object
-to a character vector, or conversely.
+to a character vector, or vice versa.
 }
 \details{
 Vectorized over \code{time} or \code{str}.

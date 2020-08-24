@@ -148,7 +148,7 @@ stri_split_lines1 <- function(str) {
 #'
 #' @examples
 #' test <- 'The\u00a0above-mentioned    features are very useful. ' %s+%
-#'    'Kudos to their developers. 123 456 789'
+#'    'Spam, spam, eggs, bacon, and spam. 123 456 789'
 #' stri_split_boundaries(test, type='line')
 #' stri_split_boundaries(test, type='word')
 #' stri_split_boundaries(test, type='word', skip_word_none=TRUE)
@@ -166,9 +166,11 @@ stri_split_lines1 <- function(str) {
 #' @family search_split
 #' @family locale_sensitive
 #' @family text_boundaries
-stri_split_boundaries <- function(str, n = -1L, tokens_only = FALSE, simplify = FALSE, 
-    ..., opts_brkiter = NULL) {
-    if (!missing(...)) 
+stri_split_boundaries <- function(str, n = -1L,
+    tokens_only = FALSE, simplify = FALSE,
+    ..., opts_brkiter = NULL)
+{
+    if (!missing(...))
         opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
     .Call(C_stri_split_boundaries, str, n, tokens_only, simplify, opts_brkiter)
 }

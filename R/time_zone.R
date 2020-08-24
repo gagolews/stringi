@@ -105,7 +105,8 @@
 #' @family datetime
 #' @family timezone
 #' @export
-stri_timezone_list <- function(region = NA_character_, offset = NA_integer_) {
+stri_timezone_list <- function(region = NA_character_, offset = NA_integer_)
+{
     .Call(C_stri_timezone_list, region, offset)
 }
 
@@ -153,14 +154,16 @@ stri_timezone_list <- function(region = NA_character_, offset = NA_integer_) {
 #' @family timezone
 #' @rdname stri_timezone_set
 #' @export
-stri_timezone_get <- function() {
+stri_timezone_get <- function()
+{
     stri_timezone_info()$ID
 }
 
 
 #' @rdname stri_timezone_set
 #' @export
-stri_timezone_set <- function(tz) {
+stri_timezone_set <- function(tz)
+{
     previous <- stri_timezone_get()
     .Call(C_stri_timezone_set, tz)
     invisible(previous)
@@ -194,7 +197,8 @@ stri_timezone_set <- function(tz) {
 #' \enumerate{
 #' \item \code{ID} (time zone identifier),
 #' \item \code{Name} (localized human-readable time zone name),
-#' \item \code{Name.Daylight} (localized human-readable time zone name when DST is used, if available),
+#' \item \code{Name.Daylight} (localized human-readable time zone
+#'       name when DST is used, if available),
 #' \item \code{Name.Windows} (Windows time zone ID, if available),
 #' \item \code{RawOffset} (raw GMT offset, in hours, before taking
 #' daylight savings into account), and
@@ -212,7 +216,8 @@ stri_timezone_set <- function(tz) {
 #' @family datetime
 #' @family timezone
 #' @export
-stri_timezone_info <- function(tz = NULL, locale = NULL, display_type = "long") {
+stri_timezone_info <- function(tz = NULL, locale = NULL, display_type = "long")
+{
     .Call(C_stri_timezone_info, tz, locale, display_type)
-    ### TO DO: when DST starts???
+    ### TO DO: when does DST start???
 }

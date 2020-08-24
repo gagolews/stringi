@@ -23,7 +23,8 @@ Returns a list with the following named components:
 \enumerate{
 \item \code{ID} (time zone identifier),
 \item \code{Name} (localized human-readable time zone name),
-\item \code{Name.Daylight} (localized human-readable time zone name when DST is used, if available),
+\item \code{Name.Daylight} (localized human-readable time zone
+      name when DST is used, if available),
 \item \code{Name.Windows} (Windows time zone ID, if available),
 \item \code{RawOffset} (raw GMT offset, in hours, before taking
 daylight savings into account), and

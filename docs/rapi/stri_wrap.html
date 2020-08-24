@@ -296,6 +296,7 @@
   <span class="n">cost_exponent</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span>
   <span class="n">simplify</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
   <span class="n">normalize</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+  <span class="n">normalise</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">,</span>
   <span class="n">indent</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span>
   <span class="n">exdent</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span>
   <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
@@ -330,22 +331,25 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">normalize</span></code></p></td>
 <td><p>single logical value, see Details</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">indent</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normalise</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">normalize</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">indent</span></code></p></td>
 <td><p>single non-negative integer; gives the indentation of the first line in each paragraph</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">exdent</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">exdent</span></code></p></td>
 <td><p>single non-negative integer; specifies the indentation of subsequent lines in paragraphs</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">prefix,</span> <span class="pre">initial</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prefix,</span> <span class="pre">initial</span></code></p></td>
 <td><p>single strings; <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is used as prefix for each line except the first, for which <code class="docutils literal notranslate"><span class="pre">initial</span></code> is utilized</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">whitespace_only</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">whitespace_only</span></code></p></td>
 <td><p>single logical value; allow breaks only at white-spaces? if <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, ICU’s line break iterator is used to split text into words, which is suitable for natural language processing</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">use_length</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">use_length</span></code></p></td>
 <td><p>single logical value; should the number of code points be used instead of the total code point width (see <a class="reference external" href="stri_width.html">stri_width</a>)?</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a></p></td>
 </tr>
 </tbody>

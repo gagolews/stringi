@@ -61,7 +61,7 @@ As usual, the elements of shorter vectors are recycled if necessary.
 }
 \description{
 Relational operators for comparing corresponding strings in
-two character vectors, with a typical \R look-and-feel.
+two character vectors, with a typical R look-and-feel.
 }
 \details{
 These functions call \code{\link{stri_cmp_le}} or its

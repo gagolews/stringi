@@ -52,12 +52,13 @@
 #'
 #' @family files
 #' @export
-stri_read_raw <- function(con) {
+stri_read_raw <- function(con)
+{
     if (is.character(con)) {
         con <- file(con, "rb")
         on.exit(close(con))
     }
-    
+
     bufsize <- 4194304L
     data <- list()
     n <- 1L
@@ -65,7 +66,7 @@ stri_read_raw <- function(con) {
         buf <- readBin(con, what = "raw", size = 1L, n = bufsize)
         data[[n]] <- buf
         n <- n + 1L
-        if (length(buf) < bufsize) 
+        if (length(buf) < bufsize)
             break
     }
     do.call(c, data)
@@ -102,15 +103,16 @@ stri_read_raw <- function(con) {
 #'
 #' @family files
 #' @export
-stri_read_lines <- function(con, encoding = NULL) {
+stri_read_lines <- function(con, encoding = NULL)
+{
     stopifnot(is.null(encoding) || is.character(encoding))
-    
-    if (is.null(encoding) || encoding == "") 
+
+    if (is.null(encoding) || encoding == "")
         encoding <- stri_enc_get()  # this need to be done manually, see ?stri_encode
-    
-    if (encoding == "auto") 
+
+    if (encoding == "auto")
         stop("encoding `auto` is no longer supported")  # TODO: remove in the future
-    
+
     txt <- stri_read_raw(con)
     txt <- stri_encode(txt, encoding, "UTF-8")
     stri_split_lines1(txt)
@@ -144,8 +146,9 @@ stri_read_lines <- function(con, encoding = NULL) {
 #'
 #' @family files
 #' @export
-stri_write_lines <- function(str, con, encoding = "UTF-8", sep = ifelse(.Platform$OS.type == 
-    "windows", "\r\n", "\n")) {
+stri_write_lines <- function(str, con,
+    encoding = "UTF-8", sep = ifelse(.Platform$OS.type == "windows", "\r\n", "\n"))
+{
     stopifnot(is.character(sep), length(sep) == 1)
     str <- stri_join(str, sep, collapse = "")
     str <- stri_encode(str, "", encoding, to_raw = TRUE)[[1]]

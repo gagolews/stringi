@@ -131,64 +131,76 @@
 #' @rdname stri_split
 #' @family search_split
 #' @export
-stri_split <- function(str, ..., regex, fixed, coll, charclass) {
-    providedarg <- c(regex = !missing(regex), fixed = !missing(fixed), coll = !missing(coll), 
+stri_split <- function(str, ..., regex, fixed, coll, charclass)
+{
+    providedarg <- c(
+        regex = !missing(regex),
+        fixed = !missing(fixed),
+        coll = !missing(coll),
         charclass = !missing(charclass))
-    
-    if (sum(providedarg) != 1) 
+
+    if (sum(providedarg) != 1)
         stop("you have to specify either `regex`, `fixed`, `coll`, or `charclass`")
-    
-    if (providedarg["regex"]) 
-        stri_split_regex(str, regex, ...) else if (providedarg["fixed"]) 
-        stri_split_fixed(str, fixed, ...) else if (providedarg["coll"]) 
-        stri_split_coll(str, coll, ...) else if (providedarg["charclass"]) 
+
+    if (providedarg["regex"])
+        stri_split_regex(str, regex, ...) else if (providedarg["fixed"])
+        stri_split_fixed(str, fixed, ...) else if (providedarg["coll"])
+        stri_split_coll(str, coll, ...) else if (providedarg["charclass"])
         stri_split_charclass(str, charclass, ...)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_fixed <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
-    simplify = FALSE, ..., opts_fixed = NULL) {
+stri_split_fixed <- function(str, pattern, n = -1L,
+    omit_empty = FALSE, tokens_only = FALSE,
+    simplify = FALSE, ..., opts_fixed = NULL)
+{
     # omit_empty defaults to FALSE for compatibility with the stringr package
     # tokens_only defaults to FALSE for compatibility with the stringr package
-    if (!missing(...)) 
+    if (!missing(...))
         opts_fixed <- do.call(stri_opts_fixed, as.list(c(opts_fixed, ...)))
-    .Call(C_stri_split_fixed, str, pattern, n, omit_empty, tokens_only, simplify, 
+    .Call(C_stri_split_fixed, str, pattern, n, omit_empty, tokens_only, simplify,
         opts_fixed)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_regex <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
-    simplify = FALSE, ..., opts_regex = NULL) {
+stri_split_regex <- function(str, pattern, n = -1L,
+    omit_empty = FALSE, tokens_only = FALSE,
+    simplify = FALSE, ..., opts_regex = NULL)
+{
     # omit_empty defaults to FALSE for compatibility with the stringr package
     # tokens_only defaults to FALSE for compatibility with the stringr package
-    if (!missing(...)) 
+    if (!missing(...))
         opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-    .Call(C_stri_split_regex, str, pattern, n, omit_empty, tokens_only, simplify, 
+    .Call(C_stri_split_regex, str, pattern, n, omit_empty, tokens_only, simplify,
         opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_coll <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
-    simplify = FALSE, ..., opts_collator = NULL) {
+stri_split_coll <- function(str, pattern, n = -1L,
+    omit_empty = FALSE, tokens_only = FALSE,
+    simplify = FALSE, ..., opts_collator = NULL)
+{
     # omit_empty defaults to FALSE for compatibility with the stringr package
     # tokens_only defaults to FALSE for compatibility with the stringr package
-    if (!missing(...)) 
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-    .Call(C_stri_split_coll, str, pattern, n, omit_empty, tokens_only, simplify, 
+    .Call(C_stri_split_coll, str, pattern, n, omit_empty, tokens_only, simplify,
         opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_split
-stri_split_charclass <- function(str, pattern, n = -1L, omit_empty = FALSE, tokens_only = FALSE, 
-    simplify = FALSE) {
+stri_split_charclass <- function(str, pattern, n = -1L,
+    omit_empty = FALSE, tokens_only = FALSE,
+    simplify = FALSE)
+{
     # omit_empty defaults to FALSE for compatibility with the stringr package
     # tokens_only defaults to FALSE for compatibility with the stringr package
     .Call(C_stri_split_charclass, str, pattern, n, omit_empty, tokens_only, simplify)

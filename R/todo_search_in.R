@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)  # TO DO: later (>0.3)
+invisible(NULL)  # TO DO
 
 # #' @title
 # #' Value Matching

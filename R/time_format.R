@@ -36,7 +36,7 @@
 #'
 #' @description
 #' These functions convert a given date/time object
-#' to a character vector, or conversely.
+#' to a character vector, or vice versa.
 #'
 #' @details
 #' Vectorized over \code{time} or \code{str}.
@@ -220,8 +220,9 @@
 #' @rdname stri_datetime_format
 #' @family datetime
 #' @export
-stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL, 
-    locale = NULL) {
+stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL,
+    locale = NULL)
+{
     .Call(C_stri_datetime_format, time, format, tz, locale)
 }
 
@@ -229,8 +230,9 @@ stri_datetime_format <- function(time, format = "uuuu-MM-dd HH:mm:ss", tz = NULL
 #' @export
 #' @rdname stri_datetime_format
 #' @aliases stri_datetime_format
-stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE, 
-    tz = NULL, locale = NULL) {
+stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = FALSE,
+    tz = NULL, locale = NULL)
+{
     .Call(C_stri_datetime_parse, str, format, lenient, tz, locale)
 }
 
@@ -264,40 +266,41 @@ stri_datetime_parse <- function(str, format = "uuuu-MM-dd HH:mm:ss", lenient = F
 #'
 #' @family datetime
 #' @export
-stri_datetime_fstr <- function(x) {
+stri_datetime_fstr <- function(x)
+{
     # %U, %W -> %V + warn
     # %x, %X -> warn
     # %u, %w -> warn
-    
+
     # problematic entities:
     warn <- c("%U", "%V", "%x", "%X", "%u", "%w", "%r", "%g", "%G", "%c")
     search <- c("%U", "%W", "%g", "%G")
     needle <- c("ww", "ww", "yy", "Y")
-    
+
     search <- c(search, "%a", "%A", "%b", "%B")
     needle <- c(needle, "ccc", "cccc", "LLL", "LLLL")
-    
+
     search <- c(search, "%c", "%d", "%D")
     needle <- c(needle, "eee LLL d HH:mm:ss yyyy", "dd", "MM/dd/yy")
-    
+
     search <- c(search, "%e", "%F", "%h", "%H")
     needle <- c(needle, "d", "yyyy-MM-dd", "MMM", "HH")
-    
+
     search <- c(search, "%I", "%j", "%m", "%M", "%n", "%p")
     needle <- c(needle, "hh", "D", "MM", "mm", "\n", "a")
-    
+
     search <- c(search, "%r", "%R", "%S", "%t", "%T", "%u")
     needle <- c(needle, "hh:mm:ss", "HH:mm", "ss", "\t", "HH:mm:ss", "c")
-    
+
     search <- c(search, "%V", "%w", "%x", "%X", "%y", "%Y", "%z", "%Z")
     needle <- c(needle, "ww", "c", "yy/MM/dd", "HH:mm:ss", "yy", "yyyy", "Z", "z")
-    
+
     x <- stri_replace_all_fixed(x, "'", "\\'")
     x <- stri_replace_all_fixed(x, "%%", "%!")  # well, that's not very elegant...
-    x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))", 
+    x <- stri_replace_all_regex(x, "(?:(?<=[%][A-Za-z])|^(?![%][A-Za-z]))(.+?)(?:(?<![%][A-Za-z])$|(?=[%][A-Za-z]))",
         "'$1'")
-    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|")))) 
-        warning(sprintf("Formatters %s might not be 100%% compatible with ICU", stri_flatten(warn, 
+    if (any(stri_detect_regex(x, stri_flatten(warn, collapse = "|"))))
+        warning(sprintf("Formatters %s might not be 100%% compatible with ICU", stri_flatten(warn,
             collapse = ", ")))
     x <- stri_replace_all_fixed(x, search, needle, vectorize_all = FALSE)
     if (any(stri_detect_regex(x, "%[A-Za-z]"))) {

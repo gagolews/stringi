@@ -25,7 +25,7 @@ Arguments
 Details
 ~~~~~~~
 
-This function is roughly equivalent to ``str2 <- stri_enc_toutf8(str); str2[is.na(str2)] <- stri_enc_toutf8(replacement); str2``. It may be used, e.g., wherever the “plain R” ``NA`` handling is desired, see Examples.
+This function is roughly equivalent to ``str2 <- stri_enc_toutf8(str); str2[is.na(str2)] <- stri_enc_toutf8(replacement); str2``. It may be used, e.g., wherever the 'plain R' ``NA`` handling is desired, see Examples.
 
 Value
 ~~~~~

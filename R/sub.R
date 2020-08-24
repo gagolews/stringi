@@ -132,7 +132,8 @@
 #' @family indexing
 #' @rdname stri_sub
 #' @export
-stri_sub <- function(str, from = 1L, to = -1L, length) {
+stri_sub <- function(str, from = 1L, to = -1L, length)
+{
     if (missing(length)) {
         if (is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in the current context")
@@ -140,7 +141,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
         }
         .Call(C_stri_sub, str, from, to, NULL)
     } else {
-        if (!missing(to)) 
+        if (!missing(to))
             warning("argument `to` is ignored in the current context")
         if (is.matrix(from)) {
             warning("argument `length` is ignored in the current context")
@@ -154,7 +155,8 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 #' @rdname stri_sub
 #' @export
 #' @usage stri_sub(str, from=1L, to=-1L, length, omit_na=FALSE) <- value
-`stri_sub<-` <- function(str, from = 1L, to = -1L, length, omit_na = FALSE, value) {
+`stri_sub<-` <- function(str, from = 1L, to = -1L, length, omit_na = FALSE, value)
+{
     if (missing(length)) {
         if (is.matrix(from) && !missing(to)) {
             warning("argument `to` is ignored in this context")
@@ -162,7 +164,7 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
         }
         .Call(C_stri_sub_replacement, str, from, to, NULL, omit_na, value)
     } else {
-        if (!missing(to)) 
+        if (!missing(to))
             warning("argument `to` is ignored in this context")
         if (is.matrix(from)) {
             warning("argument `length` is ignored in this context")
@@ -175,8 +177,8 @@ stri_sub <- function(str, from = 1L, to = -1L, length) {
 
 #' @rdname stri_sub
 #' @export
-stri_sub_replace <- function(..., replacement, value = replacement) `stri_sub<-`(..., 
-    value = value)
+stri_sub_replace <- function(..., replacement, value = replacement)
+    `stri_sub<-`(...,  value = value)
 
 
 
@@ -252,24 +254,25 @@ stri_sub_replace <- function(..., replacement, value = replacement) `stri_sub<-`
 #' @family indexing
 #' @rdname stri_sub_all
 #' @export
-stri_sub_all <- function(str, from = list(1L), to = list(-1L), length) {
-    if (!is.list(from)) 
+stri_sub_all <- function(str, from = list(1L), to = list(-1L), length)
+{
+    if (!is.list(from))
         from <- list(from)
-    
+
     if (missing(length)) {
         if (!missing(to) && !is.list(to)) {
             to <- list(to)
         }
-        
+
         .Call(C_stri_sub_all, str, from, to, NULL)
     } else {
-        if (!missing(to)) 
+        if (!missing(to))
             warning("argument `to` is ignored in this context")
-        
+
         if (!is.list(length)) {
             length <- list(length)
         }
-        
+
         .Call(C_stri_sub_all, str, from, NULL, length)
     }
 }
@@ -278,27 +281,28 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length) {
 #' @rdname stri_sub_all
 #' @export
 #' @usage stri_sub_all(str, from=list(1L), to=list(-1L), length, omit_na=FALSE) <- value
-`stri_sub_all<-` <- function(str, from = list(1L), to = list(-1L), length, omit_na = FALSE, 
-    value) {
-    if (!is.list(from)) 
+`stri_sub_all<-` <- function(str, from = list(1L), to = list(-1L), length,
+    omit_na = FALSE, value)
+{
+    if (!is.list(from))
         from <- list(from)
-    if (!is.list(value)) 
+    if (!is.list(value))
         value <- list(value)
-    
+
     if (missing(length)) {
         if (!missing(to) && !is.list(to)) {
             to <- list(to)
         }
-        
+
         .Call(C_stri_sub_replacement_all, str, from, to, NULL, omit_na, value)
     } else {
-        if (!missing(to)) 
+        if (!missing(to))
             warning("argument `to` is ignored in this context")
-        
+
         if (!is.list(length)) {
             length <- list(length)
         }
-        
+
         .Call(C_stri_sub_replacement_all, str, from, NULL, length, omit_na, value)
     }
 }
@@ -306,8 +310,8 @@ stri_sub_all <- function(str, from = list(1L), to = list(-1L), length) {
 
 #' @rdname stri_sub_all
 #' @export
-stri_sub_replace_all <- function(..., replacement, value = replacement) `stri_sub_all<-`(..., 
-    value = value)
+stri_sub_replace_all <- function(..., replacement, value = replacement)
+    `stri_sub_all<-`(...,  value = value)
 
 
 #' @rdname stri_sub_all

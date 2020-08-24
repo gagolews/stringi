@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL)  # TO DO, version >= 0.3
+invisible(NULL)  # TO DO
 
 
 # @TODO: ADD stri_split_chars - split into chars

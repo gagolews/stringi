@@ -35,7 +35,7 @@
 #' List Available Locales
 #'
 #' @description
-#' Creates a character vector with all known locale identifies.
+#' Creates a character vector with all available locale identifies.
 #'
 #' @details
 #' Note that some of the services may be unavailable in some locales.
@@ -50,7 +50,8 @@
 #'
 #' @family locale_management
 #' @export
-stri_locale_list <- function() {
+stri_locale_list <- function()
+{
     .Call(C_stri_locale_list)
 }
 
@@ -97,10 +98,11 @@ stri_locale_list <- function() {
 #' stri_locale_set(oldloc) # restore the previous default locale
 #' }
 #' @export
-stri_locale_set <- function(locale) {
+stri_locale_set <- function(locale)
+{
     previous <- stri_locale_get()
     .Call(C_stri_locale_set, locale)
-    
+
     # We call stri_info, because it generates some warnings,
     # in case any problems are found:
     message(stri_paste("You are now working with ", stri_info(short = TRUE)))
@@ -110,7 +112,8 @@ stri_locale_set <- function(locale) {
 
 #' @rdname stri_locale_set
 #' @export
-stri_locale_get <- function() {
+stri_locale_get <- function()
+{
     stri_locale_info(NULL)$Name
 }
 
@@ -149,6 +152,7 @@ stri_locale_get <- function() {
 #'
 #' @family locale_management
 #' @export
-stri_locale_info <- function(locale = NULL) {
+stri_locale_info <- function(locale = NULL)
+{
     .Call(C_stri_locale_info, locale)
 }

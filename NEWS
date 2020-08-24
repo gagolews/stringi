@@ -7,7 +7,6 @@
 
 * TODO: #382
 
-
 * TODO: #355
 
 * TODO: #345
@@ -26,8 +25,8 @@
   Use `stri_enc_detect()` or the more targeted `stri_enc_isutf8()`,
   `stri_enc_isascii()`, etc., instead.
 
-* [NEW FEATURE] Alternative, British spelling of function names and their
-  arguments has been introduced, e.g., `stri_opts_coll()` now supports both
+* [NEW FEATURE] #398: Alternative, British spelling of function parameters
+  has been introduced, e.g., `stri_opts_coll()` now supports both
   `normalization` and `normalisation`.
 
 * [NEW FEATURE] #393: `stri_read_bin()`, `stri_read_lines()`, and

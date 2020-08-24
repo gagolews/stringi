@@ -91,7 +91,7 @@ Moreover, see \code{\link{stri_subset}} for a character vector subsetting.
 If \code{max_count} is negative, then all stings are examined.
 Otherwise, searching terminates
 once \code{max_count} matches (or, if \code{negate} is \code{TRUE},
-no-matches) are detected. The un-inspected cases are marked
+no-matches) are detected. The uninspected cases are marked
 as missing in the return vector. Be aware that, unless \code{pattern} is a
 singleton, the elements in \code{str} might be inspected in a
 non-consecutive order.

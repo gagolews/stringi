@@ -33,7 +33,8 @@ Usage
      pattern,
      replacement,
      merge = FALSE,
-     vectorize_all = TRUE
+     vectorize_all = TRUE,
+     vectorise_all = vectorize_all
    )
 
    stri_replace_first_charclass(str, pattern, replacement)
@@ -45,6 +46,7 @@ Usage
      pattern,
      replacement,
      vectorize_all = TRUE,
+     vectorise_all = vectorize_all,
      ...,
      opts_collator = NULL
    )
@@ -58,6 +60,7 @@ Usage
      pattern,
      replacement,
      vectorize_all = TRUE,
+     vectorise_all = vectorize_all,
      ...,
      opts_fixed = NULL
    )
@@ -71,6 +74,7 @@ Usage
      pattern,
      replacement,
      vectorize_all = TRUE,
+     vectorise_all = vectorize_all,
      ...,
      opts_regex = NULL
    )
@@ -96,6 +100,8 @@ Arguments
 | ``merge``                                  | single logical value; should consecutive matches be merged into one string; ``stri_replace_all_charclass`` only                                                                                                                                      |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``vectorize_all``                          | single logical value; should each occurrence of a pattern in every string be replaced by a corresponding replacement string?; ``stri_replace_all_*`` only                                                                                            |
++--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``vectorise_all``                          | alias of ``vectorize_all``                                                                                                                                                                                                                           |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``opts_collator, opts_fixed, opts_regex``  | a named list used to tune up the search engine's settings; see `stri_opts_collator <stri_opts_collator.html>`__, `stri_opts_fixed <stri_opts_fixed.html>`__, and `stri_opts_regex <stri_opts_regex.html>`__, respectively; ``NULL`` for the defaults |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

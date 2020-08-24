@@ -83,8 +83,9 @@
 #' stri_sort(sample(LETTERS))
 #' stri_sort(c(1, 100, 2, 101, 11, 10))
 #' stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
-stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
 }
@@ -105,7 +106,7 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 #' in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 #'
 #' As usual in \pkg{stringi}, non-character inputs are coerced to strings,
-#' see an example below for a perhaps non-intitive behavior of lexicographic
+#' see an example below for a perhaps non-intuitive behavior of lexicographic
 #' sorting on numeric inputs.
 #'
 #'
@@ -144,8 +145,9 @@ stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator 
 #'
 #' stri_order(c(1, 100, 2, 101, 11, 10))
 #' stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
-stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_order, str, decreasing, na_last, opts_collator)
 }
@@ -189,8 +191,9 @@ stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collat
 #'
 #' @family locale_sensitive
 #' @export
-stri_unique <- function(str, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_unique <- function(str, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_unique, str, opts_collator)
 }
@@ -223,7 +226,7 @@ stri_unique <- function(str, ..., opts_collator = NULL) {
 #' @param from_last a single logical value;
 #'    indicates whether search should be performed from the last to the
 #'    first string
-#' @param fromLast deprecated alias of \code{from_last}
+#' @param fromLast [DEPRECATED] alias of \code{from_last}
 #' @param opts_collator a named list with \pkg{ICU} Collator's options,
 #' see \code{\link{stri_opts_collator}}, \code{NULL}
 #' for default collation options
@@ -259,10 +262,11 @@ stri_unique <- function(str, ..., opts_collator = NULL) {
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated <- function(str, from_last = FALSE, fromLast = from_last, ..., opts_collator = NULL) {
-    if (!missing(fromLast) && missing(from_last)) 
+stri_duplicated <- function(str, from_last = FALSE,
+    fromLast = from_last, ..., opts_collator = NULL) {
+    if (!missing(fromLast)) # DEPRECATED
         from_last <- fromLast
-    if (!missing(...)) 
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated, str, from_last, opts_collator)
 }
@@ -270,11 +274,11 @@ stri_duplicated <- function(str, from_last = FALSE, fromLast = from_last, ..., o
 
 #' @rdname stri_duplicated
 #' @export
-stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..., 
+stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ...,
     opts_collator = NULL) {
-    if (!missing(fromLast) && missing(from_last)) 
+    if (!missing(fromLast)) # DEPRECATED
         from_last <- fromLast
-    if (!missing(...)) 
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated_any, str, from_last, opts_collator)
 }
@@ -317,8 +321,9 @@ stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..
 #' @examples
 #' stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
 #' stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
-stri_sort_key <- function(str, ..., opts_collator = NULL) {
-    if (!missing(...)) 
+stri_sort_key <- function(str, ..., opts_collator = NULL)
+{
+    if (!missing(...))
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_sort_key, str, opts_collator)
 }

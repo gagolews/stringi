@@ -4,7 +4,7 @@ stri_datetime_format: Date and Time Formatting and Parsing
 Description
 ~~~~~~~~~~~
 
-These functions convert a given date/time object to a character vector, or conversely.
+These functions convert a given date/time object to a character vector, or vice versa.
 
 Usage
 ~~~~~

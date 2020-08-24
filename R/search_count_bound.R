@@ -77,7 +77,7 @@
 #' Both functions return an integer vector.
 #'
 #' @examples
-#' test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+#' test <- 'The\u00a0above-mentioned    features are very useful. Spam, spam, eggs, bacon, and spam.'
 #' stri_count_boundaries(test, type='word')
 #' stri_count_boundaries(test, type='sentence')
 #' stri_count_boundaries(test, type='character')
@@ -93,8 +93,9 @@
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @rdname stri_count_boundaries
-stri_count_boundaries <- function(str, ..., opts_brkiter = NULL) {
-    if (!missing(...)) 
+stri_count_boundaries <- function(str, ..., opts_brkiter = NULL)
+{
+    if (!missing(...))
         opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
     .Call(C_stri_count_boundaries, str, opts_brkiter)
 }
@@ -102,7 +103,9 @@ stri_count_boundaries <- function(str, ..., opts_brkiter = NULL) {
 
 #' @export
 #' @rdname stri_count_boundaries
-stri_count_words <- function(str, locale = NULL) {
-    stri_count_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word", skip_word_none = TRUE, 
+stri_count_words <- function(str, locale = NULL)
+{
+    stri_count_boundaries(str,
+        opts_brkiter = stri_opts_brkiter(type = "word", skip_word_none = TRUE,
         locale = locale))
 }

@@ -61,7 +61,7 @@
 #' for instance, search for one pattern in each given string,
 #' search for each pattern in one given string,
 #' and search for the i-th pattern within the i-th string.
-#' This behaviod sometimes leads to peculiar results - we assume you know what
+#' This behavior sometimes leads to peculiar results - we assume you know what
 #' you are doing.
 #'
 #' We of course took great care of performance issues:
@@ -122,7 +122,8 @@ invisible(NULL)
 # Otherwise the function throws an error.
 #
 # @family prepare_arg
-stri_prepare_arg_string <- function(x) {
+stri_prepare_arg_string <- function(x)
+{
     .Call(C_stri_prepare_arg_string, x, NULL)
 }
 
@@ -147,7 +148,8 @@ stri_prepare_arg_string <- function(x) {
 # Otherwise the function throws an error.
 #
 # @family prepare_arg
-stri_prepare_arg_double <- function(x) {
+stri_prepare_arg_double <- function(x)
+{
     .Call(C_stri_prepare_arg_double, x, NULL)
 }
 
@@ -172,7 +174,8 @@ stri_prepare_arg_double <- function(x) {
 # Otherwise the function throws an error.
 #
 # @family prepare_arg
-stri_prepare_arg_integer <- function(x) {
+stri_prepare_arg_integer <- function(x)
+{
     .Call(C_stri_prepare_arg_integer, x, NULL)
 }
 
@@ -197,7 +200,8 @@ stri_prepare_arg_integer <- function(x) {
 # Otherwise the function throws an error.
 #
 # @family prepare_arg
-stri_prepare_arg_logical <- function(x) {
+stri_prepare_arg_logical <- function(x)
+{
     .Call(C_stri_prepare_arg_logical, x, NULL)
 }
 
@@ -222,7 +226,8 @@ stri_prepare_arg_logical <- function(x) {
 # Otherwise the function throws an error.
 #
 # @family prepare_arg
-stri_prepare_arg_raw <- function(x) {
+stri_prepare_arg_raw <- function(x)
+{
     .Call(C_stri_prepare_arg_raw, x, NULL)
 }
 
@@ -243,7 +248,8 @@ stri_prepare_arg_raw <- function(x) {
 # A vector with one element (the first in \code{x}) is returned.
 #
 # @family prepare_arg
-stri_prepare_arg_string_1 <- function(x) {
+stri_prepare_arg_string_1 <- function(x)
+{
     .Call(C_stri_prepare_arg_string_1, x, NULL)
 }
 
@@ -264,7 +270,8 @@ stri_prepare_arg_string_1 <- function(x) {
 # A vector with one element (the first in \code{x}) is returned.
 #
 # @family prepare_arg
-stri_prepare_arg_double_1 <- function(x) {
+stri_prepare_arg_double_1 <- function(x)
+{
     .Call(C_stri_prepare_arg_double_1, x, NULL)
 }
 
@@ -285,7 +292,8 @@ stri_prepare_arg_double_1 <- function(x) {
 # A vector with one element (the first in \code{x}) is returned.
 #
 # @family prepare_arg
-stri_prepare_arg_integer_1 <- function(x) {
+stri_prepare_arg_integer_1 <- function(x)
+{
     .Call(C_stri_prepare_arg_integer_1, x, NULL)
 }
 
@@ -306,6 +314,7 @@ stri_prepare_arg_integer_1 <- function(x) {
 # A vector with one element (the first in \code{x}) is returned.
 #
 # @family prepare_arg
-stri_prepare_arg_logical_1 <- function(x) {
+stri_prepare_arg_logical_1 <- function(x)
+{
     .Call(C_stri_prepare_arg_logical_1, x, NULL)
 }

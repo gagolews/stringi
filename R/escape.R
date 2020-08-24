@@ -39,9 +39,9 @@
 #'
 #' @details
 #' For non-printable and certain special (well-known,
-#' see also \R man page \link{Quotes})
+#' see also R man page \link{Quotes})
 #' ASCII characters the following
-#' (also recognized in \R) convention is used.
+#' (also recognized in R) convention is used.
 #' We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
 #' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
 #' or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)
@@ -53,6 +53,7 @@
 #'
 #'
 #' @param str character vector
+#'
 #' @return
 #' Returns a character vector.
 #'
@@ -61,7 +62,8 @@
 #'
 #' @family escape
 #' @export
-stri_escape_unicode <- function(str) {
+stri_escape_unicode <- function(str)
+{
     .Call(C_stri_escape_unicode, str)
 }
 
@@ -86,13 +88,14 @@ stri_escape_unicode <- function(str) {
 #' \code{\\xXX} (1-2 hex digits),
 #' \code{\\ooo} (1-3 octal digits),
 #' \code{\\cX} (control-X; X is masked with 0x1F).
-#' For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF8 byte sequences.
+#' For \code{\\xXX} and \code{\\ooo}, beware of non-valid UTF-8 byte sequences.
 #'
-#' Note that some versions of \R on Windows cannot handle
+#' Note that some versions of R on Windows cannot handle
 #' characters defined with  {\\UXXXXXXXX}.
 #' We are working on that.
 #'
 #' @param str character vector
+#'
 #' @return
 #' Returns a character vector.
 #' If an escape sequence is ill-formed,
@@ -103,6 +106,7 @@ stri_escape_unicode <- function(str) {
 #'
 #' @family escape
 #' @export
-stri_unescape_unicode <- function(str) {
+stri_unescape_unicode <- function(str)
+{
     .Call(C_stri_unescape_unicode, str)
 }

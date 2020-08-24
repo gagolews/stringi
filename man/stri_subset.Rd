@@ -82,8 +82,7 @@ for the defaults}
 The \code{stri_subset} functions return a character vector.
 As usual, the output encoding is always UTF-8.
 
-The \code{stri_subset<-} function modifies the \code{str} object
-``in-place''.
+The \code{stri_subset<-} function modifies the \code{str} object 'in-place'.
 }
 \description{
 These functions return or modify a sub-vector where there is a match

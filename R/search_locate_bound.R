@@ -59,7 +59,7 @@
 #'
 #' @param str character vector or an object coercible to
 #' @param omit_no_match single logical value; if \code{FALSE},
-#' then 2 missing values will indicate that there are no text boundaries
+#' then two missing values will indicate that there are no text boundaries
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings,
 #' see \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for default break iterator, i.e., \code{line_break}
@@ -84,7 +84,7 @@
 #' or the last matches, respectively, and two \code{NA}s if there is no match.
 #'
 #' @examples
-#' test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+#' test <- 'The\u00a0above-mentioned    features are very useful. Spam, spam, eggs, bacon, and spam.'
 #' stri_locate_all_boundaries(test, type='line')
 #' stri_locate_all_boundaries(test, type='word')
 #' stri_locate_all_boundaries(test, type='sentence')
@@ -100,8 +100,9 @@
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @rdname stri_locate_boundaries
-stri_locate_all_boundaries <- function(str, omit_no_match = FALSE, ..., opts_brkiter = NULL) {
-    if (!missing(...)) 
+stri_locate_all_boundaries <- function(str, omit_no_match = FALSE, ..., opts_brkiter = NULL)
+{
+    if (!missing(...))
         opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
     .Call(C_stri_locate_all_boundaries, str, omit_no_match, opts_brkiter)
 }
@@ -109,8 +110,9 @@ stri_locate_all_boundaries <- function(str, omit_no_match = FALSE, ..., opts_brk
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_last_boundaries <- function(str, ..., opts_brkiter = NULL) {
-    if (!missing(...)) 
+stri_locate_last_boundaries <- function(str, ..., opts_brkiter = NULL)
+{
+    if (!missing(...))
         opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
     .Call(C_stri_locate_last_boundaries, str, opts_brkiter)
 }
@@ -118,8 +120,9 @@ stri_locate_last_boundaries <- function(str, ..., opts_brkiter = NULL) {
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_first_boundaries <- function(str, ..., opts_brkiter = NULL) {
-    if (!missing(...)) 
+stri_locate_first_boundaries <- function(str, ..., opts_brkiter = NULL)
+{
+    if (!missing(...))
         opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
     .Call(C_stri_locate_first_boundaries, str, opts_brkiter)
 }
@@ -127,23 +130,26 @@ stri_locate_first_boundaries <- function(str, ..., opts_brkiter = NULL) {
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_all_words <- function(str, omit_no_match = FALSE, locale = NULL) {
-    stri_locate_all_boundaries(str, omit_no_match, opts_brkiter = stri_opts_brkiter(type = "word", 
+stri_locate_all_words <- function(str, omit_no_match = FALSE, locale = NULL)
+{
+    stri_locate_all_boundaries(str, omit_no_match, opts_brkiter = stri_opts_brkiter(type = "word",
         skip_word_none = TRUE, locale = locale))
 }
 
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_last_words <- function(str, locale = NULL) {
-    stri_locate_last_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word", 
+stri_locate_last_words <- function(str, locale = NULL)
+{
+    stri_locate_last_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word",
         skip_word_none = TRUE, locale = locale))
 }
 
 
 #' @export
 #' @rdname stri_locate_boundaries
-stri_locate_first_words <- function(str, locale = NULL) {
-    stri_locate_first_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word", 
+stri_locate_first_words <- function(str, locale = NULL)
+{
+    stri_locate_first_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word",
         skip_word_none = TRUE, locale = locale))
 }
