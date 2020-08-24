@@ -70,36 +70,36 @@
  */
 class StriContainerByteSearch : public StriContainerUTF8 {
 
-   private:
+private:
 
-      typedef enum ByteSearchFlag {
-         BYTESEARCH_CASE_INSENSITIVE = 2,
-         BYTESEARCH_OVERLAP = 4
-      } ByteSearchFlag;
+    typedef enum ByteSearchFlag {
+        BYTESEARCH_CASE_INSENSITIVE = 2,
+        BYTESEARCH_OVERLAP = 4
+    } ByteSearchFlag;
 
-      StriByteSearchMatcher* matcher;
-      uint32_t flags; ///< ByteSearch flags
+    StriByteSearchMatcher* matcher;
+    uint32_t flags; ///< ByteSearch flags
 
 
-   public:
+public:
 
-      static uint32_t getByteSearchFlags(SEXP opts_fixed, bool allow_overlap=false);
+    static uint32_t getByteSearchFlags(SEXP opts_fixed, bool allow_overlap=false);
 
-      StriContainerByteSearch();
-      StriContainerByteSearch(SEXP rstr, R_len_t nrecycle, uint32_t flags);
-      StriContainerByteSearch(StriContainerByteSearch& container);
-      ~StriContainerByteSearch();
-      StriContainerByteSearch& operator=(StriContainerByteSearch& container);
+    StriContainerByteSearch();
+    StriContainerByteSearch(SEXP rstr, R_len_t nrecycle, uint32_t flags);
+    StriContainerByteSearch(StriContainerByteSearch& container);
+    ~StriContainerByteSearch();
+    StriContainerByteSearch& operator=(StriContainerByteSearch& container);
 
-      StriByteSearchMatcher* getMatcher(R_len_t i);
+    StriByteSearchMatcher* getMatcher(R_len_t i);
 
-      inline bool isCaseInsensitive() {
-         return (bool)(flags&BYTESEARCH_CASE_INSENSITIVE);
-      }
+    inline bool isCaseInsensitive() {
+        return (bool)(flags&BYTESEARCH_CASE_INSENSITIVE);
+    }
 
-      inline bool isOverlap() {
-         return (bool)(flags&BYTESEARCH_OVERLAP);
-      }
+    inline bool isOverlap() {
+        return (bool)(flags&BYTESEARCH_OVERLAP);
+    }
 };
 
 #endif

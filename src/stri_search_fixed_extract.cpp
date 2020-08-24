@@ -59,46 +59,46 @@ using namespace std;
  */
 SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool first)
 {
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                SET_STRING_ELT(ret, i, NA_STRING);, SET_STRING_ELT(ret, i, NA_STRING);)
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      int start, len;
-      if (first) {
-         start = matcher->findFirst();
-      } else {
-         start = matcher->findLast();
-      }
-      if (start == USEARCH_DONE) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        int start, len;
+        if (first) {
+            start = matcher->findFirst();
+        } else {
+            start = matcher->findLast();
+        }
+        if (start == USEARCH_DONE) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      len = matcher->getMatchedLength();
+        len = matcher->getMatchedLength();
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+start, len, CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(str_cont.get(i).c_str()+start, len, CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({ /* no-op */ })
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({ /* no-op */ })
 }
 
 
@@ -119,7 +119,7 @@ SEXP stri__extract_firstlast_fixed(SEXP str, SEXP pattern, SEXP opts_fixed, bool
  */
 SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
 {
-   return stri__extract_firstlast_fixed(str, pattern, opts_fixed, true);
+    return stri__extract_firstlast_fixed(str, pattern, opts_fixed, true);
 }
 
 
@@ -140,7 +140,7 @@ SEXP stri_extract_first_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  */
 SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
 {
-   return stri__extract_firstlast_fixed(str, pattern, opts_fixed, false);
+    return stri__extract_firstlast_fixed(str, pattern, opts_fixed, false);
 }
 
 
@@ -164,70 +164,70 @@ SEXP stri_extract_last_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
  */
 SEXP stri_extract_all_fixed(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_fixed)
 {
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
-   bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
+    bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
+    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+                SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));)
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
 
-      int start = matcher->findFirst();
-      deque< pair<R_len_t, R_len_t> > occurrences;
-      while (start != USEARCH_DONE) {
-         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+matcher->getMatchedLength()));
-         start = matcher->findNext();
-      }
+        int start = matcher->findFirst();
+        deque< pair<R_len_t, R_len_t> > occurrences;
+        while (start != USEARCH_DONE) {
+            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+matcher->getMatchedLength()));
+            start = matcher->findNext();
+        }
 
-      R_len_t noccurrences = (R_len_t)occurrences.size();
-      if (noccurrences <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));
-         continue;
-      }
+        R_len_t noccurrences = (R_len_t)occurrences.size();
+        if (noccurrences <= 0) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(omit_no_match1?0:1));
+            continue;
+        }
 
-      const char* str_cur_s = str_cont.get(i).c_str();
-      SEXP cur_res;
-      STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
-         pair<R_len_t, R_len_t> curo = *iter;
-         SET_STRING_ELT(cur_res, j,
-            Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
-      }
-      SET_VECTOR_ELT(ret, i, cur_res);
-      STRI__UNPROTECT(1);
-   }
+        const char* str_cur_s = str_cont.get(i).c_str();
+        SEXP cur_res;
+        STRI__PROTECT(cur_res = Rf_allocVector(STRSXP, noccurrences));
+        deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+        for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+            pair<R_len_t, R_len_t> curo = *iter;
+            SET_STRING_ELT(cur_res, j,
+                           Rf_mkCharLenCE(str_cur_s+curo.first, curo.second-curo.first, CE_UTF8));
+        }
+        SET_VECTOR_ELT(ret, i, cur_res);
+        STRI__UNPROTECT(1);
+    }
 
-   if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
-      SEXP robj_TRUE, robj_zero, robj_na_strings, robj_empty_strings;
-      STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
-      STRI__PROTECT(robj_zero = Rf_ScalarInteger(0));
-      STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
-      STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
-      STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
-                                           (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
-                                              :robj_empty_strings,
-                                               robj_zero));
-   }
+    if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
+        SEXP robj_TRUE, robj_zero, robj_na_strings, robj_empty_strings;
+        STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
+        STRI__PROTECT(robj_zero = Rf_ScalarInteger(0));
+        STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
+        STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
+        STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
+                                             (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
+                                             :robj_empty_strings,
+                                             robj_zero));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({/* no-op */})
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({/* no-op */})
 }

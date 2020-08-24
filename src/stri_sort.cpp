@@ -44,22 +44,26 @@
 
 /** help struct for stri_order **/
 struct StriSortComparer {
-   StriContainerUTF8* cont;
-   bool decreasing;
-   UCollator* col;
+    StriContainerUTF8* cont;
+    bool decreasing;
+    UCollator* col;
 
-   StriSortComparer(StriContainerUTF8* _cont, UCollator* _col, bool _decreasing)
-   { this->cont = _cont; this->col = _col; this->decreasing = _decreasing; }
+    StriSortComparer(StriContainerUTF8* _cont, UCollator* _col, bool _decreasing)
+    {
+        this->cont = _cont;
+        this->col = _col;
+        this->decreasing = _decreasing;
+    }
 
-   bool operator() (int a, int b) const
-   {
+    bool operator() (int a, int b) const
+    {
 //      if (col) {
-         UErrorCode status = U_ZERO_ERROR;
-         int ret = (int)ucol_strcollUTF8(col,
-            cont->get(a).c_str(), cont->get(a).length(),
-            cont->get(b).c_str(), cont->get(b).length(), &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         return (decreasing)?(ret > 0):(ret < 0);
+        UErrorCode status = U_ZERO_ERROR;
+        int ret = (int)ucol_strcollUTF8(col,
+                                        cont->get(a).c_str(), cont->get(a).length(),
+                                        cont->get(b).c_str(), cont->get(b).length(), &status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        return (decreasing)?(ret > 0):(ret < 0);
 //      }
 //      else {
 //         int ret = stri__cmp_codepoints(
@@ -68,7 +72,7 @@ struct StriSortComparer {
 //         );
 //         return (decreasing)?(ret > 0):(ret < 0);
 //      }
-   }
+    }
 };
 
 
@@ -106,102 +110,105 @@ struct StriSortComparer {
  *    use stri_order, stri_sort
  */
 SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
-   SEXP opts_collator, int _type)
+                        SEXP opts_collator, int _type)
 {
-   bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
-   PROTECT(na_last   = stri_prepare_arg_logical_1(na_last, "na_last"));
-   PROTECT(str       = stri_prepare_arg_string(str, "str")); // prepare string argument
+    bool decr = stri__prepare_arg_logical_1_notNA(decreasing, "decreasing");
+    PROTECT(na_last   = stri_prepare_arg_logical_1(na_last, "na_last"));
+    PROTECT(str       = stri_prepare_arg_string(str, "str")); // prepare string argument
 
-   // type is an internal arg -- check manually
-   if (_type < 1 || _type > 2)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+    // type is an internal arg -- check manually
+    if (_type < 1 || _type > 2)
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
-
-
-   STRI__ERROR_HANDLER_BEGIN(2)
-
-   R_len_t vectorize_length = LENGTH(str);
-   StriContainerUTF8 str_cont(str, vectorize_length);
-
-   int na_last_int = INTEGER(na_last)[0];
-
-   deque<int> NA_pos;
-   vector<int> order(vectorize_length);
-
-   R_len_t k = 0;
-   for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (!str_cont.isNA(i))
-         order[k++] = i;
-      else if (na_last_int != NA_LOGICAL)
-         NA_pos.push_back(i);
-   }
-   order.resize(k); // this should be faster than creating a separate deque (not tested)
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
 
-   // TO DO: collation-based cmp: think of using sort keys...
-   // however,  it's  very fast already now.
+    STRI__ERROR_HANDLER_BEGIN(2)
 
-   StriSortComparer comp(&str_cont, col, decr);
-   std::stable_sort(order.begin(), order.end(), comp);
+    R_len_t vectorize_length = LENGTH(str);
+    StriContainerUTF8 str_cont(str, vectorize_length);
+
+    int na_last_int = INTEGER(na_last)[0];
+
+    deque<int> NA_pos;
+    vector<int> order(vectorize_length);
+
+    R_len_t k = 0;
+    for (R_len_t i=0; i<vectorize_length; ++i) {
+        if (!str_cont.isNA(i))
+            order[k++] = i;
+        else if (na_last_int != NA_LOGICAL)
+            NA_pos.push_back(i);
+    }
+    order.resize(k); // this should be faster than creating a separate deque (not tested)
 
 
-   SEXP ret;
-   if (_type == 1) {
-      // order
-      STRI__PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
-      int* ret_tab = INTEGER(ret);
+    // TO DO: collation-based cmp: think of using sort keys...
+    // however,  it's  very fast already now.
 
-      R_len_t j = 0;
-      if (na_last_int != NA_LOGICAL && !na_last_int) {
-         // put NAs first
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+    StriSortComparer comp(&str_cont, col, decr);
+    std::stable_sort(order.begin(), order.end(), comp);
+
+
+    SEXP ret;
+    if (_type == 1) {
+        // order
+        STRI__PROTECT(ret = Rf_allocVector(INTSXP, k+NA_pos.size()));
+        int* ret_tab = INTEGER(ret);
+
+        R_len_t j = 0;
+        if (na_last_int != NA_LOGICAL && !na_last_int) {
+            // put NAs first
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                ret_tab[j] = (*it)+1; // 1-based indices
+        }
+
+        for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
             ret_tab[j] = (*it)+1; // 1-based indices
-      }
 
-      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
-         ret_tab[j] = (*it)+1; // 1-based indices
+        if (na_last_int != NA_LOGICAL && na_last_int) {
+            // put NAs last
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                ret_tab[j] = (*it)+1; // 1-based indices
+        }
+    }
+    else {
+        // sort
+        STRI__PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
+        R_len_t j = 0;
+        if (na_last_int != NA_LOGICAL && !na_last_int) {
+            // put NAs first
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                SET_STRING_ELT(ret, j, NA_STRING);
+        }
 
-      if (na_last_int != NA_LOGICAL && na_last_int) {
-         // put NAs last
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-            ret_tab[j] = (*it)+1; // 1-based indices
-      }
-   }
-   else {
-      // sort
-      STRI__PROTECT(ret = Rf_allocVector(STRSXP, k+NA_pos.size()));
-      R_len_t j = 0;
-      if (na_last_int != NA_LOGICAL && !na_last_int) {
-         // put NAs first
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-            SET_STRING_ELT(ret, j, NA_STRING);
-      }
+        for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
+            SET_STRING_ELT(ret, j, str_cont.toR(*it));
 
-      for (std::vector<int>::iterator it=order.begin(); it!=order.end(); ++it, ++j)
-         SET_STRING_ELT(ret, j, str_cont.toR(*it));
+        if (na_last_int != NA_LOGICAL && na_last_int) {
+            // put NAs last
+            for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
+                SET_STRING_ELT(ret, j, NA_STRING);
+        }
+    }
 
-      if (na_last_int != NA_LOGICAL && na_last_int) {
-         // put NAs last
-         for (std::deque<int>::iterator it=NA_pos.begin(); it!=NA_pos.end(); ++it, ++j)
-            SET_STRING_ELT(ret, j, NA_STRING);
-      }
-   }
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__UNPROTECT_ALL
-   return ret;
-
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }
 
 
@@ -218,7 +225,7 @@ SEXP stri_order_or_sort(SEXP str, SEXP decreasing, SEXP na_last,
  */
 SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
 {
-   return stri_order_or_sort(str, decreasing, na_last, opts_collator, 1);
+    return stri_order_or_sort(str, decreasing, na_last, opts_collator, 1);
 }
 
 
@@ -235,7 +242,7 @@ SEXP stri_order(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
  */
 SEXP stri_sort(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
 {
-   return stri_order_or_sort(str, decreasing, na_last, opts_collator, 2);
+    return stri_order_or_sort(str, decreasing, na_last, opts_collator, 2);
 }
 
 
@@ -258,56 +265,59 @@ SEXP stri_sort(SEXP str, SEXP decreasing, SEXP na_last, SEXP opts_collator)
  */
 SEXP stri_unique(SEXP str, SEXP opts_collator)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+    STRI__ERROR_HANDLER_BEGIN(1)
 
-   R_len_t vectorize_length = LENGTH(str);
-   StriContainerUTF8 str_cont(str, vectorize_length);
+    R_len_t vectorize_length = LENGTH(str);
+    StriContainerUTF8 str_cont(str, vectorize_length);
 
-   StriSortComparer comp(&str_cont, col, true);
-   set<int,StriSortComparer> uniqueset(comp);
+    StriSortComparer comp(&str_cont, col, true);
+    set<int,StriSortComparer> uniqueset(comp);
 
-   bool was_na = false;
-   deque<SEXP> temp;
-   for (R_len_t i=0; i<vectorize_length; ++i) {
-      if (str_cont.isNA(i)) {
-         if (!was_na) {
-            was_na = true;
-            temp.push_back(NA_STRING);
-         }
-      }
-      else {
-         pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-         if (result.second) {
-            temp.push_back(str_cont.toR(i));
-         }
-      }
-   }
+    bool was_na = false;
+    deque<SEXP> temp;
+    for (R_len_t i=0; i<vectorize_length; ++i) {
+        if (str_cont.isNA(i)) {
+            if (!was_na) {
+                was_na = true;
+                temp.push_back(NA_STRING);
+            }
+        }
+        else {
+            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+            if (result.second) {
+                temp.push_back(str_cont.toR(i));
+            }
+        }
+    }
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
-   R_len_t i = 0;
-   for (deque<SEXP>::iterator it = temp.begin(); it != temp.end(); it++) {
-      SET_STRING_ELT(ret, i++, *it);
-   }
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, temp.size()));
+    R_len_t i = 0;
+    for (deque<SEXP>::iterator it = temp.begin(); it != temp.end(); it++) {
+        SET_STRING_ELT(ret, i++, *it);
+    }
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }
 
 
@@ -328,66 +338,69 @@ SEXP stri_unique(SEXP str, SEXP opts_collator)
  */
 SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+    STRI__ERROR_HANDLER_BEGIN(1)
 
-   R_len_t vectorize_length = LENGTH(str);
-   StriContainerUTF8 str_cont(str, vectorize_length);
+    R_len_t vectorize_length = LENGTH(str);
+    StriContainerUTF8 str_cont(str, vectorize_length);
 
-   StriSortComparer comp(&str_cont, col, true);
-   set<int,StriSortComparer> uniqueset(comp);
+    StriSortComparer comp(&str_cont, col, true);
+    set<int,StriSortComparer> uniqueset(comp);
 
-   bool was_na = false;
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    bool was_na = false;
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   if (fromLastBool) {
-      for (R_len_t i=vectorize_length-1; i>=0; --i) {
-         if (str_cont.isNA(i)) {
-            ret_tab[i] = was_na;
-            if (!was_na)
-               was_na = true;
-         }
-         else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-            ret_tab[i] = !result.second;
-         }
-      }
-   }
-   else {
-      for (R_len_t i=0; i<vectorize_length; ++i) {
-         if (str_cont.isNA(i)) {
-            ret_tab[i] = was_na;
-            if (!was_na)
-               was_na = true;
-         }
-         else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-            ret_tab[i] = !result.second;
-         }
-      }
-   }
+    if (fromLastBool) {
+        for (R_len_t i=vectorize_length-1; i>=0; --i) {
+            if (str_cont.isNA(i)) {
+                ret_tab[i] = was_na;
+                if (!was_na)
+                    was_na = true;
+            }
+            else {
+                pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+                ret_tab[i] = !result.second;
+            }
+        }
+    }
+    else {
+        for (R_len_t i=0; i<vectorize_length; ++i) {
+            if (str_cont.isNA(i)) {
+                ret_tab[i] = was_na;
+                if (!was_na)
+                    was_na = true;
+            }
+            else {
+                pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+                ret_tab[i] = !result.second;
+            }
+        }
+    }
 
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }
 
 
@@ -408,79 +421,82 @@ SEXP stri_duplicated(SEXP str, SEXP fromLast, SEXP opts_collator)
  */
 SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    bool fromLastBool = stri__prepare_arg_logical_1_notNA(fromLast, "fromLast");
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+    STRI__ERROR_HANDLER_BEGIN(1)
 
-   R_len_t vectorize_length = LENGTH(str);
-   StriContainerUTF8 str_cont(str, vectorize_length);
+    R_len_t vectorize_length = LENGTH(str);
+    StriContainerUTF8 str_cont(str, vectorize_length);
 
-   StriSortComparer comp(&str_cont, col, true);
-   set<int,StriSortComparer> uniqueset(comp);
+    StriSortComparer comp(&str_cont, col, true);
+    set<int,StriSortComparer> uniqueset(comp);
 
-   bool was_na = false;
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, 1));
-   int* ret_tab = INTEGER(ret);
-   ret_tab[0] = 0;
+    bool was_na = false;
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, 1));
+    int* ret_tab = INTEGER(ret);
+    ret_tab[0] = 0;
 
-   if (fromLastBool) {
-      for (R_len_t i=vectorize_length-1; i>=0; --i) {
-         if (str_cont.isNA(i)) {
-            if (!was_na)
-               was_na = true;
+    if (fromLastBool) {
+        for (R_len_t i=vectorize_length-1; i>=0; --i) {
+            if (str_cont.isNA(i)) {
+                if (!was_na)
+                    was_na = true;
+                else {
+                    ret_tab[0] = i+1;
+                    break;
+                }
+            }
             else {
-               ret_tab[0] = i+1;
-               break;
+                pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+                if (!result.second) {
+                    ret_tab[0] = i+1;
+                    break;
+                }
             }
-         }
-         else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-            if (!result.second) {
-               ret_tab[0] = i+1;
-               break;
+        }
+    }
+    else {
+        for (R_len_t i=0; i<vectorize_length; ++i) {
+            if (str_cont.isNA(i)) {
+                if (!was_na)
+                    was_na = true;
+                else {
+                    ret_tab[0] = i+1;
+                    break;
+                }
             }
-         }
-      }
-   }
-   else {
-      for (R_len_t i=0; i<vectorize_length; ++i) {
-         if (str_cont.isNA(i)) {
-            if (!was_na)
-               was_na = true;
             else {
-               ret_tab[0] = i+1;
-               break;
+                pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
+                if (!result.second) {
+                    ret_tab[0] = i+1;
+                    break;
+                }
             }
-         }
-         else {
-            pair<set<int,StriSortComparer>::iterator,bool> result = uniqueset.insert(i);
-            if (!result.second) {
-               ret_tab[0] = i+1;
-               break;
-            }
-         }
-      }
-   }
+        }
+    }
 
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }
 
 /** Compute a character sort key
@@ -492,67 +508,70 @@ SEXP stri_duplicated_any(SEXP str, SEXP fromLast, SEXP opts_collator)
  * @version 1.4.7 (Davis Vaughan, 2020-07-15)
  */
 SEXP stri_sort_key(SEXP str, SEXP opts_collator) {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+    STRI__ERROR_HANDLER_BEGIN(1)
 
-   R_len_t length = LENGTH(str);
-   StriContainerUTF16 str_cont(str, length);
+    R_len_t length = LENGTH(str);
+    StriContainerUTF16 str_cont(str, length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, length));
 
 //    UErrorCode status = U_ZERO_ERROR;
 
-   // Allocate temporary buffer to hold the current sort key
-   size_t key_buffer_size = 16384;
-   String8buf key_buffer(key_buffer_size);
-   uint8_t* p_key_buffer_u8 = (uint8_t*) key_buffer.data();
+    // Allocate temporary buffer to hold the current sort key
+    size_t key_buffer_size = 16384;
+    String8buf key_buffer(key_buffer_size);
+    uint8_t* p_key_buffer_u8 = (uint8_t*) key_buffer.data();
 
-   for (R_len_t i = 0; i < length; ++i) {
-      if (str_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+    for (R_len_t i = 0; i < length; ++i) {
+        if (str_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      const UnicodeString* p_str_cur_data = &(str_cont.get(i));
-      const UChar* p_str_cur = p_str_cur_data->getBuffer();
-      const int str_cur_length = p_str_cur_data->length();
+        const UnicodeString* p_str_cur_data = &(str_cont.get(i));
+        const UChar* p_str_cur = p_str_cur_data->getBuffer();
+        const int str_cur_length = p_str_cur_data->length();
 
-      int32_t key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
+        int32_t key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
 
-      // Reallocate a larger buffer and retry as required
-      if ((size_t)key_size > key_buffer_size) {
-         const int32_t key_padding = 100;
-         key_buffer_size = key_size + key_padding;
+        // Reallocate a larger buffer and retry as required
+        if ((size_t)key_size > key_buffer_size) {
+            const int32_t key_padding = 100;
+            key_buffer_size = key_size + key_padding;
 
-         key_buffer.resize(key_buffer_size, false);
-         p_key_buffer_u8 = (uint8_t*) key_buffer.data();
+            key_buffer.resize(key_buffer_size, false);
+            p_key_buffer_u8 = (uint8_t*) key_buffer.data();
 
-         // Try again
-         key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
-      }
+            // Try again
+            key_size = ucol_getSortKey(col, p_str_cur, str_cur_length, p_key_buffer_u8, key_buffer_size);
+        }
 
-      // `key_size` includes null terminator,
-      // which we don't want to copy into the R CHARSXP
-      R_len_t key_char_size = key_size - 1;
+        // `key_size` includes null terminator,
+        // which we don't want to copy into the R CHARSXP
+        R_len_t key_char_size = key_size - 1;
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(key_buffer.data(), key_char_size, CE_UTF8));
+    }
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }

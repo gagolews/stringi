@@ -61,45 +61,45 @@
  */
 SEXP stri_count_charclass(SEXP str, SEXP pattern)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   R_len_t vectorize_length =
-      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    R_len_t vectorize_length =
+        stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
-   int* ret_tab = INTEGER(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+    int* ret_tab = INTEGER(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         ret_tab[i] = NA_INTEGER;
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+            ret_tab[i] = NA_INTEGER;
+            continue;
+        }
 
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
+        const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+        R_len_t     str_cur_n = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
 
-      UChar32 chr   = 0;
-      R_len_t count = 0;
-      for (R_len_t j=0; j<str_cur_n; ) {
-         U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (chr < 0) // invalid utf-8 sequence
-            throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur->contains(chr))
-            ++count;
-      }
-      ret_tab[i] = count;
-   }
+        UChar32 chr   = 0;
+        R_len_t count = 0;
+        for (R_len_t j=0; j<str_cur_n; ) {
+            U8_NEXT(str_cur_s, j, str_cur_n, chr);
+            if (chr < 0) // invalid utf-8 sequence
+                throw StriException(MSG__INVALID_UTF8);
+            if (pattern_cur->contains(chr))
+                ++count;
+        }
+        ret_tab[i] = count;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

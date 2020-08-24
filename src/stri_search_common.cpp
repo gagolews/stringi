@@ -46,16 +46,16 @@ using namespace std;
  * @version 0.1-?? (Marek Gagolewski)
  */
 void stri__locate_set_dimnames_matrix(SEXP matrix) {
-   SEXP dimnames;
-   SEXP colnames;
-   PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
-   PROTECT(colnames = Rf_allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
-   SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
-   SET_VECTOR_ELT(dimnames, 0, R_NilValue);
-   SET_VECTOR_ELT(dimnames, 1, colnames);
-   Rf_setAttrib(matrix, R_DimNamesSymbol, dimnames);
-   UNPROTECT(2);
+    SEXP dimnames;
+    SEXP colnames;
+    PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+    PROTECT(colnames = Rf_allocVector(STRSXP, 2));
+    SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
+    SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
+    SET_VECTOR_ELT(dimnames, 0, R_NilValue);
+    SET_VECTOR_ELT(dimnames, 1, colnames);
+    Rf_setAttrib(matrix, R_DimNamesSymbol, dimnames);
+    UNPROTECT(2);
 }
 
 
@@ -66,18 +66,18 @@ void stri__locate_set_dimnames_matrix(SEXP matrix) {
  * @version 0.1-?? (Marek Gagolewski)
  */
 void stri__locate_set_dimnames_list(SEXP list) {
-   SEXP dimnames;
-   SEXP colnames;
-   PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
-   PROTECT(colnames = Rf_allocVector(STRSXP, 2));
-   SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
-   SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
-   SET_VECTOR_ELT(dimnames, 1, colnames);
+    SEXP dimnames;
+    SEXP colnames;
+    PROTECT(dimnames = Rf_allocVector(VECSXP, 2));
+    PROTECT(colnames = Rf_allocVector(STRSXP, 2));
+    SET_STRING_ELT(colnames, 0, Rf_mkChar(MSG__LOCATE_DIM_START));
+    SET_STRING_ELT(colnames, 1, Rf_mkChar(MSG__LOCATE_DIM_END));
+    SET_VECTOR_ELT(dimnames, 1, colnames);
 
-   R_len_t n = LENGTH(list);
-   for (R_len_t i = 0; i < n; ++i)
-      Rf_setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
-   UNPROTECT(2);
+    R_len_t n = LENGTH(list);
+    for (R_len_t i = 0; i < n; ++i)
+        Rf_setAttrib(VECTOR_ELT(list, i), R_DimNamesSymbol, dimnames);
+    UNPROTECT(2);
 }
 
 
@@ -109,9 +109,9 @@ void stri__locate_set_dimnames_list(SEXP list) {
  *                const StriContainer& for increased performance
  */
 SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
-   const std::vector<int>& which, int result_counter)
+                             const std::vector<int>& which, int result_counter)
 {
-   stri__subset_by_logical__MACRO
+    stri__subset_by_logical__MACRO
 }
 
 
@@ -129,7 +129,7 @@ SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
  *                const StriContainer& for increased performance
  */
 SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
-   const std::vector<int>& which, int result_counter)
+                             const std::vector<int>& which, int result_counter)
 {
-   stri__subset_by_logical__MACRO
+    stri__subset_by_logical__MACRO
 }

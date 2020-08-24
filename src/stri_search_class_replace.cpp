@@ -77,70 +77,70 @@ using namespace std;
  */
 SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
-   PROTECT(str            = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern        = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement    = stri_prepare_arg_string(replacement, "replacement"));
-   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
-   R_len_t vectorize_length = stri__recycling_rule(true, 3,
-            LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+    PROTECT(str            = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern        = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement    = stri_prepare_arg_string(replacement, "replacement"));
+    bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
+    R_len_t vectorize_length = stri__recycling_rule(true, 3,
+                               LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
-   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8buf buf(0); // @TODO: calculate buf len a priori?
+    String8buf buf(0); // @TODO: calculate buf len a priori?
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      R_len_t str_cur_n     = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
-      deque< pair<R_len_t, R_len_t> > occurrences;
-      R_len_t sumbytes = StriContainerCharClass::locateAll(
-         occurrences, &pattern_cont.get(i),
-         str_cur_s, str_cur_n, merge_cur,
-         false /* byte-based indices */
-      );
+        R_len_t str_cur_n     = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
+        deque< pair<R_len_t, R_len_t> > occurrences;
+        R_len_t sumbytes = StriContainerCharClass::locateAll(
+                               occurrences, &pattern_cont.get(i),
+                               str_cur_s, str_cur_n, merge_cur,
+                               false /* byte-based indices */
+                           );
 
-      if (occurrences.size() == 0) {
-         SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
-         continue;
-      }
+        if (occurrences.size() == 0) {
+            SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
+            continue;
+        }
 
-      if (replacement_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        if (replacement_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      R_len_t     replacement_cur_n = replacement_cont.get(i).length();
-      R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
-      buf.resize(buf_need, false/*destroy contents*/);
+        R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+        R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
+        buf.resize(buf_need, false/*destroy contents*/);
 
-      R_len_t buf_used = buf.replaceAllAtPos(str_cur_s, str_cur_n,
-         replacement_cont.get(i).c_str(), replacement_cur_n,
-         occurrences);
+        R_len_t buf_used = buf.replaceAllAtPos(str_cur_s, str_cur_n,
+                                               replacement_cont.get(i).c_str(), replacement_cur_n,
+                                               occurrences);
 
 #ifndef NDEBUG
-      if (buf_need != buf_used)
-         throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
+        if (buf_need != buf_used)
+            throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
 #endif
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -164,82 +164,82 @@ SEXP stri__replace_all_charclass_yes_vectorize_all(SEXP str, SEXP pattern, SEXP 
  */
 SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP merge)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
 
-   // if str_n is 0, then return an empty vector
-   R_len_t str_n = LENGTH(str);
-   if (str_n <= 0) {
-      UNPROTECT(1);
-      return stri__vector_empty_strings(0);
-   }
+    // if str_n is 0, then return an empty vector
+    R_len_t str_n = LENGTH(str);
+    if (str_n <= 0) {
+        UNPROTECT(1);
+        return stri__vector_empty_strings(0);
+    }
 
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   R_len_t pattern_n = LENGTH(pattern);
-   R_len_t replacement_n = LENGTH(replacement);
-   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
-      UNPROTECT(3);
-      Rf_error(MSG__WARN_RECYCLING_RULE2);
-   }
-   if (pattern_n % replacement_n != 0)
-      Rf_warning(MSG__WARN_RECYCLING_RULE);
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    R_len_t pattern_n = LENGTH(pattern);
+    R_len_t replacement_n = LENGTH(replacement);
+    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
+        UNPROTECT(3);
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    }
+    if (pattern_n % replacement_n != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
 
-   if (pattern_n == 1) {// this will be much faster:
-      SEXP ret;
-      PROTECT(ret = stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge));
-      UNPROTECT(4);
-      return ret;
-   }
+    if (pattern_n == 1) {// this will be much faster:
+        SEXP ret;
+        PROTECT(ret = stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge));
+        UNPROTECT(4);
+        return ret;
+    }
 
-   bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
+    bool merge_cur = stri__prepare_arg_logical_1_notNA(merge, "merge");
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, str_n, false); // writable);
-   StriContainerUTF8 replacement_cont(replacement, pattern_n);
-   StriContainerCharClass pattern_cont(pattern, pattern_n);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, str_n, false); // writable);
+    StriContainerUTF8 replacement_cont(replacement, pattern_n);
+    StriContainerCharClass pattern_cont(pattern, pattern_n);
 
-   String8buf buf(0); // @TODO: calculate buf len a priori?
+    String8buf buf(0); // @TODO: calculate buf len a priori?
 
-   for (R_len_t i = 0; i<pattern_n; ++i)
-   {
-      if (pattern_cont.isNA(i)) {
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
+    for (R_len_t i = 0; i<pattern_n; ++i)
+    {
+        if (pattern_cont.isNA(i)) {
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
 
-      for (R_len_t j = 0; j<str_n; ++j) {
-         if (str_cont.isNA(j)) continue;
+        for (R_len_t j = 0; j<str_n; ++j) {
+            if (str_cont.isNA(j)) continue;
 
-         R_len_t str_cur_n     = str_cont.get(j).length();
-         const char* str_cur_s = str_cont.get(j).c_str();
-         deque< pair<R_len_t, R_len_t> > occurrences;
-         R_len_t sumbytes = StriContainerCharClass::locateAll(
-            occurrences, &pattern_cont.get(i),
-            str_cur_s, str_cur_n, merge_cur,
-            false /* byte-based indices */
-         );
+            R_len_t str_cur_n     = str_cont.get(j).length();
+            const char* str_cur_s = str_cont.get(j).c_str();
+            deque< pair<R_len_t, R_len_t> > occurrences;
+            R_len_t sumbytes = StriContainerCharClass::locateAll(
+                                   occurrences, &pattern_cont.get(i),
+                                   str_cur_s, str_cur_n, merge_cur,
+                                   false /* byte-based indices */
+                               );
 
-         if (occurrences.size() == 0)
-            continue;
+            if (occurrences.size() == 0)
+                continue;
 
-         if (replacement_cont.isNA(i)) {
-            str_cont.setNA(j);
-            continue;
-         }
+            if (replacement_cont.isNA(i)) {
+                str_cont.setNA(j);
+                continue;
+            }
 
-         R_len_t     replacement_cur_n = replacement_cont.get(i).length();
-         R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
-         buf.resize(buf_need, false/*destroy contents*/);
+            R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+            R_len_t buf_need = str_cur_n+(R_len_t)occurrences.size()*replacement_cur_n-sumbytes;
+            buf.resize(buf_need, false/*destroy contents*/);
 
-         str_cont.getWritable(j).replaceAllAtPos(buf_need,
-            replacement_cont.get(i).c_str(), replacement_cur_n,
-            occurrences);
-      }
-   }
+            str_cont.getWritable(j).replaceAllAtPos(buf_need,
+                                                    replacement_cont.get(i).c_str(), replacement_cur_n,
+                                                    occurrences);
+        }
+    }
 
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -259,10 +259,10 @@ SEXP stri__replace_all_charclass_no_vectorize_all(SEXP str, SEXP pattern, SEXP r
  */
 SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP merge, SEXP vectorize_all)
 {
-   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
-      return stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge);
-   else
-      return stri__replace_all_charclass_no_vectorize_all(str, pattern, replacement, merge);
+    if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+        return stri__replace_all_charclass_yes_vectorize_all(str, pattern, replacement, merge);
+    else
+        return stri__replace_all_charclass_no_vectorize_all(str, pattern, replacement, merge);
 }
 
 
@@ -294,86 +294,86 @@ SEXP stri_replace_all_charclass(SEXP str, SEXP pattern, SEXP replacement, SEXP m
  */
 SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement, bool first)
 {
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   R_len_t vectorize_length = stri__recycling_rule(true, 3,
-         LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    R_len_t vectorize_length = stri__recycling_rule(true, 3,
+                               LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
-   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8buf buf(0); // @TODO: consider calculating buflen a priori
+    String8buf buf(0); // @TODO: consider calculating buflen a priori
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      R_len_t str_cur_n     = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t j, jlast;
-      UChar32 chr;
+        const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+        R_len_t str_cur_n     = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
+        R_len_t j, jlast;
+        UChar32 chr;
 
-      if (first) { // search for first
-         for (jlast=j=0; j<str_cur_n; ) {
-            U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
-            if (chr < 0) // invalid utf-8 sequence
-               throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur->contains(chr)) {
-               break; // break at first occurrence
+        if (first) { // search for first
+            for (jlast=j=0; j<str_cur_n; ) {
+                U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
+                if (chr < 0) // invalid utf-8 sequence
+                    throw StriException(MSG__INVALID_UTF8);
+                if (pattern_cur->contains(chr)) {
+                    break; // break at first occurrence
+                }
+                jlast = j;
             }
-            jlast = j;
-         }
-      }
-      else { // search for last
-        for (jlast=j=str_cur_n; jlast>0; ) {
-            U8_PREV(str_cur_s, 0, jlast, chr); // "look behind"
-            if (chr < 0) // invalid utf-8 sequence
-               throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur->contains(chr)) {
-               break; // break at first occurrence
+        }
+        else { // search for last
+            for (jlast=j=str_cur_n; jlast>0; ) {
+                U8_PREV(str_cur_s, 0, jlast, chr); // "look behind"
+                if (chr < 0) // invalid utf-8 sequence
+                    throw StriException(MSG__INVALID_UTF8);
+                if (pattern_cur->contains(chr)) {
+                    break; // break at first occurrence
+                }
+                j = jlast;
             }
-            j = jlast;
-         }
-      }
+        }
 
-      // match is at jlast, and ends right before j
+        // match is at jlast, and ends right before j
 
-      if (j == jlast) { // iff not found
-         SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
-         continue;
-      }
+        if (j == jlast) { // iff not found
+            SET_STRING_ELT(ret, i, str_cont.toR(i)); // no change
+            continue;
+        }
 
-      if (replacement_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        if (replacement_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      R_len_t     replacement_cur_n = replacement_cont.get(i).length();
-      const char* replacement_cur_s = replacement_cont.get(i).c_str();
-      R_len_t buf_need = str_cur_n+replacement_cur_n-(j-jlast);
-      buf.resize(buf_need, false/*destroy contents*/);
-      memcpy(buf.data(), str_cur_s, (size_t)jlast);
-      memcpy(buf.data()+jlast, replacement_cur_s, (size_t)replacement_cur_n);
-      memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, (size_t)str_cur_n-j);
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
-   }
+        R_len_t     replacement_cur_n = replacement_cont.get(i).length();
+        const char* replacement_cur_s = replacement_cont.get(i).c_str();
+        R_len_t buf_need = str_cur_n+replacement_cur_n-(j-jlast);
+        buf.resize(buf_need, false/*destroy contents*/);
+        memcpy(buf.data(), str_cur_s, (size_t)jlast);
+        memcpy(buf.data()+jlast, replacement_cur_s, (size_t)replacement_cur_n);
+        memcpy(buf.data()+jlast+replacement_cur_n, str_cur_s+j, (size_t)str_cur_n-j);
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_need, CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -390,7 +390,7 @@ SEXP stri__replace_firstlast_charclass(SEXP str, SEXP pattern, SEXP replacement,
  */
 SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
-   return stri__replace_firstlast_charclass(str, pattern, replacement, true);
+    return stri__replace_firstlast_charclass(str, pattern, replacement, true);
 }
 
 
@@ -407,5 +407,5 @@ SEXP stri_replace_first_charclass(SEXP str, SEXP pattern, SEXP replacement)
  */
 SEXP stri_replace_last_charclass(SEXP str, SEXP pattern, SEXP replacement)
 {
-   return stri__replace_firstlast_charclass(str, pattern, replacement, false);
+    return stri__replace_firstlast_charclass(str, pattern, replacement, false);
 }

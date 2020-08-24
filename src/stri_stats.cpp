@@ -55,59 +55,59 @@
  */
 SEXP stri_stats_general(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   R_len_t str_length = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF8 str_cont(str, str_length);
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 str_cont(str, str_length);
 
-   enum {
-      gsNumLines = 0,
-      gsNumLinesNonEmpty = 1,
-      gsNumChars = 2,
-      gsNumCharsNonWhite = 3,
-      gsAll = 4 // always == number of elements
-   };
+    enum {
+        gsNumLines = 0,
+        gsNumLinesNonEmpty = 1,
+        gsNumChars = 2,
+        gsNumCharsNonWhite = 3,
+        gsAll = 4 // always == number of elements
+    };
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, gsAll));
-   int* stats = INTEGER(ret);
-   for (int i=0; i<gsAll; ++i)
-      stats[i] = 0;
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, gsAll));
+    int* stats = INTEGER(ret);
+    for (int i=0; i<gsAll; ++i)
+        stats[i] = 0;
 
-   for (R_len_t i=0; i<str_length; ++i) {
-      if (str_cont.isNA(i)) continue; // ignore
+    for (R_len_t i=0; i<str_length; ++i) {
+        if (str_cont.isNA(i)) continue; // ignore
 
-      ++stats[gsNumLines]; // another line
-      R_len_t     cn = str_cont.get(i).length();
-      const char* cs = str_cont.get(i).c_str();
-      UChar32 c;
-      bool AnyNonWhite = false;
+        ++stats[gsNumLines]; // another line
+        R_len_t     cn = str_cont.get(i).length();
+        const char* cs = str_cont.get(i).c_str();
+        UChar32 c;
+        bool AnyNonWhite = false;
 
-      for (int j=0; j<cn; ) {
-         U8_NEXT(cs, j, cn, c);
-         if (c < 0)
-            throw StriException(MSG__INVALID_UTF8);
-         // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
-         else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
-            throw StriException(MSG__NEWLINE_FOUND);
-         }
-         ++stats[gsNumChars]; // another character [code point]
-         // we test for UCHAR_WHITE_SPACE binary property
-         if (!u_hasBinaryProperty(c, UCHAR_WHITE_SPACE)) {
-            AnyNonWhite = true;
-            ++stats[gsNumCharsNonWhite];
-         }
-      }
+        for (int j=0; j<cn; ) {
+            U8_NEXT(cs, j, cn, c);
+            if (c < 0)
+                throw StriException(MSG__INVALID_UTF8);
+            // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
+            else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
+                throw StriException(MSG__NEWLINE_FOUND);
+            }
+            ++stats[gsNumChars]; // another character [code point]
+            // we test for UCHAR_WHITE_SPACE binary property
+            if (!u_hasBinaryProperty(c, UCHAR_WHITE_SPACE)) {
+                AnyNonWhite = true;
+                ++stats[gsNumCharsNonWhite];
+            }
+        }
 
-      if (AnyNonWhite)
-         ++stats[gsNumLinesNonEmpty]; // we have a non-empty line here
-   }
+        if (AnyNonWhite)
+            ++stats[gsNumLinesNonEmpty]; // we have a non-empty line here
+    }
 
-   stri__set_names(ret, gsAll, "Lines", "LinesNEmpty", "Chars", "CharsNWhite");
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    stri__set_names(ret, gsAll, "Lines", "LinesNEmpty", "Chars", "CharsNWhite");
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -140,171 +140,171 @@ SEXP stri_stats_general(SEXP str)
  */
 SEXP stri_stats_latex(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   R_len_t str_length = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF8 str_cont(str, str_length);
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 str_cont(str, str_length);
 
-   // We use a modified Kile 2.1.3 LaTeX Word Count algorithm
-   // (source file: `Kile/src/documentinfo.cpp`,
-   // method: `void Info::count(const QString& line, long *stat)`).
-   // (C) 2013-2019 by the Kile Team (Holger Danielsson, Michel Ludwig,
-   // Jeroen Wijnhout, and others). https://kile.sourceforge.io/.
-   // Licensed under the GNU General Public License Version 2.
-   enum State {
-      stStandard = 0, stComment = 1, stControlSequence = 3,
-      stControlSymbol = 4, stCommand = 5, stEnvironment = 6
-   };
+    // We use a modified Kile 2.1.3 LaTeX Word Count algorithm
+    // (source file: `Kile/src/documentinfo.cpp`,
+    // method: `void Info::count(const QString& line, long *stat)`).
+    // (C) 2013-2019 by the Kile Team (Holger Danielsson, Michel Ludwig,
+    // Jeroen Wijnhout, and others). https://kile.sourceforge.io/.
+    // Licensed under the GNU General Public License Version 2.
+    enum State {
+        stStandard = 0, stComment = 1, stControlSequence = 3,
+        stControlSymbol = 4, stCommand = 5, stEnvironment = 6
+    };
 
-   enum {
-      lsCharsWord = 0,
-      lsCharsCmdEnvir = 1,
-      lsCharsWhite = 2,
-      lsWords = 3,
-      lsCmd = 4,
-      lsEnvir = 5,
-      lsAll = 6
-   };
+    enum {
+        lsCharsWord = 0,
+        lsCharsCmdEnvir = 1,
+        lsCharsWhite = 2,
+        lsWords = 3,
+        lsCmd = 4,
+        lsEnvir = 5,
+        lsAll = 6
+    };
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, lsAll));
-   int* stats = INTEGER(ret);
-   for (int i=0; i<lsAll; ++i) stats[i] = 0;
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, lsAll));
+    int* stats = INTEGER(ret);
+    for (int i=0; i<lsAll; ++i) stats[i] = 0;
 
-   for (R_len_t i=0; i<str_length; ++i) {
-      if (str_cont.isNA(i)) continue; // ignore
+    for (R_len_t i=0; i<str_length; ++i) {
+        if (str_cont.isNA(i)) continue; // ignore
 
-      R_len_t     cn = str_cont.get(i).length();
-      const char* cs = str_cont.get(i).c_str();
-      UChar32 c;
+        R_len_t     cn = str_cont.get(i).length();
+        const char* cs = str_cont.get(i).c_str();
+        UChar32 c;
 
-      int state = stStandard;
-      bool word = false; // we are not in a word currently
-      for (int j=0; j<cn; ) {
-         U8_NEXT(cs, j, cn, c);
+        int state = stStandard;
+        bool word = false; // we are not in a word currently
+        for (int j=0; j<cn; ) {
+            U8_NEXT(cs, j, cn, c);
 
-         if (c < 0)
-            throw StriException(MSG__INVALID_UTF8);
-         // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
-         else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
-            throw StriException(MSG__NEWLINE_FOUND);
-         }
+            if (c < 0)
+                throw StriException(MSG__INVALID_UTF8);
+            // @TODO: follow Unicode Newline Guidelines - Unicode Technical Report #13
+            else if (c == (UChar32)'\n' || c == (UChar32)'\r') {
+                throw StriException(MSG__NEWLINE_FOUND);
+            }
 
-         UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
-         UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
+            UBool isLetter = u_isUAlphabetic(c); // u_hasBinaryProperty(c, UCHAR_ALPHABETIC)
+            UBool isNumber = u_isdigit(c); // U_DECIMAL_DIGIT_NUMBER    Nd
 
-         switch(state) {
+            switch(state) {
             case stStandard:
-               if (c == (UChar32)'\\') {
-                  state = stControlSequence;
-                  ++stats[lsCharsCmdEnvir];
+                if (c == (UChar32)'\\') {
+                    state = stControlSequence;
+                    ++stats[lsCharsCmdEnvir];
 
-                  if (j < cn) {
-                     // Look Ahead:
-                     UChar32 cnext;
-                     int jnext = j;
-                     U8_NEXT(cs, jnext, cn, cnext);
-                     UBool isPunctNext = u_ispunct(cnext);
+                    if (j < cn) {
+                        // Look Ahead:
+                        UChar32 cnext;
+                        int jnext = j;
+                        U8_NEXT(cs, jnext, cn, cnext);
+                        UBool isPunctNext = u_ispunct(cnext);
 
-                     if (!isPunctNext || cnext == (UChar32)'~' || cnext == (UChar32)'^') {
-                        // this is to avoid counting words like K\"ahler as two words
+                        if (!isPunctNext || cnext == (UChar32)'~' || cnext == (UChar32)'^') {
+                            // this is to avoid counting words like K\"ahler as two words
+                            word = false;
+                        }
+                    }
+                }
+                else if (c == (UChar32)'%') {
+                    state = stComment;
+                }
+                else {
+                    if (isLetter || isNumber) {
+                        // only start a new word if first character is a letter
+                        // (42test is still counted as a word, but 42.2 not)
+                        if (isLetter && !word) {
+                            word = true;
+                            ++stats[lsWords];
+                        }
+                        ++stats[lsCharsWord];
+                    }
+                    else {
+                        ++stats[lsCharsWhite];
                         word = false;
-                     }
-                  }
-               }
-               else if (c == (UChar32)'%') {
-                  state = stComment;
-               }
-               else {
-                  if (isLetter || isNumber) {
-                     // only start a new word if first character is a letter
-                     // (42test is still counted as a word, but 42.2 not)
-                     if (isLetter && !word) {
-                        word = true;
-                        ++stats[lsWords];
-                     }
-                     ++stats[lsCharsWord];
-                  }
-                  else {
-                     ++stats[lsCharsWhite];
-                     word = false;
-                  }
-              }
-              break; // stStandard
+                    }
+                }
+                break; // stStandard
 
             case stControlSequence:
-              if (isLetter) {
-                  // "\begin{[a-zA-z]+}" is an environment, and you can't define a command like \begin
-                  if (c == (UChar32)'b' && !strncmp(cs+j, "egin", 4) /* plain ASCII compare - it's OK */) {
-                     ++stats[lsEnvir];
-                     state = stEnvironment;
-                     stats[lsCharsCmdEnvir] +=5;
-                     j += 4;
-                  }
-                  else if (c == (UChar32)'e' && !strncmp(cs+j, "nd", 2) /* plain ASCII compare - it's OK */) {
-                     stats[lsCharsCmdEnvir] +=3;
-                     state = stEnvironment;
-                     j += 2;
-                  } // we don't count \end as a new environment, this can give wrong results in selections
-                  else {
-                     ++stats[lsCmd];
-                     ++stats[lsCharsCmdEnvir];
-                     state = stCommand;
-                  }
-               }
-               else {
-                  // MG: This will also prevent counting \% as a comment (it's a percent sign)
-                  ++stats[lsCmd];
-                  ++stats[lsCharsCmdEnvir];
-                  state = stStandard;
-               }
-               break;
+                if (isLetter) {
+                    // "\begin{[a-zA-z]+}" is an environment, and you can't define a command like \begin
+                    if (c == (UChar32)'b' && !strncmp(cs+j, "egin", 4) /* plain ASCII compare - it's OK */) {
+                        ++stats[lsEnvir];
+                        state = stEnvironment;
+                        stats[lsCharsCmdEnvir] +=5;
+                        j += 4;
+                    }
+                    else if (c == (UChar32)'e' && !strncmp(cs+j, "nd", 2) /* plain ASCII compare - it's OK */) {
+                        stats[lsCharsCmdEnvir] +=3;
+                        state = stEnvironment;
+                        j += 2;
+                    } // we don't count \end as a new environment, this can give wrong results in selections
+                    else {
+                        ++stats[lsCmd];
+                        ++stats[lsCharsCmdEnvir];
+                        state = stCommand;
+                    }
+                }
+                else {
+                    // MG: This will also prevent counting \% as a comment (it's a percent sign)
+                    ++stats[lsCmd];
+                    ++stats[lsCharsCmdEnvir];
+                    state = stStandard;
+                }
+                break;
 
             case stCommand :
-               if(isLetter) {
-                  ++stats[lsCharsCmdEnvir];
-               }
-               else if(c == (UChar32)'\\') {
-                  ++stats[lsCharsCmdEnvir];
-                  state = stControlSequence;
-               }
-               else if(c == (UChar32)'%') {
-                  state = stComment;
-               }
-               else {
-                  ++stats[lsCharsWhite];
-                  state = stStandard;
-               }
-            break;
+                if(isLetter) {
+                    ++stats[lsCharsCmdEnvir];
+                }
+                else if(c == (UChar32)'\\') {
+                    ++stats[lsCharsCmdEnvir];
+                    state = stControlSequence;
+                }
+                else if(c == (UChar32)'%') {
+                    state = stComment;
+                }
+                else {
+                    ++stats[lsCharsWhite];
+                    state = stStandard;
+                }
+                break;
 
             case stEnvironment :
-               if(c == (UChar32)'}') { // until we find a closing } we have an environment
-                  ++stats[lsCharsCmdEnvir];
-                  state = stStandard;
-               }
-               else if(c == (UChar32)'%') {
-                  state = stComment;
-               }
-               else {
-                  ++stats[lsCharsCmdEnvir];
-               }
-            break;
+                if(c == (UChar32)'}') { // until we find a closing } we have an environment
+                    ++stats[lsCharsCmdEnvir];
+                    state = stStandard;
+                }
+                else if(c == (UChar32)'%') {
+                    state = stComment;
+                }
+                else {
+                    ++stats[lsCharsCmdEnvir];
+                }
+                break;
 
             case stComment:
-               // ignore until the end - any newline will be detected
-               // and the error will be thrown
-            break;
+                // ignore until the end - any newline will be detected
+                // and the error will be thrown
+                break;
 
             default:
-               throw StriException("DEBUG: stri_stats_latex() - this shouldn't happen :-(");
-         }
-     }
-   }
+                throw StriException("DEBUG: stri_stats_latex() - this shouldn't happen :-(");
+            }
+        }
+    }
 
-   stri__set_names(ret, lsAll, "CharsWord", "CharsCmdEnvir", "CharsWhite",
-      "Words", "Cmds", "Envirs");
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    stri__set_names(ret, lsAll, "CharsWord", "CharsCmdEnvir", "CharsWhite",
+                    "Words", "Cmds", "Envirs");
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -74,47 +74,48 @@
  *    #232: `max_count` arg added
  */
 SEXP stri_detect_fixed(SEXP str, SEXP pattern, SEXP negate,
-    SEXP max_count, SEXP opts_fixed)
+                       SEXP max_count, SEXP opts_fixed)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (max_count_1 == 0) {
-          ret_tab[i] = NA_LOGICAL;
-          continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (max_count_1 == 0) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         ret_tab[i] = NA_LOGICAL,
-         {ret_tab[i] = negate_1;
-          if (max_count_1 > 0 && ret_tab[i]) --max_count_1;})
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                ret_tab[i] = NA_LOGICAL,
+        {   ret_tab[i] = negate_1;
+            if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
+        })
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      ret_tab[i] = (int)(matcher->findFirst() != USEARCH_DONE);
-      if (negate_1) ret_tab[i] = !ret_tab[i];
-      if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
-   }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        ret_tab[i] = (int)(matcher->findFirst() != USEARCH_DONE);
+        if (negate_1) ret_tab[i] = !ret_tab[i];
+        if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 
 
 //   Version 2 -- slower for long strings

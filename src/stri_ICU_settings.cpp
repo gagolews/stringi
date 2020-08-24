@@ -67,31 +67,31 @@
 */
 SEXP stri_info()
 {
-   STRI__ERROR_HANDLER_BEGIN(0)
-   const R_len_t infosize = 7;
-   SEXP vals;
+    STRI__ERROR_HANDLER_BEGIN(0)
+    const R_len_t infosize = 7;
+    SEXP vals;
 
-   STRI__PROTECT(vals = Rf_allocVector(VECSXP, infosize));
-   SET_VECTOR_ELT(vals, 0, Rf_mkString(U_UNICODE_VERSION));
-   SET_VECTOR_ELT(vals, 1, Rf_mkString(U_ICU_VERSION));
-   SET_VECTOR_ELT(vals, 2, stri_locale_info(R_NilValue)); // may call Rf_error
-   SET_VECTOR_ELT(vals, 3,
-      stri__make_character_vector_char_ptr(2, "UTF-8", "UTF-16")); // fixed strings
-   SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));  // may call Rf_error
-   SET_VECTOR_ELT(vals, 5, Rf_ScalarLogical(STRI_ICU_FOUND));
+    STRI__PROTECT(vals = Rf_allocVector(VECSXP, infosize));
+    SET_VECTOR_ELT(vals, 0, Rf_mkString(U_UNICODE_VERSION));
+    SET_VECTOR_ELT(vals, 1, Rf_mkString(U_ICU_VERSION));
+    SET_VECTOR_ELT(vals, 2, stri_locale_info(R_NilValue)); // may call Rf_error
+    SET_VECTOR_ELT(vals, 3,
+                   stri__make_character_vector_char_ptr(2, "UTF-8", "UTF-16")); // fixed strings
+    SET_VECTOR_ELT(vals, 4, stri_enc_info(R_NilValue));  // may call Rf_error
+    SET_VECTOR_ELT(vals, 5, Rf_ScalarLogical(STRI_ICU_FOUND));
 
-   SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(0));
+    SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(0));
 #ifdef U_CHARSET_IS_UTF8
 #if U_CHARSET_IS_UTF8
-   SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(1));
+    SET_VECTOR_ELT(vals, 6, Rf_ScalarLogical(1));
 #endif
 #endif
 
-   stri__set_names(vals, infosize,
-      "Unicode.version", "ICU.version", "Locale",
-      "Charset.internal", "Charset.native", "ICU.system", "ICU.UTF8");
+    stri__set_names(vals, infosize,
+                    "Unicode.version", "ICU.version", "Locale",
+                    "Charset.internal", "Charset.native", "ICU.system", "ICU.UTF8");
 
-   STRI__UNPROTECT_ALL
-   return vals;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return vals;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

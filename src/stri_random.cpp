@@ -53,81 +53,81 @@
  */
 SEXP stri_rand_shuffle(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   R_len_t n = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    R_len_t n = LENGTH(str);
 
-   GetRNGstate();
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF8 str_cont(str, n);
+    GetRNGstate();
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 str_cont(str, n);
 
-   R_len_t bufsize = 0;
-   for (R_len_t i=0; i<n; ++i) {
-      if (str_cont.isNA(i)) continue;
-      R_len_t ni = str_cont.get(i).length();
-      if (ni > bufsize) bufsize = ni;
-   }
-   std::vector<UChar32> buf1(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
-   String8buf buf2(bufsize);
+    R_len_t bufsize = 0;
+    for (R_len_t i=0; i<n; ++i) {
+        if (str_cont.isNA(i)) continue;
+        R_len_t ni = str_cont.get(i).length();
+        if (ni > bufsize) bufsize = ni;
+    }
+    std::vector<UChar32> buf1(bufsize); // at most bufsize UChars32 (bufsize/4 min.)
+    String8buf buf2(bufsize);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n));
 
-   for (R_len_t i=0; i<n; ++i) {
+    for (R_len_t i=0; i<n; ++i) {
 
-      if (str_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        if (str_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      // fill buf1
-      UChar32 c = (UChar32)0;
-      const char* s = str_cont.get(i).c_str();
-      R_len_t sn = str_cont.get(i).length();
-      R_len_t j = 0;
-      R_len_t k = 0;
-      while (c >= 0 && j < sn) {
-         U8_NEXT(s, j, sn, c);
-         buf1[k++] = (int)c;
-      }
+        // fill buf1
+        UChar32 c = (UChar32)0;
+        const char* s = str_cont.get(i).c_str();
+        R_len_t sn = str_cont.get(i).length();
+        R_len_t j = 0;
+        R_len_t k = 0;
+        while (c >= 0 && j < sn) {
+            U8_NEXT(s, j, sn, c);
+            buf1[k++] = (int)c;
+        }
 
-      if (c < 0) {
-         Rf_warning(MSG__INVALID_UTF8);
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        if (c < 0) {
+            Rf_warning(MSG__INVALID_UTF8);
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      // do shuffle buf1 at pos 0..k-1: (Fisher-Yates shuffle)
-      R_len_t cur_n = k;
-      for (j=0; j<cur_n-1; ++j) {
-         // rand from i to cur_n-1
-         R_len_t r = (R_len_t)floor(unif_rand()*(double)(cur_n-j)+(double)j);
-         UChar32 tmp = buf1[r];
-         buf1[r] = buf1[j];
-         buf1[j] = tmp;
-      }
+        // do shuffle buf1 at pos 0..k-1: (Fisher-Yates shuffle)
+        R_len_t cur_n = k;
+        for (j=0; j<cur_n-1; ++j) {
+            // rand from i to cur_n-1
+            R_len_t r = (R_len_t)floor(unif_rand()*(double)(cur_n-j)+(double)j);
+            UChar32 tmp = buf1[r];
+            buf1[r] = buf1[j];
+            buf1[j] = tmp;
+        }
 
-      // create string:
-      char* buf2data = buf2.data();
-      c = (UChar32)0;
-      j = 0;
-      k = 0;
-      UBool err = FALSE;
-      while (!err && k < cur_n) {
-         c = buf1[k++];
-         U8_APPEND((uint8_t*)buf2data, j, bufsize, c, err);
-      }
+        // create string:
+        char* buf2data = buf2.data();
+        c = (UChar32)0;
+        j = 0;
+        k = 0;
+        UBool err = FALSE;
+        while (!err && k < cur_n) {
+            c = buf1[k++];
+            U8_APPEND((uint8_t*)buf2data, j, bufsize, c, err);
+        }
 
-      if (err) throw StriException(MSG__INTERNAL_ERROR);
+        if (err) throw StriException(MSG__INTERNAL_ERROR);
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf2data, j, CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf2data, j, CE_UTF8));
+    }
 
-   PutRNGstate();
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({
-      PutRNGstate();
-   })
+    PutRNGstate();
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({
+        PutRNGstate();
+    })
 }
 
 
@@ -149,78 +149,78 @@ SEXP stri_rand_shuffle(SEXP str)
  */
 SEXP stri_rand_strings(SEXP n, SEXP length, SEXP pattern)
 {
-   int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
-   PROTECT(length    = stri_prepare_arg_integer(length, "length"));
-   PROTECT(pattern   = stri_prepare_arg_string(pattern, "pattern"));
+    int n_val = stri__prepare_arg_integer_1_notNA(n, "n");
+    PROTECT(length    = stri_prepare_arg_integer(length, "length"));
+    PROTECT(pattern   = stri_prepare_arg_string(pattern, "pattern"));
 
-   if (n_val < 0) n_val = 0; /* that's not NA for sure now */
+    if (n_val < 0) n_val = 0; /* that's not NA for sure now */
 
-   R_len_t length_len = LENGTH(length);
-   if (length_len <= 0) {
-      UNPROTECT(2);
-      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "length");
-   }
-   else if (length_len > n_val || n_val % length_len != 0)
-      Rf_warning(MSG__WARN_RECYCLING_RULE2);
+    R_len_t length_len = LENGTH(length);
+    if (length_len <= 0) {
+        UNPROTECT(2);
+        Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "length");
+    }
+    else if (length_len > n_val || n_val % length_len != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
-   R_len_t pattern_len = LENGTH(pattern);
-   if (pattern_len <= 0) {
-      UNPROTECT(2);
-      Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "pattern");
-   }
-   else if (pattern_len > n_val || n_val % pattern_len != 0)
-      Rf_warning(MSG__WARN_RECYCLING_RULE2);
+    R_len_t pattern_len = LENGTH(pattern);
+    if (pattern_len <= 0) {
+        UNPROTECT(2);
+        Rf_error(MSG__ARG_EXPECTED_NOT_EMPTY, "pattern");
+    }
+    else if (pattern_len > n_val || n_val % pattern_len != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE2);
 
-   GetRNGstate();
-   STRI__ERROR_HANDLER_BEGIN(2)
+    GetRNGstate();
+    STRI__ERROR_HANDLER_BEGIN(2)
 
-   StriContainerCharClass pattern_cont(pattern, max(n_val, pattern_len));
-   StriContainerInteger   length_cont(length, max(n_val, length_len));
+    StriContainerCharClass pattern_cont(pattern, max(n_val, pattern_len));
+    StriContainerInteger   length_cont(length, max(n_val, length_len));
 
-   // get max required bufsize
-   int*    length_tab = INTEGER(length);
-   size_t bufsize = 0;
-   for (R_len_t i=0; i<length_len; ++i) {
-      if (length_tab[i] != NA_INTEGER && (size_t)length_tab[i] > bufsize)
-         bufsize = length_tab[i];
-   }
-   bufsize *= 4;  // 1 UChar32 -> max. 4 UTF-8 bytes
-   String8buf buf(bufsize);
-   char* bufdata = buf.data();
+    // get max required bufsize
+    int*    length_tab = INTEGER(length);
+    size_t bufsize = 0;
+    for (R_len_t i=0; i<length_len; ++i) {
+        if (length_tab[i] != NA_INTEGER && (size_t)length_tab[i] > bufsize)
+            bufsize = length_tab[i];
+    }
+    bufsize *= 4;  // 1 UChar32 -> max. 4 UTF-8 bytes
+    String8buf buf(bufsize);
+    char* bufdata = buf.data();
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, n_val));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, n_val));
 
-   for (R_len_t i=0; i<n_val; ++i) {
-      if (length_cont.isNA(i) || pattern_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+    for (R_len_t i=0; i<n_val; ++i) {
+        if (length_cont.isNA(i) || pattern_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      R_len_t length_cur = length_cont.get(i);
-      if (length_cur < 0) length_cur = 0;
+        R_len_t length_cur = length_cont.get(i);
+        if (length_cur < 0) length_cur = 0;
 
-      const UnicodeSet* uset = &(pattern_cont.get(i));
-      int32_t uset_size = uset->size();
+        const UnicodeSet* uset = &(pattern_cont.get(i));
+        int32_t uset_size = uset->size();
 
-      // generate string:
-      size_t j = 0;
-      UBool err = FALSE;
-      for (R_len_t k=0; k<length_cur; ++k) {
-         int32_t idx = (int32_t)floor(unif_rand()*(double)uset_size); /* 0..uset_size-1 */
-         UChar32 c = uset->charAt(idx);
-         if (c < 0) throw StriException(MSG__INTERNAL_ERROR);
+        // generate string:
+        size_t j = 0;
+        UBool err = FALSE;
+        for (R_len_t k=0; k<length_cur; ++k) {
+            int32_t idx = (int32_t)floor(unif_rand()*(double)uset_size); /* 0..uset_size-1 */
+            UChar32 c = uset->charAt(idx);
+            if (c < 0) throw StriException(MSG__INTERNAL_ERROR);
 
-         U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);
-         if (err) throw StriException(MSG__INTERNAL_ERROR);
-      }
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, j, CE_UTF8));
-   }
+            U8_APPEND((uint8_t*)bufdata, j, bufsize, c, err);
+            if (err) throw StriException(MSG__INTERNAL_ERROR);
+        }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(bufdata, j, CE_UTF8));
+    }
 
-   PutRNGstate();
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({
-      PutRNGstate();
-   })
+    PutRNGstate();
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({
+        PutRNGstate();
+    })
 }

@@ -39,9 +39,9 @@
  *
  */
 StriContainerListRaw::StriContainerListRaw()
-   : StriContainerBase()
+    : StriContainerBase()
 {
-   data = NULL;
+    data = NULL;
 }
 
 
@@ -53,88 +53,88 @@ StriContainerListRaw::StriContainerListRaw()
  */
 StriContainerListRaw::StriContainerListRaw(SEXP rstr)
 {
-   this->data = NULL;
+    this->data = NULL;
 
-   if (isNull(rstr)) {
-      this->init_Base(1, 1, true);
-      this->data = new String8[this->n]; // 1 string, NA
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-   }
-   else if (isRaw(rstr)) {
-      this->init_Base(1, 1, true);
-      this->data = new String8[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      this->data[0].initialize((const char*)RAW(rstr), LENGTH(rstr),
-         false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
-   }
-   else if (Rf_isVectorList(rstr)) {
-      R_len_t nv = LENGTH(rstr);
-      this->init_Base(nv, nv, true);
-      this->data = new String8[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (R_len_t i=0; i<this->n; ++i) {
-         SEXP cur = VECTOR_ELT(rstr, i);
-         if (!isNull(cur))
-            this->data[i].initialize((const char*)RAW(cur), LENGTH(cur),
-               false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
-         // else leave as-is, i.e., NA
-      }
-   }
-   else { // it's surely a character vector (args have been checked)
-      R_len_t nv = LENGTH(rstr);
-      this->init_Base(nv, nv, true);
-      this->data = new String8[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (R_len_t i=0; i<this->n; ++i) {
-         SEXP cur = STRING_ELT(rstr, i);
-         if (cur != NA_STRING)
-            this->data[i].initialize(CHAR(cur), LENGTH(cur),
-               false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
-         // else leave as-is, i.e., NA
-      }
-   }
+    if (isNull(rstr)) {
+        this->init_Base(1, 1, true);
+        this->data = new String8[this->n]; // 1 string, NA
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+    }
+    else if (isRaw(rstr)) {
+        this->init_Base(1, 1, true);
+        this->data = new String8[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        this->data[0].initialize((const char*)RAW(rstr), LENGTH(rstr),
+                                 false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+    }
+    else if (Rf_isVectorList(rstr)) {
+        R_len_t nv = LENGTH(rstr);
+        this->init_Base(nv, nv, true);
+        this->data = new String8[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (R_len_t i=0; i<this->n; ++i) {
+            SEXP cur = VECTOR_ELT(rstr, i);
+            if (!isNull(cur))
+                this->data[i].initialize((const char*)RAW(cur), LENGTH(cur),
+                                         false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+            // else leave as-is, i.e., NA
+        }
+    }
+    else { // it's surely a character vector (args have been checked)
+        R_len_t nv = LENGTH(rstr);
+        this->init_Base(nv, nv, true);
+        this->data = new String8[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (R_len_t i=0; i<this->n; ++i) {
+            SEXP cur = STRING_ELT(rstr, i);
+            if (cur != NA_STRING)
+                this->data[i].initialize(CHAR(cur), LENGTH(cur),
+                                         false/*memalloc*/, false/*killbom*/, false/*isASCII*/); // shallow copy
+            // else leave as-is, i.e., NA
+        }
+    }
 }
 
 
 StriContainerListRaw::StriContainerListRaw(StriContainerListRaw& container)
-   :    StriContainerBase((StriContainerBase&)container)
+    :    StriContainerBase((StriContainerBase&)container)
 {
-   if (container.data) {
-      this->data = new String8[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (int i=0; i<this->n; ++i) {
-         this->data[i] = container.data[i];
-      }
-   }
-   else {
-      this->data = NULL;
-   }
+    if (container.data) {
+        this->data = new String8[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (int i=0; i<this->n; ++i) {
+            this->data[i] = container.data[i];
+        }
+    }
+    else {
+        this->data = NULL;
+    }
 }
 
 
 StriContainerListRaw& StriContainerListRaw::operator=(StriContainerListRaw& container)
 {
-   this->~StriContainerListRaw();
-   (StriContainerBase&) (*this) = (StriContainerBase&)container;
+    this->~StriContainerListRaw();
+    (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
-   if (container.data) {
-      this->data = new String8[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (int i=0; i<this->n; ++i) {
-         this->data[i] = container.data[i];
-      }
-   }
-   else {
-      this->data = NULL;
-   }
-   return *this;
+    if (container.data) {
+        this->data = new String8[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (int i=0; i<this->n; ++i) {
+            this->data[i] = container.data[i];
+        }
+    }
+    else {
+        this->data = NULL;
+    }
+    return *this;
 }
 
 
 StriContainerListRaw::~StriContainerListRaw()
 {
-   if (data) {
-      delete [] data;
-      data = NULL;
-   }
+    if (data) {
+        delete [] data;
+        data = NULL;
+    }
 }

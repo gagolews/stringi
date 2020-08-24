@@ -38,19 +38,19 @@
  * @version 0.3-1 (Marek Gagolewski, 2014-11-01)
  */
 template<class T> struct StriInterval {
-   int a;
-   int b;
-   T data;
+    int a;
+    int b;
+    T data;
 
-   StriInterval(int _a, int _b, const T& _data) {
-      this->a = _a;
-      this->b = _b;
-      this->data = _data;
-   }
+    StriInterval(int _a, int _b, const T& _data) {
+        this->a = _a;
+        this->b = _b;
+        this->data = _data;
+    }
 };
 
 template<class T> bool operator<(const StriInterval<T>& i1, const StriInterval<T>& i2) {
-   return (i1.a < i2.a);
+    return (i1.a < i2.a);
 }
 
 #endif

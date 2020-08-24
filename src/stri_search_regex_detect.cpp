@@ -68,47 +68,47 @@
  *    #232: `max_count` arg added
  */
 SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
-    SEXP max_count, SEXP opts_regex)
+                       SEXP max_count, SEXP opts_regex)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   R_len_t vectorize_length =
-      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    R_len_t vectorize_length =
+        stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   StriContainerUTF16 str_cont(str, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerUTF16 str_cont(str, vectorize_length);
 //   StriContainerUTF8 str_cont(str, vectorize_length); // utext_openUTF8, see below
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (max_count_1 == 0) {
-          ret_tab[i] = NA_LOGICAL;
-          continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (max_count_1 == 0) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont,
-         pattern_cont, ret_tab[i] = NA_LOGICAL)
+        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont,
+                                              pattern_cont, ret_tab[i] = NA_LOGICAL)
 
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      matcher->reset(str_cont.get(i));
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        matcher->reset(str_cont.get(i));
 
-      UErrorCode status = U_ZERO_ERROR;
-      ret_tab[i] = (int)matcher->find(status); // returns UBool
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        UErrorCode status = U_ZERO_ERROR;
+        ret_tab[i] = (int)matcher->find(status); // returns UBool
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-      if (negate_1) ret_tab[i] = !ret_tab[i];
-      if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
+        if (negate_1) ret_tab[i] = !ret_tab[i];
+        if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
 
 //      // mbmark-regex-detect1.R: UTF16 0.07171792 s; UText 0.10531605 s
 //      UText* str_text = NULL;
@@ -119,9 +119,9 @@ SEXP stri_detect_regex(SEXP str, SEXP pattern, SEXP negate,
 //      matcher->reset(str_text);
 //      ret_tab[i] = (int)matcher->find(status); // returns UBool
 //      utext_close(str_text);
-   }
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

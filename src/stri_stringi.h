@@ -74,7 +74,7 @@ bool        stri__prepare_arg_logical_1_notNA(SEXP x, const char* argname);
 const char* stri__prepare_arg_locale(SEXP loc,        const char* argname,
                                      bool allowdefault, bool allowna=false);
 const char* stri__prepare_arg_enc(SEXP loc,           const char* argname,
-                                     bool allowdefault);
+                                  bool allowdefault);
 TimeZone* stri__prepare_arg_timezone(SEXP tz, const char* argname, bool allowdefault);
 
 // prepare_arg.cpp /* internal, but in namespace: for testing */
@@ -104,9 +104,9 @@ SEXP stri_test_returnasis(SEXP x);
 void stri__locate_set_dimnames_list(SEXP list);
 void stri__locate_set_dimnames_matrix(SEXP matrix);
 SEXP stri__subset_by_logical(const StriContainerUTF8& str_cont,
-   const std::vector<int>& which, int result_counter);
+                             const std::vector<int>& which, int result_counter);
 SEXP stri__subset_by_logical(const StriContainerUTF16& str_cont,
-   const std::vector<int>& which, int result_counter);
+                             const std::vector<int>& which, int result_counter);
 
 // date/time
 void stri__set_class_POSIXct(SEXP x);

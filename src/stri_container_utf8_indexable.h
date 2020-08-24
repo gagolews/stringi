@@ -50,28 +50,28 @@
  */
 class StriContainerUTF8_indexable : public StriContainerUTF8 {
 
-   private:
+private:
 
-      // the following are used in UChar32_to_UTF8_index_back
-      // and UChar32_to_UTF8_index_fwd to speed up computations
-      // on the same strings
-      R_len_t last_ind_fwd_codepoint;
-      R_len_t last_ind_fwd_utf8;
-      const char* last_ind_fwd_str;
-      R_len_t last_ind_back_codepoint;
-      R_len_t last_ind_back_utf8;
-      const char* last_ind_back_str;
+    // the following are used in UChar32_to_UTF8_index_back
+    // and UChar32_to_UTF8_index_fwd to speed up computations
+    // on the same strings
+    R_len_t last_ind_fwd_codepoint;
+    R_len_t last_ind_fwd_utf8;
+    const char* last_ind_fwd_str;
+    R_len_t last_ind_back_codepoint;
+    R_len_t last_ind_back_utf8;
+    const char* last_ind_back_str;
 
-   public:
+public:
 
-      StriContainerUTF8_indexable();
-      StriContainerUTF8_indexable(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
-      StriContainerUTF8_indexable(StriContainerUTF8_indexable& container);
-      StriContainerUTF8_indexable& operator=(StriContainerUTF8_indexable& container);
+    StriContainerUTF8_indexable();
+    StriContainerUTF8_indexable(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
+    StriContainerUTF8_indexable(StriContainerUTF8_indexable& container);
+    StriContainerUTF8_indexable& operator=(StriContainerUTF8_indexable& container);
 
-      void UTF8_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
-      R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
-      R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);
+    void UTF8_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
+    R_len_t UChar32_to_UTF8_index_back(R_len_t i, R_len_t wh);
+    R_len_t UChar32_to_UTF8_index_fwd(R_len_t i, R_len_t wh);
 };
 
 #endif

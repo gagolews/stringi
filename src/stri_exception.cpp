@@ -50,7 +50,7 @@
  */
 const char* ICUError::getICUerrorName(UErrorCode status)
 {
-switch(status) {
+    switch(status) {
     case U_USING_FALLBACK_WARNING:
         return "A resource bundle lookup returned a fallback result. (not an error)";
     case U_USING_DEFAULT_WARNING:
@@ -132,7 +132,7 @@ switch(status) {
     case U_NO_WRITE_PERMISSION:
         return "Attempt to modify read-only or constant data.";
     // case U_STANDARD_ERROR_LIMIT:
-        // return "This must always be the last value to indicate the limit for standard errors.";
+    // return "This must always be the last value to indicate the limit for standard errors.";
     case U_BAD_VARIABLE_DEFINITION:
         return "Missing '$' or duplicate variable name.";
 //      case U_PARSE_ERROR_START:
@@ -340,5 +340,5 @@ switch(status) {
 #endif
     default:
         return "Unknown ICU error or warning.";
-   }
+    }
 }

@@ -48,97 +48,97 @@
  */
 class StriUcnv  {
 
-   private:
+private:
 
-      UConverter* m_ucnv; // converter
-      const char* m_name; // encoding, owned by caller
-      int m_isutf8;
-      int m_is8bit;
+    UConverter* m_ucnv; // converter
+    const char* m_name; // encoding, owned by caller
+    int m_isutf8;
+    int m_is8bit;
 
-      static void STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
-                  const void* context,
-                  UConverterFromUnicodeArgs* fromArgs,
-                  const UChar* codeUnits,
-                  int32_t length,
-                  UChar32 codePoint,
-                  UConverterCallbackReason reason,
-                  UErrorCode* err);
+    static void STRI__UCNV_FROM_U_CALLBACK_SUBSTITUTE_WARN (
+        const void* context,
+        UConverterFromUnicodeArgs* fromArgs,
+        const UChar* codeUnits,
+        int32_t length,
+        UChar32 codePoint,
+        UConverterCallbackReason reason,
+        UErrorCode* err);
 
-      static void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
-                 const void* context,
-                 UConverterToUnicodeArgs* toArgs,
-                 const char* codeUnits,
-                 int32_t length,
-                 UConverterCallbackReason reason,
-                 UErrorCode* err);
+    static void STRI__UCNV_TO_U_CALLBACK_SUBSTITUTE_WARN (
+        const void* context,
+        UConverterToUnicodeArgs* toArgs,
+        const char* codeUnits,
+        int32_t length,
+        UConverterCallbackReason reason,
+        UErrorCode* err);
 
-      void openConverter(bool register_callbacks);
+    void openConverter(bool register_callbacks);
 
-   public:
+public:
 
 
-      StriUcnv(const char* name=NULL) {
-         m_name = name;
-         m_ucnv = NULL; // lazy
-         m_isutf8 = NA_LOGICAL;
-         m_is8bit = NA_LOGICAL;
-      }
+    StriUcnv(const char* name=NULL) {
+        m_name = name;
+        m_ucnv = NULL; // lazy
+        m_isutf8 = NA_LOGICAL;
+        m_is8bit = NA_LOGICAL;
+    }
 
-      ~StriUcnv()
-      {
-         if (m_ucnv)
+    ~StriUcnv()
+    {
+        if (m_ucnv)
             ucnv_close(m_ucnv);
-         m_ucnv = NULL;
-      }
+        m_ucnv = NULL;
+    }
 
 
-      StriUcnv(const StriUcnv& obj) {
-         m_name = obj.m_name;
-         m_ucnv = NULL;
-         m_isutf8 = NA_LOGICAL;
-         m_is8bit = NA_LOGICAL;
-      }
+    StriUcnv(const StriUcnv& obj) {
+        m_name = obj.m_name;
+        m_ucnv = NULL;
+        m_isutf8 = NA_LOGICAL;
+        m_is8bit = NA_LOGICAL;
+    }
 
 
-      StriUcnv& operator=(const StriUcnv& obj) {
-         this->~StriUcnv();
-         m_name = obj.m_name;
-         m_ucnv = NULL;
-         m_isutf8 = NA_LOGICAL;
-         m_is8bit = NA_LOGICAL;
-         return *this;
-      }
+    StriUcnv& operator=(const StriUcnv& obj) {
+        this->~StriUcnv();
+        m_name = obj.m_name;
+        m_ucnv = NULL;
+        m_isutf8 = NA_LOGICAL;
+        m_is8bit = NA_LOGICAL;
+        return *this;
+    }
 
 
-      bool isUTF8() {
-         if (m_isutf8 != NA_LOGICAL) return m_isutf8;
+    bool isUTF8() {
+        if (m_isutf8 != NA_LOGICAL) return m_isutf8;
 
-         openConverter(false);
-         UErrorCode status = U_ZERO_ERROR;
-         // get "offical" encoder name
-         const char* ucnv_name = ucnv_getName(m_ucnv, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         m_isutf8 = !strcmp(ucnv_name, "UTF-8");
-         return m_isutf8;
-      }
-
-
-      bool is8bit() {
-         if (m_is8bit != NA_LOGICAL) return m_is8bit;
-
-         openConverter(false);
-         m_is8bit = (ucnv_getMaxCharSize(m_ucnv) == 1);
-         return m_is8bit;
-      }
+        openConverter(false);
+        UErrorCode status = U_ZERO_ERROR;
+        // get "offical" encoder name
+        const char* ucnv_name = ucnv_getName(m_ucnv, &status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        m_isutf8 = !strcmp(ucnv_name, "UTF-8");
+        return m_isutf8;
+    }
 
 
-      UConverter* getConverter(bool register_callbacks=false);
+    bool is8bit() {
+        if (m_is8bit != NA_LOGICAL) return m_is8bit;
 
-      bool hasASCIIsubset();
-      bool is1to1Unicode();
+        openConverter(false);
+        m_is8bit = (ucnv_getMaxCharSize(m_ucnv) == 1);
+        return m_is8bit;
+    }
 
-      static vector<const char*> getStandards();
-      static const char* getFriendlyName(const char* canname);
+
+    UConverter* getConverter(bool register_callbacks=false);
+
+    bool hasASCIIsubset();
+    bool is1to1Unicode();
+
+    static vector<const char*> getStandards();
+    static const char* getFriendlyName(const char* canname);
 
 
 //      /** restores default ICU's substitute callbacks
@@ -155,40 +155,40 @@ class StriUcnv  {
 //         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 //      }
 
-      /**
-       * get R's cetype_t corresponding to this converter
-       */
-      cetype_t getCE() {
-         openConverter(false);
-         UErrorCode status = U_ZERO_ERROR;
-         const char* ucnv_name = ucnv_getName(m_ucnv, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    /**
+     * get R's cetype_t corresponding to this converter
+     */
+    cetype_t getCE() {
+        openConverter(false);
+        UErrorCode status = U_ZERO_ERROR;
+        const char* ucnv_name = ucnv_getName(m_ucnv, &status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-         if (!strcmp(ucnv_name, "US-ASCII")) {
+        if (!strcmp(ucnv_name, "US-ASCII")) {
             m_is8bit = true;
             m_isutf8 = true;
             return CE_UTF8;
-         }
-         else if (!strcmp(ucnv_name, "UTF-8")) {
+        }
+        else if (!strcmp(ucnv_name, "UTF-8")) {
             m_isutf8 = true;
             m_is8bit = false;
             return CE_UTF8;
-         }
+        }
 #if defined(_WIN32) || defined(_WIN64)
-         // #270: latin-1 is windows-1252 on Windows
-         else if (!strcmp(ucnv_name, "windows-1252") || !strcmp(ucnv_name, "ibm-5348_P100-1997")) {
+        // #270: latin-1 is windows-1252 on Windows
+        else if (!strcmp(ucnv_name, "windows-1252") || !strcmp(ucnv_name, "ibm-5348_P100-1997")) {
 #else
-         else if (!strcmp(ucnv_name, "ISO-8859-1")) {
+        else if (!strcmp(ucnv_name, "ISO-8859-1")) {
 #endif
             m_is8bit = true;
             m_isutf8 = false;
             return CE_LATIN1;
-         }
-         else if (!strcmp(ucnv_name, ucnv_getDefaultName()))
+        }
+        else if (!strcmp(ucnv_name, ucnv_getDefaultName()))
             return CE_NATIVE;
 
-         return CE_BYTES;
-      }
+        return CE_BYTES;
+    }
 };
 
 #endif

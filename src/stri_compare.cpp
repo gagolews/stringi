@@ -108,49 +108,49 @@
  */
 SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, int _negate)
 {
-   // _negate is an internal arg, check manually, error() allowed here
-   if (_negate < 0 || _negate > 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+    // _negate is an internal arg, check manually, error() allowed here
+    if (_negate < 0 || _negate > 1)
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN(2)
+    STRI__ERROR_HANDLER_BEGIN(2)
 
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
-   StriContainerUTF8 e1_cont(e1, vectorize_length);
-   StriContainerUTF8 e2_cont(e2, vectorize_length);
+    StriContainerUTF8 e1_cont(e1, vectorize_length);
+    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = 0; i < vectorize_length; ++i)
-   {
-      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
-         continue;
-      }
+    for (R_len_t i = 0; i < vectorize_length; ++i)
+    {
+        if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      R_len_t     cur1_n = e1_cont.get(i).length();
-      const char* cur1_s = e1_cont.get(i).c_str();
-      R_len_t     cur2_n = e2_cont.get(i).length();
-      const char* cur2_s = e2_cont.get(i).c_str();
+        R_len_t     cur1_n = e1_cont.get(i).length();
+        const char* cur1_s = e1_cont.get(i).c_str();
+        R_len_t     cur2_n = e2_cont.get(i).length();
+        const char* cur2_s = e2_cont.get(i).c_str();
 
-      if (cur1_n != cur2_n) // different number of bytes => not equal
-         ret_tab[i] = FALSE;
-      else
-         ret_tab[i] = (memcmp(cur1_s, cur2_s, cur1_n) == 0);
+        if (cur1_n != cur2_n) // different number of bytes => not equal
+            ret_tab[i] = FALSE;
+        else
+            ret_tab[i] = (memcmp(cur1_s, cur2_s, cur1_n) == 0);
 
-      if (_negate)
-         ret_tab[i] = !ret_tab[i];
-   }
+        if (_negate)
+            ret_tab[i] = !ret_tab[i];
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({/* no-op on err */})
+    STRI__ERROR_HANDLER_END({/* no-op on err */})
 }
 
 
@@ -166,7 +166,7 @@ SEXP stri_cmp_codepoints(SEXP e1, SEXP e2, int _negate)
  *    use stri_cmp_codepoints
  */
 SEXP stri_cmp_eq(SEXP e1, SEXP e2) {
-   return stri_cmp_codepoints(e1, e2, 0);
+    return stri_cmp_codepoints(e1, e2, 0);
 }
 
 
@@ -182,7 +182,7 @@ SEXP stri_cmp_eq(SEXP e1, SEXP e2) {
  *    use stri_cmp_codepoints
  */
 SEXP stri_cmp_neq(SEXP e1, SEXP e2) {
-   return stri_cmp_codepoints(e1, e2, 1);
+    return stri_cmp_codepoints(e1, e2, 1);
 }
 
 
@@ -213,63 +213,66 @@ SEXP stri_cmp_neq(SEXP e1, SEXP e2) {
  */
 SEXP stri__cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, int _type, int _negate)
 {
-   // we'll perform a collator-based cmp
-   // type is an internal arg, check manually, error() allowed here
-   if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
-      Rf_error(MSG__INCORRECT_INTERNAL_ARG);
+    // we'll perform a collator-based cmp
+    // type is an internal arg, check manually, error() allowed here
+    if (_type > 1 || _type < -1 || _negate < 0 || _negate > 1)
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG);
 
-   PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
-   PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
+    PROTECT(e1 = stri_prepare_arg_string(e1, "e1")); // prepare string argument
+    PROTECT(e2 = stri_prepare_arg_string(e2, "e2")); // prepare string argument
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
+    STRI__ERROR_HANDLER_BEGIN(2)
 
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
-   StriContainerUTF8 e1_cont(e1, vectorize_length);
-   StriContainerUTF8 e2_cont(e2, vectorize_length);
+    StriContainerUTF8 e1_cont(e1, vectorize_length);
+    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = 0; i < vectorize_length; ++i)
-   {
-      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
-         continue;
-      }
+    for (R_len_t i = 0; i < vectorize_length; ++i)
+    {
+        if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      R_len_t     cur1_n = e1_cont.get(i).length();
-      const char* cur1_s = e1_cont.get(i).c_str();
-      R_len_t     cur2_n = e2_cont.get(i).length();
-      const char* cur2_s = e2_cont.get(i).c_str();
+        R_len_t     cur1_n = e1_cont.get(i).length();
+        const char* cur1_s = e1_cont.get(i).c_str();
+        R_len_t     cur2_n = e2_cont.get(i).length();
+        const char* cur2_s = e2_cont.get(i).c_str();
 
-      // with collation
-      UErrorCode status = U_ZERO_ERROR;
-      ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
-         cur1_s, cur1_n, cur2_s, cur2_n, &status
-      ));
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        // with collation
+        UErrorCode status = U_ZERO_ERROR;
+        ret_tab[i] = (_type == (int)ucol_strcollUTF8(col,
+                      cur1_s, cur1_n, cur2_s, cur2_n, &status
+                                                    ));
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-      if (_negate)
-         ret_tab[i] = !ret_tab[i];
-   }
+        if (_negate)
+            ret_tab[i] = !ret_tab[i];
+    }
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
-   STRI__UNPROTECT_ALL
-   return ret;
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }
 
 
@@ -286,7 +289,7 @@ SEXP stri__cmp_logical(SEXP e1, SEXP e2, SEXP opts_collator, int _type, int _neg
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_equiv(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, 0, 0);
+    return stri__cmp_logical(e1, e2, opts_collator, 0, 0);
 }
 
 
@@ -303,7 +306,7 @@ SEXP stri_cmp_equiv(SEXP e1, SEXP e2, SEXP opts_collator) {
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_nequiv(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, 0, 1);
+    return stri__cmp_logical(e1, e2, opts_collator, 0, 1);
 }
 
 
@@ -320,7 +323,7 @@ SEXP stri_cmp_nequiv(SEXP e1, SEXP e2, SEXP opts_collator) {
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_lt(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, -1, 0);
+    return stri__cmp_logical(e1, e2, opts_collator, -1, 0);
 }
 
 
@@ -337,7 +340,7 @@ SEXP stri_cmp_lt(SEXP e1, SEXP e2, SEXP opts_collator) {
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_gt(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, 1, 0);
+    return stri__cmp_logical(e1, e2, opts_collator, 1, 0);
 }
 
 
@@ -354,7 +357,7 @@ SEXP stri_cmp_gt(SEXP e1, SEXP e2, SEXP opts_collator) {
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_le(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, 1, 1);
+    return stri__cmp_logical(e1, e2, opts_collator, 1, 1);
 }
 
 
@@ -371,7 +374,7 @@ SEXP stri_cmp_le(SEXP e1, SEXP e2, SEXP opts_collator) {
  *    use stri__cmp_logical
  */
 SEXP stri_cmp_ge(SEXP e1, SEXP e2, SEXP opts_collator) {
-   return stri__cmp_logical(e1, e2, opts_collator, -1, 1);
+    return stri__cmp_logical(e1, e2, opts_collator, -1, 1);
 }
 
 
@@ -411,54 +414,57 @@ SEXP stri_cmp_ge(SEXP e1, SEXP e2, SEXP opts_collator) {
  */
 SEXP stri_cmp(SEXP e1, SEXP e2, SEXP opts_collator)
 {
-   PROTECT(e1 = stri_prepare_arg_string(e1, "e1"));
-   PROTECT(e2 = stri_prepare_arg_string(e2, "e2"));
+    PROTECT(e1 = stri_prepare_arg_string(e1, "e1"));
+    PROTECT(e2 = stri_prepare_arg_string(e2, "e2"));
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* col = NULL;
-   col = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* col = NULL;
+    col = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
+    STRI__ERROR_HANDLER_BEGIN(2)
 
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(e1), LENGTH(e2));
 
-   StriContainerUTF8 e1_cont(e1, vectorize_length);
-   StriContainerUTF8 e2_cont(e2, vectorize_length);
+    StriContainerUTF8 e1_cont(e1, vectorize_length);
+    StriContainerUTF8 e2_cont(e2, vectorize_length);
 
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
-   int* ret_int = INTEGER(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+    int* ret_int = INTEGER(ret);
 
-   for (R_len_t i = 0; i < vectorize_length; ++i)
-   {
-      if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
-         ret_int[i] = NA_INTEGER;
-         continue;
-      }
+    for (R_len_t i = 0; i < vectorize_length; ++i)
+    {
+        if (e1_cont.isNA(i) || e2_cont.isNA(i)) {
+            ret_int[i] = NA_INTEGER;
+            continue;
+        }
 
-      R_len_t     cur1_n = e1_cont.get(i).length();
-      const char* cur1_s = e1_cont.get(i).c_str();
-      R_len_t     cur2_n = e2_cont.get(i).length();
-      const char* cur2_s = e2_cont.get(i).c_str();
+        R_len_t     cur1_n = e1_cont.get(i).length();
+        const char* cur1_s = e1_cont.get(i).c_str();
+        R_len_t     cur2_n = e2_cont.get(i).length();
+        const char* cur2_s = e2_cont.get(i).c_str();
 
-      // cmp with collation
-      UErrorCode status = U_ZERO_ERROR;
-      ret_int[i] = (int)ucol_strcollUTF8(col,
-         cur1_s, cur1_n, cur2_s, cur2_n, &status
-      );
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   }
+        // cmp with collation
+        UErrorCode status = U_ZERO_ERROR;
+        ret_int[i] = (int)ucol_strcollUTF8(col,
+                                           cur1_s, cur1_n, cur2_s, cur2_n, &status
+                                          );
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-   if (col) {
-      ucol_close(col);
-      col = NULL;
-   }
-   STRI__UNPROTECT_ALL
-   return ret;
+    if (col) {
+        ucol_close(col);
+        col = NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
 
-   STRI__ERROR_HANDLER_END({
-      if (col) { ucol_close(col); col = NULL; }
-   })
+    STRI__ERROR_HANDLER_END({
+        if (col) {
+            ucol_close(col);
+            col = NULL;
+        }
+    })
 }

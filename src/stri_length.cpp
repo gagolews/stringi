@@ -49,19 +49,19 @@
  */
 R_len_t stri__numbytes_max(SEXP str)
 {
-   R_len_t ns = LENGTH(str);
-   if (ns <= 0) return -1;
-   R_len_t maxlen = -1;
-   for (R_len_t i=0; i<ns; ++i) {
-      SEXP cs = STRING_ELT(str, i);
-      if (cs != NA_STRING) {
-         /* INPUT ENCODING CHECK: this function does not need this. */
-         R_len_t cns = LENGTH(cs);
-         if (cns > maxlen) maxlen = cns;
-      }
-   }
-   return maxlen;
-   // @TODO: overload this function for StriContainers.....
+    R_len_t ns = LENGTH(str);
+    if (ns <= 0) return -1;
+    R_len_t maxlen = -1;
+    for (R_len_t i=0; i<ns; ++i) {
+        SEXP cs = STRING_ELT(str, i);
+        if (cs != NA_STRING) {
+            /* INPUT ENCODING CHECK: this function does not need this. */
+            R_len_t cns = LENGTH(cs);
+            if (cns > maxlen) maxlen = cns;
+        }
+    }
+    return maxlen;
+    // @TODO: overload this function for StriContainers.....
 }
 
 
@@ -89,73 +89,73 @@ R_len_t stri__numbytes_max(SEXP str)
  */
 SEXP stri_length(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
 
-   STRI__ERROR_HANDLER_BEGIN(1)
+    STRI__ERROR_HANDLER_BEGIN(1)
 
-   R_len_t str_n = LENGTH(str);
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
-   int* retint = INTEGER(ret);
+    R_len_t str_n = LENGTH(str);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+    int* retint = INTEGER(ret);
 
-   StriUcnv ucnvNative(NULL);
+    StriUcnv ucnvNative(NULL);
 
-   for (R_len_t k = 0; k < str_n; k++) {
-      SEXP curs = STRING_ELT(str, k);
-      if (curs == NA_STRING) {
-         retint[k] = NA_INTEGER;
-         continue;
-      }
-
-      R_len_t curs_n = LENGTH(curs);  // O(1) - stored by R
-      if (IS_ASCII(curs) || IS_LATIN1(curs)) {
-         retint[k] = curs_n;
-      }
-      else if (IS_BYTES(curs)) {
-         throw StriException(MSG__BYTESENC);
-      }
-      else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // utf8 or native-utf8
-         UChar32 c = 0;
-         const char* curs_s = CHAR(curs);
-         R_len_t j = 0;
-         R_len_t i = 0;
-         while (c >= 0 && j < curs_n) {
-            U8_NEXT(curs_s, j, curs_n, c); // faster that U8_FWD_1 & gives bad UChar32s
-            i++;
-         }
-
-         if (c < 0) { // invalid utf-8 sequence
-            Rf_warning(MSG__INVALID_UTF8);
+    for (R_len_t k = 0; k < str_n; k++) {
+        SEXP curs = STRING_ELT(str, k);
+        if (curs == NA_STRING) {
             retint[k] = NA_INTEGER;
-         }
-         else
-            retint[k] = i;
-      }
-      else if (ucnvNative.is8bit()) { // native-8bit
-         retint[k] = curs_n;
-      }
-      else { // native encoding, not 8 bit
+            continue;
+        }
 
-         UConverter* uconv = ucnvNative.getConverter();
+        R_len_t curs_n = LENGTH(curs);  // O(1) - stored by R
+        if (IS_ASCII(curs) || IS_LATIN1(curs)) {
+            retint[k] = curs_n;
+        }
+        else if (IS_BYTES(curs)) {
+            throw StriException(MSG__BYTESENC);
+        }
+        else if (IS_UTF8(curs) || ucnvNative.isUTF8()) { // utf8 or native-utf8
+            UChar32 c = 0;
+            const char* curs_s = CHAR(curs);
+            R_len_t j = 0;
+            R_len_t i = 0;
+            while (c >= 0 && j < curs_n) {
+                U8_NEXT(curs_s, j, curs_n, c); // faster that U8_FWD_1 & gives bad UChar32s
+                i++;
+            }
 
-         // native encoding which is neither 8-bit, nor UTF-8 (e.g., 'Big5')
-         // this is weird, but we'll face it
-         UErrorCode status = U_ZERO_ERROR;
-         const char* source = CHAR(curs);
-         const char* sourceLimit = source + curs_n;
-         R_len_t j;
-         for (j = 0; source != sourceLimit; j++) {
-            /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         }
-         retint[k] = j; // all right, we got it!
-      }
-   }
+            if (c < 0) { // invalid utf-8 sequence
+                Rf_warning(MSG__INVALID_UTF8);
+                retint[k] = NA_INTEGER;
+            }
+            else
+                retint[k] = i;
+        }
+        else if (ucnvNative.is8bit()) { // native-8bit
+            retint[k] = curs_n;
+        }
+        else { // native encoding, not 8 bit
 
-   STRI__UNPROTECT_ALL
-   return ret;
+            UConverter* uconv = ucnvNative.getConverter();
 
-   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
+            // native encoding which is neither 8-bit, nor UTF-8 (e.g., 'Big5')
+            // this is weird, but we'll face it
+            UErrorCode status = U_ZERO_ERROR;
+            const char* source = CHAR(curs);
+            const char* sourceLimit = source + curs_n;
+            R_len_t j;
+            for (j = 0; source != sourceLimit; j++) {
+                /*ignore_retval=*/ucnv_getNextUChar(uconv, &source, sourceLimit, &status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+            retint[k] = j; // all right, we got it!
+        }
+    }
+
+    STRI__UNPROTECT_ALL
+    return ret;
+
+    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 
@@ -177,21 +177,21 @@ SEXP stri_length(SEXP str)
  */
 SEXP stri_numbytes(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   R_len_t str_n = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    R_len_t str_n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
-   int* retint = INTEGER(ret);
-   for (R_len_t i=0; i<str_n; ++i) {
-      SEXP curs = STRING_ELT(str, i);
-      /* INPUT ENCODING CHECK: this function does not need this. */
-      retint[i] = (curs == NA_STRING)?NA_INTEGER:LENGTH(curs); // O(1) - stored by R
-   }
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
+    STRI__ERROR_HANDLER_BEGIN(1)
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+    int* retint = INTEGER(ret);
+    for (R_len_t i=0; i<str_n; ++i) {
+        SEXP curs = STRING_ELT(str, i);
+        /* INPUT ENCODING CHECK: this function does not need this. */
+        retint[i] = (curs == NA_STRING)?NA_INTEGER:LENGTH(curs); // O(1) - stored by R
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 
@@ -213,21 +213,21 @@ SEXP stri_numbytes(SEXP str)
  */
 SEXP stri_isempty(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
-   R_len_t str_n = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    R_len_t str_n = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
-   int* retlog = LOGICAL(ret);
-   for (R_len_t i=0; i<str_n; ++i) {
-      SEXP curs = STRING_ELT(str, i);
-      /* INPUT ENCODING CHECK: this function does not need this. */
-      retlog[i] = (curs == NA_STRING)?NA_LOGICAL:(LENGTH(curs) <= 0);
-   }
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
+    STRI__ERROR_HANDLER_BEGIN(1)
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_n));
+    int* retlog = LOGICAL(ret);
+    for (R_len_t i=0; i<str_n; ++i) {
+        SEXP curs = STRING_ELT(str, i);
+        /* INPUT ENCODING CHECK: this function does not need this. */
+        retlog[i] = (curs == NA_STRING)?NA_LOGICAL:(LENGTH(curs) <= 0);
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }
 
 
@@ -244,31 +244,31 @@ SEXP stri_isempty(SEXP str)
  * @return 0, 1, or 2
  */
 int stri__width_char(UChar32 c) {
-   if (c == (UChar32)0x00AD) return 1; /* SOFT HYPHEN  */
-   if (c == (UChar32)0x200B) return 0; /* ZERO WIDTH SPACE */
+    if (c == (UChar32)0x00AD) return 1; /* SOFT HYPHEN  */
+    if (c == (UChar32)0x200B) return 0; /* ZERO WIDTH SPACE */
 
-   /* GC: Me, Mn, Cf, Cc -> width = 0 */
-   if (U_GET_GC_MASK(c) &
-      (U_GC_MN_MASK | U_GC_ME_MASK | U_GC_CF_MASK | U_GC_CC_MASK))
-         return 0;
+    /* GC: Me, Mn, Cf, Cc -> width = 0 */
+    if (U_GET_GC_MASK(c) &
+            (U_GC_MN_MASK | U_GC_ME_MASK | U_GC_CF_MASK | U_GC_CC_MASK))
+        return 0;
 
-   /* Hangul Jamo medial vowels and final consonants have width 0 */
-   int hangul = (int)u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE);
-   if (hangul == U_HST_VOWEL_JAMO || hangul == U_HST_TRAILING_JAMO)
-      return 0;
+    /* Hangul Jamo medial vowels and final consonants have width 0 */
+    int hangul = (int)u_getIntPropertyValue(c, UCHAR_HANGUL_SYLLABLE_TYPE);
+    if (hangul == U_HST_VOWEL_JAMO || hangul == U_HST_TRAILING_JAMO)
+        return 0;
 
-   /* Variation Selectors */
-   if (c >= (UChar32)0xFE00 && c <= (UChar32)0xFE0F)
-      return 0;
+    /* Variation Selectors */
+    if (c >= (UChar32)0xFE00 && c <= (UChar32)0xFE0F)
+        return 0;
 
-   /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
-      equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
-   int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
-   if (width == U_EA_FULLWIDTH || width == U_EA_WIDE)
-      return 2;
+    /* Characters with the \code{UCHAR_EAST_ASIAN_WIDTH} enumerable property
+       equal to \code{U_EA_FULLWIDTH} or \code{U_EA_WIDE} are of width 2. */
+    int width = (int)u_getIntPropertyValue(c, UCHAR_EAST_ASIAN_WIDTH);
+    if (width == U_EA_FULLWIDTH || width == U_EA_WIDE)
+        return 2;
 
-   /*  any other characters have width 1 */
-   return 1;
+    /*  any other characters have width 1 */
+    return 1;
 }
 
 
@@ -279,19 +279,19 @@ int stri__width_char(UChar32 c) {
  * @return width
  */
 int stri__width_string(const char* str_cur_s, int str_cur_n) {
-   int cur_width = 0;
+    int cur_width = 0;
 
-   UChar32 c;
-   R_len_t j = 0;
-   while (j < str_cur_n) {
-      U8_NEXT(str_cur_s, j, str_cur_n, c);
-      if (c < 0)
-         throw StriException(MSG__INVALID_UTF8);
-      else
-         cur_width += stri__width_char(c);
-   }
+    UChar32 c;
+    R_len_t j = 0;
+    while (j < str_cur_n) {
+        U8_NEXT(str_cur_s, j, str_cur_n, c);
+        if (c < 0)
+            throw StriException(MSG__INVALID_UTF8);
+        else
+            cur_width += stri__width_char(c);
+    }
 
-   return cur_width;
+    return cur_width;
 }
 
 /**
@@ -304,31 +304,31 @@ int stri__width_string(const char* str_cur_s, int str_cur_n) {
   */
 SEXP stri_width(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
+    PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   R_len_t str_n = LENGTH(str);
-   StriContainerUTF8 str_cont(str, str_n);
+    STRI__ERROR_HANDLER_BEGIN(1)
+    R_len_t str_n = LENGTH(str);
+    StriContainerUTF8 str_cont(str, str_n);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
-   int* retint = INTEGER(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, str_n));
+    int* retint = INTEGER(ret);
 
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i)) {
-         retint[i] = NA_INTEGER;
-         continue;
-      }
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i)) {
+            retint[i] = NA_INTEGER;
+            continue;
+        }
 
-      const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      retint[i] = stri__width_string(str_cur_s, str_cur_n);
-   }
+        const char* str_cur_s = str_cont.get(i).c_str();
+        R_len_t     str_cur_n = str_cont.get(i).length();
+        retint[i] = stri__width_string(str_cur_s, str_cur_n);
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({ /* no special action on error */ })
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({ /* no special action on error */ })
 }

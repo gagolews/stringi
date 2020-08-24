@@ -44,66 +44,66 @@
  */
 class IntVec  {
 
-   private:
+private:
 
-      const int* m_data;
-      R_len_t m_n;
+    const int* m_data;
+    R_len_t m_n;
 
-   public:
+public:
 
-      /** default constructor
-       *
-       */
-      IntVec() {
-         this->m_data = NULL;
-         this->m_n = 0;
-      }
-
-
-      /** used to set data
-       *
-       * @param data
-       * @param n
-       */
-      void initialize(const int* data, R_len_t n)
-      {
-         this->m_data = data;
-         this->m_n = n;
-      }
+    /** default constructor
+     *
+     */
+    IntVec() {
+        this->m_data = NULL;
+        this->m_n = 0;
+    }
 
 
-      /** constructor
-       * @param str character buffer
-       * @param n buffer length (not including NUL)
-       * @param memalloc should a deep copy of the buffer be done?
-       */
-      IntVec(const int* data, R_len_t n)
-      {
-         initialize(data, n);
-      }
+    /** used to set data
+     *
+     * @param data
+     * @param n
+     */
+    void initialize(const int* data, R_len_t n)
+    {
+        this->m_data = data;
+        this->m_n = n;
+    }
 
-      inline bool isNA() const
-      {
-         return m_data == NULL;
-      }
 
-      inline const int* data() const
-      {
+    /** constructor
+     * @param str character buffer
+     * @param n buffer length (not including NUL)
+     * @param memalloc should a deep copy of the buffer be done?
+     */
+    IntVec(const int* data, R_len_t n)
+    {
+        initialize(data, n);
+    }
+
+    inline bool isNA() const
+    {
+        return m_data == NULL;
+    }
+
+    inline const int* data() const
+    {
 #ifndef NDEBUG
-         if (isNA())
+        if (isNA())
             throw StriException("IntVec::isNA() in data()");
 #endif
-         return this->m_data;
-      }
+        return this->m_data;
+    }
 
-      inline R_len_t size() const
-      {
+    inline R_len_t size() const
+    {
 #ifndef NDEBUG
-         if (isNA())
+        if (isNA())
             throw StriException("IntVec::isNA() in size()");
 #endif
-         return this->m_n;
-      }
+        return this->m_n;
+    }
 };
 
 #endif

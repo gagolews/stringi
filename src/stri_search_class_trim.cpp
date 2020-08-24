@@ -63,67 +63,67 @@
 */
 SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   R_len_t vectorize_length =
-      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    R_len_t vectorize_length =
+        stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i) || pattern_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
-      R_len_t jlast1 = 0;
-      R_len_t jlast2 = str_cur_n;
+        const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+        R_len_t     str_cur_n = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
+        R_len_t jlast1 = 0;
+        R_len_t jlast2 = str_cur_n;
 
-      if (left) {
-         UChar32 chr;
-         for (R_len_t j=0; j<str_cur_n; ) {
-            U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
-            if (chr < 0) // invalid utf-8 sequence
-               throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur->contains(chr)) {
-               break; // break at first occurrence
+        if (left) {
+            UChar32 chr;
+            for (R_len_t j=0; j<str_cur_n; ) {
+                U8_NEXT(str_cur_s, j, str_cur_n, chr); // "look ahead"
+                if (chr < 0) // invalid utf-8 sequence
+                    throw StriException(MSG__INVALID_UTF8);
+                if (pattern_cur->contains(chr)) {
+                    break; // break at first occurrence
+                }
+                jlast1 = j;
             }
-            jlast1 = j;
-         }
-      }
+        }
 
-      if (right && jlast1 < str_cur_n) {
-         UChar32 chr;
-         for (R_len_t j=str_cur_n; j>0; ) {
-            U8_PREV(str_cur_s, 0, j, chr); // "look behind"
-            if (chr < 0) // invalid utf-8 sequence
-               throw StriException(MSG__INVALID_UTF8);
-            if (pattern_cur->contains(chr)) {
-               break; // break at first occurrence
+        if (right && jlast1 < str_cur_n) {
+            UChar32 chr;
+            for (R_len_t j=str_cur_n; j>0; ) {
+                U8_PREV(str_cur_s, 0, j, chr); // "look behind"
+                if (chr < 0) // invalid utf-8 sequence
+                    throw StriException(MSG__INVALID_UTF8);
+                if (pattern_cur->contains(chr)) {
+                    break; // break at first occurrence
+                }
+                jlast2 = j;
             }
-            jlast2 = j;
-         }
-      }
+        }
 
-      // now jlast is the index, from which we start copying
-      SET_STRING_ELT(ret, i,
-         Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
-   }
+        // now jlast is the index, from which we start copying
+        SET_STRING_ELT(ret, i,
+                       Rf_mkCharLenCE(str_cur_s+jlast1, (jlast2-jlast1), CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -144,7 +144,7 @@ SEXP stri__trim_leftright(SEXP str, SEXP pattern, bool left, bool right)
 */
 SEXP stri_trim_both(SEXP str, SEXP pattern)
 {
-   return stri__trim_leftright(str, pattern, true, true);
+    return stri__trim_leftright(str, pattern, true, true);
 }
 
 
@@ -162,7 +162,7 @@ SEXP stri_trim_both(SEXP str, SEXP pattern)
 */
 SEXP stri_trim_left(SEXP str, SEXP pattern)
 {
-   return stri__trim_leftright(str, pattern, true, false);
+    return stri__trim_leftright(str, pattern, true, false);
 }
 
 
@@ -180,5 +180,5 @@ SEXP stri_trim_left(SEXP str, SEXP pattern)
 */
 SEXP stri_trim_right(SEXP str, SEXP pattern)
 {
-   return stri__trim_leftright(str, pattern, false, true);
+    return stri__trim_leftright(str, pattern, false, true);
 }

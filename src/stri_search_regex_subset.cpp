@@ -63,46 +63,50 @@
  */
 SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_regex)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   R_len_t vectorize_length =
-      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    R_len_t vectorize_length =
+        stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   StriContainerUTF16 str_cont(str, vectorize_length);
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerUTF16 str_cont(str, vectorize_length);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not
-   // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-   // MG: agreed
-   std::vector<int> which(vectorize_length);
-   int result_counter = 0;
+    // BT: this cannot be done with deque, because pattern is reused so i does not
+    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
+    // MG: agreed
+    std::vector<int> which(vectorize_length);
+    int result_counter = 0;
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-         {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} })
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+    {if (omit_na1) which[i] = FALSE; else {
+                which[i] = NA_LOGICAL;
+                result_counter++;
+            }
+        })
 
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      matcher->reset(str_cont.get(i));
-      UErrorCode status = U_ZERO_ERROR;
-      which[i] = (int)matcher->find(status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      if (negate_1) which[i] = !which[i];
-      if (which[i]) result_counter++;
-   }
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        matcher->reset(str_cont.get(i));
+        UErrorCode status = U_ZERO_ERROR;
+        which[i] = (int)matcher->find(status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        if (negate_1) which[i] = !which[i];
+        if (which[i]) result_counter++;
+    }
 
-   SEXP ret;
-   STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    SEXP ret;
+    STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -123,60 +127,60 @@ SEXP stri_subset_regex(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
  */
 SEXP stri_subset_regex_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_regex, SEXP value)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
-   PROTECT(value = stri_prepare_arg_string(value, "value"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(value = stri_prepare_arg_string(value, "value"));
 
-   int vectorize_length = LENGTH(str);
-   int value_length = LENGTH(value);
-   if (value_length == 0)
-      Rf_error(MSG__REPLACEMENT_ZERO);
+    int vectorize_length = LENGTH(str);
+    int value_length = LENGTH(value);
+    if (value_length == 0)
+        Rf_error(MSG__REPLACEMENT_ZERO);
 
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
-   UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 value_cont(value, value_length);
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerUTF8 value_cont(value, value_length);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   R_len_t k = 0;
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-      {SET_STRING_ELT(ret, i, NA_STRING);})
+    R_len_t k = 0;
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+        {SET_STRING_ELT(ret, i, NA_STRING);})
 
-      UErrorCode status = U_ZERO_ERROR;
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      matcher->reset(str_text);
+        UErrorCode status = U_ZERO_ERROR;
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        matcher->reset(str_text);
 
-      bool found = matcher->find(status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      if ((found && !negate_1) || (!found && negate_1))
-         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
-      else
-         SET_STRING_ELT(ret, i, str_cont.toR(i));
-   }
+        bool found = matcher->find(status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        if ((found && !negate_1) || (!found && negate_1))
+            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+        else
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+    }
 
-   if (str_text) {
-      utext_close(str_text);
-      str_text = NULL;
-   }
+    if (str_text) {
+        utext_close(str_text);
+        str_text = NULL;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({
-      if (str_text) {
-         utext_close(str_text);
-         str_text = NULL;
-      }
-   })
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({
+        if (str_text) {
+            utext_close(str_text);
+            str_text = NULL;
+        }
+    })
 }

@@ -74,84 +74,84 @@ using namespace std;
  */
 SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed, int type)
 {
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 replacement_cont(replacement, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerUTF8 replacement_cont(replacement, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   String8buf buf(0);
+    String8buf buf(0);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);,
-         SET_STRING_ELT(ret, i, Rf_mkCharLenCE(NULL, 0, CE_UTF8));)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                SET_STRING_ELT(ret, i, NA_STRING);,
+                SET_STRING_ELT(ret, i, Rf_mkCharLenCE(NULL, 0, CE_UTF8));)
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      R_len_t start;
-      if (type >= 0) { // first or all
-         start = matcher->findFirst();
-      } else {
-         start = matcher->findLast();
-      }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        R_len_t start;
+        if (type >= 0) { // first or all
+            start = matcher->findFirst();
+        } else {
+            start = matcher->findLast();
+        }
 
-      if (start == USEARCH_DONE) {
-         SET_STRING_ELT(ret, i, str_cont.toR(i));
-         continue;
-      }
+        if (start == USEARCH_DONE) {
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+            continue;
+        }
 
-      if (replacement_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
+        if (replacement_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
 
-      R_len_t len = matcher->getMatchedLength();
-      R_len_t sumbytes = len;
-      deque< pair<R_len_t, R_len_t> > occurrences;
-      occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+        R_len_t len = matcher->getMatchedLength();
+        R_len_t sumbytes = len;
+        deque< pair<R_len_t, R_len_t> > occurrences;
+        occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
 
-      if (type == 0) {
-         while (USEARCH_DONE != matcher->findNext()) { // all
-            start = matcher->getMatchedStart();
-            len = matcher->getMatchedLength();
-            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
-            sumbytes += len;
-         }
-      }
+        if (type == 0) {
+            while (USEARCH_DONE != matcher->findNext()) { // all
+                start = matcher->getMatchedStart();
+                len = matcher->getMatchedLength();
+                occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+                sumbytes += len;
+            }
+        }
 
-      R_len_t str_cur_n         = str_cont.get(i).length();
-      R_len_t replacement_cur_n = replacement_cont.get(i).length();
-      R_len_t buf_need =
-         str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
-      buf.resize(buf_need, false/*destroy contents*/);
+        R_len_t str_cur_n         = str_cont.get(i).length();
+        R_len_t replacement_cur_n = replacement_cont.get(i).length();
+        R_len_t buf_need =
+            str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
+        buf.resize(buf_need, false/*destroy contents*/);
 
-      R_len_t buf_used = buf.replaceAllAtPos(str_cont.get(i).c_str(), str_cur_n,
-         replacement_cont.get(i).c_str(), replacement_cur_n,
-         occurrences);
+        R_len_t buf_used = buf.replaceAllAtPos(str_cont.get(i).c_str(), str_cur_n,
+                                               replacement_cont.get(i).c_str(), replacement_cur_n,
+                                               occurrences);
 
 #ifndef NDEBUG
-      if (buf_need != buf_used)
-         throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
+        if (buf_need != buf_used)
+            throw StriException("!NDEBUG: stri__replace_allfirstlast_fixed: (buf_need != buf_used)");
 #endif
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf_used, CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -248,92 +248,92 @@ SEXP stri__replace_allfirstlast_fixed(SEXP str, SEXP pattern, SEXP replacement, 
  *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
-{ // version gamma:
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
+{   // version gamma:
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
 
-   // if str_n is 0, then return an empty vector
-   R_len_t str_n = LENGTH(str);
-   if (str_n <= 0) {
-      UNPROTECT(1);
-      return stri__vector_empty_strings(0);
-   }
+    // if str_n is 0, then return an empty vector
+    R_len_t str_n = LENGTH(str);
+    if (str_n <= 0) {
+        UNPROTECT(1);
+        return stri__vector_empty_strings(0);
+    }
 
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
 
-   R_len_t pattern_n = LENGTH(pattern);
-   R_len_t replacement_n = LENGTH(replacement);
-   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
-      UNPROTECT(3);
-      Rf_error(MSG__WARN_RECYCLING_RULE2);
-   }
-   if (pattern_n % replacement_n != 0)
-      Rf_warning(MSG__WARN_RECYCLING_RULE);
+    R_len_t pattern_n = LENGTH(pattern);
+    R_len_t replacement_n = LENGTH(replacement);
+    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
+        UNPROTECT(3);
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    }
+    if (pattern_n % replacement_n != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
 
-   if (pattern_n == 1) { // this will be much faster:
-      SEXP ret;
-      PROTECT(ret = stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0));
-      UNPROTECT(4);
-      return ret;
-   }
+    if (pattern_n == 1) { // this will be much faster:
+        SEXP ret;
+        PROTECT(ret = stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0));
+        UNPROTECT(4);
+        return ret;
+    }
 
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, str_n, false); // writable
-   StriContainerUTF8 replacement_cont(replacement, pattern_n);
-   StriContainerByteSearch pattern_cont(pattern, pattern_n, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, str_n, false); // writable
+    StriContainerUTF8 replacement_cont(replacement, pattern_n);
+    StriContainerByteSearch pattern_cont(pattern, pattern_n, pattern_flags);
 
-   for (R_len_t i = 0; i<pattern_n; ++i)
-   {
-      if (pattern_cont.isNA(i)) {
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
-      else if (pattern_cont.get(i).length() <= 0) {
-         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
+    for (R_len_t i = 0; i<pattern_n; ++i)
+    {
+        if (pattern_cont.isNA(i)) {
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
+        else if (pattern_cont.get(i).length() <= 0) {
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      for (R_len_t j = 0; j<str_n; ++j) {
-         if (str_cont.isNA(j)) continue;
-         matcher->reset(str_cont.get(j).c_str(), str_cont.get(j).length());
-         R_len_t start = matcher->findFirst();
-         if (start == USEARCH_DONE)  continue;  // nothing to do now
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        for (R_len_t j = 0; j<str_n; ++j) {
+            if (str_cont.isNA(j)) continue;
+            matcher->reset(str_cont.get(j).c_str(), str_cont.get(j).length());
+            R_len_t start = matcher->findFirst();
+            if (start == USEARCH_DONE)  continue;  // nothing to do now
 
-         if (replacement_cont.isNA(i)) {
-            str_cont.setNA(j);
-            continue;
-         }
+            if (replacement_cont.isNA(i)) {
+                str_cont.setNA(j);
+                continue;
+            }
 
-         R_len_t len = matcher->getMatchedLength();
-         R_len_t sumbytes = len;
-         deque< pair<R_len_t, R_len_t> > occurrences;
-         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
-
-         while (USEARCH_DONE != matcher->findNext()) { // all
-            start = matcher->getMatchedStart();
-            len = matcher->getMatchedLength();
+            R_len_t len = matcher->getMatchedLength();
+            R_len_t sumbytes = len;
+            deque< pair<R_len_t, R_len_t> > occurrences;
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
-            sumbytes += len;
-         }
 
-         R_len_t str_cur_n         = str_cont.get(j).length();
-         R_len_t replacement_cur_n = replacement_cont.get(i).length();
-         R_len_t buf_need =
-            str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
+            while (USEARCH_DONE != matcher->findNext()) { // all
+                start = matcher->getMatchedStart();
+                len = matcher->getMatchedLength();
+                occurrences.push_back(pair<R_len_t, R_len_t>(start, start+len));
+                sumbytes += len;
+            }
 
-         str_cont.getWritable(j).replaceAllAtPos(buf_need,
-            replacement_cont.get(i).c_str(), replacement_cur_n,
-            occurrences);
-      }
-   }
+            R_len_t str_cur_n         = str_cont.get(j).length();
+            R_len_t replacement_cur_n = replacement_cont.get(i).length();
+            R_len_t buf_need =
+                str_cur_n+replacement_cur_n*(R_len_t)occurrences.size()-sumbytes;
 
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+            str_cont.getWritable(j).replaceAllAtPos(buf_need,
+                                                    replacement_cont.get(i).c_str(), replacement_cur_n,
+                                                    occurrences);
+        }
+    }
+
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 // stri__replace_all_fixed_no_vectorize_all
@@ -536,10 +536,10 @@ SEXP stri__replace_all_fixed_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
  */
 SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_fixed)
 {
-   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
-      return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0);
-   else
-      return stri__replace_all_fixed_no_vectorize_all(str, pattern, replacement, opts_fixed);
+    if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+        return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 0);
+    else
+        return stri__replace_all_fixed_no_vectorize_all(str, pattern, replacement, opts_fixed);
 }
 
 
@@ -564,7 +564,7 @@ SEXP stri_replace_all_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
  */
 SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 {
-   return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, -1);
+    return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, -1);
 }
 
 
@@ -589,5 +589,5 @@ SEXP stri_replace_last_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts
  */
 SEXP stri_replace_first_fixed(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_fixed)
 {
-   return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 1);
+    return stri__replace_allfirstlast_fixed(str, pattern, replacement, opts_fixed, 1);
 }

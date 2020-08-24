@@ -47,46 +47,46 @@
  */
 class StriContainerListInt : public StriContainerBase {
 
-   private:
+private:
 
-      IntVec* data;
-
-
-   public:
-
-      StriContainerListInt();
-      StriContainerListInt(SEXP rlist);
-      StriContainerListInt(StriContainerListInt& container);
-      ~StriContainerListInt();
-      StriContainerListInt& operator=(StriContainerListInt& container);
+    IntVec* data;
 
 
-      /** check if the vectorized ith element is NULL/NA
-       * @param i index
-       * @return true if is NA
-       */
-      inline bool isNA(R_len_t i) const {
+public:
+
+    StriContainerListInt();
+    StriContainerListInt(SEXP rlist);
+    StriContainerListInt(StriContainerListInt& container);
+    ~StriContainerListInt();
+    StriContainerListInt& operator=(StriContainerListInt& container);
+
+
+    /** check if the vectorized ith element is NULL/NA
+     * @param i index
+     * @return true if is NA
+     */
+    inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerListInt::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (data[i%n].isNA());
-      }
+        return (data[i%n].isNA());
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string, read only
-       */
-      const IntVec& get(R_len_t i) const {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string, read only
+     */
+    const IntVec& get(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerListInt::get(): INDEX OUT OF BOUNDS");
-         if (data[i%n].isNA())
+        if (data[i%n].isNA())
             throw StriException("StriContainerListInt::get(): isNA");
 #endif
-         return data[i%n];
-      }
+        return data[i%n];
+    }
 };
 
 #endif

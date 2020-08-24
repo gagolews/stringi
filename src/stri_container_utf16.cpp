@@ -41,9 +41,9 @@
  *
  */
 StriContainerUTF16::StriContainerUTF16()
-   : StriContainerBase()
+    : StriContainerBase()
 {
-   this->str = NULL;
+    this->str = NULL;
 }
 
 
@@ -55,14 +55,14 @@ StriContainerUTF16::StriContainerUTF16()
  */
 StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
 {
-   this->str = NULL;
-   this->init_Base(_nrecycle, _nrecycle, false);
-   if (this->n > 0) {
-      this->str = new UnicodeString[this->n];
-      STRI_ASSERT(this->str);
-      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
-       this->n*sizeof(UnicodeString));
-   }
+    this->str = NULL;
+    this->init_Base(_nrecycle, _nrecycle, false);
+    if (this->n > 0) {
+        this->str = new UnicodeString[this->n];
+        STRI_ASSERT(this->str);
+        if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+                                                this->n*sizeof(UnicodeString));
+    }
 }
 
 
@@ -78,109 +78,109 @@ StriContainerUTF16::StriContainerUTF16(R_len_t _nrecycle)
  */
 StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shallowrecycle)
 {
-   this->str = NULL;
+    this->str = NULL;
 #ifndef NDEBUG
-   if (!isString(rstr))
-      throw StriException("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
+    if (!isString(rstr))
+        throw StriException("DEBUG: !isString in StriContainerUTF16::StriContainerUTF16(SEXP rstr)");
 #endif
-   R_len_t nrstr = LENGTH(rstr);
-   this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
+    R_len_t nrstr = LENGTH(rstr);
+    this->init_Base(nrstr, _nrecycle, _shallowrecycle); // calling LENGTH(rstr) fails on constructor call
 
-   if (this->n == 0)
-      return; /* nothing more to do */
+    if (this->n == 0)
+        return; /* nothing more to do */
 
-   this->str = new UnicodeString[this->n];
-   STRI_ASSERT(this->str);
-   if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
-       this->n*sizeof(UnicodeString));
-   for (R_len_t i=0; i<this->n; ++i)
-      this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
+    this->str = new UnicodeString[this->n];
+    STRI_ASSERT(this->str);
+    if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+                                            this->n*sizeof(UnicodeString));
+    for (R_len_t i=0; i<this->n; ++i)
+        this->str[i].setToBogus(); // in case it fails during conversion (this is NA)
 
-   /* Important: ICU provides full internationalization functionality
-   without any conversion table data. The common library contains
-   code to handle several important encodings algorithmically: US-ASCII,
-   ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
-   StriUcnv ucnvASCII("US-ASCII");
+    /* Important: ICU provides full internationalization functionality
+    without any conversion table data. The common library contains
+    code to handle several important encodings algorithmically: US-ASCII,
+    ISO-8859-1, UTF-7/8/16/32, SCSU, BOCU-1, CESU-8, and IMAP-mailbox-name */
+    StriUcnv ucnvASCII("US-ASCII");
 #if defined(_WIN32) || defined(_WIN64)
-   // #270: latin-1 is windows-1252 on Windows
-   StriUcnv ucnvLatin1("WINDOWS-1252");
+    // #270: latin-1 is windows-1252 on Windows
+    StriUcnv ucnvLatin1("WINDOWS-1252");
 #else
-   StriUcnv ucnvLatin1("ISO-8859-1");
+    StriUcnv ucnvLatin1("ISO-8859-1");
 #endif
-   StriUcnv ucnvNative(NULL);
+    StriUcnv ucnvNative(NULL);
 
-   for (R_len_t i=0; i<nrstr; ++i) {
-      SEXP curs = STRING_ELT(rstr, i);
-      if (curs == NA_STRING) {
-         continue; // keep NA
-      }
+    for (R_len_t i=0; i<nrstr; ++i) {
+        SEXP curs = STRING_ELT(rstr, i);
+        if (curs == NA_STRING) {
+            continue; // keep NA
+        }
 
-      if (IS_ASCII(curs)) {
-         // Version 1:
-         UConverter* ucnv = ucnvASCII.getConverter();
-         UErrorCode status = U_ZERO_ERROR;
-         this->str[i].setTo(
-            UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
-         );
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-         // Performance improvement attempt #1:
-         // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
-         // if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
-         // slower than the above
-
-         // Performance improvement attempt #2:
-         // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
-         // This wasn't faster than the ucnvASCII approach.
-
-         // Performance improvement attempt #3:
-         // slightly slower than ucnvASCII
-         // R_len_t curs_n = LENGTH(curs);
-         // const char* curs_s = CHAR(curs);
-         // this->str[i].remove(); // unset bogus (NA)
-         // UChar* buf = this->str[i].getBuffer(curs_n);
-         // for (R_len_t k=0; k<curs_n; ++k)
-         //   buf[k] = (UChar)curs_s[k]; // well, this is ASCII :)
-         // this->str[i].releaseBuffer(curs_n);
-      }
-      else if (IS_UTF8(curs)) {
-         // using ucnvUTF8 is slower for UTF-8
-         // the same is done for native encoding && ucnvNative_isUTF8
-         this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
-      }
-      else if (IS_LATIN1(curs)) {
-         UConverter* ucnv = ucnvLatin1.getConverter();
-         UErrorCode status = U_ZERO_ERROR;
-         this->str[i].setTo(
-            UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
-         );
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
-      else if (IS_BYTES(curs)) {
-         throw StriException(MSG__BYTESENC);
-      }
-      else {
-         // an "unknown" (native) encoding may be set to UTF-8 (speedup)
-         if (ucnvNative.isUTF8()) {
-            // UTF-8
-            this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
-         }
-         else {
-            UConverter* ucnv = ucnvNative.getConverter();
+        if (IS_ASCII(curs)) {
+            // Version 1:
+            UConverter* ucnv = ucnvASCII.getConverter();
             UErrorCode status = U_ZERO_ERROR;
             this->str[i].setTo(
-               UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
+                UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
             );
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         }
-      }
-   }
 
-   if (!_shallowrecycle) {
-      for (R_len_t i=nrstr; i<this->n; ++i) {
-         this->str[i].setTo(str[i%nrstr]);
-      }
-   }
+            // Performance improvement attempt #1:
+            // this->str[i] = new UnicodeString(UnicodeString::fromUTF8(CHAR(curs)));
+            // if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR);
+            // slower than the above
+
+            // Performance improvement attempt #2:
+            // Create UChar buf with LENGTH(curs) items, fill it with (CHAR(curs)[i], 0x00), i=1,...
+            // This wasn't faster than the ucnvASCII approach.
+
+            // Performance improvement attempt #3:
+            // slightly slower than ucnvASCII
+            // R_len_t curs_n = LENGTH(curs);
+            // const char* curs_s = CHAR(curs);
+            // this->str[i].remove(); // unset bogus (NA)
+            // UChar* buf = this->str[i].getBuffer(curs_n);
+            // for (R_len_t k=0; k<curs_n; ++k)
+            //   buf[k] = (UChar)curs_s[k]; // well, this is ASCII :)
+            // this->str[i].releaseBuffer(curs_n);
+        }
+        else if (IS_UTF8(curs)) {
+            // using ucnvUTF8 is slower for UTF-8
+            // the same is done for native encoding && ucnvNative_isUTF8
+            this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
+        }
+        else if (IS_LATIN1(curs)) {
+            UConverter* ucnv = ucnvLatin1.getConverter();
+            UErrorCode status = U_ZERO_ERROR;
+            this->str[i].setTo(
+                UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
+            );
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        }
+        else if (IS_BYTES(curs)) {
+            throw StriException(MSG__BYTESENC);
+        }
+        else {
+            // an "unknown" (native) encoding may be set to UTF-8 (speedup)
+            if (ucnvNative.isUTF8()) {
+                // UTF-8
+                this->str[i].setTo(UnicodeString::fromUTF8(CHAR(curs)));
+            }
+            else {
+                UConverter* ucnv = ucnvNative.getConverter();
+                UErrorCode status = U_ZERO_ERROR;
+                this->str[i].setTo(
+                    UnicodeString((const char*)CHAR(curs), (int32_t)LENGTH(curs), ucnv, status)
+                );
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+        }
+    }
+
+    if (!_shallowrecycle) {
+        for (R_len_t i=nrstr; i<this->n; ++i) {
+            this->str[i].setTo(str[i%nrstr]);
+        }
+    }
 }
 
 
@@ -189,20 +189,20 @@ StriContainerUTF16::StriContainerUTF16(SEXP rstr, R_len_t _nrecycle, bool _shall
  *  @param container source
  */
 StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
-   :    StriContainerBase((StriContainerBase&)container)
+    :    StriContainerBase((StriContainerBase&)container)
 {
-   if (container.str) {
-      this->str = new UnicodeString[this->n];
-      STRI_ASSERT(this->str);
-      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
-          this->n*sizeof(UnicodeString));
-      for (int i=0; i<this->n; ++i) {
-         this->str[i].setTo(container.str[i]);
-      }
-   }
-   else {
-      this->str = NULL;
-   }
+    if (container.str) {
+        this->str = new UnicodeString[this->n];
+        STRI_ASSERT(this->str);
+        if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+                                                this->n*sizeof(UnicodeString));
+        for (int i=0; i<this->n; ++i) {
+            this->str[i].setTo(container.str[i]);
+        }
+    }
+    else {
+        this->str = NULL;
+    }
 }
 
 
@@ -212,22 +212,22 @@ StriContainerUTF16::StriContainerUTF16(StriContainerUTF16& container)
  */
 StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
 {
-   this->~StriContainerUTF16();
-   (StriContainerBase&) (*this) = (StriContainerBase&)container;
+    this->~StriContainerUTF16();
+    (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
-   if (container.str) {
-      this->str = new UnicodeString[this->n];
-      STRI_ASSERT(this->str);
-      if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
-          this->n*sizeof(UnicodeString));
-      for (int i=0; i<this->n; ++i) {
-         this->str[i].setTo(container.str[i]);
-      }
-   }
-   else {
-      this->str = NULL;
-   }
-   return *this;
+    if (container.str) {
+        this->str = new UnicodeString[this->n];
+        STRI_ASSERT(this->str);
+        if (!this->str) throw StriException(MSG__MEM_ALLOC_ERROR_WITH_SIZE,
+                                                this->n*sizeof(UnicodeString));
+        for (int i=0; i<this->n; ++i) {
+            this->str[i].setTo(container.str[i]);
+        }
+    }
+    else {
+        this->str = NULL;
+    }
+    return *this;
 }
 
 
@@ -236,10 +236,10 @@ StriContainerUTF16& StriContainerUTF16::operator=(StriContainerUTF16& container)
  */
 StriContainerUTF16::~StriContainerUTF16()
 {
-   if (str) {
-      delete [] str;
-      str = NULL;
-   }
+    if (str) {
+        delete [] str;
+        str = NULL;
+    }
 }
 
 
@@ -258,38 +258,38 @@ StriContainerUTF16::~StriContainerUTF16()
  */
 SEXP StriContainerUTF16::toR() const
 {
-   R_len_t outbufsize = 0;
-   for (R_len_t i=0; i<nrecycle; ++i) {
-      if (!str[i%n].isBogus()) {
-         R_len_t thissize = str[i%n].length();
-         if (thissize > outbufsize)
-            outbufsize = thissize;
-      }
-   }
-   // One UChar -- <= U+FFFF  -> 1-3 bytes UTF8
-   // Two UChars -- >=U+10000 ->   4 bytes UTF8
-   outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(outbufsize, 3);
-   String8buf outbuf(outbufsize);
+    R_len_t outbufsize = 0;
+    for (R_len_t i=0; i<nrecycle; ++i) {
+        if (!str[i%n].isBogus()) {
+            R_len_t thissize = str[i%n].length();
+            if (thissize > outbufsize)
+                outbufsize = thissize;
+        }
+    }
+    // One UChar -- <= U+FFFF  -> 1-3 bytes UTF8
+    // Two UChars -- >=U+10000 ->   4 bytes UTF8
+    outbufsize = UCNV_GET_MAX_BYTES_FOR_STRING(outbufsize, 3);
+    String8buf outbuf(outbufsize);
 
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
+    SEXP ret;
+    PROTECT(ret = Rf_allocVector(STRSXP, nrecycle));
 
-   UErrorCode status = U_ZERO_ERROR;
-   for (R_len_t i=0; i<nrecycle; ++i) {
-      if (str[i%n].isBogus())
-         SET_STRING_ELT(ret, i, NA_STRING);
-      else {
-         int outrealsize = 0;
-         u_strToUTF8(outbuf.data(), outbufsize, &outrealsize,
-            str[i%n].getBuffer(), str[i%n].length(), &status);
-         STRI__CHECKICUSTATUS_THROW(status, {UNPROTECT(1);})
-         SET_STRING_ELT(ret, i,
-            Rf_mkCharLenCE(outbuf.data(), outrealsize, (cetype_t)CE_UTF8));
-      }
-   }
+    UErrorCode status = U_ZERO_ERROR;
+    for (R_len_t i=0; i<nrecycle; ++i) {
+        if (str[i%n].isBogus())
+            SET_STRING_ELT(ret, i, NA_STRING);
+        else {
+            int outrealsize = 0;
+            u_strToUTF8(outbuf.data(), outbufsize, &outrealsize,
+                        str[i%n].getBuffer(), str[i%n].length(), &status);
+            STRI__CHECKICUSTATUS_THROW(status, {UNPROTECT(1);})
+            SET_STRING_ELT(ret, i,
+                           Rf_mkCharLenCE(outbuf.data(), outrealsize, (cetype_t)CE_UTF8));
+        }
+    }
 
-   UNPROTECT(1);
-   return ret;
+    UNPROTECT(1);
+    return ret;
 }
 
 
@@ -303,17 +303,17 @@ SEXP StriContainerUTF16::toR() const
 SEXP StriContainerUTF16::toR(R_len_t i) const
 {
 #ifndef NDEBUG
-   if (i < 0 || i >= nrecycle)
-      throw StriException("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS");
+    if (i < 0 || i >= nrecycle)
+        throw StriException("StriContainerUTF16::toR(): INDEX OUT OF BOUNDS");
 #endif
 
-   if (str[i%n].isBogus())
-      return NA_STRING;
-   else {
-      std::string s;
-      str[i%n].toUTF8String(s);
-      return Rf_mkCharLenCE(s.c_str(), (int)s.length(), (cetype_t)CE_UTF8);
-   }
+    if (str[i%n].isBogus())
+        return NA_STRING;
+    else {
+        std::string s;
+        str[i%n].toUTF8String(s);
+        return Rf_mkCharLenCE(s.c_str(), (int)s.length(), (cetype_t)CE_UTF8);
+    }
 }
 
 
@@ -332,63 +332,63 @@ SEXP StriContainerUTF16::toR(R_len_t i) const
  *    #132 incorrect behavior for i2[j2] == i2[j2+1]
  */
 void StriContainerUTF16::UChar16_to_UChar32_index(R_len_t i,
-   int* i1, int* i2, const int ni, int adj1, int adj2)
+        int* i1, int* i2, const int ni, int adj1, int adj2)
 {
-   const UnicodeString* str_data = &(this->get(i));
-   const UChar* cstr = str_data->getBuffer();
-   const int nstr = str_data->length();
+    const UnicodeString* str_data = &(this->get(i));
+    const UChar* cstr = str_data->getBuffer();
+    const int nstr = str_data->length();
 
-   int j1 = 0;
-   int j2 = 0;
+    int j1 = 0;
+    int j2 = 0;
 
-   int i16 = 0;
-   int i32 = 0;
-   while (i16 < nstr && (j1 < ni || j2 < ni)) {
-      while (j1 < ni && i1[j1] <= i16) {
+    int i16 = 0;
+    int i32 = 0;
+    while (i16 < nstr && (j1 < ni || j2 < ni)) {
+        while (j1 < ni && i1[j1] <= i16) {
 #ifndef NDEBUG
-      if (j1 < ni-1 && i1[j1] > i1[j1+1])
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 1");
+            if (j1 < ni-1 && i1[j1] > i1[j1+1])
+                throw StriException("DEBUG: stri__UChar16_to_UChar32_index 1");
 #endif
-         i1[j1] = i32 + adj1;
-         ++j1;
-      }
+            i1[j1] = i32 + adj1;
+            ++j1;
+        }
 
-      while (j2 < ni && i2[j2] <= i16) {
+        while (j2 < ni && i2[j2] <= i16) {
 #ifndef NDEBUG
-      if (j2 < ni-1 && i2[j2] > i2[j2+1])
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 2");
+            if (j2 < ni-1 && i2[j2] > i2[j2+1])
+                throw StriException("DEBUG: stri__UChar16_to_UChar32_index 2");
 #endif
-         i2[j2] = i32 + adj2;
-         ++j2;
-      }
+            i2[j2] = i32 + adj2;
+            ++j2;
+        }
 
-      // Next UChar32
-      U16_FWD_1(cstr, i16, nstr);
-      ++i32;
-   }
+        // Next UChar32
+        U16_FWD_1(cstr, i16, nstr);
+        ++i32;
+    }
 
-   // CONVERT LAST:
-   while (j1 < ni && i1[j1] <= nstr) {
+    // CONVERT LAST:
+    while (j1 < ni && i1[j1] <= nstr) {
 //#ifndef NDEBUG
 //      if (j1 < ni-1 && i1[j1] >= i1[j1+1])
 //         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 3");
 //#endif
-         i1[j1] = i32 + adj1;
-         ++j1;
-   }
+        i1[j1] = i32 + adj1;
+        ++j1;
+    }
 
-   while (j2 < ni && i2[j2] <= nstr) {
+    while (j2 < ni && i2[j2] <= nstr) {
 //#ifndef NDEBUG
 //      if (j2 < ni-1 && i2[j2] >= i2[j2+1])
 //         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 4");
 //#endif
-         i2[j2] = i32 + adj2;
-         ++j2;
-   }
+        i2[j2] = i32 + adj2;
+        ++j2;
+    }
 
-   // CHECK:
+    // CHECK:
 #ifndef NDEBUG
-      if (i16 >= nstr && (j1 < ni || j2 < ni))
-         throw StriException("DEBUG: stri__UChar16_to_UChar32_index 5");
+    if (i16 >= nstr && (j1 < ni || j2 < ni))
+        throw StriException("DEBUG: stri__UChar16_to_UChar32_index 5");
 #endif
 }
