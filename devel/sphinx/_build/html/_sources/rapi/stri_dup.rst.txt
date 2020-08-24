@@ -42,6 +42,6 @@ Examples
 
 .. code-block:: r
 
-   stri_dup("a", 1:5)
-   stri_dup(c("a", NA, "ba"), 4)
-   stri_dup(c("abc", "pqrst"), c(4, 2))
+   stri_dup('a', 1:5)
+   stri_dup(c('a', NA, 'ba'), 4)
+   stri_dup(c('abc', 'pqrst'), c(4, 2))

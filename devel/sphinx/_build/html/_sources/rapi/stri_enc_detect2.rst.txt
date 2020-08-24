@@ -19,7 +19,7 @@ Arguments
 +------------+-------------------------------------------------------------------------------------------------------------------------------+
 | ``str``    | character vector, a raw vector, or a list of ``raw`` vectors                                                                  |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+
-| ``locale`` | ``NULL`` or ``""`` for default locale, ``NA`` for just checking the UTF-\* family, or a single string with locale identifier. |
+| ``locale`` | ``NULL`` or ``''`` for default locale, ``NA`` for just checking the UTF-\* family, or a single string with locale identifier. |
 +------------+-------------------------------------------------------------------------------------------------------------------------------+
 
 Details

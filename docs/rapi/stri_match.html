@@ -339,7 +339,7 @@
 <td><p>supplementary arguments passed to the underlying functions, including additional settings for <code class="docutils literal notranslate"><span class="pre">opts_regex</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
-<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code></p></td>
+<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">'first'</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, <code class="docutils literal notranslate"><span class="pre">'last'</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pattern,</span> <span class="pre">regex</span></code></p></td>
 <td><p>character vector; search patterns; for more details refer to <a class="reference external" href="stringi-search.html">stringi-search</a></p></td>
@@ -375,27 +375,27 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="s">&quot;breakfast=eggs, lunch=pizza, dessert=icecream&quot;</span><span class="p">,</span>
-   <span class="s">&quot;(\\w+)=(\\w+)&quot;</span><span class="p">)</span>
-<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;breakfast=eggs&quot;</span><span class="p">,</span> <span class="s">&quot;lunch=pizza&quot;</span><span class="p">,</span> <span class="s">&quot;no food here&quot;</span><span class="p">),</span>
-   <span class="s">&quot;(\\w+)=(\\w+)&quot;</span><span class="p">)</span>
-<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;breakfast=eggs;lunch=pizza&quot;</span><span class="p">,</span>
-   <span class="s">&quot;breakfast=bacon;lunch=spaghetti&quot;</span><span class="p">,</span> <span class="s">&quot;no food here&quot;</span><span class="p">),</span>
-   <span class="s">&quot;(\\w+)=(\\w+)&quot;</span><span class="p">)</span>
-<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;breakfast=eggs;lunch=pizza&quot;</span><span class="p">,</span>
-   <span class="s">&quot;breakfast=bacon;lunch=spaghetti&quot;</span><span class="p">,</span> <span class="s">&quot;no food here&quot;</span><span class="p">),</span>
-   <span class="s">&quot;(\\w+)=(\\w+)&quot;</span><span class="p">)</span>
-<span class="nf">stri_match_last_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;breakfast=eggs;lunch=pizza&quot;</span><span class="p">,</span>
-   <span class="s">&quot;breakfast=bacon;lunch=spaghetti&quot;</span><span class="p">,</span> <span class="s">&quot;no food here&quot;</span><span class="p">),</span>
-   <span class="s">&quot;(\\w+)=(\\w+)&quot;</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="s">&#39;breakfast=eggs, lunch=pizza, dessert=icecream&#39;</span><span class="p">,</span>
+   <span class="s">&#39;(\\w+)=(\\w+)&#39;</span><span class="p">)</span>
+<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;breakfast=eggs&#39;</span><span class="p">,</span> <span class="s">&#39;lunch=pizza&#39;</span><span class="p">,</span> <span class="s">&#39;no food here&#39;</span><span class="p">),</span>
+   <span class="s">&#39;(\\w+)=(\\w+)&#39;</span><span class="p">)</span>
+<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;breakfast=eggs;lunch=pizza&#39;</span><span class="p">,</span>
+   <span class="s">&#39;breakfast=bacon;lunch=spaghetti&#39;</span><span class="p">,</span> <span class="s">&#39;no food here&#39;</span><span class="p">),</span>
+   <span class="s">&#39;(\\w+)=(\\w+)&#39;</span><span class="p">)</span>
+<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;breakfast=eggs;lunch=pizza&#39;</span><span class="p">,</span>
+   <span class="s">&#39;breakfast=bacon;lunch=spaghetti&#39;</span><span class="p">,</span> <span class="s">&#39;no food here&#39;</span><span class="p">),</span>
+   <span class="s">&#39;(\\w+)=(\\w+)&#39;</span><span class="p">)</span>
+<span class="nf">stri_match_last_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;breakfast=eggs;lunch=pizza&#39;</span><span class="p">,</span>
+   <span class="s">&#39;breakfast=bacon;lunch=spaghetti&#39;</span><span class="p">,</span> <span class="s">&#39;no food here&#39;</span><span class="p">),</span>
+   <span class="s">&#39;(\\w+)=(\\w+)&#39;</span><span class="p">)</span>
 
-<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;:abcd&quot;</span><span class="p">,</span> <span class="s">&quot;:abcd:&quot;</span><span class="p">),</span> <span class="s">&quot;^(:)?([^:]*)(:)?$&quot;</span><span class="p">)</span>
-<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="s">&quot;:abcd&quot;</span><span class="p">,</span> <span class="s">&quot;:abcd:&quot;</span><span class="p">),</span> <span class="s">&quot;^(:)?([^:]*)(:)?$&quot;</span><span class="p">,</span> <span class="n">cg_missing</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;abcd&#39;</span><span class="p">,</span> <span class="s">&#39;:abcd&#39;</span><span class="p">,</span> <span class="s">&#39;:abcd:&#39;</span><span class="p">),</span> <span class="s">&#39;^(:)?([^:]*)(:)?$&#39;</span><span class="p">)</span>
+<span class="nf">stri_match_first_regex</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;abcd&#39;</span><span class="p">,</span> <span class="s">&#39;:abcd&#39;</span><span class="p">,</span> <span class="s">&#39;:abcd:&#39;</span><span class="p">),</span> <span class="s">&#39;^(:)?([^:]*)(:)?$&#39;</span><span class="p">,</span> <span class="n">cg_missing</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
 
 <span class="c1"># Match all the pattern of the form XYX, including overlapping matches:</span>
-<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="s">&quot;ACAGAGACTTTAGATAGAGAAGA&quot;</span><span class="p">,</span> <span class="s">&quot;(?=(([ACGT])[ACGT]\\2))&quot;</span><span class="p">)[[</span><span class="m">1</span><span class="p">]][,</span><span class="m">2</span><span class="p">]</span>
+<span class="nf">stri_match_all_regex</span><span class="p">(</span><span class="s">&#39;ACAGAGACTTTAGATAGAGAAGA&#39;</span><span class="p">,</span> <span class="s">&#39;(?=(([ACGT])[ACGT]\\2))&#39;</span><span class="p">)[[</span><span class="m">1</span><span class="p">]][,</span><span class="m">2</span><span class="p">]</span>
 <span class="c1"># Compare the above to:</span>
-<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&quot;ACAGAGACTTTAGATAGAGAAGA&quot;</span><span class="p">,</span> <span class="s">&quot;([ACGT])[ACGT]\\1&quot;</span><span class="p">)</span>
+<span class="nf">stri_extract_all_regex</span><span class="p">(</span><span class="s">&#39;ACAGAGACTTTAGATAGAGAAGA&#39;</span><span class="p">,</span> <span class="s">&#39;([ACGT])[ACGT]\\1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

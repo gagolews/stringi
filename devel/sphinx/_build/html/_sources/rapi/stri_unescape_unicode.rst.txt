@@ -46,5 +46,5 @@ Examples
 
 .. code-block:: r
 
-   stri_unescape_unicode("a\\u0105!\\u0032\\n")
+   stri_unescape_unicode('a\\u0105!\\u0032\\n')
 

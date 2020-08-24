@@ -17,11 +17,11 @@ Arguments
 ~~~~~~~~~
 
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``           | ``NULL`` or ``""`` for default time zone, or a single string with time zone ID otherwise                                                                      |
+| ``tz``           | ``NULL`` or ``''`` for default time zone, or a single string with time zone ID otherwise                                                                      |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``       | ``NULL`` or ``""`` for default locale, or a single string with locale identifier                                                                              |
+| ``locale``       | ``NULL`` or ``''`` for default locale, or a single string with locale identifier                                                                              |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``display_type`` | single string; one of ``"short"``, ``"long"``, ``"generic_short"``, ``"generic_long"``, ``"gmt_short"``, ``"gmt_long"``, ``"common"``, ``"generic_location"`` |
+| ``display_type`` | single string; one of ``'short'``, ``'long'``, ``'generic_short'``, ``'generic_long'``, ``'gmt_short'``, ``'gmt_long'``, ``'common'``, ``'generic_location'`` |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -61,8 +61,8 @@ Examples
 .. code-block:: r
 
    stri_timezone_info()
-   stri_timezone_info(locale="sk_SK")
-   sapply(c("short", "long", "generic_short", "generic_long",
-            "gmt_short", "gmt_long", "common", "generic_location"),
-     function(e) stri_timezone_info("Europe/London", display_type=e))
+   stri_timezone_info(locale='sk_SK')
+   sapply(c('short', 'long', 'generic_short', 'generic_long',
+            'gmt_short', 'gmt_long', 'common', 'generic_location'),
+     function(e) stri_timezone_info('Europe/London', display_type=e))
 

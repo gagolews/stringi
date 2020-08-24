@@ -357,32 +357,32 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># in Polish, ch &lt; h:</span>
-<span class="nf">stri_cmp_lt</span><span class="p">(</span><span class="s">&quot;hladny&quot;</span><span class="p">,</span> <span class="s">&quot;chladny&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;pl_PL&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp_lt</span><span class="p">(</span><span class="s">&#39;hladny&#39;</span><span class="p">,</span> <span class="s">&#39;chladny&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;pl_PL&#39;</span><span class="p">)</span>
 
 <span class="c1"># in Slovak, ch &gt; h:</span>
-<span class="nf">stri_cmp_lt</span><span class="p">(</span><span class="s">&quot;hladny&quot;</span><span class="p">,</span> <span class="s">&quot;chladny&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;sk_SK&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp_lt</span><span class="p">(</span><span class="s">&#39;hladny&#39;</span><span class="p">,</span> <span class="s">&#39;chladny&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;sk_SK&#39;</span><span class="p">)</span>
 
 <span class="c1"># &lt; or &gt; (depends on locale):</span>
-<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;hladny&quot;</span><span class="p">,</span> <span class="s">&quot;chladny&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;hladny&#39;</span><span class="p">,</span> <span class="s">&#39;chladny&#39;</span><span class="p">)</span>
 
 <span class="c1"># ignore case differences:</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&quot;hladny&quot;</span><span class="p">,</span> <span class="s">&quot;HLADNY&quot;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&#39;hladny&#39;</span><span class="p">,</span> <span class="s">&#39;HLADNY&#39;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 
 <span class="c1"># also ignore diacritical differences:</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&quot;hladn\u00FD&quot;</span><span class="p">,</span> <span class="s">&quot;hladny&quot;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;sk_SK&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&#39;hladn\u00FD&#39;</span><span class="p">,</span> <span class="s">&#39;hladny&#39;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;sk_SK&#39;</span><span class="p">)</span>
 
 <span class="c1"># non-Unicode-normalized vs normalized string:</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&quot;\u0105&quot;</span><span class="p">),</span> <span class="s">&quot;\u105&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">),</span> <span class="s">&#39;\u105&#39;</span><span class="p">)</span>
 
 <span class="c1"># note the difference:</span>
-<span class="nf">stri_cmp_eq</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&quot;\u0105&quot;</span><span class="p">),</span> <span class="s">&quot;\u105&quot;</span><span class="p">)</span>
+<span class="nf">stri_cmp_eq</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">),</span> <span class="s">&#39;\u105&#39;</span><span class="p">)</span>
 
 <span class="c1"># ligatures:</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&quot;\ufb00&quot;</span><span class="p">,</span> <span class="s">&quot;ff&quot;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&#39;\ufb00&#39;</span><span class="p">,</span> <span class="s">&#39;ff&#39;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 
 <span class="c1"># phonebook collation</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&quot;G\u00e4rtner&quot;</span><span class="p">,</span> <span class="s">&quot;Gaertner&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;de_DE@collation=phonebook&quot;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1L</span><span class="p">)</span>
-<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&quot;G\u00e4rtner&quot;</span><span class="p">,</span> <span class="s">&quot;Gaertner&quot;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&quot;de_DE&quot;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1L</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&#39;G\u00e4rtner&#39;</span><span class="p">,</span> <span class="s">&#39;Gaertner&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;de_DE@collation=phonebook&#39;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1L</span><span class="p">)</span>
+<span class="nf">stri_cmp_equiv</span><span class="p">(</span><span class="s">&#39;G\u00e4rtner&#39;</span><span class="p">,</span> <span class="s">&#39;Gaertner&#39;</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">&#39;de_DE&#39;</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="m">1L</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

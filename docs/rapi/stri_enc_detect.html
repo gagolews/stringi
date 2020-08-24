@@ -306,7 +306,7 @@
 <td><p>character vector, a raw vector, or a list of <code class="docutils literal notranslate"><span class="pre">raw</span></code> vectors</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">filter_angle_brackets</span></code></p></td>
-<td><p>logical; If filtering is enabled, text within angle brackets (“&lt;” and “&gt;”) will be removed before detection, which will remove most HTML or XML markup.</p></td>
+<td><p>logical; If filtering is enabled, text within angle brackets (‘&lt;’ and ‘&gt;’) will be removed before detection, which will remove most HTML or XML markup.</p></td>
 </tr>
 </tbody>
 </table>
@@ -314,7 +314,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">filter_angle_brackets</span></code>.</p>
-<p>For a character vector input, merging all text lines via <a class="reference external" href="stri_flatten.html">stri_flatten(str, collapse=”n”)</a> might be needed if <code class="docutils literal notranslate"><span class="pre">str</span></code> has been obtained via a call to <code class="docutils literal notranslate"><span class="pre">readLines</span></code> and in fact represents an image of a single text file.</p>
+<p>For a character vector input, merging all text lines via <a class="reference external" href="stri_flatten.html">stri_flatten(str, collapse=’n’)</a> might be needed if <code class="docutils literal notranslate"><span class="pre">str</span></code> has been obtained via a call to <code class="docutils literal notranslate"><span class="pre">readLines</span></code> and in fact represents an image of a single text file.</p>
 <p>This is, at best, an imprecise operation using statistics and heuristics. Because of this, detection works best if you supply at least a few hundred bytes of character data that is mostly in a single language. However, because the detection only looks at a limited amount of the input data, some of the returned character sets may fail to handle all of the input data. Note that in some cases, the language can be determined along with the encoding.</p>
 <p>Several different techniques are used for character set detection. For multi-byte encodings, the sequence of bytes is checked for legible patterns. The detected characters are also checked against a list of frequently used characters in that encoding. For single byte encodings, the data is checked against a list of the most commonly occurring three letter groups for each language that can be written using that encoding.</p>
 <p>The detection process can be configured to optionally ignore HTML or XML style markup (using ICU’s internal facilities), which can interfere with the detection process by changing the statistics.</p>
@@ -446,7 +446,7 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1">## Not run:</span>
-<span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">rawToChar</span><span class="p">(</span><span class="nf">readBin</span><span class="p">(</span><span class="s">&quot;test.txt&quot;</span><span class="p">,</span> <span class="s">&quot;raw&quot;</span><span class="p">,</span> <span class="m">100000</span><span class="p">))</span>
+<span class="n">f</span> <span class="o">&lt;-</span> <span class="nf">rawToChar</span><span class="p">(</span><span class="nf">readBin</span><span class="p">(</span><span class="s">&#39;test.txt&#39;</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">,</span> <span class="m">100000</span><span class="p">))</span>
 <span class="nf">stri_enc_detect</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="c1">## End(Not run)</span>

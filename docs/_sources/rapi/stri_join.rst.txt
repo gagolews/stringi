@@ -41,7 +41,7 @@ If any of the arguments in '``...``' is a vector of length 0 (not to be confused
 
 If ``collapse`` or ``sep`` has length greater than 1, then only the first string will be used.
 
-In case where there are missing values in any of the input vectors, ``NA`` is set to the corresponding element. Note that this behavior is different from ``paste``, which treats missing values as ordinary strings like ``"NA"``. Moreover, as usual in stringi, the resulting strings are always in UTF-8.
+In case where there are missing values in any of the input vectors, ``NA`` is set to the corresponding element. Note that this behavior is different from ``paste``, which treats missing values as ordinary strings like ``'NA'``. Moreover, as usual in stringi, the resulting strings are always in UTF-8.
 
 Value
 ~~~~~

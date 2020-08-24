@@ -51,9 +51,9 @@ Examples
 
 .. code-block:: r
 
-   stri_remove_empty(stri_na2empty(c("a", NA, "", "b")))
-   stri_remove_empty(c("a", NA, "", "b"))
-   stri_remove_empty(c("a", NA, "", "b"), TRUE)
+   stri_remove_empty(stri_na2empty(c('a', NA, '', 'b')))
+   stri_remove_empty(c('a', NA, '', 'b'))
+   stri_remove_empty(c('a', NA, '', 'b'), TRUE)
 
-   stri_omit_empty_na(c("a", NA, "", "b"))
+   stri_omit_empty_na(c('a', NA, '', 'b'))
 

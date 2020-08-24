@@ -88,7 +88,7 @@ Arguments
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``                                    | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_regex``, and so on                                                                                                      |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``mode``                                   | single string; one of: ``"first"`` (the default), ``"all"``, ``"last"``                                                                                                                                                                         |
+| ``mode``                                   | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                                                                                                                                         |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                                                                           |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -140,13 +140,13 @@ Examples
 
    ## Not run: 
    # emoji support available since ICU 57
-   stri_extract_all_charclass(stri_enc_fromutf32(32:55200), "\\p{EMOJI}")
+   stri_extract_all_charclass(stri_enc_fromutf32(32:55200), '\\p{EMOJI}')
 
    ## End(Not run)
 
    stri_extract_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-   stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-   stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale="sk_SK")
+   stri_extract_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
+   stri_extract_last_coll(c('Yy\u00FD', 'AAA'), 'y',  strength=1, locale='sk_SK')
 
    stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
    stri_extract_first_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+', '\\p{Ll}{2,3}', '\\p{Ll}{2,3}?'))
@@ -156,6 +156,6 @@ Examples
    stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=TRUE)
    stri_extract_all_regex('XaaaaX', c('\\p{Ll}', '\\p{Ll}+'), simplify=NA)
 
-   stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE)
-   stri_extract_all_fixed("abaBAba", "Aba", case_insensitive=TRUE, overlap=TRUE)
+   stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE)
+   stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
 

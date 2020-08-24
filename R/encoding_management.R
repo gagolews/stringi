@@ -61,11 +61,12 @@
 #' @export
 stri_enc_list <- function(simplify = FALSE) {
     simplify <- !identical(simplify, FALSE)
-    
+
     ret <- .Call(C_stri_enc_list)
-    if (simplify) 
+    if (simplify)
         return(stri_sort(unique(unlist(ret))))  # @TODO: use stri_unique
- else return(ret)
+    else
+        return(ret)
 }
 
 
@@ -159,7 +160,7 @@ stri_enc_info <- function(enc = NULL) {
 #' @export
 stri_enc_set <- function(enc) {
     previous <- stri_enc_get()
-    
+
     # We call stri_info, because it generates some warnings,
     # in case any problems are found:
     .Call(C_stri_enc_set, enc)

@@ -41,5 +41,5 @@ Examples
 .. code-block:: r
 
    stri_enc_isascii(letters[1:3])
-   stri_enc_isascii("\u0105\u0104")
+   stri_enc_isascii('\u0105\u0104')
 

@@ -21,9 +21,9 @@ Arguments
 +------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``str``    | a character vector, a raw vector, or a list of ``raw`` vectors to be converted                                                                                                                         |
 +------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``from``   | input encoding: ``NULL`` or ``""`` for the default encoding or internal encoding marks' usage (see Details); otherwise, a single string with encoding name, see `stri_enc_list <stri_enc_list.html>`__ |
+| ``from``   | input encoding: ``NULL`` or ``''`` for the default encoding or internal encoding marks' usage (see Details); otherwise, a single string with encoding name, see `stri_enc_list <stri_enc_list.html>`__ |
 +------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``to``     | target encoding: ``NULL`` or ``""`` for default encoding (see `stri_enc_get <stri_enc_set.html>`__), or a single string with encoding name                                                             |
+| ``to``     | target encoding: ``NULL`` or ``''`` for default encoding (see `stri_enc_get <stri_enc_set.html>`__), or a single string with encoding name                                                             |
 +------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``to_raw`` | a single logical value; indicates whether a list of raw vectors rather than a character vector should be returned                                                                                      |
 +------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -35,7 +35,7 @@ Details
 
 Refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <stringi-encoding.html>`__ for a general discussion.
 
-If ``from`` is either missing, ``""``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
+If ``from`` is either missing, ``''``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
 
 However, if ``from`` is given explicitly, the internal encoding declarations are always ignored.
 
@@ -43,9 +43,9 @@ For ``to_raw=FALSE``, the output strings always have the encodings marked accord
 
 Note that some issues might occur if ``to`` indicates, e.g, UTF-16 or UTF-32, as the output strings may have embedded NULs. In such cases, please use ``to_raw=TRUE`` and consider specifying a byte order marker (BOM) for portability reasons (e.g., set ``UTF-16`` or ``UTF-32`` which automatically adds the BOMs).
 
-Note that ``stri_encode(as.raw(data), "encodingname")`` is a clever substitute for ``rawToChar``.
+Note that ``stri_encode(as.raw(data), 'encodingname')`` is a clever substitute for ``rawToChar``.
 
-In the current version of stringi, if an incorrect code point is found on input, it is replaced with the default (for that target encoding) "missing/erroneous" character (with a warning), e.g., the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD). Occurrences thereof can be located in the output string to diagnose the problematic sequences, e.g., by calling: ``stri_locate_all_regex(converted_string, "[\ufffd\u001a]"``.
+In the current version of stringi, if an incorrect code point is found on input, it is replaced with the default (for that target encoding) 'missing/erroneous' character (with a warning), e.g., the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD). Occurrences thereof can be located in the output string to diagnose the problematic sequences, e.g., by calling: ``stri_locate_all_regex(converted_string, '[\ufffd\u001a]'``.
 
 Because of the way this function is currently implemented, maximal size of a single string to be converted cannot exceed ~0.67 GB.
 

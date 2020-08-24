@@ -48,7 +48,7 @@ Arguments
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``opts_brkiter``  | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for the default break iterator, i.e., ``line_break``                      |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``        | ``NULL`` or ``""`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
+| ``locale``        | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
 +-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -83,5 +83,5 @@ Examples
 
 .. code-block:: r
 
-   stri_extract_all_words("stringi: THE string processing package 123.48...")
+   stri_extract_all_words('stringi: THE string processing package 123.48...')
 

@@ -17,7 +17,7 @@ Arguments
 ~~~~~~~~~
 
 +------------+-----------------------------------------------------------------------------------+
-| ``locale`` | ``NULL`` or ``""`` for default locale, or a single string with locale identifier. |
+| ``locale`` | ``NULL`` or ``''`` for default locale, or a single string with locale identifier. |
 +------------+-----------------------------------------------------------------------------------+
 
 Details
@@ -25,7 +25,7 @@ Details
 
 With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by ICU or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See `stringi-locale <stringi-locale.html>`__ for discussion.
 
-This function does not do anything really complicated. In many cases it is similar to a call to ``as.list(stri_split_fixed(locale, "_", 3L)[[1]])``, with ``locale`` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
+This function does not do anything really complicated. In many cases it is similar to a call to ``as.list(stri_split_fixed(locale, '_', 3L)[[1]])``, with ``locale`` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
 
 Value
 ~~~~~
@@ -42,6 +42,6 @@ Examples
 
 .. code-block:: r
 
-   stri_locale_info("pl_PL")
-   stri_locale_info("Pl_pL") # the same result
+   stri_locale_info('pl_PL')
+   stri_locale_info('Pl_pL') # the same result
 

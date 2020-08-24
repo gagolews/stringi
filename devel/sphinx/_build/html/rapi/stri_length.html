@@ -329,7 +329,7 @@
 <span class="nf">stri_numbytes</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">)</span> <span class="c1"># 2 bytes are used</span>
 <span class="nf">stri_numbytes</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">))</span> <span class="c1"># 3 bytes here but...</span>
 <span class="nf">stri_length</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">))</span> <span class="c1"># ...two code points (!)</span>
-<span class="nf">stri_count_boundaries</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;character&quot;</span><span class="p">)</span> <span class="c1"># ...and one Unicode character</span>
+<span class="nf">stri_count_boundaries</span><span class="p">(</span><span class="nf">stri_trans_nfkd</span><span class="p">(</span><span class="s">&#39;\u0105&#39;</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;character&#39;</span><span class="p">)</span> <span class="c1"># ...and one Unicode character</span>
 </pre></div>
 </div>
 </div>

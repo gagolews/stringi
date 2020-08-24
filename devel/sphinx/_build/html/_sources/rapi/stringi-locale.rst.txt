@@ -14,13 +14,13 @@ Because a locale is just an identifier of a region, no validity check is perform
 Locale Identifiers
 ~~~~~~~~~~~~~~~~~~
 
-ICU services are parametrized by locale, to deliver culturally correct results. Locales are identified by character strings of the form ``Language`` code, ``Language_Country`` code, or ``Language_Country_Variant`` code, e.g., "en_US".
+ICU services are parametrized by locale, to deliver culturally correct results. Locales are identified by character strings of the form ``Language`` code, ``Language_Country`` code, or ``Language_Country_Variant`` code, e.g., 'en_US'.
 
-The two-letter ``Language`` code uses the ISO-639-1 standard, e.g., "en" stands for English, "pl" – Polish, "fr" – French, and "de" for German.
+The two-letter ``Language`` code uses the ISO-639-1 standard, e.g., 'en' stands for English, 'pl' – Polish, 'fr' – French, and 'de' for German.
 
-``Country`` is a two-letter code following the ISO-3166 standard. This is to reflect different language conventions within the same language, for example in US-English ("en_US") and Australian-English ("en_AU").
+``Country`` is a two-letter code following the ISO-3166 standard. This is to reflect different language conventions within the same language, for example in US-English ('en_US') and Australian-English ('en_AU').
 
-Differences may also appear in language conventions used within the same country. For example, the Euro currency may be used in several European countries while the individual country's currency is still in circulation. In such a case, ICU ``Variant`` "_EURO" could be used for selecting locales that support the Euro currency.
+Differences may also appear in language conventions used within the same country. For example, the Euro currency may be used in several European countries while the individual country's currency is still in circulation. In such a case, ICU ``Variant`` '_EURO' could be used for selecting locales that support the Euro currency.
 
 The final (optional) element of a locale is a list of keywords together with their values. Keywords must be unique. Their order is not significant. Unknown keywords are ignored. The handling of keywords depends on the specific services that utilize them. Currently, the following keywords are recognized: ``calendar``, ``colation``, ``currency``, and ``numbers``, e.g., ``fr@collation=phonebook;``\ ``calendar=islamic-civil`` is a valid French locale specifier together with keyword arguments. For more information, refer to the ICU user guide.
 

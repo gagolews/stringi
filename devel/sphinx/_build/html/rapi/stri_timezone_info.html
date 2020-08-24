@@ -302,13 +302,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tz</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default time zone, or a single string with time zone ID otherwise</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default time zone, or a single string with time zone ID otherwise</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale, or a single string with locale identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale, or a single string with locale identifier</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">display_type</span></code></p></td>
-<td><p>single string; one of <code class="docutils literal notranslate"><span class="pre">&quot;short&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;long&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;generic_short&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;generic_long&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;gmt_short&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;gmt_long&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;common&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;generic_location&quot;</span></code></p></td>
+<td><p>single string; one of <code class="docutils literal notranslate"><span class="pre">'short'</span></code>, <code class="docutils literal notranslate"><span class="pre">'long'</span></code>, <code class="docutils literal notranslate"><span class="pre">'generic_short'</span></code>, <code class="docutils literal notranslate"><span class="pre">'generic_long'</span></code>, <code class="docutils literal notranslate"><span class="pre">'gmt_short'</span></code>, <code class="docutils literal notranslate"><span class="pre">'gmt_long'</span></code>, <code class="docutils literal notranslate"><span class="pre">'common'</span></code>, <code class="docutils literal notranslate"><span class="pre">'generic_location'</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -338,10 +338,10 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_timezone_info</span><span class="p">()</span>
-<span class="nf">stri_timezone_info</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&quot;sk_SK&quot;</span><span class="p">)</span>
-<span class="nf">sapply</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;short&quot;</span><span class="p">,</span> <span class="s">&quot;long&quot;</span><span class="p">,</span> <span class="s">&quot;generic_short&quot;</span><span class="p">,</span> <span class="s">&quot;generic_long&quot;</span><span class="p">,</span>
-         <span class="s">&quot;gmt_short&quot;</span><span class="p">,</span> <span class="s">&quot;gmt_long&quot;</span><span class="p">,</span> <span class="s">&quot;common&quot;</span><span class="p">,</span> <span class="s">&quot;generic_location&quot;</span><span class="p">),</span>
-  <span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="nf">stri_timezone_info</span><span class="p">(</span><span class="s">&quot;Europe/London&quot;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">e</span><span class="p">))</span>
+<span class="nf">stri_timezone_info</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s">&#39;sk_SK&#39;</span><span class="p">)</span>
+<span class="nf">sapply</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;short&#39;</span><span class="p">,</span> <span class="s">&#39;long&#39;</span><span class="p">,</span> <span class="s">&#39;generic_short&#39;</span><span class="p">,</span> <span class="s">&#39;generic_long&#39;</span><span class="p">,</span>
+         <span class="s">&#39;gmt_short&#39;</span><span class="p">,</span> <span class="s">&#39;gmt_long&#39;</span><span class="p">,</span> <span class="s">&#39;common&#39;</span><span class="p">,</span> <span class="s">&#39;generic_location&#39;</span><span class="p">),</span>
+  <span class="nf">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="nf">stri_timezone_info</span><span class="p">(</span><span class="s">&#39;Europe/London&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">e</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

@@ -17,7 +17,7 @@ Arguments
 ~~~~~~~~~
 
 +---------+------------------------------------------------------------------------------------+
-| ``enc`` | ``NULL`` or ``""`` for the default encoding, or a single string with encoding name |
+| ``enc`` | ``NULL`` or ``''`` for the default encoding, or a single string with encoding name |
 +---------+------------------------------------------------------------------------------------+
 
 Details

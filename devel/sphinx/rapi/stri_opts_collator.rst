@@ -28,7 +28,7 @@ Arguments
 ~~~~~~~~~
 
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``            | single string, ``NULL`` or ``""`` for default locale                                                                                                                                                                                                                            |
+| ``locale``            | single string, ``NULL`` or ``''`` for default locale                                                                                                                                                                                                                            |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``strength``          | single integer in {1,2,3,4}, which defines collation strength; ``1`` for the most permissive collation rules, ``4`` for the strictest ones                                                                                                                                      |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -40,7 +40,9 @@ Arguments
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``case_level``        | single logical value; controls whether an extra case level (positioned before the third level) is generated or not                                                                                                                                                              |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``normalization``     | (synonym: ``normalisation``) single logical value; if ``TRUE``, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed                                            |
+| ``normalization``     | single logical value; if ``TRUE``, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed                                                                         |
++-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``normalisation``     | alias of ``normalization``                                                                                                                                                                                                                                                      |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``numeric``           | single logical value; when turned on, this attribute generates a collation key for the numeric value of substrings of digits; this is a way to get '100' to sort AFTER '2'                                                                                                      |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -78,8 +80,8 @@ Examples
 
 .. code-block:: r
 
-   stri_cmp("number100", "number2")
-   stri_cmp("number100", "number2", opts_collator=stri_opts_collator(numeric=TRUE))
-   stri_cmp("number100", "number2", numeric=TRUE) # equivalent
-   stri_cmp("above mentioned", "above-mentioned")
-   stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
+   stri_cmp('number100', 'number2')
+   stri_cmp('number100', 'number2', opts_collator=stri_opts_collator(numeric=TRUE))
+   stri_cmp('number100', 'number2', numeric=TRUE) # equivalent
+   stri_cmp('above mentioned', 'above-mentioned')
+   stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)

@@ -334,27 +334,27 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_join_list</span><span class="p">(</span>
-   <span class="nf">stri_extract_all_words</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lorem ipsum dolor sit amet.&quot;</span><span class="p">,</span>
-   <span class="s">&quot;Spam spam bacon sausage and spam.&quot;</span><span class="p">)),</span>
-<span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">)</span>
+   <span class="nf">stri_extract_all_words</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Lorem ipsum dolor sit amet.&#39;</span><span class="p">,</span>
+   <span class="s">&#39;Spam spam bacon sausage and spam.&#39;</span><span class="p">)),</span>
+<span class="n">sep</span><span class="o">=</span><span class="s">&#39;, &#39;</span><span class="p">)</span>
 
 <span class="nf">stri_join_list</span><span class="p">(</span>
-   <span class="nf">stri_extract_all_words</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lorem ipsum dolor sit amet.&quot;</span><span class="p">,</span>
-   <span class="s">&quot;Spam spam bacon sausage and spam.&quot;</span><span class="p">)),</span>
-<span class="n">sep</span><span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;. &quot;</span><span class="p">)</span>
+   <span class="nf">stri_extract_all_words</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Lorem ipsum dolor sit amet.&#39;</span><span class="p">,</span>
+   <span class="s">&#39;Spam spam bacon sausage and spam.&#39;</span><span class="p">)),</span>
+<span class="n">sep</span><span class="o">=</span><span class="s">&#39;, &#39;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;. &#39;</span><span class="p">)</span>
 
 <span class="nf">stri_join_list</span><span class="p">(</span>
    <span class="nf">stri_extract_all_regex</span><span class="p">(</span>
-      <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam spam bacon&quot;</span><span class="p">,</span> <span class="s">&quot;123 456&quot;</span><span class="p">,</span> <span class="s">&quot;spam 789 sausage&quot;</span><span class="p">),</span> <span class="s">&quot;\\p{L}+&quot;</span>
+      <span class="nf">c</span><span class="p">(</span><span class="s">&#39;spam spam bacon&#39;</span><span class="p">,</span> <span class="s">&#39;123 456&#39;</span><span class="p">,</span> <span class="s">&#39;spam 789 sausage&#39;</span><span class="p">),</span> <span class="s">&#39;\\p{L}+&#39;</span>
    <span class="p">),</span>
-<span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">sep</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
 
 <span class="nf">stri_join_list</span><span class="p">(</span>
    <span class="nf">stri_extract_all_regex</span><span class="p">(</span>
-      <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spam spam bacon&quot;</span><span class="p">,</span> <span class="s">&quot;123 456&quot;</span><span class="p">,</span> <span class="s">&quot;spam 789 sausage&quot;</span><span class="p">),</span> <span class="s">&quot;\\p{L}+&quot;</span><span class="p">,</span>
+      <span class="nf">c</span><span class="p">(</span><span class="s">&#39;spam spam bacon&#39;</span><span class="p">,</span> <span class="s">&#39;123 456&#39;</span><span class="p">,</span> <span class="s">&#39;spam 789 sausage&#39;</span><span class="p">),</span> <span class="s">&#39;\\p{L}+&#39;</span><span class="p">,</span>
       <span class="n">omit_no_match</span><span class="o">=</span><span class="kc">TRUE</span>
    <span class="p">),</span>
-<span class="n">sep</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&quot;; &quot;</span><span class="p">)</span>
+<span class="n">sep</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;; &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

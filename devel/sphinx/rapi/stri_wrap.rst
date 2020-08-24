@@ -50,7 +50,7 @@ Arguments
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``use_length``      | single logical value; should the number of code points be used instead of the total code point width (see `stri_width <stri_width.html>`__)?                                                                                                                 |
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``          | ``NULL`` or ``""`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__                                                                       |
+| ``locale``          | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__                                                                       |
 +---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -91,10 +91,10 @@ Examples
 .. code-block:: r
 
    s <- stri_paste(
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ",
-      "nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ",
-      "lorem. Etiam pellentesque aliquet tellus.")
-   cat(stri_wrap(s, 20, 0.0), sep="\n") # greedy
-   cat(stri_wrap(s, 20, 2.0), sep="\n") # dynamic
-   cat(stri_pad(stri_wrap(s), side='both'), sep="\n")
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ',
+      'nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel ',
+      'lorem. Etiam pellentesque aliquet tellus.')
+   cat(stri_wrap(s, 20, 0.0), sep='\n') # greedy
+   cat(stri_wrap(s, 20, 2.0), sep='\n') # dynamic
+   cat(stri_pad(stri_wrap(s), side='both'), sep='\n')
 

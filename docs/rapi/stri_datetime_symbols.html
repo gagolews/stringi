@@ -303,13 +303,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale, or a single string with locale identifier</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale, or a single string with locale identifier</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">context</span></code></p></td>
-<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">&quot;format&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;standalone&quot;</span></code></p></td>
+<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">'format'</span></code>, <code class="docutils literal notranslate"><span class="pre">'standalone'</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
-<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">&quot;abbreviated&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;wide&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;narrow&quot;</span></code></p></td>
+<td><p>single string; one of: <code class="docutils literal notranslate"><span class="pre">'abbreviated'</span></code>, <code class="docutils literal notranslate"><span class="pre">'wide'</span></code>, <code class="docutils literal notranslate"><span class="pre">'narrow'</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -342,23 +342,23 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_datetime_symbols</span><span class="p">()</span> <span class="c1"># uses the Gregorian calendar in most locales</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=hebrew&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;he_IL@calendar=hebrew&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=islamic&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=persian&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=indian&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=coptic&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;@calendar=japanese&quot;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=hebrew&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;he_IL@calendar=hebrew&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=islamic&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=persian&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=indian&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=coptic&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;@calendar=japanese&#39;</span><span class="p">)</span>
 
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;ja_JP_TRADITIONAL&quot;</span><span class="p">)</span> <span class="c1"># uses the Japanese calendar by default</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;th_TH_TRADITIONAL&quot;</span><span class="p">)</span> <span class="c1"># uses the Buddhist calendar</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;ja_JP_TRADITIONAL&#39;</span><span class="p">)</span> <span class="c1"># uses the Japanese calendar by default</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;th_TH_TRADITIONAL&#39;</span><span class="p">)</span> <span class="c1"># uses the Buddhist calendar</span>
 
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s">&quot;format&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&quot;pl_PL&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s">&quot;standalone&quot;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;pl_PL&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s">&#39;format&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="s">&#39;pl_PL&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s">&#39;standalone&#39;</span><span class="p">)</span>
 
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&quot;wide&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&quot;abbreviated&quot;</span><span class="p">)</span>
-<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&quot;narrow&quot;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&#39;wide&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&#39;abbreviated&#39;</span><span class="p">)</span>
+<span class="nf">stri_datetime_symbols</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s">&#39;narrow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

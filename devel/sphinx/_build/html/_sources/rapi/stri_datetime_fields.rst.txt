@@ -19,9 +19,9 @@ Arguments
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``time``   | an object of class ``POSIXct`` or an object coercible to                                                                                                                        |
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``     | ``NULL`` or ``""`` for the default time zone or a single string with time zone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                                 |
+| ``tz``     | ``NULL`` or ``''`` for the default time zone or a single string with time zone identifier, see `stri_timezone_list <stri_timezone_list.html>`__                                 |
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale`` | ``NULL`` or ``""`` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting ``@calendar=name`` keyword |
+| ``locale`` | ``NULL`` or ``''`` for the current default locale, or a single string with a locale identifier; a non-Gregorian calendar may be specified by setting ``@calendar=name`` keyword |
 +------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -73,8 +73,8 @@ Examples
 .. code-block:: r
 
    stri_datetime_fields(stri_datetime_now())
-   stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")
-   stri_datetime_symbols(locale="@calendar=hebrew")$Month[
-      stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")$Month
+   stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
+   stri_datetime_symbols(locale='@calendar=hebrew')$Month[
+      stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
    ]
 

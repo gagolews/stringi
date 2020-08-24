@@ -314,7 +314,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p>single string, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale</p></td>
+<td><p>single string, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">strength</span></code></p></td>
 <td><p>single integer in {1,2,3,4}, which defines collation strength; <code class="docutils literal notranslate"><span class="pre">1</span></code> for the most permissive collation rules, <code class="docutils literal notranslate"><span class="pre">4</span></code> for the strictest ones</p></td>
@@ -332,12 +332,15 @@
 <td><p>single logical value; controls whether an extra case level (positioned before the third level) is generated or not</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">normalization</span></code></p></td>
-<td><p>(synonym: <code class="docutils literal notranslate"><span class="pre">normalisation</span></code>) single logical value; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed</p></td>
+<td><p>single logical value; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normalisation</span></code></p></td>
+<td><p>alias of <code class="docutils literal notranslate"><span class="pre">normalization</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code></p></td>
 <td><p>single logical value; when turned on, this attribute generates a collation key for the numeric value of substrings of digits; this is a way to get ‘100’ to sort AFTER ‘2’</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
 <td><p>[DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future</p></td>
 </tr>
 </tbody>
@@ -364,11 +367,11 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;number100&quot;</span><span class="p">,</span> <span class="s">&quot;number2&quot;</span><span class="p">)</span>
-<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;number100&quot;</span><span class="p">,</span> <span class="s">&quot;number2&quot;</span><span class="p">,</span> <span class="n">opts_collator</span><span class="o">=</span><span class="nf">stri_opts_collator</span><span class="p">(</span><span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
-<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;number100&quot;</span><span class="p">,</span> <span class="s">&quot;number2&quot;</span><span class="p">,</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># equivalent</span>
-<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;above mentioned&quot;</span><span class="p">,</span> <span class="s">&quot;above-mentioned&quot;</span><span class="p">)</span>
-<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&quot;above mentioned&quot;</span><span class="p">,</span> <span class="s">&quot;above-mentioned&quot;</span><span class="p">,</span> <span class="n">alternate_shifted</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;number100&#39;</span><span class="p">,</span> <span class="s">&#39;number2&#39;</span><span class="p">)</span>
+<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;number100&#39;</span><span class="p">,</span> <span class="s">&#39;number2&#39;</span><span class="p">,</span> <span class="n">opts_collator</span><span class="o">=</span><span class="nf">stri_opts_collator</span><span class="p">(</span><span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;number100&#39;</span><span class="p">,</span> <span class="s">&#39;number2&#39;</span><span class="p">,</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># equivalent</span>
+<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;above mentioned&#39;</span><span class="p">,</span> <span class="s">&#39;above-mentioned&#39;</span><span class="p">)</span>
+<span class="nf">stri_cmp</span><span class="p">(</span><span class="s">&#39;above mentioned&#39;</span><span class="p">,</span> <span class="s">&#39;above-mentioned&#39;</span><span class="p">,</span> <span class="n">alternate_shifted</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -310,7 +310,7 @@
 <td><p>character vector</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for case mapping following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for case mapping following the conventions of the default locale, or a single string with locale identifier, see <a class="reference external" href="stringi-locale.html">stringi-locale</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
 <td><p>additional settings for <code class="docutils literal notranslate"><span class="pre">opts_brkiter</span></code></p></td>
@@ -330,7 +330,7 @@
 <li><p>is language-sensitive (results may differ depending on the locale), and</p></li>
 <li><p>is context-sensitive (a character in the input string may map differently depending on surrounding characters).</p></li>
 </ul>
-<p>With <code class="docutils literal notranslate"><span class="pre">stri_trans_totitle</span></code>, if <code class="docutils literal notranslate"><span class="pre">word</span></code> <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code> is used (the default), then the first letter of each word will be capitalized and the rest will be transformed to lower case. With the break iterator of type <code class="docutils literal notranslate"><span class="pre">sentence</span></code>, the first letter of each sentence will be capitalized only. Note that according the ICU User Guide, the string <code class="docutils literal notranslate"><span class="pre">&quot;one.</span> <span class="pre">two.</span> <span class="pre">three.&quot;</span></code> consists of one sentence.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">stri_trans_totitle</span></code>, if <code class="docutils literal notranslate"><span class="pre">word</span></code> <code class="docutils literal notranslate"><span class="pre">BreakIterator</span></code> is used (the default), then the first letter of each word will be capitalized and the rest will be transformed to lower case. With the break iterator of type <code class="docutils literal notranslate"><span class="pre">sentence</span></code>, the first letter of each sentence will be capitalized only. Note that according the ICU User Guide, the string <code class="docutils literal notranslate"><span class="pre">'one.</span> <span class="pre">two.</span> <span class="pre">three.'</span></code> consists of one sentence.</p>
 <p>For more general (but not locale dependent) text transforms refer to <a class="reference external" href="stri_trans_general.html">stri_trans_general</a>.</p>
 </div>
 <div class="section" id="value">
@@ -349,13 +349,13 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&quot;\u00DF&quot;</span><span class="p">,</span> <span class="s">&quot;de_DE&quot;</span><span class="p">)</span> <span class="c1"># small German Eszett / scharfes S</span>
-<span class="nf">stri_cmp_eq</span><span class="p">(</span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;en_US&quot;</span><span class="p">),</span> <span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;tr_TR&quot;</span><span class="p">))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&#39;\u00DF&#39;</span><span class="p">,</span> <span class="s">&#39;de_DE&#39;</span><span class="p">)</span> <span class="c1"># small German Eszett / scharfes S</span>
+<span class="nf">stri_cmp_eq</span><span class="p">(</span><span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;en_US&#39;</span><span class="p">),</span> <span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;tr_TR&#39;</span><span class="p">))</span>
 <span class="nf">stri_trans_toupper</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;\u0105\u0104&#39;</span><span class="p">))</span>
 <span class="nf">stri_trans_tolower</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;AbC&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;\u0105\u0104&#39;</span><span class="p">))</span>
 <span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;AbC&#39;</span><span class="p">,</span> <span class="s">&#39;123&#39;</span><span class="p">,</span> <span class="s">&#39;\u0105\u0104&#39;</span><span class="p">))</span>
-<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&quot;GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!&quot;</span><span class="p">)</span> <span class="c1"># word boundary</span>
-<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&quot;GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!&quot;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;sentence&quot;</span><span class="p">)</span>
+<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&#39;GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!&#39;</span><span class="p">)</span> <span class="c1"># word boundary</span>
+<span class="nf">stri_trans_totitle</span><span class="p">(</span><span class="s">&#39;GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!&#39;</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;sentence&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

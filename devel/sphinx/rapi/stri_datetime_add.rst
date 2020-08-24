@@ -29,11 +29,11 @@ Arguments
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``value``  | integer vector; signed number of units to add to ``time``                                                                                                             |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``units``  | single string; one of ``"years"``, ``"months"``, ``"weeks"``, ``"days"``, ``"hours"``, ``"minutes"``, ``"seconds"``, or ``"milliseconds"``                            |
+| ``units``  | single string; one of ``'years'``, ``'months'``, ``'weeks'``, ``'days'``, ``'hours'``, ``'minutes'``, ``'seconds'``, or ``'milliseconds'``                            |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``tz``     | ``NULL`` or ``""`` for the default time zone or a single string with a timezone identifier,                                                                           |
+| ``tz``     | ``NULL`` or ``''`` for the default time zone or a single string with a timezone identifier,                                                                           |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale`` | ``NULL`` or ``""`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the ``@calendar=name`` keyword |
+| ``locale`` | ``NULL`` or ``''`` for default locale, or a single string with locale identifier; a non-Gregorian calendar may be specified by setting the ``@calendar=name`` keyword |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -66,11 +66,11 @@ Examples
 .. code-block:: r
 
    x <- stri_datetime_now()
-   stri_datetime_add(x, units="months") <- 2
+   stri_datetime_add(x, units='months') <- 2
    print(x)
-   stri_datetime_add(x, -2, units="months")
-   stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years")
-   stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units="years", locale="@calendar=hebrew")
+   stri_datetime_add(x, -2, units='months')
+   stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years')
+   stri_datetime_add(stri_datetime_create(2014, 4, 20), 1, units='years', locale='@calendar=hebrew')
 
-   stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units="months")
+   stri_datetime_add(stri_datetime_create(2016, 1, 31), 1, units='months')
 

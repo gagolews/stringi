@@ -344,7 +344,7 @@
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Note that some regex settings may be changed using ICU regex flags inside regexes. For example, <code class="docutils literal notranslate"><span class="pre">&quot;(?i)pattern&quot;</span></code> performs a case-insensitive match of a given pattern, see the ICU User Guide entry on Regular Expressions in the References section or <a class="reference external" href="stringi-search-regex.html">stringi-search-regex</a>.</p>
+<p>Note that some regex settings may be changed using ICU regex flags inside regexes. For example, <code class="docutils literal notranslate"><span class="pre">'(?i)pattern'</span></code> performs a case-insensitive match of a given pattern, see the ICU User Guide entry on Regular Expressions in the References section or <a class="reference external" href="stringi-search-regex.html">stringi-search-regex</a>.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -361,10 +361,10 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;ala&quot;</span><span class="p">,</span> <span class="s">&quot;ALA&quot;</span><span class="p">)</span> <span class="c1"># case-sensitive by default</span>
-<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;ala&quot;</span><span class="p">,</span> <span class="s">&quot;ALA&quot;</span><span class="p">,</span> <span class="n">opts_regex</span><span class="o">=</span><span class="nf">stri_opts_regex</span><span class="p">(</span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
-<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;ala&quot;</span><span class="p">,</span> <span class="s">&quot;ALA&quot;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># equivalent</span>
-<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&quot;ala&quot;</span><span class="p">,</span> <span class="s">&quot;(?i)ALA&quot;</span><span class="p">)</span> <span class="c1"># equivalent</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&#39;ala&#39;</span><span class="p">,</span> <span class="s">&#39;ALA&#39;</span><span class="p">)</span> <span class="c1"># case-sensitive by default</span>
+<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&#39;ala&#39;</span><span class="p">,</span> <span class="s">&#39;ALA&#39;</span><span class="p">,</span> <span class="n">opts_regex</span><span class="o">=</span><span class="nf">stri_opts_regex</span><span class="p">(</span><span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&#39;ala&#39;</span><span class="p">,</span> <span class="s">&#39;ALA&#39;</span><span class="p">,</span> <span class="n">case_insensitive</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="c1"># equivalent</span>
+<span class="nf">stri_detect_regex</span><span class="p">(</span><span class="s">&#39;ala&#39;</span><span class="p">,</span> <span class="s">&#39;(?i)ALA&#39;</span><span class="p">)</span> <span class="c1"># equivalent</span>
 </pre></div>
 </div>
 </div>

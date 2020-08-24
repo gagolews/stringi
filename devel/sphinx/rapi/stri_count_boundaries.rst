@@ -25,7 +25,7 @@ Arguments
 +------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``opts_brkiter`` | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for the default break iterator, i.e., ``line_break``                      |
 +------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``       | ``NULL`` or ``""`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
+| ``locale``       | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
 +------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -35,7 +35,7 @@ Vectorized over ``str``.
 
 For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <stringi-search-boundaries.html>`__.
 
-In case of ``stri_count_words``, just like in `stri_extract_all_words <stri_extract_boundaries.html>`__ and `stri_locate_all_words <stri_locate_boundaries.html>`__, ICU's word ``BreakIterator`` iterator is used to locate the word boundaries, and all non-word characters (``UBRK_WORD_NONE`` rule status) are ignored. This function is equivalent to a call to `stri_count_boundaries(str, type="word", skip_word_none=TRUE, locale=locale) <stri_count_boundaries.html>`__.
+In case of ``stri_count_words``, just like in `stri_extract_all_words <stri_extract_boundaries.html>`__ and `stri_locate_all_words <stri_locate_boundaries.html>`__, ICU's word ``BreakIterator`` iterator is used to locate the word boundaries, and all non-word characters (``UBRK_WORD_NONE`` rule status) are ignored. This function is equivalent to a call to `stri_count_boundaries(str, type='word', skip_word_none=TRUE, locale=locale) <stri_count_boundaries.html>`__.
 
 Note that a ``BreakIterator`` of type ``character`` may be used to count the number of *Unicode characters* in a string. The `stri_length <stri_length.html>`__ function, which aims to count the number of *Unicode code points*, might report different results.
 
@@ -60,14 +60,14 @@ Examples
 
 .. code-block:: r
 
-   test <- "The\u00a0above-mentioned    features are very useful. Kudos to their developers."
-   stri_count_boundaries(test, type="word")
-   stri_count_boundaries(test, type="sentence")
-   stri_count_boundaries(test, type="character")
+   test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+   stri_count_boundaries(test, type='word')
+   stri_count_boundaries(test, type='sentence')
+   stri_count_boundaries(test, type='character')
    stri_count_words(test)
 
-   test2 <- stri_trans_nfkd("\u03c0\u0153\u0119\u00a9\u00df\u2190\u2193\u2192")
-   stri_count_boundaries(test2, type="character")
+   test2 <- stri_trans_nfkd('\u03c0\u0153\u0119\u00a9\u00df\u2190\u2193\u2192')
+   stri_count_boundaries(test2, type='character')
    stri_length(test2)
    stri_numbytes(test2)
 

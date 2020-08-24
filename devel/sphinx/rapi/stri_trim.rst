@@ -27,7 +27,7 @@ Arguments
 +-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``pattern`` | a single pattern, specifying character classes that should be preserved (see `stringi-search-charclass <stringi-search-charclass.html>`__). Defaults to '``\P{Wspace}``. |
 +-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``side``    | character [``stri_trim`` only]; defaults to ``"both"``                                                                                                                   |
+| ``side``    | character [``stri_trim`` only]; defaults to ``'both'``                                                                                                                   |
 +-------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
@@ -41,7 +41,7 @@ Contrary to many other string processing libraries, our trimming functions are u
 
 For replacing pattern matches with arbitrary replacement string, see `stri_replace <stri_replace.html>`__.
 
-Trimming can also be used where you would normally rely on regular expressions. For instance, you may get ``"23.5"`` out of ``"total of 23.5 bitcoins"``.
+Trimming can also be used where you would normally rely on regular expressions. For instance, you may get ``'23.5'`` out of ``'total of 23.5 bitcoins'``.
 
 For trimming white-spaces, please note the difference between Unicode binary property '``\p{Wspace}``' (more universal) and general character category '``\p{Z}``', see `stringi-search-charclass <stringi-search-charclass.html>`__.
 
@@ -62,8 +62,8 @@ Examples
 
 .. code-block:: r
 
-   stri_trim_left("               aaa")
-   stri_trim_right("rexamine.com/", "\\p{P}")
-   stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{N}")
-   stri_trim_both(" Total of 23.5 bitcoins. ", "\\p{L}")
+   stri_trim_left('               aaa')
+   stri_trim_right('rexamine.com/', '\\p{P}')
+   stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{N}')
+   stri_trim_both(' Total of 23.5 bitcoins. ', '\\p{L}')
 

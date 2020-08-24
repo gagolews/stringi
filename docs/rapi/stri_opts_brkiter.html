@@ -318,10 +318,10 @@
 <td><p>single string; either the break iterator type, one of <code class="docutils literal notranslate"><span class="pre">character</span></code>, <code class="docutils literal notranslate"><span class="pre">line_break</span></code>, <code class="docutils literal notranslate"><span class="pre">sentence</span></code>, <code class="docutils literal notranslate"><span class="pre">word</span></code>; or a custom set of ICU break iteration rules. see <a class="reference external" href="stringi-search-boundaries.html">stringi-search-boundaries</a></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">locale</span></code></p></td>
-<td><p>single string, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale</p></td>
+<td><p>single string, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">''</span></code> for default locale</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">skip_word_none</span></code></p></td>
-<td><p>logical; perform no action for “words” that do not fit into any other categories</p></td>
+<td><p>logical; perform no action for ‘words’ that do not fit into any other categories</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">skip_word_number</span></code></p></td>
 <td><p>logical; perform no action for words that appear to be numbers</p></td>
@@ -342,7 +342,7 @@
 <td><p>logical; perform no action for hard, or mandatory line breaks</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">skip_sentence_term</span></code></p></td>
-<td><p>logical; perform no action for sentences ending with a sentence terminator (“<code class="docutils literal notranslate"><span class="pre">.</span></code>”, “<code class="docutils literal notranslate"><span class="pre">,</span></code>”, “<code class="docutils literal notranslate"><span class="pre">?</span></code>”, “<code class="docutils literal notranslate"><span class="pre">!</span></code>”), possibly followed by a hard separator (<code class="docutils literal notranslate"><span class="pre">CR</span></code>, <code class="docutils literal notranslate"><span class="pre">LF</span></code>, <code class="docutils literal notranslate"><span class="pre">PS</span></code>, etc.)</p></td>
+<td><p>logical; perform no action for sentences ending with a sentence terminator (‘<code class="docutils literal notranslate"><span class="pre">.</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">,</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">?</span></code>’, ‘<code class="docutils literal notranslate"><span class="pre">!</span></code>’), possibly followed by a hard separator (<code class="docutils literal notranslate"><span class="pre">CR</span></code>, <code class="docutils literal notranslate"><span class="pre">LF</span></code>, <code class="docutils literal notranslate"><span class="pre">PS</span></code>, etc.)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">skip_sentence_sep</span></code></p></td>
 <td><p>logical; perform no action for sentences that do not contain an ending sentence terminator, but are ended by a hard separator or end of input</p></td>
