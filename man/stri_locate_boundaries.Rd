@@ -38,7 +38,7 @@ then 2 missing values will indicate that there are no text boundaries}
 see \code{\link{stri_opts_brkiter}};
 \code{NULL} for default break iterator, i.e., \code{line_break}}
 
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
+\item{locale}{\code{NULL} or \code{''} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
 }
@@ -77,18 +77,18 @@ just like in \code{\link{stri_extract_all_words}} and \code{\link{stri_count_wor
 to locate the word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 This is function is equivalent to a call to
-\code{stri_locate_*_boundaries(str, type="word", skip_word_none=TRUE, locale=locale)}
+\code{stri_locate_*_boundaries(str, type='word', skip_word_none=TRUE, locale=locale)}
 }
 \examples{
-test <- "The\u00a0above-mentioned    features are very useful. Kudos to their developers."
-stri_locate_all_boundaries(test, type="line")
-stri_locate_all_boundaries(test, type="word")
-stri_locate_all_boundaries(test, type="sentence")
-stri_locate_all_boundaries(test, type="character")
+test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+stri_locate_all_boundaries(test, type='line')
+stri_locate_all_boundaries(test, type='word')
+stri_locate_all_boundaries(test, type='sentence')
+stri_locate_all_boundaries(test, type='character')
 stri_locate_all_words(test)
 
-stri_extract_all_boundaries("Mr. Jones and Mrs. Brown are very happy.
-So am I, Prof. Smith.", type="sentence", locale="en_US@ss=standard") # ICU >= 56 only
+stri_extract_all_boundaries('Mr. Jones and Mrs. Brown are very happy.
+So am I, Prof. Smith.', type='sentence', locale='en_US@ss=standard') # ICU >= 56 only
 
 }
 \seealso{

@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -78,15 +78,15 @@
 #' @rdname stri_sort
 #'
 #' @examples
-#' stri_sort(c("hladny", "chladny"), locale="pl_PL")
-#' stri_sort(c("hladny", "chladny"), locale="sk_SK")
+#' stri_sort(c('hladny', 'chladny'), locale='pl_PL')
+#' stri_sort(c('hladny', 'chladny'), locale='sk_SK')
 #' stri_sort(sample(LETTERS))
 #' stri_sort(c(1, 100, 2, 101, 11, 10))
 #' stri_sort(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
-stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
+stri_sort <- function(str, decreasing = FALSE, na_last = NA, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_sort, str, decreasing, na_last, opts_collator)
 }
 
 
@@ -139,15 +139,15 @@ stri_sort <-  function(str, decreasing=FALSE, na_last=NA, ..., opts_collator=NUL
 #' @rdname stri_order
 #'
 #' @examples
-#' stri_order(c("hladny", "chladny"), locale="pl_PL")
-#' stri_order(c("hladny", "chladny"), locale="sk_SK")
+#' stri_order(c('hladny', 'chladny'), locale='pl_PL')
+#' stri_order(c('hladny', 'chladny'), locale='sk_SK')
 #'
 #' stri_order(c(1, 100, 2, 101, 11, 10))
 #' stri_order(c(1, 100, 2, 101, 11, 10), numeric=TRUE)
-stri_order <- function(str, decreasing=FALSE, na_last=TRUE, ..., opts_collator=NULL) {
-   if (!missing(...))
-      opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_order, str, decreasing, na_last, opts_collator)
+stri_order <- function(str, decreasing = FALSE, na_last = TRUE, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_order, str, decreasing, na_last, opts_collator)
 }
 
 
@@ -178,10 +178,10 @@ stri_order <- function(str, decreasing=FALSE, na_last=TRUE, ..., opts_collator=N
 #'
 #' @examples
 #' # normalized and non-Unicode-normalized version of the same code point:
-#' stri_unique(c("\u0105", stri_trans_nfkd("\u0105")))
-#' unique(c("\u0105", stri_trans_nfkd("\u0105")))
+#' stri_unique(c('\u0105', stri_trans_nfkd('\u0105')))
+#' unique(c('\u0105', stri_trans_nfkd('\u0105')))
 #'
-#' stri_unique(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
+#' stri_unique(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'), strength=1)
 #'
 #' @references
 #' \emph{Collation} - ICU User Guide,
@@ -189,10 +189,10 @@ stri_order <- function(str, decreasing=FALSE, na_last=TRUE, ..., opts_collator=N
 #'
 #' @family locale_sensitive
 #' @export
-stri_unique <-  function(str, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_unique, str, opts_collator)
+stri_unique <- function(str, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_unique, str, opts_collator)
 }
 
 
@@ -244,41 +244,38 @@ stri_unique <-  function(str, ..., opts_collator=NULL) {
 #'
 #' @examples
 #' # In the following examples, we have 3 duplicated values,
-#' # "a" - 2 times, NA - 1 time
-#' stri_duplicated(c("a", "b", "a", NA, "a", NA))
-#' stri_duplicated(c("a", "b", "a", NA, "a", NA), from_last=TRUE)
-#' stri_duplicated_any(c("a", "b", "a", NA, "a", NA))
+#' # 'a' - 2 times, NA - 1 time
+#' stri_duplicated(c('a', 'b', 'a', NA, 'a', NA))
+#' stri_duplicated(c('a', 'b', 'a', NA, 'a', NA), from_last=TRUE)
+#' stri_duplicated_any(c('a', 'b', 'a', NA, 'a', NA))
 #'
 #' # compare the results:
-#' stri_duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
-#' duplicated(c("\u0105", stri_trans_nfkd("\u0105")))
+#' stri_duplicated(c('\u0105', stri_trans_nfkd('\u0105')))
+#' duplicated(c('\u0105', stri_trans_nfkd('\u0105')))
 #'
-#' stri_duplicated(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"), strength=1)
-#' duplicated(c("gro\u00df", "GROSS", "Gro\u00df", "Gross"))
+#' stri_duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'), strength=1)
+#' duplicated(c('gro\u00df', 'GROSS', 'Gro\u00df', 'Gross'))
 #'
 #' @rdname stri_duplicated
 #' @family locale_sensitive
 #' @export
-stri_duplicated <- function(str, from_last=FALSE,
-        fromLast=from_last, ..., opts_collator=NULL)
-{
-    if (!missing(fromLast) && missing(from_last))
+stri_duplicated <- function(str, from_last = FALSE, fromLast = from_last, ..., opts_collator = NULL) {
+    if (!missing(fromLast) && missing(from_last)) 
         from_last <- fromLast
-    if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated, str, from_last, opts_collator)
 }
 
 
 #' @rdname stri_duplicated
 #' @export
-stri_duplicated_any <- function(str, from_last=FALSE,
-        fromLast=from_last, ..., opts_collator=NULL)
-{
-    if (!missing(fromLast) && missing(from_last))
+stri_duplicated_any <- function(str, from_last = FALSE, fromLast = from_last, ..., 
+    opts_collator = NULL) {
+    if (!missing(fromLast) && missing(from_last)) 
         from_last <- fromLast
-    if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_duplicated_any, str, from_last, opts_collator)
 }
 
@@ -288,7 +285,7 @@ stri_duplicated_any <- function(str, from_last=FALSE,
 #'
 #'
 #' @description
-#' This function computes a locale-dependent "sort key", which is an alternative
+#' This function computes a locale-dependent 'sort key', which is an alternative
 #' character representation of the string that, when ordered in the C locale
 #' (which orders using bytes directly), will give an equivalent ordering to the
 #' original string. It is useful for enhancing algorithms that sort only in the
@@ -318,11 +315,10 @@ stri_duplicated_any <- function(str, from_last=FALSE,
 #' @rdname stri_sort_key
 #'
 #' @examples
-#' stri_sort_key(c("hladny", "chladny"), locale="pl_PL")
-#' stri_sort_key(c("hladny", "chladny"), locale="sk_SK")
-stri_sort_key <- function(str, ..., opts_collator=NULL)
-{
-    if (!missing(...))
+#' stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
+#' stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
+stri_sort_key <- function(str, ..., opts_collator = NULL) {
+    if (!missing(...)) 
         opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
     .Call(C_stri_sort_key, str, opts_collator)
 }

@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -60,16 +60,16 @@
 #'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
-#' s <- c("Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-#'        "nibh augue, suscipit a, scelerisque sed, lacinia in, mi.",
-#'        "Cras vel lorem. Etiam pellentesque aliquet tellus.",
-#'        "")
+#' s <- c('Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+#'        'nibh augue, suscipit a, scelerisque sed, lacinia in, mi.',
+#'        'Cras vel lorem. Etiam pellentesque aliquet tellus.',
+#'        '')
 #' stri_stats_general(s)
 #'
 #' @family stats
 #' @export
 stri_stats_general <- function(str) {
-   .Call(C_stri_stats_general, str)
+    .Call(C_stri_stats_general, str)
 }
 
 
@@ -100,13 +100,13 @@ stri_stats_general <- function(str) {
 #'    \item ... (Other stuff that may appear in future releases of \pkg{stringi}).
 #' }
 #' @examples
-#' s <- c("Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.",
-#'        "\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.",
-#'        "")
+#' s <- c('Lorem \\textbf{ipsum} dolor sit \\textit{amet}, consectetur adipisicing elit.',
+#'        '\\begin{small}Proin nibh augue,\\end{small} suscipit a, scelerisque sed, lacinia in, mi.',
+#'        '')
 #' stri_stats_latex(s)
 #'
 #' @family stats
 #' @export
 stri_stats_latex <- function(str) {
-   .Call(C_stri_stats_latex, str)
+    .Call(C_stri_stats_latex, str)
 }

@@ -11,7 +11,7 @@ stri_read_lines(con, encoding = NULL)
 (opened in the binary mode)}
 
 \item{encoding}{single string; input encoding;
-\code{NULL} or \code{""} for the current default encoding.}
+\code{NULL} or \code{''} for the current default encoding.}
 }
 \value{
 Returns a character vector, each text line is a separate string.

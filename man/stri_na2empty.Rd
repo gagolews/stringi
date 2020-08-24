@@ -17,7 +17,7 @@ This function replaces all missing values with empty strings.
 See \code{\link{stri_replace_na}} for a generalization.
 }
 \examples{
-stri_na2empty(c("a", NA, "", "b"))
+stri_na2empty(c('a', NA, '', 'b'))
 
 }
 \seealso{

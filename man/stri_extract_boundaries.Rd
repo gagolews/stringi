@@ -48,7 +48,7 @@ then a missing value will indicate that there are no words}
 see \code{\link{stri_opts_brkiter}};
 \code{NULL} for the default break iterator, i.e., \code{line_break}}
 
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
+\item{locale}{\code{NULL} or \code{''} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
 }
@@ -88,7 +88,7 @@ to locate the word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 }
 \examples{
-stri_extract_all_words("stringi: THE string processing package 123.48...")
+stri_extract_all_words('stringi: THE string processing package 123.48...')
 
 }
 \seealso{

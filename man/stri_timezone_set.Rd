@@ -36,7 +36,7 @@ by querying the OS with methods in \pkg{ICU}'s internal platform utilities.
 }
 \examples{
 \dontrun{
-oldtz <- stri_timezone_set("Europe/Warsaw")
+oldtz <- stri_timezone_set('Europe/Warsaw')
 # ... many time zone-dependent operations
 stri_timezone_set(oldtz) # restore previous default time zone
 }

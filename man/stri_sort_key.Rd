@@ -20,7 +20,7 @@ The result is a character vector with the same length as \code{str} that
 contains the sort keys.
 }
 \description{
-This function computes a locale-dependent "sort key", which is an alternative
+This function computes a locale-dependent 'sort key', which is an alternative
 character representation of the string that, when ordered in the C locale
 (which orders using bytes directly), will give an equivalent ordering to the
 original string. It is useful for enhancing algorithms that sort only in the
@@ -31,8 +31,8 @@ For more information on \pkg{ICU}'s Collator and how to tune it up
 in \pkg{stringi}, refer to \code{\link{stri_opts_collator}}.
 }
 \examples{
-stri_sort_key(c("hladny", "chladny"), locale="pl_PL")
-stri_sort_key(c("hladny", "chladny"), locale="sk_SK")
+stri_sort_key(c('hladny', 'chladny'), locale='pl_PL')
+stri_sort_key(c('hladny', 'chladny'), locale='sk_SK')
 }
 \references{
 \emph{Collation} - ICU User Guide,

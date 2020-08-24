@@ -9,10 +9,10 @@ stri_datetime_fields(time, tz = attr(time, "tzone"), locale = NULL)
 \arguments{
 \item{time}{an object of class \code{\link{POSIXct}} or an object coercible to}
 
-\item{tz}{\code{NULL} or \code{""} for the default time zone or
+\item{tz}{\code{NULL} or \code{''} for the default time zone or
 a single string with time zone identifier, see \code{\link{stri_timezone_list}}}
 
-\item{locale}{\code{NULL} or \code{""} for the current default locale,
+\item{locale}{\code{NULL} or \code{''} for the current default locale,
 or a single string with a locale identifier; a non-Gregorian calendar
 may be specified by setting \code{@calendar=name} keyword}
 }
@@ -45,9 +45,9 @@ Vectorized over \code{time}.
 }
 \examples{
 stri_datetime_fields(stri_datetime_now())
-stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")
-stri_datetime_symbols(locale="@calendar=hebrew")$Month[
-   stri_datetime_fields(stri_datetime_now(), locale="@calendar=hebrew")$Month
+stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')
+stri_datetime_symbols(locale='@calendar=hebrew')$Month[
+   stri_datetime_fields(stri_datetime_now(), locale='@calendar=hebrew')$Month
 ]
 
 }

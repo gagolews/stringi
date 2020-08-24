@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -41,7 +41,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_Rmark <- function(str) {
-   invisible(.Call(C_stri_test_Rmark, str))
+    invisible(.Call(C_stri_test_Rmark, str))
 }
 
 
@@ -50,7 +50,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_StriContainerUTF16 <- function(str) {
-   .Call(C_stri_test_UnicodeContainer16, str)
+    .Call(C_stri_test_UnicodeContainer16, str)
 }
 
 
@@ -59,7 +59,7 @@
 # @param str character vector
 # @return who cares
 .stri_test_StriContainerUTF8 <- function(str) {
-   .Call(C_stri_test_UnicodeContainer8, str)
+    .Call(C_stri_test_UnicodeContainer8, str)
 }
 
 
@@ -68,5 +68,5 @@
 # @param str some object
 # @return \code{str}
 .stri_test_returnasis <- function(x) {
-   .Call(C_stri_test_returnasis, x)
+    .Call(C_stri_test_returnasis, x)
 }

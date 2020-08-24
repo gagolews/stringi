@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -57,13 +57,13 @@
 #' With the break iterator of type \code{sentence}, the first letter
 #' of each sentence will be capitalized only.
 #' Note that according the \pkg{ICU} User Guide,
-#' the string \code{"one. two. three."} consists of one sentence.
+#' the string \code{'one. two. three.'} consists of one sentence.
 #'
 #' For more general (but not locale dependent)
 #' text transforms refer to \code{\link{stri_trans_general}}.
 #'
 #' @param str character vector
-#' @param locale \code{NULL} or \code{""} for case mapping following
+#' @param locale \code{NULL} or \code{''} for case mapping following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}.
 #' @param opts_brkiter a named list with \pkg{ICU} BreakIterator's settings,
@@ -86,29 +86,29 @@
 #' @family text_boundaries
 #'
 #' @examples
-#' stri_trans_toupper("\u00DF", "de_DE") # small German Eszett / scharfes S
-#' stri_cmp_eq(stri_trans_toupper("i", "en_US"), stri_trans_toupper("i", "tr_TR"))
+#' stri_trans_toupper('\u00DF', 'de_DE') # small German Eszett / scharfes S
+#' stri_cmp_eq(stri_trans_toupper('i', 'en_US'), stri_trans_toupper('i', 'tr_TR'))
 #' stri_trans_toupper(c('abc', '123', '\u0105\u0104'))
 #' stri_trans_tolower(c('AbC', '123', '\u0105\u0104'))
 #' stri_trans_totitle(c('AbC', '123', '\u0105\u0104'))
-#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!") # word boundary
-#' stri_trans_totitle("GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!", type="sentence")
-stri_trans_tolower <- function(str, locale=NULL) {
-   .Call(C_stri_trans_tolower, str, locale)
+#' stri_trans_totitle('GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!') # word boundary
+#' stri_trans_totitle('GOOD-OLD cOOkiE mOnSTeR IS watCHinG You. Here HE comes!', type='sentence')
+stri_trans_tolower <- function(str, locale = NULL) {
+    .Call(C_stri_trans_tolower, str, locale)
 }
 
 
 #' @export
 #' @rdname stri_trans_casemap
-stri_trans_toupper <- function(str, locale=NULL) {
-   .Call(C_stri_trans_toupper, str, locale)
+stri_trans_toupper <- function(str, locale = NULL) {
+    .Call(C_stri_trans_toupper, str, locale)
 }
 
 
 #' @export
 #' @rdname stri_trans_casemap
-stri_trans_totitle <- function(str, ..., opts_brkiter=NULL) {
-   if (!missing(...))
-       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
-   .Call(C_stri_trans_totitle, str, opts_brkiter)
+stri_trans_totitle <- function(str, ..., opts_brkiter = NULL) {
+    if (!missing(...)) 
+        opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+    .Call(C_stri_trans_totitle, str, opts_brkiter)
 }

@@ -25,9 +25,9 @@ stri_opts_brkiter(
 or a custom set of ICU break iteration rules.
 see \link{stringi-search-boundaries}}
 
-\item{locale}{single string, \code{NULL} or \code{""} for default locale}
+\item{locale}{single string, \code{NULL} or \code{''} for default locale}
 
-\item{skip_word_none}{logical; perform no action for "words" that
+\item{skip_word_none}{logical; perform no action for 'words' that
 do not fit into any other categories}
 
 \item{skip_word_number}{logical; perform no action for words that
@@ -49,8 +49,8 @@ i.e., positions where a line break is acceptable but not required}
 or mandatory line breaks}
 
 \item{skip_sentence_term}{logical; perform no action for sentences
-ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}",
-"\code{!}"), possibly followed by a hard separator
+ending with a sentence terminator ('\code{.}', '\code{,}', '\code{?}',
+'\code{!}'), possibly followed by a hard separator
 (\code{CR}, \code{LF}, \code{PS}, etc.)}
 
 \item{skip_sentence_sep}{logical; perform no action for sentences

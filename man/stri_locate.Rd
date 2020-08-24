@@ -85,7 +85,7 @@ including additional settings for \code{opts_collator}, \code{opts_regex},
 \code{opts_fixed}, and so on}
 
 \item{mode}{single string;
-one of: \code{"first"} (the default), \code{"all"}, \code{"last"}}
+one of: \code{'first'} (the default), \code{'all'}, \code{'last'}}
 
 \item{pattern, regex, fixed, coll, charclass}{character vector;
 search patterns; for more details refer to \link{stringi-search}}
@@ -157,12 +157,12 @@ stri_locate_first_charclass('AaBbCc', '\\\\p{Ll}')
 stri_locate_last_charclass('AaBbCc', '\\\\p{Ll}')
 
 stri_locate_all_coll(c('AaaaaaaA', 'AAAA'), 'a')
-stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale="sk_SK")
-stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale="sk_SK")
+stri_locate_first_coll(c('Yy\u00FD', 'AAA'), 'y', strength=2, locale='sk_SK')
+stri_locate_last_coll(c('Yy\u00FD', 'AAA'), 'y', strength=1, locale='sk_SK')
 
-pat <- stri_paste("\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ",
-                  "\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ")
-stri_locate_last_coll("\ufdfa\ufdfa\ufdfaXYZ", pat, strength = 1)
+pat <- stri_paste('\u0635\u0644\u0649 \u0627\u0644\u0644\u0647 ',
+                  '\u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645XYZ')
+stri_locate_last_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength = 1)
 
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a')
 stri_locate_all_fixed(c('AaaaaaaA', 'AAAA'), 'a', case_insensitive=TRUE, overlap=TRUE)
@@ -185,7 +185,7 @@ stri_locate_last_regex('XaaaaX',
    c('\\\\p{Ll}', '\\\\p{Ll}+', '\\\\p{Ll}{2,3}', '\\\\p{Ll}{2,3}?'))
 
 # Use regex positive-lookahead to locate overlapping pattern matches:
-stri_locate_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=AGA)")
+stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 # note that start > end here (match of 0 length)
 
 

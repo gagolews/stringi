@@ -31,7 +31,7 @@ support the  functionality requested using the format-strings API
 or there are some inconsistencies between base R and \pkg{ICU}.
 }
 \examples{
-stri_datetime_fstr("\%Y-\%m-\%d \%H:\%M:\%S")
+stri_datetime_fstr('\%Y-\%m-\%d \%H:\%M:\%S')
 
 }
 \seealso{

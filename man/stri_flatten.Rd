@@ -26,7 +26,7 @@ Joins the elements of a character vector into one string.
 }
 \details{
 The \code{stri_flatten(str, collapse='XXX')} call
-is equivalent to \code{\link{paste}(str, collapse='XXX', sep="")}.
+is equivalent to \code{\link{paste}(str, collapse='XXX', sep='')}.
 
 If you wish to use some more fancy (e.g., differing)
 separators between flattened strings,
@@ -38,9 +38,9 @@ will be used.
 }
 \examples{
 stri_flatten(LETTERS)
-stri_flatten(LETTERS, collapse=",")
+stri_flatten(LETTERS, collapse=',')
 stri_flatten(stri_dup(letters[1:6], 1:3))
-stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
+stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
 
 }
 \seealso{

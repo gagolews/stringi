@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -41,7 +41,7 @@
 #' Apart from given encoding identifiers and their aliases,
 #' some other specifiers might be additionally available.
 #' This is due to the fact that \pkg{ICU} tries to normalize
-#' converter names. For instance, \code{"UTF8"} is also valid,
+#' converter names. For instance, \code{'UTF8'} is also valid,
 #' see \link{stringi-encoding} for more information.
 #'
 #' @param simplify single logical value; return a character vector or a
@@ -59,14 +59,13 @@
 #'
 #' @family encoding_management
 #' @export
-stri_enc_list <- function(simplify=FALSE) {
-   simplify <- !identical(simplify, FALSE)
-
-   ret <- .Call(C_stri_enc_list)
-   if (simplify)
-      return(stri_sort(unique(unlist(ret)))) # @TODO: use stri_unique
-   else
-      return(ret)
+stri_enc_list <- function(simplify = FALSE) {
+    simplify <- !identical(simplify, FALSE)
+    
+    ret <- .Call(C_stri_enc_list)
+    if (simplify) 
+        return(stri_sort(unique(unlist(ret))))  # @TODO: use stri_unique
+ else return(ret)
 }
 
 
@@ -81,7 +80,7 @@ stri_enc_list <- function(simplify=FALSE) {
 #' (see \code{\link{stri_enc_list}} for more details).
 #'
 #'
-#' @param enc \code{NULL} or \code{""} for the default encoding,
+#' @param enc \code{NULL} or \code{''} for the default encoding,
 #' or a single string with encoding name
 #'
 #' @return
@@ -110,8 +109,8 @@ stri_enc_list <- function(simplify=FALSE) {
 #'
 #' @family encoding_management
 #' @export
-stri_enc_info <- function(enc=NULL) {
-   .Call(C_stri_enc_info, enc)
+stri_enc_info <- function(enc = NULL) {
+    .Call(C_stri_enc_info, enc)
 }
 
 
@@ -159,20 +158,20 @@ stri_enc_info <- function(enc=NULL) {
 #' @rdname stri_enc_set
 #' @export
 stri_enc_set <- function(enc) {
-   previous <- stri_enc_get()
-
-   # We call stri_info, because it generates some warnings,
-   # in case any problems are found:
-   .Call(C_stri_enc_set, enc)
-   message(stri_paste('New settings: ', stri_info(short=TRUE)))
-   invisible(previous)
+    previous <- stri_enc_get()
+    
+    # We call stri_info, because it generates some warnings,
+    # in case any problems are found:
+    .Call(C_stri_enc_set, enc)
+    message(stri_paste("New settings: ", stri_info(short = TRUE)))
+    invisible(previous)
 }
 
 
 #' @rdname stri_enc_set
 #' @export
 stri_enc_get <- function() {
-   stri_enc_info(NULL)$Name.friendly
+    stri_enc_info(NULL)$Name.friendly
 }
 
 
@@ -198,7 +197,7 @@ stri_enc_get <- function() {
 #' encoding.
 #'
 #' Intuitively, the default encoding should be equivalent to
-#' the one you use on stdin (e.g., your "keyboard").
+#' the one you use on stdin (e.g., your 'keyboard').
 #' In \code{stringi} we assume that such an encoding
 #' is equivalent to the one returned by \code{\link{stri_enc_get}}.
 #' It is automatically detected by \pkg{ICU}
@@ -221,5 +220,5 @@ stri_enc_get <- function() {
 #' @family encoding_management
 #' @export
 stri_enc_mark <- function(str) {
-   .Call(C_stri_enc_mark, str)
+    .Call(C_stri_enc_mark, str)
 }

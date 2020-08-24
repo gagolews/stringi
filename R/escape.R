@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -43,7 +43,7 @@
 #' ASCII characters the following
 #' (also recognized in \R) convention is used.
 #' We get \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v},
-#' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}
+#' \code{\\f}, \code{\\r}, \code{\'}, \code{\'}, \code{\\\\}
 #' or either {\\uXXXX} (4 hex digits) or {\\UXXXXXXXX} (8 hex digits)
 #' otherwise.
 #'
@@ -57,12 +57,12 @@
 #' Returns a character vector.
 #'
 #' @examples
-#' stri_escape_unicode("a\u0105!")
+#' stri_escape_unicode('a\u0105!')
 #'
 #' @family escape
 #' @export
 stri_escape_unicode <- function(str) {
-   .Call(C_stri_escape_unicode, str)
+    .Call(C_stri_escape_unicode, str)
 }
 
 
@@ -78,7 +78,7 @@ stri_escape_unicode <- function(str) {
 #' The following ASCII standard escapes are recognized:
 #' \code{\\a}, \code{\\b}, \code{\\t}, \code{\\n}, \code{\\v}, \code{\\?},
 #' \code{\\e},
-#' \code{\\f}, \code{\\r}, \code{\"}, \code{\'}, \code{\\\\}.
+#' \code{\\f}, \code{\\r}, \code{\'}, \code{\'}, \code{\\\\}.
 #'
 #' Moreover, the function understands the following ones:
 #' \code{\\uXXXX} (4 hex digits),
@@ -99,10 +99,10 @@ stri_escape_unicode <- function(str) {
 #' result will be \code{NA} and a warning will be given.
 #'
 #' @examples
-#' stri_unescape_unicode("a\\u0105!\\u0032\\n")
+#' stri_unescape_unicode('a\\u0105!\\u0032\\n')
 #'
 #' @family escape
 #' @export
 stri_unescape_unicode <- function(str) {
-   .Call(C_stri_unescape_unicode, str)
+    .Call(C_stri_unescape_unicode, str)
 }

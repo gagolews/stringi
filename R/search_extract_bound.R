@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -61,7 +61,7 @@
 #' see \code{\link{stri_opts_brkiter}};
 #' \code{NULL} for the default break iterator, i.e., \code{line_break}
 #' @param ... additional settings for \code{opts_brkiter}
-#' @param locale \code{NULL} or \code{""} for text boundary analysis following
+#' @param locale \code{NULL} or \code{''} for text boundary analysis following
 #' the conventions of the default locale, or a single string with
 #' locale identifier, see \link{stringi-locale}
 #'
@@ -85,57 +85,59 @@
 #' A \code{NA} element indicates a no-match.
 #'
 #' @examples
-#' stri_extract_all_words("stringi: THE string processing package 123.48...")
+#' stri_extract_all_words('stringi: THE string processing package 123.48...')
 #'
 #' @export
 #' @family search_extract
 #' @family locale_sensitive
 #' @family text_boundaries
 #' @rdname stri_extract_boundaries
-stri_extract_all_boundaries <- function(str, simplify=FALSE, omit_no_match=FALSE, ..., opts_brkiter=NULL) {
-   if (!missing(...))
-       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
-   .Call(C_stri_extract_all_boundaries, str, simplify, omit_no_match, opts_brkiter)
+stri_extract_all_boundaries <- function(str, simplify = FALSE, omit_no_match = FALSE, 
+    ..., opts_brkiter = NULL) {
+    if (!missing(...)) 
+        opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+    .Call(C_stri_extract_all_boundaries, str, simplify, omit_no_match, opts_brkiter)
 }
 
 
 #' @export
 #' @rdname stri_extract_boundaries
-stri_extract_last_boundaries <- function(str, ..., opts_brkiter=NULL) {
-   if (!missing(...))
-       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
-   .Call(C_stri_extract_last_boundaries, str, opts_brkiter)
+stri_extract_last_boundaries <- function(str, ..., opts_brkiter = NULL) {
+    if (!missing(...)) 
+        opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+    .Call(C_stri_extract_last_boundaries, str, opts_brkiter)
 }
 
 
 #' @export
 #' @rdname stri_extract_boundaries
-stri_extract_first_boundaries <- function(str, ..., opts_brkiter=NULL) {
-   if (!missing(...))
-       opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
-   .Call(C_stri_extract_first_boundaries, str, opts_brkiter)
+stri_extract_first_boundaries <- function(str, ..., opts_brkiter = NULL) {
+    if (!missing(...)) 
+        opts_brkiter <- do.call(stri_opts_brkiter, as.list(c(opts_brkiter, ...)))
+    .Call(C_stri_extract_first_boundaries, str, opts_brkiter)
 }
 
 
 #' @export
 #' @rdname stri_extract_boundaries
-stri_extract_all_words <- function(str, simplify=FALSE, omit_no_match=FALSE, locale=NULL) {
-   stri_extract_all_boundaries(str, simplify, omit_no_match,
-      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+stri_extract_all_words <- function(str, simplify = FALSE, omit_no_match = FALSE, 
+    locale = NULL) {
+    stri_extract_all_boundaries(str, simplify, omit_no_match, opts_brkiter = stri_opts_brkiter(type = "word", 
+        skip_word_none = TRUE, locale = locale))
 }
 
 
 #' @export
 #' @rdname stri_extract_boundaries
-stri_extract_first_words <- function(str, locale=NULL) {
-   stri_extract_first_boundaries(str,
-      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+stri_extract_first_words <- function(str, locale = NULL) {
+    stri_extract_first_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word", 
+        skip_word_none = TRUE, locale = locale))
 }
 
 
 #' @export
 #' @rdname stri_extract_boundaries
-stri_extract_last_words <- function(str, locale=NULL) {
-   stri_extract_last_boundaries(str,
-      opts_brkiter=stri_opts_brkiter(type="word", skip_word_none=TRUE, locale=locale))
+stri_extract_last_words <- function(str, locale = NULL) {
+    stri_extract_last_boundaries(str, opts_brkiter = stri_opts_brkiter(type = "word", 
+        skip_word_none = TRUE, locale = locale))
 }

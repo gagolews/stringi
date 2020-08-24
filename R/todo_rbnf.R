@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -31,7 +31,7 @@
 ## EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-invisible(NULL) # TO BE DONE, version >= 0.3
+invisible(NULL)  # TO BE DONE, version >= 0.3
 
 
 # #' @title
@@ -46,7 +46,7 @@ invisible(NULL) # TO BE DONE, version >= 0.3
 # #' @param x numeric vector
 # #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
 # #'                 \code{numbering_system}?
-# #' @param locale \code{NULL} or \code{""} for case mapping following
+# #' @param locale \code{NULL} or \code{''} for case mapping following
 # #' the conventions of the default locale, or a single string with
 # #' locale identifier, see \link{stringi-locale}.
 # #'
@@ -73,7 +73,7 @@ invisible(NULL) # TO BE DONE, version >= 0.3
 # #' @param str character vector
 # #' @param ruleset single string; one of \code{spellout}, \code{ordinal}, \code{duration},
 # #'                 \code{numbering_system}?
-# #' @param locale \code{NULL} or \code{""} for case mapping following
+# #' @param locale \code{NULL} or \code{''} for case mapping following
 # #' the conventions of the default locale, or a single string with
 # #' locale identifier, see \link{stringi-locale}.
 # #' @param lenient single logical value; ....

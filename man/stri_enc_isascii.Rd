@@ -24,7 +24,7 @@ character strings (see \link{Encoding} and \link{stringi-encoding}).
 }
 \examples{
 stri_enc_isascii(letters[1:3])
-stri_enc_isascii("\u0105\u0104")
+stri_enc_isascii('\u0105\u0104')
 
 }
 \seealso{

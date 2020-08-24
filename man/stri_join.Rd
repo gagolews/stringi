@@ -50,7 +50,7 @@ then only the first string will be used.
 In case where there are missing values in any of the input vectors,
 \code{NA} is set to the corresponding element.
 Note that this behavior is different from \code{\link{paste}},
-which treats missing values as ordinary strings like \code{"NA"}.
+which treats missing values as ordinary strings like \code{'NA'}.
 Moreover, as usual in \pkg{stringi}, the resulting strings are
 always in UTF-8.
 }

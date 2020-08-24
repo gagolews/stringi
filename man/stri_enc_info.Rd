@@ -7,7 +7,7 @@
 stri_enc_info(enc = NULL)
 }
 \arguments{
-\item{enc}{\code{NULL} or \code{""} for the default encoding,
+\item{enc}{\code{NULL} or \code{''} for the default encoding,
 or a single string with encoding name}
 }
 \value{

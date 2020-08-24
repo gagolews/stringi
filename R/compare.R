@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -100,40 +100,40 @@
 #'
 #' @examples
 #' # in Polish, ch < h:
-#' stri_cmp_lt("hladny", "chladny", locale="pl_PL")
+#' stri_cmp_lt('hladny', 'chladny', locale='pl_PL')
 #'
 #' # in Slovak, ch > h:
-#' stri_cmp_lt("hladny", "chladny", locale="sk_SK")
+#' stri_cmp_lt('hladny', 'chladny', locale='sk_SK')
 #'
 #' # < or > (depends on locale):
-#' stri_cmp("hladny", "chladny")
+#' stri_cmp('hladny', 'chladny')
 #'
 #' # ignore case differences:
-#' stri_cmp_equiv("hladny", "HLADNY", strength=2)
+#' stri_cmp_equiv('hladny', 'HLADNY', strength=2)
 #'
 #' # also ignore diacritical differences:
-#' stri_cmp_equiv("hladn\u00FD", "hladny", strength=1, locale="sk_SK")
+#' stri_cmp_equiv('hladn\u00FD', 'hladny', strength=1, locale='sk_SK')
 #'
 #' # non-Unicode-normalized vs normalized string:
-#' stri_cmp_equiv(stri_trans_nfkd("\u0105"), "\u105")
+#' stri_cmp_equiv(stri_trans_nfkd('\u0105'), '\u105')
 #'
 #' # note the difference:
-#' stri_cmp_eq(stri_trans_nfkd("\u0105"), "\u105")
+#' stri_cmp_eq(stri_trans_nfkd('\u0105'), '\u105')
 #'
 #' # ligatures:
-#' stri_cmp_equiv("\ufb00", "ff", strength=2)
+#' stri_cmp_equiv('\ufb00', 'ff', strength=2)
 #'
 #' # phonebook collation
-#' stri_cmp_equiv("G\u00e4rtner", "Gaertner", locale="de_DE@@collation=phonebook", strength=1L)
-#' stri_cmp_equiv("G\u00e4rtner", "Gaertner", locale="de_DE", strength=1L)
+#' stri_cmp_equiv('G\u00e4rtner', 'Gaertner', locale='de_DE@@collation=phonebook', strength=1L)
+#' stri_cmp_equiv('G\u00e4rtner', 'Gaertner', locale='de_DE', strength=1L)
 #'
 #' @family locale_sensitive
 #' @export
 #' @rdname stri_compare
-stri_compare <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp, e1, e2, opts_collator)
+stri_compare <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp, e1, e2, opts_collator)
 }
 
 
@@ -145,66 +145,66 @@ stri_cmp <- stri_compare
 #' @export
 #' @rdname stri_compare
 stri_cmp_eq <- function(e1, e2) {
-   .Call(C_stri_cmp_eq, e1, e2)
+    .Call(C_stri_cmp_eq, e1, e2)
 }
 
 
 #' @export
 #' @rdname stri_compare
 stri_cmp_neq <- function(e1, e2) {
-   .Call(C_stri_cmp_neq, e1, e2)
+    .Call(C_stri_cmp_neq, e1, e2)
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_equiv <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_equiv, e1, e2, opts_collator)
+stri_cmp_equiv <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_equiv, e1, e2, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_nequiv <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_nequiv, e1, e2, opts_collator)
+stri_cmp_nequiv <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_nequiv, e1, e2, opts_collator)
 }
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_lt <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_lt, e1, e2, opts_collator)
-}
-
-
-#' @export
-#' @rdname stri_compare
-stri_cmp_gt <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_gt, e1, e2, opts_collator)
-}
-
-#' @export
-#' @rdname stri_compare
-stri_cmp_le <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_le, e1, e2, opts_collator)
+stri_cmp_lt <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_lt, e1, e2, opts_collator)
 }
 
 
 #' @export
 #' @rdname stri_compare
-stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
-   if (!missing(...))
-       opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
-   .Call(C_stri_cmp_ge, e1, e2, opts_collator)
+stri_cmp_gt <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_gt, e1, e2, opts_collator)
+}
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_le <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_le, e1, e2, opts_collator)
+}
+
+
+#' @export
+#' @rdname stri_compare
+stri_cmp_ge <- function(e1, e2, ..., opts_collator = NULL) {
+    if (!missing(...)) 
+        opts_collator <- do.call(stri_opts_collator, as.list(c(opts_collator, ...)))
+    .Call(C_stri_cmp_ge, e1, e2, opts_collator)
 }
 
 
@@ -235,8 +235,8 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #'
 #'
 #' @examples
-#' "a" %stri<% "b"
-#' c("a", "b", "c") %stri>=% "b"
+#' 'a' %stri<% 'b'
+#' c('a', 'b', 'c') %stri>=% 'b'
 #'
 #' @usage
 #' e1 \%s<\% e2
@@ -245,7 +245,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s<%" <- function(e1, e2) {
-   stri_cmp_lt(e1, e2)
+    stri_cmp_lt(e1, e2)
 }
 
 
@@ -254,7 +254,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s<=%" <- function(e1, e2) {
-   stri_cmp_le(e1, e2)
+    stri_cmp_le(e1, e2)
 }
 
 
@@ -263,7 +263,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s>%" <- function(e1, e2) {
-   stri_cmp_gt(e1, e2)
+    stri_cmp_gt(e1, e2)
 }
 
 
@@ -272,7 +272,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s>=%" <- function(e1, e2) {
-   stri_cmp_ge(e1, e2)
+    stri_cmp_ge(e1, e2)
 }
 
 
@@ -281,7 +281,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s==%" <- function(e1, e2) {
-   stri_cmp_equiv(e1, e2)
+    stri_cmp_equiv(e1, e2)
 }
 
 
@@ -290,7 +290,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s!=%" <- function(e1, e2) {
-   stri_cmp_nequiv(e1, e2)
+    stri_cmp_nequiv(e1, e2)
 }
 
 
@@ -299,7 +299,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s===%" <- function(e1, e2) {
-   stri_cmp_eq(e1, e2)
+    stri_cmp_eq(e1, e2)
 }
 
 
@@ -308,7 +308,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%s!==%" <- function(e1, e2) {
-   stri_cmp_neq(e1, e2)
+    stri_cmp_neq(e1, e2)
 }
 
 
@@ -317,7 +317,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri<%" <- function(e1, e2) {
-   stri_cmp_lt(e1, e2)
+    stri_cmp_lt(e1, e2)
 }
 
 
@@ -326,7 +326,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri<=%" <- function(e1, e2) {
-   stri_cmp_le(e1, e2)
+    stri_cmp_le(e1, e2)
 }
 
 
@@ -335,7 +335,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri>%" <- function(e1, e2) {
-   stri_cmp_gt(e1, e2)
+    stri_cmp_gt(e1, e2)
 }
 
 
@@ -344,7 +344,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri>=%" <- function(e1, e2) {
-   stri_cmp_ge(e1, e2)
+    stri_cmp_ge(e1, e2)
 }
 
 
@@ -353,7 +353,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri==%" <- function(e1, e2) {
-   stri_cmp_equiv(e1, e2)
+    stri_cmp_equiv(e1, e2)
 }
 
 
@@ -362,7 +362,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri!=%" <- function(e1, e2) {
-   stri_cmp_nequiv(e1, e2)
+    stri_cmp_nequiv(e1, e2)
 }
 
 
@@ -371,7 +371,7 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri===%" <- function(e1, e2) {
-   stri_cmp_eq(e1, e2)
+    stri_cmp_eq(e1, e2)
 }
 
 
@@ -380,5 +380,5 @@ stri_cmp_ge <- function(e1, e2, ..., opts_collator=NULL) {
 #' @rdname oper_comparison
 #' @export
 "%stri!==%" <- function(e1, e2) {
-   stri_cmp_neq(e1, e2)
+    stri_cmp_neq(e1, e2)
 }

@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -71,7 +71,7 @@
 #' @param cg_missing single string to be used if a capture group match
 #' is unavailable
 #' @param mode single string;
-#' one of: \code{"first"} (the default), \code{"all"}, \code{"last"}
+#' one of: \code{'first'} (the default), \code{'all'}, \code{'last'}
 #' @param ... supplementary arguments passed to the underlying functions,
 #' including additional settings for \code{opts_regex}
 #'
@@ -89,90 +89,86 @@
 #'
 #'
 #' @examples
-#' stri_match_all_regex("breakfast=eggs, lunch=pizza, dessert=icecream",
-#'    "(\\w+)=(\\w+)")
-#' stri_match_all_regex(c("breakfast=eggs", "lunch=pizza", "no food here"),
-#'    "(\\w+)=(\\w+)")
-#' stri_match_all_regex(c("breakfast=eggs;lunch=pizza",
-#'    "breakfast=bacon;lunch=spaghetti", "no food here"),
-#'    "(\\w+)=(\\w+)")
-#' stri_match_first_regex(c("breakfast=eggs;lunch=pizza",
-#'    "breakfast=bacon;lunch=spaghetti", "no food here"),
-#'    "(\\w+)=(\\w+)")
-#' stri_match_last_regex(c("breakfast=eggs;lunch=pizza",
-#'    "breakfast=bacon;lunch=spaghetti", "no food here"),
-#'    "(\\w+)=(\\w+)")
+#' stri_match_all_regex('breakfast=eggs, lunch=pizza, dessert=icecream',
+#'    '(\\w+)=(\\w+)')
+#' stri_match_all_regex(c('breakfast=eggs', 'lunch=pizza', 'no food here'),
+#'    '(\\w+)=(\\w+)')
+#' stri_match_all_regex(c('breakfast=eggs;lunch=pizza',
+#'    'breakfast=bacon;lunch=spaghetti', 'no food here'),
+#'    '(\\w+)=(\\w+)')
+#' stri_match_first_regex(c('breakfast=eggs;lunch=pizza',
+#'    'breakfast=bacon;lunch=spaghetti', 'no food here'),
+#'    '(\\w+)=(\\w+)')
+#' stri_match_last_regex(c('breakfast=eggs;lunch=pizza',
+#'    'breakfast=bacon;lunch=spaghetti', 'no food here'),
+#'    '(\\w+)=(\\w+)')
 #'
-#' stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$")
-#' stri_match_first_regex(c("abcd", ":abcd", ":abcd:"), "^(:)?([^:]*)(:)?$", cg_missing="")
+#' stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$')
+#' stri_match_first_regex(c('abcd', ':abcd', ':abcd:'), '^(:)?([^:]*)(:)?$', cg_missing='')
 #'
 #' # Match all the pattern of the form XYX, including overlapping matches:
-#' stri_match_all_regex("ACAGAGACTTTAGATAGAGAAGA", "(?=(([ACGT])[ACGT]\\2))")[[1]][,2]
+#' stri_match_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=(([ACGT])[ACGT]\\2))')[[1]][,2]
 #' # Compare the above to:
-#' stri_extract_all_regex("ACAGAGACTTTAGATAGAGAAGA", "([ACGT])[ACGT]\\1")
+#' stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\1')
 #'
 #' @family search_extract
 #' @export
 #' @rdname stri_match
 stri_match_all <- function(str, ..., regex) {
-   stri_match_all_regex(str, regex, ...)
+    stri_match_all_regex(str, regex, ...)
 }
 
 
 #' @export
 #' @rdname stri_match
 stri_match_first <- function(str, ..., regex) {
-   stri_match_first_regex(str, regex, ...)
+    stri_match_first_regex(str, regex, ...)
 }
 
 
 #' @export
 #' @rdname stri_match
 stri_match_last <- function(str, ..., regex) {
-   stri_match_last_regex(str, regex, ...)
+    stri_match_last_regex(str, regex, ...)
 }
 
 
 #' @export
 #' @rdname stri_match
-stri_match <- function(str, ..., regex,
-                        mode=c("first", "all", "last")) {
-   # `first` is default for compatibility with stringr
-   mode <- match.arg(mode) # this is slow
-
-   switch(mode,
-          first=stri_match_first_regex(str, regex, ...),
-          last =stri_match_last_regex(str, regex, ...),
-          all  =stri_match_all_regex(str, regex, ...)
-   )
+stri_match <- function(str, ..., regex, mode = c("first", "all", "last")) {
+    # `first` is default for compatibility with stringr
+    mode <- match.arg(mode)  # this is slow
+    
+    switch(mode, first = stri_match_first_regex(str, regex, ...), last = stri_match_last_regex(str, 
+        regex, ...), all = stri_match_all_regex(str, regex, ...))
 }
 
 
 #' @export
 #' @rdname stri_match
-stri_match_all_regex <- function(str, pattern, omit_no_match=FALSE,
-      cg_missing=NA_character_, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_match_all_regex, str, pattern, omit_no_match, cg_missing, opts_regex)
+stri_match_all_regex <- function(str, pattern, omit_no_match = FALSE, cg_missing = NA_character_, 
+    ..., opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_match_all_regex, str, pattern, omit_no_match, cg_missing, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_match
-stri_match_first_regex <- function(str, pattern,
-      cg_missing=NA_character_, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_match_first_regex, str, pattern, cg_missing, opts_regex)
+stri_match_first_regex <- function(str, pattern, cg_missing = NA_character_, ..., 
+    opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_match_first_regex, str, pattern, cg_missing, opts_regex)
 }
 
 
 #' @export
 #' @rdname stri_match
-stri_match_last_regex <- function(str, pattern,
-      cg_missing=NA_character_, ..., opts_regex=NULL) {
-   if (!missing(...))
-       opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
-   .Call(C_stri_match_last_regex, str, pattern, cg_missing, opts_regex)
+stri_match_last_regex <- function(str, pattern, cg_missing = NA_character_, ..., 
+    opts_regex = NULL) {
+    if (!missing(...)) 
+        opts_regex <- do.call(stri_opts_regex, as.list(c(opts_regex, ...)))
+    .Call(C_stri_match_last_regex, str, pattern, cg_missing, opts_regex)
 }

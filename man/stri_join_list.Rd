@@ -42,27 +42,27 @@ then only the first string will be used.
 }
 \examples{
 stri_join_list(
-   stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-   "Spam spam bacon sausage and spam.")),
-sep=", ")
+   stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
+   'Spam spam bacon sausage and spam.')),
+sep=', ')
 
 stri_join_list(
-   stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-   "Spam spam bacon sausage and spam.")),
-sep=", ", collapse=". ")
+   stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
+   'Spam spam bacon sausage and spam.')),
+sep=', ', collapse='. ')
 
 stri_join_list(
    stri_extract_all_regex(
-      c("spam spam bacon", "123 456", "spam 789 sausage"), "\\\\p{L}+"
+      c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\\\p{L}+'
    ),
-sep=",")
+sep=',')
 
 stri_join_list(
    stri_extract_all_regex(
-      c("spam spam bacon", "123 456", "spam 789 sausage"), "\\\\p{L}+",
+      c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\\\p{L}+',
       omit_no_match=TRUE
    ),
-sep=",", collapse="; ")
+sep=',', collapse='; ')
 
 }
 \seealso{

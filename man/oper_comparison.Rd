@@ -75,8 +75,8 @@ As a consequence, they are vectorized over \code{e1} and \code{e2}.
 code point-based comparison.
 }
 \examples{
-"a" \%stri<\% "b"
-c("a", "b", "c") \%stri>=\% "b"
+'a' \%stri<\% 'b'
+c('a', 'b', 'c') \%stri>=\% 'b'
 
 }
 \seealso{

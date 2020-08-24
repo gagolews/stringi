@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -97,75 +97,75 @@
 #' \url{http://en.wikipedia.org/wiki/Unicode_equivalence}
 #'
 #' @examples
-#' stri_trans_nfd("\u0105") # Polish a with ogonek -> a, ogonek
-#' stri_trans_nfkc("\ufdfa") # 1 codepoint -> 18 codepoints
+#' stri_trans_nfd('\u0105') # Polish a with ogonek -> a, ogonek
+#' stri_trans_nfkc('\ufdfa') # 1 codepoint -> 18 codepoints
 #'
 #' @export
 #' @rdname stri_trans_nf
 #' @family transform
 stri_trans_nfc <- function(str) {
-   .Call(C_stri_trans_nfc, str)
+    .Call(C_stri_trans_nfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfd <- function(str) {
-   .Call(C_stri_trans_nfd, str)
+    .Call(C_stri_trans_nfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkd <- function(str) {
-   .Call(C_stri_trans_nfkd, str)
+    .Call(C_stri_trans_nfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkc <- function(str) {
-   .Call(C_stri_trans_nfkc, str)
+    .Call(C_stri_trans_nfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_nfkc_casefold <- function(str) {
-   .Call(C_stri_trans_nfkc_casefold, str)
+    .Call(C_stri_trans_nfkc_casefold, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfc <- function(str) {
-   .Call(C_stri_trans_isnfc, str)
+    .Call(C_stri_trans_isnfc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfd <- function(str) {
-   .Call(C_stri_trans_isnfd, str)
+    .Call(C_stri_trans_isnfd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkd <- function(str) {
-   .Call(C_stri_trans_isnfkd, str)
+    .Call(C_stri_trans_isnfkd, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkc <- function(str) {
-   .Call(C_stri_trans_isnfkc, str)
+    .Call(C_stri_trans_isnfkc, str)
 }
 
 
 #' @rdname stri_trans_nf
 #' @export
 stri_trans_isnfkc_casefold <- function(str) {
-   .Call(C_stri_trans_isnfkc_casefold, str)
+    .Call(C_stri_trans_isnfkc_casefold, str)
 }

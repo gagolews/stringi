@@ -33,9 +33,9 @@ Searching for overlapping pattern matches is available in
 and \code{\link{stri_count_fixed}} functions.
 }
 \examples{
-stri_detect_fixed("ala", "ALA") # case-sensitive by default
-stri_detect_fixed("ala", "ALA", opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
-stri_detect_fixed("ala", "ALA", case_insensitive=TRUE) # equivalent
+stri_detect_fixed('ala', 'ALA') # case-sensitive by default
+stri_detect_fixed('ala', 'ALA', opts_fixed=stri_opts_fixed(case_insensitive=TRUE))
+stri_detect_fixed('ala', 'ALA', case_insensitive=TRUE) # equivalent
 }
 \references{
 \emph{C/POSIX Migration} -- ICU User Guide,

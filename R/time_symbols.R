@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -43,10 +43,10 @@
 #' and \code{width} - for date formatting width.
 #'
 #'
-#' @param locale \code{NULL} or \code{""} for default locale,
+#' @param locale \code{NULL} or \code{''} for default locale,
 #' or a single string with locale identifier
-#' @param context single string; one of: \code{"format"}, \code{"standalone"}
-#' @param width single string; one of: \code{"abbreviated"}, \code{"wide"}, \code{"narrow"}
+#' @param context single string; one of: \code{'format'}, \code{'standalone'}
+#' @param width single string; one of: \code{'abbreviated'}, \code{'wide'}, \code{'narrow'}
 #'
 #' @return Returns a list with the following named components:
 #' \enumerate{
@@ -59,23 +59,23 @@
 #'
 #' @examples
 #' stri_datetime_symbols() # uses the Gregorian calendar in most locales
-#' stri_datetime_symbols("@@calendar=hebrew")
-#' stri_datetime_symbols("he_IL@@calendar=hebrew")
-#' stri_datetime_symbols("@@calendar=islamic")
-#' stri_datetime_symbols("@@calendar=persian")
-#' stri_datetime_symbols("@@calendar=indian")
-#' stri_datetime_symbols("@@calendar=coptic")
-#' stri_datetime_symbols("@@calendar=japanese")
+#' stri_datetime_symbols('@@calendar=hebrew')
+#' stri_datetime_symbols('he_IL@@calendar=hebrew')
+#' stri_datetime_symbols('@@calendar=islamic')
+#' stri_datetime_symbols('@@calendar=persian')
+#' stri_datetime_symbols('@@calendar=indian')
+#' stri_datetime_symbols('@@calendar=coptic')
+#' stri_datetime_symbols('@@calendar=japanese')
 #'
-#' stri_datetime_symbols("ja_JP_TRADITIONAL") # uses the Japanese calendar by default
-#' stri_datetime_symbols("th_TH_TRADITIONAL") # uses the Buddhist calendar
+#' stri_datetime_symbols('ja_JP_TRADITIONAL') # uses the Japanese calendar by default
+#' stri_datetime_symbols('th_TH_TRADITIONAL') # uses the Buddhist calendar
 #'
-#' stri_datetime_symbols("pl_PL", context="format")
-#' stri_datetime_symbols("pl_PL", context="standalone")
+#' stri_datetime_symbols('pl_PL', context='format')
+#' stri_datetime_symbols('pl_PL', context='standalone')
 #'
-#' stri_datetime_symbols(width="wide")
-#' stri_datetime_symbols(width="abbreviated")
-#' stri_datetime_symbols(width="narrow")
+#' stri_datetime_symbols(width='wide')
+#' stri_datetime_symbols(width='abbreviated')
+#' stri_datetime_symbols(width='narrow')
 #'
 #' @references
 #' \emph{Calendar} - ICU User Guide,
@@ -89,8 +89,8 @@
 #'
 #' @family datetime
 #' @export
-stri_datetime_symbols <- function(locale=NULL, context="standalone", width="wide") {
-   # Possibly @TODO:
-   # get first day of week
-   .Call(C_stri_datetime_symbols, locale, context, width)
+stri_datetime_symbols <- function(locale = NULL, context = "standalone", width = "wide") {
+    # Possibly @TODO:
+    # get first day of week
+    .Call(C_stri_datetime_symbols, locale, context, width)
 }

@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -57,15 +57,16 @@ stri_read_raw <- function(con) {
         con <- file(con, "rb")
         on.exit(close(con))
     }
-
+    
     bufsize <- 4194304L
     data <- list()
     n <- 1L
     repeat {
-        buf <- readBin(con, what="raw", size=1L, n=bufsize)
+        buf <- readBin(con, what = "raw", size = 1L, n = bufsize)
         data[[n]] <- buf
         n <- n + 1L
-        if (length(buf) < bufsize) break
+        if (length(buf) < bufsize) 
+            break
     }
     do.call(c, data)
 }
@@ -93,7 +94,7 @@ stri_read_raw <- function(con) {
 #' @param con name of the output file or a connection object
 #'        (opened in the binary mode)
 #' @param encoding single string; input encoding;
-#' \code{NULL} or \code{""} for the current default encoding.
+#' \code{NULL} or \code{''} for the current default encoding.
 #'
 #' @return
 #' Returns a character vector, each text line is a separate string.
@@ -101,15 +102,15 @@ stri_read_raw <- function(con) {
 #'
 #' @family files
 #' @export
-stri_read_lines <- function(con, encoding=NULL) {
+stri_read_lines <- function(con, encoding = NULL) {
     stopifnot(is.null(encoding) || is.character(encoding))
-
-    if (is.null(encoding) || encoding == "")
-        encoding <- stri_enc_get() # this need to be done manually, see ?stri_encode
-
-    if (encoding == "auto")
-        stop("encoding `auto` is no longer supported") # TODO: remove in the future
-
+    
+    if (is.null(encoding) || encoding == "") 
+        encoding <- stri_enc_get()  # this need to be done manually, see ?stri_encode
+    
+    if (encoding == "auto") 
+        stop("encoding `auto` is no longer supported")  # TODO: remove in the future
+    
     txt <- stri_read_raw(con)
     txt <- stri_encode(txt, encoding, "UTF-8")
     stri_split_lines1(txt)
@@ -134,7 +135,7 @@ stri_read_lines <- function(con, encoding=NULL) {
 #' @param str character vector with data to write
 #' @param con name of the output file or a connection object
 #'        (opened in the binary mode)
-#' @param encoding output encoding, \code{NULL} or \code{""} for
+#' @param encoding output encoding, \code{NULL} or \code{''} for
 #' the current default one
 #' @param sep newline separator
 #'
@@ -143,12 +144,11 @@ stri_read_lines <- function(con, encoding=NULL) {
 #'
 #' @family files
 #' @export
-stri_write_lines <- function(str, con, encoding='UTF-8',
-      sep=ifelse(.Platform$OS.type == "windows", '\x0d\x0a', '\x0a'))
-{
+stri_write_lines <- function(str, con, encoding = "UTF-8", sep = ifelse(.Platform$OS.type == 
+    "windows", "\r\n", "\n")) {
     stopifnot(is.character(sep), length(sep) == 1)
-    str <- stri_join(str, sep, collapse='')
-    str <- stri_encode(str, '', encoding, to_raw=TRUE)[[1]]
-    writeBin(str, con, useBytes=TRUE)
+    str <- stri_join(str, sep, collapse = "")
+    str <- stri_encode(str, "", encoding, to_raw = TRUE)[[1]]
+    writeBin(str, con, useBytes = TRUE)
     invisible(NULL)
 }

@@ -14,13 +14,13 @@ stri_conv(str, from = NULL, to = NULL, to_raw = FALSE)
 a list of \code{raw} vectors to be converted}
 
 \item{from}{input encoding:
-\code{NULL} or \code{""} for the default encoding
+\code{NULL} or \code{''} for the default encoding
 or internal encoding marks' usage (see Details);
 otherwise, a single string with encoding name,
 see \code{\link{stri_enc_list}}}
 
 \item{to}{target encoding:
-\code{NULL} or \code{""} for default encoding
+\code{NULL} or \code{''} for default encoding
 (see \code{\link{stri_enc_get}}),
 or a single string with encoding name}
 
@@ -45,7 +45,7 @@ Refer to \code{\link{stri_enc_list}} for the list
 of supported encodings and \link{stringi-encoding}
 for a general discussion.
 
-If \code{from} is either missing, \code{""}, or \code{NULL},
+If \code{from} is either missing, \code{''}, or \code{NULL},
 and if \code{str} is a character vector
 then the marked encodings are used
 (see \code{\link{stri_enc_mark}}) -- in such a case \code{bytes}-declared
@@ -72,16 +72,16 @@ specifying a byte order marker (BOM) for portability reasons
 (e.g., set \code{UTF-16} or \code{UTF-32} which automatically
 adds the BOMs).
 
-Note that \code{stri_encode(as.raw(data), "encodingname")}
+Note that \code{stri_encode(as.raw(data), 'encodingname')}
 is a clever substitute for \code{\link{rawToChar}}.
 
 In the current version of \pkg{stringi}, if an incorrect code point is found
 on input, it is replaced with the default (for that target encoding)
-"missing/erroneous" character (with a warning), e.g.,
+'missing/erroneous' character (with a warning), e.g.,
 the SUBSTITUTE character (U+001A) or the REPLACEMENT one (U+FFFD).
 Occurrences thereof can be located in the output string to diagnose
 the problematic sequences, e.g., by calling:
-\code{stri_locate_all_regex(converted_string, "[\\ufffd\\u001a]"}.
+\code{stri_locate_all_regex(converted_string, '[\\ufffd\\u001a]'}.
 
 Because of the way this function is currently implemented,
 maximal size of a single string to be converted cannot exceed ~0.67 GB.

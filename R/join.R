@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -49,11 +49,11 @@
 #' @export
 #' @family join
 #' @examples
-#' stri_dup("a", 1:5)
-#' stri_dup(c("a", NA, "ba"), 4)
-#' stri_dup(c("abc", "pqrst"), c(4, 2))
+#' stri_dup('a', 1:5)
+#' stri_dup(c('a', NA, 'ba'), 4)
+#' stri_dup(c('abc', 'pqrst'), c(4, 2))
 stri_dup <- function(str, times) {
-   .Call(C_stri_dup, str, times)
+    .Call(C_stri_dup, str, times)
 }
 
 
@@ -67,9 +67,9 @@ stri_dup <- function(str, times) {
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
-#' These operators act like a call to \code{\link{stri_join}(e1, e2, sep="")}.
+#' These operators act like a call to \code{\link{stri_join}(e1, e2, sep='')}.
 #' However, note that joining 3 vectors, e.g., \code{e1 \%+\% e2 \%+\% e3}
-#' is slower than \code{\link{stri_join}(e1, e2, e3, sep="")},
+#' is slower than \code{\link{stri_join}(e1, e2, e3, sep='')},
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
 #'
@@ -92,7 +92,7 @@ stri_dup <- function(str, times) {
 #'
 #' @export
 "%s+%" <- function(e1, e2) {
-   .Call(C_stri_join2, e1, e2)
+    .Call(C_stri_join2, e1, e2)
 }
 
 
@@ -101,7 +101,7 @@ stri_dup <- function(str, times) {
 #' @rdname oper_plus
 #' @export
 "%stri+%" <- function(e1, e2) {
-   .Call(C_stri_join2, e1, e2)
+    .Call(C_stri_join2, e1, e2)
 }
 
 
@@ -131,7 +131,7 @@ stri_dup <- function(str, times) {
 #' In case where there are missing values in any of the input vectors,
 #' \code{NA} is set to the corresponding element.
 #' Note that this behavior is different from \code{\link{paste}},
-#' which treats missing values as ordinary strings like \code{"NA"}.
+#' which treats missing values as ordinary strings like \code{'NA'}.
 #' Moreover, as usual in \pkg{stringi}, the resulting strings are
 #' always in UTF-8.
 #'
@@ -156,8 +156,8 @@ stri_dup <- function(str, times) {
 #'
 #' @family join
 #' @rdname stri_join
-stri_join <- function(..., sep="", collapse=NULL, ignore_null=FALSE) {
-   .Call(C_stri_join, list(...), sep, collapse, ignore_null)
+stri_join <- function(..., sep = "", collapse = NULL, ignore_null = FALSE) {
+    .Call(C_stri_join, list(...), sep, collapse, ignore_null)
 }
 
 
@@ -179,7 +179,7 @@ stri_paste <- stri_join
 #'
 #' @details
 #' The \code{stri_flatten(str, collapse='XXX')} call
-#' is equivalent to \code{\link{paste}(str, collapse='XXX', sep="")}.
+#' is equivalent to \code{\link{paste}(str, collapse='XXX', sep='')}.
 #'
 #' If you wish to use some more fancy (e.g., differing)
 #' separators between flattened strings,
@@ -202,14 +202,14 @@ stri_paste <- stri_join
 #'
 #' @examples
 #' stri_flatten(LETTERS)
-#' stri_flatten(LETTERS, collapse=",")
+#' stri_flatten(LETTERS, collapse=',')
 #' stri_flatten(stri_dup(letters[1:6], 1:3))
-#' stri_flatten(c(NA, "", "A", "", "B", NA, "C"), collapse=",", na_empty=TRUE, omit_empty=TRUE)
+#' stri_flatten(c(NA, '', 'A', '', 'B', NA, 'C'), collapse=',', na_empty=TRUE, omit_empty=TRUE)
 #'
 #' @export
 #' @family join
-stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
-   .Call(C_stri_flatten, str, collapse, na_empty, omit_empty)
+stri_flatten <- function(str, collapse = "", na_empty = FALSE, omit_empty = FALSE) {
+    .Call(C_stri_flatten, str, collapse, na_empty, omit_empty)
 }
 
 
@@ -243,32 +243,32 @@ stri_flatten <- function(str, collapse="", na_empty=FALSE, omit_empty=FALSE) {
 #' @export
 #' @examples
 #' stri_join_list(
-#'    stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#'    "Spam spam bacon sausage and spam.")),
-#' sep=", ")
+#'    stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
+#'    'Spam spam bacon sausage and spam.')),
+#' sep=', ')
 #'
 #' stri_join_list(
-#'    stri_extract_all_words(c("Lorem ipsum dolor sit amet.",
-#'    "Spam spam bacon sausage and spam.")),
-#' sep=", ", collapse=". ")
+#'    stri_extract_all_words(c('Lorem ipsum dolor sit amet.',
+#'    'Spam spam bacon sausage and spam.')),
+#' sep=', ', collapse='. ')
 #'
 #' stri_join_list(
 #'    stri_extract_all_regex(
-#'       c("spam spam bacon", "123 456", "spam 789 sausage"), "\\p{L}+"
+#'       c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\p{L}+'
 #'    ),
-#' sep=",")
+#' sep=',')
 #'
 #' stri_join_list(
 #'    stri_extract_all_regex(
-#'       c("spam spam bacon", "123 456", "spam 789 sausage"), "\\p{L}+",
+#'       c('spam spam bacon', '123 456', 'spam 789 sausage'), '\\p{L}+',
 #'       omit_no_match=TRUE
 #'    ),
-#' sep=",", collapse="; ")
+#' sep=',', collapse='; ')
 #'
 #' @family join
 #' @rdname stri_join_list
-stri_join_list <- function(x, sep="", collapse=NULL) {
-   .Call(C_stri_join_list, x, sep, collapse)
+stri_join_list <- function(x, sep = "", collapse = NULL) {
+    .Call(C_stri_join_list, x, sep, collapse)
 }
 
 

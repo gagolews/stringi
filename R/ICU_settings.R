@@ -19,7 +19,7 @@
 ## this software without specific prior written permission.
 ##
 ## THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-## "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+## 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
 ## BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 ## FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ## HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -51,7 +51,7 @@
 #' \item \code{ICU.version} -- \pkg{ICU} library version used;
 #' \item \code{Locale} -- contains information on default locale,
 #' as returned by \code{\link{stri_locale_info}};
-#' \item \code{Charset.internal} -- fixed at \code{c("UTF-8", "UTF-16")};
+#' \item \code{Charset.internal} -- fixed at \code{c('UTF-8', 'UTF-16')};
 #' \item \code{Charset.native} -- information on the default encoding,
 #' as returned by \code{\link{stri_enc_info}};
 #' \item \code{ICU.system} -- logical; \code{TRUE} indicates that
@@ -64,42 +64,34 @@
 #' @export
 #' @family locale
 #' @family encoding
-stri_info <- function(short=FALSE) {
-   stopifnot(is.logical(short), length(short) == 1)
-
-   info <- .Call(C_stri_info)
-   if (info$Charset.native$Name.friendly != "UTF-8") {
-#       if (!info$Charset.native$CharSize.8bit)    # this should not cause problems, e.g., in the Big5 encoding
-#          warning("You use a non-8bit native charset. " %s+%
-#             "This may cause serious problems. Consider switching to UTF-8.")
-#       else
-      if (!identical(info$Charset.native$ASCII.subset, TRUE))
-         warning(stri_paste("Your native charset is not a superset of US-ASCII. ",
-           "This may cause serious problems. Consider switching to UTF-8."))
-      else if (!identical(info$Charset.native$Unicode.1to1, TRUE))
-         warning(stri_paste("Your native charset does not map to Unicode well. ",
-            "This may cause serious problems. Consider switching to UTF-8."))
-   }
-
-   loclist <- stri_locale_list()
-   if (!(info$Locale$Name %in% loclist))
-      warning(stri_paste("Your current locale is not in the list of available ",
-         "locales. Some functions may not work properly. ",
-         "Refer to stri_locale_list() for more details ",
-         "on known locale specifiers."))
-
-   if (!short)
-      return(info)
-   else {
-      locale <- info$Locale$Name
-      charset <- info$Charset.native$Name.friendly
-      return(sprintf("stringi_%s (%s.%s; ICU4C %s [%s%s]; Unicode %s)",
-         as.character(packageVersion("stringi")),
-         locale, charset,
-         info$ICU.version,
-         if (info$ICU.system) "system" else "bundle",
-         if (info$ICU.UTF8) "#U_CHARSET_IS_UTF8" else "",
-         info$Unicode.version
-      ))
-   }
+stri_info <- function(short = FALSE) {
+    stopifnot(is.logical(short), length(short) == 1)
+    
+    info <- .Call(C_stri_info)
+    if (info$Charset.native$Name.friendly != "UTF-8") {
+        #       if (!info$Charset.native$CharSize.8bit)    # this should not cause problems, e.g., in the Big5 encoding
+        #          warning('You use a non-8bit native charset. ' %s+%
+        #             'This may cause serious problems. Consider switching to UTF-8.')
+        #       else
+        if (!identical(info$Charset.native$ASCII.subset, TRUE)) 
+            warning(stri_paste("Your native charset is not a superset of US-ASCII. ", 
+                "This may cause serious problems. Consider switching to UTF-8.")) else if (!identical(info$Charset.native$Unicode.1to1, TRUE)) 
+            warning(stri_paste("Your native charset does not map to Unicode well. ", 
+                "This may cause serious problems. Consider switching to UTF-8."))
+    }
+    
+    loclist <- stri_locale_list()
+    if (!(info$Locale$Name %in% loclist)) 
+        warning(stri_paste("Your current locale is not in the list of available ", 
+            "locales. Some functions may not work properly. ", "Refer to stri_locale_list() for more details ", 
+            "on known locale specifiers."))
+    
+    if (!short) 
+        return(info) else {
+        locale <- info$Locale$Name
+        charset <- info$Charset.native$Name.friendly
+        return(sprintf("stringi_%s (%s.%s; ICU4C %s [%s%s]; Unicode %s)", as.character(packageVersion("stringi")), 
+            locale, charset, info$ICU.version, if (info$ICU.system) "system" else "bundle", 
+            if (info$ICU.UTF8) "#U_CHARSET_IS_UTF8" else "", info$Unicode.version))
+    }
 }

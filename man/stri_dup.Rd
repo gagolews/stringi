@@ -22,9 +22,9 @@ and concatenates the results.
 Vectorized over \code{str} and \code{times}.
 }
 \examples{
-stri_dup("a", 1:5)
-stri_dup(c("a", NA, "ba"), 4)
-stri_dup(c("abc", "pqrst"), c(4, 2))
+stri_dup('a', 1:5)
+stri_dup(c('a', NA, 'ba'), 4)
+stri_dup(c('abc', 'pqrst'), c(4, 2))
 }
 \seealso{
 Other join: 

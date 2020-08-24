@@ -18,7 +18,7 @@ stri_count_words(str, locale = NULL)
 see \code{\link{stri_opts_brkiter}};
 \code{NULL} for the default break iterator, i.e., \code{line_break}}
 
-\item{locale}{\code{NULL} or \code{""} for text boundary analysis following
+\item{locale}{\code{NULL} or \code{''} for text boundary analysis following
 the conventions of the default locale, or a single string with
 locale identifier, see \link{stringi-locale}}
 }
@@ -43,7 +43,7 @@ just like in \code{\link{stri_extract_all_words}} and
 to locate the word boundaries, and all non-word characters
 (\code{UBRK_WORD_NONE} rule status) are ignored.
 This function is equivalent to a call to
-\code{\link{stri_count_boundaries}(str, type="word", skip_word_none=TRUE, locale=locale)}.
+\code{\link{stri_count_boundaries}(str, type='word', skip_word_none=TRUE, locale=locale)}.
 
 Note that a \code{BreakIterator} of type \code{character}
 may be used to count the number of \emph{Unicode characters} in a string.
@@ -55,14 +55,14 @@ Moreover, a \code{BreakIterator} of type \code{sentence}
 may be used to count the number of sentences in a text piece.
 }
 \examples{
-test <- "The\u00a0above-mentioned    features are very useful. Kudos to their developers."
-stri_count_boundaries(test, type="word")
-stri_count_boundaries(test, type="sentence")
-stri_count_boundaries(test, type="character")
+test <- 'The\u00a0above-mentioned    features are very useful. Kudos to their developers.'
+stri_count_boundaries(test, type='word')
+stri_count_boundaries(test, type='sentence')
+stri_count_boundaries(test, type='character')
 stri_count_words(test)
 
-test2 <- stri_trans_nfkd("\u03c0\u0153\u0119\u00a9\u00df\u2190\u2193\u2192")
-stri_count_boundaries(test2, type="character")
+test2 <- stri_trans_nfkd('\u03c0\u0153\u0119\u00a9\u00df\u2190\u2193\u2192')
+stri_count_boundaries(test2, type='character')
 stri_length(test2)
 stri_numbytes(test2)
 

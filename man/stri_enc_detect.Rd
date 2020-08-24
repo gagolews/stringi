@@ -11,7 +11,7 @@ stri_enc_detect(str, filter_angle_brackets = FALSE)
 a list of \code{raw} vectors}
 
 \item{filter_angle_brackets}{logical; If filtering is enabled,
-text within angle brackets ("<" and ">") will be removed before detection,
+text within angle brackets ('<' and '>') will be removed before detection,
 which will remove most HTML or XML markup.}
 }
 \value{
@@ -35,7 +35,7 @@ or encoding, of character data in an unknown format.
 Vectorized over \code{str} and \code{filter_angle_brackets}.
 
 For a character vector input, merging all text lines
-via \code{\link{stri_flatten}(str, collapse="\n")}
+via \code{\link{stri_flatten}(str, collapse='\n')}
 might be needed if \code{str} has been obtained via a call to
 \code{readLines} and in fact represents an image of a single text file.
 
@@ -103,7 +103,7 @@ IBM424 \tab Hebrew \cr
 }
 \examples{
 \dontrun{
-f <- rawToChar(readBin("test.txt", "raw", 100000))
+f <- rawToChar(readBin('test.txt', 'raw', 100000))
 stri_enc_detect(f)
 }
 

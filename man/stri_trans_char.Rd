@@ -34,9 +34,9 @@ Time complexity for each string in \code{str} is
 O(\code{stri_length(str)*stri_length(pattern)}).
 }
 \examples{
-stri_trans_char("id.123", ".", "_")
-stri_trans_char("babaab", "ab", "01")
-stri_trans_char("GCUACGGAGCUUCGGAGCUAG", "ACGT", "TGCA")
+stri_trans_char('id.123', '.', '_')
+stri_trans_char('babaab', 'ab', '01')
+stri_trans_char('GCUACGGAGCUUCGGAGCUAG', 'ACGT', 'TGCA')
 }
 \seealso{
 Other transform: 

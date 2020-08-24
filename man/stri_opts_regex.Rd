@@ -62,16 +62,16 @@ and other \link{stringi-search-regex} functions.
 }
 \details{
 Note that some regex settings may be changed using ICU regex flags
-inside regexes. For example, \code{"(?i)pattern"} performs
+inside regexes. For example, \code{'(?i)pattern'} performs
 a case-insensitive match of a given pattern,
 see the \pkg{ICU} User Guide entry on Regular Expressions
 in the References section or \link{stringi-search-regex}.
 }
 \examples{
-stri_detect_regex("ala", "ALA") # case-sensitive by default
-stri_detect_regex("ala", "ALA", opts_regex=stri_opts_regex(case_insensitive=TRUE))
-stri_detect_regex("ala", "ALA", case_insensitive=TRUE) # equivalent
-stri_detect_regex("ala", "(?i)ALA") # equivalent
+stri_detect_regex('ala', 'ALA') # case-sensitive by default
+stri_detect_regex('ala', 'ALA', opts_regex=stri_opts_regex(case_insensitive=TRUE))
+stri_detect_regex('ala', 'ALA', case_insensitive=TRUE) # equivalent
+stri_detect_regex('ala', '(?i)ALA') # equivalent
 }
 \references{
 \emph{\code{enum URegexpFlag}: Constants for Regular Expression Match Modes}

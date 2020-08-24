@@ -19,7 +19,7 @@ stri_opts_collator(
 }
 \arguments{
 \item{locale}{single string, \code{NULL} or
-\code{""} for default locale}
+\code{''} for default locale}
 
 \item{strength}{single integer in \{1,2,3,4\}, which defines collation strength;
 \code{1} for the most permissive collation rules, \code{4} for the strictest
@@ -74,11 +74,11 @@ one that is more complex and appropriate than ordinary bytewise
 comparison.
 }
 \examples{
-stri_cmp("number100", "number2")
-stri_cmp("number100", "number2", opts_collator=stri_opts_collator(numeric=TRUE))
-stri_cmp("number100", "number2", numeric=TRUE) # equivalent
-stri_cmp("above mentioned", "above-mentioned")
-stri_cmp("above mentioned", "above-mentioned", alternate_shifted=TRUE)
+stri_cmp('number100', 'number2')
+stri_cmp('number100', 'number2', opts_collator=stri_opts_collator(numeric=TRUE))
+stri_cmp('number100', 'number2', numeric=TRUE) # equivalent
+stri_cmp('above mentioned', 'above-mentioned')
+stri_cmp('above mentioned', 'above-mentioned', alternate_shifted=TRUE)
 }
 \references{
 \emph{Collation} -- ICU User Guide,

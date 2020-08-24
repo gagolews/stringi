@@ -26,20 +26,20 @@ In particular you should note that:
 }
 }
 \details{
-"Hundreds of encodings have been developed over the years, each for small
+'Hundreds of encodings have been developed over the years, each for small
 groups of languages and for special purposes. As a result,
 the interpretation of text, input, sorting, display, and storage
 depends on the knowledge of all the different types of character sets
 and their encodings. Programs have been written to handle either
 one single encoding at a time and switch between them, or to convert
-between external and internal encodings."
+between external and internal encodings.'
 
-"Unicode provides a single character set that covers the major
+'Unicode provides a single character set that covers the major
 languages of the world, and a small number of machine-friendly encoding
 forms and schemes to fit the needs of existing applications and protocols.
 It is designed for best interoperability with both ASCII and ISO-8859-1
 (the most widely used character sets) to make it easier for Unicode to be
-used in almost all applications and protocols" (see the ICU User Guide).
+used in almost all applications and protocols' (see the ICU User Guide).
 
 The Unicode Standard determines the way to map any possible character
 to a numeric value -- a so-called code point. Such code points, however,
@@ -97,7 +97,7 @@ from UTF8-encoded strings, see \code{\link{stri_enc_toutf8}}.
 
 Data in memory are just bytes (small integer
 values) -- an en\emph{coding} is a way to represent characters with such
-numbers, it is a semantic "key" to understand a given byte sequence.
+numbers, it is a semantic 'key' to understand a given byte sequence.
 For example, in ISO-8859-2 (Central European), the value 177 represents
 Polish ``a with ogonek'', and in ISO-8859-1 (Western European),
 the same value denotes the ``plus-minus'' sign. Thus, a character encoding
@@ -143,7 +143,7 @@ from the default encoding, i.e., the one returned by \code{\link{stri_enc_get}}
 changed if the automatic encoding detection process fails on \pkg{stringi}
 load).
 
-Functions which allow \code{"bytes"} encoding markings are very rare in
+Functions which allow \code{'bytes'} encoding markings are very rare in
 \pkg{stringi}, and were carefully selected. These are:
 \code{\link{stri_enc_toutf8}} (with argument \code{is_unknown_8bit=TRUE}),
 \code{\link{stri_enc_toascii}}, and \code{\link{stri_encode}}.
@@ -166,7 +166,7 @@ Note that converter names are case-insensitive
 and \pkg{ICU} tries to normalize the encoding specifiers.
 Leading zeroes are ignored in sequences of digits (if further digits follow),
 and all non-alphanumeric characters are ignored. Thus the strings
-"UTF-8", "utf_8", "u*Tf08" and "Utf 8" are equivalent.
+'UTF-8', 'utf_8', 'u*Tf08' and 'Utf 8' are equivalent.
 
 The \code{\link{stri_encode}} function
 allows you to convert between any given encodings
