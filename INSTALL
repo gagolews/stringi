@@ -2,7 +2,7 @@
 ================================================================================
 
 
-Introductory remark
+Introductory Remark
 -------------------
 
 We are putting great effort so that the package may be installed successfully
@@ -16,7 +16,7 @@ Also, some additional build tweaks are possible to those who want a more
 customized installation.
 
 
-stringi and the ICU4C library
+stringi and the ICU4C Library
 -----------------------------
 
 The stringi package depends on the ICU4C >= 55 library.
@@ -73,7 +73,7 @@ from within an R session.
 
 
 
-C++11 support
+C++11 Support
 -------------
 
 For R >= 3.1.0  we suggest (by default) C++11 support to build the package
@@ -88,7 +88,7 @@ tolerates the `long long` type (which is very common -- this is checked by the
 the `--disable-cxx11` argument to the `configure` script.
 
 
-Customizing the build process
+Customizing the Build Process
 -----------------------------
 
 Auxiliary `./configure` features and options:
@@ -130,7 +130,7 @@ Some influential environment variables:
 * `STRINGI_LIBS`: see `--with-extra-libs`.
 
 
-Final remarks
+Final Remarks
 -------------
 
 We expect that with a properly configured C++11 compiler and properly
