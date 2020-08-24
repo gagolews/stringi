@@ -63,18 +63,22 @@
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-30)
  *    Issue #210: Allow NA replacement
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
     PROTECT(str = stri_prepare_arg_string(str, "str"));
     PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     STRI__ERROR_HANDLER_BEGIN(3)
     R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
     StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
     StriContainerUTF16 replacement_cont(replacement, vectorize_length);
 
     SEXP ret;
@@ -176,7 +180,8 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
     PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
     PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     R_len_t pattern_n = LENGTH(pattern);
     R_len_t replacement_n = LENGTH(replacement);
@@ -196,7 +201,7 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
 
     STRI__ERROR_HANDLER_BEGIN(3)
     StriContainerUTF16 str_cont(str, str_n, false); // writable
-    StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_opts);
     StriContainerUTF16 replacement_cont(replacement, pattern_n);
 
     for (R_len_t i = 0; i<pattern_n; ++i)

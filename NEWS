@@ -5,8 +5,9 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
-
-* TODO: #355
+* [NEW FEATURE] #355: `stri_opts_regex()` now accepts the `time_limit` and
+  `stack_limit` options so as to prevent malformed or malicious regexes
+  from running for too long.
 
 * [NEW FEATURE] #345: `stri_startswith()` and `stri_endswith()` now are equipped
   with the `negate` parameter.

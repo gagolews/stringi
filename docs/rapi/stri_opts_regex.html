@@ -301,6 +301,8 @@
   <span class="n">unix_lines</span><span class="p">,</span>
   <span class="n">uword</span><span class="p">,</span>
   <span class="n">error_on_unknown_escapes</span><span class="p">,</span>
+  <span class="n">time_limit</span> <span class="o">=</span> <span class="m">0L</span><span class="p">,</span>
+  <span class="n">stack_limit</span> <span class="o">=</span> <span class="m">0L</span><span class="p">,</span>
   <span class="kc">...</span>
 <span class="p">)</span>
 </pre></div>
@@ -343,6 +345,12 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">error_on_unknown_escapes</span></code></p></td>
 <td><p>logical; whether to generate an error on unrecognized backslash escapes; if set, fail with an error on patterns that contain backslash-escaped ASCII letters without a known special meaning; otherwise, these escaped letters represent themselves</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">time_limit</span></code></p></td>
+<td><p>integer; processing time limit, in ~milliseconds (but not precisely so, depends on the CPU speed), for match operations; setting a limit is desirable if poorly written regexes are expected on input; 0 for no limit</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stack_limit</span></code></p></td>
+<td><p>integer; maximal size, in bytes, of the heap storage available for the match backtracking stack; setting a limit is desirable if poorly written regexes are expected on input; 0 for no limit</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
 <td><p>[DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future</p></td>

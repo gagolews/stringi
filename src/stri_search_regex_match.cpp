@@ -64,6 +64,9 @@ using namespace std;
  * @version 1.1.8 (Marek Gagolewski, 2018-04-09)
  *    #288: stri_match did not return correct number of columns
  *    when input was empty
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP opts_regex, bool first)
 {
@@ -73,7 +76,8 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
     PROTECT(cg_missing = stri_prepare_arg_string_1(cg_missing, "cg_missing"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
     STRI__ERROR_HANDLER_BEGIN(3)
@@ -87,7 +91,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
 
     if (LENGTH(str) == 0 && LENGTH(pattern) > 0) {
         // we need to determine the number of capture groups anyway
-        StriContainerRegexPattern pattern_cont(pattern, LENGTH(pattern), pattern_flags);
+        StriContainerRegexPattern pattern_cont(pattern, LENGTH(pattern), pattern_opts);
         for (R_len_t i = pattern_cont.vectorize_init();
                 i != pattern_cont.vectorize_end();
                 i = pattern_cont.vectorize_next(i))
@@ -105,7 +109,7 @@ SEXP stri__match_firstlast_regex(SEXP str, SEXP pattern, SEXP cg_missing, SEXP o
     }
     else
     {
-        StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+        StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
         for (R_len_t i = pattern_cont.vectorize_init();
                 i != pattern_cont.vectorize_end();
                 i = pattern_cont.vectorize_next(i))
@@ -251,12 +255,13 @@ SEXP stri_match_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP cg_mi
     PROTECT(cg_missing = stri_prepare_arg_string_1(cg_missing, "cg_missing"));
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
     STRI__ERROR_HANDLER_BEGIN(3)
     StriContainerUTF8 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
     StriContainerUTF8 cg_missing_cont(cg_missing, 1);
     STRI__PROTECT(cg_missing = STRING_ELT(cg_missing, 0));
 

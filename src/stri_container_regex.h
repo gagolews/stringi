@@ -39,6 +39,19 @@
 #include "stri_container_utf16.h"
 
 
+
+/** Represents Regex Matcher's settings
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ */
+struct StriRegexMatcherOptions {
+    uint32_t flags;
+    int32_t stack_limit;
+    int32_t time_limit;
+};
+
+
+
 /**
  * A class to handle regex searches
  *
@@ -57,17 +70,17 @@ class StriContainerRegexPattern : public StriContainerUTF16 {
 
 private:
 
-    uint32_t flags; ///< RegexMatcher flags
-    RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
+    StriRegexMatcherOptions opts; ///< RegexMatcher options
+    RegexMatcher* lastMatcher; ///< recently used RegexMatcher
     R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
 
 
 public:
 
-    static uint32_t getRegexFlags(SEXP opts_regex);
+    static StriRegexMatcherOptions getRegexOptions(SEXP opts_regex);
 
     StriContainerRegexPattern();
-    StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, uint32_t flags);
+    StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, StriRegexMatcherOptions opts);
     StriContainerRegexPattern(StriContainerRegexPattern& container);
     ~StriContainerRegexPattern();
     StriContainerRegexPattern& operator=(StriContainerRegexPattern& container);

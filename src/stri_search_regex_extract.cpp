@@ -54,6 +54,9 @@ using namespace std;
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool first)
 {
@@ -61,12 +64,13 @@ SEXP stri__extract_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF8 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
@@ -185,7 +189,8 @@ SEXP stri_extract_last_regex(SEXP str, SEXP pattern, SEXP opts_regex)
  */
 SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_match, SEXP opts_regex)
 {
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
     PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
     PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
@@ -195,7 +200,7 @@ SEXP stri_extract_all_regex(SEXP str, SEXP pattern, SEXP simplify, SEXP omit_no_
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
     STRI__ERROR_HANDLER_BEGIN(3)
     StriContainerUTF8 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));

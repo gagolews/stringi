@@ -77,6 +77,9 @@ using namespace std;
  *
  * @version 0.4-1 (Marek Gagolewski, 2014-12-04)
  *    allow `simplify=NA`; FR #126: pass n to stri_list2matrix
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex)
@@ -90,14 +93,15 @@ SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
     R_len_t vectorize_length = stri__recycling_rule(true, 4,
                                LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
     STRI__ERROR_HANDLER_BEGIN(5)
     StriContainerUTF8      str_cont(str, vectorize_length);
     StriContainerInteger   n_cont(n, vectorize_length);
     StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));

@@ -184,6 +184,13 @@ stri_coll <- stri_opts_collator
 #' if set, fail with an error on patterns that contain backslash-escaped ASCII
 #' letters without a known special meaning;
 #' otherwise, these escaped letters represent themselves
+#' @param time_limit integer; processing time limit, in ~milliseconds (but not precisely so,
+#' depends on the CPU speed), for match operations;
+#' setting a limit is desirable if poorly written regexes are expected on input;
+#' 0 for no limit
+#' @param stack_limit integer; maximal size, in bytes, of the heap storage available
+#' for the match backtracking stack; setting a limit is desirable if poorly
+#' written regexes are expected on input; 0 for no limit
 #' @param ... [DEPRECATED] any other arguments passed to this function
 #'     generate a warning; this argument will be removed in the future
 #'
@@ -210,7 +217,9 @@ stri_opts_regex <- function(case_insensitive, comments,
     dotall, dot_all = dotall,
     literal,
     multiline, multi_line = multiline,
-    unix_lines, uword, error_on_unknown_escapes, ...)
+    unix_lines, uword, error_on_unknown_escapes,
+    time_limit = 0L, stack_limit = 0L,
+    ...)
 {
     if (!missing(...))
         warning("Unknown option to `stri_opts_regex`.")
@@ -228,6 +237,11 @@ stri_opts_regex <- function(case_insensitive, comments,
         opts["uword"] <- uword
     if (!missing(error_on_unknown_escapes))
         opts["error_on_unknown_escapes"] <- error_on_unknown_escapes
+
+    if (!missing(stack_limit))
+        opts["stack_limit"] <- stack_limit
+    if (!missing(time_limit))
+        opts["time_limit"] <- time_limit
 
     if (!missing(dotall))
         opts["dotall"] <- dotall

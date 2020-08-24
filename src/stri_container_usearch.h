@@ -61,7 +61,7 @@ class StriContainerUStringSearch : public StriContainerUTF16 {
 private:
 
     UCollator* col; ///< collator, owned by creator
-    UStringSearch* lastMatcher; ///< recently used \code{UStringSearch}
+    UStringSearch* lastMatcher; ///< recently used UStringSearch
     R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
 
 

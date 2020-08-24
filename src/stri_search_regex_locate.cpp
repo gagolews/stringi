@@ -61,20 +61,24 @@ using namespace std;
  *
  * @version 1.0-2 (Marek Gagolewski, 2016-01-29)
  *    Issue #214: allow a regex pattern like `.*`  to match an empty string
+ *
+ * @version 1.4.7 (Marek Gagolewski, 2020-08-24)
+ *    Use StriContainerRegexPattern::getRegexOptions
  */
 SEXP stri_locate_all_regex(SEXP str, SEXP pattern, SEXP omit_no_match, SEXP opts_regex)
 {
     // ??? @TODO: capture_group arg (integer vector which capture group to locate) ???
     // ??? OR introduce stri_matchpos_*_regex ???
     bool omit_no_match1 = stri__prepare_arg_logical_1_notNA(omit_no_match, "omit_no_match");
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
     PROTECT(str = stri_prepare_arg_string(str, "str")); // prepare string argument
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF16 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
@@ -164,11 +168,12 @@ SEXP stri__locate_firstlast_regex(SEXP str, SEXP pattern, SEXP opts_regex, bool 
     PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern")); // prepare string argument
     R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    StriRegexMatcherOptions pattern_opts =
+        StriContainerRegexPattern::getRegexOptions(opts_regex);
 
     STRI__ERROR_HANDLER_BEGIN(2)
     StriContainerUTF16 str_cont(str, vectorize_length);
-    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_opts);
 
     SEXP ret;
     STRI__PROTECT(ret = Rf_allocMatrix(INTSXP, vectorize_length, 2));
