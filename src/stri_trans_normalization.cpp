@@ -55,42 +55,42 @@
  */
 const Normalizer2* stri__normalizer_get(int _type)
 {
-   UErrorCode status = U_ZERO_ERROR;
-   const Normalizer2* normalizer = NULL;
+    UErrorCode status = U_ZERO_ERROR;
+    const Normalizer2* normalizer = NULL;
 
-   switch (_type) {
-      case STRI_UNINORM_NFC:
+    switch (_type) {
+    case STRI_UNINORM_NFC:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_COMPOSE, status);
-         normalizer = Normalizer2::getNFCInstance(status);
-         break;
+        normalizer = Normalizer2::getNFCInstance(status);
+        break;
 
-      case STRI_UNINORM_NFD:
+    case STRI_UNINORM_NFD:
 //         normalizer = Normalizer2::getInstance(NULL, "nfc", UNORM2_DECOMPOSE, status);
-         normalizer = Normalizer2::getNFDInstance(status);
-         break;
+        normalizer = Normalizer2::getNFDInstance(status);
+        break;
 
-      case STRI_UNINORM_NFKC:
+    case STRI_UNINORM_NFKC:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_COMPOSE, status);
-         normalizer = Normalizer2::getNFKCInstance(status);
-         break;
+        normalizer = Normalizer2::getNFKCInstance(status);
+        break;
 
-      case STRI_UNINORM_NFKD:
+    case STRI_UNINORM_NFKD:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc", UNORM2_DECOMPOSE, status);
-         normalizer = Normalizer2::getNFKDInstance(status);
-         break;
+        normalizer = Normalizer2::getNFKDInstance(status);
+        break;
 
-      case STRI_UNINORM_NFKC_CF:
+    case STRI_UNINORM_NFKC_CF:
 //         normalizer = Normalizer2::getInstance(NULL, "nfkc_cf", UNORM2_COMPOSE, status);
-         normalizer = Normalizer2::getNFKCCasefoldInstance(status);
-         break;
+        normalizer = Normalizer2::getNFKCCasefoldInstance(status);
+        break;
 
-      default:
-         Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
-   }
+    default:
+        Rf_error(MSG__INCORRECT_INTERNAL_ARG); // error() allowed here
+    }
 
-   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})  /* Rf_error */
+    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */})  /* Rf_error */
 
-   return normalizer;
+    return normalizer;
 }
 
 
@@ -120,35 +120,35 @@ const Normalizer2* stri__normalizer_get(int _type)
  */
 SEXP stri_trans_nf(SEXP str, int type)
 {
-   // As of ICU 52.1 (Unicode 6.3.0), the "most expansive" decomposition
-   // is 1 UChar -> 18 UChars (data/unidata/norm2/nfkc.txt)
-   // FDFA>0635 0644 0649 0020 0627 0644 0644 0647 0020
-   //      0639 0644 064A 0647 0020 0648 0633 0644 0645
+    // As of ICU 52.1 (Unicode 6.3.0), the "most expansive" decomposition
+    // is 1 UChar -> 18 UChars (data/unidata/norm2/nfkc.txt)
+    // FDFA>0635 0644 0649 0020 0627 0644 0644 0647 0020
+    //      0639 0644 064A 0647 0020 0648 0633 0644 0645
 
-   // C API will not be faster here
-   // In ICU 52.1 unorm2_normalize does UnicodeString destString(dest, 0, capacity);
-   // and so on, thus it is a simple wrapper for C++ API
+    // C API will not be faster here
+    // In ICU 52.1 unorm2_normalize does UnicodeString destString(dest, 0, capacity);
+    // and so on, thus it is a simple wrapper for C++ API
 
-   const Normalizer2* normalizer =
-      stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
+    const Normalizer2* normalizer =
+        stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
-   PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
-   R_len_t str_length = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF16 str_cont(str, str_length, false); // writable, no recycle
 
-   for (R_len_t i=0; i<str_length; ++i) {
-      if (str_cont.isNA(i)) continue;
-      UErrorCode status = U_ZERO_ERROR;
-      str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   }
+    for (R_len_t i=0; i<str_length; ++i) {
+        if (str_cont.isNA(i)) continue;
+        UErrorCode status = U_ZERO_ERROR;
+        str_cont.set(i, normalizer->normalize(str_cont.get(i), status));
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-   // normalizer shall not be deleted at all
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    // normalizer shall not be deleted at all
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -176,40 +176,40 @@ SEXP stri_trans_nf(SEXP str, int type)
  */
 SEXP stri_trans_isnf(SEXP str, int type)
 {
-   const Normalizer2* normalizer =
-      stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
+    const Normalizer2* normalizer =
+        stri__normalizer_get(type); // auto `type` check here, call before ERROR_HANDLER
 
-   PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
-   R_len_t str_length = LENGTH(str);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));    // prepare string argument
+    R_len_t str_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF16 str_cont(str, str_length);
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF16 str_cont(str, str_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, str_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
-         continue;
-      }
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i)) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      // C API will not be faster here
-      // as it is a simple wrapper for C++ API
+        // C API will not be faster here
+        // as it is a simple wrapper for C++ API
 
-      UErrorCode status = U_ZERO_ERROR;
-      ret_tab[i] = normalizer->isNormalized(str_cont.get(i), status) ? TRUE : FALSE;
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   }
+        UErrorCode status = U_ZERO_ERROR;
+        ret_tab[i] = normalizer->isNormalized(str_cont.get(i), status) ? TRUE : FALSE;
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-   // normalizer shall not be deleted at all
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    // normalizer shall not be deleted at all
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -223,7 +223,7 @@ SEXP stri_trans_isnf(SEXP str, int type)
  *    call stri_trans_nf
  */
 SEXP stri_trans_nfc(SEXP str) {
-   return stri_trans_nf(str, STRI_UNINORM_NFC);
+    return stri_trans_nf(str, STRI_UNINORM_NFC);
 }
 
 
@@ -237,7 +237,7 @@ SEXP stri_trans_nfc(SEXP str) {
  *    call stri_trans_nf
  */
 SEXP stri_trans_nfd(SEXP str) {
-   return stri_trans_nf(str, STRI_UNINORM_NFD);
+    return stri_trans_nf(str, STRI_UNINORM_NFD);
 }
 
 
@@ -251,7 +251,7 @@ SEXP stri_trans_nfd(SEXP str) {
  *    call stri_trans_nf
  */
 SEXP stri_trans_nfkd(SEXP str) {
-   return stri_trans_nf(str, STRI_UNINORM_NFKD);
+    return stri_trans_nf(str, STRI_UNINORM_NFKD);
 }
 
 
@@ -265,7 +265,7 @@ SEXP stri_trans_nfkd(SEXP str) {
  *    call stri_trans_nf
  */
 SEXP stri_trans_nfkc(SEXP str) {
-   return stri_trans_nf(str, STRI_UNINORM_NFKC);
+    return stri_trans_nf(str, STRI_UNINORM_NFKC);
 }
 
 
@@ -279,7 +279,7 @@ SEXP stri_trans_nfkc(SEXP str) {
  *    call stri_trans_nf
  */
 SEXP stri_trans_nfkc_casefold(SEXP str) {
-   return stri_trans_nf(str, STRI_UNINORM_NFKC_CF);
+    return stri_trans_nf(str, STRI_UNINORM_NFKC_CF);
 }
 
 
@@ -293,7 +293,7 @@ SEXP stri_trans_nfkc_casefold(SEXP str) {
  *    call stri_trans_isnf
  */
 SEXP stri_trans_isnfc(SEXP str) {
-   return stri_trans_isnf(str, STRI_UNINORM_NFC);
+    return stri_trans_isnf(str, STRI_UNINORM_NFC);
 }
 
 
@@ -307,7 +307,7 @@ SEXP stri_trans_isnfc(SEXP str) {
  *    call stri_trans_isnf
  */
 SEXP stri_trans_isnfd(SEXP str) {
-   return stri_trans_isnf(str, STRI_UNINORM_NFD);
+    return stri_trans_isnf(str, STRI_UNINORM_NFD);
 }
 
 
@@ -321,7 +321,7 @@ SEXP stri_trans_isnfd(SEXP str) {
  *    call stri_trans_isnf
  */
 SEXP stri_trans_isnfkd(SEXP str) {
-   return stri_trans_isnf(str, STRI_UNINORM_NFKD);
+    return stri_trans_isnf(str, STRI_UNINORM_NFKD);
 }
 
 
@@ -335,7 +335,7 @@ SEXP stri_trans_isnfkd(SEXP str) {
  *    call stri_trans_isnf
  */
 SEXP stri_trans_isnfkc(SEXP str) {
-   return stri_trans_isnf(str, STRI_UNINORM_NFKC);
+    return stri_trans_isnf(str, STRI_UNINORM_NFKC);
 }
 
 
@@ -349,5 +349,5 @@ SEXP stri_trans_isnfkc(SEXP str) {
  *    call stri_trans_isnf
  */
 SEXP stri_trans_isnfkc_casefold(SEXP str) {
-   return stri_trans_isnf(str, STRI_UNINORM_NFKC_CF);
+    return stri_trans_isnf(str, STRI_UNINORM_NFKC_CF);
 }

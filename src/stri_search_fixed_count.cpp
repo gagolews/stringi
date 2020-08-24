@@ -70,35 +70,35 @@
  */
 SEXP stri_count_fixed(SEXP str, SEXP pattern, SEXP opts_fixed)
 {
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed, /*allow_overlap*/true);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
-   int* ret_tab = INTEGER(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+    int* ret_tab = INTEGER(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-      i != pattern_cont.vectorize_end();
-      i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-      ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                ret_tab[i] = NA_INTEGER, ret_tab[i] = 0)
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      R_len_t found = 0;
-      while (USEARCH_DONE != matcher->findNext())
-         ++found;
-      ret_tab[i] = found;
-   }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        R_len_t found = 0;
+        while (USEARCH_DONE != matcher->findNext())
+            ++found;
+        ret_tab[i] = found;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }

@@ -40,11 +40,11 @@
  */
 StriContainerBase::StriContainerBase()
 {
-   this->n = 0;
-   this->nrecycle = 0;
-   this->sexp = (SEXP)NULL;
+    this->n = 0;
+    this->nrecycle = 0;
+    this->sexp = (SEXP)NULL;
 #ifndef NDEBUG
-   this->isShallow = true;
+    this->isShallow = true;
 #endif
 }
 
@@ -56,26 +56,26 @@ StriContainerBase::StriContainerBase()
 void StriContainerBase::init_Base(R_len_t _n, R_len_t _nrecycle, bool _shallowrecycle, SEXP _sexp)
 {
 #ifndef NDEBUG
-   if (this->n != 0 || this->nrecycle != 0 || this->sexp != (SEXP)NULL)
-      throw StriException("StriContainerBase::init_Base(...): already initialized");
-   this->isShallow = _shallowrecycle;
+    if (this->n != 0 || this->nrecycle != 0 || this->sexp != (SEXP)NULL)
+        throw StriException("StriContainerBase::init_Base(...): already initialized");
+    this->isShallow = _shallowrecycle;
 #endif
 
-   if (_n == 0 || _nrecycle == 0) {
-      this->nrecycle = 0;
-      this->n = 0;
-      this->sexp = _sexp;
-   }
-   else {
-      this->nrecycle = _nrecycle;
-      this->n = (_shallowrecycle)?_n:_nrecycle;
-      this->sexp = _sexp;
+    if (_n == 0 || _nrecycle == 0) {
+        this->nrecycle = 0;
+        this->n = 0;
+        this->sexp = _sexp;
+    }
+    else {
+        this->nrecycle = _nrecycle;
+        this->n = (_shallowrecycle)?_n:_nrecycle;
+        this->sexp = _sexp;
 
 #ifndef NDEBUG
-   if (this->n < _n)
-      throw StriException("StriContainerBase::init_Base(...): this->n < _n");
-   if (this->n > this->nrecycle)
-      throw StriException("StriContainerBase::init_Base(...): this->n > this->nrecycle");
+        if (this->n < _n)
+            throw StriException("StriContainerBase::init_Base(...): this->n < _n");
+        if (this->n > this->nrecycle)
+            throw StriException("StriContainerBase::init_Base(...): this->n > this->nrecycle");
 #endif
-   }
+    }
 }

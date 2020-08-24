@@ -64,52 +64,62 @@
  */
 SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_collator)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* collator = NULL;
+    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF16 str_cont(str, vectorize_length);
-   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+    STRI__ERROR_HANDLER_BEGIN(2)
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF16 str_cont(str, vectorize_length);
+    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not
-   // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-   // MG: agreed
-   std::vector<int> which(vectorize_length);
-   int result_counter = 0;
+    // BT: this cannot be done with deque, because pattern is reused so i does not
+    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
+    // MG: agreed
+    std::vector<int> which(vectorize_length);
+    int result_counter = 0;
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} },
-         {which[i] = negate_1; if (which[i]) result_counter++;})
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+    {if (omit_na1) which[i] = FALSE; else {
+                which[i] = NA_LOGICAL;
+                result_counter++;
+            }
+        },
+        {which[i] = negate_1; if (which[i]) result_counter++;})
 
-      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
-      usearch_reset(matcher);
-      UErrorCode status = U_ZERO_ERROR;
-      which[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
-      if (negate_1) which[i] = !which[i];
-      if (which[i]) result_counter++;
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   }
+        UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+        usearch_reset(matcher);
+        UErrorCode status = U_ZERO_ERROR;
+        which[i] = ((int)usearch_first(matcher, &status) != USEARCH_DONE);  // this is F*G slow! :-(
+        if (negate_1) which[i] = !which[i];
+        if (which[i]) result_counter++;
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-   if (collator) { ucol_close(collator); collator = NULL; }
-   SEXP ret;
-   STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(
-      if (collator) { ucol_close(collator); collator = NULL; }
-   )
+    if (collator) {
+        ucol_close(collator);
+        collator = NULL;
+    }
+    SEXP ret;
+    STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(
+    if (collator) {
+    ucol_close(collator);
+        collator = NULL;
+    }
+    )
 }
 
 
@@ -130,53 +140,59 @@ SEXP stri_subset_coll(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP op
  */
 SEXP stri_subset_coll_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_collator, SEXP value)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
-   PROTECT(value = stri_prepare_arg_string(value, "value"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(value = stri_prepare_arg_string(value, "value"));
 
-   int vectorize_length = LENGTH(str);
-   int value_length = LENGTH(value);
-   if (value_length == 0)
-      Rf_error(MSG__REPLACEMENT_ZERO);
+    int vectorize_length = LENGTH(str);
+    int value_length = LENGTH(value);
+    if (value_length == 0)
+        Rf_error(MSG__REPLACEMENT_ZERO);
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* collator = NULL;
+    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF16 str_cont(str, vectorize_length);
-   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
-   StriContainerUTF8 value_cont(value, value_length);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF16 str_cont(str, vectorize_length);
+    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+    StriContainerUTF8 value_cont(value, value_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   R_len_t k = 0;
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-      {SET_STRING_ELT(ret, i, NA_STRING);},
-      {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));})
+    R_len_t k = 0;
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+        {SET_STRING_ELT(ret, i, NA_STRING);},
+        {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));})
 
-      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
-      usearch_reset(matcher);
-      UErrorCode status = U_ZERO_ERROR;
-      if (((int)usearch_first(matcher, &status) != USEARCH_DONE && !negate_1)
-         || (usearch_first(matcher, &status) == USEARCH_DONE && negate_1))
-         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
-      else
-         SET_STRING_ELT(ret, i, str_cont.toR(i));
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-   }
+        UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+        usearch_reset(matcher);
+        UErrorCode status = U_ZERO_ERROR;
+        if (((int)usearch_first(matcher, &status) != USEARCH_DONE && !negate_1)
+                || (usearch_first(matcher, &status) == USEARCH_DONE && negate_1))
+            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+        else
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-   if (collator) { ucol_close(collator); collator = NULL; }
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(
-      if (collator) { ucol_close(collator); collator = NULL; }
-   )
+    if (collator) {
+        ucol_close(collator);
+        collator = NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(
+    if (collator) {
+    ucol_close(collator);
+        collator = NULL;
+    }
+    )
 }

@@ -66,95 +66,98 @@ using namespace std;
  */
 SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator, int type)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator);
+    UCollator* collator = NULL;
+    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
-   StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
-   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
-   StriContainerUTF16 replacement_cont(replacement, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+    StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
+    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+    StriContainerUTF16 replacement_cont(replacement, vectorize_length);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         str_cont.setNA(i);,
-         /*just skip on empty str*/;)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                str_cont.setNA(i);,
+                /*just skip on empty str*/;)
 
-      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
-      usearch_reset(matcher);
+        UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+        usearch_reset(matcher);
 
-      UErrorCode status = U_ZERO_ERROR;
-      R_len_t remUChars = 0;
-      deque< pair<R_len_t, R_len_t> > occurrences;
+        UErrorCode status = U_ZERO_ERROR;
+        R_len_t remUChars = 0;
+        deque< pair<R_len_t, R_len_t> > occurrences;
 
-      if (type >= 0) { // first or all
-         int start = (int)usearch_first(matcher, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        if (type >= 0) { // first or all
+            int start = (int)usearch_first(matcher, &status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-         if (start == USEARCH_DONE) // no match
-            continue; // no change in str_cont[i] at all
+            if (start == USEARCH_DONE) // no match
+                continue; // no change in str_cont[i] at all
 
-         if (replacement_cont.isNA(i)) {
-            str_cont.setNA(i);
-            continue;
-         }
+            if (replacement_cont.isNA(i)) {
+                str_cont.setNA(i);
+                continue;
+            }
 
-         while (start != USEARCH_DONE) {
+            while (start != USEARCH_DONE) {
+                R_len_t mlen = usearch_getMatchedLength(matcher);
+                remUChars += mlen;
+                occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
+                if (type > 0) break; // break if first and not all
+                start = usearch_next(matcher, &status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+        }
+        else { // if last
+            int start = (int)usearch_last(matcher, &status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (start == USEARCH_DONE) // no match
+                continue; // no change in str_cont[i] at all
+
+            if (replacement_cont.isNA(i)) {
+                str_cont.setNA(i);
+                continue;
+            }
             R_len_t mlen = usearch_getMatchedLength(matcher);
             remUChars += mlen;
             occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
-            if (type > 0) break; // break if first and not all
-            start = usearch_next(matcher, &status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         }
-      }
-      else { // if last
-         int start = (int)usearch_last(matcher, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         if (start == USEARCH_DONE) // no match
-            continue; // no change in str_cont[i] at all
+        }
 
-         if (replacement_cont.isNA(i)) {
-            str_cont.setNA(i);
-            continue;
-         }
-         R_len_t mlen = usearch_getMatchedLength(matcher);
-         remUChars += mlen;
-         occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
-      }
+        R_len_t replacement_cur_n = replacement_cont.get(i).length();
+        R_len_t noccurrences = (R_len_t)occurrences.size();
+        UnicodeString ans(str_cont.get(i).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
+        R_len_t jlast = 0;
+        R_len_t anslast = 0;
+        deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+        for (; iter != occurrences.end(); ++iter) {
+            pair<R_len_t, R_len_t> match = *iter;
+            ans.replace(anslast, match.first-jlast, str_cont.get(i), jlast, match.first-jlast);
+            anslast += match.first-jlast;
+            jlast = match.second;
+            ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
+            anslast += replacement_cur_n;
+        }
+        ans.replace(anslast, str_cont.get(i).length()-jlast, str_cont.get(i), jlast, str_cont.get(i).length()-jlast);
+        str_cont.getWritable(i) = ans;
+    }
 
-      R_len_t replacement_cur_n = replacement_cont.get(i).length();
-      R_len_t noccurrences = (R_len_t)occurrences.size();
-      UnicodeString ans(str_cont.get(i).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
-      R_len_t jlast = 0;
-      R_len_t anslast = 0;
-      deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-      for (; iter != occurrences.end(); ++iter) {
-         pair<R_len_t, R_len_t> match = *iter;
-         ans.replace(anslast, match.first-jlast, str_cont.get(i), jlast, match.first-jlast);
-         anslast += match.first-jlast;
-         jlast = match.second;
-         ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
-         anslast += replacement_cur_n;
-      }
-      ans.replace(anslast, str_cont.get(i).length()-jlast, str_cont.get(i), jlast, str_cont.get(i).length()-jlast);
-      str_cont.getWritable(i) = ans;
-   }
-
-   if (collator) { ucol_close(collator); collator=NULL; }
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(
-      if (collator) ucol_close(collator);
-   )
-}
+    if (collator) {
+        ucol_close(collator);
+        collator=NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(
+        if (collator) ucol_close(collator);
+    )
+    }
 
 
 /**
@@ -178,111 +181,120 @@ SEXP stri__replace_allfirstlast_coll(SEXP str, SEXP pattern, SEXP replacement, S
  *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
-{ // version beta
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
+{   // version beta
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
 
-   // if str_n is 0, then return an empty vector
-   R_len_t str_n = LENGTH(str);
-   if (str_n <= 0) {
-      UNPROTECT(1);
-      return stri__vector_empty_strings(0);
-   }
+    // if str_n is 0, then return an empty vector
+    R_len_t str_n = LENGTH(str);
+    if (str_n <= 0) {
+        UNPROTECT(1);
+        return stri__vector_empty_strings(0);
+    }
 
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   R_len_t pattern_n = LENGTH(pattern);
-   R_len_t replacement_n = LENGTH(replacement);
-   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
-      UNPROTECT(3);
-      Rf_error(MSG__WARN_RECYCLING_RULE2);
-   }
-   if (pattern_n % replacement_n != 0) {
-      Rf_warning(MSG__WARN_RECYCLING_RULE);
-   }
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    R_len_t pattern_n = LENGTH(pattern);
+    R_len_t replacement_n = LENGTH(replacement);
+    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
+        UNPROTECT(3);
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    }
+    if (pattern_n % replacement_n != 0) {
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
+    }
 
-   if (pattern_n == 1) {// this will be much faster:
-      SEXP ret;
-      PROTECT(ret = stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 0));
-      UNPROTECT(4);
-      return ret;
-   }
+    if (pattern_n == 1) {// this will be much faster:
+        SEXP ret;
+        PROTECT(ret = stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 0));
+        UNPROTECT(4);
+        return ret;
+    }
 
-   UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator);
+    UCollator* collator = NULL;
+    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF16 str_cont(str, str_n, false); // writable
-   StriContainerUStringSearch pattern_cont(pattern, pattern_n, collator);  // collator is not owned by pattern_cont
-   StriContainerUTF16 replacement_cont(replacement, pattern_n);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF16 str_cont(str, str_n, false); // writable
+    StriContainerUStringSearch pattern_cont(pattern, pattern_n, collator);  // collator is not owned by pattern_cont
+    StriContainerUTF16 replacement_cont(replacement, pattern_n);
 
-   for (R_len_t i = 0; i<pattern_n; ++i)
-   {
-      if (pattern_cont.isNA(i)) {
-         if (collator) { ucol_close(collator); collator=NULL; }
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
-      else if (pattern_cont.get(i).length() <= 0) {
-         if (collator) { ucol_close(collator); collator=NULL; }
-         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
+    for (R_len_t i = 0; i<pattern_n; ++i)
+    {
+        if (pattern_cont.isNA(i)) {
+            if (collator) {
+                ucol_close(collator);
+                collator=NULL;
+            }
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
+        else if (pattern_cont.get(i).length() <= 0) {
+            if (collator) {
+                ucol_close(collator);
+                collator=NULL;
+            }
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
 
-      for (R_len_t j = 0; j<str_n; ++j) {
-         if (str_cont.isNA(j) || str_cont.get(j).length() <= 0) continue;
+        for (R_len_t j = 0; j<str_n; ++j) {
+            if (str_cont.isNA(j) || str_cont.get(j).length() <= 0) continue;
 
-         UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(j));
-         usearch_reset(matcher);
-         UErrorCode status = U_ZERO_ERROR;
-         R_len_t remUChars = 0;
-         deque< pair<R_len_t, R_len_t> > occurrences;
+            UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(j));
+            usearch_reset(matcher);
+            UErrorCode status = U_ZERO_ERROR;
+            R_len_t remUChars = 0;
+            deque< pair<R_len_t, R_len_t> > occurrences;
 
-         int start = (int)usearch_first(matcher, &status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-
-         if (start == USEARCH_DONE) // no match
-            continue; // no change in str_cont[j] at all
-
-         if (replacement_cont.isNA(i)) {
-            str_cont.setNA(j);
-            continue;
-         }
-
-         while (start != USEARCH_DONE) {
-            R_len_t mlen = usearch_getMatchedLength(matcher);
-            remUChars += mlen;
-            occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
-            start = usearch_next(matcher, &status);
+            int start = (int)usearch_first(matcher, &status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         }
 
-         R_len_t replacement_cur_n = replacement_cont.get(i).length();
-         R_len_t noccurrences = (R_len_t)occurrences.size();
-         UnicodeString ans(str_cont.get(j).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
-         R_len_t jlast = 0;
-         R_len_t anslast = 0;
-         deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
-         for (; iter != occurrences.end(); ++iter) {
-            pair<R_len_t, R_len_t> match = *iter;
-            ans.replace(anslast, match.first-jlast, str_cont.get(j), jlast, match.first-jlast);
-            anslast += match.first-jlast;
-            jlast = match.second;
-            ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
-            anslast += replacement_cur_n;
-         }
-         ans.replace(anslast, str_cont.get(j).length()-jlast, str_cont.get(j), jlast, str_cont.get(j).length()-jlast);
-         str_cont.getWritable(j) = ans;
-      }
-   }
+            if (start == USEARCH_DONE) // no match
+                continue; // no change in str_cont[j] at all
 
-   if (collator) { ucol_close(collator); collator=NULL; }
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(
-      if (collator) ucol_close(collator);
-   )
-}
+            if (replacement_cont.isNA(i)) {
+                str_cont.setNA(j);
+                continue;
+            }
+
+            while (start != USEARCH_DONE) {
+                R_len_t mlen = usearch_getMatchedLength(matcher);
+                remUChars += mlen;
+                occurrences.push_back(pair<R_len_t, R_len_t>(start, start+mlen));
+                start = usearch_next(matcher, &status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+
+            R_len_t replacement_cur_n = replacement_cont.get(i).length();
+            R_len_t noccurrences = (R_len_t)occurrences.size();
+            UnicodeString ans(str_cont.get(j).length()-remUChars+noccurrences*replacement_cur_n, (UChar)0xfffd, 0);
+            R_len_t jlast = 0;
+            R_len_t anslast = 0;
+            deque< pair<R_len_t, R_len_t> >::iterator iter = occurrences.begin();
+            for (; iter != occurrences.end(); ++iter) {
+                pair<R_len_t, R_len_t> match = *iter;
+                ans.replace(anslast, match.first-jlast, str_cont.get(j), jlast, match.first-jlast);
+                anslast += match.first-jlast;
+                jlast = match.second;
+                ans.replace(anslast, replacement_cur_n, replacement_cont.get(i));
+                anslast += replacement_cur_n;
+            }
+            ans.replace(anslast, str_cont.get(j).length()-jlast, str_cont.get(j), jlast, str_cont.get(j).length()-jlast);
+            str_cont.getWritable(j) = ans;
+        }
+    }
+
+    if (collator) {
+        ucol_close(collator);
+        collator=NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(
+        if (collator) ucol_close(collator);
+    )
+    }
 
 
 /**
@@ -307,10 +319,10 @@ SEXP stri__replace_all_coll_no_vectorize_all(SEXP str, SEXP pattern, SEXP replac
  */
 SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_collator)
 {
-   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
-      return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 0);
-   else
-      return stri__replace_all_coll_no_vectorize_all(str, pattern, replacement, opts_collator);
+    if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+        return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 0);
+    else
+        return stri__replace_all_coll_no_vectorize_all(str, pattern, replacement, opts_collator);
 }
 
 
@@ -333,7 +345,7 @@ SEXP stri_replace_all_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP vector
  */
 SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
 {
-   return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, -1);
+    return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, -1);
 }
 
 
@@ -356,5 +368,5 @@ SEXP stri_replace_last_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_
  */
 SEXP stri_replace_first_coll(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_collator)
 {
-   return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 1);
+    return stri__replace_allfirstlast_coll(str, pattern, replacement, opts_collator, 1);
 }

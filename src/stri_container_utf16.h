@@ -58,104 +58,104 @@
  */
 class StriContainerUTF16 : public StriContainerBase {
 
-   protected:
+protected:
 
-      UnicodeString* str;       ///< data - \code{UnicodeString}s
-
-
-   public:
-
-      StriContainerUTF16();
-      StriContainerUTF16(R_len_t nrecycle);
-      StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
-      StriContainerUTF16(StriContainerUTF16& container);
-      ~StriContainerUTF16();
-      StriContainerUTF16& operator=(StriContainerUTF16& container);
-      SEXP toR(R_len_t i) const;
-      SEXP toR() const;
+    UnicodeString* str;       ///< data - \code{UnicodeString}s
 
 
-      /** check if the vectorized ith element is NA
-       * @param i index
-       * @return true if is NA
-       */
-      inline bool isNA(R_len_t i) const {
+public:
+
+    StriContainerUTF16();
+    StriContainerUTF16(R_len_t nrecycle);
+    StriContainerUTF16(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
+    StriContainerUTF16(StriContainerUTF16& container);
+    ~StriContainerUTF16();
+    StriContainerUTF16& operator=(StriContainerUTF16& container);
+    SEXP toR(R_len_t i) const;
+    SEXP toR() const;
+
+
+    /** check if the vectorized ith element is NA
+     * @param i index
+     * @return true if is NA
+     */
+    inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
-         if (!str)
+        if (!str)
             throw StriException("StriContainerUTF16::isNA(): !str");
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF16::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return str[i%n].isBogus();
-      }
+        return str[i%n].isBogus();
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string
-       */
-      inline const UnicodeString& get(R_len_t i) const {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string
+     */
+    inline const UnicodeString& get(R_len_t i) const {
 #ifndef NDEBUG
-         if (isNA(i))
+        if (isNA(i))
             throw StriException("StriContainerUTF16::get(): isNA");
 #endif
-         return str[i%n];
-      }
+        return str[i%n];
+    }
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string
-       */
-      inline UnicodeString& getWritable(R_len_t i) {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string
+     */
+    inline UnicodeString& getWritable(R_len_t i) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF16::getWritable(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
-         if (isNA(i))
+        if (isNA(i))
             throw StriException("StriContainerUTF16::getWritable(): isNA");
 #endif
-         return str[i%n]; // in fact, "%n" is not necessary
-      }
+        return str[i%n]; // in fact, "%n" is not necessary
+    }
 
 
-      /** set NA
-       * @param i index
-       */
-      inline void setNA(R_len_t i) {
+    /** set NA
+     * @param i index
+     */
+    inline void setNA(R_len_t i) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF16::getWritable(): shallow StriContainerUTF16");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF16::getWritable(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::getWritable(): INDEX OUT OF BOUNDS");
 #endif
-         str[i%n].setToBogus();
-      }
+        str[i%n].setToBogus();
+    }
 
-      /** set the vectorized ith element
-       * @param i index
-       * @param s string to be copied
-       */
-      inline void set(R_len_t i, const UnicodeString& s) {
+    /** set the vectorized ith element
+     * @param i index
+     * @param s string to be copied
+     */
+    inline void set(R_len_t i, const UnicodeString& s) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF16::set(): shallow StriContainerUTF16");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF16::set(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF16::set(): INDEX OUT OF BOUNDS");
-         if (str[i%n].isBogus())
+        if (str[i%n].isBogus())
             throw StriException("StriContainerUTF16::set(): isNA");
 #endif
-         str[i%n].setTo(s); // in fact, "%n" is not necessary
-      }
+        str[i%n].setTo(s); // in fact, "%n" is not necessary
+    }
 
-      // @QUESTION: separate StriContainerUTF16_indexable?
-      void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
+    // @QUESTION: separate StriContainerUTF16_indexable?
+    void UChar16_to_UChar32_index(R_len_t i, int* i1, int* i2, const int ni, int adj1, int adj2);
 };
 
 #endif

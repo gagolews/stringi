@@ -39,11 +39,11 @@
  *
  */
 StriContainerUStringSearch::StriContainerUStringSearch()
-   : StriContainerUTF16()
+    : StriContainerUTF16()
 {
-   this->lastMatcherIndex = -1;
-   this->str = NULL;
-   this->col = NULL;
+    this->lastMatcherIndex = -1;
+    this->str = NULL;
+    this->col = NULL;
 }
 
 
@@ -54,18 +54,18 @@ StriContainerUStringSearch::StriContainerUStringSearch()
  * @param col Collator; owned by external caller
  */
 StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecycle, UCollator* _col)
-   : StriContainerUTF16(rstr, _nrecycle, true)
+    : StriContainerUTF16(rstr, _nrecycle, true)
 {
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->col = _col;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->col = _col;
 
-   R_len_t n = get_n();
-   for (R_len_t i=0; i<n; ++i) {
-      if (!isNA(i) && get(i).length() <= 0) {
-         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-      }
-   }
+    R_len_t n = get_n();
+    for (R_len_t i=0; i<n; ++i) {
+        if (!isNA(i) && get(i).length() <= 0) {
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+        }
+    }
 }
 
 
@@ -73,22 +73,22 @@ StriContainerUStringSearch::StriContainerUStringSearch(SEXP rstr, R_len_t _nrecy
  *
  */
 StriContainerUStringSearch::StriContainerUStringSearch(StriContainerUStringSearch& container)
-   :    StriContainerUTF16((StriContainerUTF16&)container)
+    :    StriContainerUTF16((StriContainerUTF16&)container)
 {
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->col = container.col;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->col = container.col;
 }
 
 
 StriContainerUStringSearch& StriContainerUStringSearch::operator=(StriContainerUStringSearch& container)
 {
-   this->~StriContainerUStringSearch();
-   (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->col = container.col;
-   return *this;
+    this->~StriContainerUStringSearch();
+    (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->col = container.col;
+    return *this;
 }
 
 
@@ -97,12 +97,12 @@ StriContainerUStringSearch& StriContainerUStringSearch::operator=(StriContainerU
  */
 StriContainerUStringSearch::~StriContainerUStringSearch()
 {
-   if (lastMatcher) {
-      usearch_close(lastMatcher);
-      lastMatcher = NULL;
-   }
-   col = NULL;
-   // col is owned by the caller
+    if (lastMatcher) {
+        usearch_close(lastMatcher);
+        lastMatcher = NULL;
+    }
+    col = NULL;
+    // col is owned by the caller
 }
 
 
@@ -117,7 +117,7 @@ StriContainerUStringSearch::~StriContainerUStringSearch()
  */
 UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeString& searchStr)
 {
-   return getMatcher(i, searchStr.getBuffer(), searchStr.length());
+    return getMatcher(i, searchStr.getBuffer(), searchStr.length());
 }
 
 
@@ -133,28 +133,28 @@ UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UnicodeSt
  */
 UStringSearch* StriContainerUStringSearch::getMatcher(R_len_t i, const UChar* searchStr, int32_t searchStr_len)
 {
-   if (!lastMatcher) {
-      this->lastMatcherIndex = (i % n);
-      UErrorCode status = U_ZERO_ERROR;
-      lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
-            searchStr, searchStr_len, col, NULL, &status);
-      STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
-      return lastMatcher;
-   }
+    if (!lastMatcher) {
+        this->lastMatcherIndex = (i % n);
+        UErrorCode status = U_ZERO_ERROR;
+        lastMatcher = usearch_openFromCollator(this->get(i).getBuffer(), this->get(i).length(),
+                                               searchStr, searchStr_len, col, NULL, &status);
+        STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
+        return lastMatcher;
+    }
 
-   if (this->lastMatcherIndex == (i % n)) {
-      // do nothing => matcher reuse
-   }
-   else {
-      this->lastMatcherIndex = (i % n);
-      UErrorCode status = U_ZERO_ERROR;
-      usearch_setPattern(lastMatcher, this->get(i).getBuffer(), this->get(i).length(), &status);
-      STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
-   }
+    if (this->lastMatcherIndex == (i % n)) {
+        // do nothing => matcher reuse
+    }
+    else {
+        this->lastMatcherIndex = (i % n);
+        UErrorCode status = U_ZERO_ERROR;
+        usearch_setPattern(lastMatcher, this->get(i).getBuffer(), this->get(i).length(), &status);
+        STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
+    }
 
-   UErrorCode status = U_ZERO_ERROR;
-   usearch_setText(lastMatcher, searchStr, searchStr_len, &status);
-   STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
+    UErrorCode status = U_ZERO_ERROR;
+    usearch_setText(lastMatcher, searchStr, searchStr_len, &status);
+    STRI__CHECKICUSTATUS_THROW(status, {usearch_close(lastMatcher); lastMatcher = NULL;})
 
-   return lastMatcher;
+    return lastMatcher;
 }

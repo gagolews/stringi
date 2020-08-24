@@ -81,146 +81,146 @@ using namespace std;
 SEXP stri_split_regex(SEXP str, SEXP pattern, SEXP n, SEXP omit_empty,
                       SEXP tokens_only, SEXP simplify, SEXP opts_regex)
 {
-   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(n = stri_prepare_arg_integer(n, "n"));
-   PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
-   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-   R_len_t vectorize_length = stri__recycling_rule(true, 4,
-      LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
+    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(n = stri_prepare_arg_integer(n, "n"));
+    PROTECT(omit_empty = stri_prepare_arg_logical(omit_empty, "omit_empty"));
+    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
+    R_len_t vectorize_length = stri__recycling_rule(true, 4,
+                               LENGTH(str), LENGTH(pattern), LENGTH(n), LENGTH(omit_empty));
 
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
-   STRI__ERROR_HANDLER_BEGIN(5)
-   StriContainerUTF8      str_cont(str, vectorize_length);
-   StriContainerInteger   n_cont(n, vectorize_length);
-   StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    UText* str_text = NULL; // may potentially be slower, but definitely is more convenient!
+    STRI__ERROR_HANDLER_BEGIN(5)
+    StriContainerUTF8      str_cont(str, vectorize_length);
+    StriContainerInteger   n_cont(n, vectorize_length);
+    StriContainerLogical   omit_empty_cont(omit_empty, vectorize_length);
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (n_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (n_cont.isNA(i)) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+            continue;
+        }
 
-      int  n_cur        = n_cont.get(i);
-      int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
+        int  n_cur        = n_cont.get(i);
+        int  omit_empty_cur   = !omit_empty_cont.isNA(i) && omit_empty_cont.get(i);
 
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
-         SET_VECTOR_ELT(ret, i,
-            (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
-            stri__vector_empty_strings((omit_empty_cur || n_cur == 0)?0:1));)
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));,
+                SET_VECTOR_ELT(ret, i,
+                               (omit_empty_cont.isNA(i))?stri__vector_NA_strings(1):
+                               stri__vector_empty_strings((omit_empty_cur || n_cur == 0)?0:1));)
 
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
+        R_len_t     str_cur_n = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
 
-      if (n_cur >= INT_MAX-1)
-         throw StriException(MSG__EXPECTED_SMALLER, "n");
-      else if (n_cur < 0)
-         n_cur = INT_MAX;
-      else if (n_cur == 0) {
-         SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
-         continue;
-      }
-      else if (tokens_only1)
-         n_cur++; // we need to do one split ahead here
+        if (n_cur >= INT_MAX-1)
+            throw StriException(MSG__EXPECTED_SMALLER, "n");
+        else if (n_cur < 0)
+            n_cur = INT_MAX;
+        else if (n_cur == 0) {
+            SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
+            continue;
+        }
+        else if (tokens_only1)
+            n_cur++; // we need to do one split ahead here
 
-      UErrorCode status = U_ZERO_ERROR;
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        UErrorCode status = U_ZERO_ERROR;
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        str_text = utext_openUTF8(str_text, str_cont.get(i).c_str(), str_cont.get(i).length(), &status);
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-      matcher->reset(str_text);
+        matcher->reset(str_text);
 
 
-      R_len_t k;
-      deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
-      fields.push_back(pair<R_len_t, R_len_t>(0,0));
+        R_len_t k;
+        deque< pair<R_len_t, R_len_t> > fields; // byte based-indices
+        fields.push_back(pair<R_len_t, R_len_t>(0,0));
 
-      for (k=1; k < n_cur; ) {
-         int m_res = (int)matcher->find(status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         if (!m_res) break;
+        for (k=1; k < n_cur; ) {
+            int m_res = (int)matcher->find(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            if (!m_res) break;
 
-         R_len_t s1 = (R_len_t)matcher->start(status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         R_len_t s2 = (R_len_t)matcher->end(status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            R_len_t s1 = (R_len_t)matcher->start(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            R_len_t s2 = (R_len_t)matcher->end(status);
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
 
-         if (omit_empty_cur && fields.back().first == s1)
-            fields.back().first = s2; // don't start any new field
-         else {
-            fields.back().second = s1;
-            fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start a new field here
-            ++k; // another field
-         }
-      }
-      fields.back().second = str_cur_n;
-      if (omit_empty_cur && fields.back().first == fields.back().second)
-         fields.pop_back();
+            if (omit_empty_cur && fields.back().first == s1)
+                fields.back().first = s2; // don't start any new field
+            else {
+                fields.back().second = s1;
+                fields.push_back(pair<R_len_t, R_len_t>(s2, s2)); // start a new field here
+                ++k; // another field
+            }
+        }
+        fields.back().second = str_cur_n;
+        if (omit_empty_cur && fields.back().first == fields.back().second)
+            fields.pop_back();
 
-      if (tokens_only1 && n_cur < INT_MAX) {
-         n_cur--; // one split ahead could have been made, see above
-         while (fields.size() > (size_t)n_cur)
-            fields.pop_back(); // get rid of the remainder
-      }
+        if (tokens_only1 && n_cur < INT_MAX) {
+            n_cur--; // one split ahead could have been made, see above
+            while (fields.size() > (size_t)n_cur)
+                fields.pop_back(); // get rid of the remainder
+        }
 
-      SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
+        SEXP ans;
+        STRI__PROTECT(ans = Rf_allocVector(STRSXP, fields.size()));
 
-      deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
-      for (k = 0; iter != fields.end(); ++iter, ++k) {
-         pair<R_len_t, R_len_t> curoccur = *iter;
-         if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
-            SET_STRING_ELT(ans, k, NA_STRING);
-         else
-            SET_STRING_ELT(ans, k,
-            Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
-      }
+        deque< pair<R_len_t, R_len_t> >::iterator iter = fields.begin();
+        for (k = 0; iter != fields.end(); ++iter, ++k) {
+            pair<R_len_t, R_len_t> curoccur = *iter;
+            if (curoccur.second == curoccur.first && omit_empty_cont.isNA(i))
+                SET_STRING_ELT(ans, k, NA_STRING);
+            else
+                SET_STRING_ELT(ans, k,
+                               Rf_mkCharLenCE(str_cur_s+curoccur.first, curoccur.second-curoccur.first, CE_UTF8));
+        }
 
-      SET_VECTOR_ELT(ret, i, ans);
-      STRI__UNPROTECT(1);
-   }
+        SET_VECTOR_ELT(ret, i, ans);
+        STRI__UNPROTECT(1);
+    }
 
-   if (str_text) {
-      utext_close(str_text);
-      str_text = NULL;
-   }
+    if (str_text) {
+        utext_close(str_text);
+        str_text = NULL;
+    }
 
-   if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
-      R_len_t n_min = 0;
-      R_len_t n_length = LENGTH(n);
-      int* n_tab = INTEGER(n);
-      for (R_len_t i=0; i<n_length; ++i) {
-         if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
-            n_min = n_tab[i];
-      }
-      SEXP robj_TRUE, robj_n_min, robj_na_strings, robj_empty_strings;
-      STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
-      STRI__PROTECT(robj_n_min = Rf_ScalarInteger(n_min));
-      STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
-      STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
-      STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
-                                           (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
-                                              :robj_empty_strings,
-                                               robj_n_min))
-   }
+    if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
+        R_len_t n_min = 0;
+        R_len_t n_length = LENGTH(n);
+        int* n_tab = INTEGER(n);
+        for (R_len_t i=0; i<n_length; ++i) {
+            if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
+                n_min = n_tab[i];
+        }
+        SEXP robj_TRUE, robj_n_min, robj_na_strings, robj_empty_strings;
+        STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
+        STRI__PROTECT(robj_n_min = Rf_ScalarInteger(n_min));
+        STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
+        STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
+        STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
+                                             (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
+                                             :robj_empty_strings,
+                                             robj_n_min))
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({
-      if (str_text) {
-         utext_close(str_text);
-         str_text = NULL;
-      }
-   })
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({
+        if (str_text) {
+            utext_close(str_text);
+            str_text = NULL;
+        }
+    })
 }

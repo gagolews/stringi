@@ -71,52 +71,52 @@
  *    #232: `max_count` arg added
  */
 SEXP stri_detect_charclass(SEXP str, SEXP pattern,
-    SEXP negate, SEXP max_count)
+                           SEXP negate, SEXP max_count)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   R_len_t vectorize_length =
-      stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    int max_count_1 = stri__prepare_arg_integer_1_notNA(max_count, "max_count");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    R_len_t vectorize_length =
+        stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerCharClass pattern_cont(pattern, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerCharClass pattern_cont(pattern, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
-   int* ret_tab = LOGICAL(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(LGLSXP, vectorize_length));
+    int* ret_tab = LOGICAL(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      if (max_count_1 == 0 || str_cont.isNA(i) || pattern_cont.isNA(i)) {
-         ret_tab[i] = NA_LOGICAL;
-         continue;
-      }
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        if (max_count_1 == 0 || str_cont.isNA(i) || pattern_cont.isNA(i)) {
+            ret_tab[i] = NA_LOGICAL;
+            continue;
+        }
 
-      const UnicodeSet* pattern_cur = &pattern_cont.get(i);
-      R_len_t     str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
+        const UnicodeSet* pattern_cur = &pattern_cont.get(i);
+        R_len_t     str_cur_n = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
 
-      UChar32 chr = 0;
-      ret_tab[i] = FALSE;
-      for (R_len_t j=0; j<str_cur_n; ) {
-         U8_NEXT(str_cur_s, j, str_cur_n, chr);
-         if (chr < 0) // invalid UTF-8 sequence
-            throw StriException(MSG__INVALID_UTF8);
-         if (pattern_cur->contains(chr)) {
-            ret_tab[i] = TRUE;
-            break;
-         }
-      }
-      if (negate_1) ret_tab[i] = !ret_tab[i];
-      if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
-   }
+        UChar32 chr = 0;
+        ret_tab[i] = FALSE;
+        for (R_len_t j=0; j<str_cur_n; ) {
+            U8_NEXT(str_cur_s, j, str_cur_n, chr);
+            if (chr < 0) // invalid UTF-8 sequence
+                throw StriException(MSG__INVALID_UTF8);
+            if (pattern_cur->contains(chr)) {
+                ret_tab[i] = TRUE;
+                break;
+            }
+        }
+        if (negate_1) ret_tab[i] = !ret_tab[i];
+        if (max_count_1 > 0 && ret_tab[i]) --max_count_1;
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

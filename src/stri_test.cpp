@@ -41,7 +41,7 @@
  */
 SEXP stri_test_returnasis(SEXP x)
 {
-   return x;
+    return x;
 }
 
 
@@ -60,27 +60,27 @@ SEXP stri_test_returnasis(SEXP x)
 SEXP stri_test_Rmark(SEXP s)
 {
 #ifndef NDEBUG
-   PROTECT(s = stri_prepare_arg_string(s, "str"));
-   int ns = LENGTH(s);
-   for (int i=0; i < ns; ++i) {
-      fprintf(stdout, "!NDEBUG: Element #%d:\n", i);
-      SEXP curs = STRING_ELT(s, i);
-      if (curs == NA_STRING){
-         fprintf(stdout, "!NDEBUG: \tNA\n");
-         continue;
-      }
-      //const char* string = CHAR(curs);
-      fprintf(stdout, "!NDEBUG: \tMARK_ASCII = %d\n", (IS_ASCII(curs) > 0));
-      fprintf(stdout, "!NDEBUG: \tMARK_UTF8  = %d\n", (IS_UTF8(curs) > 0));
-      fprintf(stdout, "!NDEBUG: \tMARK_LATIN1= %d\n", (IS_LATIN1(curs) > 0));
-      fprintf(stdout, "!NDEBUG: \tMARK_BYTES = %d\n", (IS_BYTES(curs) > 0));
-      fprintf(stdout, "!NDEBUG: \n");
-   }
-   UNPROTECT(1);
-   return R_NilValue;
+    PROTECT(s = stri_prepare_arg_string(s, "str"));
+    int ns = LENGTH(s);
+    for (int i=0; i < ns; ++i) {
+        fprintf(stdout, "!NDEBUG: Element #%d:\n", i);
+        SEXP curs = STRING_ELT(s, i);
+        if (curs == NA_STRING) {
+            fprintf(stdout, "!NDEBUG: \tNA\n");
+            continue;
+        }
+        //const char* string = CHAR(curs);
+        fprintf(stdout, "!NDEBUG: \tMARK_ASCII = %d\n", (IS_ASCII(curs) > 0));
+        fprintf(stdout, "!NDEBUG: \tMARK_UTF8  = %d\n", (IS_UTF8(curs) > 0));
+        fprintf(stdout, "!NDEBUG: \tMARK_LATIN1= %d\n", (IS_LATIN1(curs) > 0));
+        fprintf(stdout, "!NDEBUG: \tMARK_BYTES = %d\n", (IS_BYTES(curs) > 0));
+        fprintf(stdout, "!NDEBUG: \n");
+    }
+    UNPROTECT(1);
+    return R_NilValue;
 #else
-   Rf_error("This function is enabled only if NDEBUG is undef.");
-   return s;  // s here avoids compiler warning
+    Rf_error("This function is enabled only if NDEBUG is undef.");
+    return s;  // s here avoids compiler warning
 #endif
 }
 
@@ -97,12 +97,12 @@ SEXP stri_test_Rmark(SEXP s)
  */
 SEXP stri_test_UnicodeContainer16(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF16 ss(str, LENGTH(str));
-   STRI__UNPROTECT_ALL
-   return R_NilValue;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF16 ss(str, LENGTH(str));
+    STRI__UNPROTECT_ALL
+    return R_NilValue;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -115,12 +115,12 @@ SEXP stri_test_UnicodeContainer16(SEXP str)
  */
 SEXP stri_test_UnicodeContainer16b(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF16 ss(str, LENGTH(str));
-   STRI__UNPROTECT_ALL
-   return ss.toR();
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF16 ss(str, LENGTH(str));
+    STRI__UNPROTECT_ALL
+    return ss.toR();
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -132,10 +132,10 @@ SEXP stri_test_UnicodeContainer16b(SEXP str)
  */
 SEXP stri_test_UnicodeContainer8(SEXP str)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   STRI__ERROR_HANDLER_BEGIN(1)
-   StriContainerUTF8 ss(str, LENGTH(str));
-   STRI__UNPROTECT_ALL
-   return R_NilValue;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    STRI__ERROR_HANDLER_BEGIN(1)
+    StriContainerUTF8 ss(str, LENGTH(str));
+    STRI__UNPROTECT_ALL
+    return R_NilValue;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

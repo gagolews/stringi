@@ -43,60 +43,60 @@
  */
 class StriContainerInteger : public StriContainerBase {
 
-   private:
+private:
 
-      int* data;
+    int* data;
 
-   public:
+public:
 
-      StriContainerInteger() : StriContainerBase()
-      {
-         data = NULL;
-      }
+    StriContainerInteger() : StriContainerBase()
+    {
+        data = NULL;
+    }
 
-      StriContainerInteger(SEXP rvec, R_len_t _nrecycle)
-      {
-         this->data = NULL;
+    StriContainerInteger(SEXP rvec, R_len_t _nrecycle)
+    {
+        this->data = NULL;
 #ifndef NDEBUG
-         if (!Rf_isInteger(rvec))
+        if (!Rf_isInteger(rvec))
             throw StriException("DEBUG: !isInteger in StriContainerInteger");
 #endif
-         R_len_t ndata = LENGTH(rvec);
-         this->init_Base(ndata, _nrecycle, true);
-         this->data = INTEGER(rvec);
-      }
+        R_len_t ndata = LENGTH(rvec);
+        this->init_Base(ndata, _nrecycle, true);
+        this->data = INTEGER(rvec);
+    }
 
-      //  StriContainerInteger(StriContainerInteger& container); // default-shallow
-      // ~StriContainerInteger(); // default-shallow
-      //  StriContainerInteger& operator=(StriContainerInteger& container); // default-shallow
+    //  StriContainerInteger(StriContainerInteger& container); // default-shallow
+    // ~StriContainerInteger(); // default-shallow
+    //  StriContainerInteger& operator=(StriContainerInteger& container); // default-shallow
 
 
-      /** check if the vectorized ith element is NA
-       * @param i index
-       * @return true if is NA
-       */
-      inline bool isNA(R_len_t i) const {
+    /** check if the vectorized ith element is NA
+     * @param i index
+     * @return true if is NA
+     */
+    inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerInteger::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (data[i%n] == NA_INTEGER);
-      }
+        return (data[i%n] == NA_INTEGER);
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return integer
-       */
-      inline int get(R_len_t i) const {
+    /** get the vectorized ith element
+     * @param i index
+     * @return integer
+     */
+    inline int get(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerInteger::get(): INDEX OUT OF BOUNDS");
-         if (data[i%n] == NA_INTEGER)
+        if (data[i%n] == NA_INTEGER)
             throw StriException("StriContainerInteger::get(): isNA");
 #endif
-         return (data[i%n]);
-      }
+        return (data[i%n]);
+    }
 };
 
 #endif

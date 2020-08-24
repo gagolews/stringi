@@ -154,7 +154,7 @@ public:
     __StriException(const char* file, int line, UErrorCode status) {
         sprintf(msg, "[!NDEBUG] Error in %s:%d: ", file, line);
         sprintf(msg+strlen(msg),
-            MSG__ICU_ERROR, ICUError::getICUerrorName(status), u_errorName(status));
+                MSG__ICU_ERROR, ICUError::getICUerrorName(status), u_errorName(status));
     }
 
 
@@ -202,7 +202,7 @@ public:
 
     StriException(UErrorCode status) {
         sprintf(msg, MSG__ICU_ERROR,
-            ICUError::getICUerrorName(status), u_errorName(status));
+                ICUError::getICUerrorName(status), u_errorName(status));
     }
 
 

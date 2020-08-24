@@ -75,128 +75,128 @@
  */
 class StriContainerUTF8 : public StriContainerBase {
 
-   private:
+private:
 
-      String8* str;  ///< data - \code{string}
-
-
-   public:
-
-      StriContainerUTF8();
-      StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
-      StriContainerUTF8(StriContainerUTF8& container);
-      ~StriContainerUTF8();
-      StriContainerUTF8& operator=(StriContainerUTF8& container);
-      SEXP toR(R_len_t i) const;
-      SEXP toR() const;
+    String8* str;  ///< data - \code{string}
 
 
-      /** check if the vectorized ith element is NA
-       * @param i index
-       * @return true if is NA
-       */
-      inline bool isNA(R_len_t i) const {
+public:
+
+    StriContainerUTF8();
+    StriContainerUTF8(SEXP rstr, R_len_t nrecycle, bool shallowrecycle=true);
+    StriContainerUTF8(StriContainerUTF8& container);
+    ~StriContainerUTF8();
+    StriContainerUTF8& operator=(StriContainerUTF8& container);
+    SEXP toR(R_len_t i) const;
+    SEXP toR() const;
+
+
+    /** check if the vectorized ith element is NA
+     * @param i index
+     * @return true if is NA
+     */
+    inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF8::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (str[i%n].isNA());
-      }
+        return (str[i%n].isNA());
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string, read only
-       */
-      inline const String8& get(R_len_t i) const {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string, read only
+     */
+    inline const String8& get(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerUTF8::get(): INDEX OUT OF BOUNDS");
-         if (str[i%n].isNA())
+        if (str[i%n].isNA())
             throw StriException("StriContainerUTF8::get(): isNA");
 #endif
-         return str[i%n];
-      }
+        return str[i%n];
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string
-       */
-      inline String8& getWritable(R_len_t i) {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string
+     */
+    inline String8& getWritable(R_len_t i) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF8::getWritable(): shallow StriContainerUTF8");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF8::getWritable(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF8::getWritable(): INDEX OUT OF BOUNDS");
 //         if (str[i%n].isReadOnly()) // not needed: readOnly here => changes are possible (but not on m_str directly)
 //            throw StriException("StriContainerUTF8::getWritable(): isReadOnly");
-         if (str[i%n].isNA())
+        if (str[i%n].isNA())
             throw StriException("StriContainerUTF8::getWritable(): isNA");
 #endif
-         return str[i%n]; // in fact, "%n" is not necessary
-      }
+        return str[i%n]; // in fact, "%n" is not necessary
+    }
 
 
-      /** set NA
-       * @param i index
-       */
-      inline void setNA(R_len_t i) {
+    /** set NA
+     * @param i index
+     */
+    inline void setNA(R_len_t i) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF8::setNA(): shallow StriContainerUTF8");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF8::setNA(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF8::setNA(): INDEX OUT OF BOUNDS");
 #endif
-         str[i%n].setNA();
-      }
+        str[i%n].setNA();
+    }
 
 
-      /** get the number of bytes used to represent the longest string */
-      R_len_t getMaxNumBytes() const {
-         R_len_t bufsize = 0;
-         for (R_len_t i=0; i<n; ++i) {
+    /** get the number of bytes used to represent the longest string */
+    R_len_t getMaxNumBytes() const {
+        R_len_t bufsize = 0;
+        for (R_len_t i=0; i<n; ++i) {
             if (isNA(i)) continue;
             R_len_t cursize = get(i).length();
             if (cursize > bufsize)
-               bufsize = cursize;
-         }
-         return bufsize;
-      }
+                bufsize = cursize;
+        }
+        return bufsize;
+    }
 
 
-      /** get the length of the longest string */
-      R_len_t getMaxLength() const {
-         R_len_t bufsize = 0;
-         for (R_len_t i=0; i<n; ++i) {
+    /** get the length of the longest string */
+    R_len_t getMaxLength() const {
+        R_len_t bufsize = 0;
+        for (R_len_t i=0; i<n; ++i) {
             if (isNA(i)) continue;
             R_len_t cursize = get(i).countCodePoints();
             if (cursize > bufsize)
-               bufsize = cursize;
-         }
-         return bufsize;
-      }
+                bufsize = cursize;
+        }
+        return bufsize;
+    }
 
 
-      /** set the vectorized ith element
-       * @param i index
-       * @param s string to be copied
-       */
-      inline void set(R_len_t i, const String8& s) {
+    /** set the vectorized ith element
+     * @param i index
+     * @param s string to be copied
+     */
+    inline void set(R_len_t i, const String8& s) {
 #ifndef NDEBUG
-         if (isShallow)
+        if (isShallow)
             throw StriException("StriContainerUTF8::set(): shallow StriContainerUTF8");
-         if (n != nrecycle)
+        if (n != nrecycle)
             throw StriException("StriContainerUTF8::set(): n!=nrecycle");
-         if (i < 0 || i >= n)
+        if (i < 0 || i >= n)
             throw StriException("StriContainerUTF8::set(): INDEX OUT OF BOUNDS");
 #endif
-         str[i%n] = s; // in fact, "%n" is not necessary
-      }
+        str[i%n] = s; // in fact, "%n" is not necessary
+    }
 
 };
 

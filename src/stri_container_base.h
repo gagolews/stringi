@@ -50,52 +50,58 @@
  */
 class StriContainerBase {
 
-   protected:
+protected:
 
-      R_len_t n;                 ///< number of strings (size of \code{str})
-      R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
-      SEXP sexp;                 ///<
+    R_len_t n;                 ///< number of strings (size of \code{str})
+    R_len_t nrecycle;          ///< number of strings for the recycle rule (can be > \code{n})
+    SEXP sexp;                 ///<
 
 #ifndef NDEBUG
-      bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
+    bool isShallow;            ///< have we made only shallow copy of the strings? (=> read only)
 #endif
 
-      StriContainerBase();
-      // StriContainerBase(StriContainerBase& container); // use default (shallow copy)
-      //~StriContainerBase(); // use default
+    StriContainerBase();
+    // StriContainerBase(StriContainerBase& container); // use default (shallow copy)
+    //~StriContainerBase(); // use default
 
-      void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle, SEXP sexp=NULL);
-
-
-   public:
-      //StriContainerBase& operator=(StriContainerBase& container); // use default (shallow)
-
-      inline R_len_t get_n() { return n; }
-      inline R_len_t get_nrecycle() { return nrecycle; }
-      inline void set_nrecycle(R_len_t nval) { nrecycle = nval; }
+    void init_Base(R_len_t n, R_len_t nrecycle, bool shallowrecycle, SEXP sexp=NULL);
 
 
-      /** Loop over vectorized container - init */
-      inline R_len_t vectorize_init() const {
-         if (n <= 0) return nrecycle;
-         else return 0;
-      }
+public:
+    //StriContainerBase& operator=(StriContainerBase& container); // use default (shallow)
 
-      /** Loop over vectorized container - end iterator */
-      inline R_len_t vectorize_end() const {
-         return nrecycle;
-      }
+    inline R_len_t get_n() {
+        return n;
+    }
+    inline R_len_t get_nrecycle() {
+        return nrecycle;
+    }
+    inline void set_nrecycle(R_len_t nval) {
+        nrecycle = nval;
+    }
 
-      /** Loop over vectorized container - next iteration */
-      inline R_len_t vectorize_next(R_len_t i) const {
-         if (i == nrecycle - 1 - (nrecycle%n))
+
+    /** Loop over vectorized container - init */
+    inline R_len_t vectorize_init() const {
+        if (n <= 0) return nrecycle;
+        else return 0;
+    }
+
+    /** Loop over vectorized container - end iterator */
+    inline R_len_t vectorize_end() const {
+        return nrecycle;
+    }
+
+    /** Loop over vectorized container - next iteration */
+    inline R_len_t vectorize_next(R_len_t i) const {
+        if (i == nrecycle - 1 - (nrecycle%n))
             return nrecycle; // this is the end
-         i = i + n;
-         if (i >= nrecycle)
+        i = i + n;
+        if (i >= nrecycle)
             return (i % n) + 1;
-         else
+        else
             return i;
-      }
+    }
 };
 
 #endif

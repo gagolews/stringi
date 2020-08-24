@@ -39,9 +39,9 @@
  *
  */
 StriContainerListInt::StriContainerListInt()
-   : StriContainerBase()
+    : StriContainerBase()
 {
-   data = NULL;
+    data = NULL;
 }
 
 
@@ -53,74 +53,74 @@ StriContainerListInt::StriContainerListInt()
  */
 StriContainerListInt::StriContainerListInt(SEXP rstr)
 {
-   this->data = NULL;
+    this->data = NULL;
 
-   if (isNull(rstr)) {
-      this->init_Base(1, 1, true);
-      this->data = new IntVec[this->n]; // 1 vector, NA/NULL
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-   }
-   else if (Rf_isInteger(rstr)) {
-      this->init_Base(1, 1, true);
-      this->data = new IntVec[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      this->data[0].initialize((const int*)INTEGER(rstr), LENGTH(rstr)); // shallow copy
-   }
-   else // if (Rf_isVectorList(rstr)) -- args already checked
-   {
-      R_len_t nv = LENGTH(rstr);
-      this->init_Base(nv, nv, true);
-      this->data = new IntVec[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (R_len_t i=0; i<this->n; ++i) {
-         SEXP cur = VECTOR_ELT(rstr, i);
-         if (!isNull(cur))
-            this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy
-         // else leave as-is, i.e., NULL/NA
-      }
-   }
+    if (isNull(rstr)) {
+        this->init_Base(1, 1, true);
+        this->data = new IntVec[this->n]; // 1 vector, NA/NULL
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+    }
+    else if (Rf_isInteger(rstr)) {
+        this->init_Base(1, 1, true);
+        this->data = new IntVec[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        this->data[0].initialize((const int*)INTEGER(rstr), LENGTH(rstr)); // shallow copy
+    }
+    else // if (Rf_isVectorList(rstr)) -- args already checked
+    {
+        R_len_t nv = LENGTH(rstr);
+        this->init_Base(nv, nv, true);
+        this->data = new IntVec[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (R_len_t i=0; i<this->n; ++i) {
+            SEXP cur = VECTOR_ELT(rstr, i);
+            if (!isNull(cur))
+                this->data[i].initialize((const int*)INTEGER(cur), LENGTH(cur)); // shallow copy
+            // else leave as-is, i.e., NULL/NA
+        }
+    }
 }
 
 
 StriContainerListInt::StriContainerListInt(StriContainerListInt& container)
-   :    StriContainerBase((StriContainerBase&)container)
+    :    StriContainerBase((StriContainerBase&)container)
 {
-   if (container.data) {
-      this->data = new IntVec[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (int i=0; i<this->n; ++i) {
-         this->data[i] = container.data[i];
-      }
-   }
-   else {
-      this->data = NULL;
-   }
+    if (container.data) {
+        this->data = new IntVec[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (int i=0; i<this->n; ++i) {
+            this->data[i] = container.data[i];
+        }
+    }
+    else {
+        this->data = NULL;
+    }
 }
 
 
 StriContainerListInt& StriContainerListInt::operator=(StriContainerListInt& container)
 {
-   this->~StriContainerListInt();
-   (StriContainerBase&) (*this) = (StriContainerBase&)container;
+    this->~StriContainerListInt();
+    (StriContainerBase&) (*this) = (StriContainerBase&)container;
 
-   if (container.data) {
-      this->data = new IntVec[this->n];
-      if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
-      for (int i=0; i<this->n; ++i) {
-         this->data[i] = container.data[i];
-      }
-   }
-   else {
-      this->data = NULL;
-   }
-   return *this;
+    if (container.data) {
+        this->data = new IntVec[this->n];
+        if (!this->data) throw StriException(MSG__MEM_ALLOC_ERROR);
+        for (int i=0; i<this->n; ++i) {
+            this->data[i] = container.data[i];
+        }
+    }
+    else {
+        this->data = NULL;
+    }
+    return *this;
 }
 
 
 StriContainerListInt::~StriContainerListInt()
 {
-   if (data) {
-      delete [] data;
-      data = NULL;
-   }
+    if (data) {
+        delete [] data;
+        data = NULL;
+    }
 }

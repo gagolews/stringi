@@ -61,45 +61,48 @@
  */
 SEXP stri_count_coll(SEXP str, SEXP pattern, SEXP opts_collator)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   // call stri__ucol_open after prepare_arg:
-   // if prepare_arg had failed, we would have a mem leak
-   UCollator* collator = NULL;
-   collator = stri__ucol_open(opts_collator);
+    // call stri__ucol_open after prepare_arg:
+    // if prepare_arg had failed, we would have a mem leak
+    UCollator* collator = NULL;
+    collator = stri__ucol_open(opts_collator);
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF16 str_cont(str, vectorize_length);
-   StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
+    STRI__ERROR_HANDLER_BEGIN(2)
+    R_len_t vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF16 str_cont(str, vectorize_length);
+    StriContainerUStringSearch pattern_cont(pattern, vectorize_length, collator);  // collator is not owned by pattern_cont
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
-   int* ret_tab = INTEGER(ret);
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(INTSXP, vectorize_length));
+    int* ret_tab = INTEGER(ret);
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         ret_tab[i] = NA_INTEGER,
-         ret_tab[i] = 0)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+                ret_tab[i] = NA_INTEGER,
+                ret_tab[i] = 0)
 
-      UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
-      usearch_reset(matcher);
-      UErrorCode status = U_ZERO_ERROR;
-      R_len_t found = 0;
-      while (!U_FAILURE(status) && ((int)usearch_next(matcher, &status) != USEARCH_DONE))
-         ++found;
-      STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      ret_tab[i] = found;
-   }
+        UStringSearch *matcher = pattern_cont.getMatcher(i, str_cont.get(i));
+        usearch_reset(matcher);
+        UErrorCode status = U_ZERO_ERROR;
+        R_len_t found = 0;
+        while (!U_FAILURE(status) && ((int)usearch_next(matcher, &status) != USEARCH_DONE))
+            ++found;
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        ret_tab[i] = found;
+    }
 
-   if (collator) { ucol_close(collator); collator=NULL; }
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(
-      if (collator) ucol_close(collator);
-   )
-}
+    if (collator) {
+        ucol_close(collator);
+        collator=NULL;
+    }
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(
+        if (collator) ucol_close(collator);
+    )
+    }

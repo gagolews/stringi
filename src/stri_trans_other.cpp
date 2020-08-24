@@ -40,15 +40,15 @@
  * fill a vector with CHARSXPs == individual code points in s of length n
  */
 void stri__split_codepoints(vector<UChar32>& out, const char* s, int n) {
-   UChar32 c = 0;
-   R_len_t j = 0; // current pos
-   while (j < n) {
-      U8_NEXT(s, j, n, c);
-      out.push_back(c);
+    UChar32 c = 0;
+    R_len_t j = 0; // current pos
+    while (j < n) {
+        U8_NEXT(s, j, n, c);
+        out.push_back(c);
 
-      if (c < 0)
-         Rf_warning(MSG__INVALID_UTF8);
-   }
+        if (c < 0)
+            Rf_warning(MSG__INVALID_UTF8);
+    }
 }
 
 
@@ -67,97 +67,97 @@ void stri__split_codepoints(vector<UChar32>& out, const char* s, int n) {
  *     BUGFIX: overlapping maps (#343)
  */
 SEXP stri_trans_char(SEXP str, SEXP pattern, SEXP replacement) {
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern      = stri_prepare_arg_string_1(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string_1(replacement, "replacement"));
-   R_len_t vectorize_length = LENGTH(str);
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern      = stri_prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string_1(replacement, "replacement"));
+    R_len_t vectorize_length = LENGTH(str);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 replacement_cont(replacement, 1);
-   StriContainerUTF8 pattern_cont(pattern, 1);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 replacement_cont(replacement, 1);
+    StriContainerUTF8 pattern_cont(pattern, 1);
 
-   if (replacement_cont.isNA(0) || pattern_cont.isNA(0)) {
-      STRI__UNPROTECT_ALL
-      return stri__vector_NA_strings(LENGTH(str));
-   }
+    if (replacement_cont.isNA(0) || pattern_cont.isNA(0)) {
+        STRI__UNPROTECT_ALL
+        return stri__vector_NA_strings(LENGTH(str));
+    }
 
-   const String8* s_pat = &pattern_cont.get(0);
-   const String8* s_rep = &replacement_cont.get(0);
+    const String8* s_pat = &pattern_cont.get(0);
+    const String8* s_rep = &replacement_cont.get(0);
 
-   std::vector<UChar32> d_pat;
-   stri__split_codepoints(d_pat, s_pat->c_str(), s_pat->length());
+    std::vector<UChar32> d_pat;
+    stri__split_codepoints(d_pat, s_pat->c_str(), s_pat->length());
 
-   std::vector<UChar32> d_rep;
-   stri__split_codepoints(d_rep, s_rep->c_str(), s_rep->length());
+    std::vector<UChar32> d_rep;
+    stri__split_codepoints(d_rep, s_rep->c_str(), s_rep->length());
 
-   R_len_t m = std::min(d_rep.size(), d_pat.size());
-   if (d_pat.size() != d_rep.size()) {
-      Rf_warning(MSG__WARN_RECYCLING_RULE2);
-   }
-
-
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   if (m == 0) { // nothing to do
-      STRI__UNPROTECT_ALL
-      return str_cont.toR(); // assure UTF-8
-   }
+    R_len_t m = std::min(d_rep.size(), d_pat.size());
+    if (d_pat.size() != d_rep.size()) {
+        Rf_warning(MSG__WARN_RECYCLING_RULE2);
+    }
 
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    if (m == 0) { // nothing to do
+        STRI__UNPROTECT_ALL
+        return str_cont.toR(); // assure UTF-8
+    }
 
-   std::vector<char> buf;
-   for (R_len_t i = str_cont.vectorize_init();
-        i != str_cont.vectorize_end();
-        i = str_cont.vectorize_next(i))
-   {
-      if (str_cont.isNA(i)) {
-         SET_STRING_ELT(ret, i, NA_STRING);
-         continue;
-      }
-      buf.clear();
 
-      const char* s = str_cont.get(i).c_str();
-      R_len_t n = str_cont.get(i).length();
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-      UChar32 c = 0;
-      R_len_t j = 0; // current pos
-      while (j < n) {
-         U8_NEXT(s, j, n, c);
-         if (c < 0) Rf_warning(MSG__INVALID_UTF8);
+    std::vector<char> buf;
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        if (str_cont.isNA(i)) {
+            SET_STRING_ELT(ret, i, NA_STRING);
+            continue;
+        }
+        buf.clear();
 
-         // considering only the first m elements in d_pat and d_rep, from last
-         for (R_len_t k=m-1; k>=0; --k) {
-            if (d_pat[k] == c) {
-               c = d_rep[k];
-               break;
+        const char* s = str_cont.get(i).c_str();
+        R_len_t n = str_cont.get(i).length();
+
+        UChar32 c = 0;
+        R_len_t j = 0; // current pos
+        while (j < n) {
+            U8_NEXT(s, j, n, c);
+            if (c < 0) Rf_warning(MSG__INVALID_UTF8);
+
+            // considering only the first m elements in d_pat and d_rep, from last
+            for (R_len_t k=m-1; k>=0; --k) {
+                if (d_pat[k] == c) {
+                    c = d_rep[k];
+                    break;
+                }
             }
-         }
 
-         // U8_APPEND_UNSAFE(buf, /end/, c)
-         uint32_t __uc=(c);
-         if(__uc<=0x7f) {
-            buf.push_back((uint8_t)__uc);
-         } else {
-            if(__uc<=0x7ff) {
-               buf.push_back((uint8_t)((__uc>>6)|0xc0));
+            // U8_APPEND_UNSAFE(buf, /end/, c)
+            uint32_t __uc=(c);
+            if(__uc<=0x7f) {
+                buf.push_back((uint8_t)__uc);
             } else {
-               if(__uc<=0xffff) {
-                  buf.push_back((uint8_t)((__uc>>12)|0xe0));
-               } else {
-                  buf.push_back((uint8_t)((__uc>>18)|0xf0));
-                  buf.push_back((uint8_t)(((__uc>>12)&0x3f)|0x80));
-               }
-               buf.push_back((uint8_t)(((__uc>>6)&0x3f)|0x80));
+                if(__uc<=0x7ff) {
+                    buf.push_back((uint8_t)((__uc>>6)|0xc0));
+                } else {
+                    if(__uc<=0xffff) {
+                        buf.push_back((uint8_t)((__uc>>12)|0xe0));
+                    } else {
+                        buf.push_back((uint8_t)((__uc>>18)|0xf0));
+                        buf.push_back((uint8_t)(((__uc>>12)&0x3f)|0x80));
+                    }
+                    buf.push_back((uint8_t)(((__uc>>6)&0x3f)|0x80));
+                }
+                buf.push_back((uint8_t)((__uc&0x3f)|0x80));
             }
-            buf.push_back((uint8_t)((__uc&0x3f)|0x80));
-         }
-      }
+        }
 
-      SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8));
-   }
+        SET_STRING_ELT(ret, i, Rf_mkCharLenCE(buf.data(), buf.size(), CE_UTF8));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }

@@ -68,43 +68,47 @@
  */
 SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP opts_fixed)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-   bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    bool omit_na1 = stri__prepare_arg_logical_1_notNA(omit_na, "omit_na");
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
 
-   STRI__ERROR_HANDLER_BEGIN(2)
-   int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(2)
+    int vectorize_length = stri__recycling_rule(true, 2, LENGTH(str), LENGTH(pattern));
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   // BT: this cannot be done with deque, because pattern is reused so i does not
-   // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
-   // MG: agreed
-   std::vector<int> which(vectorize_length);
-   int result_counter = 0;
+    // BT: this cannot be done with deque, because pattern is reused so i does not
+    // go like 0,1,2...n but 0,pat_len,2*pat_len,1,pat_len+1 and so on
+    // MG: agreed
+    std::vector<int> which(vectorize_length);
+    int result_counter = 0;
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-         {if (omit_na1) which[i] = FALSE; else {which[i] = NA_LOGICAL; result_counter++;} },
-         {which[i] = negate_1; if (which[i]) result_counter++;})
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+    {if (omit_na1) which[i] = FALSE; else {
+                which[i] = NA_LOGICAL;
+                result_counter++;
+            }
+        },
+        {which[i] = negate_1; if (which[i]) result_counter++;})
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      which[i] = (int)(matcher->findFirst() != USEARCH_DONE);
-      if (negate_1) which[i] = !which[i];
-      if (which[i]) result_counter++;
-   }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        which[i] = (int)(matcher->findFirst() != USEARCH_DONE);
+        if (negate_1) which[i] = !which[i];
+        if (which[i]) result_counter++;
+    }
 
-   SEXP ret;
-   STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
+    SEXP ret;
+    STRI__PROTECT(ret = stri__subset_by_logical(str_cont, which, result_counter));
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END( ;/* do nothing special on error */ )
 }
 
 
@@ -125,45 +129,45 @@ SEXP stri_subset_fixed(SEXP str, SEXP pattern, SEXP omit_na, SEXP negate, SEXP o
  */
 SEXP stri_subset_fixed_replacement(SEXP str, SEXP pattern, SEXP negate, SEXP opts_fixed, SEXP value)
 {
-   bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
-   uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
-   PROTECT(value = stri_prepare_arg_string(value, "value"));
+    bool negate_1 = stri__prepare_arg_logical_1_notNA(negate, "negate");
+    uint32_t pattern_flags = StriContainerByteSearch::getByteSearchFlags(opts_fixed);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(pattern = stri_prepare_arg_string_1(pattern, "pattern"));
+    PROTECT(value = stri_prepare_arg_string(value, "value"));
 
-   int vectorize_length = LENGTH(str);
-   int value_length = LENGTH(value);
-   if (value_length == 0)
-      Rf_error(MSG__REPLACEMENT_ZERO);
+    int vectorize_length = LENGTH(str);
+    int value_length = LENGTH(value);
+    if (value_length == 0)
+        Rf_error(MSG__REPLACEMENT_ZERO);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF8 str_cont(str, vectorize_length);
-   StriContainerUTF8 value_cont(value, value_length);
-   StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF8 str_cont(str, vectorize_length);
+    StriContainerUTF8 value_cont(value, value_length);
+    StriContainerByteSearch pattern_cont(pattern, vectorize_length, pattern_flags);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   R_len_t k = 0;
-   for (R_len_t i = str_cont.vectorize_init();
-         i != str_cont.vectorize_end();
-         i = str_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
-      {SET_STRING_ELT(ret, i, NA_STRING);},
-      {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));} )
+    R_len_t k = 0;
+    for (R_len_t i = str_cont.vectorize_init();
+            i != str_cont.vectorize_end();
+            i = str_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_STR_PATTERN(str_cont, pattern_cont,
+        {SET_STRING_ELT(ret, i, NA_STRING);},
+        {SET_STRING_ELT(ret, i, (negate_1)?value_cont.toR((k++)%value_length):str_cont.toR(i));} )
 
-      StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
-      matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
-      if (((int)(matcher->findFirst() != USEARCH_DONE) && !negate_1) ||
-          ((int)(matcher->findFirst() == USEARCH_DONE) && negate_1))
-         SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
-      else
-         SET_STRING_ELT(ret, i, str_cont.toR(i));
-   }
+        StriByteSearchMatcher* matcher = pattern_cont.getMatcher(i);
+        matcher->reset(str_cont.get(i).c_str(), str_cont.get(i).length());
+        if (((int)(matcher->findFirst() != USEARCH_DONE) && !negate_1) ||
+                ((int)(matcher->findFirst() == USEARCH_DONE) && negate_1))
+            SET_STRING_ELT(ret, i, value_cont.toR((k++)%value_length));
+        else
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 

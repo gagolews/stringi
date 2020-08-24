@@ -48,17 +48,17 @@
 */
 void stri__set_names(SEXP object, R_len_t numnames, ...)
 {
-   va_list arguments;
-   SEXP names;
-   PROTECT(names = Rf_allocVector(STRSXP, numnames));
+    va_list arguments;
+    SEXP names;
+    PROTECT(names = Rf_allocVector(STRSXP, numnames));
 
-   va_start(arguments, numnames);
-   for (R_len_t i = 0; i < numnames; ++i)
-      SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
-   va_end(arguments);
+    va_start(arguments, numnames);
+    for (R_len_t i = 0; i < numnames; ++i)
+        SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
+    va_end(arguments);
 
-   Rf_setAttrib(object, R_NamesSymbol, names);
-   UNPROTECT(1);
+    Rf_setAttrib(object, R_NamesSymbol, names);
+    UNPROTECT(1);
 }
 
 
@@ -76,17 +76,17 @@ void stri__set_names(SEXP object, R_len_t numnames, ...)
 */
 SEXP stri__make_character_vector_char_ptr(R_len_t numnames, ...)
 {
-   va_list arguments;
-   SEXP names;
-   PROTECT(names = Rf_allocVector(STRSXP, numnames));
+    va_list arguments;
+    SEXP names;
+    PROTECT(names = Rf_allocVector(STRSXP, numnames));
 
-   va_start(arguments, numnames);
-   for (R_len_t i = 0; i < numnames; ++i)
-      SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
-   va_end(arguments);
+    va_start(arguments, numnames);
+    for (R_len_t i = 0; i < numnames; ++i)
+        SET_STRING_ELT(names, i, Rf_mkCharCE(va_arg(arguments, char*), CE_UTF8));
+    va_end(arguments);
 
-   UNPROTECT(1);
-   return names;
+    UNPROTECT(1);
+    return names;
 }
 
 
@@ -101,21 +101,21 @@ SEXP stri__make_character_vector_char_ptr(R_len_t numnames, ...)
 */
 SEXP stri__make_character_vector_UnicodeString_ptr(R_len_t numnames, ...)
 {
-   va_list arguments;
-   SEXP names;
-   PROTECT(names = Rf_allocVector(STRSXP, numnames));
+    va_list arguments;
+    SEXP names;
+    PROTECT(names = Rf_allocVector(STRSXP, numnames));
 
-   va_start(arguments, numnames);
-   for (R_len_t i = 0; i < numnames; ++i) {
-      UnicodeString* cur_str16 = (UnicodeString*)va_arg(arguments, UnicodeString*);
-      std::string cur_str8;
-      cur_str16->toUTF8String(cur_str8);
-      SET_STRING_ELT(names, i, Rf_mkCharCE(cur_str8.c_str(), CE_UTF8));
-   }
-   va_end(arguments);
+    va_start(arguments, numnames);
+    for (R_len_t i = 0; i < numnames; ++i) {
+        UnicodeString* cur_str16 = (UnicodeString*)va_arg(arguments, UnicodeString*);
+        std::string cur_str8;
+        cur_str16->toUTF8String(cur_str8);
+        SET_STRING_ELT(names, i, Rf_mkCharCE(cur_str8.c_str(), CE_UTF8));
+    }
+    va_end(arguments);
 
-   UNPROTECT(1);
-   return names;
+    UNPROTECT(1);
+    return names;
 }
 
 
@@ -137,32 +137,32 @@ SEXP stri__make_character_vector_UnicodeString_ptr(R_len_t numnames, ...)
 */
 R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 {
-   R_len_t nsm = 0;
-   va_list arguments;
+    R_len_t nsm = 0;
+    va_list arguments;
 
-   va_start(arguments, n);
-   for (R_len_t i = 0; i < n; ++i) {
-      R_len_t curlen = va_arg(arguments, R_len_t);
-      if (curlen <= 0)
-         return 0;
-      if (curlen > nsm)
-         nsm = curlen;
-   }
-   va_end(arguments);
+    va_start(arguments, n);
+    for (R_len_t i = 0; i < n; ++i) {
+        R_len_t curlen = va_arg(arguments, R_len_t);
+        if (curlen <= 0)
+            return 0;
+        if (curlen > nsm)
+            nsm = curlen;
+    }
+    va_end(arguments);
 
-   if (enableWarning) {
-      va_start(arguments, n);
-      for (R_len_t i = 0; i < n; ++i) {
-         R_len_t curlen = va_arg(arguments, R_len_t);
-         if (nsm % curlen != 0) {
-            Rf_warning(MSG__WARN_RECYCLING_RULE);
-            break;
-         }
-      }
-      va_end(arguments);
-   }
+    if (enableWarning) {
+        va_start(arguments, n);
+        for (R_len_t i = 0; i < n; ++i) {
+            R_len_t curlen = va_arg(arguments, R_len_t);
+            if (nsm % curlen != 0) {
+                Rf_warning(MSG__WARN_RECYCLING_RULE);
+                break;
+            }
+        }
+        va_end(arguments);
+    }
 
-   return nsm;
+    return nsm;
 }
 
 
@@ -176,18 +176,18 @@ R_len_t stri__recycling_rule(bool enableWarning, int n, ...)
 */
 SEXP stri__vector_NA_strings(R_len_t howmany)
 {
-   if (howmany < 0) {
-      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
-      howmany = 0;
-   }
+    if (howmany < 0) {
+        Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+        howmany = 0;
+    }
 
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, howmany));
-   for (R_len_t i=0; i<howmany; ++i)
-      SET_STRING_ELT(ret, i, NA_STRING);
-   UNPROTECT(1);
+    SEXP ret;
+    PROTECT(ret = Rf_allocVector(STRSXP, howmany));
+    for (R_len_t i=0; i<howmany; ++i)
+        SET_STRING_ELT(ret, i, NA_STRING);
+    UNPROTECT(1);
 
-   return ret;
+    return ret;
 }
 
 
@@ -201,18 +201,18 @@ SEXP stri__vector_NA_strings(R_len_t howmany)
 */
 SEXP stri__vector_NA_integers(R_len_t howmany)
 {
-   if (howmany < 0) {
-      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
-      howmany = 0;
-   }
+    if (howmany < 0) {
+        Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+        howmany = 0;
+    }
 
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(INTSXP, howmany));
-   for (R_len_t i=0; i<howmany; ++i)
-      INTEGER(ret)[i] = NA_INTEGER;
-   UNPROTECT(1);
+    SEXP ret;
+    PROTECT(ret = Rf_allocVector(INTSXP, howmany));
+    for (R_len_t i=0; i<howmany; ++i)
+        INTEGER(ret)[i] = NA_INTEGER;
+    UNPROTECT(1);
 
-   return ret;
+    return ret;
 }
 
 
@@ -226,18 +226,18 @@ SEXP stri__vector_NA_integers(R_len_t howmany)
 */
 SEXP stri__vector_empty_strings(R_len_t howmany)
 {
-   if (howmany < 0) {
-      Rf_warning(MSG__EXPECTED_NONNEGATIVE);
-      howmany = 0;
-   }
+    if (howmany < 0) {
+        Rf_warning(MSG__EXPECTED_NONNEGATIVE);
+        howmany = 0;
+    }
 
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, howmany));
-   for (R_len_t i=0; i<howmany; ++i)
-      SET_STRING_ELT(ret, i, R_BlankString);
-   UNPROTECT(1);
+    SEXP ret;
+    PROTECT(ret = Rf_allocVector(STRSXP, howmany));
+    for (R_len_t i=0; i<howmany; ++i)
+        SET_STRING_ELT(ret, i, R_BlankString);
+    UNPROTECT(1);
 
-   return ret;
+    return ret;
 }
 
 
@@ -249,7 +249,7 @@ SEXP stri__vector_empty_strings(R_len_t howmany)
  */
 SEXP stri__emptyList()
 {
-   return Rf_allocVector(VECSXP, 0);
+    return Rf_allocVector(VECSXP, 0);
 }
 
 
@@ -262,13 +262,13 @@ SEXP stri__emptyList()
  */
 SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
 {
-   SEXP x;
-   PROTECT(x = Rf_allocMatrix(INTSXP, nrow, ncol));
-   int* ians = INTEGER(x);
-   for (R_len_t i=0; i<nrow*ncol; ++i)
-      ians[i] = NA_INTEGER;
-   UNPROTECT(1);
-   return x;
+    SEXP x;
+    PROTECT(x = Rf_allocMatrix(INTSXP, nrow, ncol));
+    int* ians = INTEGER(x);
+    for (R_len_t i=0; i<nrow*ncol; ++i)
+        ians[i] = NA_INTEGER;
+    UNPROTECT(1);
+    return x;
 }
 
 
@@ -281,12 +281,12 @@ SEXP stri__matrix_NA_INTEGER(R_len_t nrow, R_len_t ncol)
  */
 SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
 {
-   SEXP x;
-   PROTECT(x = Rf_allocMatrix(STRSXP, nrow, ncol));
-   for (R_len_t i=0; i<nrow*ncol; ++i)
-      SET_STRING_ELT(x, i, NA_STRING);
-   UNPROTECT(1);
-   return x;
+    SEXP x;
+    PROTECT(x = Rf_allocMatrix(STRSXP, nrow, ncol));
+    for (R_len_t i=0; i<nrow*ncol; ++i)
+        SET_STRING_ELT(x, i, NA_STRING);
+    UNPROTECT(1);
+    return x;
 }
 
 
@@ -302,27 +302,27 @@ SEXP stri__matrix_NA_STRING(R_len_t nrow, R_len_t ncol)
  *          proper handling of "word" in {"word", "word-second"}
  */
 int stri__match_arg(const char* option, const char** set) {
-   int set_length = 0;
-   while (set[set_length] != NULL) ++set_length;
-   if (set_length <= 0) return -1;
+    int set_length = 0;
+    while (set[set_length] != NULL) ++set_length;
+    if (set_length <= 0) return -1;
     // this could be substituted for a linked list:
-   std::vector<bool> excluded((size_t)set_length, false);
+    std::vector<bool> excluded((size_t)set_length, false);
 
-   for (int k=0; option[k] != '\0'; ++k) {
-      for (int i=0; i<set_length; ++i) {
-         if (excluded[i]) continue;
-         if (set[i][k] == '\0' || set[i][k] != option[k])
-            excluded[i] = true;
-         else if (set[i][k+1] == '\0' && option[k+1] == '\0')
-            return i; // exact match
-      }
-   }
+    for (int k=0; option[k] != '\0'; ++k) {
+        for (int i=0; i<set_length; ++i) {
+            if (excluded[i]) continue;
+            if (set[i][k] == '\0' || set[i][k] != option[k])
+                excluded[i] = true;
+            else if (set[i][k+1] == '\0' && option[k+1] == '\0')
+                return i; // exact match
+        }
+    }
 
-   int which = -1;
-   for (int i=0; i<set_length; ++i) {
-      if (excluded[i]) continue;
-      if (which < 0) which = i;
-      else return -1; // more than one match
-   }
-   return which;
+    int which = -1;
+    for (int i=0; i<set_length; ++i) {
+        if (excluded[i]) continue;
+        if (which < 0) which = i;
+        else return -1; // more than one match
+    }
+    return which;
 }

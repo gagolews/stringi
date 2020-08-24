@@ -46,48 +46,48 @@
  */
 class StriContainerListUTF8 : public StriContainerBase {
 
-   private:
+private:
 
-      StriContainerUTF8 **data;
-
-
-   public:
-
-      StriContainerListUTF8();
-      StriContainerListUTF8(SEXP rlist, R_len_t nrecycle, bool shallowrecycle=true);
-      StriContainerListUTF8(StriContainerListUTF8& container);
-      ~StriContainerListUTF8();
-      StriContainerListUTF8& operator=(StriContainerListUTF8& container);
-      SEXP toR(R_len_t i) const;
-      SEXP toR() const;
+    StriContainerUTF8 **data;
 
 
-      /** check if the vectorized ith element is NA
-       * @param i index
-       * @return true if is NA
-       */
-      inline bool isNA(R_len_t i) const {
+public:
+
+    StriContainerListUTF8();
+    StriContainerListUTF8(SEXP rlist, R_len_t nrecycle, bool shallowrecycle=true);
+    StriContainerListUTF8(StriContainerListUTF8& container);
+    ~StriContainerListUTF8();
+    StriContainerListUTF8& operator=(StriContainerListUTF8& container);
+    SEXP toR(R_len_t i) const;
+    SEXP toR() const;
+
+
+    /** check if the vectorized ith element is NA
+     * @param i index
+     * @return true if is NA
+     */
+    inline bool isNA(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerListUTF8::isNA(): INDEX OUT OF BOUNDS");
 #endif
-         return (data[i%n] == NULL);
-      }
+        return (data[i%n] == NULL);
+    }
 
 
-      /** get the vectorized ith element
-       * @param i index
-       * @return string, read only
-       */
-      const StriContainerUTF8& get(R_len_t i) const {
+    /** get the vectorized ith element
+     * @param i index
+     * @return string, read only
+     */
+    const StriContainerUTF8& get(R_len_t i) const {
 #ifndef NDEBUG
-         if (i < 0 || i >= nrecycle)
+        if (i < 0 || i >= nrecycle)
             throw StriException("StriContainerListUTF8::get(): INDEX OUT OF BOUNDS");
-         if (data[i%n] == NULL)
+        if (data[i%n] == NULL)
             throw StriException("StriContainerListUTF8::get(): isNA");
 #endif
-         return (*(data[i%n]));
-      }
+        return (*(data[i%n]));
+    }
 };
 
 #endif

@@ -68,97 +68,97 @@
  */
 SEXP stri_split_boundaries(SEXP str, SEXP n, SEXP tokens_only, SEXP simplify, SEXP opts_brkiter)
 {
-   bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
-   PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(n = stri_prepare_arg_integer(n, "n"));
-   StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
+    bool tokens_only1 = stri__prepare_arg_logical_1_notNA(tokens_only, "tokens_only");
+    PROTECT(simplify = stri_prepare_arg_logical_1(simplify, "simplify"));
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(n = stri_prepare_arg_integer(n, "n"));
+    StriBrkIterOptions opts_brkiter2(opts_brkiter, "line_break");
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   R_len_t vectorize_length = stri__recycling_rule(true, 2,
-      LENGTH(str), LENGTH(n));
-   StriContainerUTF8_indexable str_cont(str, vectorize_length);
-   StriContainerInteger n_cont(n, vectorize_length);
-   StriRuleBasedBreakIterator brkiter(opts_brkiter2);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    R_len_t vectorize_length = stri__recycling_rule(true, 2,
+                               LENGTH(str), LENGTH(n));
+    StriContainerUTF8_indexable str_cont(str, vectorize_length);
+    StriContainerInteger n_cont(n, vectorize_length);
+    StriRuleBasedBreakIterator brkiter(opts_brkiter2);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(VECSXP, vectorize_length));
 
-   for (R_len_t i = 0; i < vectorize_length; ++i)
-   {
-      if (n_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         continue;
-      }
-      int  n_cur = n_cont.get(i);
+    for (R_len_t i = 0; i < vectorize_length; ++i)
+    {
+        if (n_cont.isNA(i)) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+            continue;
+        }
+        int  n_cur = n_cont.get(i);
 
-      if (str_cont.isNA(i)) {
-         SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
-         continue;
-      }
+        if (str_cont.isNA(i)) {
+            SET_VECTOR_ELT(ret, i, stri__vector_NA_strings(1));
+            continue;
+        }
 
-      if (n_cur >= INT_MAX-1)
-         throw StriException(MSG__EXPECTED_SMALLER, "n");
-      else if (n_cur < 0)
-         n_cur = INT_MAX;
-      else if (n_cur == 0) {
-         SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
-         continue;
-      }
+        if (n_cur >= INT_MAX-1)
+            throw StriException(MSG__EXPECTED_SMALLER, "n");
+        else if (n_cur < 0)
+            n_cur = INT_MAX;
+        else if (n_cur == 0) {
+            SET_VECTOR_ELT(ret, i, Rf_allocVector(STRSXP, 0));
+            continue;
+        }
 
-      R_len_t str_cur_n = str_cont.get(i).length();
-      const char* str_cur_s = str_cont.get(i).c_str();
-      deque< pair<R_len_t,R_len_t> > occurrences;
-      brkiter.setupMatcher(str_cur_s, str_cur_n);
-      brkiter.first();
+        R_len_t str_cur_n = str_cont.get(i).length();
+        const char* str_cur_s = str_cont.get(i).c_str();
+        deque< pair<R_len_t,R_len_t> > occurrences;
+        brkiter.setupMatcher(str_cur_s, str_cur_n);
+        brkiter.first();
 
-      pair<R_len_t,R_len_t> curpair;
-      R_len_t k = 0;
-      while (k < n_cur && brkiter.next(curpair)) {
-         occurrences.push_back(curpair);
-         ++k; // another field
-      }
+        pair<R_len_t,R_len_t> curpair;
+        R_len_t k = 0;
+        while (k < n_cur && brkiter.next(curpair)) {
+            occurrences.push_back(curpair);
+            ++k; // another field
+        }
 
 
-      R_len_t noccurrences = (R_len_t)occurrences.size();
-      if (noccurrences <= 0) {
-         SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(0)); // @TODO: Should it be a NA? Hard to say...
-         continue;
-      }
-      if (k == n_cur && !tokens_only1)
-         occurrences.back().second = str_cur_n;
+        R_len_t noccurrences = (R_len_t)occurrences.size();
+        if (noccurrences <= 0) {
+            SET_VECTOR_ELT(ret, i, stri__vector_empty_strings(0)); // @TODO: Should it be a NA? Hard to say...
+            continue;
+        }
+        if (k == n_cur && !tokens_only1)
+            occurrences.back().second = str_cur_n;
 
-      SEXP ans;
-      STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
-      deque< pair<R_len_t,R_len_t> >::iterator iter = occurrences.begin();
-      for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
-         SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
-            (*iter).second-(*iter).first, CE_UTF8));
-      }
-      SET_VECTOR_ELT(ret, i, ans);
-      STRI__UNPROTECT(1);
-   }
+        SEXP ans;
+        STRI__PROTECT(ans = Rf_allocVector(STRSXP, noccurrences));
+        deque< pair<R_len_t,R_len_t> >::iterator iter = occurrences.begin();
+        for (R_len_t j = 0; iter != occurrences.end(); ++iter, ++j) {
+            SET_STRING_ELT(ans, j, Rf_mkCharLenCE(str_cur_s+(*iter).first,
+                                                  (*iter).second-(*iter).first, CE_UTF8));
+        }
+        SET_VECTOR_ELT(ret, i, ans);
+        STRI__UNPROTECT(1);
+    }
 
-   if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
-      R_len_t n_min = 0;
-      R_len_t n_length = LENGTH(n);
-      int* n_tab = INTEGER(n);
-      for (R_len_t i=0; i<n_length; ++i) {
-         if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
-            n_min = n_tab[i];
-      }
-      SEXP robj_TRUE, robj_n_min, robj_na_strings, robj_empty_strings;
-      STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
-      STRI__PROTECT(robj_n_min = Rf_ScalarInteger(n_min));
-      STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
-      STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
-      STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
-                                           (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
-                                              :robj_empty_strings,
-                                               robj_n_min))
-   }
+    if (LOGICAL(simplify)[0] == NA_LOGICAL || LOGICAL(simplify)[0]) {
+        R_len_t n_min = 0;
+        R_len_t n_length = LENGTH(n);
+        int* n_tab = INTEGER(n);
+        for (R_len_t i=0; i<n_length; ++i) {
+            if (n_tab[i] != NA_INTEGER && n_min < n_tab[i])
+                n_min = n_tab[i];
+        }
+        SEXP robj_TRUE, robj_n_min, robj_na_strings, robj_empty_strings;
+        STRI__PROTECT(robj_TRUE = Rf_ScalarLogical(TRUE));
+        STRI__PROTECT(robj_n_min = Rf_ScalarInteger(n_min));
+        STRI__PROTECT(robj_na_strings = stri__vector_NA_strings(1));
+        STRI__PROTECT(robj_empty_strings = stri__vector_empty_strings(1));
+        STRI__PROTECT(ret = stri_list2matrix(ret, robj_TRUE,
+                                             (LOGICAL(simplify)[0] == NA_LOGICAL)?robj_na_strings
+                                             :robj_empty_strings,
+                                             robj_n_min))
+    }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END({ /* no action */ })
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END({ /* no action */ })
 }

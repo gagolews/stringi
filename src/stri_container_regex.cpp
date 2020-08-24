@@ -39,11 +39,11 @@
  *
  */
 StriContainerRegexPattern::StriContainerRegexPattern()
-   : StriContainerUTF16()
+    : StriContainerUTF16()
 {
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->flags =0;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->flags =0;
 }
 
 
@@ -54,18 +54,18 @@ StriContainerRegexPattern::StriContainerRegexPattern()
  * @param flags regexp flags
  */
 StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycle, uint32_t _flags)
-   : StriContainerUTF16(rstr, _nrecycle, true)
+    : StriContainerUTF16(rstr, _nrecycle, true)
 {
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->flags = _flags;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->flags = _flags;
 
-   R_len_t n = get_n();
-   for (R_len_t i=0; i<n; ++i) {
-      if (!isNA(i) && get(i).length() <= 0) {
-         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-      }
-   }
+    R_len_t n = get_n();
+    for (R_len_t i=0; i<n; ++i) {
+        if (!isNA(i) && get(i).length() <= 0) {
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+        }
+    }
 }
 
 
@@ -73,22 +73,22 @@ StriContainerRegexPattern::StriContainerRegexPattern(SEXP rstr, R_len_t _nrecycl
  *
  */
 StriContainerRegexPattern::StriContainerRegexPattern(StriContainerRegexPattern& container)
-   :    StriContainerUTF16((StriContainerUTF16&)container)
+    :    StriContainerUTF16((StriContainerUTF16&)container)
 {
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->flags = container.flags;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->flags = container.flags;
 }
 
 
 StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerRegexPattern& container)
 {
-   this->~StriContainerRegexPattern();
-   (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
-   this->lastMatcherIndex = -1;
-   this->lastMatcher = NULL;
-   this->flags = container.flags;
-   return *this;
+    this->~StriContainerRegexPattern();
+    (StriContainerUTF16&) (*this) = (StriContainerUTF16&)container;
+    this->lastMatcherIndex = -1;
+    this->lastMatcher = NULL;
+    this->flags = container.flags;
+    return *this;
 }
 
 
@@ -97,10 +97,10 @@ StriContainerRegexPattern& StriContainerRegexPattern::operator=(StriContainerReg
  */
 StriContainerRegexPattern::~StriContainerRegexPattern()
 {
-   if (lastMatcher) {
-      delete lastMatcher;
-      lastMatcher = NULL;
-   }
+    if (lastMatcher) {
+        delete lastMatcher;
+        lastMatcher = NULL;
+    }
 }
 
 
@@ -113,23 +113,23 @@ StriContainerRegexPattern::~StriContainerRegexPattern()
  */
 RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
 {
-   if (lastMatcher) {
-      if (this->lastMatcherIndex == (i % n)) {
-         return lastMatcher; // reuse
-      }
-      else {
-         delete lastMatcher; // invalidate
-         lastMatcher = NULL;
-      }
-   }
+    if (lastMatcher) {
+        if (this->lastMatcherIndex == (i % n)) {
+            return lastMatcher; // reuse
+        }
+        else {
+            delete lastMatcher; // invalidate
+            lastMatcher = NULL;
+        }
+    }
 
-   UErrorCode status = U_ZERO_ERROR;
-   lastMatcher = new RegexMatcher(this->get(i), flags, status);
-   STRI__CHECKICUSTATUS_THROW(status, {if (lastMatcher) delete lastMatcher; lastMatcher = NULL;})
-   if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
-   this->lastMatcherIndex = (i % n);
+    UErrorCode status = U_ZERO_ERROR;
+    lastMatcher = new RegexMatcher(this->get(i), flags, status);
+    STRI__CHECKICUSTATUS_THROW(status, {if (lastMatcher) delete lastMatcher; lastMatcher = NULL;})
+        if (!lastMatcher) throw StriException(MSG__MEM_ALLOC_ERROR);
+    this->lastMatcherIndex = (i % n);
 
-   return lastMatcher;
+    return lastMatcher;
 }
 
 
@@ -153,59 +153,59 @@ RegexMatcher* StriContainerRegexPattern::getMatcher(R_len_t i)
  */
 uint32_t StriContainerRegexPattern::getRegexFlags(SEXP opts_regex)
 {
-   uint32_t flags = 0;
-   if (!isNull(opts_regex) && !Rf_isVectorList(opts_regex))
-      Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
+    uint32_t flags = 0;
+    if (!isNull(opts_regex) && !Rf_isVectorList(opts_regex))
+        Rf_error(MSG__ARG_EXPECTED_LIST, "opts_regex"); // error() call allowed here
 
-   R_len_t narg = isNull(opts_regex)?0:LENGTH(opts_regex);
+    R_len_t narg = isNull(opts_regex)?0:LENGTH(opts_regex);
 
-   if (narg > 0) {
+    if (narg > 0) {
 
-      SEXP names = PROTECT(Rf_getAttrib(opts_regex, R_NamesSymbol));
-      if (names == R_NilValue || LENGTH(names) != narg)
-         Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
-
-      for (R_len_t i=0; i<narg; ++i) {
-         if (STRING_ELT(names, i) == NA_STRING)
+        SEXP names = PROTECT(Rf_getAttrib(opts_regex, R_NamesSymbol));
+        if (names == R_NilValue || LENGTH(names) != narg)
             Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
 
-         SEXP tmp_arg;
-         PROTECT(tmp_arg = STRING_ELT(names, i));
-         const char* curname = stri__copy_string_Ralloc(tmp_arg, "curname");  /* this is R_alloc'ed */
-         UNPROTECT(1);
+        for (R_len_t i=0; i<narg; ++i) {
+            if (STRING_ELT(names, i) == NA_STRING)
+                Rf_error(MSG__REGEXP_CONFIG_FAILED); // error() call allowed here
 
-         PROTECT(tmp_arg = VECTOR_ELT(opts_regex, i));
-         if  (!strcmp(curname, "case_insensitive")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "case_insensitive");
-            if (val) flags |= UREGEX_CASE_INSENSITIVE;
-         } else if  (!strcmp(curname, "comments")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "comments");
-            if (val) flags |= UREGEX_COMMENTS;
-         } else if  (!strcmp(curname, "dotall")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "dotall");
-            if (val) flags |= UREGEX_DOTALL;
-         } else if  (!strcmp(curname, "literal")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "literal");
-            if (val) flags |= UREGEX_LITERAL;
-         } else if  (!strcmp(curname, "multiline")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "multiline");
-            if (val) flags |= UREGEX_MULTILINE;
-         } else if  (!strcmp(curname, "unix_lines")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "unix_lines");
-            if (val) flags |= UREGEX_UNIX_LINES;
-         } else if  (!strcmp(curname, "uword")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "uword");
-            if (val) flags |= UREGEX_UWORD;
-         } else if  (!strcmp(curname, "error_on_unknown_escapes")) {
-            bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "error_on_unknown_escapes");
-            if (val) flags |= UREGEX_ERROR_ON_UNKNOWN_ESCAPES;
-         } else {
-            Rf_warning(MSG__INCORRECT_REGEX_OPTION, curname);
-         }
-         UNPROTECT(1);
-      }
-      UNPROTECT(1); /* names */
-   }
+            SEXP tmp_arg;
+            PROTECT(tmp_arg = STRING_ELT(names, i));
+            const char* curname = stri__copy_string_Ralloc(tmp_arg, "curname");  /* this is R_alloc'ed */
+            UNPROTECT(1);
 
-   return flags;
+            PROTECT(tmp_arg = VECTOR_ELT(opts_regex, i));
+            if  (!strcmp(curname, "case_insensitive")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "case_insensitive");
+                if (val) flags |= UREGEX_CASE_INSENSITIVE;
+            } else if  (!strcmp(curname, "comments")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "comments");
+                if (val) flags |= UREGEX_COMMENTS;
+            } else if  (!strcmp(curname, "dotall")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "dotall");
+                if (val) flags |= UREGEX_DOTALL;
+            } else if  (!strcmp(curname, "literal")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "literal");
+                if (val) flags |= UREGEX_LITERAL;
+            } else if  (!strcmp(curname, "multiline")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "multiline");
+                if (val) flags |= UREGEX_MULTILINE;
+            } else if  (!strcmp(curname, "unix_lines")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "unix_lines");
+                if (val) flags |= UREGEX_UNIX_LINES;
+            } else if  (!strcmp(curname, "uword")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "uword");
+                if (val) flags |= UREGEX_UWORD;
+            } else if  (!strcmp(curname, "error_on_unknown_escapes")) {
+                bool val = stri__prepare_arg_logical_1_notNA(tmp_arg, "error_on_unknown_escapes");
+                if (val) flags |= UREGEX_ERROR_ON_UNKNOWN_ESCAPES;
+            } else {
+                Rf_warning(MSG__INCORRECT_REGEX_OPTION, curname);
+            }
+            UNPROTECT(1);
+        }
+        UNPROTECT(1); /* names */
+    }
+
+    return flags;
 }

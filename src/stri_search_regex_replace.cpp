@@ -66,80 +66,80 @@
  */
 SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex, int type)
 {
-   PROTECT(str = stri_prepare_arg_string(str, "str"));
-   PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
-   PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    PROTECT(str = stri_prepare_arg_string(str, "str"));
+    PROTECT(replacement = stri_prepare_arg_string(replacement, "replacement"));
+    PROTECT(pattern = stri_prepare_arg_string(pattern, "pattern"));
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
-   StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
-   StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
-   StriContainerUTF16 replacement_cont(replacement, vectorize_length);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    R_len_t vectorize_length = stri__recycling_rule(true, 3, LENGTH(str), LENGTH(pattern), LENGTH(replacement));
+    StriContainerUTF16 str_cont(str, vectorize_length, false); // writable
+    StriContainerRegexPattern pattern_cont(pattern, vectorize_length, pattern_flags);
+    StriContainerUTF16 replacement_cont(replacement, vectorize_length);
 
-   SEXP ret;
-   STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
+    SEXP ret;
+    STRI__PROTECT(ret = Rf_allocVector(STRSXP, vectorize_length));
 
-   for (R_len_t i = pattern_cont.vectorize_init();
-         i != pattern_cont.vectorize_end();
-         i = pattern_cont.vectorize_next(i))
-   {
-      STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
-         SET_STRING_ELT(ret, i, NA_STRING);)
+    for (R_len_t i = pattern_cont.vectorize_init();
+            i != pattern_cont.vectorize_end();
+            i = pattern_cont.vectorize_next(i))
+    {
+        STRI__CONTINUE_ON_EMPTY_OR_NA_PATTERN(str_cont, pattern_cont,
+                                              SET_STRING_ELT(ret, i, NA_STRING);)
 
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
-      matcher->reset(str_cont.get(i));
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        matcher->reset(str_cont.get(i));
 
-      UErrorCode status = U_ZERO_ERROR;
-      if (replacement_cont.isNA(i)) {
-         int m_res = matcher->find(status);
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         if (m_res)
-            str_cont.setNA(i);
-         SET_STRING_ELT(ret, i, str_cont.toR(i));
-         continue;
-      }
-
-      if (type == 0) { // all
-         str_cont.set(i, matcher->replaceAll(replacement_cont.get(i), status));
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
-      else if (type == 1) { // first
-         str_cont.set(i, matcher->replaceFirst(replacement_cont.get(i), status));
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
-      else if (type == -1) { // end
-         int start = -1;
-         int end = -1;
-         while (1) { // find last match
+        UErrorCode status = U_ZERO_ERROR;
+        if (replacement_cont.isNA(i)) {
             int m_res = matcher->find(status);
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            if (!m_res) break;
-            start = matcher->start(status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            end = matcher->end(status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-         }
-         if (start >= 0) {
-            matcher->find(start, status); // go back
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            UnicodeString out;
-            matcher->appendReplacement(out, replacement_cont.get(i), status);
-            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            out.append(str_cont.get(i), end, str_cont.get(i).length()-end);
-            str_cont.set(i, out);
-         }
-      }
-      else {
-         throw StriException(MSG__INTERNAL_ERROR);
-      }
+            if (m_res)
+                str_cont.setNA(i);
+            SET_STRING_ELT(ret, i, str_cont.toR(i));
+            continue;
+        }
 
-      SET_STRING_ELT(ret, i, str_cont.toR(i));
-   }
+        if (type == 0) { // all
+            str_cont.set(i, matcher->replaceAll(replacement_cont.get(i), status));
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        }
+        else if (type == 1) { // first
+            str_cont.set(i, matcher->replaceFirst(replacement_cont.get(i), status));
+            STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+        }
+        else if (type == -1) { // end
+            int start = -1;
+            int end = -1;
+            while (1) { // find last match
+                int m_res = matcher->find(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                if (!m_res) break;
+                start = matcher->start(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                end = matcher->end(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+            }
+            if (start >= 0) {
+                matcher->find(start, status); // go back
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                UnicodeString out;
+                matcher->appendReplacement(out, replacement_cont.get(i), status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                out.append(str_cont.get(i), end, str_cont.get(i).length()-end);
+                str_cont.set(i, out);
+            }
+        }
+        else {
+            throw StriException(MSG__INTERNAL_ERROR);
+        }
 
-   STRI__UNPROTECT_ALL
-   return ret;
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+        SET_STRING_ELT(ret, i, str_cont.toR(i));
+    }
+
+    STRI__UNPROTECT_ALL
+    return ret;
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -164,79 +164,79 @@ SEXP stri__replace_allfirstlast_regex(SEXP str, SEXP pattern, SEXP replacement, 
  *    Issue #210: Allow NA replacement
  */
 SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
-{ // version beta
-   PROTECT(str          = stri_prepare_arg_string(str, "str"));
+{   // version beta
+    PROTECT(str          = stri_prepare_arg_string(str, "str"));
 
-   // if str_n is 0, then return an empty vector
-   R_len_t str_n = LENGTH(str);
-   if (str_n <= 0) {
-      UNPROTECT(1);
-      return stri__vector_empty_strings(0);
-   }
+    // if str_n is 0, then return an empty vector
+    R_len_t str_n = LENGTH(str);
+    if (str_n <= 0) {
+        UNPROTECT(1);
+        return stri__vector_empty_strings(0);
+    }
 
-   PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
-   PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
-   uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
+    PROTECT(pattern      = stri_prepare_arg_string(pattern, "pattern"));
+    PROTECT(replacement  = stri_prepare_arg_string(replacement, "replacement"));
+    uint32_t pattern_flags = StriContainerRegexPattern::getRegexFlags(opts_regex);
 
-   R_len_t pattern_n = LENGTH(pattern);
-   R_len_t replacement_n = LENGTH(replacement);
-   if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
-      UNPROTECT(3);
-      Rf_error(MSG__WARN_RECYCLING_RULE2);
-   }
-   else if (pattern_n % replacement_n != 0)
-      Rf_warning(MSG__WARN_RECYCLING_RULE);
+    R_len_t pattern_n = LENGTH(pattern);
+    R_len_t replacement_n = LENGTH(replacement);
+    if (pattern_n < replacement_n || pattern_n <= 0 || replacement_n <= 0) {
+        UNPROTECT(3);
+        Rf_error(MSG__WARN_RECYCLING_RULE2);
+    }
+    else if (pattern_n % replacement_n != 0)
+        Rf_warning(MSG__WARN_RECYCLING_RULE);
 
-   if (pattern_n == 1) {// this will be much faster:
-      SEXP ret;
-      PROTECT(ret = stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0));
-      UNPROTECT(4);
-      return ret;
-   }
+    if (pattern_n == 1) {// this will be much faster:
+        SEXP ret;
+        PROTECT(ret = stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0));
+        UNPROTECT(4);
+        return ret;
+    }
 
-   STRI__ERROR_HANDLER_BEGIN(3)
-   StriContainerUTF16 str_cont(str, str_n, false); // writable
-   StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_flags);
-   StriContainerUTF16 replacement_cont(replacement, pattern_n);
+    STRI__ERROR_HANDLER_BEGIN(3)
+    StriContainerUTF16 str_cont(str, str_n, false); // writable
+    StriContainerRegexPattern pattern_cont(pattern, pattern_n, pattern_flags);
+    StriContainerUTF16 replacement_cont(replacement, pattern_n);
 
-   for (R_len_t i = 0; i<pattern_n; ++i)
-   {
-      if (pattern_cont.isNA(i)) {
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
-      else if (pattern_cont.get(i).length() <= 0) {
-         Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
-         STRI__UNPROTECT_ALL
-         return stri__vector_NA_strings(str_n);
-      }
+    for (R_len_t i = 0; i<pattern_n; ++i)
+    {
+        if (pattern_cont.isNA(i)) {
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
+        else if (pattern_cont.get(i).length() <= 0) {
+            Rf_warning(MSG__EMPTY_SEARCH_PATTERN_UNSUPPORTED);
+            STRI__UNPROTECT_ALL
+            return stri__vector_NA_strings(str_n);
+        }
 
-      RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
+        RegexMatcher *matcher = pattern_cont.getMatcher(i); // will be deleted automatically
 
-      for (R_len_t j = 0; j<str_n; ++j) {
-         if (str_cont.isNA(j)) continue;
+        for (R_len_t j = 0; j<str_n; ++j) {
+            if (str_cont.isNA(j)) continue;
 
-         matcher->reset(str_cont.get(j));
+            matcher->reset(str_cont.get(j));
 
-         UErrorCode status = U_ZERO_ERROR;
+            UErrorCode status = U_ZERO_ERROR;
 
-         if (replacement_cont.isNA(i)) {
-            int m_res = matcher->find(status);
+            if (replacement_cont.isNA(i)) {
+                int m_res = matcher->find(status);
+                STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+                if (m_res)
+                    str_cont.setNA(j);
+                continue;
+            }
+
+
+            str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
             STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-            if (m_res)
-               str_cont.setNA(j);
-            continue;
-         }
+        }
+    }
 
-
-         str_cont.set(j, matcher->replaceAll(replacement_cont.get(i), status));
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
-   }
-
-   STRI__UNPROTECT_ALL
-   return str_cont.toR();
-   STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
+    STRI__UNPROTECT_ALL
+    return str_cont.toR();
+    STRI__ERROR_HANDLER_END(;/* nothing special to be done on error */)
 }
 
 
@@ -287,10 +287,10 @@ SEXP stri__replace_all_regex_no_vectorize_all(SEXP str, SEXP pattern, SEXP repla
  */
 SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP vectorize_all, SEXP opts_regex)
 {
-   if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
-      return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
-   else
-      return stri__replace_all_regex_no_vectorize_all(str, pattern, replacement, opts_regex);
+    if (stri__prepare_arg_logical_1_notNA(vectorize_all, "vectorize_all"))
+        return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 0);
+    else
+        return stri__replace_all_regex_no_vectorize_all(str, pattern, replacement, opts_regex);
 }
 
 
@@ -307,7 +307,7 @@ SEXP stri_replace_all_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP vecto
  */
 SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
-   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 1);
+    return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, 1);
 }
 
 
@@ -324,5 +324,5 @@ SEXP stri_replace_first_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opt
  */
 SEXP stri_replace_last_regex(SEXP str, SEXP pattern, SEXP replacement, SEXP opts_regex)
 {
-   return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, -1);
+    return stri__replace_allfirstlast_regex(str, pattern, replacement, opts_regex, -1);
 }

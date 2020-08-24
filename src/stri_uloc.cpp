@@ -44,11 +44,11 @@
  */
 SEXP stri_locale_set(SEXP loc)
 {
-   const char* qloc = stri__prepare_arg_locale(loc, "locale", false); /* this is R_alloc'ed */
-   UErrorCode status = U_ZERO_ERROR;
-   uloc_setDefault(qloc, &status);
-   STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */}) // error() allowed here
-   return R_NilValue;
+    const char* qloc = stri__prepare_arg_locale(loc, "locale", false); /* this is R_alloc'ed */
+    UErrorCode status = U_ZERO_ERROR;
+    uloc_setDefault(qloc, &status);
+    STRI__CHECKICUSTATUS_RFERROR(status, {/* do nothing special on err */}) // error() allowed here
+    return R_NilValue;
 }
 
 
@@ -60,17 +60,17 @@ SEXP stri_locale_set(SEXP loc)
  */
 SEXP stri_locale_list()
 {
-   R_len_t c = (R_len_t)uloc_countAvailable();
-   SEXP ret;
-   PROTECT(ret = Rf_allocVector(STRSXP, c));
+    R_len_t c = (R_len_t)uloc_countAvailable();
+    SEXP ret;
+    PROTECT(ret = Rf_allocVector(STRSXP, c));
 
-   for (R_len_t i=0; i<c; ++i) {
-      const char* name = uloc_getAvailable(i);
-      SET_STRING_ELT(ret, i, Rf_mkChar(name));
-   }
+    for (R_len_t i=0; i<c; ++i) {
+        const char* name = uloc_getAvailable(i);
+        SET_STRING_ELT(ret, i, Rf_mkChar(name));
+    }
 
-   UNPROTECT(1);
-   return ret;
+    UNPROTECT(1);
+    return ret;
 }
 
 
@@ -86,34 +86,34 @@ SEXP stri_locale_list()
  */
 SEXP stri_locale_info(SEXP loc)
 {
-   const char* qloc = stri__prepare_arg_locale(loc, "locale", true); /* this is R_alloc'ed */
-   const R_len_t infosize = 4;
-   SEXP vals;
+    const char* qloc = stri__prepare_arg_locale(loc, "locale", true); /* this is R_alloc'ed */
+    const R_len_t infosize = 4;
+    SEXP vals;
 
-   PROTECT(vals = Rf_allocVector(VECSXP, infosize));
-   for (int i=0; i<infosize; ++i)
-      SET_VECTOR_ELT(vals, i, Rf_ScalarString(NA_STRING));
+    PROTECT(vals = Rf_allocVector(VECSXP, infosize));
+    for (int i=0; i<infosize; ++i)
+        SET_VECTOR_ELT(vals, i, Rf_ScalarString(NA_STRING));
 
-   UErrorCode err = U_ZERO_ERROR;
-   char buf[ULOC_FULLNAME_CAPACITY]; // this is sufficient
+    UErrorCode err = U_ZERO_ERROR;
+    char buf[ULOC_FULLNAME_CAPACITY]; // this is sufficient
 
-   uloc_getLanguage(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 0, stri__make_character_vector_char_ptr(1, buf));
+    uloc_getLanguage(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
+    if (U_FAILURE(err)) err = U_ZERO_ERROR;
+    else SET_VECTOR_ELT(vals, 0, stri__make_character_vector_char_ptr(1, buf));
 
-   uloc_getCountry(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 1, stri__make_character_vector_char_ptr(1, buf));
+    uloc_getCountry(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
+    if (U_FAILURE(err)) err = U_ZERO_ERROR;
+    else SET_VECTOR_ELT(vals, 1, stri__make_character_vector_char_ptr(1, buf));
 
-   uloc_getVariant(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 2, stri__make_character_vector_char_ptr(1, buf));
+    uloc_getVariant(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
+    if (U_FAILURE(err)) err = U_ZERO_ERROR;
+    else SET_VECTOR_ELT(vals, 2, stri__make_character_vector_char_ptr(1, buf));
 
-   uloc_canonicalize(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
-   if (U_FAILURE(err)) err = U_ZERO_ERROR;
-   else SET_VECTOR_ELT(vals, 3, stri__make_character_vector_char_ptr(1, buf));
+    uloc_canonicalize(qloc, buf, ULOC_FULLNAME_CAPACITY, &err);
+    if (U_FAILURE(err)) err = U_ZERO_ERROR;
+    else SET_VECTOR_ELT(vals, 3, stri__make_character_vector_char_ptr(1, buf));
 
-   stri__set_names(vals, 4, "Language", "Country", "Variant", "Name");
-   UNPROTECT(1);
-   return vals;
+    stri__set_names(vals, 4, "Language", "Country", "Variant", "Name");
+    UNPROTECT(1);
+    return vals;
 }

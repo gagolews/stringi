@@ -55,23 +55,23 @@
  */
 class StriContainerRegexPattern : public StriContainerUTF16 {
 
-   private:
+private:
 
-      uint32_t flags; ///< RegexMatcher flags
-      RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
-      R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
+    uint32_t flags; ///< RegexMatcher flags
+    RegexMatcher* lastMatcher; ///< recently used \code{RegexMatcher}
+    R_len_t lastMatcherIndex;  ///< used by vectorize_getMatcher
 
 
-   public:
+public:
 
-      static uint32_t getRegexFlags(SEXP opts_regex);
+    static uint32_t getRegexFlags(SEXP opts_regex);
 
-      StriContainerRegexPattern();
-      StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, uint32_t flags);
-      StriContainerRegexPattern(StriContainerRegexPattern& container);
-      ~StriContainerRegexPattern();
-      StriContainerRegexPattern& operator=(StriContainerRegexPattern& container);
-      RegexMatcher* getMatcher(R_len_t i);
+    StriContainerRegexPattern();
+    StriContainerRegexPattern(SEXP rstr, R_len_t nrecycle, uint32_t flags);
+    StriContainerRegexPattern(StriContainerRegexPattern& container);
+    ~StriContainerRegexPattern();
+    StriContainerRegexPattern& operator=(StriContainerRegexPattern& container);
+    RegexMatcher* getMatcher(R_len_t i);
 };
 
 #endif

@@ -51,42 +51,42 @@
  * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriBrkIterOptions {
-   protected:
+protected:
 
-      const char* locale;      // R_alloc'd
-      UnicodeString rules;
-      UBreakIteratorType type;
-      int32_t* skip_rules;     // R_alloc'd
-      R_len_t  skip_size;      // number of elements in skip_rules
-
-
-   private:
-
-      void setEmptyOpts() {
-         locale = NULL;
-         type = UBRK_CHARACTER;
-         skip_rules = NULL;
-         skip_size = 0;
-      }
-
-      void setType(SEXP opts_brkiter, const char* default_type);
-      void setLocale(SEXP opts_brkiter);
-      void setSkipRuleStatus(SEXP opts_brkiter);
+    const char* locale;      // R_alloc'd
+    UnicodeString rules;
+    UBreakIteratorType type;
+    int32_t* skip_rules;     // R_alloc'd
+    R_len_t  skip_size;      // number of elements in skip_rules
 
 
-   public:
+private:
+
+    void setEmptyOpts() {
+        locale = NULL;
+        type = UBRK_CHARACTER;
+        skip_rules = NULL;
+        skip_size = 0;
+    }
+
+    void setType(SEXP opts_brkiter, const char* default_type);
+    void setLocale(SEXP opts_brkiter);
+    void setSkipRuleStatus(SEXP opts_brkiter);
 
 
-      StriBrkIterOptions() {
-         setEmptyOpts();
-      }
+public:
 
-      StriBrkIterOptions(SEXP opts_brkiter, const char* default_type) {
-         setEmptyOpts();
-         setLocale(opts_brkiter);
-         setSkipRuleStatus(opts_brkiter);
-         setType(opts_brkiter, default_type);
-      }
+
+    StriBrkIterOptions() {
+        setEmptyOpts();
+    }
+
+    StriBrkIterOptions(SEXP opts_brkiter, const char* default_type) {
+        setEmptyOpts();
+        setLocale(opts_brkiter);
+        setSkipRuleStatus(opts_brkiter);
+        setType(opts_brkiter, default_type);
+    }
 };
 
 
@@ -102,86 +102,86 @@ class StriBrkIterOptions {
  * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriUBreakIterator : public StriBrkIterOptions {
-   private:
+private:
 
-      UBreakIterator* uiterator;
+    UBreakIterator* uiterator;
 
-      void open() {
+    void open() {
 #ifndef NDEBUG
-         if (uiterator) throw StriException("!NDEBUG: StriUBreakIterator::open()");
+        if (uiterator) throw StriException("!NDEBUG: StriUBreakIterator::open()");
 #endif
-         UErrorCode status = U_ZERO_ERROR;
-         if (!rules.isEmpty()) {
+        UErrorCode status = U_ZERO_ERROR;
+        if (!rules.isEmpty()) {
             UParseError parseErr;
             uiterator = ubrk_openRules(rules.getTerminatedBuffer(),
                                        -1/*null-terminated*/, NULL, 0,
                                        &parseErr, &status);
-         }
-         else {
+        }
+        else {
             switch (type) {
             case UBRK_CHARACTER: // character
-               uiterator = ubrk_open(UBRK_CHARACTER, locale, NULL, 0, &status);
-               break;
+                uiterator = ubrk_open(UBRK_CHARACTER, locale, NULL, 0, &status);
+                break;
             case UBRK_LINE: // line_break
-               uiterator = ubrk_open(UBRK_LINE, locale, NULL, 0, &status);
-               break;
+                uiterator = ubrk_open(UBRK_LINE, locale, NULL, 0, &status);
+                break;
             case UBRK_SENTENCE: // sentence
-               uiterator = ubrk_open(UBRK_SENTENCE, locale, NULL, 0, &status);
-               break;
+                uiterator = ubrk_open(UBRK_SENTENCE, locale, NULL, 0, &status);
+                break;
             case UBRK_WORD: // word
-               uiterator = ubrk_open(UBRK_WORD, locale, NULL, 0, &status);
-               break;
+                uiterator = ubrk_open(UBRK_WORD, locale, NULL, 0, &status);
+                break;
             default:
-               throw StriException(MSG__INTERNAL_ERROR);
+                throw StriException(MSG__INTERNAL_ERROR);
             }
-         }
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
+        }
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
 
-   public:
+public:
 
-      StriUBreakIterator()
-         : StriBrkIterOptions() {
-         uiterator = NULL;
-      }
+    StriUBreakIterator()
+        : StriBrkIterOptions() {
+        uiterator = NULL;
+    }
 
-      StriUBreakIterator(const StriBrkIterOptions& bropt)
-         : StriBrkIterOptions(bropt) {
-         uiterator = NULL;
-      }
+    StriUBreakIterator(const StriBrkIterOptions& bropt)
+        : StriBrkIterOptions(bropt) {
+        uiterator = NULL;
+    }
 
-      StriUBreakIterator& operator=(const StriBrkIterOptions& bropt) {
-         this->~StriUBreakIterator();
-         (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
-         uiterator = NULL;
-         return *this;
-      }
+    StriUBreakIterator& operator=(const StriBrkIterOptions& bropt) {
+        this->~StriUBreakIterator();
+        (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
+        uiterator = NULL;
+        return *this;
+    }
 
-      ~StriUBreakIterator() {
-         if (uiterator) {
+    ~StriUBreakIterator() {
+        if (uiterator) {
             ubrk_close(uiterator);
             uiterator = NULL;
-         }
-      }
+        }
+    }
 
-      void free(bool dealloc=true) {
-         if (uiterator && dealloc) {
+    void free(bool dealloc=true) {
+        if (uiterator && dealloc) {
             ubrk_close(uiterator);
-         }
-         uiterator = NULL;
-      }
+        }
+        uiterator = NULL;
+    }
 
 
-      UBreakIterator* getIterator() {
-         if (!uiterator) open();
-         return uiterator;
-      }
+    UBreakIterator* getIterator() {
+        if (!uiterator) open();
+        return uiterator;
+    }
 
 
-      const char* getLocale() {
-         return locale;
-      }
+    const char* getLocale() {
+        return locale;
+    }
 };
 
 
@@ -196,93 +196,93 @@ class StriUBreakIterator : public StriBrkIterOptions {
  * @version 1.1.6 (Marek Gagolewski, 2017-04-22) Add support for RBBI
  */
 class StriRuleBasedBreakIterator : public StriBrkIterOptions {
-   private:
+private:
 
-      BreakIterator* rbiterator;
-      UText* searchText;
-      R_len_t searchPos; // may be BreakIterator::DONE
-      const char* searchStr; // owned by caller
-      R_len_t searchLen; // in bytes
+    BreakIterator* rbiterator;
+    UText* searchText;
+    R_len_t searchPos; // may be BreakIterator::DONE
+    const char* searchStr; // owned by caller
+    R_len_t searchLen; // in bytes
 
-      void setEmptyOpts() {
-         rbiterator = NULL;
-         searchText = NULL;
-         searchPos = BreakIterator::DONE;
-         searchStr = NULL;
-         searchLen = 0;
-      }
+    void setEmptyOpts() {
+        rbiterator = NULL;
+        searchText = NULL;
+        searchPos = BreakIterator::DONE;
+        searchStr = NULL;
+        searchLen = 0;
+    }
 
-      void open() {
-         UErrorCode status = U_ZERO_ERROR;
-         Locale loc = Locale::createFromName(locale);
-         if (!rules.isEmpty()) {
+    void open() {
+        UErrorCode status = U_ZERO_ERROR;
+        Locale loc = Locale::createFromName(locale);
+        if (!rules.isEmpty()) {
             UParseError parseErr;
             rbiterator = (BreakIterator*) new RuleBasedBreakIterator(
-               UnicodeString(rules), parseErr, status
-            );
-         }
-         else {
+                             UnicodeString(rules), parseErr, status
+                         );
+        }
+        else {
             switch (type) {
             case UBRK_CHARACTER: // character
-               rbiterator = (BreakIterator*)BreakIterator::createCharacterInstance(loc, status);
-               break;
+                rbiterator = (BreakIterator*)BreakIterator::createCharacterInstance(loc, status);
+                break;
             case UBRK_LINE: // line_break
-               rbiterator = (BreakIterator*)BreakIterator::createLineInstance(loc, status);
-               break;
+                rbiterator = (BreakIterator*)BreakIterator::createLineInstance(loc, status);
+                break;
             case UBRK_SENTENCE: // sentence
-               rbiterator = (BreakIterator*)BreakIterator::createSentenceInstance(loc, status);
-               break;
+                rbiterator = (BreakIterator*)BreakIterator::createSentenceInstance(loc, status);
+                break;
             case UBRK_WORD: // word
-               rbiterator = (BreakIterator*)BreakIterator::createWordInstance(loc, status);
-               break;
+                rbiterator = (BreakIterator*)BreakIterator::createWordInstance(loc, status);
+                break;
             default:
-               throw StriException(MSG__INTERNAL_ERROR);
+                throw StriException(MSG__INTERNAL_ERROR);
             }
-         }
-         STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
-      }
+        }
+        STRI__CHECKICUSTATUS_THROW(status, {/* do nothing special on err */})
+    }
 
-      bool ignoreBoundary();
+    bool ignoreBoundary();
 
-   public:
+public:
 
-      StriRuleBasedBreakIterator()
-         : StriBrkIterOptions() {
-         setEmptyOpts();
-      }
+    StriRuleBasedBreakIterator()
+        : StriBrkIterOptions() {
+        setEmptyOpts();
+    }
 
-      StriRuleBasedBreakIterator(const StriBrkIterOptions& bropt)
-         : StriBrkIterOptions(bropt) {
-         setEmptyOpts();
-      }
+    StriRuleBasedBreakIterator(const StriBrkIterOptions& bropt)
+        : StriBrkIterOptions(bropt) {
+        setEmptyOpts();
+    }
 
-      StriRuleBasedBreakIterator& operator=(const StriBrkIterOptions& bropt) {
-         this->~StriRuleBasedBreakIterator();
-         (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
-         setEmptyOpts();
-         return *this;
-      }
+    StriRuleBasedBreakIterator& operator=(const StriBrkIterOptions& bropt) {
+        this->~StriRuleBasedBreakIterator();
+        (StriBrkIterOptions&) (*this) = (StriBrkIterOptions&)bropt;
+        setEmptyOpts();
+        return *this;
+    }
 
-      ~StriRuleBasedBreakIterator() {
-         if (rbiterator) {
+    ~StriRuleBasedBreakIterator() {
+        if (rbiterator) {
             delete rbiterator;
             rbiterator = NULL;
-         }
+        }
 
-         if (searchText) {
+        if (searchText) {
             utext_close(searchText);
             searchText = NULL;
-         }
-      }
+        }
+    }
 
-      void setupMatcher(const char* searchStr, R_len_t searchLen);
+    void setupMatcher(const char* searchStr, R_len_t searchLen);
 
-      void first();
-      bool next();
-      bool next(std::pair<R_len_t, R_len_t>& bdr);
+    void first();
+    bool next();
+    bool next(std::pair<R_len_t, R_len_t>& bdr);
 
-      void last();
-      bool previous(std::pair<R_len_t, R_len_t>& bdr);
+    void last();
+    bool previous(std::pair<R_len_t, R_len_t>& bdr);
 };
 
 #endif
