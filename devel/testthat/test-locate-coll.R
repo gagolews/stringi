@@ -85,7 +85,7 @@ test_that("stri_locate_last_coll", {
    expect_equivalent(stri_locate_last_coll("\u0105a", "\u0105a"), matrix(c(1,2)))
    expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("\u0105a"), "\u0105a"), matrix(c(1,3)))
    expect_equivalent(stri_locate_last_coll("\U0001F0A0a", "a"), matrix(c(2,2)))
-   #additional test for overlapping pattern
+   #additional test for overlapping patterns
    expect_equivalent(stri_locate_last_coll(stri_trans_nfkd("\u0105a\u0105a\u0105a"), "\u0105a\u0105a"), matrix(c(4,9)))
 
    expect_warning(expect_equivalent(stri_locate_last_coll("",  ""), matrix(c(NA,NA_integer_))))

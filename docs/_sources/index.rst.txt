@@ -10,16 +10,18 @@ stringi: THE String Processing Package for R
 
 
 Thanks to the use of the `ICU <https://www.icu-project.org>`_
-library, `stringi` fully supports `Unicode <https://www.unicode.org/>`_.
+library, `stringi` fully supports a wide range
+of `Unicode <https://www.unicode.org/>`_ standards.
+
 It gives you a multitude of functions for:
 
-* pattern searching (e.g., with ICU Java-like regular expressions or the
-  Unicode Collation Algorithm),
+* string concatenation, padding, wrapping,
+* substring extraction,
+* pattern searching (e.g., with ICU Java-like regular expressions),
 * collation and sorting,
 * random string generation,
 * case mapping,
 * string transliteration,
-* concatenation,
 * Unicode normalisation,
 * date-time formatting and parsing,
 

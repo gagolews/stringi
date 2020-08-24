@@ -298,25 +298,25 @@
 <h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 27%" />
-<col style="width: 73%" />
+<col style="width: 15%" />
+<col style="width: 85%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">case_insensitive</span></code></p></td>
 <td><p>logical; enable simple case insensitive matching</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">overlap</span></code></p></td>
-<td><p>logical; enable overlapping matches detection</p></td>
+<td><p>logical; enable overlapping matches’ detection</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
-<td><p>any other arguments to this function are purposely ignored</p></td>
+<td><p>[DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>Case-insensitive matching uses a simple, single-code point case mapping (via ICU’s <code class="docutils literal notranslate"><span class="pre">u_toupper()</span></code> function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They take into account the string context and the language. Also, they can map to a result string with a different length as appropriate, see <a class="reference external" href="stringi-search-coll.html">stringi-search-coll</a>.</p>
+<p>Case-insensitive matching uses a simple, single-code point case mapping (via ICU’s <code class="docutils literal notranslate"><span class="pre">u_toupper()</span></code> function). Full case mappings should be used whenever possible because they produce better results by working on whole strings. They also take into account the string context and the language, see <a class="reference external" href="stringi-search-coll.html">stringi-search-coll</a>.</p>
 <p>Searching for overlapping pattern matches is available in <a class="reference external" href="stri_extract.html">stri_extract_all_fixed</a>, <a class="reference external" href="stri_locate.html">stri_locate_all_fixed</a>, and <a class="reference external" href="stri_count.html">stri_count_fixed</a> functions.</p>
 </div>
 <div class="section" id="value">

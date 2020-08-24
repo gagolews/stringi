@@ -57,7 +57,8 @@ ending with a sentence terminator ("\code{.}", "\code{,}", "\code{?}",
 that do not contain an ending sentence terminator, but are ended
 by a hard separator or end of input}
 
-\item{...}{any other arguments to this function are purposely ignored}
+\item{...}{[DEPRECATED] any other arguments passed to this function
+generate a warning; this argument will be removed in the future}
 }
 \value{
 Returns a named list object.

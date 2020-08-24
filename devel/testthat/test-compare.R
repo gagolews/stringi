@@ -32,6 +32,13 @@ test_that("stri_cmp", {
    expect_equivalent(stri_cmp(LETTERS, letters), rep(+1L, length(LETTERS)))
    expect_equivalent(stri_cmp(c(NA, 'a', 'b'), 'a'), c(NA_integer_, 0L, 1L))
 
+   expect_false(stri_cmp("å\u0327", "a\u0327\u030A") == 0)
+   expect_true(stri_cmp("å\u0327", "a\u0327\u030A", normalisation=TRUE) == 0)
+   expect_true(stri_cmp("å\u0327", "a\u0327\u030A", normalization=TRUE) == 0)
+
+   #expect_warning(stri_cmp("å\u0327", "a\u0327\u030A", nrmaliztion=FALSE)) # DEPRECATED!
+
+
    expect_equivalent(stri_cmp("hladny", "chladny", locale="pl_PL"),  1L)
    expect_equivalent(stri_cmp("hladny", "chladny", locale="sk_SK"), -1L)
    expect_equivalent(stri_cmp(letters, LETTERS, strength=2), rep(0L, length(LETTERS)))

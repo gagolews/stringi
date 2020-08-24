@@ -9,8 +9,9 @@ Description: Fast, portable, consistent, correct, and convenient character
     known to 'Java', 'Perl', 'Python', 'PHP', and 'Ruby' programmers. Available
     features include: pattern searching (e.g., with 'Java'-like regular
     expressions or the 'Unicode' collation algorithm), random string generation,
-    case mapping, string transliteration, concatenation,
-    Unicode normalisation, date-time formatting and parsing, and many more.
+    case mapping, string transliteration, concatenation, sorting, padding,
+    wrapping, Unicode normalisation, date-time formatting and parsing,
+    and many more.
 URL: http://stringi.gagolewski.com/
     http://site.icu-project.org/
     http://www.unicode.org/

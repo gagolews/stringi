@@ -298,6 +298,7 @@
   <span class="n">uppercase_first</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span>
   <span class="n">case_level</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
   <span class="n">normalization</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+  <span class="n">normalisation</span> <span class="o">=</span> <span class="n">normalization</span><span class="p">,</span>
   <span class="n">numeric</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
   <span class="kc">...</span>
 <span class="p">)</span>
@@ -316,7 +317,7 @@
 <td><p>single string, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for default locale</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">strength</span></code></p></td>
-<td><p>single integer in {1,2,3,4}, which defines collation strength; <code class="docutils literal notranslate"><span class="pre">1</span></code> for the most permissive collation rules, <code class="docutils literal notranslate"><span class="pre">4</span></code> for the most strict ones</p></td>
+<td><p>single integer in {1,2,3,4}, which defines collation strength; <code class="docutils literal notranslate"><span class="pre">1</span></code> for the most permissive collation rules, <code class="docutils literal notranslate"><span class="pre">4</span></code> for the strictest ones</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">alternate_shifted</span></code></p></td>
 <td><p>single logical value; <code class="docutils literal notranslate"><span class="pre">FALSE</span></code> treats all the code points with non-ignorable primary weights in the same way, <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> causes code points with primary weights that are equal or below the variable top value to be ignored on primary level and moved to the quaternary level</p></td>
@@ -331,22 +332,20 @@
 <td><p>single logical value; controls whether an extra case level (positioned before the third level) is generated or not</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">normalization</span></code></p></td>
-<td><p>single logical value; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed</p></td>
+<td><p>(synonym: <code class="docutils literal notranslate"><span class="pre">normalisation</span></code>) single logical value; if <code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code></p></td>
 <td><p>single logical value; when turned on, this attribute generates a collation key for the numeric value of substrings of digits; this is a way to get ‘100’ to sort AFTER ‘2’</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">...</span></code></p></td>
-<td><p>any other arguments to this function are purposely ignored</p></td>
+<td><p>[DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>ICU’s <em>collator</em> performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between string than that provided by base R, and definitely one that is more complex and appropriate than ordinary byte-comparison.</p>
-<p>A note on collation <code class="docutils literal notranslate"><span class="pre">strength</span></code>: generally, <code class="docutils literal notranslate"><span class="pre">strength</span></code> set to 4 is the least permissive. Set to 2 to ignore case differences. Set to 1 to also ignore diacritical differences.</p>
-<p>The strings are Unicode-normalized before the comparison.</p>
+<p>ICU’s <em>collator</em> performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between strings than the one provided by base R, and definitely one that is more complex and appropriate than ordinary bytewise comparison.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>

@@ -19,6 +19,7 @@ Usage
      uppercase_first = NA,
      case_level = FALSE,
      normalization = FALSE,
+     normalisation = normalization,
      numeric = FALSE,
      ...
    )
@@ -29,7 +30,7 @@ Arguments
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``locale``            | single string, ``NULL`` or ``""`` for default locale                                                                                                                                                                                                                            |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``strength``          | single integer in {1,2,3,4}, which defines collation strength; ``1`` for the most permissive collation rules, ``4`` for the most strict ones                                                                                                                                    |
+| ``strength``          | single integer in {1,2,3,4}, which defines collation strength; ``1`` for the most permissive collation rules, ``4`` for the strictest ones                                                                                                                                      |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``alternate_shifted`` | single logical value; ``FALSE`` treats all the code points with non-ignorable primary weights in the same way, ``TRUE`` causes code points with primary weights that are equal or below the variable top value to be ignored on primary level and moved to the quaternary level |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -39,21 +40,17 @@ Arguments
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``case_level``        | single logical value; controls whether an extra case level (positioned before the third level) is generated or not                                                                                                                                                              |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``normalization``     | single logical value; if ``TRUE``, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed                                                                         |
+| ``normalization``     | (synonym: ``normalisation``) single logical value; if ``TRUE``, then incremental check is performed to see whether the input data is in the FCD form. If the data is not in the FCD form, incremental NFD normalization is performed                                            |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``numeric``           | single logical value; when turned on, this attribute generates a collation key for the numeric value of substrings of digits; this is a way to get '100' to sort AFTER '2'                                                                                                      |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``...``               | any other arguments to this function are purposely ignored                                                                                                                                                                                                                      |
+| ``...``               | [DEPRECATED] any other arguments passed to this function generate a warning; this argument will be removed in the future                                                                                                                                                        |
 +-----------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
-ICU's *collator* performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between string than that provided by base R, and definitely one that is more complex and appropriate than ordinary byte-comparison.
-
-A note on collation ``strength``: generally, ``strength`` set to 4 is the least permissive. Set to 2 to ignore case differences. Set to 1 to also ignore diacritical differences.
-
-The strings are Unicode-normalized before the comparison.
+ICU's *collator* performs a locale-aware, natural-language alike string comparison. This is a more reliable way of establishing relationships between strings than the one provided by base R, and definitely one that is more complex and appropriate than ordinary bytewise comparison.
 
 Value
 ~~~~~
