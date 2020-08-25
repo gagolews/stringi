@@ -19,13 +19,13 @@ Returns a character vector.
 }
 \description{
 Binary operators for joining (concatenating) two character vectors,
-with a typical \R look-and-feel.
+with a typical R look-and-feel.
 }
 \details{
 Vectorized over \code{e1} and \code{e2}.
 
 These operators act like a call to \code{\link{stri_join}(e1, e2, sep='')}.
-However, note that joining 3 vectors, e.g., \code{e1 \%+\% e2 \%+\% e3}
+However, note that joining 3 vectors, e.g., \code{e1 \%s+\% e2 \%s+\% e3}
 is slower than \code{\link{stri_join}(e1, e2, e3, sep='')},
 because it creates a new (temporary) result vector each time
 the operator is applied.

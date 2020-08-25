@@ -35,27 +35,53 @@
 #' Duplicate Strings
 #'
 #' @description
-#' Duplicates each string \code{times} times
+#' Duplicates each \code{str}(\code{e1}) string \code{times}(\code{e2}) times
 #' and concatenates the results.
 #'
 #' @details
-#' Vectorized over \code{str} and \code{times}.
+#' Vectorized over all arguments.
 #'
-#' @param str a character vector of strings to be duplicated
-#' @param times an integer vector with the numbers of times to duplicate each string
+#' \code{e1 \%s*\% e2} and \code{e1 \%stri*\% e2} are synonyms
+#' for \code{stri_dup(e1, e2)}
 #'
-#' @return Returns a character vector of the same length as \code{str}.
+#' @param str,e1 a character vector of strings to be duplicated
+#' @param times,e2 an integer vector with the numbers of times to duplicate each string
+#'
+#' @return Returns a character vector.
 #'
 #' @export
 #' @family join
+#' @rdname stri_dup
 #' @examples
 #' stri_dup('a', 1:5)
 #' stri_dup(c('a', NA, 'ba'), 4)
 #' stri_dup(c('abc', 'pqrst'), c(4, 2))
+#' "a" %s*% 5
 stri_dup <- function(str, times)
 {
     .Call(C_stri_dup, str, times)
 }
+
+
+#' @usage
+#' e1 \%s*\% e2
+#' @rdname stri_dup
+#' @export
+`%s*%` <- function(e1, e2)
+{
+    .Call(C_stri_dup, e1, e2)
+}
+
+
+#' @usage
+#' e1 \%stri*\% e2
+#' @rdname stri_dup
+#' @export
+`%stri*%` <- function(e1, e2)
+{
+    .Call(C_stri_dup, e1, e2)
+}
+
 
 
 #' @title
@@ -63,13 +89,13 @@ stri_dup <- function(str, times)
 #'
 #' @description
 #' Binary operators for joining (concatenating) two character vectors,
-#' with a typical \R look-and-feel.
+#' with a typical R look-and-feel.
 #'
 #' @details
 #' Vectorized over \code{e1} and \code{e2}.
 #'
 #' These operators act like a call to \code{\link{stri_join}(e1, e2, sep='')}.
-#' However, note that joining 3 vectors, e.g., \code{e1 \%+\% e2 \%+\% e3}
+#' However, note that joining 3 vectors, e.g., \code{e1 \%s+\% e2 \%s+\% e3}
 #' is slower than \code{\link{stri_join}(e1, e2, e3, sep='')},
 #' because it creates a new (temporary) result vector each time
 #' the operator is applied.
@@ -92,7 +118,7 @@ stri_dup <- function(str, times)
 #' e1 \%s+\% e2
 #'
 #' @export
-"%s+%" <- function(e1, e2)
+`%s+%` <- function(e1, e2)
 {
     .Call(C_stri_join2, e1, e2)
 }
@@ -102,7 +128,7 @@ stri_dup <- function(str, times)
 #' e1 \%stri+\% e2
 #' @rdname oper_plus
 #' @export
-"%stri+%" <- function(e1, e2)
+`%stri+%` <- function(e1, e2)
 {
     .Call(C_stri_join2, e1, e2)
 }

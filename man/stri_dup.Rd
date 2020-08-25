@@ -2,29 +2,39 @@
 % Please edit documentation in R/join.R
 \name{stri_dup}
 \alias{stri_dup}
+\alias{\%s*\%}
+\alias{\%stri*\%}
 \title{Duplicate Strings}
 \usage{
 stri_dup(str, times)
+
+e1 \%s*\% e2
+
+e1 \%stri*\% e2
 }
 \arguments{
-\item{str}{a character vector of strings to be duplicated}
+\item{str, e1}{a character vector of strings to be duplicated}
 
-\item{times}{an integer vector with the numbers of times to duplicate each string}
+\item{times, e2}{an integer vector with the numbers of times to duplicate each string}
 }
 \value{
-Returns a character vector of the same length as \code{str}.
+Returns a character vector.
 }
 \description{
-Duplicates each string \code{times} times
+Duplicates each \code{str}(\code{e1}) string \code{times}(\code{e2}) times
 and concatenates the results.
 }
 \details{
-Vectorized over \code{str} and \code{times}.
+Vectorized over all arguments.
+
+\code{e1 \%s*\% e2} and \code{e1 \%stri*\% e2} are synonyms
+for \code{stri_dup(e1, e2)}
 }
 \examples{
 stri_dup('a', 1:5)
 stri_dup(c('a', NA, 'ba'), 4)
 stri_dup(c('abc', 'pqrst'), c(4, 2))
+"a" \%s*\% 5
 }
 \seealso{
 Other join: 
