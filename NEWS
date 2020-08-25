@@ -8,14 +8,14 @@
 * [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
   that call base R's `sprintf()`.
 
-* [NEW FEATURE] #399: The `%s*` and `%stri*` operators can be used
+* [NEW FEATURE] #399: The `%s*%` and `%stri*%` operators can be used
   in addition to `stri_dup()`, for the very same purpose.
 
 * [NEW FEATURE] #355: `stri_opts_regex()` now accepts the `time_limit` and
   `stack_limit` options so as to prevent malformed or malicious regexes
   from running for too long.
 
-* [NEW FEATURE] #345: `stri_startswith()` and `stri_endswith()` now are equipped
+* [NEW FEATURE] #345: `stri_startswith()` and `stri_endswith()` are now equipped
   with the `negate` parameter.
 
 * [NEW FEATURE] #382: Incorrect regexes are now reported to ease debugging.
