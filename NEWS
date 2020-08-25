@@ -5,6 +5,9 @@
 
 ## 1.4.7 (2020-XX-XX) **devel*
 
+* [NEW FEATURE] #400: `%s$%` and `%stri$%` are now binary operators
+  that call base R's `sprintf()`.
+
 * [NEW FEATURE] #399: The `%s*` and `%stri*` operators can be used
   in addition to `stri_dup()`, for the very same purpose.
 
