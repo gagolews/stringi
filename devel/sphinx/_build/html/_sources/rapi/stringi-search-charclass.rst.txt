@@ -52,19 +52,19 @@ Some examples:
    Characters with Unicode Category = Letter. All forms shown are equivalent.
 
 ``[\P{Letter}]``
-   Negated property. (Upper case ``\P``) Match everything except Letters.
+   Negated property (Note the upper case ``\P``) – match everything except Letters.
 
 ``[\p{numeric_value=9}]``
    Match all numbers with a numeric value of 9. Any Unicode Property may be used in set expressions.
 
-``[\p{Letter}&&\p{script=cyrillic}]``
-   Logical AND or intersection – match the set of all Cyrillic letters.
+``[\p{Letter}&\p{script=cyrillic}]``
+   Set intersection – match the set of all Cyrillic letters.
 
-``[\p{Letter}--\p{script=latin}]``
-   Subtraction – match all non-Latin letters.
+``[\p{Letter}-\p{script=latin}]``
+   Set difference – match all non-Latin letters.
 
 ``[[a-z][A-Z][0-9]]`` or ``[a-zA-Z0-9]``
-   Implicit Logical OR or Union of Sets – the examples match ASCII letters and digits. The two forms are equivalent.
+   Implicit union of sets – match ASCII letters and digits (the two forms are equivalent).
 
 ``[:script=Greek:]``
    Alternate POSIX-like syntax for properties – equivalent to ``\p{script=Greek}``.

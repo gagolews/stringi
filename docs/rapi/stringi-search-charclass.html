@@ -318,15 +318,15 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}]</span></code> or <code class="docutils literal notranslate"><span class="pre">[\p{General_Category=Letter}]</span></code> or <code class="docutils literal notranslate"><span class="pre">[\p{L}]</span></code></dt><dd><p>Characters with Unicode Category = Letter. All forms shown are equivalent.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[\P{Letter}]</span></code></dt><dd><p>Negated property. (Upper case <code class="docutils literal notranslate"><span class="pre">\P</span></code>) Match everything except Letters.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[\P{Letter}]</span></code></dt><dd><p>Negated property (Note the upper case <code class="docutils literal notranslate"><span class="pre">\P</span></code>) – match everything except Letters.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[\p{numeric_value=9}]</span></code></dt><dd><p>Match all numbers with a numeric value of 9. Any Unicode Property may be used in set expressions.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}&amp;&amp;\p{script=cyrillic}]</span></code></dt><dd><p>Logical AND or intersection – match the set of all Cyrillic letters.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}&amp;\p{script=cyrillic}]</span></code></dt><dd><p>Set intersection – match the set of all Cyrillic letters.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}--\p{script=latin}]</span></code></dt><dd><p>Subtraction – match all non-Latin letters.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[\p{Letter}-\p{script=latin}]</span></code></dt><dd><p>Set difference – match all non-Latin letters.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[[a-z][A-Z][0-9]]</span></code> or <code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9]</span></code></dt><dd><p>Implicit Logical OR or Union of Sets – the examples match ASCII letters and digits. The two forms are equivalent.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[[a-z][A-Z][0-9]]</span></code> or <code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9]</span></code></dt><dd><p>Implicit union of sets – match ASCII letters and digits (the two forms are equivalent).</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[:script=Greek:]</span></code></dt><dd><p>Alternate POSIX-like syntax for properties – equivalent to <code class="docutils literal notranslate"><span class="pre">\p{script=Greek}</span></code>.</p>
 </dd>
