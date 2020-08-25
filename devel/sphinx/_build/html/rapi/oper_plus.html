@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="stri_compare: Compare Strings with or without Collation" href="stri_compare.html" />
-    <link rel="prev" title="oper_comparison: Compare Strings with or without Collation" href="oper_comparison.html" /> 
+    <link rel="prev" title="oper_dollar: C-Style Formatting with sprintf as a Binary Operator" href="oper_dollar.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,6 +93,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">oper_plus: Concatenate Two Character Vectors</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -272,7 +273,7 @@
         <a href="stri_compare.html" class="btn btn-neutral float-right" title="stri_compare: Compare Strings with or without Collation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="oper_comparison.html" class="btn btn-neutral float-left" title="oper_comparison: Compare Strings with or without Collation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="oper_dollar.html" class="btn btn-neutral float-left" title="oper_dollar: C-Style Formatting with sprintf as a Binary Operator" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -315,7 +316,7 @@
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
-<p>These operators act like a call to <a class="reference external" href="stri_join.html">stri_join(e1, e2, sep=’’)</a>. However, note that joining 3 vectors, e.g., <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%+%</span> <span class="pre">e2</span> <span class="pre">%+%</span> <span class="pre">e3</span></code> is slower than <a class="reference external" href="stri_join.html">stri_join(e1, e2, e3, sep=’’)</a>, because it creates a new (temporary) result vector each time the operator is applied.</p>
+<p>These operators act like a call to <a class="reference external" href="stri_join.html">stri_join(e1, e2, sep=’’)</a>. However, note that joining 3 vectors, e.g., <code class="docutils literal notranslate"><span class="pre">e1</span> <span class="pre">%s+%</span> <span class="pre">e2</span> <span class="pre">%s+%</span> <span class="pre">e3</span></code> is slower than <a class="reference external" href="stri_join.html">stri_join(e1, e2, e3, sep=’’)</a>, because it creates a new (temporary) result vector each time the operator is applied.</p>
 </div>
 <div class="section" id="value">
 <h2>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
@@ -345,7 +346,7 @@
         <a href="stri_compare.html" class="btn btn-neutral float-right" title="stri_compare: Compare Strings with or without Collation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="oper_comparison.html" class="btn btn-neutral float-left" title="oper_comparison: Compare Strings with or without Collation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="oper_dollar.html" class="btn btn-neutral float-left" title="oper_dollar: C-Style Formatting with sprintf as a Binary Operator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

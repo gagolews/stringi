@@ -77,10 +77,7 @@ stri_dup <- function(str, times)
 #' e1 \%stri*\% e2
 #' @rdname stri_dup
 #' @export
-`%stri*%` <- function(e1, e2)
-{
-    .Call(C_stri_dup, e1, e2)
-}
+`%stri*%` <- `%s*%`
 
 
 
@@ -128,10 +125,7 @@ stri_dup <- function(str, times)
 #' e1 \%stri+\% e2
 #' @rdname oper_plus
 #' @export
-`%stri+%` <- function(e1, e2)
-{
-    .Call(C_stri_join2, e1, e2)
-}
+`%stri+%` <- `%s+%`
 
 
 #' @title
@@ -151,7 +145,7 @@ stri_dup <- function(str, times)
 #'
 #' If any of the arguments in `\code{...}` is a vector of length 0
 #' (not to be confused with vectors of empty strings)
-#' and \code{ignore_null=FALSE}, then
+#' and \code{ignore_null} is \code{FALSE}, then
 #' you will get a 0-length character vector in result.
 #'
 #' If \code{collapse} or \code{sep} has length greater than 1,

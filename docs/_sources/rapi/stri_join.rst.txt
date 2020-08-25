@@ -37,7 +37,7 @@ Vectorized over each atomic vector in '``...``'.
 
 Unless ``collapse`` is ``NULL``, the result will be a single string. Otherwise, you get a character vector of length equal to the length of the longest argument.
 
-If any of the arguments in '``...``' is a vector of length 0 (not to be confused with vectors of empty strings) and ``ignore_null=FALSE``, then you will get a 0-length character vector in result.
+If any of the arguments in '``...``' is a vector of length 0 (not to be confused with vectors of empty strings) and ``ignore_null`` is ``FALSE``, then you will get a 0-length character vector in result.
 
 If ``collapse`` or ``sep`` has length greater than 1, then only the first string will be used.
 

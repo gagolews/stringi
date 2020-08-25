@@ -93,6 +93,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oper_plus.html">oper_plus: Concatenate Two Character Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
@@ -324,7 +325,7 @@
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
 <p>Vectorized over each atomic vector in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’.</p>
 <p>Unless <code class="docutils literal notranslate"><span class="pre">collapse</span></code> is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, the result will be a single string. Otherwise, you get a character vector of length equal to the length of the longest argument.</p>
-<p>If any of the arguments in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’ is a vector of length 0 (not to be confused with vectors of empty strings) and <code class="docutils literal notranslate"><span class="pre">ignore_null=FALSE</span></code>, then you will get a 0-length character vector in result.</p>
+<p>If any of the arguments in ‘<code class="docutils literal notranslate"><span class="pre">...</span></code>’ is a vector of length 0 (not to be confused with vectors of empty strings) and <code class="docutils literal notranslate"><span class="pre">ignore_null</span></code> is <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, then you will get a 0-length character vector in result.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">collapse</span></code> or <code class="docutils literal notranslate"><span class="pre">sep</span></code> has length greater than 1, then only the first string will be used.</p>
 <p>In case where there are missing values in any of the input vectors, <code class="docutils literal notranslate"><span class="pre">NA</span></code> is set to the corresponding element. Note that this behavior is different from <code class="docutils literal notranslate"><span class="pre">paste</span></code>, which treats missing values as ordinary strings like <code class="docutils literal notranslate"><span class="pre">'NA'</span></code>. Moreover, as usual in stringi, the resulting strings are always in UTF-8.</p>
 </div>

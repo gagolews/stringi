@@ -5,6 +5,7 @@ R Package *stringi* Reference
     :maxdepth: 1
 
     rapi/oper_comparison
+    rapi/oper_dollar
     rapi/oper_plus
     rapi/stri_compare
     rapi/stri_count_boundaries

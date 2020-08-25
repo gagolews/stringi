@@ -115,6 +115,7 @@ stri_na2empty <- function(x)
     x
 }
 
+
 #' @title
 #' Remove All Empty Strings from a Character Vector
 #'
@@ -221,3 +222,71 @@ stri_replace_na <- function(str, replacement = "NA")
     .Call(C_stri_replace_na, str, replacement)
 }
 
+
+
+#' @title
+#' C-Style Formatting with sprintf as a Binary Operator
+#'
+#' @description
+#' Provides access to base R's \code{\link{sprintf}} in form of a binary
+#' operator in a way similar to Python's \code{\%} overloaded for strings.
+#'
+#' @details
+#' Vectorized over \code{e2}.
+#'
+#' \code{e1 \%s$\% atomic_vector} is equivalent to
+#' \code{e1 \%s$\% list(atomic_vector)}.
+#'
+#'
+#' @param e1 a single format string, see \code{\link{sprintf}} for syntax
+#' @param e2 a list of arguments to be passed to \code{\link{sprintf}}
+#' or a single atomic vector
+#'
+#' @return
+#' Returns a character vector.
+#'
+#'
+#' @examples
+#' "value='%d'" %s$% 3
+#' "value='%d'" %s$% 1:3
+#' "%s='%d'" %s$% list("value", 3)
+#' "%s='%d'" %s$% list("value", 1:3)
+#' "%s='%d'" %s$% list(c("a", "b", "c"), 1)
+#' "%s='%d'" %s$% list(c("a", "b", "c"), 1:3)
+#'
+#' @rdname oper_dollar
+#'
+#' @usage
+#' e1 \%s$\% e2
+#'
+#' @export
+`%s$%` <- function(e1, e2)
+{
+    stopifnot(is.character(e1), length(e1) == 1, !is.na(e1))
+
+
+
+    if (!is.list(e2))
+        e2 <- list(e2)
+
+    # this is stringi, assure UTF-8 output and proper NA handling!
+
+    for (i in seq_along(e2)) {
+        if (is.character(e2[[i]])) {
+            e2[[i]] <- stri_enc_toutf8(e2[[i]])
+        }
+    }
+
+    ret <- stri_enc_toutf8(do.call(sprintf, as.list(c(e1, e2))))
+    which_na <- do.call(stri_paste, e2)
+    ret[is.na(which_na)] <- NA_character_
+
+    ret
+}
+
+
+#' @usage
+#' e1 \%stri$\% e2
+#' @rdname oper_dollar
+#' @export
+`%stri$%` <- `%s$%`
