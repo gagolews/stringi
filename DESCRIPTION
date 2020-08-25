@@ -1,21 +1,19 @@
 Package: stringi
 Version: 1.4.7
-Date: 2020-08-24
+Date: 2020-08-25
 Title: Character String Processing Facilities
-Description: Fast, portable, consistent, correct, and convenient character
-    string/text/natural language processing in every locale and any native encoding.
-    Owing to the use of the 'ICU' (International Components for Unicode)
-    library, the package provides 'R' users with platform-independent functions
-    known to 'Java', 'Perl', 'Python', 'PHP', and 'Ruby' programmers. Available
-    features include: pattern searching (e.g., with 'Java'-like regular
+Description: A multitude of character string/text/natural language
+    processing tools: pattern searching (e.g., with 'Java'-like regular
     expressions or the 'Unicode' collation algorithm), random string generation,
     case mapping, string transliteration, concatenation, sorting, padding,
     wrapping, Unicode normalisation, date-time formatting and parsing,
-    and many more.
-URL: http://stringi.gagolewski.com/
+    and many more. They are fast, consistent, convenient, and -
+    owing to the use of the 'ICU' (International Components for Unicode)
+    library - portable across all locales and platforms.
+URL: https://stringi.gagolewski.com/
     http://site.icu-project.org/
-    http://www.unicode.org/
-BugReports: http://github.com/gagolews/stringi/issues
+    https://www.unicode.org/
+BugReports: https://github.com/gagolews/stringi/issues
 SystemRequirements: ICU4C (>= 55, optional)
 Type: Package
 Depends:

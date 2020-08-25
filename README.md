@@ -11,7 +11,7 @@
 ![RStudio CRAN mirror downloads](http://cranlogs.r-pkg.org/badges/last-day/stringi)
 
 
-> The package documentation is available at https://stringi.gagolewski.com/.
+> Documentation is available at https://stringi.gagolewski.com/.
 
 
 
