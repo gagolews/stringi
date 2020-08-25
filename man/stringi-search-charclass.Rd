@@ -76,17 +76,16 @@ Some examples:
 \item{\code{[\\u0000-\\U0010ffff]}}{Range -- match all characters.}
 \item{\code{[\\p{Letter}]} or \code{[\\p{General_Category=Letter}]} or \code{[\\p{L}]}}{
    Characters with Unicode Category = Letter. All forms shown are equivalent.}
-\item{\code{[\\P{Letter}]}}{Negated property.
-   (Upper case \code{\\P}) Match everything except Letters.}
+\item{\code{[\\P{Letter}]}}{Negated property
+   (Note the upper case \code{\\P}) -- match everything except Letters.}
 \item{\code{[\\p{numeric_value=9}]}}{Match all numbers with a numeric value of 9.
    Any Unicode Property may be used in set expressions.}
-\item{\code{[\\p{Letter}&&\\p{script=cyrillic}]}}{Logical AND
-   or intersection -- match the set of all Cyrillic letters.}
-\item{\code{[\\p{Letter}--\\p{script=latin}]}}{Subtraction --
+\item{\code{[\\p{Letter}&\\p{script=cyrillic}]}}{Set
+    intersection -- match the set of all Cyrillic letters.}
+\item{\code{[\\p{Letter}-\\p{script=latin}]}}{Set difference --
    match all non-Latin letters.}
-\item{\code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}}{Implicit Logical
-   OR or Union of Sets -- the examples match ASCII letters and digits.
-   The two forms are equivalent.}
+\item{\code{[[a-z][A-Z][0-9]]} or \code{[a-zA-Z0-9]}}{Implicit union of
+   sets -- match ASCII letters and digits (the two forms are equivalent).}
 \item{\code{[:script=Greek:]}}{Alternate POSIX-like syntax for properties --
    equivalent to \code{\\p{script=Greek}}.}
 }
