@@ -129,7 +129,8 @@
 #' D.E. Knuth, M.F. Plass,
 #' Breaking paragraphs into lines, \emph{Software: Practice and Experience} 11(11),
 #' 1981, pp. 1119--1184
-stri_wrap <- function(str, width = floor(0.9 * getOption("width")), cost_exponent = 2,
+stri_wrap <- function(str, width = floor(0.9 * getOption("width")),
+    cost_exponent = 2,
     simplify = TRUE, normalize = TRUE, normalise = normalize,
     indent = 0, exdent = 0, prefix = "", initial = prefix,
     whitespace_only = FALSE, use_length = FALSE, locale = NULL)

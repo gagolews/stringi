@@ -52,6 +52,9 @@
 * [BUGFIX] #138: `stri_encode()` and `stri_rand_strings()`
   now can generate strings of much larger lengths.
 
+* [BUGFIX] `stri_wrap()` did not honour `indent` correctly when
+  `use_width` was `TRUE`.
+
 -------------------------------------------------------------------------------
 
 ## 1.4.6 (2020-02-17) **CRAN*

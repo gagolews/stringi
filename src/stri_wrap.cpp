@@ -195,7 +195,7 @@ struct StriWrapLineStart {
         str(s.c_str()) {
         nbytes  = s.length()+v;
         count   = s.countCodePoints()+v;
-        width   = stri__width_string(s.c_str(), s.length());
+        width   = stri__width_string(s.c_str(), s.length())+v;
         str.append(std::string(v, ' '));
     }
 };
@@ -433,15 +433,15 @@ SEXP stri_wrap(SEXP str, SEXP width, SEXP cost_exponent,
         std::deque<R_len_t> wrap_after; // wrap line after which word in {0..nwords-1}?
         if (exponent_val <= 0.0) {
             stri__wrap_greedy(wrap_after, nwords, width_val,
-                              widths_orig, widths_trim,
-                              (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
-                              (use_length_val)?pe.count:pe.width);
+                widths_orig, widths_trim,
+                (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
+                (use_length_val)?pe.count:pe.width);
         }
         else {
             stri__wrap_dynamic(wrap_after, nwords, width_val, exponent_val,
-                               widths_orig, widths_trim,
-                               (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
-                               (use_length_val)?pe.count:pe.width);
+                widths_orig, widths_trim,
+                (use_length_val)?((i==0)?ii.count:pi.count):((i==0)?ii.width:pi.width),
+                (use_length_val)?pe.count:pe.width);
         }
 
         // wrap_after.size() line breaks => wrap_after.size()+1 lines
