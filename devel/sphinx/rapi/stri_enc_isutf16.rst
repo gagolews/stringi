@@ -29,7 +29,7 @@ Arguments
 Details
 ~~~~~~~
 
-These functions are independent of the way R marks encodings in character strings (see `Encoding <../../base/html/Encoding.html>`__ and `stringi-encoding <stringi-encoding.html>`__). Most often, these functions act on raw vectors.
+These functions are independent of the way R marks encodings in character strings (see `Encoding <../../base/html/Encoding.html>`__ and `stringi-encoding <about_encoding.html>`__). Most often, these functions act on raw vectors.
 
 A result of ``FALSE`` means that a string is surely not valid UTF-16 or UTF-32. However, false positives are possible.
 
@@ -43,4 +43,4 @@ Returns a logical vector.
 See Also
 ~~~~~~~~
 
-Other encoding_detection: `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_detect() <stri_enc_detect.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_detection: `about_encoding <about_encoding.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_detect() <stri_enc_detect.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__

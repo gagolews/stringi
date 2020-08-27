@@ -25,7 +25,7 @@ Arguments
 Details
 ~~~~~~~
 
-See `stringi-locale <stringi-locale.html>`__ for more information on the effect of changing the default locale.
+See `stringi-locale <about_locale.html>`__ for more information on the effect of changing the default locale.
 
 ``stri_locale_get`` is the same as `stri_locale_info(NULL)$Name <stri_locale_info.html>`__.
 
@@ -39,7 +39,7 @@ Value
 See Also
 ~~~~~~~~
 
-Other locale_management: `stri_locale_info() <stri_locale_info.html>`__, `stri_locale_list() <stri_locale_list.html>`__, `stringi-locale <stringi-locale.html>`__
+Other locale_management: `about_locale <about_locale.html>`__, `stri_locale_info() <stri_locale_info.html>`__, `stri_locale_list() <stri_locale_list.html>`__
 
 Examples
 ~~~~~~~~

@@ -133,7 +133,7 @@ stri_endswith_coll('\ufdfa\ufdfa\ufdfaXYZ', pat, strength=1)
 }
 \seealso{
 Other search_detect: 
-\code{\link{stri_detect}()},
-\code{\link{stringi-search}}
+\code{\link{about_search}},
+\code{\link{stri_detect}()}
 }
 \concept{search_detect}

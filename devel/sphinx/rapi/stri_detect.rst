@@ -50,7 +50,7 @@ Arguments
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``                                    | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_regex``, ``opts_fixed``, and so on                                                                                           |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                                                                                |
+| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                                                                                  |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``negate``                                 | single logical value; whether a no-match to a pattern is rather of interest                                                                                                                                                                          |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -80,7 +80,7 @@ Each function returns a logical vector.
 See Also
 ~~~~~~~~
 
-Other search_detect: `stri_startswith() <stri_startsendswith.html>`__, `stringi-search <stringi-search.html>`__
+Other search_detect: `about_search <about_search.html>`__, `stri_startswith() <stri_startsendswith.html>`__
 
 Examples
 ~~~~~~~~

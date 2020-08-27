@@ -192,8 +192,8 @@ stri_locate_all_regex('ACAGAGACTTTAGATAGAGAAGA', '(?=AGA)')
 }
 \seealso{
 Other search_locate: 
-\code{\link{stri_locate_all_boundaries}()},
-\code{\link{stringi-search}}
+\code{\link{about_search}},
+\code{\link{stri_locate_all_boundaries}()}
 
 Other indexing: 
 \code{\link{stri_locate_all_boundaries}()},

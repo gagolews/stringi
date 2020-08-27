@@ -52,6 +52,7 @@
 #' @export
 #' @family join
 #' @rdname stri_dup
+#' @aliases stri_dup operator_multiply oper_multiply
 #' @examples
 #' stri_dup('a', 1:5)
 #' stri_dup(c('a', NA, 'ba'), 4)
@@ -108,7 +109,8 @@ stri_dup <- function(str, times)
 #' c('abc', '123', 'xy') %s+% letters[1:6]
 #' 'ID_' %s+% 1:5
 #'
-#' @rdname oper_plus
+#' @rdname operator_add
+#' @aliases oper_plus operator_add operator_plus
 #' @family join
 #'
 #' @usage
@@ -123,7 +125,7 @@ stri_dup <- function(str, times)
 
 #' @usage
 #' e1 \%stri+\% e2
-#' @rdname oper_plus
+#' @rdname operator_add
 #' @export
 `%stri+%` <- `%s+%`
 

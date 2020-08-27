@@ -224,8 +224,9 @@
 #' Check out \code{\link{stri_enc_detect}} (among others) for a useful
 #' function in this category.
 #'
-#' @name stringi-encoding
-#' @rdname stringi-encoding
+#' @name about_encoding
+#' @rdname about_encoding
+#' @aliases about_encoding stringi-encoding encoding
 #' @family stringi_general_topics
 #' @family encoding_management
 #' @family encoding_detection

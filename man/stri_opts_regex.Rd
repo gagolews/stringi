@@ -100,7 +100,7 @@ stri_detect_regex('ala', '(?i)ALA') # equivalent
 }
 \seealso{
 Other search_regex: 
-\code{\link{stringi-search-regex}},
-\code{\link{stringi-search}}
+\code{\link{about_search_regex}},
+\code{\link{about_search}}
 }
 \concept{search_regex}

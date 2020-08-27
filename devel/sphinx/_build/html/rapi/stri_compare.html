@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="stri_count_boundaries: Count the Number of Text Boundaries" href="stri_count_boundaries.html" />
-    <link rel="prev" title="oper_plus: Concatenate Two Character Vectors" href="oper_plus.html" /> 
+    <link rel="prev" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator" href="operator_dollar.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -92,9 +92,19 @@
               <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../rapi.html">R Package <em>stringi</em> Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oper_plus.html">oper_plus: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_arguments.html">about_arguments: Passing Arguments to Functions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_encoding.html">about_encoding: Character Encodings and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_locale.html">about_locale: Locales and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_charclass.html">about_search_charclass: Character Classes in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search_regex.html">about_search_regex: Regular Expressions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_search.html">about_search: String Searching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">stri_compare: Compare Strings with or without Collation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
@@ -191,16 +201,6 @@
 <li class="toctree-l2"><a class="reference internal" href="stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-locale.html">stringi-locale: Locales and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-package.html">stringi-package: THE String Processing Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-boundaries.html">stringi-search-boundaries: Text Boundary Analysis in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-charclass.html">stringi-search-charclass: Character Classes in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-coll.html">stringi-search-coll: Locale-Sensitive Text Searching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-fixed.html">stringi-search-fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search-regex.html">stringi-search-regex: Regular Expressions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stringi-search.html">stringi-search: String Searching</a></li>
 </ul>
 </li>
 </ul>
@@ -274,7 +274,7 @@
         <a href="stri_count_boundaries.html" class="btn btn-neutral float-right" title="stri_count_boundaries: Count the Number of Text Boundaries" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="oper_plus.html" class="btn btn-neutral float-left" title="oper_plus: Concatenate Two Character Vectors" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
   </div>
   
@@ -338,7 +338,7 @@
 <p>All the functions listed here are vectorized over <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_cmp_eq</span></code> tests whether two corresponding strings consist of exactly the same code points, while <code class="docutils literal notranslate"><span class="pre">stri_cmp_neq</span></code> allows to check whether there is any difference between them. These are locale-independent operations: for natural language processing, where the notion of canonical equivalence is more valid, this might not be exactly what you are looking for, see Examples. Please note that stringi always silently removes UTF-8 BOMs from input strings, therefore, e.g., <code class="docutils literal notranslate"><span class="pre">stri_cmp_eq</span></code> does not take BOMs into account while comparing strings.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_cmp_equiv</span></code> tests for canonical equivalence of two strings and is locale-dependent. Additionally, the ICU’s Collator may be tuned up so that, e.g., the comparison is case-insensitive. To test whether two strings are not canonically equivalent, call <code class="docutils literal notranslate"><span class="pre">stri_cmp_nequiv</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">stri_cmp_le</span></code> tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, <code class="docutils literal notranslate"><span class="pre">stri_cmp_ge</span></code> tests whether they are greater or equal, <code class="docutils literal notranslate"><span class="pre">stri_cmp_lt</span></code> if less, and <code class="docutils literal notranslate"><span class="pre">stri_cmp_gt</span></code> if greater, see also, e.g., <a class="reference external" href="oper_comparison.html">%s&lt;%</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stri_cmp_le</span></code> tests whether the elements in the first vector are less than or equal to the corresponding elements in the second vector, <code class="docutils literal notranslate"><span class="pre">stri_cmp_ge</span></code> tests whether they are greater or equal, <code class="docutils literal notranslate"><span class="pre">stri_cmp_lt</span></code> if less, and <code class="docutils literal notranslate"><span class="pre">stri_cmp_gt</span></code> if greater, see also, e.g., <a class="reference external" href="operator_compare.html">%s&lt;%</a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">stri_compare</span></code> is an alias to <code class="docutils literal notranslate"><span class="pre">stri_cmp</span></code>. They both perform exactly the same locale-dependent operation. Both functions provide a C library’s <code class="docutils literal notranslate"><span class="pre">strcmp()</span></code> look-and-feel, see Value for details.</p>
 <p>For more information on ICU’s Collator and how to tune its settings refer to <a class="reference external" href="stri_opts_collator.html">stri_opts_collator</a>. Note that different locale settings may lead to different results (see the examples below).</p>
 </div>
@@ -353,7 +353,7 @@
 </div>
 <div class="section" id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
-<p>Other locale_sensitive: <a class="reference external" href="oper_comparison.html">%s&lt;%()</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_duplicated.html">stri_duplicated()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_sort.html">stri_sort()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a>, <a class="reference external" href="stringi-locale.html">stringi-locale</a>, <a class="reference external" href="stringi-search-boundaries.html">stringi-search-boundaries</a>, <a class="reference external" href="stringi-search-coll.html">stringi-search-coll</a></p>
+<p>Other locale_sensitive: <a class="reference external" href="operator_compare.html">%s&lt;%()</a>, <a class="reference external" href="about_locale.html">about_locale</a>, <a class="reference external" href="about_search_boundaries.html">about_search_boundaries</a>, <a class="reference external" href="about_search_coll.html">about_search_coll</a>, <a class="reference external" href="stri_count_boundaries.html">stri_count_boundaries()</a>, <a class="reference external" href="stri_duplicated.html">stri_duplicated()</a>, <a class="reference external" href="stri_enc_detect2.html">stri_enc_detect2()</a>, <a class="reference external" href="stri_extract_boundaries.html">stri_extract_all_boundaries()</a>, <a class="reference external" href="stri_locate_boundaries.html">stri_locate_all_boundaries()</a>, <a class="reference external" href="stri_opts_collator.html">stri_opts_collator()</a>, <a class="reference external" href="stri_order.html">stri_order()</a>, <a class="reference external" href="stri_sort_key.html">stri_sort_key()</a>, <a class="reference external" href="stri_sort.html">stri_sort()</a>, <a class="reference external" href="stri_split_boundaries.html">stri_split_boundaries()</a>, <a class="reference external" href="stri_trans_casemap.html">stri_trans_tolower()</a>, <a class="reference external" href="stri_unique.html">stri_unique()</a>, <a class="reference external" href="stri_wrap.html">stri_wrap()</a></p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -400,7 +400,7 @@
         <a href="stri_count_boundaries.html" class="btn btn-neutral float-right" title="stri_count_boundaries: Count the Number of Text Boundaries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="oper_plus.html" class="btn btn-neutral float-left" title="oper_plus: Concatenate Two Character Vectors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="operator_dollar.html" class="btn btn-neutral float-left" title="operator_dollar: C-Style Formatting with sprintf as a Binary Operator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

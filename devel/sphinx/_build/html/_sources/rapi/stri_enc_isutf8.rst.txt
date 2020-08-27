@@ -27,7 +27,7 @@ Details
 
 However, the longer the sequence, the greater the possibility that the result is indeed in UTF-8 – this is because not all sequences of bytes are valid UTF-8.
 
-This function is independent of the way R marks encodings in character strings (see `Encoding <../../base/html/Encoding.html>`__ and `stringi-encoding <stringi-encoding.html>`__).
+This function is independent of the way R marks encodings in character strings (see `Encoding <../../base/html/Encoding.html>`__ and `stringi-encoding <about_encoding.html>`__).
 
 Value
 ~~~~~
@@ -37,7 +37,7 @@ Returns a logical vector. Its i-th element indicates whether the i-th string cor
 See Also
 ~~~~~~~~
 
-Other encoding_detection: `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_detect() <stri_enc_detect.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_detection: `about_encoding <about_encoding.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_detect() <stri_enc_detect.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__
 
 Examples
 ~~~~~~~~

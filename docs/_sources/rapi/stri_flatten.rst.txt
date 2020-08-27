@@ -43,7 +43,7 @@ Returns a single string, i.e., a character vector of length 1.
 See Also
 ~~~~~~~~
 
-Other join: `%s+%() <oper_plus.html>`__, `stri_dup() <stri_dup.html>`__, `stri_join_list() <stri_join_list.html>`__, `stri_join() <stri_join.html>`__
+Other join: `%s+%() <operator_add.html>`__, `stri_dup() <stri_dup.html>`__, `stri_join_list() <stri_join_list.html>`__, `stri_join() <stri_join.html>`__
 
 Examples
 ~~~~~~~~

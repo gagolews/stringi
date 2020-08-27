@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by ICU or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See `stringi-locale <stringi-locale.html>`__ for discussion.
+With this function you may obtain some basic information on any provided locale identifier, even if it is unsupported by ICU or if you pass a malformed locale identifier (the one that is not, e.g., of the form Language_Country). See `stringi-locale <about_locale.html>`__ for discussion.
 
 This function does not do anything really complicated. In many cases it is similar to a call to ``as.list(stri_split_fixed(locale, '_', 3L)[[1]])``, with ``locale`` case mapped. It may be used, however, to get insight on how ICU understands a given locale identifier.
 
@@ -35,7 +35,7 @@ Returns a list with the following named character strings: ``Language``, ``Count
 See Also
 ~~~~~~~~
 
-Other locale_management: `stri_locale_list() <stri_locale_list.html>`__, `stri_locale_set() <stri_locale_set.html>`__, `stringi-locale <stringi-locale.html>`__
+Other locale_management: `about_locale <about_locale.html>`__, `stri_locale_list() <stri_locale_list.html>`__, `stri_locale_set() <stri_locale_set.html>`__
 
 Examples
 ~~~~~~~~

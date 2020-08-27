@@ -46,7 +46,7 @@ If ``n`` is negative (the default), then all text pieces are extracted.
 
 Otherwise, if ``tokens_only`` is ``FALSE`` (this is the default, for compatibility with the stringr package), then ``n-1`` tokens are extracted (if possible) and the ``n``-th string gives the (non-split) remainder (see Examples). On the other hand, if ``tokens_only`` is ``TRUE``, then only full tokens (up to ``n`` pieces) are extracted.
 
-For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <stringi-search-boundaries.html>`__.
+For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <about_search_boundaries.html>`__.
 
 Value
 ~~~~~
@@ -58,11 +58,11 @@ Otherwise, `stri_list2matrix <stri_list2matrix.html>`__ with ``byrow=TRUE`` and 
 See Also
 ~~~~~~~~
 
-Other search_split: `stri_split_lines() <stri_split_lines.html>`__, `stri_split() <stri_split.html>`__, `stringi-search <stringi-search.html>`__
+Other search_split: `about_search <about_search.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_split() <stri_split.html>`__
 
-Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
+Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__
 
-Other text_boundaries: `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search <stringi-search.html>`__
+Other text_boundaries: `about_search_boundaries <about_search_boundaries.html>`__, `about_search <about_search.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_wrap() <stri_wrap.html>`__
 
 Examples
 ~~~~~~~~

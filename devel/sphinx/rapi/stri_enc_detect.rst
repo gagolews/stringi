@@ -95,7 +95,7 @@ References
 See Also
 ~~~~~~~~
 
-Other encoding_detection: `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_detection: `about_encoding <about_encoding.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_enc_isascii() <stri_enc_isascii.html>`__, `stri_enc_isutf16be() <stri_enc_isutf16.html>`__, `stri_enc_isutf8() <stri_enc_isutf8.html>`__
 
 Examples
 ~~~~~~~~

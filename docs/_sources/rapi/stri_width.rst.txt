@@ -25,7 +25,7 @@ Details
 
 The Unicode standard does not formalize the notion of a character width. Roughly based on http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c and the UAX #11 we proceed as follows. The following code points are of width 0:
 
--  code points with general category (see `stringi-search-charclass <stringi-search-charclass.html>`__) ``Me``, ``Mn``, and ``Cf``),
+-  code points with general category (see `stringi-search-charclass <about_search_charclass.html>`__) ``Me``, ``Mn``, and ``Cf``),
 
 -  ``C0`` and ``C1`` control codes (general category ``Cc``) - for compatibility with the ``nchar`` function,
 

@@ -63,7 +63,7 @@ Arguments
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``...``                             | supplementary arguments passed to the underlying functions, including additional settings for ``opts_collator``, ``opts_fixed``, and so on.                                                             |
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, fixed, coll, charclass`` | character vector defining search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                           |
+| ``pattern, fixed, coll, charclass`` | character vector defining search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                             |
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``from``                            | integer vector                                                                                                                                                                                          |
 +-------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -91,7 +91,7 @@ If you wish to test for a pattern match at an arbitrary position in ``str``, use
 
 ``stri_startswith`` and ``stri_endswith`` are convenience functions. They call either ``stri_*_fixed``, ``stri_*_coll``, or ``stri_*_charclass``, depending on the argument used. Relying on these underlying functions directly will make your code run slightly faster.
 
-Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the '``^``' and '``$``' meta-characters, see `stringi-search-regex <stringi-search-regex.html>`__.
+Note that testing for a pattern match at the start or end of a string has not been implemented separately for regex patterns. For that you may use the '``^``' and '``$``' meta-characters, see `stringi-search-regex <about_search_regex.html>`__.
 
 Value
 ~~~~~
@@ -101,7 +101,7 @@ Each function returns a logical vector.
 See Also
 ~~~~~~~~
 
-Other search_detect: `stri_detect() <stri_detect.html>`__, `stringi-search <stringi-search.html>`__
+Other search_detect: `about_search <about_search.html>`__, `stri_detect() <stri_detect.html>`__
 
 Examples
 ~~~~~~~~

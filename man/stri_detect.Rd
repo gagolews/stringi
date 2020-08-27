@@ -119,7 +119,7 @@ stri_detect_regex(c('abc', 'def', '123', 'ghi', '456', '789', 'jkl'),
 }
 \seealso{
 Other search_detect: 
-\code{\link{stri_startswith}()},
-\code{\link{stringi-search}}
+\code{\link{about_search}},
+\code{\link{stri_startswith}()}
 }
 \concept{search_detect}

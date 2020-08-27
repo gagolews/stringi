@@ -52,18 +52,18 @@
 #' @details
 #' Manual pages on general topics:
 #' \itemize{
-#' \item \link{stringi-encoding} -- character encoding issues, including
+#' \item \link{about_encoding} -- character encoding issues, including
 #'    information on encoding management in \pkg{stringi}, as well as
 #'    on encoding detection and conversion.
 #'
-#' \item \link{stringi-locale} -- locale issues, including locale
+#' \item \link{about_locale} -- locale issues, including locale
 #'    management and specification in \pkg{stringi}, and the list of
 #'    locale-sensitive operations. In particular, see
 #'    \code{\link{stri_opts_collator}} for a description of the string
 #'    collation algorithm, which is used for string comparing, ordering,
 #'    sorting, case-folding, and searching.
 #'
-#' \item \link{stringi-arguments} -- information on how \pkg{stringi}
+#' \item \link{about_arguments} -- information on how \pkg{stringi}
 #'    treats its functions' arguments.
 #' }
 #'
@@ -72,18 +72,18 @@
 #'
 #' Refer to the following:
 #' \itemize{
-#' \item \link{stringi-search} for string searching facilities;
+#' \item \link{about_search} for string searching facilities;
 #' these include pattern searching, matching, string splitting, and so on.
 #' The following independent search engines are provided:
 #' \itemize{
-#' \item \link{stringi-search-regex} -- with ICU (Java-like) regular expressions,
-#' \item \link{stringi-search-fixed} -- fast, locale-independent, byte-wise pattern
+#' \item \link{about_search_regex} -- with ICU (Java-like) regular expressions,
+#' \item \link{about_search_fixed} -- fast, locale-independent, byte-wise pattern
 #'    matching,
-#' \item \link{stringi-search-coll} -- locale-aware pattern matching
+#' \item \link{about_search_coll} -- locale-aware pattern matching
 #'    for natural language processing tasks,
-#' \item \link{stringi-search-charclass} -- seeking elements of
+#' \item \link{about_search_charclass} -- seeking elements of
 #'    particular character classes, like ``all whites-paces'' or ``all digits'',
-#' \item \link{stringi-search-boundaries} -- text boundary analysis.
+#' \item \link{about_search_boundaries} -- text boundary analysis.
 #' }
 #'
 #' \item \code{\link{stri_datetime_format}} for date/time formatting
@@ -102,12 +102,12 @@
 #'
 #' \item \code{\link{stri_length}} (among others) for determining the number
 #' of code points in a string. See also \code{\link{stri_count_boundaries}}
-#' for counting the number of \code{Unicode characters}
+#' for counting the number of Unicode characters
 #' and \code{\link{stri_width}} for approximating the width of a string.
 #'
 #' \item \code{\link{stri_trim}} (among others) for
 #' trimming characters from the beginning or/and end of a string,
-#' see also \link{stringi-search-charclass}, and \code{\link{stri_pad}}
+#' see also \link{about_search_charclass}, and \code{\link{stri_pad}}
 #' for padding strings so that they are of the same width.
 #' Additionally, \code{\link{stri_wrap}} wraps text into lines.
 #'
@@ -121,7 +121,7 @@
 #' \item \code{\link{stri_cmp}}, \code{\link{\%s<\%}}, \code{\link{stri_order}},
 #' \code{\link{stri_sort}}, \code{\link{stri_unique}}, and
 #' \code{\link{stri_duplicated}} for collation-based,
-#' locale-aware operations, see also \link{stringi-locale}.
+#' locale-aware operations, see also \link{about_locale}.
 #'
 #' \item \code{\link{stri_split_lines}} (among others)
 #' to split a string into text lines.
@@ -140,12 +140,13 @@
 #' Note that each man page provides many further links to other
 #' interesting facilities and topics.
 #'
-#' @name stringi-package
-#' @rdname stringi-package
-#' @aliases stringi
+#' @name about_stringi
+#' @rdname about_stringi
+#' @aliases about_stringi stringi stringi-package
+#'
 #' @docType package
 #' @author Marek Gagolewski,
-#' with contributions from Bartek Tartanus and others.
+#' with contributions from Bartek Tartanus and many others.
 #' ICU4C was developed by IBM and others.
 #' The Unicode Character Database is due to Unicode, Inc.;
 #' see the COPYRIGHTS file for more details.

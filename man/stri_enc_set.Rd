@@ -49,9 +49,9 @@ the default charset is always UTF-8 (i.e., where the internal
 }
 \seealso{
 Other encoding_management: 
+\code{\link{about_encoding}},
 \code{\link{stri_enc_info}()},
 \code{\link{stri_enc_list}()},
-\code{\link{stri_enc_mark}()},
-\code{\link{stringi-encoding}}
+\code{\link{stri_enc_mark}()}
 }
 \concept{encoding_management}

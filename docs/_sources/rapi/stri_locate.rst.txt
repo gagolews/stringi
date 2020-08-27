@@ -79,7 +79,7 @@ Arguments
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``mode``                                   | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                                                                                                                                              |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                                                                                |
+| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                                                                                  |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``merge``                                  | single logical value; indicates whether consecutive sequences of indexes in the resulting matrix should be merged; ``stri_locate_all_charclass`` only                                                                                                |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -109,7 +109,7 @@ For ``stri_locate_*_regex``, if the match is of zero length, ``end`` will be one
 See Also
 ~~~~~~~~
 
-Other search_locate: `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stringi-search <stringi-search.html>`__
+Other search_locate: `about_search <about_search.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__
 
 Other indexing: `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_sub_all() <stri_sub_all.html>`__, `stri_sub() <stri_sub.html>`__
 

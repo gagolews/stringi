@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="oper_comparison: Compare Strings with or without Collation" href="rapi/oper_comparison.html" />
+    <link rel="next" title="about_arguments: Passing Arguments to Functions in stringi" href="rapi/about_arguments.html" />
     <link rel="prev" title="stringi: THE String Processing Package for R" href="index.html" /> 
 </head>
 
@@ -92,9 +92,19 @@
               <p class="caption"><span class="caption-text">API Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">R Package <em>stringi</em> Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rapi/oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/oper_plus.html">oper_plus: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_arguments.html">about_arguments: Passing Arguments to Functions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_encoding.html">about_encoding: Character Encodings and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_locale.html">about_locale: Locales and stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search_charclass.html">about_search_charclass: Character Classes in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search_regex.html">about_search_regex: Regular Expressions in stringi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_search.html">about_search: String Searching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rapi/operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -181,16 +191,6 @@
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rapi/stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-locale.html">stringi-locale: Locales and stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-package.html">stringi-package: THE String Processing Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search-boundaries.html">stringi-search-boundaries: Text Boundary Analysis in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search-charclass.html">stringi-search-charclass: Character Classes in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search-coll.html">stringi-search-coll: Locale-Sensitive Text Searching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search-fixed.html">stringi-search-fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search-regex.html">stringi-search-regex: Regular Expressions in stringi</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rapi/stringi-search.html">stringi-search: String Searching</a></li>
 </ul>
 </li>
 </ul>
@@ -259,7 +259,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="rapi/oper_comparison.html" class="btn btn-neutral float-right" title="oper_comparison: Compare Strings with or without Collation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rapi/about_arguments.html" class="btn btn-neutral float-right" title="about_arguments: Passing Arguments to Functions in stringi" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="stringi: THE String Processing Package for R" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -275,9 +275,19 @@
 <h1>R Package <em>stringi</em> Reference<a class="headerlink" href="#r-package-stringi-reference" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="rapi/oper_comparison.html">oper_comparison: Compare Strings with or without Collation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/oper_dollar.html">oper_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/oper_plus.html">oper_plus: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_arguments.html">about_arguments: Passing Arguments to Functions in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_encoding.html">about_encoding: Character Encodings and stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_locale.html">about_locale: Locales and stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search_boundaries.html">about_search_boundaries: Text Boundary Analysis in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search_charclass.html">about_search_charclass: Character Classes in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search_coll.html">about_search_coll: Locale-Sensitive Text Searching in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search_fixed.html">about_search_fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search_regex.html">about_search_regex: Regular Expressions in stringi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_search.html">about_search: String Searching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/about_stringi.html">about_stringi: THE String Processing Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/operator_add.html">operator_add: Concatenate Two Character Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/operator_compare.html">operator_compare: Compare Strings with or without Collation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rapi/operator_dollar.html">operator_dollar: C-Style Formatting with sprintf as a Binary Operator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_compare.html">stri_compare: Compare Strings with or without Collation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_count_boundaries.html">stri_count_boundaries: Count the Number of Text Boundaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_count.html">stri_count: Count the Number of Pattern Matches</a></li>
@@ -364,16 +374,6 @@
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_width.html">stri_width: Determine the Width of Code Points</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_wrap.html">stri_wrap: Word Wrap Text to Format Paragraphs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rapi/stri_write_lines.html">stri_write_lines: Write Text Lines to a Text File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-arguments.html">stringi-arguments: Passing Arguments to Functions in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-encoding.html">stringi-encoding: Character Encodings and stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-locale.html">stringi-locale: Locales and stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-package.html">stringi-package: THE String Processing Package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search-boundaries.html">stringi-search-boundaries: Text Boundary Analysis in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search-charclass.html">stringi-search-charclass: Character Classes in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search-coll.html">stringi-search-coll: Locale-Sensitive Text Searching in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search-fixed.html">stringi-search-fixed: Locale-Insensitive Fixed Pattern Matching in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search-regex.html">stringi-search-regex: Regular Expressions in stringi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rapi/stringi-search.html">stringi-search: String Searching</a></li>
 </ul>
 </div>
 </div>
@@ -386,7 +386,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rapi/oper_comparison.html" class="btn btn-neutral float-right" title="oper_comparison: Compare Strings with or without Collation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rapi/about_arguments.html" class="btn btn-neutral float-right" title="about_arguments: Passing Arguments to Functions in stringi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="stringi: THE String Processing Package for R" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -90,7 +90,7 @@ Arguments
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``mode``                                   | single string; one of: ``'first'`` (the default), ``'all'``, ``'last'``                                                                                                                                                                         |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__                                                                                                                                           |
+| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__                                                                                                                                             |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``merge``                                  | single logical value; indicates whether consecutive pattern matches will be merged into one string; ``stri_extract_all_charclass`` only                                                                                                         |
 +--------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -122,7 +122,7 @@ Otherwise, i.e., if ``simplify`` is not ``FALSE``, then `stri_list2matrix <stri_
 See Also
 ~~~~~~~~
 
-Other search_extract: `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_match_all() <stri_match.html>`__, `stringi-search <stringi-search.html>`__
+Other search_extract: `about_search <about_search.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_match_all() <stri_match.html>`__
 
 Examples
 ~~~~~~~~

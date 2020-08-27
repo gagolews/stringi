@@ -2,6 +2,8 @@
 % Please edit documentation in R/join.R
 \name{stri_dup}
 \alias{stri_dup}
+\alias{operator_multiply}
+\alias{oper_multiply}
 \alias{\%s*\%}
 \alias{\%stri*\%}
 \title{Duplicate Strings}

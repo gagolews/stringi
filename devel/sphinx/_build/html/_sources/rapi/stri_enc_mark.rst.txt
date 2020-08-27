@@ -39,4 +39,4 @@ This gives exactly the same data that is used by all the functions in stringi to
 See Also
 ~~~~~~~~
 
-Other encoding_management: `stri_enc_info() <stri_enc_info.html>`__, `stri_enc_list() <stri_enc_list.html>`__, `stri_enc_set() <stri_enc_set.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_management: `about_encoding <about_encoding.html>`__, `stri_enc_info() <stri_enc_info.html>`__, `stri_enc_list() <stri_enc_list.html>`__, `stri_enc_set() <stri_enc_set.html>`__

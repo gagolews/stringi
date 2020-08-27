@@ -62,7 +62,7 @@ Arguments
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``value``                                  | character vector to be substituted with; replacement function only                                                                                                                                                                                   |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <stringi-search.html>`__; the replacement functions accept only one pattern at a time                                                                                   |
+| ``pattern, regex, fixed, coll, charclass`` | character vector; search patterns; for more details refer to `stringi-search <about_search.html>`__; the replacement functions accept only one pattern at a time                                                                                     |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``omit_na``                                | single logical value; should missing values be excluded from the result?                                                                                                                                                                             |
 +--------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -88,7 +88,7 @@ The ``stri_subset<-`` function modifies the ``str`` object 'in-place'.
 See Also
 ~~~~~~~~
 
-Other search_subset: `stringi-search <stringi-search.html>`__
+Other search_subset: `about_search <about_search.html>`__
 
 Examples
 ~~~~~~~~

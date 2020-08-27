@@ -18,22 +18,22 @@ Usage
 Arguments
 ~~~~~~~~~
 
-+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``str``          | character vector or an object coercible to                                                                                                                                             |
-+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``...``          | additional settings for ``opts_brkiter``                                                                                                                                               |
-+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``opts_brkiter`` | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for the default break iterator, i.e., ``line_break``                      |
-+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``locale``       | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <stringi-locale.html>`__ |
-+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``str``          | character vector or an object coercible to                                                                                                                                           |
++------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``...``          | additional settings for ``opts_brkiter``                                                                                                                                             |
++------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``opts_brkiter`` | a named list with ICU BreakIterator's settings, see `stri_opts_brkiter <stri_opts_brkiter.html>`__; ``NULL`` for the default break iterator, i.e., ``line_break``                    |
++------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``locale``       | ``NULL`` or ``''`` for text boundary analysis following the conventions of the default locale, or a single string with locale identifier, see `stringi-locale <about_locale.html>`__ |
++------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Details
 ~~~~~~~
 
 Vectorized over ``str``.
 
-For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <stringi-search-boundaries.html>`__.
+For more information on text boundary analysis performed by ICU's ``BreakIterator``, see `stringi-search-boundaries <about_search_boundaries.html>`__.
 
 In case of ``stri_count_words``, just like in `stri_extract_all_words <stri_extract_boundaries.html>`__ and `stri_locate_all_words <stri_locate_boundaries.html>`__, ICU's word ``BreakIterator`` iterator is used to locate the word boundaries, and all non-word characters (``UBRK_WORD_NONE`` rule status) are ignored. This function is equivalent to a call to `stri_count_boundaries(str, type='word', skip_word_none=TRUE, locale=locale) <stri_count_boundaries.html>`__.
 
@@ -49,11 +49,11 @@ Both functions return an integer vector.
 See Also
 ~~~~~~~~
 
-Other search_count: `stri_count() <stri_count.html>`__, `stringi-search <stringi-search.html>`__
+Other search_count: `about_search <about_search.html>`__, `stri_count() <stri_count.html>`__
 
-Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_compare() <stri_compare.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
+Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_compare() <stri_compare.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_collator() <stri_opts_collator.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__
 
-Other text_boundaries: `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search <stringi-search.html>`__
+Other text_boundaries: `about_search_boundaries <about_search_boundaries.html>`__, `about_search <about_search.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_opts_brkiter() <stri_opts_brkiter.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_split_lines() <stri_split_lines.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_wrap() <stri_wrap.html>`__
 
 Examples
 ~~~~~~~~

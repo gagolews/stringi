@@ -129,8 +129,8 @@ stri_extract_all_regex('ACAGAGACTTTAGATAGAGAAGA', '([ACGT])[ACGT]\\\\1')
 }
 \seealso{
 Other search_extract: 
+\code{\link{about_search}},
 \code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_extract_all}()},
-\code{\link{stringi-search}}
+\code{\link{stri_extract_all}()}
 }
 \concept{search_extract}

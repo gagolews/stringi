@@ -33,7 +33,7 @@ Details
 
 ``stri_conv`` is an alias for ``stri_encode``.
 
-Refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <stringi-encoding.html>`__ for a general discussion.
+Refer to `stri_enc_list <stri_enc_list.html>`__ for the list of supported encodings and `stringi-encoding <about_encoding.html>`__ for a general discussion.
 
 If ``from`` is either missing, ``''``, or ``NULL``, and if ``str`` is a character vector then the marked encodings are used (see `stri_enc_mark <stri_enc_mark.html>`__) – in such a case ``bytes``-declared strings are disallowed. Otherwise, i.e., if ``str`` is a ``raw``-type vector or a list of raw vectors, we assume that the input encoding is the current default encoding as given by `stri_enc_get <stri_enc_set.html>`__.
 
@@ -64,4 +64,4 @@ References
 See Also
 ~~~~~~~~
 
-Other encoding_conversion: `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_enc_toutf8() <stri_enc_toutf8.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_conversion: `about_encoding <about_encoding.html>`__, `stri_enc_fromutf32() <stri_enc_fromutf32.html>`__, `stri_enc_toascii() <stri_enc_toascii.html>`__, `stri_enc_tonative() <stri_enc_tonative.html>`__, `stri_enc_toutf32() <stri_enc_toutf32.html>`__, `stri_enc_toutf8() <stri_enc_toutf8.html>`__

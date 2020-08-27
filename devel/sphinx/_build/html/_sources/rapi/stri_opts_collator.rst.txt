@@ -4,7 +4,7 @@ stri_opts_collator: Generate a List with Collator Settings
 Description
 ~~~~~~~~~~~
 
-A convenience function to tune the ICU Collator's behavior, e.g., in `stri_compare <stri_compare.html>`__, `stri_order <stri_order.html>`__, `stri_unique <stri_unique.html>`__, `stri_duplicated <stri_duplicated.html>`__, as well as `stri_detect_coll <stri_detect.html>`__ and other `stringi-search-coll <stringi-search-coll.html>`__ functions.
+A convenience function to tune the ICU Collator's behavior, e.g., in `stri_compare <stri_compare.html>`__, `stri_order <stri_order.html>`__, `stri_unique <stri_unique.html>`__, `stri_duplicated <stri_duplicated.html>`__, as well as `stri_detect_coll <stri_detect.html>`__ and other `stringi-search-coll <about_search_coll.html>`__ functions.
 
 Usage
 ~~~~~
@@ -84,9 +84,9 @@ References
 See Also
 ~~~~~~~~
 
-Other locale_sensitive: `%s<%() <oper_comparison.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__, `stringi-locale <stringi-locale.html>`__, `stringi-search-boundaries <stringi-search-boundaries.html>`__, `stringi-search-coll <stringi-search-coll.html>`__
+Other locale_sensitive: `%s<%() <operator_compare.html>`__, `about_locale <about_locale.html>`__, `about_search_boundaries <about_search_boundaries.html>`__, `about_search_coll <about_search_coll.html>`__, `stri_compare() <stri_compare.html>`__, `stri_count_boundaries() <stri_count_boundaries.html>`__, `stri_duplicated() <stri_duplicated.html>`__, `stri_enc_detect2() <stri_enc_detect2.html>`__, `stri_extract_all_boundaries() <stri_extract_boundaries.html>`__, `stri_locate_all_boundaries() <stri_locate_boundaries.html>`__, `stri_order() <stri_order.html>`__, `stri_sort_key() <stri_sort_key.html>`__, `stri_sort() <stri_sort.html>`__, `stri_split_boundaries() <stri_split_boundaries.html>`__, `stri_trans_tolower() <stri_trans_casemap.html>`__, `stri_unique() <stri_unique.html>`__, `stri_wrap() <stri_wrap.html>`__
 
-Other search_coll: `stringi-search-coll <stringi-search-coll.html>`__, `stringi-search <stringi-search.html>`__
+Other search_coll: `about_search_coll <about_search_coll.html>`__, `about_search <about_search.html>`__
 
 Examples
 ~~~~~~~~

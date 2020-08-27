@@ -23,7 +23,7 @@ Arguments
 Details
 ~~~~~~~
 
-Apart from given encoding identifiers and their aliases, some other specifiers might be additionally available. This is due to the fact that ICU tries to normalize converter names. For instance, ``'UTF8'`` is also valid, see `stringi-encoding <stringi-encoding.html>`__ for more information.
+Apart from given encoding identifiers and their aliases, some other specifiers might be additionally available. This is due to the fact that ICU tries to normalize converter names. For instance, ``'UTF8'`` is also valid, see `stringi-encoding <about_encoding.html>`__ for more information.
 
 Value
 ~~~~~
@@ -35,4 +35,4 @@ If ``simplify`` is ``TRUE``, then the resulting list is coerced to a character v
 See Also
 ~~~~~~~~
 
-Other encoding_management: `stri_enc_info() <stri_enc_info.html>`__, `stri_enc_mark() <stri_enc_mark.html>`__, `stri_enc_set() <stri_enc_set.html>`__, `stringi-encoding <stringi-encoding.html>`__
+Other encoding_management: `about_encoding <about_encoding.html>`__, `stri_enc_info() <stri_enc_info.html>`__, `stri_enc_mark() <stri_enc_mark.html>`__, `stri_enc_set() <stri_enc_set.html>`__

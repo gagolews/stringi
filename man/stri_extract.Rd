@@ -191,8 +191,8 @@ stri_extract_all_fixed('abaBAba', 'Aba', case_insensitive=TRUE, overlap=TRUE)
 }
 \seealso{
 Other search_extract: 
+\code{\link{about_search}},
 \code{\link{stri_extract_all_boundaries}()},
-\code{\link{stri_match_all}()},
-\code{\link{stringi-search}}
+\code{\link{stri_match_all}()}
 }
 \concept{search_extract}
