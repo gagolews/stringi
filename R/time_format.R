@@ -278,10 +278,10 @@ stri_datetime_fstr <- function(x)
     needle <- c("ww", "ww", "yy", "Y")
 
     search <- c(search, "%a", "%A", "%b", "%B")
-    needle <- c(needle, "ccc", "cccc", "LLL", "LLLL")
+    needle <- c(needle, "ccc", "cccc", "MMM", "MMMM")
 
     search <- c(search, "%c", "%d", "%D")
-    needle <- c(needle, "eee LLL d HH:mm:ss yyyy", "dd", "MM/dd/yy")
+    needle <- c(needle, "eee MMM d HH:mm:ss yyyy", "dd", "MM/dd/yy")
 
     search <- c(search, "%e", "%F", "%h", "%H")
     needle <- c(needle, "d", "yyyy-MM-dd", "MMM", "HH")
